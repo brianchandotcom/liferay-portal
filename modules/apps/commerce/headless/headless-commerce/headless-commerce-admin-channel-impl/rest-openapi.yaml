@@ -1212,7 +1212,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -1222,7 +1222,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes an Account Address Channel by ID.
             tags:
                 -   AccountAddressChannel
@@ -1268,7 +1268,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -1339,7 +1339,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -1397,10 +1397,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1423,7 +1423,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -1443,7 +1443,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -1453,7 +1454,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -1517,7 +1518,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -1573,10 +1574,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1599,7 +1600,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -1619,7 +1620,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -1629,7 +1631,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -1677,7 +1679,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -1687,7 +1689,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes a Channel Account by ID.
             tags:
                 -   ChannelAccount
@@ -1733,7 +1735,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -1805,7 +1807,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -1865,10 +1867,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1891,7 +1893,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -1911,7 +1913,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -1921,7 +1924,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -1986,7 +1989,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2046,10 +2049,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2072,7 +2075,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2092,7 +2095,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -2102,7 +2106,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -2149,7 +2153,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -2159,7 +2163,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes a Category Display Page by ID.
             tags:
                 -   CategoryDisplayPage
@@ -2203,7 +2207,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2258,7 +2262,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CategoryDisplayPage"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -2288,7 +2292,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to update this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2308,7 +2312,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -2449,7 +2453,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -2459,7 +2464,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -2507,7 +2512,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -2517,7 +2522,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes a Channel by ID.
             tags:
                 -   Channel
@@ -2556,7 +2561,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2612,7 +2617,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Channel"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -2642,7 +2647,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to update this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2662,7 +2667,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -2709,7 +2714,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Channel"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -2739,7 +2744,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to replace this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2759,7 +2764,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — state invariant violated
+                        The requested change violates a state invariant on this resource.
                 422:
                     content:
                         application/json:
@@ -2769,7 +2774,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -2832,7 +2837,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2891,10 +2896,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2917,7 +2922,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -2937,7 +2942,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -2947,7 +2953,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -2996,7 +3002,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -3006,7 +3012,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes the default Category Display Page for a channel.
             tags:
                 -   DefaultCategoryDisplayPage
@@ -3049,7 +3055,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3106,10 +3112,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3132,7 +3138,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3152,7 +3158,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -3162,7 +3169,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -3211,7 +3218,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -3221,7 +3228,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes the default Product Display Page for a channel.
             tags:
                 -   DefaultProductDisplayPage
@@ -3264,7 +3271,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3320,10 +3327,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3346,7 +3353,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3366,7 +3373,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -3376,7 +3384,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -3439,7 +3447,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3496,10 +3504,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3522,7 +3530,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3542,7 +3550,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -3552,7 +3561,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -3599,7 +3608,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -3609,7 +3618,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes a Channel by ID.
             tags:
                 -   Channel
@@ -3647,7 +3656,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3702,7 +3711,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Channel"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -3732,7 +3741,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to update this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3752,7 +3761,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -3798,7 +3807,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Channel"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -3828,7 +3837,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to replace this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3848,7 +3857,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — state invariant violated
+                        The requested change violates a state invariant on this resource.
                 422:
                     content:
                         application/json:
@@ -3858,7 +3867,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -3918,7 +3927,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -3990,7 +3999,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4049,10 +4058,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4075,7 +4084,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4095,7 +4104,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -4105,7 +4115,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -4153,7 +4163,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -4163,7 +4173,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes the default Category Display Page for a channel.
             tags:
                 -   DefaultCategoryDisplayPage
@@ -4205,7 +4215,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4261,10 +4271,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4287,7 +4297,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4307,7 +4317,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -4317,7 +4328,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -4365,7 +4376,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -4375,7 +4386,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes the default Product Display Page for a channel.
             tags:
                 -   DefaultProductDisplayPage
@@ -4417,7 +4428,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4473,10 +4484,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4499,7 +4510,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4519,7 +4530,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -4529,7 +4541,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -4591,7 +4603,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4648,10 +4660,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4674,7 +4686,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4694,7 +4706,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -4704,7 +4717,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -4751,7 +4764,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -4761,7 +4774,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes a Payment Method Group Rel Order Type by ID.
             tags:
                 -   PaymentMethodGroupRelOrderType
@@ -4807,7 +4820,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4864,7 +4877,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -4874,7 +4887,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes a Payment Method Group Rel Term by ID.
             tags:
                 -   PaymentMethodGroupRelTerm
@@ -4919,7 +4932,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -4994,7 +5007,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5051,10 +5064,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5077,7 +5090,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5097,7 +5110,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -5107,7 +5121,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -5172,7 +5186,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5229,10 +5243,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5255,7 +5269,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5275,7 +5289,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -5285,7 +5300,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -5332,7 +5347,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -5342,7 +5357,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes a Product Display Page by ID.
             tags:
                 -   ProductDisplayPage
@@ -5386,7 +5401,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5440,7 +5455,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProductDisplayPage"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -5470,7 +5485,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to update this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5490,7 +5505,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -5537,7 +5552,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -5547,7 +5562,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes a Shipping Fixed Option Order Type by ID.
             tags:
                 -   ShippingFixedOptionOrderType
@@ -5592,7 +5607,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5649,7 +5664,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to delete this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 409:
                     content:
                         application/json:
@@ -5659,7 +5674,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — entity cannot be deleted due to dependent state
+                        The resource cannot be deleted because dependent records still reference it.
             summary: Deletes a Shipping Fixed Option Term by ID.
             tags:
                 -   ShippingFixedOptionTerm
@@ -5704,7 +5719,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5778,7 +5793,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5835,10 +5850,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5861,7 +5876,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -5881,7 +5896,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -5891,7 +5907,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -5955,7 +5971,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -6012,10 +6028,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -6038,7 +6054,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to perform this action on the resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:
@@ -6058,7 +6074,8 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict — duplicate `externalReferenceCode` or state invariant violated
+                        A resource with the same external reference code already exists, or the requested change
+                        violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -6068,7 +6085,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Unprocessable Entity — request body failed domain validation
+                        The request body failed domain validation.
                 500:
                     content:
                         application/json:
@@ -6181,7 +6198,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission to read this resource.
+                        The authenticated user lacks permission for the requested action on this resource.
                 404:
                     content:
                         application/json:

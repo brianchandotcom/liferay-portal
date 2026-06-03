@@ -692,7 +692,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ShipmentItem"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -880,7 +880,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ShipmentItem"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -1039,7 +1039,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1215,7 +1215,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Shipment"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -1308,7 +1308,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Shipment"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -1475,10 +1475,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1567,10 +1567,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -1722,7 +1722,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ShippingAddress"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -2099,7 +2099,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Shipment"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -2260,10 +2260,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -2416,7 +2416,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ShippingAddress"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input

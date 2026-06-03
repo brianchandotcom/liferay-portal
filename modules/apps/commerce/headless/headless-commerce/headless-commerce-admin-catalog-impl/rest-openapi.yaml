@@ -4514,13 +4514,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Attachment"
                     description:
-                        Updated
+                        Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4608,13 +4608,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Attachment"
                     description:
-                        Updated
+                        Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4833,10 +4833,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4930,7 +4930,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5110,10 +5110,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5268,7 +5268,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5409,7 +5409,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5785,7 +5785,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Currency"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -5880,7 +5880,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Diagram"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -5995,7 +5995,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/GroupedProduct"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -6161,7 +6161,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MappedProduct"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -6309,10 +6309,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -6502,10 +6502,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OptionCategory"
                     description:
-                        Updated
+                        Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 400:
                     description:
                         Invalid input
@@ -6593,10 +6593,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OptionCategory"
                     description:
-                        Updated
+                        Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 400:
                     description:
                         Invalid input
@@ -6775,10 +6775,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -6848,10 +6848,10 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "204":
+                204:
                     description:
                         No content
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -6883,7 +6883,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -6893,7 +6893,7 @@ paths:
                                 $ref: "#/components/schemas/OptionValue"
                     description:
                         Successful operation
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -6903,26 +6903,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                "404":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                "500":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
                 403:
                     content:
                         application/json:
@@ -6933,6 +6913,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this option value.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
             summary: Gets the value related to an option.
             tags:
                 -   OptionValue
@@ -6954,16 +6954,16 @@ paths:
                             $ref: "#/components/schemas/OptionValue"
                 required: true
             responses:
-                "202":
+                202:
                     description:
-                        Async
-                "204":
+                        Accepted - Async
+                204:
                     description:
-                        Updated
-                "400":
+                        No content
+                400:
                     description:
                         Invalid input
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -6973,26 +6973,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                "404":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                "500":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
                 403:
                     content:
                         application/json:
@@ -7003,6 +6983,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this option value.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
                 422:
                     content:
                         application/json:
@@ -7015,6 +7005,16 @@ paths:
                         A domain validation error prevented the option value from being created or updated (for example,
                         a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
                         range).
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
             summary: Updates an option by ID.
             tags:
                 -   OptionValue
@@ -7028,10 +7028,10 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
             responses:
-                "204":
+                204:
                     description:
                         No content
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -7062,7 +7062,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -7072,7 +7072,7 @@ paths:
                                 $ref: "#/components/schemas/OptionValue"
                     description:
                         Successful operation
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -7082,26 +7082,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                "404":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                "500":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
                 403:
                     content:
                         application/json:
@@ -7112,6 +7092,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this option value.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
             summary: Gets the value related to an option.
             tags:
                 -   OptionValue
@@ -7133,16 +7133,16 @@ paths:
                             $ref: "#/components/schemas/OptionValue"
                 required: true
             responses:
-                "202":
+                202:
                     description:
-                        Async
-                "204":
+                        Accepted - Async
+                204:
                     description:
-                        Updated
-                "400":
+                        No content
+                400:
                     description:
                         Invalid input
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -7152,26 +7152,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                "404":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                "500":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
                 403:
                     content:
                         application/json:
@@ -7182,6 +7162,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this option value.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
                 422:
                     content:
                         application/json:
@@ -7194,6 +7184,16 @@ paths:
                         A domain validation error prevented the option value from being created or updated (for example,
                         a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
                         range).
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
             summary: Updates an option by ID.
             tags:
                 -   OptionValue
@@ -7288,10 +7288,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -7472,10 +7472,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -7566,10 +7566,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -7724,7 +7724,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -7912,10 +7912,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -8070,7 +8070,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -8195,7 +8195,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Pin"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -8715,7 +8715,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -8898,7 +8898,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProductConfigurationList"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -9051,10 +9051,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -9207,10 +9207,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -9363,10 +9363,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -9519,10 +9519,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -9683,7 +9683,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProductConfiguration"
                     description:
-                        Created
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -9876,7 +9876,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProductConfigurationList"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -10032,10 +10032,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -10190,10 +10190,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -10348,10 +10348,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -10507,10 +10507,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -10670,7 +10670,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProductConfiguration"
                     description:
-                        Created
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -10860,7 +10860,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProductConfiguration"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -11050,7 +11050,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProductConfiguration"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -11241,7 +11241,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -11415,10 +11415,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -11512,7 +11512,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -11667,7 +11667,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -11861,10 +11861,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -12018,7 +12018,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -12098,11 +12098,11 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
             responses:
-                "204":
+                204:
                     content:
                         application/json: {}
                         application/xml: {}
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -12134,7 +12134,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -12144,7 +12144,7 @@ paths:
                                 $ref: "#/components/schemas/ProductOptionValue"
                     description:
                         Successful operation
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -12154,26 +12154,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                "404":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                "500":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
                 403:
                     content:
                         application/json:
@@ -12184,6 +12164,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this product option value.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
             summary: Gets the value related to a product option value.
             tags:
                 -   ProductOptionValue
@@ -12206,7 +12206,7 @@ paths:
                             $ref: "#/components/schemas/ProductOptionValue"
                 required: true
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -12215,11 +12215,11 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProductOptionValue"
                     description:
-                        Updated
-                "400":
+                        Successful operation
+                400:
                     description:
                         Invalid input
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -12229,26 +12229,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                "404":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                "500":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
                 403:
                     content:
                         application/json:
@@ -12259,6 +12239,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this product option value.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
                 422:
                     content:
                         application/json:
@@ -12271,6 +12261,16 @@ paths:
                         A domain validation error prevented the product option value from being created or updated (for
                         example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
                         out of range).
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
             summary: Updates a product option value by ID.
             tags:
                 -   ProductOptionValue
@@ -12411,7 +12411,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -12710,10 +12710,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -12870,7 +12870,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -13073,10 +13073,10 @@ paths:
                         Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -13272,10 +13272,10 @@ paths:
                         Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -13434,7 +13434,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -13607,10 +13607,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -13704,7 +13704,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -13859,7 +13859,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -13967,7 +13967,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -14073,7 +14073,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -14399,10 +14399,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -14641,10 +14641,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -14799,7 +14799,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Diagram"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -14950,7 +14950,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/GroupedProduct"
                     description:
-                        Created
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -15115,7 +15115,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -15222,7 +15222,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -15327,7 +15327,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -15488,7 +15488,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MappedProduct"
                     description:
-                        Created
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -15708,7 +15708,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Pin"
                     description:
-                        Created
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -15983,7 +15983,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -16049,7 +16049,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Creates or updates a product specification
+            summary: Creates or updates a product specification.
             tags:
                 -   ProductSpecification
     /products/by-externalReferenceCode/{externalReferenceCode}/product-virtual-settings:
@@ -16226,10 +16226,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -16375,7 +16375,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -16431,7 +16431,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Creates or updates a related product of a product
+            summary: Creates or updates a related product of a product.
             tags:
                 -   RelatedProduct
     /products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration:
@@ -16524,10 +16524,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -16683,7 +16683,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -16832,10 +16832,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -16985,10 +16985,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -17172,10 +17172,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -17329,7 +17329,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -17435,7 +17435,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -17540,7 +17540,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -17864,10 +17864,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -18106,10 +18106,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -18263,7 +18263,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Diagram"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -18414,7 +18414,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/GroupedProduct"
                     description:
-                        Created
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -18578,7 +18578,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -18684,7 +18684,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -18789,7 +18789,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -19013,7 +19013,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MappedProduct"
                     description:
-                        Created
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -19232,7 +19232,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Pin"
                     description:
-                        Created
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -19582,10 +19582,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -19731,7 +19731,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -19797,7 +19797,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Creates or updates a value related to a specification
+            summary: Creates or updates a value related to a specification.
             tags:
                 -   ProductSpecification
     /products/{id}/relatedProducts:
@@ -19896,7 +19896,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -19952,7 +19952,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Creates or updates a related product of a product
+            summary: Creates or updates a related product of a product.
             tags:
                 -   RelatedProduct
     /products/{id}/shippingConfiguration:
@@ -20044,10 +20044,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -20201,7 +20201,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -20349,10 +20349,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -20501,10 +20501,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -20796,10 +20796,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SkuUnitOfMeasure"
                     description:
-                        Updated
+                        Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 400:
                     description:
                         Invalid input
@@ -20994,7 +20994,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -21363,10 +21363,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Sku"
                     description:
-                        Updated
+                        Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 400:
                     description:
                         Invalid input
@@ -21454,10 +21454,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Sku"
                     description:
-                        Updated
+                        Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 400:
                     description:
                         Invalid input
@@ -21615,7 +21615,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -21945,10 +21945,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Sku"
                     description:
-                        Updated
+                        Successful operation
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 400:
                     description:
                         Invalid input
@@ -22104,7 +22104,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -22397,10 +22397,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -22580,7 +22580,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Specification"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -22676,7 +22676,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Specification"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -22872,7 +22872,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Specification"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     content:
                         application/json:
@@ -23033,7 +23033,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input

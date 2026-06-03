@@ -3180,10 +3180,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3360,7 +3360,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OrderRule"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -3446,7 +3446,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OrderRule"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -3592,10 +3592,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3742,10 +3742,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -3891,10 +3891,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4040,10 +4040,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4222,10 +4222,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OrderRule"
                     description:
-                        Successfully update the Order Rule
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4372,10 +4372,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4520,10 +4520,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4668,10 +4668,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -4816,10 +4816,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5072,7 +5072,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5247,10 +5247,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OrderType"
                     description:
-                        Successfully update the Order Type
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5335,10 +5335,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OrderType"
                     description:
-                        Successfully update the Order Type
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5485,10 +5485,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5673,10 +5673,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OrderType"
                     description:
-                        Successfully update the Order Type
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -5822,10 +5822,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -6067,7 +6067,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OrderItem"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -6336,7 +6336,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/OrderItem"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -6660,10 +6660,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -6837,10 +6837,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -6993,7 +6993,7 @@ paths:
                         Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -7167,7 +7167,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Order"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -7266,7 +7266,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Order"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -7602,10 +7602,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -7820,10 +7820,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -7972,10 +7972,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -8118,10 +8118,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -8309,7 +8309,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Order"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -8527,10 +8527,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -8741,10 +8741,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -8891,10 +8891,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -9035,10 +9035,10 @@ paths:
             responses:
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -9591,10 +9591,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -9771,7 +9771,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Term"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -9856,7 +9856,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Term"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -10002,10 +10002,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -10184,10 +10184,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Term"
                     description:
-                        Updated
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input
@@ -10332,10 +10332,10 @@ paths:
                         Created
                 202:
                     description:
-                        Async
+                        Accepted - Async
                 204:
                     description:
-                        Updated
+                        No content
                 400:
                     description:
                         Invalid input

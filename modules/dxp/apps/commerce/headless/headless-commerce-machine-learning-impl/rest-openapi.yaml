@@ -1233,7 +1233,7 @@ paths:
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             example:
@@ -1349,10 +1349,10 @@ paths:
                                 type: array
                     description:
                         Successful operation
-                "400":
+                400:
                     description:
                         Invalid input
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1362,7 +1362,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1372,7 +1372,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1404,7 +1404,7 @@ paths:
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             example:
@@ -1592,10 +1592,10 @@ paths:
                                 type: array
                     description:
                         Successful operation
-                "400":
+                400:
                     description:
                         Invalid input
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1605,7 +1605,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1615,7 +1615,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1649,7 +1649,7 @@ paths:
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/skusQueryParam"
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             example:
@@ -1837,10 +1837,10 @@ paths:
                                 type: array
                     description:
                         Successful operation
-                "400":
+                400:
                     description:
                         Invalid input
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1850,7 +1850,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1860,7 +1860,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
-                "500":
+                500:
                     content:
                         application/json:
                             schema:

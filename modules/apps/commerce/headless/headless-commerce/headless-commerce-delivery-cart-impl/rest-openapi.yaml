@@ -1671,16 +1671,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart comment.
                 204:
                     content:
                         application/json: {}
@@ -1695,6 +1685,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart comment.
             summary: Deletes a cart comment by external reference code.
             tags:
             -   CartComment
@@ -1706,16 +1706,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart comment.
                 200:
                     content:
                         application/json:
@@ -1739,6 +1729,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart comment.
                 404:
                     content:
                         application/json:
@@ -1779,28 +1779,6 @@ paths:
                             $ref: "#/components/schemas/CartComment"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart comment.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart comment from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -1810,7 +1788,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CartComment"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -1824,6 +1802,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart comment.
                 404:
                     content:
                         application/json:
@@ -1834,6 +1822,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart comment from being created or updated (for example,
+                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -1864,127 +1864,6 @@ paths:
                             $ref: "#/components/schemas/CartComment"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart comment.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart comment from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/CartComment"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/CartComment"
-                    description:
-                        Updated
-                400:
-                    description:
-                        Invalid input
-                401:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Authentication information is missing or invalid
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                500:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
-            summary: Updates a cart comment by external reference code.
-            tags:
-            -   CartComment
-    /cart-comments/{cartCommentId}:
-        delete:
-            description:
-                Deletes the comment addressed by its internal identifier.
-            operationId: deleteCartComment
-            parameters:
-            -   $ref: "#/components/parameters/cartCommentIdPathParam"
-            responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart comment.
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                401:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Authentication information is missing or invalid
-            summary: Deletes a Cart Comment by ID.
-            tags:
-            -   CartComment
-        get:
-            description:
-                Retrieves a single comment by ID. Restricted notes are returned only to users with the manage-comments
-                permission on the parent cart.
-            operationId: getCartComment
-            parameters:
-            -   $ref: "#/components/parameters/cartCommentIdPathParam"
-            responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart comment.
                 200:
                     content:
                         application/json:
@@ -2008,6 +1887,127 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart comment.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart comment from being created or updated (for example,
+                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Updates a cart comment by external reference code.
+            tags:
+            -   CartComment
+    /cart-comments/{cartCommentId}:
+        delete:
+            description:
+                Deletes the comment addressed by its internal identifier.
+            operationId: deleteCartComment
+            parameters:
+            -   $ref: "#/components/parameters/cartCommentIdPathParam"
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart comment.
+            summary: Deletes a Cart Comment by ID.
+            tags:
+            -   CartComment
+        get:
+            description:
+                Retrieves a single comment by ID. Restricted notes are returned only to users with the manage-comments
+                permission on the parent cart.
+            operationId: getCartComment
+            parameters:
+            -   $ref: "#/components/parameters/cartCommentIdPathParam"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CartComment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CartComment"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart comment.
                 404:
                     content:
                         application/json:
@@ -2048,28 +2048,6 @@ paths:
                             $ref: "#/components/schemas/CartComment"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart comment.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart comment from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -2079,7 +2057,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CartComment"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -2093,6 +2071,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart comment.
                 404:
                     content:
                         application/json:
@@ -2103,6 +2091,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart comment from being created or updated (for example,
+                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2132,28 +2132,6 @@ paths:
                             $ref: "#/components/schemas/CartComment"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart comment.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart comment from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -2163,7 +2141,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CartComment"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -2177,6 +2155,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart comment.
                 404:
                     content:
                         application/json:
@@ -2187,6 +2175,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart comment from being created or updated (for example,
+                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2210,16 +2210,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart item.
                 204:
                     content:
                         application/json: {}
@@ -2234,6 +2224,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart item.
             summary: Deletes a cart item by external reference code.
             tags:
             -   CartItem
@@ -2244,16 +2244,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart item.
                 200:
                     content:
                         application/json:
@@ -2277,6 +2267,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart item.
                 404:
                     content:
                         application/json:
@@ -2318,28 +2318,6 @@ paths:
                             $ref: "#/components/schemas/CartItem"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart item.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -2349,7 +2327,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CartItem"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -2363,6 +2341,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart item.
                 404:
                     content:
                         application/json:
@@ -2373,6 +2361,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart item from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2403,127 +2403,6 @@ paths:
                             $ref: "#/components/schemas/CartItem"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart item.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/CartItem"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/CartItem"
-                    description:
-                        Updated
-                400:
-                    description:
-                        Invalid input
-                401:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Authentication information is missing or invalid
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                500:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
-            summary: Updates a cart item by external reference code.
-            tags:
-            -   CartItem
-    /cart-items/{cartItemId}:
-        delete:
-            description:
-                Deletes the cart item addressed by its internal identifier. Triggers cart pricing recalculation through
-                the cart context.
-            operationId: deleteCartItem
-            parameters:
-            -   $ref: "#/components/parameters/cartItemIdPathParam"
-            responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart item.
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                401:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Authentication information is missing or invalid
-            summary: Deletes a cart item by ID.
-            tags:
-            -   CartItem
-        get:
-            description:
-                Retrieves a single cart item by ID.
-            operationId: getCartItem
-            parameters:
-            -   $ref: "#/components/parameters/cartItemIdPathParam"
-            responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart item.
                 200:
                     content:
                         application/json:
@@ -2547,6 +2426,127 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart item.
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart item from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Updates a cart item by external reference code.
+            tags:
+            -   CartItem
+    /cart-items/{cartItemId}:
+        delete:
+            description:
+                Deletes the cart item addressed by its internal identifier. Triggers cart pricing recalculation through
+                the cart context.
+            operationId: deleteCartItem
+            parameters:
+            -   $ref: "#/components/parameters/cartItemIdPathParam"
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart item.
+            summary: Deletes a cart item by ID.
+            tags:
+            -   CartItem
+        get:
+            description:
+                Retrieves a single cart item by ID.
+            operationId: getCartItem
+            parameters:
+            -   $ref: "#/components/parameters/cartItemIdPathParam"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CartItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CartItem"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart item.
                 404:
                     content:
                         application/json:
@@ -2588,28 +2588,6 @@ paths:
                             $ref: "#/components/schemas/CartItem"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart item.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -2619,7 +2597,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CartItem"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -2633,6 +2611,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart item.
                 404:
                     content:
                         application/json:
@@ -2643,6 +2631,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart item from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2672,28 +2672,6 @@ paths:
                             $ref: "#/components/schemas/CartItem"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart item.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -2703,7 +2681,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CartItem"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -2717,6 +2695,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart item.
                 404:
                     content:
                         application/json:
@@ -2727,6 +2715,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart item from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2748,27 +2748,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
                 204:
                     description:
                         No content
@@ -2782,16 +2761,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-            summary: Deletes a Cart by external reference code.
-            tags:
-            -   Cart
-        get:
-            description:
-                Retrieves the cart addressed by external reference code with its items, addresses, summary, and status.
-            parameters:
-            -   $ref: "#/components/parameters/externalReferenceCodePathParam"
-            responses:
-                "403":
+                403:
                     content:
                         application/json:
                             schema:
@@ -2801,6 +2771,26 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this cart.
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+            summary: Deletes a Cart by external reference code.
+            tags:
+            -   Cart
+        get:
+            description:
+                Retrieves the cart addressed by external reference code with its items, addresses, summary, and status.
+            parameters:
+            -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            responses:
                 200:
                     content:
                         application/json:
@@ -2824,6 +2814,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -2865,39 +2865,6 @@ paths:
                             $ref: "#/components/schemas/Cart"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -2907,7 +2874,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Cart"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -2921,6 +2888,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -2931,6 +2908,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -2960,39 +2960,6 @@ paths:
                             $ref: "#/components/schemas/Cart"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -3002,7 +2969,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Cart"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -3016,6 +2983,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -3026,6 +3003,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3118,28 +3118,6 @@ paths:
                             $ref: "#/components/schemas/AttachmentBase64"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -3163,6 +3141,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -3173,6 +3161,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3195,22 +3195,12 @@ paths:
             -   $ref: "#/components/parameters/attachmentExternalReferenceCodePathParam"
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
                 200:
                     content:
                         application/json: {}
                         application/xml: {}
                     description:
-                        Updated
+                        Successful operation
                 401:
                     content:
                         application/json:
@@ -3221,6 +3211,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -3251,16 +3251,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
                 200:
                     content:
                         application/json:
@@ -3284,6 +3274,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -3316,39 +3316,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -3369,6 +3336,39 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
             summary: Checks out a cart by external reference code.
             tags:
             -   Cart
@@ -3448,28 +3448,6 @@ paths:
                             $ref: "#/components/schemas/CartComment"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 201:
                     content:
                         application/json:
@@ -3493,6 +3471,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -3503,6 +3491,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3533,39 +3533,6 @@ paths:
                             $ref: "#/components/schemas/CouponCode"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -3589,6 +3556,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -3599,6 +3576,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3743,28 +3743,6 @@ paths:
                             $ref: "#/components/schemas/CartItem"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 201:
                     content:
                         application/json:
@@ -3788,6 +3766,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -3798,6 +3786,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -3931,16 +3931,6 @@ paths:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/callbackURLQueryParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
                 200:
                     content:
                         text/plain:
@@ -3961,6 +3951,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -3991,16 +3991,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
                 200:
                     content:
                         application/json:
@@ -4024,6 +4014,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -4110,27 +4110,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
                 204:
                     description:
                         No content
@@ -4144,6 +4123,27 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
             summary: Deletes a Cart by ID.
             tags:
             -   Cart
@@ -4154,16 +4154,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
                 200:
                     content:
                         application/json:
@@ -4187,6 +4177,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -4229,39 +4229,6 @@ paths:
                             $ref: "#/components/schemas/Cart"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -4271,7 +4238,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Cart"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -4285,6 +4252,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -4295,6 +4272,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -4324,39 +4324,6 @@ paths:
                             $ref: "#/components/schemas/Cart"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -4366,7 +4333,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Cart"
                     description:
-                        Updated
+                        Successful operation
                 400:
                     description:
                         Invalid input
@@ -4380,6 +4347,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -4390,6 +4367,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -4482,28 +4482,6 @@ paths:
                             $ref: "#/components/schemas/AttachmentBase64"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -4527,6 +4505,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -4537,6 +4525,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -4558,22 +4558,12 @@ paths:
             -   $ref: "#/components/parameters/attachmentIdPathParam"
             -   $ref: "#/components/parameters/cartIdPathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
                 200:
                     content:
                         application/json: {}
                         application/xml: {}
                     description:
-                        Updated
+                        Successful operation
                 401:
                     content:
                         application/json:
@@ -4584,6 +4574,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -4615,16 +4615,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
                 200:
                     content:
                         application/json:
@@ -4648,6 +4638,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -4747,39 +4747,6 @@ paths:
                             $ref: "#/components/schemas/CartTransition"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -4803,6 +4770,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -4813,6 +4790,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -4836,39 +4836,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -4889,6 +4856,39 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
             summary: Checks out a cart.
             tags:
             -   Cart
@@ -4970,28 +4970,6 @@ paths:
                             $ref: "#/components/schemas/CartComment"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 201:
                     content:
                         application/json:
@@ -5015,6 +4993,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -5025,6 +5013,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -5056,39 +5056,6 @@ paths:
                             $ref: "#/components/schemas/CouponCode"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "409":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 200:
                     content:
                         application/json:
@@ -5112,6 +5079,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -5122,6 +5099,29 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                409:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a
+                        workflow state conflict occurred.
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -5269,28 +5269,6 @@ paths:
                             $ref: "#/components/schemas/CartItem"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 201:
                     content:
                         application/json:
@@ -5314,6 +5292,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -5324,6 +5312,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -5460,16 +5460,6 @@ paths:
             -   $ref: "#/components/parameters/cartIdPathParam"
             -   $ref: "#/components/parameters/callbackURLQueryParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
                 200:
                     content:
                         text/plain:
@@ -5490,6 +5480,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -5521,16 +5521,6 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
                 200:
                     content:
                         application/json:
@@ -5554,6 +5544,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -5715,28 +5715,6 @@ paths:
                             $ref: "#/components/schemas/Cart"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 201:
                     content:
                         application/json:
@@ -5760,6 +5738,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -5770,6 +5758,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:
@@ -5925,28 +5925,6 @@ paths:
                             $ref: "#/components/schemas/Cart"
                 required: true
             responses:
-                "403":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The authenticated user lacks permission for the requested action on this cart.
-                "422":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
                 201:
                     content:
                         application/json:
@@ -5970,6 +5948,16 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The authenticated user lacks permission for the requested action on this cart.
                 404:
                     content:
                         application/json:
@@ -5980,6 +5968,18 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The specified resource was not found
+                422:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        A domain validation error prevented the cart from being created or updated (for example, a
+                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
+                        range).
                 500:
                     content:
                         application/json:

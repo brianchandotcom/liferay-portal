@@ -781,6 +781,61 @@ test(
 );
 
 test(
+	'Can view an asset from Recent Assets',
+	{tag: '@LPD-93228'},
+	async ({apiHelpers, homePage, page}) => {
+		const contentApplicationName = 'cms/basic-web-contents';
+		const contentTitle = `content ${getRandomString()}`;
+
+		let contentEntry;
+
+		try {
+			contentEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentTitle,
+				},
+				contentApplicationName,
+				'Default'
+			);
+
+			const dataSetFragmentPage: DataSetPage = new DataSetPage(page);
+
+			await homePage.goto();
+
+			await test.step('Can open the asset navigation modal with the View action', async () => {
+				await dataSetFragmentPage.execItemAction({
+					action: 'View',
+					filter: contentTitle,
+				});
+
+				await expect(page.getByTestId('modal-header-name')).toHaveText(
+					contentTitle
+				);
+			});
+
+			await test.step('Details panel shows the metadata with the location breadcrumb', async () => {
+				await page.getByRole('button', {name: 'Show Details'}).click();
+
+				const spaceBreadcrumb = page.locator(
+					'.asset-metadata .space-breadcrumb'
+				);
+
+				await expect(spaceBreadcrumb).toBeVisible();
+			});
+		}
+		finally {
+			if (contentEntry) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					contentApplicationName,
+					String(contentEntry.id)
+				);
+			}
+		}
+	}
+);
+
+test(
 	'Can use Quick Actions to create new content',
 	{tag: '@LPD-58793'},
 	async ({apiHelpers, homePage, page}) => {

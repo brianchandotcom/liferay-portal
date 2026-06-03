@@ -7,5 +7,9 @@
  * @returns a set containing `${key}=${value}` strings
  */
 export function getCookies(): Set<string> {
+	if (!document.cookie) {
+		return new Set();
+	}
+
 	return new Set(document.cookie.split(';').map((item) => item.trim()));
 }

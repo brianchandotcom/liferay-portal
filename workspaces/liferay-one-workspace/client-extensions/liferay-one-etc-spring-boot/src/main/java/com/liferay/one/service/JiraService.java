@@ -46,7 +46,8 @@ public class JiraService extends BaseService {
 
 		_syncBusinessEvent(null, businessEvent);
 
-		return getBusinessEvents(businessEvent.getAccountExternalKey());
+		return getBusinessEvents(
+			businessEvent.getAccountExternalReferenceCode());
 	}
 
 	public void deleteBusinessEvent(String id) throws Exception {
@@ -648,7 +649,8 @@ public class JiraService extends BaseService {
 		if (Validator.isNull(id)) {
 			attributesJSONObject.put(
 				_jiraBusinessEventAssetObjectTypeAttributeAccount,
-				getAccountObjectKey(businessEvent.getAccountExternalKey())
+				getAccountObjectKey(
+					businessEvent.getAccountExternalReferenceCode())
 			).put(
 				_jiraBusinessEventAssetObjectTypeAttributeAuthor,
 				businessEvent.getAuthorEmailAddress()

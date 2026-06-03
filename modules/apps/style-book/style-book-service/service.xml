@@ -67,11 +67,58 @@
 			<finder-column name="themeId" />
 		</finder>
 	</entity>
+	<entity external-reference-code="group" local-service="true" name="StyleBookTokenSet" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="styleBookTokenSetId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="styleBookEntryId" type="long" />
+		<column name="frontendTokenDefinitionId" type="String" />
+		<column name="frontendTokenCategoryName" type="String" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="StyleBookEntryId" return-type="Collection">
+			<finder-column name="styleBookEntryId" />
+		</finder>
+		<finder name="SBEI_FTDI_FTCN_N" return-type="StyleBookTokenSet" unique="true">
+			<finder-column name="styleBookEntryId" />
+			<finder-column name="frontendTokenDefinitionId" />
+			<finder-column name="frontendTokenCategoryName" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>DuplicateStyleBookEntryKey</exception>
 		<exception>DuplicateStyleBookEntryName</exception>
+		<exception>DuplicateStyleBookTokenSetName</exception>
+		<exception>NoSuchFrontendTokenCategory</exception>
 		<exception>StyleBookEntryFile</exception>
 		<exception>StyleBookEntryName</exception>
 		<exception>StyleBookEntryThemeId</exception>
+		<exception>StyleBookTokenSetName</exception>
 	</exceptions>
 </service-builder>

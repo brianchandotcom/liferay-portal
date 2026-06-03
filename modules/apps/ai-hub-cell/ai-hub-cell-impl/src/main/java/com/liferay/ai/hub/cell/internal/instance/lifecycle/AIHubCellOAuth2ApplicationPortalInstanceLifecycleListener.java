@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
-import java.util.List;
+import java.util.Arrays;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,14 +57,14 @@ public class AIHubCellOAuth2ApplicationPortalInstanceLifecycleListener
 			_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
 				AIHubCellConstants.OAUTH2_APPLICATION_USER_ON_BEHALF_OF_ERC,
 				user.getUserId(), user.getScreenName(),
-				List.of(GrantType.CLIENT_CREDENTIALS), "client_secret_post",
-				user.getUserId(),
+				Arrays.asList(GrantType.CLIENT_CREDENTIALS),
+				"client_secret_post", user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),
 				ClientProfile.HEADLESS_SERVER.id(),
 				OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
 				company.getPortalURL(0), 0, null,
-				"AI Hub Cell User On Behalf Of", null, List.of(), false,
-				List.of("Liferay.Portal.Search.REST.everything"), false,
+				"AI Hub Cell User On Behalf Of", null, Arrays.asList(), false,
+				Arrays.asList("Liferay.Portal.Search.REST.everything"), false,
 				new ServiceContext());
 		}
 		catch (PortalException portalException) {

@@ -220,6 +220,10 @@ public class ObjectRelationshipExtensionProviderTest {
 		CommerceCatalog commerceCatalog = CPTestUtil.getSystemCommerceCatalog(
 			TestPropsValues.getCompanyId());
 
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
 		ObjectDefinition cpDefinitionObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), CPDefinition.class.getName());
@@ -229,10 +233,6 @@ public class ObjectRelationshipExtensionProviderTest {
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
-
-		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
-			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
-			true);
 
 		ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			0, TestPropsValues.getUserId(),
@@ -254,6 +254,9 @@ public class ObjectRelationshipExtensionProviderTest {
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
+		NestedFieldsContext originalNestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
 		ObjectRelationshipLocalServiceUtil.
 			addObjectRelationshipMappingTableValues(
 				TestPropsValues.getUserId(),
@@ -261,19 +264,16 @@ public class ObjectRelationshipExtensionProviderTest {
 				objectEntry.getPrimaryKey(), cpDefinition.getCProductId(),
 				ServiceContextTestUtil.getServiceContext());
 
-		NestedFieldsContext originalNestedFieldsContext =
-			NestedFieldsContextThreadLocal.getNestedFieldsContext();
-
 		try {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				_getNestedFieldsContext(objectRelationship.getName()));
+
 			Product product = new Product() {
 				{
 					id = cpDefinition.getCPDefinitionId();
 					productId = cpDefinition.getCProductId();
 				}
 			};
-
-			NestedFieldsContextThreadLocal.setNestedFieldsContext(
-				_getNestedFieldsContext(objectRelationship.getName()));
 
 			Map<String, Serializable> extendedProperties =
 				_extensionProvider.getExtendedProperties(

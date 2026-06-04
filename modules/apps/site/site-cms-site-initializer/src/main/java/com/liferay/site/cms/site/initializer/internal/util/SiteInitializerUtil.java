@@ -82,10 +82,12 @@ public class SiteInitializerUtil {
 
 			ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 
+			Role role = RoleUtil.getOrAddCMSAdministratorRole(
+				companyId, user.getUserId());
+
 			siteInitializer.initialize(group.getGroupId());
 
-			_addResourcePermissions(
-				companyId, group.getGroupId(), user.getUserId());
+			_addResourcePermissions(companyId, group.getGroupId(), role);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
@@ -100,10 +102,8 @@ public class SiteInitializerUtil {
 	}
 
 	private static void _addResourcePermissions(
-			long companyId, long groupId, long userId)
-		throws Exception {
-
-		Role role = RoleUtil.getOrAddCMSAdministratorRole(companyId, userId);
+			long companyId, long groupId, Role role)
+		throws PortalException {
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
 			companyId, Layout.class.getName(), ResourceConstants.SCOPE_GROUP,

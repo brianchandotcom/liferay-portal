@@ -13,6 +13,7 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -64,6 +66,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.data.cleanup.DLFileEntryDataCleanupPreupgradeProcess;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.HashMap;
 import java.util.List;
@@ -254,6 +258,230 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 				"delete from DLFileEntry where fileEntryId = " + fileEntryId1);
 			runSQL(
 				"delete from DLFileEntry where fileEntryId = " + fileEntryId2);
+		}
+	}
+
+	@Test
+	public void testUpgradeDLFileEntryResourcePermissionScopeCheck()
+		throws Exception {
+
+		long primKeyId = RandomTestUtil.nextLong();
+		long individualPermissionId = CounterLocalServiceUtil.increment();
+		long companyPermissionId = CounterLocalServiceUtil.increment();
+		long companyId = TestPropsValues.getCompanyId();
+		long roleId = RandomTestUtil.nextLong();
+
+		String insertSQL = StringBundler.concat(
+			"insert into ResourcePermission (mvccVersion, ctCollectionId, ",
+			"resourcePermissionId, companyId, name, scope, primKey, ",
+			"primKeyId, roleId, ownerId, actionIds, viewActionId) values (0, ",
+			"0, ?, ?, ?, ?, ?, ?, ?, 0, 1, 0)");
+
+		try {
+			try (Connection connection = DataAccess.getConnection()) {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(insertSQL)) {
+
+					preparedStatement.setLong(1, individualPermissionId);
+					preparedStatement.setLong(2, companyId);
+					preparedStatement.setString(3, DLFileEntry.class.getName());
+					preparedStatement.setInt(
+						4, ResourceConstants.SCOPE_INDIVIDUAL);
+					preparedStatement.setString(5, String.valueOf(primKeyId));
+					preparedStatement.setLong(6, primKeyId);
+					preparedStatement.setLong(7, roleId);
+
+					preparedStatement.executeUpdate();
+				}
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(insertSQL)) {
+
+					preparedStatement.setLong(1, companyPermissionId);
+					preparedStatement.setLong(2, companyId);
+					preparedStatement.setString(3, DLFileEntry.class.getName());
+					preparedStatement.setInt(
+						4, ResourceConstants.SCOPE_COMPANY);
+					preparedStatement.setString(5, String.valueOf(primKeyId));
+					preparedStatement.setLong(6, primKeyId);
+					preparedStatement.setLong(7, roleId);
+
+					preparedStatement.executeUpdate();
+				}
+			}
+
+			try (Connection connection = DataAccess.getConnection();
+
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"select count(*) from ResourcePermission where " +
+							"resourcePermissionId in (?, ?)")) {
+
+				preparedStatement.setLong(1, individualPermissionId);
+				preparedStatement.setLong(2, companyPermissionId);
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					resultSet.next();
+
+					Assert.assertEquals(2, resultSet.getInt("count(*)"));
+				}
+			}
+
+			upgrade();
+
+			try (Connection connection = DataAccess.getConnection()) {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"select count(*) from ResourcePermission where " +
+								"resourcePermissionId = ?")) {
+
+					preparedStatement.setLong(1, individualPermissionId);
+
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						resultSet.next();
+
+						Assert.assertEquals(0, resultSet.getInt("count(*)"));
+					}
+				}
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"select count(*) from ResourcePermission where " +
+								"resourcePermissionId = ?")) {
+
+					preparedStatement.setLong(1, companyPermissionId);
+
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						resultSet.next();
+
+						Assert.assertEquals(1, resultSet.getInt("count(*)"));
+					}
+				}
+			}
+		}
+		finally {
+			runSQL(
+				StringBundler.concat(
+					"delete from ResourcePermission where ",
+					"resourcePermissionId in (", individualPermissionId, ", ",
+					companyPermissionId, ")"));
+		}
+	}
+
+	@Test
+	public void testUpgradeDLFileShortcutResourcePermissionScopeCheck()
+		throws Exception {
+
+		long primKeyId = RandomTestUtil.nextLong();
+		long individualPermissionId = CounterLocalServiceUtil.increment();
+		long companyPermissionId = CounterLocalServiceUtil.increment();
+		long companyId = TestPropsValues.getCompanyId();
+		long roleId = RandomTestUtil.nextLong();
+
+		String insertSQL = StringBundler.concat(
+			"insert into ResourcePermission (mvccVersion, ctCollectionId, ",
+			"resourcePermissionId, companyId, name, scope, primKey, ",
+			"primKeyId, roleId, ownerId, actionIds, viewActionId) values (0, ",
+			"0, ?, ?, ?, ?, ?, ?, ?, 0, 1, 0)");
+
+		try {
+			try (Connection connection = DataAccess.getConnection()) {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(insertSQL)) {
+
+					preparedStatement.setLong(1, individualPermissionId);
+					preparedStatement.setLong(2, companyId);
+					preparedStatement.setString(
+						3, DLFileShortcut.class.getName());
+					preparedStatement.setInt(
+						4, ResourceConstants.SCOPE_INDIVIDUAL);
+					preparedStatement.setString(5, String.valueOf(primKeyId));
+					preparedStatement.setLong(6, primKeyId);
+					preparedStatement.setLong(7, roleId);
+
+					preparedStatement.executeUpdate();
+				}
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(insertSQL)) {
+
+					preparedStatement.setLong(1, companyPermissionId);
+					preparedStatement.setLong(2, companyId);
+					preparedStatement.setString(
+						3, DLFileShortcut.class.getName());
+					preparedStatement.setInt(
+						4, ResourceConstants.SCOPE_COMPANY);
+					preparedStatement.setString(5, String.valueOf(primKeyId));
+					preparedStatement.setLong(6, primKeyId);
+					preparedStatement.setLong(7, roleId);
+
+					preparedStatement.executeUpdate();
+				}
+			}
+
+			try (Connection connection = DataAccess.getConnection();
+
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"select count(*) from ResourcePermission where " +
+							"resourcePermissionId in (?, ?)")) {
+
+				preparedStatement.setLong(1, individualPermissionId);
+				preparedStatement.setLong(2, companyPermissionId);
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					resultSet.next();
+
+					Assert.assertEquals(2, resultSet.getInt("count(*)"));
+				}
+			}
+
+			upgrade();
+
+			try (Connection connection = DataAccess.getConnection()) {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"select count(*) from ResourcePermission where " +
+								"resourcePermissionId = ?")) {
+
+					preparedStatement.setLong(1, individualPermissionId);
+
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						resultSet.next();
+
+						Assert.assertEquals(0, resultSet.getInt("count(*)"));
+					}
+				}
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"select count(*) from ResourcePermission where " +
+								"resourcePermissionId = ?")) {
+
+					preparedStatement.setLong(1, companyPermissionId);
+
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						resultSet.next();
+
+						Assert.assertEquals(1, resultSet.getInt("count(*)"));
+					}
+				}
+			}
+		}
+		finally {
+			runSQL(
+				StringBundler.concat(
+					"delete from ResourcePermission where ",
+					"resourcePermissionId in (", individualPermissionId, ", ",
+					companyPermissionId, ")"));
 		}
 	}
 

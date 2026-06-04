@@ -1,0 +1,22 @@
+assemble:
+    -   fromTask: bootJar
+liferay-seostudio-pagespeed-oahs:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay SEO Studio PageSpeed OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Portal.Instances.read
+        -   c_seostudiodomain.read
+        -   c_seostudioinstance.read
+        -   c_seostudioscan.write
+    type: oAuthApplicationHeadlessServer
+liferay-seostudio-pagespeed-oaua:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay SEO Studio PageSpeed OAuth Application User Agent
+    type: oAuthApplicationUserAgent
+liferay-seostudio-pagespeed-object-action-scan:
+    name: Liferay SEO Studio PageSpeed Object Action Scan
+    oAuth2ApplicationExternalReferenceCode: liferay-seostudio-pagespeed-oaua
+    resourcePath: /object/action/pagespeed/scan
+    type: objectAction

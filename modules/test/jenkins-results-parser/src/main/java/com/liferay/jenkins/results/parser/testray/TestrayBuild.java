@@ -56,6 +56,21 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		"dateModified", "dueStatus { key name }", "errors", "id", "startDate"
 	};
 
+	public static long getID(URL testrayBuildURL) {
+		if (testrayBuildURL == null) {
+			return 0;
+		}
+
+		Matcher matcher = _testrayBuildURLPattern.matcher(
+			String.valueOf(testrayBuildURL));
+
+		if (!matcher.find()) {
+			return 0;
+		}
+
+		return Long.parseLong(matcher.group("buildID"));
+	}
+
 	public int compareTo(TestrayBuild testrayBuild) {
 		if (testrayBuild == null) {
 			throw new NullPointerException("Testray build is null");
@@ -478,9 +493,73 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		_jsonObject = jsonObject;
 	}
 
-	protected TestrayBuild(TestrayServer testrayServer, JSONObject jsonObject) {
+	protected TestrayBuild(TestrayRoutine testrayRoutine, long id) {
+		_testrayRoutine = testrayRoutine;
+
+		_testrayServer = testrayRoutine.getTestrayServer();
+
+		try {
+			String filterString = JenkinsResultsParserUtil.combine(
+				"id eq '", String.valueOf(id),
+				"' and r_routineToBuilds_c_routineId eq '",
+				String.valueOf(testrayRoutine.getID()), "'");
+
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+				"builds", FIELD_NAMES, filterString, null, 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				throw new RuntimeException("Build ID not found: " + id);
+			}
+
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			JSONObject entityJSONObject = iterator.next();
+
+			JSONObject projectJSONObject = entityJSONObject.getJSONObject(
+				"projectToBuilds");
+
+			_testrayProject = _testrayServer.getTestrayProjectByID(
+				projectJSONObject.getLong("id"));
+
+			_jsonObject = entityJSONObject;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	protected TestrayBuild(TestrayServer testrayServer, long id) {
 		_testrayServer = testrayServer;
-		_jsonObject = jsonObject;
+
+		try {
+			Set<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
+				"builds", FIELD_NAMES, "id eq '" + id + "'", null, 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				throw new RuntimeException("Build ID not found: " + id);
+			}
+
+			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+			JSONObject entityJSONObject = iterator.next();
+
+			JSONObject projectJSONObject = entityJSONObject.getJSONObject(
+				"projectToBuilds");
+
+			_testrayProject = testrayServer.getTestrayProjectByID(
+				projectJSONObject.getLong("id"));
+
+			JSONObject routineJSONObject = entityJSONObject.getJSONObject(
+				"routineToBuilds");
+
+			_testrayRoutine = _testrayProject.getTestrayRoutineByID(
+				routineJSONObject.getLong("id"));
+
+			_jsonObject = entityJSONObject;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected TestrayBuild(URL url) {
@@ -601,7 +680,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	private Matcher _testrayAttachmentURLMatcher;
 	private TestrayProductVersion _testrayProductVersion;
 	private TestrayProject _testrayProject;
-	private TestrayRoutine _testrayRoutine;
+	private final TestrayRoutine _testrayRoutine;
 	private List<TestrayRun> _testrayRuns;
 	private final TestrayServer _testrayServer;
 	private TopLevelBuildReport _topLevelBuildReport;

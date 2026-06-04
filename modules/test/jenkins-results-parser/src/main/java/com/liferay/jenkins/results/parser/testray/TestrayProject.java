@@ -109,29 +109,8 @@ public class TestrayProject {
 	public TestrayCase getTestrayCase(
 		String testCaseName, TestrayCaseType testrayCaseType) {
 
-		String filterString = JenkinsResultsParserUtil.combine(
-			"name eq '", testCaseName, "' and ",
-			"r_caseTypeToCases_c_caseTypeId eq '",
-			String.valueOf(testrayCaseType.getID()), "' and ",
-			"r_projectToCases_c_projectId eq '", String.valueOf(getID()), "'");
-
-		try {
-			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"cases", TestrayCase.FIELD_NAMES, filterString, null, 1, 1);
-
-			if (entityJSONObjects.isEmpty()) {
-				return null;
-			}
-
-			for (JSONObject entityJSONObject : entityJSONObjects) {
-				return TestrayFactory.newTestrayCase(this, entityJSONObject);
-			}
-
-			return null;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return TestrayFactory.newTestrayCase(
+			this, testCaseName, testrayCaseType);
 	}
 
 	public TestrayCase getTestrayCaseByName(String testCaseName) {

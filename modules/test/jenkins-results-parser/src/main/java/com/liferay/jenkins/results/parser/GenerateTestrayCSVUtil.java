@@ -43,8 +43,8 @@ public class GenerateTestrayCSVUtil {
 		TestrayServer testrayServer = TestrayFactory.newTestrayServer(
 			String.valueOf(testrayServerURL));
 
-		TestrayBuild testrayBuild = testrayServer.getTestrayBuildByID(
-			projectTestrayBuildId);
+		TestrayBuild testrayBuild = TestrayFactory.newTestrayBuild(
+			testrayServer, projectTestrayBuildId);
 
 		System.out.println("Generating Testray CSV.");
 

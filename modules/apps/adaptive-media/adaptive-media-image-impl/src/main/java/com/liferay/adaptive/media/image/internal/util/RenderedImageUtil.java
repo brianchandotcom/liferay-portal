@@ -102,6 +102,8 @@ public class RenderedImageUtil {
 			}
 		}
 
+		StreamUtil.cleanUp(imageInputStream, inputStream);
+
 		throw new IOException("Unsupported image type");
 	}
 

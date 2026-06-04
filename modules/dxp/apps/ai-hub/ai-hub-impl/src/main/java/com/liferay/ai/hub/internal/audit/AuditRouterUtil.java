@@ -25,14 +25,14 @@ public class AuditRouterUtil {
 			JSONObject jsonObject, long userId)
 		throws Exception {
 
-		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
-			userId);
-
 		for (String key : jsonObject.keySet()) {
 			if (jsonObject.get(key) instanceof String value) {
 				jsonObject.put(key, _truncate(value));
 			}
 		}
+
+		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
+			userId);
 
 		com.liferay.portal.kernel.audit.AuditRouterUtil.route(
 			new AuditMessage(

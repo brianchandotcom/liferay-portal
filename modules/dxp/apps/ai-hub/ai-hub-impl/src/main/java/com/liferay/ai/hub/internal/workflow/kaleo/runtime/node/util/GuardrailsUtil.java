@@ -50,7 +50,7 @@ public class GuardrailsUtil {
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
 				new NestedFieldsContext(
-					1, List.of("aiHubAgentDefinitionsToAIHubMATemplates")));
+					1, List.of("aiHubAgentDefinitionsToAIHubGuardrails")));
 
 		try {
 			ObjectEntry agentDefinitionObjectEntry =
@@ -70,36 +70,32 @@ public class GuardrailsUtil {
 							serviceContext.getCompanyId()),
 					null);
 
-			ObjectEntry[] modelArmorTemplateObjectEntries =
+			ObjectEntry[] guardrailObjectEntries =
 				(ObjectEntry[])agentDefinitionObjectEntry.getPropertyValue(
-					"aiHubAgentDefinitionsToAIHubMATemplates");
+					"aiHubAgentDefinitionsToAIHubGuardrails");
 
-			if (ArrayUtil.isEmpty(modelArmorTemplateObjectEntries)) {
+			if (ArrayUtil.isEmpty(guardrailObjectEntries)) {
 				return;
 			}
 
-			for (ObjectEntry modelArmorTemplateObjectEntry :
-					modelArmorTemplateObjectEntries) {
-
+			for (ObjectEntry guardrailObjectEntry : guardrailObjectEntries) {
 				if (!GetterUtil.getBoolean(
-						modelArmorTemplateObjectEntry.getPropertyValue(
-							"active"))) {
+						guardrailObjectEntry.getPropertyValue("active"))) {
 
 					continue;
 				}
 
 				ListEntry listEntry =
-					(ListEntry)modelArmorTemplateObjectEntry.getPropertyValue(
+					(ListEntry)guardrailObjectEntry.getPropertyValue(
 						"guardrailType");
 
 				if (Objects.equals(listEntry.getKey(), "input")) {
 					inputGuardrails.add(
 						new InputGuardrailImpl(
 							serviceContext.getCompanyId(),
-							modelArmorTemplateObjectEntry.
-								getExternalReferenceCode(),
+							guardrailObjectEntry.getExternalReferenceCode(),
 							GetterUtil.getString(
-								modelArmorTemplateObjectEntry.getPropertyValue(
+								guardrailObjectEntry.getPropertyValue(
 									"location")),
 							modelArmorHandler, quotaManager,
 							serviceContext.getUserId(), workflowContext));
@@ -108,10 +104,9 @@ public class GuardrailsUtil {
 					outputGuardrails.add(
 						new OutputGuardrailImpl(
 							serviceContext.getCompanyId(),
-							modelArmorTemplateObjectEntry.
-								getExternalReferenceCode(),
+							guardrailObjectEntry.getExternalReferenceCode(),
 							GetterUtil.getString(
-								modelArmorTemplateObjectEntry.getPropertyValue(
+								guardrailObjectEntry.getPropertyValue(
 									"location")),
 							modelArmorHandler, quotaManager,
 							serviceContext.getUserId(), workflowContext));

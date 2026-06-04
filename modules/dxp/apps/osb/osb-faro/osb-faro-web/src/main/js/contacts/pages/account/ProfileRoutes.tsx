@@ -2,11 +2,12 @@ import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
+import ErrorPage from 'shared/pages/ErrorPage';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useContext} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
+import {ACCOUNTS, Routes, toRoute} from 'shared/util/router';
 import {ChannelContext} from 'shared/context/channel';
-import {Routes} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
@@ -35,13 +36,34 @@ const AccountProfileRoutes = () => {
 
 	const {channelId, groupId, id} = useParams();
 
-	const {data, loading} = useRequest({
+	const {data, error, loading} = useRequest({
 		dataSourceFn: API.accounts.fetch,
 		variables: {accountId: id!, channelId: channelId!, groupId: groupId!}
 	});
 
+	if (loading) {
+		return <Loading />;
+	}
+
+	if (error || !data) {
+		return (
+			<ErrorPage
+				href={toRoute(Routes.CONTACTS_LIST_ENTITY, {
+					channelId: channelId!,
+					groupId: groupId!,
+					type: ACCOUNTS
+				})}
+				linkLabel={Liferay.Language.get('go-to-accounts')}
+				message={Liferay.Language.get(
+					'the-account-you-are-looking-for-does-not-exist'
+				)}
+				subtitle={Liferay.Language.get('account-not-found')}
+			/>
+		);
+	}
+
 	const accountName: string =
-		data?.accountName || Liferay.Language.get('account');
+		data.accountName || Liferay.Language.get('account');
 
 	return (
 		<BasePage

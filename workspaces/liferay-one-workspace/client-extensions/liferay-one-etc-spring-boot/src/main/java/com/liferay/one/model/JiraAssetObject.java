@@ -13,24 +13,21 @@ import org.json.JSONObject;
 /**
  * @author Amos Fong
  */
-public abstract class JiraAssetObject {
+public class JiraAssetObject {
 
 	protected String getAttributeKey(
 		JSONObject jsonObject, String attributeName) {
 
-		JSONArray attributesJSONArray = jsonObject.getJSONArray("attributes");
-
 		return _getAttributeKey(
-			_getAttributeValueJSONObject(attributesJSONArray, attributeName));
+			_getAttributeValueJSONObject(
+				jsonObject.getJSONArray("attributes"), attributeName));
 	}
 
 	protected String getAttributeValue(
 		JSONObject jsonObject, String attributeName) {
 
-		JSONArray attributesJSONArray = jsonObject.getJSONArray("attributes");
-
 		JSONObject attributeValueJSONObject = _getAttributeValueJSONObject(
-			attributesJSONArray, attributeName);
+			jsonObject.getJSONArray("attributes"), attributeName);
 
 		return attributeValueJSONObject.optString(
 			"displayValue", _getAttributeKey(attributeValueJSONObject));
@@ -52,10 +49,11 @@ public abstract class JiraAssetObject {
 	}
 
 	private JSONObject _getAttributeValueJSONObject(
-		JSONArray jsonArray, String attributeName) {
+		JSONArray attributesJSONArray, String attributeName) {
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject attributeJSONObject = jsonArray.getJSONObject(i);
+		for (int i = 0; i < attributesJSONArray.length(); i++) {
+			JSONObject attributeJSONObject = attributesJSONArray.getJSONObject(
+				i);
 
 			String name = attributeJSONObject.optString(
 				"objectTypeAttributeName");

@@ -7,12 +7,14 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
+import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
@@ -25,7 +27,9 @@ const ANALYTICS_CONFIGURATION_URL = `/o/headless-admin-configuration/v1.0/instan
 const test = mergeTests(
 	apiHelpersTest,
 	assetPublisherPagesTest,
+	collectionsPagesTest,
 	featureFlagsTest({
+		'LPD-17564': {enabled: true},
 		'LPD-65399': {enabled: true},
 		'LPD-81914': {enabled: true},
 		'LPS-155284': {enabled: true},
@@ -212,6 +216,145 @@ test(
 				`${name}: no analytics attributes in edit mode`
 			).toHaveCount(0);
 		}
+	}
+);
+
+test(
+	'Emits object entry analytics attributes for CMS basic web content',
+	{
+		tag: '@LPD-93309',
+	},
+	async ({
+		apiHelpers,
+		assetPublisherPage,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		test.slow();
+
+		// Create a space and connect it to the site
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			externalReferenceCode: getRandomString(),
+			name: `Space ${getRandomString()}`,
+			settings: {},
+			type: 'Space',
+		});
+
+		await apiHelpers.headlessAssetLibrary.connectSite(
+			space.externalReferenceCode,
+			site.externalReferenceCode
+		);
+
+		// Add a CMS basic web content entry to the space
+
+		const title = getRandomString();
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{title},
+			'cms/basic-web-contents',
+			space.externalReferenceCode
+		);
+
+		// Create a dynamic collection on the site scoped to the space
+
+		const collectionName = getRandomString();
+
+		await collectionsPage.goto(site.friendlyUrlPath);
+
+		await collectionsPage.addNewDynamicCollection(collectionName);
+
+		await page
+			.getByLabel('Item Type')
+			.selectOption({label: 'Basic Web Content (CMS)'});
+
+		await page.getByRole('button', {name: 'Scope'}).click();
+
+		await page.getByRole('button', {name: 'Select Site'}).click();
+
+		await page
+			.getByRole('menuitem', {name: 'Other Site, Asset Library, or'})
+			.click();
+
+		const scopeIframe = page
+			.locator('iframe[title="Scope"]')
+			.contentFrame();
+
+		await scopeIframe.getByRole('link', {name: 'Spaces'}).click();
+
+		await scopeIframe
+			.getByRole('link', {exact: true, name: space.name})
+			.click();
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, undefined, {autoClose: false, first: true});
+
+		// Add an Asset Publisher widget to a site page
+
+		const widgetId = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: widgetId,
+					widgetName:
+						'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Configure the widget to display the dynamic collection
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.goToWidgetConfiguration(widgetId);
+
+		await assetPublisherPage.openAssetSelectionTab();
+
+		await assetPublisherPage.configurationIframe
+			.getByRole('button', {exact: true, name: 'Select Collection'})
+			.click();
+
+		await assetPublisherPage.configurationIframe
+			.frameLocator('iframe[title="Select Collection"]')
+			.getByRole('button', {name: `Select ${collectionName}`})
+			.click();
+
+		await assetPublisherPage.saveConfiguration();
+
+		await assetPublisherPage.closeConfiguration();
+
+		// Publish the page and assert the rendered analytics attributes
+
+		await page.getByLabel('Publish', {exact: true}).click();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		const titleLocator = page
+			.locator(`[data-analytics-asset-title="${title}"]`)
+			.first();
+
+		await expect(titleLocator).toBeVisible();
+
+		await expect(titleLocator).toHaveAttribute(
+			'data-analytics-asset-type',
+			'object-entry'
+		);
+
+		await expect(titleLocator).toHaveAttribute(
+			'data-analytics-external-reference-code',
+			/.+/
+		);
+
+		await expect(titleLocator).toHaveAttribute(
+			'data-analytics-object-definition-name',
+			'cms-basic-web-content'
+		);
 	}
 );
 

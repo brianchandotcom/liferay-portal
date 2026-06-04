@@ -26,19 +26,6 @@ describe('MaxLengthProperties', () => {
 		jest.clearAllMocks();
 	});
 
-	it('does not accept a value greater than the maximum allowed for a Text field', () => {
-		renderComponent();
-
-		const input = screen.getByDisplayValue('280');
-
-		fireEvent.change(input, {target: {value: '281'}});
-
-		expect(defaultProps.onSettingsChange).toHaveBeenCalledWith({
-			name: 'maxLength',
-			value: 280,
-		});
-	});
-
 	it('accepts a value within the maximum allowed for a Text field', () => {
 		renderComponent();
 
@@ -49,6 +36,19 @@ describe('MaxLengthProperties', () => {
 		expect(defaultProps.onSettingsChange).toHaveBeenCalledWith({
 			name: 'maxLength',
 			value: 28,
+		});
+	});
+
+	it('does not accept a value greater than the maximum allowed for a Text field', () => {
+		renderComponent();
+
+		const input = screen.getByDisplayValue('280');
+
+		fireEvent.change(input, {target: {value: '281'}});
+
+		expect(defaultProps.onSettingsChange).toHaveBeenCalledWith({
+			name: 'maxLength',
+			value: 280,
 		});
 	});
 });

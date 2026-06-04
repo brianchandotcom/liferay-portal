@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -317,32 +316,6 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return null;
 	}
 
-	public synchronized Long getTestrayRunID(TestrayRun testrayRun) {
-		String runIDString = testrayRun.getRunIDString();
-
-		Long testrayRunID = _testrayRunIDs.get(runIDString);
-
-		if (testrayRunID != null) {
-			return testrayRunID;
-		}
-
-		JSONObject testrayRunJSONObject = _getTestrayRunJSONObject(testrayRun);
-
-		if ((testrayRunJSONObject == null) || !testrayRunJSONObject.has("id")) {
-			return null;
-		}
-
-		testrayRunID = testrayRunJSONObject.optLong("id");
-
-		if (testrayRunID <= 0) {
-			return null;
-		}
-
-		_testrayRunIDs.put(runIDString, testrayRunID);
-
-		return testrayRunID;
-	}
-
 	public synchronized List<TestrayRun> getTestrayRuns() {
 		if (_testrayRuns != null) {
 			return _testrayRuns;
@@ -363,20 +336,9 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
 
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
-				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
-
-				TestrayRun testrayRun = TestrayFactory.newTestrayRun(
-					this, itemJSONObject);
-
-				_testrayRuns.add(testrayRun);
-
-				long testrayRunID = testrayRun.getID();
-
-				if (testrayRunID <= 0) {
-					continue;
-				}
-
-				_testrayRunIDs.put(testrayRun.getRunIDString(), testrayRunID);
+				_testrayRuns.add(
+					TestrayFactory.newTestrayRun(
+						this, itemsJSONArray.getJSONObject(i)));
 			}
 		}
 		catch (IOException ioException) {
@@ -611,38 +573,6 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return null;
 	}
 
-	private JSONObject _getTestrayRunJSONObject(TestrayRun testrayRun) {
-		String runIDString = testrayRun.getRunIDString();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(runIDString)) {
-			return null;
-		}
-
-		TestrayServer testrayServer = getTestrayServer();
-
-		String filterString = JenkinsResultsParserUtil.combine(
-			"name eq '", runIDString, "' and r_buildToRuns_c_buildId eq '",
-			String.valueOf(getID()), "'");
-
-		try {
-			Set<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
-				"runs", TestrayRun.FIELD_NAMES, filterString, null, 1, 1);
-
-			for (JSONObject entityJSONObject : entityJSONObjects) {
-				if (entityJSONObject == null) {
-					continue;
-				}
-
-				return entityJSONObject;
-			}
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return null;
-	}
-
 	private static final MultiPattern _descriptionMultiPattern =
 		new MultiPattern(
 			JenkinsResultsParserUtil.combine(
@@ -672,7 +602,6 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	private TestrayProductVersion _testrayProductVersion;
 	private TestrayProject _testrayProject;
 	private TestrayRoutine _testrayRoutine;
-	private final Map<String, Long> _testrayRunIDs = new HashMap<>();
 	private List<TestrayRun> _testrayRuns;
 	private final TestrayServer _testrayServer;
 	private TopLevelBuildReport _topLevelBuildReport;

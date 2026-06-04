@@ -126,19 +126,19 @@ public abstract class BaseStandaloneBuildTestrayCaseResult
 	public void recordTestrayCaseResult(Job job) {
 		TestrayBuild testrayBuild = getTestrayBuild();
 
-		TestrayRun testrayRun = null;
+		String testSuiteName = null;
 
 		if (job instanceof TestSuiteJob) {
 			TestSuiteJob testSuiteJob = (TestSuiteJob)job;
 
-			testrayRun = TestrayFactory.newTestrayRun(
-				testrayBuild, getBatchName(), testSuiteJob.getTestSuiteName(),
-				job.getJobPropertiesFiles());
+			testSuiteName = testSuiteJob.getTestSuiteName();
 		}
-		else {
-			testrayRun = TestrayFactory.newTestrayRun(
-				testrayBuild, getBatchName(), job.getJobPropertiesFiles());
-		}
+
+		TestrayRun testrayRun = TestrayFactory.newTestrayRun(
+			testrayBuild, getBatchName(), testSuiteName,
+			job.getJobProperties());
+
+		setTestrayRun(testrayRun);
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
@@ -146,15 +146,7 @@ public abstract class BaseStandaloneBuildTestrayCaseResult
 
 		Element rootElement = document.addElement("testsuite");
 
-		Element environmentsElement = rootElement.addElement("environments");
-
-		for (TestrayRun.Factor factor : testrayRun.getFactors()) {
-			Element environmentElement = environmentsElement.addElement(
-				"environment");
-
-			environmentElement.addAttribute("type", factor.getName());
-			environmentElement.addAttribute("option", factor.getValue());
-		}
+		rootElement.add(testrayRun.getEnvironmentsElement());
 
 		Map<String, String> propertiesMap = new HashMap<>();
 

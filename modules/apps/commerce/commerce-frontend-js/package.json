@@ -55,6 +55,7 @@
 			"<rootDir>/test/tests_utilities/setup.spec.ts"
 		],
 		"testPathIgnorePatterns": [
+			"<rootDir>/test/components/fixtures/",
 			"<rootDir>/test/tests_utilities/"
 		]
 	},

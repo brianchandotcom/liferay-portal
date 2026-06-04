@@ -211,20 +211,20 @@ public class DesignLibraryResourcesDisplayContext {
 			JSONUtil.put(
 				"href",
 				_getExportImportPortletURL(
-					group, ExportImportPortletKeys.IMPORT)
-			).put(
-				"label", LanguageUtil.get(_httpServletRequest, "import")
-			).put(
-				"symbolLeft", "import"
-			),
-			JSONUtil.put(
-				"href",
-				_getExportImportPortletURL(
 					group, ExportImportPortletKeys.EXPORT)
 			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "export")
 			).put(
 				"symbolLeft", "export"
+			),
+			JSONUtil.put(
+				"href",
+				_getExportImportPortletURL(
+					group, ExportImportPortletKeys.IMPORT)
+			).put(
+				"label", LanguageUtil.get(_httpServletRequest, "import")
+			).put(
+				"symbolLeft", "import"
 			),
 			JSONUtil.put(
 				"descriptiveName", group.getDescriptiveName()

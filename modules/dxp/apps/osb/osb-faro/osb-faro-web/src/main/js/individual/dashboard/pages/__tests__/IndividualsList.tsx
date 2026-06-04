@@ -1,21 +1,11 @@
 import * as API from 'shared/api';
-import * as useStatefulPaginationModule from 'shared/hooks/useStatefulPagination';
 
 import IndividualsList from '../IndividualsList';
 import React from 'react';
 import {createMemoryHistory} from 'history';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
-import {Map, Set} from 'immutable';
-import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {render} from '@testing-library/react';
 import {Router} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
-
-const defaultRangeSelectors = {
-	rangeEnd: null,
-	rangeKey: RangeKeyTimeRanges.Last30Days,
-	rangeStart: null
-};
 
 jest.unmock('react-dom');
 
@@ -43,7 +33,6 @@ describe('Individuals List', () => {
 					{
 						accountName: 'Liferay Inc.',
 						activitiesCount: 8,
-						activityStatus: 'ACTIVE',
 						dateCreated: 1769697362927,
 						firstActivityDate: 1769697128235,
 						id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c1',
@@ -58,7 +47,6 @@ describe('Individuals List', () => {
 					{
 						accountName: 'Liferay',
 						activitiesCount: 8,
-						activityStatus: 'ACTIVE',
 						dateCreated: 1769697362927,
 						firstActivityDate: 1769697128235,
 						id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c3',
@@ -72,7 +60,6 @@ describe('Individuals List', () => {
 					},
 					{
 						activitiesCount: 3,
-						activityStatus: 'INACTIVE',
 						dateCreated: 1769697362927,
 						firstActivityDate: 1769697128235,
 						id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c2',
@@ -90,7 +77,7 @@ describe('Individuals List', () => {
 
 		const {getByText} = render(
 			<Router history={history}>
-				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+				<IndividualsList />
 			</Router>
 		);
 
@@ -110,7 +97,7 @@ describe('Individuals List', () => {
 
 		const {getByText} = render(
 			<Router history={history}>
-				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+				<IndividualsList />
 			</Router>
 		);
 
@@ -129,7 +116,7 @@ describe('Individuals List', () => {
 		).toBeInTheDocument();
 	});
 
-	it('passes range params to the search API', async () => {
+	it('passes Last 30 Days as the default range key to the search API', async () => {
 		// @ts-ignore
 		API.individuals.search.mockReturnValue(
 			Promise.resolve({items: [], total: 0})
@@ -139,7 +126,7 @@ describe('Individuals List', () => {
 
 		render(
 			<Router history={history}>
-				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+				<IndividualsList />
 			</Router>
 		);
 
@@ -153,136 +140,5 @@ describe('Individuals List', () => {
 				rangeStart: null
 			})
 		);
-	});
-
-	it('passes activityStatus ACTIVE to the search API by default', async () => {
-		(API.individuals.search as jest.Mock).mockReturnValue(
-			Promise.resolve({items: [], total: 0})
-		);
-
-		const history = createMemoryHistory();
-
-		render(
-			<Router history={history}>
-				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
-		);
-
-		await waitForLoadingToBeRemoved(document.body);
-
-		expect(API.individuals.search as jest.Mock).toHaveBeenCalledWith(
-			expect.objectContaining({
-				activityStatus: 'ACTIVE'
-			})
-		);
-	});
-
-	it('renders the activity status column header', async () => {
-		(API.individuals.search as jest.Mock).mockReturnValue(
-			Promise.resolve({items: [], total: 0})
-		);
-
-		const history = createMemoryHistory();
-
-		const {getByText} = render(
-			<Router history={history}>
-				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
-		);
-
-		await waitForLoadingToBeRemoved(document.body);
-
-		expect(getByText('Activity Status')).toBeInTheDocument();
-	});
-
-	it('renders active and inactive activity status labels', async () => {
-		(API.individuals.search as jest.Mock).mockReturnValue(
-			Promise.resolve({
-				items: [
-					{
-						activitiesCount: 1,
-						activityStatus: 'ACTIVE',
-						dateCreated: 1769697362927,
-						firstActivityDate: 1769697128235,
-						id: 'id-active',
-						lastActivityDate: 1769697160365,
-						name: 'Active User',
-						profileType: 'KNOWN',
-						properties: {}
-					},
-					{
-						activitiesCount: 0,
-						activityStatus: 'INACTIVE',
-						dateCreated: 1769697362927,
-						firstActivityDate: 1769697128235,
-						id: 'id-inactive',
-						lastActivityDate: 1769697160365,
-						name: 'Inactive User',
-						profileType: 'KNOWN',
-						properties: {}
-					}
-				],
-				total: 2
-			})
-		);
-
-		const history = createMemoryHistory();
-
-		render(
-			<Router history={history}>
-				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
-		);
-
-		await waitForLoadingToBeRemoved(document.body);
-
-		expect(
-			document.querySelector('.label-success .label-item')
-		).toHaveTextContent('Active');
-
-		expect(
-			document.querySelector('.label-secondary .label-item')
-		).toHaveTextContent('Inactive');
-	});
-
-	it('passes undefined activityStatus when both active and inactive are selected', async () => {
-		(API.individuals.search as jest.Mock).mockClear();
-		(API.individuals.search as jest.Mock).mockReturnValue(
-			Promise.resolve({items: [], total: 0})
-		);
-
-		const spy = jest
-			.spyOn(useStatefulPaginationModule, 'useStatefulPagination')
-			.mockReturnValue({
-				delta: 20,
-				filterBy: Map({
-					activityStatus: Set(['ACTIVE', 'INACTIVE'])
-				}) as any,
-				onDeltaChange: jest.fn(),
-				onFilterByChange: jest.fn(),
-				onOrderIOMapChange: jest.fn(),
-				onPageChange: jest.fn(),
-				onQueryChange: jest.fn(),
-				orderIOMap: createOrderIOMap(NAME),
-				page: 1,
-				query: '',
-				resetPage: jest.fn()
-			});
-
-		const history = createMemoryHistory();
-
-		render(
-			<Router history={history}>
-				<IndividualsList rangeSelectors={defaultRangeSelectors} />
-			</Router>
-		);
-
-		await waitForLoadingToBeRemoved(document.body);
-
-		const callArgs = (API.individuals.search as jest.Mock).mock.calls[0][0];
-
-		expect(callArgs.activityStatus).toBeUndefined();
-
-		spy.mockRestore();
 	});
 });

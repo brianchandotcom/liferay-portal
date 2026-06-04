@@ -9,33 +9,27 @@ import ClayPanel from '@clayui/panel';
 import React from 'react';
 
 import {RAI_FILTERS, RAI_LEVEL_OPTIONS} from './constants';
-import {ModelArmorTemplate, RAILevel} from './types/ModelArmorTemplate';
+import {Guardrail, RAILevel} from './types/Guardrail';
 
 interface IProps {
 	readOnly: boolean;
-	setField: <K extends keyof ModelArmorTemplate>(
+	setField: <K extends keyof Guardrail>(
 		field: K,
-		value: ModelArmorTemplate[K]
+		value: Guardrail[K]
 	) => void;
-	values: ModelArmorTemplate;
+	values: Guardrail;
 }
 
 const ResponsibleAIPanel: React.FC<IProps> = ({readOnly, setField, values}) => {
 	return (
-		<ClayPanel
-			className="model-armor-template-form-rai"
-			collapsable={false}
-		>
+		<ClayPanel className="guardrail-form-rai" collapsable={false}>
 			<ClayPanel.Body>
-				<div className="model-armor-template-form-header">
+				<div className="guardrail-form-header">
 					<h2>{Liferay.Language.get('responsible-ai')}</h2>
 				</div>
 
 				{RAI_FILTERS.map(({field, helpText, label}) => (
-					<div
-						className="model-armor-template-form-rai-row"
-						key={field}
-					>
+					<div className="guardrail-form-rai-row" key={field}>
 						<label htmlFor={field}>
 							{label}
 
@@ -50,7 +44,7 @@ const ResponsibleAIPanel: React.FC<IProps> = ({readOnly, setField, values}) => {
 						</label>
 
 						<Picker
-							className="model-armor-template-form-picker"
+							className="guardrail-form-picker"
 							disabled={readOnly}
 							id={field}
 							items={RAI_LEVEL_OPTIONS}
@@ -61,12 +55,12 @@ const ResponsibleAIPanel: React.FC<IProps> = ({readOnly, setField, values}) => {
 						>
 							{({description, label, value}) => (
 								<Option key={value} textValue={label}>
-									<div className="model-armor-template-form-option">
-										<div className="model-armor-template-form-option-label">
+									<div className="guardrail-form-option">
+										<div className="guardrail-form-option-label">
 											{label}
 										</div>
 
-										<div className="model-armor-template-form-option-description">
+										<div className="guardrail-form-option-description">
 											{description}
 										</div>
 									</div>

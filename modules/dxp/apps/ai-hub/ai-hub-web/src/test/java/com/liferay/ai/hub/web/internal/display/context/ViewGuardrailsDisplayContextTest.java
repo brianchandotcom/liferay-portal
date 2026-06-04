@@ -30,7 +30,7 @@ import org.mockito.Mockito;
 /**
  * @author João Victor Alves
  */
-public class ViewModelArmorTemplatesDisplayContextTest {
+public class ViewGuardrailsDisplayContextTest {
 
 	@ClassRule
 	@Rule
@@ -48,14 +48,14 @@ public class ViewModelArmorTemplatesDisplayContextTest {
 			Mockito.mock(Company.class), Mockito.mock(Group.class),
 			httpServletRequest);
 
-		_viewModelArmorTemplatesDisplayContext =
-			new ViewModelArmorTemplatesDisplayContext(httpServletRequest);
+		_viewGuardrailsDisplayContext = new ViewGuardrailsDisplayContext(
+			httpServletRequest);
 	}
 
 	@Test
 	public void testGetCreationMenu() throws Exception {
 		CreationMenu creationMenu =
-			_viewModelArmorTemplatesDisplayContext.getCreationMenu();
+			_viewGuardrailsDisplayContext.getCreationMenu();
 
 		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
 			"primaryItems");
@@ -73,7 +73,7 @@ public class ViewModelArmorTemplatesDisplayContextTest {
 	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			_viewModelArmorTemplatesDisplayContext.getFDSActionDropdownItems();
+			_viewGuardrailsDisplayContext.getFDSActionDropdownItems();
 
 		Assert.assertEquals(
 			fdsActionDropdownItems.toString(), 2,
@@ -86,7 +86,7 @@ public class ViewModelArmorTemplatesDisplayContextTest {
 			"view", "view", "view", "get", null);
 		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1),
-			"/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code" +
+			"/o/ai-hub/v1.0/guardrails/by-external-reference-code" +
 				"/{externalReferenceCode}",
 			"trash", "delete", "delete", "delete", "async");
 	}
@@ -104,7 +104,6 @@ public class ViewModelArmorTemplatesDisplayContextTest {
 		);
 	}
 
-	private ViewModelArmorTemplatesDisplayContext
-		_viewModelArmorTemplatesDisplayContext;
+	private ViewGuardrailsDisplayContext _viewGuardrailsDisplayContext;
 
 }

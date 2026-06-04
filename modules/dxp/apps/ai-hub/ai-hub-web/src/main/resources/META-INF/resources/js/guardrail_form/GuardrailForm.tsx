@@ -9,14 +9,14 @@ import ClayLayout from '@clayui/layout';
 import Link from '@clayui/link';
 import React from 'react';
 
-import './ModelArmorTemplateForm.scss';
+import './GuardrailForm.scss';
 import Toolbar from '../components/ToolBar';
 import DetailsPanel from './DetailsPanel';
 import DetectionsPanel from './DetectionsPanel';
 import ResponsibleAIPanel from './ResponsibleAIPanel';
-import {useModelArmorTemplateForm} from './hooks/useModelArmorTemplateForm';
+import {useGuardrailForm} from './hooks/useGuardrailForm';
 
-const FORM_ID = 'modelArmorTemplateForm';
+const FORM_ID = 'guardrailForm';
 
 interface IProps {
 	accountEntryExternalReferenceCode: string;
@@ -25,7 +25,7 @@ interface IProps {
 	readOnly: boolean;
 }
 
-export default function ModelArmorTemplateForm({
+export default function GuardrailForm({
 	backURL,
 	externalReferenceCode,
 	readOnly,
@@ -39,7 +39,7 @@ export default function ModelArmorTemplateForm({
 		setFieldTouched,
 		touched,
 		values,
-	} = useModelArmorTemplateForm({
+	} = useGuardrailForm({
 		externalReferenceCode,
 	});
 
@@ -79,7 +79,7 @@ export default function ModelArmorTemplateForm({
 				</Toolbar.Item>
 			</Toolbar>
 
-			<ClayLayout.ContainerFluid className="model-armor-template-form">
+			<ClayLayout.ContainerFluid className="guardrail-form">
 				<ClayForm id={FORM_ID} onSubmit={handleSubmit}>
 					<ClayLayout.Row>
 						<ClayLayout.Col md={12}>

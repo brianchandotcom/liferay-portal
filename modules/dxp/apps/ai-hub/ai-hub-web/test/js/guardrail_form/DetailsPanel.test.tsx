@@ -7,9 +7,9 @@ import '@testing-library/jest-dom';
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
-import DetailsPanel from '../../../src/main/resources/META-INF/resources/js/model_armor_template_form/DetailsPanel';
+import DetailsPanel from '../../../src/main/resources/META-INF/resources/js/guardrail_form/DetailsPanel';
 
-import type {ModelArmorTemplate} from '../../../src/main/resources/META-INF/resources/js/model_armor_template_form/types/ModelArmorTemplate';
+import type {Guardrail} from '../../../src/main/resources/META-INF/resources/js/guardrail_form/types/Guardrail';
 
 jest.mock('@clayui/core', () => {
 	const React = require('react');
@@ -95,7 +95,7 @@ jest.mock('frontend-js-components-web', () => {
 	},
 };
 
-const baseValues: ModelArmorTemplate = {
+const baseValues: Guardrail = {
 	active: true,
 	description: '',
 	externalReferenceCode: '',
@@ -116,7 +116,7 @@ function renderPanel(
 	overrides: Partial<{
 		errors: any;
 		touched: any;
-		values: ModelArmorTemplate;
+		values: Guardrail;
 	}> = {}
 ) {
 	const handleBlur = jest.fn();

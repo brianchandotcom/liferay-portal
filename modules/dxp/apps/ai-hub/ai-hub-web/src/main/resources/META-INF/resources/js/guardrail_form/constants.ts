@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ModelArmorTemplate} from './types/ModelArmorTemplate';
+import {Guardrail} from './types/Guardrail';
 
-export const DEFAULT_MODEL_ARMOR_TEMPLATE: ModelArmorTemplate = {
+export const DEFAULT_GUARDRAIL: Guardrail = {
 	active: true,
 	description: '',
 	externalReferenceCode: '',
@@ -23,14 +23,14 @@ export const DEFAULT_MODEL_ARMOR_TEMPLATE: ModelArmorTemplate = {
 };
 
 export type DetectionField = Extract<
-	keyof ModelArmorTemplate,
+	keyof Guardrail,
 	| 'maliciousUriFilterEnabled'
 	| 'piAndJailbreakFilterEnabled'
 	| 'sdpFilterEnabled'
 >;
 
 export type RAIFilterField = Extract<
-	keyof ModelArmorTemplate,
+	keyof Guardrail,
 	| 'raiDangerousLevel'
 	| 'raiHarassmentLevel'
 	| 'raiHateSpeechLevel'

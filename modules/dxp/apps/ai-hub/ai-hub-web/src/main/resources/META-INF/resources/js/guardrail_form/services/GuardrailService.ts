@@ -5,15 +5,13 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
+import {Guardrail} from '../types/Guardrail';
 
 const normalizeKey = <T extends string>(value: {key: T}): T => value.key;
 
-async function getModelArmorTemplate(
-	externalReferenceCode: string
-): Promise<ModelArmorTemplate> {
+async function getGuardrail(externalReferenceCode: string): Promise<Guardrail> {
 	const response = await fetch(
-		`/o/ai-hub/model-armor-templates/by-external-reference-code/${externalReferenceCode}`,
+		`/o/ai-hub/guardrails/by-external-reference-code/${externalReferenceCode}`,
 		{
 			method: 'GET',
 		}
@@ -38,11 +36,9 @@ async function getModelArmorTemplate(
 	};
 }
 
-async function postModelArmorTemplate(
-	modelArmorTemplate: ModelArmorTemplate
-): Promise<ModelArmorTemplate> {
-	const response = await fetch('/o/ai-hub/v1.0/model-armor-templates', {
-		body: JSON.stringify(modelArmorTemplate),
+async function postGuardrail(guardrail: Guardrail): Promise<Guardrail> {
+	const response = await fetch('/o/ai-hub/v1.0/guardrails', {
+		body: JSON.stringify(guardrail),
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -58,13 +54,11 @@ async function postModelArmorTemplate(
 	return response.json();
 }
 
-async function putModelArmorTemplate(
-	modelArmorTemplate: ModelArmorTemplate
-): Promise<ModelArmorTemplate> {
+async function putGuardrail(guardrail: Guardrail): Promise<Guardrail> {
 	const response = await fetch(
-		`/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/${modelArmorTemplate.externalReferenceCode}`,
+		`/o/ai-hub/v1.0/guardrails/by-external-reference-code/${guardrail.externalReferenceCode}`,
 		{
-			body: JSON.stringify(modelArmorTemplate),
+			body: JSON.stringify(guardrail),
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -81,4 +75,4 @@ async function putModelArmorTemplate(
 	return response.json();
 }
 
-export {getModelArmorTemplate, postModelArmorTemplate, putModelArmorTemplate};
+export {getGuardrail, postGuardrail, putGuardrail};

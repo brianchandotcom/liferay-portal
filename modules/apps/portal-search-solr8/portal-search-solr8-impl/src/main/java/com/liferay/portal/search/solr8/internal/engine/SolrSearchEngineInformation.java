@@ -122,6 +122,11 @@ public class SolrSearchEngineInformation implements SearchEngineInformation {
 		return "Solr";
 	}
 
+	@Override
+	public boolean isInferenceAPISupported() {
+		return false;
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

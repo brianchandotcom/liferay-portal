@@ -31,10 +31,6 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 	}
 }));
 
-jest.mock('shared/components/dropdown-range-key/DropdownRangeKey', () => ({
-	DropdownRangeKey: () => null
-}));
-
 jest.mock('shared/hooks/useRequest', () => ({
 	useRequest: jest.fn()
 }));
@@ -156,16 +152,14 @@ describe('List', () => {
 			expect(screen.getByTestId('fds-component')).toHaveAttribute('id');
 		});
 
-		it('should pass activityStatusFilter "ACTIVE" to AccountsDataSet by default', () => {
+		it('should preload the rangeKey filter with Last 30 Days by default', () => {
 			renderList();
 
-			const activityStatusFilter = lastFilters?.find(
-				f => f.id === 'activityStatus'
-			);
+			const rangeKeyFilter = lastFilters?.find(f => f.id === 'rangeKey');
 
-			expect(activityStatusFilter?.preloadedData).toEqual({
+			expect(rangeKeyFilter?.preloadedData).toEqual({
 				exclude: false,
-				selectedItems: [{label: 'Active', value: 'ACTIVE'}]
+				selectedItems: [{label: 'Last 30 days', value: '30'}]
 			});
 		});
 

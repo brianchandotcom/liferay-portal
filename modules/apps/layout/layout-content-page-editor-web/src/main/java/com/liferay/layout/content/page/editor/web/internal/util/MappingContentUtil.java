@@ -101,17 +101,22 @@ public class MappingContentUtil {
 	}
 
 	private static JSONObject _getAttributesJSONObject(
-		InfoField infoField, Locale locale) {
+		InfoField<?> infoField, Locale locale) {
 
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 		if (infoFieldType instanceof PhoneNumberInfoFieldType) {
+			InfoField<PhoneNumberInfoFieldType> phoneNumberInfoField =
+				(InfoField<PhoneNumberInfoFieldType>)infoField;
+
 			return JSONUtil.put(
 				"country",
-				infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY)
+				phoneNumberInfoField.getAttribute(
+					PhoneNumberInfoFieldType.COUNTRY)
 			).put(
 				"countrySource",
-				infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY_SOURCE)
+				phoneNumberInfoField.getAttribute(
+					PhoneNumberInfoFieldType.COUNTRY_SOURCE)
 			);
 		}
 
@@ -226,21 +231,25 @@ public class MappingContentUtil {
 	}
 
 	private static JSONArray _getOptionsJSONArray(
-		InfoField infoField, Locale locale) {
+		InfoField<?> infoField, Locale locale) {
 
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 		Collection<OptionInfoFieldType> optionInfoFieldTypes = null;
 
 		if (infoFieldType instanceof MultiselectInfoFieldType) {
-			optionInfoFieldTypes =
-				(Collection<OptionInfoFieldType>)infoField.getAttribute(
-					MultiselectInfoFieldType.OPTIONS);
+			InfoField<MultiselectInfoFieldType> multiselectInfoField =
+				(InfoField<MultiselectInfoFieldType>)infoField;
+
+			optionInfoFieldTypes = multiselectInfoField.getAttribute(
+				MultiselectInfoFieldType.OPTIONS);
 		}
 		else if (infoFieldType instanceof SelectInfoFieldType) {
-			optionInfoFieldTypes =
-				(Collection<OptionInfoFieldType>)infoField.getAttribute(
-					SelectInfoFieldType.OPTIONS);
+			InfoField<SelectInfoFieldType> selectInfoField =
+				(InfoField<SelectInfoFieldType>)infoField;
+
+			optionInfoFieldTypes = selectInfoField.getAttribute(
+				SelectInfoFieldType.OPTIONS);
 		}
 
 		if (optionInfoFieldTypes == null) {

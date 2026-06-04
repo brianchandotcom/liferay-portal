@@ -3,9 +3,7 @@ components:
         externalReferenceCodePathParam:
             in: path
             description:
-                External reference code that addresses the target payment on the `by-externalReferenceCode` paths. The
-                code is the integration-supplied idempotency key, unique within the company scope; POST against this
-                path is upsert (create when absent, replace when present).
+                External reference code that addresses the target payment on the `by-externalReferenceCode` paths. The code is the integration-supplied idempotency key, unique within the company scope; POST against this path is upsert (create when absent, replace when present).
             explode: false
             name: externalReferenceCode
             required: true
@@ -19,9 +17,7 @@ components:
         filterQueryParam:
             in: query
             description:
-                OData v4 filter expression that narrows the payment result set. Filterable fields sourced from the
-                payment entity model -- paymentStatus, type, reasonKey, and relatedItemId (the FK to the parent order or
-                subscription, indexed as classPK). Example -- filter=paymentStatus eq 0 and type eq 1.
+                OData v4 filter expression that narrows the payment result set. Filterable fields sourced from the payment entity model -- paymentStatus, type, reasonKey, and relatedItemId (the FK to the parent order or subscription, indexed as classPK). Example -- filter=paymentStatus eq 0 and type eq 1.
             explode: true
             name: filter
             required: false
@@ -31,8 +27,7 @@ components:
         idPathParam:
             in: path
             description:
-                Internal numeric identifier of the target payment. Counterpart to the `by-externalReferenceCode` path
-                variant; identifiers are server-assigned and stable across the payment's lifetime.
+                Internal numeric identifier of the target payment. Counterpart to the `by-externalReferenceCode` path variant; identifiers are server-assigned and stable across the payment's lifetime.
             explode: false
             name: id
             required: true
@@ -47,8 +42,7 @@ components:
         pageQueryParam:
             in: query
             description:
-                One-based page index. Combined with pageSize to paginate the payment result set; defaults to 1 when
-                omitted.
+                One-based page index. Combined with pageSize to paginate the payment result set; defaults to 1 when omitted.
             explode: true
             name: page
             required: false
@@ -58,8 +52,7 @@ components:
         pageSizeQueryParam:
             in: query
             description:
-                Number of payments per page. Defaults to the portal's configured page size when omitted; capped by the
-                portal configuration to prevent unbounded reads.
+                Number of payments per page. Defaults to the portal's configured page size when omitted; capped by the portal configuration to prevent unbounded reads.
             explode: true
             name: pageSize
             required: false
@@ -69,8 +62,7 @@ components:
         searchQueryParam:
             in: query
             description:
-                Full-text search expression matched against the payment's indexed fields. Returns the payments whose
-                searchable content matches the expression.
+                Full-text search expression matched against the payment's indexed fields. Returns the payments whose searchable content matches the expression.
             explode: true
             name: search
             required: false
@@ -80,9 +72,7 @@ components:
         sortQueryParam:
             in: query
             description:
-                Sort expression of the form `field:asc` or `field:desc`, comma-separated for multi-field sorting.
-                Sortable fields sourced from the payment entity model -- createDate, id, paymentStatus, reasonKey,
-                relatedItemId, and type.
+                Sort expression of the form `field:asc` or `field:desc`, comma-separated for multi-field sorting. Sortable fields sourced from the payment entity model -- createDate, id, paymentStatus, reasonKey, relatedItemId, and type.
             explode: true
             name: sort
             required: false
@@ -92,20 +82,17 @@ components:
     schemas:
         Error:
             description:
-                Error envelope returned by the API when a request fails. Carries the HTTP status, an internal error
-                code, a developer-facing error description, and a human-readable message that names the offending input.
+                Error envelope returned by the API when a request fails. Carries the HTTP status, an internal error code, a developer-facing error description, and a human-readable message that names the offending input.
             properties:
                 errorCode:
                     description:
-                        Internal error code that identifies the specific validation or lookup failure. Stable across
-                        releases for the same error condition.
+                        Internal error code that identifies the specific validation or lookup failure. Stable across releases for the same error condition.
                     example: 996
                     readOnly: true
                     type: integer
                 errorDescription:
                     description:
-                        Developer-facing description of the error, typically naming the invalid field or the missing
-                        cross-reference.
+                        Developer-facing description of the error, typically naming the invalid field or the missing cross-reference.
                     example: Unable to find currency. Currency code should be expressed with
                         3-letter ISO 4217 format.
                     readOnly: true
@@ -130,10 +117,7 @@ components:
             type: object
         Payment:
             description:
-                Payment or refund record produced by the commerce checkout and back-office flows. Captures the amount,
-                currency, payment integration, workflow status, related order or subscription, and the gateway
-                transaction code. The same schema is used for both kinds of record and is distinguished by the integer
-                `type` discriminator.
+                Payment or refund record produced by the commerce checkout and back-office flows. Captures the amount, currency, payment integration, workflow status, related order or subscription, and the gateway transaction code. The same schema is used for both kinds of record and is distinguished by the integer `type` discriminator.
             properties:
                 actions:
                     additionalProperties:
@@ -141,35 +125,30 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 amount:
                     description:
-                        Monetary amount of the payment in the payment's currency, expressed as a decimal number. Must be
-                        greater than zero on create. Tax handling matches the parent order or subscription.
+                        Monetary amount of the payment in the payment's currency, expressed as a decimal number. Must be greater than zero on create. Tax handling matches the parent order or subscription.
                     example: 10.1
                     format: bigdecimal
                     type: number
                 amountFormatted:
                     description:
-                        Localized, currency-formatted rendering of `amount`. Computed by the price formatter using the
-                        payment currency and the request locale. Read-only.
+                        Localized, currency-formatted rendering of `amount`. Computed by the price formatter using the payment currency and the request locale. Read-only.
                     example: $10.10
                     readOnly: true
                     type: string
                 author:
                     description:
-                        Full name of the user who created the payment record. Computed from the authenticated user at
-                        create time and stored alongside the record. Read-only.
+                        Full name of the user who created the payment record. Computed from the authenticated user at create time and stored alongside the record. Read-only.
                     example: Liferay Administrator
                     readOnly: true
                     type: string
                 callbackURL:
                     description:
-                        Server-to-server callback URL the payment gateway invokes to notify the portal of the payment
-                        outcome.
+                        Server-to-server callback URL the payment gateway invokes to notify the portal of the payment outcome.
                     example: https://example.com/payment/callback
                     type: string
                 cancelURL:
@@ -191,36 +170,31 @@ components:
                     type: string
                 createDate:
                     description:
-                        Creation date of the payment in ISO 8601 (yyyy-MM-dd). Read-only; set when the record is first
-                        persisted. Sortable via the OData query parameter.
+                        Creation date of the payment in ISO 8601 (yyyy-MM-dd). Read-only; set when the record is first persisted. Sortable via the OData query parameter.
                     example: 2017-07-21
                     format: date
                     readOnly: true
                     type: string
                 currencyCode:
                     description:
-                        ISO 4217 three-letter currency code. One of `currencyCode`, `currencyExternalReferenceCode`, or
-                        `currencyId` resolves the currency on write.
+                        ISO 4217 three-letter currency code. One of `currencyCode`, `currencyExternalReferenceCode`, or `currencyId` resolves the currency on write.
                     example: USD
                     type: string
                 currencyExternalReferenceCode:
                     description:
-                        External reference code of the currency. Alternative lookup key for resolving the currency on
-                        write.
+                        External reference code of the currency. Alternative lookup key for resolving the currency on write.
                     example: AB-34098-789-N
                     type: string
                 currencyId:
                     description:
-                        Reference to the currency (FK identifier). Alternative lookup key for resolving the currency on
-                        write.
+                        Reference to the currency (FK identifier). Alternative lookup key for resolving the currency on write.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 errorMessages:
                     description:
-                        Error message returned by the payment gateway when the transaction fails. Populated by the
-                        integration on a failed authorization, capture, or refund.
+                        Error message returned by the payment gateway when the transaction fails. Populated by the integration on a failed authorization, capture, or refund.
                     example: Card declined due to insufficient funds.
                     type: string
                 externalReferenceCode:
@@ -230,8 +204,7 @@ components:
                     type: string
                 id:
                     description:
-                        Internal numeric identifier of the payment. Server-assigned and stable across the payment's
-                        lifetime. Read-only; sortable via the OData query parameter.
+                        Internal numeric identifier of the payment. Server-assigned and stable across the payment's lifetime. Read-only; sortable via the OData query parameter.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -239,14 +212,12 @@ components:
                     type: integer
                 languageId:
                     description:
-                        Liferay locale identifier of the buyer at the time of the payment. Used by the gateway to
-                        localize redirect pages.
+                        Liferay locale identifier of the buyer at the time of the payment. Used by the gateway to localize redirect pages.
                     example: en_US
                     type: string
                 payload:
                     description:
-                        Raw gateway payload captured from the payment integration for audit and replay. The portal
-                        stores the value as supplied without parsing it.
+                        Raw gateway payload captured from the payment integration for audit and replay. The portal stores the value as supplied without parsing it.
                     example: intent_id=pi_3O8L7v2eZvKYlo2C1pX2DV4z
                     type: string
                 paymentIntegrationKey:
@@ -256,10 +227,7 @@ components:
                     type: string
                 paymentIntegrationType:
                     description:
-                        Integer integration type indicating how the configured payment integration is invoked. Derived
-                        from the payment integration and set by the server. 0=Internal Online Standard, 1=Internal
-                        Online Redirect, 2=Internal Offline, 3=Function Online Standard, 4=Function Online Redirect,
-                        5=Function Offline. Read-only.
+                        Integer integration type indicating how the configured payment integration is invoked. Derived from the payment integration and set by the server. 0=Internal Online Standard, 1=Internal Online Redirect, 2=Internal Offline, 3=Function Online Standard, 4=Function Online Redirect, 5=Function Offline. Read-only.
                     example: 0
                     format: int32
                     minimum: 0
@@ -267,9 +235,7 @@ components:
                     type: integer
                 paymentStatus:
                     description:
-                        Integer workflow status of the payment. 0=Completed, 1=Pending, 2=Authorized, 4=Failed,
-                        8=Cancelled, 17=Refunded, 18=Created, 23=Not Required. Forced to Pending on create; cannot be
-                        set to Refunded by the client. Filterable and sortable via the OData query parameter.
+                        Integer workflow status of the payment. 0=Completed, 1=Pending, 2=Authorized, 4=Failed, 8=Cancelled, 17=Refunded, 18=Created, 23=Not Required. Forced to Pending on create; cannot be set to Refunded by the client. Filterable and sortable via the OData query parameter.
                     example: 0
                     format: int32
                     minimum: 0
@@ -279,17 +245,14 @@ components:
                     readOnly: true
                 reasonKey:
                     description:
-                        Reason code for a refund, or, on a failed payment, the gateway-reported decline reason. Free
-                        text driven by the integration vocabulary; on a refund record the value must resolve to a
-                        registered refund type. Filterable and sortable via the OData query parameter.
+                        Reason code for a refund, or, on a failed payment, the gateway-reported decline reason. Free text driven by the integration vocabulary; on a refund record the value must resolve to a registered refund type. Filterable and sortable via the OData query parameter.
                     example: product-defect
                     type: string
                 reasonName:
                     additionalProperties:
                         type: string
                     description:
-                        Localized refund reason text. Map keys are locale codes; values are the translated strings.
-                        Computed from the registered refund type matching `reasonKey`. Read-only.
+                        Localized refund reason text. Map keys are locale codes; values are the translated strings. Computed from the registered refund type matching `reasonKey`. Read-only.
                     example:
                         en_US: Product Defect
                         hr_HR: Product Defect HR
@@ -298,23 +261,19 @@ components:
                     type: object
                 redirectURL:
                     description:
-                        Frontend URL the buyer is redirected to after the gateway completes the transaction
-                        successfully.
+                        Frontend URL the buyer is redirected to after the gateway completes the transaction successfully.
                     example: https://example.com/payment/redirect
                     type: string
                 relatedItemId:
                     description:
-                        Reference to the related entity (FK identifier). Typically the order the payment funds, or the
-                        source payment when this record is a refund. Filterable and sortable via the OData query
-                        parameter.
+                        Reference to the related entity (FK identifier). Typically the order the payment funds, or the source payment when this record is a refund. Filterable and sortable via the OData query parameter.
                     example: 20078
                     format: int64
                     minimum: 0
                     type: integer
                 relatedItemName:
                     description:
-                        Fully qualified class name of the related entity. Resolved into a class name identifier on
-                        write. For a refund record, must reference a payment.
+                        Fully qualified class name of the related entity. Resolved into a class name identifier on write. For a refund record, must reference a payment.
                     example: com.liferay.commerce.model.CommerceOrder
                     type: string
                 relatedItemNameLabel:
@@ -324,15 +283,12 @@ components:
                     type: string
                 transactionCode:
                     description:
-                        Identifier returned by the payment gateway for the transaction. Used for reconciliation,
-                        chargeback investigation, and refund linkage.
+                        Identifier returned by the payment gateway for the transaction. Used for reconciliation, chargeback investigation, and refund linkage.
                     example: txn-1A2B3C4D
                     type: string
                 type:
                     description:
-                        Integer payment type discriminator. 0=Payment, 1=Refund. The `/refund` operations require
-                        type=1; a refund record points to the source payment via `relatedItemId`. Filterable and
-                        sortable via the OData query parameter.
+                        Integer payment type discriminator. 0=Payment, 1=Refund. The `/refund` operations require type=1; a refund record points to the source payment via `relatedItemId`. Filterable and sortable via the OData query parameter.
                     example: 0
                     format: int32
                     type: integer
@@ -344,13 +300,11 @@ components:
                     type: string
         Status:
             description:
-                Payment status envelope. Exposes the integer status code together with the English label key and the
-                label rendered in the request locale. Read-only.
+                Payment status envelope. Exposes the integer status code together with the English label key and the label rendered in the request locale. Read-only.
             properties:
                 code:
                     description:
-                        Integer payment status. 0=Completed, 1=Pending, 2=Authorized, 4=Failed, 8=Cancelled,
-                        17=Refunded, 18=Created, 23=Not Required. Read-only.
+                        Integer payment status. 0=Completed, 1=Pending, 2=Authorized, 4=Failed, 8=Cancelled, 17=Refunded, 18=Created, 23=Not Required. Read-only.
                     example: 0
                     format: int32
                     readOnly: true
@@ -407,11 +361,7 @@ paths:
     /payments:
         get:
             description:
-                Lists payments visible to the authenticated user as a permission-filtered page. Searches the
-                CommercePaymentEntry index for the current company and applies the OData filter, full-text search, and
-                sort expression. Filterable fields -- paymentStatus, type, reasonKey, relatedItemId. Sortable fields --
-                createDate, id, paymentStatus, reasonKey, relatedItemId, type. Search is matched against the indexed
-                fields of the entry.
+                Lists payments visible to the authenticated user as a permission-filtered page. Searches the CommercePaymentEntry index for the current company and applies the OData filter, full-text search, and sort expression. Filterable fields -- paymentStatus, type, reasonKey, relatedItemId. Sortable fields -- createDate, id, paymentStatus, reasonKey, relatedItemId, type. Search is matched against the indexed fields of the entry.
             operationId: getPaymentsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
@@ -472,13 +422,7 @@ paths:
                 -   Payment
         post:
             description:
-                Upsert by external reference code. Delegates to CommercePaymentEntryService.
-                addOrUpdateCommercePaymentEntry, resolving the currency by `currencyCode`,
-                `currencyExternalReferenceCode`, or `currencyId` and the related entity by `relatedItemName` (resolved
-                to a class name id) and `relatedItemId`. Creates a new payment when no record matches the supplied
-                externalReferenceCode within the company; replaces the existing record otherwise. Validates the amount,
-                payment integration type, payment status, and reason key; invalid input raises a
-                CommercePaymentEntry*Exception that maps to 400.
+                Upsert by external reference code. Delegates to CommercePaymentEntryService. addOrUpdateCommercePaymentEntry, resolving the currency by `currencyCode`, `currencyExternalReferenceCode`, or `currencyId` and the related entity by `relatedItemName` (resolved to a class name id) and `relatedItemId`. Creates a new payment when no record matches the supplied externalReferenceCode within the company; replaces the existing record otherwise. Validates the amount, payment integration type, payment status, and reason key; invalid input raises a CommercePaymentEntry*Exception that maps to 400.
             operationId: postPayment
             requestBody:
                 content:
@@ -545,10 +489,7 @@ paths:
     /payments/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the payment identified by external reference code. Looks up the entry via
-                CommercePaymentEntryService.fetchCommercePaymentEntryByExternalReferenceCode for the current company and
-                delegates to deleteCommercePaymentEntry. Returns 204 on success; raises NoSuchPaymentEntryException
-                (404) when no record matches the supplied code.
+                Deletes the payment identified by external reference code. Looks up the entry via CommercePaymentEntryService.fetchCommercePaymentEntryByExternalReferenceCode for the current company and delegates to deleteCommercePaymentEntry. Returns 204 on success; raises NoSuchPaymentEntryException (404) when no record matches the supplied code.
             operationId: deletePaymentByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -581,11 +522,7 @@ paths:
                 -   Payment
         get:
             description:
-                Returns the payment identified by external reference code. Looks up the entry via
-                CommercePaymentEntryService.fetchCommercePaymentEntryByExternalReferenceCode for the current company and
-                converts it through PaymentDTOConverter, populating the formatted amount, the localized
-                paymentStatusStatus envelope, the type label, and the HATEOAS actions map. Raises
-                NoSuchPaymentEntryException (404) when no record matches the supplied code.
+                Returns the payment identified by external reference code. Looks up the entry via CommercePaymentEntryService.fetchCommercePaymentEntryByExternalReferenceCode for the current company and converts it through PaymentDTOConverter, populating the formatted amount, the localized paymentStatusStatus envelope, the type label, and the HATEOAS actions map. Raises NoSuchPaymentEntryException (404) when no record matches the supplied code.
             operationId: getPaymentByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -648,13 +585,7 @@ paths:
                 -   Payment
         patch:
             description:
-                Partially updates the payment identified by external reference code (JSON Merge Patch -- only the
-                supplied fields are modified; unspecified fields retain their existing value). Resolves the entry via
-                CommercePaymentEntryService.fetchCommercePaymentEntryByExternalReferenceCode and delegates to
-                updateCommercePaymentEntry, blending the request body against the stored record. Currency lookup falls
-                back to the stored `currencyCode` when the request does not resolve a new currency. Raises
-                NoSuchPaymentEntryException (404) when no record matches; raises CommercePaymentEntry*Exception (400)
-                when validation fails.
+                Partially updates the payment identified by external reference code (JSON Merge Patch -- only the supplied fields are modified; unspecified fields retain their existing value). Resolves the entry via CommercePaymentEntryService.fetchCommercePaymentEntryByExternalReferenceCode and delegates to updateCommercePaymentEntry, blending the request body against the stored record. Currency lookup falls back to the stored `currencyCode` when the request does not resolve a new currency. Raises NoSuchPaymentEntryException (404) when no record matches; raises CommercePaymentEntry*Exception (400) when validation fails.
             operationId: patchPaymentByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -729,13 +660,7 @@ paths:
                 -   Payment
         put:
             description:
-                Replaces the payment identified by external reference code. Delegates to
-                CommercePaymentEntryService.addOrUpdateCommercePaymentEntry with the supplied externalReferenceCode
-                taken from the path -- creates a new payment when no record matches in the current company, fully
-                replaces the existing record otherwise. Unlike PATCH, missing fields take their default value (for
-                example, type defaults to 0 (Payment), paymentStatus defaults to 1 (Pending)). Validates the amount,
-                payment integration type, payment status, and reason key; invalid input raises a
-                CommercePaymentEntry*Exception that maps to 400.
+                Replaces the payment identified by external reference code. Delegates to CommercePaymentEntryService.addOrUpdateCommercePaymentEntry with the supplied externalReferenceCode taken from the path -- creates a new payment when no record matches in the current company, fully replaces the existing record otherwise. Unlike PATCH, missing fields take their default value (for example, type defaults to 0 (Payment), paymentStatus defaults to 1 (Pending)). Validates the amount, payment integration type, payment status, and reason key; invalid input raises a CommercePaymentEntry*Exception that maps to 400.
             operationId: putPaymentByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -812,12 +737,7 @@ paths:
     /payments/by-externalReferenceCode/{externalReferenceCode}/refund:
         post:
             description:
-                Issues a refund against the payment identified by external reference code. Resolves the payment via
-                CommercePaymentEntryService.fetchCommercePaymentEntryByExternalReferenceCode; the call requires the
-                record to be of type=1 (Refund), otherwise it raises UnsupportedOperationException (500). On a valid
-                refund record, delegates to CommercePaymentGateway.refund to drive the configured payment integration
-                and transitions the entry to paymentStatus=17 (Refunded) on success. Raises NoSuchPaymentEntryException
-                (404) when no record matches the supplied code.
+                Issues a refund against the payment identified by external reference code. Resolves the payment via CommercePaymentEntryService.fetchCommercePaymentEntryByExternalReferenceCode; the call requires the record to be of type=1 (Refund), otherwise it raises UnsupportedOperationException (500). On a valid refund record, delegates to CommercePaymentGateway.refund to drive the configured payment integration and transitions the entry to paymentStatus=17 (Refunded) on success. Raises NoSuchPaymentEntryException (404) when no record matches the supplied code.
             operationId: postPaymentByExternalReferenceCodeRefund
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -887,8 +807,7 @@ paths:
     /payments/{id}:
         delete:
             description:
-                Deletes the payment identified by internal ID. Delegates directly to
-                CommercePaymentEntryService.deleteCommercePaymentEntry. Returns 204 on success.
+                Deletes the payment identified by internal ID. Delegates directly to CommercePaymentEntryService.deleteCommercePaymentEntry. Returns 204 on success.
             operationId: deletePayment
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -921,10 +840,7 @@ paths:
                 -   Payment
         get:
             description:
-                Returns the payment identified by internal ID. Delegates to
-                CommercePaymentEntryService.getCommercePaymentEntry and converts the result through PaymentDTOConverter,
-                populating the formatted amount, the localized paymentStatusStatus envelope, the type label, and the
-                HATEOAS actions map.
+                Returns the payment identified by internal ID. Delegates to CommercePaymentEntryService.getCommercePaymentEntry and converts the result through PaymentDTOConverter, populating the formatted amount, the localized paymentStatusStatus envelope, the type label, and the HATEOAS actions map.
             operationId: getPayment
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -987,12 +903,7 @@ paths:
                 -   Payment
         patch:
             description:
-                Partially updates the payment identified by internal ID (JSON Merge Patch -- only the supplied fields
-                are modified; unspecified fields retain their existing value). Resolves the entry via
-                CommercePaymentEntryService.getCommercePaymentEntry and delegates to updateCommercePaymentEntry,
-                blending the request body against the stored record. Currency lookup falls back to the stored
-                `currencyCode` when the request does not resolve a new currency. Raises CommercePaymentEntry*Exception
-                (400) when validation fails.
+                Partially updates the payment identified by internal ID (JSON Merge Patch -- only the supplied fields are modified; unspecified fields retain their existing value). Resolves the entry via CommercePaymentEntryService.getCommercePaymentEntry and delegates to updateCommercePaymentEntry, blending the request body against the stored record. Currency lookup falls back to the stored `currencyCode` when the request does not resolve a new currency. Raises CommercePaymentEntry*Exception (400) when validation fails.
             operationId: patchPayment
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -1068,11 +979,7 @@ paths:
     /payments/{id}/refund:
         post:
             description:
-                Issues a refund against the payment identified by internal ID. Loads the entry via
-                CommercePaymentEntryService.getCommercePaymentEntry; the call requires the record to be of type=1
-                (Refund), otherwise it raises UnsupportedOperationException (500). On a valid refund record, delegates
-                to CommercePaymentGateway.refund to drive the configured payment integration and transitions the entry
-                to paymentStatus=17 (Refunded) on success.
+                Issues a refund against the payment identified by internal ID. Loads the entry via CommercePaymentEntryService.getCommercePaymentEntry; the call requires the record to be of type=1 (Refund), otherwise it raises UnsupportedOperationException (500). On a valid refund record, delegates to CommercePaymentGateway.refund to drive the configured payment integration and transitions the entry to paymentStatus=17 (Refunded) on success.
             operationId: postPaymentRefund
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -1141,7 +1048,5 @@ paths:
                 -   Payment
 tags:
     -   description:
-            Payment and refund records produced by commerce checkout, gateway callbacks, and back-office refund flows.
-            Each entry captures the amount, currency, payment integration, workflow status, and the related order or
-            subscription; type=0 is a payment, type=1 is a refund.
+            Payment and refund records produced by commerce checkout, gateway callbacks, and back-office refund flows. Each entry captures the amount, currency, payment integration, workflow status, and the related order or subscription; type=0 is a payment, type=1 is a refund.
         name: Payment

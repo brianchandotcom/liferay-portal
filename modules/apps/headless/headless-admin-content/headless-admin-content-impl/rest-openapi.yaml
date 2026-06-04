@@ -183,8 +183,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.content.client', and version '2.0.52'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.content.client', and version '2.0.52'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -319,8 +318,7 @@ paths:
         get:
             # @review
             description:
-                Retrieves the site's structured contents latest version. Results can be paginated, filtered, searched,
-                flattened, and sorted.
+                Retrieves the site's structured contents latest version. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getSiteStructuredContentsPage
             parameters:
                 -   in: path

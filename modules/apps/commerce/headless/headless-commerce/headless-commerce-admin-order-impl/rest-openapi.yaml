@@ -3,8 +3,7 @@ components:
         attachmentExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code that addresses an attachment under an order. The code is the
-                integration-supplied idempotency key, unique per attachment within the company.
+                External reference code that addresses an attachment under an order. The code is the integration-supplied idempotency key, unique per attachment within the company.
             explode: false
             name: attachmentExternalReferenceCode
             required: true
@@ -33,9 +32,7 @@ components:
         externalReferenceCodePathParam:
             in: path
             description:
-                External reference code that addresses the target resource on the by-externalReferenceCode paths. The
-                code is the integration-supplied idempotency key, unique within the resource scope; POST against this
-                path is upsert (create when absent, replace when present).
+                External reference code that addresses the target resource on the by-externalReferenceCode paths. The code is the integration-supplied idempotency key, unique within the resource scope; POST against this path is upsert (create when absent, replace when present).
             explode: false
             name: externalReferenceCode
             required: true
@@ -49,9 +46,7 @@ components:
         filterQueryParam:
             in: query
             description:
-                OData v4 filter expression that narrows the result set. Supported fields depend on the endpoint and are
-                sourced from the matching entity model -- typically accountId, channelId, orderStatus, orderTypeId,
-                paymentStatus, sku, name, and createDate. Example -- filter=orderStatus eq 10.
+                OData v4 filter expression that narrows the result set. Supported fields depend on the endpoint and are sourced from the matching entity model -- typically accountId, channelId, orderStatus, orderTypeId, paymentStatus, sku, name, and createDate. Example -- filter=orderStatus eq 10.
             explode: true
             name: filter
             required: false
@@ -61,8 +56,7 @@ components:
         idPathParam:
             in: path
             description:
-                Internal numeric identifier of the target resource. Counterpart to the by-externalReferenceCode path
-                variant; identifiers are server-assigned and stable across the resource lifetime.
+                Internal numeric identifier of the target resource. Counterpart to the by-externalReferenceCode path variant; identifiers are server-assigned and stable across the resource lifetime.
             explode: false
             name: id
             required: true
@@ -77,8 +71,7 @@ components:
         orderIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target order. Used as the parent context when accessing nested
-                resources (items, notes, attachments, addresses).
+                Internal numeric identifier of the target order. Used as the parent context when accessing nested resources (items, notes, attachments, addresses).
             explode: false
             name: orderId
             required: true
@@ -168,8 +161,7 @@ components:
         pageQueryParam:
             in: query
             description:
-                One-based page number used together with pageSize to navigate paginated result sets. Defaults to 1 when
-                omitted.
+                One-based page number used together with pageSize to navigate paginated result sets. Defaults to 1 when omitted.
             explode: true
             name: page
             required: false
@@ -179,8 +171,7 @@ components:
         pageSizeQueryParam:
             in: query
             description:
-                Number of items to return per page in paginated result sets. Defaults to the resource pagination
-                configuration when omitted.
+                Number of items to return per page in paginated result sets. Defaults to the resource pagination configuration when omitted.
             explode: true
             name: pageSize
             required: false
@@ -190,8 +181,7 @@ components:
         searchQueryParam:
             in: query
             description:
-                Free-text search expression applied to the indexed search corpus of the target resource (for example,
-                the creator email for orders, the SKU for order items, the name for order rules).
+                Free-text search expression applied to the indexed search corpus of the target resource (for example, the creator email for orders, the SKU for order items, the name for order rules).
             explode: true
             name: search
             required: false
@@ -201,8 +191,7 @@ components:
         sortQueryParam:
             in: query
             description:
-                Comma-separated list of fields to sort by. Each field accepts the suffix :asc or :desc; sortable fields
-                depend on the endpoint and are sourced from the matching entity model.
+                Comma-separated list of fields to sort by. Each field accepts the suffix :asc or :desc; sortable fields depend on the endpoint and are sourced from the matching entity model.
             explode: true
             name: sort
             required: false
@@ -248,14 +237,12 @@ components:
     schemas:
         Account:
             description:
-                A customer account that places orders. Represents either a person or a business and carries identity,
-                contact, and tax-attribution data; created on POST and updated on PATCH.
+                A customer account that places orders. Represents either a person or a business and carries identity, contact, and tax-attribution data; created on POST and updated on PATCH.
             properties:
                 customFields:
                     additionalProperties: true
                     description:
-                        Map of custom-field values keyed by field name. Values depend on the custom-field type and are
-                        configured per company.
+                        Map of custom-field values keyed by field name. Values depend on the custom-field type and are configured per company.
                     example:
                         customField: customValue
                     type: object
@@ -272,16 +259,14 @@ components:
                     type: string
                 id:
                     description:
-                        Reference to the account (FK identifier). Read-only; set by the service when the account is
-                        first persisted.
+                        Reference to the account (FK identifier). Read-only; set by the service when the account is first persisted.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 logoId:
                     description:
-                        Reference to the file entry that stores the account logo image (FK identifier). 0 when no logo
-                        is set.
+                        Reference to the file entry that stores the account logo image (FK identifier). 0 when no logo is set.
                     example: 20078
                     format: int64
                     minimum: 0
@@ -293,8 +278,7 @@ components:
                     type: string
                 root:
                     description:
-                        When true, the account is a top-level (parent) account with no parent. When false, the account
-                        is a subsidiary.
+                        When true, the account is a top-level (parent) account with no parent. When false, the account is a subsidiary.
                     example: true
                     type: boolean
                 taxId:
@@ -312,8 +296,7 @@ components:
                     type: integer
         Attachment:
             description:
-                A file attached to an order (image, document, virtual asset). Carries the file content on upload and
-                file metadata, download URL, and a restricted flag for visibility control on retrieval.
+                A file attached to an order (image, document, virtual asset). Carries the file content on upload and file metadata, download URL, and a restricted flag for visibility control on retrieval.
             properties:
                 actions:
                     additionalProperties:
@@ -321,9 +304,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name (e.g., "delete",
-                        "update"). Each value carries the href template and HTTP method, computed dynamically from user
-                        permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name (e.g., "delete", "update"). Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 attachment:
@@ -371,8 +352,7 @@ components:
                     type: number
                 restricted:
                     description:
-                        When true, the attachment is internal-only and not visible to the storefront. When false, it is
-                        visible to the buyer.
+                        When true, the attachment is internal-only and not visible to the storefront. When false, it is visible to the buyer.
                     example: false
                     type: boolean
                 title:
@@ -382,8 +362,7 @@ components:
                     type: string
                 type:
                     description:
-                        Type key for the attachment, drawn from the attachment-type list configured for the company.
-                        Free-form string.
+                        Type key for the attachment, drawn from the attachment-type list configured for the company. Free-form string.
                     example: general
                     type: string
                 typeLabel:
@@ -401,8 +380,7 @@ components:
             type: object
         BillingAddress:
             description:
-                Postal address used for billing the order. Stored as an address record on the order and accessed by
-                order ID or external reference code.
+                Postal address used for billing the order. Stored as an address record on the order and accessed by order ID or external reference code.
             properties:
                 city:
                     description:
@@ -421,8 +399,7 @@ components:
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update; must be unique per address within the company. Read-only
-                        after create.
+                        Idempotency key for create and update; must be unique per address within the company. Read-only after create.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
@@ -498,8 +475,7 @@ components:
             type: object
         Channel:
             description:
-                A commerce sales channel that groups products, prices, and orders. Channels carry a default currency and
-                a type that classifies the storefront context.
+                A commerce sales channel that groups products, prices, and orders. Channels carry a default currency and a type that classifies the storefront context.
             properties:
                 currencyCode:
                     description:
@@ -531,8 +507,7 @@ components:
             type: object
         Error:
             description:
-                Standard error envelope returned on non-success responses, with HTTP status code, internal error code,
-                developer message, and user-facing description.
+                Standard error envelope returned on non-success responses, with HTTP status code, internal error code, developer message, and user-facing description.
             properties:
                 errorCode:
                     description:
@@ -566,23 +541,19 @@ components:
             type: object
         Order:
             description:
-                A purchase order placed by an account in a channel. Carries the buyer account, addresses, currency,
-                payment and delivery terms, line items, notes, attachments, and tax-aware totals; created on POST,
-                updated on PATCH, replaced on PUT against the external reference code.
+                A purchase order placed by an account in a channel. Carries the buyer account, addresses, currency, payment and delivery terms, line items, notes, attachments, and tax-aware totals; created on POST, updated on PATCH, replaced on PUT against the external reference code.
             properties:
                 account:
                     $ref: "#/components/schemas/Account"
                     readOnly: true
                 accountExternalReferenceCode:
                     description:
-                        External reference code of the buyer account. Used as a lookup key when the numeric account ID
-                        is not supplied.
+                        External reference code of the buyer account. Used as a lookup key when the numeric account ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 accountId:
                     description:
-                        Reference to the buyer account (FK identifier). One of accountId or accountExternalReferenceCode
-                        is required on create.
+                        Reference to the buyer account (FK identifier). One of accountId or accountExternalReferenceCode is required on create.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -593,14 +564,12 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 advanceStatus:
                     description:
-                        Free-text status string for custom workflows on top of the standard order status (for example,
-                        on-hold, escalated).
+                        Free-text status string for custom workflows on top of the standard order status (for example, on-hold, escalated).
                     example: transmitted
                     type: string
                 author:
@@ -613,8 +582,7 @@ components:
                     $ref: "#/components/schemas/BillingAddress"
                 billingAddressExternalReferenceCode:
                     description:
-                        External reference code of the billing address. Used as a lookup key when the numeric address ID
-                        is not supplied.
+                        External reference code of the billing address. Used as a lookup key when the numeric address ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 billingAddressId:
@@ -629,14 +597,12 @@ components:
                     readOnly: true
                 channelExternalReferenceCode:
                     description:
-                        External reference code of the channel. Used as a lookup key when the numeric channel ID is not
-                        supplied.
+                        External reference code of the channel. Used as a lookup key when the numeric channel ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 channelId:
                     description:
-                        Reference to the channel where the order was placed (FK identifier). One of channelId or
-                        channelExternalReferenceCode is required on create.
+                        Reference to the channel where the order was placed (FK identifier). One of channelId or channelExternalReferenceCode is required on create.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -660,14 +626,12 @@ components:
                     type: string
                 currencyCode:
                     description:
-                        ISO 4217 currency code applied to every monetary value on the order. Defaults to the channel
-                        currency.
+                        ISO 4217 currency code applied to every monetary value on the order. Defaults to the channel currency.
                     example: USD
                     type: string
                 currencyExternalReferenceCode:
                     description:
-                        External reference code of the currency entry. Used as a lookup key when the numeric currency ID
-                        is not supplied.
+                        External reference code of the currency entry. Used as a lookup key when the numeric currency ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 currencyId:
@@ -680,22 +644,19 @@ components:
                 customFields:
                     additionalProperties: true
                     description:
-                        Map of custom-field values keyed by field name. Values depend on the custom-field type and are
-                        configured per company.
+                        Map of custom-field values keyed by field name. Values depend on the custom-field type and are configured per company.
                     example:
                         customField: customValue
                     type: object
                 deliveryTermDescription:
                     description:
-                        Localized description of the bound delivery term, resolved against the request locale.
-                        Read-only.
+                        Localized description of the bound delivery term, resolved against the request locale. Read-only.
                     example: Standard delivery within 5 business days.
                     readOnly: true
                     type: string
                 deliveryTermExternalReferenceCode:
                     description:
-                        External reference code of the delivery term. Used as a lookup key when the numeric term ID is
-                        not supplied.
+                        External reference code of the delivery term. Used as a lookup key when the numeric term ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 deliveryTermId:
@@ -707,8 +668,7 @@ components:
                     type: integer
                 deliveryTermName:
                     description:
-                        Localized display name of the bound delivery term, resolved against the request locale.
-                        Read-only.
+                        Localized display name of the bound delivery term, resolved against the request locale. Read-only.
                     example: Standard Delivery
                     readOnly: true
                     type: string
@@ -743,15 +703,13 @@ components:
                     type: string
                 orderDate:
                     description:
-                        Date the order was placed. May differ from the creation date when the order is imported from
-                        another system.
+                        Date the order was placed. May differ from the creation date when the order is imported from another system.
                     example: 2017-07-21
                     format: date
                     type: string
                 orderItems:
                     description:
-                        Nested array of OrderItem objects. Write-only on POST/PATCH; items not in the array are deleted
-                        (upsert-by-ID semantics).
+                        Nested array of OrderItem objects. Write-only on POST/PATCH; items not in the array are deleted (upsert-by-ID semantics).
                     items:
                         $ref: "#/components/schemas/OrderItem"
                     type: array
@@ -767,8 +725,7 @@ components:
                     readOnly: true
                 orderTypeExternalReferenceCode:
                     description:
-                        External reference code of the order type. Used as a lookup key when the numeric order type ID
-                        is not supplied. Filterable via the OData query parameter.
+                        External reference code of the order type. Used as a lookup key when the numeric order type ID is not supplied. Filterable via the OData query parameter.
                     example: AB-34098-789-N
                     type: string
                 orderTypeId:
@@ -780,8 +737,7 @@ components:
                     type: integer
                 paymentMethod:
                     description:
-                        Identifier of the payment method used by the order (for example, credit_card, purchase_order).
-                        Free-form string.
+                        Identifier of the payment method used by the order (for example, credit_card, purchase_order). Free-form string.
                     example: credit_card
                     type: string
                 paymentStatus:
@@ -802,8 +758,7 @@ components:
                     type: string
                 paymentTermExternalReferenceCode:
                     description:
-                        External reference code of the payment term. Used as a lookup key when the numeric term ID is
-                        not supplied.
+                        External reference code of the payment term. Used as a lookup key when the numeric term ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 paymentTermId:
@@ -815,8 +770,7 @@ components:
                     type: integer
                 paymentTermName:
                     description:
-                        Localized display name of the bound payment term, resolved against the request locale.
-                        Read-only.
+                        Localized display name of the bound payment term, resolved against the request locale. Read-only.
                     example: Net 30
                     readOnly: true
                     type: string
@@ -838,8 +792,7 @@ components:
                     type: string
                 shippable:
                     description:
-                        When true, the order (or its product) ships physically; when false, it is virtual or
-                        non-shippable. Read-only.
+                        When true, the order (or its product) ships physically; when false, it is virtual or non-shippable. Read-only.
                     example: true
                     readOnly: true
                     type: boolean
@@ -847,8 +800,7 @@ components:
                     $ref: "#/components/schemas/ShippingAddress"
                 shippingAddressExternalReferenceCode:
                     description:
-                        External reference code of the shipping address. Used as a lookup key when the numeric address
-                        ID is not supplied.
+                        External reference code of the shipping address. Used as a lookup key when the numeric address ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 shippingAddressId:
@@ -1166,8 +1118,7 @@ components:
                     type: number
                 totalDiscountPercentageLevel1WithTaxAmount:
                     description:
-                        BigDecimal totalDiscountPercentageLevel1 value with tax included. Currency follows the order or
-                        channel currency.
+                        BigDecimal totalDiscountPercentageLevel1 value with tax included. Currency follows the order or channel currency.
                     example: 20
                     format: bigdecimal
                     minimum: 0
@@ -1181,8 +1132,7 @@ components:
                     type: number
                 totalDiscountPercentageLevel2WithTaxAmount:
                     description:
-                        BigDecimal totalDiscountPercentageLevel2 value with tax included. Currency follows the order or
-                        channel currency.
+                        BigDecimal totalDiscountPercentageLevel2 value with tax included. Currency follows the order or channel currency.
                     example: 0
                     format: bigdecimal
                     minimum: 0
@@ -1196,8 +1146,7 @@ components:
                     type: number
                 totalDiscountPercentageLevel3WithTaxAmount:
                     description:
-                        BigDecimal totalDiscountPercentageLevel3 value with tax included. Currency follows the order or
-                        channel currency.
+                        BigDecimal totalDiscountPercentageLevel3 value with tax included. Currency follows the order or channel currency.
                     example: 0
                     format: bigdecimal
                     minimum: 0
@@ -1211,8 +1160,7 @@ components:
                     type: number
                 totalDiscountPercentageLevel4WithTaxAmount:
                     description:
-                        BigDecimal totalDiscountPercentageLevel4 value with tax included. Currency follows the order or
-                        channel currency.
+                        BigDecimal totalDiscountPercentageLevel4 value with tax included. Currency follows the order or channel currency.
                     example: 0
                     format: bigdecimal
                     minimum: 0
@@ -1293,8 +1241,7 @@ components:
             type: object
         OrderItem:
             description:
-                A single line item within an order. Carries the SKU, quantity, options, unit price, line discount,
-                line-level tax, and an optional per-item shipping address.
+                A single line item within an order. Carries the SKU, quantity, options, unit price, line discount, line-level tax, and an optional per-item shipping address.
             properties:
                 bookedQuantityId:
                     description:
@@ -1305,8 +1252,7 @@ components:
                     type: integer
                 customFields:
                     description:
-                        Map of custom-field values keyed by field name. Values depend on the custom-field type and are
-                        configured per company.
+                        Map of custom-field values keyed by field name. Values depend on the custom-field type and are configured per company.
                     example:
                         customField: customValue
                     items:
@@ -1314,8 +1260,7 @@ components:
                     type: array
                 decimalQuantity:
                     description:
-                        Quantity expressed as a decimal value to support fractional units. Used together with the
-                        unit-of-measure key.
+                        Quantity expressed as a decimal value to support fractional units. Used together with the unit-of-measure key.
                     example: 10.1
                     format: bigdecimal
                     minimum: 0
@@ -1323,8 +1268,7 @@ components:
                 deliveryGroup:
                     deprecated: true
                     description:
-                        Deprecated -- use deliveryGroupName instead. Identifier of the delivery group this line item
-                        belongs to; carried for backward compatibility with clients that predate deliveryGroupName.
+                        Deprecated -- use deliveryGroupName instead. Identifier of the delivery group this line item belongs to; carried for backward compatibility with clients that predate deliveryGroupName.
                     example: separate-package
                     type: string
                 deliveryGroupName:
@@ -1341,8 +1285,7 @@ components:
                     type: number
                 discountManuallyAdjusted:
                     description:
-                        When true, the line discount was set manually by an administrator and is preserved across price
-                        recalculations.
+                        When true, the line discount was set manually by an administrator and is preserved across price recalculations.
                     example: true
                     readOnly: true
                     type: boolean
@@ -1445,20 +1388,17 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Display name of the product or SKU on this line item. Resolved against the request locale.
-                        Read-only.
+                        Display name of the product or SKU on this line item. Resolved against the request locale. Read-only.
                     example: Hand Saw
                     type: object
                 options:
                     description:
-                        Stringified JSON representation of the product options selected for this line item. Encodes the
-                        option-value combinations that distinguish the SKU variant.
+                        Stringified JSON representation of the product options selected for this line item. Encodes the option-value combinations that distinguish the SKU variant.
                     example: sizeColor=L_red
                     type: string
                 orderExternalReferenceCode:
                     description:
-                        External reference code of the parent order. Used to address the line item by its parent
-                        external reference code.
+                        External reference code of the parent order. Used to address the line item by its parent external reference code.
                     example: AB-34098-789-N
                     type: string
                 orderId:
@@ -1470,8 +1410,7 @@ components:
                     type: integer
                 priceManuallyAdjusted:
                     description:
-                        When true, the unit price was overridden by an administrator and is preserved across price
-                        recalculations.
+                        When true, the unit price was overridden by an administrator and is preserved across price recalculations.
                     example: false
                     readOnly: true
                     type: boolean
@@ -1510,15 +1449,13 @@ components:
                     type: number
                 replacedSku:
                     description:
-                        When the SKU has been replaced by another, this field carries the SKU code that replaced the
-                        original.
+                        When the SKU has been replaced by another, this field carries the SKU code that replaced the original.
                     example: HAND-SAW-V2
                     readOnly: true
                     type: string
                 replacedSkuExternalReferenceCode:
                     description:
-                        External reference code of the replacedSku entity. Used as a lookup key in place of the numeric
-                        replacedSkuId.
+                        External reference code of the replacedSku entity. Used as a lookup key in place of the numeric replacedSkuId.
                     example: AB-34098-789-N
                     type: string
                 replacedSkuId:
@@ -1535,8 +1472,7 @@ components:
                     type: string
                 shippable:
                     description:
-                        When true, the line item ships physically. When false, the item is virtual or non-shippable.
-                        Read-only.
+                        When true, the line item ships physically. When false, the item is virtual or non-shippable. Read-only.
                     example: true
                     readOnly: true
                     type: boolean
@@ -1551,14 +1487,12 @@ components:
                     $ref: "#/components/schemas/ShippingAddress"
                 shippingAddressExternalReferenceCode:
                     description:
-                        External reference code of the shippingAddress entity. Used as a lookup key in place of the
-                        numeric shippingAddressId.
+                        External reference code of the shippingAddress entity. Used as a lookup key in place of the numeric shippingAddressId.
                     example: AB-34098-789-N
                     type: string
                 shippingAddressId:
                     description:
-                        Reference to the per-item shipping address (FK identifier). 0 when the line item uses the order
-                        shipping address.
+                        Reference to the per-item shipping address (FK identifier). 0 when the line item uses the order shipping address.
                     example: 31131
                     format: int64
                     minimum: 0
@@ -1627,8 +1561,7 @@ components:
             type: object
         OrderNote:
             description:
-                A note attached to an order. Carries free-text content and a restricted flag that hides internal-only
-                notes from the storefront.
+                A note attached to an order. Carries free-text content and a restricted flag that hides internal-only notes from the storefront.
             properties:
                 author:
                     description:
@@ -1666,15 +1599,13 @@ components:
                     type: integer
                 restricted:
                     description:
-                        When true, the note is internal-only and not visible to the storefront. When false, it is
-                        visible to the buyer.
+                        When true, the note is internal-only and not visible to the storefront. When false, it is visible to the buyer.
                     example: false
                     type: boolean
             type: object
         OrderRule:
             description:
-                A business rule that conditions order behavior on the linked accounts, account groups, channels, and
-                order types. Drives discounting, validation, and other administrator-defined order policy.
+                A business rule that conditions order behavior on the linked accounts, account groups, channels, and order types. Drives discounting, validation, and other administrator-defined order policy.
             properties:
                 actions:
                     additionalProperties:
@@ -1682,8 +1613,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 active:
@@ -1797,8 +1727,7 @@ components:
                     readOnly: true
                 accountExternalReferenceCode:
                     description:
-                        External reference code of the account. Used as a lookup key when the numeric account ID is not
-                        supplied.
+                        External reference code of the account. Used as a lookup key when the numeric account ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 accountId:
@@ -1850,8 +1779,7 @@ components:
                     readOnly: true
                 accountGroupExternalReferenceCode:
                     description:
-                        External reference code of the account group. Used as a lookup key when the numeric account
-                        group ID is not supplied.
+                        External reference code of the account group. Used as a lookup key when the numeric account group ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 accountGroupId:
@@ -1912,8 +1840,7 @@ components:
                     readOnly: true
                 channelExternalReferenceCode:
                     description:
-                        External reference code of the channel. Used as a lookup key when the numeric channel ID is not
-                        supplied.
+                        External reference code of the channel. Used as a lookup key when the numeric channel ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 channelId:
@@ -1985,8 +1912,7 @@ components:
                     readOnly: true
                 orderTypeExternalReferenceCode:
                     description:
-                        External reference code of the order type. Used as a lookup key when the numeric order type ID
-                        is not supplied.
+                        External reference code of the order type. Used as a lookup key when the numeric order type ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 orderTypeId:
@@ -2002,8 +1928,7 @@ components:
             type: object
         OrderType:
             description:
-                An order classification that groups orders by purpose (B2B quote, retail purchase, subscription, etc.).
-                Order types can be restricted to specific channels and bound to specific delivery and payment terms.
+                An order classification that groups orders by purpose (B2B quote, retail purchase, subscription, etc.). Order types can be restricted to specific channels and bound to specific delivery and payment terms.
             properties:
                 actions:
                     additionalProperties:
@@ -2011,8 +1936,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 active:
@@ -2097,8 +2021,7 @@ components:
             type: object
         OrderTypeChannel:
             description:
-                Binding between an order type and a sales channel. Identifies a channel where the order type is
-                available.
+                Binding between an order type and a sales channel. Identifies a channel where the order type is available.
             properties:
                 actions:
                     additionalProperties:
@@ -2114,8 +2037,7 @@ components:
                     readOnly: true
                 channelExternalReferenceCode:
                     description:
-                        External reference code of the channel. Used as a lookup key when the numeric channel ID is not
-                        supplied.
+                        External reference code of the channel. Used as a lookup key when the numeric channel ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 channelId:
@@ -2151,8 +2073,7 @@ components:
             type: object
         ShippingAddress:
             description:
-                Postal address used for shipping the order or a single line item. Stored as an address record on the
-                order and accessed by order ID or external reference code.
+                Postal address used for shipping the order or a single line item. Stored as an address record on the order and accessed by order ID or external reference code.
             properties:
                 city:
                     description:
@@ -2242,8 +2163,7 @@ components:
             type: object
         Status:
             description:
-                Status pair returned for workflow- and payment-style integer codes. Carries the numeric code and its
-                human-readable label.
+                Status pair returned for workflow- and payment-style integer codes. Carries the numeric code and its human-readable label.
             properties:
                 code:
                     description:
@@ -2265,9 +2185,7 @@ components:
             type: object
         Term:
             description:
-                A reusable commerce term (delivery term or payment term) that can be bound to one or more order types.
-                Carries a localized label and description, a priority for evaluation order, and active or expiration
-                dates.
+                A reusable commerce term (delivery term or payment term) that can be bound to one or more order types. Carries a localized label and description, a priority for evaluation order, and active or expiration dates.
             properties:
                 actions:
                     additionalProperties:
@@ -2275,8 +2193,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 active:
@@ -2358,8 +2275,7 @@ components:
                     type: array
                 type:
                     description:
-                        Term type identifier (delivery or payment). Free-form string drawn from the configured term-type
-                        list.
+                        Term type identifier (delivery or payment). Free-form string drawn from the configured term-type list.
                     example: payment
                     type: string
                 typeLocalized:
@@ -2397,8 +2313,7 @@ components:
                     readOnly: true
                 orderTypeExternalReferenceCode:
                     description:
-                        External reference code of the order type. Used as a lookup key when the numeric order type ID
-                        is not supplied.
+                        External reference code of the order type. Used as a lookup key when the numeric order type ID is not supplied.
                     example: AB-34098-789-N
                     type: string
                 orderTypeId:
@@ -2499,8 +2414,7 @@ paths:
     "/orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-externalReferenceCode/{attachmentExternalReferenceCode}":
         delete:
             description:
-                Deletes an attachment from an order using external reference codes for both. Validates both order and
-                attachment existence. Returns 204 No Content.
+                Deletes an attachment from an order using external reference codes for both. Validates both order and attachment existence. Returns 204 No Content.
             operationId: deleteOrderByExternalReferenceCodeAttachmentByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2535,9 +2449,7 @@ paths:
             -   Attachment
         get:
             description:
-                Retrieves a single attachment via external reference code pair; resolves both order and attachment, then
-                delegates to getOrderAttachment(). Throws NoSuchOrderException (404) or NoSuchOrderAttachmentException
-                (404) if either not found.
+                Retrieves a single attachment via external reference code pair; resolves both order and attachment, then delegates to getOrderAttachment(). Throws NoSuchOrderException (404) or NoSuchOrderAttachmentException (404) if either not found.
             operationId: getOrderByExternalReferenceCodeAttachmentByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2601,8 +2513,7 @@ paths:
             -   Attachment
         patch:
             description:
-                Partial update of an attachment via external reference codes for both order and attachment. Throws
-                NoSuchOrderException (404) or NoSuchOrderAttachmentException (404) if either not found.
+                Partial update of an attachment via external reference codes for both order and attachment. Throws NoSuchOrderException (404) or NoSuchOrderAttachmentException (404) if either not found.
             operationId: patchOrderByExternalReferenceCodeAttachmentByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2669,9 +2580,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Domain validation failed -- an invalid lookup key (channel, account, currency, order type,
-                        term), an out-of-range numeric value, or a missing required cross-reference on the attachment
-                        payload prevented the operation.
+                        Domain validation failed -- an invalid lookup key (channel, account, currency, order type, term), an out-of-range numeric value, or a missing required cross-reference on the attachment payload prevented the operation.
                 500:
                     content:
                         application/json:
@@ -2688,8 +2597,7 @@ paths:
     /order-rule-account-groups/{orderRuleAccountGroupId}:
         delete:
             description:
-                Deletes an Order Rule Account Group by ID. Backed by the matching commerce service method on the target
-                resource.
+                Deletes an Order Rule Account Group by ID. Backed by the matching commerce service method on the target resource.
             parameters:
             -   $ref: "#/components/parameters/orderRuleAccountGroupIdPathParam"
             responses:
@@ -2716,8 +2624,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order rule account
-                        group binding.
+                        The authenticated user lacks permission for the requested action on this order rule account group binding.
             summary: Deletes an Order Rule Account Group by ID.
             tags:
             -   OrderRuleAccountGroup
@@ -2761,8 +2668,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order rule account
-                        group binding.
+                        The authenticated user lacks permission for the requested action on this order rule account group binding.
                 404:
                     content:
                         application/json:
@@ -2789,8 +2695,7 @@ paths:
     /order-rule-accounts/{orderRuleAccountId}:
         delete:
             description:
-                Deletes an order rule account relationship by ID using _corEntryRelService.deleteCOREntryRel(id).
-                Returns 204 No Content.
+                Deletes an order rule account relationship by ID using _corEntryRelService.deleteCOREntryRel(id). Returns 204 No Content.
             operationId: deleteOrderRuleAccount
             parameters:
             -   $ref: "#/components/parameters/orderRuleAccountIdPathParam"
@@ -2818,8 +2723,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order rule account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this order rule account binding.
             summary: Deletes an Order Rule Account by ID.
             tags:
             -   OrderRuleAccount
@@ -2863,8 +2767,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order rule account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this order rule account binding.
                 404:
                     content:
                         application/json:
@@ -2891,8 +2794,7 @@ paths:
     /order-rule-channels/{orderRuleChannelId}:
         delete:
             description:
-                Deletes an order rule channel relationship by ID using _corEntryRelService.deleteCOREntryRel(id).
-                Returns 204 No Content.
+                Deletes an order rule channel relationship by ID using _corEntryRelService.deleteCOREntryRel(id). Returns 204 No Content.
             operationId: deleteOrderRuleChannel
             parameters:
             -   $ref: "#/components/parameters/orderRuleChannelIdPathParam"
@@ -2920,8 +2822,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order rule channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this order rule channel binding.
             summary: Deletes an Order Rule Channel by ID.
             tags:
             -   OrderRuleChannel
@@ -2965,8 +2866,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order rule channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this order rule channel binding.
                 404:
                     content:
                         application/json:
@@ -2993,8 +2893,7 @@ paths:
     /order-rule-order-types/{orderRuleOrderTypeId}:
         delete:
             description:
-                Deletes an order rule order-type relationship by ID using _corEntryRelService.deleteCOREntryRel(id).
-                Returns 204 No Content.
+                Deletes an order rule order-type relationship by ID using _corEntryRelService.deleteCOREntryRel(id). Returns 204 No Content.
             operationId: deleteOrderRuleOrderType
             parameters:
             -   $ref: "#/components/parameters/orderRuleOrderTypeIdPathParam"
@@ -3022,8 +2921,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order rule order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this order rule order type binding.
             summary: Deletes an Order Rule Order Type by ID.
             tags:
             -   OrderRuleOrderType
@@ -3067,8 +2965,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order rule order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this order rule order type binding.
                 404:
                     content:
                         application/json:
@@ -3153,10 +3050,7 @@ paths:
             -   OrderRule
         post:
             description:
-                Create a new order rule. Calls _addCOREntry() which uses _corEntryService.addCOREntry() with
-                externalReferenceCode, active, description, dates, name, priority, type, typeSettings. Also calls
-                _updateNestedResources() to add linked accounts/groups/channels/order-types if provided in request body.
-                Returns created OrderRule DTO.
+                Create a new order rule. Calls _addCOREntry() which uses _corEntryService.addCOREntry() with externalReferenceCode, active, description, dates, name, priority, type, typeSettings. Also calls _updateNestedResources() to add linked accounts/groups/channels/order-types if provided in request body. Returns created OrderRule DTO.
             operationId: postOrderRule
             requestBody:
                 content:
@@ -3216,9 +3110,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3235,9 +3127,7 @@ paths:
     /order-rules/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes an order rule by externalReferenceCode using
-                _corEntryService.fetchCOREntryByExternalReferenceCode() followed by deletion. Throws
-                NoSuchCOREntryException (404) if not found.
+                Deletes an order rule by externalReferenceCode using _corEntryService.fetchCOREntryByExternalReferenceCode() followed by deletion. Throws NoSuchCOREntryException (404) if not found.
             operationId: deleteOrderRuleByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3271,9 +3161,7 @@ paths:
             -   OrderRule
         get:
             description:
-                Retrieves an order rule by externalReferenceCode
-                _corEntryService.fetchCOREntryByExternalReferenceCode(). Identical response to getOrderRule. Throws
-                NoSuchCOREntryException (404) if not found.
+                Retrieves an order rule by externalReferenceCode _corEntryService.fetchCOREntryByExternalReferenceCode(). Identical response to getOrderRule. Throws NoSuchCOREntryException (404) if not found.
             operationId: getOrderRuleByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3336,8 +3224,7 @@ paths:
             -   OrderRule
         patch:
             description:
-                Partial update of an order rule by externalReferenceCode. Identical semantics to patchOrderRule. Throws
-                NoSuchCOREntryException (404) if not found.
+                Partial update of an order rule by externalReferenceCode. Identical semantics to patchOrderRule. Throws NoSuchCOREntryException (404) if not found.
             operationId: patchOrderRuleByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3403,9 +3290,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3421,9 +3306,7 @@ paths:
             -   OrderRule
         put:
             description:
-                Full replace of an order rule by externalReferenceCode (upsert semantics). If rule exists, updates all
-                fields via _updateOrderRule() and _updateNestedResources(); if not, creates a new rule _addCOREntry().
-                Returns OrderRule DTO.
+                Full replace of an order rule by externalReferenceCode (upsert semantics). If rule exists, updates all fields via _updateOrderRule() and _updateNestedResources(); if not, creates a new rule _addCOREntry(). Returns OrderRule DTO.
             operationId: putOrderRuleByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3489,9 +3372,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3508,8 +3389,7 @@ paths:
     /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-account-groups:
         get:
             description:
-                Retrieves order rule by externalReferenceCode, then returns linked account groups. Throws
-                NoSuchCOREntryException (404) if order rule not found.
+                Retrieves order rule by externalReferenceCode, then returns linked account groups. Throws NoSuchCOREntryException (404) if order rule not found.
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3565,8 +3445,7 @@ paths:
             -   OrderRuleAccountGroup
         post:
             description:
-                Add an account group to an order rule via externalReferenceCode. Throws NoSuchCOREntryException (404) if
-                order rule not found.
+                Add an account group to an order rule via externalReferenceCode. Throws NoSuchCOREntryException (404) if order rule not found.
             operationId: postOrderRuleByExternalReferenceCodeOrderRuleAccountGroup
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3638,9 +3517,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3657,8 +3534,7 @@ paths:
     /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-accounts:
         get:
             description:
-                Retrieves order rule first by externalReferenceCode, then returns its linked accounts. Throws
-                NoSuchCOREntryException (404) if order rule not found.
+                Retrieves order rule first by externalReferenceCode, then returns its linked accounts. Throws NoSuchCOREntryException (404) if order rule not found.
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleAccountsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3714,9 +3590,7 @@ paths:
             -   OrderRuleAccount
         post:
             description:
-                Add an account to an order rule via externalReferenceCode. Resolves order rule, then calls
-                _corEntryRelService.addCOREntryRel(). Returns created OrderRuleAccount DTO. Throws
-                NoSuchCOREntryException (404) if order rule not found.
+                Add an account to an order rule via externalReferenceCode. Resolves order rule, then calls _corEntryRelService.addCOREntryRel(). Returns created OrderRuleAccount DTO. Throws NoSuchCOREntryException (404) if order rule not found.
             operationId: postOrderRuleByExternalReferenceCodeOrderRuleAccount
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3788,9 +3662,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3807,8 +3679,7 @@ paths:
     /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-channels:
         get:
             description:
-                Retrieves order rule by externalReferenceCode, then returns linked channels. Throws
-                NoSuchCOREntryException (404) if order rule not found.
+                Retrieves order rule by externalReferenceCode, then returns linked channels. Throws NoSuchCOREntryException (404) if order rule not found.
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3864,8 +3735,7 @@ paths:
             -   OrderRuleChannel
         post:
             description:
-                Add a channel to an order rule via externalReferenceCode. Throws NoSuchCOREntryException (404) if order
-                rule not found.
+                Add a channel to an order rule via externalReferenceCode. Throws NoSuchCOREntryException (404) if order rule not found.
             operationId: postOrderRuleByExternalReferenceCodeOrderRuleChannel
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3937,9 +3807,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3956,8 +3824,7 @@ paths:
     /order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-order-types:
         get:
             description:
-                Retrieves order rule by externalReferenceCode, then returns linked order types. Throws
-                NoSuchCOREntryException (404) if order rule not found.
+                Retrieves order rule by externalReferenceCode, then returns linked order types. Throws NoSuchCOREntryException (404) if order rule not found.
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4013,8 +3880,7 @@ paths:
             -   OrderRuleOrderType
         post:
             description:
-                Add an order type to an order rule via externalReferenceCode. Throws NoSuchCOREntryException (404) if
-                order rule not found.
+                Add an order type to an order rule via externalReferenceCode. Throws NoSuchCOREntryException (404) if order rule not found.
             operationId: postOrderRuleByExternalReferenceCodeOrderRuleOrderType
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4086,9 +3952,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4268,9 +4132,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4418,9 +4280,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4566,9 +4426,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4714,9 +4572,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4862,9 +4718,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order rule from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4909,8 +4763,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order type channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this order type channel binding.
             summary: Deletes an Order Type Channel by ID.
             tags:
             -   OrderTypeChannel
@@ -4954,8 +4807,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this order type channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this order type channel binding.
                 404:
                     content:
                         application/json:
@@ -5043,9 +4895,7 @@ paths:
             -   OrderType
         post:
             description:
-                Create a new order type. Calls _addCommerceOrderType() which uses the service with
-                externalReferenceCode, localized name/description, active, dates, displayOrder, neverExpire. Returns
-                created OrderType DTO.
+                Create a new order type. Calls _addCommerceOrderType() which uses the service with externalReferenceCode, localized name/description, active, dates, displayOrder, neverExpire. Returns created OrderType DTO.
             operationId: postOrderType
             requestBody:
                 content:
@@ -5105,9 +4955,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order type from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order type from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5124,8 +4972,7 @@ paths:
     /order-types/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes an order type by externalReferenceCode. Returns 204 No Content; throws NoSuchOrderTypeException
-                (404) if not found.
+                Deletes an order type by externalReferenceCode. Returns 204 No Content; throws NoSuchOrderTypeException (404) if not found.
             operationId: deleteOrderTypeByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5159,8 +5006,7 @@ paths:
             -   OrderType
         get:
             description:
-                Retrieves an order type by externalReferenceCode the service. Identical response to getOrderType. Throws
-                NoSuchOrderTypeException (404) if not found.
+                Retrieves an order type by externalReferenceCode the service. Identical response to getOrderType. Throws NoSuchOrderTypeException (404) if not found.
             operationId: getOrderTypeByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5223,8 +5069,7 @@ paths:
             -   OrderType
         patch:
             description:
-                Partial update of an order type by externalReferenceCode. Identical semantics to patchOrderType. Throws
-                NoSuchOrderTypeException (404) if not found.
+                Partial update of an order type by externalReferenceCode. Identical semantics to patchOrderType. Throws NoSuchOrderTypeException (404) if not found.
             operationId: patchOrderTypeByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5293,9 +5138,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order type from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order type from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5311,8 +5154,7 @@ paths:
             -   OrderType
         put:
             description:
-                Full replace of an order type by externalReferenceCode (upsert semantics). If order type exists, updates
-                all fields() and custom fields; if not, creates a new order type. Returns OrderType DTO.
+                Full replace of an order type by externalReferenceCode (upsert semantics). If order type exists, updates all fields() and custom fields; if not, creates a new order type. Returns OrderType DTO.
             operationId: putOrderTypeByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5381,9 +5223,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order type from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order type from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5400,8 +5240,7 @@ paths:
     /order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels:
         get:
             description:
-                Retrieves order type first by externalReferenceCode, then returns its linked channels. Throws
-                NoSuchOrderTypeException (404) if order type not found.
+                Retrieves order type first by externalReferenceCode, then returns its linked channels. Throws NoSuchOrderTypeException (404) if order type not found.
             operationId: getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5457,9 +5296,7 @@ paths:
             -   OrderTypeChannel
         post:
             description:
-                Create an order-type-channel link for an order type accessed by externalReferenceCode. Resolves channel
-                by either ID or externalReferenceCode. Returns created OrderTypeChannel DTO. Throws
-                NoSuchOrderTypeException (404) or NoSuchChannelException (404) if either not found.
+                Create an order-type-channel link for an order type accessed by externalReferenceCode. Resolves channel by either ID or externalReferenceCode. Returns created OrderTypeChannel DTO. Throws NoSuchOrderTypeException (404) or NoSuchChannelException (404) if either not found.
             operationId: postOrderTypeByExternalReferenceCodeOrderTypeChannel
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5531,9 +5368,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order type from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order type from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5584,8 +5419,7 @@ paths:
             -   OrderType
         get:
             description:
-                Retrieves a single order type by ID(). Returns full OrderType DTO including nested orderTypeChannels.
-                Throws NoSuchOrderTypeException (404) if not found.
+                Retrieves a single order type by ID(). Returns full OrderType DTO including nested orderTypeChannels. Throws NoSuchOrderTypeException (404) if not found.
             operationId: getOrderType
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -5648,9 +5482,7 @@ paths:
             -   OrderType
         patch:
             description:
-                Partial update of an order type via _updateOrderType(). Updates externalReferenceCode, name,
-                description, active, displayDate, expirationDate, displayOrder, neverExpire, and custom fields. Returns
-                updated OrderType DTO. Throws NoSuchOrderTypeException (404) if not found.
+                Partial update of an order type via _updateOrderType(). Updates externalReferenceCode, name, description, active, displayDate, expirationDate, displayOrder, neverExpire, and custom fields. Returns updated OrderType DTO. Throws NoSuchOrderTypeException (404) if not found.
             operationId: patchOrderType
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -5719,9 +5551,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order type from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order type from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5868,9 +5698,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order type from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order type from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5945,8 +5773,7 @@ paths:
     /orderItems/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes an order item by externalReferenceCode. Returns 200 OK on successful deletion; throws
-                NoSuchOrderItemException (404) if not found.
+                Deletes an order item by externalReferenceCode. Returns 200 OK on successful deletion; throws NoSuchOrderItemException (404) if not found.
             operationId: deleteOrderItemByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5979,8 +5806,7 @@ paths:
             -   OrderItem
         get:
             description:
-                Retrieves an order item by externalReferenceCode the service. Throws NoSuchOrderItemException (404) if
-                not found.
+                Retrieves an order item by externalReferenceCode the service. Throws NoSuchOrderItemException (404) if not found.
             operationId: getOrderItemByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6043,8 +5869,7 @@ paths:
             -   OrderItem
         patch:
             description:
-                Partial update of an order item by externalReferenceCode. Identical semantics to patchOrderItem. Throws
-                NoSuchOrderItemException (404) if not found.
+                Partial update of an order item by externalReferenceCode. Identical semantics to patchOrderItem. Throws NoSuchOrderItemException (404) if not found.
             operationId: patchOrderItemByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6110,9 +5935,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order item from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6128,8 +5951,7 @@ paths:
             -   OrderItem
         put:
             description:
-                Updates an Order Item by external reference code. Backed by the matching commerce service method on the
-                target resource.
+                Updates an Order Item by external reference code. Backed by the matching commerce service method on the target resource.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -6194,9 +6016,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order item from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6213,8 +6033,7 @@ paths:
     /orderItems/{id}:
         delete:
             description:
-                Deletes an order item by ID, passing the order context with account, group, and order ID. Returns 204 No
-                Content; throws NoSuchOrderItemException (404) if not found.
+                Deletes an order item by ID, passing the order context with account, group, and order ID. Returns 204 No Content; throws NoSuchOrderItemException (404) if not found.
             operationId: deleteOrderItem
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -6247,8 +6066,7 @@ paths:
             -   OrderItem
         get:
             description:
-                Retrieves a single order item by ID via _orderItemDTOConverter.toDTO(). Returns full OrderItem DTO.
-                Throws NoSuchOrderItemException (404) if not found.
+                Retrieves a single order item by ID via _orderItemDTOConverter.toDTO(). Returns full OrderItem DTO. Throws NoSuchOrderItemException (404) if not found.
             operationId: getOrderItem
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -6311,9 +6129,7 @@ paths:
             -   OrderItem
         patch:
             description:
-                Partial update of an order item via _updateOrderItem(). Updates externalReferenceCode, options,
-                quantity, and pricing (if user has MANAGE_COMMERCE_ORDER_PRICES permission). Returns updated OrderItem
-                DTO. Throws NoSuchOrderItemException (404) if not found.
+                Partial update of an order item via _updateOrderItem(). Updates externalReferenceCode, options, quantity, and pricing (if user has MANAGE_COMMERCE_ORDER_PRICES permission). Returns updated OrderItem DTO. Throws NoSuchOrderItemException (404) if not found.
             operationId: patchOrderItem
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -6379,9 +6195,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order item from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6462,9 +6276,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order item from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6545,8 +6357,7 @@ paths:
     /orderNotes/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes an order note by externalReferenceCode. Returns 200 OK; throws NoSuchOrderNoteException (404) if
-                not found.
+                Deletes an order note by externalReferenceCode. Returns 200 OK; throws NoSuchOrderNoteException (404) if not found.
             operationId: deleteOrderNoteByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6579,8 +6390,7 @@ paths:
             -   OrderNote
         get:
             description:
-                Retrieves an order note by externalReferenceCode the service. Throws NoSuchOrderNoteException (404) if
-                not found.
+                Retrieves an order note by externalReferenceCode the service. Throws NoSuchOrderNoteException (404) if not found.
             operationId: getOrderNoteByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6643,8 +6453,7 @@ paths:
             -   OrderNote
         patch:
             description:
-                Partial update of an order note by externalReferenceCode. Returns 200 OK. Throws
-                NoSuchOrderNoteException (404) if not found.
+                Partial update of an order note by externalReferenceCode. Returns 200 OK. Throws NoSuchOrderNoteException (404) if not found.
             operationId: patchOrderNoteByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6706,9 +6515,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order note from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order note from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6883,9 +6690,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order note from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order note from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6902,10 +6707,7 @@ paths:
     /orders:
         get:
             description:
-                Lists all orders in the company scope. Supports OData filter, free-text search, paging, and sort. Backed
-                by SearchUtil.search() over order. Filterable fields -- accountId, orderStatus, channelId, orderTypeId,
-                paymentStatus, orderTypeExternalReferenceCode. Sortable fields -- createDate, modifiedDate, orderDate,
-                totalAmount. Search corpus -- creatorEmailAddress (indexed as orderCreatorEmailAddress).
+                Lists all orders in the company scope. Supports OData filter, free-text search, paging, and sort. Backed by SearchUtil.search() over order. Filterable fields -- accountId, orderStatus, channelId, orderTypeId, paymentStatus, orderTypeExternalReferenceCode. Sortable fields -- createDate, modifiedDate, orderDate, totalAmount. Search corpus -- creatorEmailAddress (indexed as orderCreatorEmailAddress).
             operationId: getOrdersPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
@@ -7026,9 +6828,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7045,8 +6845,7 @@ paths:
     /orders/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes an order identified by externalReferenceCode. Performs a lookup by externalReferenceCode within
-                the company scope first. Returns 204 No Content; throws NoSuchOrderException (404) if not found.
+                Deletes an order identified by externalReferenceCode. Performs a lookup by externalReferenceCode within the company scope first. Returns 204 No Content; throws NoSuchOrderException (404) if not found.
             operationId: deleteOrderByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7079,8 +6878,7 @@ paths:
             -   Order
         get:
             description:
-                Retrieves an order by externalReferenceCode the service. Identical to getOrder in response format.
-                Throws NoSuchOrderException (404) if not found.
+                Retrieves an order by externalReferenceCode the service. Identical to getOrder in response format. Throws NoSuchOrderException (404) if not found.
             operationId: getOrderByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7143,8 +6941,7 @@ paths:
             -   Order
         patch:
             description:
-                Partial update of an order by externalReferenceCode. Identical semantics to patchOrder. Throws
-                NoSuchOrderException (404) if order not found.
+                Partial update of an order by externalReferenceCode. Identical semantics to patchOrder. Throws NoSuchOrderException (404) if order not found.
             operationId: patchOrderByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7210,9 +7007,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict -- the requested update violates the order workflow state machine (for example, the
-                        order has already been completed, cancelled, or refunded and the requested transition is not
-                        permitted).
+                        Conflict -- the requested update violates the order workflow state machine (for example, the order has already been completed, cancelled, or refunded and the requested transition is not permitted).
                 422:
                     content:
                         application/json:
@@ -7222,9 +7017,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7240,10 +7033,7 @@ paths:
             -   Order
         put:
             description:
-                Full replace of an order by externalReferenceCode (upsert semantics). Calls
-                _addOrUpdateOrder(externalReferenceCode, order). If order exists, all fields are replaced; if not, a new
-                order is created. Identical to postOrder in implementation but with explicit ERC provided. Returns Order
-                DTO.
+                Full replace of an order by externalReferenceCode (upsert semantics). Calls _addOrUpdateOrder(externalReferenceCode, order). If order exists, all fields are replaced; if not, a new order is created. Identical to postOrder in implementation but with explicit ERC provided. Returns Order DTO.
             operationId: putOrderByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7309,9 +7099,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict -- the requested update violates the order workflow state machine (for example, the
-                        order has already been completed, cancelled, or refunded and the requested transition is not
-                        permitted).
+                        Conflict -- the requested update violates the order workflow state machine (for example, the order has already been completed, cancelled, or refunded and the requested transition is not permitted).
                 422:
                     content:
                         application/json:
@@ -7321,9 +7109,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7340,8 +7126,7 @@ paths:
     /orders/by-externalReferenceCode/{externalReferenceCode}/account:
         get:
             description:
-                Nested field for orders accessed by externalReferenceCode; returns the associated Account. Throws
-                NoSuchOrderException (404) if order not found.
+                Nested field for orders accessed by externalReferenceCode; returns the associated Account. Throws NoSuchOrderException (404) if order not found.
             operationId: getOrderByExternalReferenceCodeAccount
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7405,8 +7190,7 @@ paths:
     /orders/by-externalReferenceCode/{externalReferenceCode}/attachments:
         get:
             description:
-                Identical to getOrderAttachmentsPage but order is resolved by externalReferenceCode first. Throws
-                NoSuchOrderException (404) if order not found.
+                Identical to getOrderAttachmentsPage but order is resolved by externalReferenceCode first. Throws NoSuchOrderException (404) if order not found.
             operationId: getOrderByExternalReferenceCodeAttachmentsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7435,8 +7219,7 @@ paths:
             -   Attachment
         post:
             description:
-                Create an attachment for an order accessed by externalReferenceCode. Resolves order first, then
-                delegates to postOrderAttachment(). Throws NoSuchOrderException (404) if order not found.
+                Create an attachment for an order accessed by externalReferenceCode. Resolves order first, then delegates to postOrderAttachment(). Throws NoSuchOrderException (404) if order not found.
             operationId: postOrderByExternalReferenceCodeAttachment
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7502,9 +7285,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7521,8 +7302,7 @@ paths:
     /orders/by-externalReferenceCode/{externalReferenceCode}/billingAddress:
         get:
             description:
-                Nested field for orders accessed by externalReferenceCode; returns BillingAddress. Throws
-                NoSuchOrderException (404) if order not found.
+                Nested field for orders accessed by externalReferenceCode; returns BillingAddress. Throws NoSuchOrderException (404) if order not found.
             operationId: getOrderByExternalReferenceCodeBillingAddress
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7585,8 +7365,7 @@ paths:
             -   BillingAddress
         patch:
             description:
-                Partial update of billing address for an order accessed by externalReferenceCode. Returns 204 No
-                Content. Throws NoSuchOrderException (404) if order not found.
+                Partial update of billing address for an order accessed by externalReferenceCode. Returns 204 No Content. Throws NoSuchOrderException (404) if order not found.
             operationId: patchOrderByExternalReferenceCodeBillingAddress
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7648,9 +7427,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7667,8 +7444,7 @@ paths:
     /orders/by-externalReferenceCode/{externalReferenceCode}/channel:
         get:
             description:
-                Nested field for orders accessed by externalReferenceCode; returns the Channel. Throws
-                NoSuchOrderException (404) if order not found.
+                Nested field for orders accessed by externalReferenceCode; returns the Channel. Throws NoSuchOrderException (404) if order not found.
             operationId: getOrderByExternalReferenceCodeChannel
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7732,9 +7508,7 @@ paths:
     /orders/by-externalReferenceCode/{externalReferenceCode}/orderItems:
         get:
             description:
-                List endpoint for items belonging to a single order, resolved by order externalReferenceCode. Delegates
-                to the service. Returns Page<OrderItem> with total count. Throws NoSuchOrderException (404) if order not
-                found.
+                List endpoint for items belonging to a single order, resolved by order externalReferenceCode. Delegates to the service. Returns Page<OrderItem> with total count. Throws NoSuchOrderException (404) if order not found.
             operationId: getOrderByExternalReferenceCodeOrderItemsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7793,8 +7567,7 @@ paths:
             -   OrderItem
         post:
             description:
-                Create an order item in an order accessed by externalReferenceCode. Delegates to _addOrderItem() which
-                calls OrderItemUtil. Throws NoSuchOrderException (404) if order not found.
+                Create an order item in an order accessed by externalReferenceCode. Delegates to _addOrderItem() which calls OrderItemUtil. Throws NoSuchOrderException (404) if order not found.
             operationId: postOrderByExternalReferenceCodeOrderItem
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7866,9 +7639,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7885,8 +7656,7 @@ paths:
     /orders/by-externalReferenceCode/{externalReferenceCode}/orderNotes:
         get:
             description:
-                List endpoint for notes belonging to an order, resolved by externalReferenceCode. Delegates to the
-                service. Throws NoSuchOrderException (404) if order not found.
+                List endpoint for notes belonging to an order, resolved by externalReferenceCode. Delegates to the service. Throws NoSuchOrderException (404) if order not found.
             operationId: getOrderByExternalReferenceCodeOrderNotesPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7945,8 +7715,7 @@ paths:
             -   OrderNote
         post:
             description:
-                Create an order note for an order accessed by externalReferenceCode. Delegates to
-                _addOrUpdateOrderNote(). Throws NoSuchOrderException (404) if order not found.
+                Create an order note for an order accessed by externalReferenceCode. Delegates to _addOrUpdateOrderNote(). Throws NoSuchOrderException (404) if order not found.
             operationId: postOrderByExternalReferenceCodeOrderNote
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8018,9 +7787,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8037,8 +7804,7 @@ paths:
     /orders/by-externalReferenceCode/{externalReferenceCode}/shippingAddress:
         get:
             description:
-                Nested field for orders accessed by externalReferenceCode; returns ShippingAddress. Throws
-                NoSuchOrderException (404) if order not found.
+                Nested field for orders accessed by externalReferenceCode; returns ShippingAddress. Throws NoSuchOrderException (404) if order not found.
             operationId: getOrderByExternalReferenceCodeShippingAddress
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8101,8 +7867,7 @@ paths:
             -   ShippingAddress
         patch:
             description:
-                Partial update of shipping address for an order accessed by externalReferenceCode. Returns 204 No
-                Content. Throws NoSuchOrderException (404) if order not found.
+                Partial update of shipping address for an order accessed by externalReferenceCode. Returns 204 No Content. Throws NoSuchOrderException (404) if order not found.
             operationId: patchOrderByExternalReferenceCodeShippingAddress
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8164,9 +7929,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8183,8 +7946,7 @@ paths:
     /orders/{id}:
         delete:
             description:
-                Deletes an order by its ID. Returns 204 No Content on success; throws NoSuchOrderException (404) if the
-                order does not exist.
+                Deletes an order by its ID. Returns 204 No Content on success; throws NoSuchOrderException (404) if the order does not exist.
             operationId: deleteOrder
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -8217,9 +7979,7 @@ paths:
             -   Order
         get:
             description:
-                Retrieves a single order by ID(id), converts to DTO with actions, locale-aware context, and HATEOAS
-                links. Returns full Order object with all nested relationships populated via _toOrder(). Throws
-                NoSuchOrderException (404) if not found.
+                Retrieves a single order by ID(id), converts to DTO with actions, locale-aware context, and HATEOAS links. Returns full Order object with all nested relationships populated via _toOrder(). Throws NoSuchOrderException (404) if not found.
             operationId: getOrder
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -8282,11 +8042,7 @@ paths:
             -   Order
         patch:
             description:
-                Partial update of an order (JSON Merge Patch semantics). Calls _updateOrder() which preserves existing
-                fields not supplied in the patch. Updates via _commerceOrderEngine for fields, the service for pricing,
-                _commercePaymentEngine.updateOrderPaymentStatus() if payment status changes, the service if terms
-                change, and _updateNestedResources() for items/addresses. Returns full updated Order DTO. Throws
-                NoSuchOrderException (404) if order not found.
+                Partial update of an order (JSON Merge Patch semantics). Calls _updateOrder() which preserves existing fields not supplied in the patch. Updates via _commerceOrderEngine for fields, the service for pricing, _commercePaymentEngine.updateOrderPaymentStatus() if payment status changes, the service if terms change, and _updateNestedResources() for items/addresses. Returns full updated Order DTO. Throws NoSuchOrderException (404) if order not found.
             operationId: patchOrder
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -8352,9 +8108,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        Conflict -- the requested update violates the order workflow state machine (for example, the
-                        order has already been completed, cancelled, or refunded and the requested transition is not
-                        permitted).
+                        Conflict -- the requested update violates the order workflow state machine (for example, the order has already been completed, cancelled, or refunded and the requested transition is not permitted).
                 422:
                     content:
                         application/json:
@@ -8364,9 +8118,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8447,8 +8199,7 @@ paths:
     /orders/{id}/billingAddress:
         get:
             description:
-                Nested field accessor returning the BillingAddress for order by order ID. Returns empty object if no
-                billing address exists.
+                Nested field accessor returning the BillingAddress for order by order ID. Returns empty object if no billing address exists.
             operationId: getOrderIdBillingAddress
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -8573,9 +8324,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8787,9 +8536,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8937,9 +8684,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9081,9 +8826,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9100,9 +8843,7 @@ paths:
     /orders/{orderId}/attachments:
         get:
             description:
-                List endpoint for order attachments; supports pagination, filtering, and sorting. Delegates to the
-                service scoped to a single order. Returns Page<Attachment> with total count. Searchable/filterable by
-                attachment properties stored in attachment model.
+                List endpoint for order attachments; supports pagination, filtering, and sorting. Delegates to the service scoped to a single order. Returns Page<Attachment> with total count. Searchable/filterable by attachment properties stored in attachment model.
             operationId: getOrderAttachmentsPage
             parameters:
             -   $ref: "#/components/parameters/orderIdPathParam"
@@ -9131,8 +8872,7 @@ paths:
             -   Attachment
         post:
             description:
-                Create a file attachment for an order. Base64-decodes the attachment field and calls the service with
-                title, type, restricted flag, and priority. Returns created Attachment DTO.
+                Create a file attachment for an order. Base64-decodes the attachment field and calls the service with title, type, restricted flag, and priority. Returns created Attachment DTO.
             operationId: postOrderAttachment
             parameters:
             -   $ref: "#/components/parameters/orderIdPathParam"
@@ -9198,9 +8938,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9252,9 +8990,7 @@ paths:
             -   Attachment
         get:
             description:
-                Retrieves a single attachment from an order by attachment ID the service. Returns populated Attachment
-                DTO with file metadata (extension, fileName, url) and actions. Throws NoSuchOrderAttachmentException
-                (404) if not found.
+                Retrieves a single attachment from an order by attachment ID the service. Returns populated Attachment DTO with file metadata (extension, fileName, url) and actions. Throws NoSuchOrderAttachmentException (404) if not found.
             operationId: getOrderAttachment
             parameters:
             -   $ref: "#/components/parameters/orderIdPathParam"
@@ -9318,8 +9054,7 @@ paths:
             -   Attachment
         patch:
             description:
-                Partial update of an order attachment the service. Updates priority, restricted flag, title, and type.
-                Returns updated Attachment DTO. Throws NoSuchOrderAttachmentException (404) if not found.
+                Partial update of an order attachment the service. Updates priority, restricted flag, title, and type. Returns updated Attachment DTO. Throws NoSuchOrderAttachmentException (404) if not found.
             operationId: patchOrderAttachment
             parameters:
             -   $ref: "#/components/parameters/orderIdPathParam"
@@ -9386,9 +9121,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9433,8 +9166,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this term order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this term order type binding.
             summary: Deletes a Term Order Type by ID.
             tags:
             -   TermOrderType
@@ -9478,8 +9210,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this term order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this term order type binding.
                 404:
                     content:
                         application/json:
@@ -9506,8 +9237,7 @@ paths:
     /terms:
         get:
             description:
-                List endpoint for all commerce terms in the system. Supports pagination, filtering, and sorting
-                SearchUtil.search(). Status is set to Any.
+                List endpoint for all commerce terms in the system. Supports pagination, filtering, and sorting SearchUtil.search(). Status is set to Any.
             operationId: getTermsPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
@@ -9565,9 +9295,7 @@ paths:
             -   Term
         post:
             description:
-                Create a new commerce term. Calls _addCommerceTermEntry() which uses the service with
-                externalReferenceCode, localized description/label, active, dates, name, priority, type, typeSettings.
-                Also calls _updateNestedResources() to add linked order types if provided. Returns created Term DTO.
+                Create a new commerce term. Calls _addCommerceTermEntry() which uses the service with externalReferenceCode, localized description/label, active, dates, name, priority, type, typeSettings. Also calls _updateNestedResources() to add linked order types if provided. Returns created Term DTO.
             operationId: postTerm
             requestBody:
                 content:
@@ -9627,9 +9355,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the term from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the term from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9646,8 +9372,7 @@ paths:
     /terms/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes a commerce term by externalReferenceCode followed by deletion. Throws NoSuchTermEntryException
-                (404) if not found.
+                Deletes a commerce term by externalReferenceCode followed by deletion. Throws NoSuchTermEntryException (404) if not found.
             operationId: deleteTermByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -9681,8 +9406,7 @@ paths:
             -   Term
         get:
             description:
-                Retrieves a term by externalReferenceCode the service. Identical response to getTerm. Throws
-                NoSuchTermEntryException (404) if not found.
+                Retrieves a term by externalReferenceCode the service. Identical response to getTerm. Throws NoSuchTermEntryException (404) if not found.
             operationId: getTermByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -9745,10 +9469,7 @@ paths:
             -   Term
         patch:
             description:
-                Partial update of a term by externalReferenceCode via _updateTerm(). Updates active, description,
-                displayDate, expirationDate, label, name, neverExpire, priority, typeSettings, and calls
-                _updateNestedResources() to sync linked order types. Returns updated Term DTO. Throws
-                NoSuchTermEntryException (404) if not found.
+                Partial update of a term by externalReferenceCode via _updateTerm(). Updates active, description, displayDate, expirationDate, label, name, neverExpire, priority, typeSettings, and calls _updateNestedResources() to sync linked order types. Returns updated Term DTO. Throws NoSuchTermEntryException (404) if not found.
             operationId: patchTermByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -9814,9 +9535,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the term from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the term from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9832,8 +9551,7 @@ paths:
             -   Term
         put:
             description:
-                Full replace of a term by externalReferenceCode (upsert semantics). If term exists, updates all fields
-                and calls _updateNestedResources(); if not, calls postTerm(). Returns Term DTO.
+                Full replace of a term by externalReferenceCode (upsert semantics). If term exists, updates all fields and calls _updateNestedResources(); if not, calls postTerm(). Returns Term DTO.
             operationId: putTermByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -9899,9 +9617,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the term from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the term from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9918,8 +9634,7 @@ paths:
     /terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types:
         get:
             description:
-                Retrieves term first by externalReferenceCode, then returns its linked order types. Throws
-                NoSuchTermEntryException (404) if term not found.
+                Retrieves term first by externalReferenceCode, then returns its linked order types. Throws NoSuchTermEntryException (404) if term not found.
             operationId: getTermByExternalReferenceCodeTermOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -9975,8 +9690,7 @@ paths:
             -   TermOrderType
         post:
             description:
-                Add an order type to a term via externalReferenceCode. Resolves term, then calls the service. Returns
-                created TermOrderType DTO. Throws NoSuchTermEntryException (404) if term not found.
+                Add an order type to a term via externalReferenceCode. Resolves term, then calls the service. Returns created TermOrderType DTO. Throws NoSuchTermEntryException (404) if term not found.
             operationId: postTermByExternalReferenceCodeTermOrderType
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -10048,9 +9762,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the term from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the term from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -10230,9 +9942,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the term from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the term from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -10378,9 +10088,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the term from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the term from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -10399,20 +10107,16 @@ tags:
         Endpoints for retrieving the Account entity linked to an order, nested under Order.account.
     name: Account
 -   description:
-        Endpoints for managing file attachments associated with orders, including upload, download, update, and delete
-        operations.
+        Endpoints for managing file attachments associated with orders, including upload, download, update, and delete operations.
     name: Attachment
 -   description:
-        Endpoints for retrieving and updating the billing address bound to an order, persisted as a address and updated
-        via BillingAddressUtil.
+        Endpoints for retrieving and updating the billing address bound to an order, persisted as a address and updated via BillingAddressUtil.
     name: BillingAddress
 -   description:
         Endpoints for retrieving the Channel entity linked to an order, representing the sales channel context.
     name: Channel
 -   description:
-        Endpoints for managing commerce orders end-to-end -- create, retrieve, update, and delete the order header
-        (account, channel, currency, addresses, payment and delivery terms, totals) and orchestrate the nested order
-        items, attachments, notes, and addresses.
+        Endpoints for managing commerce orders end-to-end -- create, retrieve, update, and delete the order header (account, channel, currency, addresses, payment and delivery terms, totals) and orchestrate the nested order items, attachments, notes, and addresses.
     name: Order
 -   description:
         Endpoints for retrieving account group entities linked to order rules.
@@ -10421,19 +10125,16 @@ tags:
         Endpoints for managing line items within orders, including quantity, options, pricing, and per-item shipping.
     name: OrderItem
 -   description:
-        Endpoints for managing notes attached to a single order, including internal-only notes flagged via the
-        restricted property.
+        Endpoints for managing notes attached to a single order, including internal-only notes flagged via the restricted property.
     name: OrderNote
 -   description:
-        Endpoints for managing order rules (COREntry) that apply business logic to orders based on account, channel, and
-        order-type conditions.
+        Endpoints for managing order rules (COREntry) that apply business logic to orders based on account, channel, and order-type conditions.
     name: OrderRule
 -   description:
         Endpoints for managing account-to-order-rule relationships, which determine which accounts a rule applies to.
     name: OrderRuleAccount
 -   description:
-        Endpoints for managing account-group-to-order-rule relationships, enabling rule application to groups of
-        accounts.
+        Endpoints for managing account-group-to-order-rule relationships, enabling rule application to groups of accounts.
     name: OrderRuleAccountGroup
 -   description:
         Endpoints for managing channel-to-order-rule relationships, enabling channel-specific rule application.
@@ -10445,12 +10146,10 @@ tags:
         Endpoints for managing order type classifications and their associations with sales channels.
     name: OrderType
 -   description:
-        Endpoints for managing order-type-to-channel relationships, determining which order types are available per
-        channel.
+        Endpoints for managing order-type-to-channel relationships, determining which order types are available per channel.
     name: OrderTypeChannel
 -   description:
-        Endpoints for retrieving and updating the shipping address bound to an order or order item, persisted as a
-        address and updated via ShippingAddressUtil.
+        Endpoints for retrieving and updating the shipping address bound to an order or order item, persisted as a address and updated via ShippingAddressUtil.
     name: ShippingAddress
 -   description:
         Endpoints for managing commerce terms (delivery and payment terms) and their associations with order types.

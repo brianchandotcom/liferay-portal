@@ -72,8 +72,7 @@ components:
                     type: string
                 themeId:
                     description:
-                        The theme id or the themeCSS client extension external reference code this style book is based
-                        on.
+                        The theme id or the themeCSS client extension external reference code this style book is based on.
                     readOnly: true
                     type: string
             type: object

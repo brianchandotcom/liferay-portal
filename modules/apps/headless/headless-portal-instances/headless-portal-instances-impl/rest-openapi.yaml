@@ -32,8 +32,7 @@ components:
                     $ref: "#/components/schemas/Admin"
                     # @review
                     description:
-                        The portal instance's administrator. This field is optional and is only used in the portal
-                        instance creation.
+                        The portal instance's administrator. This field is optional and is only used in the portal instance creation.
                     writeOnly: true
                 companyId:
                     description:
@@ -56,8 +55,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.portal.instances.client', and version '1.0.31'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.portal.instances.client', and version '1.0.31'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -164,8 +162,7 @@ paths:
         patch:
             # @review
             description:
-                Updates the portal instance with information sent in the request body. Only the provided fields are
-                updated.
+                Updates the portal instance with information sent in the request body. Only the provided fields are updated.
             operationId: patchPortalInstance
             parameters:
                 -   in: path
@@ -219,8 +216,7 @@ paths:
         # @review
         put:
             description:
-                Deactivates the portal instance. When a portal instance is deactivated, its virtual host will not longer
-                respond requests.
+                Deactivates the portal instance. When a portal instance is deactivated, its virtual host will not longer respond requests.
             operationId: putPortalInstanceDeactivate
             parameters:
                 -   in: path

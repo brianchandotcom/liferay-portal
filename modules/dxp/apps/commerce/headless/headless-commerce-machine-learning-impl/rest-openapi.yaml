@@ -3,9 +3,7 @@ components:
         accountIdsQueryParam:
             in: query
             description:
-                Restricts the response to the supplied account identifiers. Repeat the parameter once per identifier.
-                The set is further intersected with the accounts the caller has view permission on; when the
-                intersection is empty the response is an empty page.
+                Restricts the response to the supplied account identifiers. Repeat the parameter once per identifier. The set is further intersected with the accounts the caller has view permission on; when the intersection is empty the response is an empty page.
             explode: true
             name: accountIds
             required: false
@@ -19,8 +17,7 @@ components:
         categoryIdsQueryParam:
             in: query
             description:
-                Restricts the response to the supplied category identifiers. Repeat the parameter once per identifier.
-                When omitted, forecast points across every category are returned.
+                Restricts the response to the supplied category identifiers. Repeat the parameter once per identifier. When omitted, forecast points across every category are returned.
             explode: true
             name: categoryIds
             required: false
@@ -44,9 +41,7 @@ components:
         forecastStartDateQueryParam:
             in: query
             description:
-                Anchor date for the forecast window in ISO 8601 date format (yyyy-MM-dd). Defaults to the current server
-                date when omitted. The response covers historyLength months before this date and forecastLength months
-                from this date forward.
+                Anchor date for the forecast window in ISO 8601 date format (yyyy-MM-dd). Defaults to the current server date when omitted. The response covers historyLength months before this date and forecastLength months from this date forward.
             explode: true
             name: forecastStartDate
             required: false
@@ -83,8 +78,7 @@ components:
         skusQueryParam:
             in: query
             description:
-                Restricts the response to the supplied SKU strings. Repeat the parameter for each SKU. When omitted,
-                forecast points across every trained SKU are returned.
+                Restricts the response to the supplied SKU strings. Repeat the parameter for each SKU. When omitted, forecast points across every trained SKU are returned.
             explode: true
             name: skus
             required: false
@@ -117,8 +111,7 @@ components:
     schemas:
         AccountCategoryForecast:
             description:
-                Monthly revenue forecast point for one account restricted to one category, produced by the analytics
-                training pipeline and downloaded back into the portal by the analytics download executor.
+                Monthly revenue forecast point for one account restricted to one category, produced by the analytics training pipeline and downloaded back into the portal by the analytics download executor.
             properties:
                 account:
                     description:
@@ -128,9 +121,7 @@ components:
                     type: integer
                 actual:
                     description:
-                        Observed revenue for the period, aggregated from completed orders by the analytics pipeline.
-                        Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not
-                        been observed yet.
+                        Observed revenue for the period, aggregated from completed orders by the analytics pipeline. Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not been observed yet.
                     example: 43855
                     format: float
                     type: number
@@ -142,8 +133,7 @@ components:
                     type: integer
                 categoryTitle:
                     description:
-                        Localized title of the referenced category, resolved in the caller's preferred locale. Read-only
-                        convenience field; not persisted.
+                        Localized title of the referenced category, resolved in the caller's preferred locale. Read-only convenience field; not persisted.
                     example: Default Category
                     readOnly: true
                     type: string
@@ -155,8 +145,7 @@ components:
                     type: number
                 forecastLowerBound:
                     description:
-                        Lower bound of the forecast confidence interval. Negative values occur when the model's
-                        confidence interval extends below zero; treat them as zero for display purposes.
+                        Lower bound of the forecast confidence interval. Negative values occur when the model's confidence interval extends below zero; treat them as zero for display purposes.
                     example: -21236.652
                     format: float
                     type: number
@@ -180,8 +169,7 @@ components:
             type: object
         AccountForecast:
             description:
-                Monthly revenue forecast point for one account, produced by the analytics training pipeline and
-                downloaded back into the portal by the analytics download executor.
+                Monthly revenue forecast point for one account, produced by the analytics training pipeline and downloaded back into the portal by the analytics download executor.
             properties:
                 account:
                     description:
@@ -191,9 +179,7 @@ components:
                     type: integer
                 actual:
                     description:
-                        Observed revenue for the period, aggregated from completed orders by the analytics pipeline.
-                        Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not
-                        been observed yet.
+                        Observed revenue for the period, aggregated from completed orders by the analytics pipeline. Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not been observed yet.
                     example: 43855
                     format: float
                     type: number
@@ -205,8 +191,7 @@ components:
                     type: number
                 forecastLowerBound:
                     description:
-                        Lower bound of the forecast confidence interval. Negative values occur when the model's
-                        confidence interval extends below zero; treat them as zero for display purposes.
+                        Lower bound of the forecast confidence interval. Negative values occur when the model's confidence interval extends below zero; treat them as zero for display purposes.
                     example: -21236.652
                     format: float
                     type: number
@@ -230,8 +215,7 @@ components:
             type: object
         Category:
             description:
-                Wire shape for a category referenced from this API. Used as a lightweight projection of the portal's
-                category model when uploading categorisation data with each product or forecast point.
+                Wire shape for a category referenced from this API. Used as a lightweight projection of the portal's category model when uploading categorisation data with each product or forecast point.
             properties:
                 externalReferenceCode:
                     description:
@@ -258,8 +242,7 @@ components:
                     type: integer
                 vocabulary:
                     description:
-                        Name of the parent vocabulary the category sits in. Read-only convenience field; resolved from
-                        the persisted vocabulary reference.
+                        Name of the parent vocabulary the category sits in. Read-only convenience field; resolved from the persisted vocabulary reference.
                     example: Default Vocabulary
                     readOnly: true
                     type: string
@@ -268,8 +251,7 @@ components:
             type: object
         Error:
             description:
-                Standard JSON envelope returned by every non-2xx response, carrying the HTTP status, an internal error
-                code, and a human-readable message.
+                Standard JSON envelope returned by every non-2xx response, carrying the HTTP status, an internal error code, and a human-readable message.
             properties:
                 errorCode:
                     description:
@@ -303,13 +285,11 @@ components:
             type: object
         FrequentPatternRecommendation:
             description:
-                Wire shape for an association-rule recommendation downloaded from the analytics pipeline. Given a set of
-                antecedent products that make up a basket, the model recommends a consequent product.
+                Wire shape for an association-rule recommendation downloaded from the analytics pipeline. Given a set of antecedent products that make up a basket, the model recommends a consequent product.
             properties:
                 antecedentIds:
                     description:
-                        References to the products that make up the antecedent (left-hand side) of the association rule
-                        (FK identifier array). The recommendation applies when a basket contains all of these products.
+                        References to the products that make up the antecedent (left-hand side) of the association rule (FK identifier array). The recommendation applies when a basket contains all of these products.
                     example:
                         -   10130
                         -   10131
@@ -319,8 +299,7 @@ components:
                     type: array
                 antecedentIdsLength:
                     description:
-                        Cardinality of `antecedentIds`. Persisted alongside the array so the index can filter rules by
-                        antecedent-set size without unpacking the array.
+                        Cardinality of `antecedentIds`. Persisted alongside the array so the index can filter rules by antecedent-set size without unpacking the array.
                     example: 2
                     format: int64
                     type: integer
@@ -332,8 +311,7 @@ components:
                     type: string
                 jobId:
                     description:
-                        Identifier of the analytics training job that produced this rule. Used to group rules by
-                        training run.
+                        Identifier of the analytics training job that produced this rule. Used to group rules by training run.
                     example: ml-job-2025-04-01
                     type: string
                 recommendedProductId:
@@ -344,21 +322,17 @@ components:
                     type: integer
                 score:
                     description:
-                        Association-rule confidence score in [0, 1]. Higher means the rule fires more reliably;
-                        consumers typically sort descending and apply a threshold.
+                        Association-rule confidence score in [0, 1]. Higher means the rule fires more reliably; consumers typically sort descending and apply a threshold.
                     example: 0.78
                     format: float
                     type: number
         Order:
             description:
-                Wire shape for a commerce order uploaded to the analytics pipeline. Carries the fields the training
-                models need to learn revenue and demand patterns -- account, channel, currency, status, total, and order
-                line items.
+                Wire shape for a commerce order uploaded to the analytics pipeline. Carries the fields the training models need to learn revenue and demand patterns -- account, channel, currency, status, total, and order line items.
             properties:
                 accountExternalReferenceCode:
                     description:
-                        Idempotency key of the account the order belongs to. Used by the analytics pipeline to join
-                        orders to accounts without depending on internal identifiers.
+                        Idempotency key of the account the order belongs to. Used by the analytics pipeline to join orders to accounts without depending on internal identifiers.
                     example: AB-34098-789-N
                     type: string
                 accountId:
@@ -370,8 +344,7 @@ components:
                     type: integer
                 channelId:
                     description:
-                        Reference to the channel the order was placed on (FK identifier). Resolved on the server from
-                        the order's site identifier.
+                        Reference to the channel the order was placed on (FK identifier). Resolved on the server from the order's site identifier.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -391,8 +364,7 @@ components:
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form custom attributes attached to the order. Map keys are the attribute names; values are
-                        their typed values serialised as JSON.
+                        Free-form custom attributes attached to the order. Map keys are the attribute names; values are their typed values serialised as JSON.
                     example:
                         priorityHandling: true
                     type: object
@@ -417,8 +389,7 @@ components:
                     type: string
                 orderDate:
                     description:
-                        Date the order was placed by the buyer, in ISO 8601 (yyyy-MM-dd). Distinct from the create date
-                        when the order was imported.
+                        Date the order was placed by the buyer, in ISO 8601 (yyyy-MM-dd). Distinct from the create date when the order was imported.
                     example: 2017-07-21
                     format: date
                     type: string
@@ -430,10 +401,7 @@ components:
                     type: array
                 orderStatus:
                     description:
-                        "Integer order status -- 0=Completed, 2=Open, 4=Pending, 6=InProgress, 8=Cancelled,
-                        9=Subscription, 10=Processing, 13=AwaitingPickup, 14=PartiallyShipped, 15=Shipped, 16=Declined,
-                        17=Refunded, 18=Disputed, 19=PartiallyRefunded, 20=OnHold, 21=QuoteRequested,
-                        22=QuoteProcessed."
+                        "Integer order status -- 0=Completed, 2=Open, 4=Pending, 6=InProgress, 8=Cancelled, 9=Subscription, 10=Processing, 13=AwaitingPickup, 14=PartiallyShipped, 15=Shipped, 16=Declined, 17=Refunded, 18=Disputed, 19=PartiallyRefunded, 20=OnHold, 21=QuoteRequested, 22=QuoteProcessed."
                     example: 0
                     format: int32
                     minimum: 0
@@ -457,22 +425,19 @@ components:
                     type: string
                 paymentStatus:
                     description:
-                        Integer payment status set by the payment engine -- 0=Pending, 1=Authorized, 2=Paid,
-                        3=PartiallyRefunded, 4=Refunded, 5=Cancelled, 6=Failed.
+                        Integer payment status set by the payment engine -- 0=Pending, 1=Authorized, 2=Paid, 3=PartiallyRefunded, 4=Refunded, 5=Cancelled, 6=Failed.
                     example: 0
                     format: int32
                     minimum: 0
                     type: integer
                 status:
                     description:
-                        Portal workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Inactive, 5=Scheduled,
-                        6=Incomplete, 7=Denied, 8=InTrash. Distinct from `orderStatus`.
+                        Portal workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Inactive, 5=Scheduled, 6=Incomplete, 7=Denied, 8=InTrash. Distinct from `orderStatus`.
                     example: 0
                     type: integer
                 total:
                     description:
-                        Order total in the order's currency. Tax inclusion follows the channel's tax-inclusive setting.
-                        Read-only on this wire shape; computed by the order engine.
+                        Order total in the order's currency. Tax inclusion follows the channel's tax-inclusive setting. Read-only on this wire shape; computed by the order engine.
                     example: 113
                     format: bigdecimal
                     minimum: 0
@@ -490,8 +455,7 @@ components:
             type: object
         OrderItem:
             description:
-                Wire shape for an order line uploaded alongside its parent order to the analytics pipeline. Carries
-                product, SKU, quantity, and price information per line.
+                Wire shape for an order line uploaded alongside its parent order to the analytics pipeline. Carries product, SKU, quantity, and price information per line.
             properties:
                 cpDefinitionId:
                     description:
@@ -509,8 +473,7 @@ components:
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form custom attributes attached to the order line. Map keys are the attribute names; values
-                        are their typed values serialised as JSON.
+                        Free-form custom attributes attached to the order line. Map keys are the attribute names; values are their typed values serialised as JSON.
                     example:
                         giftWrap: true
                     type: object
@@ -521,8 +484,7 @@ components:
                     type: string
                 finalPrice:
                     description:
-                        Line total after discounts and promotions, expressed in the parent order's currency. Tax
-                        inclusion follows the channel's tax-inclusive setting.
+                        Line total after discounts and promotions, expressed in the parent order's currency. Tax inclusion follows the channel's tax-inclusive setting.
                     example: 200
                     format: bigdecimal
                     minimum: 0
@@ -545,8 +507,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized product name captured at the time the order was placed. Map keys are locale codes;
-                        values are the translated strings.
+                        Localized product name captured at the time the order was placed. Map keys are locale codes; values are the translated strings.
                     example:
                         en_US: Hand Saw
                         hr_HR: Product Name HR
@@ -566,16 +527,14 @@ components:
                     type: integer
                 parentOrderItemId:
                     description:
-                        Reference to the parent order line when the line is part of a bundle (FK identifier). Zero when
-                        the line is top-level.
+                        Reference to the parent order line when the line is part of a bundle (FK identifier). Zero when the line is top-level.
                     example: 30128
                     format: int64
                     minimum: 0
                     type: integer
                 quantity:
                     description:
-                        Number of units ordered. Combined with the unit-of-measure key when the SKU is sold in
-                        fractional units.
+                        Number of units ordered. Combined with the unit-of-measure key when the SKU is sold in fractional units.
                     example: 2
                     format: int32
                     minimum: 0
@@ -592,14 +551,12 @@ components:
                     type: boolean
                 unitOfMeasure:
                     description:
-                        Unit-of-measure key the quantity is expressed in. Resolved against the SKU's allowed units of
-                        measure.
+                        Unit-of-measure key the quantity is expressed in. Resolved against the SKU's allowed units of measure.
                     example: pc
                     type: string
                 unitPrice:
                     description:
-                        Unit price at the time the order was placed, expressed in the parent order's currency. Tax
-                        inclusion follows the channel's tax-inclusive setting.
+                        Unit price at the time the order was placed, expressed in the parent order's currency. Tax inclusion follows the channel's tax-inclusive setting.
                     example: 101
                     format: bigdecimal
                     minimum: 0
@@ -613,8 +570,7 @@ components:
             type: object
         Product:
             description:
-                Wire shape for a catalog product uploaded to the analytics pipeline. Carries the metadata the training
-                models need to learn product affinity and content-based recommendations.
+                Wire shape for a catalog product uploaded to the analytics pipeline. Carries the metadata the training models need to learn product affinity and content-based recommendations.
             properties:
                 catalogId:
                     description:
@@ -643,8 +599,7 @@ components:
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form custom attributes attached to the product. Map keys are the attribute names; values
-                        are their typed values serialised as JSON.
+                        Free-form custom attributes attached to the product. Map keys are the attribute names; values are their typed values serialised as JSON.
                     example:
                         warrantyYears: 2
                     type: object
@@ -652,8 +607,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized long description of the product. Map keys are locale codes; values are the translated
-                        strings.
+                        Localized long description of the product. Map keys are locale codes; values are the translated strings.
                     example:
                         en_US: Professional hand stainless steel saw for wood. Made to last and
                             saw forever. Made of best steel
@@ -689,8 +643,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized SEO meta description of the product. Map keys are locale codes; values are the
-                        translated strings.
+                        Localized SEO meta description of the product. Map keys are locale codes; values are the translated strings.
                     example:
                         en_US: Meta description HU
                         hr_HR: Meta description HU
@@ -700,8 +653,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized SEO meta keywords of the product. Map keys are locale codes; values are the translated
-                        strings.
+                        Localized SEO meta keywords of the product. Map keys are locale codes; values are the translated strings.
                     example:
                         en_US: Meta keyword HU
                         hr_HR: Meta keyword HU
@@ -711,8 +663,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized SEO meta title of the product. Map keys are locale codes; values are the translated
-                        strings.
+                        Localized SEO meta title of the product. Map keys are locale codes; values are the translated strings.
                     example:
                         en_US: Meta title HU
                         hr_HR: Meta title HU
@@ -729,8 +680,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized display name of the product. Map keys are locale codes; values are the translated
-                        strings.
+                        Localized display name of the product. Map keys are locale codes; values are the translated strings.
                     example:
                         en_US: Hand Saw
                         hr_HR: Product Name HR
@@ -778,8 +728,7 @@ components:
                     type: array
                 status:
                     description:
-                        Portal workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Inactive, 5=Scheduled,
-                        6=Incomplete, 7=Denied, 8=InTrash.
+                        Portal workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Inactive, 5=Scheduled, 6=Incomplete, 7=Denied, 8=InTrash.
                     example: 0
                     type: integer
                 subscriptionEnabled:
@@ -801,8 +750,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized URL slugs of the product, keyed by locale code. Used to build canonical storefront
-                        URLs.
+                        Localized URL slugs of the product, keyed by locale code. Used to build canonical storefront URLs.
                     example:
                         en_US: product-url-us
                         hr_HR: product-url-hr
@@ -815,8 +763,7 @@ components:
             type: object
         ProductChannel:
             description:
-                Wire shape for a channel the product is published on, uploaded to the analytics pipeline alongside its
-                parent product.
+                Wire shape for a channel the product is published on, uploaded to the analytics pipeline alongside its parent product.
             properties:
                 currencyCode:
                     description:
@@ -850,9 +797,7 @@ components:
             type: object
         ProductContentRecommendation:
             description:
-                Wire shape for a content-based product recommendation downloaded from the analytics pipeline. Given a
-                source product, the model recommends similar products based on product metadata such as name,
-                description, and categorisation.
+                Wire shape for a content-based product recommendation downloaded from the analytics pipeline. Given a source product, the model recommends similar products based on product metadata such as name, description, and categorisation.
             properties:
                 createDate:
                     description:
@@ -862,8 +807,7 @@ components:
                     type: string
                 jobId:
                     description:
-                        Identifier of the analytics training job that produced this recommendation. Used to group
-                        recommendations by training run.
+                        Identifier of the analytics training job that produced this recommendation. Used to group recommendations by training run.
                     example: ml-job-2025-04-01
                     type: string
                 productId:
@@ -893,9 +837,7 @@ components:
             type: object
         ProductInteractionRecommendation:
             description:
-                Wire shape for a collaborative-filtering product recommendation downloaded from the analytics pipeline.
-                Given a source product, the model recommends products that users frequently interact with alongside it
-                -- for example, co-view or co-purchase.
+                Wire shape for a collaborative-filtering product recommendation downloaded from the analytics pipeline. Given a source product, the model recommends products that users frequently interact with alongside it -- for example, co-view or co-purchase.
             properties:
                 createDate:
                     description:
@@ -935,8 +877,7 @@ components:
             type: object
         ProductOption:
             description:
-                Wire shape for a product option attached to a product, uploaded to the analytics pipeline alongside its
-                parent product.
+                Wire shape for a product option attached to a product, uploaded to the analytics pipeline alongside its parent product.
             properties:
                 key:
                     description:
@@ -945,14 +886,12 @@ components:
                     type: string
                 optionKey:
                     description:
-                        Stable key of the product-specific option binding. Distinct from `key` when the same global
-                        option is bound to a product under a custom alias.
+                        Stable key of the product-specific option binding. Distinct from `key` when the same global option is bound to a product under a custom alias.
                     example: option-key
                     type: string
                 values:
                     description:
-                        Selectable values of the option. Each entry is a map keyed by locale code whose values are the
-                        localised value labels.
+                        Selectable values of the option. Each entry is a map keyed by locale code whose values are the localised value labels.
                     example:
                         -   en_US: Small
                             hr_HR: Maleno
@@ -966,8 +905,7 @@ components:
             type: object
         ProductSpecification:
             description:
-                Wire shape for a product specification value attached to a product, uploaded to the analytics pipeline
-                alongside its parent product.
+                Wire shape for a product specification value attached to a product, uploaded to the analytics pipeline alongside its parent product.
             properties:
                 id:
                     description:
@@ -992,8 +930,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized value of the specification. Map keys are locale codes; values are the translated
-                        strings.
+                        Localized value of the specification. Map keys are locale codes; values are the translated strings.
                     example:
                         en_US: Stainless Steel
                         hr_HR: Nehrdjajuci Celik
@@ -1005,13 +942,11 @@ components:
             type: object
         Sku:
             description:
-                Wire shape for a SKU variant of a product, uploaded to the analytics pipeline alongside its parent
-                product.
+                Wire shape for a SKU variant of a product, uploaded to the analytics pipeline alongside its parent product.
             properties:
                 cost:
                     description:
-                        Internal cost of the SKU, expressed in the catalog's default currency. Used for margin
-                        calculations; not visible to buyers.
+                        Internal cost of the SKU, expressed in the catalog's default currency. Used for margin calculations; not visible to buyers.
                     example: 101
                     format: bigdecimal
                     minimum: 0
@@ -1076,14 +1011,11 @@ components:
             type: object
         SkuForecast:
             description:
-                Monthly demand forecast point for one SKU, produced by the analytics training pipeline and downloaded
-                back into the portal by the analytics download executor.
+                Monthly demand forecast point for one SKU, produced by the analytics training pipeline and downloaded back into the portal by the analytics download executor.
             properties:
                 actual:
                     description:
-                        Observed demand in units for the period, aggregated from completed order lines by the analytics
-                        pipeline. Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon
-                        and have not been observed yet.
+                        Observed demand in units for the period, aggregated from completed order lines by the analytics pipeline. Zero -- or the float marker 1.4E-45 -- for periods that lie in the forecast horizon and have not been observed yet.
                     example: 230225
                     format: float
                     type: number
@@ -1095,8 +1027,7 @@ components:
                     type: number
                 forecastLowerBound:
                     description:
-                        Lower bound of the forecast confidence interval. Negative values occur when the model's
-                        confidence interval extends below zero; treat them as zero for display purposes.
+                        Lower bound of the forecast confidence interval. Negative values occur when the model's confidence interval extends below zero; treat them as zero for display purposes.
                     example: -63249.176
                     format: float
                     type: number
@@ -1125,13 +1056,11 @@ components:
             type: object
         UserRecommendation:
             description:
-                Wire shape for a per-user product recommendation downloaded from the analytics pipeline. Given a user
-                profiled by the categories they interact with, the model recommends products.
+                Wire shape for a per-user product recommendation downloaded from the analytics pipeline. Given a user profiled by the categories they interact with, the model recommends products.
             properties:
                 assetCategoryIds:
                     description:
-                        References to the categories that profile the target user (FK identifier array). The
-                        recommendation applies to users associated with this category set.
+                        References to the categories that profile the target user (FK identifier array). The recommendation applies to users associated with this category set.
                     example:
                         -   10130
                         -   10131
@@ -1216,13 +1145,7 @@ paths:
     /accountCategoryForecasts/by-monthlyRevenue:
         get:
             description:
-                Returns a page of monthly revenue forecast points broken down by AccountEntry and AssetCategory. Calls
-                AssetCategoryCommerceMLForecastManager.getMonthlyRevenueAssetCategoryCommerceMLForecasts in
-                AccountCategoryForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history
-                months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server
-                date; account identifiers the caller cannot view are silently dropped through
-                CommerceAccountPermissionHelper, and an empty intersection returns an empty page). List query support --
-                None (no filter, search, or sort exposed). Side effects -- None (read-only).
+                Returns a page of monthly revenue forecast points broken down by AccountEntry and AssetCategory. Calls AssetCategoryCommerceMLForecastManager.getMonthlyRevenueAssetCategoryCommerceMLForecasts in AccountCategoryForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; account identifiers the caller cannot view are silently dropped through CommerceAccountPermissionHelper, and an empty intersection returns an empty page). List query support -- None (no filter, search, or sort exposed). Side effects -- None (read-only).
             operationId: getAccountCategoryForecastsByMonthlyRevenuePage
             parameters:
                 -   $ref: "#/components/parameters/accountIdsQueryParam"
@@ -1388,13 +1311,7 @@ paths:
     /accountForecasts/by-monthlyRevenue:
         get:
             description:
-                Returns a page of monthly revenue forecast points broken down by AccountEntry. Calls
-                CommerceAccountCommerceMLForecastManager.getMonthlyRevenueCommerceAccountCommerceMLForecasts in
-                AccountForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from
-                CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; account
-                identifiers the caller cannot view are silently dropped through CommerceAccountPermissionHelper, and an
-                empty intersection returns an empty page). List query support -- None (no filter, search, or sort
-                exposed). Side effects -- None (read-only).
+                Returns a page of monthly revenue forecast points broken down by AccountEntry. Calls CommerceAccountCommerceMLForecastManager.getMonthlyRevenueCommerceAccountCommerceMLForecasts in AccountForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; account identifiers the caller cannot view are silently dropped through CommerceAccountPermissionHelper, and an empty intersection returns an empty page). List query support -- None (no filter, search, or sort exposed). Side effects -- None (read-only).
             operationId: getAccountForecastsByMonthlyRevenuePage
             parameters:
                 -   $ref: "#/components/parameters/accountIdsQueryParam"
@@ -1631,15 +1548,7 @@ paths:
     /skuForecasts/by-monthlyDemand:
         get:
             description:
-                Returns a page of monthly demand forecast points broken down by SKU. Calls
-                SkuCommerceMLForecastManager.getMonthlyQuantitySkuCommerceMLForecasts in SkuForecastResourceImpl.
-                Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants
-                when omitted; forecastStartDate defaults to the current server date; the optional skus filter restricts
-                the result to the supplied SKU strings, otherwise every trained SKU is returned). List query support --
-                None (no filter, search, or sort exposed). Side effects -- None (read-only). Naming caveat -- the
-                operationId is published as getSkuForecastsByMonthlyRevenuePage for backward client compatibility but
-                the response carries demand quantity, not revenue; consult the path (/by-monthlyDemand) and the
-                SkuForecast.unit field (`quantity`) to confirm the response dimension.
+                Returns a page of monthly demand forecast points broken down by SKU. Calls SkuCommerceMLForecastManager.getMonthlyQuantitySkuCommerceMLForecasts in SkuForecastResourceImpl. Validation -- None (defaults to 3 forecast months and 8 history months from CommerceMLForecastConstants when omitted; forecastStartDate defaults to the current server date; the optional skus filter restricts the result to the supplied SKU strings, otherwise every trained SKU is returned). List query support -- None (no filter, search, or sort exposed). Side effects -- None (read-only). Naming caveat -- the operationId is published as getSkuForecastsByMonthlyRevenuePage for backward client compatibility but the response carries demand quantity, not revenue; consult the path (/by-monthlyDemand) and the SkuForecast.unit field (`quantity`) to confirm the response dimension.
             operationId: getSkuForecastsByMonthlyRevenuePage
             parameters:
                 -   $ref: "#/components/parameters/forecastLengthQueryParam"
@@ -1875,8 +1784,7 @@ paths:
                 -   SkuForecast
 tags:
     -   description:
-            Monthly revenue forecast points for one account restricted to one category. Read-only; populated by the
-            analytics download pipeline.
+            Monthly revenue forecast points for one account restricted to one category. Read-only; populated by the analytics download pipeline.
         name: AccountCategoryForecast
     -   description:
             Monthly revenue forecast points for one account. Read-only; populated by the analytics download pipeline.

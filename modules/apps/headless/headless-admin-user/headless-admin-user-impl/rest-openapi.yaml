@@ -128,8 +128,7 @@ components:
                 domains:
                     # @review
                     description:
-                        The account's email domains. Users assigned to this account generally will have email addresses
-                        under one of these domains.
+                        The account's email domains. Users assigned to this account generally will have email addresses under one of these domains.
                     items:
                         type: string
                     type: array
@@ -208,8 +207,7 @@ components:
             type: object
         AccountBrief:
             description:
-                Represents an account's basic information, to be embedded in other resources. This resource's ID can be
-                used to query the account's complete information.
+                Represents an account's basic information, to be embedded in other resources. This resource's ID can be used to query the account's complete information.
             properties:
                 externalReferenceCode:
                     description:
@@ -368,8 +366,7 @@ components:
                     type: string
         Creator:
             description:
-                Represents the user who created/authored the content. Properties follow the
-                [creator](https://schema.org/creator) specification.
+                Represents the user who created/authored the content. Properties follow the [creator](https://schema.org/creator) specification.
             properties:
                 additionalName:
                     description:
@@ -484,8 +481,7 @@ components:
             type: object
         Organization:
             description:
-                Represents an organization. Organizations can contain other organizations (suborganizations). Properties
-                follow the [Organization](https://schema.org/Organization) specification.
+                Represents an organization. Organizations can contain other organizations (suborganizations). Properties follow the [Organization](https://schema.org/Organization) specification.
             properties:
                 accountBriefs:
                     description:
@@ -568,8 +564,7 @@ components:
                     properties:
                         addressCountry:
                             description:
-                                The organization's country. This follows the
-                                [`addressCountry`](https://schema.org/addressCountry) specification.
+                                The organization's country. This follows the [`addressCountry`](https://schema.org/addressCountry) specification.
                             type: string
                         addressCountryCode:
                             description:
@@ -586,8 +581,7 @@ components:
                             type: object
                         addressRegion:
                             description:
-                                The organization's region. This follows the
-                                [`addressRegion`](https://schema.org/addressRegion) specification.
+                                The organization's region. This follows the [`addressRegion`](https://schema.org/addressRegion) specification.
                             type: string
                         addressRegionCode:
                             description:
@@ -630,8 +624,7 @@ components:
                     type: array
                 organizationContactInformation:
                     description:
-                        The organization's contact information, which includes email addresses, postal addresses, phone
-                        numbers, and web URLs. This is modeled internally as a `Contact`.
+                        The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`.
                     properties:
                         emailAddresses:
                             description:
@@ -675,15 +668,12 @@ components:
                     type: array
                 services:
                     description:
-                        A list of services the organization provides. This follows the
-                        [`Service`](https://www.schema.org/Service) specification.
+                        A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification.
                     items:
                         properties:
                             hoursAvailable:
                                 description:
-                                    A list of hours when the organization is open. This follows the
-                                    [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification)
-                                    specification.
+                                    A list of hours when the organization is open. This follows the [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification) specification.
                                 items:
                                     properties:
                                         closes:
@@ -731,8 +721,7 @@ components:
             type: object
         OrganizationBrief:
             description:
-                Represents an organization's basic information, to be embedded in other resources. This resource's ID
-                can be used to query the organization's complete information.
+                Represents an organization's basic information, to be embedded in other resources. This resource's ID can be used to query the organization's complete information.
             properties:
                 externalReferenceCode:
                     description:
@@ -791,8 +780,7 @@ components:
             type: object
         PostalAddress:
             description:
-                Represents a mailing address. This follows the [`PostalAddress`](https://www.schema.org/PostalAddress)
-                specification.
+                Represents a mailing address. This follows the [`PostalAddress`](https://www.schema.org/PostalAddress) specification.
             properties:
                 addressCountry:
                     description:
@@ -866,8 +854,7 @@ components:
             type: object
         Role:
             description:
-                Represents a relationship between a user and a company or site. This follows the
-                [`Role`](https://www.schema.org/Role) specification.
+                Represents a relationship between a user and a company or site. This follows the [`Role`](https://www.schema.org/Role) specification.
             properties:
                 actions:
                     additionalProperties:
@@ -949,8 +936,7 @@ components:
             type: object
         RoleBrief:
             description:
-                Represents a role's basic information, to be embedded with other resources. The ID of this resource can
-                be used to query the role's complete information.
+                Represents a role's basic information, to be embedded with other resources. The ID of this resource can be used to query the role's complete information.
             properties:
                 externalReferenceCode:
                     description:
@@ -1005,8 +991,7 @@ components:
             type: object
         Segment:
             description:
-                Represents a set of users that meet certain criteria. Segments may be used to create customized
-                experiences for users.
+                Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for users.
             properties:
                 active:
                     description:
@@ -1185,8 +1170,7 @@ components:
         Site:
             # @review
             description:
-                Represents the site where the content is created. Properties follow the
-                [WebSite](https://schema.org/WebSite) specification.
+                Represents the site where the content is created. Properties follow the [WebSite](https://schema.org/WebSite) specification.
             properties:
                 availableLanguages:
                     items:
@@ -1401,8 +1385,7 @@ components:
                     readOnly: true
                 currentPassword:
                     description:
-                        The user's current password. Used to authenticate a user when they attempt to update their own
-                        password.
+                        The user's current password. Used to authenticate a user when they attempt to update their own password.
                     type: string
                     writeOnly: true
                 customFields:
@@ -1788,8 +1771,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.86'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.user.client', and version '4.0.86'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -2024,8 +2006,7 @@ paths:
         put:
             # @review
             description:
-                Replaces the account group with information sent in the request body. Any missing fields are deleted
-                unless they are required.
+                Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putAccountGroupByExternalReferenceCode
             parameters:
                 -   in: path
@@ -2095,8 +2076,7 @@ paths:
         patch:
             # @review
             description:
-                Updates the account group with information sent in the request body. Only the provided fields are
-                updated.
+                Updates the account group with information sent in the request body. Only the provided fields are updated.
             operationId: patchAccountGroup
             parameters:
                 -   in: path
@@ -2129,8 +2109,7 @@ paths:
         put:
             # @review
             description:
-                Replaces the account group with information sent in the request body. Any missing fields are deleted
-                unless they are required.
+                Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putAccountGroup
             parameters:
                 -   in: path
@@ -2587,8 +2566,7 @@ paths:
         put:
             # @review
             description:
-                Replaces the account with information sent in the request body. Any missing fields are deleted unless
-                they are required.
+                Replaces the account with information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putAccountByExternalReferenceCode
             parameters:
                 -   in: path
@@ -3321,8 +3299,7 @@ paths:
         put:
             # @review
             description:
-                Replaces the account with information sent in the request body. Any missing fields are deleted unless
-                they are required.
+                Replaces the account with information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putAccount
             parameters:
                 -   in: path
@@ -4069,8 +4046,7 @@ paths:
             tags: ["EmailAddress"]
         patch:
             description:
-                Updates the email address with the information sent in the request body. Fields not present in the
-                request body are left unchanged.
+                Updates the email address with the information sent in the request body. Fields not present in the request body are left unchanged.
             operationId: patchEmailAddressByExternalReferenceCode
             parameters:
                 -   in: path
@@ -4139,8 +4115,7 @@ paths:
             tags: ["EmailAddress"]
         patch:
             description:
-                Updates the email address with the information sent in the request body. Fields not present in the
-                request body are left unchanged.
+                Updates the email address with the information sent in the request body. Fields not present in the request body are left unchanged.
             operationId: patchEmailAddress
             parameters:
                 -   in: path
@@ -4476,8 +4451,7 @@ paths:
         patch:
             # @review
             description:
-                Updates the organization with information sent in the request body. Only the provided fields are
-                updated.
+                Updates the organization with information sent in the request body. Only the provided fields are updated.
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -4508,8 +4482,7 @@ paths:
         put:
             # @review
             description:
-                Replaces the organization with information sent in the request body. Any missing fields are deleted
-                unless they are required.
+                Replaces the organization with information sent in the request body. Any missing fields are deleted unless they are required.
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -4570,8 +4543,7 @@ paths:
             tags: ["Account"]
         get:
             description:
-                Retrieves the organization's members (accounts). Results can be paginated, filtered, searched, and
-                sorted.
+                Retrieves the organization's members (accounts). Results can be paginated, filtered, searched, and sorted.
             operationId: getOrganizationByExternalReferenceCodeAccountsPage
             parameters:
                 -   in: path
@@ -4646,8 +4618,7 @@ paths:
     "/organizations/by-external-reference-code/{externalReferenceCode}/child-organizations":
         get:
             description:
-                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched,
-                and sorted.
+                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched, and sorted.
             operationId: getOrganizationByExternalReferenceCodeChildOrganizationsPage
             parameters:
                 -   in: path
@@ -4995,8 +4966,7 @@ paths:
             tags: ["Account"]
         get:
             description:
-                Retrieves the organization's members (accounts) by external reference code. Results can be paginated,
-                filtered, searched, and sorted.
+                Retrieves the organization's members (accounts) by external reference code. Results can be paginated, filtered, searched, and sorted.
             parameters:
                 -   in: path
                     name: organizationExternalReferenceCode
@@ -5133,8 +5103,7 @@ paths:
                             type: array
                 # @review
                 description:
-                    An array of account external reference codes to move from the source organization to the target
-                    organization
+                    An array of account external reference codes to move from the source organization to the target organization
             responses:
                 204:
                     content:
@@ -5182,8 +5151,7 @@ paths:
         patch:
             # @review
             description:
-                Updates the organization with the information sent in the request body. Fields not present in the
-                request body are left unchanged.
+                Updates the organization with the information sent in the request body. Fields not present in the request body are left unchanged.
             operationId: patchOrganization
             parameters:
                 -   in: path
@@ -5215,8 +5183,7 @@ paths:
         put:
             # @review
             description:
-                Replaces the organization with information sent in the request body. Any missing fields are deleted
-                unless they are required.
+                Replaces the organization with information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putOrganization
             parameters:
                 -   in: path
@@ -5279,8 +5246,7 @@ paths:
             tags: ["Account"]
         get:
             description:
-                Retrieves the organization's members (accounts). Results can be paginated, filtered, searched, and
-                sorted.
+                Retrieves the organization's members (accounts). Results can be paginated, filtered, searched, and sorted.
             operationId: getOrganizationAccountsPage
             parameters:
                 -   in: path
@@ -5418,8 +5384,7 @@ paths:
     "/organizations/{organizationId}/child-organizations":
         get:
             description:
-                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched,
-                and sorted.
+                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched, and sorted.
             operationId: getOrganizationChildOrganizationsPage
             parameters:
                 -   in: path
@@ -5746,8 +5711,7 @@ paths:
     "/organizations/{parentOrganizationId}/organizations":
         get:
             description:
-                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched,
-                and sorted.
+                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched, and sorted.
             operationId: getOrganizationOrganizationsPage
             parameters:
                 -   in: path
@@ -7163,8 +7127,7 @@ paths:
             tags: ["UserAccount"]
         patch:
             description:
-                Updates the user account with information sent in the request body. Only the provided fields are
-                updated.
+                Updates the user account with information sent in the request body. Only the provided fields are updated.
             operationId: patchUserAccountByExternalReferenceCode
             parameters:
                 -   in: path
@@ -7405,8 +7368,7 @@ paths:
         patch:
             # @review
             description:
-                Updates the user account with information sent in the request body. Only the provided fields are
-                updated.
+                Updates the user account with information sent in the request body. Only the provided fields are updated.
             operationId: patchUserAccount
             parameters:
                 -   in: path
@@ -7438,8 +7400,7 @@ paths:
         put:
             # @review
             description:
-                Replaces the user account with information sent in the request body. Any missing fields are deleted
-                unless they are required.
+                Replaces the user account with information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putUserAccount
             parameters:
                 -   in: path

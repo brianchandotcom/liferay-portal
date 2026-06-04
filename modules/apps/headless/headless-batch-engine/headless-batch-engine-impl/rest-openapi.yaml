@@ -69,8 +69,7 @@ components:
                     type: string
                 itemIndex:
                     description:
-                        Position of the item in the import file. For CSV file it will represent a line number, for JSON
-                        file it will represent an array index etc.
+                        Position of the item in the import file. For CSV file it will represent a line number, for JSON file it will represent an array index etc.
                     type: integer
                 message:
                     description:
@@ -154,8 +153,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.batch.engine.client', and version '1.1.4'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.batch.engine.client', and version '1.1.4'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

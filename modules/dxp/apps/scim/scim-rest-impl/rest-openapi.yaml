@@ -14,8 +14,7 @@ components:
                     type: boolean
                 description:
                     description:
-                        The attribute's human-readable description.  When
-                        applicable, service providers MUST specify the description
+                        The attribute's human-readable description.  When applicable, service providers MUST specify the description
                     type: string
                 multiValued:
                     description:
@@ -23,8 +22,7 @@ components:
                     type: boolean
                 mutability:
                     description:
-                        A single keyword indicating the circumstances under which the value of the attribute can be
-                        (re)defined.
+                        A single keyword indicating the circumstances under which the value of the attribute can be (re)defined.
                     enum: [readOnly, readWrite, immutable, writeOnly]
                     type: string
                 name:
@@ -33,8 +31,7 @@ components:
                     type: string
                 referenceTypes:
                     description:
-                        A multi-valued array of JSON strings that indicate the SCIM resource types that may be
-                        referenced
+                        A multi-valued array of JSON strings that indicate the SCIM resource types that may be referenced
                     items:
                         type: string
                     type: array
@@ -44,8 +41,7 @@ components:
                     type: boolean
                 returned:
                     description:
-                        A single keyword that indicates when an attribute and associated values are returned in response
-                        to a GET request or in response to a PUT, POST, or PATCH request.
+                        A single keyword that indicates when an attribute and associated values are returned in response to a GET request or in response to a PUT, POST, or PATCH request.
                     enum: [always, never, default, request]
                     type: string
                 subAttributes:
@@ -54,14 +50,12 @@ components:
                     type: array
                 type:
                     description:
-                        The attribute's data type.  Valid values are "string", "boolean", "decimal", "integer",
-                        "dateTime", "reference", and "complex".
+                        The attribute's data type.  Valid values are "string", "boolean", "decimal", "integer", "dateTime", "reference", and "complex".
                     enum: [string, boolean, decimal, integer, dateTime, reference, complex]
                     type: string
                 uniqueness:
                     description:
-                        A single keyword value that specifies how the service provider enforces uniqueness of attribute
-                        values.
+                        A single keyword value that specifies how the service provider enforces uniqueness of attribute values.
                     enum: [none, server, global]
                     type: string
             type: object
@@ -105,8 +99,7 @@ components:
                     $ref: "#/components/schemas/Meta"
                 schemas:
                     description:
-                        A multi-valued list of strings indicating the namespaces of the SCIM schemas that define the
-                        attributes present in the current JSON structure.
+                        A multi-valued list of strings indicating the namespaces of the SCIM schemas that define the attributes present in the current JSON structure.
                     items:
                         type: string
                     type: array
@@ -173,13 +166,11 @@ components:
                     type: string
                 display:
                     description:
-                        A human-readable name, primarily used for display purposes and having a mutability of
-                        "immutable".
+                        A human-readable name, primarily used for display purposes and having a mutability of "immutable".
                     type: string
                 primary:
                     description:
-                        Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g.,
-                        the preferred mailing address or the primary email address.
+                        Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred mailing address or the primary email address.
                     type: boolean
                 type:
                     description:
@@ -229,8 +220,7 @@ components:
             properties:
                 attributes:
                     description:
-                        A multi-valued list of strings indicating the names of resource attributes to return in the
-                        response, overriding the set of attributes that would be returned by default.
+                        A multi-valued list of strings indicating the names of resource attributes to return in the response, overriding the set of attributes that would be returned by default.
                     items:
                         type: string
                     type: array
@@ -240,8 +230,7 @@ components:
                     type: integer
                 excludedAttributes:
                     description:
-                        A multi-valued list of strings indicating the names of resource attributes to be removed from
-                        the default set of attributes to return.
+                        A multi-valued list of strings indicating the names of resource attributes to be removed from the default set of attributes to return.
                     items:
                         type: string
                     type: array
@@ -319,8 +308,7 @@ components:
                             -   properties:
                                     required:
                                         description:
-                                            A Boolean value that specifies whether or not the schema extension is
-                                            required for the resource type.
+                                            A Boolean value that specifies whether or not the schema extension is required for the resource type.
                                         type: boolean
                                     schema:
                                         description:
@@ -458,8 +446,7 @@ components:
                                         type: string
                                     streetAddress:
                                         description:
-                                            The full street address component, which may include house number, street
-                                            name, P.O. box, and multi-line extended street address information.
+                                            The full street address component, which may include house number, street name, P.O. box, and multi-line extended street address information.
                                         type: string
                                     type:
                                         description:
@@ -485,8 +472,7 @@ components:
                             type: array
                         groups:
                             description:
-                                A list of groups to which the user belongs, either through direct membership, through
-                                nested groups, or dynamically calculated.
+                                A list of groups to which the user belongs, either through direct membership, through nested groups, or dynamically calculated.
                             items:
                                 $ref: "#/components/schemas/MultiValuedAttribute"
                             type: array
@@ -498,8 +484,7 @@ components:
                             type: array
                         locale:
                             description:
-                                Used to indicate the User's default location for purposes of localizing such items as
-                                currency, date time format, or numerical representations.
+                                Used to indicate the User's default location for purposes of localizing such items as currency, date time format, or numerical representations.
                             type: string
                         name:
                             description:
@@ -520,13 +505,11 @@ components:
                             type: object
                         nickName:
                             description:
-                                The casual way to address the user in real life, e.g., "Bob" or "Bobby" instead of
-                                "Robert".
+                                The casual way to address the user in real life, e.g., "Bob" or "Bobby" instead of "Robert".
                             type: string
                         password:
                             description:
-                                This attribute is intended to be used as a means to set, replace, or compare (i.e.,
-                                filter for equality) a password.
+                                This attribute is intended to be used as a means to set, replace, or compare (i.e., filter for equality) a password.
                             type: string
                             writeOnly: true
                         phoneNumbers:
@@ -537,32 +520,27 @@ components:
                             type: array
                         photos:
                             description:
-                                A URI that is a uniform resource locator that points to a resource location representing
-                                the user's image.
+                                A URI that is a uniform resource locator that points to a resource location representing the user's image.
                             items:
                                 $ref: "#/components/schemas/MultiValuedAttribute"
                             type: array
                         preferredLanguage:
                             description:
-                                Indicates the user's preferred written or spoken languages and is generally used for
-                                selecting a localized user interface.
+                                Indicates the user's preferred written or spoken languages and is generally used for selecting a localized user interface.
                             type: string
                         profileUrl:
                             description:
-                                A URI that is a uniform resource locator and that points to a location representing the
-                                user's online profile (e.g., a web page).
+                                A URI that is a uniform resource locator and that points to a location representing the user's online profile (e.g., a web page).
                             type: string
                         roles:
                             description:
-                                A list of roles for the user that collectively represent who the user is, e.g.,
-                                "Student", "Faculty".
+                                A list of roles for the user that collectively represent who the user is, e.g., "Student", "Faculty".
                             items:
                                 $ref: "#/components/schemas/MultiValuedAttribute"
                             type: array
                         timezone:
                             description:
-                                The User's time zone, in IANA Time Zone database format, also known as the "Olson" time
-                                zone database format (e.g., "America/Los_Angeles").
+                                The User's time zone, in IANA Time Zone database format, also known as the "Olson" time zone database format (e.g., "America/Los_Angeles").
                             type: string
                         title:
                             description:
@@ -575,8 +553,7 @@ components:
                             type: UserSchemaExtension
                         userName:
                             description:
-                                A service provider's unique identifier for the user, typically used by the user to
-                                directly authenticate to the service provider.
+                                A service provider's unique identifier for the user, typically used by the user to directly authenticate to the service provider.
                             type: string
                         userType:
                             description:
@@ -601,8 +578,7 @@ components:
             type: object
 info:
     description:
-        "Liferay SCIM endpoints. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.scim.rest.client', and version '1.0.18'."
+        "Liferay SCIM endpoints. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.scim.rest.client', and version '1.0.18'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -701,8 +677,7 @@ paths:
             responses:
                 204:
                     description:
-                        In response to a successful DELETE, the server SHALL return a successful HTTP status code 204
-                        (No Content).
+                        In response to a successful DELETE, the server SHALL return a successful HTTP status code 204 (No Content).
             tags: ["Group"]
         get:
             description:
@@ -728,8 +703,7 @@ paths:
                                         type: string
                                     -   $ref: "#/components/schemas/Group"
                     description:
-                        If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
-                        result in the body of the response.
+                        If the resource exists, the server responds with HTTP status code 200 (OK) and includes the result in the body of the response.
             tags: ["Group"]
         patch:
             description:
@@ -968,8 +942,7 @@ paths:
             responses:
                 204:
                     description:
-                        In response to a successful DELETE, the server SHALL return a successful HTTP status code 204
-                        (No Content).
+                        In response to a successful DELETE, the server SHALL return a successful HTTP status code 204 (No Content).
             tags: ["User"]
         get:
             description:
@@ -991,8 +964,7 @@ paths:
                                         type: string
                                     -   $ref: "#/components/schemas/User"
                     description:
-                        If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
-                        result in the body of the response.
+                        If the resource exists, the server responds with HTTP status code 200 (OK) and includes the result in the body of the response.
             tags: ["User"]
         patch:
             description:

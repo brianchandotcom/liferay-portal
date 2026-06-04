@@ -153,8 +153,7 @@ components:
             type: object
         EntityModelResourceTestEntity2:
             description:
-                "A EntityModelResource test entity (`implements EntityModelResource` in the
-                EntityModelResourceTestEntity2ResourceImpl class) with filterable fields."
+                "A EntityModelResource test entity (`implements EntityModelResource` in the EntityModelResourceTestEntity2ResourceImpl class) with filterable fields."
             properties:
                 id:
                     format: int64
@@ -179,8 +178,7 @@ components:
             type: object
         JSONMapAttributeTestEntity:
             description:
-                Test Component to test the generation of getValue method on Entities when one or multiple JSON Maps are
-                present.
+                Test Component to test the generation of getValue method on Entities when one or multiple JSON Maps are present.
             properties:
                 description:
                     type: string
@@ -1364,8 +1362,7 @@ paths:
     "/entity-model-resource-test-entities2/{entityModelResourceTestEntity2Id}":
         get:
             description:
-                "Retrieve a EntityModelResourceTestEntity2 item. (EntityModelResource and
-                VulcanBatchEngineTaskItemDelegate interfaces will not be implemented automatically)"
+                "Retrieve a EntityModelResourceTestEntity2 item. (EntityModelResource and VulcanBatchEngineTaskItemDelegate interfaces will not be implemented automatically)"
             operationId: getEntityModelResourceTestEntities2EntityModelResourceTestEntity2
             parameters:
                 -   in: path

@@ -66,8 +66,7 @@ components:
             type: object
         CollaboratorBrief:
             description:
-                Brief of the collaborator record for the user making the request, present only when this asset is shared
-                with them.
+                Brief of the collaborator record for the user making the request, present only when this asset is shared with them.
             properties:
                 actionIds:
                     description:
@@ -526,9 +525,7 @@ paths:
                                 type: array
         post:
             description:
-                Add or update all the collaborators received in the request. Delete existing collaborators that are not
-                included in the request. Send a notification for the new collaborators and those whose permissions are
-                different.
+                Add or update all the collaborators received in the request. Delete existing collaborators that are not included in the request. Send a notification for the new collaborators and those whose permissions are different.
             operationId: postObjectEntryFolderCollaboratorsPage
             parameters:
                 -   in: path
@@ -986,9 +983,7 @@ paths:
                                 type: array
         post:
             description:
-                Add or update all the collaborators received in the request. Delete existing collaborators that are not
-                included in the request. Send a notification for the new collaborators and those whose permissions are
-                different.
+                Add or update all the collaborators received in the request. Delete existing collaborators that are not included in the request. Send a notification for the new collaborators and those whose permissions are different.
             operationId: postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage
             parameters:
                 -   in: path

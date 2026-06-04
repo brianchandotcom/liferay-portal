@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.LogEntry;
 
@@ -31,10 +32,13 @@ import org.junit.runner.RunWith;
 public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 
 	@BeforeClass
-	public static void setUpClass() {
-		Class<?> clazz = getValidateClass();
+	public static void setUpClass() throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
-		for (Method method : clazz.getDeclaredMethods()) {
+		Class<?> keyGeneratorClass = classLoader.loadClass(
+			getProperty("key.generator.class"));
+
+		for (Method method : keyGeneratorClass.getDeclaredMethods()) {
 			Class<?>[] parameterTypes = method.getParameterTypes();
 
 			if ((parameterTypes.length == 1) &&
@@ -48,7 +52,9 @@ public class BannedKeyLicenseTest extends BaseLicenseTestCase {
 			}
 		}
 
-		for (Field field : clazz.getDeclaredFields()) {
+		Class<?> validateClass = getValidateClass();
+
+		for (Field field : validateClass.getDeclaredFields()) {
 			if (Set.class.isAssignableFrom(field.getType())) {
 				field.setAccessible(true);
 

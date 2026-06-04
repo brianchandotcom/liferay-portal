@@ -41,7 +41,7 @@ public class ViewModelArmorTemplatesDisplayContext {
 			dropdownItem -> {
 				dropdownItem.setHref(
 					DisplayContextUtil.getAIHubURL(_themeDisplay) +
-						"/model-armor-template");
+						"/guardrails");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "new-guardrail"));
 			}
@@ -55,7 +55,7 @@ public class ViewModelArmorTemplatesDisplayContext {
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					DisplayContextUtil.getAIHubURL(_themeDisplay),
-					"/model-armor-template",
+					"/guardrails",
 					"?externalReferenceCode={externalReferenceCode}"),
 				"view", "view", LanguageUtil.get(_httpServletRequest, "view"),
 				"get", null, null),

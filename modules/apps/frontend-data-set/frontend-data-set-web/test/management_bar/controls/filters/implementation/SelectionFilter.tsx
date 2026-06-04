@@ -490,4 +490,45 @@ describe('SelectionFilter.getOdataString', () => {
 			expect(result).toBe('testField/any(x:(x ne 123) and (x ne 456))');
 		});
 	});
+
+	describe('without entityFieldType', () => {
+		it('generates a "eq" filter with quotes for a single item', () => {
+			const result = getOdataString({
+				id: 'testField',
+				multiple: false,
+				selectedData: {
+					exclude: false,
+					selectedItems: [{label: 'Item 1', value: '123'}],
+				},
+			} as any);
+
+			expect(result).toBe("testField eq '123'");
+		});
+
+		it('generates a "eq" filter without quotes for a single item with a number value', () => {
+			const result = getOdataString({
+				id: 'testField',
+				multiple: false,
+				selectedData: {
+					exclude: false,
+					selectedItems: [{label: 'Item 1', value: 123}],
+				},
+			} as any);
+
+			expect(result).toBe('testField eq 123');
+		});
+
+		it('escapes single quotes in a string value', () => {
+			const result = getOdataString({
+				id: 'testField',
+				multiple: false,
+				selectedData: {
+					exclude: false,
+					selectedItems: [{label: 'Item 1', value: "O'Connor"}],
+				},
+			} as any);
+
+			expect(result).toBe("testField eq 'O''Connor'");
+		});
+	});
 });

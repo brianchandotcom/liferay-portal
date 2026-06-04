@@ -63,7 +63,7 @@ public class AssetAnalyticsAttributesProviderTest {
 		_testBuildAttributesForBlogsEntry();
 		_testBuildAttributesForDLFileEntry();
 		_testBuildAttributesForJournalArticle();
-		_testBuildAttributesTypeForObjectEntry();
+		_testBuildAttributesForObjectEntry();
 		_testBuildAttributesWithoutAssetEntry();
 		_testBuildAttributesWithoutAssetRenderer();
 		_testBuildAttributesWithoutField();
@@ -81,6 +81,26 @@ public class AssetAnalyticsAttributesProviderTest {
 		Assert.assertTrue(
 			attributes.contains(
 				"analytics-asset-cmsversion=\"" + expectedVersion + "\""));
+	}
+
+	private void _assertObjectDefinitionName(
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider,
+		String expectedObjectDefinitionName) {
+
+		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_VIEW,
+			AssetAnalyticsAttributesProvider.FIELD_CONTENT);
+
+		if (expectedObjectDefinitionName == null) {
+			Assert.assertFalse(
+				attributes.contains("analytics-object-definition-name="));
+		}
+		else {
+			Assert.assertTrue(
+				attributes.contains(
+					"analytics-object-definition-name=\"" +
+						expectedObjectDefinitionName + "\""));
+		}
 	}
 
 	private void _assertType(
@@ -279,7 +299,7 @@ public class AssetAnalyticsAttributesProviderTest {
 			attributes.contains("analytics-asset-type=\"web-content\""));
 	}
 
-	private void _testBuildAttributesTypeForObjectEntry() {
+	private void _testBuildAttributesForObjectEntry() {
 		String className = "com.liferay.object.model.ObjectDefinition#42";
 		long companyId = RandomTestUtil.randomLong();
 
@@ -306,7 +326,9 @@ public class AssetAnalyticsAttributesProviderTest {
 			"MyCMSType"
 		);
 
-		_assertType(assetAnalyticsAttributesProvider, "my-cms-type");
+		_assertObjectDefinitionName(
+			assetAnalyticsAttributesProvider, "my-cms-type");
+		_assertType(assetAnalyticsAttributesProvider, "object-entry");
 
 		Mockito.when(
 			objectDefinition.getName()
@@ -314,6 +336,7 @@ public class AssetAnalyticsAttributesProviderTest {
 			null
 		);
 
+		_assertObjectDefinitionName(assetAnalyticsAttributesProvider, null);
 		_assertType(assetAnalyticsAttributesProvider, "object-entry");
 	}
 

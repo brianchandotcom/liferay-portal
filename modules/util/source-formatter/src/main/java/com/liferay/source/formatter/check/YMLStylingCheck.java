@@ -340,6 +340,6 @@ public class YMLStylingCheck extends BaseFileCheck {
 		YMLStylingCheck.class);
 
 	private static final Pattern _descriptionPattern = Pattern.compile(
-		"(\\A|\n)( *)description:((\n\\2 +.+)+)");
+		"(\\A|\n)( *)description:((?!\n.+:\n)(\n\\2 +.+)+)");
 
 }

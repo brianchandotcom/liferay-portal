@@ -1,0 +1,22 @@
+{{- if .Values.alerting.templates -}}
+apiVersion: v1
+data:
+    templates.yaml: |
+        apiVersion: 1
+        templates:
+            {{- range $key, $tmpl := .Values.alerting.templates }}
+            {{- if not (eq $tmpl.enabled false) }}
+            -   orgID: {{ $tmpl.orgID | default 1 }}
+                name: {{ $key }}
+                template: |
+                    {{- $tmpl.template | nindent 20 }}
+            {{- end }}
+            {{- end }}
+kind: ConfigMap
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        grafana_alert: "true"
+    name: {{ printf "%s-alerting-templates" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
+    namespace: {{ include "observability.namespace" . | quote }}
+{{- end -}}

@@ -1,0 +1,42 @@
+{{- if and .Values.alerting.notificationChannels .Values.alerting.defaultChannel -}}
+{{- $defaultChannel := .Values.alerting.defaultChannel -}}
+{{- if not (hasKey .Values.alerting.notificationChannels $defaultChannel) -}}
+{{- fail (printf "alerting.defaultChannel %q is not present in alerting.notificationChannels" $defaultChannel) -}}
+{{- end -}}
+apiVersion: v1
+data:
+    notification-policies.yaml: |
+        apiVersion: 1
+        policies:
+            -   orgID: 1
+                name: grafana-default
+                receiver: {{ $defaultChannel }}
+                routes:
+                    {{- range $key, $channel := .Values.alerting.notificationChannels }}
+                    {{- range $kind, $route := $channel.notificationTypes }}
+                    {{- if not (eq $route.enabled false) }}
+                    -   name: {{ printf "%s-%s" $key $kind }}
+                        receiver: {{ $key }}
+                        group_by: {{ $route.group_by | default (list "alertname" "grafana_folder") | toYaml | nindent 28 }}
+                        object_matchers:
+                            -   {{ list "channel" "=" $key | toJson }}
+                            -   {{ list "type" "=" $kind | toJson }}
+                        continue: {{ if hasKey $route "continue" }}{{ index $route "continue" }}{{ else }}true{{ end }}
+                        group_wait: {{ default "1m" $route.group_wait }}
+                        {{- with $route.group_interval }}
+                        group_interval: {{ . }}
+                        {{- end }}
+                        {{- with $route.repeat_interval }}
+                        repeat_interval: {{ . }}
+                        {{- end }}
+                    {{- end }}
+                    {{- end }}
+                    {{- end }}
+kind: ConfigMap
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        grafana_alert: "true"
+    name: {{ printf "%s-notification-policies" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" | quote }}
+    namespace: {{ include "observability.namespace" . | quote }}
+{{- end -}}

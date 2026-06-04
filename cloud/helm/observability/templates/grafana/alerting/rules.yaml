@@ -1,0 +1,85 @@
+{{- $datasourceUid := include "observability.datasourceUid" . -}}
+{{- $namespace := include "observability.namespace" . -}}
+{{- $folder := .Values.alerting.folder -}}
+{{- $defaultInterval := .Values.alerting.interval -}}
+{{- range $key, $rule := .Values.alerting.rules }}
+{{- if not (eq $rule.enabled false) }}
+{{- $title := $rule.title | default $key }}
+{{- if gt (len $key) 40 -}}
+{{- fail (printf "Alert rule key %q exceeds 40 characters" $key) -}}
+{{- end }}
+---
+apiVersion: v1
+data:
+    {{ printf "%s.yaml" $key | quote }}: |
+        apiVersion: 1
+        groups:
+            -   orgId: 1
+                name: {{ $key }}
+                folder: {{ $folder | quote }}
+                interval: {{ $rule.interval | default $defaultInterval | quote }}
+                rules:
+                    -   uid: {{ $key | quote }}
+                        title: {{ $title | quote }}
+                        condition: Firing
+                        data:
+                            -   refId: Expression
+                                relativeTimeRange:
+                                    from: 3600
+                                    to: 0
+                                datasourceUid: {{ $datasourceUid | quote }}
+                                model:
+                                    datasource:
+                                        type: prometheus
+                                        uid: {{ $datasourceUid | quote }}
+                                    expr: |
+                                        {{- $rule.expr | nindent 40 }}
+                                    format: {{ $rule.format | default "table" }}
+                                    instant: {{ if hasKey $rule "instant" }}{{ index $rule "instant" }}{{ else }}true{{ end }}
+                                    range: {{ if hasKey $rule "range" }}{{ index $rule "range" }}{{ else }}false{{ end }}
+                                    refId: Expression
+                            -   refId: Firing
+                                relativeTimeRange:
+                                    from: 3600
+                                    to: 0
+                                datasourceUid: __expr__
+                                model:
+                                    conditions:
+                                        -   evaluator:
+                                                params:
+                                                    -   0
+                                                type: gt
+                                            operator:
+                                                type: and
+                                            query:
+                                                params:
+                                                    -   Expression
+                                            reducer:
+                                                params: []
+                                                type: last
+                                            type: query
+                                    datasource:
+                                        type: __expr__
+                                        uid: __expr__
+                                    expression: Expression
+                                    refId: Firing
+                                    type: threshold
+                        noDataState: OK
+                        execErrState: OK
+                        for: {{ $rule.for | default "0s" }}
+                        annotations:
+                            summary: {{ $title | quote }}
+                        {{- with $rule.labels }}
+                        labels:
+                            {{- toYaml . | nindent 28 }}
+                        {{- end }}
+                        isPaused: {{ $rule.isPaused | default false }}
+kind: ConfigMap
+metadata:
+    labels:
+        {{- include "observability.labels" $ | nindent 8 }}
+        grafana_alert: "true"
+    name: {{ printf "%s-alert-%s" (include "observability.fullname" $) $key | trunc 63 | trimSuffix "-" | quote }}
+    namespace: {{ $namespace | quote }}
+{{- end }}
+{{- end }}

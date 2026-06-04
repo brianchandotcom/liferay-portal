@@ -794,3 +794,30 @@ test(
 		}
 	}
 );
+
+test(
+	'User Management list order is reversed when toggling the name column sort',
+	{
+		tag: '@LRAC-9044',
+	},
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.userManagementPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		const readNames = async () =>
+			(await page.locator('.table-title').allInnerTexts()).map((name) =>
+				name.trim()
+			);
+
+		const initialNames = await readNames();
+
+		// Toggle the active name-column sort direction
+
+		await page.getByRole('link', {name: 'Name Ascending'}).click();
+
+		await expect.poll(readNames).toEqual([...initialNames].reverse());
+	}
+);

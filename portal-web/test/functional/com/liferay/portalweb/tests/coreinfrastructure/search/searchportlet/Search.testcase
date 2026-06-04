@@ -574,7 +574,7 @@ definition {
 
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.docx");
 
-			Click(locator1 = "SearchPage#PREVIEW_BACK_BUTTON");
+			GoBack();
 
 			SearchPage.gotoResultDetails(searchAssetTitle = "PDF File");
 

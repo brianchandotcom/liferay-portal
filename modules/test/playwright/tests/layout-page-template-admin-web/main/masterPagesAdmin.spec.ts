@@ -18,8 +18,6 @@ import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/Page
 import {MasterPagesPage} from '../../../pages/layout-page-template-admin-web/MasterPagesPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import {hoverAndExpectToBeVisible} from '../../../utils/hoverAndExpectToBeVisible';
-import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -310,22 +308,7 @@ test(
 
 		await masterPagesPage.goto(site.friendlyUrlPath);
 
-		await clickAndExpectToBeVisible({
-			autoClick: false,
-			target: page.getByRole('menuitem', {name: 'Make a Copy'}),
-			trigger: page
-				.locator('.card-page-item')
-				.filter({hasText: masterName})
-				.getByLabel('More actions'),
-		});
-
-		await hoverAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByText('Master Page', {exact: true}).nth(1),
-			trigger: page.getByRole('menuitem', {name: 'Make a Copy'}),
-		});
-
-		await waitForAlert(page);
+		await masterPagesPage.makeCopy(masterName, 'master-page');
 
 		// Assert master page template is duplicated
 

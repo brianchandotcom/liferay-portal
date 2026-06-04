@@ -63,7 +63,7 @@ customInitContainers:
                             {{- end }}
                     envFrom:
                         -   secretRef:
-                                name: managed-service-details
+                                name: overlay-bucket-details
                     image: {{ printf "%s:%s" .overlay.image.repository (.overlay.image.tag | toString) }}
                     name: liferay-overlay
                     {{- with .securityContext }}

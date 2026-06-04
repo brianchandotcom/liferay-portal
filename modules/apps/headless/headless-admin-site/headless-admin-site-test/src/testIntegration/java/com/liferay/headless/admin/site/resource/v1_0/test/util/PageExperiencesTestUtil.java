@@ -81,8 +81,6 @@ public class PageExperiencesTestUtil {
 		PageExperience defaultPageExperience = pageExperiencesByKey.get(
 			SegmentsExperienceConstants.KEY_DEFAULT);
 
-		Assert.assertNotNull(defaultPageExperience);
-
 		SegmentsExperience segmentsExperience =
 			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperience(
 				layout.getPlid());

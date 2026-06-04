@@ -21,6 +21,7 @@ import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryTopPages;
 import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceAssetConsumption;
 import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceAssetConsumptionItem;
+import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceOverviewMetric;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.object.model.ObjectDefinition;
@@ -386,6 +387,63 @@ public class AnalyticsCloudClient {
 		}
 	}
 
+	public PerformanceMetric getPerformanceMetric(
+			AnalyticsConfiguration analyticsConfiguration, List<Long> groupIds,
+			String metricType, String path, Integer rangeKey)
+		throws Exception {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			options.setLocation(
+				_getLocation(
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					groupIds,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					metricType, path, rangeKey));
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				PerformanceMetric performanceMetric = null;
+
+				JsonNode jsonNode = ObjectMapperHolder._objectMapper.readTree(
+					content);
+
+				if (jsonNode != null) {
+					performanceMetric = new PerformanceMetric();
+
+					ObjectReader objectReader =
+						ObjectMapperHolder._objectMapper.readerFor(
+							Metric[].class);
+
+					performanceMetric.setMetrics(
+						() -> objectReader.readValue(jsonNode));
+
+					performanceMetric.setMetricType(() -> metricType);
+				}
+
+				return performanceMetric;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response code " + response.getResponseCode());
+			}
+
+			throw new PortalException("Unable to get performance metric");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get performance metric", exception);
+		}
+	}
+
 	public PerformanceOverviewMetric getPerformanceOverviewMetric(
 			AnalyticsConfiguration analyticsConfiguration, List<Long> groupIds,
 			Integer rangeKey)
@@ -516,6 +574,17 @@ public class AnalyticsCloudClient {
 		}
 
 		return url;
+	}
+
+	private String _getLocation(
+		String dataSourceId, List<Long> groupIds,
+		String liferayAnalyticsFaroBackendURL, String metricType, String path,
+		Integer rangeKey) {
+
+		return _getLocation(
+			null, dataSourceId, null, null, groupIds,
+			liferayAnalyticsFaroBackendURL, metricType, null, null, path,
+			rangeKey, null, null, null, null);
 	}
 
 	private String _getLocation(

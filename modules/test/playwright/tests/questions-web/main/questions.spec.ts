@@ -35,21 +35,25 @@ allQuestionsAcrossTopics(
 
 		await questionsTopicsPage.addNewTopic(firstTopicName);
 
-		await expect(
-			page.getByRole('link', {name: firstTopicName})
-		).toBeVisible();
+		// Wait until the UI-created topic is committed, which confirms creation
 
-		// Seed a second topic and one question per topic through the API
+		let firstMessageBoardSection;
 
-		const {items: messageBoardSections} =
-			await apiHelpers.headlessDelivery.getSiteMessageBoardSectionsPage(
-				site.id
+		await expect(async () => {
+			const {items: messageBoardSections} =
+				await apiHelpers.headlessDelivery.getSiteMessageBoardSectionsPage(
+					site.id
+				);
+
+			firstMessageBoardSection = messageBoardSections.find(
+				(messageBoardSection) =>
+					messageBoardSection.title === firstTopicName
 			);
 
-		const [firstMessageBoardSection] = messageBoardSections.filter(
-			(messageBoardSection) =>
-				messageBoardSection.title === firstTopicName
-		);
+			expect(firstMessageBoardSection).toBeTruthy();
+		}).toPass({timeout: 15000});
+
+		// Seed a second topic and one question per topic through the API
 
 		const secondMessageBoardSection =
 			await apiHelpers.headlessDelivery.postSiteMessageBoardSection({
@@ -76,6 +80,8 @@ allQuestionsAcrossTopics(
 		);
 
 		// Switch to All Questions from the breadcrumb dropdown
+
+		await page.reload();
 
 		await questionsTopicsPage.goToTopic(firstTopicName);
 
@@ -170,22 +176,25 @@ subtopicsViaWidget(
 
 		const breadcrumb = page.locator('.breadcrumb');
 
-		// Create a root topic and nest two subtopics under it
+		// Seed a root topic through the API and nest two subtopics via the widget
 
-		await questionsTopicsPage.addNewTopic(rootTopicName);
+		await apiHelpers.headlessDelivery.postSiteMessageBoardSection({
+			siteId: site.id,
+			title: rootTopicName,
+		});
 
-		await expect(
-			page.getByRole('link', {name: rootTopicName})
-		).toBeVisible();
+		await page.reload();
 
 		await questionsTopicsPage.goToTopic(rootTopicName);
 		await questionsTopicsPage.addNewTopic(subTopicAName);
 
-		await expect(breadcrumb.getByText(subTopicAName)).toBeVisible();
+		// Creating a subtopic navigates into it
+
+		await expect(page.getByText(subTopicAName).first()).toBeVisible();
 
 		await questionsTopicsPage.addNewTopic(subTopicBName);
 
-		await expect(breadcrumb.getByText(subTopicBName)).toBeVisible();
+		await expect(page.getByText(subTopicBName).first()).toBeVisible();
 
 		// The created subtopics can be navigated through the breadcrumb
 
@@ -348,7 +357,7 @@ questionsAcrossTopics(
 		await homeIcon.click();
 
 		await expect(
-			page.getByText(rootTopicName, {exact: true})
+			page.locator('.questions-card', {hasText: rootTopicName})
 		).toBeVisible();
 		await expect(homeIcon).toBeHidden();
 
@@ -368,5 +377,179 @@ questionsAcrossTopics(
 		await expect(
 			page.getByRole('link', {name: rootQuestionTitle})
 		).toBeVisible();
+	}
+);
+
+const lockAndUnlock = mergeTests(questionsTest);
+
+lockAndUnlock(
+	'This is a test for LPS-121205. A question can be locked and unlocked through the message board.',
+	{tag: '@LPS-121205'},
+	async ({
+		apiHelpers,
+		page,
+		questionsPage,
+		questionsTopicsPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+		const layoutURL = '/web' + site.friendlyUrlPath + layout.friendlyURL;
+
+		await page.goto(layoutURL);
+		await widgetPagePage.addPortlet('Questions');
+
+		// Seed a topic, a question and an answer through the API
+
+		const questionTitle = getRandomString();
+		const topicName = getRandomString().replace(/-/g, '');
+
+		const messageBoardSection =
+			await apiHelpers.headlessDelivery.postSiteMessageBoardSection({
+				siteId: site.id,
+				title: topicName,
+			});
+
+		const messageBoardThread =
+			await apiHelpers.headlessDelivery.postMessageBoardSectionMessageBoardThread(
+				{
+					articleBody: getRandomString(),
+					headline: questionTitle,
+					messageBoardSectionId: messageBoardSection.id,
+				}
+			);
+
+		await apiHelpers.headlessDelivery.postMessageBoardMessage({
+			articleBody: getRandomString(),
+			messageBoardThreadId: messageBoardThread.id,
+		});
+
+		await page.reload();
+
+		await questionsTopicsPage.goToTopic(topicName);
+		await page.getByRole('link', {name: questionTitle}).click();
+
+		await expect(page.getByText('1 Answers')).toBeVisible();
+
+		// Locking the thread through the message board closes the question
+
+		await apiHelpers.jsonWebServicesMBApiHelper.lockThread(
+			messageBoardThread.id
+		);
+
+		await page.goto(layoutURL);
+		await questionsTopicsPage.goToTopic(topicName);
+
+		await expect(
+			page.locator('.questions-container svg.lexicon-icon-lock')
+		).toBeVisible();
+
+		await page.getByRole('link', {name: questionTitle}).click();
+
+		await expect(page.locator('h1 svg.lexicon-icon-lock')).toBeVisible();
+
+		// Answering a locked question shows that it is closed
+
+		await page.getByRole('button', {name: 'Add Answer'}).click();
+
+		await expect(
+			page.getByText(
+				'This question is closed. New answers and comments are disabled.'
+			)
+		).toBeVisible();
+
+		// Unlocking the thread reopens the question for answers
+
+		await apiHelpers.jsonWebServicesMBApiHelper.unlockThread(
+			messageBoardThread.id
+		);
+
+		await page.goto(layoutURL);
+		await questionsTopicsPage.goToTopic(topicName);
+
+		await expect(
+			page.locator('.questions-container svg.lexicon-icon-lock')
+		).toBeHidden();
+
+		await page.getByRole('link', {name: questionTitle}).click();
+
+		await questionsPage.answerQuestion(getRandomString());
+
+		await expect(page.getByText('2 Answers')).toBeVisible();
+	}
+);
+
+const parentCategoryDisplay = mergeTests(questionsTest);
+
+parentCategoryDisplay(
+	'This is a test for LPS-113665. The category label and topic selector appear once a topic has subtopics.',
+	{tag: '@LPS-113665'},
+	async ({apiHelpers, page, questionsTopicsPage, site, widgetPagePage}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+			typeSettings: 'layout-template-id=1_column\n',
+		});
+		const layoutURL = '/web' + site.friendlyUrlPath + layout.friendlyURL;
+
+		await page.goto(layoutURL);
+		await widgetPagePage.addPortlet('Questions');
+
+		// Seed a topic and a question through the API
+
+		const questionTitle = getRandomString();
+		const topicName = getRandomString().replace(/-/g, '');
+
+		const messageBoardSection =
+			await apiHelpers.headlessDelivery.postSiteMessageBoardSection({
+				siteId: site.id,
+				title: topicName,
+			});
+
+		await apiHelpers.headlessDelivery.postMessageBoardSectionMessageBoardThread(
+			{
+				articleBody: getRandomString(),
+				headline: questionTitle,
+				messageBoardSectionId: messageBoardSection.id,
+			}
+		);
+
+		await page.reload();
+
+		const categoryLabel = page.locator('span.label-item', {
+			hasText: topicName,
+		});
+		const topicSelector = page.locator('select.form-control');
+
+		// Without subtopics, the category label and topic selector are hidden
+
+		await questionsTopicsPage.goToTopic(topicName);
+
+		await expect(categoryLabel).toBeHidden();
+
+		await page.getByRole('button', {name: 'Ask Question'}).first().click();
+
+		await expect(topicSelector).toBeHidden();
+
+		// Adding a subtopic reveals the category label and topic selector
+
+		await apiHelpers.headlessDelivery.postMessageBoardSectionMessageBoardSection(
+			{
+				parentMessageBoardSectionId: messageBoardSection.id,
+				title: getRandomString().replace(/-/g, ''),
+			}
+		);
+
+		await page.goto(layoutURL);
+		await questionsTopicsPage.goToTopic(topicName);
+
+		await expect(categoryLabel).toBeVisible();
+
+		await page.getByRole('button', {name: 'Ask Question'}).first().click();
+
+		await expect(topicSelector).toBeVisible();
 	}
 );

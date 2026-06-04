@@ -9,6 +9,8 @@ import React from 'react';
 
 import {ITask} from '../../../../utils/types';
 
+import './CalendarView.scss';
+
 interface CalendarViewProps {
 	items: ITask[];
 }
@@ -24,10 +26,12 @@ export default function CalendarView({items}: CalendarViewProps) {
 		}));
 
 	return (
-		<FullCalendar
-			events={events}
-			initialView="dayGridMonth"
-			plugins={[dayGridPlugin]}
-		/>
+		<div className="lfr__calendar-view">
+			<FullCalendar
+				events={events}
+				initialView="dayGridMonth"
+				plugins={[dayGridPlugin]}
+			/>
+		</div>
 	);
 }

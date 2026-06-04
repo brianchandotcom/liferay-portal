@@ -1,0 +1,57 @@
+@import 'atlas-variables';
+
+.lfr__calendar-view {
+	--fc-border-color: #{$border-color};
+	--fc-today-bg-color: transparent;
+
+	.fc-col-header-cell {
+		background-color: $gray-100;
+		border-left-width: 0;
+		border-right-width: 0;
+		text-align: left;
+	}
+
+	.fc-col-header-cell-cushion {
+		color: $secondary;
+		display: inline-block;
+		font-size: 0.75rem;
+		font-weight: $font-weight-semi-bold;
+		padding: 0.5rem 0.75rem;
+		text-decoration: none !important;
+	}
+
+	.fc-day-today .fc-daygrid-day-number {
+		align-items: center;
+		background-color: $primary;
+		border-radius: 50%;
+		color: $white;
+		display: inline-flex;
+		height: 1.75rem;
+		justify-content: center;
+		margin: 0.25rem 0.5rem;
+		padding: 0;
+		width: 1.75rem;
+	}
+
+	.fc-daygrid-day.fc-day-sat,
+	.fc-daygrid-day.fc-day-sun {
+		background-color: $gray-100;
+	}
+
+	.fc-daygrid-day-number {
+		color: $secondary;
+		font-size: $font-size-sm;
+		font-weight: $font-weight-semi-bold;
+		padding: 0.5rem 0.75rem;
+		text-decoration: none !important;
+	}
+
+	.fc-daygrid-day-top {
+		flex-direction: row;
+	}
+
+	.fc-theme-standard .fc-scrollgrid {
+		border-left-width: 0;
+		border-right-width: 0;
+	}
+}

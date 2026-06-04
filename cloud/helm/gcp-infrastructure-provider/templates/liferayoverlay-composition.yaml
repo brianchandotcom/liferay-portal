@@ -1,5 +1,5 @@
 {{- $templates := list -}}
-{{- range $path, $_ := .Files.Glob "compositions-overlay/**" -}}
+{{- range $path, $_ := .Files.Glob "overlay-composition/**" -}}
     {{- $content := $.Files.Get $path | trim -}}
     {{- if $content -}}
         {{- $templates = append $templates $content -}}

@@ -7,8 +7,8 @@ package com.liferay.ai.hub.rest.internal.manager.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.guardrail.ModelArmorHandler;
-import com.liferay.ai.hub.rest.dto.v1_0.ModelArmorTemplate;
-import com.liferay.ai.hub.rest.manager.v1_0.ModelArmorTemplateManager;
+import com.liferay.ai.hub.rest.dto.v1_0.Guardrail;
+import com.liferay.ai.hub.rest.manager.v1_0.GuardrailManager;
 import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -28,12 +28,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author João Victor Alves
  */
-@Component(service = ModelArmorTemplateManager.class)
-public class ModelArmorTemplateManagerImpl
-	implements ModelArmorTemplateManager {
+@Component(service = GuardrailManager.class)
+public class GuardrailManagerImpl implements GuardrailManager {
 
 	@Override
-	public void deleteModelArmorTemplate(
+	public void deleteGuardrail(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode)
 		throws Exception {
@@ -52,9 +51,9 @@ public class ModelArmorTemplateManagerImpl
 	}
 
 	@Override
-	public ModelArmorTemplate postModelArmorTemplate(
+	public Guardrail postGuardrail(
 			long companyId, DTOConverterContext dtoConverterContext,
-			ModelArmorTemplate modelArmorTemplate)
+			Guardrail guardrail)
 		throws Exception {
 
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
@@ -62,21 +61,19 @@ public class ModelArmorTemplateManagerImpl
 
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
 			dtoConverterContext, _getObjectDefinition(companyId),
-			_toObjectEntry(
-				accountEntry.getAccountEntryId(), modelArmorTemplate),
-			null);
+			_toObjectEntry(accountEntry.getAccountEntryId(), guardrail), null);
 
 		_modelArmorHandler.createModelArmorTemplate(
 			companyId, objectEntry.getExternalReferenceCode(),
 			objectEntry.getProperties());
 
-		return _toModelArmorTemplate(objectEntry);
+		return _toGuardrail(objectEntry);
 	}
 
 	@Override
-	public ModelArmorTemplate putModelArmorTemplate(
+	public Guardrail putGuardrail(
 			long companyId, DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ModelArmorTemplate modelArmorTemplate)
+			String externalReferenceCode, Guardrail guardrail)
 		throws Exception {
 
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
@@ -94,9 +91,7 @@ public class ModelArmorTemplateManagerImpl
 		ObjectEntry objectEntry = _objectEntryManager.updateObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
 			objectDefinition,
-			_toObjectEntry(
-				accountEntry.getAccountEntryId(), modelArmorTemplate),
-			null);
+			_toObjectEntry(accountEntry.getAccountEntryId(), guardrail), null);
 
 		if (existingObjectEntry == null) {
 			_modelArmorHandler.createModelArmorTemplate(
@@ -107,7 +102,7 @@ public class ModelArmorTemplateManagerImpl
 				companyId, externalReferenceCode, objectEntry.getProperties());
 		}
 
-		return _toModelArmorTemplate(objectEntry);
+		return _toGuardrail(objectEntry);
 	}
 
 	private ObjectDefinition _getObjectDefinition(long companyId)
@@ -115,11 +110,11 @@ public class ModelArmorTemplateManagerImpl
 
 		return _objectDefinitionLocalService.
 			getObjectDefinitionByExternalReferenceCode(
-				"L_AI_HUB_MODEL_ARMOR_TEMPLATE", companyId);
+				"L_AI_HUB_GUARDRAIL", companyId);
 	}
 
-	private ModelArmorTemplate _toModelArmorTemplate(ObjectEntry objectEntry) {
-		return new ModelArmorTemplate() {
+	private Guardrail _toGuardrail(ObjectEntry objectEntry) {
+		return new Guardrail() {
 			{
 				setActive(
 					() -> GetterUtil.getBoolean(
@@ -129,7 +124,7 @@ public class ModelArmorTemplateManagerImpl
 						objectEntry.getPropertyValue("description")));
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
 				setGuardrailType(
-					() -> ModelArmorTemplate.GuardrailType.create(
+					() -> Guardrail.GuardrailType.create(
 						GetterUtil.getString(
 							objectEntry.getPropertyValue("guardrailType"))));
 				setLocation(
@@ -144,32 +139,31 @@ public class ModelArmorTemplateManagerImpl
 						objectEntry.getPropertyValue(
 							"multilanguageDetectionEnabled")));
 				setPiAndJailbreakConfidenceLevel(
-					() ->
-						ModelArmorTemplate.PiAndJailbreakConfidenceLevel.create(
-							GetterUtil.getString(
-								objectEntry.getPropertyValue(
-									"piAndJailbreakConfidenceLevel"))));
+					() -> Guardrail.PiAndJailbreakConfidenceLevel.create(
+						GetterUtil.getString(
+							objectEntry.getPropertyValue(
+								"piAndJailbreakConfidenceLevel"))));
 				setPiAndJailbreakFilterEnabled(
 					() -> GetterUtil.getBoolean(
 						objectEntry.getPropertyValue(
 							"piAndJailbreakFilterEnabled")));
 				setRaiDangerousLevel(
-					() -> ModelArmorTemplate.RaiDangerousLevel.create(
+					() -> Guardrail.RaiDangerousLevel.create(
 						GetterUtil.getString(
 							objectEntry.getPropertyValue(
 								"raiDangerousLevel"))));
 				setRaiHarassmentLevel(
-					() -> ModelArmorTemplate.RaiHarassmentLevel.create(
+					() -> Guardrail.RaiHarassmentLevel.create(
 						GetterUtil.getString(
 							objectEntry.getPropertyValue(
 								"raiHarassmentLevel"))));
 				setRaiHateSpeechLevel(
-					() -> ModelArmorTemplate.RaiHateSpeechLevel.create(
+					() -> Guardrail.RaiHateSpeechLevel.create(
 						GetterUtil.getString(
 							objectEntry.getPropertyValue(
 								"raiHateSpeechLevel"))));
 				setRaiSexuallyExplicitLevel(
-					() -> ModelArmorTemplate.RaiSexuallyExplicitLevel.create(
+					() -> Guardrail.RaiSexuallyExplicitLevel.create(
 						GetterUtil.getString(
 							objectEntry.getPropertyValue(
 								"raiSexuallyExplicitLevel"))));
@@ -187,71 +181,62 @@ public class ModelArmorTemplateManagerImpl
 	}
 
 	private ObjectEntry _toObjectEntry(
-		long accountEntryId, ModelArmorTemplate modelArmorTemplate) {
+		long accountEntryId, Guardrail guardrail) {
 
 		return new ObjectEntry() {
 			{
-				setExternalReferenceCode(
-					modelArmorTemplate::getExternalReferenceCode);
+				setExternalReferenceCode(guardrail::getExternalReferenceCode);
 				setProperties(
 					() -> HashMapBuilder.<String, Object>put(
 						"active",
-						GetterUtil.getBoolean(
-							modelArmorTemplate.getActive(), true)
+						GetterUtil.getBoolean(guardrail.getActive(), true)
 					).put(
 						"description",
-						GetterUtil.getString(
-							modelArmorTemplate.getDescription())
+						GetterUtil.getString(guardrail.getDescription())
 					).put(
 						"guardrailType",
-						String.valueOf(modelArmorTemplate.getGuardrailType())
+						String.valueOf(guardrail.getGuardrailType())
 					).put(
-						"location", modelArmorTemplate.getLocation()
+						"location", guardrail.getLocation()
 					).put(
 						"maliciousUriFilterEnabled",
 						GetterUtil.getBoolean(
-							modelArmorTemplate.getMaliciousUriFilterEnabled())
+							guardrail.getMaliciousUriFilterEnabled())
 					).put(
 						"multilanguageDetectionEnabled",
 						GetterUtil.getBoolean(
-							modelArmorTemplate.
-								getMultilanguageDetectionEnabled())
+							guardrail.getMultilanguageDetectionEnabled())
 					).put(
 						"piAndJailbreakConfidenceLevel",
 						Objects.toString(
-							modelArmorTemplate.
-								getPiAndJailbreakConfidenceLevel(),
-							null)
+							guardrail.getPiAndJailbreakConfidenceLevel(), null)
 					).put(
 						"piAndJailbreakFilterEnabled",
 						GetterUtil.getBoolean(
-							modelArmorTemplate.getPiAndJailbreakFilterEnabled())
+							guardrail.getPiAndJailbreakFilterEnabled())
 					).put(
-						"r_accountToAIHubModelArmorTemplates_accountEntryId",
+						"r_accountToAIHubGuardrails_accountEntryId",
 						String.valueOf(accountEntryId)
 					).put(
 						"raiDangerousLevel",
-						Objects.toString(
-							modelArmorTemplate.getRaiDangerousLevel(), null)
+						Objects.toString(guardrail.getRaiDangerousLevel(), null)
 					).put(
 						"raiHarassmentLevel",
 						Objects.toString(
-							modelArmorTemplate.getRaiHarassmentLevel(), null)
+							guardrail.getRaiHarassmentLevel(), null)
 					).put(
 						"raiHateSpeechLevel",
 						Objects.toString(
-							modelArmorTemplate.getRaiHateSpeechLevel(), null)
+							guardrail.getRaiHateSpeechLevel(), null)
 					).put(
 						"raiSexuallyExplicitLevel",
 						Objects.toString(
-							modelArmorTemplate.getRaiSexuallyExplicitLevel(),
-							null)
+							guardrail.getRaiSexuallyExplicitLevel(), null)
 					).put(
 						"sdpFilterEnabled",
-						GetterUtil.getBoolean(
-							modelArmorTemplate.getSdpFilterEnabled())
+						GetterUtil.getBoolean(guardrail.getSdpFilterEnabled())
 					).put(
-						"title_i18n", modelArmorTemplate.getTitle_i18n()
+						"title_i18n", guardrail.getTitle_i18n()
 					).build());
 			}
 		};

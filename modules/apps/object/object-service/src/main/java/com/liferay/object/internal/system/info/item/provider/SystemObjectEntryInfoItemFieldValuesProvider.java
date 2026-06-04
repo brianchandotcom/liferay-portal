@@ -27,6 +27,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -71,6 +72,7 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		ObjectEntryService objectEntryService,
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -94,6 +96,7 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
+		_objectEntryService = objectEntryService;
 		_objectFieldInfoFieldConverter = objectFieldInfoFieldConverter;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -230,12 +233,12 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 				_friendlyURLEntryLocalService, _listTypeEntryLocalService,
 				_objectActionLocalService, _objectDefinition,
 				_objectDefinitionLocalService, _objectEntryLocalService,
-				_objectEntryManagerRegistry, _objectFieldInfoFieldConverter,
-				_objectFieldLocalService,
+				_objectEntryManagerRegistry, _objectEntryService,
+				_objectFieldInfoFieldConverter, _objectFieldLocalService,
 				_objectFieldLocalService.getObjectFields(
 					_objectDefinition.getObjectDefinitionId()),
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
-				_portal, themeDisplay, values));
+				_portal, null, themeDisplay, values));
 
 		return infoFieldValues;
 	}
@@ -256,6 +259,7 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldInfoFieldConverter _objectFieldInfoFieldConverter;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService

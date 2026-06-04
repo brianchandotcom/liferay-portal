@@ -58,8 +58,8 @@ export function OptionRow({
 				bordered && 'border p-3 rounded'
 			)}
 		>
-			<ClayLayout.ContentRow className="align-items-center">
-				<ClayLayout.ContentCol className="pr-2" expand={false}>
+			<ClayLayout.ContentRow className="align-items-start">
+				<ClayLayout.ContentCol className="pr-2 pt-1" expand={false}>
 					{input}
 				</ClayLayout.ContentCol>
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Liferay} from '../liferay/liferay';
+import { Liferay } from '../liferay/liferay';
 
 export default {
 	'a-license-key-for-the-entered-domain-already-exists':
@@ -127,7 +127,7 @@ export default {
 	'business-account': 'Business Account',
 	'business-address': 'Business Address',
 	'business-email-address': 'Business Email Address',
-	'buy-extra-token': 'Buy Extra Token',
+	'buy-liferay-tokens': 'Buy Liferay Tokens',
 	'by-requesting-a-publisher-account-you-agree-to-the':
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
@@ -358,6 +358,7 @@ export default {
 	'go-to-dashboard': 'Go to Dashboard',
 	'go-to-download': 'Go to Download',
 	'go-to-dxp': 'Go to DXP',
+	'go-to-liferay-data-platform': 'Go to Liferay Data Platform',
 	'go-to-marketplace': 'Go to Marketplace',
 	'go-to-my-apps': 'Go to My Apps',
 	'go-to-ssa-trial-listing': 'Go to SSA Trial Listing',
@@ -492,6 +493,7 @@ export default {
 	'module-based-apps-delivered-as-lpkg-files-that-the-user-can-install-to-modify-native-liferay-behavior':
 		'Module-based apps delivered as .lpkg files that the user can install to modify native Liferay behavior.',
 	'monetize-your-apps-and-solutions': 'Monetize Your Apps and Solutions',
+	'monthly': 'Monthly',
 	'monthly-increase': 'Monthly Increase',
 	'more-actions': 'More Actions',
 	'more-info': 'More Info',
@@ -854,6 +856,7 @@ export default {
 	'token-unavailable': 'Token Unavailable',
 	'tokens': 'Tokens',
 	'tokens-amount': 'Tokens Amount',
+	'liferay-tokens-was-purchased-successfully': 'Liferay Tokens was purchased successfully',
 	'total': 'Total',
 	'transaction-details': 'Transaction Details',
 	'transaction-id': 'Transaction ID',

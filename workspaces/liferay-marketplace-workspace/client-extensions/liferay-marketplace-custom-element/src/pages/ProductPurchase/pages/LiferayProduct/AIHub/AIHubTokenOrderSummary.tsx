@@ -2,11 +2,14 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
-
+import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClaySticker from '@clayui/sticker';
 import {useSelector} from '@xstate/store/react';
 import {useEffect} from 'react';
+
+import paypal from '../../../../../assets/images/paypal.png';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import {Section} from '../../../../../components/Section/Section';
@@ -126,21 +129,41 @@ const AIHubTokenOrderSummary = () => {
 				>
 					<div className="ai-hub-summary-infomation-card">
 						<div className="align-items-center d-flex justify-content-between w-100">
-							<div>
-								<p className="liferay-ai-hub-form-token-name mb-1">
-									{
-										selectedSku.skuOptions?.[0]
-											?.skuOptionValueNames?.[0]
-									}
-								</p>
-								<p className="liferay-ai-hub-form-token-description mb-0 text-black-50">
-									{
-										selectedSku.customFields?.find(
-											(field: any) =>
-												field.name === 'Description'
-										)?.customValue.data
-									}
-								</p>
+							<div className="d-flex align-items-center">
+								{selectedSku.customFields?.find(
+									(field: any) => field.name === 'icon-url'
+								)?.customValue.data && (
+									<div className="mr-3">
+										<ClaySticker shape="circle" size="lg">
+											<ClaySticker.Image
+												alt="AI Hub Token Icon"
+												src={
+													selectedSku.customFields?.find(
+														(field: any) =>
+															field.name ===
+															'icon-url'
+													)?.customValue.data as string
+												}
+											/>
+										</ClaySticker>
+									</div>
+								)}
+								<div>
+									<p className="liferay-ai-hub-form-token-name mb-1">
+										{
+											selectedSku.skuOptions?.[0]
+												?.skuOptionValueNames?.[0]
+										}
+									</p>
+									<p className="liferay-ai-hub-form-token-description mb-0 text-black-50">
+										{
+											selectedSku.customFields?.find(
+												(field: any) =>
+													field.name === 'description'
+											)?.customValue.data as string
+										}
+									</p>
+								</div>
 							</div>
 							<p className="liferay-ai-hub-form-token-price mb-0">
 								{selectedSku.price?.priceFormatted}
@@ -174,36 +197,21 @@ const AIHubTokenOrderSummary = () => {
 
 			<Section className="ai-hub-summary" label={i18n.translate('payment-method')}
 			>
-				<div className="ai-hub-alert-card">
-					<ClayIcon
-						className="mr-3"
-						color="#25488A"
-						fontSize={24}
-						symbol="info-circle"
-					/>
-					<p className="ai-hub-alert-card-text m-0">
-						{i18n.translate(
-							'this-purchase-will-be-billed-under-your-existing-payment-agreement-the-payment-method-cannot-be-changed-and-no-online-payment-is-required'
-						)}
-					</p>
-				</div>
-
 				<div className="ai-hub-summary-infomation-card">
-					<ClayIcon
+					<img
+						alt="paypal"
 						className="mr-3"
-						color="#0B5FFF"
-						fontSize={16}
-						symbol="document-text"
+						height={18}
+						src={paypal}
+						width={16}
 					/>
 					<div>
 						<div className="text">
-							{i18n.translate('pay-with-invoice')}
+							{i18n.translate('pay-with-card')}
 						</div>
-						<div className="sub-text">
-							{i18n.translate(
-								'offline-payments-using-the-invoice'
-							)}
-						</div>
+						<p className="font-weight-normal mb-0 sub-text text-black-50">
+							Online payments with <b>PayPal</b>
+						</p>
 					</div>
 				</div>
 			</Section>
@@ -235,6 +243,10 @@ const AIHubTokenOrderSummary = () => {
 					<span className="font-weight-bold ml-2">
 						{valueFallBack(summary?.totalFormatted)}
 					</span>
+					<ClayBadge
+							className="ml-3 px-2 text-2 rounded font-weight-normal monthly-badge"
+							label="One-Time"
+						/>
 				</div>
 			</Section>
 
@@ -248,7 +260,7 @@ const AIHubTokenOrderSummary = () => {
 					onClick={onSubmit}
 					size="regular"
 				>
-					{i18n.translate('buy-extra-token')}
+					{i18n.translate('buy-liferay-tokens')}
 				</ClayButton>
 			</div>
 		</ProductPurchase.Shell>

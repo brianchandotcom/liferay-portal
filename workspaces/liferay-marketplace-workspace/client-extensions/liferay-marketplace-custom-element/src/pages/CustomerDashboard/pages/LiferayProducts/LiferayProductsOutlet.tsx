@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import {NavbarProps} from '../../../../components/Navbar';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {
-	OrderStatus,
+	OrderCustomFields,
 	OrderTypes,
 	OrderWorkflowStatusCode,
 	orderTypeDocumentationURL,
@@ -128,7 +128,7 @@ const LiferayProductsOutlet = () => {
 										}}
 										size="regular"
 									>
-										{i18n.translate('buy-extra-token')}
+										{i18n.translate('buy-liferay-tokens')}
 									</ClayButton>
 								)}
 

@@ -8,7 +8,6 @@ import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import {useSelector} from '@xstate/store/react';
 import {useEffect, useState} from 'react';
-import {Navigate, useNavigate} from 'react-router-dom';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import {Section} from '../../../../../components/Section/Section';
@@ -22,17 +21,13 @@ import {ProductPurchaseAIHubOpenBeta} from '../../../services/ProductPurchaseAIH
 import {productPurchaseStore} from '../../../store';
 
 import {ClayCheckbox} from '@clayui/form';
-import {RequiredMask} from '../../../../../components/FieldBase';
 import {productAgreements} from '../../../../../utils/agreements';
 
 import './AIHubOrderSummary.scss';
-import {Label} from '../../../../../components/MarketplaceForm/Label';
 
 const AIHubOrderSummary = () => {
-	const navigate = useNavigate();
 
 	const {
-		actions: {previousStep},
 		form,
 		handlePurchase,
 		product,
@@ -50,16 +45,6 @@ const AIHubOrderSummary = () => {
 
 	const {data: addressResponse} = useAccountAddresses(selectedAccount?.id);
 	const addresses = addressResponse?.items;
-
-	// useEffect(() => {
-	// 	if (selectedAccount?.id) {
-	// 		const result = zodSchema.aiHubOpenBetaForm.safeParse(form);
-
-	// 		if (!result.success) {
-	// 			navigate('/ai-hub-open-beta-form');
-	// 		}
-	// 	}
-	// }, [form, navigate, selectedAccount?.id]);
 
 	useEffect(() => {
 		if (
@@ -86,10 +71,6 @@ const AIHubOrderSummary = () => {
 			});
 		}
 	}, [addresses, paymentStore.billingAddress?.name]);
-
-	// if (!selectedAccount || !selectedAccount.id) {
-	// 	return <Navigate to="/" />;
-	// }
 
 	const summary = productPurchaseCart.cart.summary;
 	const currencyCode = Liferay.CommerceContext.currency.currencyCode;
@@ -212,8 +193,8 @@ const AIHubOrderSummary = () => {
 					<span className="font-weight-bold ml-2 d-flex">
 						{valueFallBack(summary?.totalFormatted)}{' '}
 						<ClayBadge
-							className="ml-4 px-2 text-2 rounded font-weight-normal montly-badge"
-							label="Montly"
+							className="ml-4 px-2 text-2 rounded font-weight-normal monthly-badge"
+							label="Monthly"
 						/>
 					</span>
 				</div>
@@ -277,13 +258,9 @@ const AIHubOrderSummary = () => {
 						{i18n.translate(
 							'i-agree-to-the-processing-of-my-personal-data-for-the-purpose-of-evaluating-my-beta-access-request-in-accordance-with'
 						)}
-						<a
-							className="ml-1"
-							href={productAgreements.links.privacyPolicy}
-							target="_blank"
-						>
+						<span className="ml-1">
 							{i18n.translate('liferay-s-privacy-policy')}
-						</a>
+						</span>
 					</span>
 				</label>
 			</div>

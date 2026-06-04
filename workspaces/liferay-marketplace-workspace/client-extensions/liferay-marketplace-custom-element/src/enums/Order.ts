@@ -151,7 +151,7 @@ export function getOrderStatusLabel(order: PlacedOrder) {
 
 	if (order.orderTypeExternalReferenceCode === OrderTypes.AI_HUB) {
 		if (order.orderStatusInfo.code !== OrderWorkflowStatusCode.COMPLETED) {
-			return 'Requested';
+			return 'Pending';
 		}
 
 		return 'Active';

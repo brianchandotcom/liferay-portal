@@ -115,7 +115,7 @@ const LiferayProductsListView = () => {
 
 									return isNotAIHub || isNotActive;
 								},
-								name: i18n.translate('buy-extra-token'),
+								name: i18n.translate('buy-liferay-tokens'),
 								onClick: (placedOrder: PlacedOrder) => {
 									const placedOrderItems = placedOrder.placedOrderItems ?? [];
 									const firstOrderItem = placedOrderItems[0];

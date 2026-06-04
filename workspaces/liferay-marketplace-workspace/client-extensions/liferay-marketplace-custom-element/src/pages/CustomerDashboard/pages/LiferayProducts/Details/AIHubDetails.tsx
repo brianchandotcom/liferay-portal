@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {useOutletContext, useSearchParams} from 'react-router-dom';
 
 import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
@@ -31,16 +31,16 @@ const activationKeyAlertStatuses = {
 	},
 	pending: {
 		description:
-			'Our team is currently reviewing your request. An administrator will approve your access, and you will receive a notification via email as soon as your account is activated.',
-		dismissable: false,
-		title: 'Your Beta Access Request is Pending',
+			"We've sent the order form to your email via DocuSign. Please review, sign, and return it to confirm your subscription — once received, we'll provision your AI Hub and notify you by email.",
+		dismissible: false,
+		title: 'Awaiting Signature',
 		type: 'info',
 	},
 };
 
 const AIHubDetails = () => {
 	const {placedOrder, selectedAccount} = useOutletContext<any>();
-	const [searchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const orderStatusCode = placedOrder?.orderStatusInfo
 		?.code as OrderWorkflowStatusCode;
@@ -101,6 +101,40 @@ const AIHubDetails = () => {
 			return isCompleted && isPaid;
 		});
 	}, [tokenOrdersData]);
+
+	useEffect(() => {
+		if (searchParams.has('tokenPurchaseSuccess') && tokenOrdersData?.items) {
+			const completedOrders = (tokenOrdersData.items ?? []).filter((order) => {
+				const isCompleted =
+					order.orderStatusInfo?.code ===
+					OrderWorkflowStatusCode.COMPLETED;
+
+				const isPaid =
+					order.paymentStatus === PaymentStatus.PAID ||
+					order.paymentStatusInfo?.code === PaymentStatus.PAID;
+
+				return isCompleted && isPaid;
+			});
+
+			if (completedOrders.length > 0) {
+				const lastOrder = completedOrders[0];
+				const sku = lastOrder.placedOrderItems?.[0]?.sku
+				const tokensAmount = sku.split(' ')[0] || '';
+
+				const toastMessage = [tokensAmount, i18n.translate('liferay-tokens-was-purchased-successfully')].join(' ');
+
+				Liferay.Util.openToast({
+					message: toastMessage,
+					title: i18n.translate('success'),
+					type: 'success',
+				});
+
+				const newSearchParams = new URLSearchParams(searchParams);
+				newSearchParams.delete('tokenPurchaseSuccess');
+				setSearchParams(newSearchParams, {replace: true});
+			}
+		}
+	}, [searchParams, tokenOrdersData, setSearchParams]);
 
 	const orderMetadata = placedOrder
 		? JSON.parse(placedOrder.customFields[OrderCustomFields.ORDER_METADATA])
@@ -188,16 +222,6 @@ const AIHubDetails = () => {
 						}}
 						resource={`o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${Liferay.CommerceContext.account?.accountId}/placed-orders?filter=${SearchBuilder.eq('orderTypeExternalReferenceCode', OrderTypes.AI_HUB_TOKEN)}&nestedFields=placedOrderItems&sort=createDate:desc`}
 						tableProps={{
-							actions: [
-								{
-									name: i18n.translate('download-invoice'),
-									onClick: (row: PlacedOrder) =>
-										window.open(
-											`/o/headless-commerce-delivery-order/v1.0/placed-orders/${row.id}/print`,
-											'_blank'
-										),
-								},
-							],
 							columns: [
 								{
 									id: 'createDate',

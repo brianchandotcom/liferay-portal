@@ -57,9 +57,6 @@ const AIHubOpenBetaNextSteps: React.FC<AIHubOpenBetaNextStepsProps> = ({
 						title={
 							<div className="align-items-center d-flex">
 								{productName}{' '}
-								<label className="beta-badge-label ml-2 mt-1">
-									Beta
-								</label>{' '}
 							</div>
 						}
 					/>
@@ -87,7 +84,7 @@ const AIHubOpenBetaNextSteps: React.FC<AIHubOpenBetaNextStepsProps> = ({
 								<span className="text-center">
 									<p className="mb-1 next-step-page-description">
 										Thank you for your purchase of{' '}
-										<strong>AI Hub Beta.</strong> An order
+										<strong>AI Hub.</strong> An order
 										form will be sent to your{' '}
 										<strong>email via DocuSign</strong>.
 										Please review, sign, and return it to

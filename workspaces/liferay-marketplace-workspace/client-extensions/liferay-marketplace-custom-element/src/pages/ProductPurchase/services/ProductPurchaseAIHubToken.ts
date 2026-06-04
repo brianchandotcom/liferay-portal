@@ -57,7 +57,7 @@ export class ProductPurchaseAIHubToken extends ProductPurchase {
 					);
 				const aiHubOrder = response?.items?.[0];
 				if (aiHubOrder?.id) {
-					return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products/${aiHubOrder.id}`;
+					return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products/${aiHubOrder.id}?tokenPurchaseSuccess`;
 				}
 			}
 		}
@@ -65,6 +65,6 @@ export class ProductPurchaseAIHubToken extends ProductPurchase {
 			console.error('Failed to resolve AI Hub order ID:', error);
 		}
 
-		return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products`;
+		return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products?tokenPurchaseSuccess`;
 	}
 }

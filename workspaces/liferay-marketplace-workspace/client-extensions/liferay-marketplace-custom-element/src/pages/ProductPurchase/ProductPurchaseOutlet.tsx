@@ -227,6 +227,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 						<ProductPurchasePrice
 							product={product}
 							productPurchaseCart={productPurchaseCart}
+							solutionTypeSpecificationValue={solutionTypeSpecificationValue}
 						/>
 					) : null
 				}

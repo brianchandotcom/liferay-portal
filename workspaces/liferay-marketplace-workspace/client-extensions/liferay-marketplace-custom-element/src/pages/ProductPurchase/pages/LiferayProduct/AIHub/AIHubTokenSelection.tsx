@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import ClayLink from '@clayui/link';
+import ClayIcon from '@clayui/icon';
 import {useEffect, useMemo, useState} from 'react';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
@@ -12,7 +11,11 @@ import RadioCardList from '../../../../../components/RadioCardList/RadioCardList
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import HeadlessCommerceDeliveryCart from '../../../../../services/rest/HeadlessCommerceDeliveryCart';
+import HeadlessCommerceDeliveryOrder from '../../../../../services/rest/HeadlessCommerceDeliveryOrder';
+import SearchBuilder from '../../../../../core/SearchBuilder';
+import {OrderTypes} from '../../../../../enums/Order';
 import {getAiHubTokenSKUs} from '../../../../../utils/productUtils';
+import {getSiteURL} from '../../../../../utils/site';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {cartStore, productPurchaseStore} from '../../../store';
 
@@ -40,6 +43,58 @@ const AIHubTokenSelection = () => {
 	const [selectedSkuId, setSelectedSkuId] = useState<number | undefined>();
 	const [isCartLoading, setIsCartLoading] = useState(true);
 
+	const searchParams = useMemo(() => new URLSearchParams(window.location.search), []);
+	const [orderId, setOrderId] = useState<string | null>(searchParams.get('orderId'));
+
+	const onClickCancel = () => {
+		if (productPurchaseCart.cart.id) {
+			productPurchaseCart.removeCart(productPurchaseCart.cart.id);
+		}
+
+		if (orderId) {
+			Liferay.Util.navigate(`${getSiteURL()}/customer-dashboard#/products/${orderId}`);
+		}
+		else {
+			Liferay.Util.navigate(`${getSiteURL()}/customer-dashboard`);
+		}
+	};
+
+	useEffect(() => {
+		if (orderId || !selectedAccount?.id) {
+			return;
+		}
+
+		(async () => {
+			try {
+				const channelId = Liferay.CommerceContext.commerceChannelId;
+
+				const params = new URLSearchParams({
+					filter: new SearchBuilder()
+						.eq(
+							'orderTypeExternalReferenceCode',
+							OrderTypes.AI_HUB
+						)
+						.build(),
+					pageSize: '1',
+				});
+
+				const {items: orders} =
+					await HeadlessCommerceDeliveryOrder.getPlacedOrders(
+						channelId,
+						selectedAccount.id,
+						params
+					);
+
+				if (orders.length) {
+					setOrderId(String(orders[0].id));
+				}
+			}
+			catch (error) {
+				console.error(error);
+			}
+		})();
+	}, [orderId, selectedAccount?.id]);
+
 	useEffect(() => {
 		if (!selectedAccount?.id) {
 			setIsCartLoading(true);
@@ -62,11 +117,7 @@ const AIHubTokenSelection = () => {
 						channelId
 					);
 
-				if (!active) {
-					return;
-				}
-
-				if (carts?.length > 0) {
+				if (carts.length) {
 					const [cart] = carts;
 					const {items: cartItems} =
 						await HeadlessCommerceDeliveryCart.getCartItems(
@@ -170,6 +221,17 @@ const AIHubTokenSelection = () => {
 	return (
 		<ProductPurchase.Shell
 			className="liferay-ai-hub-form"
+			footerProps={{
+				backButtonProps: {className: 'd-none'},
+				cancelButtonProps: {
+					onClick: onClickCancel,
+				},
+				continueButtonProps: {
+					children: i18n.translate('continue'),
+					disabled: !selectedSkuId,
+					onClick: onSubmit,
+				},
+			}}
 			title={i18n.translate('select-desired-amount-of-tokens')}
 		>
 			<p className="mb-6 text-black-50">
@@ -183,6 +245,10 @@ const AIHubTokenSelection = () => {
 					<RadioCardList
 						contentList={aiHubTokens.map((token: any) => ({
 							...token,
+							imageURL: token.customFields?.find(
+								(field: any) =>
+									field.name === 'icon-url'
+							)?.customValue.data,
 							selected: selectedSkuId === token?.id,
 							title: (
 								<div className="align-items-center d-flex justify-content-between pt-2">
@@ -198,7 +264,7 @@ const AIHubTokenSelection = () => {
 												token.customFields?.find(
 													(field: any) =>
 														field.name ===
-														'Description'
+														'description'
 												)?.customValue.data
 											}
 										</p>
@@ -217,30 +283,14 @@ const AIHubTokenSelection = () => {
 				) : (
 					<p className="font-weight-bold my-5">No tokens available</p>
 				)}
+				
+				<ClayIcon className="mr-1 text-black-50 liferay-ai-hub-form-info" symbol="lock" />
 
-				<span className="mr-1 secondary-text">
-					Need help calculating tokens usage?
+				<span className="text-black-50 liferay-ai-hub-form-info">
+					The per-token price is locked when you purchase. Future rate changes won't affect tokens you've already bought.
 				</span>
-
-				<ClayLink
-					className="font-weight-bold"
-					href="http://help.liferay.com/"
-					rel="noopener noreferrer"
-					target="_blank"
-				>
-					Contact Support
-				</ClayLink>
 			</div>
-
-			<ClayButton
-				className="mt-6 w-100"
-				disabled={!selectedSkuId}
-				onClick={onSubmit}
-			>
-				<div className="align-items-center d-flex justify-content-center">
-					<span>{i18n.translate('continue')}</span>
-				</div>
-			</ClayButton>
+			
 		</ProductPurchase.Shell>
 	);
 };

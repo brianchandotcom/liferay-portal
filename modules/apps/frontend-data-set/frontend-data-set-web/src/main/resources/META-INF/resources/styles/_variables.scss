@@ -1,34 +1,31 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/variables';
 
 // Colors
 
-$border-color: #e7e7ed;
+$border-color: $gray-300;
 
-$danger-primary: #da1414;
-$danger-secondary: #f48989;
+$danger-primary: $danger;
+$danger-secondary: $danger-l1;
 
-$error-l1: lighten($danger-primary, 28%);
+$error-l1: $danger-l1;
 
-$gray-200: #f1f2f5;
-$gray-600: #6b6c7e;
+$info-bc: $info-l2;
+$info-primary: $info;
+$info-secondary: $info-l1;
 
-$info-bc: #eef2fa;
-$info-primary: #2e5aac;
-$info-secondary: #89a7e0;
-
-$primary-color: #0b5fff;
+$primary-color: $primary;
 
 $secondary-text: $gray-600;
 
-$step-tracker-active: #6b6c7e;
+$step-tracker-active: $gray-600;
 $step-tracker-completed: #6fcf97;
-$step-tracker-inactive: #cdced9;
+$step-tracker-inactive: $gray-400;
 
-$success-primary: #287d3d;
-$success-secondary: #5aca76;
+$success-primary: $success;
+$success-secondary: $success-l1;
 
-$warning-primary: #863a00;
-$warning-secondary: #ff8f39;
+$warning-primary: $warning-d2;
+$warning-secondary: $warning-l1;
 
 // Drop
 

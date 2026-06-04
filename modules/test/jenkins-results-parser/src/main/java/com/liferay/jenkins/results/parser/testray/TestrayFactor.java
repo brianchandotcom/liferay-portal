@@ -5,6 +5,13 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+import java.io.IOException;
+
+import java.net.URLEncoder;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -23,55 +30,243 @@ public interface TestrayFactor {
 
 	public JSONObject getJSONObject();
 
-	public String getName();
-
 	public BaseTestrayFactor.Option getOption();
+
+	public TestrayServer getTestrayServer();
 
 	public static class Category {
 
-		public static final String[] FIELD_NAMES = {
-			"dateCreated", "dateModified", "id", "name"
-		};
-
 		public Long getID() {
+			if (_id <= 0) {
+				JSONObject jsonObject = _getJSONObject();
+
+				if (jsonObject == null) {
+					return _id;
+				}
+
+				_id = jsonObject.getLong("id");
+			}
+
 			return _id;
 		}
 
 		public String getName() {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(_name)) {
+				JSONObject jsonObject = _getJSONObject();
+
+				if (jsonObject == null) {
+					return _name;
+				}
+
+				_name = jsonObject.getString("name");
+			}
+
 			return _name;
 		}
 
-		protected Category(JSONObject jsonObject) {
-			_id = jsonObject.getLong("id");
-			_name = jsonObject.getString("name");
+		public TestrayServer getTestrayServer() {
+			return _testrayServer;
 		}
 
-		private final long _id;
-		private final String _name;
+		protected Category(TestrayServer testrayServer, JSONObject jsonObject) {
+			_testrayServer = testrayServer;
+			_jsonObject = jsonObject;
+
+			_cached = true;
+
+			_id = _jsonObject.getLong("id");
+			_name = _jsonObject.getString("name");
+		}
+
+		protected Category(TestrayServer testrayServer, long id) {
+			_testrayServer = testrayServer;
+			_id = id;
+		}
+
+		protected Category(TestrayServer testrayServer, String name) {
+			_testrayServer = testrayServer;
+			_name = name;
+		}
+
+		private synchronized JSONObject _getJSONObject() {
+			if (_cached || (_jsonObject != null)) {
+				return _jsonObject;
+			}
+
+			String filter = null;
+
+			if (_id > 0) {
+				filter = "id eq '" + _id + "'";
+			}
+			else if (!JenkinsResultsParserUtil.isNullOrEmpty(_name)) {
+				filter = "name eq '" + _name + "'";
+			}
+
+			if (filter == null) {
+				_cached = true;
+
+				return null;
+			}
+
+			try {
+				JSONObject jsonObject = new JSONObject(
+					_testrayServer.requestGet(
+						"/o/c/factorcategories?filter=" +
+							URLEncoder.encode(filter, "UTF-8")));
+
+				JSONArray itemsJSONArray = jsonObject.optJSONArray("items");
+
+				if ((itemsJSONArray == null) || itemsJSONArray.isEmpty()) {
+					_cached = true;
+
+					return null;
+				}
+
+				_jsonObject = itemsJSONArray.getJSONObject(0);
+
+				_cached = true;
+
+				return _jsonObject;
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		private boolean _cached;
+		private long _id;
+		private JSONObject _jsonObject;
+		private String _name;
+		private final TestrayServer _testrayServer;
 
 	}
 
 	public static class Option {
 
-		public static final String[] FIELD_NAMES = {
-			"dateCreated", "dateModified", "id", "name"
-		};
+		public Category getCategory() {
+			if (_category != null) {
+				return _category;
+			}
+
+			JSONObject jsonObject = _getJSONObject();
+
+			if (jsonObject == null) {
+				return null;
+			}
+
+			_category = TestrayFactory.newTestrayFactorCategory(
+				getTestrayServer(),
+				jsonObject.getLong(
+					"r_factorCategoryToOptions_c_factorCategoryId"));
+
+			return _category;
+		}
 
 		public Long getID() {
+			if (_cached || (_id > 0)) {
+				return _id;
+			}
+
+			JSONObject jsonObject = _getJSONObject();
+
+			if (jsonObject == null) {
+				return _id;
+			}
+
+			_id = jsonObject.getLong("id");
+
 			return _id;
 		}
 
 		public String getName() {
+			if (_cached || (_name != null)) {
+				return _name;
+			}
+
+			JSONObject jsonObject = _getJSONObject();
+
+			if (jsonObject == null) {
+				return _name;
+			}
+
+			_name = jsonObject.getString("name");
+
 			return _name;
 		}
 
-		protected Option(JSONObject jsonObject) {
+		public TestrayServer getTestrayServer() {
+			return _testrayServer;
+		}
+
+		protected Option(TestrayServer testrayServer, JSONObject jsonObject) {
+			_testrayServer = testrayServer;
+			_jsonObject = jsonObject;
+
 			_id = jsonObject.getLong("id");
 			_name = jsonObject.getString("name");
 		}
 
-		private final long _id;
-		private final String _name;
+		protected Option(TestrayServer testrayServer, long id) {
+			_testrayServer = testrayServer;
+			_id = id;
+		}
+
+		protected Option(TestrayServer testrayServer, String name) {
+			_testrayServer = testrayServer;
+			_name = name;
+		}
+
+		private synchronized JSONObject _getJSONObject() {
+			if (_cached) {
+				return _jsonObject;
+			}
+
+			String filter = null;
+
+			if (_id > 0) {
+				filter = "id eq '" + _id + "'";
+			}
+			else if (!JenkinsResultsParserUtil.isNullOrEmpty(_name)) {
+				filter = "name eq '" + _name + "'";
+			}
+
+			if (filter == null) {
+				_cached = true;
+
+				return null;
+			}
+
+			try {
+				JSONObject jsonObject = new JSONObject(
+					_testrayServer.requestGet(
+						"/o/c/factoroptions?filter=" +
+							URLEncoder.encode(filter, "UTF-8")));
+
+				JSONArray itemsJSONArray = jsonObject.optJSONArray("items");
+
+				if ((itemsJSONArray == null) || itemsJSONArray.isEmpty()) {
+					_cached = true;
+
+					return null;
+				}
+
+				_jsonObject = itemsJSONArray.getJSONObject(0);
+
+				_cached = true;
+
+				return _jsonObject;
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		private boolean _cached;
+		private Category _category;
+		private long _id;
+		private JSONObject _jsonObject;
+		private String _name;
+		private final TestrayServer _testrayServer;
 
 	}
 

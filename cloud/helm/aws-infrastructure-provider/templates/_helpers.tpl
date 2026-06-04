@@ -1,3 +1,9 @@
+{{- define "aws-infrastructure-provider.overlayBucketName" -}}
+{{- print `{{- $overlayUidHash := printf "%s-%s-%s" $accountId $deploymentName $projectId | sha256sum | trunc 6 -}}
+{{- $overlayBaseName := printf "%.18s-%s" $projectId $overlayUidHash -}}
+{{- $overlayBucketName := printf "%s-overlay-%s" $deploymentName $overlayBaseName -}}` -}}
+{{- end -}}
+
 {{- define "crossplane-runtime-configs.containerSecurityContext" -}}
 securityContext:
     allowPrivilegeEscalation: false
@@ -16,10 +22,4 @@ securityContext:
     runAsUser: 2000
     seccompProfile:
         type: RuntimeDefault
-{{- end -}}
-
-{{- define "aws-infrastructure-provider.overlayBucketName" -}}
-{{- print `{{- $overlayUidHash := printf "%s-%s-%s" $accountId $deploymentName $projectId | sha256sum | trunc 6 -}}
-{{- $overlayBaseName := printf "%.18s-%s" $projectId $overlayUidHash -}}
-{{- $overlayBucketName := printf "%s-overlay-%s" $deploymentName $overlayBaseName -}}` -}}
 {{- end -}}

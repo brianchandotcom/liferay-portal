@@ -323,6 +323,40 @@ public class CustomFacetDisplayContextBuilderTest
 	}
 
 	@Test
+	public void testIsRenderNothingFalseWithNoHitsAndRanges() throws Exception {
+		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
+			_createCustomFacetDisplayContextBuilder(_AGGREGATION_TYPE_RANGE);
+
+		_mockFacetConfiguration("one=[200 TO 300]", "two=[400 TO 500]");
+
+		CustomFacetDisplayContext customFacetDisplayContext =
+			customFacetDisplayContextBuilder.totalHits(
+				0
+			).build();
+
+		Assert.assertFalse(customFacetDisplayContext.isRenderNothing());
+	}
+
+	@Test
+	public void testIsRenderNothingFalseWithNoHitsAndTermCollectors()
+		throws Exception {
+
+		setUpTermCollectors(
+			facetCollector,
+			Collections.singletonList(createTermCollector(createTerm(), 0)));
+
+		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
+			_createCustomFacetDisplayContextBuilder(_AGGREGATION_TYPE_TERMS);
+
+		CustomFacetDisplayContext customFacetDisplayContext =
+			customFacetDisplayContextBuilder.totalHits(
+				0
+			).build();
+
+		Assert.assertFalse(customFacetDisplayContext.isRenderNothing());
+	}
+
+	@Test
 	public void testIsRenderNothingFalseWithSelectedDateRange()
 		throws Exception {
 
@@ -391,7 +425,7 @@ public class CustomFacetDisplayContextBuilderTest
 		Assert.assertFalse(bucketDisplayContext.isSelected());
 
 		Assert.assertTrue(facetDisplayContext.isNothingSelected());
-		Assert.assertTrue(facetDisplayContext.isRenderNothing());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
 		Assert.assertEquals(
 			parameterValue, facetDisplayContext.getParameterValue());
 	}

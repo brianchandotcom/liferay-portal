@@ -83,15 +83,17 @@ public class CustomFacetDisplayContextBuilder {
 			return _buildRangeAggregationCustomFacetDisplayContext();
 		}
 
-		return new CustomFacetDisplayContext(
-			_aggregationType,
+		List<BucketDisplayContext> bucketDisplayContexts =
 			_buildTermsAggregationBucketDisplayContexts(
-				getTermsAggregationTermCollectors()),
-			null, _customFacetPortletInstanceConfiguration, null,
-			getDisplayCaption(), _getDisplayStyleGroupId(), _from,
-			isNothingSelected(), _paginationStartParameterName, _parameterName,
-			_getFirstParameterValue(), _parameterValues, isRenderNothing(),
-			_showInputRange, _to);
+				getTermsAggregationTermCollectors());
+
+		return new CustomFacetDisplayContext(
+			_aggregationType, bucketDisplayContexts, null,
+			_customFacetPortletInstanceConfiguration, null, getDisplayCaption(),
+			_getDisplayStyleGroupId(), _from, isNothingSelected(),
+			_paginationStartParameterName, _parameterName,
+			_getFirstParameterValue(), _parameterValues,
+			isRenderNothing(bucketDisplayContexts), _showInputRange, _to);
 	}
 
 	public CustomFacetDisplayContextBuilder currentURL(String currentURL) {
@@ -267,8 +269,10 @@ public class CustomFacetDisplayContextBuilder {
 		return false;
 	}
 
-	protected boolean isRenderNothing() {
-		if (_totalHits > 0) {
+	protected boolean isRenderNothing(
+		List<BucketDisplayContext> bucketDisplayContexts) {
+
+		if ((_totalHits > 0) || !bucketDisplayContexts.isEmpty()) {
 			return false;
 		}
 
@@ -382,14 +386,17 @@ public class CustomFacetDisplayContextBuilder {
 	private CustomFacetDisplayContext
 		_buildRangeAggregationCustomFacetDisplayContext() {
 
+		List<BucketDisplayContext> bucketDisplayContexts =
+			_buildRangeAggregationBucketDisplayContexts();
+
 		return new CustomFacetDisplayContext(
-			_aggregationType, _buildRangeAggregationBucketDisplayContexts(),
+			_aggregationType, bucketDisplayContexts,
 			_buildCalendarDisplayContext(),
 			_customFacetPortletInstanceConfiguration,
 			_buildCustomRangeBucketDisplayContext(), getDisplayCaption(),
 			_getDisplayStyleGroupId(), _from, isNothingSelected(),
 			_paginationStartParameterName, _parameterName, null, null,
-			isRenderNothing(), _showInputRange, _to);
+			isRenderNothing(bucketDisplayContexts), _showInputRange, _to);
 	}
 
 	private BucketDisplayContext _buildTermsAggregationBucketDisplayContext(

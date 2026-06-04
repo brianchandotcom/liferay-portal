@@ -121,7 +121,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 	private String _getExportImportPortletURL(String portletId) {
 		return HttpComponentsUtil.addParameter(
 			StringBundler.concat(
-				_themeDisplay.getPortalURL(),
+				_themeDisplay.getCDNBaseURL(),
 				_themeDisplay.getPathFriendlyURLPrivateGroup(),
 				"/asset-library-{id}/~/control_panel/manage?p_p_id=",
 				portletId),

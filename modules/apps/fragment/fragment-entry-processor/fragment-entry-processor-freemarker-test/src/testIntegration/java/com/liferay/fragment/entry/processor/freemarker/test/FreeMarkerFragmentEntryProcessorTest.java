@@ -10,6 +10,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -127,6 +128,22 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testAddFragmentEntryWithDynamicDataDuringImport()
+		throws Exception {
+
+		try {
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+			Assert.assertNotNull(
+				_addFragmentEntry(
+					"fragment_entry_with_rest_client_data.html", null));
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+		}
 	}
 
 	@Test

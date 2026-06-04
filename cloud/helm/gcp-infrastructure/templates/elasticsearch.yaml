@@ -1,6 +1,6 @@
 {{- $search := .Values.search.elasticsearch -}}
 {{- $elasticsearchNamespace := printf "%s-elasticsearch" .Release.Namespace -}}
-{{- if $search.enabled }}
+{{- if and .Values.enabled $search.enabled }}
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:

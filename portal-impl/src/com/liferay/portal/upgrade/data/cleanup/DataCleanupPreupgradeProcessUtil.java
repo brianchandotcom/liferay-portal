@@ -131,15 +131,15 @@ public class DataCleanupPreupgradeProcessUtil {
 				ImplementationClassName implementationClassName =
 					clazz.getAnnotation(ImplementationClassName.class);
 
-				if (implementationClassName != null) {
-					clazz = bundle.loadClass(implementationClassName.value());
-
-					Field field = clazz.getField("TABLE_NAME");
-
-					return (String)field.get(null);
+				if (implementationClassName == null) {
+					return null;
 				}
 
-				return null;
+				clazz = bundle.loadClass(implementationClassName.value());
+
+				Field field = clazz.getField("TABLE_NAME");
+
+				return (String)field.get(null);
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {

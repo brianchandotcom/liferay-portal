@@ -125,19 +125,14 @@ export async function findChannel({
 	channelName: string;
 	page: Page;
 }): Promise<any> {
-	const managementBar = page.locator('.management-bar').filter({
-		has: page.locator('input[placeholder="Search"]:not([disabled])'),
+	await page.getByRole('textbox', {name: 'Search'}).first().fill(channelName);
+
+	await clickAndExpectToBeVisible({
+		target: page.getByRole('cell', {name: channelName}),
+		trigger: page.getByRole('button', {name: 'Search'}).first(),
 	});
 
-	await managementBar.getByPlaceholder('Search').fill(channelName);
-
-	await managementBar.getByRole('button', {name: 'Search'}).click();
-
-	await expect(page.getByRole('cell', {name: channelName})).toBeVisible({
-		timeout: 100 * 1000,
-	});
-
-	return await page.locator('table.table tbody tr:first-child');
+	return page.locator('table.table tbody tr:first-child');
 }
 
 export async function goToAnalyticsCloudInstanceSettings(page: Page) {
@@ -157,9 +152,7 @@ export async function goToSettingsStep({
 }) {
 	await goToAnalyticsCloudInstanceSettings(page);
 
-	const menuBar = await page.locator('.menubar');
-
-	await menuBar.getByText(stepName).click();
+	await page.getByRole('menuitem', {name: stepName}).click();
 }
 
 export async function syncAllContacts(page: Page) {
@@ -316,7 +309,7 @@ export async function syncAnalyticsCloud({
 
 	await goNextStep(page);
 
-	const nextButton = await page.getByRole('button', {
+	const nextButton = page.getByRole('button', {
 		exact: true,
 		name: 'Next',
 	});
@@ -326,6 +319,11 @@ export async function syncAnalyticsCloud({
 	}
 
 	await page.getByRole('button', {name: 'Finish'}).click();
+
+	await waitForAlert(
+		page,
+		'Success:DXP has successfully connected to Analytics Cloud. You will begin to see data as activities occur on your sites.'
+	);
 
 	return {
 		channel,
@@ -383,9 +381,10 @@ export async function syncCommerce({
 }) {
 	const channel = await findChannel({channelName, page});
 
-	const assignButton = await channel.locator('button');
-
-	await assignButton.click();
+	await clickAndExpectToBeVisible({
+		target: page.getByRole('dialog'),
+		trigger: channel.locator("[role='assign-button']"),
+	});
 
 	await switchToTab({page, tabName: TabName.Channel});
 
@@ -398,9 +397,9 @@ export async function syncCommerce({
 
 	await expect(page.locator('span[data-testid="loading"]')).toBeHidden();
 
-	const channelTable = await page.locator('[data-testid="channel"]');
+	const channelTable = page.locator('[data-testid="channel"]');
 
-	expect(channelTable).toBeVisible();
+	await expect(channelTable).toBeVisible();
 
 	const checkbox = channelTable.locator(
 		'tbody tr:first-child input[type="checkbox"]'
@@ -439,9 +438,9 @@ export async function toggleSiteSync({
 
 	await expect(page.locator('span[data-testid="loading"]')).toBeHidden();
 
-	const sitesTable = await page.locator('[data-testid="sites"]');
+	const sitesTable = page.locator('[data-testid="sites"]');
 
-	expect(sitesTable).toBeVisible();
+	await expect(sitesTable).toBeVisible();
 
 	const siteRow = sitesTable.locator('tbody tr').filter({hasText: siteName});
 
@@ -461,7 +460,7 @@ export async function toggleSiteSync({
 	await waitForAlert(page, 'Properties settings have been saved.');
 }
 
-export async function goNextStep(page) {
+export async function goNextStep(page: Page) {
 	await page.getByRole('button', {exact: true, name: 'Next'}).click();
 }
 

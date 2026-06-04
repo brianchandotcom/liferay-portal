@@ -106,6 +106,14 @@ public abstract class BaseSectionDisplayContextTestCase {
 			"getCreationMenu", new Class<?>[0]);
 	}
 
+	protected Map<String, Object> getEmptyState(AssetEntry assetEntry)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(_getHttpServletRequest(assetEntry)),
+			"getEmptyState", new Class<?>[0]);
+	}
+
 	protected List<FDSActionDropdownItem> getFDSActionDropdownItems(
 			AssetEntry assetEntry)
 		throws Exception {

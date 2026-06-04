@@ -103,8 +103,9 @@ public class SyncEnvironmentUrlsObjectActionExecutorImpl
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			StringBundler.concat(
-				"(&(service.factoryPid=", _PORTAL_CORS_CONFIGURATION_PID,
-				".scoped)(companyId=", companyId, "))"));
+				"(&(service.factoryPid=com.liferay.portal.remote.cors.",
+				"configuration.PortalCORSConfiguration.scoped)(companyId=",
+				companyId, "))"));
 
 		if (ArrayUtil.isEmpty(configurations)) {
 			return;
@@ -146,9 +147,6 @@ public class SyncEnvironmentUrlsObjectActionExecutorImpl
 
 		configuration.update(properties);
 	}
-
-	private static final String _PORTAL_CORS_CONFIGURATION_PID =
-		"com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration";
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

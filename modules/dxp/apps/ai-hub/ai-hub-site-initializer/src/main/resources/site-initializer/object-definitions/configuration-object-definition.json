@@ -14,6 +14,18 @@
 	"name": "AIHubConfiguration",
 	"objectFields": [
 		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "ENVIRONMENT_URLS",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Environment URLs"
+			},
+			"name": "environmentUrls",
+			"system": true
+		},
+		{
 			"DBType": "Long",
 			"businessType": "Relationship",
 			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_CONFIGURATIONS",
@@ -37,18 +49,6 @@
 			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CONFIGURATIONS",
 			"relationshipType": "oneToMany",
 			"required": true,
-			"system": true
-		},
-		{
-			"DBType": "Clob",
-			"businessType": "LongText",
-			"externalReferenceCode": "ENVIRONMENT_URLS",
-			"indexed": true,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Environment URLs"
-			},
-			"name": "environmentUrls",
 			"system": true
 		}
 	],

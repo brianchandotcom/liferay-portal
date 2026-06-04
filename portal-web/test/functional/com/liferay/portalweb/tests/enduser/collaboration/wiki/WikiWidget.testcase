@@ -188,21 +188,4 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that the wiki widget follows W3C accessibility standards."
-	@ignore = "true"
-	@priority = 4
-	test WidgetFollowsAccessibilityStandards {
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Wiki Test Page",
-			widgetName = "Wiki Display");
-
-		Navigator.openSitePage(
-			pageName = "Wiki Test Page",
-			siteName = "Guest");
-
-		AssertAccessible();
-	}
-
 }

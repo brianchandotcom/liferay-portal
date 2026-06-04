@@ -515,53 +515,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
-	@priority = 4
-	@refactordone
-	test CanViewMessageBoardsRSS {
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body 1",
-			threadSubject = "MB Thread Message Subject 1");
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body 2",
-			threadSubject = "MB Thread Message Subject 2");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		RSS.viewFeed(
-			entryContent = "MB Thread Message Body 2",
-			entryTitle = "MB Thread Message Subject 2",
-			feedSubtitle = "MB Thread Message Subject 2",
-			feedTitle = "MB Thread Message Subject 2",
-			rssURL = "message_boards");
-
-		MessageboardsThread.openToThread(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadSubject = "MB Thread Message Subject 1");
-
-		RSS.viewFeed(
-			entryContent = "MB Thread Message Body 1",
-			entryTitle = "MB Thread Message Subject 1",
-			feedSubtitle = "MB Thread Message Subject 1",
-			feedTitle = "MB Thread Message Subject 1",
-			rssURL = "message_boards");
-
-		Click(locator1 = "NavBar#HOME");
-
-		RSS.gotoFeed(rssURL = "message_boards");
-
-		RSS.viewFeedEntry(
-			entryContent = "MB Thread Message Body 1,MB Thread Message Body 2",
-			entryTitle = "MB Thread Message Subject 1,MB Thread Message Subject 2");
-	}
-
 	@description = "This test covers LPS-132060, LPS-77252 and LPS-86797. It ensures that Categories group and Threads group are listed independently with their own pager."
 	@priority = 4
 	@refactordone
@@ -916,17 +869,6 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.viewDefault();
-	}
-
-	@description = "This test ensures that the MB widget follows W3C accessibility standards"
-	@ignore = "true"
-	@priority = 4
-	test WidgetFollowsAccessibilityStandards {
-		Navigator.openSitePage(
-			pageName = "Message Boards Page",
-			siteName = "Guest");
-
-		AssertAccessible();
 	}
 
 	@description = "This test checks that the javascript in the user name will not be executed when viewing a thread on page."

@@ -233,23 +233,6 @@ definition {
 			value1 = "2 of 10 Items Selected");
 	}
 
-	@description = "This test ensures that the DM widgets follow W3C accessibility standards."
-	@ignore = "true"
-	@priority = 3
-	test WidgetsFollowAccessibilityStandards {
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Media Gallery");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Guest");
-
-		AssertAccessible();
-	}
-
 	@description = "This test checks that the javascript in the user name will not be executed when viewing a document on page."
 	@priority = 3
 	test XSSIsNotExecutedWhenViewingUsernameInDocument {

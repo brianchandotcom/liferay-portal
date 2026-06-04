@@ -1168,9 +1168,9 @@ spec:
                         {{- $uidHash := printf "%s-%s-%s" $accountId $deploymentName $projectIdFull | sha256sum | trunc 6 -}}
                         {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
-                        {{- $overlayUidHash := printf "%s-%s-%s" $accountId $deploymentName $projectId | sha256sum | trunc 6 -}}
-                        {{- $overlayBaseName := printf "%.18s-%s" $projectId $overlayUidHash -}}
-                        {{- $overlayBucketName := printf "%s-overlay-%s" $deploymentName $overlayBaseName -}}
+                        `}}
+                        {{- include "aws-infrastructure-provider.overlayBucketName" . | nindent 24 }}
+                        {{`
 
                         {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
                         {{- $targetInactiveDataPlane := (eq $targetActiveDataPlane "blue") | ternary "green" "blue" -}}
@@ -1573,9 +1573,9 @@ spec:
                         {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
                         {{- $namespace := $xr.metadata.namespace -}}
 
-                        {{- $uidHash := printf "%s-%s-%s" $accountId $deploymentName $projectId | sha256sum | trunc 6 -}}
-                        {{- $overlayBaseName := printf "%.18s-%s" $projectId $uidHash -}}
-                        {{- $overlayBucketName := printf "%s-overlay-%s" $deploymentName $overlayBaseName -}}
+                        `}}
+                        {{- include "aws-infrastructure-provider.overlayBucketName" . | nindent 24 }}
+                        {{`
                         ---
                         apiVersion: s3.aws.m.upbound.io/v1beta1
                         kind: Bucket

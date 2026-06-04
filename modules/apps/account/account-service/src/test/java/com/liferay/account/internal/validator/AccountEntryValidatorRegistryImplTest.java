@@ -52,7 +52,7 @@ public class AccountEntryValidatorRegistryImplTest {
 			AccountEntryValidator.class);
 
 		ServiceWrapper<AccountEntryValidator> serviceWrapper =
-			_getMockServiceWrapper(accountEntryValidator);
+			_getServiceWrapper(accountEntryValidator);
 
 		Mockito.when(
 			_serviceTrackerMap.getService("key")
@@ -89,8 +89,8 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		List<ServiceWrapper<AccountEntryValidator>> serviceWrappers =
 			Arrays.asList(
-				_getMockServiceWrapper(accountEntryValidator1),
-				_getMockServiceWrapper(accountEntryValidator2));
+				_getServiceWrapper(accountEntryValidator1),
+				_getServiceWrapper(accountEntryValidator2));
 
 		Mockito.when(
 			_serviceTrackerMap.values()
@@ -155,8 +155,8 @@ public class AccountEntryValidatorRegistryImplTest {
 
 		List<ServiceWrapper<AccountEntryValidator>> serviceWrappers =
 			Arrays.asList(
-				_getMockServiceWrapper(accountEntryValidator1),
-				_getMockServiceWrapper(accountEntryValidator2));
+				_getServiceWrapper(accountEntryValidator1),
+				_getServiceWrapper(accountEntryValidator2));
 
 		Mockito.when(
 			_serviceTrackerMap.values()
@@ -189,7 +189,7 @@ public class AccountEntryValidatorRegistryImplTest {
 			accountEntryValidatorResult2, accountEntryValidatorResults.get(1));
 	}
 
-	private ServiceWrapper<AccountEntryValidator> _getMockServiceWrapper(
+	private ServiceWrapper<AccountEntryValidator> _getServiceWrapper(
 		AccountEntryValidator accountEntryValidator) {
 
 		ServiceWrapper<AccountEntryValidator> serviceWrapper = Mockito.mock(

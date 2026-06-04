@@ -31,15 +31,15 @@ import org.kohsuke.stapler.StaplerResponse;
 @Extension
 public class OPConnectManagementLink extends ManagementLink {
 
-	public OPConnectManagementLink() {
-		opConnectDescriptor = new OPConnectDescriptor();
-
-		opConnectDescriptor.load();
-	}
-
 	public void doOpConnectConfiguration(
 			StaplerRequest staplerRequest, StaplerResponse staplerResponse)
 		throws IOException, ServletException {
+
+		OPConnectDescriptor opConnectDescriptor = getOpConnectDescriptor();
+
+		if (opConnectDescriptor == null) {
+			return;
+		}
 
 		JSONObject jsonObject = new JSONObject(
 			staplerRequest.getParameter("json"));
@@ -96,8 +96,6 @@ public class OPConnectManagementLink extends ManagementLink {
 
 		opConnectDescriptor.save();
 
-		OPConnectUtil.setOPConnectDescriptor(opConnectDescriptor);
-
 		opConnectDescriptor.refreshSecretValues();
 
 		Jenkins jenkins = Jenkins.getInstanceOrNull();
@@ -128,6 +126,16 @@ public class OPConnectManagementLink extends ManagementLink {
 		return "clipboard.png";
 	}
 
+	public OPConnectDescriptor getOpConnectDescriptor() {
+		Jenkins jenkins = Jenkins.getInstanceOrNull();
+
+		if (jenkins == null) {
+			return null;
+		}
+
+		return jenkins.getDescriptorByType(OPConnectDescriptor.class);
+	}
+
 	@Override
 	public Permission getRequiredPermission() {
 		return Jenkins.ADMINISTER;
@@ -137,8 +145,6 @@ public class OPConnectManagementLink extends ManagementLink {
 	public String getUrlName() {
 		return "op-connect-configuration";
 	}
-
-	public OPConnectDescriptor opConnectDescriptor;
 
 	private static final String _VAULT_NAME_PREFIX = "vault:";
 

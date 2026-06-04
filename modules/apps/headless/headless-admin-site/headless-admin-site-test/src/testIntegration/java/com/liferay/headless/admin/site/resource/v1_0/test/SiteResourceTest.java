@@ -176,10 +176,10 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		super.testGetSitesPage();
 
 		_testGetSitesPageWithActiveAndInactiveSites();
-		_testGetSitesPageWithExcludedExternalReferenceCodes();
 		_testGetSitesPageWithActiveOrSiteGroups(false, true);
 		_testGetSitesPageWithActiveOrSiteGroups(true, false);
 		_testGetSitesPageWithDepotEntry();
+		_testGetSitesPageWithExcludedExternalReferenceCodes();
 		_testGetSitesPageWithInactiveSites();
 		_testGetSitesPageWithoutSiteMembership();
 		_testGetSitesPageWithSearch();
@@ -500,15 +500,15 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private void _testGetSitesPageWithExcludedExternalReferenceCodes()
 		throws Exception {
 
-		Site excludedSite = new Site();
+		Site excludedSite = randomSite();
 
-		excludedSite.setName(RandomTestUtil.randomString());
+		excludedSite.setActive(true);
 
 		Site postExcludedSite = _testPostSite_addSite(excludedSite);
 
-		Site includedSite = new Site();
+		Site includedSite = randomSite();
 
-		includedSite.setName(RandomTestUtil.randomString());
+		includedSite.setActive(true);
 
 		Site postIncludedSite = _testPostSite_addSite(includedSite);
 

@@ -259,7 +259,7 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 								},
 								{
 									name="gateway.envoyProxyRoleArn"
-									value=data.aws_iam_role.envoy_proxy_role.arn
+									value=local.envoy_proxy_role_arn
 								},
 								{
 									name="gateway.namespace"
@@ -395,7 +395,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 										},
 										{
 											name="global.liferayServiceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-											value=data.aws_iam_role.liferay_irsa.arn
+											value=local.liferay_service_account_role_arn
 										},
 										{
 											name="global.liferayServiceAccount.create"
@@ -545,7 +545,7 @@ resource "kubernetes_manifest" "observability_application" {
 								},
 								{
 									name="alloy.iam.awsRoleArn"
-									value=try(data.aws_iam_role.alloy_role[0].arn, "")
+									value=local.alloy_role_arn
 								},
 								{
 									name="alloy.namespace"
@@ -589,7 +589,7 @@ resource "kubernetes_manifest" "observability_application" {
 								},
 								{
 									name="grafana.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-									value=try(data.aws_iam_role.grafana_role[0].arn, "")
+									value=local.grafana_role_arn
 								},
 								{
 									name="kube-state-metrics.namespaceOverride"
@@ -609,7 +609,7 @@ resource "kubernetes_manifest" "observability_application" {
 								},
 								{
 									name="rdsExporter.iam.awsRoleArn"
-									value=try(data.aws_iam_role.rds_exporter_role[0].arn, "")
+									value=local.rds_exporter_role_arn
 								},
 							]
 							valueFiles=[

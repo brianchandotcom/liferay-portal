@@ -15,5 +15,5 @@ resource "aws_iam_role_policy" "aws_marketplace_metering_policy" {
 			]
 			Version="2012-10-17"
 		})
-	role=data.aws_iam_role.liferay_irsa.id
+	role=local.liferay_service_account_role_name
 }

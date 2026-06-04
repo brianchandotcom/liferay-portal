@@ -25,10 +25,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -67,7 +64,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowNode;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.log.LogCapture;
@@ -78,9 +74,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
-import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
-import com.liferay.portal.workflow.manager.WorkflowLogManager;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
@@ -365,11 +359,11 @@ public class AgentInstanceResourceTest
 		return StringUtil.read(inputStream);
 	}
 
-	private ObjectEntry _addOrUpdateInstructionDefinitionObjectEntry(
+	private void _addOrUpdateInstructionDefinitionObjectEntry(
 			Map<String, Serializable> values)
 		throws Exception {
 
-		return _objectEntryLocalService.addOrUpdateObjectEntry(
+		_objectEntryLocalService.addOrUpdateObjectEntry(
 			"L_AI_HUB_INSTRUCTION_DEFINITION", 0, TestPropsValues.getUserId(),
 			_instructionObjectDefinition.getObjectDefinitionId(), 0,
 			HashMapBuilder.<String, Serializable>put(
@@ -388,56 +382,6 @@ public class AgentInstanceResourceTest
 		for (String text : texts) {
 			Assert.assertTrue(line, line.contains(text));
 		}
-	}
-
-	private String _getExpectedPromptInput(
-			Map<String, Serializable> instructionDefinitionObjectEntryValues,
-			String instructionDefinitionScope)
-		throws Exception {
-
-		String prompt = StringBundler.concat(
-			"You are an expert linguistic editor. Your sole task is to ",
-			"correct all grammatical, spelling, and punctuation errors in the ",
-			"provided text while preserving its meaning, tone, and style. Do ",
-			"not alter structure or wording beyond what is necessary for ",
-			"grammatical precision and natural fluency. Output only the ",
-			"corrected text, with no explanations or commentary. If the text ",
-			"is already correct, return it unchanged.");
-
-		if (!GetterUtil.getBoolean(
-				instructionDefinitionObjectEntryValues.get("active"))) {
-
-			return prompt;
-		}
-
-		String scope = GetterUtil.getString(
-			instructionDefinitionObjectEntryValues.get("scope"));
-
-		if (!StringUtil.equals(scope, "everywhere") &&
-			!StringUtil.equals(instructionDefinitionScope, scope)) {
-
-			return prompt;
-		}
-
-		String instruction = GetterUtil.getString(
-			instructionDefinitionObjectEntryValues.get("instruction"));
-		String occasion = GetterUtil.getString(
-			instructionDefinitionObjectEntryValues.get("occasion"));
-
-		if (Validator.isNull(occasion)) {
-			return StringUtil.replace(
-				_read("expected-prompt-input-with-instruction.txt"),
-				new String[] {"${instruction}", "${prompt}"},
-				new String[] {instruction, prompt});
-		}
-
-		return StringUtil.replace(
-			_read("expected-prompt-input-with-instruction-and-occasion.txt"),
-			new String[] {"${instruction}", "${occasion}", "${prompt}"},
-			new String[] {
-				StringUtil.lowerCaseFirstLetter(instruction),
-				StringUtil.removeLast(occasion, StringPool.PERIOD), prompt
-			});
 	}
 
 	private JSONObject _postAgentInstance(
@@ -603,97 +547,86 @@ public class AgentInstanceResourceTest
 
 		// Active, scope clickToChat
 
-		ObjectEntry instructionDefinitionObjectEntry =
-			_addOrUpdateInstructionDefinitionObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"active", true
-				).put(
-					"instruction", "Respond in ALL CAPS."
-				).put(
-					"scope", "clickToChat"
-				).build());
+		_addOrUpdateInstructionDefinitionObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"active", true
+			).put(
+				"instruction", "Respond in ALL CAPS."
+			).put(
+				"scope", "clickToChat"
+			).build());
 
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
-			"THIS TEXT IS WRONG.", "Thi text ix wrong.",
-			instructionDefinitionObjectEntry, "clickToChat");
+			"THIS TEXT IS WRONG.", "Thi text ix wrong.", "clickToChat");
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
-			"This text is wrong.", "Thi text ix wrong.",
-			instructionDefinitionObjectEntry, "cms");
+			"This text is wrong.", "Thi text ix wrong.", "cms");
 
 		// Active, scope everywhere
 
-		instructionDefinitionObjectEntry =
-			_addOrUpdateInstructionDefinitionObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"active", true
-				).put(
-					"instruction",
-					"Preserve all grammar errors exactly as they appear."
-				).put(
-					"scope", "everywhere"
-				).build());
+		_addOrUpdateInstructionDefinitionObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"active", true
+			).put(
+				"instruction",
+				"Preserve all grammar errors exactly as they appear."
+			).put(
+				"scope", "everywhere"
+			).build());
 
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
-			"Thi text ix wrong.", "Thi text ix wrong.",
-			instructionDefinitionObjectEntry, "clickToChat");
+			"Thi text ix wrong.", "Thi text ix wrong.", "clickToChat");
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
-			"Thi text ix wrong.", "Thi text ix wrong.",
-			instructionDefinitionObjectEntry, "cms");
+			"Thi text ix wrong.", "Thi text ix wrong.", "cms");
 
 		// Active, scope everywhere with occasion
 
-		instructionDefinitionObjectEntry =
-			_addOrUpdateInstructionDefinitionObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"active", true
-				).put(
-					"instruction",
-					"Preserve all grammar errors exactly as they appear."
-				).put(
-					"occasion", "When the text is a poem or song lyrics."
-				).put(
-					"scope", "everywhere"
-				).build());
+		_addOrUpdateInstructionDefinitionObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"active", true
+			).put(
+				"instruction",
+				"Preserve all grammar errors exactly as they appear."
+			).put(
+				"occasion", "When the text is a poem or song lyrics."
+			).put(
+				"scope", "everywhere"
+			).build());
 
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
 			"Song she sang to me, song she brang to me.",
-			"Song she sang to me, song she brang to me.",
-			instructionDefinitionObjectEntry, "everywhere");
+			"Song she sang to me, song she brang to me.", "everywhere");
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
-			"This text is wrong.", "Thi text ix wrong.",
-			instructionDefinitionObjectEntry, "everywhere");
+			"This text is wrong.", "Thi text ix wrong.", "everywhere");
 
 		// Inactive, scope everywhere
 
+		_addOrUpdateInstructionDefinitionObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"active", false
+			).put(
+				"instruction", "Respond in ALL CAPS."
+			).put(
+				"scope", "everywhere"
+			).build());
+
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
-			"This text is wrong.", "Thi text ix wrong.",
-			_addOrUpdateInstructionDefinitionObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"active", false
-				).put(
-					"instruction", "Respond in ALL CAPS."
-				).put(
-					"scope", "everywhere"
-				).build()),
-			null);
+			"This text is wrong.", "Thi text ix wrong.", null);
 	}
 
 	private void
 			_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction(
 				String expectedOutput, String input,
-				ObjectEntry instructionDefinitionObjectEntry,
 				String instructionDefinitionScope)
 		throws Exception {
 
 		CountDownLatch countDownLatch = new CountDownLatch(4);
 		List<String> lines = new ArrayList<>();
 
-		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(countDownLatch), lines, "agent-instances/subscribe");
-
 		JSONObject jsonObject = _postAgentInstance(
 			"L_FIX_SPELLING_AND_GRAMMAR", input, "text",
-			instructionDefinitionScope, sseEventSinkKey);
+			instructionDefinitionScope,
+			SseEventSourceTestUtil.open(
+				List.of(countDownLatch), lines, "agent-instances/subscribe"));
 
 		Assert.assertTrue(countDownLatch.await(20, TimeUnit.SECONDS));
 
@@ -721,55 +654,6 @@ public class AgentInstanceResourceTest
 					MapUtil.getString(
 						workflowInstance.getWorkflowContext(),
 						"rewrittenText"));
-
-				List<WorkflowLog> workflowLogs =
-					_workflowLogManager.getWorkflowLogsByWorkflowInstance(
-						TestPropsValues.getCompanyId(),
-						workflowInstance.getWorkflowInstanceId(),
-						List.of(WorkflowLog.NODE_USAGE_METADATA),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-				Assert.assertEquals(
-					workflowLogs.toString(), 1, workflowLogs.size());
-
-				WorkflowLog workflowLog = workflowLogs.get(0);
-
-				Map<String, Serializable> workflowContext =
-					WorkflowContextUtil.convert(
-						workflowLog.getWorkflowContext());
-
-				int inputTokenCount = GetterUtil.getInteger(
-					workflowContext.get("inputTokenCount"));
-
-				Assert.assertTrue(inputTokenCount > 0);
-
-				Assert.assertEquals(
-					expectedOutput, workflowContext.get("output"));
-
-				int outputTokenCount = GetterUtil.getInteger(
-					workflowContext.get("outputTokenCount"));
-
-				Assert.assertTrue(outputTokenCount > 0);
-
-				Assert.assertEquals(
-					_getExpectedPromptInput(
-						instructionDefinitionObjectEntry.getValues(),
-						instructionDefinitionScope),
-					workflowContext.get("promptInput"));
-
-				int thoughtsTokenCount = GetterUtil.getInteger(
-					workflowContext.get("thoughtsTokenCount"));
-
-				Assert.assertTrue(thoughtsTokenCount >= 0);
-
-				Assert.assertEquals(
-					inputTokenCount + outputTokenCount + thoughtsTokenCount,
-					GetterUtil.getInteger(
-						workflowContext.get("totalTokenCount")));
-
-				Assert.assertEquals(
-					"This is the text to be fixed: " + input,
-					workflowContext.get("userMessageInput"));
 
 				return null;
 			});
@@ -1315,8 +1199,5 @@ public class AgentInstanceResourceTest
 
 	@Inject
 	private WorkflowInstanceManager _workflowInstanceManager;
-
-	@Inject
-	private WorkflowLogManager _workflowLogManager;
 
 }

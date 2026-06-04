@@ -1,3 +1,5 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-objects__model-builder-many-edge-dropdown-item {
 	&-button {
 		align-items: center;
@@ -26,19 +28,19 @@
 	}
 	&.selected {
 		marker {
-			fill: #0b5fff !important;
+			fill: $primary !important;
 		}
 	}
 
 	&.react-flow__edge-treeStructureObjectRelationshipEdge {
 		&.selected {
 			marker {
-				fill: #2e5aac !important;
+				fill: $info !important;
 			}
 		}
 
 		marker {
-			fill: #89a7e0;
+			fill: $info-l1;
 		}
 	}
 
@@ -47,6 +49,6 @@
 	}
 
 	marker {
-		fill: #80acff;
+		fill: $primary-l1;
 	}
 }

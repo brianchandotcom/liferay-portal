@@ -1,6 +1,8 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-objects__model-builder-header {
-	background-color: #fff;
-	border-bottom: 1px solid #f1f2f5;
+	background-color: $white;
+	border-bottom: 1px solid $gray-200;
 	display: flex;
 	justify-content: center;
 	padding: 1rem 0;
@@ -13,7 +15,7 @@
 
 	&-changes-saved {
 		align-items: center;
-		color: #287d3c;
+		color: $success;
 		display: flex;
 		font-size: 14px;
 		font-weight: 600;
@@ -45,12 +47,12 @@
 		}
 
 		&-erc-title {
-			color: #6b6c7e;
+			color: $gray-600;
 		}
 
 		&-label {
-			border-right: solid 1px #cdced9;
-			color: #272833;
+			border-right: solid 1px $gray-400;
+			color: $gray-900;
 			font-size: 18px;
 			font-weight: 600;
 			line-height: 150%;

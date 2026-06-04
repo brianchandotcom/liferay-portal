@@ -1,3 +1,5 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr__management-toolbar {
 	position: sticky;
 	width: 100%;
@@ -8,6 +10,7 @@
 	}
 
 	&--box-shadow {
-		box-shadow: 0 0.125rem 0.75rem rgb(0 0 0 / 8%);
+		box-shadow: 0 0.125rem 0.75rem
+			unquote('hsl(from #{$black} h s l / 0.08)');
 	}
 }

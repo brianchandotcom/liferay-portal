@@ -1,4 +1,4 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/_variables';
 
 .lfr-object__object-view-modal-select-object-fields {
 	&-empty-state {
@@ -19,7 +19,7 @@
 		}
 
 		.list-group-item {
-			background-color: #f7f8f9;
+			background-color: $gray-100;
 			border: 0;
 			padding-left: 16px;
 		}

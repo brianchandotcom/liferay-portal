@@ -1,4 +1,4 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/_variables';
 
 .lfr-objects__model-builder-left-sidebar {
 	display: flex;
@@ -69,7 +69,7 @@
 	}
 
 	&-item {
-		border: 2.5px solid #80acff;
+		border: 2.5px solid $primary-l1;
 		border-radius: 8px;
 	}
 
@@ -80,7 +80,7 @@
 
 	&-item-linked.treeview-link {
 		background-color: transparent;
-		color: #6b6c7e80;
+		color: unquote('hsl(from #{$secondary} h s l / 0.5)');
 	}
 
 	&-loading {

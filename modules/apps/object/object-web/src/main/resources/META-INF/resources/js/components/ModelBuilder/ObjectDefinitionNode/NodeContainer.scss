@@ -1,3 +1,5 @@
+@import 'atlas-custom-properties/_variables';
+
 @mixin nodeAnimation($translateYPx) {
 	transform: translateY($translateYPx);
 	transition:
@@ -8,8 +10,8 @@
 
 .lfr-objects__model-builder-node {
 	&-container {
-		background: #fff;
-		border-color: #d3d6e0;
+		background: $white;
+		border-color: $light-d2;
 		border-radius: 0.25rem;
 		border-style: solid;
 		border-width: 0.125rem;
@@ -18,17 +20,17 @@
 		@include nodeAnimation(4px);
 
 		&:active {
-			border-color: #0b5fff;
+			border-color: $primary;
 			border-width: 0.125rem;
 			cursor: grabbing;
 		}
 
 		&:hover {
-			border-color: #b3cdff;
+			border-color: $primary-l2;
 			border-width: 0.125rem;
 			box-shadow:
-				rgba(17, 17, 26, 0.1) 0 4px 16px,
-				rgba(17, 17, 26, 0.05) 0 8px 32px;
+				unquote('hsl(from #{$dark-d2} h s l / 0.1)') 0 4px 16px,
+				unquote('hsl(from #{$dark-d2} h s l / 0.05)') 0 8px 32px;
 
 			@include nodeAnimation(-4px);
 		}
@@ -38,11 +40,11 @@
 		}
 
 		&--selected {
-			border-color: #0b5fff !important;
+			border-color: $primary !important;
 			border-width: 0.125rem !important;
 			box-shadow:
-				rgba(17, 17, 26, 0.1) 0 4px 16px,
-				rgba(17, 17, 26, 0.05) 0 8px 32px;
+				unquote('hsl(from #{$dark-d2} h s l / 0.1)') 0 4px 16px,
+				unquote('hsl(from #{$dark-d2} h s l / 0.05)') 0 8px 32px;
 			@include nodeAnimation(4px);
 		}
 
@@ -50,7 +52,7 @@
 			padding-left: 1rem;
 
 			&::before {
-				background-color: #2e5aac;
+				background-color: $info;
 				border-bottom-left-radius: 0.15rem;
 				border-top-left-radius: 0.15rem;
 				bottom: 0;

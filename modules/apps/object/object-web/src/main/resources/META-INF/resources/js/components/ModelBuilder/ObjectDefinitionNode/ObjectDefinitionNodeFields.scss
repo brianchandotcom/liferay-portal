@@ -1,7 +1,9 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-objects__model-builder-node-field {
 	align-items: center;
-	border-top: 1px solid #f1f2f5;
-	color: #6b6c7e;
+	border-top: 1px solid $gray-200;
+	color: $gray-600;
 	cursor: pointer;
 	display: flex;
 	justify-content: space-between;
@@ -15,8 +17,8 @@
 	}
 
 	&:hover {
-		background: #f0f5ff;
-		color: #0b5fff !important;
+		background: $primary-l3;
+		color: $primary !important;
 	}
 
 	&-label {
@@ -30,7 +32,7 @@
 	}
 
 	&--selected {
-		background: #f0f5ff;
-		color: #0b5fff !important;
+		background: $primary-l3;
+		color: $primary !important;
 	}
 }

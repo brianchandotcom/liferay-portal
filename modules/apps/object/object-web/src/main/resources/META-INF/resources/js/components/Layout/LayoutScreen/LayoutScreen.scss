@@ -1,9 +1,11 @@
-$bgColor: #f7f8f9;
+@import 'atlas-custom-properties/_variables';
+
+$bgColor: $gray-100;
 
 .layout-tab {
 	&__add-tab-btn {
 		background-color: $bgColor;
-		border: 2px dashed #a7a9bc;
+		border: 2px dashed $gray-500;
 		border-radius: 4px;
 		display: grid;
 		margin-bottom: 1.5rem;
@@ -20,7 +22,7 @@ $bgColor: #f7f8f9;
 	}
 
 	&__field {
-		border: 1px solid #e7e7ed;
+		border: 1px solid $gray-300;
 	}
 
 	&__tab {
@@ -28,9 +30,9 @@ $bgColor: #f7f8f9;
 	}
 
 	&__tab-types {
-		border: 1px solid #cdced9;
+		border: 1px solid $gray-400;
 		border-radius: 4px;
-		color: #6b6c7e;
+		color: $gray-600;
 		cursor: pointer;
 		margin-bottom: 1rem;
 		padding: 1rem;
@@ -40,7 +42,7 @@ $bgColor: #f7f8f9;
 		}
 
 		&.active {
-			border: 2px solid #0b5fff;
+			border: 2px solid $primary;
 			color: initial;
 		}
 
@@ -59,8 +61,8 @@ $bgColor: #f7f8f9;
 	display: flex;
 
 	&__btn {
-		background-color: #fff;
-		border: 1px solid #e2e4ea;
+		background-color: $white;
+		border: 1px solid $light-d1;
 		border-radius: 4px;
 		display: flex;
 		flex-direction: row;
@@ -70,26 +72,26 @@ $bgColor: #f7f8f9;
 		width: 80px;
 
 		&:hover {
-			border-color: #ccced4;
+			border-color: $gray-400;
 
 			.box-btn-columns__item {
-				background-color: #ccd0d8;
+				background-color: $gray-400;
 			}
 		}
 
 		&.active,
 		&.active:hover {
-			background-color: #f0f5ff;
-			border-color: #0b5fff;
+			background-color: $primary-l3;
+			border-color: $primary;
 
 			.box-btn-columns__item {
-				background-color: #80acff;
+				background-color: $primary-l1;
 			}
 		}
 	}
 
 	&__item {
-		background-color: #e2e4ea;
+		background-color: $light-d1;
 		border-radius: 4px;
 		height: calc(100% - 8px);
 		margin: 4px;

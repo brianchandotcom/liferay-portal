@@ -1,4 +1,4 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/_variables';
 
 .lfr__object-web-view-object-definitions {
 	display: flex;
@@ -70,5 +70,5 @@
 }
 
 .treeview-light .treeview-link.active {
-	background-color: #f0f5ff;
+	background-color: $primary-l3;
 }

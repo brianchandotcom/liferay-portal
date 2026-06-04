@@ -5,16 +5,258 @@
 
 package com.liferay.analytics.cms.rest.resource.v1_0.test;
 
+import com.liferay.analytics.cms.rest.dto.v1_0.Metric;
+import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceMetric;
+import com.liferay.analytics.cms.rest.resource.v1_0.PerformanceMetricResource;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.MockHttp;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import org.junit.Ignore;
+import jakarta.ws.rs.BadRequestException;
+
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Rachael Koestartyo
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class PerformanceMetricResourceTest
 	extends BasePerformanceMetricResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_addDepotEntry();
+		_addDepotEntry();
+	}
+
+	@Override
+	@Test
+	public void testGetPerformanceMetric() throws Exception {
+		_testGetPerformanceMetric(
+			"categories", "/api/1.0/asset-metric/objectEntry/categories",
+			"viewsMetric");
+		_testGetPerformanceMetric(
+			"location", "/api/1.0/asset-metric/objectEntry/geolocation",
+			"downloadsMetric");
+		_testGetPerformanceMetricWithInvalidMetricType();
+	}
+
+	private DepotEntry _addDepotEntry() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		_depotEntries.add(depotEntry);
+
+		return depotEntry;
+	}
+
+	private void _assertMetric(Metric metric, double value, String valueKey) {
+		Assert.assertEquals(valueKey, metric.getValueKey());
+		Assert.assertEquals(value, metric.getValue(), 0);
+	}
+
+	private void _assertParameter(
+		String expectedValue, String name, String url) {
+
+		Assert.assertEquals(
+			expectedValue,
+			URLCodec.decodeURL(
+				HttpComponentsUtil.getParameter(url, name, false)));
+	}
+
+	private PerformanceMetric _getPerformanceMetric(
+			long dataSourceId, String metricsJSON, String metricType,
+			String path, int rangeKey,
+			UnsafeFunction<Long[], PerformanceMetric, Exception> unsafeFunction)
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						testCompany.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsDataSourceId", dataSourceId
+						).put(
+							"liferayAnalyticsEnableAllGroupIds", true
+						).put(
+							"liferayAnalyticsFaroBackendSecuritySignature",
+							RandomTestUtil.randomString()
+						).put(
+							"liferayAnalyticsFaroBackendURL",
+							"http://" + RandomTestUtil.randomString()
+						).build())) {
+
+			RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
+				Collections.singletonMap(path, () -> metricsJSON));
+
+			ReflectionTestUtil.setFieldValue(
+				_performanceMetricResource, "_http", recordingMockHttp);
+
+			PerformanceMetric performanceMetric = unsafeFunction.apply(
+				TransformUtil.transformToArray(
+					_depotEntries, DepotEntry::getDepotEntryId, Long.class));
+
+			String location = recordingMockHttp.getLocation();
+
+			_assertParameter(
+				metricType, "assetSummaryMetricTypeString", location);
+			_assertParameter(
+				String.valueOf(dataSourceId), "dataSourceId", location);
+			_assertParameter(
+				StringUtil.merge(
+					TransformUtil.transformToArray(
+						_depotEntries, DepotEntry::getGroupId, Long.class),
+					StringPool.COMMA),
+				"groupIds", location);
+			_assertParameter(String.valueOf(rangeKey), "rangeKey", location);
+
+			return performanceMetric;
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				_performanceMetricResource, "_http", _http);
+		}
+	}
+
+	private void _testGetPerformanceMetric(
+			String groupBy, String path, String metricType)
+		throws Exception {
+
+		long dataSourceId = RandomTestUtil.nextLong();
+		int rangeKey = RandomTestUtil.nextInt();
+		int value1 = RandomTestUtil.nextInt();
+		int value2 = RandomTestUtil.nextInt();
+		String valueKey1 = RandomTestUtil.randomString();
+		String valueKey2 = RandomTestUtil.randomString();
+
+		PerformanceMetric performanceMetric = _getPerformanceMetric(
+			dataSourceId,
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"value", value1
+				).put(
+					"valueKey", valueKey1
+				),
+				JSONUtil.put(
+					"value", value2
+				).put(
+					"valueKey", valueKey2
+				)
+			).toString(),
+			metricType, path, rangeKey,
+			depotEntryIds -> _performanceMetricResource.getPerformanceMetric(
+				depotEntryIds, groupBy, metricType, rangeKey));
+
+		Assert.assertEquals(metricType, performanceMetric.getMetricType());
+
+		Metric[] metrics = performanceMetric.getMetrics();
+
+		Assert.assertEquals(Arrays.toString(metrics), 2, metrics.length);
+
+		_assertMetric(metrics[0], value1, valueKey1);
+		_assertMetric(metrics[1], value2, valueKey2);
+	}
+
+	private void _testGetPerformanceMetricWithInvalidMetricType() {
+		Assert.assertThrows(
+			BadRequestException.class,
+			() -> _performanceMetricResource.getPerformanceMetric(
+				TransformUtil.transformToArray(
+					_depotEntries, DepotEntry::getDepotEntryId, Long.class),
+				"categories", RandomTestUtil.randomString(),
+				RandomTestUtil.nextInt()));
+	}
+
+	@DeleteAfterTestRun
+	private final List<DepotEntry> _depotEntries = new ArrayList<>();
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private Http _http;
+
+	@Inject
+	private PerformanceMetricResource _performanceMetricResource;
+
+	private static class RecordingMockHttp extends MockHttp {
+
+		public RecordingMockHttp(
+			Map<String, UnsafeSupplier<String, Exception>> unsafeSuppliers) {
+
+			super(unsafeSuppliers);
+		}
+
+		public String getLocation() {
+			return _location;
+		}
+
+		@Override
+		public String URLtoString(Http.Options options) throws IOException {
+			_location = options.getLocation();
+
+			return super.URLtoString(options);
+		}
+
+		private String _location;
+
+	}
+
 }

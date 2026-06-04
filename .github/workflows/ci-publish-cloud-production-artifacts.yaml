@@ -7,6 +7,7 @@ defaults:
 jobs:
     approve-release:
         environment: production-release
+        if: ${{needs.test-rcs.result == 'success' && !cancelled() && !failure()}}
         needs: test-rcs
         runs-on: ubuntu-latest
         steps:

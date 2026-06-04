@@ -13,14 +13,12 @@ jobs:
                 uses: google-github-actions/auth@v3
                 with:
                     project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRODUCTION}}
-                    token_format: access_token
                     workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NONPRODUCTION}}
             -   id: auth_production
                 name: Authenticate to Google Cloud (Production)
                 uses: google-github-actions/auth@v3
                 with:
                     project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_PRODUCTION}}
-                    token_format: access_token
                     workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_PRODUCTION}}
             -   name: Install ORAS
                 uses: oras-project/setup-oras@v1
@@ -34,9 +32,9 @@ jobs:
 
                     function main {
                         oras cp \
-                            --from-password "${{steps.auth_nonproduction.outputs.access_token}}" \
+                            --from-password "${{steps.auth_nonproduction.outputs.auth_token}}" \
                             --from-username oauth2accesstoken \
-                            --to-password "${{steps.auth_production.outputs.access_token}}" \
+                            --to-password "${{steps.auth_production.outputs.auth_token}}" \
                             --to-username oauth2accesstoken \
                             "${{inputs.source_image_ref}}" \
                             "${HELM_CHART_REGISTRY_PRODUCTION}/${{inputs.chart_name}}:${{inputs.chart_version}}"

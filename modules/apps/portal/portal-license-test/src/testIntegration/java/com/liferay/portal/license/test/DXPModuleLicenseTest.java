@@ -9,10 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
 
@@ -21,11 +18,8 @@ import java.util.Objects;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -38,16 +32,6 @@ import org.osgi.framework.BundleContext;
  */
 @RunWith(Arquillian.class)
 public class DXPModuleLicenseTest extends BaseLicenseTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
-
-	public static void assume() {
-		Assume.assumeTrue(isReleaseBundle());
-	}
 
 	@BeforeClass
 	public static void setUpClass() {

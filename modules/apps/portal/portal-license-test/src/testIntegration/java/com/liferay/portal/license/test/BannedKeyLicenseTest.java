@@ -7,13 +7,10 @@ package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -23,10 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,16 +29,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class BannedKeyLicenseTest extends BaseLicenseTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
-
-	public static void assume() {
-		Assume.assumeTrue(isReleaseBundle());
-	}
 
 	@BeforeClass
 	public static void setUpClass() {

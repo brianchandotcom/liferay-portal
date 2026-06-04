@@ -58,7 +58,7 @@ EOF
 		fi
 	done
 
-	for util in awk basename bash dirname env head mktemp printf readarray sed sort tr
+	for util in awk basename bash dirname env head mktemp sed sort tr
 	do
 		local real_path
 

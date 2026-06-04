@@ -33,8 +33,7 @@ components:
                         The fragment's set.
                 fragmentVersions:
                     description:
-                        The fragment's versions. A fragment can have up to 2 versions, one draft and one published
-                        (approved).
+                        The fragment's versions. A fragment can have up to 2 versions, one draft and one published (approved).
                     items:
                         $ref: "#/components/schemas/FragmentVersion"
                     type: array
@@ -61,8 +60,7 @@ components:
                 thumbnailURLReference:
                     $ref: ../../headless-admin-site/headless-admin-site-impl/rest-openapi.yaml#ThumbnailURLReference
                     description:
-                        The fragment's thumbnail. On read, returned only when `nestedFields=thumbnailURLReference` is
-                        requested. On POST or PUT, omitting `thumbnailURLReference` clears any previously bound preview.
+                        The fragment's thumbnail. On read, returned only when `nestedFields=thumbnailURLReference` is requested. On POST or PUT, omitting `thumbnailURLReference` clears any previously bound preview.
                 type:
                     description:
                         The fragment's type.
@@ -137,8 +135,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.fragment.client', and version '1.0.3'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.fragment.client', and version '1.0.3'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -276,9 +273,7 @@ paths:
             tags: ["FragmentSet"]
         put:
             description:
-                Updates the fragment set with the given external reference code, or creates it if it does not exist. On
-                update, only `name` and `description` are honored; `externalReferenceCode`, `key`, and `marketplace` are
-                immutable and any values sent for them in the request body are ignored.
+                Updates the fragment set with the given external reference code, or creates it if it does not exist. On update, only `name` and `description` are honored; `externalReferenceCode`, `key`, and `marketplace` are immutable and any values sent for them in the request body are ignored.
             operationId: putSiteFragmentSet
             parameters:
                 -   in: path

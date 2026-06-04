@@ -30,8 +30,7 @@ components:
             type: object
         Creator:
             description:
-                Represents the user who created/authored the content. Properties follow the
-                [creator](https://schema.org/creator) specification.
+                Represents the user who created/authored the content. Properties follow the [creator](https://schema.org/creator) specification.
             properties:
                 additionalName:
                     description:
@@ -121,8 +120,7 @@ components:
             type: object
         Role:
             description:
-                Represents a relationship between a user and a company or site. This follows the
-                [`Role`](https://www.schema.org/Role) specification.
+                Represents a relationship between a user and a company or site. This follows the [`Role`](https://www.schema.org/Role) specification.
             properties:
                 availableLanguages:
                     description:
@@ -691,8 +689,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.workflow.client', and version '4.0.49'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.workflow.client', and version '4.0.49'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

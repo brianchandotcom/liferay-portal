@@ -52,8 +52,7 @@ components:
             type: object
         Creator:
             description:
-                Represents the user who created the content. Properties follow the [creator](https://schema.org/creator)
-                specification.
+                Represents the user who created the content. Properties follow the [creator](https://schema.org/creator) specification.
             properties:
                 additionalName:
                     description:
@@ -107,8 +106,7 @@ components:
             type: object
         Keyword:
             description:
-                Represents a keyword that describes content. Properties follow the
-                [keywords](https://schema.org/keywords) specification.
+                Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.
             properties:
                 actions:
                     additionalProperties:
@@ -184,8 +182,7 @@ components:
             type: object
         TaxonomyCategory:
             description:
-                Represents a category, which is a hierarchical classification that can be associated with particular
-                asset types. Properties follow the [category](https://schema.org/category) specification.
+                Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.
             properties:
                 actions:
                     additionalProperties:
@@ -366,8 +363,7 @@ components:
             type: object
         TaxonomyVocabulary:
             description:
-                Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification,
-                sorting, etc.).
+                Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).
             properties:
                 actions:
                     additionalProperties:
@@ -485,8 +481,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.taxonomy.client', and version '4.0.49'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.taxonomy.client', and version '4.0.49'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -641,8 +636,7 @@ paths:
         put:
             # @review
             description:
-                Updates the asset library's keyword with the given external reference code, or creates it if it not
-                exists.
+                Updates the asset library's keyword with the given external reference code, or creates it if it not exists.
             operationId: putAssetLibraryKeywordByExternalReferenceCode
             parameters:
                 -   in: path
@@ -873,8 +867,7 @@ paths:
         put:
             # @review
             description:
-                Updates the asset library's taxonomy category with the given external reference code, or creates it if
-                it not exists.
+                Updates the asset library's taxonomy category with the given external reference code, or creates it if it not exists.
             operationId: putAssetLibraryTaxonomyCategoryByExternalReferenceCode
             parameters:
                 -   in: path
@@ -1053,8 +1046,7 @@ paths:
         put:
             # @review
             description:
-                Updates the asset library's taxonomy vocabulary with the given external reference code, or creates it if
-                it not exists.
+                Updates the asset library's taxonomy vocabulary with the given external reference code, or creates it if it not exists.
             operationId: putAssetLibraryTaxonomyVocabularyByExternalReferenceCode
             parameters:
                 -   in: path
@@ -1225,8 +1217,7 @@ paths:
             tags: ["Keyword"]
         put:
             description:
-                Replaces the keyword with the information sent in the request body. Any missing fields are deleted,
-                unless required.
+                Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required.
             operationId: putKeyword
             parameters:
                 -   in: path
@@ -1757,8 +1748,7 @@ paths:
         put:
             # @review
             description:
-                Updates the site's taxonomy category with the given external reference code, or creates it if it not
-                exists.
+                Updates the site's taxonomy category with the given external reference code, or creates it if it not exists.
             operationId: putSiteTaxonomyCategoryByExternalReferenceCode
             parameters:
                 -   in: path
@@ -1941,8 +1931,7 @@ paths:
         put:
             # @review
             description:
-                Updates the site's taxonomy vocabulary with the given external reference code, or creates it if it not
-                exists.
+                Updates the site's taxonomy vocabulary with the given external reference code, or creates it if it not exists.
             operationId: putSiteTaxonomyVocabularyByExternalReferenceCode
             parameters:
                 -   in: path
@@ -2063,8 +2052,7 @@ paths:
     "/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories":
         get:
             description:
-                Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched,
-                and sorted.
+                Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted.
             operationId: getTaxonomyCategoryTaxonomyCategoriesPage
             parameters:
                 -   in: path
@@ -2223,8 +2211,7 @@ paths:
             tags: ["TaxonomyCategory"]
         put:
             description:
-                Replaces the taxonomy category with the information sent in the request body. Any missing fields are
-                deleted unless they are required.
+                Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putTaxonomyCategory
             parameters:
                 -   in: path
@@ -2373,8 +2360,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
         put:
             description:
-                Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are
-                deleted unless they are required.
+                Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putTaxonomyVocabulary
             parameters:
                 -   in: path
@@ -2603,8 +2589,7 @@ paths:
         put:
             # @review
             description:
-                Updates the site's taxonomy category with the given external reference code, or creates it if it not
-                exists.
+                Updates the site's taxonomy category with the given external reference code, or creates it if it not exists.
             operationId: putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode
             parameters:
                 -   in: path

@@ -11,8 +11,7 @@ components:
                 inputSchema:
                     additionalProperties: true
                     description:
-                        JSON Schema describing the arguments accepted by the tool. Build an input map matching this
-                        schema and POST it to `invoke` under the same URL to execute the tool.
+                        JSON Schema describing the arguments accepted by the tool. Build an input map matching this schema and POST it to `invoke` under the same URL to execute the tool.
                     type: object
                 name:
                     description:
@@ -46,20 +45,14 @@ components:
                     type: string
                 name:
                     description:
-                        Stable identifier of the tool within its tool-set. Pass this verbatim as `toolName` in
-                        subsequent calls.
+                        Stable identifier of the tool within its tool-set. Pass this verbatim as `toolName` in subsequent calls.
                     type: string
             required:
                 -   name
             type: object
 info:
     description:
-        "Single entry point for an AI to discover, understand, and invoke any tool exposed by Liferay. When the user
-        asks for something you do not already know how to do in Liferay, start with `getToolSets` to find a tool-set
-        matching their intent, then `getToolSummaries` to find the right tool in it, then `getTool` to fetch the tool's
-        input schema, then `invokeTool` with an input map matching that schema to execute it. A Java client JAR is
-        available for use with the group ID 'com.liferay', artifact ID 'com.liferay.mcp.server.rest.client', and version
-        '1.0.2'."
+        "Single entry point for an AI to discover, understand, and invoke any tool exposed by Liferay. When the user asks for something you do not already know how to do in Liferay, start with `getToolSets` to find a tool-set matching their intent, then `getToolSummaries` to find the right tool in it, then `getTool` to fetch the tool's input schema, then `invokeTool` with an input map matching that schema to execute it. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.mcp.server.rest.client', and version '1.0.2'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -70,10 +63,7 @@ paths:
     "/tool-sets":
         get:
             description:
-                Use this whenever you do not know which tool-set can fulfill the user's request — it is the first thing
-                to try. Returns every tool-set exposed by Liferay, each with a curated description. Pick the tool-set
-                whose description matches the user's intent and pass its `name` to `getToolSummaries` to see what tools
-                it offers.
+                Use this whenever you do not know which tool-set can fulfill the user's request — it is the first thing to try. Returns every tool-set exposed by Liferay, each with a curated description. Pick the tool-set whose description matches the user's intent and pass its `name` to `getToolSummaries` to see what tools it offers.
             operationId: getToolSets
             responses:
                 200:
@@ -94,10 +84,7 @@ paths:
     "/tool-sets/{toolSetName}/tool-summaries":
         get:
             description:
-                Use this once you have identified a tool-set (via `getToolSets`) and need to find which of its tools
-                matches the user's request. Returns every tool in the tool-set, each with a `name` and a description.
-                Pick the tool whose description matches the user's intent and pass its `name` to `getTool` to see its
-                input schema.
+                Use this once you have identified a tool-set (via `getToolSets`) and need to find which of its tools matches the user's request. Returns every tool in the tool-set, each with a `name` and a description. Pick the tool whose description matches the user's intent and pass its `name` to `getTool` to see its input schema.
             operationId: getToolSummaries
             parameters:
                 -   in: path
@@ -126,9 +113,7 @@ paths:
     "/tool-sets/{toolSetName}/tools/{toolName}":
         get:
             description:
-                Use this once you have identified a tool (via `getToolSummaries`) and need its input schema before
-                invoking it. Returns the tool's `inputSchema`. Build an input map matching `inputSchema` and POST it to
-                `invoke` under the same URL to execute the tool.
+                Use this once you have identified a tool (via `getToolSummaries`) and need its input schema before invoking it. Returns the tool's `inputSchema`. Build an input map matching `inputSchema` and POST it to `invoke` under the same URL to execute the tool.
             operationId: getTool
             parameters:
                 -   in: path
@@ -160,9 +145,7 @@ paths:
     "/tool-sets/{toolSetName}/tools/{toolName}/invoke":
         post:
             description:
-                Invokes a tool. ALWAYS call `getTool` first to fetch the tool's `inputSchema`, then build the request
-                `body` to match it exactly. Skipping `getTool` leads to malformed input and avoidable failures. Returns
-                the tool's response body unchanged.
+                Invokes a tool. ALWAYS call `getTool` first to fetch the tool's `inputSchema`, then build the request `body` to match it exactly. Skipping `getTool` leads to malformed input and avoidable failures. Returns the tool's response body unchanged.
             operationId: invokeTool
             parameters:
                 -   in: path

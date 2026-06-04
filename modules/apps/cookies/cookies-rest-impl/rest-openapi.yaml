@@ -39,8 +39,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.cookies.rest.client', and version '1.0.2'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.cookies.rest.client', and version '1.0.2'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -61,8 +60,7 @@ paths:
             tags: ["CookiesConsentPreference"]
         put:
             description:
-                Replaces the cookies consent preference with information sent in the request body. Any missing fields
-                are deleted unless they are required.
+                Replaces the cookies consent preference with information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putCookiesConsentPreference
             requestBody:
                 content:

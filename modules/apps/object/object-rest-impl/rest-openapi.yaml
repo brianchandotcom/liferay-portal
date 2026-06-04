@@ -40,8 +40,7 @@ components:
                     type: object
         CollaboratorBrief:
             description:
-                Brief of the collaborator record for the user making the request, present only when this asset is shared
-                with them.
+                Brief of the collaborator record for the user making the request, present only when this asset is shared with them.
             properties:
                 actionIds:
                     description:
@@ -75,14 +74,12 @@ components:
                 fileBase64:
                     # @review
                     description:
-                        optional field with the content of the document in Base64, can be embedded with nestedFields
-                        (the format of the nested field must be `<attachment field name>.fileBase64`)
+                        optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileBase64`)
                     type: string
                 fileURL:
                     # @review
                     description:
-                        optional field that specifies the source of the file to be downloaded, can be embedded with
-                        nestedFields (the format of the nested field must be `<attachment field name>.fileURL`)
+                        optional field that specifies the source of the file to be downloaded, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileURL`)
                     type: string
                 folder:
                     $ref: "#/components/schemas/Folder"
@@ -97,8 +94,7 @@ components:
                         type: object
                     # @review
                     description:
-                        optional field that specifies the metadata of the file, can be embedded with nestedFields (the
-                        format of the nested field must be `<attachment field name>.metadata`)
+                        optional field that specifies the metadata of the file, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.metadata`)
                     readOnly: true
                     type: object
                 mimeType:
@@ -109,8 +105,7 @@ components:
                 previewURL:
                     # @review
                     description:
-                        optional field that specifies the preview URL of the file to be used, can be embedded with
-                        nestedFields (the format of the nested field must be `<attachment field name>.previewURL`)
+                        optional field that specifies the preview URL of the file to be used, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.previewURL`)
                     readOnly: true
                     type: string
                 scope:
@@ -121,8 +116,7 @@ components:
                 thumbnailURL:
                     # @review
                     description:
-                        optional field that specifies the thumbnail of the file to be used, can be embedded with
-                        nestedFields (the format of the nested field must be `<attachment field name>.thumbnailURL`)
+                        optional field that specifies the thumbnail of the file to be used, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.thumbnailURL`)
                     readOnly: true
                     type: string
             type: object
@@ -186,16 +180,14 @@ components:
                     type: object
                 auditEvents:
                     description:
-                        Optional field with the audit events associated with this object entry, can be embedded with
-                        nestedFields
+                        Optional field with the audit events associated with this object entry, can be embedded with nestedFields
                     items:
                         $ref: "#/components/schemas/AuditEvent"
                     readOnly: true
                     type: array
                 comments:
                     description:
-                        Optional field with the comments associated with this object entry, can be embedded with
-                        nestedFields
+                        Optional field with the comments associated with this object entry, can be embedded with nestedFields
                     items:
                         $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Comment
                     type: array
@@ -1532,9 +1524,7 @@ paths:
             tags: ["Collaborator"]
         post:
             description:
-                Add or update all the collaborators received in the request. Delete existing collaborators that are not
-                included in the request. Send a notification for the new collaborators and those whose permissions are
-                different.
+                Add or update all the collaborators received in the request. Delete existing collaborators that are not included in the request. Send a notification for the new collaborators and those whose permissions are different.
             operationId: postScopeScopeKeyByExternalReferenceCodeCollaboratorsPage
             parameters:
                 -   in: path
@@ -2666,8 +2656,7 @@ paths:
             tags: ["Collaborator"]
         post:
             description:
-                Add or update all the collaborators received in the request. Delete existing collaborators that are not
-                included in the request.
+                Add or update all the collaborators received in the request. Delete existing collaborators that are not included in the request.
             operationId: postObjectEntryCollaboratorsPage
             parameters:
                 -   in: path

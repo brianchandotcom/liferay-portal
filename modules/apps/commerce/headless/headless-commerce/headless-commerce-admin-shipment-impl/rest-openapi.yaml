@@ -3,9 +3,7 @@ components:
         externalReferenceCodePathParam:
             in: path
             description:
-                External reference code that addresses the target resource on the `by-externalReferenceCode` paths. The
-                code is the integration-supplied idempotency key, unique within the resource scope; PUT against this
-                path is upsert (create when absent, replace when present).
+                External reference code that addresses the target resource on the `by-externalReferenceCode` paths. The code is the integration-supplied idempotency key, unique within the resource scope; PUT against this path is upsert (create when absent, replace when present).
             explode: false
             name: externalReferenceCode
             required: true
@@ -19,9 +17,7 @@ components:
         filterQueryParam:
             in: query
             description:
-                OData v4 filter expression that narrows the result set. The supported fields are those exposed by the
-                matching Liferay entity model for shipment (typically createDate, modifiedDate, status, and the shipment
-                identifiers). Example -- filter=status eq 2.
+                OData v4 filter expression that narrows the result set. The supported fields are those exposed by the matching Liferay entity model for shipment (typically createDate, modifiedDate, status, and the shipment identifiers). Example -- filter=status eq 2.
             explode: true
             name: filter
             required: false
@@ -41,8 +37,7 @@ components:
         pageSizeQueryParam:
             in: query
             description:
-                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the
-                portal configuration to prevent unbounded reads.
+                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the portal configuration to prevent unbounded reads.
             explode: true
             name: pageSize
             required: false
@@ -52,8 +47,7 @@ components:
         searchQueryParam:
             in: query
             description:
-                Full-text search expression matched against the resource's indexed fields. Returns the items whose
-                searchable content matches the expression.
+                Full-text search expression matched against the resource's indexed fields. Returns the items whose searchable content matches the expression.
             explode: true
             name: search
             required: false
@@ -63,8 +57,7 @@ components:
         shipmentIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target shipment. Counterpart to the `by-externalReferenceCode` path
-                variant; identifiers are server-assigned and stable across the shipment's lifetime.
+                Internal numeric identifier of the target shipment. Counterpart to the `by-externalReferenceCode` path variant; identifiers are server-assigned and stable across the shipment's lifetime.
             explode: false
             name: shipmentId
             required: true
@@ -79,8 +72,7 @@ components:
         shipmentItemIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target shipment item. Identifiers are server-assigned and stable
-                across the shipment item's lifetime; the parent shipment is resolved from the row.
+                Internal numeric identifier of the target shipment item. Identifiers are server-assigned and stable across the shipment item's lifetime; the parent shipment is resolved from the row.
             explode: false
             name: shipmentItemId
             required: true
@@ -95,9 +87,7 @@ components:
         sortQueryParam:
             in: query
             description:
-                Sort expression of the form `field:asc` or `field:desc`, comma-separated for multi-field sorting.
-                Supported sort fields depend on the endpoint and are sourced from the matching entity model (typically
-                createDate, modifiedDate, and the status field).
+                Sort expression of the form `field:asc` or `field:desc`, comma-separated for multi-field sorting. Supported sort fields depend on the endpoint and are sourced from the matching entity model (typically createDate, modifiedDate, and the status field).
             explode: true
             name: sort
             required: false
@@ -107,8 +97,7 @@ components:
     schemas:
         Error:
             description:
-                Standard error envelope returned on every non-success response. Carries the HTTP status, an internal
-                error code, a short human-readable message, and a developer-oriented diagnostic description.
+                Standard error envelope returned on every non-success response. Carries the HTTP status, an internal error code, a short human-readable message, and a developer-oriented diagnostic description.
             properties:
                 errorCode:
                     description:
@@ -118,15 +107,13 @@ components:
                     type: integer
                 errorDescription:
                     description:
-                        Diagnostic message describing the failure. Intended for logs and debugging surfaces; not meant
-                        for end-user display. Read-only.
+                        Diagnostic message describing the failure. Intended for logs and debugging surfaces; not meant for end-user display. Read-only.
                     example: Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format.
                     readOnly: true
                     type: string
                 message:
                     description:
-                        Short human-readable summary of the failure, suitable for end-user display when the calling
-                        client does not provide a domain-specific message. Read-only.
+                        Short human-readable summary of the failure, suitable for end-user display when the calling client does not provide a domain-specific message. Read-only.
                     example: No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}
                     readOnly: true
                     type: string
@@ -144,14 +131,11 @@ components:
             type: object
         Shipment:
             description:
-                Fulfillment record that ships a single parcel for a source order. Carries the carrier, tracking
-                identifiers, expected and shipping dates, the ship-to address, the picked items, and the workflow status
-                that advances from processing through ready-to-be-shipped and shipped to delivered.
+                Fulfillment record that ships a single parcel for a source order. Carries the carrier, tracking identifiers, expected and shipping dates, the ship-to address, the picked items, and the workflow status that advances from processing through ready-to-be-shipped and shipped to delivered.
             properties:
                 accountId:
                     description:
-                        Reference to the customer account that owns the source order (FK identifier). Copied from the
-                        order at creation time and read-only thereafter.
+                        Reference to the customer account that owns the source order (FK identifier). Copied from the order at creation time and read-only thereafter.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -163,14 +147,12 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 carrier:
                     description:
-                        Name of the shipping carrier handling the parcel. Free-form string supplied by the fulfillment
-                        operator; updatable while the shipment is still in flight.
+                        Name of the shipping carrier handling the parcel. Free-form string supplied by the fulfillment operator; updatable while the shipment is still in flight.
                     example: FedEx
                     type: string
                 createDate:
@@ -182,23 +164,19 @@ components:
                     type: string
                 customFields:
                     description:
-                        Custom field values attached to the shipment by the platform's expando mechanism. Each entry is
-                        a name/value pair declared on the shipment's custom-fields configuration; the field set is
-                        installation-specific.
+                        Custom field values attached to the shipment by the platform's expando mechanism. Each entry is a name/value pair declared on the shipment's custom-fields configuration; the field set is installation-specific.
                     items:
                         type: customField
                     type: array
                 expectedDate:
                     description:
-                        Estimated delivery date in ISO 8601. Supplied by the fulfillment operator; updatable until the
-                        shipment is delivered.
+                        Estimated delivery date in ISO 8601. Supplied by the fulfillment operator; updatable until the shipment is delivered.
                     example: 2017-07-21T19:30:00Z
                     format: date
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update; must be unique per shipment within the company. When set,
-                        the resource is also addressable through the by-external-reference-code paths.
+                        Idempotency key for create and update; must be unique per shipment within the company. When set, the resource is also addressable through the by-external-reference-code paths.
                     example: AB-34098-789-N
                     type: string
                 id:
@@ -218,82 +196,65 @@ components:
                     type: string
                 orderExternalReferenceCode:
                     description:
-                        External reference code of the source order. Accepted on create as an alternative to orderId;
-                        the order is resolved against the current company scope. Write-only -- the response carries the
-                        resolved orderId and accountId instead.
+                        External reference code of the source order. Accepted on create as an alternative to orderId; the order is resolved against the current company scope. Write-only -- the response carries the resolved orderId and accountId instead.
                     example: AB-34098-789-N
                     type: string
                 orderId:
                     description:
-                        Reference to the source order this shipment fulfills (FK identifier). Required on create when
-                        orderExternalReferenceCode is omitted; seeds the shipment's group, customer account, ship-to
-                        address, shipping method, and shipping-option label.
+                        Reference to the source order this shipment fulfills (FK identifier). Required on create when orderExternalReferenceCode is omitted; seeds the shipment's group, customer account, ship-to address, shipping method, and shipping-option label.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 shipmentItems:
                     description:
-                        Nested picked-line rows to write together with the shipment. When supplied on update, every
-                        existing line on the parent is removed first and the array is replayed; supply an empty array to
-                        clear all lines, or omit the field to leave the lines untouched.
+                        Nested picked-line rows to write together with the shipment. When supplied on update, every existing line on the parent is removed first and the array is replayed; supply an empty array to clear all lines, or omit the field to leave the lines untouched.
                     items:
                         $ref: "#/components/schemas/ShipmentItem"
                     type: array
                 shippingAddress:
                     $ref: "#/components/schemas/ShippingAddress"
                     description:
-                        Nested ship-to address applied to this shipment. When supplied, the existing address row is
-                        updated in place (or a new one is created when none is linked yet) and the shipment is rebound
-                        to it. Omit to leave the address inherited from the source order.
+                        Nested ship-to address applied to this shipment. When supplied, the existing address row is updated in place (or a new one is created when none is linked yet) and the shipment is rebound to it. Omit to leave the address inherited from the source order.
                 shippingAddressId:
                     description:
-                        Reference to the postal address the parcel ships to (FK identifier). Copied from the source
-                        order at creation time; can be retargeted by supplying a nested shippingAddress or by calling
-                        the shipping-address endpoint.
+                        Reference to the postal address the parcel ships to (FK identifier). Copied from the source order at creation time; can be retargeted by supplying a nested shippingAddress or by calling the shipping-address endpoint.
                     example: 31130
                     format: int64
                     minimum: 0
                     type: integer
                 shippingDate:
                     description:
-                        Date the parcel was handed over to the carrier, in ISO 8601. Typically set when the shipment
-                        transitions to shipped.
+                        Date the parcel was handed over to the carrier, in ISO 8601. Typically set when the shipment transitions to shipped.
                     example: 2017-07-21T19:30:00Z
                     format: date
                     type: string
                 shippingMethodId:
                     description:
-                        Reference to the shipping method used by the carrier (FK identifier). Copied from the source
-                        order at creation time; updatable while the shipment is still processing or ready to be shipped.
+                        Reference to the shipping method used by the carrier (FK identifier). Copied from the source order at creation time; updatable while the shipment is still processing or ready to be shipped.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 shippingOptionName:
                     description:
-                        Label of the shipping option selected on the source order. Copied from the order at creation
-                        time. Read-only.
+                        Label of the shipping option selected on the source order. Copied from the order at creation time. Read-only.
                     example: Standard Delivery
                     readOnly: true
                     type: string
                 status:
                     $ref: "#/components/schemas/Status"
                     description:
-                        Workflow envelope with the integer code and the localized label of the shipment. Transitions are
-                        driven by the dedicated status-* endpoints and cannot run backwards; reaching shipped or
-                        delivered emits an asynchronous shipment-status message. Read-only on this schema.
+                        Workflow envelope with the integer code and the localized label of the shipment. Transitions are driven by the dedicated status-* endpoints and cannot run backwards; reaching shipped or delivered emits an asynchronous shipment-status message. Read-only on this schema.
                     readOnly: true
                 trackingNumber:
                     description:
-                        Carrier-assigned tracking number for the parcel. Free-form string supplied by the fulfillment
-                        operator.
+                        Carrier-assigned tracking number for the parcel. Free-form string supplied by the fulfillment operator.
                     example: 123AD-asd
                     type: string
                 trackingURL:
                     description:
-                        Carrier tracking page for the parcel. Free-form string; not validated as a URL. Defaults to the
-                        tracking URL configured on the selected shipping method when the field is omitted.
+                        Carrier tracking page for the parcel. Free-form string; not validated as a URL. Defaults to the tracking URL configured on the selected shipping method when the field is omitted.
                     example: https://example.com/track?number=123AD-asd
                     type: string
                 userName:
@@ -305,8 +266,7 @@ components:
             type: object
         ShipmentItem:
             description:
-                Single picked line on a shipment. Binds an order item to a shipment with a quantity drawn from a
-                specific inventory warehouse, optionally validating against stock on hand at write time.
+                Single picked line on a shipment. Binds an order item to a shipment with a quantity drawn from a specific inventory warehouse, optionally validating against stock on hand at write time.
             properties:
                 actions:
                     additionalProperties:
@@ -314,8 +274,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 createDate:
@@ -327,8 +286,7 @@ components:
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update; must be unique per picked line within the company. When
-                        set, the resource is also addressable through the by-external-reference-code paths.
+                        Idempotency key for create and update; must be unique per picked line within the company. When set, the resource is also addressable through the by-external-reference-code paths.
                     example: AB-34098-789-N
                     type: string
                 id:
@@ -348,38 +306,31 @@ components:
                     type: string
                 orderItemExternalReferenceCode:
                     description:
-                        External reference code of the source order item this line draws from. Accepted on create as an
-                        alternative to orderItemId; the order item is resolved against the current company scope.
+                        External reference code of the source order item this line draws from. Accepted on create as an alternative to orderItemId; the order item is resolved against the current company scope.
                     example: AB-34098-789-N
                     type: string
                 orderItemId:
                     description:
-                        Reference to the source order item this line draws from (FK identifier). Required on create when
-                        orderItemExternalReferenceCode is omitted; identifies the SKU and the remaining quantity
-                        available to ship.
+                        Reference to the source order item this line draws from (FK identifier). Required on create when orderItemExternalReferenceCode is omitted; identifies the SKU and the remaining quantity available to ship.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 quantity:
                     description:
-                        Quantity shipped on this line, expressed in the unit of measure of the referenced order item.
-                        Formatted on read against the SKU's unit-of-measure configuration. Required on create; must be
-                        positive.
+                        Quantity shipped on this line, expressed in the unit of measure of the referenced order item. Formatted on read against the SKU's unit-of-measure configuration. Required on create; must be positive.
                     example: 10.1
                     format: bigdecimal
                     minimum: 0
                     type: number
                 shipmentExternalReferenceCode:
                     description:
-                        External reference code of the parent shipment this line belongs to. Read-only; derived from the
-                        linked shipment.
+                        External reference code of the parent shipment this line belongs to. Read-only; derived from the linked shipment.
                     example: AB-34098-789-N
                     type: string
                 shipmentId:
                     description:
-                        Reference to the parent shipment this line belongs to (FK identifier). Set by the server when
-                        the line is created through a shipment-scoped path. Read-only.
+                        Reference to the parent shipment this line belongs to (FK identifier). Set by the server when the line is created through a shipment-scoped path. Read-only.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -387,8 +338,7 @@ components:
                     type: integer
                 unitOfMeasureKey:
                     description:
-                        Unit-of-measure key applied to the quantity. Inherited from the referenced order item; common
-                        values are each, kg, and m.
+                        Unit-of-measure key applied to the quantity. Inherited from the referenced order item; common values are each, kg, and m.
                     example: each
                     type: string
                 userName:
@@ -399,21 +349,17 @@ components:
                     type: string
                 validateInventory:
                     description:
-                        When true, the server validates the requested quantity against the warehouse's current stock on
-                        hand and rejects the write when stock is insufficient. Defaults to true when omitted.
+                        When true, the server validates the requested quantity against the warehouse's current stock on hand and rejects the write when stock is insufficient. Defaults to true when omitted.
                     example: true
                     type: boolean
                 warehouseExternalReferenceCode:
                     description:
-                        External reference code of the inventory warehouse the line is picked from. Accepted on create
-                        as an alternative to warehouseId; the warehouse is resolved against the current company scope.
+                        External reference code of the inventory warehouse the line is picked from. Accepted on create as an alternative to warehouseId; the warehouse is resolved against the current company scope.
                     example: AB-34098-789-N
                     type: string
                 warehouseId:
                     description:
-                        Reference to the inventory warehouse the line is picked from (FK identifier). Required on create
-                        when warehouseExternalReferenceCode is omitted. Defaults on update to the warehouse already
-                        bound to the row.
+                        Reference to the inventory warehouse the line is picked from (FK identifier). Required on create when warehouseExternalReferenceCode is omitted. Defaults on update to the warehouse already bound to the row.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -423,9 +369,7 @@ components:
             type: object
         ShippingAddress:
             description:
-                Postal address used as the ship-to location for a shipment. Country and region are resolved by ISO code
-                against the portal's country and region catalogs; the same row is shared with the parent shipment's
-                address slot.
+                Postal address used as the ship-to location for a shipment. Country and region are resolved by ISO code against the portal's country and region catalogs; the same row is shared with the parent shipment's address slot.
             properties:
                 city:
                     description:
@@ -434,8 +378,7 @@ components:
                     type: string
                 countryISOCode:
                     description:
-                        ISO 3166-1 alpha-2 country code. Resolved against the portal's country catalog to bind the
-                        address to a country record. Required.
+                        ISO 3166-1 alpha-2 country code. Resolved against the portal's country catalog to bind the address to a country record. Required.
                     example: US
                     type: string
                 description:
@@ -510,14 +453,11 @@ components:
             type: object
         Status:
             description:
-                Workflow envelope describing the integer code and human-readable label of a shipment's current state.
-                Used by the Shipment.status property; the value follows the shipment lifecycle and is not editable
-                directly on the parent resource.
+                Workflow envelope describing the integer code and human-readable label of a shipment's current state. Used by the Shipment.status property; the value follows the shipment lifecycle and is not editable directly on the parent resource.
             properties:
                 code:
                     description:
-                        Integer status of the shipment -- 0=Processing, 1=Ready to be shipped, 2=Shipped, 3=Delivered.
-                        Transitions are driven by the dedicated status-* endpoints and cannot run backwards. Read-only.
+                        Integer status of the shipment -- 0=Processing, 1=Ready to be shipped, 2=Shipped, 3=Delivered. Transitions are driven by the dedicated status-* endpoints and cannot run backwards. Read-only.
                     example: 2
                     format: int32
                     readOnly: true
@@ -529,8 +469,7 @@ components:
                     type: string
                 label_i18n:
                     description:
-                        Localized label corresponding to the integer code, resolved against the current request's
-                        preferred locale.
+                        Localized label corresponding to the integer code, resolved against the current request's preferred locale.
                     example: Spedito
                     type: string
             type: object
@@ -568,9 +507,7 @@ paths:
     /shipment-items/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the shipment item identified by external reference code. Resolves the row and calls
-                deleteCommerceShipmentItem with restoreStockQuantity=false; raises a not-found error (404) when the ERC
-                is unknown.
+                Deletes the shipment item identified by external reference code. Resolves the row and calls deleteCommerceShipmentItem with restoreStockQuantity=false; raises a not-found error (404) when the ERC is unknown.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -603,8 +540,7 @@ paths:
                 -   ShipmentItem
         get:
             description:
-                Returns the shipment item identified by external reference code. Resolves the row against the current
-                company scope; raises a not-found error (404) when the ERC is unknown.
+                Returns the shipment item identified by external reference code. Resolves the row against the current company scope; raises a not-found error (404) when the ERC is unknown.
             operationId: getShipmentByExternalReferenceCodeItem
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -667,10 +603,7 @@ paths:
                 -   ShipmentItem
         patch:
             description:
-                Updates the shipment item identified by external reference code using JSON Merge Patch (only the
-                supplied fields are modified). Resolves the row, then calls the service with the resolved warehouse, the
-                new quantity, and the validateInventory flag (default true). Raises a not-found error (404) when the ERC
-                is unknown; domain validation (inactive warehouse, insufficient stock) maps to 422.
+                Updates the shipment item identified by external reference code using JSON Merge Patch (only the supplied fields are modified). Resolves the row, then calls the service with the resolved warehouse, the new quantity, and the validateInventory flag (default true). Raises a not-found error (404) when the ERC is unknown; domain validation (inactive warehouse, insufficient stock) maps to 422.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -735,9 +668,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipment item from being created or updated (for
-                        example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or
-                        a required cross-reference cannot be resolved).
+                        A domain validation error prevented the shipment item from being created or updated (for example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or a required cross-reference cannot be resolved).
                 500:
                     content:
                         application/json:
@@ -754,9 +685,7 @@ paths:
     /shipment-items/{shipmentItemId}:
         delete:
             description:
-                Deletes the shipment item identified by shipmentItemId. Calls the service with
-                restoreStockQuantity=false; the row is removed without re-crediting the shipped quantity back to the
-                order item.
+                Deletes the shipment item identified by shipmentItemId. Calls the service with restoreStockQuantity=false; the row is removed without re-crediting the shipped quantity back to the order item.
             operationId: deleteShipmentItem
             parameters:
                 -   $ref: "#/components/parameters/shipmentItemIdPathParam"
@@ -790,8 +719,7 @@ paths:
                 -   ShipmentItem
         get:
             description:
-                Returns the shipment item identified by shipmentItemId. Read-only fetch; the response includes the
-                actions HATEOAS map for the current user.
+                Returns the shipment item identified by shipmentItemId. Read-only fetch; the response includes the actions HATEOAS map for the current user.
             operationId: getShipmentItem
             parameters:
                 -   $ref: "#/components/parameters/shipmentItemIdPathParam"
@@ -854,10 +782,7 @@ paths:
                 -   ShipmentItem
         patch:
             description:
-                Updates the shipment item identified by shipmentItemId using JSON Merge Patch (only the supplied fields
-                are modified). Resolves the row, then calls updateCommerceShipmentItem with the resolved warehouse, the
-                new quantity, and the validateInventory flag (default true). Domain validation (inactive warehouse,
-                insufficient stock) maps to 422.
+                Updates the shipment item identified by shipmentItemId using JSON Merge Patch (only the supplied fields are modified). Resolves the row, then calls updateCommerceShipmentItem with the resolved warehouse, the new quantity, and the validateInventory flag (default true). Domain validation (inactive warehouse, insufficient stock) maps to 422.
             operationId: patchShipmentItem
             parameters:
                 -   $ref: "#/components/parameters/shipmentItemIdPathParam"
@@ -923,9 +848,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipment item from being created or updated (for
-                        example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or
-                        a required cross-reference cannot be resolved).
+                        A domain validation error prevented the shipment item from being created or updated (for example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or a required cross-reference cannot be resolved).
                 500:
                     content:
                         application/json:
@@ -942,10 +865,7 @@ paths:
     /shipments:
         get:
             description:
-                Lists shipment rows for the current company through Liferay's SearchUtil with status set to STATUS_ANY
-                (all workflow states returned). Supports OData v4 filter, full-text search across the shipment's indexed
-                fields, sort, and one-based page/pageSize pagination; the filter and sort fields are sourced from
-                shipment's entity model.
+                Lists shipment rows for the current company through Liferay's SearchUtil with status set to STATUS_ANY (all workflow states returned). Supports OData v4 filter, full-text search across the shipment's indexed fields, sort, and one-based page/pageSize pagination; the filter and sort fields are sourced from shipment's entity model.
             operationId: getShipmentsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
@@ -1006,13 +926,7 @@ paths:
                 -   Shipment
         post:
             description:
-                Creates a shipment for an existing order identified by orderId (preferred) or
-                orderExternalReferenceCode. Resolves the order, then calls the service cloning the order's groupId,
-                accountId, shippingAddressId, shippingMethodId, and shippingOptionName. Applies the optional carrier,
-                trackingNumber, trackingURL, expectedDate, and shippingDate via updateCommerceShipment; when
-                shippingAddress is supplied the linked address is updated in place, and when shipmentItems is supplied
-                every existing item is replaced. Raises a not-found error (404) when orderExternalReferenceCode is
-                unknown; domain validation (inactive warehouse, invalid shipping address) maps to 422.
+                Creates a shipment for an existing order identified by orderId (preferred) or orderExternalReferenceCode. Resolves the order, then calls the service cloning the order's groupId, accountId, shippingAddressId, shippingMethodId, and shippingOptionName. Applies the optional carrier, trackingNumber, trackingURL, expectedDate, and shippingDate via updateCommerceShipment; when shippingAddress is supplied the linked address is updated in place, and when shipmentItems is supplied every existing item is replaced. Raises a not-found error (404) when orderExternalReferenceCode is unknown; domain validation (inactive warehouse, invalid shipping address) maps to 422.
             operationId: postShipment
             requestBody:
                 content:
@@ -1072,9 +986,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipment from being created or updated (for example, an
-                        inactive warehouse on a nested shipment item, a malformed nested shipping address, or a required
-                        cross-reference that cannot be resolved).
+                        A domain validation error prevented the shipment from being created or updated (for example, an inactive warehouse on a nested shipment item, a malformed nested shipping address, or a required cross-reference that cannot be resolved).
                 500:
                     content:
                         application/json:
@@ -1091,9 +1003,7 @@ paths:
     /shipments/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the shipment identified by external reference code. Resolves the row against the current company
-                scope and calls deleteCommerceShipment with restoreStockQuantity=false; raises a not-found error (404)
-                when the ERC is unknown.
+                Deletes the shipment identified by external reference code. Resolves the row against the current company scope and calls deleteCommerceShipment with restoreStockQuantity=false; raises a not-found error (404) when the ERC is unknown.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -1126,8 +1036,7 @@ paths:
                 -   Shipment
         get:
             description:
-                Returns the shipment identified by external reference code. Resolves the row against the current company
-                scope; raises a not-found error (404) when the ERC is unknown.
+                Returns the shipment identified by external reference code. Resolves the row against the current company scope; raises a not-found error (404) when the ERC is unknown.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -1189,11 +1098,7 @@ paths:
                 -   Shipment
         patch:
             description:
-                Updates the shipment identified by external reference code using JSON Merge Patch (only the supplied
-                fields are modified). Resolves the row, applies carrier, trackingNumber, trackingURL, expectedDate,
-                shippingDate, and shippingMethodId, and replays the nested shippingAddress and shipmentItems collections
-                when supplied. Raises a not-found error (404) when the ERC is unknown; domain validation (inactive
-                warehouse, malformed address) maps to 422.
+                Updates the shipment identified by external reference code using JSON Merge Patch (only the supplied fields are modified). Resolves the row, applies carrier, trackingNumber, trackingURL, expectedDate, shippingDate, and shippingMethodId, and replays the nested shippingAddress and shipmentItems collections when supplied. Raises a not-found error (404) when the ERC is unknown; domain validation (inactive warehouse, malformed address) maps to 422.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -1265,8 +1170,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipment from being created or updated (for example, an
-                        inactive warehouse on a nested shipment item or a malformed nested shipping address).
+                        A domain validation error prevented the shipment from being created or updated (for example, an inactive warehouse on a nested shipment item or a malformed nested shipping address).
                 500:
                     content:
                         application/json:
@@ -1282,11 +1186,7 @@ paths:
                 -   Shipment
         put:
             description:
-                Upserts the shipment identified by external reference code. When the ERC resolves, the row is updated
-                and the nested shippingAddress and shipmentItems collections are replayed; when the ERC is unknown, the
-                request body's orderId is used to resolve the source order and addCommerceShipment is invoked to seed a
-                new shipment from the order's groupId, accountId, shippingAddressId, shippingMethodId, and
-                shippingOptionName. Domain validation maps to 422.
+                Upserts the shipment identified by external reference code. When the ERC resolves, the row is updated and the nested shippingAddress and shipmentItems collections are replayed; when the ERC is unknown, the request body's orderId is used to resolve the source order and addCommerceShipment is invoked to seed a new shipment from the order's groupId, accountId, shippingAddressId, shippingMethodId, and shippingOptionName. Domain validation maps to 422.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -1358,8 +1258,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipment from being created or updated (for example, an
-                        inactive warehouse, a malformed nested shipping address, or a missing required cross-reference).
+                        A domain validation error prevented the shipment from being created or updated (for example, an inactive warehouse, a malformed nested shipping address, or a missing required cross-reference).
                 500:
                     content:
                         application/json:
@@ -1376,8 +1275,7 @@ paths:
     /shipments/by-externalReferenceCode/{externalReferenceCode}/items:
         get:
             description:
-                Returns the shipment item rows owned by the shipment identified by external reference code, paged.
-                Raises a not-found error (404) when the parent ERC is unknown.
+                Returns the shipment item rows owned by the shipment identified by external reference code, paged. Raises a not-found error (404) when the parent ERC is unknown.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
@@ -1445,11 +1343,7 @@ paths:
                 -   ShipmentItem
         post:
             description:
-                Creates a shipment item on the shipment identified by external reference code. Resolves the parent
-                shipment via fetchCommerceShipmentByExternalReferenceCode and then delegates to the postShipmentItem
-                flow, which resolves the warehouse and order item, then calls the service with the supplied quantity and
-                validateInventory flag (default true). Raises a not-found error (404) when the parent ERC is unknown;
-                domain validation (inactive warehouse, insufficient stock) maps to 422.
+                Creates a shipment item on the shipment identified by external reference code. Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and then delegates to the postShipmentItem flow, which resolves the warehouse and order item, then calls the service with the supplied quantity and validateInventory flag (default true). Raises a not-found error (404) when the parent ERC is unknown; domain validation (inactive warehouse, insufficient stock) maps to 422.
             operationId: postShipmentItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1521,9 +1415,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipment item from being created or updated (for
-                        example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or
-                        the referenced order item is missing).
+                        A domain validation error prevented the shipment item from being created or updated (for example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or the referenced order item is missing).
                 500:
                     content:
                         application/json:
@@ -1539,10 +1431,7 @@ paths:
                 -   ShipmentItem
         put:
             description:
-                Upserts a shipment item on the shipment addressed by external reference code. The parent shipment is
-                resolved by ERC and, when missing, by the body's shipmentId; the item is then created or updated through
-                the service keyed by the body's externalReferenceCode. Domain validation (inactive warehouse,
-                insufficient stock) maps to 422.
+                Upserts a shipment item on the shipment addressed by external reference code. The parent shipment is resolved by ERC and, when missing, by the body's shipmentId; the item is then created or updated through the service keyed by the body's externalReferenceCode. Domain validation (inactive warehouse, insufficient stock) maps to 422.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -1613,8 +1502,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipment item from being created or updated (for
-                        example, the referenced warehouse is inactive or the requested quantity exceeds stock on hand).
+                        A domain validation error prevented the shipment item from being created or updated (for example, the referenced warehouse is inactive or the requested quantity exceeds stock on hand).
                 500:
                     content:
                         application/json:
@@ -1631,10 +1519,7 @@ paths:
     /shipments/by-externalReferenceCode/{externalReferenceCode}/shipping-address:
         get:
             description:
-                Returns the ShippingAddress bound to the shipment identified by external reference code. Resolves the
-                parent shipment via fetchCommerceShipmentByExternalReferenceCode and reads the address; raises a
-                not-found error (404) when the ERC is unknown. Returns an empty ShippingAddress when no address is bound
-                yet.
+                Returns the ShippingAddress bound to the shipment identified by external reference code. Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and reads the address; raises a not-found error (404) when the ERC is unknown. Returns an empty ShippingAddress when no address is bound yet.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -1696,11 +1581,7 @@ paths:
                 -   ShippingAddress
         patch:
             description:
-                Updates the ShippingAddress bound to the shipment identified by external reference code. Resolves the
-                parent shipment via fetchCommerceShipmentByExternalReferenceCode and delegates to
-                ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying address and rebinds
-                the shipment to it; country and region are resolved by ISO code. Raises a not-found error (404) when the
-                ERC is unknown; domain validation (malformed city, country, name, street, or zip) maps to 422.
+                Updates the ShippingAddress bound to the shipment identified by external reference code. Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and delegates to ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying address and rebinds the shipment to it; country and region are resolved by ISO code. Raises a not-found error (404) when the ERC is unknown; domain validation (malformed city, country, name, street, or zip) maps to 422.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -1765,8 +1646,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipping address from being created or updated (for
-                        example, missing city, country, name, street, or an unresolved country/region ISO code).
+                        A domain validation error prevented the shipping address from being created or updated (for example, missing city, country, name, street, or an unresolved country/region ISO code).
                 500:
                     content:
                         application/json:
@@ -1783,10 +1663,7 @@ paths:
     /shipments/by-externalReferenceCode/{externalReferenceCode}/status-delivered:
         post:
             description:
-                Transitions the shipment identified by external reference code to the DELIVERED workflow state (code 3).
-                Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with
-                SHIPMENT_STATUS_DELIVERED; raises a not-found error (404) when the ERC is unknown and a status conflict
-                (400) when the transition is not allowed from the current state.
+                Transitions the shipment identified by external reference code to the DELIVERED workflow state (code 3). Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with SHIPMENT_STATUS_DELIVERED; raises a not-found error (404) when the ERC is unknown and a status conflict (400) when the transition is not allowed from the current state.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -1846,10 +1723,7 @@ paths:
     /shipments/by-externalReferenceCode/{externalReferenceCode}/status-finish-processing:
         post:
             description:
-                Transitions the shipment identified by external reference code to the READY_TO_BE_SHIPPED workflow state
-                (code 1). Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the
-                service with SHIPMENT_STATUS_READY_TO_BE_SHIPPED; raises a not-found error (404) when the ERC is unknown
-                and a status conflict (400) when the transition is not allowed from the current state.
+                Transitions the shipment identified by external reference code to the READY_TO_BE_SHIPPED workflow state (code 1). Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with SHIPMENT_STATUS_READY_TO_BE_SHIPPED; raises a not-found error (404) when the ERC is unknown and a status conflict (400) when the transition is not allowed from the current state.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -1909,10 +1783,7 @@ paths:
     /shipments/by-externalReferenceCode/{externalReferenceCode}/status-shipped:
         post:
             description:
-                Transitions the shipment identified by external reference code to the SHIPPED workflow state (code 2).
-                Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with
-                SHIPMENT_STATUS_SHIPPED; raises a not-found error (404) when the ERC is unknown and a status conflict
-                (400) when the transition is not allowed from the current state.
+                Transitions the shipment identified by external reference code to the SHIPPED workflow state (code 2). Resolves the parent shipment via fetchCommerceShipmentByExternalReferenceCode and calls the service with SHIPMENT_STATUS_SHIPPED; raises a not-found error (404) when the ERC is unknown and a status conflict (400) when the transition is not allowed from the current state.
             operationId: postShipmentByExternalReferenceCodeStatusShipped
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1973,8 +1844,7 @@ paths:
     /shipments/{shipmentId}:
         delete:
             description:
-                Deletes the shipment identified by shipmentId. Calls the service with restoreStockQuantity=false; the
-                row is removed without re-crediting the shipped quantity back to the order items.
+                Deletes the shipment identified by shipmentId. Calls the service with restoreStockQuantity=false; the row is removed without re-crediting the shipped quantity back to the order items.
             operationId: deleteShipment
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2008,8 +1878,7 @@ paths:
                 -   Shipment
         get:
             description:
-                Returns the shipment identified by shipmentId. Read-only fetch; the response includes the actions
-                HATEOAS map for the current user.
+                Returns the shipment identified by shipmentId. Read-only fetch; the response includes the actions HATEOAS map for the current user.
             operationId: getShipment
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2072,11 +1941,7 @@ paths:
                 -   Shipment
         patch:
             description:
-                Updates the shipment identified by shipmentId using JSON Merge Patch (only the supplied fields are
-                modified). Resolves the row, applies carrier, trackingNumber, trackingURL, expectedDate, shippingDate,
-                and shippingMethodId via updateCommerceShipment, replays the nested shippingAddress and shipmentItems
-                collections when supplied, and optionally rewrites externalReferenceCode. Domain validation (inactive
-                warehouse, malformed address) maps to 422.
+                Updates the shipment identified by shipmentId using JSON Merge Patch (only the supplied fields are modified). Resolves the row, applies carrier, trackingNumber, trackingURL, expectedDate, shippingDate, and shippingMethodId via updateCommerceShipment, replays the nested shippingAddress and shipmentItems collections when supplied, and optionally rewrites externalReferenceCode. Domain validation (inactive warehouse, malformed address) maps to 422.
             operationId: patchShipment
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2142,8 +2007,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipment from being created or updated (for example, an
-                        inactive warehouse on a nested shipment item or a malformed nested shipping address).
+                        A domain validation error prevented the shipment from being created or updated (for example, an inactive warehouse on a nested shipment item or a malformed nested shipping address).
                 500:
                     content:
                         application/json:
@@ -2160,9 +2024,7 @@ paths:
     /shipments/{shipmentId}/items:
         get:
             description:
-                Returns the shipment item rows owned by the shipment identified by shipmentId, paged. Exposed as a
-                nested field on the Shipment schema so a single GET on the parent can expand the shipmentItems
-                collection.
+                Returns the shipment item rows owned by the shipment identified by shipmentId, paged. Exposed as a nested field on the Shipment schema so a single GET on the parent can expand the shipmentItems collection.
             operationId: getShipmentItemsPage
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2231,10 +2093,7 @@ paths:
                 -   ShipmentItem
         post:
             description:
-                Creates a shipment item on the shipment identified by shipmentId. Resolves the order item and warehouse
-                via the supplied IDs or external reference codes, then calls the service with the requested quantity and
-                the validateInventory flag (default true). Domain validation (inactive warehouse, insufficient stock,
-                missing order item) maps to 422.
+                Creates a shipment item on the shipment identified by shipmentId. Resolves the order item and warehouse via the supplied IDs or external reference codes, then calls the service with the requested quantity and the validateInventory flag (default true). Domain validation (inactive warehouse, insufficient stock, missing order item) maps to 422.
             operationId: postShipmentItem
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2306,9 +2165,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipment item from being created or updated (for
-                        example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or
-                        the referenced order item is missing).
+                        A domain validation error prevented the shipment item from being created or updated (for example, the referenced warehouse is inactive, the requested quantity exceeds stock on hand, or the referenced order item is missing).
                 500:
                     content:
                         application/json:
@@ -2325,9 +2182,7 @@ paths:
     /shipments/{shipmentId}/shipping-address:
         get:
             description:
-                Returns the ShippingAddress bound to the shipment identified by shipmentId. Reads the underlying
-                address; returns an empty ShippingAddress when no address is bound yet. Exposed as a nested field on the
-                Shipment schema so a single GET on the parent can expand the shippingAddress object.
+                Returns the ShippingAddress bound to the shipment identified by shipmentId. Reads the underlying address; returns an empty ShippingAddress when no address is bound yet. Exposed as a nested field on the Shipment schema so a single GET on the parent can expand the shippingAddress object.
             operationId: getShipmentShippingAddress
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2390,10 +2245,7 @@ paths:
                 -   ShippingAddress
         patch:
             description:
-                Updates the ShippingAddress bound to the shipment identified by shipmentId. Resolves the parent shipment
-                and delegates to ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying
-                address and rebinds the shipment to it; country and region are resolved by ISO code. Domain validation
-                (malformed city, country, name, street, or zip) maps to 422.
+                Updates the ShippingAddress bound to the shipment identified by shipmentId. Resolves the parent shipment and delegates to ShippingAddressUtil.updateShippingAddress, which creates or updates the underlying address and rebinds the shipment to it; country and region are resolved by ISO code. Domain validation (malformed city, country, name, street, or zip) maps to 422.
             operationId: patchShipmentShippingAddress
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2459,8 +2311,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the shipping address from being created or updated (for
-                        example, missing city, country, name, street, or an unresolved country/region ISO code).
+                        A domain validation error prevented the shipping address from being created or updated (for example, missing city, country, name, street, or an unresolved country/region ISO code).
                 500:
                     content:
                         application/json:
@@ -2477,9 +2328,7 @@ paths:
     /shipments/{shipmentId}/status-delivered:
         post:
             description:
-                Transitions the shipment identified by shipmentId to the DELIVERED workflow state (code 3). Calls the
-                service with SHIPMENT_STATUS_DELIVERED; raises a status conflict (400) when the transition is not
-                allowed from the current state.
+                Transitions the shipment identified by shipmentId to the DELIVERED workflow state (code 3). Calls the service with SHIPMENT_STATUS_DELIVERED; raises a status conflict (400) when the transition is not allowed from the current state.
             operationId: postShipmentStatusDelivered
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2540,9 +2389,7 @@ paths:
     /shipments/{shipmentId}/status-finish-processing:
         post:
             description:
-                Transitions the shipment identified by shipmentId to the READY_TO_BE_SHIPPED workflow state (code 1).
-                Calls the service with SHIPMENT_STATUS_READY_TO_BE_SHIPPED; raises a status conflict (400) when the
-                transition is not allowed from the current state.
+                Transitions the shipment identified by shipmentId to the READY_TO_BE_SHIPPED workflow state (code 1). Calls the service with SHIPMENT_STATUS_READY_TO_BE_SHIPPED; raises a status conflict (400) when the transition is not allowed from the current state.
             operationId: postShipmentStatusFinishProcessing
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2603,9 +2450,7 @@ paths:
     /shipments/{shipmentId}/status-shipped:
         post:
             description:
-                Transitions the shipment identified by shipmentId to the SHIPPED workflow state (code 2). Calls the
-                service with SHIPMENT_STATUS_SHIPPED; raises a status conflict (400) when the transition is not allowed
-                from the current state.
+                Transitions the shipment identified by shipmentId to the SHIPPED workflow state (code 2). Calls the service with SHIPMENT_STATUS_SHIPPED; raises a status conflict (400) when the transition is not allowed from the current state.
             operationId: postShipmentStatusShipped
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
@@ -2665,13 +2510,11 @@ paths:
                 -   Shipment
 tags:
     -   description:
-            Fulfillment record for a order. Owns the carrier, tracking data, ship dates, and the workflow transitions
-            that advance a shipment from PROCESSING to DELIVERED.
+            Fulfillment record for a order. Owns the carrier, tracking data, ship dates, and the workflow transitions that advance a shipment from PROCESSING to DELIVERED.
         name: Shipment
     -   description:
             Picked line on a shipment. Binds a order item to a shipment with a quantity drawn from a specific warehouse.
         name: ShipmentItem
     -   description:
-            Postal ship-to address attached to a shipment. Mirrors the underlying address and is resolvable by country
-            and region ISO codes.
+            Postal ship-to address attached to a shipment. Mirrors the underlying address and is resolvable by country and region ISO codes.
         name: ShippingAddress

@@ -73,7 +73,6 @@ describe('SettingsStep', () => {
 		expect(
 			screen.getByLabelText('mirror-with-overwriting')
 		).not.toBeChecked();
-		expect(screen.getByLabelText('copy-as-new')).not.toBeChecked();
 	});
 
 	it('switches the update-data strategy when a different option is selected', async () => {
@@ -81,12 +80,18 @@ describe('SettingsStep', () => {
 
 		renderSettingsStep();
 
-		const radio = screen.getByLabelText('copy-as-new');
+		const radio = screen.getByLabelText('mirror-with-overwriting');
 
 		await user.click(radio);
 
 		expect(radio).toBeChecked();
 		expect(screen.getByLabelText('mirror')).not.toBeChecked();
+	});
+
+	it('does not show the copy-as-new strategy', () => {
+		renderSettingsStep();
+
+		expect(screen.queryByLabelText('copy-as-new')).not.toBeInTheDocument();
 	});
 
 	it('shows mirror as a read-only label at the company scope', () => {

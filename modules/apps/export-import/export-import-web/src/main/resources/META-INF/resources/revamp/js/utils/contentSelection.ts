@@ -8,6 +8,8 @@ import {
 	PreviewPortletDataHandlerSection,
 } from '../types/portletDataHandler';
 
+import type {ContentSelection} from '../components/forms/content_selector/ContentSelector';
+
 export type HandlerSelection =
 	| {
 			[key: string]: HandlerSelection | boolean | number[];
@@ -119,4 +121,22 @@ export function withSiteBuilderSection(
 			previewPortletDataHandlers: [],
 		},
 	];
+}
+
+export function toProcessRequestFlags(
+	contentSelection: ContentSelection | undefined
+) {
+	const commentsAndRatings = (contentSelection?.[CONTENT_SECTION_KEY]
+		?.commentsAndRatings ?? {}) as Record<string, boolean>;
+	const lookAndFeel = (contentSelection?.[SITE_BUILDER_SECTION_KEY]
+		?.lookAndFeel ?? {}) as Record<string, boolean>;
+
+	return {
+		comments: !!commentsAndRatings.comments,
+		logo: !!lookAndFeel.logo,
+		ratings: !!commentsAndRatings.ratings,
+		sitePagesSettings: !!lookAndFeel.sitePagesSettings,
+		siteTemplateSettings: !!lookAndFeel.siteTemplateSettings,
+		themeSettings: !!lookAndFeel.themeSettings,
+	};
 }

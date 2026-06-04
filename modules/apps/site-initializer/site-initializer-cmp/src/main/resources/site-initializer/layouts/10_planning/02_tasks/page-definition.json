@@ -55,7 +55,7 @@
 								},
 								"text": {
 									"value_i18n": {
-										"en_US": "Workflow"
+										"en_US": "Workflow Tasks"
 									}
 								}
 							}
@@ -112,6 +112,19 @@
 							"fragmentDropZoneId": "3"
 						},
 						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.WorkflowTasksOverviewComponentSectionFragmentRenderer"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
 							{
 								"definition": {
 									"fragment": {

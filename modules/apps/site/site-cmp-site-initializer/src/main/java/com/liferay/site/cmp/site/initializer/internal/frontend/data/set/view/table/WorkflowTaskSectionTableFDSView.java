@@ -8,7 +8,6 @@ package com.liferay.site.cmp.site.initializer.internal.frontend.data.set.view.ta
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.site.cmp.site.initializer.internal.constants.CMPSiteInitializerFDSNames;
 
@@ -28,10 +27,8 @@ public class WorkflowTaskSectionTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
-		FDSTableSchemaBuilder fdsTableSchemaBuilder =
-			_fdsTableSchemaBuilderFactory.create();
-
-		return fdsTableSchemaBuilder.add(
+		return _fdsTableSchemaBuilderFactory.create(
+		).add(
 			"assetTitle", "asset-title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"actionLinkWorkflowTask"
@@ -54,7 +51,7 @@ public class WorkflowTaskSectionTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"dueDateTableCellRenderer")
 		).add(
-			"state", "state-status",
+			"state", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"workflowStateTableCellRenderer")
 		).add(

@@ -33,7 +33,7 @@ export interface ExportProcessRequest {
 	themeSettings?: boolean;
 }
 
-export type DataStrategy = 'MIRROR' | 'MIRROR_OVERWRITE' | 'COPY_AS_NEW';
+export type DataStrategy = 'MIRROR' | 'MIRROR_OVERWRITE';
 
 export type UserIdStrategy = 'CURRENT_USER_ID' | 'ALWAYS_CURRENT_USER_ID';
 

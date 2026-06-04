@@ -56,8 +56,7 @@ public class AIHubCellPortalInstanceLifecycleListener
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.
 					fetchOAuth2ApplicationByExternalReferenceCode(
-						"AI-HUB-CELL-OAUTH2-APPLICATION",
-						company.getCompanyId());
+						"AI-HUB-CELL", company.getCompanyId());
 
 			if (oAuth2Application != null) {
 				return;
@@ -71,8 +70,7 @@ public class AIHubCellPortalInstanceLifecycleListener
 			}
 
 			_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
-				"AI-HUB-CELL-OAUTH2-APPLICATION", user.getUserId(),
-				user.getScreenName(),
+				"AI-HUB-CELL", user.getUserId(), user.getScreenName(),
 				Arrays.asList(GrantType.CLIENT_CREDENTIALS),
 				"client_secret_post", user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),

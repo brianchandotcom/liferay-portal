@@ -6,7 +6,7 @@
 package com.liferay.ai.hub.rest.internal.resource.v1_0.factory;
 
 import com.liferay.ai.hub.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.ai.hub.rest.resource.v1_0.ModelArmorTemplateResource;
+import com.liferay.ai.hub.rest.resource.v1_0.GuardrailResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,29 +55,28 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/ai-hub/v1.0/ModelArmorTemplate",
-	service = ModelArmorTemplateResource.Factory.class
+	property = "resource.locator.key=/ai-hub/v1.0/Guardrail",
+	service = GuardrailResource.Factory.class
 )
 @Generated("")
-public class ModelArmorTemplateResourceFactoryImpl
-	implements ModelArmorTemplateResource.Factory {
+public class GuardrailResourceFactoryImpl implements GuardrailResource.Factory {
 
 	@Override
-	public ModelArmorTemplateResource.Builder create() {
-		return new ModelArmorTemplateResource.Builder() {
+	public GuardrailResource.Builder create() {
+		return new GuardrailResource.Builder() {
 
 			@Override
-			public ModelArmorTemplateResource build() {
+			public GuardrailResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, ModelArmorTemplateResource>
-					modelArmorTemplateResourceProxyProviderFunction =
+				Function<InvocationHandler, GuardrailResource>
+					guardrailResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
-							_modelArmorTemplateResourceProxyProviderFunction;
+							_guardrailResourceProxyProviderFunction;
 
-				return modelArmorTemplateResourceProxyProviderFunction.apply(
+				return guardrailResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -85,7 +84,7 @@ public class ModelArmorTemplateResourceFactoryImpl
 			}
 
 			@Override
-			public ModelArmorTemplateResource.Builder checkPermissions(
+			public GuardrailResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -94,7 +93,7 @@ public class ModelArmorTemplateResourceFactoryImpl
 			}
 
 			@Override
-			public ModelArmorTemplateResource.Builder httpServletRequest(
+			public GuardrailResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -103,7 +102,7 @@ public class ModelArmorTemplateResourceFactoryImpl
 			}
 
 			@Override
-			public ModelArmorTemplateResource.Builder httpServletResponse(
+			public GuardrailResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -112,7 +111,7 @@ public class ModelArmorTemplateResourceFactoryImpl
 			}
 
 			@Override
-			public ModelArmorTemplateResource.Builder preferredLocale(
+			public GuardrailResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -121,14 +120,14 @@ public class ModelArmorTemplateResourceFactoryImpl
 			}
 
 			@Override
-			public ModelArmorTemplateResource.Builder uriInfo(UriInfo uriInfo) {
+			public GuardrailResource.Builder uriInfo(UriInfo uriInfo) {
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public ModelArmorTemplateResource.Builder user(User user) {
+			public GuardrailResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -144,17 +143,16 @@ public class ModelArmorTemplateResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, ModelArmorTemplateResource>
+	private static Function<InvocationHandler, GuardrailResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			ModelArmorTemplateResource.class.getClassLoader(),
-			ModelArmorTemplateResource.class);
+			GuardrailResource.class.getClassLoader(), GuardrailResource.class);
 
 		try {
-			Constructor<ModelArmorTemplateResource> constructor =
-				(Constructor<ModelArmorTemplateResource>)
-					proxyClass.getConstructor(InvocationHandler.class);
+			Constructor<GuardrailResource> constructor =
+				(Constructor<GuardrailResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
 
 			return invocationHandler -> {
 				try {
@@ -195,41 +193,38 @@ public class ModelArmorTemplateResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		ModelArmorTemplateResource modelArmorTemplateResource =
+		GuardrailResource guardrailResource =
 			_componentServiceObjects.getService();
 
-		modelArmorTemplateResource.setContextAcceptLanguage(
+		guardrailResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		modelArmorTemplateResource.setContextCompany(company);
+		guardrailResource.setContextCompany(company);
 
-		modelArmorTemplateResource.setContextHttpServletRequest(
-			httpServletRequest);
-		modelArmorTemplateResource.setContextHttpServletResponse(
-			httpServletResponse);
-		modelArmorTemplateResource.setContextUriInfo(uriInfo);
-		modelArmorTemplateResource.setContextUser(user);
-		modelArmorTemplateResource.setExpressionConvert(_expressionConvert);
-		modelArmorTemplateResource.setFilterParserProvider(
-			_filterParserProvider);
-		modelArmorTemplateResource.setGroupLocalService(_groupLocalService);
-		modelArmorTemplateResource.setResourceActionLocalService(
+		guardrailResource.setContextHttpServletRequest(httpServletRequest);
+		guardrailResource.setContextHttpServletResponse(httpServletResponse);
+		guardrailResource.setContextUriInfo(uriInfo);
+		guardrailResource.setContextUser(user);
+		guardrailResource.setExpressionConvert(_expressionConvert);
+		guardrailResource.setFilterParserProvider(_filterParserProvider);
+		guardrailResource.setGroupLocalService(_groupLocalService);
+		guardrailResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		modelArmorTemplateResource.setResourcePermissionLocalService(
+		guardrailResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		modelArmorTemplateResource.setRoleLocalService(_roleLocalService);
-		modelArmorTemplateResource.setSortParserProvider(_sortParserProvider);
+		guardrailResource.setRoleLocalService(_roleLocalService);
+		guardrailResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(modelArmorTemplateResource, arguments);
+			return method.invoke(guardrailResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(modelArmorTemplateResource);
+			_componentServiceObjects.ungetService(guardrailResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -241,8 +236,7 @@ public class ModelArmorTemplateResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<ModelArmorTemplateResource>
-		_componentServiceObjects;
+	private ComponentServiceObjects<GuardrailResource> _componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
@@ -275,10 +269,9 @@ public class ModelArmorTemplateResourceFactoryImpl
 
 	private static class ResourceProxyProviderFunctionHolder {
 
-		private static final Function
-			<InvocationHandler, ModelArmorTemplateResource>
-				_modelArmorTemplateResourceProxyProviderFunction =
-					_getProxyProviderFunction();
+		private static final Function<InvocationHandler, GuardrailResource>
+			_guardrailResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 	}
 
@@ -333,4 +326,4 @@ public class ModelArmorTemplateResourceFactoryImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1762892347
+// LIFERAY-REST-BUILDER-HASH:449646454

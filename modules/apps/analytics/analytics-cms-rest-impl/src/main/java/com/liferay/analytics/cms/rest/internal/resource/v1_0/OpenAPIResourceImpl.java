@@ -103,6 +103,8 @@ public class OpenAPIResourceImpl {
 
 			add(OverviewResourceImpl.class);
 
+			add(PerformanceAssetConsumptionResourceImpl.class);
+
 			add(PerformanceOverviewMetricResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
@@ -110,4 +112,4 @@ public class OpenAPIResourceImpl {
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:1295959257
+// LIFERAY-REST-BUILDER-HASH:1523237586

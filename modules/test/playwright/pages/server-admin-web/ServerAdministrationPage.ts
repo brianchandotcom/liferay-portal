@@ -27,6 +27,17 @@ export class ServerAdministrationPage {
 		this.scriptOutput = page.locator('b:text-is("Output") + pre');
 	}
 
+	async goto(tabs1?: string) {
+		let url =
+			'/group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view';
+
+		if (tabs1) {
+			url += `&_com_liferay_server_admin_web_portlet_ServerAdminPortlet_tabs1=${tabs1}`;
+		}
+
+		await this.page.goto(url);
+	}
+
 	async executeAction(action: EActions) {
 		await this.page
 			.getByText(action)

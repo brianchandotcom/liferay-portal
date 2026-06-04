@@ -541,7 +541,7 @@ test('Topper is properly aligned in small resolutions', async ({
 test(
 	'Viewport size selector is wrapped in a presentation container',
 	{
-		tag: '@LPP-64278',
+		tag: '@LPD-93507',
 	},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 

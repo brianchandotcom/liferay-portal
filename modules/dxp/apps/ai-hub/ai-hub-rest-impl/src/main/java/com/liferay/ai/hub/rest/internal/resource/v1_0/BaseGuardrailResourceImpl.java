@@ -5,8 +5,8 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.ModelArmorTemplate;
-import com.liferay.ai.hub.rest.resource.v1_0.ModelArmorTemplateResource;
+import com.liferay.ai.hub.rest.dto.v1_0.Guardrail;
+import com.liferay.ai.hub.rest.resource.v1_0.GuardrailResource;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -65,14 +65,14 @@ import java.util.Set;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BaseModelArmorTemplateResourceImpl
-	implements EntityModelResource, ModelArmorTemplateResource,
-			   VulcanBatchEngineTaskItemDelegate<ModelArmorTemplate> {
+public abstract class BaseGuardrailResourceImpl
+	implements EntityModelResource, GuardrailResource,
+			   VulcanBatchEngineTaskItemDelegate<Guardrail> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/ai-hub/v1.0/guardrails/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -83,17 +83,15 @@ public abstract class BaseModelArmorTemplateResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ModelArmorTemplate")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Guardrail")}
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/model-armor-templates/by-external-reference-code/{externalReferenceCode}"
+		"/guardrails/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteModelArmorTemplateByExternalReferenceCode(
+	public void deleteGuardrailByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("externalReferenceCode")
@@ -104,29 +102,24 @@ public abstract class BaseModelArmorTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/model-armor-templates' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "guardrailType": ___, "location": ___, "maliciousUriFilterEnabled": ___, "multilanguageDetectionEnabled": ___, "piAndJailbreakConfidenceLevel": ___, "piAndJailbreakFilterEnabled": ___, "raiDangerousLevel": ___, "raiHarassmentLevel": ___, "raiHateSpeechLevel": ___, "raiSexuallyExplicitLevel": ___, "sdpFilterEnabled": ___, "title_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/guardrails' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "guardrailType": ___, "location": ___, "maliciousUriFilterEnabled": ___, "multilanguageDetectionEnabled": ___, "piAndJailbreakConfidenceLevel": ___, "piAndJailbreakFilterEnabled": ___, "raiDangerousLevel": ___, "raiHarassmentLevel": ___, "raiHateSpeechLevel": ___, "raiSexuallyExplicitLevel": ___, "sdpFilterEnabled": ___, "title_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ModelArmorTemplate")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Guardrail")}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/model-armor-templates")
+	@jakarta.ws.rs.Path("/guardrails")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ModelArmorTemplate postModelArmorTemplate(
-			ModelArmorTemplate modelArmorTemplate)
-		throws Exception {
-
-		return new ModelArmorTemplate();
+	public Guardrail postGuardrail(Guardrail guardrail) throws Exception {
+		return new Guardrail();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/model-armor-templates/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/guardrails/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -137,16 +130,14 @@ public abstract class BaseModelArmorTemplateResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ModelArmorTemplate")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Guardrail")}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/model-armor-templates/batch")
+	@jakarta.ws.rs.Path("/guardrails/batch")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
-	public Response postModelArmorTemplateBatch(
+	public Response postGuardrailBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -165,14 +156,14 @@ public abstract class BaseModelArmorTemplateResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
-				ModelArmorTemplate.class.getName(), callbackURL, null, object)
+				Guardrail.class.getName(), callbackURL, null, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/{externalReferenceCode}' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "guardrailType": ___, "location": ___, "maliciousUriFilterEnabled": ___, "multilanguageDetectionEnabled": ___, "piAndJailbreakConfidenceLevel": ___, "piAndJailbreakFilterEnabled": ___, "raiDangerousLevel": ___, "raiHarassmentLevel": ___, "raiHateSpeechLevel": ___, "raiSexuallyExplicitLevel": ___, "sdpFilterEnabled": ___, "title_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/ai-hub/v1.0/guardrails/by-external-reference-code/{externalReferenceCode}' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "guardrailType": ___, "location": ___, "maliciousUriFilterEnabled": ___, "multilanguageDetectionEnabled": ___, "piAndJailbreakConfidenceLevel": ___, "piAndJailbreakFilterEnabled": ___, "raiDangerousLevel": ___, "raiHarassmentLevel": ___, "raiHateSpeechLevel": ___, "raiSexuallyExplicitLevel": ___, "sdpFilterEnabled": ___, "title_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -183,45 +174,41 @@ public abstract class BaseModelArmorTemplateResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ModelArmorTemplate")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Guardrail")}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/model-armor-templates/by-external-reference-code/{externalReferenceCode}"
+		"/guardrails/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public ModelArmorTemplate putModelArmorTemplateByExternalReferenceCode(
+	public Guardrail putGuardrailByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
-			ModelArmorTemplate modelArmorTemplate)
+			Guardrail guardrail)
 		throws Exception {
 
-		return new ModelArmorTemplate();
+		return new Guardrail();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<ModelArmorTemplate> modelArmorTemplates,
+			Collection<Guardrail> guardrails,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<ModelArmorTemplate, ModelArmorTemplate, Exception>
-			modelArmorTemplateUnsafeFunction = null;
+		UnsafeFunction<Guardrail, Guardrail, Exception>
+			guardrailUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			modelArmorTemplateUnsafeFunction =
-				modelArmorTemplate -> postModelArmorTemplate(
-					modelArmorTemplate);
+			guardrailUnsafeFunction = guardrail -> postGuardrail(guardrail);
 		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
@@ -229,53 +216,51 @@ public abstract class BaseModelArmorTemplateResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				modelArmorTemplateUnsafeFunction = modelArmorTemplate -> {
-					ModelArmorTemplate persistedModelArmorTemplate = null;
+				guardrailUnsafeFunction = guardrail -> {
+					Guardrail persistedGuardrail = null;
 
-					persistedModelArmorTemplate =
-						putModelArmorTemplateByExternalReferenceCode(
-							modelArmorTemplate.getExternalReferenceCode(),
-							modelArmorTemplate);
+					persistedGuardrail = putGuardrailByExternalReferenceCode(
+						guardrail.getExternalReferenceCode(), guardrail);
 
-					return persistedModelArmorTemplate;
+					return persistedGuardrail;
 				};
 			}
 		}
 
-		if (modelArmorTemplateUnsafeFunction == null) {
+		if (guardrailUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
-					"\" is not supported for ModelArmorTemplate");
+					"\" is not supported for Guardrail");
 		}
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				modelArmorTemplates, modelArmorTemplateUnsafeFunction);
+				guardrails, guardrailUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				modelArmorTemplates, modelArmorTemplateUnsafeFunction::apply);
+				guardrails, guardrailUnsafeFunction::apply);
 		}
 		else {
-			for (ModelArmorTemplate modelArmorTemplate : modelArmorTemplates) {
-				modelArmorTemplateUnsafeFunction.apply(modelArmorTemplate);
+			for (Guardrail guardrail : guardrails) {
+				guardrailUnsafeFunction.apply(guardrail);
 			}
 		}
 	}
 
 	@Override
 	public void delete(
-			Collection<ModelArmorTemplate> modelArmorTemplates,
+			Collection<Guardrail> guardrails,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<ModelArmorTemplate, ModelArmorTemplate, Exception>
-			modelArmorTemplateUnsafeFunction = modelArmorTemplate -> {
-				if (modelArmorTemplate.getExternalReferenceCode() != null) {
-					deleteModelArmorTemplateByExternalReferenceCode(
-						modelArmorTemplate.getExternalReferenceCode());
+		UnsafeFunction<Guardrail, Guardrail, Exception>
+			guardrailUnsafeFunction = guardrail -> {
+				if (guardrail.getExternalReferenceCode() != null) {
+					deleteGuardrailByExternalReferenceCode(
+						guardrail.getExternalReferenceCode());
 
-					return modelArmorTemplate;
+					return guardrail;
 				}
 
 				throw new UnsupportedOperationException(
@@ -284,15 +269,15 @@ public abstract class BaseModelArmorTemplateResourceImpl
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				modelArmorTemplates, modelArmorTemplateUnsafeFunction);
+				guardrails, guardrailUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				modelArmorTemplates, modelArmorTemplateUnsafeFunction::apply);
+				guardrails, guardrailUnsafeFunction::apply);
 		}
 		else {
-			for (ModelArmorTemplate modelArmorTemplate : modelArmorTemplates) {
-				modelArmorTemplateUnsafeFunction.apply(modelArmorTemplate);
+			for (Guardrail guardrail : guardrails) {
+				guardrailUnsafeFunction.apply(guardrail);
 			}
 		}
 	}
@@ -314,7 +299,7 @@ public abstract class BaseModelArmorTemplateResourceImpl
 	}
 
 	public String getResourceName() {
-		return "ModelArmorTemplate";
+		return "Guardrail";
 	}
 
 	public String getVersion() {
@@ -322,7 +307,7 @@ public abstract class BaseModelArmorTemplateResourceImpl
 	}
 
 	@Override
-	public Page<ModelArmorTemplate> read(
+	public Page<Guardrail> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
@@ -366,7 +351,7 @@ public abstract class BaseModelArmorTemplateResourceImpl
 
 	@Override
 	public void update(
-			Collection<ModelArmorTemplate> modelArmorTemplates,
+			Collection<Guardrail> guardrails,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -387,18 +372,17 @@ public abstract class BaseModelArmorTemplateResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<ModelArmorTemplate>,
-			 UnsafeFunction<ModelArmorTemplate, ModelArmorTemplate, Exception>,
-			 Exception> contextBatchUnsafeBiConsumer) {
+			<Collection<Guardrail>,
+			 UnsafeFunction<Guardrail, Guardrail, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<ModelArmorTemplate>,
-			 UnsafeConsumer<ModelArmorTemplate, Exception>, Exception>
-				contextBatchUnsafeConsumer) {
+			<Collection<Guardrail>, UnsafeConsumer<Guardrail, Exception>,
+			 Exception> contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
@@ -907,12 +891,10 @@ public abstract class BaseModelArmorTemplateResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<ModelArmorTemplate>,
-		 UnsafeFunction<ModelArmorTemplate, ModelArmorTemplate, Exception>,
+		<Collection<Guardrail>, UnsafeFunction<Guardrail, Guardrail, Exception>,
 		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<ModelArmorTemplate>,
-		 UnsafeConsumer<ModelArmorTemplate, Exception>, Exception>
+		<Collection<Guardrail>, UnsafeConsumer<Guardrail, Exception>, Exception>
 			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -934,7 +916,7 @@ public abstract class BaseModelArmorTemplateResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseModelArmorTemplateResourceImpl.class);
+		LogFactoryUtil.getLog(BaseGuardrailResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1791803584
+// LIFERAY-REST-BUILDER-HASH:918626619

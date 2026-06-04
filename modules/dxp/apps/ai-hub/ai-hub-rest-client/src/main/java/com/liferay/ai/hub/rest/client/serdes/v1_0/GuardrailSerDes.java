@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.rest.client.serdes.v1_0;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.ModelArmorTemplate;
+import com.liferay.ai.hub.rest.client.dto.v1_0.Guardrail;
 import com.liferay.ai.hub.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,24 +21,22 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class ModelArmorTemplateSerDes {
+public class GuardrailSerDes {
 
-	public static ModelArmorTemplate toDTO(String json) {
-		ModelArmorTemplateJSONParser modelArmorTemplateJSONParser =
-			new ModelArmorTemplateJSONParser();
+	public static Guardrail toDTO(String json) {
+		GuardrailJSONParser guardrailJSONParser = new GuardrailJSONParser();
 
-		return modelArmorTemplateJSONParser.parseToDTO(json);
+		return guardrailJSONParser.parseToDTO(json);
 	}
 
-	public static ModelArmorTemplate[] toDTOs(String json) {
-		ModelArmorTemplateJSONParser modelArmorTemplateJSONParser =
-			new ModelArmorTemplateJSONParser();
+	public static Guardrail[] toDTOs(String json) {
+		GuardrailJSONParser guardrailJSONParser = new GuardrailJSONParser();
 
-		return modelArmorTemplateJSONParser.parseToDTOs(json);
+		return guardrailJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ModelArmorTemplate modelArmorTemplate) {
-		if (modelArmorTemplate == null) {
+	public static String toJSON(Guardrail guardrail) {
+		if (guardrail == null) {
 			return "null";
 		}
 
@@ -46,17 +44,17 @@ public class ModelArmorTemplateSerDes {
 
 		sb.append("{");
 
-		if (modelArmorTemplate.getActive() != null) {
+		if (guardrail.getActive() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"active\": ");
 
-			sb.append(modelArmorTemplate.getActive());
+			sb.append(guardrail.getActive());
 		}
 
-		if (modelArmorTemplate.getDescription() != null) {
+		if (guardrail.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -65,12 +63,12 @@ public class ModelArmorTemplateSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(modelArmorTemplate.getDescription()));
+			sb.append(_escape(guardrail.getDescription()));
 
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getExternalReferenceCode() != null) {
+		if (guardrail.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -79,12 +77,12 @@ public class ModelArmorTemplateSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(modelArmorTemplate.getExternalReferenceCode()));
+			sb.append(_escape(guardrail.getExternalReferenceCode()));
 
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getGuardrailType() != null) {
+		if (guardrail.getGuardrailType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -92,11 +90,11 @@ public class ModelArmorTemplateSerDes {
 			sb.append("\"guardrailType\": ");
 
 			sb.append("\"");
-			sb.append(modelArmorTemplate.getGuardrailType());
+			sb.append(guardrail.getGuardrailType());
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getLocation() != null) {
+		if (guardrail.getLocation() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -105,32 +103,32 @@ public class ModelArmorTemplateSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(modelArmorTemplate.getLocation()));
+			sb.append(_escape(guardrail.getLocation()));
 
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getMaliciousUriFilterEnabled() != null) {
+		if (guardrail.getMaliciousUriFilterEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"maliciousUriFilterEnabled\": ");
 
-			sb.append(modelArmorTemplate.getMaliciousUriFilterEnabled());
+			sb.append(guardrail.getMaliciousUriFilterEnabled());
 		}
 
-		if (modelArmorTemplate.getMultilanguageDetectionEnabled() != null) {
+		if (guardrail.getMultilanguageDetectionEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"multilanguageDetectionEnabled\": ");
 
-			sb.append(modelArmorTemplate.getMultilanguageDetectionEnabled());
+			sb.append(guardrail.getMultilanguageDetectionEnabled());
 		}
 
-		if (modelArmorTemplate.getPiAndJailbreakConfidenceLevel() != null) {
+		if (guardrail.getPiAndJailbreakConfidenceLevel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -138,21 +136,21 @@ public class ModelArmorTemplateSerDes {
 			sb.append("\"piAndJailbreakConfidenceLevel\": ");
 
 			sb.append("\"");
-			sb.append(modelArmorTemplate.getPiAndJailbreakConfidenceLevel());
+			sb.append(guardrail.getPiAndJailbreakConfidenceLevel());
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getPiAndJailbreakFilterEnabled() != null) {
+		if (guardrail.getPiAndJailbreakFilterEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"piAndJailbreakFilterEnabled\": ");
 
-			sb.append(modelArmorTemplate.getPiAndJailbreakFilterEnabled());
+			sb.append(guardrail.getPiAndJailbreakFilterEnabled());
 		}
 
-		if (modelArmorTemplate.getRaiDangerousLevel() != null) {
+		if (guardrail.getRaiDangerousLevel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -160,11 +158,11 @@ public class ModelArmorTemplateSerDes {
 			sb.append("\"raiDangerousLevel\": ");
 
 			sb.append("\"");
-			sb.append(modelArmorTemplate.getRaiDangerousLevel());
+			sb.append(guardrail.getRaiDangerousLevel());
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getRaiHarassmentLevel() != null) {
+		if (guardrail.getRaiHarassmentLevel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -172,11 +170,11 @@ public class ModelArmorTemplateSerDes {
 			sb.append("\"raiHarassmentLevel\": ");
 
 			sb.append("\"");
-			sb.append(modelArmorTemplate.getRaiHarassmentLevel());
+			sb.append(guardrail.getRaiHarassmentLevel());
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getRaiHateSpeechLevel() != null) {
+		if (guardrail.getRaiHateSpeechLevel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -184,11 +182,11 @@ public class ModelArmorTemplateSerDes {
 			sb.append("\"raiHateSpeechLevel\": ");
 
 			sb.append("\"");
-			sb.append(modelArmorTemplate.getRaiHateSpeechLevel());
+			sb.append(guardrail.getRaiHateSpeechLevel());
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getRaiSexuallyExplicitLevel() != null) {
+		if (guardrail.getRaiSexuallyExplicitLevel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -196,21 +194,21 @@ public class ModelArmorTemplateSerDes {
 			sb.append("\"raiSexuallyExplicitLevel\": ");
 
 			sb.append("\"");
-			sb.append(modelArmorTemplate.getRaiSexuallyExplicitLevel());
+			sb.append(guardrail.getRaiSexuallyExplicitLevel());
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getSdpFilterEnabled() != null) {
+		if (guardrail.getSdpFilterEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"sdpFilterEnabled\": ");
 
-			sb.append(modelArmorTemplate.getSdpFilterEnabled());
+			sb.append(guardrail.getSdpFilterEnabled());
 		}
 
-		if (modelArmorTemplate.getTitle() != null) {
+		if (guardrail.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -219,19 +217,19 @@ public class ModelArmorTemplateSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(modelArmorTemplate.getTitle()));
+			sb.append(_escape(guardrail.getTitle()));
 
 			sb.append("\"");
 		}
 
-		if (modelArmorTemplate.getTitle_i18n() != null) {
+		if (guardrail.getTitle_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"title_i18n\": ");
 
-			sb.append(_toJSON(modelArmorTemplate.getTitle_i18n()));
+			sb.append(_toJSON(guardrail.getTitle_i18n()));
 		}
 
 		sb.append("}");
@@ -240,179 +238,164 @@ public class ModelArmorTemplateSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ModelArmorTemplateJSONParser modelArmorTemplateJSONParser =
-			new ModelArmorTemplateJSONParser();
+		GuardrailJSONParser guardrailJSONParser = new GuardrailJSONParser();
 
-		return modelArmorTemplateJSONParser.parseToMap(json);
+		return guardrailJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		ModelArmorTemplate modelArmorTemplate) {
-
-		if (modelArmorTemplate == null) {
+	public static Map<String, String> toMap(Guardrail guardrail) {
+		if (guardrail == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (modelArmorTemplate.getActive() == null) {
+		if (guardrail.getActive() == null) {
 			map.put("active", null);
 		}
 		else {
-			map.put("active", String.valueOf(modelArmorTemplate.getActive()));
+			map.put("active", String.valueOf(guardrail.getActive()));
 		}
 
-		if (modelArmorTemplate.getDescription() == null) {
+		if (guardrail.getDescription() == null) {
 			map.put("description", null);
 		}
 		else {
-			map.put(
-				"description",
-				String.valueOf(modelArmorTemplate.getDescription()));
+			map.put("description", String.valueOf(guardrail.getDescription()));
 		}
 
-		if (modelArmorTemplate.getExternalReferenceCode() == null) {
+		if (guardrail.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
-				String.valueOf(modelArmorTemplate.getExternalReferenceCode()));
+				String.valueOf(guardrail.getExternalReferenceCode()));
 		}
 
-		if (modelArmorTemplate.getGuardrailType() == null) {
+		if (guardrail.getGuardrailType() == null) {
 			map.put("guardrailType", null);
 		}
 		else {
 			map.put(
-				"guardrailType",
-				String.valueOf(modelArmorTemplate.getGuardrailType()));
+				"guardrailType", String.valueOf(guardrail.getGuardrailType()));
 		}
 
-		if (modelArmorTemplate.getLocation() == null) {
+		if (guardrail.getLocation() == null) {
 			map.put("location", null);
 		}
 		else {
-			map.put(
-				"location", String.valueOf(modelArmorTemplate.getLocation()));
+			map.put("location", String.valueOf(guardrail.getLocation()));
 		}
 
-		if (modelArmorTemplate.getMaliciousUriFilterEnabled() == null) {
+		if (guardrail.getMaliciousUriFilterEnabled() == null) {
 			map.put("maliciousUriFilterEnabled", null);
 		}
 		else {
 			map.put(
 				"maliciousUriFilterEnabled",
-				String.valueOf(
-					modelArmorTemplate.getMaliciousUriFilterEnabled()));
+				String.valueOf(guardrail.getMaliciousUriFilterEnabled()));
 		}
 
-		if (modelArmorTemplate.getMultilanguageDetectionEnabled() == null) {
+		if (guardrail.getMultilanguageDetectionEnabled() == null) {
 			map.put("multilanguageDetectionEnabled", null);
 		}
 		else {
 			map.put(
 				"multilanguageDetectionEnabled",
-				String.valueOf(
-					modelArmorTemplate.getMultilanguageDetectionEnabled()));
+				String.valueOf(guardrail.getMultilanguageDetectionEnabled()));
 		}
 
-		if (modelArmorTemplate.getPiAndJailbreakConfidenceLevel() == null) {
+		if (guardrail.getPiAndJailbreakConfidenceLevel() == null) {
 			map.put("piAndJailbreakConfidenceLevel", null);
 		}
 		else {
 			map.put(
 				"piAndJailbreakConfidenceLevel",
-				String.valueOf(
-					modelArmorTemplate.getPiAndJailbreakConfidenceLevel()));
+				String.valueOf(guardrail.getPiAndJailbreakConfidenceLevel()));
 		}
 
-		if (modelArmorTemplate.getPiAndJailbreakFilterEnabled() == null) {
+		if (guardrail.getPiAndJailbreakFilterEnabled() == null) {
 			map.put("piAndJailbreakFilterEnabled", null);
 		}
 		else {
 			map.put(
 				"piAndJailbreakFilterEnabled",
-				String.valueOf(
-					modelArmorTemplate.getPiAndJailbreakFilterEnabled()));
+				String.valueOf(guardrail.getPiAndJailbreakFilterEnabled()));
 		}
 
-		if (modelArmorTemplate.getRaiDangerousLevel() == null) {
+		if (guardrail.getRaiDangerousLevel() == null) {
 			map.put("raiDangerousLevel", null);
 		}
 		else {
 			map.put(
 				"raiDangerousLevel",
-				String.valueOf(modelArmorTemplate.getRaiDangerousLevel()));
+				String.valueOf(guardrail.getRaiDangerousLevel()));
 		}
 
-		if (modelArmorTemplate.getRaiHarassmentLevel() == null) {
+		if (guardrail.getRaiHarassmentLevel() == null) {
 			map.put("raiHarassmentLevel", null);
 		}
 		else {
 			map.put(
 				"raiHarassmentLevel",
-				String.valueOf(modelArmorTemplate.getRaiHarassmentLevel()));
+				String.valueOf(guardrail.getRaiHarassmentLevel()));
 		}
 
-		if (modelArmorTemplate.getRaiHateSpeechLevel() == null) {
+		if (guardrail.getRaiHateSpeechLevel() == null) {
 			map.put("raiHateSpeechLevel", null);
 		}
 		else {
 			map.put(
 				"raiHateSpeechLevel",
-				String.valueOf(modelArmorTemplate.getRaiHateSpeechLevel()));
+				String.valueOf(guardrail.getRaiHateSpeechLevel()));
 		}
 
-		if (modelArmorTemplate.getRaiSexuallyExplicitLevel() == null) {
+		if (guardrail.getRaiSexuallyExplicitLevel() == null) {
 			map.put("raiSexuallyExplicitLevel", null);
 		}
 		else {
 			map.put(
 				"raiSexuallyExplicitLevel",
-				String.valueOf(
-					modelArmorTemplate.getRaiSexuallyExplicitLevel()));
+				String.valueOf(guardrail.getRaiSexuallyExplicitLevel()));
 		}
 
-		if (modelArmorTemplate.getSdpFilterEnabled() == null) {
+		if (guardrail.getSdpFilterEnabled() == null) {
 			map.put("sdpFilterEnabled", null);
 		}
 		else {
 			map.put(
 				"sdpFilterEnabled",
-				String.valueOf(modelArmorTemplate.getSdpFilterEnabled()));
+				String.valueOf(guardrail.getSdpFilterEnabled()));
 		}
 
-		if (modelArmorTemplate.getTitle() == null) {
+		if (guardrail.getTitle() == null) {
 			map.put("title", null);
 		}
 		else {
-			map.put("title", String.valueOf(modelArmorTemplate.getTitle()));
+			map.put("title", String.valueOf(guardrail.getTitle()));
 		}
 
-		if (modelArmorTemplate.getTitle_i18n() == null) {
+		if (guardrail.getTitle_i18n() == null) {
 			map.put("title_i18n", null);
 		}
 		else {
-			map.put(
-				"title_i18n",
-				String.valueOf(modelArmorTemplate.getTitle_i18n()));
+			map.put("title_i18n", String.valueOf(guardrail.getTitle_i18n()));
 		}
 
 		return map;
 	}
 
-	public static class ModelArmorTemplateJSONParser
-		extends BaseJSONParser<ModelArmorTemplate> {
+	public static class GuardrailJSONParser extends BaseJSONParser<Guardrail> {
 
 		@Override
-		protected ModelArmorTemplate createDTO() {
-			return new ModelArmorTemplate();
+		protected Guardrail createDTO() {
+			return new Guardrail();
 		}
 
 		@Override
-		protected ModelArmorTemplate[] createDTOArray(int size) {
-			return new ModelArmorTemplate[size];
+		protected Guardrail[] createDTOArray(int size) {
+			return new Guardrail[size];
 		}
 
 		@Override
@@ -487,46 +470,44 @@ public class ModelArmorTemplateSerDes {
 
 		@Override
 		protected void setField(
-			ModelArmorTemplate modelArmorTemplate, String jsonParserFieldName,
+			Guardrail guardrail, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "active")) {
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setActive((Boolean)jsonParserFieldValue);
+					guardrail.setActive((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setDescription(
-						(String)jsonParserFieldValue);
+					guardrail.setDescription((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setExternalReferenceCode(
+					guardrail.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "guardrailType")) {
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setGuardrailType(
-						ModelArmorTemplate.GuardrailType.create(
+					guardrail.setGuardrailType(
+						Guardrail.GuardrailType.create(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "location")) {
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setLocation(
-						(String)jsonParserFieldValue);
+					guardrail.setLocation((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "maliciousUriFilterEnabled")) {
 
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setMaliciousUriFilterEnabled(
+					guardrail.setMaliciousUriFilterEnabled(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
@@ -534,7 +515,7 @@ public class ModelArmorTemplateSerDes {
 						jsonParserFieldName, "multilanguageDetectionEnabled")) {
 
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setMultilanguageDetectionEnabled(
+					guardrail.setMultilanguageDetectionEnabled(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
@@ -542,8 +523,8 @@ public class ModelArmorTemplateSerDes {
 						jsonParserFieldName, "piAndJailbreakConfidenceLevel")) {
 
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setPiAndJailbreakConfidenceLevel(
-						ModelArmorTemplate.PiAndJailbreakConfidenceLevel.create(
+					guardrail.setPiAndJailbreakConfidenceLevel(
+						Guardrail.PiAndJailbreakConfidenceLevel.create(
 							(String)jsonParserFieldValue));
 				}
 			}
@@ -551,14 +532,14 @@ public class ModelArmorTemplateSerDes {
 						jsonParserFieldName, "piAndJailbreakFilterEnabled")) {
 
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setPiAndJailbreakFilterEnabled(
+					guardrail.setPiAndJailbreakFilterEnabled(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "raiDangerousLevel")) {
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setRaiDangerousLevel(
-						ModelArmorTemplate.RaiDangerousLevel.create(
+					guardrail.setRaiDangerousLevel(
+						Guardrail.RaiDangerousLevel.create(
 							(String)jsonParserFieldValue));
 				}
 			}
@@ -566,8 +547,8 @@ public class ModelArmorTemplateSerDes {
 						jsonParserFieldName, "raiHarassmentLevel")) {
 
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setRaiHarassmentLevel(
-						ModelArmorTemplate.RaiHarassmentLevel.create(
+					guardrail.setRaiHarassmentLevel(
+						Guardrail.RaiHarassmentLevel.create(
 							(String)jsonParserFieldValue));
 				}
 			}
@@ -575,8 +556,8 @@ public class ModelArmorTemplateSerDes {
 						jsonParserFieldName, "raiHateSpeechLevel")) {
 
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setRaiHateSpeechLevel(
-						ModelArmorTemplate.RaiHateSpeechLevel.create(
+					guardrail.setRaiHateSpeechLevel(
+						Guardrail.RaiHateSpeechLevel.create(
 							(String)jsonParserFieldValue));
 				}
 			}
@@ -584,25 +565,25 @@ public class ModelArmorTemplateSerDes {
 						jsonParserFieldName, "raiSexuallyExplicitLevel")) {
 
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setRaiSexuallyExplicitLevel(
-						ModelArmorTemplate.RaiSexuallyExplicitLevel.create(
+					guardrail.setRaiSexuallyExplicitLevel(
+						Guardrail.RaiSexuallyExplicitLevel.create(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sdpFilterEnabled")) {
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setSdpFilterEnabled(
+					guardrail.setSdpFilterEnabled(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setTitle((String)jsonParserFieldValue);
+					guardrail.setTitle((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
 				if (jsonParserFieldValue != null) {
-					modelArmorTemplate.setTitle_i18n(
+					guardrail.setTitle_i18n(
 						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
@@ -687,4 +668,4 @@ public class ModelArmorTemplateSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-63021740
+// LIFERAY-REST-BUILDER-HASH:-417826116

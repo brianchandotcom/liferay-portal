@@ -38,17 +38,17 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ModelArmorTemplate")
+@GraphQLName("Guardrail")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ModelArmorTemplate")
-public class ModelArmorTemplate implements Serializable {
+@XmlRootElement(name = "Guardrail")
+public class Guardrail implements Serializable {
 
-	public static ModelArmorTemplate toDTO(String json) {
-		return ObjectMapperUtil.readValue(ModelArmorTemplate.class, json);
+	public static Guardrail toDTO(String json) {
+		return ObjectMapperUtil.readValue(Guardrail.class, json);
 	}
 
-	public static ModelArmorTemplate unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(ModelArmorTemplate.class, json);
+	public static Guardrail unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Guardrail.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -819,13 +819,13 @@ public class ModelArmorTemplate implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ModelArmorTemplate)) {
+		if (!(object instanceof Guardrail)) {
 			return false;
 		}
 
-		ModelArmorTemplate modelArmorTemplate = (ModelArmorTemplate)object;
+		Guardrail guardrail = (Guardrail)object;
 
-		return Objects.equals(toString(), modelArmorTemplate.toString());
+		return Objects.equals(toString(), guardrail.toString());
 	}
 
 	@Override
@@ -1070,7 +1070,7 @@ public class ModelArmorTemplate implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.ModelArmorTemplate",
+		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.Guardrail",
 		name = "x-class-name"
 	)
 	public String xClassName;
@@ -1403,4 +1403,4 @@ public class ModelArmorTemplate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1193542898
+// LIFERAY-REST-BUILDER-HASH:-570620727

@@ -511,8 +511,10 @@ public abstract class BaseBundlePersistentResource
 		_invokeBuild();
 
 		print(
-			"Redispatching bundles (" + _redispatchAttempts + " of " +
-				_MAX_REDISPATCH_ATTEMPTS + ") at " + _getProducerJobURL());
+			JenkinsResultsParserUtil.combine(
+				"Redispatching bundles (", String.valueOf(_redispatchAttempts),
+				" of ", String.valueOf(_MAX_REDISPATCH_ATTEMPTS), ") at ",
+				_getProducerJobURL()));
 	}
 
 	private void _updateBuild(String producerBuildURL) {

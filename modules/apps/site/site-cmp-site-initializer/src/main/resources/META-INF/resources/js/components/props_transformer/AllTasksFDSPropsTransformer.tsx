@@ -18,7 +18,10 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {styleActions, styleBulkActions} from '../../utils/actionStyles';
-import {installCMPTabPersistence} from '../../utils/cmpTabPersistence';
+import {
+	installCMPTabPersistence,
+	registerTabFDS,
+} from '../../utils/cmpTabPersistence';
 import {WORKFLOW_TASK_ACTION_LINK_ID} from '../../utils/constants';
 import {openCMPModal} from '../../utils/openCMPModal';
 import {
@@ -69,6 +72,7 @@ export default function AllTasksFDSPropsTransformer({
 		initialPaginationDelta: 20,
 	}));
 
+	registerTabFDS(id, 0);
 	installCMPTabPersistence();
 
 	return {

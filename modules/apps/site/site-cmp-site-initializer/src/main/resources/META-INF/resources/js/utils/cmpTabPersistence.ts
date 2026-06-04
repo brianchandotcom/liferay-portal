@@ -3,11 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import {COOKIE_TYPES, sessionStorage} from 'frontend-js-web';
 
 export const STORAGE_KEY = 'cmpGlobalTasksActiveTab';
 
 let installed = false;
+
+const tabIndexToFDSId = new Map<number, string>();
 
 function findTabsContainer(): HTMLElement | null {
 	const tabsContainers = Array.from(
@@ -78,6 +81,16 @@ function handleActivePanel(event: {panel: HTMLElement}) {
 	}
 
 	sessionStorage.setItem(STORAGE_KEY, String(index), COOKIE_TYPES.NECESSARY);
+
+	const fdsId = tabIndexToFDSId.get(index);
+
+	if (fdsId) {
+		Liferay.fire(FDS_EVENT.UPDATE_DISPLAY, {id: fdsId});
+	}
+}
+
+export function registerTabFDS(fdsId: string, tabIndex: number) {
+	tabIndexToFDSId.set(tabIndex, fdsId);
 }
 
 export function installCMPTabPersistence() {

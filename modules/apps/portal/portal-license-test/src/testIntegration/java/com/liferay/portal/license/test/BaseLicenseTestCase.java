@@ -75,8 +75,15 @@ public abstract class BaseLicenseTestCase implements Serializable {
 	}
 
 	public static boolean isReleaseBundle() {
-		if (ReflectionsHolder._licenseManagerHelperClass != null) {
-			return true;
+		try {
+			if (ReflectionsHolder._licenseManagerHelperClass != null) {
+				return true;
+			}
+		}
+		catch (ExceptionInInitializerError exceptionInInitializerError) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exceptionInInitializerError);
+			}
 		}
 
 		return false;
@@ -687,15 +694,15 @@ public abstract class BaseLicenseTestCase implements Serializable {
 
 	private static final String _PROPERTY_PREFIX = "license.test.";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseLicenseTestCase.class);
+
 	private static String _licensePackageName;
 	private static Properties _licenseTestProperties;
 	private static Object _lifecycleAction;
 	private static Class<?> _lifecycleActionClass;
 
 	private static class ReflectionsHolder {
-
-		private static final Log _log = LogFactoryUtil.getLog(
-			BaseLicenseTestCase.class);
 
 		private static Instrumentation _instrumentation;
 		private static Class<?> _licenseManagerHelperClass;

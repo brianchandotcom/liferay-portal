@@ -7,6 +7,18 @@
 .checkbox-row .custom-control {
 	align-items: center;
 	display: flex;
+	margin-bottom: 0;
+}
+
+.checkbox-row .custom-control-label {
+	position: relative;
+}
+
+.checkbox-row .custom-control-label::after {
+	height: 1rem;
+	left: 0;
+	top: 0;
+	width: 1rem;
 }
 
 .checkbox-row-content {

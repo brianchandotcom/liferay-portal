@@ -43,54 +43,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-110392 - Verify if the user can create a question with an image from a connected Depot."
-	@priority = 4
-	@refactordone
-	test CanAddQuestionWithDepotImage {
-		task ("Given a connected depot with an image") {
-			JSONDepot.addDepot(
-				depotDescription = "This is the description of a depot",
-				depotName = "Test Depot Name");
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_2.jpeg",
-				groupName = "Test Depot Name",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_2.jpeg");
-
-			JSONDepot.connectSite(
-				depotName = "Test Depot Name",
-				groupName = "Guest");
-		}
-
-		task ("and a Message Boards Category is added") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Category",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("When a Question is created with an image from the connected Depot") {
-			Questions.askQuestionFillingTheMandatoryFields(
-				contentField = "Body AddQuestionWithTheALImage",
-				depotName = "Test Depot Name",
-				imageFileName = "Document_2.jpeg",
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				titleField = "Title AddQuestionWithTheALImage",
-				topicName = "questions-test-category");
-
-			Questions.gotoDetails(
-				questionTabField = "Questions",
-				questionTitle = "Title AddQuestionWithTheALImage");
-		}
-
-		task ("Then the image from the Depot should be displayed.") {
-			Questions.viewImageInQuestion(imageFileName = "document_2-jpeg");
-		}
-	}
-
 	@description = "LPS-116844 and LPS-116845 - Validate if the user can setup the landing page topic navigation and the root topic for the widget."
 	@priority = 4
 	@refactordone

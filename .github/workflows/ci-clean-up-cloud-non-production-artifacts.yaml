@@ -4,9 +4,9 @@ defaults:
 jobs:
     clean-up-artifacts:
         env:
-            BOOTSTRAP_STORAGE_PATH_NONPRD: ${{vars.BOOTSTRAP_STORAGE_PATH_NONPRD}}
+            BOOTSTRAP_STORAGE_PATH_NON_PRODUCTION: ${{vars.BOOTSTRAP_STORAGE_PATH_NON_PRODUCTION}}
             EVENT_REF: ${{github.event.ref}}
-            HELM_CHART_REGISTRY_NONPRD: ${{vars.HELM_CHART_REGISTRY_NONPRD}}
+            HELM_CHART_REGISTRY_NON_PRODUCTION: ${{vars.HELM_CHART_REGISTRY_NON_PRODUCTION}}
         if: |
             github.repository == 'cloudnative-team/liferay-portal' &&
             github.event.ref_type == 'branch' &&
@@ -19,20 +19,20 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRD}}
-                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NONPRD}}
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NON_PRODUCTION}}
+                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NON_PRODUCTION}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRD}}
-            -   name: Delete chart images
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NON_PRODUCTION}}
+            -   name: Clean up chart images
                 run: |
                     set -o errexit
                     set -o nounset
                     set -o pipefail
 
                     function main {
-                        local registry_path="${HELM_CHART_REGISTRY_NONPRD}/$(echo "${EVENT_REF}" | tr 'A-Z/' 'a-z-')"
+                        local registry_path="${HELM_CHART_REGISTRY_NON_PRODUCTION}/$(echo "${EVENT_REF}" | tr 'A-Z/' 'a-z-')"
 
                         local images
 
@@ -47,14 +47,14 @@ jobs:
                     }
 
                     main "${@}"
-            -   name: Delete bootstrap tarballs
+            -   name: Clean up bootstrap tarballs
                 run: |
                     set -o errexit
                     set -o nounset
                     set -o pipefail
 
                     function main {
-                        gcloud storage rm --recursive "${BOOTSTRAP_STORAGE_PATH_NONPRD}/$(echo "${EVENT_REF}" | tr '/' '-')/" || true
+                        gcloud storage rm --recursive "${BOOTSTRAP_STORAGE_PATH_NON_PRODUCTION}/$(echo "${EVENT_REF}" | tr '/' '-')/" || true
                     }
 
                     main "${@}"

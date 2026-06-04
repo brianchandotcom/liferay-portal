@@ -100,7 +100,7 @@ public class DepotEntryUtil {
 			}
 			else if (_log.isInfoEnabled()) {
 				_log.info(
-					"User does not have access to view space " +
+					"User does not have access to view depot entry " +
 						depotEntry.getDepotEntryId());
 			}
 		}

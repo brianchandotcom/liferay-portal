@@ -80,16 +80,15 @@ public class DepotBreadcrumbEntryContributorImpl
 			DepotEntry depotEntry = _getDepotEntry(
 				scopeGroup.getGroupId(), depotEntryId);
 
-			if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+			if ((depotEntry.getType() == DepotConstants.TYPE_DESIGN_LIBRARY) ||
+				(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
+
 				return originalBreadcrumbEntries;
 			}
 
-			if (depotEntry.getType() != DepotConstants.TYPE_DESIGN_LIBRARY) {
-				breadcrumbEntries.add(
-					_getAssetLibrariesBreadcrumbEntry(
-						themeDisplay.getControlPanelGroup(),
-						httpServletRequest));
-			}
+			breadcrumbEntries.add(
+				_getAssetLibrariesBreadcrumbEntry(
+					themeDisplay.getControlPanelGroup(), httpServletRequest));
 
 			breadcrumbEntries.add(
 				_getAssetLibraryBreadcrumbEntry(

@@ -148,7 +148,7 @@ resource "kubernetes_manifest" "infrastructure_appproject" {
 					kind="*"
 				},
 			]
-			description="ArgoCD project for Liferay could native infrastructure."
+			description="ArgoCD project for Liferay cloud native infrastructure."
 			destinations=[
 				{
 					namespace="cluster-bootstrap-system"

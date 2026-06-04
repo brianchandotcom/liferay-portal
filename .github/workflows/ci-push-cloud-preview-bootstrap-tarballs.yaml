@@ -23,8 +23,7 @@ on:
             -   .github/workflows/ci-push-cloud-preview-bootstrap-tarballs.yaml
             -   .github/workflows/ci-reusable-push-bootstrap-tarball.yaml
             -   cloud/scripts/**
-            -   cloud/terraform/aws/**
-            -   cloud/terraform/gcp/**
+            -   cloud/terraform/**
 permissions:
     contents: read
     id-token: write

@@ -10,13 +10,10 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.net.InetAddress;
 
@@ -24,10 +21,7 @@ import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -36,16 +30,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class FreeTierDomainLicenseTest extends BaseLicenseTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
-
-	public static void assume() {
-		Assume.assumeTrue(isReleaseBundle());
-	}
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

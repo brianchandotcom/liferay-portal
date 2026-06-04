@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -29,6 +31,7 @@ import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.LicenseUtil;
 
 import java.io.File;
@@ -59,6 +62,9 @@ import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.matcher.ElementMatchers;
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -68,6 +74,16 @@ import org.osgi.framework.launch.Framework;
  * @author Tina Tian
  */
 public abstract class BaseLicenseTestCase implements Serializable {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
+
+	public static void assume() {
+		Assume.assumeTrue(isReleaseBundle());
+	}
 
 	public static SafeCloseable disableValidateWithSafeCloseable() {
 		return setReturnValueWithSafeCloseable(

@@ -179,16 +179,15 @@ public class CollaboratorUtil {
 			UserLocalService userLocalService)
 		throws Exception {
 
+		Date expirationDate = _getExpirationDate(
+			companyId, configurationProvider);
 		List<SharingEntry> oldSharingEntries =
 			sharingEntryService.getSharingEntries(
 				classNameId, classPK, groupId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
-
 		List<SharingEntry> newSharingEntries = new ArrayList<>();
 		Set<Long> sharingEntryIds = new HashSet<>();
 		Set<Long> ticketIds = new HashSet<>();
-		Date expirationDate = _getExpirationDate(
-			companyId, configurationProvider);
 
 		for (Collaborator collaborator : collaborators) {
 			_validateType(companyId, collaborator.getType());

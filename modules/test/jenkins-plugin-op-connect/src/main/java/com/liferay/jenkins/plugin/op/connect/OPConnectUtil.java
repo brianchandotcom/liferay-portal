@@ -8,47 +8,59 @@ package com.liferay.jenkins.plugin.op.connect;
 import java.util.Collections;
 import java.util.List;
 
+import jenkins.model.Jenkins;
+
 /**
  * @author Michael Hashimoto
  */
 public class OPConnectUtil {
 
 	public static List<String> getIgnoredValues() {
-		if (_opConnectDescriptor == null) {
+		OPConnectDescriptor opConnectDescriptor = _getOPConnectDescriptor();
+
+		if (opConnectDescriptor == null) {
 			return Collections.emptyList();
 		}
 
-		return _opConnectDescriptor.getIgnoredValues();
+		return opConnectDescriptor.getIgnoredValues();
 	}
 
 	public static long getRefreshIntervalMinutes() {
-		if (_opConnectDescriptor == null) {
+		OPConnectDescriptor opConnectDescriptor = _getOPConnectDescriptor();
+
+		if (opConnectDescriptor == null) {
 			return 0;
 		}
 
-		return _opConnectDescriptor.getRefreshIntervalMinutes();
+		return opConnectDescriptor.getRefreshIntervalMinutes();
 	}
 
 	public static List<String> getSecretValues() {
-		if (_opConnectDescriptor == null) {
+		OPConnectDescriptor opConnectDescriptor = _getOPConnectDescriptor();
+
+		if (opConnectDescriptor == null) {
 			return Collections.emptyList();
 		}
 
-		return _opConnectDescriptor.getSecretValues();
+		return opConnectDescriptor.getSecretValues();
 	}
 
 	public static void refreshSecretValues() {
-		if (_opConnectDescriptor != null) {
-			_opConnectDescriptor.refreshSecretValues();
+		OPConnectDescriptor opConnectDescriptor = _getOPConnectDescriptor();
+
+		if (opConnectDescriptor != null) {
+			opConnectDescriptor.refreshSecretValues();
 		}
 	}
 
-	public static void setOPConnectDescriptor(
-		OPConnectDescriptor opConnectDescriptor) {
+	private static OPConnectDescriptor _getOPConnectDescriptor() {
+		Jenkins jenkins = Jenkins.getInstanceOrNull();
 
-		_opConnectDescriptor = opConnectDescriptor;
+		if (jenkins == null) {
+			return null;
+		}
+
+		return jenkins.getDescriptorByType(OPConnectDescriptor.class);
 	}
-
-	private static volatile OPConnectDescriptor _opConnectDescriptor;
 
 }

@@ -57,7 +57,10 @@ export class DisplayPageTemplatesPage {
 
 		await hoverAndExpectToBeVisible({
 			autoClick: true,
-			target: this.page.getByText('Display Page', {exact: true}).nth(1),
+			target: this.page
+				.getByText('Display Page', {exact: true})
+				.filter({visible: true}),
+			timeout: 5000,
 			trigger: this.page.getByRole('menuitem', {name: 'Make a Copy'}),
 		});
 

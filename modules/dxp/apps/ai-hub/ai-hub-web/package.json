@@ -15,7 +15,6 @@
 		"@clayui/progress-bar": "^3.164.0",
 		"@clayui/provider": "^3.164.0",
 		"@clayui/toolbar": "^3.164.0",
-		"@clayui/tooltip": "^3.164.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/object-js-components-web": "*",

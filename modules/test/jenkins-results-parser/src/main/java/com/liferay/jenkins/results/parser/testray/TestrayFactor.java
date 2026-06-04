@@ -24,13 +24,13 @@ public interface TestrayFactor {
 		"factorOptionToFactors"
 	};
 
-	public BaseTestrayFactor.Category getCategory();
+	public Category getCategory();
 
 	public Long getID();
 
 	public JSONObject getJSONObject();
 
-	public BaseTestrayFactor.Option getOption();
+	public Option getOption();
 
 	public TestrayServer getTestrayServer();
 

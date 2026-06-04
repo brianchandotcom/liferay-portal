@@ -562,9 +562,9 @@ public class DynamicQueryEntryTest {
 
 	@Test
 	public void testDynamicQueryWithProjectionReusedProjectionInstance() {
-		Projection projection = ProjectionFactoryUtil.property("name");
-
 		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
+
+		Projection projection = ProjectionFactoryUtil.property("name");
 
 		projectionList.add(projection, "a");
 		projectionList.add(projection, "b");

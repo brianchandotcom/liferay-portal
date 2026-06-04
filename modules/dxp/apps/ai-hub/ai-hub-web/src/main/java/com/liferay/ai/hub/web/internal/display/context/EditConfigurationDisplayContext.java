@@ -8,6 +8,8 @@ package com.liferay.ai.hub.web.internal.display.context;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -22,7 +24,10 @@ import java.util.Map;
 public class EditConfigurationDisplayContext {
 
 	public EditConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		OAuth2ApplicationLocalService oAuth2ApplicationLocalService) {
+
+		_oAuth2ApplicationLocalService = oAuth2ApplicationLocalService;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -44,6 +49,22 @@ public class EditConfigurationDisplayContext {
 		).put(
 			"backURL", DisplayContextUtil.getAIHubURL(_themeDisplay)
 		).put(
+			"clientId",
+			() -> {
+				OAuth2Application oAuth2Application =
+					_oAuth2ApplicationLocalService.
+						fetchOAuth2ApplicationByExternalReferenceCode(
+							accountEntry.getAccountEntryId() +
+								"-ai-hub-oauth2-application",
+							_themeDisplay.getCompanyId());
+
+				if (oAuth2Application == null) {
+					return null;
+				}
+
+				return oAuth2Application.getClientId();
+			}
+		).put(
 			"externalReferenceCode",
 			() -> {
 				if (accountEntry == null) {
@@ -56,6 +77,7 @@ public class EditConfigurationDisplayContext {
 		).build();
 	}
 
+	private final OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -5,13 +5,26 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {Configuration} from '../types/Configuration';
+import {Configuration, Credential} from '../types/Configuration';
 
 const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
 });
+
+async function getCredential() {
+	const response = await fetch('/o/ai-hub/v1.0/credentials', {
+		headers: HEADERS,
+		method: 'GET',
+	});
+
+	if (!response.ok) {
+		throw new Error('Failed to fetch credential');
+	}
+
+	return response.json() as Promise<Credential>;
+}
 
 async function getConfiguration(externalReferenceCode: string) {
 	const response = await fetch(
@@ -51,4 +64,4 @@ async function putConfiguration(
 	return response.json() as Promise<Configuration>;
 }
 
-export {getConfiguration, putConfiguration};
+export {getConfiguration, getCredential, putConfiguration};

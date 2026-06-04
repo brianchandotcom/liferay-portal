@@ -11,6 +11,7 @@ import ClayPanel from '@clayui/panel';
 import {FieldBase} from 'frontend-js-components-web';
 import React from 'react';
 
+import CredentialsPanel from './CredentialsPanel';
 import {useConfigurationForm} from './hooks/useConfigurationForm';
 
 const FORM_ID = 'configurationForm';
@@ -18,10 +19,12 @@ const FORM_ID = 'configurationForm';
 export default function ConfigurationForm({
 	accountEntryId,
 	backURL,
+	clientId,
 	externalReferenceCode,
 }: {
 	accountEntryId: number;
 	backURL: string;
+	clientId?: string;
 	externalReferenceCode: string;
 }) {
 	const {handleSubmit, isSubmitting, loading, setField, values} =
@@ -75,6 +78,14 @@ export default function ConfigurationForm({
 								value={values.recipientEmailAddress}
 							/>
 						</FieldBase>
+
+						{clientId ? (
+							<>
+								<hr className="my-4" />
+
+								<CredentialsPanel clientId={clientId} />
+							</>
+						) : null}
 
 						<div className="mt-4">
 							<Button

@@ -1,0 +1,795 @@
+{
+	"annotations": {
+		"list": [
+			{
+				"builtIn": 1,
+				"datasource": {
+					"type": "grafana",
+					"uid": "-- Grafana --"
+				},
+				"enable": true,
+				"hide": true,
+				"iconColor": "rgba(0, 211, 255, 1)",
+				"name": "Annotations & Alerts",
+				"type": "dashboard"
+			}
+		]
+	},
+	"editable": true,
+	"fiscalYearStartMonth": 0,
+	"graphTooltip": 1,
+	"links": [
+	],
+	"panels": [
+		{
+			"fieldConfig": {
+				"defaults": {
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 5,
+				"w": 24,
+				"x": 0,
+				"y": 0
+			},
+			"id": 1,
+			"options": {
+				"code": {
+					"language": "plaintext",
+					"showLineNumbers": false,
+					"showMiniMap": false
+				},
+				"content": "${HEADER_HTML}",
+				"mode": "html"
+			},
+			"pluginVersion": "12.4.2",
+			"title": "",
+			"transparent": true,
+			"type": "text"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"fixedColor": "purple",
+						"mode": "fixed"
+					},
+					"mappings": [
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							}
+						]
+					},
+					"unit": "reqps"
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 6,
+				"x": 0,
+				"y": 5
+			},
+			"id": 2,
+			"options": {
+				"colorMode": "value",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"percentChangeColorMode": "standard",
+				"reduceOptions": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"fields": "",
+					"values": false
+				},
+				"showPercentChange": false,
+				"textMode": "auto",
+				"wideLayout": true
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"expr": "sum(rate(envoy_http_downstream_rq_total{envoy_http_conn_manager_prefix=\"https-10443\", namespace=\"$environment\"}[$__rate_interval]))",
+					"refId": "A"
+				}
+			],
+			"title": "Request Rate",
+			"type": "stat"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"fixedColor": "orange",
+						"mode": "fixed"
+					},
+					"mappings": [
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							},
+							{
+								"color": "red",
+								"value": 1
+							}
+						]
+					},
+					"unit": "s"
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 6,
+				"x": 6,
+				"y": 5
+			},
+			"id": 3,
+			"options": {
+				"colorMode": "value",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"percentChangeColorMode": "standard",
+				"reduceOptions": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"fields": "",
+					"values": false
+				},
+				"showPercentChange": false,
+				"textMode": "auto",
+				"wideLayout": true
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"expr": "histogram_quantile(0.95, sum(rate(envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix=\"https-10443\", namespace=\"$environment\"}[5m])) by (le)) / 1000",
+					"refId": "A"
+				}
+			],
+			"title": "Latency P95",
+			"type": "stat"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"fixedColor": "green",
+						"mode": "fixed"
+					},
+					"mappings": [
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					},
+					"unit": "Bps"
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 6,
+				"x": 12,
+				"y": 5
+			},
+			"id": 4,
+			"options": {
+				"colorMode": "value",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"percentChangeColorMode": "standard",
+				"reduceOptions": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"fields": "",
+					"values": false
+				},
+				"showPercentChange": false,
+				"textMode": "auto",
+				"wideLayout": true
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"expr": "sum(rate(envoy_http_downstream_cx_rx_bytes_total{namespace=\"$environment\"}[$__rate_interval]))",
+					"refId": "A"
+				}
+			],
+			"title": "Ingress Rate",
+			"type": "stat"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"fixedColor": "blue",
+						"mode": "fixed"
+					},
+					"mappings": [
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					},
+					"unit": "Bps"
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 6,
+				"x": 18,
+				"y": 5
+			},
+			"id": 5,
+			"options": {
+				"colorMode": "value",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"percentChangeColorMode": "standard",
+				"reduceOptions": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"fields": "",
+					"values": false
+				},
+				"showPercentChange": false,
+				"textMode": "auto",
+				"wideLayout": true
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"expr": "sum(rate(envoy_http_downstream_cx_tx_bytes_total{namespace=\"$environment\"}[$__rate_interval]))",
+					"refId": "A"
+				}
+			],
+			"title": "Egress Rate",
+			"type": "stat"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisBorderShow": false,
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"barWidthFactor": 0.6,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"insertNulls": false,
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"showValues": false,
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "HTTP 2xx"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "#10b981",
+									"mode": "fixed"
+								}
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "HTTP 1xx"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "#909090",
+									"mode": "fixed"
+								}
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "HTTP 3xx"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "#00d6ff",
+									"mode": "fixed"
+								}
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "HTTP 4xx"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "#fade2a",
+									"mode": "fixed"
+								}
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "HTTP 5xx"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "#f43f5e",
+									"mode": "fixed"
+								}
+							}
+						]
+					}
+				]
+			},
+			"gridPos": {
+				"h": 10,
+				"w": 12,
+				"x": 0,
+				"y": 9
+			},
+			"id": 6,
+			"options": {
+				"legend": {
+					"calcs": [
+						"mean",
+						"max"
+					],
+					"displayMode": "table",
+					"placement": "right",
+					"showLegend": true
+				},
+				"tooltip": {
+					"hideZeros": false,
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"editorMode": "code",
+					"expr": "sum by (envoy_response_code_class) (rate(envoy_http_downstream_rq_xx{envoy_http_conn_manager_prefix=\"https-10443\", namespace=\"$environment\"}[$__rate_interval])) > 0",
+					"legendFormat": "HTTP {{envoy_response_code_class}}xx",
+					"range": true,
+					"refId": "A"
+				}
+			],
+			"title": "Response Rate by Status Class",
+			"type": "timeseries"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisBorderShow": false,
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"barWidthFactor": 0.6,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"insertNulls": false,
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"showValues": false,
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					},
+					"unit": "ms"
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "P50 Latency"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "green",
+									"mode": "fixed"
+								}
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "P95 Latency"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "orange",
+									"mode": "fixed"
+								}
+							}
+						]
+					}
+				]
+			},
+			"gridPos": {
+				"h": 10,
+				"w": 12,
+				"x": 12,
+				"y": 9
+			},
+			"id": 7,
+			"options": {
+				"legend": {
+					"calcs": [
+						"mean",
+						"max"
+					],
+					"displayMode": "table",
+					"placement": "right",
+					"showLegend": true
+				},
+				"tooltip": {
+					"hideZeros": false,
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"expr": "histogram_quantile(0.95, sum(rate(envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix=\"https-10443\", namespace=\"$environment\"}[5m])) by (le))",
+					"legendFormat": "P95 Latency",
+					"refId": "A"
+				},
+				{
+					"expr": "histogram_quantile(0.50, sum(rate(envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix=\"https-10443\", namespace=\"$environment\"}[5m])) by (le))",
+					"legendFormat": "P50 Latency",
+					"refId": "B"
+				}
+			],
+			"title": "Request Latency Over Time",
+			"type": "timeseries"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisBorderShow": false,
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"barWidthFactor": 0.6,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"insertNulls": false,
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"showValues": false,
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					},
+					"unit": "Bps"
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "TX (Egress)"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "blue",
+									"mode": "fixed"
+								}
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "RX (Ingress)"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "green",
+									"mode": "fixed"
+								}
+							}
+						]
+					}
+				]
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 24,
+				"x": 0,
+				"y": 19
+			},
+			"id": 8,
+			"options": {
+				"legend": {
+					"calcs": [
+						"mean",
+						"max"
+					],
+					"displayMode": "table",
+					"placement": "right",
+					"showLegend": true
+				},
+				"tooltip": {
+					"hideZeros": false,
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"editorMode": "code",
+					"expr": "sum(rate(envoy_http_downstream_cx_rx_bytes_total{envoy_http_conn_manager_prefix=\"https-10443\", namespace=\"$environment\"}[$__rate_interval]))",
+					"legendFormat": "RX (Ingress)",
+					"range": true,
+					"refId": "A"
+				},
+				{
+					"editorMode": "code",
+					"expr": "sum(rate(envoy_http_downstream_cx_tx_bytes_total{envoy_http_conn_manager_prefix=\"https-10443\", namespace=\"$environment\"}[$__rate_interval]))",
+					"legendFormat": "TX (Egress)",
+					"range": true,
+					"refId": "B"
+				}
+			],
+			"title": "Network Throughput",
+			"type": "timeseries"
+		}
+	],
+	"preload": false,
+	"schemaVersion": 42,
+	"tags": [
+		"Liferay",
+		"Load Balancers"
+	],
+	"templating": {
+		"list": [
+			{
+				"current": {
+					"text": "",
+					"value": ""
+				},
+				"datasource": {
+					"type": "prometheus",
+					"uid": "${DS_PROMETHEUS}"
+				},
+				"definition": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
+				"label": "Environment",
+				"name": "environment",
+				"options": [
+				],
+				"query": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
+				"refresh": 1,
+				"regex": "/(?<value>.*-(?<text>.*))/",
+				"regexApplyTo": "value",
+				"sort": 1,
+				"type": "query"
+			}
+		]
+	},
+	"time": {
+		"from": "now-1h",
+		"to": "now"
+	},
+	"timepicker": {
+	},
+	"timezone": "browser",
+	"title": "Load Balancers",
+	"uid": "load-balancers",
+	"version": 1,
+	"weekStart": ""
+}

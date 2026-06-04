@@ -16,6 +16,10 @@ import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.rule.constants.COREntryConstants;
+import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.commerce.order.rule.service.COREntryLocalService;
+import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
@@ -44,11 +48,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -149,6 +155,14 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		if (_accountEntry != null) {
 			_accountEntryLocalService.deleteAccountEntry(_accountEntry);
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetCart() throws Exception {
+		super.testGetCart();
+
+		_testGetCartWithOffendedOrderRule();
 	}
 
 	@Override
@@ -517,6 +531,51 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 					commerceOrder.getStatus());
 			}
 		};
+	}
+
+	private void _testGetCartWithOffendedOrderRule() throws Exception {
+		Cart cart = _createCart();
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			_user.getTimeZone());
+
+		COREntry corEntry = _corEntryLocalService.addCOREntry(
+			RandomTestUtil.randomString(), _user.getUserId(), true,
+			RandomTestUtil.randomString(), calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE), true, RandomTestUtil.randomString(),
+			100, COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT,
+			UnicodePropertiesBuilder.put(
+				COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT,
+				"10000"
+			).put(
+				COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_CURRENCY_CODE,
+				_commerceCurrency.getCode()
+			).buildString(),
+			_serviceContext);
+
+		_corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(), corEntry.getCOREntryId());
+
+		Cart invalidCart = cartResource.getCart(cart.getId());
+
+		Assert.assertFalse(invalidCart.getValid());
+		Assert.assertTrue(ArrayUtil.isNotEmpty(invalidCart.getErrorMessages()));
+
+		Page<Cart> cartsPage = cartResource.getChannelCartsPage(
+			_commerceChannel.getCommerceChannelId(), null, null,
+			Pagination.of(1, 10), null);
+
+		Assert.assertTrue(cartsPage.getTotalCount() > 0);
+
+		for (Cart pageCart : cartsPage.getItems()) {
+			Assert.assertNull(pageCart.getErrorMessages());
+			Assert.assertNull(pageCart.getValid());
+		}
 	}
 
 	private void _testGetChannelCartsPageWithFilter() throws Exception {
@@ -1024,6 +1083,12 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Inject
+	private COREntryLocalService _corEntryLocalService;
+
+	@Inject
+	private COREntryRelLocalService _corEntryRelLocalService;
 
 	@DeleteAfterTestRun
 	private Country _country;

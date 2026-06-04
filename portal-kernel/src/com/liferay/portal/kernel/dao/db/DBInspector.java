@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
@@ -91,7 +92,12 @@ public class DBInspector {
 
 			List<String> names = _getNames(null, "TABLE");
 
-			_tableNamesCache.putIfAbsent(catalog, new HashSet<>(names));
+			Set<String> tableNamesSnapshot = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			tableNamesSnapshot.addAll(names);
+
+			_tableNamesCache.putIfAbsent(catalog, tableNamesSnapshot);
 
 			return names;
 		}

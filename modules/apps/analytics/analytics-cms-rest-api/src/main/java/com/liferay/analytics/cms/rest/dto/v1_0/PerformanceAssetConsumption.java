@@ -1,0 +1,370 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.analytics.cms.rest.dto.v1_0;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
+
+import jakarta.annotation.Generated;
+
+import jakarta.validation.Valid;
+
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+import java.io.Serializable;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Supplier;
+
+/**
+ * @author Rachael Koestartyo
+ * @generated
+ */
+@Generated("")
+@GraphQLName("PerformanceAssetConsumption")
+@JsonFilter("Liferay.Vulcan")
+@XmlRootElement(name = "PerformanceAssetConsumption")
+public class PerformanceAssetConsumption implements Serializable {
+
+	public static PerformanceAssetConsumption toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			PerformanceAssetConsumption.class, json);
+	}
+
+	public static PerformanceAssetConsumption unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			PerformanceAssetConsumption.class, json);
+	}
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public PerformanceAssetConsumptionItem[]
+		getPerformanceAssetConsumptionItems() {
+
+		if (_performanceAssetConsumptionItemsSupplier != null) {
+			performanceAssetConsumptionItems =
+				_performanceAssetConsumptionItemsSupplier.get();
+
+			_performanceAssetConsumptionItemsSupplier = null;
+		}
+
+		return performanceAssetConsumptionItems;
+	}
+
+	public void setPerformanceAssetConsumptionItems(
+		PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems) {
+
+		this.performanceAssetConsumptionItems =
+			performanceAssetConsumptionItems;
+
+		_performanceAssetConsumptionItemsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPerformanceAssetConsumptionItems(
+		UnsafeSupplier<PerformanceAssetConsumptionItem[], Exception>
+			performanceAssetConsumptionItemsUnsafeSupplier) {
+
+		_performanceAssetConsumptionItemsSupplier = () -> {
+			try {
+				return performanceAssetConsumptionItemsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected PerformanceAssetConsumptionItem[]
+		performanceAssetConsumptionItems;
+
+	@JsonIgnore
+	private Supplier<PerformanceAssetConsumptionItem[]>
+		_performanceAssetConsumptionItemsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getPerformanceAssetConsumptionItemsCount() {
+		if (_performanceAssetConsumptionItemsCountSupplier != null) {
+			performanceAssetConsumptionItemsCount =
+				_performanceAssetConsumptionItemsCountSupplier.get();
+
+			_performanceAssetConsumptionItemsCountSupplier = null;
+		}
+
+		return performanceAssetConsumptionItemsCount;
+	}
+
+	public void setPerformanceAssetConsumptionItemsCount(
+		Long performanceAssetConsumptionItemsCount) {
+
+		this.performanceAssetConsumptionItemsCount =
+			performanceAssetConsumptionItemsCount;
+
+		_performanceAssetConsumptionItemsCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPerformanceAssetConsumptionItemsCount(
+		UnsafeSupplier<Long, Exception>
+			performanceAssetConsumptionItemsCountUnsafeSupplier) {
+
+		_performanceAssetConsumptionItemsCountSupplier = () -> {
+			try {
+				return performanceAssetConsumptionItemsCountUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long performanceAssetConsumptionItemsCount;
+
+	@JsonIgnore
+	private Supplier<Long> _performanceAssetConsumptionItemsCountSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getTotalCount() {
+		if (_totalCountSupplier != null) {
+			totalCount = _totalCountSupplier.get();
+
+			_totalCountSupplier = null;
+		}
+
+		return totalCount;
+	}
+
+	public void setTotalCount(Long totalCount) {
+		this.totalCount = totalCount;
+
+		_totalCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTotalCount(
+		UnsafeSupplier<Long, Exception> totalCountUnsafeSupplier) {
+
+		_totalCountSupplier = () -> {
+			try {
+				return totalCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long totalCount;
+
+	@JsonIgnore
+	private Supplier<Long> _totalCountSupplier;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof PerformanceAssetConsumption)) {
+			return false;
+		}
+
+		PerformanceAssetConsumption performanceAssetConsumption =
+			(PerformanceAssetConsumption)object;
+
+		return Objects.equals(
+			toString(), performanceAssetConsumption.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBundler sb = new StringBundler();
+
+		sb.append("{");
+
+		PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems =
+			getPerformanceAssetConsumptionItems();
+
+		if (performanceAssetConsumptionItems != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"performanceAssetConsumptionItems\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < performanceAssetConsumptionItems.length; i++) {
+				sb.append(String.valueOf(performanceAssetConsumptionItems[i]));
+
+				if ((i + 1) < performanceAssetConsumptionItems.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		Long performanceAssetConsumptionItemsCount =
+			getPerformanceAssetConsumptionItemsCount();
+
+		if (performanceAssetConsumptionItemsCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"performanceAssetConsumptionItemsCount\": ");
+
+			sb.append(performanceAssetConsumptionItemsCount);
+		}
+
+		Long totalCount = getTotalCount();
+
+		if (totalCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalCount\": ");
+
+			sb.append(totalCount);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+		defaultValue = "com.liferay.analytics.cms.rest.dto.v1_0.PerformanceAssetConsumption",
+		name = "x-class-name"
+	)
+	public String xClassName;
+
+	private static String _escape(Object object) {
+		return StringUtil.replace(
+			String.valueOf(object), _JSON_ESCAPE_STRINGS[0],
+			_JSON_ESCAPE_STRINGS[1]);
+	}
+
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		@SuppressWarnings("unchecked")
+		Set set = map.entrySet();
+
+		@SuppressWarnings("unchecked")
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(_escape(entry.getKey()));
+			sb.append("\": ");
+
+			Object value = entry.getValue();
+
+			if (_isArray(value)) {
+				sb.append("[");
+
+				Object[] valueArray = (Object[])value;
+
+				for (int i = 0; i < valueArray.length; i++) {
+					if (valueArray[i] instanceof Map) {
+						sb.append(_toJSON((Map<String, ?>)valueArray[i]));
+					}
+					else if (valueArray[i] instanceof String) {
+						sb.append("\"");
+						sb.append(valueArray[i]);
+						sb.append("\"");
+					}
+					else {
+						sb.append(valueArray[i]);
+					}
+
+					if ((i + 1) < valueArray.length) {
+						sb.append(", ");
+					}
+				}
+
+				sb.append("]");
+			}
+			else if (value instanceof Map) {
+				sb.append(_toJSON((Map<String, ?>)value));
+			}
+			else if (value instanceof String) {
+				sb.append("\"");
+				sb.append(_escape(value));
+				sb.append("\"");
+			}
+			else {
+				sb.append(value);
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static final String[][] _JSON_ESCAPE_STRINGS = {
+		{"\\", "\"", "\b", "\f", "\n", "\r", "\t"},
+		{"\\\\", "\\\"", "\\b", "\\f", "\\n", "\\r", "\\t"}
+	};
+
+	private Map<String, Serializable> _extendedProperties;
+
+}
+// LIFERAY-REST-BUILDER-HASH:-1757778872

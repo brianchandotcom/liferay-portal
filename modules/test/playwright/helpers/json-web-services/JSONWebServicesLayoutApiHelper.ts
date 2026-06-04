@@ -40,6 +40,7 @@ export class JSONWebServicesLayoutApiHelper {
 		parentLayoutId = '0',
 		privateLayout = 'false',
 		title,
+		typeSettings = '',
 	}: {
 		externalReferenceCode?: string;
 		groupId: string;
@@ -48,6 +49,7 @@ export class JSONWebServicesLayoutApiHelper {
 		parentLayoutId?: string;
 		privateLayout?: string;
 		title: string;
+		typeSettings?: string;
 	}): Promise<Layout> {
 		if (options.publish && options.type !== 'content') {
 			throw new TypeError(
@@ -75,7 +77,7 @@ export class JSONWebServicesLayoutApiHelper {
 		urlSearchParams.append('keywordsMap', JSON.stringify({en_US: ''}));
 		urlSearchParams.append('robotsMap', JSON.stringify({en_US: ''}));
 		urlSearchParams.append('type', options.type);
-		urlSearchParams.append('typeSettings', '');
+		urlSearchParams.append('typeSettings', typeSettings);
 		urlSearchParams.append('hidden', 'false');
 		urlSearchParams.append(
 			'friendlyURLMap',

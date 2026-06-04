@@ -53,13 +53,13 @@ describe('Liferay.Portal.Tabs.applyTabSelectionDOMChanges', () => {
 		document.body.innerHTML = `
 			<div>
 				<div id="${ids[0]}TabsId">
-					<a class="active">First</a>
+					<a aria-selected="true" class="active">First</a>
 				</div>
 				<div id="${ids[1]}TabsId">
-					<a><b>Second</b></a>
+					<a aria-selected="false"><b>Second</b></a>
 				</div>
 				<div id="${ids[2]}TabsId">
-					<a>Third</a>
+					<a aria-selected="false">Third</a>
 				</div>
 			<div>
 			<div>
@@ -85,6 +85,9 @@ describe('Liferay.Portal.Tabs.applyTabSelectionDOMChanges', () => {
 		expect(link1.classList.contains('active')).toBe(false);
 		expect(link2.classList.contains('active')).toBe(true);
 		expect(link3.classList.contains('active')).toBe(false);
+
+		expect(link1.getAttribute('aria-selected')).toBe('false');
+		expect(link2.getAttribute('aria-selected')).toBe('true');
 
 		const section1 = document.getElementById(`${ids[0]}TabsSection`);
 		const section2 = document.getElementById(`${ids[1]}TabsSection`);

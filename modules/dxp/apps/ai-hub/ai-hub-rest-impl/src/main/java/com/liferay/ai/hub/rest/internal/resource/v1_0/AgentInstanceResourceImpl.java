@@ -5,33 +5,24 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
+import com.liferay.ai.hub.agent.AgentContext;
+import com.liferay.ai.hub.agent.DefaultAgent;
 import com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.dto.v1_0.AgentInstance;
+import com.liferay.ai.hub.rest.dto.v1_0.Variable;
 import com.liferay.ai.hub.rest.internal.util.OAuth2ApplicationIdResolverUtil;
 import com.liferay.ai.hub.rest.manager.v1_0.AgentDefinitionManager;
 import com.liferay.ai.hub.rest.resource.v1_0.AgentInstanceResource;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.ai.hub.util.AccountEntryUtil;
-import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseEventSink;
-
-import java.io.Serializable;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,62 +68,44 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 					contextUser),
 				agentInstance.getAgentDefinitionExternalReferenceCode());
 
-		WorkflowDefinition workflowDefinition =
-			_workflowDefinitionManager.getLatestWorkflowDefinition(
-				contextCompany.getCompanyId(),
-				agentDefinition.getWorkflowDefinitionName());
-
-		Map<String, Serializable> workflowContext =
-			HashMapBuilder.<String, Serializable>put(
-				WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
-				ServiceContextFactory.getInstance(contextHttpServletRequest)
-			).put(
-				"agentDefinitionExternalReferenceCode",
+		long workflowInstanceId = _defaultAgent.invoke(
+			AgentContext.builder(
+			).agentDefinitionExternalReferenceCode(
 				agentDefinition.getExternalReferenceCode()
-			).put(
-				"instructionDefinitionScope",
+			).companyId(
+				contextCompany.getCompanyId()
+			).groupId(
+				AccountEntryUtil.getUserAccountEntryGroupId(
+					contextUser.getUserId())
+			).input(
+				agentInstance.getContext()
+			).inputVariableNames(
+				transformToList(
+					agentDefinition.getInputVariables(), Variable::getName)
+			).instructionDefinitionScope(
 				agentInstance.getInstructionDefinitionScopeAsString()
-			).put(
-				"oAuth2ApplicationId",
+			).oAuth2ApplicationId(
 				OAuth2ApplicationIdResolverUtil.resolve(
 					contextHttpServletRequest)
-			).put(
-				"outBoundEventName", agentDefinition.getExternalReferenceCode()
-			).put(
-				"sseEventSinkKey", agentInstance.getSseEventSinkKey()
-			).put(
-				"userToken",
-				_encryptor.encrypt(
-					contextCompany.getKeyObj(),
-					contextHttpServletRequest.getHeader(
-						"Liferay-AI-Hub-Cell-On-Behalf-Of"))
-			).build();
-
-		MapUtil.isNotEmptyForEach(
-			agentInstance.getContext(),
-			(key, value) -> {
-				if ((value instanceof Serializable serializableValue) &&
-					!workflowContext.containsKey(key)) {
-
-					workflowContext.put(key, serializableValue);
-				}
-			});
-
-		WorkflowInstance workflowInstance =
-			_workflowInstanceManager.startWorkflowInstance(
-				contextCompany.getCompanyId(),
-				AccountEntryUtil.getUserAccountEntryGroupId(
-					contextUser.getUserId()),
-				contextUser.getUserId(), workflowDefinition.getName(),
-				workflowDefinition.getVersion(), null, workflowContext);
+			).serviceContext(
+				ServiceContextFactory.getInstance(contextHttpServletRequest)
+			).sseEventSinkKey(
+				agentInstance.getSseEventSinkKey()
+			).userId(
+				contextUser.getUserId()
+			).userToken(
+				contextHttpServletRequest.getHeader(
+					"Liferay-AI-Hub-Cell-On-Behalf-Of")
+			).workflowDefinitionName(
+				agentDefinition.getWorkflowDefinitionName()
+			).build());
 
 		return new AgentInstance() {
 			{
 				setAgentDefinitionExternalReferenceCode(
 					agentDefinition::getExternalReferenceCode);
 				setExternalReferenceCode(
-					() -> String.valueOf(
-						workflowInstance.getWorkflowInstanceId()));
+					() -> String.valueOf(workflowInstanceId));
 			}
 		};
 	}
@@ -141,18 +114,12 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 	private AgentDefinitionManager _agentDefinitionManager;
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	private DefaultAgent _defaultAgent;
 
 	@Reference
-	private Encryptor _encryptor;
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Context
 	private Sse _sse;
-
-	@Reference
-	private WorkflowDefinitionManager _workflowDefinitionManager;
-
-	@Reference
-	private WorkflowInstanceManager _workflowInstanceManager;
 
 }

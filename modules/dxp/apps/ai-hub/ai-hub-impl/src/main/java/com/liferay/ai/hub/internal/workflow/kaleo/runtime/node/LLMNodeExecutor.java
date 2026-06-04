@@ -13,7 +13,7 @@ import com.liferay.ai.hub.internal.langchain4j.observability.api.listener.Output
 import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
 import com.liferay.ai.hub.internal.model.VertexAiGeminiUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.GuardrailsUtil;
-import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.KaleoLogUtil;
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.MessageUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.PromptUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.QuotaUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.RetrievalAugmentorUtil;
@@ -107,12 +107,6 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				kaleoNodeSetting.getName(), kaleoNodeSetting.getValue());
 		}
 
-		String prompt = PromptUtil.composePrompt(
-			kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
-			executionContext, kaleoNodeSettingValues, _objectEntryManager);
-		String userMessage = VariablesUtil.applyInputVariables(
-			executionContext, "userMessage", kaleoNodeSettingValues);
-
 		ServiceContext serviceContext = executionContext.getServiceContext();
 
 		Map<String, Serializable> workflowContext =
@@ -120,8 +114,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 		if (QuotaUtil.hasExceededQuota(
 				serviceContext.getCompanyId(), currentKaleoNode.getName(),
-				_quotaManager, prompt + "\n" + userMessage,
-				serviceContext.getUserId(), workflowContext,
+				_quotaManager, serviceContext.getUserId(), workflowContext,
 				kaleoInstanceToken.getKaleoInstanceId())) {
 
 			return;
@@ -133,6 +126,12 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 		AtomicReference<ChatResponse> chatResponseAtomicReference =
 			new AtomicReference<>();
+
+		String prompt = PromptUtil.composePrompt(
+			kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
+			executionContext, kaleoNodeSettingValues, _objectEntryManager);
+		String userMessage = VariablesUtil.applyInputVariables(
+			executionContext, "userMessage", kaleoNodeSettingValues);
 
 		Callable<Void> completeResponseCallable =
 			new CompanyInheritableThreadLocalCallable<>(
@@ -275,8 +274,8 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		KaleoLogUtil.addNodeUsageKaleoLog(
-			chatResponse, kaleoInstanceToken, aiMessage.text(), prompt,
+		MessageUtil.sendMessage(
+			chatResponse, kaleoInstanceToken, prompt,
 			executionContext.getServiceContext(), userMessage);
 
 		List<KaleoTransition> kaleoTransitions =

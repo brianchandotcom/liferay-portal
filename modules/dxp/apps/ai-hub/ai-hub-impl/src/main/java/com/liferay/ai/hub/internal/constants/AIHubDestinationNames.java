@@ -10,6 +10,9 @@ package com.liferay.ai.hub.internal.constants;
  */
 public class AIHubDestinationNames {
 
+	public static final String AI_HUB_AGENT_INSTANCE =
+		"liferay/ai_hub_agent_instance";
+
 	public static final String AI_HUB_CONTENT_RETRIEVER =
 		"liferay/ai_hub_content_retriever";
 

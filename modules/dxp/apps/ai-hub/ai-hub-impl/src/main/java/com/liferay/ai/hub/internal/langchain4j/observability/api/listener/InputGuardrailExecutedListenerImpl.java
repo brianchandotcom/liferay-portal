@@ -37,21 +37,13 @@ public class InputGuardrailExecutedListenerImpl
 			return;
 		}
 
-		completeExceptionally();
-
 		InputGuardrailRequest inputGuardrailRequest =
 			inputGuardrailExecutedEvent.request();
 
 		UserMessage userMessage = inputGuardrailRequest.userMessage();
 
-		String content = userMessage.singleText();
-
-		if (content.length() > 200) {
-			content = content.substring(0, 200);
-		}
-
-		route(
-			content, inputGuardrailExecutedEvent.duration(),
+		completeExceptionally(
+			userMessage.singleText(), inputGuardrailExecutedEvent.duration(),
 			inputGuardrailResult, "input");
 	}
 

@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.internal.agent.util;
 
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -23,33 +24,26 @@ import java.util.concurrent.TimeUnit;
  */
 public class AgentUtil {
 
-	public static void complete(
-		Map<String, Serializable> workflowContext, long workflowInstanceId) {
-
+	public static void complete(Message message) {
 		CompletableFuture<Map<String, Serializable>> completableFuture =
-			_completableFutures.get(workflowInstanceId);
+			_completableFutures.remove(message.getLong("workflowInstanceId"));
 
-		if (completableFuture == null) {
-			return;
+		if (completableFuture != null) {
+			completableFuture.complete(
+				(Map<String, Serializable>)message.get("workflowContext"));
 		}
-
-		completableFuture.complete(workflowContext);
 	}
 
-	public static void completeExceptionally(
-		Exception exception, long workflowInstanceId) {
-
+	public static void completeExceptionally(Message message) {
 		CompletableFuture<Map<String, Serializable>> completableFuture =
-			_completableFutures.get(workflowInstanceId);
+			_completableFutures.remove(message.getLong("workflowInstanceId"));
 
-		if (completableFuture == null) {
-			return;
+		if (completableFuture != null) {
+			completableFuture.complete(
+				HashMapBuilder.<String, Serializable>put(
+					"exception", (Exception)message.get("exception")
+				).build());
 		}
-
-		completableFuture.complete(
-			HashMapBuilder.<String, Serializable>put(
-				"exception", exception
-			).build());
 	}
 
 	public static String getOutput(WorkflowInstance workflowInstance)

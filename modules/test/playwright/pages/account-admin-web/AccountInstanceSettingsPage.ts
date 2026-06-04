@@ -50,7 +50,9 @@ export class AccountInstanceSettingsPage {
 		}
 
 		await this.allowedAccountTypesCombobox.click();
-		await this.allowedAccountTypeOption(allowedType).click();
+		await this.allowedAccountTypeOption(allowedType).click({force: true});
+
+		await this.page.keyboard.press('Escape');
 
 		await this.siteSettingsPage.saveConfiguration();
 	}

@@ -24,20 +24,7 @@ jobs:
             -   name: Lint chart
                 run: helm lint "cloud/helm/${{matrix.chart}}"
             -   name: Render and validate manifests
-                run: |
-                    set -o errexit
-                    set -o nounset
-                    set -o pipefail
-
-                    function main {
-                        helm template liferay "cloud/helm/${{matrix.chart}}" | \
-                            kubeconform --strict --summary \
-                                -schema-location default \
-                                -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
-                                -skip ClusterProviderConfig,LiferayInfrastructure
-                    }
-
-                    main "${@}"
+                run: cloud/scripts/tests/render_helm_manifests.sh
             -   name: Run unit tests
                 run: cloud/scripts/tests/run_helm_tests.sh
             -   name: Upload test reports

@@ -82,7 +82,7 @@ resource "kubernetes_manifest" "argocd_gateway_proxy_config" {
 					envoyDeployment={
 						pod={
 							annotations={
-								"eks.amazonaws.com/role-arn"=data.aws_iam_role.envoy_proxy_role.arn
+								"eks.amazonaws.com/role-arn"=local.envoy_proxy_role_arn
 							}
 						}
 						replicas=2

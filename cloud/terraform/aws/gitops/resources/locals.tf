@@ -1,5 +1,6 @@
 locals {
 	account_id=data.aws_caller_identity.current.account_id
+	alloy_role_arn=var.observability_config.enabled ? "arn:aws:iam::${local.account_id}:role/${var.deployment_name}-alloy" : ""
 	argocd_external_url=var.argocd_domain_config.hostname == null ? "" : "${local.argocd_tls_enabled ? "https" : "http"}://${var.argocd_domain_config.hostname}"
 	argocd_gateway_class_name="argocd-gateway-class"
 	argocd_gateway_name="argocd-gateway"
@@ -73,6 +74,7 @@ locals {
 	EOT
 	ecr_credentials_sync_serviceaccount_name="ecr-credentials-sync-sa"
 	eks_endpoint_cidrs=[for s in data.aws_subnet.private : s.cidr_block]
+	envoy_proxy_role_arn="arn:aws:iam::${local.account_id}:role/${var.deployment_name}-envoy-proxy"
 	gateway_class_name="liferay-gateway-class"
 	gateway_name="${var.infrastructure_git_repo_config.target.slugProjectId}-${var.infrastructure_git_repo_config.target.slugEnvironmentId}-gateway"
 	git_repo_auth_configs=merge(
@@ -91,6 +93,7 @@ locals {
 				})
 		})
 	git_repo_infrastructure_separate_from_liferay=local.infrastructure_git_repo_url != var.liferay_git_repo_url
+	grafana_role_arn=var.observability_config.enabled ? "arn:aws:iam::${local.account_id}:role/${var.deployment_name}-grafana" : ""
 	infrastructure_appproject_name="liferay-infrastructure"
 	infrastructure_git_repo_url=coalesce(var.infrastructure_git_repo_config.url, var.liferay_git_repo_url)
 	liferay_appproject_name="liferay-application"
@@ -119,8 +122,10 @@ locals {
 		} : {},
 	)
 	liferay_namespace_pattern="liferay-*"
+	liferay_service_account_role_arn="arn:aws:iam::${local.account_id}:role/${local.liferay_service_account_role_name}"
 	liferay_service_account_role_name="${var.deployment_name}-irsa"
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
+	rds_exporter_role_arn=var.observability_config.enabled ? "arn:aws:iam::${local.account_id}:role/${var.deployment_name}-rds-exporter" : ""
 	secret_prefixes={
 		certificates="liferay/certificates/"
 		credentials="liferay/credentials/"

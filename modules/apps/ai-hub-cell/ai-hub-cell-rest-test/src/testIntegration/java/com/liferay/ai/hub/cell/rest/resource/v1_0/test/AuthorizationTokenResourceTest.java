@@ -81,6 +81,8 @@ public class AuthorizationTokenResourceTest
 			).put(
 				"clientSecret", oAuth2Application.getClientSecret()
 			).put(
+				"companyId", user.getCompanyId()
+			).put(
 				"serviceURL", portalURL
 			).build());
 

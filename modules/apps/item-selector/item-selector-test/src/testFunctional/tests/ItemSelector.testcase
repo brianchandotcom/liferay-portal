@@ -231,241 +231,6 @@ definition {
 			viewNoLocationInfo = "Site Name");
 	}
 
-	// Ignored until LPS-159228 implemented
-
-	@description = "This test ensures that web content using a structure can be filtered from the current depot."
-	@ignore = "true"
-	@priority = 5
-	@refactordone
-	test CanFilterCustomWCFromCurrentDepot {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-		WebContent.addWithStructureCP(
-			structureName = "WC Structure Name",
-			webContentText = "Text",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		JSONAssetlist.addManualAssetListEntryWithItemType(
-			groupName = "Test Depot Name",
-			itemSubtype = "WC Structure Name",
-			itemType = "Web Content Article",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		ItemSelector.viewFilteredResultsViaAssetLists(
-			assetListName = "Depot Manual Asset List",
-			assetTitle = "Web Content Title",
-			assetType = "WC Structure Name",
-			itemSubtype = "WC Structure Name",
-			itemType = "Web Content Article");
-	}
-
-	// Ignored until LPS-159228 implemented
-
-	@description = "This test ensures that a document folder can be filtered from the current depot."
-	@ignore = "true"
-	@priority = 5
-	@refactordone
-	test CanFilterDMFolderFromCurrentDepot {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Test Depot Name");
-
-		JSONAssetlist.addManualAssetListEntryWithItemType(
-			groupName = "Test Depot Name",
-			itemType = "Documents Folder",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		ItemSelector.viewFilteredResultsViaAssetLists(
-			assetListName = "Depot Manual Asset List",
-			assetTitle = "DM Folder Name",
-			assetType = "Documents Folder",
-			itemType = "Documents Folder");
-	}
-
-	// Ignored until LPS-159228 implemented
-
-	@description = "This test ensures that a document can be filtered from the current depot."
-	@ignore = "true"
-	@priority = 5
-	@refactordone
-	test CanFilterImageFromCurrentDepot {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpeg",
-			groupName = "Test Depot Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpeg");
-
-		JSONAssetlist.addManualAssetListEntryWithItemType(
-			groupName = "Test Depot Name",
-			itemSubtype = "Basic Document",
-			itemType = "Document",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		ItemSelector.viewFilteredResultsViaAssetLists(
-			assetListName = "Depot Manual Asset List",
-			assetTitle = "Document_1.jpeg",
-			assetType = "Basic Document",
-			itemSubtype = "Basic Document",
-			itemType = "Document");
-	}
-
-	// Ignored until LPS-159228 implemented
-
-	@description = "This test ensures that web contents can filter by the current site in the item selector."
-	@ignore = "true"
-	@priority = 5
-	@refactordone
-	test CanFilterWCByCurrentSite {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Web Content Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Site Name",
-			layoutName = "Web Content Display Page",
-			widgetName = "Web Content Display");
-
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content From Depot",
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Web Content From Depot");
-
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content From Site",
-			groupName = "Site Name",
-			title = "Web Content From Site");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Site Name");
-
-		WebContentDisplayPortlet.gotoSelectWebContent();
-
-		ItemSelector.viewWCCurrentSiteFilterResults(
-			noWebContentTitle = "Web Content From Depot",
-			viewNoLocationInfo = "Site Name",
-			webContentTitle = "Web Content From Site");
-	}
-
-	// Ignored until LPS-159228 implemented
-
-	@description = "This test ensures that the web content folder can be filtered from the current depot."
-	@ignore = "true"
-	@priority = 5
-	@refactordone
-	test CanFilterWCFolderFromCurrentDepot {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONWebcontent.addFolder(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name",
-			groupName = "Test Depot Name",
-			site = "false");
-
-		JSONAssetlist.addManualAssetListEntryWithItemType(
-			groupName = "Test Depot Name",
-			itemType = "Web Content Folder",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		ItemSelector.viewFilteredResultsViaAssetLists(
-			assetListName = "Depot Manual Asset List",
-			assetTitle = "WC Folder Name",
-			assetType = "Web Content Folder",
-			itemType = "Web Content Folder");
-	}
-
-	// Ignored until LPS-159228 implemented
-
-	@description = "This test ensures that web content can be filtered from the current depot."
-	@ignore = "true"
-	@priority = 5
-	@refactordone
-	test CanFilterWCFromCurrentDepot {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "WC WebContent Title");
-
-		JSONAssetlist.addManualAssetListEntryWithItemType(
-			groupName = "Test Depot Name",
-			itemSubtype = "Basic Web Content",
-			itemType = "Web Content Article",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		ItemSelector.viewFilteredResultsViaAssetLists(
-			assetListName = "Depot Manual Asset List",
-			assetTitle = "WC WebContent Title",
-			assetType = "Basic Web Content",
-			itemSubtype = "Basic Web Content",
-			itemType = "Web Content Article");
-	}
-
 	@description = "This ensures that a message is displayed in the preview section of the item selector when pasting an invalid URL."
 	@priority = 5
 	@refactordone
@@ -936,167 +701,6 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 	}
 
-	// Ignored until LPS-159228 implemented
-
-	@description = "This test covers LPS-119553. It ensures that the assets in the connected site can not be filtered out after navigating to the depot through the breadcrumb."
-	@ignore = "true"
-	@priority = 4
-	@refactordone
-	test CanViewCorrectFilterResultsInSpecificBreadcrumb {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Web Content Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Site Name",
-			layoutName = "Web Content Display Page",
-			widgetName = "Web Content Display");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Depot",
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "WC WebContent From Depot");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Site",
-			groupName = "Site Name",
-			title = "WC WebContent From Site");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Site Name");
-
-		WebContentDisplayPortlet.gotoSelectWebContent(depotName = "Test Depot Name");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Everywhere");
-
-		AssertElementPresent(
-			key_filterScope = "Scope: Everywhere",
-			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
-
-		LexiconEntry.viewEntryName(rowEntry = "WC WebContent From Depot");
-
-		LexiconEntry.viewNoEntry(rowEntry = "WC WebContent From Site");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Current Asset Library");
-
-		AssertElementNotPresent(
-			key_filterScope = "Scope: Current Asset Library",
-			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
-
-		LexiconEntry.viewEntryName(rowEntry = "WC WebContent From Depot");
-
-		LexiconEntry.viewNoEntry(rowEntry = "WC WebContent From Site");
-	}
-
-	@description = "The user should see horizontal nav tabs when less than and equal 5 nav items appear on item selector modal."
-	@priority = 4
-	test HorizontalNavItemsShowsWhenNotMoreThan5Items {
-		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.document.library.item.selector.web\" ]";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Content Display");
-
-		PageEditor.editContentDisplay(
-			fragmentName = "Content Display",
-			navItemStyle = "horizontal",
-			navTab = "Web Content");
-
-		OSGiConfig.deployOSGiConfigFile(
-			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
-			osgiConfigs = "blacklistBundleSymbolicNames=[\"com.liferay.knowledge.base.web\" ]");
-
-		OSGiConfig.waitForOSGiConfig();
-
-		WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.knowledge.base.web");
-
-		Navigator.openURL();
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Site Name");
-
-		PageEditor.editContentDisplay(
-			fragmentName = "Content Display",
-			navItemStyle = "horizontal",
-			navTab = "Web Content");
-	}
-
-	// Ignored until LPS-159228 implemented
-
-	@description = "This ensures that the location info of depot web content can be viewed through WCD on a connected site."
-	@ignore = "true"
-	@priority = 4
-	@refactordone
-	test CanViewCorrectWCLocationInfo {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Depot Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Web Content Display");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Depot",
-			groupName = "Depot Name",
-			site = "false",
-			title = "WC WebContent From Depot");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Site",
-			groupName = "Site Name",
-			title = "WC WebContent From Site");
-
-		JSONDepot.connectSite(
-			depotName = "Depot Name",
-			groupName = "Site Name");
-
-		for (var localization : list "Depot,Site") {
-			Navigator.gotoSitePage(
-				pageName = "Page Name",
-				siteName = "Site Name");
-
-			ItemSelector.viewLocationInfoViaWCD(
-				locationName = "${localization} Name",
-				titleList = "WC WebContent From ${localization}");
-		}
-	}
-
 	@description = "This ensures that the location info of the documents can be viewed through Blogs on a connected site."
 	@priority = 4
 	@refactordone
@@ -1434,6 +1038,54 @@ definition {
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		Pagination.viewResults(results = "Showing 21 to 30 of 30 entries.");
+	}
+
+	@description = "The user should see horizontal nav tabs when less than and equal 5 nav items appear on item selector modal."
+	@priority = 4
+	test HorizontalNavItemsShowsWhenNotMoreThan5Items {
+		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.document.library.item.selector.web\" ]";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			fragmentName = "Content Display",
+			navItemStyle = "horizontal",
+			navTab = "Web Content");
+
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"com.liferay.knowledge.base.web\" ]");
+
+		OSGiConfig.waitForOSGiConfig();
+
+		WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.knowledge.base.web");
+
+		Navigator.openURL();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.editContentDisplay(
+			fragmentName = "Content Display",
+			navItemStyle = "horizontal",
+			navTab = "Web Content");
 	}
 
 	@description = "This is a test for LPS-136945. It checks that only 'File Upload', 'Folder', and 'External Video Shortcut' options appear when adding a document."

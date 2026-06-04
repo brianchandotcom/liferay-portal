@@ -36,10 +36,6 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
-jest.mock('shared/components/dropdown-range-key/DropdownRangeKey', () => ({
-	DropdownRangeKey: () => null
-}));
-
 jest.mock('../IndividualsList', () => ({
 	__esModule: true,
 	default: () => null

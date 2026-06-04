@@ -134,15 +134,14 @@ public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
 		Assert.assertNotNull(excludedSiteExternalReferenceCode);
 		Assert.assertNotNull(includedSiteExternalReferenceCode);
 
-		Page<SiteTemplate> filteredSiteTemplatesPage =
-			siteTemplateResource.getSiteTemplatesPage(
-				true, new String[] {excludedSiteExternalReferenceCode},
-				Pagination.of(1, 100));
+		siteTemplatesPage = siteTemplateResource.getSiteTemplatesPage(
+			true, new String[] {excludedSiteExternalReferenceCode},
+			Pagination.of(1, 100));
 
 		boolean excludedSiteTemplateFound = false;
 		boolean includedSiteTemplateFound = false;
 
-		for (SiteTemplate siteTemplate : filteredSiteTemplatesPage.getItems()) {
+		for (SiteTemplate siteTemplate : siteTemplatesPage.getItems()) {
 			String siteExternalReferenceCode =
 				siteTemplate.getSiteExternalReferenceCode();
 

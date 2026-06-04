@@ -37,8 +37,10 @@ function isGroup(
 	return 'items' in item;
 }
 
-function parseInitialOrderByColumn(value: string): OrderBySelection {
-	if (value.startsWith('{')) {
+function parseInitialOrderByColumn(
+	value: string | null | undefined
+): OrderBySelection {
+	if (value && value.startsWith('{')) {
 		try {
 			const parsed = JSON.parse(value);
 
@@ -60,7 +62,7 @@ function parseInitialOrderByColumn(value: string): OrderBySelection {
 	return {
 		classNameId: undefined,
 		classTypeId: undefined,
-		name: value,
+		name: value || '',
 	};
 }
 
@@ -148,7 +150,7 @@ function OrderByField({
 				name={columnName}
 				type="hidden"
 				value={
-					columnValue.classNameId && columnValue.classTypeId
+					columnValue.classNameId !== undefined
 						? JSON.stringify(columnValue)
 						: columnValue.name
 				}

@@ -30,5 +30,5 @@ export default function useTypeProperties(
 		[atomProperties]
 	);
 
-	return cloned.length ? cloned : initialValue;
+	return cloned && cloned.length ? cloned : initialValue || [];
 }

@@ -479,6 +479,11 @@ public class DDMIndexerImplTest {
 						return null;
 					}
 
+					@Override
+					public boolean isInferenceAPISupported() {
+						return false;
+					}
+
 				};
 			}
 		};

@@ -8584,6 +8584,10 @@ information. Make sure to commit in all format-javadoc results.
 	</target>
 
 	<target name="integration-license-postgresql163">
+		<local name="test.deploy.license" />
+
+		<property name="test.deploy.license" value="false" />
+
 		<run-modules-integration-test
 			database.type="postgresql"
 			database.version="16.3"

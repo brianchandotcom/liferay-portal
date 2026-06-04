@@ -6,7 +6,7 @@
 package com.liferay.ai.hub.rest.client.dto.v1_0;
 
 import com.liferay.ai.hub.rest.client.function.UnsafeSupplier;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.ModelArmorTemplateSerDes;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.GuardrailSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -20,10 +20,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class ModelArmorTemplate implements Cloneable, Serializable {
+public class Guardrail implements Cloneable, Serializable {
 
-	public static ModelArmorTemplate toDTO(String json) {
-		return ModelArmorTemplateSerDes.toDTO(json);
+	public static Guardrail toDTO(String json) {
+		return GuardrailSerDes.toDTO(json);
 	}
 
 	public Boolean getActive() {
@@ -435,8 +435,8 @@ public class ModelArmorTemplate implements Cloneable, Serializable {
 	protected Map<String, String> title_i18n;
 
 	@Override
-	public ModelArmorTemplate clone() throws CloneNotSupportedException {
-		return (ModelArmorTemplate)super.clone();
+	public Guardrail clone() throws CloneNotSupportedException {
+		return (Guardrail)super.clone();
 	}
 
 	@Override
@@ -445,13 +445,13 @@ public class ModelArmorTemplate implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ModelArmorTemplate)) {
+		if (!(object instanceof Guardrail)) {
 			return false;
 		}
 
-		ModelArmorTemplate modelArmorTemplate = (ModelArmorTemplate)object;
+		Guardrail guardrail = (Guardrail)object;
 
-		return Objects.equals(toString(), modelArmorTemplate.toString());
+		return Objects.equals(toString(), guardrail.toString());
 	}
 
 	@Override
@@ -462,7 +462,7 @@ public class ModelArmorTemplate implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ModelArmorTemplateSerDes.toJSON(this);
+		return GuardrailSerDes.toJSON(this);
 	}
 
 	public static enum GuardrailType {
@@ -674,4 +674,4 @@ public class ModelArmorTemplate implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1483779983
+// LIFERAY-REST-BUILDER-HASH:854641146

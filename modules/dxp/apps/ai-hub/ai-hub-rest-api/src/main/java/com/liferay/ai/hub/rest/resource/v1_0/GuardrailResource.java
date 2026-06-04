@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.ModelArmorTemplate;
+import com.liferay.ai.hub.rest.dto.v1_0.Guardrail;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -42,22 +42,19 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface ModelArmorTemplateResource {
+public interface GuardrailResource {
 
-	public void deleteModelArmorTemplateByExternalReferenceCode(
+	public void deleteGuardrailByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
-	public ModelArmorTemplate postModelArmorTemplate(
-			ModelArmorTemplate modelArmorTemplate)
+	public Guardrail postGuardrail(Guardrail guardrail) throws Exception;
+
+	public Response postGuardrailBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Response postModelArmorTemplateBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public ModelArmorTemplate putModelArmorTemplateByExternalReferenceCode(
-			String externalReferenceCode, ModelArmorTemplate modelArmorTemplate)
+	public Guardrail putGuardrailByExternalReferenceCode(
+			String externalReferenceCode, Guardrail guardrail)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -130,7 +127,7 @@ public interface ModelArmorTemplateResource {
 	@ProviderType
 	public interface Builder {
 
-		public ModelArmorTemplateResource build();
+		public GuardrailResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 
@@ -156,4 +153,4 @@ public interface ModelArmorTemplateResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:456182443
+// LIFERAY-REST-BUILDER-HASH:-652788648

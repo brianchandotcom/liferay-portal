@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.cell.internal.instance.lifecycle;
+package com.liferay.ai.hub.cell.internal.configuration.persistence.listener;
 
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
@@ -11,22 +11,24 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Dictionary;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,14 +37,21 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pedro Victor Silvestre
  * @author Rafael Praxedes
  */
-@Component(service = PortalInstanceLifecycleListener.class)
-public class AIHubCellPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+@Component(
+	property = "model.class.name=com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration",
+	service = ConfigurationModelListener.class
+)
+public class AIHubCellConfigurationModelListener
+	implements ConfigurationModelListener {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				company.getCompanyId(), "LPD-62272")) {
+	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
+		long companyId = GetterUtil.getLong(properties.get("companyId"));
+
+		Company company = _companyLocalService.fetchCompany(companyId);
+
+		if ((company == null) ||
+			!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-62272")) {
 
 			return;
 		}
@@ -121,7 +130,10 @@ public class AIHubCellPortalInstanceLifecycleListener
 	private static final String _SAP_ENTRY_NAME = "AI_HUB_CELL_TOKEN";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AIHubCellPortalInstanceLifecycleListener.class);
+		AIHubCellConfigurationModelListener.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

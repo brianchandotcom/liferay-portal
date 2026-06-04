@@ -32,7 +32,7 @@ const DEVICE_ICONS_MAP = {
 const LIFERAY_DXP_APPLICATION_IDS = new Set([
 	'Blog',
 	'Comment',
-	'Custom',
+	'CustomEvent',
 	'Document',
 	'Form',
 	'Layout',

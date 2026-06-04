@@ -42,6 +42,12 @@ public class ExternalEmbeddingCapabilityGateImplTest {
 			_searchEngineInformation);
 
 		Mockito.when(
+			_searchEngineInformation.getVendorString()
+		).thenReturn(
+			"Elasticsearch"
+		);
+
+		Mockito.when(
 			_searchEngineInformation.isInferenceAPISupported()
 		).thenReturn(
 			true
@@ -81,6 +87,19 @@ public class ExternalEmbeddingCapabilityGateImplTest {
 		_assertUnavailable(
 			"semantic-search.external-embedding-capability." +
 				"missing-elasticsearch-license");
+	}
+
+	@Test
+	public void testCheckUnsupportedSearchEngine() {
+		Mockito.when(
+			_searchEngineInformation.getVendorString()
+		).thenReturn(
+			"OpenSearch"
+		);
+
+		_assertUnavailable(
+			"semantic-search.external-embedding-capability." +
+				"unsupported-search-engine");
 	}
 
 	private void _assertUnavailable(String expectedReason) {

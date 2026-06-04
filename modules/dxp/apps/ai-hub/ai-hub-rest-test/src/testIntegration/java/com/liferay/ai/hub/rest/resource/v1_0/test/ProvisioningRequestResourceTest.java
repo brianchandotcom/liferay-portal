@@ -188,8 +188,6 @@ public class ProvisioningRequestResourceTest
 						"-ai-hub-oauth2-application",
 					TestPropsValues.getCompanyId());
 
-		Assert.assertNotNull(oAuth2Application);
-
 		Assert.assertEquals(
 			Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
 			oAuth2Application.getAllowedGrantTypesList());

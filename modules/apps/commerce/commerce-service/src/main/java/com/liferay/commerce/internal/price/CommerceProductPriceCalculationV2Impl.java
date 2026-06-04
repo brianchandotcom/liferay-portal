@@ -1277,12 +1277,12 @@ public class CommerceProductPriceCalculationV2Impl
 			commerceContext.getCommerceCurrency();
 
 		BigDecimal pricingQuantityUnitPrice = pricingQuantity.multiply(
-			commercePriceEntry.getPrice()
-		).divide(
+			commercePriceEntry.getPrice());
+
+		pricingQuantityUnitPrice = pricingQuantityUnitPrice.divide(
 			commercePriceEntry.getQuantity(),
 			commerceCurrency.getMaxFractionDigits(),
-			RoundingMode.valueOf(commerceCurrency.getRoundingMode())
-		);
+			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.getCommercePriceList(

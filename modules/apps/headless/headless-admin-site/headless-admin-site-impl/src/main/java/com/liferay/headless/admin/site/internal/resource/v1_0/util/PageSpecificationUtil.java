@@ -432,12 +432,12 @@ public class PageSpecificationUtil {
 			ContentPageSpecification.unsafeToDTO(
 				publishedContentPageSpecification.toString());
 
-		draftContentPageSpecification.
-			setDraftContentPageSpecificationExternalReferenceCode(() -> null);
 		draftContentPageSpecification.setExternalReferenceCode(
 			() -> draftContentPageSpecificationExternalReferenceCode);
 		draftContentPageSpecification.setStatus(
 			() -> PageSpecification.Status.APPROVED);
+		draftContentPageSpecification.
+			setDraftContentPageSpecificationExternalReferenceCode(() -> null);
 
 		PageExperience[] pageExperiences =
 			draftContentPageSpecification.getPageExperiences();

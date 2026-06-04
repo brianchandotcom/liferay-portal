@@ -19,8 +19,6 @@ jobs:
                 uses: bmuschko/setup-kubeconform@v1
                 with:
                     kubeconform-version: 0.7.0
-            -   name: Update chart dependencies
-                run: helm dependency update --skip-refresh "cloud/helm/${{matrix.chart}}"
             -   name: Lint chart
                 run: helm lint "cloud/helm/${{matrix.chart}}"
             -   name: Render and validate manifests

@@ -2996,6 +2996,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<attribute default="" name="generate.license.test.properties" />
 		<attribute default="" name="ibm.store.enabled" />
 		<attribute default="" name="refreshdependencies" />
+		<attribute default="" name="setup.wizard.enabled" />
 		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="subrepository.name" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
@@ -3035,6 +3036,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<param name="gcs.store.enabled" value="@{gcs.store.enabled}" />
 								<param name="generate.license.test.properties" value="@{generate.license.test.properties}" />
 								<param name="ibm.store.enabled" value="@{ibm.store.enabled}" />
+								<param name="setup.wizard.enabled" value="@{setup.wizard.enabled}" />
 							</antcall>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
@@ -8586,6 +8588,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="postgresql"
 			database.version="16.3"
 			generate.license.test.properties="true"
+			setup.wizard.enabled="true"
 		/>
 	</target>
 

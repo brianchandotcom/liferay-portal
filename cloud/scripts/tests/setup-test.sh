@@ -155,9 +155,11 @@ function _run_test {
 }
 
 function _test_aborts_with_config_missing_variables_object {
+	local config_json
 	local output
 
-	output=$(_run_setup_test "${1}" '{"options":{"provider":"aws"}}')
+	config_json=$(jq --null-input '{options: {provider: "aws"}}')
+	output=$(_run_setup_test "${1}" "${config_json}")
 
 	if [[ "${output}" == *'must contain a root object named "variables"'* ]]
 	then
@@ -202,9 +204,11 @@ function _test_aborts_with_missing_config_file {
 }
 
 function _test_aborts_with_missing_required_utility {
+	local config_json
 	local output
 
-	output=$(_run_setup_test "${1}" '{"variables":{}}' "1.10.0" jq)
+	config_json=$(jq --null-input '{variables: {}}')
+	output=$(_run_setup_test "${1}" "${config_json}" "1.10.0" jq)
 
 	if [[ "${output}" == *"utility jq is not installed"* ]]
 	then
@@ -215,9 +219,11 @@ function _test_aborts_with_missing_required_utility {
 }
 
 function _test_aborts_with_missing_tfvars_file {
+	local config_json
 	local output
 
-	output=$(_run_setup_test "${1}" '{"variables":{}}' "1.10.0" "" no)
+	config_json=$(jq --null-input '{variables: {}}')
+	output=$(_run_setup_test "${1}" "${config_json}" "1.10.0" "" no)
 
 	if [[ "${output}" == *"Versions tfvars file"*"does not exist"* ]]
 	then
@@ -241,9 +247,11 @@ function _test_aborts_with_no_arguments {
 }
 
 function _test_aborts_with_old_terraform_version {
+	local config_json
 	local output
 
-	output=$(_run_setup_test "${1}" '{"variables":{}}' "1.9.9")
+	config_json=$(jq --null-input '{variables: {}}')
+	output=$(_run_setup_test "${1}" "${config_json}" "1.9.9")
 
 	if [[ "${output}" == *"below minimum version"* ]]
 	then

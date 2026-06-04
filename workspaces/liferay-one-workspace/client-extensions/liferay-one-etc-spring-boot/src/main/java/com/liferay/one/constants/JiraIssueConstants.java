@@ -36,9 +36,9 @@ public interface JiraIssueConstants {
 	public static final String TYPE_GENERAL_REQUEST = "General Request";
 
 	public static String toJQLCustomField(String customField) {
-		int pos = customField.indexOf(StringPool.UNDERLINE);
+		int index = customField.indexOf(StringPool.UNDERLINE);
 
-		return "cf[" + customField.substring(pos + 1) + "]";
+		return "cf[" + customField.substring(index + 1) + "]";
 	}
 
 }

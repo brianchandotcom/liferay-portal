@@ -60,6 +60,32 @@ public class BusinessEventPermission {
 			}
 		}
 
+		for (AccountBrief accountBrief : userAccount.getAccountBriefs()) {
+			if (!accountExternalReferenceCode.equals(
+					accountBrief.getExternalReferenceCode())) {
+
+				continue;
+			}
+
+			for (RoleBrief roleBrief : accountBrief.getRoleBriefs()) {
+				if (ArrayUtil.contains(
+						RoleConstants.SUPPORT_ACCOUNT_ROLES,
+						roleBrief.getName()) &&
+					actionId.equals(ActionKeys.VIEW)) {
+
+					return true;
+				}
+
+				if (ArrayUtil.contains(
+						RoleConstants.SUPPORT_ACCOUNT_TICKET_ROLES,
+						roleBrief.getName()) &&
+					actionId.equals(ActionKeys.UPDATE)) {
+
+					return true;
+				}
+			}
+		}
+
 		AccountResource accountResource = AccountResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
@@ -70,36 +96,9 @@ public class BusinessEventPermission {
 		Account account = accountResource.getAccountByExternalReferenceCode(
 			accountExternalReferenceCode);
 
-		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
+		for (OrganizationBrief organizationBrief :
+				userAccount.getOrganizationBriefs()) {
 
-		for (AccountBrief accountBrief : accountBriefs) {
-			if (accountExternalReferenceCode.equals(
-					accountBrief.getExternalReferenceCode())) {
-
-				for (RoleBrief roleBrief : accountBrief.getRoleBriefs()) {
-					if (ArrayUtil.contains(
-							RoleConstants.SUPPORT_ACCOUNT_ROLES,
-							roleBrief.getName()) &&
-						actionId.equals(ActionKeys.VIEW)) {
-
-						return true;
-					}
-
-					if (ArrayUtil.contains(
-							RoleConstants.SUPPORT_ACCOUNT_TICKET_ROLES,
-							roleBrief.getName()) &&
-						actionId.equals(ActionKeys.UPDATE)) {
-
-						return true;
-					}
-				}
-			}
-		}
-
-		OrganizationBrief[] organizationBriefs =
-			userAccount.getOrganizationBriefs();
-
-		for (OrganizationBrief organizationBrief : organizationBriefs) {
 			if (ArrayUtil.contains(
 					account.getOrganizationIds(), organizationBrief.getId())) {
 

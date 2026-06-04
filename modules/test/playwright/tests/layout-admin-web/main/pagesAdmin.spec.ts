@@ -15,7 +15,6 @@ import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import {hoverAndExpectToBeVisible} from '../../../utils/hoverAndExpectToBeVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -987,38 +986,13 @@ test(
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				exact: true,
-				name: 'Make a Copy',
-			}),
-			trigger: page
-				.locator('li', {has: page.getByText(layoutTitle)})
-				.getByRole('button', {name: 'Open Page Options Menu'}),
-		});
-
-		await hoverAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {name: 'Page With Permissions'}),
-			trigger: page.getByRole('menuitem', {name: 'Make a Copy'}),
-		});
-
-		const copyPageWithPermissionsFrame = page.frameLocator(
-			'iframe[title="Copy Page With Permissions"]'
-		);
-
 		const copyPageName = getRandomString();
 
-		await copyPageWithPermissionsFrame
-			.getByPlaceholder('Add Page Name')
-			.fill(copyPageName);
-
-		await copyPageWithPermissionsFrame
-			.getByRole('button', {name: 'Add'})
-			.click();
-
-		await waitForAlert(page);
+		await pagesAdminPage.makeCopy({
+			name: layoutTitle,
+			newName: copyPageName,
+			type: 'page-with-permissions',
+		});
 
 		// Assert copied permissions
 
@@ -1079,38 +1053,17 @@ test(
 			]
 		);
 
-		// Copy page with permissions
+		// Copy page without permissions
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				exact: true,
-				name: 'Make a Copy',
-			}),
-			trigger: page
-				.locator('li', {has: page.getByText(layoutTitle)})
-				.getByRole('button', {name: 'Open Page Options Menu'}),
-		});
-
-		await hoverAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {exact: true, name: 'Page'}),
-			trigger: page.getByRole('menuitem', {name: 'Make a Copy'}),
-		});
-
-		const copyPageFrame = page.frameLocator('iframe[title="Copy Page"]');
-
 		const copyPageName = getRandomString();
 
-		await copyPageFrame
-			.getByPlaceholder('Add Page Name')
-			.fill(copyPageName);
-
-		await copyPageFrame.getByRole('button', {name: 'Add'}).click();
-
-		await waitForAlert(page);
+		await pagesAdminPage.makeCopy({
+			name: layoutTitle,
+			newName: copyPageName,
+			type: 'page',
+		});
 
 		// Assert copied permissions
 

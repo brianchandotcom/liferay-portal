@@ -4,10 +4,15 @@
  */
 
 import '@testing-library/jest-dom';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import HealthScanConfiguration from '../../../js/health_scan/components/HealthScanConfiguration';
+
+jest.mock('frontend-js-components-web', () => ({
+	openToast: jest.fn(),
+}));
 
 function getSaveButton() {
 	return screen.getByRole('button', {name: 'save'});
@@ -26,16 +31,30 @@ const TIME_ZONES = [
 	{label: '(UTC -05:00) Eastern Standard Time', value: 'America/New_York'},
 ];
 
-function renderConfiguration() {
+type ConfigurationProps = React.ComponentProps<typeof HealthScanConfiguration>;
+
+function renderConfiguration(props: Partial<ConfigurationProps> = {}) {
 	return render(
 		<HealthScanConfiguration
 			defaultTimeZoneId="UTC"
+			domainId={1}
+			scanConfig={null}
+			schedule={null}
 			timeZones={TIME_ZONES}
+			{...props}
 		/>
 	);
 }
 
 describe('HealthScanConfiguration', () => {
+	beforeEach(() => {
+		(openToast as jest.Mock).mockClear();
+
+		(Liferay.Util as unknown) = {
+			fetch: jest.fn().mockResolvedValue({ok: true}),
+		};
+	});
+
 	describe('schedule section', () => {
 		it('shows the schedule fields when Auto Scan is on', () => {
 			renderConfiguration();
@@ -233,6 +252,141 @@ describe('HealthScanConfiguration', () => {
 			expect(screen.getAllByLabelText('scope')).toHaveLength(4);
 			expect(getSaveButton()).toBeEnabled();
 			expect(getCancelButton()).toBeEnabled();
+		});
+	});
+
+	describe('persistence', () => {
+		it('disables Save when no domain is available', () => {
+			renderConfiguration({domainId: null});
+
+			expect(getSaveButton()).toBeDisabled();
+		});
+
+		it('persists the configuration to the domain on Save', async () => {
+			const fetchMock = Liferay.Util.fetch as jest.Mock;
+
+			renderConfiguration({domainId: 42});
+
+			fireEvent.click(getSaveButton());
+
+			await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+
+			const [url, init] = fetchMock.mock.calls[0];
+
+			expect(url).toBe('/o/seo-studio/domains/42');
+			expect(init.method).toBe('PATCH');
+
+			const body = JSON.parse(init.body);
+
+			expect(body.autoScanEnabled).toBe(true);
+			expect(body.scanFrequency).toBe('daily');
+			expect(body.scanTimeZone).toBe('UTC');
+
+			const scanConfig = JSON.parse(body.scanConfig);
+
+			expect(scanConfig.engines.crawler.enabled).toBe(true);
+
+			await waitFor(() =>
+				expect(openToast).toHaveBeenCalledWith(
+					expect.objectContaining({type: 'success'})
+				)
+			);
+		});
+
+		it('shows an error toast when the save request fails', async () => {
+			(Liferay.Util.fetch as jest.Mock).mockResolvedValue({ok: false});
+
+			renderConfiguration();
+
+			fireEvent.click(getSaveButton());
+
+			await waitFor(() =>
+				expect(openToast).toHaveBeenCalledWith(
+					expect.objectContaining({type: 'danger'})
+				)
+			);
+		});
+
+		it('seeds the form from the persisted configuration', () => {
+			renderConfiguration({
+				scanConfig: JSON.stringify({
+					engines: {
+						crawler: {
+							enabled: false,
+							excludedPaths: '',
+							includedPaths: '',
+							maxPagesPerScan: 100,
+							rankingMethod: 'topByPageVisit',
+							scope: 'allPublishedPages',
+						},
+					},
+				}),
+				schedule: {
+					autoScanEnabled: true,
+					scanDayOfWeek: 'WE',
+					scanFrequency: 'weekly',
+				},
+			});
+
+			expect(screen.getByLabelText('frequency')).toHaveValue('weekly');
+			expect(screen.getByLabelText('day-of-week')).toHaveValue('WE');
+			expect(
+				screen.queryByLabelText('crawler-insights')
+			).not.toBeChecked();
+		});
+
+		it('keeps the schedule defaults when persisted fields are empty', () => {
+			renderConfiguration({
+				schedule: {
+					autoScanEnabled: true,
+					scanDayOfMonth: 0,
+					scanDayOfWeek: '',
+					scanFrequency: '',
+					scanTime: '',
+					scanTimeZone: '',
+				} as unknown as ConfigurationProps['schedule'],
+			});
+
+			expect(screen.getByLabelText('frequency')).toHaveValue('daily');
+			expect(screen.getByLabelText('time')).toHaveValue('00:00');
+			expect(screen.getByLabelText('time-zone')).toHaveValue('UTC');
+		});
+
+		it('persists midnight when Time is cleared', async () => {
+			const fetchMock = Liferay.Util.fetch as jest.Mock;
+
+			renderConfiguration({domainId: 42});
+
+			enableAutoScan();
+
+			fireEvent.change(screen.getByLabelText('time'), {
+				target: {value: ''},
+			});
+			fireEvent.click(getSaveButton());
+
+			await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+
+			const body = JSON.parse(fetchMock.mock.calls[0][1].body);
+
+			expect(body.scanTime).toBe('00:00');
+		});
+
+		it('merges a partial persisted engine over its defaults', () => {
+			renderConfiguration({
+				scanConfig: JSON.stringify({
+					engines: {
+						crawler: {
+							scope: 'sitemapOnly',
+						},
+					},
+				}),
+			});
+
+			expect(screen.getByLabelText('crawler-insights')).toBeChecked();
+			expect(screen.getAllByLabelText('scope')).toHaveLength(4);
+			expect(screen.getAllByLabelText('scope')[0]).toHaveValue(
+				'sitemapOnly'
+			);
 		});
 	});
 

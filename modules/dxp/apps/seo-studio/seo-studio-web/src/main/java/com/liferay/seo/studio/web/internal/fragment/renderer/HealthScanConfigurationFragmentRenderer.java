@@ -6,6 +6,12 @@
 package com.liferay.seo.studio.web.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.seo.studio.web.internal.display.context.HealthScanConfigurationDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,12 +41,54 @@ public class HealthScanConfigurationFragmentRenderer
 	protected HealthScanConfigurationDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new HealthScanConfigurationDisplayContext(httpServletRequest);
+		return new HealthScanConfigurationDisplayContext(
+			httpServletRequest,
+			_fetchSEOStudioDomainObjectEntry(httpServletRequest));
 	}
 
 	@Override
 	protected String getJSPPath() {
 		return "/health_scan_configuration.jsp";
 	}
+
+	private ObjectEntry _fetchSEOStudioDomainObjectEntry(
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			long companyId = portal.getCompanyId(httpServletRequest);
+
+			ObjectDefinition objectDefinition =
+				objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						"L_SEO_STUDIO_DOMAIN", companyId);
+
+			if (objectDefinition == null) {
+				return null;
+			}
+
+			Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
+				companyId, objectDefinition, null, null,
+				getDTOConverterContext(objectDefinition), null,
+				Pagination.of(1, 1), null, null);
+
+			if (page != null) {
+				for (ObjectEntry objectEntry : page.getItems()) {
+					return objectEntry;
+				}
+			}
+
+			return null;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			return null;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		HealthScanConfigurationFragmentRenderer.class);
 
 }

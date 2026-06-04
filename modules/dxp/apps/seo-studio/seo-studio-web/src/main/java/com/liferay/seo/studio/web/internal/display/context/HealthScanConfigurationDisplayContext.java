@@ -5,10 +5,13 @@
 
 package com.liferay.seo.studio.web.internal.display.context;
 
+import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -36,7 +39,10 @@ import java.util.TreeSet;
 public class HealthScanConfigurationDisplayContext {
 
 	public HealthScanConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		ObjectEntry seoStudioDomainObjectEntry) {
+
+		_seoStudioDomainObjectEntry = seoStudioDomainObjectEntry;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -45,6 +51,12 @@ public class HealthScanConfigurationDisplayContext {
 	public Map<String, Object> getViewProps() {
 		return HashMapBuilder.<String, Object>put(
 			"defaultTimeZoneId", _getDefaultTimeZoneId()
+		).put(
+			"domainId", _getDomainId()
+		).put(
+			"scanConfig", _getScanConfig()
+		).put(
+			"schedule", _getScheduleJSONObject()
 		).put(
 			"timeZones", _getTimeZonesJSONArray()
 		).build();
@@ -58,6 +70,60 @@ public class HealthScanConfigurationDisplayContext {
 		}
 
 		return timeZone.getID();
+	}
+
+	private Long _getDomainId() {
+		if (_seoStudioDomainObjectEntry == null) {
+			return null;
+		}
+
+		return _seoStudioDomainObjectEntry.getId();
+	}
+
+	private String _getListTypeEntryKey(Object value) {
+		ListEntry listEntry = (ListEntry)value;
+
+		if (listEntry == null) {
+			return null;
+		}
+
+		return listEntry.getKey();
+	}
+
+	private String _getScanConfig() {
+		if (_seoStudioDomainObjectEntry == null) {
+			return null;
+		}
+
+		Map<String, Object> properties =
+			_seoStudioDomainObjectEntry.getProperties();
+
+		return (String)properties.get("scanConfig");
+	}
+
+	private JSONObject _getScheduleJSONObject() {
+		if (_seoStudioDomainObjectEntry == null) {
+			return null;
+		}
+
+		Map<String, Object> properties =
+			_seoStudioDomainObjectEntry.getProperties();
+
+		return JSONUtil.put(
+			"autoScanEnabled", properties.get("autoScanEnabled")
+		).put(
+			"scanDayOfMonth", properties.get("scanDayOfMonth")
+		).put(
+			"scanDayOfWeek",
+			_getListTypeEntryKey(properties.get("scanDayOfWeek"))
+		).put(
+			"scanFrequency",
+			_getListTypeEntryKey(properties.get("scanFrequency"))
+		).put(
+			"scanTime", properties.get("scanTime")
+		).put(
+			"scanTimeZone", properties.get("scanTimeZone")
+		);
 	}
 
 	private JSONArray _getTimeZonesJSONArray() {
@@ -124,6 +190,7 @@ public class HealthScanConfigurationDisplayContext {
 		return timeZonesJSONArray;
 	}
 
+	private final ObjectEntry _seoStudioDomainObjectEntry;
 	private final ThemeDisplay _themeDisplay;
 
 }

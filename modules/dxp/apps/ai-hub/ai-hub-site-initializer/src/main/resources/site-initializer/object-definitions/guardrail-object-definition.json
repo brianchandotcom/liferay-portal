@@ -1,28 +1,28 @@
 {
 	"accountEntryRestricted": true,
-	"accountEntryRestrictedObjectFieldName": "r_accountToAIHubModelArmorTemplates_accountEntryId",
+	"accountEntryRestrictedObjectFieldName": "r_accountToAIHubGuardrails_accountEntryId",
 	"className": "com.liferay.object.model.ObjectDefinition#MA1T",
 	"enableFormContainer": false,
 	"enableIndexSearch": true,
 	"enableObjectEntryHistory": true,
-	"externalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE",
+	"externalReferenceCode": "L_AI_HUB_GUARDRAIL",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "AI Hub Model Armor Template"
+		"en_US": "AI Hub Guardrail"
 	},
 	"modifiable": true,
-	"name": "AIHubModelArmorTemplate",
+	"name": "AIHubGuardrail",
 	"objectFields": [
 		{
 			"DBType": "Long",
 			"businessType": "Relationship",
-			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_MODEL_ARMOR_TEMPLATES",
+			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_GUARDRAILS",
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Account to AI Hub Model Armor Templates"
+				"en_US": "Account to AI Hub Guardrails"
 			},
-			"name": "r_accountToAIHubModelArmorTemplates_accountEntryId",
+			"name": "r_accountToAIHubGuardrails_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
 			"objectFieldSettings": [
 				{
@@ -31,10 +31,10 @@
 				},
 				{
 					"name": "objectRelationshipERCObjectFieldName",
-					"value": "r_accountToAIHubModelArmorTemplates_accountEntryERC"
+					"value": "r_accountToAIHubGuardrails_accountEntryERC"
 				}
 			],
-			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_MODEL_ARMOR_TEMPLATES",
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_GUARDRAILS",
 			"readOnly": false,
 			"relationshipType": "oneToMany",
 			"required": true,
@@ -77,7 +77,7 @@
 			"label": {
 				"en_US": "Guardrail Type"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE_GUARDRAIL_TYPES",
+			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GUARDRAIL_GUARDRAIL_TYPES",
 			"name": "guardrailType",
 			"required": true,
 			"system": true,
@@ -133,7 +133,7 @@
 			"label": {
 				"en_US": "Prompt Injection and Jailbreak Confidence Level"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE_CONFIDENCE_LEVELS",
+			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GUARDRAIL_CONFIDENCE_LEVELS",
 			"name": "piAndJailbreakConfidenceLevel",
 			"system": true,
 			"type": "String"
@@ -161,7 +161,7 @@
 			"label": {
 				"en_US": "Responsible AI Dangerous Level"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE_RESPONSIBLE_AI_LEVELS",
+			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GUARDRAIL_RESPONSIBLE_AI_LEVELS",
 			"name": "raiDangerousLevel",
 			"system": true,
 			"type": "String"
@@ -176,7 +176,7 @@
 			"label": {
 				"en_US": "Responsible AI Harassment Level"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE_RESPONSIBLE_AI_LEVELS",
+			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GUARDRAIL_RESPONSIBLE_AI_LEVELS",
 			"name": "raiHarassmentLevel",
 			"system": true,
 			"type": "String"
@@ -191,7 +191,7 @@
 			"label": {
 				"en_US": "Responsible AI Hate Speech Level"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE_RESPONSIBLE_AI_LEVELS",
+			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GUARDRAIL_RESPONSIBLE_AI_LEVELS",
 			"name": "raiHateSpeechLevel",
 			"system": true,
 			"type": "String"
@@ -206,7 +206,7 @@
 			"label": {
 				"en_US": "Responsible AI Sexually Explicit Level"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE_RESPONSIBLE_AI_LEVELS",
+			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GUARDRAIL_RESPONSIBLE_AI_LEVELS",
 			"name": "raiSexuallyExplicitLevel",
 			"system": true,
 			"type": "String"
@@ -243,7 +243,7 @@
 	"objectFolderExternalReferenceCode": "default",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "AI Hub Model Armor Templates"
+		"en_US": "AI Hub Guardrails"
 	},
 	"portlet": true,
 	"scope": "company",

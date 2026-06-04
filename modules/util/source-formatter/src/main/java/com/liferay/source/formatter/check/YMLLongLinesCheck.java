@@ -122,6 +122,6 @@ public class YMLLongLinesCheck extends BaseFileCheck {
 		YMLLongLinesCheck.class);
 
 	private static final Pattern _descriptionPattern = Pattern.compile(
-		"(\n( +)description:)((\n\\2 +.+)+)");
+		"(\\A|\n)( *)description:((\n\\2 +.+)+)");
 
 }

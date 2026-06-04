@@ -82,9 +82,11 @@ public class DBInspector {
 		throws SQLException {
 
 		if (_schemaSnapshotEnabled && (tableNamePattern == null)) {
-			String catalog = StringUtil.defaultString(getCatalog());
+			String cacheKey = StringBundler.concat(
+				StringUtil.defaultString(getCatalog()), ".",
+				StringUtil.defaultString(getSchema()));
 
-			Set<String> tableNames = _tableNamesCache.get(catalog);
+			Set<String> tableNames = _tableNamesCache.get(cacheKey);
 
 			if (tableNames != null) {
 				return new ArrayList<>(tableNames);
@@ -97,7 +99,7 @@ public class DBInspector {
 
 			tableNamesSnapshot.addAll(names);
 
-			_tableNamesCache.putIfAbsent(catalog, tableNamesSnapshot);
+			_tableNamesCache.putIfAbsent(cacheKey, tableNamesSnapshot);
 
 			return names;
 		}
@@ -128,7 +130,8 @@ public class DBInspector {
 
 			String cacheKey = StringBundler.concat(
 				StringUtil.defaultString(getCatalog()), ".",
-				normalizedTableName, ".", normalizedColumnName);
+				StringUtil.defaultString(getSchema()), ".", normalizedTableName,
+				".", normalizedColumnName);
 
 			Boolean cached = _columnExistsCache.get(cacheKey);
 
@@ -300,14 +303,16 @@ public class DBInspector {
 
 	public boolean hasTable(String tableName) throws Exception {
 		if (_schemaSnapshotEnabled) {
-			String catalog = StringUtil.defaultString(getCatalog());
+			String cacheKey = StringBundler.concat(
+				StringUtil.defaultString(getCatalog()), ".",
+				StringUtil.defaultString(getSchema()));
 
-			Set<String> tableNames = _tableNamesCache.get(catalog);
+			Set<String> tableNames = _tableNamesCache.get(cacheKey);
 
 			if (tableNames == null) {
 				getTableNames(null);
 
-				tableNames = _tableNamesCache.get(catalog);
+				tableNames = _tableNamesCache.get(cacheKey);
 			}
 
 			if (tableNames != null) {
@@ -380,7 +385,8 @@ public class DBInspector {
 
 			String cacheKey = StringBundler.concat(
 				StringUtil.defaultString(getCatalog()), ".",
-				normalizedTableName, ".", normalizedColumnName);
+				StringUtil.defaultString(getSchema()), ".", normalizedTableName,
+				".", normalizedColumnName);
 
 			Boolean cached = _columnNumericCache.get(cacheKey);
 

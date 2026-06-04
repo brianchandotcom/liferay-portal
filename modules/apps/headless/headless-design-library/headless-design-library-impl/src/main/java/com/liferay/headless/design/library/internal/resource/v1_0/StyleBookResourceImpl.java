@@ -113,12 +113,14 @@ public class StyleBookResourceImpl
 
 	@Override
 	public StyleBook getItem(Long id) throws Exception {
+		_checkFeatureFlag();
+
 		return _toStyleBook(_styleBookEntryService.getStyleBookEntry(id));
 	}
 
 	private void _checkFeatureFlag() {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-56718")) {
+				contextCompany.getCompanyId(), "LPD-57283")) {
 
 			throw new UnsupportedOperationException();
 		}

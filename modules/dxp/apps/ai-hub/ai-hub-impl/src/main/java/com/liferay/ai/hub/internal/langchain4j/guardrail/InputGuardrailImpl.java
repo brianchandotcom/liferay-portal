@@ -67,8 +67,7 @@ public class InputGuardrailImpl implements InputGuardrail {
 			if (Validator.isNotNull(violationMessage)) {
 				return fatal(
 					JSONUtil.put(
-						"modelArmorTemplateExternalReferenceCode",
-						_externalReferenceCode
+						"guardrailExternalReferenceCode", _externalReferenceCode
 					).put(
 						"violationMessage", violationMessage
 					).toString());

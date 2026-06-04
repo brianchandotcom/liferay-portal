@@ -10,6 +10,7 @@ import NotificationAlertList, {
 import React from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
 import Toolbar from './Toolbar';
+import {DEVELOPER_MODE} from 'shared/util/constants';
 import {IBreadcrumbArgs} from 'shared/util/breadcrumbs';
 import {matchPath, useLocation, useParams} from 'react-router-dom';
 import {PageActions} from 'shared/components/base-page/Header';
@@ -103,8 +104,19 @@ function getSidebarSections({
 					label: Liferay.Language.get('workspace'),
 					route: Routes.SETTINGS_WORKSPACE,
 					url: toRoute(Routes.SETTINGS_WORKSPACE, {groupId})
+				},
+				DEVELOPER_MODE && {
+					icon: 'flag-full',
+					label: 'Feature Flags',
+					route: Routes.SETTINGS_FEATURE_FLAGS,
+					url: toRoute(Routes.SETTINGS_FEATURE_FLAGS, {groupId})
 				}
-			],
+			].filter(Boolean) as Array<{
+				icon: string;
+				label: string;
+				route: string;
+				url: string;
+			}>,
 			label: Liferay.Language.get('workspace-settings')
 		}
 	];

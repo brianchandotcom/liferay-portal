@@ -6,6 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {zipFolder} from '../../utils/zip';
@@ -201,6 +202,37 @@ export class MasterPagesPage {
 		).toBeVisible();
 
 		await this.page.getByRole('button', {name: 'Import'}).click();
+	}
+
+	async makeCopy(
+		name: string,
+		type: 'master-page' | 'master-page-with-permissions' = 'master-page'
+	) {
+		const label =
+			type === 'master-page-with-permissions'
+				? 'Master Page With Permissions'
+				: 'Master Page';
+
+		// Open the actions menu
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: this.page.getByRole('menuitem', {name: 'Make a Copy'}),
+			trigger: this.getMasterCard(name).getByLabel('More actions'),
+		});
+
+		// Click desired option
+
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.getByText(label, {exact: true})
+				.filter({visible: true}),
+			timeout: 5000,
+			trigger: this.page.getByRole('menuitem', {name: 'Make a Copy'}),
+		});
+
+		await waitForAlert(this.page);
 	}
 
 	async openMasterActionsMenu(name: string) {

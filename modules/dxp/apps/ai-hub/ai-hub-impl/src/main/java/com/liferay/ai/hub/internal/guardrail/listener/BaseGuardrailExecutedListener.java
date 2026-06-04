@@ -34,24 +34,15 @@ public abstract class BaseGuardrailExecutedListener {
 		_executionContext = executionContext;
 	}
 
-	protected void completeExceptionally() {
-		Message message = new Message();
-
-		message.put("exception", new IllegalArgumentException());
-
-		KaleoInstanceToken kaleoInstanceToken =
-			_executionContext.getKaleoInstanceToken();
-
-		message.put(
-			"workflowInstanceId", kaleoInstanceToken.getKaleoInstanceId());
-
-		MessageBusUtil.sendMessage(
-			WorkflowInstanceDestinationNames.WORKFLOW_INSTANCE, message);
-	}
-
-	protected void route(
+	protected void completeExceptionally(
 		String content, Duration duration, GuardrailResult<?> guardrailResult,
 		String guardrailType) {
+
+		List<GuardrailResult.Failure> failures = guardrailResult.failures();
+
+		GuardrailResult.Failure failure = failures.get(0);
+
+		String failureMessage = failure.message();
 
 		try {
 			KaleoInstanceToken kaleoInstanceToken =
@@ -73,15 +64,7 @@ public abstract class BaseGuardrailExecutedListener {
 				).put(
 					"guardrailType", guardrailType
 				).put(
-					"violation",
-					() -> {
-						List<GuardrailResult.Failure> failures =
-							guardrailResult.failures();
-
-						GuardrailResult.Failure failure = failures.get(0);
-
-						return failure.message();
-					}
+					"violation", failureMessage
 				).put(
 					"workflowInstanceId",
 					kaleoInstanceToken.getKaleoInstanceId()
@@ -93,6 +76,21 @@ public abstract class BaseGuardrailExecutedListener {
 				_log.warn(exception);
 			}
 		}
+
+		Message message = new Message();
+
+		KaleoInstanceToken kaleoInstanceToken =
+			_executionContext.getKaleoInstanceToken();
+
+		message.put("companyId", kaleoInstanceToken.getCompanyId());
+
+		message.put("createDate", new Date());
+		message.put("exception", new IllegalArgumentException(failureMessage));
+		message.put(
+			"workflowInstanceId", kaleoInstanceToken.getKaleoInstanceId());
+
+		MessageBusUtil.sendMessage(
+			WorkflowInstanceDestinationNames.WORKFLOW_INSTANCE, message);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -6,6 +6,7 @@
 package com.liferay.ai.hub.internal.agent;
 
 import com.liferay.ai.hub.agent.AgentContext;
+import com.liferay.ai.hub.internal.langchain4j.agentic.internal.InternalAgentImpl;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,6 +49,7 @@ public class InternalAgentFactory {
 					String.class, inputVariable)));
 		internalAgentImpl.setDescription(
 			GetterUtil.getString(objectEntry.getPropertyValue("description")));
+		internalAgentImpl.setMemoryId(_agentContext.getSseEventSinkKey());
 		internalAgentImpl.setName(
 			GetterUtil.getString(
 				objectEntry.getPropertyValue("externalReferenceCode")));

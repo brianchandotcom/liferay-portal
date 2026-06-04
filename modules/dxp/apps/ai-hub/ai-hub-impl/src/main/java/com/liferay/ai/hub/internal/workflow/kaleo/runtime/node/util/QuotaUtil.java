@@ -15,6 +15,7 @@ import com.liferay.portal.workflow.kaleo.runtime.constants.WorkflowInstanceDesti
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -24,7 +25,7 @@ public class QuotaUtil {
 
 	public static boolean hasExceededQuota(
 			long companyId, String nodeName, QuotaManager quotaManager,
-			String text, long userId, Map<String, Serializable> workflowContext,
+			long userId, Map<String, Serializable> workflowContext,
 			long workflowInstanceId)
 		throws PortalException {
 
@@ -36,7 +37,10 @@ public class QuotaUtil {
 		catch (UnsupportedOperationException unsupportedOperationException) {
 			Message message = new Message();
 
+			message.put("companyId", companyId);
+			message.put("createDate", new Date());
 			message.put("exception", unsupportedOperationException);
+			message.put("userId", userId);
 			message.put("workflowInstanceId", workflowInstanceId);
 
 			MessageBusUtil.sendMessage(

@@ -13,7 +13,7 @@ import com.liferay.ai.hub.internal.guardrail.listener.OutputGuardrailExecutedLis
 import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
 import com.liferay.ai.hub.internal.model.VertexAiGeminiUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.GuardrailsUtil;
-import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.KaleoLogUtil;
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.MessageUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.PromptUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.QuotaUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.RetrievalAugmentorUtil;
@@ -162,12 +162,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				kaleoNodeSetting.getName(), kaleoNodeSetting.getValue());
 		}
 
-		String prompt = PromptUtil.composePrompt(
-			kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
-			executionContext, kaleoNodeSettingValues, _objectEntryManager);
-		String userMessage = VariablesUtil.applyInputVariables(
-			executionContext, "userMessage", kaleoNodeSettingValues);
-
 		ServiceContext serviceContext = executionContext.getServiceContext();
 
 		Map<String, Serializable> workflowContext =
@@ -175,12 +169,17 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		if (QuotaUtil.hasExceededQuota(
 				serviceContext.getCompanyId(), currentKaleoNode.getName(),
-				_quotaManager, prompt + "\n" + userMessage,
-				serviceContext.getUserId(), workflowContext,
+				_quotaManager, serviceContext.getUserId(), workflowContext,
 				kaleoInstanceToken.getKaleoInstanceId())) {
 
 			return;
 		}
+
+		String prompt = PromptUtil.composePrompt(
+			kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
+			executionContext, kaleoNodeSettingValues, _objectEntryManager);
+		String userMessage = VariablesUtil.applyInputVariables(
+			executionContext, "userMessage", kaleoNodeSettingValues);
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiUtil.createVertexAiGeminiStreamingChatModel(
@@ -211,16 +210,14 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 			).memoryId(
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponseConsumer(
-				response -> {
+				chatResponse -> {
 					MCPToolProviderUtil.close(sseEventSinkKey);
 
 					vertexAiGeminiStreamingChatModel.close();
 
-					KaleoLogUtil.addNodeUsageKaleoLog(
-						response, kaleoInstanceToken,
-						GetterUtil.getString(workflowContext.get("reason")),
-						prompt, executionContext.getServiceContext(),
-						userMessage);
+					MessageUtil.sendMessage(
+						chatResponse, kaleoInstanceToken, prompt,
+						executionContext.getServiceContext(), userMessage);
 				}
 			).onErrorConsumer(
 				throwable -> {

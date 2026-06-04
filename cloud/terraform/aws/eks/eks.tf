@@ -82,13 +82,6 @@ module "eks" {
 	subnet_ids=module.vpc.private_subnets
 	vpc_id=module.vpc.vpc_id
 }
-resource "aws_eks_addon" "s3_csi" {
-	addon_name="aws-mountpoint-s3-csi-driver"
-	addon_version=data.aws_eks_addon_version.s3_csi.version
-	cluster_name=module.eks.cluster_name
-	resolve_conflicts_on_update="OVERWRITE"
-	service_account_role_arn=aws_iam_role.s3_csi_driver.arn
-}
 resource "aws_iam_role" "ebs_csi_driver" {
 	assume_role_policy=jsonencode(
 		{
@@ -138,33 +131,7 @@ resource "aws_iam_role" "irsa" {
 	force_detach_policies=true
 	name="${var.deployment_name}-irsa"
 }
-resource "aws_iam_role" "s3_csi_driver" {
-	assume_role_policy=jsonencode(
-		{
-			Statement=[
-				{
-					Action="sts:AssumeRoleWithWebIdentity"
-					Condition={
-						StringEquals={
-							"${module.eks.oidc_provider}:aud"="sts.amazonaws.com"
-							"${module.eks.oidc_provider}:sub"=[
-								"system:serviceaccount:kube-system:s3-csi-driver-controller-sa",
-								"system:serviceaccount:kube-system:s3-csi-driver-sa"
-							]
-						}
-					}
-					Effect="Allow"
-					Principal={
-						Federated=local.oidc_provider_arn
-					}
-				}
-			]
-			Version="2012-10-17"
-		})
-	force_detach_policies=true
-	name="${var.deployment_name}-s3_csi_driver"
-}
-resource "aws_iam_role_policy" "s3_csi_driver" {
+resource "aws_iam_role_policy" "overlay" {
 	policy=jsonencode(
 		{
 			Statement=[
@@ -184,7 +151,7 @@ resource "aws_iam_role_policy" "s3_csi_driver" {
 			Version="2012-10-17"
 		}
 	)
-	role=aws_iam_role.s3_csi_driver.id
+	role=aws_iam_role.irsa.id
 }
 resource "aws_iam_role_policy" "this" {
 	count=length(var.ecr_repositories) > 0 ? 1 : 0

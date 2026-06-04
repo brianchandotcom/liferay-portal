@@ -75,6 +75,25 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapperTest {
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
 	}
 
+	@Test
+	public void testPublishSystemObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BASIC_WEB_CONTENT", TestPropsValues.getCompanyId());
+
+		_assertResourcePermission(
+			ActionKeys.VIEW, objectDefinition.getObjectDefinitionId(),
+			ObjectDefinition.class.getName(),
+			_roleLocalService.getRole(
+				TestPropsValues.getCompanyId(), RoleConstants.GUEST));
+		_assertResourcePermission(
+			ActionKeys.VIEW, objectDefinition.getObjectDefinitionId(),
+			ObjectDefinition.class.getName(),
+			_roleLocalService.getRole(
+				TestPropsValues.getCompanyId(), RoleConstants.USER));
+	}
+
 	private void _assertResourcePermission(
 			String actionId, long classPK, String resourceName, Role role)
 		throws Exception {

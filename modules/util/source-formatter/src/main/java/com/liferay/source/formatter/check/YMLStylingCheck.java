@@ -183,13 +183,9 @@ public class YMLStylingCheck extends BaseFileCheck {
 			matcher.appendReplacement(sb, replacement);
 		}
 
-		if (sb.length() > 0) {
-			matcher.appendTail(sb);
+		matcher.appendTail(sb);
 
-			return sb.toString();
-		}
-
-		return content;
+		return sb.toString();
 	}
 
 	private String _formatQuotes(String content) throws IOException {

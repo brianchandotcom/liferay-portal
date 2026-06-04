@@ -13573,6 +13573,9 @@ outgoingSMTPPort="25000"
 					<property name="release.info.version.major" value="${release.info.version.major}" />
 					<property name="release.info.version.minor" value="${release.info.version.minor}" />
 				</ant>
+
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+enterprise.product.enterprise.search.enabled=false</echo>
 			</then>
 		</if>
 

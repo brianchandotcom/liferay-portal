@@ -35,25 +35,6 @@ function main {
 	return 1
 }
 
-function _make_real_terraform_stub {
-	local stub_dir="${1}"
-
-	cat > "${stub_dir}/terraform" <<'EOF'
-#!/usr/bin/env bash
-
-if [ "${1:-}" = "--version" ]
-then
-	echo "Terraform v1.10.0"
-
-	exit 0
-fi
-
-exit 0
-EOF
-
-	chmod +x "${stub_dir}/terraform"
-}
-
 function _make_stub_path {
 	local stub_dir
 
@@ -92,11 +73,64 @@ EOF
 	echo "${stub_dir}"
 }
 
+function _make_terraform_stub {
+	local stub_dir="${1}"
+	local version="${2}"
+
+	cat > "${stub_dir}/terraform" <<EOF
+#!/usr/bin/env bash
+
+if [ "\${1:-}" = "--version" ]
+then
+	echo "Terraform v${version}"
+
+	exit 0
+fi
+
+exit 0
+EOF
+
+	chmod +x "${stub_dir}/terraform"
+}
+
+function _run_setup_test {
+	local config_content="${2}"
+	local script="${1}"
+	local terraform_version="${3:-1.10.0}"
+	local utility_to_remove="${4:-}"
+	local write_tfvars="${5:-yes}"
+
+	local stub_dir
+
+	stub_dir=$(_make_stub_path)
+
+	_make_terraform_stub "${stub_dir}" "${terraform_version}"
+
+	if [ -n "${utility_to_remove}" ]
+	then
+		rm "${stub_dir}/${utility_to_remove}"
+	fi
+
+	local tmpdir
+
+	tmpdir=$(mktemp -d)
+
+	printf '%s' "${config_content}" > "${tmpdir}/config.json"
+
+	if [ "${write_tfvars}" = "yes" ]
+	then
+		touch "${tmpdir}/versions.tfvars"
+	fi
+
+	PATH="${stub_dir}" bash "${script}" "${tmpdir}/config.json" "${tmpdir}/versions.tfvars" 2>&1 || true
+
+	rm -rf "${stub_dir}" "${tmpdir}"
+}
+
 function _run_test {
 	local script="${1}"
-	local test_function="${2}"
-
 	local script_name
+	local test_function="${2}"
 
 	script_name=$(basename "${script}")
 
@@ -121,63 +155,27 @@ function _run_test {
 }
 
 function _test_aborts_with_config_missing_variables_object {
-	local stub_dir
-
-	stub_dir=$(_make_stub_path)
-
-	_make_real_terraform_stub "${stub_dir}"
-
-	local tmpdir
-
-	tmpdir=$(mktemp -d)
-
-	echo '{"options":{"provider":"aws"}}' > "${tmpdir}/config.json"
-
-	touch "${tmpdir}/versions.tfvars"
-
 	local output
 
-	output=$(PATH="${stub_dir}" bash "${1}" "${tmpdir}/config.json" "${tmpdir}/versions.tfvars" 2>&1 || true)
+	output=$(_run_setup_test "${1}" '{"options":{"provider":"aws"}}')
 
-	rm -rf "${stub_dir}" "${tmpdir}"
-
-	if [[ "${output}" == *"must contain a root object named \"variables\""* ]]
+	if [[ "${output}" == *'must contain a root object named "variables"'* ]]
 	then
 		return 0
 	fi
-
-	echo "Output was: ${output}" >&2
 
 	return 1
 }
 
 function _test_aborts_with_malformed_config_json {
-	local stub_dir
-
-	stub_dir=$(_make_stub_path)
-
-	_make_real_terraform_stub "${stub_dir}"
-
-	local tmpdir
-
-	tmpdir=$(mktemp -d)
-
-	echo '{this is not valid json' > "${tmpdir}/config.json"
-
-	touch "${tmpdir}/versions.tfvars"
-
 	local output
 
-	output=$(PATH="${stub_dir}" bash "${1}" "${tmpdir}/config.json" "${tmpdir}/versions.tfvars" 2>&1 || true)
-
-	rm -rf "${stub_dir}" "${tmpdir}"
+	output=$(_run_setup_test "${1}" '{not valid json')
 
 	if [[ "${output}" == *"is not valid JSON"* ]]
 	then
 		return 0
 	fi
-
-	echo "Output was: ${output}" >&2
 
 	return 1
 }
@@ -187,88 +185,44 @@ function _test_aborts_with_missing_config_file {
 
 	stub_dir=$(_make_stub_path)
 
-	_make_real_terraform_stub "${stub_dir}"
-
-	local tmpdir
-
-	tmpdir=$(mktemp -d)
-
-	touch "${tmpdir}/versions.tfvars"
+	_make_terraform_stub "${stub_dir}" "1.10.0"
 
 	local output
 
-	output=$(PATH="${stub_dir}" bash "${1}" "${tmpdir}/does-not-exist.json" "${tmpdir}/versions.tfvars" 2>&1 || true)
+	output=$(PATH="${stub_dir}" bash "${1}" /does/not/exist.json /does/not/exist.tfvars 2>&1 || true)
 
-	rm -rf "${stub_dir}" "${tmpdir}"
+	rm -rf "${stub_dir}"
 
 	if [[ "${output}" == *"Configuration JSON file"*"does not exist"* ]]
 	then
 		return 0
 	fi
 
-	echo "Output was: ${output}" >&2
-
 	return 1
 }
 
 function _test_aborts_with_missing_required_utility {
-	local stub_dir
-
-	stub_dir=$(_make_stub_path)
-
-	_make_real_terraform_stub "${stub_dir}"
-
-	rm "${stub_dir}/jq"
-
-	local tmpdir
-
-	tmpdir=$(mktemp -d)
-
-	echo '{"variables":{}}' > "${tmpdir}/config.json"
-
-	touch "${tmpdir}/versions.tfvars"
-
 	local output
 
-	output=$(PATH="${stub_dir}" bash "${1}" "${tmpdir}/config.json" "${tmpdir}/versions.tfvars" 2>&1 || true)
-
-	rm -rf "${stub_dir}" "${tmpdir}"
+	output=$(_run_setup_test "${1}" '{"variables":{}}' "1.10.0" jq)
 
 	if [[ "${output}" == *"utility jq is not installed"* ]]
 	then
 		return 0
 	fi
 
-	echo "Output was: ${output}" >&2
-
 	return 1
 }
 
 function _test_aborts_with_missing_tfvars_file {
-	local stub_dir
-
-	stub_dir=$(_make_stub_path)
-
-	_make_real_terraform_stub "${stub_dir}"
-
-	local tmpdir
-
-	tmpdir=$(mktemp -d)
-
-	echo '{"variables":{}}' > "${tmpdir}/config.json"
-
 	local output
 
-	output=$(PATH="${stub_dir}" bash "${1}" "${tmpdir}/config.json" "${tmpdir}/does-not-exist.tfvars" 2>&1 || true)
-
-	rm -rf "${stub_dir}" "${tmpdir}"
+	output=$(_run_setup_test "${1}" '{"variables":{}}' "1.10.0" "" no)
 
 	if [[ "${output}" == *"Versions tfvars file"*"does not exist"* ]]
 	then
 		return 0
 	fi
-
-	echo "Output was: ${output}" >&2
 
 	return 1
 }
@@ -283,51 +237,18 @@ function _test_aborts_with_no_arguments {
 		return 0
 	fi
 
-	echo "Output was: ${output}" >&2
-
 	return 1
 }
 
 function _test_aborts_with_old_terraform_version {
-	local stub_dir
-
-	stub_dir=$(_make_stub_path)
-
-	cat > "${stub_dir}/terraform" <<'EOF'
-#!/usr/bin/env bash
-
-if [ "${1:-}" = "--version" ]
-then
-	echo "Terraform v1.9.9"
-
-	exit 0
-fi
-
-exit 0
-EOF
-
-	chmod +x "${stub_dir}/terraform"
-
-	local tmpdir
-
-	tmpdir=$(mktemp -d)
-
-	echo '{"variables":{}}' > "${tmpdir}/config.json"
-
-	touch "${tmpdir}/versions.tfvars"
-
 	local output
 
-	output=$(PATH="${stub_dir}" bash "${1}" "${tmpdir}/config.json" "${tmpdir}/versions.tfvars" 2>&1 || true)
-
-	rm -rf "${stub_dir}" "${tmpdir}"
+	output=$(_run_setup_test "${1}" '{"variables":{}}' "1.9.9")
 
 	if [[ "${output}" == *"below minimum version"* ]]
 	then
 		return 0
 	fi
-
-	echo "Output was: ${output}" >&2
 
 	return 1
 }

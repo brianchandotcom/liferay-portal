@@ -1436,13 +1436,13 @@ definition {
 			key_searchAssetTitle = "WC",
 			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_HIGHLIGHT",
 			locator2 = "background-color",
-			value1 = "rgba(255, 228, 153, 1)");
+			value1 = "rgba(252, 248, 227, 1)");
 
 		AssertCssValue(
 			key_searchAssetTitle = "Title",
 			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_HIGHLIGHT",
 			locator2 = "background-color",
-			value1 = "rgba(255, 228, 153, 1)");
+			value1 = "rgba(252, 248, 227, 1)");
 	}
 
 	@priority = 3

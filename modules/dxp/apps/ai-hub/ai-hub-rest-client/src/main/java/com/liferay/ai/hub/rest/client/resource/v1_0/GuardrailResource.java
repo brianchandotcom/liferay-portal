@@ -5,10 +5,10 @@
 
 package com.liferay.ai.hub.rest.client.resource.v1_0;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.ModelArmorTemplate;
+import com.liferay.ai.hub.rest.client.dto.v1_0.Guardrail;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.problem.Problem;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.ModelArmorTemplateSerDes;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.GuardrailSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -26,44 +26,41 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface ModelArmorTemplateResource {
+public interface GuardrailResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public void deleteModelArmorTemplateByExternalReferenceCode(
+	public void deleteGuardrailByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteModelArmorTemplateByExternalReferenceCodeHttpResponse(
+			deleteGuardrailByExternalReferenceCodeHttpResponse(
 				String externalReferenceCode)
 		throws Exception;
 
-	public ModelArmorTemplate postModelArmorTemplate(
-			ModelArmorTemplate modelArmorTemplate)
+	public Guardrail postGuardrail(Guardrail guardrail) throws Exception;
+
+	public HttpInvoker.HttpResponse postGuardrailHttpResponse(
+			Guardrail guardrail)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postModelArmorTemplateHttpResponse(
-			ModelArmorTemplate modelArmorTemplate)
+	public void postGuardrailBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void postModelArmorTemplateBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postModelArmorTemplateBatchHttpResponse(
+	public HttpInvoker.HttpResponse postGuardrailBatchHttpResponse(
 			String callbackURL, Object object)
 		throws Exception;
 
-	public ModelArmorTemplate putModelArmorTemplateByExternalReferenceCode(
-			String externalReferenceCode, ModelArmorTemplate modelArmorTemplate)
+	public Guardrail putGuardrailByExternalReferenceCode(
+			String externalReferenceCode, Guardrail guardrail)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putModelArmorTemplateByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode,
-				ModelArmorTemplate modelArmorTemplate)
+			putGuardrailByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode, Guardrail guardrail)
 		throws Exception;
 
 	public static class Builder {
@@ -79,8 +76,8 @@ public interface ModelArmorTemplateResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public ModelArmorTemplateResource build() {
-			return new ModelArmorTemplateResourceImpl(this);
+		public GuardrailResource build() {
+			return new GuardrailResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -172,15 +169,14 @@ public interface ModelArmorTemplateResource {
 
 	}
 
-	public static class ModelArmorTemplateResourceImpl
-		implements ModelArmorTemplateResource {
+	public static class GuardrailResourceImpl implements GuardrailResource {
 
-		public void deleteModelArmorTemplateByExternalReferenceCode(
+		public void deleteGuardrailByExternalReferenceCode(
 				String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteModelArmorTemplateByExternalReferenceCodeHttpResponse(
+				deleteGuardrailByExternalReferenceCodeHttpResponse(
 					externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -243,7 +239,7 @@ public interface ModelArmorTemplateResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteModelArmorTemplateByExternalReferenceCodeHttpResponse(
+				deleteGuardrailByExternalReferenceCodeHttpResponse(
 					String externalReferenceCode)
 			throws Exception {
 
@@ -271,7 +267,7 @@ public interface ModelArmorTemplateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/{externalReferenceCode}");
+						"/o/ai-hub/v1.0/guardrails/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -283,12 +279,9 @@ public interface ModelArmorTemplateResource {
 			return httpInvoker.invoke();
 		}
 
-		public ModelArmorTemplate postModelArmorTemplate(
-				ModelArmorTemplate modelArmorTemplate)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postModelArmorTemplateHttpResponse(modelArmorTemplate);
+		public Guardrail postGuardrail(Guardrail guardrail) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = postGuardrailHttpResponse(
+				guardrail);
 
 			String content = httpResponse.getContent();
 
@@ -338,7 +331,7 @@ public interface ModelArmorTemplateResource {
 			}
 
 			try {
-				return ModelArmorTemplateSerDes.toDTO(content);
+				return GuardrailSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -349,13 +342,13 @@ public interface ModelArmorTemplateResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postModelArmorTemplateHttpResponse(
-				ModelArmorTemplate modelArmorTemplate)
+		public HttpInvoker.HttpResponse postGuardrailHttpResponse(
+				Guardrail guardrail)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(modelArmorTemplate.toString(), "application/json");
+			httpInvoker.body(guardrail.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -379,7 +372,7 @@ public interface ModelArmorTemplateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/model-armor-templates");
+						"/o/ai-hub/v1.0/guardrails");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -389,12 +382,11 @@ public interface ModelArmorTemplateResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postModelArmorTemplateBatch(
-				String callbackURL, Object object)
+		public void postGuardrailBatch(String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postModelArmorTemplateBatchHttpResponse(callbackURL, object);
+				postGuardrailBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -444,7 +436,7 @@ public interface ModelArmorTemplateResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postModelArmorTemplateBatchHttpResponse(
+		public HttpInvoker.HttpResponse postGuardrailBatchHttpResponse(
 				String callbackURL, Object object)
 			throws Exception {
 
@@ -479,7 +471,7 @@ public interface ModelArmorTemplateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/model-armor-templates/batch");
+						"/o/ai-hub/v1.0/guardrails/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -489,14 +481,13 @@ public interface ModelArmorTemplateResource {
 			return httpInvoker.invoke();
 		}
 
-		public ModelArmorTemplate putModelArmorTemplateByExternalReferenceCode(
-				String externalReferenceCode,
-				ModelArmorTemplate modelArmorTemplate)
+		public Guardrail putGuardrailByExternalReferenceCode(
+				String externalReferenceCode, Guardrail guardrail)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putModelArmorTemplateByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, modelArmorTemplate);
+				putGuardrailByExternalReferenceCodeHttpResponse(
+					externalReferenceCode, guardrail);
 
 			String content = httpResponse.getContent();
 
@@ -546,7 +537,7 @@ public interface ModelArmorTemplateResource {
 			}
 
 			try {
-				return ModelArmorTemplateSerDes.toDTO(content);
+				return GuardrailSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -558,14 +549,13 @@ public interface ModelArmorTemplateResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putModelArmorTemplateByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode,
-					ModelArmorTemplate modelArmorTemplate)
+				putGuardrailByExternalReferenceCodeHttpResponse(
+					String externalReferenceCode, Guardrail guardrail)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(modelArmorTemplate.toString(), "application/json");
+			httpInvoker.body(guardrail.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -589,7 +579,7 @@ public interface ModelArmorTemplateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code/{externalReferenceCode}");
+						"/o/ai-hub/v1.0/guardrails/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -601,16 +591,16 @@ public interface ModelArmorTemplateResource {
 			return httpInvoker.invoke();
 		}
 
-		private ModelArmorTemplateResourceImpl(Builder builder) {
+		private GuardrailResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			ModelArmorTemplateResource.class.getName());
+			GuardrailResource.class.getName());
 
 		private Builder _builder;
 
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:685772972
+// LIFERAY-REST-BUILDER-HASH:391613812

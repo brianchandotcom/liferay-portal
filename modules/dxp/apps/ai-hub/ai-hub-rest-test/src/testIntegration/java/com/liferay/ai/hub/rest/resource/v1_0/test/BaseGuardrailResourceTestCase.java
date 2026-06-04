@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.ModelArmorTemplate;
+import com.liferay.ai.hub.rest.client.dto.v1_0.Guardrail;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.pagination.Page;
-import com.liferay.ai.hub.rest.client.resource.v1_0.ModelArmorTemplateResource;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.ModelArmorTemplateSerDes;
+import com.liferay.ai.hub.rest.client.resource.v1_0.GuardrailResource;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.GuardrailSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
@@ -76,7 +76,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseModelArmorTemplateResourceTestCase {
+public abstract class BaseGuardrailResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -97,12 +97,12 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_modelArmorTemplateResource.setContextCompany(testCompany);
+		_guardrailResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		modelArmorTemplateResource = ModelArmorTemplateResource.builder(
+		guardrailResource = GuardrailResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -135,24 +135,23 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		ModelArmorTemplate modelArmorTemplate1 = randomModelArmorTemplate();
+		Guardrail guardrail1 = randomGuardrail();
 
-		String json = objectMapper.writeValueAsString(modelArmorTemplate1);
+		String json = objectMapper.writeValueAsString(guardrail1);
 
-		ModelArmorTemplate modelArmorTemplate2 = ModelArmorTemplateSerDes.toDTO(
-			json);
+		Guardrail guardrail2 = GuardrailSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(modelArmorTemplate1, modelArmorTemplate2));
+		Assert.assertTrue(equals(guardrail1, guardrail2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		ModelArmorTemplate modelArmorTemplate = randomModelArmorTemplate();
+		Guardrail guardrail = randomGuardrail();
 
-		String json1 = objectMapper.writeValueAsString(modelArmorTemplate);
-		String json2 = ModelArmorTemplateSerDes.toJSON(modelArmorTemplate);
+		String json1 = objectMapper.writeValueAsString(guardrail);
+		String json2 = GuardrailSerDes.toJSON(guardrail);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -180,43 +179,40 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		ModelArmorTemplate modelArmorTemplate = randomModelArmorTemplate();
+		Guardrail guardrail = randomGuardrail();
 
-		modelArmorTemplate.setDescription(regex);
-		modelArmorTemplate.setExternalReferenceCode(regex);
-		modelArmorTemplate.setLocation(regex);
-		modelArmorTemplate.setTitle(regex);
+		guardrail.setDescription(regex);
+		guardrail.setExternalReferenceCode(regex);
+		guardrail.setLocation(regex);
+		guardrail.setTitle(regex);
 
-		String json = ModelArmorTemplateSerDes.toJSON(modelArmorTemplate);
+		String json = GuardrailSerDes.toJSON(guardrail);
 
 		Assert.assertFalse(json.contains(regex));
 
-		modelArmorTemplate = ModelArmorTemplateSerDes.toDTO(json);
+		guardrail = GuardrailSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, modelArmorTemplate.getDescription());
-		Assert.assertEquals(
-			regex, modelArmorTemplate.getExternalReferenceCode());
-		Assert.assertEquals(regex, modelArmorTemplate.getLocation());
-		Assert.assertEquals(regex, modelArmorTemplate.getTitle());
+		Assert.assertEquals(regex, guardrail.getDescription());
+		Assert.assertEquals(regex, guardrail.getExternalReferenceCode());
+		Assert.assertEquals(regex, guardrail.getLocation());
+		Assert.assertEquals(regex, guardrail.getTitle());
 	}
 
 	@Test
-	public void testDeleteModelArmorTemplateByExternalReferenceCode()
-		throws Exception {
-
+	public void testDeleteGuardrailByExternalReferenceCode() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ModelArmorTemplate modelArmorTemplate =
-			testDeleteModelArmorTemplateByExternalReferenceCode_addModelArmorTemplate();
+		Guardrail guardrail =
+			testDeleteGuardrailByExternalReferenceCode_addGuardrail();
 
 		assertHttpResponseStatusCode(
 			204,
-			modelArmorTemplateResource.
-				deleteModelArmorTemplateByExternalReferenceCodeHttpResponse(
-					modelArmorTemplate.getExternalReferenceCode()));
+			guardrailResource.
+				deleteGuardrailByExternalReferenceCodeHttpResponse(
+					guardrail.getExternalReferenceCode()));
 	}
 
-	protected ModelArmorTemplate
-			testDeleteModelArmorTemplateByExternalReferenceCode_addModelArmorTemplate()
+	protected Guardrail
+			testDeleteGuardrailByExternalReferenceCode_addGuardrail()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -224,21 +220,17 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 	}
 
 	@Test
-	public void testPostModelArmorTemplate() throws Exception {
-		ModelArmorTemplate randomModelArmorTemplate =
-			randomModelArmorTemplate();
+	public void testPostGuardrail() throws Exception {
+		Guardrail randomGuardrail = randomGuardrail();
 
-		ModelArmorTemplate postModelArmorTemplate =
-			testPostModelArmorTemplate_addModelArmorTemplate(
-				randomModelArmorTemplate);
+		Guardrail postGuardrail = testPostGuardrail_addGuardrail(
+			randomGuardrail);
 
-		assertEquals(randomModelArmorTemplate, postModelArmorTemplate);
-		assertValid(postModelArmorTemplate);
+		assertEquals(randomGuardrail, postGuardrail);
+		assertValid(postGuardrail);
 	}
 
-	protected ModelArmorTemplate
-			testPostModelArmorTemplate_addModelArmorTemplate(
-				ModelArmorTemplate modelArmorTemplate)
+	protected Guardrail testPostGuardrail_addGuardrail(Guardrail guardrail)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -246,95 +238,82 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 	}
 
 	@Test
-	public void testPutModelArmorTemplateByExternalReferenceCode()
-		throws Exception {
+	public void testPutGuardrailByExternalReferenceCode() throws Exception {
+		Guardrail postGuardrail =
+			testPutGuardrailByExternalReferenceCode_addGuardrail();
 
-		ModelArmorTemplate postModelArmorTemplate =
-			testPutModelArmorTemplateByExternalReferenceCode_addModelArmorTemplate();
+		Guardrail randomGuardrail = randomGuardrail();
 
-		ModelArmorTemplate randomModelArmorTemplate =
-			randomModelArmorTemplate();
+		Guardrail putGuardrail =
+			guardrailResource.putGuardrailByExternalReferenceCode(
+				postGuardrail.getExternalReferenceCode(), randomGuardrail);
 
-		ModelArmorTemplate putModelArmorTemplate =
-			modelArmorTemplateResource.
-				putModelArmorTemplateByExternalReferenceCode(
-					postModelArmorTemplate.getExternalReferenceCode(),
-					randomModelArmorTemplate);
+		assertEquals(randomGuardrail, putGuardrail);
+		assertValid(putGuardrail);
 
-		assertEquals(randomModelArmorTemplate, putModelArmorTemplate);
-		assertValid(putModelArmorTemplate);
+		Guardrail getGuardrail =
+			testPutGuardrailByExternalReferenceCode_getGuardrail(
+				putGuardrail.getExternalReferenceCode());
 
-		ModelArmorTemplate getModelArmorTemplate =
-			testPutModelArmorTemplateByExternalReferenceCode_getModelArmorTemplate(
-				putModelArmorTemplate.getExternalReferenceCode());
+		assertEquals(randomGuardrail, getGuardrail);
+		assertValid(getGuardrail);
 
-		assertEquals(randomModelArmorTemplate, getModelArmorTemplate);
-		assertValid(getModelArmorTemplate);
+		Guardrail newGuardrail =
+			testPutGuardrailByExternalReferenceCode_createGuardrail();
 
-		ModelArmorTemplate newModelArmorTemplate =
-			testPutModelArmorTemplateByExternalReferenceCode_createModelArmorTemplate();
+		putGuardrail = guardrailResource.putGuardrailByExternalReferenceCode(
+			newGuardrail.getExternalReferenceCode(), newGuardrail);
 
-		putModelArmorTemplate =
-			modelArmorTemplateResource.
-				putModelArmorTemplateByExternalReferenceCode(
-					newModelArmorTemplate.getExternalReferenceCode(),
-					newModelArmorTemplate);
+		assertEquals(newGuardrail, putGuardrail);
+		assertValid(putGuardrail);
 
-		assertEquals(newModelArmorTemplate, putModelArmorTemplate);
-		assertValid(putModelArmorTemplate);
+		getGuardrail = testPutGuardrailByExternalReferenceCode_getGuardrail(
+			putGuardrail.getExternalReferenceCode());
 
-		getModelArmorTemplate =
-			testPutModelArmorTemplateByExternalReferenceCode_getModelArmorTemplate(
-				putModelArmorTemplate.getExternalReferenceCode());
-
-		assertEquals(newModelArmorTemplate, getModelArmorTemplate);
+		assertEquals(newGuardrail, getGuardrail);
 
 		Assert.assertEquals(
-			newModelArmorTemplate.getExternalReferenceCode(),
-			putModelArmorTemplate.getExternalReferenceCode());
+			newGuardrail.getExternalReferenceCode(),
+			putGuardrail.getExternalReferenceCode());
 	}
 
-	protected ModelArmorTemplate
-		testPutModelArmorTemplateByExternalReferenceCode_getModelArmorTemplate(
-			String externalReferenceCode) {
+	protected Guardrail testPutGuardrailByExternalReferenceCode_getGuardrail(
+		String externalReferenceCode) {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected ModelArmorTemplate
-			testPutModelArmorTemplateByExternalReferenceCode_addModelArmorTemplate()
+	protected Guardrail testPutGuardrailByExternalReferenceCode_addGuardrail()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected ModelArmorTemplate
-			testPutModelArmorTemplateByExternalReferenceCode_createModelArmorTemplate()
+	protected Guardrail
+			testPutGuardrailByExternalReferenceCode_createGuardrail()
 		throws Exception {
 
-		return randomModelArmorTemplate();
+		return randomGuardrail();
 	}
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		ModelArmorTemplate modelArmorTemplate1 =
-			testBatchEngineDeleteImportTask_addModelArmorTemplate();
+		Guardrail guardrail1 = testBatchEngineDeleteImportTask_addGuardrail();
 
-		testBatchEngineDeleteImportTask_deleteModelArmorTemplate(
-			200, modelArmorTemplate1.getExternalReferenceCode());
+		testBatchEngineDeleteImportTask_deleteGuardrail(
+			200, guardrail1.getExternalReferenceCode());
 	}
 
-	protected ModelArmorTemplate
-			testBatchEngineDeleteImportTask_addModelArmorTemplate()
+	protected Guardrail testBatchEngineDeleteImportTask_addGuardrail()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void testBatchEngineDeleteImportTask_deleteModelArmorTemplate(
+	protected void testBatchEngineDeleteImportTask_deleteGuardrail(
 			int expectedStatusCode, String externalReferenceCode,
 			String... parameters)
 		throws Exception {
@@ -352,8 +331,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 
 		HttpResponse httpResponse =
 			importTaskResource.deleteImportTaskHttpResponse(
-				"com.liferay.ai.hub.rest.dto.v1_0.ModelArmorTemplate", null,
-				null, null, null,
+				"com.liferay.ai.hub.rest.dto.v1_0.Guardrail", null, null, null,
+				null,
 				JSONUtil.putAll(
 					JSONUtil.put(
 						"externalReferenceCode", () -> externalReferenceCode)));
@@ -368,13 +347,12 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 	}
 
 	protected void assertContains(
-		ModelArmorTemplate modelArmorTemplate,
-		List<ModelArmorTemplate> modelArmorTemplates) {
+		Guardrail guardrail, List<Guardrail> guardrails) {
 
 		boolean contains = false;
 
-		for (ModelArmorTemplate item : modelArmorTemplates) {
-			if (equals(modelArmorTemplate, item)) {
+		for (Guardrail item : guardrails) {
+			if (equals(guardrail, item)) {
 				contains = true;
 
 				break;
@@ -382,8 +360,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			modelArmorTemplates + " does not contain " + modelArmorTemplate,
-			contains);
+			guardrails + " does not contain " + guardrail, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -394,46 +371,35 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(
-		ModelArmorTemplate modelArmorTemplate1,
-		ModelArmorTemplate modelArmorTemplate2) {
-
+	protected void assertEquals(Guardrail guardrail1, Guardrail guardrail2) {
 		Assert.assertTrue(
-			modelArmorTemplate1 + " does not equal " + modelArmorTemplate2,
-			equals(modelArmorTemplate1, modelArmorTemplate2));
+			guardrail1 + " does not equal " + guardrail2,
+			equals(guardrail1, guardrail2));
 	}
 
 	protected void assertEquals(
-		List<ModelArmorTemplate> modelArmorTemplates1,
-		List<ModelArmorTemplate> modelArmorTemplates2) {
+		List<Guardrail> guardrails1, List<Guardrail> guardrails2) {
 
-		Assert.assertEquals(
-			modelArmorTemplates1.size(), modelArmorTemplates2.size());
+		Assert.assertEquals(guardrails1.size(), guardrails2.size());
 
-		for (int i = 0; i < modelArmorTemplates1.size(); i++) {
-			ModelArmorTemplate modelArmorTemplate1 = modelArmorTemplates1.get(
-				i);
-			ModelArmorTemplate modelArmorTemplate2 = modelArmorTemplates2.get(
-				i);
+		for (int i = 0; i < guardrails1.size(); i++) {
+			Guardrail guardrail1 = guardrails1.get(i);
+			Guardrail guardrail2 = guardrails2.get(i);
 
-			assertEquals(modelArmorTemplate1, modelArmorTemplate2);
+			assertEquals(guardrail1, guardrail2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<ModelArmorTemplate> modelArmorTemplates1,
-		List<ModelArmorTemplate> modelArmorTemplates2) {
+		List<Guardrail> guardrails1, List<Guardrail> guardrails2) {
 
-		Assert.assertEquals(
-			modelArmorTemplates1.size(), modelArmorTemplates2.size());
+		Assert.assertEquals(guardrails1.size(), guardrails2.size());
 
-		for (ModelArmorTemplate modelArmorTemplate1 : modelArmorTemplates1) {
+		for (Guardrail guardrail1 : guardrails1) {
 			boolean contains = false;
 
-			for (ModelArmorTemplate modelArmorTemplate2 :
-					modelArmorTemplates2) {
-
-				if (equals(modelArmorTemplate1, modelArmorTemplate2)) {
+			for (Guardrail guardrail2 : guardrails2) {
+				if (equals(guardrail1, guardrail2)) {
 					contains = true;
 
 					break;
@@ -441,22 +407,18 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				modelArmorTemplates2 + " does not contain " +
-					modelArmorTemplate1,
-				contains);
+				guardrails2 + " does not contain " + guardrail1, contains);
 		}
 	}
 
-	protected void assertValid(ModelArmorTemplate modelArmorTemplate)
-		throws Exception {
-
+	protected void assertValid(Guardrail guardrail) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("active", additionalAssertFieldName)) {
-				if (modelArmorTemplate.getActive() == null) {
+				if (guardrail.getActive() == null) {
 					valid = false;
 				}
 
@@ -464,7 +426,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			}
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
-				if (modelArmorTemplate.getDescription() == null) {
+				if (guardrail.getDescription() == null) {
 					valid = false;
 				}
 
@@ -474,7 +436,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getExternalReferenceCode() == null) {
+				if (guardrail.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -482,7 +444,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			}
 
 			if (Objects.equals("guardrailType", additionalAssertFieldName)) {
-				if (modelArmorTemplate.getGuardrailType() == null) {
+				if (guardrail.getGuardrailType() == null) {
 					valid = false;
 				}
 
@@ -490,7 +452,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			}
 
 			if (Objects.equals("location", additionalAssertFieldName)) {
-				if (modelArmorTemplate.getLocation() == null) {
+				if (guardrail.getLocation() == null) {
 					valid = false;
 				}
 
@@ -500,7 +462,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			if (Objects.equals(
 					"maliciousUriFilterEnabled", additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getMaliciousUriFilterEnabled() == null) {
+				if (guardrail.getMaliciousUriFilterEnabled() == null) {
 					valid = false;
 				}
 
@@ -511,9 +473,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					"multilanguageDetectionEnabled",
 					additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getMultilanguageDetectionEnabled() ==
-						null) {
-
+				if (guardrail.getMultilanguageDetectionEnabled() == null) {
 					valid = false;
 				}
 
@@ -524,9 +484,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					"piAndJailbreakConfidenceLevel",
 					additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getPiAndJailbreakConfidenceLevel() ==
-						null) {
-
+				if (guardrail.getPiAndJailbreakConfidenceLevel() == null) {
 					valid = false;
 				}
 
@@ -536,9 +494,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			if (Objects.equals(
 					"piAndJailbreakFilterEnabled", additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getPiAndJailbreakFilterEnabled() ==
-						null) {
-
+				if (guardrail.getPiAndJailbreakFilterEnabled() == null) {
 					valid = false;
 				}
 
@@ -548,7 +504,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			if (Objects.equals(
 					"raiDangerousLevel", additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getRaiDangerousLevel() == null) {
+				if (guardrail.getRaiDangerousLevel() == null) {
 					valid = false;
 				}
 
@@ -558,7 +514,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			if (Objects.equals(
 					"raiHarassmentLevel", additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getRaiHarassmentLevel() == null) {
+				if (guardrail.getRaiHarassmentLevel() == null) {
 					valid = false;
 				}
 
@@ -568,7 +524,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			if (Objects.equals(
 					"raiHateSpeechLevel", additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getRaiHateSpeechLevel() == null) {
+				if (guardrail.getRaiHateSpeechLevel() == null) {
 					valid = false;
 				}
 
@@ -578,7 +534,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			if (Objects.equals(
 					"raiSexuallyExplicitLevel", additionalAssertFieldName)) {
 
-				if (modelArmorTemplate.getRaiSexuallyExplicitLevel() == null) {
+				if (guardrail.getRaiSexuallyExplicitLevel() == null) {
 					valid = false;
 				}
 
@@ -586,7 +542,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			}
 
 			if (Objects.equals("sdpFilterEnabled", additionalAssertFieldName)) {
-				if (modelArmorTemplate.getSdpFilterEnabled() == null) {
+				if (guardrail.getSdpFilterEnabled() == null) {
 					valid = false;
 				}
 
@@ -594,7 +550,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			}
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
-				if (modelArmorTemplate.getTitle() == null) {
+				if (guardrail.getTitle() == null) {
 					valid = false;
 				}
 
@@ -602,7 +558,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			}
 
 			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
-				if (modelArmorTemplate.getTitle_i18n() == null) {
+				if (guardrail.getTitle_i18n() == null) {
 					valid = false;
 				}
 
@@ -617,20 +573,19 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ModelArmorTemplate> page) {
+	protected void assertValid(Page<Guardrail> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<ModelArmorTemplate> page,
+		Page<Guardrail> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<ModelArmorTemplate> modelArmorTemplates =
-			page.getItems();
+		java.util.Collection<Guardrail> guardrails = page.getItems();
 
-		int size = modelArmorTemplates.size();
+		int size = guardrails.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -672,8 +627,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.rest.dto.v1_0.ModelArmorTemplate.
-						class)) {
+					com.liferay.ai.hub.rest.dto.v1_0.Guardrail.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -721,11 +675,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(
-		ModelArmorTemplate modelArmorTemplate1,
-		ModelArmorTemplate modelArmorTemplate2) {
-
-		if (modelArmorTemplate1 == modelArmorTemplate2) {
+	protected boolean equals(Guardrail guardrail1, Guardrail guardrail2) {
+		if (guardrail1 == guardrail2) {
 			return true;
 		}
 
@@ -734,8 +685,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 
 			if (Objects.equals("active", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getActive(),
-						modelArmorTemplate2.getActive())) {
+						guardrail1.getActive(), guardrail2.getActive())) {
 
 					return false;
 				}
@@ -745,8 +695,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getDescription(),
-						modelArmorTemplate2.getDescription())) {
+						guardrail1.getDescription(),
+						guardrail2.getDescription())) {
 
 					return false;
 				}
@@ -758,8 +708,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getExternalReferenceCode(),
-						modelArmorTemplate2.getExternalReferenceCode())) {
+						guardrail1.getExternalReferenceCode(),
+						guardrail2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -769,8 +719,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 
 			if (Objects.equals("guardrailType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getGuardrailType(),
-						modelArmorTemplate2.getGuardrailType())) {
+						guardrail1.getGuardrailType(),
+						guardrail2.getGuardrailType())) {
 
 					return false;
 				}
@@ -780,8 +730,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 
 			if (Objects.equals("location", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getLocation(),
-						modelArmorTemplate2.getLocation())) {
+						guardrail1.getLocation(), guardrail2.getLocation())) {
 
 					return false;
 				}
@@ -793,8 +742,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					"maliciousUriFilterEnabled", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getMaliciousUriFilterEnabled(),
-						modelArmorTemplate2.getMaliciousUriFilterEnabled())) {
+						guardrail1.getMaliciousUriFilterEnabled(),
+						guardrail2.getMaliciousUriFilterEnabled())) {
 
 					return false;
 				}
@@ -807,9 +756,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getMultilanguageDetectionEnabled(),
-						modelArmorTemplate2.
-							getMultilanguageDetectionEnabled())) {
+						guardrail1.getMultilanguageDetectionEnabled(),
+						guardrail2.getMultilanguageDetectionEnabled())) {
 
 					return false;
 				}
@@ -822,9 +770,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getPiAndJailbreakConfidenceLevel(),
-						modelArmorTemplate2.
-							getPiAndJailbreakConfidenceLevel())) {
+						guardrail1.getPiAndJailbreakConfidenceLevel(),
+						guardrail2.getPiAndJailbreakConfidenceLevel())) {
 
 					return false;
 				}
@@ -836,8 +783,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					"piAndJailbreakFilterEnabled", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getPiAndJailbreakFilterEnabled(),
-						modelArmorTemplate2.getPiAndJailbreakFilterEnabled())) {
+						guardrail1.getPiAndJailbreakFilterEnabled(),
+						guardrail2.getPiAndJailbreakFilterEnabled())) {
 
 					return false;
 				}
@@ -849,8 +796,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					"raiDangerousLevel", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getRaiDangerousLevel(),
-						modelArmorTemplate2.getRaiDangerousLevel())) {
+						guardrail1.getRaiDangerousLevel(),
+						guardrail2.getRaiDangerousLevel())) {
 
 					return false;
 				}
@@ -862,8 +809,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					"raiHarassmentLevel", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getRaiHarassmentLevel(),
-						modelArmorTemplate2.getRaiHarassmentLevel())) {
+						guardrail1.getRaiHarassmentLevel(),
+						guardrail2.getRaiHarassmentLevel())) {
 
 					return false;
 				}
@@ -875,8 +822,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					"raiHateSpeechLevel", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getRaiHateSpeechLevel(),
-						modelArmorTemplate2.getRaiHateSpeechLevel())) {
+						guardrail1.getRaiHateSpeechLevel(),
+						guardrail2.getRaiHateSpeechLevel())) {
 
 					return false;
 				}
@@ -888,8 +835,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 					"raiSexuallyExplicitLevel", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getRaiSexuallyExplicitLevel(),
-						modelArmorTemplate2.getRaiSexuallyExplicitLevel())) {
+						guardrail1.getRaiSexuallyExplicitLevel(),
+						guardrail2.getRaiSexuallyExplicitLevel())) {
 
 					return false;
 				}
@@ -899,8 +846,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 
 			if (Objects.equals("sdpFilterEnabled", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getSdpFilterEnabled(),
-						modelArmorTemplate2.getSdpFilterEnabled())) {
+						guardrail1.getSdpFilterEnabled(),
+						guardrail2.getSdpFilterEnabled())) {
 
 					return false;
 				}
@@ -910,8 +857,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						modelArmorTemplate1.getTitle(),
-						modelArmorTemplate2.getTitle())) {
+						guardrail1.getTitle(), guardrail2.getTitle())) {
 
 					return false;
 				}
@@ -921,8 +867,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 
 			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)modelArmorTemplate1.getTitle_i18n(),
-						(Map)modelArmorTemplate2.getTitle_i18n())) {
+						(Map)guardrail1.getTitle_i18n(),
+						(Map)guardrail2.getTitle_i18n())) {
 
 					return false;
 				}
@@ -986,13 +932,13 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_modelArmorTemplateResource instanceof EntityModelResource)) {
+		if (!(_guardrailResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_modelArmorTemplateResource;
+			(EntityModelResource)_guardrailResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -1025,8 +971,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator,
-		ModelArmorTemplate modelArmorTemplate) {
+		EntityField entityField, String operator, Guardrail guardrail) {
 
 		StringBundler sb = new StringBundler();
 
@@ -1044,7 +989,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		}
 
 		if (entityFieldName.equals("description")) {
-			Object object = modelArmorTemplate.getDescription();
+			Object object = guardrail.getDescription();
 
 			String value = String.valueOf(object);
 
@@ -1090,7 +1035,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			Object object = modelArmorTemplate.getExternalReferenceCode();
+			Object object = guardrail.getExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -1141,7 +1086,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		}
 
 		if (entityFieldName.equals("location")) {
-			Object object = modelArmorTemplate.getLocation();
+			Object object = guardrail.getLocation();
 
 			String value = String.valueOf(object);
 
@@ -1232,7 +1177,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		}
 
 		if (entityFieldName.equals("title")) {
-			Object object = modelArmorTemplate.getTitle();
+			Object object = guardrail.getTitle();
 
 			String value = String.valueOf(object);
 
@@ -1326,8 +1271,8 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected ModelArmorTemplate randomModelArmorTemplate() throws Exception {
-		return new ModelArmorTemplate() {
+	protected Guardrail randomGuardrail() throws Exception {
+		return new Guardrail() {
 			{
 				active = RandomTestUtil.randomBoolean();
 				description = StringUtil.toLowerCase(
@@ -1345,19 +1290,14 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		};
 	}
 
-	protected ModelArmorTemplate randomIrrelevantModelArmorTemplate()
-		throws Exception {
+	protected Guardrail randomIrrelevantGuardrail() throws Exception {
+		Guardrail randomIrrelevantGuardrail = randomGuardrail();
 
-		ModelArmorTemplate randomIrrelevantModelArmorTemplate =
-			randomModelArmorTemplate();
-
-		return randomIrrelevantModelArmorTemplate;
+		return randomIrrelevantGuardrail;
 	}
 
-	protected ModelArmorTemplate randomPatchModelArmorTemplate()
-		throws Exception {
-
-		return randomModelArmorTemplate();
+	protected Guardrail randomPatchGuardrail() throws Exception {
+		return randomGuardrail();
 	}
 
 	protected final JSONObject waitForFinish(
@@ -1382,7 +1322,7 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 		}
 	}
 
-	protected ModelArmorTemplateResource modelArmorTemplateResource;
+	protected GuardrailResource guardrailResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
@@ -1582,15 +1522,15 @@ public abstract class BaseModelArmorTemplateResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseModelArmorTemplateResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseGuardrailResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.rest.resource.v1_0.ModelArmorTemplateResource
-		_modelArmorTemplateResource;
+	private com.liferay.ai.hub.rest.resource.v1_0.GuardrailResource
+		_guardrailResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1091802144
+// LIFERAY-REST-BUILDER-HASH:754939531

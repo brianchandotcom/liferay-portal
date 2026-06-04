@@ -10,6 +10,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.search.NestedQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -215,6 +218,11 @@ public class AssetListFiltersUtil {
 			new TermQuery("nestedFieldArray.fieldName", propertyName),
 			BooleanClauseOccur.MUST);
 		booleanQuery.add(
+			new TermQuery(
+				"nestedFieldArray.valueFieldName",
+				subfield.substring(subfield.indexOf(CharPool.PERIOD) + 1)),
+			BooleanClauseOccur.MUST);
+		booleanQuery.add(
 			valueQuery,
 			_isNegatedOperator(operatorName) ? BooleanClauseOccur.MUST_NOT :
 				BooleanClauseOccur.MUST);
@@ -332,11 +340,19 @@ public class AssetListFiltersUtil {
 		JSONObject filterJSONObject, String subfield, String operatorName,
 		String value, ObjectField objectField) {
 
-		if (subfield.endsWith(".value_keyword") &&
-			(operatorName.equals("contains") ||
-			 operatorName.equals("not-contains"))) {
+		if (operatorName.equals("contains") ||
+			operatorName.equals("not-contains")) {
 
-			return _toPicklistQuery(filterJSONObject, subfield);
+			if (objectField.getListTypeDefinitionId() != 0) {
+				return _toPicklistQuery(filterJSONObject, subfield);
+			}
+
+			if (subfield.endsWith(".value_keyword")) {
+				return new WildcardQuery(
+					subfield,
+					StringPool.STAR + StringUtil.toLowerCase(value) +
+						StringPool.STAR);
+			}
 		}
 
 		if (operatorName.equals("between") || operatorName.equals("gt") ||
@@ -358,11 +374,13 @@ public class AssetListFiltersUtil {
 				_normalizeDateValue(value, dateTime, true), true, true);
 		}
 
+		if (subfield.endsWith(".value_keyword")) {
+			return new TermQuery(subfield, StringUtil.toLowerCase(value));
+		}
+
 		if (subfield.endsWith(".value_boolean") ||
-			subfield.endsWith(".value_date") ||
 			subfield.endsWith(".value_double") ||
 			subfield.endsWith(".value_integer") ||
-			subfield.endsWith(".value_keyword") ||
 			subfield.endsWith(".value_long") || operatorName.equals("eq") ||
 			operatorName.equals("not-eq")) {
 

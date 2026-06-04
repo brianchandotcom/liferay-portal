@@ -441,22 +441,20 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	public URL getTopLevelBuildURL() {
 		String description = getDescription();
 
-		Matcher descriptionMatcher = null;
+		Matcher matcher = null;
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(description)) {
-			descriptionMatcher = _descriptionPattern.matches(description);
+			matcher = _descriptionPattern.matches(description);
 		}
 
 		String topLevelBuildNumber = null;
 		String topLevelJobName = null;
 		String topLevelMasterHostname = null;
 
-		if (descriptionMatcher != null) {
-			topLevelBuildNumber = descriptionMatcher.group(
-				"topLevelBuildNumber");
-			topLevelJobName = descriptionMatcher.group("topLevelJobName");
-			topLevelMasterHostname = descriptionMatcher.group(
-				"topLevelMasterHostname");
+		if (matcher != null) {
+			topLevelBuildNumber = matcher.group("topLevelBuildNumber");
+			topLevelJobName = matcher.group("topLevelJobName");
+			topLevelMasterHostname = matcher.group("topLevelMasterHostname");
 		}
 		else {
 			Matcher testrayAttachmentURLMatcher =
@@ -480,7 +478,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			return new URL(
 				JenkinsResultsParserUtil.combine(
 					"https://", topLevelMasterHostname, ".liferay.com/job/",
-					topLevelJobName, "/", topLevelBuildNumber, "/"));
+					topLevelJobName, "/", topLevelBuildNumber));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

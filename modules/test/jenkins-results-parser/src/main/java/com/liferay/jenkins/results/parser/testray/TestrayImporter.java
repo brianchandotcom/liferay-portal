@@ -389,12 +389,12 @@ public class TestrayImporter {
 
 		sb.append("<a href=\"");
 
-		URL jenkinsReportTestrayAttachmentURL =
+		URL testrayAttachmentURL =
 			_topLevelBuildReport.getTestrayAttachmentURLBySuffix(
 				"jenkins-report.html.gz");
 
-		if (jenkinsReportTestrayAttachmentURL != null) {
-			sb.append(jenkinsReportTestrayAttachmentURL);
+		if (testrayAttachmentURL != null) {
+			sb.append(testrayAttachmentURL);
 			sb.append("?authuser=0");
 		}
 		else {

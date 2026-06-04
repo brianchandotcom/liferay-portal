@@ -174,7 +174,7 @@ function _get_branch {
 
 	local branch
 
-	branch=$(jq -r ".options.branch // .branch // empty" "${config_file}")
+	branch=$(jq -r ".options.branch // empty" "${config_file}")
 
 	echo "${branch}"
 }

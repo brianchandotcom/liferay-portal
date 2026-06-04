@@ -21,6 +21,7 @@ import {
 	findChannel,
 	goToSettingsStep,
 	syncAnalyticsCloud,
+	syncCommerce,
 } from './utils/analytics-settings';
 
 export const test = mergeTests(
@@ -191,5 +192,90 @@ test(
 			index: PROPERTY_SITE_COLUMN_INDEX,
 			page,
 		});
+	}
+);
+
+test(
+	'Assigned channels cannot be edited once the property commerce toggle is disabled',
+	{
+		tag: '@LRAC-12578',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		const commerceChannel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'commerce' + getRandomString(),
+				siteGroupId: site.id,
+			});
+
+		try {
+			await syncAnalyticsCloud({
+				apiHelpers,
+				channel,
+				page,
+				project,
+				siteName: site.name,
+			});
+
+			await goToSettingsStep({page, stepName: 'Properties'});
+
+			// Enable commerce and assign a channel to the property
+
+			await enableCommerceChannel({channelName: channel.name, page});
+
+			await syncCommerce({
+				channelName: channel.name,
+				commerceChannelName: commerceChannel.name,
+				page,
+			});
+
+			await expectPropertyColumn({
+				channelName: channel.name,
+				expectedValue: '1',
+				index: PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
+				page,
+			});
+
+			// Disable the commerce toggle
+
+			const propertyRow = await findChannel({
+				channelName: channel.name,
+				page,
+			});
+
+			await propertyRow.locator('.toggle-switch-check').click();
+
+			// The channel list can no longer be edited
+
+			await openAssignModal(page, channel.name);
+
+			await page.getByRole('tab', {name: 'Channel'}).click();
+
+			const channelPane = page.locator('.modal .tab-pane.active');
+
+			await expect(
+				channelPane.locator('.pagination-results')
+			).toBeVisible();
+
+			// The select-all control and every row checkbox are disabled
+
+			await expect(
+				channelPane.locator('[data-testid="globalCheckbox"]')
+			).toBeDisabled();
+
+			await expect(
+				channelPane.locator(
+					'tbody input[type="checkbox"]:not([disabled])'
+				)
+			).toHaveCount(0);
+
+			await expect(
+				channelPane.locator('tbody input[type="checkbox"]').first()
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.headlessCommerceAdminChannel
+				.deleteChannel(commerceChannel.id)
+				.catch(() => {});
+		}
 	}
 );

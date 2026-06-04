@@ -334,14 +334,10 @@ public class TestrayCloudBucket {
 		long latest = Long.MIN_VALUE;
 
 		for (Blob blob : blobPage.iterateAll()) {
-			if (blob.getCreateTime() == null) {
-				continue;
-			}
+			Long createTime = blob.getCreateTime();
 
-			long millis = blob.getCreateTime();
-
-			if (millis > latest) {
-				latest = millis;
+			if ((createTime != null) && (createTime > latest)) {
+				latest = createTime;
 			}
 		}
 

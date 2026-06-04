@@ -14,6 +14,8 @@ Test code (`**/src/test/**`) is in scope: when a test class itself changed, run 
 
 Locate the counterpart test by parallel name: `Foo.java` → `FooTest.java` in the same module's `src/test/java/**` (for OSGi modules) or `portal-impl/test/unit/**` / `portal-kernel/test/unit/**` (for portal-core).
 
+Do not select `Log4jConfigUtilTest` or `SampleSQLBuilderTest`, even when their counterpart source changes. Both are in `test.batch.class.names.excludes.permanent` and neither runs in the normal CI flow, so pr-check does not run them either.
+
 Verify each counterpart file exists before scheduling it. Fall back to the module's full unit suite only when no parallel-name counterpart exists and the module is small enough that running everything is cheap.
 
 ## Command

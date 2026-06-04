@@ -7,6 +7,7 @@
 		<suppress checks="ResourceTestInjectionCheck" files="analytics-cms-rest-test/src/testIntegration/java/com/liferay/analytics/cms/rest/resource/v1_0/test/ObjectEntryHistogramMetricResourceTest\.java" />
 		<suppress checks="ResourceTestInjectionCheck" files="analytics-cms-rest-test/src/testIntegration/java/com/liferay/analytics/cms/rest/resource/v1_0/test/ObjectEntryMetricResourceTest\.java" />
 		<suppress checks="ResourceTestInjectionCheck" files="analytics-cms-rest-test/src/testIntegration/java/com/liferay/analytics/cms/rest/resource/v1_0/test/ObjectEntryTopPagesResourceTest\.java" />
+		<suppress checks="ResourceTestInjectionCheck" files="analytics-cms-rest-test/src/testIntegration/java/com/liferay/analytics/cms/rest/resource/v1_0/test/PerformanceAssetConsumptionResourceTest\.java" />
 		<suppress checks="ResourceTestInjectionCheck" files="analytics-cms-rest-test/src/testIntegration/java/com/liferay/analytics/cms/rest/resource/v1_0/test/PerformanceOverviewMetricResourceTest\.java" />
 	</checkstyle>
 </suppressions>

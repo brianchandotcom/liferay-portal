@@ -29,6 +29,7 @@ import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
 import ACTIONS from './actions/creationMenuActions';
 import {cmpTasksFDSAtom} from './atoms';
 import AssigneeRenderer from './cell_renderers/AssigneeRenderer';
+import CalendarView from './views/calendar_view/CalendarView';
 import KanbanView from './views/kanban_view/KanbanView';
 
 export default function ProjectTasksFDSPropsTransformer({
@@ -54,6 +55,24 @@ export default function ProjectTasksFDSPropsTransformer({
 		default: false,
 		initialPaginationDelta: 20,
 	}));
+
+	const calendarView: IView = {
+		component: (props: any) => CalendarView(props),
+		default: false,
+		initialPaginationDelta: FDS_PAGINATION_DELTA_ALL,
+		label: Liferay.Language.get('calendar'),
+		name: 'calendar',
+		schema: {
+			description: 'description',
+			image: 'imageURL',
+			link: '',
+			sticker: '',
+			symbol: '',
+			title: 'embedded.title',
+		},
+		showPagination: false,
+		thumbnail: 'calendar',
+	};
 
 	const kanbanView: IView = {
 		component: (props: any) =>
@@ -272,6 +291,6 @@ export default function ProjectTasksFDSPropsTransformer({
 				});
 			}
 		},
-		views: [...nonDefaultViews, kanbanView],
+		views: [...nonDefaultViews, kanbanView, calendarView],
 	};
 }

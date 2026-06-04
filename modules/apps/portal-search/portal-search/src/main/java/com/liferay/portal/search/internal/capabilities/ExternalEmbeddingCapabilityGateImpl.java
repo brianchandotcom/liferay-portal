@@ -10,6 +10,8 @@ import com.liferay.portal.search.capabilities.ExternalEmbeddingCapabilityGate;
 import com.liferay.portal.search.capabilities.ExternalEmbeddingEligibility;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -26,6 +28,14 @@ public class ExternalEmbeddingCapabilityGateImpl
 			return ExternalEmbeddingEligibility.unavailable(
 				"semantic-search.external-embedding-capability." +
 					"missing-dxp-enterprise");
+		}
+
+		if (!Objects.equals(
+				_searchEngineInformation.getVendorString(), "Elasticsearch")) {
+
+			return ExternalEmbeddingEligibility.unavailable(
+				"semantic-search.external-embedding-capability." +
+					"unsupported-search-engine");
 		}
 
 		if (!_searchEngineInformation.isInferenceAPISupported()) {

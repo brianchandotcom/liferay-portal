@@ -440,7 +440,6 @@ public class PageSpecificationsTestUtil {
 					RandomTestUtil.randomInt(1, 3), StringPool.BLANK, groupId),
 				contentPageSpecificationExternalReferenceCode,
 				defaultPageExperienceUuid);
-
 		PageExperience pageExperience =
 			PageExperiencesTestUtil.getPageExperience(
 				pageExperienceExternalReferenceCode, pageExperienceKey, 1,

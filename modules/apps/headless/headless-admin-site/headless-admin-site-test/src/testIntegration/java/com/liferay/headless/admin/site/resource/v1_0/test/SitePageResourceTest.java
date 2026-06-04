@@ -2852,8 +2852,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		PageExperience[] pageExperiences =
 			contentPageSpecification.getPageExperiences();
 
-		PageExperience[] expectedDraftPageExperiences;
-		PageExperience[] expectedPublishedPageExperiences;
+		PageExperience[] expectedDraftPageExperiences = null;
+		PageExperience[] expectedPublishedPageExperiences = null;
 
 		if (inputIsDraft) {
 			expectedDraftPageExperiences = pageExperiences;

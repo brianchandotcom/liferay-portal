@@ -55,14 +55,14 @@ public class PageExperiencesTestUtil {
 				Arrays.toString(pageExperiences), 1, pageExperiences.length);
 		}
 
-		Map<String, PageExperience> pageExperiencesByKey = new HashMap<>();
+		Map<String, PageExperience> pageExperiencesMap = new HashMap<>();
 
 		for (PageExperience pageExperience : pageExperiences) {
-			pageExperiencesByKey.put(pageExperience.getKey(), pageExperience);
+			pageExperiencesMap.put(pageExperience.getKey(), pageExperience);
 		}
 
 		for (PageExperience expectedPageExperience : expectedPageExperiences) {
-			PageExperience pageExperience = pageExperiencesByKey.get(
+			PageExperience pageExperience = pageExperiencesMap.get(
 				expectedPageExperience.getKey());
 
 			Assert.assertEquals(
@@ -78,7 +78,7 @@ public class PageExperiencesTestUtil {
 			}
 		}
 
-		PageExperience defaultPageExperience = pageExperiencesByKey.get(
+		PageExperience defaultPageExperience = pageExperiencesMap.get(
 			SegmentsExperienceConstants.KEY_DEFAULT);
 
 		SegmentsExperience segmentsExperience =

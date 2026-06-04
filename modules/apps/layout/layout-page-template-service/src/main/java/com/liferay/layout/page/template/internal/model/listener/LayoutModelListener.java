@@ -155,13 +155,13 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return segmentsExperience;
 		}
 
-		serviceContext.setUuid(
-			GetterUtil.getString(
-				serviceContext.getAttribute("defaultSegmentsExperienceUuid")));
-
 		Serializable defaultSegmentsExperienceExternalReferenceCode =
 			serviceContext.getAttribute(
 				"defaultSegmentsExperienceExternalReferenceCode");
+
+		serviceContext.setUuid(
+			GetterUtil.getString(
+				serviceContext.getAttribute("defaultSegmentsExperienceUuid")));
 
 		return _segmentsExperienceLocalService.addDefaultSegmentsExperience(
 			GetterUtil.getString(

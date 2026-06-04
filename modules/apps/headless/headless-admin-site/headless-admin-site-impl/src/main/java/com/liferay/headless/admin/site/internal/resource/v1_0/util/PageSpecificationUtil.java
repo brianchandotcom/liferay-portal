@@ -143,8 +143,8 @@ public class PageSpecificationUtil {
 		ContentPageSpecification contentPageSpecification,
 		String sitePageExternalReferenceCode) {
 
-		ContentPageSpecification draftContentPageSpecification;
-		ContentPageSpecification publishedContentPageSpecification;
+		ContentPageSpecification draftContentPageSpecification = null;
+		ContentPageSpecification publishedContentPageSpecification = null;
 
 		if (Objects.equals(
 				contentPageSpecification.getExternalReferenceCode(),

@@ -45,10 +45,9 @@ public class OAuthClientASLocalMetadataUpgradeProcess extends UpgradeProcess {
 					"oAuthASMetadataJSON from OAuthClientASLocalMetadata")) {
 
 			while (resultSet.next()) {
+				String metadataJSON = resultSet.getString("metadataJSON");
 				long oAuthClientASLocalMetadataId = resultSet.getLong(
 					"oAuthClientASLocalMetadataId");
-
-				String metadataJSON = resultSet.getString("metadataJSON");
 
 				String updatedMetadataJSON = _removeNullEntries(
 					metadataJSON, oAuthClientASLocalMetadataId);
@@ -84,7 +83,7 @@ public class OAuthClientASLocalMetadataUpgradeProcess extends UpgradeProcess {
 			return json;
 		}
 
-		JSONObject jsonObject;
+		JSONObject jsonObject = null;
 
 		try {
 			jsonObject = JSONObjectUtils.parse(json);
@@ -104,9 +103,9 @@ public class OAuthClientASLocalMetadataUpgradeProcess extends UpgradeProcess {
 			return json;
 		}
 
-		Set<Map.Entry<String, Object>> entrySet = jsonObject.entrySet();
+		Set<Map.Entry<String, Object>> set = jsonObject.entrySet();
 
-		boolean removed = entrySet.removeIf(
+		boolean removed = set.removeIf(
 			entry -> Objects.equals(entry.getValue(), "null"));
 
 		if (!removed) {

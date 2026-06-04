@@ -47,22 +47,20 @@ public class OAuthClientASLocalMetadataLocalServiceTest {
 
 	@Test
 	public void testAddOAuthClientASLocalMetadata() throws Exception {
-		_testAddOAuthClientASLocalMetadata(null);
 		_testAddOAuthClientASLocalMetadata("authorization_endpoint");
 		_testAddOAuthClientASLocalMetadata("registration_endpoint");
 		_testAddOAuthClientASLocalMetadata("token_endpoint");
 		_testAddOAuthClientASLocalMetadata("userinfo_endpoint");
+		_testAddOAuthClientASLocalMetadata(null);
 	}
 
 	@Test
-	public void testUpdateOAuthClientASLocalMetadataWhenUserInfoEndpointIsMissing()
-		throws Exception {
-
+	public void testUpdateOAuthClientASLocalMetadata() throws Exception {
 		_oAuthClientASLocalMetadata =
 			_oAuthClientASLocalMetadataLocalService.
 				addOAuthClientASLocalMetadata(
 					TestPropsValues.getUserId(),
-					_buildMetadataJSONObject().toString(),
+					_createMetadataJSONObject().toString(),
 					"openid-configuration");
 
 		String updatedIssuer = _ISSUER + "/updated";
@@ -99,7 +97,7 @@ public class OAuthClientASLocalMetadataLocalServiceTest {
 		Assert.assertNull(oidcProviderMetadata.getUserInfoEndpointURI());
 	}
 
-	private JSONObject _buildMetadataJSONObject() {
+	private JSONObject _createMetadataJSONObject() {
 		return JSONUtil.put(
 			"authorization_endpoint", _ISSUER + "/protocol/openid-connect/auth"
 		).put(
@@ -121,7 +119,7 @@ public class OAuthClientASLocalMetadataLocalServiceTest {
 	private void _testAddOAuthClientASLocalMetadata(String missingKey)
 		throws Exception {
 
-		JSONObject metadataJSONObject = _buildMetadataJSONObject();
+		JSONObject metadataJSONObject = _createMetadataJSONObject();
 
 		if (missingKey != null) {
 			metadataJSONObject.remove(missingKey);

@@ -8,6 +8,8 @@ package com.liferay.ai.hub.web.internal.display.context;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.ai.hub.web.internal.test.util.DisplayContextTestUtil;
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -44,8 +46,11 @@ public class EditConfigurationDisplayContextTest {
 			Mockito.mock(Company.class), Mockito.mock(Group.class),
 			httpServletRequest);
 
+		_oAuth2ApplicationLocalService = Mockito.mock(
+			OAuth2ApplicationLocalService.class);
+
 		_editConfigurationDisplayContext = new EditConfigurationDisplayContext(
-			httpServletRequest);
+			httpServletRequest, _oAuth2ApplicationLocalService);
 	}
 
 	@Test
@@ -67,12 +72,30 @@ public class EditConfigurationDisplayContextTest {
 				accountEntry
 			);
 
+			OAuth2Application oAuth2Application = Mockito.mock(
+				OAuth2Application.class);
+
+			Mockito.when(
+				oAuth2Application.getClientId()
+			).thenReturn(
+				"test-client-id"
+			);
+
+			Mockito.when(
+				_oAuth2ApplicationLocalService.
+					fetchOAuth2ApplicationByExternalReferenceCode(
+						Mockito.anyString(), Mockito.anyLong())
+			).thenReturn(
+				oAuth2Application
+			);
+
 			Map<String, Object> reactData =
 				_editConfigurationDisplayContext.getReactData();
 
 			Assert.assertEquals(1L, reactData.get("accountEntryId"));
 			Assert.assertEquals(
 				"http://localhost:8080/web/test", reactData.get("backURL"));
+			Assert.assertEquals("test-client-id", reactData.get("clientId"));
 			Assert.assertEquals(
 				"1-ai-hub-configuration",
 				reactData.get("externalReferenceCode"));
@@ -80,5 +103,6 @@ public class EditConfigurationDisplayContextTest {
 	}
 
 	private EditConfigurationDisplayContext _editConfigurationDisplayContext;
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 }

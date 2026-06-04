@@ -2,7 +2,7 @@
 	"description": "Liferay Sample Editor Config Contributor CKEditor 5 WordCount",
 	"devDependencies": {
 		"@ckeditor/ckeditor5-word-count": "46.0.3",
-		"@liferay/js-api": "0.6.2",
+		"@liferay/js-api": "link:../../../../../liferay-frontend-projects/projects/js-toolkit/packages/js-api",
 		"serve": "^14.2.0",
 		"typescript": "^5.0.4"
 	},

@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Retryable;
 
 import java.io.IOException;
 
@@ -289,7 +290,15 @@ public class TestrayCaseResult {
 			return _testrayCaseResultURL;
 		}
 
-		_testrayCaseResultURL = _fetchTestrayCaseResultURL();
+		URL cachedTestrayCaseResultURL = _fetchTestrayCaseResultURL();
+
+		if (cachedTestrayCaseResultURL != null) {
+			_testrayCaseResultURL = cachedTestrayCaseResultURL;
+
+			return _testrayCaseResultURL;
+		}
+
+		_testrayCaseResultURL = _createTestrayCaseResultURL();
 
 		return _testrayCaseResultURL;
 	}
@@ -592,6 +601,115 @@ public class TestrayCaseResult {
 	}
 
 	protected Map<String, TestrayAttachment> testrayAttachments;
+
+	private synchronized URL _createTestrayCaseResultURL() {
+		final long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		final JSONObject requestJSONObject = new JSONObject();
+
+		JSONArray testrayAttachmentsJSONArray = new JSONArray();
+
+		for (TestrayAttachment testrayAttachment : getTestrayAttachments()) {
+			testrayAttachmentsJSONArray.put(testrayAttachment.getJSONObject());
+		}
+
+		if (!testrayAttachmentsJSONArray.isEmpty()) {
+			requestJSONObject.put(
+				"attachments", String.valueOf(testrayAttachmentsJSONArray));
+		}
+
+		Status status = getStatus();
+
+		if (status != null) {
+			requestJSONObject.put("dueStatus", status.toString());
+		}
+
+		long duration = getDuration();
+
+		if (duration > 0) {
+			requestJSONObject.put("duration", duration);
+		}
+
+		String errors = getErrors();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(errors)) {
+			requestJSONObject.put("errors", errors);
+		}
+
+		final TestrayBuild testrayBuild = getTestrayBuild();
+
+		if (testrayBuild != null) {
+			requestJSONObject.put(
+				"r_buildToCaseResult_c_buildId", testrayBuild.getID());
+		}
+
+		TestrayCase testrayCase = getTestrayCase();
+
+		if (testrayCase != null) {
+			requestJSONObject.put(
+				"r_caseToCaseResult_c_caseId", testrayCase.getID());
+		}
+
+		TestrayComponent testrayComponent = getTestrayComponent();
+
+		if (testrayComponent != null) {
+			requestJSONObject.put(
+				"r_componentToCaseResult_c_componentId",
+				testrayComponent.getID());
+		}
+
+		if (_testrayRun != null) {
+			requestJSONObject.put(
+				"r_runToCaseResult_c_runId", _testrayRun.getID());
+		}
+
+		TestrayTeam testrayTeam = getTestrayTeam();
+
+		if (testrayTeam != null) {
+			requestJSONObject.put(
+				"r_teamToCaseResult_c_teamId", testrayTeam.getID());
+		}
+
+		Retryable<URL> retryable = new Retryable<URL>(true, 3, 5, true) {
+
+			@Override
+			public URL execute() {
+				URL cachedTestrayCaseResultURL = _fetchTestrayCaseResultURL();
+
+				if (cachedTestrayCaseResultURL != null) {
+					return cachedTestrayCaseResultURL;
+				}
+
+				try {
+					JSONObject responseJSONObject = new JSONObject(
+						_testrayServer.requestPost(
+							"/o/c/caseresults", requestJSONObject.toString()));
+
+					URL testrayCaseResultURL = new URL(
+						testrayBuild.getURL() + "/case-result/" +
+							responseJSONObject.getLong("id"));
+
+					long end = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Testray Case Result '", getName(), "' ",
+							String.valueOf(testrayCaseResultURL),
+							" created in ",
+							JenkinsResultsParserUtil.toDurationString(
+								end - start)));
+
+					return testrayCaseResultURL;
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+
+		};
+
+		return retryable.executeWithRetries();
+	}
 
 	private URL _fetchTestrayCaseResultURL() {
 		TestrayBuild testrayBuild = getTestrayBuild();

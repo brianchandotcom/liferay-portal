@@ -326,7 +326,15 @@ public class TestrayFactory {
 			"r_projectToCases_c_projectId eq '",
 			String.valueOf(testrayProject.getID()), "'");
 
-		final TestrayServer testrayServer = testrayProject.getTestrayServer();
+		final JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put(
+			"name", name
+		).put(
+			"r_caseTypeToCases_c_caseTypeId", testrayCaseType.getID()
+		).put(
+			"r_projectToCases_c_projectId", testrayProject.getID()
+		);
 
 		Retryable<TestrayCase> retryable = new Retryable<TestrayCase>(
 			true, 3, 5, true) {
@@ -334,6 +342,9 @@ public class TestrayFactory {
 			@Override
 			public TestrayCase execute() {
 				try {
+					TestrayServer testrayServer =
+						testrayProject.getTestrayServer();
+
 					Set<JSONObject> entityJSONObjects =
 						testrayServer.requestGraphQL(
 							"cases", TestrayCase.FIELD_NAMES, filterString,
@@ -344,7 +355,24 @@ public class TestrayFactory {
 							testrayProject, entityJSONObject);
 					}
 
-					return null;
+					long start =
+						JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+					JSONObject responseJSONObject = new JSONObject(
+						testrayServer.requestPost(
+							"/o/c/cases", requestJSONObject.toString()));
+
+					long end = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Testray Case '",
+							requestJSONObject.getString("name"),
+							"' created in ",
+							JenkinsResultsParserUtil.toDurationString(
+								end - start)));
+
+					return new TestrayCase(testrayProject, responseJSONObject);
 				}
 				catch (IOException ioException) {
 					throw new RuntimeException(ioException);

@@ -43,14 +43,13 @@ public class AuthorizationTokenResourceImpl
 			_configurationProvider.getCompanyConfiguration(
 				AIHubCellConfiguration.class, contextCompany.getCompanyId());
 
-		JSONObject accessTokenJSONObject = AIHubCellAccessTokenWebCacheItem.get(
+		JSONObject jsonObject = AIHubCellAccessTokenWebCacheItem.get(
 			aiHubCellConfiguration, contextCompany.getCompanyId());
 
 		return new AuthorizationToken() {
 			{
-				setAccessToken(
-					() -> accessTokenJSONObject.getString("access_token"));
-				setScope(() -> accessTokenJSONObject.getString("scope"));
+				setAccessToken(() -> jsonObject.getString("access_token"));
+				setScope(() -> jsonObject.getString("scope"));
 				setServiceURL(aiHubCellConfiguration::serviceURL);
 				setUserToken(
 					() -> {

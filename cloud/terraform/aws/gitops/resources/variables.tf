@@ -76,8 +76,7 @@ variable "infrastructure_git_repo_config" {
 			target=object({
 				name=optional(string, "{{path[2]}}-{{path[4]}}-infra")
 				namespaceSuffix=optional(string, "{{path[2]}}-{{path[4]}}")
-				projectNamespaceSuffix=optional(string, "{{path[2]}}-resources")
-				projectScopedName=optional(string, "{{path[2]}}-resources")
+				resourcesName=optional(string, "{{path[2]}}-resources")
 				slugEnvironmentId=optional(string, "{{path[4]}}")
 				slugProjectId=optional(string, "{{path[2]}}")
 			})

@@ -541,13 +541,13 @@ resource "kubernetes_manifest" "resources_applicationset" {
 					labels=merge(
 						local.common_labels,
 						{
-							"app.kubernetes.io/name"=var.infrastructure_git_repo_config.target.projectScopedName
+							"app.kubernetes.io/name"=var.infrastructure_git_repo_config.target.resourcesName
 						})
-					name=var.infrastructure_git_repo_config.target.projectScopedName
+					name=var.infrastructure_git_repo_config.target.resourcesName
 				}
 				spec={
 					destination={
-						namespace="liferay-${var.infrastructure_git_repo_config.target.projectNamespaceSuffix}"
+						namespace="liferay-${var.infrastructure_git_repo_config.target.resourcesName}"
 						server="https://kubernetes.default.svc"
 					}
 					project=local.infrastructure_appproject_name

@@ -502,6 +502,7 @@ resource "kubernetes_manifest" "liferay_appproject" {
 		}
 	}
 }
+
 resource "kubernetes_manifest" "observability_application" {
 	count=var.observability_config.enabled ? 1 : 0
 	depends_on=[
@@ -640,6 +641,119 @@ resource "kubernetes_manifest" "observability_application" {
 					"CreateNamespace=true",
 					"SkipDryRunOnMissingResource=true",
 				]
+			}
+		}
+	}
+}
+resource "kubernetes_manifest" "resources_applicationset" {
+	depends_on=[
+		kubernetes_manifest.git_repo_credentials_external_secret,
+		kubernetes_manifest.infrastructure_appproject,
+	]
+	field_manager {
+		force_conflicts=true
+		name=local.terraform_manager_name
+	}
+	manifest={
+		apiVersion="argoproj.io/v1alpha1"
+		kind="ApplicationSet"
+		metadata={
+			finalizers=["resources-finalizer.argocd.argoproj.io"]
+			labels=merge(
+				local.common_labels,
+				{
+					"app.kubernetes.io/name"="liferay-resources-applicationset"
+				})
+			name="liferay-resources-applicationset"
+			namespace=var.argocd_namespace
+		}
+		spec={
+			generators=[
+				{
+					git={
+						files=[
+							{
+								path="${var.infrastructure_git_repo_config.source_paths.projects}/${var.infrastructure_git_repo_config.source_paths.project_values_filename}"
+							},
+						]
+						repoURL=local.infrastructure_git_repo_url
+						revision=var.infrastructure_git_repo_config.revision
+					}
+				},
+			]
+			template={
+				metadata={
+					annotations={
+						"argocd.argoproj.io/compare-options"="IgnoreExtraneous"
+					}
+					labels=merge(
+						local.common_labels,
+						{
+							"app.kubernetes.io/name"=var.infrastructure_git_repo_config.target.projectScopedName
+						})
+					name=var.infrastructure_git_repo_config.target.projectScopedName
+				}
+				spec={
+					destination={
+						namespace="liferay-${var.infrastructure_git_repo_config.target.projectNamespaceSuffix}"
+						server="https://kubernetes.default.svc"
+					}
+					project=local.infrastructure_appproject_name
+					sources=[
+						merge(
+							{
+								helm={
+									parameters=[
+										{
+											name="enabled"
+											value="false"
+										},
+										{
+											name="projectId"
+											value=var.infrastructure_git_repo_config.target.slugProjectId
+										},
+										{
+											name="region"
+											value=var.region
+										},
+									]
+									valueFiles=[
+										"$values/{{path}}/${var.infrastructure_git_repo_config.source_paths.project_values_filename}",
+									]
+								}
+								repoURL=var.infrastructure_helm_chart_config.chart_url
+								targetRevision=var.infrastructure_helm_chart_version
+							},
+							var.infrastructure_helm_chart_config.path == null ? {
+								chart=var.infrastructure_helm_chart_config.chart_name
+							} : {
+								path=var.infrastructure_helm_chart_config.path
+							}
+						),
+						{
+							ref="values"
+							repoURL=local.infrastructure_git_repo_url
+							targetRevision=var.infrastructure_git_repo_config.revision
+						},
+					]
+					syncPolicy={
+						automated={
+							prune=true
+							selfHeal=true
+						}
+						managedNamespaceMetadata={
+							labels = {
+								"pod-security.kubernetes.io/enforce"="restricted"
+							}
+						}
+						syncOptions=[
+							"CreateNamespace=true",
+							"IgnoreExtraneous=true",
+							"RespectIgnoreDifferences=true",
+							"SkipDryRunOnMissingResource=true"
+						]
+					}
+				}
 			}
 		}
 	}

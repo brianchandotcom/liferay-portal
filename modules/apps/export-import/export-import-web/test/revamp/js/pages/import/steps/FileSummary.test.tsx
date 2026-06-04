@@ -8,18 +8,7 @@ import React from 'react';
 
 import FileSummary from '../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/steps/FileSummary';
 import {ImportPreview} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/types/exportImportPreview';
-
-jest.mock('frontend-js-web', () => {
-	const actual = jest.requireActual('frontend-js-web');
-
-	return {
-		...actual,
-		dateUtils: {
-			...actual.dateUtils,
-			fromNow: jest.fn(() => '5 days ago'),
-		},
-	};
-});
+import formatDate from '../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/formatDate';
 
 const baseImportPreview: ImportPreview = {
 	additionCount: 0,
@@ -41,11 +30,13 @@ describe('FileSummary', () => {
 		expect(screen.getByText('site.lar')).toBeInTheDocument();
 	});
 
-	it('renders author, relative export date, and formatted file size', () => {
+	it('renders author, absolute export date, and formatted file size', () => {
 		render(<FileSummary importPreview={baseImportPreview} />);
 
 		expect(valueOf('author')).toHaveTextContent('Jane Doe');
-		expect(valueOf('exported')).toHaveTextContent('5 days ago');
+		expect(valueOf('exported')).toHaveTextContent(
+			formatDate('2026-05-01T00:00:00Z')
+		);
 		expect(valueOf('size')).toHaveTextContent('1 KB');
 	});
 

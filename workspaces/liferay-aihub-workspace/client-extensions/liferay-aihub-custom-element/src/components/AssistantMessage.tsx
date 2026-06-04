@@ -10,13 +10,13 @@ import ChatbotAvatar from './ChatbotAvatar';
 import {StarsIcon} from './Icons';
 
 interface AssistantMessageProps {
-	companyLogo?: string;
+	avatar?: string;
 	text: string;
 	title: string;
 }
 
 export default function AssistantMessage({
-	companyLogo,
+	avatar,
 	text,
 	title,
 }: AssistantMessageProps) {
@@ -24,8 +24,8 @@ export default function AssistantMessage({
 		<div className="aihub-msg-assistant">
 			<div className="aihub-msg-assistant-icon">
 				<ChatbotAvatar
+					avatar={avatar}
 					className="aihub-msg-assistant-company-logo"
-					companyLogo={companyLogo}
 					fallback={<StarsIcon />}
 					title={title}
 				/>

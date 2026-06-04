@@ -6,22 +6,22 @@
 import React from 'react';
 
 interface ChatbotAvatarProps {
+	avatar?: string;
 	className?: string;
-	companyLogo?: string;
 	fallback: React.ReactNode;
 	title: string;
 }
 
 export default function ChatbotAvatar({
+	avatar,
 	className,
-	companyLogo,
 	fallback,
 	title,
 }: ChatbotAvatarProps) {
-	if (companyLogo) {
+	if (avatar) {
 		return (
 			<div className={className}>
-				<img alt={title} src={companyLogo} />
+				<img alt={title} src={avatar} />
 			</div>
 		);
 	}

@@ -12,7 +12,7 @@ export interface AuthorizationToken {
 
 export interface ChatbotConfiguration {
 	active: boolean;
-	companyLogo?: {
+	avatar?: {
 		fileURL: string;
 	};
 	defaultLanguageId: string;

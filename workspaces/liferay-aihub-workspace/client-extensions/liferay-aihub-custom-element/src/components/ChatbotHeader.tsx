@@ -10,21 +10,21 @@ import {CloseIcon} from './Icons';
 import Logo from './Logo';
 
 interface ChatbotHeaderProps {
-	companyLogo?: string;
+	avatar?: string;
 	onClose: () => void;
 	title: string;
 }
 
 export default function ChatbotHeader({
-	companyLogo,
+	avatar,
 	onClose,
 	title,
 }: ChatbotHeaderProps) {
 	return (
 		<div className="aihub-header">
 			<ChatbotAvatar
+				avatar={avatar}
 				className="aihub-header-logo"
-				companyLogo={companyLogo}
 				fallback={<Logo className="aihub-header-logo" />}
 				title={title}
 			/>

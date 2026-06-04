@@ -5,16 +5,17 @@
 
 package com.liferay.portal.kernel.security.fips;
 
-import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.security.Provider;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 /**
  * @author Caio Farias
@@ -22,103 +23,69 @@ import org.junit.Test;
 public class FIPSComplianceCheckerTest {
 
 	@Test
-	public void testFIPSCompliance() {
-		_assertCheckFails("No security providers are registered");
+	public void testCheckFIPSProvider() {
+		_assertSecurityException(
+			"Invalid FIPS provider:",
+			() -> ReflectionTestUtil.invoke(
+				FIPSComplianceChecker.class, "_checkFIPSProvider",
+				new Class<?>[] {Provider.class},
+				_createProvider(RandomTestUtil.randomString())));
 
-		_assertCheckFails(
-			"FIPS provider is not supported",
-			_createProvider(RandomTestUtil.randomString()));
-
-		Map<?, ?> fipsSecurityProvidersMap;
-
-		try {
-			fipsSecurityProvidersMap =
-				(Map<?, ?>)ReflectionUtil.getDeclaredField(
-					FIPSComplianceChecker.class, "_fipsSecurityProvidersMap"
-				).get(
-					null
-				);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-
-		for (Object fipsProviderName : fipsSecurityProvidersMap.keySet()) {
-			_assertCheckFails(
-				"Unapproved security providers registered in FIPS mode",
-				_createProvider((String)fipsProviderName),
-				_createProvider(RandomTestUtil.randomString()));
-		}
-
-		SecurityException securityException =
-			_invokeAndCaptureSecurityException(
-				"_checkFIPSProviderIntegrity", Provider.class,
-				_createProvider(RandomTestUtil.randomString()));
-
-		Assert.assertTrue(
-			securityException.getMessage(),
-			securityException.getMessage(
-			).contains(
-				"No integrity check implemented for:"
-			));
-
-		UnsafeRunnable<Throwable> unsafeRunnable = () -> {
-			throw new RuntimeException(RandomTestUtil.randomString());
-		};
-
-		securityException = _invokeAndCaptureSecurityException(
-			"_executeFIPSProviderIntegrityCheck", UnsafeRunnable.class,
-			unsafeRunnable);
-
-		Assert.assertTrue(
-			securityException.getMessage(),
-			securityException.getMessage(
-			).contains(
-				"FIPS provider integrity failure:"
-			));
+		_assertSecurityException(
+			"FIPS provider integrity failed:",
+			() -> ReflectionTestUtil.invoke(
+				FIPSComplianceChecker.class, "_checkFIPSProvider",
+				new Class<?>[] {Provider.class}, _createProvider("BCFIPS")));
 	}
 
-	private void _assertCheckFails(
-		String expectedMessage, Provider... providers) {
+	@Test
+	public void testCheckProviders() {
+		_assertSecurityException(
+			"There are no providers registered",
+			() -> ReflectionTestUtil.invoke(
+				FIPSComplianceChecker.class, "_checkProviders",
+				new Class<?>[] {Provider[].class}, (Object)new Provider[0]));
 
-		SecurityException securityException =
-			_invokeAndCaptureSecurityException(
-				"_check", Provider[].class, providers);
+		_assertSecurityException(
+			"The first provider must be an allowed FIPS provider",
+			() -> ReflectionTestUtil.invoke(
+				FIPSComplianceChecker.class, "_checkProviders",
+				new Class<?>[] {Provider[].class},
+				(Object)new Provider[] {
+					_createProvider(RandomTestUtil.randomString())
+				}));
 
-		Assert.assertTrue(
-			securityException.getMessage(),
-			securityException.getMessage(
-			).contains(
-				expectedMessage
-			));
+		Map<String, List<String>> allowedProviders =
+			ReflectionTestUtil.getFieldValue(
+				FIPSComplianceChecker.class, "_allowedProviders");
+
+		for (String allowedProvider : allowedProviders.keySet()) {
+			_assertSecurityException(
+				"are not allowed in FIPS mode for",
+				() -> ReflectionTestUtil.invoke(
+					FIPSComplianceChecker.class, "_checkProviders",
+					new Class<?>[] {Provider[].class},
+					(Object)new Provider[] {
+						_createProvider(allowedProvider),
+						_createProvider(RandomTestUtil.randomString())
+					}));
+		}
+	}
+
+	private void _assertSecurityException(
+		String expectedMessage, ThrowingRunnable throwingRunnable) {
+
+		SecurityException securityException = Assert.assertThrows(
+			SecurityException.class, throwingRunnable);
+
+		String message = securityException.getMessage();
+
+		Assert.assertTrue(message, message.contains(expectedMessage));
 	}
 
 	private Provider _createProvider(String name) {
 		return new Provider(name, "1.0", "") {
 		};
-	}
-
-	private SecurityException _invokeAndCaptureSecurityException(
-		String methodName, Class<?> parameterType, Object argument) {
-
-		try {
-			ReflectionUtil.getDeclaredMethod(
-				FIPSComplianceChecker.class, methodName, parameterType
-			).invoke(
-				null, argument
-			);
-		}
-		catch (Exception exception) {
-			Throwable throwable = exception.getCause();
-
-			if (throwable instanceof SecurityException) {
-				return (SecurityException)throwable;
-			}
-
-			throw new RuntimeException(exception);
-		}
-
-		throw new AssertionError("SecurityException expected");
 	}
 
 }

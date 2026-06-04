@@ -18,7 +18,12 @@ import LearnMessage, {
 	LearnResourcesContext,
 } from '../learn_message/LearnMessage';
 
-export type Type = 'beta' | 'deprecated' | 'enterprise' | 'maintenance';
+export type Type =
+	| 'beta'
+	| 'deprecated'
+	| 'enterprise'
+	| 'maintenance'
+	| 'private-beta';
 
 type DisplayType = 'info' | 'primary' | 'warning';
 
@@ -74,7 +79,7 @@ export default function FeatureIndicator({
 	let linkUrl;
 	let popoverText = Liferay.Language.get('this-feature-is-in-testing');
 	let popoverTitle = Liferay.Language.get('beta-feature');
-	let symbol = 'info-circle-open';
+	let symbol = 'test';
 	let tooltipTitle = Liferay.Language.get('open-beta-definition');
 
 	if (type === 'deprecated') {
@@ -110,6 +115,17 @@ export default function FeatureIndicator({
 		popoverTitle = Liferay.Language.get('maintenance-mode');
 		symbol = 'info-circle-open';
 		tooltipTitle = Liferay.Language.get('open-maintenance-mode-definition');
+	}
+
+	if (type === 'private-beta') {
+		displayType = 'info';
+		label = Liferay.Language.get('private-beta');
+		popoverText = Liferay.Language.get(
+			'this-feature-is-in-private-testing'
+		);
+		popoverTitle = Liferay.Language.get('private-beta-feature');
+		symbol = 'lock';
+		tooltipTitle = Liferay.Language.get('open-private-beta-definition');
 	}
 
 	return (

@@ -7,107 +7,91 @@ import ClayLayout from '@clayui/layout';
 import {FeatureIndicator} from 'frontend-js-components-web';
 import React from 'react';
 
+const TYPES = [
+	'beta',
+	'deprecated',
+	'enterprise',
+	'maintenance',
+	'private-beta',
+];
+
 export default function FeatureIndicatorSamples({learnResourceContext}) {
-	return (
-		<>
-			<ClayLayout.Row className="p-3">
-				<ClayLayout.Col>
-					<h3>Beta Interactive</h3>
+	const renderVariants = (type, dark) => {
+		const interactiveProps =
+			type === 'enterprise'
+				? {dark, interactive: true}
+				: {dark, interactive: true, learnResourceContext};
 
+		return (
+			<>
+				<ClayLayout.Col>
+					<FeatureIndicator {...interactiveProps} type={type} />
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<FeatureIndicator dark={dark} type={type} />
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<FeatureIndicator dark={dark} iconOnly type={type} />
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
 					<FeatureIndicator
-						interactive
-						learnResourceContext={learnResourceContext}
-						type="beta"
-					/>
-				</ClayLayout.Col>
-
-				<ClayLayout.Col>
-					<h3>Beta</h3>
-
-					<FeatureIndicator type="beta" />
-				</ClayLayout.Col>
-
-				<ClayLayout.Col>
-					<h3>Deprecated Interactive</h3>
-
-					<FeatureIndicator
-						interactive
-						learnResourceContext={learnResourceContext}
-						type="deprecated"
-					/>
-				</ClayLayout.Col>
-
-				<ClayLayout.Col>
-					<h3>Deprecated</h3>
-
-					<FeatureIndicator type="deprecated" />
-				</ClayLayout.Col>
-			</ClayLayout.Row>
-
-			<ClayLayout.Row className="bg-dark clay-dark mb-3 p-3 text-white">
-				<ClayLayout.Col>
-					<h3>Dark Beta Interactive</h3>
-
-					<FeatureIndicator
-						interactive
-						learnResourceContext={learnResourceContext}
-						type="beta"
-					/>
-				</ClayLayout.Col>
-
-				<ClayLayout.Col>
-					<h3>Dark Beta</h3>
-
-					<FeatureIndicator type="beta" />
-				</ClayLayout.Col>
-
-				<ClayLayout.Col>
-					<h3>Dark Deprecated Interactive</h3>
-
-					<FeatureIndicator
-						interactive
-						learnResourceContext={learnResourceContext}
-						type="deprecated"
-					/>
-				</ClayLayout.Col>
-
-				<ClayLayout.Col>
-					<h3>Dark Deprecated</h3>
-
-					<FeatureIndicator type="deprecated" />
-				</ClayLayout.Col>
-			</ClayLayout.Row>
-
-			<ClayLayout.Row className="p-3">
-				<ClayLayout.Col>
-					<h3>Beta Icon Only Interactive</h3>
-
-					<FeatureIndicator
+						{...interactiveProps}
 						iconOnly
-						interactive
-						learnResourceContext={learnResourceContext}
-						type="beta"
+						type={type}
 					/>
 				</ClayLayout.Col>
+			</>
+		);
+	};
 
-				<ClayLayout.Col>
-					<h3>Beta Icon Only</h3>
-
-					<FeatureIndicator iconOnly type="beta" />
+	return (
+		<div className="p-3">
+			<ClayLayout.Row>
+				<ClayLayout.Col size={2}>
+					<h4>Type</h4>
 				</ClayLayout.Col>
 
 				<ClayLayout.Col>
-					<h3>Deprecated Icon Only</h3>
-
-					<FeatureIndicator iconOnly type="deprecated" />
+					<h4>Interactive</h4>
 				</ClayLayout.Col>
 
 				<ClayLayout.Col>
-					<h3>Maintenance Icon Only</h3>
+					<h4>Default</h4>
+				</ClayLayout.Col>
 
-					<FeatureIndicator iconOnly type="maintenance" />
+				<ClayLayout.Col>
+					<h4>Icon Only</h4>
+				</ClayLayout.Col>
+
+				<ClayLayout.Col>
+					<h4>Interactive Icon Only</h4>
 				</ClayLayout.Col>
 			</ClayLayout.Row>
-		</>
+
+			{TYPES.map((type) => (
+				<React.Fragment key={type}>
+					<ClayLayout.Row className="align-items-center mb-2">
+						<ClayLayout.Col size={2}>
+							<strong className="text-uppercase">{type}</strong>
+						</ClayLayout.Col>
+
+						{renderVariants(type, false)}
+					</ClayLayout.Row>
+
+					<ClayLayout.Row className="align-items-center bg-dark mb-3 p-2 text-white">
+						<ClayLayout.Col size={2}>
+							<strong className="text-uppercase">
+								{type} (dark)
+							</strong>
+						</ClayLayout.Col>
+
+						{renderVariants(type, true)}
+					</ClayLayout.Row>
+				</React.Fragment>
+			))}
+		</div>
 	);
 }

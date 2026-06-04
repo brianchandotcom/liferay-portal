@@ -33,12 +33,18 @@ public class LoadBalancerUtil {
 		String blacklistString, String masterPrefix, Properties properties,
 		boolean verbose) {
 
-		List<JenkinsMaster> allJenkinsMasters =
-			_jenkinsMastersMap.computeIfAbsent(
+		List<JenkinsMaster> allJenkinsMasters = _jenkinsMastersMap.get(
+			masterPrefix);
+
+		if (allJenkinsMasters == null) {
+			_jenkinsMastersMap.putIfAbsent(
 				masterPrefix,
-				key -> JenkinsResultsParserUtil.getJenkinsMasters(
+				JenkinsResultsParserUtil.getJenkinsMasters(
 					properties, JenkinsMaster.getSlaveRAMMinimumDefault(),
-					JenkinsMaster.getSlavesPerHostDefault(), key));
+					JenkinsMaster.getSlavesPerHostDefault(), masterPrefix));
+
+			allJenkinsMasters = _jenkinsMastersMap.get(masterPrefix);
+		}
 
 		List<String> blacklist = _getBlacklist(
 			properties, blacklistString, verbose);
@@ -92,13 +98,16 @@ public class LoadBalancerUtil {
 			return null;
 		}
 
-		AtomicInteger counter = _roundRobinCounters.computeIfAbsent(
-			masterPrefix,
-			key -> {
-				Random random = new Random();
+		AtomicInteger counter = _roundRobinCounters.get(masterPrefix);
 
-				return new AtomicInteger(random.nextInt());
-			});
+		if (counter == null) {
+			Random random = new Random();
+
+			_roundRobinCounters.putIfAbsent(
+				masterPrefix, new AtomicInteger(random.nextInt()));
+
+			counter = _roundRobinCounters.get(masterPrefix);
+		}
 
 		int index = Math.floorMod(
 			counter.getAndIncrement(), availableJenkinsMasters.size());

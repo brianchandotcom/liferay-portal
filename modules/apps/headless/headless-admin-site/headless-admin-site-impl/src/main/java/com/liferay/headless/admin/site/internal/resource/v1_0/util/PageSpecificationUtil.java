@@ -313,7 +313,7 @@ public class PageSpecificationUtil {
 		PageExperience[] pageExperiences =
 			publishedContentPageSpecification.getPageExperiences();
 
-		if (pageExperiences == null) {
+		if (ArrayUtil.isEmpty(pageExperiences)) {
 			return;
 		}
 
@@ -502,43 +502,43 @@ public class PageSpecificationUtil {
 		PageExperience[] pageExperiences =
 			publishedContentPageSpecification.getPageExperiences();
 
-		if (pageExperiences != null) {
-			for (PageExperience pageExperience : pageExperiences) {
-				String publishedPageExperienceExternalReferenceCode;
+		if (ArrayUtil.isEmpty(pageExperiences)) {
+			return publishedContentPageSpecification;
+		}
 
-				if (Objects.equals(
-						pageExperience.getKey(),
-						SegmentsExperienceConstants.KEY_DEFAULT)) {
+		for (PageExperience pageExperience : pageExperiences) {
+			String publishedPageExperienceExternalReferenceCode;
 
-					publishedPageExperienceExternalReferenceCode =
-						publishedContentPageSpecificationExternalReferenceCode +
-							LayoutConstants.
-								EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT;
-				}
-				else {
-					publishedPageExperienceExternalReferenceCode =
-						_toPublishedExternalReferenceCode(
-							pageExperience.getExternalReferenceCode());
-				}
+			if (Objects.equals(
+					pageExperience.getKey(),
+					SegmentsExperienceConstants.KEY_DEFAULT)) {
 
-				String publishedPageExperienceExternalReferenceCodeFinal =
-					publishedPageExperienceExternalReferenceCode;
-
-				pageExperience.setExternalReferenceCode(
-					() -> publishedPageExperienceExternalReferenceCodeFinal);
-
-				pageExperience.setPageSpecificationExternalReferenceCode(
-					() ->
-						publishedContentPageSpecificationExternalReferenceCode);
-				pageExperience.setUuid(() -> null);
-
-				_processPageElements(
-					PageSpecificationUtil::
-						_processPublishedFromDraftFragmentInstance,
-					pageExperience.getPageElements(),
-					PageSpecificationUtil::
-						_processPublishedFromDraftWidgetInstancePageElementDefinition);
+				publishedPageExperienceExternalReferenceCode =
+					publishedContentPageSpecificationExternalReferenceCode +
+						LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT;
 			}
+			else {
+				publishedPageExperienceExternalReferenceCode =
+					_toPublishedExternalReferenceCode(
+						pageExperience.getExternalReferenceCode());
+			}
+
+			String publishedPageExperienceExternalReferenceCodeFinal =
+				publishedPageExperienceExternalReferenceCode;
+
+			pageExperience.setExternalReferenceCode(
+				() -> publishedPageExperienceExternalReferenceCodeFinal);
+
+			pageExperience.setPageSpecificationExternalReferenceCode(
+				() -> publishedContentPageSpecificationExternalReferenceCode);
+			pageExperience.setUuid(() -> null);
+
+			_processPageElements(
+				PageSpecificationUtil::
+					_processPublishedFromDraftFragmentInstance,
+				pageExperience.getPageElements(),
+				PageSpecificationUtil::
+					_processPublishedFromDraftWidgetInstancePageElementDefinition);
 		}
 
 		return publishedContentPageSpecification;

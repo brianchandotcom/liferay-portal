@@ -64,9 +64,6 @@ public class ObjectEntryPicklistDefaultValueUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-
-		// Picklist object field
-
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
@@ -88,8 +85,6 @@ public class ObjectEntryPicklistDefaultValueUpgradeProcessTest {
 			listTypeEntry, RandomTestUtil.randomBoolean(), false);
 
 		ObjectEntry objectEntry1 = _addObjectEntry(picklistObjectField1, null);
-
-		// Picklist object field marked as state
 
 		ObjectField picklistObjectField2 = _addPicklistObjectField(
 			listTypeEntry, true, true);

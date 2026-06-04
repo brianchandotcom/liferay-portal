@@ -47,7 +47,7 @@ describe('feature-flags', () => {
 	});
 
 	it('exposes a key and default value for every registered flag', () => {
-		FEATURE_FLAGS.forEach((definition) => {
+		FEATURE_FLAGS.forEach(definition => {
 			expect(definition.key).toBeTruthy();
 			expect(typeof definition.defaultValue).toBe('boolean');
 		});

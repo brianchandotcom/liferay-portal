@@ -1,7 +1,7 @@
 import * as Constants from 'shared/util/constants';
 import mockStore from 'test/mock-store';
-import {ENABLE_BLOCKLIST_KEYWORDS} from 'shared/util/feature-flags';
 import React from 'react';
+import {ENABLE_BLOCKLIST_KEYWORDS} from 'shared/util/feature-flags';
 import {Overview} from '../Overview';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';

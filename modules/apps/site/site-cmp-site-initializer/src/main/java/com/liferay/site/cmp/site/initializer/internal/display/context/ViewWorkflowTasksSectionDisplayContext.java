@@ -7,9 +7,11 @@ package com.liferay.site.cmp.site.initializer.internal.display.context;
 
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
@@ -18,14 +20,20 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.AssigneeSelectionFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.DueDateRangeFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.StateSelectionFDSFilter;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Fábio Alves
@@ -56,20 +64,58 @@ public class ViewWorkflowTasksSectionDisplayContext
 
 	@Override
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("/o/search/v1.0/search?emptySearch=true&entryClassNames=");
-		sb.append(KaleoTaskInstanceToken.class.getName());
-		sb.append("&filter=keywords/any(k:startswith(k, '");
-		sb.append(objectDefinition.getExternalReferenceCode());
-		sb.append("'))&nestedFields=embedded");
-
-		return sb.toString();
+		return StringBundler.concat(
+			"/o/search/v1.0/search?emptySearch=true&entryClassNames=",
+			KaleoTaskInstanceToken.class.getName(),
+			"&filter=keywords/any(k:startswith(k, '",
+			objectDefinition.getExternalReferenceCode(),
+			"'))&nestedFields=embedded");
 	}
 
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return Collections.emptyList();
+		return ListUtil.fromArray(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setIcon(
+				"date-time"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "update-due-date")
+			).setPermissionKey(
+				"updateDueDate"
+			).build(
+				"update-due-date"
+			),
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setIcon(
+				"user"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "assign-to-...")
+			).setPermissionKey(
+				"assignToUser"
+			).build(
+				"assign-to"
+			));
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			LanguageUtil.get(
+				httpServletRequest,
+				"there-are-no-workflow-tasks-related-to-your-projects")
+		).put(
+			"image", "/states/cmp_empty_state_tasks.svg"
+		).put(
+			"title", LanguageUtil.get(httpServletRequest, "no-tasks")
+		).build();
 	}
 
 	@Override
@@ -85,6 +131,15 @@ public class ViewWorkflowTasksSectionDisplayContext
 			).build(
 				"other-actions"
 			));
+	}
+
+	@Override
+	public List<FDSFilter> getFDSFilters() {
+		return ListUtil.fromArray(
+			new AssigneeSelectionFDSFilter(
+				classNameLocalService, projectObjectDefinition.getCompanyId(),
+				roleService),
+			new DueDateRangeFDSFilter(), new StateSelectionFDSFilter());
 	}
 
 }

@@ -72,6 +72,35 @@ beforeEach(() => {
 	fetchMock.get('http://localhost/url', {});
 });
 
+describe('when the business type is "Formula"', () => {
+	const formulaProps = {
+		...objectFieldFormBaseDefaultProps,
+		objectField: {
+			businessType: 'Formula' as ObjectFieldBusinessTypeName,
+		},
+		objectRelationshipId: undefined,
+	};
+
+	it('does not render the mandatory toggle', () => {
+		render(<ObjectFieldFormBase {...formulaProps} />);
+
+		expect(
+			screen.queryByRole('switch', {name: 'mandatory'})
+		).not.toBeInTheDocument();
+	});
+
+	it('renders the output field as required', () => {
+		render(<ObjectFieldFormBase {...formulaProps} />);
+
+		const outputLabel = screen.getByText('output', {
+			exact: false,
+			selector: 'label',
+		});
+
+		expect(within(outputLabel).getByText('mandatory')).toBeInTheDocument();
+	});
+});
+
 describe('when the root model feature flag [LPD-34594] is disabled', () => {
 	describe('the mandatory toggle', () => {
 		beforeEach(() => {
@@ -245,34 +274,5 @@ describe('when the root model feature flag [LPD-34594] is enabled', () => {
 				await screen.findByText('inheritance-relationships-fields')
 			).toBeInTheDocument();
 		});
-	});
-});
-
-describe('when the business type is "Formula"', () => {
-	const formulaProps = {
-		...objectFieldFormBaseDefaultProps,
-		objectField: {
-			businessType: 'Formula' as ObjectFieldBusinessTypeName,
-		},
-		objectRelationshipId: undefined,
-	};
-
-	it('does not render the mandatory toggle', () => {
-		render(<ObjectFieldFormBase {...formulaProps} />);
-
-		expect(
-			screen.queryByRole('switch', {name: 'mandatory'})
-		).not.toBeInTheDocument();
-	});
-
-	it('renders the output field as required', () => {
-		render(<ObjectFieldFormBase {...formulaProps} />);
-
-		const outputLabel = screen.getByText('output', {
-			exact: false,
-			selector: 'label',
-		});
-
-		expect(within(outputLabel).getByText('mandatory')).toBeInTheDocument();
 	});
 });

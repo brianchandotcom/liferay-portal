@@ -58,6 +58,17 @@ describe('AttachmentProperties', () => {
 		).not.toBeInTheDocument();
 	});
 
+	it('renders depot storage inputs when showFilesInLibrary is enabled for userComputerToCMSBasicDocument upload', () => {
+		renderComponent([
+			{name: 'fileSource', value: 'userComputerToCMSBasicDocument'},
+			{name: 'showFilesInLibrary', value: true},
+		]);
+
+		expect(screen.getByText('Mock SpacePicker')).toBeInTheDocument();
+
+		expect(screen.getByLabelText(/cms-storage-folder/)).toBeInTheDocument();
+	});
+
 	it('renders Documents and Media folder input when showFilesInLibrary is enabled for userComputerToDocumentsAndMedia upload', () => {
 		renderComponent([
 			{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
@@ -70,28 +81,14 @@ describe('AttachmentProperties', () => {
 		expect(input).toBeInTheDocument();
 	});
 
-	it('renders depot storage inputs when showFilesInLibrary is enabled for userComputerToCMSBasicDocument upload', () => {
-		renderComponent([
-			{name: 'fileSource', value: 'userComputerToCMSBasicDocument'},
-			{name: 'showFilesInLibrary', value: true},
-		]);
-
-		expect(screen.getByText('Mock SpacePicker')).toBeInTheDocument();
-
-		expect(screen.getByLabelText(/cms-storage-folder/)).toBeInTheDocument();
-	});
-
-	it('renders the help text for the storage folder field', () => {
-		renderComponent([
-			{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
-			{name: 'showFilesInLibrary', value: true},
-		]);
+	it('renders the accepted file extensions and maximum file size options on the side panel', () => {
+		renderComponent([{name: 'fileSource', value: 'documentsAndMedia'}]);
 
 		expect(
-			screen.getByText(
-				/input-the-path-of-the-chosen-folder-in-documents-and-media/
-			)
+			screen.getByText('accepted-file-extensions')
 		).toBeInTheDocument();
+
+		expect(screen.getByText('maximum-file-size')).toBeInTheDocument();
 	});
 
 	it('renders the error when the required storage folder field is empty', () => {
@@ -112,13 +109,16 @@ describe('AttachmentProperties', () => {
 		expect(screen.getByText('this-field-is-required')).toBeInTheDocument();
 	});
 
-	it('renders the accepted file extensions and maximum file size options on the side panel', () => {
-		renderComponent([{name: 'fileSource', value: 'documentsAndMedia'}]);
+	it('renders the help text for the storage folder field', () => {
+		renderComponent([
+			{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+			{name: 'showFilesInLibrary', value: true},
+		]);
 
 		expect(
-			screen.getByText('accepted-file-extensions')
+			screen.getByText(
+				/input-the-path-of-the-chosen-folder-in-documents-and-media/
+			)
 		).toBeInTheDocument();
-
-		expect(screen.getByText('maximum-file-size')).toBeInTheDocument();
 	});
 });

@@ -146,10 +146,35 @@ describe('The AttachmentFormBase component', () => {
 		).not.toBeInTheDocument();
 	});
 
-	it('renders library toggle for userComputerToDocumentsAndMedia file source', () => {
-		renderComponent({
+	it('keeps the library toggle editable before the object is published and disables it otherwise', () => {
+		const {unmount} = renderComponent({
 			objectFieldSettings: [
 				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+			],
+		});
+
+		expect(
+			screen.getByLabelText('show-uploaded-files-in-library')
+		).toBeEnabled();
+
+		unmount();
+
+		renderComponent({
+			disabled: true,
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
+			],
+		});
+
+		expect(
+			screen.getByLabelText('show-uploaded-files-in-library')
+		).toBeDisabled();
+	});
+
+	it('renders library toggle for userComputerToCMSBasicDocument file source', () => {
+		renderComponent({
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'userComputerToCMSBasicDocument'},
 			],
 		});
 
@@ -158,10 +183,10 @@ describe('The AttachmentFormBase component', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders library toggle for userComputerToCMSBasicDocument file source', () => {
+	it('renders library toggle for userComputerToDocumentsAndMedia file source', () => {
 		renderComponent({
 			objectFieldSettings: [
-				{name: 'fileSource', value: 'userComputerToCMSBasicDocument'},
+				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
 			],
 		});
 
@@ -224,18 +249,6 @@ describe('The AttachmentFormBase component', () => {
 		});
 	});
 
-	it('shows the library toggle off by default when uploading directly from the user computer', () => {
-		renderComponent({
-			objectFieldSettings: [
-				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
-			],
-		});
-
-		expect(
-			screen.getByLabelText('show-uploaded-files-in-library')
-		).not.toBeChecked();
-	});
-
 	it('shows a tooltip on the library toggle when uploading directly from the user computer', () => {
 		renderComponent({
 			objectFieldSettings: [
@@ -250,21 +263,8 @@ describe('The AttachmentFormBase component', () => {
 		).toBeInTheDocument();
 	});
 
-	it('keeps the library toggle editable before the object is published and disables it otherwise', () => {
-		const {unmount} = renderComponent({
-			objectFieldSettings: [
-				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
-			],
-		});
-
-		expect(
-			screen.getByLabelText('show-uploaded-files-in-library')
-		).toBeEnabled();
-
-		unmount();
-
+	it('shows the library toggle off by default when uploading directly from the user computer', () => {
 		renderComponent({
-			disabled: true,
 			objectFieldSettings: [
 				{name: 'fileSource', value: 'userComputerToDocumentsAndMedia'},
 			],
@@ -272,6 +272,6 @@ describe('The AttachmentFormBase component', () => {
 
 		expect(
 			screen.getByLabelText('show-uploaded-files-in-library')
-		).toBeDisabled();
+		).not.toBeChecked();
 	});
 });

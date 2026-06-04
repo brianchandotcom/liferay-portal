@@ -151,6 +151,25 @@ public class AgentDefinition implements Cloneable, Serializable {
 
 	protected Variable[] inputVariables;
 
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public void setModel(UnsafeSupplier<Model, Exception> modelUnsafeSupplier) {
+		try {
+			model = modelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Model model;
+
 	public Variable getOutputVariable() {
 		return outputVariable;
 	}
@@ -289,4 +308,4 @@ public class AgentDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1954647915
+// LIFERAY-REST-BUILDER-HASH:1827902501

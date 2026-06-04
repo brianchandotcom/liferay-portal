@@ -809,6 +809,14 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("model", additionalAssertFieldName)) {
+				if (agentDefinition.getModel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("outputVariable", additionalAssertFieldName)) {
 				if (agentDefinition.getOutputVariable() == null) {
 					valid = false;
@@ -1034,6 +1042,17 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						agentDefinition1.getInputVariables(),
 						agentDefinition2.getInputVariables())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("model", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						agentDefinition1.getModel(),
+						agentDefinition2.getModel())) {
 
 					return false;
 				}
@@ -1314,6 +1333,11 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("inputVariables")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("model")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1733,4 +1757,4 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 		_agentDefinitionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:949541681
+// LIFERAY-REST-BUILDER-HASH:-224583323

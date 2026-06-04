@@ -12,6 +12,7 @@ import {ContentSelection} from '../../components/forms/content_selector/ContentS
 import {postImportProcess} from '../../services/postImportProcess';
 import {ImportPreview} from '../../types/exportImportPreview';
 import {DataStrategy, UserIdStrategy} from '../../types/exportImportProcess';
+import {Scope} from '../../types/scope';
 import {toProcessRequestFlags} from '../../utils/contentSelection';
 import {toRequestPortletDataHandlers} from '../../utils/toRequestPortletDataHandlers';
 import DataSelectionStep from './steps/DataSelectionStep';
@@ -23,15 +24,15 @@ export function NewImport({
 	commentsAndRatingsEnabled = false,
 	importPreviewAPIURL,
 	importProcessAPIURL,
-	instance,
 	lookAndFeelEnabled = false,
+	scope,
 }: {
 	backURL: string;
 	commentsAndRatingsEnabled?: boolean;
 	importPreviewAPIURL: string;
 	importProcessAPIURL: string;
-	instance: boolean;
 	lookAndFeelEnabled?: boolean;
+	scope: Scope;
 }) {
 	const [importPreview, setImportPreview] = useState<
 		ImportPreview | undefined
@@ -141,7 +142,7 @@ export function NewImport({
 				}}
 				title={Liferay.Language.get('settings')}
 			>
-				<SettingsStep instance={instance} />
+				<SettingsStep scope={scope} />
 			</WizardStep>
 		</Wizard>
 	);

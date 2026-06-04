@@ -40,9 +40,9 @@ portletDisplay.setURLBack(exportImportPreviewDisplayContext.getBackURL());
 			).put(
 				"importProcessAPIURL", exportImportPreviewDisplayContext.getImportProcessAPIURL()
 			).put(
-				"instance", exportImportPreviewDisplayContext.isCompanyGroup()
-			).put(
 				"lookAndFeelEnabled", exportImportPreviewDisplayContext.isLookAndFeelEnabled()
+			).put(
+				"scope", exportImportPreviewDisplayContext.getScope()
 			).build()
 		%>'
 	/>

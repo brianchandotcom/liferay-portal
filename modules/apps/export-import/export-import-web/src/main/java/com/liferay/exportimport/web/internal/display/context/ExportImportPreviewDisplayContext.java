@@ -112,6 +112,18 @@ public class ExportImportPreviewDisplayContext {
 		return _importProcessAPIURL;
 	}
 
+	public String getScope() {
+		if (_stagingGroupHelper.isCompanyGroup(_group)) {
+			return "company";
+		}
+
+		if (_group.isDepot()) {
+			return "assetLibrary";
+		}
+
+		return "site";
+	}
+
 	public boolean isCommentsAndRatingsEnabled() {
 		if (!_stagingGroupHelper.isCompanyGroup(_group) ||
 			FeatureFlagManagerUtil.isEnabled(
@@ -121,10 +133,6 @@ public class ExportImportPreviewDisplayContext {
 		}
 
 		return false;
-	}
-
-	public boolean isCompanyGroup() {
-		return _stagingGroupHelper.isCompanyGroup(_group);
 	}
 
 	public boolean isLookAndFeelEnabled() {

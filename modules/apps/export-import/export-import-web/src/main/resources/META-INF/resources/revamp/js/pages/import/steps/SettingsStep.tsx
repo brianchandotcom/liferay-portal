@@ -8,13 +8,14 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import {FormikFieldRadioGroup} from '../../../components/forms/formik';
+import {SCOPES, Scope} from '../../../types/scope';
 
 export const SETTINGS_STEP_INITIAL_VALUES = {
 	dataStrategy: 'MIRROR',
 	userIdStrategy: 'CURRENT_USER_ID',
 };
 
-export default function SettingsStep({instance}: {instance: boolean}) {
+export default function SettingsStep({scope}: {scope: Scope}) {
 	return (
 		<>
 			<ClayLayout.Sheet>
@@ -57,7 +58,7 @@ export default function SettingsStep({instance}: {instance: boolean}) {
 					title={Liferay.Language.get('update-data')}
 				/>
 
-				{instance ? (
+				{scope === SCOPES.COMPANY ? (
 					<div className="d-flex mb-2">
 						<span
 							aria-hidden="true"

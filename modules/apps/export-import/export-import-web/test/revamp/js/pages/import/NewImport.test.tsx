@@ -11,6 +11,7 @@ import React from 'react';
 
 import {NewImport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/NewImport';
 import {postImportPreview} from '../../../../../src/main/resources/META-INF/resources/revamp/js/services/postImportPreview';
+import {SCOPES} from '../../../../../src/main/resources/META-INF/resources/revamp/js/types/scope';
 import formatDate from '../../../../../src/main/resources/META-INF/resources/revamp/js/utils/formatDate';
 import {mockImportPreview} from '../../mocks/mockImportPreview';
 import {mockSectionsForFilterTest} from '../../mocks/mockSectionsForFilterTest';
@@ -37,8 +38,8 @@ const renderComponent = ({
 			commentsAndRatingsEnabled={commentsAndRatingsEnabled}
 			importPreviewAPIURL="/o/export-import/v1.0/import-preview"
 			importProcessAPIURL="/o/export-import/v1.0/import-processes"
-			instance={false}
 			lookAndFeelEnabled={lookAndFeelEnabled}
+			scope={SCOPES.SITE}
 		/>
 	);
 

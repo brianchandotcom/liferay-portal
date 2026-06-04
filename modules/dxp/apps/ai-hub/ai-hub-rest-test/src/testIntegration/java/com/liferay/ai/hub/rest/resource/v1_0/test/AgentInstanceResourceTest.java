@@ -1011,8 +1011,7 @@ public class AgentInstanceResourceTest
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_MODEL_ARMOR_TEMPLATE",
-					TestPropsValues.getCompanyId());
+					"L_AI_HUB_GUARDRAIL", TestPropsValues.getCompanyId());
 
 		ObjectEntry agentDefinitionObjectEntry =
 			_objectEntryLocalService.fetchObjectEntry(
@@ -1043,8 +1042,7 @@ public class AgentInstanceResourceTest
 				guardrailObjectEntry.getObjectEntryId(),
 				_objectRelationshipLocalService.
 					getObjectRelationshipByExternalReferenceCode(
-						"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_MODEL_" +
-							"ARMOR_TEMPLATES",
+						"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_GUARDRAILS",
 						TestPropsValues.getCompanyId(),
 						_agentDefinitionObjectDefinition.
 							getObjectDefinitionId()),

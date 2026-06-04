@@ -77,7 +77,7 @@
 			"label": {
 				"en_US": "Guardrail Type"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GUARDRAIL_GUARDRAIL_TYPES",
+			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GUARDRAIL_TYPES",
 			"name": "guardrailType",
 			"required": true,
 			"system": true,

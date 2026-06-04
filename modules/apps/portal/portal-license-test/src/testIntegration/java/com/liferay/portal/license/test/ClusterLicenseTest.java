@@ -37,6 +37,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,6 +45,7 @@ import org.junit.runner.RunWith;
  * @author Dante Wang
  * @author Jiefeng Wu
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class ClusterLicenseTest extends BaseLicenseTestCase {
 

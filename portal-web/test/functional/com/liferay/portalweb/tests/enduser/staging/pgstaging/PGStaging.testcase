@@ -541,7 +541,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		Navigator.gotoStagedView();
+		ProductMenu.gotoStagingSite(site = "Site Name");
 
 		PagesAdmin.changeLogo(
 			logoFile = "Document_3.png",

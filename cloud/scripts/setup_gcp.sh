@@ -327,6 +327,13 @@ function _recover_kubectl_context {
 function _resolve_path {
 	local file_path="${1}"
 
+	if [ ! -e "${file_path}" ]
+	then
+		echo "Path ${file_path} does not exist." >&2
+
+		exit 1
+	fi
+
 	printf '%s\n' "$(cd "$(dirname "${file_path}")" && pwd)/$(basename "${file_path}")"
 }
 

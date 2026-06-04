@@ -122,9 +122,15 @@ function _run_setup_test {
 		touch "${tmpdir}/versions.tfvars"
 	fi
 
-	PATH="${stub_dir}" bash "${script}" "${tmpdir}/config.json" "${tmpdir}/versions.tfvars" 2>&1 || true
+	local exit_code=0
+	local output
+
+	output=$(PATH="${stub_dir}" bash "${script}" "${tmpdir}/config.json" "${tmpdir}/versions.tfvars" 2>&1) || exit_code="${?}"
 
 	rm -rf "${stub_dir}" "${tmpdir}"
+
+	echo "${exit_code}"
+	echo "${output}"
 }
 
 function _run_test {
@@ -156,12 +162,16 @@ function _run_test {
 
 function _test_aborts_with_config_missing_variables_object {
 	local config_json
+	local exit_code
 	local output
+	local result
 
 	config_json=$(jq --null-input '{options: {provider: "aws"}}')
-	output=$(_run_setup_test "${1}" "${config_json}")
+	result=$(_run_setup_test "${1}" "${config_json}")
+	exit_code=$(echo "${result}" | head -n 1)
+	output=$(echo "${result}" | tail -n +2)
 
-	if [[ "${output}" == *'must contain a root object named "variables"'* ]]
+	if [ "${exit_code}" -ne 0 ] && [[ "${output}" == *'must contain a root object named "variables"'* ]]
 	then
 		return 0
 	fi
@@ -170,11 +180,15 @@ function _test_aborts_with_config_missing_variables_object {
 }
 
 function _test_aborts_with_malformed_config_json {
+	local exit_code
 	local output
+	local result
 
-	output=$(_run_setup_test "${1}" '{not valid json')
+	result=$(_run_setup_test "${1}" '{not valid json')
+	exit_code=$(echo "${result}" | head -n 1)
+	output=$(echo "${result}" | tail -n +2)
 
-	if [[ "${output}" == *"is not valid JSON"* ]]
+	if [ "${exit_code}" -ne 0 ] && [[ "${output}" == *"is not valid JSON"* ]]
 	then
 		return 0
 	fi
@@ -183,19 +197,19 @@ function _test_aborts_with_malformed_config_json {
 }
 
 function _test_aborts_with_missing_config_file {
+	local exit_code=0
+	local output
 	local stub_dir
 
 	stub_dir=$(_make_stub_path)
 
 	_make_terraform_stub "${stub_dir}" "1.10.0"
 
-	local output
-
-	output=$(PATH="${stub_dir}" bash "${1}" /does/not/exist.json /does/not/exist.tfvars 2>&1 || true)
+	output=$(PATH="${stub_dir}" bash "${1}" /does/not/exist.json /does/not/exist.tfvars 2>&1) || exit_code="${?}"
 
 	rm -rf "${stub_dir}"
 
-	if [[ "${output}" == *"Configuration JSON file"*"does not exist"* ]]
+	if [ "${exit_code}" -ne 0 ] && [[ "${output}" == *"Configuration JSON file"*"does not exist"* ]]
 	then
 		return 0
 	fi
@@ -205,12 +219,16 @@ function _test_aborts_with_missing_config_file {
 
 function _test_aborts_with_missing_required_utility {
 	local config_json
+	local exit_code
 	local output
+	local result
 
 	config_json=$(jq --null-input '{variables: {}}')
-	output=$(_run_setup_test "${1}" "${config_json}" "1.10.0" jq)
+	result=$(_run_setup_test "${1}" "${config_json}" "1.10.0" jq)
+	exit_code=$(echo "${result}" | head -n 1)
+	output=$(echo "${result}" | tail -n +2)
 
-	if [[ "${output}" == *"utility jq is not installed"* ]]
+	if [ "${exit_code}" -ne 0 ] && [[ "${output}" == *"utility jq is not installed"* ]]
 	then
 		return 0
 	fi
@@ -220,12 +238,16 @@ function _test_aborts_with_missing_required_utility {
 
 function _test_aborts_with_missing_tfvars_file {
 	local config_json
+	local exit_code
 	local output
+	local result
 
 	config_json=$(jq --null-input '{variables: {}}')
-	output=$(_run_setup_test "${1}" "${config_json}" "1.10.0" "" no)
+	result=$(_run_setup_test "${1}" "${config_json}" "1.10.0" "" no)
+	exit_code=$(echo "${result}" | head -n 1)
+	output=$(echo "${result}" | tail -n +2)
 
-	if [[ "${output}" == *"Versions tfvars file"*"does not exist"* ]]
+	if [ "${exit_code}" -ne 0 ] && [[ "${output}" == *"Versions tfvars file"*"does not exist"* ]]
 	then
 		return 0
 	fi
@@ -234,11 +256,12 @@ function _test_aborts_with_missing_tfvars_file {
 }
 
 function _test_aborts_with_no_arguments {
+	local exit_code=0
 	local output
 
-	output=$(bash "${1}" 2>&1 || true)
+	output=$(bash "${1}" 2>&1) || exit_code="${?}"
 
-	if [[ "${output}" == *"Usage:"* ]]
+	if [ "${exit_code}" -ne 0 ] && [[ "${output}" == *"Usage:"* ]]
 	then
 		return 0
 	fi
@@ -248,12 +271,16 @@ function _test_aborts_with_no_arguments {
 
 function _test_aborts_with_old_terraform_version {
 	local config_json
+	local exit_code
 	local output
+	local result
 
 	config_json=$(jq --null-input '{variables: {}}')
-	output=$(_run_setup_test "${1}" "${config_json}" "1.9.9")
+	result=$(_run_setup_test "${1}" "${config_json}" "1.9.9")
+	exit_code=$(echo "${result}" | head -n 1)
+	output=$(echo "${result}" | tail -n +2)
 
-	if [[ "${output}" == *"below minimum version"* ]]
+	if [ "${exit_code}" -ne 0 ] && [[ "${output}" == *"below minimum version"* ]]
 	then
 		return 0
 	fi

@@ -931,6 +931,8 @@ components:
                         $ref: "#/components/schemas/SkuOption"
                     type: array
                 skuUnitOfMeasures:
+                    description:
+                        Inline units of measure available for the mapped product.
                     items:
                         $ref: "#/components/schemas/SkuUnitOfMeasure"
                     type: array

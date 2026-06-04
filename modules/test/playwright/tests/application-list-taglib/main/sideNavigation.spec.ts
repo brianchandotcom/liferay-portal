@@ -211,6 +211,39 @@ test(
 );
 
 test(
+	'The side navigation shows a visible divider separating it from the content',
+	{tag: '@LPD-93647'},
+	async ({globalMenuPage, page}) => {
+		await test.step('Go to an Applications Panel page', async () => {
+			await globalMenuPage.goToApplications();
+
+			await expect(
+				page.getByLabel('Applications Menu', {exact: true})
+			).toBeVisible();
+		});
+
+		await test.step('Assert the divider border is actually rendered', async () => {
+			const {borderRightColor, borderRightStyle, borderRightWidth} =
+				await page.getByTestId('sideNavigation').evaluate((element) => {
+					const computedStyle = window.getComputedStyle(element);
+
+					return {
+						borderRightColor: computedStyle.borderRightColor,
+						borderRightStyle: computedStyle.borderRightStyle,
+						borderRightWidth: computedStyle.borderRightWidth,
+					};
+				});
+
+			expect(borderRightStyle).toBe('solid');
+
+			expect(parseFloat(borderRightWidth)).toBeGreaterThan(0);
+
+			expect(borderRightColor).not.toBe('rgba(0, 0, 0, 0)');
+		});
+	}
+);
+
+test(
 	'Side navigation remains visible after Liferay.Portlet.refresh call',
 	{tag: '@LPD-86410'},
 	async ({contentDashboardPage, page, site}) => {

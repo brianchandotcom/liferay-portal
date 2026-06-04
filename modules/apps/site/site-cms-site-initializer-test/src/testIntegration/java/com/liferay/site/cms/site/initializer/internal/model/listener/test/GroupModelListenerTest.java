@@ -64,10 +64,61 @@ public class GroupModelListenerTest {
 
 	@Test
 	@TestInfo("LPD-92888")
-	public void testUpdateDepotEntry() throws Exception {
-		_testSetTrashEnabled();
+	public void testSetTrashEnabled() throws Exception {
+		Layout layout = _getRecycleBinLayout(_cmsGroup);
 
-		_testUpdateExternalReferenceCode();
+		Assert.assertFalse(layout.isHidden());
+
+		DepotEntry depotEntry = _addDepotEntry();
+
+		Group depotGroup = depotEntry.getGroup();
+
+		_setTrashEnabled(depotGroup, Boolean.FALSE.toString());
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(
+				depotGroup.getTypeSettingsProperty("trashEnabled")));
+
+		_setTrashEnabled(depotGroup, Boolean.TRUE.toString());
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				depotGroup.getTypeSettingsProperty("trashEnabled")));
+	}
+
+	@Test
+	@TestInfo("LPD-92888")
+	public void testUpdateExternalReferenceCode() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		Group depotGroup = depotEntry.getGroup();
+
+		String originalExternalReferenceCode =
+			depotGroup.getExternalReferenceCode();
+
+		Assert.assertNotNull(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
+				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
+				originalExternalReferenceCode, depotEntry.getModelClassName(),
+				_filterFactory));
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		depotGroup.setExternalReferenceCode(externalReferenceCode);
+
+		depotGroup = _groupLocalService.updateGroup(depotGroup);
+
+		Assert.assertNull(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
+				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
+				originalExternalReferenceCode, depotEntry.getModelClassName(),
+				_filterFactory));
+
+		Assert.assertNotNull(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
+				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
+				externalReferenceCode, depotEntry.getModelClassName(),
+				_filterFactory));
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
@@ -103,59 +154,6 @@ public class GroupModelListenerTest {
 
 		_groupLocalService.updateGroup(
 			group.getGroupId(), unicodeProperties.toString());
-	}
-
-	private void _testSetTrashEnabled() throws Exception {
-		Group depotGroup = _addDepotEntry().getGroup();
-
-		Layout layout = _getRecycleBinLayout(_cmsGroup);
-
-		Assert.assertFalse(layout.isHidden());
-
-		_setTrashEnabled(depotGroup, Boolean.FALSE.toString());
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				depotGroup.getTypeSettingsProperty("trashEnabled")));
-
-		_setTrashEnabled(depotGroup, Boolean.TRUE.toString());
-
-		Assert.assertTrue(
-			GetterUtil.getBoolean(
-				depotGroup.getTypeSettingsProperty("trashEnabled")));
-	}
-
-	private void _testUpdateExternalReferenceCode() throws Exception {
-		DepotEntry depotEntry = _addDepotEntry();
-
-		Group depotGroup = depotEntry.getGroup();
-
-		String originalExternalReferenceCode =
-			depotGroup.getExternalReferenceCode();
-
-		Assert.assertNotNull(
-			CMSDefaultPermissionUtil.fetchObjectEntry(
-				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
-				originalExternalReferenceCode, depotEntry.getModelClassName(),
-				_filterFactory));
-
-		String externalReferenceCode = RandomTestUtil.randomString();
-
-		depotGroup.setExternalReferenceCode(externalReferenceCode);
-
-		depotGroup = _groupLocalService.updateGroup(depotGroup);
-
-		Assert.assertNull(
-			CMSDefaultPermissionUtil.fetchObjectEntry(
-				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
-				originalExternalReferenceCode, depotEntry.getModelClassName(),
-				_filterFactory));
-
-		Assert.assertNotNull(
-			CMSDefaultPermissionUtil.fetchObjectEntry(
-				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
-				externalReferenceCode, depotEntry.getModelClassName(),
-				_filterFactory));
 	}
 
 	private Group _cmsGroup;

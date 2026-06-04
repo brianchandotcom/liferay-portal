@@ -336,7 +336,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 			long logoId = layoutSet.getLogoId();
 
-			layoutSet = layoutSetPersistence.findByG_P(groupId, privateLayout);
+			layoutSet = layoutSetPersistence.fetchByG_P(
+				groupId, privateLayout, false);
 
 			layoutSet.setModifiedDate(new Date());
 			layoutSet.setLogoId(logoId);

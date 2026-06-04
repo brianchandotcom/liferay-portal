@@ -9,6 +9,10 @@ import {Formik} from 'formik';
 import React from 'react';
 
 import SettingsStep from '../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/steps/SettingsStep';
+import {
+	SCOPES,
+	Scope,
+} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/types/scope';
 
 const defaultInitialValues = {
 	dataStrategy: 'MIRROR',
@@ -17,14 +21,14 @@ const defaultInitialValues = {
 
 const renderSettingsStep = (
 	overrides: Partial<typeof defaultInitialValues> = {},
-	instance = false
+	scope: Scope = SCOPES.SITE
 ) =>
 	render(
 		<Formik
 			initialValues={{...defaultInitialValues, ...overrides}}
 			onSubmit={jest.fn()}
 		>
-			<SettingsStep instance={instance} />
+			<SettingsStep scope={scope} />
 		</Formik>
 	);
 
@@ -85,8 +89,8 @@ describe('SettingsStep', () => {
 		expect(screen.getByLabelText('mirror')).not.toBeChecked();
 	});
 
-	it('shows mirror as a read-only label at the instance level', () => {
-		renderSettingsStep({}, true);
+	it('shows mirror as a read-only label at the company scope', () => {
+		renderSettingsStep({}, SCOPES.COMPANY);
 
 		expect(screen.getByText('mirror')).toBeInTheDocument();
 		expect(
@@ -94,8 +98,8 @@ describe('SettingsStep', () => {
 		).toBeInTheDocument();
 	});
 
-	it('hides the update-data strategy options at the instance level', () => {
-		renderSettingsStep({}, true);
+	it('hides the update-data strategy options at the company scope', () => {
+		renderSettingsStep({}, SCOPES.COMPANY);
 
 		expect(screen.queryByLabelText('mirror')).not.toBeInTheDocument();
 		expect(

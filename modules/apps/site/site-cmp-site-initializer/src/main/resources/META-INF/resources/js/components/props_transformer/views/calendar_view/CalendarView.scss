@@ -4,6 +4,27 @@
 	--fc-border-color: #{$border-color};
 	--fc-today-bg-color: transparent;
 
+	margin-top: -1rem;
+
+	&-toolbar {
+		align-items: center;
+		display: flex;
+		gap: 0.5rem;
+		justify-content: center;
+		padding: 0.5rem;
+
+		&-date-picker {
+			position: relative;
+
+			.date-picker {
+				inset: 0;
+				opacity: 0;
+				pointer-events: none;
+				position: absolute;
+			}
+		}
+	}
+
 	.fc-col-header-cell {
 		background-color: $gray-100;
 		border-left-width: 0;
@@ -28,6 +49,7 @@
 		display: inline-flex;
 		height: 1.75rem;
 		justify-content: center;
+		line-height: 1;
 		margin: 0.25rem 0.5rem;
 		padding: 0;
 		width: 1.75rem;

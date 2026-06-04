@@ -59,7 +59,7 @@ public class StagingLayoutFriendlyURLTest extends BaseLocalStagingTestCase {
 		Layout stagingLayout2 = LayoutTestUtil.addTypePortletLayout(
 			stagingGroup);
 
-		String stagingLayout2FriendlyURL = stagingLayout2.getFriendlyURL();
+		String originalLayout2FriendlyURL = stagingLayout2.getFriendlyURL();
 
 		publishLayouts();
 
@@ -96,7 +96,7 @@ public class StagingLayoutFriendlyURLTest extends BaseLocalStagingTestCase {
 			stagingLayout2.isPrivateLayout());
 
 		Assert.assertEquals(
-			stagingLayout2FriendlyURL,
+			originalLayout2FriendlyURL,
 			liveLayout2.getFriendlyURL(LocaleUtil.US));
 
 		_publishLayoutsExpectLayoutFriendlyURLsException(stagingLayout2);

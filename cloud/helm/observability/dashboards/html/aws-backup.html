@@ -1,0 +1,50 @@
+<style>
+	.ab-emoji { font-size: 24px; }
+	.ab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; width: 100%; }
+	.ab-header { margin-bottom: 24px; border-left: 6px solid #ff9900; padding-left: 16px; }
+	.ab-icon { margin-bottom: 8px; height: 28px; display: flex; align-items: center; }
+	.ab-panel { padding: 32px; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; font-family: 'Inter', system-ui, sans-serif; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); box-sizing: border-box; width: 100%; }
+	.ab-sub { margin: 4px 0 0 0; color: #4b5563; font-size: 14px; line-height: 1.5; }
+	.ab-tile { background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; box-sizing: border-box; }
+	.ab-tile-primary { border: 2px solid #ff9900; }
+	.ab-tile-sub { color: #6b7280; font-size: 12px; line-height: 1.3; }
+	.ab-tile-title { color: #111827; font-weight: 800; font-size: 16px; margin-bottom: 2px; }
+	.ab-title { margin: 0; color: #111827; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+</style>
+
+<div class="ab-panel">
+	<div class="ab-header">
+		<h1 class="ab-title">AWS Backup</h1>
+
+		<p class="ab-sub">On AWS, backups are managed by the native AWS Backup service. Recovery points, backup jobs, and restore history are tracked in the AWS Backup console rather than in Grafana.</p>
+	</div>
+
+	<div class="ab-grid">
+		<a class="ab-tile ab-tile-primary" href="https://{{ .region }}.console.aws.amazon.com/backup/home?region={{ .region }}#/dashboard" target="_blank">
+			<div class="ab-icon">
+				<span class="ab-emoji">🗄️</span>
+			</div>
+
+			<div class="ab-tile-title">AWS Backup Dashboard</div>
+			<div class="ab-tile-sub">Jobs, recovery points & status ({{ .region }}).</div>
+		</a>
+
+		<a class="ab-tile" href="https://{{ .region }}.console.aws.amazon.com/backup/home?region={{ .region }}#/backupvaults" target="_blank">
+			<div class="ab-icon">
+				<span class="ab-emoji">🔒</span>
+			</div>
+
+			<div class="ab-tile-title">Backup Vaults</div>
+			<div class="ab-tile-sub">Stored recovery points by vault.</div>
+		</a>
+
+		<a class="ab-tile" href="https://{{ .region }}.console.aws.amazon.com/backup/home?region={{ .region }}#/jobs" target="_blank">
+			<div class="ab-icon">
+				<span class="ab-emoji">📋</span>
+			</div>
+
+			<div class="ab-tile-title">Backup &amp; Restore Jobs</div>
+			<div class="ab-tile-sub">Recent job history & failures.</div>
+		</a>
+	</div>
+</div>

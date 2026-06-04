@@ -85,8 +85,25 @@ alloy:
 aws:
     ampWorkspaceURL: ""
     region: ""
+centralHub:
+    argoWorkflowsURL: ""
+    argocdURL: ""
+    gitURL: ""
 cloudProvider: ""
 customLabels: {}
+dashboards:
+    folder: Liferay
+    items:
+        backups:
+            file: dashboards/backups.json
+        central-hub:
+            file: dashboards/central-hub.json
+        databases:
+            file: dashboards/databases.json
+        kubernetes-workloads:
+            file: dashboards/kubernetes-workloads.json
+        load-balancers:
+            file: dashboards/load-balancers.json
 datasource:
     name: Prometheus
     type: prometheus
@@ -94,6 +111,102 @@ datasource:
 fullnameOverride: ""
 gcp:
     projectId: ""
+grafana:
+    datasources: {}
+    grafana.ini:
+        analytics:
+            check_for_plugin_updates: true
+            check_for_updates: true
+            reporting_enabled: false
+        annotations:
+            cleanupjob_batchsize: 300
+        annotations.api:
+            max_age: 10d
+            max_annotations_to_keep: 3000
+        annotations.dashboard:
+            max_age: 10d
+            max_annotations_to_keep: 3000
+        auth:
+            sigv4_auth_enabled: true
+        dashboards:
+            default_home_dashboard_path: /tmp/dashboards/Liferay/central-hub.json
+        feature_toggles:
+            enable: accessControlOnCall,idForwarding,externalServiceAccounts
+        log:
+            filters: plugins:error
+            level: error
+            mode: console
+        log.console:
+            format: json
+        panels:
+            disable_sanitize_html: true
+        plugins:
+            disable_plugins: grafana-lokiexplore-app
+        server:
+            enable_gzip: true
+            read_timeout: 0
+        unified_alerting.state_history.annotations:
+            max_age: 10d
+            max_annotations_to_keep: 3000
+        users:
+            default_theme: light
+    networkPolicy:
+        enabled: false
+    podAnnotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+    podDisruptionBudget:
+        maxUnavailable: 1
+    rbac:
+        namespaced: true
+    resources:
+        limits:
+            cpu: 500m
+            memory: 512Mi
+        requests:
+            cpu: 100m
+            memory: 256Mi
+    serviceAccount:
+        annotations:
+            eks.amazonaws.com/role-arn: ""
+        automountServiceAccountToken: true
+        name: grafana
+    serviceMonitor:
+        enabled: false
+    sidecar:
+        alerts:
+            enabled: true
+            env:
+                HEALTH_PORT: 8081
+            labelValue: "true"
+            resource: configmap
+            searchNamespace: ""
+            watchMethod: SLEEP
+        dashboards:
+            enabled: true
+            env:
+                HEALTH_PORT: 8084
+            folderAnnotation: grafana_folder
+            labelValue: "true"
+            provider:
+                foldersFromFilesStructure: true
+            resource: configmap
+            searchNamespace: ""
+            watchMethod: SLEEP
+        datasources:
+            alertmanager:
+                enabled: false
+            defaultDatasourceEnabled: true
+            enabled: true
+            env:
+                HEALTH_PORT: 8082
+            labelValue: "true"
+            resource: configmap
+            searchNamespace: ""
+            timeout: 180s
+            watchMethod: SLEEP
+        logLevel: error
+        plugins:
+            enabled: true
 grafana-alloy:
     alloy:
         clustering:

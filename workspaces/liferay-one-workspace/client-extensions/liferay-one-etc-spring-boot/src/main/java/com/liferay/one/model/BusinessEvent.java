@@ -22,7 +22,6 @@ public class BusinessEvent extends JiraAssetObject {
 
 		_accountExternalReferenceCode = accountExternalReferenceCode;
 
-		_businessEventId = jiraAssetObjectJSONObject.optString("id");
 		_actualEventDate = getAttributeKey(
 			jiraAssetObjectJSONObject,
 			BusinessEventConstants.ATTRIBUTE_ACTUAL_EVENT_DATE);
@@ -31,6 +30,7 @@ public class BusinessEvent extends JiraAssetObject {
 			BusinessEventConstants.ATTRIBUTE_ASSOCIATED_TICKETS);
 		_authorEmailAddress = getAttributeValue(
 			jiraAssetObjectJSONObject, BusinessEventConstants.ATTRIBUTE_AUTHOR);
+		_businessEventId = jiraAssetObjectJSONObject.optString("id");
 		_currentLiferayVersionKey = getAttributeKey(
 			jiraAssetObjectJSONObject,
 			BusinessEventConstants.ATTRIBUTE_CURRENT_VERSION);
@@ -80,20 +80,22 @@ public class BusinessEvent extends JiraAssetObject {
 		_lastUpdatedAuthorEmailAddress = authorEmailAddress;
 		_newLiferayVersionName = StringPool.BLANK;
 
-		JSONObject jsonObject = new JSONObject(attributesJSON);
+		JSONObject attributesJSONObject = new JSONObject(attributesJSON);
 
-		_actualEventDate = jsonObject.optString("actualEventDate");
-		_associatedTickets = jsonObject.optString("associatedTickets");
-		_currentLiferayVersionKey = jsonObject.optString(
+		_actualEventDate = attributesJSONObject.optString("actualEventDate");
+		_associatedTickets = attributesJSONObject.optString(
+			"associatedTickets");
+		_currentLiferayVersionKey = attributesJSONObject.optString(
 			"currentLiferayVersion");
-		_description = jsonObject.optString("description");
-		_eventStatusName = jsonObject.optString("eventStatus");
-		_eventTypeName = jsonObject.optString("eventType");
-		_lastComment = jsonObject.optString("lastComment");
-		_name = jsonObject.optString("name");
-		_newLiferayVersionKey = jsonObject.optString("newLiferayVersion");
-		_plannedEventDate = jsonObject.optString("plannedEventDate");
-		_timeZoneName = jsonObject.optString("timeZone");
+		_description = attributesJSONObject.optString("description");
+		_eventStatusName = attributesJSONObject.optString("eventStatus");
+		_eventTypeName = attributesJSONObject.optString("eventType");
+		_lastComment = attributesJSONObject.optString("lastComment");
+		_name = attributesJSONObject.optString("name");
+		_newLiferayVersionKey = attributesJSONObject.optString(
+			"newLiferayVersion");
+		_plannedEventDate = attributesJSONObject.optString("plannedEventDate");
+		_timeZoneName = attributesJSONObject.optString("timeZone");
 	}
 
 	public String getAccountExternalReferenceCode() {

@@ -293,7 +293,8 @@ public class PageExperiencesTestUtil {
 
 		PageExperience pageExperience = new PageExperience();
 
-		pageExperience.setKey(draftPageExperience.getKey());
+		String draftExternalReferenceCode =
+			draftPageExperience.getExternalReferenceCode();
 
 		if (SegmentsExperienceConstants.KEY_DEFAULT.equals(
 				draftPageExperience.getKey())) {
@@ -301,15 +302,9 @@ public class PageExperiencesTestUtil {
 			pageExperience.setExternalReferenceCode(
 				publishedContentPageSpecificationExternalReferenceCode +
 					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT);
-
-			return pageExperience;
 		}
-
-		String draftExternalReferenceCode =
-			draftPageExperience.getExternalReferenceCode();
-
-		if (draftExternalReferenceCode.endsWith(
-				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT)) {
+		else if (draftExternalReferenceCode.endsWith(
+					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT)) {
 
 			int suffixDraftLength =
 				LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DRAFT.length();
@@ -324,6 +319,8 @@ public class PageExperiencesTestUtil {
 				draftExternalReferenceCode +
 					LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_PUBLISHED);
 		}
+
+		pageExperience.setKey(draftPageExperience.getKey());
 
 		return pageExperience;
 	}

@@ -2880,19 +2880,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		expectedDraftContentPageSpecification.setExternalReferenceCode(
 			draftContentPageSpecificationExternalReferenceCode);
-		expectedDraftContentPageSpecification.setPageExperiences(
-			expectedDraftPageExperiences);
 		expectedDraftContentPageSpecification.setStatus(
 			PageSpecification.Status.APPROVED);
+		expectedDraftContentPageSpecification.setPageExperiences(
+			expectedDraftPageExperiences);
 
 		ContentPageSpecification expectedPublishedContentPageSpecification =
 			new ContentPageSpecification();
 
 		expectedPublishedContentPageSpecification.setExternalReferenceCode(
 			sitePageExternalReferenceCode);
+		expectedPublishedContentPageSpecification.setStatus(status);
 		expectedPublishedContentPageSpecification.setPageExperiences(
 			expectedPublishedPageExperiences);
-		expectedPublishedContentPageSpecification.setStatus(status);
 
 		SitePage sitePage = _getRandomSitePage(
 			sitePageExternalReferenceCode, null,
@@ -3208,11 +3208,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		ContentPageSpecification publishedContentPageSpecification =
 			new ContentPageSpecification();
 
+		publishedContentPageSpecification.setExternalReferenceCode(
+			pageSpecificationExternalReferenceCode);
+		publishedContentPageSpecification.setStatus(
+			PageSpecification.Status.APPROVED);
+		publishedContentPageSpecification.setType(
+			() -> ContentPageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
 		publishedContentPageSpecification.
 			setDraftContentPageSpecificationExternalReferenceCode(
 				draftContentPageSpecificationExternalReferenceCode);
-		publishedContentPageSpecification.setExternalReferenceCode(
-			pageSpecificationExternalReferenceCode);
 		publishedContentPageSpecification.setPageExperiences(
 			new PageExperience[] {
 				PageExperiencesTestUtil.getDefaultPageExperience(
@@ -3220,10 +3224,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						LayoutConstants.EXTERNAL_REFERENCE_CODE_SUFFIX_DEFAULT,
 					pageElements, pageSpecificationExternalReferenceCode, null)
 			});
-		publishedContentPageSpecification.setStatus(
-			PageSpecification.Status.APPROVED);
-		publishedContentPageSpecification.setType(
-			() -> ContentPageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
 
 		_testPostSiteSitePageWithDraftContentPageSpecification(
 			false, publishedContentPageSpecification,

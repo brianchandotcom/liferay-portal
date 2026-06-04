@@ -180,7 +180,7 @@ public abstract class BaseBundlePersistentResource
 	}
 
 	protected void start() {
-		_dispatch();
+		_invokeBuild();
 
 		print("Start building bundles at " + _getProducerJobURL());
 	}
@@ -238,7 +238,7 @@ public abstract class BaseBundlePersistentResource
 
 			if (getStatus() == Status.FAILED) {
 				if (_redispatchAttempts < _MAX_REDISPATCH_ATTEMPTS) {
-					_attemptRedispatch(dataJSONObject);
+					_redispatchBuild(dataJSONObject);
 				}
 				else {
 					print("No redispatch attempts remaining");
@@ -342,98 +342,39 @@ public abstract class BaseBundlePersistentResource
 		}
 	}
 
-	private void _attemptRedispatch(JSONObject cachedDataJSONObject) {
-		JSONObject historyEntryJSONObject = new JSONObject();
-
-		historyEntryJSONObject.put(
-			"controller_build_url",
-			cachedDataJSONObject.optString("controller_build_url")
-		).put(
-			"producer_build_url",
-			cachedDataJSONObject.optString("producer_build_url")
-		).put(
-			"status", cachedDataJSONObject.optString("status")
-		);
-
-		_redispatchHistoryJSONArray.put(historyEntryJSONObject);
-
-		while (_redispatchHistoryJSONArray.length() >
-					_MAX_REDISPATCH_ATTEMPTS) {
-
-			_redispatchHistoryJSONArray.remove(0);
-		}
-
-		_redispatchAttempts++;
-
-		String currentTopLevelBuildURL = getCurrentTopLevelBuildURL();
-
-		setControllerBuildURL(currentTopLevelBuildURL);
-
-		setProducerBuildURL(null);
-		setProducerJenkinsMaster(null);
-		setProducerQueueId(0);
-		setStatus(Status.IN_QUEUE);
-
-		save();
-
-		JenkinsResultsParserUtil.sleep(_STAMPEDE_CLAIM_VERIFY_TIME);
-
-		JSONObject verifyDataJSONObject = getDataJSONObject();
-
-		if (verifyDataJSONObject != null) {
-			String winningControllerBuildURL = verifyDataJSONObject.optString(
-				"controller_build_url");
-
-			if (!Objects.equals(
-					currentTopLevelBuildURL, winningControllerBuildURL)) {
-
-				print(
-					"Following redispatched bundles at " +
-						winningControllerBuildURL);
-
-				setControllerBuildURL(winningControllerBuildURL);
-				setProducerBuildURL(
-					verifyDataJSONObject.optString("producer_build_url"));
-				setProducerJenkinsMaster(null);
-
-				String producerJenkinsMasterName =
-					verifyDataJSONObject.optString("producer_jenkins_master");
-
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(
-						producerJenkinsMasterName)) {
-
-					setProducerJenkinsMaster(
-						JenkinsMaster.getInstance(producerJenkinsMasterName));
-				}
-
-				setProducerQueueId(
-					verifyDataJSONObject.optLong("producer_queue_id"));
-				setStatus(
-					Status.valueOf(verifyDataJSONObject.getString("status")));
-
-				_redispatchAttempts = verifyDataJSONObject.optInt(
-					"redispatch_attempts", _redispatchAttempts);
-
-				JSONArray winnerRedispatchHistoryJSONArray =
-					verifyDataJSONObject.optJSONArray("redispatch_history");
-
-				if (winnerRedispatchHistoryJSONArray != null) {
-					_redispatchHistoryJSONArray =
-						winnerRedispatchHistoryJSONArray;
-				}
-
-				return;
-			}
-		}
-
-		_dispatch();
-
-		print(
-			"Redispatching bundles (" + _redispatchAttempts + " of " +
-				_MAX_REDISPATCH_ATTEMPTS + ") at " + _getProducerJobURL());
+	private String _getAxisVariable() {
+		return String.valueOf(getType());
 	}
 
-	private void _dispatch() {
+	private String _getBaseInvocationURL() {
+		try {
+			String serverType = "production";
+
+			String topLevelBuildURL = getCurrentTopLevelBuildURL();
+
+			if (topLevelBuildURL.contains("test-5")) {
+				serverType = "staging";
+			}
+
+			return JenkinsResultsParserUtil.getBuildProperty(
+				"github.webhook.base.invocation.url", serverType);
+		}
+		catch (IOException ioException) {
+			return _BASE_INVOCATION_URL;
+		}
+	}
+
+	private String _getProducerJobURL() {
+		JenkinsMaster producerJenkinsMaster = getProducerJenkinsMaster();
+
+		if (producerJenkinsMaster == null) {
+			return null;
+		}
+
+		return producerJenkinsMaster.getRemoteURL() + "job/" + _JOB_NAME;
+	}
+
+	private void _invokeBuild() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(_JOB_VARIANT);
@@ -483,36 +424,95 @@ public abstract class BaseBundlePersistentResource
 		save();
 	}
 
-	private String _getAxisVariable() {
-		return String.valueOf(getType());
-	}
+	private void _redispatchBuild(JSONObject cachedDataJSONObject) {
+		JSONObject historyEntryJSONObject = new JSONObject();
 
-	private String _getBaseInvocationURL() {
-		try {
-			String serverType = "production";
+		historyEntryJSONObject.put(
+			"controller_build_url",
+			cachedDataJSONObject.optString("controller_build_url")
+		).put(
+			"producer_build_url",
+			cachedDataJSONObject.optString("producer_build_url")
+		).put(
+			"status", cachedDataJSONObject.optString("status")
+		);
 
-			String topLevelBuildURL = getCurrentTopLevelBuildURL();
+		_redispatchHistoryJSONArray.put(historyEntryJSONObject);
 
-			if (topLevelBuildURL.contains("test-5")) {
-				serverType = "staging";
+		while (_redispatchHistoryJSONArray.length() >
+					_MAX_REDISPATCH_ATTEMPTS) {
+
+			_redispatchHistoryJSONArray.remove(0);
+		}
+
+		_redispatchAttempts++;
+
+		String currentTopLevelBuildURL = getCurrentTopLevelBuildURL();
+
+		setControllerBuildURL(currentTopLevelBuildURL);
+
+		setProducerBuildURL(null);
+		setProducerJenkinsMaster(null);
+		setProducerQueueId(0);
+		setStatus(Status.IN_QUEUE);
+
+		save();
+
+		JenkinsResultsParserUtil.sleep(_REDISPATCH_VERIFY_TIME);
+
+		JSONObject verifyDataJSONObject = getDataJSONObject();
+
+		if (verifyDataJSONObject != null) {
+			String winningControllerBuildURL = verifyDataJSONObject.optString(
+				"controller_build_url");
+
+			if (!Objects.equals(
+					currentTopLevelBuildURL, winningControllerBuildURL)) {
+
+				print(
+					"Following redispatched bundles at " +
+						winningControllerBuildURL);
+
+				setControllerBuildURL(winningControllerBuildURL);
+				setProducerBuildURL(
+					verifyDataJSONObject.optString("producer_build_url"));
+				setProducerJenkinsMaster(null);
+
+				String producerJenkinsMasterName =
+					verifyDataJSONObject.optString("producer_jenkins_master");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(
+						producerJenkinsMasterName)) {
+
+					setProducerJenkinsMaster(
+						JenkinsMaster.getInstance(producerJenkinsMasterName));
+				}
+
+				setProducerQueueId(
+					verifyDataJSONObject.optLong("producer_queue_id"));
+				setStatus(
+					Status.valueOf(verifyDataJSONObject.getString("status")));
+
+				_redispatchAttempts = verifyDataJSONObject.optInt(
+					"redispatch_attempts", _redispatchAttempts);
+
+				JSONArray winnerRedispatchHistoryJSONArray =
+					verifyDataJSONObject.optJSONArray("redispatch_history");
+
+				if (winnerRedispatchHistoryJSONArray != null) {
+					_redispatchHistoryJSONArray =
+						winnerRedispatchHistoryJSONArray;
+				}
+
+				return;
 			}
-
-			return JenkinsResultsParserUtil.getBuildProperty(
-				"github.webhook.base.invocation.url", serverType);
-		}
-		catch (IOException ioException) {
-			return _BASE_INVOCATION_URL;
-		}
-	}
-
-	private String _getProducerJobURL() {
-		JenkinsMaster producerJenkinsMaster = getProducerJenkinsMaster();
-
-		if (producerJenkinsMaster == null) {
-			return null;
 		}
 
-		return producerJenkinsMaster.getRemoteURL() + "job/" + _JOB_NAME;
+		_invokeBuild();
+
+		print(
+			"Redispatching bundles (" + _redispatchAttempts + " of " +
+				_MAX_REDISPATCH_ATTEMPTS + ") at " + _getProducerJobURL());
 	}
 
 	private void _updateBuild(String producerBuildURL) {
@@ -565,7 +565,7 @@ public abstract class BaseBundlePersistentResource
 
 	private static final int _MAX_REDISPATCH_ATTEMPTS = 1;
 
-	private static final long _STAMPEDE_CLAIM_VERIFY_TIME = 1000 * 10;
+	private static final long _REDISPATCH_VERIFY_TIME = 1000 * 10;
 
 	private Build _build;
 	private int _failCount;

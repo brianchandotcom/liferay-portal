@@ -527,6 +527,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).put(
 					"com.liferay.portlet.display-category",
 					() -> {
+						if (FeatureFlagManagerUtil.isEnabled(
+								objectDefinition.getCompanyId(), "LPD-69877") &&
+							!objectDefinition.isAllowStandaloneObjectEntry()) {
+
+							return "category.hidden";
+						}
+
 						if (objectDefinition.isPortlet()) {
 							return "category.object";
 						}

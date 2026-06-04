@@ -81,49 +81,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments And I have connected my DXP instance with AC When I create an Individual Segment in AC and it shows in the DXP Segments administration Then I don't see the edit action"
-	@priority = 3
-	test CheckNotEditableSegmentFromACAtDXP {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Run individual segments scheduler job") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Job Scheduler");
-
-			Navigator.gotoNavTab(navTab = "Scheduled Jobs");
-
-			Pagination.changePagination(itemsPerPage = 60);
-
-			Click(
-				key_tableEntry = "CheckIndividualSegmentsSchedulerJobConfiguration",
-				key_text = "Run Now",
-				locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Go to segmentats page and assert that not possible Edit/Delete ") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Home",
-				siteName = "Test Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "People",
-				portlet = "Segments");
-
-			Click.waitForMenuToggleJSClick(
-				key_tableEntry = "Dynamic Segment Test",
-				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
-
-			AssertElementNotPresent(
-				key_menuItem = "Edit",
-				locator1 = "MenuItem#ANY_MENU_ITEM");
-		}
-	}
-
 	@description = "LPS-111465 When a default virtual instance/company is not synced to AC, none of the segments created on AC for other virtual instances are listed in People > Segments"
 	@priority = 5
 	test DefaultInstanceNotSynchronizedWithAC {

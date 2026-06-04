@@ -5,9 +5,10 @@
 
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {ITask} from '../../../../utils/types';
+import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
 
 import './CalendarView.scss';
 
@@ -24,6 +25,14 @@ export default function CalendarView({items}: CalendarViewProps) {
 			start: item.embedded.dueDate.slice(0, 10),
 			title: item.embedded.title,
 		}));
+
+	useEffect(() => {
+		Liferay.fire(UPDATE_TASKS_QUICK_FILTER_VISIBILITY, {visible: false});
+
+		return () => {
+			Liferay.fire(UPDATE_TASKS_QUICK_FILTER_VISIBILITY, {visible: true});
+		};
+	}, []);
 
 	return (
 		<div className="lfr__calendar-view">

@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.fragment.renderer;
 
-import com.liferay.ai.hub.web.internal.display.context.EditModelArmorTemplateDisplayContext;
+import com.liferay.ai.hub.web.internal.display.context.EditGuardrailDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,24 +16,24 @@ import org.osgi.service.component.annotations.Component;
  * @author João Victor Alves
  */
 @Component(service = FragmentRenderer.class)
-public class EditModelArmorTemplateFragmentRenderer
-	extends BaseFragmentRenderer<EditModelArmorTemplateDisplayContext> {
+public class EditGuardrailFragmentRenderer
+	extends BaseFragmentRenderer<EditGuardrailDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
-		return "model-armor-template";
+		return "guardrail";
 	}
 
 	@Override
-	protected EditModelArmorTemplateDisplayContext getDisplayContext(
+	protected EditGuardrailDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new EditModelArmorTemplateDisplayContext(httpServletRequest);
+		return new EditGuardrailDisplayContext(httpServletRequest);
 	}
 
 	@Override
 	protected String getJSPPath() {
-		return "/edit_model_armor_template.jsp";
+		return "/edit_guardrail.jsp";
 	}
 
 }

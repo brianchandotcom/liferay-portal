@@ -7,7 +7,7 @@ export type FilterLevel = 'lowAndAbove' | 'mediumAndAbove' | 'high';
 
 export type RAILevel = 'none' | FilterLevel;
 
-export type ModelArmorTemplate = {
+export type Guardrail = {
 	active: boolean;
 	description: string;
 	externalReferenceCode: string;

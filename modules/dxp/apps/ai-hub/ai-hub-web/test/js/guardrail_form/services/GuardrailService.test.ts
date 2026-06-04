@@ -4,10 +4,10 @@
  */
 
 import {
-	getModelArmorTemplate,
-	postModelArmorTemplate,
-	putModelArmorTemplate,
-} from '../../../../src/main/resources/META-INF/resources/js/model_armor_template_form/services/ModelArmorTemplateService';
+	getGuardrail,
+	postGuardrail,
+	putGuardrail,
+} from '../../../../src/main/resources/META-INF/resources/js/guardrail_form/services/GuardrailService';
 
 const mockFetch = jest.fn();
 
@@ -15,10 +15,10 @@ jest.mock('frontend-js-web', () => ({
 	fetch: (...args: any[]) => mockFetch(...args),
 }));
 
-const GET_BASE_URI = '/o/ai-hub/model-armor-templates';
-const POST_PUT_BASE_URI = '/o/ai-hub/v1.0/model-armor-templates';
+const GET_BASE_URI = '/o/ai-hub/guardrails';
+const POST_PUT_BASE_URI = '/o/ai-hub/v1.0/guardrails';
 
-describe('ModelArmorTemplateService', () => {
+describe('GuardrailService', () => {
 	beforeEach(() => {
 		mockFetch.mockReset();
 	});
@@ -35,14 +35,14 @@ describe('ModelArmorTemplateService', () => {
 		raiSexuallyExplicitLevel: {key: 'none', name: 'None'},
 	};
 
-	describe('getModelArmorTemplate', () => {
+	describe('getGuardrail', () => {
 		it('targets the by-external-reference-code endpoint', async () => {
 			mockFetch.mockResolvedValueOnce({
 				json: () => Promise.resolve(fullPickerFields),
 				ok: true,
 			});
 
-			await getModelArmorTemplate('TEMPLATE_X');
+			await getGuardrail('TEMPLATE_X');
 
 			expect(mockFetch).toHaveBeenCalledWith(
 				`${GET_BASE_URI}/by-external-reference-code/TEMPLATE_X`,
@@ -53,7 +53,7 @@ describe('ModelArmorTemplateService', () => {
 		it('throws when the response is not ok', async () => {
 			mockFetch.mockResolvedValueOnce({ok: false});
 
-			await expect(getModelArmorTemplate('TEMPLATE_X')).rejects.toThrow();
+			await expect(getGuardrail('TEMPLATE_X')).rejects.toThrow();
 		});
 
 		it('unwraps picker fields shaped as {key, name} into bare keys', async () => {
@@ -79,7 +79,7 @@ describe('ModelArmorTemplateService', () => {
 				ok: true,
 			});
 
-			const result = await getModelArmorTemplate('TEMPLATE_X');
+			const result = await getGuardrail('TEMPLATE_X');
 
 			expect(result.guardrailType).toBe('output');
 			expect(result.piAndJailbreakConfidenceLevel).toBe('high');
@@ -90,7 +90,7 @@ describe('ModelArmorTemplateService', () => {
 		});
 	});
 
-	describe('postModelArmorTemplate', () => {
+	describe('postGuardrail', () => {
 		it('returns the parsed response body', async () => {
 			mockFetch.mockResolvedValueOnce({
 				json: () =>
@@ -101,7 +101,7 @@ describe('ModelArmorTemplateService', () => {
 				ok: true,
 			});
 
-			const result = await postModelArmorTemplate({
+			const result = await postGuardrail({
 				externalReferenceCode: 'TEMPLATE_X',
 			} as any);
 
@@ -121,7 +121,7 @@ describe('ModelArmorTemplateService', () => {
 				title_i18n: {en_US: 'My Template'},
 			} as any;
 
-			await postModelArmorTemplate(template);
+			await postGuardrail(template);
 
 			expect(mockFetch).toHaveBeenCalledWith(
 				POST_PUT_BASE_URI,
@@ -143,14 +143,14 @@ describe('ModelArmorTemplateService', () => {
 			});
 
 			await expect(
-				postModelArmorTemplate({
+				postGuardrail({
 					externalReferenceCode: 'TEMPLATE_X',
 				} as any)
 			).rejects.toThrow('External reference code already in use');
 		});
 	});
 
-	describe('putModelArmorTemplate', () => {
+	describe('putGuardrail', () => {
 		it('returns the parsed response body', async () => {
 			mockFetch.mockResolvedValueOnce({
 				json: () =>
@@ -161,7 +161,7 @@ describe('ModelArmorTemplateService', () => {
 				ok: true,
 			});
 
-			const result = await putModelArmorTemplate({
+			const result = await putGuardrail({
 				externalReferenceCode: 'TEMPLATE_X',
 			} as any);
 
@@ -181,7 +181,7 @@ describe('ModelArmorTemplateService', () => {
 				title_i18n: {en_US: 'My Template'},
 			} as any;
 
-			await putModelArmorTemplate(template);
+			await putGuardrail(template);
 
 			expect(mockFetch).toHaveBeenCalledWith(
 				`${POST_PUT_BASE_URI}/by-external-reference-code/TEMPLATE_X`,
@@ -203,7 +203,7 @@ describe('ModelArmorTemplateService', () => {
 			});
 
 			await expect(
-				putModelArmorTemplate({
+				putGuardrail({
 					externalReferenceCode: 'TEMPLATE_X',
 				} as any)
 			).rejects.toThrow('External reference code already in use');
@@ -216,7 +216,7 @@ describe('ModelArmorTemplateService', () => {
 			});
 
 			await expect(
-				putModelArmorTemplate({
+				putGuardrail({
 					externalReferenceCode: 'TEMPLATE_X',
 				} as any)
 			).rejects.toThrow();

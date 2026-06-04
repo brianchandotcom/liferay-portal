@@ -16,33 +16,33 @@ import React from 'react';
 import AgentDefinitionForm from '../../../src/main/resources/META-INF/resources/js/agent_definition_form/AgentDefinitionForm';
 
 const mockDeleteAgentDefinitionToContentRetrievers = jest.fn();
-const mockDeleteAgentDefinitionToModelArmorTemplates = jest.fn();
+const mockDeleteAgentDefinitionToGuardrails = jest.fn();
 const mockGetAgentDefinition = jest.fn();
 const mockGetContentRetrievers = jest.fn();
-const mockGetModelArmorTemplates = jest.fn();
+const mockGetGuardrails = jest.fn();
 const mockGetWorkflowDefinition = jest.fn();
 const mockGetWorkflowDefinitions = jest.fn();
 const mockOpenToast = jest.fn();
 const mockPostAgentDefinition = jest.fn();
 const mockPutAgentDefinition = jest.fn();
 const mockPutAgentDefinitionToContentRetrievers = jest.fn();
-const mockPutAgentDefinitionToModelArmorTemplates = jest.fn();
+const mockPutAgentDefinitionToGuardrails = jest.fn();
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/agent_definition_form/services/AgentDefinitionService',
 	() => ({
 		deleteAgentDefinitionToContentRetrievers: (...args: any[]) =>
 			mockDeleteAgentDefinitionToContentRetrievers(...args),
-		deleteAgentDefinitionToModelArmorTemplates: (...args: any[]) =>
-			mockDeleteAgentDefinitionToModelArmorTemplates(...args),
+		deleteAgentDefinitionToGuardrails: (...args: any[]) =>
+			mockDeleteAgentDefinitionToGuardrails(...args),
 		getAgentDefinition: (...args: any[]) => mockGetAgentDefinition(...args),
 		postAgentDefinition: (...args: any[]) =>
 			mockPostAgentDefinition(...args),
 		putAgentDefinition: (...args: any[]) => mockPutAgentDefinition(...args),
 		putAgentDefinitionToContentRetrievers: (...args: any[]) =>
 			mockPutAgentDefinitionToContentRetrievers(...args),
-		putAgentDefinitionToModelArmorTemplates: (...args: any[]) =>
-			mockPutAgentDefinitionToModelArmorTemplates(...args),
+		putAgentDefinitionToGuardrails: (...args: any[]) =>
+			mockPutAgentDefinitionToGuardrails(...args),
 	})
 );
 
@@ -55,10 +55,9 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../src/main/resources/META-INF/resources/js/agent_definition_form/services/ModelArmorTemplateService',
+	'../../../src/main/resources/META-INF/resources/js/agent_definition_form/services/GuardrailService',
 	() => ({
-		getModelArmorTemplates: (...args: any[]) =>
-			mockGetModelArmorTemplates(...args),
+		getGuardrails: (...args: any[]) => mockGetGuardrails(...args),
 	})
 );
 
@@ -169,20 +168,20 @@ const defaultProps = {
 describe('AgentDefinitionForm', () => {
 	beforeEach(() => {
 		mockDeleteAgentDefinitionToContentRetrievers.mockReset();
-		mockDeleteAgentDefinitionToModelArmorTemplates.mockReset();
+		mockDeleteAgentDefinitionToGuardrails.mockReset();
 		mockGetAgentDefinition.mockReset();
 		mockGetContentRetrievers.mockReset();
-		mockGetModelArmorTemplates.mockReset();
+		mockGetGuardrails.mockReset();
 		mockGetWorkflowDefinition.mockReset();
 		mockGetWorkflowDefinitions.mockReset();
 		mockOpenToast.mockReset();
 		mockPostAgentDefinition.mockReset();
 		mockPutAgentDefinition.mockReset();
 		mockPutAgentDefinitionToContentRetrievers.mockReset();
-		mockPutAgentDefinitionToModelArmorTemplates.mockReset();
+		mockPutAgentDefinitionToGuardrails.mockReset();
 
 		mockGetContentRetrievers.mockResolvedValue({items: []});
-		mockGetModelArmorTemplates.mockResolvedValue({items: []});
+		mockGetGuardrails.mockResolvedValue({items: []});
 		mockGetWorkflowDefinitions.mockResolvedValue({items: []});
 	});
 
@@ -195,7 +194,7 @@ describe('AgentDefinitionForm', () => {
 			mockGetAgentDefinition.mockResolvedValueOnce({
 				active: true,
 				agentDefinitionsToContentRetrievers: [],
-				aiHubAgentDefinitionsToAIHubMATemplates: [],
+				aiHubAgentDefinitionsToAIHubGuardrails: [],
 				description: 'Loaded',
 				externalReferenceCode: 'AGENT_X',
 				inputVariables: 'in',
@@ -340,7 +339,7 @@ describe('AgentDefinitionForm', () => {
 		it('fetches the single workflow by name when readOnly is true and the name is set', async () => {
 			mockGetAgentDefinition.mockResolvedValueOnce({
 				agentDefinitionsToContentRetrievers: [],
-				aiHubAgentDefinitionsToAIHubMATemplates: [],
+				aiHubAgentDefinitionsToAIHubGuardrails: [],
 				externalReferenceCode: 'AGENT_X',
 				title_i18n: {en_US: 'Loaded'},
 				workflowDefinitionName: 'wf-1',

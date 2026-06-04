@@ -19,11 +19,9 @@ import java.util.Map;
 /**
  * @author João Victor Alves
  */
-public class EditModelArmorTemplateDisplayContext {
+public class EditGuardrailDisplayContext {
 
-	public EditModelArmorTemplateDisplayContext(
-		HttpServletRequest httpServletRequest) {
-
+	public EditGuardrailDisplayContext(HttpServletRequest httpServletRequest) {
 		_httpServletRequest = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -55,7 +53,7 @@ public class EditModelArmorTemplateDisplayContext {
 			DisplayContextUtil.isReadOnly(
 				_themeDisplay.getCompanyId(),
 				_httpServletRequest.getParameter("externalReferenceCode"),
-				"L_AI_HUB_MODEL_ARMOR_TEMPLATE")
+				"L_AI_HUB_GUARDRAIL")
 		).build();
 	}
 

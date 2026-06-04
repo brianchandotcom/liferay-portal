@@ -8,31 +8,31 @@ import {act, renderHook, waitFor} from '@testing-library/react';
 import {useAgentDefinitionForm} from '../../../../src/main/resources/META-INF/resources/js/agent_definition_form/hooks/useAgentDefinitionForm';
 
 const mockDeleteAgentDefinitionToContentRetrievers = jest.fn();
-const mockDeleteAgentDefinitionToModelArmorTemplates = jest.fn();
+const mockDeleteAgentDefinitionToGuardrails = jest.fn();
 const mockGetAgentDefinition = jest.fn();
 const mockGetContentRetrievers = jest.fn();
-const mockGetModelArmorTemplates = jest.fn();
+const mockGetGuardrails = jest.fn();
 const mockOpenToast = jest.fn();
 const mockPostAgentDefinition = jest.fn();
 const mockPutAgentDefinition = jest.fn();
 const mockPutAgentDefinitionToContentRetrievers = jest.fn();
-const mockPutAgentDefinitionToModelArmorTemplates = jest.fn();
+const mockPutAgentDefinitionToGuardrails = jest.fn();
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/agent_definition_form/services/AgentDefinitionService',
 	() => ({
 		deleteAgentDefinitionToContentRetrievers: (...args: any[]) =>
 			mockDeleteAgentDefinitionToContentRetrievers(...args),
-		deleteAgentDefinitionToModelArmorTemplates: (...args: any[]) =>
-			mockDeleteAgentDefinitionToModelArmorTemplates(...args),
+		deleteAgentDefinitionToGuardrails: (...args: any[]) =>
+			mockDeleteAgentDefinitionToGuardrails(...args),
 		getAgentDefinition: (...args: any[]) => mockGetAgentDefinition(...args),
 		postAgentDefinition: (...args: any[]) =>
 			mockPostAgentDefinition(...args),
 		putAgentDefinition: (...args: any[]) => mockPutAgentDefinition(...args),
 		putAgentDefinitionToContentRetrievers: (...args: any[]) =>
 			mockPutAgentDefinitionToContentRetrievers(...args),
-		putAgentDefinitionToModelArmorTemplates: (...args: any[]) =>
-			mockPutAgentDefinitionToModelArmorTemplates(...args),
+		putAgentDefinitionToGuardrails: (...args: any[]) =>
+			mockPutAgentDefinitionToGuardrails(...args),
 	})
 );
 
@@ -45,10 +45,9 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/agent_definition_form/services/ModelArmorTemplateService',
+	'../../../../src/main/resources/META-INF/resources/js/agent_definition_form/services/GuardrailService',
 	() => ({
-		getModelArmorTemplates: (...args: any[]) =>
-			mockGetModelArmorTemplates(...args),
+		getGuardrails: (...args: any[]) => mockGetGuardrails(...args),
 	})
 );
 
@@ -96,18 +95,18 @@ async function fillRequiredFields(result: any) {
 describe('useAgentDefinitionForm', () => {
 	beforeEach(() => {
 		mockDeleteAgentDefinitionToContentRetrievers.mockReset();
-		mockDeleteAgentDefinitionToModelArmorTemplates.mockReset();
+		mockDeleteAgentDefinitionToGuardrails.mockReset();
 		mockGetAgentDefinition.mockReset();
 		mockGetContentRetrievers.mockReset();
-		mockGetModelArmorTemplates.mockReset();
+		mockGetGuardrails.mockReset();
 		mockOpenToast.mockReset();
 		mockPostAgentDefinition.mockReset();
 		mockPutAgentDefinition.mockReset();
 		mockPutAgentDefinitionToContentRetrievers.mockReset();
-		mockPutAgentDefinitionToModelArmorTemplates.mockReset();
+		mockPutAgentDefinitionToGuardrails.mockReset();
 
 		mockGetContentRetrievers.mockResolvedValue({items: []});
-		mockGetModelArmorTemplates.mockResolvedValue({items: []});
+		mockGetGuardrails.mockResolvedValue({items: []});
 	});
 
 	describe('initial values', () => {
@@ -144,7 +143,7 @@ describe('useAgentDefinitionForm', () => {
 					{externalReferenceCode: 'CR_1', title: 'First'},
 					{externalReferenceCode: 'CR_2', title: 'Second'},
 				],
-				aiHubAgentDefinitionsToAIHubMATemplates: [
+				aiHubAgentDefinitionsToAIHubGuardrails: [
 					{externalReferenceCode: 'MAT_1', title: 'Guard'},
 				],
 				externalReferenceCode: 'AGENT_X',
@@ -161,11 +160,11 @@ describe('useAgentDefinitionForm', () => {
 				);
 			});
 
-			expect(result.current.modelArmorTemplates.selected).toHaveLength(1);
+			expect(result.current.guardrails.selected).toHaveLength(1);
 
 			await act(async () => {
 				await result.current.contentRetrievers.sync('AGENT_X');
-				await result.current.modelArmorTemplates.sync('AGENT_X');
+				await result.current.guardrails.sync('AGENT_X');
 			});
 
 			expect(
@@ -180,7 +179,7 @@ describe('useAgentDefinitionForm', () => {
 			mockGetAgentDefinition.mockResolvedValueOnce({
 				active: true,
 				agentDefinitionsToContentRetrievers: [],
-				aiHubAgentDefinitionsToAIHubMATemplates: [],
+				aiHubAgentDefinitionsToAIHubGuardrails: [],
 				description: 'Loaded from API',
 				externalReferenceCode: 'AGENT_X',
 				inputVariables: 'in1,in2',
@@ -213,7 +212,7 @@ describe('useAgentDefinitionForm', () => {
 					{externalReferenceCode: 'CR_2', title: 'Second'},
 				],
 			});
-			mockGetModelArmorTemplates.mockResolvedValueOnce({
+			mockGetGuardrails.mockResolvedValueOnce({
 				items: [{externalReferenceCode: 'MAT_1', title: 'Guard'}],
 			});
 
@@ -225,9 +224,7 @@ describe('useAgentDefinitionForm', () => {
 				).toHaveLength(2);
 			});
 
-			expect(result.current.modelArmorTemplates.sourceList).toHaveLength(
-				1
-			);
+			expect(result.current.guardrails.sourceList).toHaveLength(1);
 		});
 
 		it('shows an error toast when the agent fetch rejects', async () => {
@@ -289,7 +286,7 @@ describe('useAgentDefinitionForm', () => {
 					{externalReferenceCode: 'CR_1'},
 					{externalReferenceCode: 'CR_2'},
 				],
-				aiHubAgentDefinitionsToAIHubMATemplates: [
+				aiHubAgentDefinitionsToAIHubGuardrails: [
 					{externalReferenceCode: 'MAT_1'},
 				],
 				description: 'desc',
@@ -304,9 +301,7 @@ describe('useAgentDefinitionForm', () => {
 				status: {label: 'approved'},
 			});
 			mockDeleteAgentDefinitionToContentRetrievers.mockResolvedValue({});
-			mockDeleteAgentDefinitionToModelArmorTemplates.mockResolvedValue(
-				{}
-			);
+			mockDeleteAgentDefinitionToGuardrails.mockResolvedValue({});
 
 			const {result} = renderAgentHook({
 				externalReferenceCode: 'AGENT_X',
@@ -322,7 +317,7 @@ describe('useAgentDefinitionForm', () => {
 				result.current.contentRetrievers.setSelected([
 					{externalReferenceCode: 'CR_1'},
 				]);
-				result.current.modelArmorTemplates.setSelected([]);
+				result.current.guardrails.setSelected([]);
 			});
 
 			await act(async () => {
@@ -335,9 +330,10 @@ describe('useAgentDefinitionForm', () => {
 				).toHaveBeenCalledWith('AGENT_X', 'CR_2');
 			});
 
-			expect(
-				mockDeleteAgentDefinitionToModelArmorTemplates
-			).toHaveBeenCalledWith('AGENT_X', 'MAT_1');
+			expect(mockDeleteAgentDefinitionToGuardrails).toHaveBeenCalledWith(
+				'AGENT_X',
+				'MAT_1'
+			);
 		});
 
 		it('issues PUT requests for added relationships only', async () => {
@@ -345,7 +341,7 @@ describe('useAgentDefinitionForm', () => {
 				agentDefinitionsToContentRetrievers: [
 					{externalReferenceCode: 'CR_1'},
 				],
-				aiHubAgentDefinitionsToAIHubMATemplates: [],
+				aiHubAgentDefinitionsToAIHubGuardrails: [],
 				description: 'desc',
 				externalReferenceCode: 'AGENT_X',
 				inputVariables: 'a',
@@ -358,7 +354,7 @@ describe('useAgentDefinitionForm', () => {
 				status: {label: 'approved'},
 			});
 			mockPutAgentDefinitionToContentRetrievers.mockResolvedValue({});
-			mockPutAgentDefinitionToModelArmorTemplates.mockResolvedValue({});
+			mockPutAgentDefinitionToGuardrails.mockResolvedValue({});
 
 			const {result} = renderAgentHook({
 				externalReferenceCode: 'AGENT_X',
@@ -375,7 +371,7 @@ describe('useAgentDefinitionForm', () => {
 					{externalReferenceCode: 'CR_1'},
 					{externalReferenceCode: 'CR_2'},
 				]);
-				result.current.modelArmorTemplates.setSelected([
+				result.current.guardrails.setSelected([
 					{externalReferenceCode: 'MAT_1'},
 				]);
 			});
@@ -393,9 +389,10 @@ describe('useAgentDefinitionForm', () => {
 			expect(
 				mockPutAgentDefinitionToContentRetrievers
 			).not.toHaveBeenCalledWith('AGENT_X', 'CR_1');
-			expect(
-				mockPutAgentDefinitionToModelArmorTemplates
-			).toHaveBeenCalledWith('AGENT_X', 'MAT_1');
+			expect(mockPutAgentDefinitionToGuardrails).toHaveBeenCalledWith(
+				'AGENT_X',
+				'MAT_1'
+			);
 			expect(
 				mockDeleteAgentDefinitionToContentRetrievers
 			).not.toHaveBeenCalled();
@@ -512,14 +509,12 @@ describe('useAgentDefinitionForm', () => {
 			expect(
 				mockPutAgentDefinitionToContentRetrievers
 			).not.toHaveBeenCalled();
-			expect(
-				mockPutAgentDefinitionToModelArmorTemplates
-			).not.toHaveBeenCalled();
+			expect(mockPutAgentDefinitionToGuardrails).not.toHaveBeenCalled();
 			expect(
 				mockDeleteAgentDefinitionToContentRetrievers
 			).not.toHaveBeenCalled();
 			expect(
-				mockDeleteAgentDefinitionToModelArmorTemplates
+				mockDeleteAgentDefinitionToGuardrails
 			).not.toHaveBeenCalled();
 		});
 	});

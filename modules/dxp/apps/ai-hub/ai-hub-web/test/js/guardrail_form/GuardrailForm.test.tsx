@@ -13,22 +13,19 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
-import ModelArmorTemplateForm from '../../../src/main/resources/META-INF/resources/js/model_armor_template_form/ModelArmorTemplateForm';
+import GuardrailForm from '../../../src/main/resources/META-INF/resources/js/guardrail_form/GuardrailForm';
 
-const mockGetModelArmorTemplate = jest.fn();
-const mockPostModelArmorTemplate = jest.fn();
-const mockPutModelArmorTemplate = jest.fn();
+const mockGetGuardrail = jest.fn();
+const mockPostGuardrail = jest.fn();
+const mockPutGuardrail = jest.fn();
 const mockOpenToast = jest.fn();
 
 jest.mock(
-	'../../../src/main/resources/META-INF/resources/js/model_armor_template_form/services/ModelArmorTemplateService',
+	'../../../src/main/resources/META-INF/resources/js/guardrail_form/services/GuardrailService',
 	() => ({
-		getModelArmorTemplate: (...args: any[]) =>
-			mockGetModelArmorTemplate(...args),
-		postModelArmorTemplate: (...args: any[]) =>
-			mockPostModelArmorTemplate(...args),
-		putModelArmorTemplate: (...args: any[]) =>
-			mockPutModelArmorTemplate(...args),
+		getGuardrail: (...args: any[]) => mockGetGuardrail(...args),
+		postGuardrail: (...args: any[]) => mockPostGuardrail(...args),
+		putGuardrail: (...args: any[]) => mockPutGuardrail(...args),
 	})
 );
 
@@ -125,11 +122,11 @@ const defaultProps = {
 	readOnly: false,
 };
 
-describe('ModelArmorTemplateForm', () => {
+describe('GuardrailForm', () => {
 	beforeEach(() => {
-		mockGetModelArmorTemplate.mockReset();
-		mockPostModelArmorTemplate.mockReset();
-		mockPutModelArmorTemplate.mockReset();
+		mockGetGuardrail.mockReset();
+		mockPostGuardrail.mockReset();
+		mockPutGuardrail.mockReset();
 		mockOpenToast.mockReset();
 	});
 
@@ -139,7 +136,7 @@ describe('ModelArmorTemplateForm', () => {
 
 	describe('panels', () => {
 		it('hydrates panel inputs after the fetch resolves', async () => {
-			mockGetModelArmorTemplate.mockResolvedValueOnce({
+			mockGetGuardrail.mockResolvedValueOnce({
 				active: true,
 				externalReferenceCode: 'TEMPLATE_X',
 				guardrailType: 'input',
@@ -147,7 +144,7 @@ describe('ModelArmorTemplateForm', () => {
 				multilanguageDetectionEnabled: false,
 				piAndJailbreakConfidenceLevel: 'mediumAndAbove',
 				piAndJailbreakFilterEnabled: false,
-				r_accountToAIHubModelArmorTemplates_accountEntryERC: 'ACCOUNT',
+				r_accountToAIHubGuardrails_accountEntryERC: 'ACCOUNT',
 				raiDangerousLevel: 'none',
 				raiHarassmentLevel: 'none',
 				raiHateSpeechLevel: 'none',
@@ -157,7 +154,7 @@ describe('ModelArmorTemplateForm', () => {
 			});
 
 			render(
-				<ModelArmorTemplateForm
+				<GuardrailForm
 					{...defaultProps}
 					externalReferenceCode="TEMPLATE_X"
 				/>
@@ -171,7 +168,7 @@ describe('ModelArmorTemplateForm', () => {
 		});
 
 		it('shows only the Details panel when no guardrail type is selected', () => {
-			render(<ModelArmorTemplateForm {...defaultProps} />);
+			render(<GuardrailForm {...defaultProps} />);
 
 			expect(screen.getByText('details')).toBeInTheDocument();
 			expect(screen.queryByText('detections')).not.toBeInTheDocument();
@@ -181,13 +178,13 @@ describe('ModelArmorTemplateForm', () => {
 		});
 
 		it('shows Details and Detections when the guardrail type is input', async () => {
-			mockGetModelArmorTemplate.mockResolvedValueOnce({
+			mockGetGuardrail.mockResolvedValueOnce({
 				externalReferenceCode: 'TEMPLATE_X',
 				guardrailType: 'input',
 			});
 
 			render(
-				<ModelArmorTemplateForm
+				<GuardrailForm
 					{...defaultProps}
 					externalReferenceCode="TEMPLATE_X"
 				/>
@@ -204,13 +201,13 @@ describe('ModelArmorTemplateForm', () => {
 		});
 
 		it('shows Details and Responsible AI when the guardrail type is output', async () => {
-			mockGetModelArmorTemplate.mockResolvedValueOnce({
+			mockGetGuardrail.mockResolvedValueOnce({
 				externalReferenceCode: 'TEMPLATE_X',
 				guardrailType: 'output',
 			});
 
 			render(
-				<ModelArmorTemplateForm
+				<GuardrailForm
 					{...defaultProps}
 					externalReferenceCode="TEMPLATE_X"
 				/>
@@ -227,7 +224,7 @@ describe('ModelArmorTemplateForm', () => {
 
 	describe('save', () => {
 		it('blocks the submit and surfaces a required-field error when a required field is empty', async () => {
-			render(<ModelArmorTemplateForm {...defaultProps} />);
+			render(<GuardrailForm {...defaultProps} />);
 
 			fireEvent.change(
 				screen.getByLabelText(/^external-reference-code/i),
@@ -243,16 +240,16 @@ describe('ModelArmorTemplateForm', () => {
 				);
 			});
 
-			expect(mockPostModelArmorTemplate).not.toHaveBeenCalled();
-			expect(mockPutModelArmorTemplate).not.toHaveBeenCalled();
+			expect(mockPostGuardrail).not.toHaveBeenCalled();
+			expect(mockPutGuardrail).not.toHaveBeenCalled();
 		});
 
 		it('submits filled values and shows the success toast', async () => {
-			mockPostModelArmorTemplate.mockResolvedValueOnce({
+			mockPostGuardrail.mockResolvedValueOnce({
 				externalReferenceCode: 'TEMPLATE_X',
 			});
 
-			render(<ModelArmorTemplateForm {...defaultProps} />);
+			render(<GuardrailForm {...defaultProps} />);
 
 			fireEvent.change(screen.getByLabelText(/^title/i), {
 				target: {value: 'My Template'},
@@ -265,7 +262,7 @@ describe('ModelArmorTemplateForm', () => {
 			fireEvent.click(screen.getByRole('button', {name: 'save'}));
 
 			await waitFor(() => {
-				expect(mockPostModelArmorTemplate).toHaveBeenCalledWith(
+				expect(mockPostGuardrail).toHaveBeenCalledWith(
 					expect.objectContaining({
 						externalReferenceCode: 'TEMPLATE-X',
 						title_i18n: {en_US: 'My Template'},
@@ -283,12 +280,7 @@ describe('ModelArmorTemplateForm', () => {
 
 	describe('toolbar', () => {
 		it('exposes a Cancel link that points at backURL', () => {
-			render(
-				<ModelArmorTemplateForm
-					{...defaultProps}
-					backURL="/back-here"
-				/>
-			);
+			render(<GuardrailForm {...defaultProps} backURL="/back-here" />);
 
 			const cancel = screen.getByRole('link', {name: 'cancel'});
 
@@ -296,13 +288,13 @@ describe('ModelArmorTemplateForm', () => {
 		});
 
 		it('shows the edit-guardrail title when externalReferenceCode is set', async () => {
-			mockGetModelArmorTemplate.mockResolvedValueOnce({
+			mockGetGuardrail.mockResolvedValueOnce({
 				externalReferenceCode: 'TEMPLATE_X',
 				title_i18n: {en_US: 'Loaded Title'},
 			});
 
 			render(
-				<ModelArmorTemplateForm
+				<GuardrailForm
 					{...defaultProps}
 					externalReferenceCode="TEMPLATE_X"
 				/>
@@ -312,7 +304,7 @@ describe('ModelArmorTemplateForm', () => {
 		});
 
 		it('shows the new-guardrail title when no externalReferenceCode is set', () => {
-			render(<ModelArmorTemplateForm {...defaultProps} />);
+			render(<GuardrailForm {...defaultProps} />);
 
 			expect(screen.getByText('new-guardrail')).toBeInTheDocument();
 		});

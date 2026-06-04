@@ -5,11 +5,11 @@
 
 import {fetch} from 'frontend-js-web';
 
-const MODEL_ARMOR_TEMPLATE_BASE_URI = '/o/ai-hub/model-armor-templates';
+const GUARDRAIL_BASE_URI = '/o/ai-hub/guardrails';
 
-async function getModelArmorTemplates() {
+async function getGuardrails() {
 	const response = await fetch(
-		`${MODEL_ARMOR_TEMPLATE_BASE_URI}?fields=externalReferenceCode,title`,
+		`${GUARDRAIL_BASE_URI}?fields=externalReferenceCode,title`,
 		{
 			method: 'GET',
 		}
@@ -18,4 +18,4 @@ async function getModelArmorTemplates() {
 	return response.json();
 }
 
-export {getModelArmorTemplates};
+export {getGuardrails};

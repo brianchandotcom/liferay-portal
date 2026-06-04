@@ -39,10 +39,10 @@ export default function AgentDefinitionForm({
 	const {
 		contentRetrievers,
 		errors,
+		guardrails,
 		handleBlur,
 		handleSubmit,
 		isSubmitting,
-		modelArmorTemplates,
 		setField,
 		setFieldTouched,
 		touched,
@@ -130,7 +130,7 @@ export default function AgentDefinitionForm({
 							/>
 
 							<GuardrailsPanel
-								modelArmorTemplates={modelArmorTemplates}
+								guardrails={guardrails}
 								readOnly={readOnly}
 							/>
 						</ClayLayout.Col>

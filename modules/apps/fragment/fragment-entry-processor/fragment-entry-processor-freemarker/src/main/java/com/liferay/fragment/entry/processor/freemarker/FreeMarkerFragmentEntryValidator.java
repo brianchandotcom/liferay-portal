@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.entry.processor.freemarker;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.entry.processor.freemarker.internal.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.input.template.parser.InputTemplateNode;
@@ -62,7 +63,8 @@ public class FreeMarkerFragmentEntryValidator
 					CompanyThreadLocal.getCompanyId());
 
 		if (!freeMarkerFragmentEntryProcessorConfiguration.enable() ||
-			!_isFreeMarkerTemplate(html)) {
+			!_isFreeMarkerTemplate(html) ||
+			ExportImportThreadLocal.isImportInProcess()) {
 
 			return;
 		}

@@ -200,8 +200,7 @@ public class GuardrailResourceTest extends BaseGuardrailResourceTestCase {
 	private ObjectDefinition _getObjectDefinition() throws Exception {
 		return _objectDefinitionLocalService.
 			getObjectDefinitionByExternalReferenceCode(
-				"L_AI_HUB_MODEL_ARMOR_TEMPLATE",
-				TestPropsValues.getCompanyId());
+				"L_AI_HUB_GUARDRAIL", TestPropsValues.getCompanyId());
 	}
 
 	@Inject

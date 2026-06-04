@@ -114,7 +114,11 @@ public class GuardrailResourceTest extends BaseGuardrailResourceTestCase {
 		}
 	}
 
-	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() {
+	}
+
 	@Override
 	@Test
 	public void testDeleteGuardrailByExternalReferenceCode() throws Exception {

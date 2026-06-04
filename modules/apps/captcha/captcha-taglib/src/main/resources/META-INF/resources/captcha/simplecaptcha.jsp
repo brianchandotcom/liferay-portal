@@ -45,7 +45,7 @@ String namespace = portletDisplay.getNamespace();
 		/>
 
 		<aui:input name="captchaId" type="hidden" value="<%= captchaId %>" />
-		<aui:input aria-labelledby='<%= namespace + "captchaLabel " + namespace + "captchaError" %>' class="form-control" ignoreRequestValue="<%= true %>" label="text-verification" name="captchaText" required="<%= true %>" size="10" type="text" value="" />
+		<aui:input aria-describedby='<%= namespace + "captchaError" %>' class="form-control" ignoreRequestValue="<%= true %>" label="text-verification" name="captchaText" required="<%= true %>" size="10" type="text" value="" />
 
 		<c:if test="<%= Validator.isNotNull(errorMessage) %>">
 			<p class="font-weight-semi-bold mt-1 text-danger" id="<%= namespace %>captchaError">

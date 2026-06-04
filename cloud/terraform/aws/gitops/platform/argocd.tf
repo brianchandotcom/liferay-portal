@@ -116,6 +116,7 @@ resource "helm_release" "argocd" {
 				}
 				repoServer={
 					livenessProbe={
+						failureThreshold=6
 						periodSeconds=15
 						timeoutSeconds=10
 					}

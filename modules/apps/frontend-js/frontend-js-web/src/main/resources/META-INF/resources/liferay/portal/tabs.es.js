@@ -68,9 +68,11 @@ export function applyTabSelectionDOMChanges({
 
 		if (activeTab) {
 			activeTab.classList.remove('active');
+			activeTab.setAttribute('aria-selected', 'false');
 		}
 
 		selectedTabLink.classList.add('active');
+		selectedTabLink.setAttribute('aria-selected', 'true');
 	}
 
 	if (selectedTabSection) {

@@ -94,7 +94,9 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 	}
 
 	@Test
-	public void testMultipleEntryCategoryRendersList() throws Exception {
+	public void testWriteProductNavigationControlMenuEntriesWithMultipleEntries()
+		throws Exception {
+
 		_serviceRegistrations.add(_registerEntry("entry-1", 100));
 		_serviceRegistrations.add(_registerEntry("entry-2", 200));
 
@@ -115,7 +117,7 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 	}
 
 	@Test
-	public void testSingleEntryCategoryRendersPresentationContainer()
+	public void testWriteProductNavigationControlMenuEntriesWithSingleEntry()
 		throws Exception {
 
 		_serviceRegistrations.add(_registerEntry("entry-1", 100));

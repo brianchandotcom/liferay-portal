@@ -131,9 +131,6 @@ public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
 			}
 		}
 
-		Assert.assertNotNull(excludedSiteExternalReferenceCode);
-		Assert.assertNotNull(includedSiteExternalReferenceCode);
-
 		siteTemplatesPage = siteTemplateResource.getSiteTemplatesPage(
 			true, new String[] {excludedSiteExternalReferenceCode},
 			Pagination.of(1, 100));

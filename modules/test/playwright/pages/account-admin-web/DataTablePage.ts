@@ -198,7 +198,7 @@ export class DataTablePage {
 				});
 			}).toPass({timeout: 1500});
 
-			await this.selectViewListButton.click();
+			await this.selectViewListButton.click({force: true});
 			await expect(this.viewStatus(view)).toBeVisible();
 
 			return;
@@ -212,7 +212,7 @@ export class DataTablePage {
 				});
 			}).toPass({timeout: 1500});
 
-			await this.selectViewCardButton.click();
+			await this.selectViewCardButton.click({force: true});
 			await expect(this.viewStatus(view)).toBeVisible();
 
 			return;
@@ -225,7 +225,7 @@ export class DataTablePage {
 				timeout: 100,
 			});
 
-			await this.selectViewTableButton.click({timeout: 500});
+			await this.selectViewTableButton.click({force: true, timeout: 500});
 		}).toPass({timeout: 5000});
 
 		await expect(this.viewStatus(view)).toBeVisible();

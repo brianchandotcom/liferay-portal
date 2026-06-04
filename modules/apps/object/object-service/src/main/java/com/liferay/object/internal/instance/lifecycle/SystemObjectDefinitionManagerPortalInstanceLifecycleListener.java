@@ -49,6 +49,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
@@ -272,8 +273,8 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					_listTypeEntryLocalService, _objectActionLocalService,
 					objectDefinition, _objectDefinitionLocalService,
 					_objectEntryLocalService, _objectEntryManagerRegistry,
-					objectFieldInfoFieldConverter, _objectFieldLocalService,
-					_objectRelationshipLocalService,
+					_objectEntryService, objectFieldInfoFieldConverter,
+					_objectFieldLocalService, _objectRelationshipLocalService,
 					_objectScopeProviderRegistry, _portal,
 					systemObjectDefinitionManager,
 					_templateInfoItemFieldSetProvider),
@@ -455,6 +456,9 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

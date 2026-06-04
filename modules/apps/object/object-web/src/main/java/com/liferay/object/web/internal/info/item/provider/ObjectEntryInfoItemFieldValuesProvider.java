@@ -36,6 +36,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
@@ -85,6 +86,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -106,6 +108,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		_objectFieldInfoFieldConverter = objectFieldInfoFieldConverter;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
+		_objectEntryService = objectEntryService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
@@ -260,11 +263,12 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_listTypeEntryLocalService, _objectActionLocalService,
 				_objectDefinition, _objectDefinitionLocalService,
 				_objectEntryLocalService, _objectEntryManagerRegistry,
-				_objectFieldInfoFieldConverter, _objectFieldLocalService,
+				_objectEntryService, _objectFieldInfoFieldConverter,
+				_objectFieldLocalService,
 				_objectFieldLocalService.getObjectFields(
 					objectEntry.getObjectDefinitionId()),
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
-				_portal, themeDisplay, properties));
+				_portal, objectEntry, themeDisplay, properties));
 
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
@@ -377,11 +381,13 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_listTypeEntryLocalService, _objectActionLocalService,
 				_objectDefinition, _objectDefinitionLocalService,
 				_objectEntryLocalService, _objectEntryManagerRegistry,
-				_objectFieldInfoFieldConverter, _objectFieldLocalService,
+				_objectEntryService, _objectFieldInfoFieldConverter,
+				_objectFieldLocalService,
 				_objectFieldLocalService.getObjectFields(
 					serviceBuilderObjectEntry.getObjectDefinitionId()),
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
-				_portal, themeDisplay, objectEntry.getProperties()));
+				_portal, serviceBuilderObjectEntry, themeDisplay,
+				objectEntry.getProperties()));
 
 		return objectEntryFieldValues;
 	}
@@ -472,6 +478,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldInfoFieldConverter _objectFieldInfoFieldConverter;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelatedModelsProviderRegistry

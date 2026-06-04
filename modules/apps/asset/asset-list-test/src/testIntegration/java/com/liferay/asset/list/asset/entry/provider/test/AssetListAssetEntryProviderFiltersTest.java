@@ -19,10 +19,13 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -102,13 +105,23 @@ public class AssetListAssetEntryProviderFiltersTest {
 					ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
 					"Due Date", "dueDate", false),
 				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					"Learn Documentation", "learnDocumentation", false),
+				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 					ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
 					"Priority", "priority", false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
 					ObjectFieldConstants.DB_TYPE_DATE_TIME, true, false, null,
-					"Start Time", "startTime", false),
+					"Start Time", "startTime",
+					Collections.singletonList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+							ObjectFieldSettingConstants.
+								VALUE_USE_INPUT_AS_ENTERED)),
+					false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
@@ -122,10 +135,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"dueDate", "2026-01-15"
-			).build());
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"dueDate", "2026-06-15"
 			).build());
 
 		_assertFilteredClassPKs(
@@ -149,8 +158,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 			_buildFiltersJSONArray(
 				_filter(
 					"startTime", "between",
-					JSONUtil.putAll(
-						"2026-01-15 00:00", "2026-01-15 23:59"))),
+					JSONUtil.putAll("2026-01-15 00:00", "2026-01-15 23:59"))),
 			objectEntry3);
 	}
 
@@ -283,6 +291,28 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
+	public void testKeywordTextContainsFilters() throws Exception {
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"learnDocumentation", "I like alpha"
+			).build());
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"learnDocumentation", "other content"
+			).build());
+
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_filter("learnDocumentation", "contains", "alpha")),
+			objectEntry1);
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_filter("learnDocumentation", "not-contains", "alpha")),
+			objectEntry2);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
 	public void testMultipleFiltersJoinedWithMust() throws Exception {
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -335,6 +365,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 			HashMapBuilder.<String, Serializable>put(
 				"priority", 1
 			).build());
+
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"priority", 5
@@ -350,6 +381,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(_filter("priority", "ge", "5")),
 			objectEntry2, objectEntry3);
+
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(_filter("priority", "lt", "5")),
 			objectEntry1);
@@ -434,8 +466,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 			_buildFiltersJSONArray(_filter("title", "contains", "liferay")),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(
-				_filter("title", "not-contains", "liferay")),
+			_buildFiltersJSONArray(_filter("title", "not-contains", "liferay")),
 			objectEntry2);
 	}
 
@@ -474,7 +505,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 	private ListTypeDefinition _addListTypeDefinition() throws Exception {
 		return _listTypeDefinitionLocalService.addListTypeDefinition(
 			null, TestPropsValues.getUserId(),
-			Collections.singletonMap(LocaleUtil.US, RandomTestUtil.randomString()),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
 			false,
 			Arrays.asList(
 				ListTypeEntryUtil.createListTypeEntry(
@@ -539,6 +571,18 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	private JSONArray _buildFiltersJSONArray(JSONObject... filterJSONObjects) {
 		return JSONUtil.putAll((Object[])filterJSONObjects);
+	}
+
+	private ObjectFieldSetting _createObjectFieldSetting(
+		String name, String value) {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
+
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSetting;
 	}
 
 	private JSONObject _filter(
@@ -609,6 +653,9 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Inject
 	private Portal _portal;

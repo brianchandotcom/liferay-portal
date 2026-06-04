@@ -242,33 +242,29 @@ exports[`List rendering should match the snapshot 1`] = `
           </div>
         </div>
         <div
-          class="align-items-center d-flex justify-content-between mb-3"
+          class="mb-3"
         >
-          <div
-            class="mb-0"
+          <span
+            class="mr-2"
           >
             <span
-              class="mr-2"
+              class="text-4 text-secondary"
             >
-              <span
-                class="text-4 text-secondary"
+              <svg
+                class="lexicon-icon lexicon-icon-box-container"
+                role="presentation"
               >
-                <svg
-                  class="lexicon-icon lexicon-icon-box-container"
-                  role="presentation"
-                >
-                  <use
-                    href="#box-container"
-                  />
-                </svg>
-              </span>
+                <use
+                  href="#box-container"
+                />
+              </svg>
             </span>
-            <span
-              class="text-4 text-secondary font-weight-semi-bold"
-            >
-              ACCOUNTS
-            </span>
-          </div>
+          </span>
+          <span
+            class="text-4 text-secondary font-weight-semi-bold"
+          >
+            ACCOUNTS
+          </span>
         </div>
         <div
           class="card card-root"

@@ -8,7 +8,7 @@ metadata:
     name: {{ .Release.Name }}
     namespace: {{ .Release.Namespace }}
 spec:
-    commonTags: {{ merge (dict "ProjectId" .Values.projectId) .Values.overlay.commonTags | toYaml | nindent 8 }}
+    commonTags: {{ merge (dict "ProjectId" .Values.projectId) (.Values.overlay.commonTags | default dict) | toYaml | nindent 8 }}
     forceDestroy: {{ .Values.overlay.forceDestroy }}
     orphanOnDelete: {{ .Values.overlay.orphanOnDelete }}
     projectId: {{ .Values.projectId }}

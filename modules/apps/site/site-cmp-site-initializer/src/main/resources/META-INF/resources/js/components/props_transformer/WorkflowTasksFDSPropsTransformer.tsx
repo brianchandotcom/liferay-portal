@@ -5,6 +5,7 @@
 
 import {
 	DateRenderer,
+	FDS_EVENT,
 	IInternalRenderer,
 	IView,
 } from '@liferay/frontend-data-set-web';
@@ -20,11 +21,28 @@ import {WORKFLOW_TASK_ACTION_LINK_ID} from '../../utils/constants';
 import {openCMPModal} from '../../utils/openCMPModal';
 import {TaskAction, WorkflowTaskItemData} from '../../utils/types';
 import WORKFLOW_TASK_MODALS from '../../utils/workflowTaskModals';
+import BulkEditWorkflowAssigneeModalContent from '../modal/BulkEditWorkflowAssigneeModalContent';
+import BulkEditWorkflowDueDateModalContent from '../modal/BulkEditWorkflowDueDateModalContent';
 import ACTIONS from './actions/creationMenuActions';
 import WorkflowStateRenderer from './cell_renderers/WorkflowStateRenderer';
 import WorkflowTaskActionLinkRenderer from './cell_renderers/WorkflowTaskActionLinkRenderer';
 
+type BulkModalProps = {
+	closeModal: () => void;
+	loadData: () => void;
+	selectedData: any;
+};
+
+const BULK_ACTION_MODALS: Record<
+	string,
+	React.ComponentType<BulkModalProps>
+> = {
+	'assign-to': BulkEditWorkflowAssigneeModalContent,
+	'update-due-date': BulkEditWorkflowDueDateModalContent,
+};
+
 export default function WorkflowTasksFDSPropsTransformer({
+	bulkActions = [],
 	creationMenu,
 	id,
 	itemsActions = [],
@@ -32,24 +50,35 @@ export default function WorkflowTasksFDSPropsTransformer({
 	...otherProps
 }: {
 	apiURL: string;
+	bulkActions?: any[];
 	creationMenu: any;
 	id: string;
 	itemsActions?: any[];
 	otherProps: any;
 	views: IView[];
 }) {
-	const nonDefaultViews = views.map((view) => ({
-		...view,
-		default: false,
-		initialPaginationDelta: 20,
-	}));
+	const nonDefaultViews = views
+		.filter((view) => view.name !== 'kanban')
+		.map((view) => ({
+			...view,
+			default: false,
+			initialPaginationDelta: 20,
+		}));
 
 	registerTabFDS(id, 2);
 	installCMPTabPersistence();
 
 	return {
 		...otherProps,
-		creationMenu: {
+		bulkActions: bulkActions.map((action) => ({
+			...action,
+			isDisabled: ({
+				allItemsSelectedActive,
+			}: {
+				allItemsSelectedActive: boolean;
+			}) => allItemsSelectedActive,
+		})),
+		creationMenu: creationMenu && {
 			...creationMenu,
 			primaryItems: addOnClickToCreationMenuItems(
 				creationMenu.primaryItems,
@@ -135,6 +164,33 @@ export default function WorkflowTasksFDSPropsTransformer({
 						loadData,
 						workflowTaskId: itemData.embedded?.id,
 					}),
+				size: 'md',
+			});
+		},
+		onBulkActionItemClick: async ({
+			action,
+			selectedData,
+		}: {
+			action: any;
+			selectedData: any;
+		}) => {
+			const ContentComponent = BULK_ACTION_MODALS[action?.data?.id];
+
+			if (!ContentComponent) {
+				return;
+			}
+
+			const loadData = () => Liferay.fire(FDS_EVENT.UPDATE_DISPLAY, {id});
+
+			await openCMPModal({
+				center: true,
+				contentComponent: ({closeModal}: {closeModal: () => void}) => (
+					<ContentComponent
+						closeModal={closeModal}
+						loadData={loadData}
+						selectedData={selectedData}
+					/>
+				),
 				size: 'md',
 			});
 		},

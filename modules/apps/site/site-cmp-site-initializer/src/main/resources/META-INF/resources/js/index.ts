@@ -18,3 +18,4 @@ export {default as TaskHistory} from './components/task/TaskHistory';
 export {default as TaskInfoSummary} from './components/task/TaskInfoSummary';
 export {default as TasksOverview} from './components/task/TasksOverview';
 export {default as TasksQuickFilters} from './components/task/TasksQuickFilters';
+export {default as WorkflowTasksOverview} from './components/task/WorkflowTasksOverview';

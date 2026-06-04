@@ -1,3 +1,5 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-objects__model-builder-empty-object-folder-card {
 	&-body {
 		align-items: center;
@@ -7,8 +9,8 @@
 	}
 
 	&-container {
-		border: 2px solid #d3d6e0;
-		box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+		border: 2px solid $light-d2;
+		box-shadow: unquote('hsl(from #{$gray-600} h s l / 0.2)') 0 7px 29px 0;
 		left: calc(50% - (17.5rem / 2));
 		max-height: 10.125rem;
 		max-width: 17.5rem;
@@ -18,7 +20,7 @@
 	}
 
 	&-description {
-		color: #6b6c7e;
+		color: $gray-600;
 		font-size: 14px;
 		text-align: center;
 	}

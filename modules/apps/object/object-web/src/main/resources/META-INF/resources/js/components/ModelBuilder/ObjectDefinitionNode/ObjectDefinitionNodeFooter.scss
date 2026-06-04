@@ -1,3 +1,5 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-objects__model-builder-node {
 	&-button-container {
 		align-items: center;
@@ -7,7 +9,7 @@
 
 		button {
 			align-items: center;
-			border-color: #cdced9;
+			border-color: $gray-400;
 			display: flex;
 			height: 2rem;
 			justify-content: center;
@@ -27,7 +29,7 @@
 	&-show-all-fields {
 		&-button {
 			align-items: center;
-			color: #6b6c7e;
+			color: $gray-600;
 			cursor: pointer;
 			display: flex;
 			font-size: 12px;
@@ -36,7 +38,7 @@
 			margin-bottom: 0.5rem;
 
 			&:hover {
-				color: #0b5fff !important;
+				color: $primary !important;
 			}
 		}
 

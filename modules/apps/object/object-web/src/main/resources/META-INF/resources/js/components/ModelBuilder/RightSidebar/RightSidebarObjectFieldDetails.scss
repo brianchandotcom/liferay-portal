@@ -1,14 +1,16 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-objects__model-builder-right-sidebar-definition-node {
 	&-content {
-		border-bottom: 1px solid #f1f2f5;
+		border-bottom: 1px solid $gray-200;
 		overflow-x: hidden;
 		padding: 1rem 1rem 0;
 	}
 
 	&-title {
 		align-items: center;
-		border-bottom: 1px solid #f1f2f5;
-		color: #272833;
+		border-bottom: 1px solid $gray-200;
+		color: $gray-900;
 		display: flex;
 		font-size: 16px;
 		font-weight: 600;

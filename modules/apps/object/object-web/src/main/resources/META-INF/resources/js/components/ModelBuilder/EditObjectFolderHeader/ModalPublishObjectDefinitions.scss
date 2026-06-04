@@ -1,3 +1,5 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-object__object-view-modal-object-definitions {
 	.container-list {
 		max-height: 350px;
@@ -15,7 +17,7 @@
 		justify-content: space-between;
 
 		&.active {
-			background: #f0f5ff;
+			background: $primary-l3;
 		}
 		> div:first-child {
 			align-items: center;
@@ -23,7 +25,7 @@
 			gap: 20px;
 
 			> svg {
-				background: #fff;
+				background: $white;
 				border-radius: 5px;
 				height: 32px;
 				padding: 8px;

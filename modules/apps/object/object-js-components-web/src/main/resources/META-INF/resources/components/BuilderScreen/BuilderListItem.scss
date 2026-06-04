@@ -1,10 +1,12 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-object {
 	&__object-custom-view-builder-item {
 		&--dragging {
 			background: transparent;
-			background-color: #f7f8f9;
+			background-color: $gray-100;
 			border-radius: 0;
-			box-shadow: 0 0 0 0.125rem #80acff;
+			box-shadow: 0 0 0 0.125rem $primary-l1;
 			cursor: grabbing;
 			margin-bottom: 5px;
 			margin-top: 5px;

@@ -1,0 +1,11 @@
+{{- $env := index .context "apiextensions.crossplane.io/environment" -}}
+{{- $xr := .observed.composite.resource -}}
+
+{{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
+{{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
+{{- $projectId := $xr.spec.projectId -}}
+{{- $region := $xr.spec.region -}}
+
+{{- $labels := merge ($xr.spec.commonTags | default dict) (dict "app" "liferay" "deployment-name" $env.deploymentName "project-id" $projectId) -}}
+
+{{- include "aws-infrastructure-provider.overlayBucketName" . }}

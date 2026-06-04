@@ -208,12 +208,37 @@ spec:
                 DATABASE_PORT: {{ $databasePort | default 5432 | toString | b64enc | quote }}
                 DATABASE_USERNAME: {{ $databaseIamUser | toString | b64enc | quote }}
                 LIFERAY_GCS_BUCKET_NAME: {{ printf "%s-dl-%s" $baseName $activeDataPlane | b64enc | quote }}
-                LIFERAY_OVERLAY_BUCKET_NAME: {{ printf "%s-overlay" $baseName | b64enc | quote }}
             kind: Secret
             metadata:
                 labels:
                     {{- $labels | toYaml | nindent 20 }}
                 name: managed-service-details
+                namespace: {{ $namespace }}
+            type: Opaque
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}
+{{- if $overlay.enabled }}
+---
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-overlay-bucket-details-secret
+        gotemplating.fn.crossplane.io/composition-resource-name: overlay-bucket-details-secret
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $baseName }}-overlay-bucket-details-secret
+spec:
+    forProvider:
+        manifest:
+            apiVersion: v1
+            data:
+                LIFERAY_OVERLAY_BUCKET_NAME: {{ $overlayBucketName | b64enc | quote }}
+            kind: Secret
+            metadata:
+                labels:
+                    {{- $labels | toYaml | nindent 20 }}
+                name: overlay-bucket-details
                 namespace: {{ $namespace }}
             type: Opaque
     managementPolicies: {{ $managementPolicies }}

@@ -1,0 +1,19 @@
+apiVersion: storage.gcp.m.upbound.io/v1beta1
+kind: Bucket
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-overlay-bucket
+    labels:
+        {{- $labels | toYaml | nindent 8 }}
+    name: {{ $overlayBucketName }}
+spec:
+    forProvider:
+        forceDestroy: {{ $forceDestroy }}
+        labels:
+            {{- $labels | toYaml | nindent 12 }}
+        location: {{ $region }}
+        storageClass: STANDARD
+        uniformBucketLevelAccess: true
+        versioning:
+            enabled: true
+    managementPolicies: {{ $managementPolicies }}

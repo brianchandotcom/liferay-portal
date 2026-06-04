@@ -49,3 +49,5 @@
 {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
 {{- $cmkKeyName := printf "projects/%s/locations/%s/keyRings/%s-keyring/cryptoKeys/%s-key" $env.projectId $region $baseName $baseName -}}
+
+{{- include "gcp-infrastructure-provider.overlayBucketName" . }}

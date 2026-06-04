@@ -23,6 +23,7 @@ import {MetricsPage} from '../pages/portal-workflow-metrics-web/MetricsPage';
 import {PerformanceByAssigneePage} from '../pages/portal-workflow-metrics-web/PerformanceByAssigneePage';
 import {PerformanceByStepPage} from '../pages/portal-workflow-metrics-web/PerformanceByStepPage';
 import {ProcessMetricsPage} from '../pages/portal-workflow-metrics-web/ProcessMetricsPage';
+import {SLAPage} from '../pages/portal-workflow-metrics-web/SLAPage';
 import {WorkflowTaskDetailsPage} from '../pages/portal-workflow-task-web/WorkflowTaskDetailsPage';
 import {WorkflowTasksPage} from '../pages/portal-workflow-task-web/WorkflowTasksPage';
 import {WorkflowPage} from '../pages/portal-workflow-web/WorkflowPage';
@@ -50,6 +51,7 @@ const workflowPagesTest = test.extend<{
 	processBuilderPage: ProcessBuilderPage;
 	processMetricsPage: ProcessMetricsPage;
 	scriptManagementPage: ScriptManagementPage;
+	slaPage: SLAPage;
 	sourceViewPage: SourceViewPage;
 	timerPage: TimerPage;
 	transitionInfoPage: TransitionInfoPage;
@@ -129,6 +131,9 @@ const workflowPagesTest = test.extend<{
 	},
 	scriptManagementPage: async ({page}, use) => {
 		await use(new ScriptManagementPage(page));
+	},
+	slaPage: async ({page}, use) => {
+		await use(new SLAPage(page));
 	},
 	sourceViewPage: async ({page}, use) => {
 		await use(new SourceViewPage(page));

@@ -19,7 +19,7 @@
 			tbody
 			tr:hover:not(.table-disabled):not(.table-divider) {
 			&.table-active td {
-				background-color: #d6e4ff;
+				background-color: $primary-l2;
 			}
 
 			td {
@@ -83,7 +83,7 @@
 }
 
 .tooltip-table {
-	color: white;
+	color: $white;
 	font-weight: 600;
 	width: 100%;
 
@@ -91,7 +91,7 @@
 		border: none;
 
 		&:first-child {
-			color: darken(white, 10%);
+			color: unquote('hsl(from #{$white} h s calc(l - 10%))');
 			text-align: left;
 		}
 
@@ -105,7 +105,7 @@
 		position: relative;
 
 		&::after {
-			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			border-top: 1px solid unquote('hsl(from #{$white} h s l / 0.1)');
 			content: '';
 			left: 0;
 			position: absolute;

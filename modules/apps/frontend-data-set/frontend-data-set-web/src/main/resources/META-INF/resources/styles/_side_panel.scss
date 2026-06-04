@@ -1,7 +1,7 @@
 .fds-side-panel {
-	background-color: #f1f2f5;
+	background-color: $gray-200;
 	bottom: 0;
-	box-shadow: 0 0 0 rgba(39, 40, 51, 0.15);
+	box-shadow: 0 0 0 unquote('hsl(from #{$gray-900} h s l / 0.15)');
 	position: fixed;
 	right: 0;
 	top: 0;
@@ -16,8 +16,8 @@
 
 	.fds-side-panel-header {
 		align-items: center;
-		background: #f7f7f7;
-		border-bottom: 1px solid #e7e7ed;
+		background: $gray-100;
+		border-bottom: 1px solid $border-color;
 		display: flex;
 		height: 65px;
 		justify-content: space-between;
@@ -63,7 +63,8 @@
 	}
 
 	&.is-visible {
-		box-shadow: -10px 20px 30px rgba(39, 40, 51, 0.15);
+		box-shadow: -10px 20px 30px
+			unquote('hsl(from #{$gray-900} h s l / 0.15)');
 		transform: translateX(0);
 		visibility: visible;
 	}
@@ -93,7 +94,7 @@
 	}
 
 	.nav {
-		border-bottom: 1px solid #dddee7;
+		border-bottom: 1px solid $border-color;
 	}
 
 	.fds-side-menu {
@@ -139,7 +140,7 @@
 }
 
 .fds-side-panel-nav-cover {
-	background: white;
+	background: $white;
 	left: 0;
 	opacity: 0;
 	position: fixed;

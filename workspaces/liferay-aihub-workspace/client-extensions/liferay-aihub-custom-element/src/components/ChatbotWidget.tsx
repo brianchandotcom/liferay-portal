@@ -120,14 +120,26 @@ export default function ChatbotWidget({
 				});
 
 				eventSource.addEventListener('error', () => {
-					console.error('EventSource connection error');
-
 					setSubscribed(false);
-					setMessages((prev) => [
-						...prev,
-						{sender: 'error', text: ''},
-					]);
-					setLoading(false);
+
+					if (loadingTimeoutRef.current) {
+						clearTimeout(loadingTimeoutRef.current);
+						loadingTimeoutRef.current = null;
+
+						setMessages((prev) => [
+							...prev,
+							{sender: 'error', text: ''},
+						]);
+						setLoading(false);
+					}
+					else if (eventSource.readyState === EventSource.CLOSED) {
+						console.error('EventSource connection closed');
+
+						setMessages((prev) => [
+							...prev,
+							{sender: 'error', text: ''},
+						]);
+					}
 				});
 			})
 			.catch((error) => {

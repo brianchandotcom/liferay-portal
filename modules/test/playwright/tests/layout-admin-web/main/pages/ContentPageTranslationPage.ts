@@ -251,32 +251,41 @@ export class ContentPageTranslationPage {
 	}
 
 	async switchLanguage({from, to}: {from?: string; to?: string}) {
-		if (from) {
+		const selectLanguage = async (
+			language: string,
+			toggleIndex: number
+		) => {
+			const toggle = this.page
+				.locator('.management-bar .dropdown-toggle')
+				.nth(toggleIndex);
+
+			const option = this.page.getByRole('menuitem', {name: language});
+
 			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: this.page.getByRole('menuitem', {
-					name: from,
-				}),
-				trigger: this.page
-					.locator('.management-bar .dropdown-toggle')
-					.nth(0),
+				target: option,
+				trigger: toggle,
 			});
 
-			await this.page.locator('.col-md-6').getByText(from).waitFor();
+			// The already-selected language renders as an active,
+			// non-clickable item, so only click it when it is not the active
+			// one and close the dropdown otherwise.
+
+			if ((await option.getAttribute('aria-selected')) === 'true') {
+				await toggle.click();
+			}
+			else {
+				await option.click();
+			}
+
+			await this.page.locator('.col-md-6').getByText(language).waitFor();
+		};
+
+		if (from) {
+			await selectLanguage(from, 0);
 		}
 
 		if (to) {
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: this.page.getByRole('menuitem', {
-					name: to,
-				}),
-				trigger: this.page
-					.locator('.management-bar .dropdown-toggle')
-					.nth(1),
-			});
-
-			await this.page.locator('.col-md-6').getByText(to).waitFor();
+			await selectLanguage(to, 1);
 		}
 	}
 

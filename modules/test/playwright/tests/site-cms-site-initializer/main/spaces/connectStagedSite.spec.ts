@@ -27,9 +27,7 @@ test(
 	'Distinguishes live and staging rows in the connected sites list',
 	{tag: ['@LPD-91062']},
 	async ({apiHelpers, page, site, spaceSummaryPage}) => {
-		const spaceName = `Space ${getRandomString()}`;
-
-		// Create the Space and connect the site while it is unstaged
+		const spaceName = getRandomString();
 
 		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceName,
@@ -41,9 +39,6 @@ test(
 			space.externalReferenceCode,
 			site.externalReferenceCode
 		);
-
-		// Enabling staging copies the connection onto the staging group, so the
-		// site appears twice
 
 		await enableLocalStaging(apiHelpers, page, site);
 
@@ -63,9 +58,6 @@ test(
 		const stagingRow = connectedSites.getByRole('row').filter({
 			hasText: `${site.name} (${stagingWord})`,
 		});
-
-		// The live and staging rows are listed with distinct labels once the
-		// initial staging publish has copied the connection
 
 		await expect(async () => {
 			await page.reload();

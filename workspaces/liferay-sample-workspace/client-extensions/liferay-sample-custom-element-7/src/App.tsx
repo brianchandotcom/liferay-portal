@@ -4,28 +4,30 @@
  */
 
 import {SearchSubscription, subscribeSearch} from '@liferay/js-api/data-set';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 interface AppProps {
 	fdsName: string;
 }
 
+type SearchAPI = {
+	setSearch: (query: string) => void;
+};
+
 function App({fdsName}: AppProps) {
-	const [disabled, setDisabled] = useState<boolean>(true);
 	const [query, setQuery] = useState('');
-	const [setSearch, setSetSearch] = useState<Function>(() => () => {});
+	const [searchApi, setSearchApi] = useState<SearchAPI | null>(null);
 
 	useEffect(() => {
 		let disposed = false;
 		let searchSubscription : SearchSubscription | null = null;
 
-		const handleQueryValue = 	(queryString: string) => {
-			//console.log("Search query handler for", fdsName, ". New query: ", queryString);
-			setQuery(queryString);
-			setDisabled(false);
+		const handleQueryValue = (query: string) => {
+			console.log("Search query handler for", fdsName, ". New query: ", query);
+			setQuery(query);
 		}
 
-		//console.log("Effect running for", fdsName);
+		console.log("Effect running for", fdsName);
 		subscribeSearch(
 			fdsName, handleQueryValue, {timeout: 10000}
 		)
@@ -36,10 +38,11 @@ function App({fdsName}: AppProps) {
 					subscription.dispose()
 					return;
 				}
+				console.log("Search subscription is ready for", fdsName, ", with query", subscription.getSearch());
+
 				searchSubscription = subscription;
-				setSetSearch(() => subscription.setSearch);
+				setSearchApi({setSearch: subscription.setSearch});
 				handleQueryValue(subscription.getSearch());
-				//console.log("Search subscription is ready for", fdsName, ". I received query", subscription.getSearch());
 			})
 			.catch((error: Error) => {
 				console.warn(
@@ -48,19 +51,23 @@ function App({fdsName}: AppProps) {
 			});
 
 		return () => {
-			//console.log("Effect disposal for", fdsName, "subscription: " + searchSubscription);
+			console.log("Effect cleanup for", fdsName);
 			disposed = true;
 			if (searchSubscription) {
+				console.log("Subscription disposal for", fdsName, "subscription: " + searchSubscription);
+				
 				searchSubscription.dispose();
 				searchSubscription = null;
 			}
-			setDisabled(true);
+			setSearchApi(null);
 		};
 	}, [fdsName]);
 
+	const disabled = !searchApi;
+
 	const handleSearch = () => {
-		console.log("Search triggered from CX for", fdsName, "with", query);
-		setSearch(query);
+		console.log("Search triggered from CX for", fdsName, "with query", query);
+		searchApi?.setSearch(query);
 	};
 
 	return (

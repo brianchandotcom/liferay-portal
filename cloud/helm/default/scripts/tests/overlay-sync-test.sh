@@ -83,7 +83,7 @@ function _test_passes_plain_path_to_rclone_without_include {
 
 	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs source/path dest/path 2>&1)
 
-	if [[ "${output}" == *"rclone copy :gcs:test-bucket/source/path"* ]] && [[ "${output}" != *"--include"* ]]
+	if [[ "${output}" == *"rclone copy :gcs,env_auth=true:test-bucket/source/path"* ]] && [[ "${output}" != *"--include"* ]]
 	then
 		return 0
 	fi
@@ -96,7 +96,7 @@ function _test_splits_glob_pattern_into_path_and_include_filter {
 
 	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs "source/path/*.jar" dest/path 2>&1)
 
-	if [[ "${output}" == *"rclone copy :gcs:test-bucket/source/path"* ]] && [[ "${output}" == *"--include *.jar"* ]]
+	if [[ "${output}" == *"rclone copy :gcs,env_auth=true:test-bucket/source/path"* ]] && [[ "${output}" == *"--include *.jar"* ]]
 	then
 		return 0
 	fi
@@ -109,7 +109,7 @@ function _test_strips_wildcard_and_passes_include_for_wildcard_path {
 
 	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs "source/path/*" dest/path 2>&1)
 
-	if [[ "${output}" == *"rclone copy :gcs:test-bucket/source/path"* ]] && [[ "${output}" == *"--include *"* ]]
+	if [[ "${output}" == *"rclone copy :gcs,env_auth=true:test-bucket/source/path"* ]] && [[ "${output}" == *"--include *"* ]]
 	then
 		return 0
 	fi
@@ -127,7 +127,7 @@ function _test_target_path_is_prefixed_with_temp {
 }
 
 function _test_uses_liferay_overlay_bucket_name_when_set {
-	if [[ "$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs source/path dest/path 2>&1)" == *":gcs:test-bucket/source/path"* ]]
+	if [[ "$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs source/path dest/path 2>&1)" == *":gcs,env_auth=true:test-bucket/source/path"* ]]
 	then
 		return 0
 	fi

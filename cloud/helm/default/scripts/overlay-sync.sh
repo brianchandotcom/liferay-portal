@@ -32,7 +32,7 @@ function main {
 		from_path="${from_path%/*}"
 	fi
 
-	local source_uri=":${provider_type}:${bucket_name}/${from_path}"
+	local source_uri=":${provider_type},env_auth=true:${bucket_name}/${from_path}"
 	local target_path="/temp/${into_path}"
 
 	_log_json "Copying from \"${source_uri}\" to \"${target_path}\"."

@@ -60,4 +60,34 @@ export class JSONWebServicesMBApiHelper {
 			}
 		);
 	}
+
+	async lockThread(threadId: string): Promise<void> {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('threadId', threadId);
+
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}/api/jsonws/mb.mbthread/lock-thread`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
+	async unlockThread(threadId: string): Promise<void> {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('threadId', threadId);
+
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}/api/jsonws/mb.mbthread/unlock-thread`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
 }

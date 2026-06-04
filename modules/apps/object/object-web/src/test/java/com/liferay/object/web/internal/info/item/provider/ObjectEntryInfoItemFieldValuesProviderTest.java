@@ -23,6 +23,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
@@ -119,7 +120,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				Mockito.mock(ObjectFieldInfoFieldConverter.class),
 				Mockito.mock(ObjectEntryLocalService.class),
 				Mockito.mock(ObjectEntryManagerRegistry.class),
-				objectFieldLocalService,
+				Mockito.mock(ObjectEntryService.class), objectFieldLocalService,
 				Mockito.mock(ObjectRelatedModelsProviderRegistry.class),
 				Mockito.mock(ObjectRelationshipLocalService.class),
 				Mockito.mock(ObjectScopeProviderRegistry.class),

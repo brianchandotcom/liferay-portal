@@ -2819,8 +2819,8 @@ components:
                     type: string
             type: object
         PageExperience:
+            # @review
             description:
-                # @review
                 A customized experience for a given page specification.
             properties:
                 externalReferenceCode:

@@ -623,8 +623,8 @@ components:
                     readOnly: true
                     type: boolean
         ContentFieldValue:
+            # @review
             description:
-                # @review
                 Represents the value of a content field. Can contain different information types (e.g., geolocation,
                 documents, etc.).
             properties:
@@ -1899,8 +1899,8 @@ components:
                     writeOnly: true
             type: object
         Experience:
+            # @review
             description:
-                # @review
                 Represents a customized experience for a given page.
             properties:
                 key:

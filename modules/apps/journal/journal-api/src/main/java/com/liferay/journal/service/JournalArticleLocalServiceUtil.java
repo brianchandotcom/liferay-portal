@@ -680,6 +680,12 @@ public class JournalArticleLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static JournalArticle expireArticle(long articleId)
+		throws PortalException {
+
+		return getService().expireArticle(articleId);
+	}
+
 	/**
 	 * Expires the web content article matching the group, article ID, and
 	 * version.
@@ -3128,4 +3134,4 @@ public class JournalArticleLocalServiceUtil {
 			JournalArticleLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1821916815
+// LIFERAY-SERVICE-BUILDER-HASH:534208057

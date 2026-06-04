@@ -4,12 +4,12 @@
  */
 
 export default function ({namespace}) {
-	const assetSelector = document.getElementById(`${namespace}anyAssetType`);
+	const assetSelector = document.getElementById(namespace + 'anyAssetType');
 	const assetWrapper = document.getElementById(
-		`${namespace}assetFilterBuilderWrapper`
+		namespace + 'assetFilterBuilderWrapper'
 	);
 	const collectionWrapper = document.getElementById(
-		`${namespace}collectionFilterBuilderWrapper`
+		namespace + 'collectionFilterBuilderWrapper'
 	);
 
 	if (!assetSelector || !assetWrapper || !collectionWrapper) {
@@ -29,5 +29,11 @@ export default function ({namespace}) {
 
 	updateVisibility();
 
-	Liferay.on(`${namespace}sourceChange`, updateVisibility);
+	Liferay.on(namespace + 'sourceChange', updateVisibility);
+
+	return {
+		destroy() {
+			Liferay.detach(namespace + 'sourceChange', updateVisibility);
+		},
+	};
 }

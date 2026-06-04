@@ -969,7 +969,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 	@Test
 	public void testIsNotifiableUser() throws Exception {
-		User user = UserTestUtil.addUser(RandomTestUtil.randomString());
+		User user = UserTestUtil.addUser(_company);
 
 		_activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
 

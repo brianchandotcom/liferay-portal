@@ -155,20 +155,26 @@ public class YMLStylingCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String description = matcher.group(3);
 
-			if (description.contains(": ")) {
+			String trimmedDescription = StringUtil.trim(
+				description.replaceAll("\n +", StringPool.SPACE));
+
+			if (!trimmedDescription.startsWith("\"") &&
+				trimmedDescription.contains(": ")) {
+
 				continue;
 			}
 
-			String indent = matcher.group(2) + StringPool.FOUR_SPACES;
-			String newDescription = StringUtil.trim(
-				description.replaceAll("\n +", StringPool.SPACE));
+			String newDescription = StringPool.BLANK;
 
 			if (!fileName.endsWith("/rest-openapi.yaml")) {
 				newDescription = _splitDescription(
-					indent, newDescription, maxLineLength);
+					matcher.group(2) + StringPool.FOUR_SPACES,
+					trimmedDescription, maxLineLength);
 			}
 			else {
-				newDescription = indent + newDescription;
+				newDescription =
+					matcher.group(2) + StringPool.FOUR_SPACES +
+						trimmedDescription;
 			}
 
 			newDescription = StringPool.NEW_LINE + newDescription;

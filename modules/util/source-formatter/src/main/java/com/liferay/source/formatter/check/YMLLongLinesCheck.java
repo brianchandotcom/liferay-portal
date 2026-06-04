@@ -38,34 +38,45 @@ public class YMLLongLinesCheck extends BaseFileCheck {
 			return content;
 		}
 
+		StringBuffer sb = new StringBuffer();
+
 		Matcher matcher = _descriptionPattern.matcher(content);
 
 		while (matcher.find()) {
-			String match = matcher.group(3);
+			String description = matcher.group(3);
 
-			if (match.contains(": ")) {
+			if (description.contains(": ")) {
 				continue;
 			}
 
-			String description = StringUtil.trim(
-				match.replaceAll("\n +", StringPool.SPACE));
-
 			String indent = matcher.group(2) + StringPool.FOUR_SPACES;
+			String newDescription = StringUtil.trim(
+				description.replaceAll("\n +", StringPool.SPACE));
 
 			if (!fileName.endsWith("/rest-openapi.yaml")) {
-				description = _formatDescription(
-					indent, description, maxLineLength);
+				newDescription = _formatDescription(
+					indent, newDescription, maxLineLength);
 			}
 			else {
-				description = indent + description;
+				newDescription = indent + newDescription;
 			}
 
-			description = StringPool.NEW_LINE + description;
+			newDescription = StringPool.NEW_LINE + newDescription;
 
-			if (!StringUtil.equals(match, description)) {
-				return StringUtil.replaceFirst(
-					content, match, description, matcher.start(3));
+			if (description.equals(newDescription)) {
+				continue;
 			}
+
+			String replacement = StringUtil.replaceFirst(
+				matcher.group(), description, newDescription);
+
+			matcher.appendReplacement(sb, replacement);
+		}
+
+		if (sb.length() > 0) {
+			matcher.appendTail(sb);
+
+			return sb.toString();
 		}
 
 		return content;

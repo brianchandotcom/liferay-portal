@@ -232,7 +232,7 @@ export default function ChatbotWidget({
 		return null;
 	}
 
-	const companyLogoURL = chatbotConfiguration.companyLogo?.fileURL;
+	const avatarURL = chatbotConfiguration.avatar?.fileURL;
 
 	return (
 		<>
@@ -242,14 +242,14 @@ export default function ChatbotWidget({
 				tabIndex={-1}
 			>
 				<ChatbotHeader
-					companyLogo={companyLogoURL}
+					avatar={avatarURL}
 					onClose={handleToggle}
 					title={localized.title}
 				/>
 
 				<div aria-live="polite" className="aihub-messages">
 					<ChatbotIntro
-						companyLogo={companyLogoURL}
+						avatar={avatarURL}
 						introMessage={localized.introMessage}
 						title={localized.title}
 					/>
@@ -258,7 +258,7 @@ export default function ChatbotWidget({
 						if (msg.sender === 'assistant') {
 							return (
 								<AssistantMessage
-									companyLogo={companyLogoURL}
+									avatar={avatarURL}
 									key={index}
 									text={msg.text}
 									title={localized.title}

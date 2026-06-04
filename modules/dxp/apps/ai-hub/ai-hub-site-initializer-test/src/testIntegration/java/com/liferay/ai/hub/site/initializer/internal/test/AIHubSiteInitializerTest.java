@@ -145,7 +145,8 @@ public class AIHubSiteInitializerTest {
 		_assertAccountRolePortletResourcePermission(
 			"L_AI_HUB_AGENT_DEFINITION", "L_AI_HUB_AGENT_ADMINISTRATOR",
 			"ADD_OBJECT_ENTRY");
-		_assertLayoutExists("/account-management");
+		_assertLayoutExists("/account-management", "Account Management");
+		_assertLayoutExists("/guardrails", "Guardrails");
 		_assertLayoutUtilityPageEntryExists(
 			"L_AI_HUB_CREATE_ACCOUNT_UTILITY_PAGE",
 			LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT);
@@ -349,11 +350,13 @@ public class AIHubSiteInitializerTest {
 		}
 	}
 
-	private void _assertLayoutExists(String friendlyURL) throws Exception {
+	private void _assertLayoutExists(String friendlyURL, String name)
+		throws Exception {
+
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			TestPropsValues.getGroupId(), false, friendlyURL);
 
-		Assert.assertNotNull(layout);
+		Assert.assertEquals(name, layout.getName());
 	}
 
 	private void _assertLayoutUtilityPageEntryExists(

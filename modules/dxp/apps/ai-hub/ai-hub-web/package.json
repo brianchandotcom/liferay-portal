@@ -9,6 +9,7 @@
 		"@clayui/label": "^3.165.0",
 		"@clayui/layout": "^3.165.0",
 		"@clayui/link": "^3.165.0",
+		"@clayui/list": "^3.165.0",
 		"@clayui/localized-input": "^3.165.0",
 		"@clayui/multi-select": "^3.165.0",
 		"@clayui/panel": "^3.165.0",

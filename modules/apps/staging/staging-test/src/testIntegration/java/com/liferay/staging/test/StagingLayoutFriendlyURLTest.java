@@ -89,7 +89,7 @@ public class StagingLayoutFriendlyURLTest extends BaseLocalStagingTestCase {
 				LocaleUtil.US, testFriendlyURL
 			).build());
 
-		_publishLayoutsExpectLayoutFriendlyURLsException(stagingLayout2);
+		_publishLayoutsWithLayoutFriendlyURLsException(stagingLayout2);
 
 		Layout liveLayout2 = _layoutLocalService.getLayoutByUuidAndGroupId(
 			stagingLayout2.getUuid(), liveGroup.getGroupId(),
@@ -99,7 +99,7 @@ public class StagingLayoutFriendlyURLTest extends BaseLocalStagingTestCase {
 			originalLayout2FriendlyURL,
 			liveLayout2.getFriendlyURL(LocaleUtil.US));
 
-		_publishLayoutsExpectLayoutFriendlyURLsException(stagingLayout2);
+		_publishLayoutsWithLayoutFriendlyURLsException(stagingLayout2);
 
 		List<BackgroundTask> failedBackgroundTasks =
 			_backgroundTaskLocalService.getBackgroundTasks(
@@ -158,7 +158,7 @@ public class StagingLayoutFriendlyURLTest extends BaseLocalStagingTestCase {
 			liveFriendlyURLEntryLocalization3.getClassPK());
 	}
 
-	private void _publishLayoutsExpectLayoutFriendlyURLsException(Layout layout)
+	private void _publishLayoutsWithLayoutFriendlyURLsException(Layout layout)
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

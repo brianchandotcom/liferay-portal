@@ -589,21 +589,32 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				infoItemFieldValues.getInfoFieldValue(
 					objectField.getObjectFieldId() + "#downloadURL");
 
+			String downloadURL = String.valueOf(
+				downloadURLInfoFieldValue.getValue());
+
 			Assert.assertEquals(
-				HttpComponentsUtil.removeParameter(
-					_dlURLHelper.getDownloadURL(
-						fileEntry, fileEntry.getFileVersion(), themeDisplay,
-						StringPool.BLANK),
-					"t"),
-				HttpComponentsUtil.removeParameter(
-					String.valueOf(downloadURLInfoFieldValue.getValue()), "t"));
+				"true",
+				HttpComponentsUtil.getParameter(
+					downloadURL, "download", false));
+			Assert.assertEquals(
+				_childObjectDefinition.getExternalReferenceCode(),
+				HttpComponentsUtil.getParameter(
+					downloadURL, "objectDefinitionExternalReferenceCode",
+					false));
+			Assert.assertEquals(
+				objectEntry.getExternalReferenceCode(),
+				HttpComponentsUtil.getParameter(
+					downloadURL, "objectEntryExternalReferenceCode", false));
+			Assert.assertEquals(
+				objectField.getExternalReferenceCode(),
+				HttpComponentsUtil.getParameter(
+					downloadURL, "objectFieldExternalReferenceCode", false));
 
 			if (themeDisplay != null) {
 				Assert.assertEquals(
 					themeDisplay.getDoAsUserId(),
 					HttpComponentsUtil.getParameter(
-						String.valueOf(downloadURLInfoFieldValue.getValue()),
-						"doAsUserId", false));
+						downloadURL, "doAsUserId", false));
 			}
 
 			_assertWebImage(

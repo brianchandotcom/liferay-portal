@@ -11,20 +11,9 @@ import React from 'react';
 
 import {NewImport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/NewImport';
 import {postImportPreview} from '../../../../../src/main/resources/META-INF/resources/revamp/js/services/postImportPreview';
+import formatDate from '../../../../../src/main/resources/META-INF/resources/revamp/js/utils/formatDate';
 import {mockImportPreview} from '../../mocks/mockImportPreview';
 import {mockSectionsForFilterTest} from '../../mocks/mockSectionsForFilterTest';
-
-jest.mock('frontend-js-web', () => {
-	const actual = jest.requireActual('frontend-js-web');
-
-	return {
-		...actual,
-		dateUtils: {
-			...actual.dateUtils,
-			fromNow: jest.fn(() => '5 days ago'),
-		},
-	};
-});
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/revamp/js/services/postImportPreview',
@@ -241,7 +230,9 @@ describe('NewImport', () => {
 		expect(screen.getByText('file-summary')).toBeInTheDocument();
 		expect(screen.getAllByText('site.lar').length).toBeGreaterThan(0);
 		expect(screen.getByText('Test User')).toBeInTheDocument();
-		expect(screen.getByText('5 days ago')).toBeInTheDocument();
+		expect(
+			screen.getByText(formatDate('2000-07-27T00:00:00Z'))
+		).toBeInTheDocument();
 		expect(screen.getByText('4 KB')).toBeInTheDocument();
 
 		expect(screen.getByText('Design')).toBeInTheDocument();

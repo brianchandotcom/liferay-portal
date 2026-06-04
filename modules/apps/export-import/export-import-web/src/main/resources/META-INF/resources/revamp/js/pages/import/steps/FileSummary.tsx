@@ -5,10 +5,11 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {dateUtils, formatStorage} from 'frontend-js-web';
+import {formatStorage} from 'frontend-js-web';
 import React from 'react';
 
 import {ImportPreview} from '../../../types/exportImportPreview';
+import formatDate from '../../../utils/formatDate';
 
 function MetadataItem({
 	icon,
@@ -60,11 +61,7 @@ export default function FileSummary({
 					<MetadataItem
 						icon="export"
 						label={Liferay.Language.get('exported')}
-						value={
-							exportDate
-								? dateUtils.fromNow(new Date(exportDate))
-								: '—'
-						}
+						value={exportDate ? formatDate(exportDate) : '—'}
 					/>
 				</ClayLayout.Col>
 

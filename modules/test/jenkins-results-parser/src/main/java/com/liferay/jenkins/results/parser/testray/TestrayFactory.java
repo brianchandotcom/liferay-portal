@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Retryable;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.test.clazz.BaseAntTargetTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -18,12 +19,15 @@ import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGro
 import com.liferay.jenkins.results.parser.test.clazz.group.ModulesAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestClassGroup;
 
+import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -227,23 +231,129 @@ public class TestrayFactory {
 	public static TestrayBuild newTestrayBuild(
 		TestrayRoutine testrayRoutine, JSONObject jsonObject) {
 
-		return new TestrayBuild(testrayRoutine, jsonObject);
+		synchronized (_testrayBuilds) {
+			long id = jsonObject.getLong("id");
+
+			TestrayBuild testrayBuild = _testrayBuilds.get(id);
+
+			if (testrayBuild != null) {
+				return testrayBuild;
+			}
+
+			testrayBuild = new TestrayBuild(testrayRoutine, jsonObject);
+
+			_testrayBuilds.put(id, testrayBuild);
+
+			return testrayBuild;
+		}
 	}
 
 	public static TestrayBuild newTestrayBuild(
-		TestrayServer testrayServer, JSONObject jsonObject) {
+		TestrayRoutine testrayRoutine, long id) {
 
-		return new TestrayBuild(testrayServer, jsonObject);
+		synchronized (_testrayBuilds) {
+			TestrayBuild testrayBuild = _testrayBuilds.get(id);
+
+			if (testrayBuild != null) {
+				return testrayBuild;
+			}
+
+			testrayBuild = new TestrayBuild(testrayRoutine, id);
+
+			_testrayBuilds.put(id, testrayBuild);
+
+			return testrayBuild;
+		}
+	}
+
+	public static TestrayBuild newTestrayBuild(
+		TestrayServer testrayServer, long id) {
+
+		synchronized (_testrayBuilds) {
+			TestrayBuild testrayBuild = _testrayBuilds.get(id);
+
+			if (testrayBuild != null) {
+				return testrayBuild;
+			}
+
+			testrayBuild = new TestrayBuild(testrayServer, id);
+
+			_testrayBuilds.put(id, testrayBuild);
+
+			return testrayBuild;
+		}
 	}
 
 	public static TestrayBuild newTestrayBuild(URL url) {
-		return new TestrayBuild(url);
+		synchronized (_testrayBuilds) {
+			long id = TestrayBuild.getID(url);
+
+			if (id <= 0) {
+				return new TestrayBuild(url);
+			}
+
+			TestrayBuild testrayBuild = _testrayBuilds.get(id);
+
+			if (testrayBuild != null) {
+				return testrayBuild;
+			}
+
+			testrayBuild = new TestrayBuild(url);
+
+			_testrayBuilds.put(id, testrayBuild);
+
+			return testrayBuild;
+		}
 	}
 
 	public static TestrayCase newTestrayCase(
 		TestrayProject testrayProject, JSONObject jsonObject) {
 
 		return new TestrayCase(testrayProject, jsonObject);
+	}
+
+	public static TestrayCase newTestrayCase(
+		final TestrayProject testrayProject, String name,
+		TestrayCaseType testrayCaseType) {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+			return null;
+		}
+
+		final String filterString = JenkinsResultsParserUtil.combine(
+			"name eq '", name, "' and ", "r_caseTypeToCases_c_caseTypeId eq '",
+			String.valueOf(testrayCaseType.getID()), "' and ",
+			"r_projectToCases_c_projectId eq '",
+			String.valueOf(testrayProject.getID()), "'");
+
+		final TestrayServer testrayServer = testrayProject.getTestrayServer();
+
+		Retryable<TestrayCase> retryable = new Retryable<TestrayCase>(
+			true, 3, 5, true) {
+
+			@Override
+			public TestrayCase execute() {
+				try {
+					Set<JSONObject> entityJSONObjects =
+						testrayServer.requestGraphQL(
+							"cases", TestrayCase.FIELD_NAMES, filterString,
+							null, 1, 1);
+
+					for (JSONObject entityJSONObject : entityJSONObjects) {
+						return new TestrayCase(
+							testrayProject, entityJSONObject);
+					}
+
+					return null;
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+
+		};
+
+		return retryable.executeWithRetries();
 	}
 
 	public static TestrayCaseType newTestrayCaseType(
@@ -592,6 +702,8 @@ public class TestrayFactory {
 		_testrayAttachmentRecorders = new ConcurrentHashMap<>();
 	private static final Map<String, TestrayAttachmentUploader>
 		_testrayAttachmentUploaders = new ConcurrentHashMap<>();
+	private static final Map<Long, TestrayBuild> _testrayBuilds =
+		new ConcurrentHashMap<>();
 	private static final Map<Long, TestrayFactor.Category>
 		_testrayFactorCategoriesIDs = new ConcurrentHashMap<>();
 	private static final Map<String, TestrayFactor.Category>

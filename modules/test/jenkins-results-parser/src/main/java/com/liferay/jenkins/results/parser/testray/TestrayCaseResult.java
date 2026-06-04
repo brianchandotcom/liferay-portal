@@ -196,8 +196,8 @@ public class TestrayCaseResult {
 			"buildToCaseResult");
 
 		if (buildJSONObject != null) {
-			_testrayBuild = _testrayServer.getTestrayBuildByID(
-				buildJSONObject.getLong("id"));
+			_testrayBuild = TestrayFactory.newTestrayBuild(
+				_testrayServer, buildJSONObject.getLong("id"));
 		}
 
 		return _testrayBuild;
@@ -225,6 +225,10 @@ public class TestrayCaseResult {
 					_testrayCase = TestrayFactory.newTestrayCase(
 						testrayBuild.getTestrayProject(), caseJSONObject);
 				}
+			}
+
+			if (_testrayCase == null) {
+				_testrayCase = getCachedTestrayCase();
 			}
 
 			return _testrayCase;
@@ -276,7 +280,7 @@ public class TestrayCaseResult {
 		return testrayCaseResults;
 	}
 
-	public URL getTestrayCaseResultURL() {
+	public synchronized URL getTestrayCaseResultURL() {
 		if (_testrayCaseResultURL != null) {
 			return _testrayCaseResultURL;
 		}
@@ -498,6 +502,38 @@ public class TestrayCaseResult {
 			propertyElement.addAttribute("name", propertyName);
 			propertyElement.addAttribute("value", propertyValue);
 		}
+	}
+
+	protected TestrayCase getCachedTestrayCase() {
+		String name = getName();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+			return null;
+		}
+
+		String type = getType();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(type)) {
+			return null;
+		}
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		TestrayCaseType testrayCaseType =
+			testrayServer.getTestrayCaseTypeByName(type);
+
+		if (testrayCaseType == null) {
+			return null;
+		}
+
+		TestrayProject testrayProject = getTestrayProject();
+
+		if (testrayProject == null) {
+			return null;
+		}
+
+		return TestrayFactory.newTestrayCase(
+			testrayProject, name, testrayCaseType);
 	}
 
 	protected synchronized void initTestrayAttachments() {

@@ -603,6 +603,12 @@ public interface JournalArticleLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
+	@Transactional(
+		propagation = Propagation.REQUIRES_NEW,
+		rollbackFor = {PortalException.class, SystemException.class}
+	)
+	public JournalArticle expireArticle(long articleId) throws PortalException;
+
 	/**
 	 * Expires the web content article matching the group, article ID, and
 	 * version.
@@ -2631,4 +2637,4 @@ public interface JournalArticleLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1488310260
+// LIFERAY-SERVICE-BUILDER-HASH:502448300

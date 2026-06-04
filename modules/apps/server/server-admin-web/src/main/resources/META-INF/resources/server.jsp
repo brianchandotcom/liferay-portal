@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ServerDisplayContext serverDisplayContext = new ServerDisplayContext(renderRequest, renderResponse);
+ServerDisplayContext serverDisplayContext = (ServerDisplayContext)request.getAttribute(ServerAdminWebKeys.SERVER_DISPLAY_CONTEXT);
 %>
 
 <clay:navigation-bar

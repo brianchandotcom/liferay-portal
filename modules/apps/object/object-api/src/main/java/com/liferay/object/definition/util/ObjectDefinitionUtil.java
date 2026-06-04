@@ -192,11 +192,11 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubCrawlerJob", "/ai-hub/crawler-jobs"
 		).put(
+			"AIHubGuardrail", "/ai-hub/guardrails"
+		).put(
 			"AIHubInstructionDefinition", "/ai-hub/instruction-definitions"
 		).put(
 			"AIHubMCPServer", "/ai-hub/mcp-servers"
-		).put(
-			"AIHubModelArmorTemplate", "/ai-hub/model-armor-templates"
 		).put(
 			"APIApplication", "/headless-builder/applications"
 		).put(

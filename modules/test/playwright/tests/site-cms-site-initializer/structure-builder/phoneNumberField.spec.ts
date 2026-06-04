@@ -69,6 +69,13 @@ test(
 
 		const phoneInput = page.locator('input[type="tel"]');
 
+		// Typing letters is rejected — only digits, spaces, dashes,
+		// parentheses and dots survive
+
+		await phoneInput.pressSequentially('abc212-555 (1234)def');
+
+		await expect(phoneInput).toHaveValue('212-555 (1234)');
+
 		await phoneInput.fill('2125551234');
 
 		await contentsPage.saveContent();

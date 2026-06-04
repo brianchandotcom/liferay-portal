@@ -12,13 +12,14 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Nícolas Moura
+ * @author Jhosseph Gonzalez
  */
 @FeatureFlags(
 	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-58677")}
@@ -48,9 +49,14 @@ public class WorkflowTaskSectionTableFDSViewTest
 		assertFDSTableSchemaField(
 			null, "dueDateTableCellRenderer", "due-date", "dueDate");
 		assertFDSTableSchemaField(
-			null, "workflowStateTableCellRenderer", "state-status", "state");
+			null, "workflowStateTableCellRenderer", "status", "state");
 		assertFDSTableSchemaField(
 			null, "dateTime", "last-activity-date", "dateModified");
+
+		Assert.assertTrue(
+			fdsTableSchemaFieldsMap.get(
+				"dateModified"
+			).isSortable());
 	}
 
 	@Override

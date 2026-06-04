@@ -7,6 +7,8 @@ package com.liferay.site.cmp.site.initializer.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -24,6 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -69,8 +72,49 @@ public class ViewWorkflowTasksSectionDisplayContextTest
 			null);
 
 		Assert.assertEquals(
-			bulkActionDropdownItems.toString(), 0,
+			bulkActionDropdownItems.toString(), 2,
 			bulkActionDropdownItems.size());
+
+		FDSActionDropdownItem updateDueDateFDSActionDropdownItem =
+			(FDSActionDropdownItem)bulkActionDropdownItems.get(0);
+
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"date-time", "update-due-date", "Update Due Date", null,
+			updateDueDateFDSActionDropdownItem);
+
+		Assert.assertEquals(
+			"updateDueDate",
+			getValue(updateDueDateFDSActionDropdownItem, "permissionKey"));
+
+		FDSActionDropdownItem assignToFDSActionDropdownItem =
+			(FDSActionDropdownItem)bulkActionDropdownItems.get(1);
+
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"user", "assign-to", "Assign to...", null,
+			assignToFDSActionDropdownItem);
+
+		Assert.assertEquals(
+			"assignToUser",
+			getValue(assignToFDSActionDropdownItem, "permissionKey"));
+	}
+
+	@Override
+	@Test
+	public void testGetCreationMenu() throws Exception {
+		Assert.assertNull(getCreationMenu(null));
+		Assert.assertNull(getCreationMenu(assetEntry));
+	}
+
+	@Test
+	public void testGetEmptyState() throws Exception {
+		Map<String, Object> emptyState = getEmptyState(null);
+
+		Assert.assertEquals(
+			"There are no workflow tasks related to your projects.",
+			emptyState.get("description"));
+		Assert.assertEquals(
+			"/states/cmp_empty_state_tasks.svg", emptyState.get("image"));
+		Assert.assertEquals("No Tasks", emptyState.get("title"));
 	}
 
 	@Test
@@ -82,34 +126,36 @@ public class ViewWorkflowTasksSectionDisplayContextTest
 			groupFDSActionDropdownItems.toString(), 2,
 			groupFDSActionDropdownItems.size());
 
-		FDSActionDropdownItem workflowTransitionsGroup =
+		FDSActionDropdownItem groupFDSActionDropdownItem =
 			groupFDSActionDropdownItems.get(0);
 
-		List<FDSActionDropdownItem> workflowTransitionItems =
-			(List<FDSActionDropdownItem>)workflowTransitionsGroup.get("items");
+		List<FDSActionDropdownItem> fdsActionDropdownItems =
+			(List<FDSActionDropdownItem>)groupFDSActionDropdownItem.get(
+				"items");
 
 		Assert.assertEquals(
-			workflowTransitionItems.toString(), 1,
-			workflowTransitionItems.size());
+			fdsActionDropdownItems.toString(), 1,
+			fdsActionDropdownItems.size());
 
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			null, "workflow-transition", null, null,
-			workflowTransitionItems.get(0));
+			fdsActionDropdownItems.get(0));
 
-		FDSActionDropdownItem otherActionsGroup =
-			groupFDSActionDropdownItems.get(1);
+		groupFDSActionDropdownItem = groupFDSActionDropdownItems.get(1);
 
-		List<FDSActionDropdownItem> workflowTasksItems =
-			(List<FDSActionDropdownItem>)otherActionsGroup.get("items");
+		fdsActionDropdownItems =
+			(List<FDSActionDropdownItem>)groupFDSActionDropdownItem.get(
+				"items");
 
 		Assert.assertEquals(
-			workflowTasksItems.toString(), 4, workflowTasksItems.size());
+			fdsActionDropdownItems.toString(), 4,
+			fdsActionDropdownItems.size());
 
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"view", "actionLinkWorkflowTask", "View", null,
 			Collections.singletonMap(
 				"entryClassName", CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN),
-			workflowTasksItems.get(0));
+			fdsActionDropdownItems.get(0));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			null, "assignToMeWorkflowTask", "Assign to Me", null,
 			HashMapBuilder.<String, Object>put(
@@ -119,7 +165,7 @@ public class ViewWorkflowTasksSectionDisplayContextTest
 			).put(
 				"entryClassName", CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
-			workflowTasksItems.get(1));
+			fdsActionDropdownItems.get(1));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			null, "assignToWorkflowTask", "Assign to...", null,
 			HashMapBuilder.<String, Object>put(
@@ -127,7 +173,7 @@ public class ViewWorkflowTasksSectionDisplayContextTest
 			).put(
 				"entryClassName", CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
-			workflowTasksItems.get(2));
+			fdsActionDropdownItems.get(2));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"date-time", "updateDueDateWorkflowTask", "Update Due Date", null,
 			HashMapBuilder.<String, Object>put(
@@ -135,7 +181,24 @@ public class ViewWorkflowTasksSectionDisplayContextTest
 			).put(
 				"entryClassName", CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
-			workflowTasksItems.get(3));
+			fdsActionDropdownItems.get(3));
+	}
+
+	@Override
+	@Test
+	public void testGetFDSFilters() throws Exception {
+		List<FDSFilter> fdsFilters = getFDSFilters(null);
+
+		Assert.assertEquals(fdsFilters.toString(), 3, fdsFilters.size());
+
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "cmpAssignTo", "assignee",
+			fdsFilters.get(0));
+		assertFDSFilter(
+			FDSEntityFieldTypes.DATE_TIME, "cmpDueDate", "due-date",
+			fdsFilters.get(1));
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "cmpState", "state", fdsFilters.get(2));
 	}
 
 	@Override

@@ -699,7 +699,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
+			Assert.assertEquals(
+				logEntries.toString(), layoutIds.length, logEntries.size());
 
 			for (LogEntry logEntry : logEntries) {
 				Throwable throwable = logEntry.getThrowable();

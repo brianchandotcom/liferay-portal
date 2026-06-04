@@ -7,6 +7,7 @@ import SidebarItem from './SidebarItem';
 import UserDropdown, {Menus} from 'shared/components/user-dropdown';
 import {ACCOUNTS, Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {DEVELOPER_MODE, LANGUAGES} from 'shared/util/constants';
+import {ENABLE_COMMERCE} from 'shared/util/feature-flags';
 import {Link, matchPath} from 'react-router-dom';
 import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
 import {User} from 'shared/util/records';
@@ -106,7 +107,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 		},
 		{
 			// LRAC-13187 - TODO Remove Feature flag after definition of the features that will be announced to commerce and AC connection.
-			hide: !DEVELOPER_MODE,
+			hide: !ENABLE_COMMERCE,
 			items: [
 				{
 					icon: 'ac_commerce',

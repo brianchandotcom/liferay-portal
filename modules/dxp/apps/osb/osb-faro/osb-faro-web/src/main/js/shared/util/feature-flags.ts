@@ -17,6 +17,7 @@ export const FEATURE_FLAGS_STORAGE_KEY = 'faro:feature-flags';
 export type FeatureFlagKey =
 	| 'ENABLE_ASSET_CARD'
 	| 'ENABLE_BLOCKLIST_KEYWORDS'
+	| 'ENABLE_COMMERCE'
 	| 'ENABLE_FORM_ABANDONMENT'
 	| 'ENABLE_REAL_TIME_SEGMENTS';
 
@@ -28,18 +29,16 @@ export interface FeatureFlagDefinition {
 export const FEATURE_FLAGS: FeatureFlagDefinition[] = [
 	{defaultValue: false, key: 'ENABLE_ASSET_CARD'},
 	{defaultValue: false, key: 'ENABLE_BLOCKLIST_KEYWORDS'},
+	{defaultValue: false, key: 'ENABLE_COMMERCE'},
 	{defaultValue: false, key: 'ENABLE_FORM_ABANDONMENT'},
 	{defaultValue: false, key: 'ENABLE_REAL_TIME_SEGMENTS'}
 ];
 
-const DEFAULTS = FEATURE_FLAGS.reduce(
-	(acc, {defaultValue, key}) => {
-		acc[key] = defaultValue;
+const DEFAULTS = FEATURE_FLAGS.reduce((acc, {defaultValue, key}) => {
+	acc[key] = defaultValue;
 
-		return acc;
-	},
-	{} as Record<FeatureFlagKey, boolean>
-);
+	return acc;
+}, {} as Record<FeatureFlagKey, boolean>);
 
 type FeatureFlagOverrides = Partial<Record<FeatureFlagKey, boolean>>;
 
@@ -92,6 +91,8 @@ export const ENABLE_ASSET_CARD = isFeatureFlagEnabled('ENABLE_ASSET_CARD');
 export const ENABLE_BLOCKLIST_KEYWORDS = isFeatureFlagEnabled(
 	'ENABLE_BLOCKLIST_KEYWORDS'
 );
+
+export const ENABLE_COMMERCE = isFeatureFlagEnabled('ENABLE_COMMERCE');
 
 export const ENABLE_FORM_ABANDONMENT = isFeatureFlagEnabled(
 	'ENABLE_FORM_ABANDONMENT'

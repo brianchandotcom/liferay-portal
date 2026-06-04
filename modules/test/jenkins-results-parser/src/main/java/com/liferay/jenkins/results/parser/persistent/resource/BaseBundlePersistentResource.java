@@ -327,8 +327,10 @@ public abstract class BaseBundlePersistentResource
 
 				if (_failCount <= _MAX_FAIL_COUNT) {
 					print(
-						"Retry " + _failCount + " of " + _MAX_FAIL_COUNT +
-							" due to FAILURE in " + getProducerBuildURL());
+						JenkinsResultsParserUtil.combine(
+							"Retry ", String.valueOf(_failCount), " of ",
+							String.valueOf(_MAX_FAIL_COUNT),
+							" due to FAILURE in ", getProducerBuildURL()));
 
 					start();
 

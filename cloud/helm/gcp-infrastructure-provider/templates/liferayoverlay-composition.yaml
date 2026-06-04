@@ -1,3 +1,11 @@
+{{- $templates := list -}}
+{{- range $path, $_ := .Files.Glob "overlay-composition/**" -}}
+    {{- $content := $.Files.Get $path | trim -}}
+    {{- if $content -}}
+        {{- $templates = append $templates $content -}}
+    {{- end -}}
+{{- end -}}
+{{- $templateHash := join "\n" (sortAlpha $templates) | sha256sum -}}
 apiVersion: apiextensions.crossplane.io/v2
 kind: CompositeResourceDefinition
 metadata:
@@ -51,14 +59,6 @@ spec:
                     type: object
             served: true
 ---
-{{- $templates := list -}}
-{{- range $path, $_ := .Files.Glob "overlay-composition/**" -}}
-    {{- $content := $.Files.Get $path | trim -}}
-    {{- if $content -}}
-        {{- $templates = append $templates $content -}}
-    {{- end -}}
-{{- end -}}
-{{- $templateHash := join "\n" (sortAlpha $templates) | sha256sum -}}
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:

@@ -5,9 +5,18 @@
 
 package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceMetric;
+import com.liferay.analytics.cms.rest.internal.client.AnalyticsCloudClient;
+import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.PerformanceMetricResource;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
+import com.liferay.portal.kernel.util.Http;
+
+import java.util.Arrays;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -19,4 +28,51 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class PerformanceMetricResourceImpl
 	extends BasePerformanceMetricResourceImpl {
+
+	@Override
+	public PerformanceMetric getPerformanceMetricViewsByCategorization(
+			Long[] depotEntryIds, Integer rangeKey)
+		throws Exception {
+
+		LicenseManagerUtil.checkFreeTier();
+
+		Long[] groupIds = DepotEntryUtil.getGroupIds(
+			DepotEntryUtil.getDepotEntries(
+				contextCompany.getCompanyId(), depotEntryIds));
+
+		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
+			_http);
+
+		return analyticsCloudClient.getPerformanceMetric(
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId()),
+			Arrays.asList(groupIds), "viewsMetric", "/categories", rangeKey);
+	}
+
+	@Override
+	public PerformanceMetric getPerformanceMetricViewsByLocation(
+			Long[] depotEntryIds, Integer rangeKey)
+		throws Exception {
+
+		LicenseManagerUtil.checkFreeTier();
+
+		Long[] groupIds = DepotEntryUtil.getGroupIds(
+			DepotEntryUtil.getDepotEntries(
+				contextCompany.getCompanyId(), depotEntryIds));
+
+		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
+			_http);
+
+		return analyticsCloudClient.getPerformanceMetric(
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId()),
+			Arrays.asList(groupIds), "viewsMetric", "/geolocation", rangeKey);
+	}
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private Http _http;
+
 }

@@ -1,0 +1,9 @@
+assemble:
+    -   from: build
+        into: static
+liferay-sample-editor-config-contributor-2:
+    editorConfigKeys:
+        -   sampleReactCKEditor5ClassicEditor
+    name: Liferay Sample Editor Config Contributor CKEditor 5 WordCount
+    type: editorConfigContributor
+    url: index.js

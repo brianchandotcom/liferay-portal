@@ -1,7 +1,6 @@
 {
-	"description": "Liferay Sample Editor Config Contributor CKEditor 5 WordCount",
+	"description": "Liferay Sample Editor Config Contributor",
 	"devDependencies": {
-		"@ckeditor/ckeditor5-word-count": "46.0.3",
 		"@liferay/js-api": "0.6.2",
 		"serve": "^14.2.0",
 		"typescript": "^5.0.4"
@@ -9,8 +8,8 @@
 	"main": "./src/index.ts",
 	"name": "@liferay/liferay-sample-editor-config-contributor-1",
 	"scripts": {
-		"build": "esbuild src/index.ts --outdir=build --bundle --format=esm --external:@ckeditor/ckeditor5-word-count",
-		"start": "PORT=3001 serve --cors",
+		"build": "esbuild src/index.ts --outdir=build --bundle --format=esm",
+		"start": "PORT=3000 serve --cors",
 		"watch": "tsc --watch"
 	},
 	"type": "module",

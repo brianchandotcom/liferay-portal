@@ -78,9 +78,13 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Build a custom element that uses `react`, `react-dom`, and `vite`.
 
-- *liferay-sample-editor-config-contributor*
+- *liferay-sample-editor-config-contributor-1*
 
 	Build a JavaScript function to configure WYSIWYG editors.
+
+- *liferay-sample-editor-config-contributor-2*
+
+	Build a JavaScript function to add the CKEditor 5 WordCount plugin via a client extension.
 
 - *liferay-sample-etc-cron*
 

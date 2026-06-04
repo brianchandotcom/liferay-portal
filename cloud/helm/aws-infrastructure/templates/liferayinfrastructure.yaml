@@ -17,7 +17,6 @@ spec:
     environmentId: {{ .Values.environmentId }}
     forceDestroy: {{ .Values.forceDestroy }}
     orphanOnDelete: {{ .Values.orphanOnDelete }}
-    overlay: {{ .Values.overlay | toYaml | nindent 8 }}
     projectId: {{ .Values.projectId }}
     region: {{ .Values.region }}
     search:

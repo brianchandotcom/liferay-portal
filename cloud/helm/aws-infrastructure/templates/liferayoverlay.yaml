@@ -1,0 +1,16 @@
+{{- if .Values.overlay.enabled -}}
+apiVersion: aws.liferay.com/v1alpha1
+kind: LiferayOverlay
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
+        argocd.argoproj.io/sync-wave: "-20"
+    name: {{ .Release.Name }}
+    namespace: {{ .Release.Namespace }}
+spec:
+    commonTags: {{ merge (dict "ProjectId" .Values.projectId) .Values.overlay.commonTags | toYaml | nindent 8 }}
+    forceDestroy: {{ .Values.overlay.forceDestroy }}
+    orphanOnDelete: {{ .Values.overlay.orphanOnDelete }}
+    projectId: {{ .Values.projectId }}
+    region: {{ .Values.region }}
+{{- end -}}

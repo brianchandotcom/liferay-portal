@@ -25,7 +25,11 @@ forceDestroy: false
 gateway: {}
 license: {}
 orphanOnDelete: false
-overlay: {}
+overlay:
+    commonTags: {}
+    enabled: false
+    forceDestroy: false
+    orphanOnDelete: false
 search:
     elasticsearch:
         annotations:

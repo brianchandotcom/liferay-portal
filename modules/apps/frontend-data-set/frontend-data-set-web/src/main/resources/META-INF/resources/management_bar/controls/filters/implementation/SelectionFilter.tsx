@@ -146,7 +146,9 @@ function getOdataString({
 			return parsedValue.toLocaleLowerCase();
 		}
 
-		return typeof item.value === 'string' ? `'${item.value}'` : item.value;
+		return typeof item.value === 'string'
+			? `'${item.value.replace(/'/g, "''")}'`
+			: item.value;
 	});
 
 	if (

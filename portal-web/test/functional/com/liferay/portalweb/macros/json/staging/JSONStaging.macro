@@ -48,7 +48,7 @@ definition {
 			parentGroupName = ${parentGroupName},
 			site = "false");
 
-		while (("" == "")) {
+		while ((${groupId} == "")) {
 			var groupId = JSONGroupAPI._getGroupIdByNameNoError(
 				grandParentGroupName = ${grandParentGroupName},
 				groupName = "${groupName} (Staging)",

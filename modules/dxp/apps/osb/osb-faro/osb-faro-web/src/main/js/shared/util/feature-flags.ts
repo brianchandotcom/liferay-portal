@@ -17,7 +17,8 @@ export const FEATURE_FLAGS_STORAGE_KEY = 'faro:feature-flags';
 export type FeatureFlagKey =
 	| 'ENABLE_ASSET_CARD'
 	| 'ENABLE_BLOCKLIST_KEYWORDS'
-	| 'ENABLE_FORM_ABANDONMENT';
+	| 'ENABLE_FORM_ABANDONMENT'
+	| 'ENABLE_REAL_TIME_SEGMENTS';
 
 export interface FeatureFlagDefinition {
 	defaultValue: boolean;
@@ -27,7 +28,8 @@ export interface FeatureFlagDefinition {
 export const FEATURE_FLAGS: FeatureFlagDefinition[] = [
 	{defaultValue: false, key: 'ENABLE_ASSET_CARD'},
 	{defaultValue: false, key: 'ENABLE_BLOCKLIST_KEYWORDS'},
-	{defaultValue: false, key: 'ENABLE_FORM_ABANDONMENT'}
+	{defaultValue: false, key: 'ENABLE_FORM_ABANDONMENT'},
+	{defaultValue: false, key: 'ENABLE_REAL_TIME_SEGMENTS'}
 ];
 
 const DEFAULTS = FEATURE_FLAGS.reduce(
@@ -93,4 +95,8 @@ export const ENABLE_BLOCKLIST_KEYWORDS = isFeatureFlagEnabled(
 
 export const ENABLE_FORM_ABANDONMENT = isFeatureFlagEnabled(
 	'ENABLE_FORM_ABANDONMENT'
+);
+
+export const ENABLE_REAL_TIME_SEGMENTS = isFeatureFlagEnabled(
+	'ENABLE_REAL_TIME_SEGMENTS'
 );

@@ -8,4 +8,4 @@
 
 {{- $labels := merge ($xr.spec.commonTags | default dict) (dict "app" "liferay" "deployment-name" $env.deploymentName "project-id" $projectId) -}}
 
-{{- include "aws-infrastructure-provider.overlayBucketName" . }}
+{{- include "gcp-infrastructure-provider.overlayBucketName" . }}

@@ -197,7 +197,7 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewModelArmorTemplatesFragmentRenderer"
+												"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewGuardrailsFragmentRenderer"
 											},
 											"fragmentConfig": {
 											},

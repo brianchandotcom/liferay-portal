@@ -24,6 +24,9 @@ components:
                     items:
                         $ref: "#/components/schemas/Variable"
                     type: array
+                model:
+                    $ref: "#/components/schemas/Model"
+                    readOnly: true
                 outputVariable:
                     $ref: "#/components/schemas/Variable"
                 status:
@@ -116,6 +119,15 @@ components:
                         -   everywhere
                     type: string
                 text:
+                    type: string
+            type: object
+        Model:
+            properties:
+                label:
+                    type: string
+                name:
+                    type: string
+                providerLabel:
                     type: string
             type: object
         ModelArmorTemplate:

@@ -71,7 +71,7 @@ export async function createDataSource(page) {
 			.click({timeout: 1000});
 	}).toPass();
 
-	const input = page.locator('#token');
+	const input = page.locator('#value');
 
 	await expect(input).not.toHaveValue('');
 

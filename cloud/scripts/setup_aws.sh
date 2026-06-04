@@ -38,7 +38,7 @@ function main {
 
 	local terraform_args
 
-	terraform_args="$(_get_terraform_apply_args "${1}" "${2}")"
+	readarray -t terraform_args < <(_get_terraform_apply_args "${1}" "${2}")
 
 	if jq --exit-status '.variables.tfstate_bucket_name' "${1}" &> /dev/null
 	then
@@ -65,11 +65,11 @@ function main {
 
 	_set_up_aws_service_linked_roles
 
-	_set_up_aws_eks "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
+	_set_up_aws_eks "${bucket_name}" "${region}" "${deployment_name}" "${terraform_args[@]}"
 
-	_set_up_aws_grafana "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
+	_set_up_aws_grafana "${bucket_name}" "${region}" "${deployment_name}" "${terraform_args[@]}"
 
-	_set_up_aws_gitops "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
+	_set_up_aws_gitops "${bucket_name}" "${region}" "${deployment_name}" "${terraform_args[@]}"
 
 	_port_forward_argo_cd
 }
@@ -302,7 +302,7 @@ function _get_terraform_apply_args {
 		apply_args+=("-parallelism=${parallelism}")
 	fi
 
-	echo "${apply_args[@]}"
+	printf '%s\n' "${apply_args[@]}"
 }
 
 function _log {
@@ -353,20 +353,26 @@ function _pushd {
 function _resolve_path {
 	local file_path="${1}"
 
+	if [ ! -e "${file_path}" ]
+	then
+		echo "Path ${file_path} does not exist." >&2
+
+		exit 1
+	fi
+
 	printf '%s\n' "$(cd "$(dirname "${file_path}")" && pwd)/$(basename "${file_path}")"
 }
 
 function _set_up_aws_eks {
-	local bucket_name="${2}"
-	local deployment_name="${4}"
-	local region="${3}"
-	local terraform_args="${1}"
+	local bucket_name="${1}"
+	local deployment_name="${3}"
+	local region="${2}"
 
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/eks"
 
 	echo "Setting up the AWS EKS cluster."
 
-	_terraform_init_and_apply "." "eks" "${bucket_name}" "${deployment_name}" "${region}" "${terraform_args}"
+	_terraform_init_and_apply "." "eks" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}"
 
 	export KUBE_CONFIG_PATH="${HOME}/.kube/config"
 
@@ -382,18 +388,17 @@ function _set_up_aws_eks {
 }
 
 function _set_up_aws_gitops {
-	local bucket_name="${2}"
-	local deployment_name="${4}"
-	local region="${3}"
-	local terraform_args="${1}"
+	local bucket_name="${1}"
+	local deployment_name="${3}"
+	local region="${2}"
 
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/gitops"
 
 	echo "Setting up GitOps infrastructure."
 
-	_terraform_init_and_apply "./platform" "gitops/platform" "${bucket_name}" "${deployment_name}" "${region}" "${terraform_args}"
+	_terraform_init_and_apply "./platform" "gitops/platform" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}"
 
-	_terraform_init_and_apply "./resources" "gitops/resources" "${bucket_name}" "${deployment_name}" "${region}" "${terraform_args}"
+	_terraform_init_and_apply "./resources" "gitops/resources" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}"
 
 	echo "GitOps infrastructure setup complete."
 
@@ -401,10 +406,9 @@ function _set_up_aws_gitops {
 }
 
 function _set_up_aws_grafana {
-	local bucket_name="${2}"
-	local deployment_name="${4}"
-	local region="${3}"
-	local terraform_args="${1}"
+	local bucket_name="${1}"
+	local deployment_name="${3}"
+	local region="${2}"
 
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/eks"
 
@@ -431,7 +435,7 @@ function _set_up_aws_grafana {
 		"${bucket_name}" \
 		"${deployment_name}" \
 		"${region}" \
-		"${terraform_args}" \
+		"${@:4}" \
 		"-var=grafana_workspace_endpoint=$(terraform output -raw "grafana_workspace_endpoint")" \
 		"-var=prometheus_workspace_endpoint=$(terraform output -raw "prometheus_workspace_endpoint")"
 
@@ -473,7 +477,6 @@ function _terraform_init_and_apply {
 	local deployment_name="${4}"
 	local folder_separator="${2}"
 	local region="${5}"
-	local terraform_args="${6}"
 
 	_pushd "${1}"
 
@@ -494,7 +497,7 @@ EOF
 			terraform init
 	fi
 
-	terraform apply ${terraform_args} "${@:7}"
+	terraform apply "${@:6}"
 
 	_popd
 }

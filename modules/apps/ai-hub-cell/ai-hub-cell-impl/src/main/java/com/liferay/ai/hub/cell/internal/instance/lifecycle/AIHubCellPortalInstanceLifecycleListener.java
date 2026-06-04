@@ -5,7 +5,6 @@
 
 package com.liferay.ai.hub.cell.internal.instance.lifecycle;
 
-import com.liferay.ai.hub.cell.constants.AIHubCellConstants;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
@@ -57,7 +56,7 @@ public class AIHubCellPortalInstanceLifecycleListener
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.
 					fetchOAuth2ApplicationByExternalReferenceCode(
-						AIHubCellConstants.AI_HUB_CELL_OAUTH2_APPLICATION_ERC,
+						"AI-HUB-CELL-OAUTH2-APPLICATION",
 						company.getCompanyId());
 
 			if (oAuth2Application != null) {
@@ -72,8 +71,8 @@ public class AIHubCellPortalInstanceLifecycleListener
 			}
 
 			_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
-				AIHubCellConstants.AI_HUB_CELL_OAUTH2_APPLICATION_ERC,
-				user.getUserId(), user.getScreenName(),
+				"AI-HUB-CELL-OAUTH2-APPLICATION", user.getUserId(),
+				user.getScreenName(),
 				Arrays.asList(GrantType.CLIENT_CREDENTIALS),
 				"client_secret_post", user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),

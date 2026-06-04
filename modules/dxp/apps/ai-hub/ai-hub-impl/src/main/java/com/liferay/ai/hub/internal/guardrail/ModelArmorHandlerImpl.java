@@ -368,7 +368,7 @@ public class ModelArmorHandlerImpl implements ModelArmorHandler {
 			sanitizationResult.getFilterResultsMap();
 
 		return StringBundler.concat(
-			"The ", sanitizationTarget, " violated",
+			"The ", sanitizationTarget, " violated ",
 			StringUtil.merge(
 				TransformUtil.transform(
 					filterResults.values(), this::_getViolation),

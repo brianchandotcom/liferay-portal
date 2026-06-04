@@ -41,13 +41,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class JiraService extends BaseService {
 
-	public List<BusinessEvent> createBusinessEvent(BusinessEvent businessEvent)
+	public void createBusinessEvent(BusinessEvent businessEvent)
 		throws Exception {
 
 		_syncBusinessEvent(null, businessEvent);
-
-		return getBusinessEvents(
-			businessEvent.getAccountExternalReferenceCode());
 	}
 
 	public void deleteBusinessEvent(String id) throws Exception {
@@ -178,7 +175,7 @@ public class JiraService extends BaseService {
 
 		while (true) {
 			JSONObject searchResponseJSONObject = _searchJSONObject(
-				jql, 100, nextPageToken, returnFields);
+				jql, _MAX_RESULTS, nextPageToken, returnFields);
 
 			if (searchResponseJSONObject == null) {
 				break;
@@ -243,7 +240,7 @@ public class JiraService extends BaseService {
 		String response = post(
 			bodyJSONObject.toString(),
 			HashMapBuilder.put(
-				HttpHeaders.AUTHORIZATION, _getCredentials()
+				HttpHeaders.AUTHORIZATION, _getAuthorization()
 			).put(
 				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
 			).build(),
@@ -262,7 +259,7 @@ public class JiraService extends BaseService {
 		throws Exception {
 
 		String response = delete(
-			_getCredentials(), StringPool.BLANK,
+			_getAuthorization(), StringPool.BLANK,
 			UriComponentsBuilder.fromUriString(
 				StringBundler.concat(
 					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/", workspaceId,
@@ -283,7 +280,7 @@ public class JiraService extends BaseService {
 
 		return new JSONObject(
 			get(
-				_getCredentials(),
+				_getAuthorization(),
 				UriComponentsBuilder.fromUriString(
 					StringBundler.concat(
 						_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
@@ -292,14 +289,13 @@ public class JiraService extends BaseService {
 				).toUri()));
 	}
 
-	private String _getCredentials() {
+	private String _getAuthorization() {
 		Base64.Encoder encoder = Base64.getEncoder();
 
-		String jiraUserNameAndJiraApiToken =
+		String credentials =
 			_jiraAPIEmailAddress + StringPool.COLON + _jiraAPIToken;
 
-		return "Basic " +
-			encoder.encodeToString(jiraUserNameAndJiraApiToken.getBytes());
+		return "Basic " + encoder.encodeToString(credentials.getBytes());
 	}
 
 	private void _injectBusinessEventAttributeNames(
@@ -495,7 +491,7 @@ public class JiraService extends BaseService {
 					"qlQuery", sb.toString()
 				).toString(),
 				HashMapBuilder.put(
-					HttpHeaders.AUTHORIZATION, _getCredentials()
+					HttpHeaders.AUTHORIZATION, _getAuthorization()
 				).put(
 					HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
 				).build(),
@@ -517,20 +513,21 @@ public class JiraService extends BaseService {
 		int startAt = 0;
 
 		while (!last) {
-			JSONObject jsonObject = _searchAssetsObjectsPageJSONObject(
-				workspaceId, aql, _ASSET_OBJECTS_MAX_RESULTS, startAt);
+			JSONObject resultsJSONObject = _searchAssetsObjectsPageJSONObject(
+				workspaceId, aql, _MAX_RESULTS, startAt);
 
-			JSONArray jsonArray = jsonObject.optJSONArray("values");
+			JSONArray valuesJSONArray = resultsJSONObject.optJSONArray(
+				"values");
 
-			if ((jsonArray == null) || jsonArray.isEmpty()) {
+			if ((valuesJSONArray == null) || valuesJSONArray.isEmpty()) {
 				break;
 			}
 
-			itemsJSONArray.putAll(jsonArray);
+			itemsJSONArray.putAll(valuesJSONArray);
 
-			last = jsonObject.optBoolean("last");
+			last = resultsJSONObject.optBoolean("last");
 
-			startAt += _ASSET_OBJECTS_MAX_RESULTS;
+			startAt += _MAX_RESULTS;
 		}
 
 		return itemsJSONArray;
@@ -546,7 +543,7 @@ public class JiraService extends BaseService {
 				"qlQuery", aql
 			).toString(),
 			HashMapBuilder.put(
-				HttpHeaders.AUTHORIZATION, _getCredentials()
+				HttpHeaders.AUTHORIZATION, _getAuthorization()
 			).put(
 				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
 			).build(),
@@ -576,7 +573,7 @@ public class JiraService extends BaseService {
 		try {
 			return new JSONObject(
 				get(
-					_getCredentials(),
+					_getAuthorization(),
 					UriComponentsBuilder.fromUriString(
 						StringBundler.concat(
 							_jiraURL, _URL_REST_API_3, "/search/jql")
@@ -667,14 +664,14 @@ public class JiraService extends BaseService {
 	}
 
 	private JSONArray _transformAttributes(JSONObject attributesJSONObject) {
-		JSONArray jsonArray = new JSONArray();
+		JSONArray attributesJSONArray = new JSONArray();
 
 		for (String key : attributesJSONObject.keySet()) {
 			if (Validator.isNull(key)) {
 				continue;
 			}
 
-			jsonArray.put(
+			attributesJSONArray.put(
 				new JSONObject(
 				).put(
 					"objectAttributeValues",
@@ -690,7 +687,7 @@ public class JiraService extends BaseService {
 				));
 		}
 
-		return jsonArray;
+		return attributesJSONArray;
 	}
 
 	private JSONObject _updateAssetObjectJSONObject(
@@ -705,7 +702,7 @@ public class JiraService extends BaseService {
 					"attributes", _transformAttributes(attributesJSONObject)
 				).toString(),
 				HashMapBuilder.put(
-					HttpHeaders.AUTHORIZATION, _getCredentials()
+					HttpHeaders.AUTHORIZATION, _getAuthorization()
 				).put(
 					HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
 				).build(),
@@ -717,10 +714,10 @@ public class JiraService extends BaseService {
 				).toUri()));
 	}
 
-	private static final int _ASSET_OBJECTS_MAX_RESULTS = 500;
-
 	private static final String _JIRA_CLOUD_API_URL =
 		"https://api.atlassian.com";
+
+	private static final int _MAX_RESULTS = 100;
 
 	private static final String _URL_REST_API_3 = "/rest/api/3";
 

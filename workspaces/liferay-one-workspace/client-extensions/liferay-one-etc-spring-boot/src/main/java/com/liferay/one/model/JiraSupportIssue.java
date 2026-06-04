@@ -25,18 +25,16 @@ public class JiraSupportIssue {
 
 		JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
 
-		JSONArray jsonArray = fieldsJSONObject.optJSONArray(
+		JSONArray labelsJSONArray = fieldsJSONObject.optJSONArray(
 			"labels", new JSONArray());
 
 		List<String> labels = new ArrayList<>();
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			labels.add(jsonArray.getString(i));
+		for (int i = 0; i < labelsJSONArray.length(); i++) {
+			labels.add(labelsJSONArray.getString(i));
 		}
 
 		_labels = labels.toArray(new String[0]);
-
-		_organizationId = StringPool.BLANK;
 
 		JSONObject statusJSONObject = fieldsJSONObject.optJSONObject(
 			"status", new JSONObject());
@@ -108,7 +106,7 @@ public class JiraSupportIssue {
 
 	private final String _key;
 	private final String[] _labels;
-	private String _organizationId;
+	private String _organizationId = StringPool.BLANK;
 	private final String _status;
 	private final String _summary;
 	private String _ticketURL = StringPool.BLANK;

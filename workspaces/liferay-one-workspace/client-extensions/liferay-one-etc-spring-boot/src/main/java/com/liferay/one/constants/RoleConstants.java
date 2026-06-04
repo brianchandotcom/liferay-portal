@@ -8,7 +8,7 @@ package com.liferay.one.constants;
 /**
  * @author Felipe Franca
  */
-public class RoleConstants {
+public interface RoleConstants {
 
 	public static final String NAME_ACCOUNT_ADMINISTRATOR =
 		"Account Administrator";

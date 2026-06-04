@@ -26,7 +26,7 @@ function _derive_db_name {
 		return
 	fi
 
-	suffix="$(echo "${suffix}" | tr "[:upper:]" "[:lower:]" | sed --regexp-extended "s/[^a-z0-9]+/_/g; s/^_+|_+\$//g")"
+	suffix="$(echo "${suffix}" | tr "[:upper:]" "[:lower:]" | _sed --regexp-extended "s/[^a-z0-9]+/_/g; s/^_+|_+\$//g")"
 	suffix="${suffix:0:56}"
 
 	echo "lportal_${suffix}"
@@ -79,12 +79,12 @@ function _find_app_server_parent_dir {
 
 	if [[ -f ${user_props} ]]
 	then
-		raw="$(grep --extended-regexp "^[[:space:]]*app\.server\.parent\.dir=" "${user_props}" | tail --lines=1 | sed "s/^[[:space:]]*app\.server\.parent\.dir=//")"
+		raw="$(grep --extended-regexp "^[[:space:]]*app\.server\.parent\.dir=" "${user_props}" | tail --lines=1 | _sed "s/^[[:space:]]*app\.server\.parent\.dir=//")"
 	fi
 
 	if [[ -z ${raw} && -f ${default_props} ]]
 	then
-		raw="$(grep --extended-regexp "^[[:space:]]*app\.server\.parent\.dir=" "${default_props}" | tail --lines=1 | sed "s/^[[:space:]]*app\.server\.parent\.dir=//")"
+		raw="$(grep --extended-regexp "^[[:space:]]*app\.server\.parent\.dir=" "${default_props}" | tail --lines=1 | _sed "s/^[[:space:]]*app\.server\.parent\.dir=//")"
 	fi
 
 	[[ -n ${raw} ]] || return 1
@@ -123,7 +123,7 @@ function _get_property {
 
 	if [[ -f ${file} ]] && grep --extended-regexp --quiet "^[[:space:]]*${key}=" "${file}"
 	then
-		value="$(grep --extended-regexp "^[[:space:]]*${key}=" "${file}" | tail --lines=1 | sed --regexp-extended "s/^[[:space:]]*${key}=[[:space:]]*//; s/[[:space:]]+\$//")"
+		value="$(grep --extended-regexp "^[[:space:]]*${key}=" "${file}" | tail --lines=1 | _sed --regexp-extended "s/^[[:space:]]*${key}=[[:space:]]*//; s/[[:space:]]+\$//")"
 	fi
 
 	echo "${value}"
@@ -141,11 +141,61 @@ function _get_property_from_files {
 	do
 		if [[ -f ${file} ]] && grep --extended-regexp --quiet "^[[:space:]]*${key}=" "${file}"
 		then
-			grep --extended-regexp "^[[:space:]]*${key}=" "${file}" | tail --lines=1 | sed --regexp-extended "s/^[[:space:]]*${key}=[[:space:]]*//; s/[[:space:]]+\$//"
+			grep --extended-regexp "^[[:space:]]*${key}=" "${file}" | tail --lines=1 | _sed --regexp-extended "s/^[[:space:]]*${key}=[[:space:]]*//; s/[[:space:]]+\$//"
 
 			return
 		fi
 	done
 
 	echo "${default}"
+}
+
+function _sed {
+	local arg in_place=0
+
+	for arg in "${@}"
+	do
+		[[ ${arg} == --in-place ]] && in_place=1
+	done
+
+	if [[ ${in_place} -eq 1 ]]
+	then
+		local file="${*: -1}"
+
+		if [[ -L ${file} ]]
+		then
+			local dereferenced="${file}.dereferenced"
+
+			cp "${file}" "${dereferenced}" 2>/dev/null || : > "${dereferenced}"
+
+			rm -f "${file}"
+
+			mv "${dereferenced}" "${file}"
+		fi
+	fi
+
+	if [[ $(uname) == Darwin ]]
+	then
+		local args=()
+
+		for arg in "${@}"
+		do
+			if [[ ${arg} == --expression ]]
+			then
+				args+=(-e)
+			elif [[ ${arg} == --in-place ]]
+			then
+				args+=(-i "")
+			elif [[ ${arg} == --regexp-extended ]]
+			then
+				args+=(-E)
+			else
+				args+=("${arg}")
+			fi
+		done
+
+		sed "${args[@]}"
+	else
+		sed "${@}"
+	fi
 }

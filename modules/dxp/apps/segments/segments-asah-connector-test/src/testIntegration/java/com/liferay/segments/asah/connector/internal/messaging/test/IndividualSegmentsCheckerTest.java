@@ -160,6 +160,47 @@ public class IndividualSegmentsCheckerTest {
 	}
 
 	@Test
+	public void testCheckIndividualSegmentsEntriesWhenNotSyncedWithAnalyticsCloud()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsDataSourceId", StringPool.BLANK
+						).put(
+							"liferayAnalyticsFaroBackendSecuritySignature",
+							StringPool.BLANK
+						).put(
+							"liferayAnalyticsFaroBackendURL", StringPool.BLANK
+						).build());
+			ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.segments.asah.connector.internal." +
+						"configuration.SegmentsAsahConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"anonymousUserSegmentsCacheExpirationTime", "60"
+					).build())) {
+
+			UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+				_checkIndividualSegmentsSchedulerJobConfiguration.
+					getJobExecutorUnsafeRunnable();
+
+			jobExecutorUnsafeRunnable.run();
+
+			List<SegmentsEntry> segmentsEntries =
+				_segmentsEntryLocalService.getSegmentsEntriesBySource(
+					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(
+				segmentsEntries.toString(), 0, segmentsEntries.size());
+		}
+	}
+
+	@Test
 	public void testIndividualSegmentsDeleteSegmentsEntries() throws Exception {
 		SegmentsTestUtil.addSegmentsEntry(
 			"1234567", "Test Segment 1", null, null,

@@ -83,12 +83,6 @@ resource "aws_iam_policy" "alloy_cloudwatch_rds" {
 				Sid="CloudWatchMetricsRead"
 			},
 			{
-				Action=["tag:GetResources"]
-				Effect="Allow"
-				Resource="*"
-				Sid="TagDiscovery"
-			},
-			{
 				Action=[
 					"rds:DescribeDBInstances",
 					"rds:ListTagsForResource",
@@ -96,6 +90,12 @@ resource "aws_iam_policy" "alloy_cloudwatch_rds" {
 				Effect="Allow"
 				Resource="*"
 				Sid="RDSDescribe"
+			},
+			{
+				Action=["tag:GetResources"]
+				Effect="Allow"
+				Resource="*"
+				Sid="TagDiscovery"
 			},
 		]
 		Version="2012-10-17"
@@ -107,16 +107,6 @@ resource "aws_iam_policy" "rds_exporter" {
 	name="${var.deployment_name}-rds-exporter"
 	policy=jsonencode({
 		Statement=[
-			{
-				Action=[
-					"rds:DescribeDBInstances",
-					"rds:DescribeDBClusters",
-					"rds:ListTagsForResource",
-				]
-				Effect="Allow"
-				Resource="*"
-				Sid="RDSDescribe"
-			},
 			{
 				Action=[
 					"cloudwatch:GetMetricData",
@@ -134,6 +124,16 @@ resource "aws_iam_policy" "rds_exporter" {
 				Effect="Allow"
 				Resource="*"
 				Sid="EC2QuotasRead"
+			},
+			{
+				Action=[
+					"rds:DescribeDBClusters",
+					"rds:DescribeDBInstances",
+					"rds:ListTagsForResource",
+				]
+				Effect="Allow"
+				Resource="*"
+				Sid="RDSDescribe"
 			},
 		]
 		Version="2012-10-17"

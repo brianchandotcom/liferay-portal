@@ -9,7 +9,7 @@ import {
 	RequestQuote,
 	commerceEvents,
 } from 'commerce-frontend-js';
-import {openToast} from 'frontend-js-components-web';
+import {openModal, openToast} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {handleOrderActionRedirect} from './orderActionRedirectHelper';
@@ -30,6 +30,7 @@ function OrderActions({
 }) {
 	const [actions, setActions] = useState([]);
 	const [currentOrder, setCurrentOrder] = useState({});
+	const [errorMessage, setErrorMessage] = useState('');
 	const [open, setOpen] = useState(isOpen);
 
 	const getActions = useCallback(
@@ -92,24 +93,53 @@ function OrderActions({
 		]
 	);
 
-	useEffect(() => {
-		getOrder(open, null, orderId).then((order) => setCurrentOrder(order));
+	const refreshOrder = useCallback(() => {
+		getOrder(open, null, orderId).then((order) => {
+			setCurrentOrder(order);
+			setErrorMessage(order?.errorMessages?.[0] || '');
+		});
 	}, [open, orderId]);
+
+	useEffect(() => refreshOrder(), [refreshOrder]);
 
 	useEffect(() => getActions({}), [getActions]);
 
 	useEffect(() => {
-		Liferay.on(commerceEvents.CART_UPDATED, getActions);
-		Liferay.on(commerceEvents.ORDER_INFORMATION_ALTERED, getActions);
+		const refreshActionsAndOrder = (event) => {
+			getActions(event);
+
+			refreshOrder();
+		};
+
+		Liferay.on(commerceEvents.CART_UPDATED, refreshActionsAndOrder);
+		Liferay.on(
+			commerceEvents.ORDER_INFORMATION_ALTERED,
+			refreshActionsAndOrder
+		);
 
 		return () => {
-			Liferay.detach(commerceEvents.CART_UPDATED, getActions);
+			Liferay.detach(commerceEvents.CART_UPDATED, refreshActionsAndOrder);
 			Liferay.detach(
 				commerceEvents.ORDER_INFORMATION_ALTERED,
-				getActions
+				refreshActionsAndOrder
 			);
 		};
-	}, [getActions]);
+	}, [getActions, refreshOrder]);
+
+	useEffect(() => {
+		if (open && errorMessage) {
+			openModal({
+				bodyHTML: errorMessage,
+				center: true,
+				containerProps: {
+					className: 'commerce-modal',
+				},
+				size: 'md',
+				status: 'warning',
+				title: Liferay.Language.get('warning'),
+			});
+		}
+	}, [errorMessage, open]);
 
 	const onClick = (event, action) => {
 		event.preventDefault();

@@ -10,8 +10,8 @@ import React, {useEffect} from 'react';
 
 import FormMappingOptions from '../../../plugins/browser/components/page_structure/components/item_configuration_panels/FormMappingOptions';
 import {config} from '../../config';
-import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
 import {useSaveFormMappingFields} from '../../contexts/FormDataContext';
+import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
 import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import {formIsMapped} from '../../utils/formIsMapped';

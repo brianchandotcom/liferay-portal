@@ -11,7 +11,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {config} from '../../../app/config';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
-import {MappingField, MappingFields} from '../../../types/MappingField';
 import {
 	useRuleValidation,
 	useScriptError,
@@ -26,6 +25,7 @@ import {CACHE_KEYS, getCacheItem, getCacheKey} from '../../../app/utils/cache';
 import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
 import useCache from '../../../app/utils/useCache';
 import {visitSelectedInputLayoutDataItems} from '../../../app/utils/visitSelectedInputLayoutDataItems';
+import {MappingField, MappingFields} from '../../../types/MappingField';
 import {State} from '../../../types/State';
 import {FragmentLayoutDataItem} from '../../../types/layout_data/FragmentLayoutDataItem';
 import {MappingFieldItem} from '../utils/useMappingFieldItems';

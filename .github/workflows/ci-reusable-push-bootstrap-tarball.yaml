@@ -17,14 +17,14 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRD}}
-                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NONPRD}}
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NON_PRODUCTION}}
+                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NON_PRODUCTION}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRD}}
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NON_PRODUCTION}}
             -   env:
-                    BOOTSTRAP_STORAGE_PATH_NONPRD: ${{vars.BOOTSTRAP_STORAGE_PATH_NONPRD}}
+                    BOOTSTRAP_STORAGE_PATH_NON_PRODUCTION: ${{vars.BOOTSTRAP_STORAGE_PATH_NON_PRODUCTION}}
                 id: vars
                 name: Set up variables
                 run: |
@@ -43,7 +43,7 @@ jobs:
 
                         echo "OBJECT_BASENAME=${object_basename}" >> ${GITHUB_ENV}
 
-                        local object_name="${BOOTSTRAP_STORAGE_PATH_NONPRD}/$(echo "${GITHUB_REF_NAME}" | tr '/' '-')/liferay-${provider}-bootstrap/${object_basename}"
+                        local object_name="${BOOTSTRAP_STORAGE_PATH_NON_PRODUCTION}/$(echo "${GITHUB_REF_NAME}" | tr '/' '-')/liferay-${provider}-bootstrap/${object_basename}"
 
                         echo "OBJECT_NAME=${object_name}" >> ${GITHUB_ENV}
                         echo "object_name=${object_name}" >> ${GITHUB_OUTPUT}
@@ -61,32 +61,30 @@ jobs:
 
                         local files
 
-                        case "${provider}" in
-                            aws)
-                                files=(
-                                    cloud/scripts/setup_aws.sh
-                                    cloud/scripts/versions_aws.tfvars
-                                    cloud/terraform/aws/eks/*
-                                    cloud/terraform/aws/gitops/platform/*
-                                    cloud/terraform/aws/gitops/resources/*
-                                    cloud/terraform/aws/grafana/*
-                                )
-                                ;;
-                            gcp)
-                                files=(
-                                    cloud/scripts/setup_gcp.sh
-                                    cloud/scripts/versions_gcp.tfvars
-                                    cloud/terraform/gcp/gitops/platform/*
-                                    cloud/terraform/gcp/gitops/resources/*
-                                    cloud/terraform/gcp/gke/*
-                                )
-                                ;;
-                            *)
-                                echo "Provider ${provider} is unsupported." >&2
+                        if [ "${provider}" == "aws" ]
+                        then
+                            files=(
+                                cloud/scripts/setup_aws.sh
+                                cloud/scripts/versions_aws.tfvars
+                                cloud/terraform/aws/eks/*
+                                cloud/terraform/aws/gitops/platform/*
+                                cloud/terraform/aws/gitops/resources/*
+                                cloud/terraform/aws/grafana/*
+                            )
+                        elif [ "${provider}" == "gcp" ]
+                        then
+                            files=(
+                                cloud/scripts/setup_gcp.sh
+                                cloud/scripts/versions_gcp.tfvars
+                                cloud/terraform/gcp/gitops/platform/*
+                                cloud/terraform/gcp/gitops/resources/*
+                                cloud/terraform/gcp/gke/*
+                            )
+                        else
+                            echo "Provider ${provider} is unsupported." >&2
 
-                                exit 1
-                                ;;
-                        esac
+                            exit 1
+                        fi
 
                         tar \
                             --create \

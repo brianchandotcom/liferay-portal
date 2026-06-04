@@ -12,22 +12,22 @@ jobs:
                 name: Authenticate to Google Cloud (Non-production)
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRD}}
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NON_PRODUCTION}}
                     token_format: access_token
-                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NONPRD}}
+                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NON_PRODUCTION}}
             -   id: auth_production
                 name: Authenticate to Google Cloud (Production)
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_PRD}}
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_PRODUCTION}}
                     token_format: access_token
-                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_PRD}}
+                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_PRODUCTION}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_PRD}}
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_PRODUCTION}}
             -   env:
-                    BOOTSTRAP_STORAGE_PATH_PRD: ${{vars.BOOTSTRAP_STORAGE_PATH_PRD}}
+                    BOOTSTRAP_STORAGE_PATH_PRODUCTION: ${{vars.BOOTSTRAP_STORAGE_PATH_PRODUCTION}}
                 name: Promote bootstrap tarball
                 run: |
                     set -o errexit
@@ -51,7 +51,7 @@ jobs:
                                 storage \
                                 cp \
                                 "/tmp/${destination_object_basename}" \
-                                "${BOOTSTRAP_STORAGE_PATH_PRD}/liferay-${{inputs.provider}}-bootstrap/${destination_object_basename}"
+                                "${BOOTSTRAP_STORAGE_PATH_PRODUCTION}/liferay-${{inputs.provider}}-bootstrap/${destination_object_basename}"
                     }
 
                     main "${@}"

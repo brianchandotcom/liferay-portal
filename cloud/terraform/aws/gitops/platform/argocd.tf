@@ -115,12 +115,18 @@ resource "helm_release" "argocd" {
 					}
 				}
 				repoServer={
+					livenessProbe={
+						timeoutSeconds=10
+					}
+					readinessProbe={
+						timeoutSeconds=10
+					}
 					resources={
 						limits={
 							memory="1.5Gi"
 						}
 						requests={
-							cpu="15m"
+							cpu="250m"
 							memory="128Mi"
 						}
 					}

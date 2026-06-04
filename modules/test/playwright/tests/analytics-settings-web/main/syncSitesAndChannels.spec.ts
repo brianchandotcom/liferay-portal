@@ -22,6 +22,7 @@ import {
 	goToSettingsStep,
 	syncAnalyticsCloud,
 	syncCommerce,
+	toggleSiteSync,
 } from './utils/analytics-settings';
 
 export const test = mergeTests(
@@ -275,6 +276,77 @@ test(
 		finally {
 			await apiHelpers.headlessCommerceAdminChannel
 				.deleteChannel(commerceChannel.id)
+				.catch(() => {});
+		}
+	}
+);
+
+test(
+	'Assigned channels and sites are counted on the property after syncing',
+	{
+		tag: '@LRAC-12574',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		const commerceChannel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'commerce' + getRandomString(),
+				siteGroupId: site.id,
+			});
+
+		const siteB = await apiHelpers.headlessAdminSite.postSite({
+			name: 'siteB' + getRandomString(),
+		});
+
+		try {
+			await syncAnalyticsCloud({
+				apiHelpers,
+				channel,
+				page,
+				project,
+				siteName: site.name,
+			});
+
+			await goToSettingsStep({page, stepName: 'Properties'});
+
+			// Assign a second site and a commerce channel to the property
+
+			await toggleSiteSync({
+				channelName: channel.name,
+				page,
+				siteName: siteB.name,
+			});
+
+			await enableCommerceChannel({channelName: channel.name, page});
+
+			await syncCommerce({
+				channelName: channel.name,
+				commerceChannelName: commerceChannel.name,
+				page,
+			});
+
+			// One channel and two sites are counted
+
+			await expectPropertyColumn({
+				channelName: channel.name,
+				expectedValue: '1',
+				index: PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
+				page,
+			});
+
+			await expectPropertyColumn({
+				channelName: channel.name,
+				expectedValue: '2',
+				index: PROPERTY_SITE_COLUMN_INDEX,
+				page,
+			});
+		}
+		finally {
+			await apiHelpers.headlessCommerceAdminChannel
+				.deleteChannel(commerceChannel.id)
+				.catch(() => {});
+
+			await apiHelpers.headlessAdminSite
+				.deleteSite(siteB.externalReferenceCode)
 				.catch(() => {});
 		}
 	}

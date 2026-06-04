@@ -1,19 +1,23 @@
-@import 'cadmin-variables';
+@import 'atlas-custom-properties/_variables';
 
 .side-navigation-container {
 	--skeleton-shimmer-color: 247, 248, 249;
 
 	input:not(:focus-within) {
-		background-image: clay-icon(search, $cadmin-secondary);
+		background-image: clay-icon(search, #6b6c7e);
 		background-position: 15px;
 		background-repeat: no-repeat;
 		background-size: 16px;
 		padding-left: 40px;
+
+		@media (prefers-color-scheme: dark) {
+			background-image: clay-icon(search, #a2a2b9);
+		}
 	}
 
 	.c-slideout-start .sidebar-light {
-		background-color: $cadmin-light-l1;
-		border-right: 0.5px solid $cadmin-secondary-l0;
+		background-color: $light-l1;
+		border-right: 0.5px solid $secondary-l0;
 		box-shadow: none;
 
 		&.skeleton {

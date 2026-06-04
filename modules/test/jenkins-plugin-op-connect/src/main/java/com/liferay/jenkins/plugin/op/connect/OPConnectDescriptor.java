@@ -256,6 +256,6 @@ public class OPConnectDescriptor
 	private long _refreshIntervalMinutes = 60;
 	private transient volatile List<String> _secretValues =
 		Collections.emptyList();
-	private final List<String> _vaultNames = new ArrayList<>();
+	private List<String> _vaultNames = new ArrayList<>();
 
 }

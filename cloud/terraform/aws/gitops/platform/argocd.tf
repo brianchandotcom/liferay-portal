@@ -116,9 +116,11 @@ resource "helm_release" "argocd" {
 				}
 				repoServer={
 					livenessProbe={
+						periodSeconds=15
 						timeoutSeconds=10
 					}
 					readinessProbe={
+						periodSeconds=15
 						timeoutSeconds=10
 					}
 					resources={

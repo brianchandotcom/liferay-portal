@@ -180,7 +180,8 @@ public class YMLStylingCheck extends BaseFileCheck {
 			String replacement = StringUtil.replaceFirst(
 				matcher.group(), description, newDescription);
 
-			matcher.appendReplacement(sb, replacement);
+			matcher.appendReplacement(
+				sb, Matcher.quoteReplacement(replacement));
 		}
 
 		matcher.appendTail(sb);

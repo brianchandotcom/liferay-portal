@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -75,10 +75,10 @@ public class HeapDumpCloudUploader {
 			return;
 		}
 
-		String yearMonth = LocalDate.now(
-		).format(
-			DateTimeFormatter.ofPattern("yyyy-MM")
-		);
+		LocalDate localDate = LocalDate.now();
+
+		String yearMonth = localDate.format(
+			DateTimeFormatter.ofPattern("yyyy-MM"));
 
 		String key = JenkinsResultsParserUtil.combine(
 			"heap-dumps/", yearMonth, "/", _masterHostname, "/", _jobName, "/",
@@ -91,8 +91,10 @@ public class HeapDumpCloudUploader {
 		File gzippedFile = new File(file.getAbsolutePath() + ".gz");
 
 		try (FileInputStream fileInputStream = new FileInputStream(file);
+
 			FileOutputStream fileOutputStream = new FileOutputStream(
 				gzippedFile);
+
 			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
 				fileOutputStream) {
 
@@ -111,7 +113,7 @@ public class HeapDumpCloudUploader {
 		catch (IOException ioException) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"ERROR: Failed to gzip heap dump ", file.getAbsolutePath(),
+					"ERROR: Unable to gzip heap dump ", file.getAbsolutePath(),
 					": ", ioException.getMessage()));
 
 			return null;

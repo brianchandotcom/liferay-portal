@@ -1,0 +1,9 @@
+[#assign
+	restGetSample = restClient.get("/o/headless-delivery/v1.0/sites/0/site-pages?fields=taxonomyCategoryBriefs")
+]
+
+[#if (restGetSample.taxonomyCategoryBriefs)??]
+	${restGetSample.taxonomyCategoryBriefs}
+[/#if]
+
+<h1>Sample</h1>

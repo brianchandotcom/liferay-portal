@@ -57,7 +57,7 @@ public class AuthorizationTokenResourceImpl
 						OAuth2Application oAuth2Application =
 							_oAuth2ApplicationLocalService.
 								getOAuth2ApplicationByExternalReferenceCode(
-									"AI-HUB-CELL-OAUTH2-APPLICATION",
+									"AI-HUB-CELL",
 									contextCompany.getCompanyId());
 
 						return AIHubCellUserTokenWebCacheItem.get(

@@ -557,7 +557,7 @@ test(
 			);
 
 			await expect(
-				shareModal.getByText(/Who Can See This View/)
+				shareModal.getByText(/Who Can Use This View/)
 			).toBeVisible();
 		});
 

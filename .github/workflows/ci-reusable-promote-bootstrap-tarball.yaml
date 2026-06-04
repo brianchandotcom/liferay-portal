@@ -13,14 +13,12 @@ jobs:
                 uses: google-github-actions/auth@v3
                 with:
                     project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRODUCTION}}
-                    token_format: access_token
                     workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NONPRODUCTION}}
             -   id: auth_production
                 name: Authenticate to Google Cloud (Production)
                 uses: google-github-actions/auth@v3
                 with:
                     project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_PRODUCTION}}
-                    token_format: access_token
                     workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_PRODUCTION}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
@@ -39,14 +37,14 @@ jobs:
 
                         destination_object_basename=$(basename "${{inputs.source_object_name}}")
 
-                        CLOUDSDK_AUTH_ACCESS_TOKEN="${{steps.auth_nonproduction.outputs.access_token}}" \
+                        CLOUDSDK_AUTH_ACCESS_TOKEN="${{steps.auth_nonproduction.outputs.auth_token}}" \
                             gcloud \
                                 storage \
                                 cp \
                                 "${{inputs.source_object_name}}" \
                                 "/tmp/${destination_object_basename}"
 
-                        CLOUDSDK_AUTH_ACCESS_TOKEN="${{steps.auth_production.outputs.access_token}}" \
+                        CLOUDSDK_AUTH_ACCESS_TOKEN="${{steps.auth_production.outputs.auth_token}}" \
                             gcloud \
                                 storage \
                                 cp \

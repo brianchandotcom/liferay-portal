@@ -6,6 +6,13 @@
 package com.liferay.message.boards.comment.internal;
 
 import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
@@ -14,6 +21,9 @@ import com.liferay.portal.kernel.comment.BaseDiscussionPermission;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -138,7 +148,8 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 				CommentGroupServiceConfiguration.class, message.getCompanyId(),
 				message.getGroupId());
 
-		if (commentGroupServiceConfiguration.alwaysEditableByOwner() &&
+		if ((commentGroupServiceConfiguration.alwaysEditableByOwner() ||
+			 _isSpaceDepotEntry(message)) &&
 			(permissionChecker.getUserId() == message.getUserId())) {
 
 			return true;
@@ -160,8 +171,57 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 			className, message.getClassPK(), actionId);
 	}
 
+	private boolean _isSpaceDepotEntry(MBMessage message) {
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, message.getClassName());
+
+		if (infoItemObjectProvider == null) {
+			return false;
+		}
+
+		try {
+			Object infoItem = infoItemObjectProvider.getInfoItem(
+				new ClassPKInfoItemIdentifier(message.getClassPK()));
+
+			if (!(infoItem instanceof GroupedModel)) {
+				return false;
+			}
+
+			GroupedModel groupedModel = (GroupedModel)infoItem;
+
+			DepotEntry depotEntry =
+				_depotEntryLocalService.fetchGroupDepotEntry(
+					groupedModel.getGroupId());
+
+			if ((depotEntry != null) &&
+				(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+
+			return false;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MBDiscussionPermissionImpl.class);
+
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private MBBanLocalService _mbBanLocalService;

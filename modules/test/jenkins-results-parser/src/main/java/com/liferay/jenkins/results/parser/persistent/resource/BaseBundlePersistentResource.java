@@ -382,9 +382,9 @@ public abstract class BaseBundlePersistentResource
 
 		String key = sb.toString();
 
-		Properties startProperties = getStartProperties();
-
 		BuildDatabase buildDatabase = getBuildDatabase();
+
+		Properties startProperties = getStartProperties();
 
 		buildDatabase.putProperties(key, startProperties, true);
 
@@ -460,26 +460,23 @@ public abstract class BaseBundlePersistentResource
 
 		JenkinsResultsParserUtil.sleep(_REDISPATCH_VERIFY_TIME);
 
-		JSONObject verifyDataJSONObject = getDataJSONObject();
+		JSONObject dataJSONObject = getDataJSONObject();
 
-		if (verifyDataJSONObject != null) {
-			String winningControllerBuildURL = verifyDataJSONObject.optString(
+		if (dataJSONObject != null) {
+			String controllerBuildURL = dataJSONObject.optString(
 				"controller_build_url");
 
-			if (!Objects.equals(
-					currentTopLevelBuildURL, winningControllerBuildURL)) {
-
+			if (!Objects.equals(currentTopLevelBuildURL, controllerBuildURL)) {
 				print(
-					"Following redispatched bundles at " +
-						winningControllerBuildURL);
+					"Following redispatched bundles at " + controllerBuildURL);
 
-				setControllerBuildURL(winningControllerBuildURL);
+				setControllerBuildURL(controllerBuildURL);
 				setProducerBuildURL(
-					verifyDataJSONObject.optString("producer_build_url"));
+					dataJSONObject.optString("producer_build_url"));
 				setProducerJenkinsMaster(null);
 
-				String producerJenkinsMasterName =
-					verifyDataJSONObject.optString("producer_jenkins_master");
+				String producerJenkinsMasterName = dataJSONObject.optString(
+					"producer_jenkins_master");
 
 				if (!JenkinsResultsParserUtil.isNullOrEmpty(
 						producerJenkinsMasterName)) {
@@ -488,20 +485,17 @@ public abstract class BaseBundlePersistentResource
 						JenkinsMaster.getInstance(producerJenkinsMasterName));
 				}
 
-				setProducerQueueId(
-					verifyDataJSONObject.optLong("producer_queue_id"));
-				setStatus(
-					Status.valueOf(verifyDataJSONObject.getString("status")));
+				setProducerQueueId(dataJSONObject.optLong("producer_queue_id"));
+				setStatus(Status.valueOf(dataJSONObject.getString("status")));
 
-				_redispatchAttempts = verifyDataJSONObject.optInt(
+				_redispatchAttempts = dataJSONObject.optInt(
 					"redispatch_attempts", _redispatchAttempts);
 
-				JSONArray winnerRedispatchHistoryJSONArray =
-					verifyDataJSONObject.optJSONArray("redispatch_history");
+				JSONArray redispatchHistoryJSONArray =
+					dataJSONObject.optJSONArray("redispatch_history");
 
-				if (winnerRedispatchHistoryJSONArray != null) {
-					_redispatchHistoryJSONArray =
-						winnerRedispatchHistoryJSONArray;
+				if (redispatchHistoryJSONArray != null) {
+					_redispatchHistoryJSONArray = redispatchHistoryJSONArray;
 				}
 
 				return;

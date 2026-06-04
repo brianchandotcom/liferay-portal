@@ -23,6 +23,7 @@ import org.mockito.Mockito;
 
 /**
  * @author Feliphe Marinho
+ * @author Lucas Miranda
  */
 public class LiferayWebSearchContentRetrieverTest {
 

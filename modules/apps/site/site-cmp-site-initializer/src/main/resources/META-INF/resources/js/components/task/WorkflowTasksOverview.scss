@@ -1,0 +1,34 @@
+@import 'atlas-variables';
+
+.lfr-cmp__workflow-tasks-overview-container {
+	margin-bottom: 0.75rem;
+	margin-top: 1.5rem;
+
+	.statistic-card {
+		align-items: center;
+		display: flex;
+		padding-bottom: 0.25rem;
+		padding-top: 0.25rem;
+
+		.statistic-card__body {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.statistic-card__count {
+			font-size: $h5-font-size;
+			font-weight: $font-weight-bold;
+		}
+
+		.statistic-card__icon {
+			display: inline-flex;
+			font-size: 1.5rem;
+			margin-right: $spacer;
+		}
+
+		.statistic-card__label {
+			color: $secondary;
+			font-size: $h6-font-size;
+		}
+	}
+}

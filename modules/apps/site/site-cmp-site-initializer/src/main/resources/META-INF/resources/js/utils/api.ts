@@ -7,6 +7,29 @@ import {ApiHelper} from '@liferay/site-cms-site-initializer';
 
 import {ITask} from './types';
 
+type WorkflowTaskAssignee = {
+	assignableUsers: Array<{id: number; name: string}>;
+	workflowTaskId: number;
+};
+
+export async function bulkAssignWorkflowTasks(
+	assignments: Array<{assigneeId: number; workflowTaskId: number}>
+) {
+	return ApiHelper.patch(
+		assignments,
+		'/o/headless-admin-workflow/v1.0/workflow-tasks/assign-to-user'
+	);
+}
+
+export async function bulkUpdateWorkflowTaskDueDate(
+	updates: Array<{dueDate: string; workflowTaskId: number}>
+) {
+	return ApiHelper.patch(
+		updates,
+		'/o/headless-admin-workflow/v1.0/workflow-tasks/update-due-date'
+	);
+}
+
 export async function deleteTaskById({taskId}: {taskId: string}) {
 	return await ApiHelper.delete(`/o/cmp/tasks/${taskId}`);
 }
@@ -21,6 +44,16 @@ export async function getAllStates() {
 	return await ApiHelper.get(
 		'/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/L_CMP_STATES/list-type-entries'
 	);
+}
+
+export async function getAssignableUsersForWorkflowTasks(
+	workflowTaskIds: number[]
+) {
+	return ApiHelper.post<{
+		workflowTaskAssignableUsers: WorkflowTaskAssignee[];
+	}>('/o/headless-admin-workflow/v1.0/workflow-tasks/assignable-users', {
+		workflowTaskIds,
+	});
 }
 
 export async function getStateObjectField() {

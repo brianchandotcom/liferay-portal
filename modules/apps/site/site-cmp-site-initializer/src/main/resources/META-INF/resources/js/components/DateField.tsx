@@ -12,7 +12,7 @@ import type {FirstDayOfWeekLocale} from 'frontend-js-web';
 
 interface IDateField {
 	id: string;
-	onChange: (value: string) => Promise<void>;
+	onChange: (value: string) => Promise<void> | void;
 }
 
 export const dateConfig = datetimeUtils.generateDateConfigurations({

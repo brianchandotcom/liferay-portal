@@ -39,40 +39,19 @@ jobs:
 
                     main "${@}"
             -   name: Run unit tests
-                run: |
-                    set -o errexit
-                    set -o nounset
-                    set -o pipefail
-
-                    function main {
-                        local test_files
-
-                        test_files=$(ls "cloud/helm/${{matrix.chart}}/tests/"*_test.yaml 2>/dev/null || echo "")
-
-                        if [ "${test_files}" ]
-                        then
-                            mkdir --parents cloud/test-reports
-
-                            helm unittest \
-                                --output-file "cloud/test-reports/helm-unittest-${{matrix.chart}}.xml" \
-                                --output-type JUnit \
-                                "cloud/helm/${{matrix.chart}}"
-                        fi
-                    }
-
-                    main "${@}"
+                run: cloud/scripts/tests/run_helm_tests.sh
             -   name: Upload test reports
-                if: ${{!cancelled() && hashFiles(format('cloud/test-reports/helm-unittest-{0}.xml', matrix.chart)) != ''}}
+                if: ${{!cancelled() && hashFiles(format('cloud/scripts/tests/test-reports/helm-unittest-{0}.xml', matrix.chart)) != ''}}
                 uses: actions/upload-artifact@v4
                 with:
                     name: helm-test-reports-${{matrix.chart}}
-                    path: cloud/test-reports/helm-unittest-${{matrix.chart}}.xml
+                    path: cloud/scripts/tests/test-reports/helm-unittest-${{matrix.chart}}.xml
             -   name: Publish test report
-                if: ${{!cancelled() && hashFiles(format('cloud/test-reports/helm-unittest-{0}.xml', matrix.chart)) != ''}}
+                if: ${{!cancelled() && hashFiles(format('cloud/scripts/tests/test-reports/helm-unittest-{0}.xml', matrix.chart)) != ''}}
                 uses: dorny/test-reporter@v2
                 with:
                     name: Helm unit tests (${{matrix.chart}})
-                    path: cloud/test-reports/helm-unittest-${{matrix.chart}}.xml
+                    path: cloud/scripts/tests/test-reports/helm-unittest-${{matrix.chart}}.xml
                     reporter: java-junit
         strategy:
             fail-fast: false
@@ -91,6 +70,7 @@ on:
         paths:
             -   .github/workflows/ci-test-cloud-helm-chart.yaml
             -   cloud/helm/**
+            -   cloud/scripts/tests/**
     push:
         branches:
             -   master

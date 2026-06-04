@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
  * @author Rubén Pulido
  * @author Thiago Buarque
  */
-@FeatureFlag("LPD-56718")
+@FeatureFlag("LPD-57283")
 @RunWith(Arquillian.class)
 public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 

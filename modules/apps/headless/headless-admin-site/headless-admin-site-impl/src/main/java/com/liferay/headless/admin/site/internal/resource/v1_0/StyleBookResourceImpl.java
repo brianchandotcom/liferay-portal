@@ -189,7 +189,7 @@ public class StyleBookResourceImpl extends BaseStyleBookResourceImpl {
 
 	private void _checkFeatureFlag() {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-56718")) {
+				contextCompany.getCompanyId(), "LPD-57283")) {
 
 			throw new UnsupportedOperationException();
 		}

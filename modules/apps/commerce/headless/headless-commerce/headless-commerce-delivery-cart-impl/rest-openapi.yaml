@@ -535,7 +535,7 @@ components:
                     type: string
                 errorMessages:
                     description:
-                        Validation messages collected during cart-level validation. Each message names a missing or invalid field.
+                        Validation messages collected during cart-level validation. Each message names a missing or invalid field. Populated when a single cart is fetched, created, or updated, when a coupon code is applied, and on a failed checkout. Omitted in cart list responses.
                     example:
                     -   Billing address is required.
                     -   Shipping method is required.
@@ -718,7 +718,7 @@ components:
                     type: boolean
                 valid:
                     description:
-                        Aggregate validation flag -- true when no cart-level error messages and no item-level errors are present. Read-only.
+                        Aggregate validation flag. True when no cart-level error messages and no item-level errors are present. Populated when a single cart is fetched, created, or updated, when a coupon code is applied, and when the cart is checked out. Omitted in cart list responses. Read-only.
                     example: true
                     readOnly: true
                     type: boolean

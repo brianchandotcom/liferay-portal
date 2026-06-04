@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+function main {
+    local script_dir
+    script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+    local cloud_dir
+    cloud_dir=$(cd "${script_dir}/../.." && pwd)
+
+    local charts=(
+        aws
+        aws-infrastructure
+        aws-infrastructure-provider
+        aws-marketplace
+        default
+        gcp
+        gcp-infrastructure
+        gcp-infrastructure-provider
+    )
+
+    for chart in "${charts[@]}"
+    do
+        helm dependency update --skip-refresh "${cloud_dir}/helm/${chart}"
+
+        helm template liferay "${cloud_dir}/helm/${chart}" | \
+            kubeconform --strict --summary \
+                -schema-location default \
+                -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+                -skip ClusterProviderConfig,LiferayInfrastructure
+    done
+}
+
+main "${@}"

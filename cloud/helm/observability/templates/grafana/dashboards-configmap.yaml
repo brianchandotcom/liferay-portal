@@ -1,0 +1,78 @@
+{{- $folder := .Values.dashboards.folder -}}
+{{- $datasourceUid := include "observability.datasourceUid" . -}}
+{{- $namespace := include "observability.namespace" . -}}
+{{- $items := deepCopy .Values.dashboards.items -}}
+{{- $region := "" -}}
+{{- with .Values.aws -}}
+{{- $region = (.region | default "") -}}
+{{- end -}}
+{{- if eq .Values.cloudProvider "aws" -}}
+{{- if hasKey $items "backups" -}}
+{{- $_ := set (index $items "backups") "file" "dashboards/backups-aws.json" -}}
+{{- end -}}
+{{- end -}}
+{{- $activeTileStyle := "ch-tile" -}}
+{{- $mutedTileStyle := "ch-tile-muted" -}}
+{{- $argocdHref := "#" -}}
+{{- $argocdDescription := "Set centralHub.argocdURL in your values.yaml to enable this link." -}}
+{{- $argocdTileStyle := $mutedTileStyle -}}
+{{- if .Values.centralHub.argocdURL -}}
+{{- $argocdHref = .Values.centralHub.argocdURL -}}
+{{- $argocdDescription = "GitOps & Delivery." -}}
+{{- $argocdTileStyle = $activeTileStyle -}}
+{{- end -}}
+{{- $argoWfHref := "#" -}}
+{{- $argoWfDescription := "Set centralHub.argoWorkflowsURL in your values.yaml to enable this link." -}}
+{{- $argoWfTileStyle := $mutedTileStyle -}}
+{{- if .Values.centralHub.argoWorkflowsURL -}}
+{{- $argoWfHref = .Values.centralHub.argoWorkflowsURL -}}
+{{- $argoWfDescription = "Workflow automation." -}}
+{{- $argoWfTileStyle = $activeTileStyle -}}
+{{- end -}}
+{{- $gitHref := "#" -}}
+{{- $gitDescription := "Set centralHub.gitURL in your values.yaml to enable this link." -}}
+{{- $gitTileStyle := $mutedTileStyle -}}
+{{- if .Values.centralHub.gitURL -}}
+{{- $gitHref = .Values.centralHub.gitURL -}}
+{{- $gitDescription = "Source code history." -}}
+{{- $gitTileStyle = $activeTileStyle -}}
+{{- end -}}
+{{- $dashboardHeaders := dict
+    "backups" (dict "title" "Backups" "subtitle" "Backup history and status across the platform.")
+    "databases" (dict "title" "Database Health" "subtitle" "Database instance health and operational metrics.")
+    "kubernetes-workloads" (dict "title" "Kubernetes Workloads" "subtitle" "Performance and resource metrics across pods.")
+    "load-balancers" (dict "title" "Load Balancer Metrics" "subtitle" "Traffic analysis and envoy health monitoring.")
+-}}
+{{- range $key, $entry := $items }}
+{{- if not (eq $entry.enabled false) }}
+{{- $raw := $.Files.Get $entry.file -}}
+{{- if not $raw -}}
+{{- fail (printf "Dashboard file %s not found in chart" $entry.file) -}}
+{{- end -}}
+{{- $rendered := $raw | replace "${DS_PROMETHEUS}" $datasourceUid | replace "${region}" $region -}}
+{{- if hasKey $dashboardHeaders $key -}}
+{{- $rendered = $rendered | replace "\"${HEADER_HTML}\"" (tpl ($.Files.Get "dashboards/html/dashboard-header.html") (index $dashboardHeaders $key) | toJson) -}}
+{{- end -}}
+{{- if and (eq $key "backups") (eq $.Values.cloudProvider "aws") -}}
+{{- $rendered = $rendered | replace "\"${AWS_BACKUP_HTML}\"" (tpl ($.Files.Get "dashboards/html/aws-backup.html") (dict "region" $.Values.aws.region) | toJson) -}}
+{{- end -}}
+{{- if eq $key "central-hub" -}}
+{{- $centralHubCtx := dict "gitHref" $gitHref "gitDescription" $gitDescription "gitTileStyle" $gitTileStyle "argocdHref" $argocdHref "argocdDescription" $argocdDescription "argocdTileStyle" $argocdTileStyle "argoWfHref" $argoWfHref "argoWfDescription" $argoWfDescription "argoWfTileStyle" $argoWfTileStyle -}}
+{{- $rendered = $rendered | replace "\"${CENTRAL_HUB_HTML}\"" (tpl ($.Files.Get "dashboards/html/central-hub.html") $centralHubCtx | toJson) -}}
+{{- end }}
+---
+apiVersion: v1
+data:
+    {{ $key }}.json: |
+        {{- $rendered | nindent 8 }}
+kind: ConfigMap
+metadata:
+    annotations:
+        grafana_folder: {{ $folder | quote }}
+    labels:
+        {{- include "observability.labels" $ | nindent 8 }}
+        grafana_dashboard: "true"
+    name: {{ printf "%s-dashboard-%s" (include "observability.fullname" $) $key | trunc 63 | trimSuffix "-" | quote }}
+    namespace: {{ $namespace | quote }}
+{{- end }}
+{{- end }}

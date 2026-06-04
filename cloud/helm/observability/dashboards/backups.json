@@ -1,0 +1,637 @@
+{
+	"annotations": {
+		"list": [
+			{
+				"builtIn": 1,
+				"datasource": {
+					"type": "grafana",
+					"uid": "-- Grafana --"
+				},
+				"enable": true,
+				"hide": true,
+				"iconColor": "rgba(0, 211, 255, 1)",
+				"name": "Annotations & Alerts",
+				"type": "dashboard"
+			}
+		]
+	},
+	"editable": true,
+	"fiscalYearStartMonth": 0,
+	"graphTooltip": 0,
+	"links": [
+	],
+	"panels": [
+		{
+			"fieldConfig": {
+				"defaults": {
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 5,
+				"w": 24,
+				"x": 0,
+				"y": 0
+			},
+			"id": 1,
+			"options": {
+				"code": {
+					"language": "plaintext",
+					"showLineNumbers": false,
+					"showMiniMap": false
+				},
+				"content": "${HEADER_HTML}",
+				"mode": "html"
+			},
+			"pluginVersion": "12.4.2",
+			"title": "",
+			"transparent": true,
+			"type": "text"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "thresholds"
+					},
+					"custom": {
+						"align": "auto",
+						"cellOptions": {
+							"type": "auto"
+						},
+						"filterable": true,
+						"footer": {
+							"reducers": [
+							]
+						},
+						"inspect": false
+					},
+					"mappings": [
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "red",
+								"value": 0
+							},
+							{
+								"color": "green",
+								"value": 1
+							}
+						]
+					}
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byType",
+							"options": "time"
+						},
+						"properties": [
+							{
+								"id": "custom.filterable"
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "Status"
+						},
+						"properties": [
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"options": {
+											"0": {
+												"index": 1,
+												"text": "🔴 Not Ready"
+											},
+											"0.5": {
+												"index": 2,
+												"text": "🟡 In Progress"
+											},
+											"1": {
+												"index": 0,
+												"text": "🟢 Ready"
+											}
+										},
+										"type": "value"
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"gridPos": {
+				"h": 16,
+				"w": 15,
+				"x": 0,
+				"y": 5
+			},
+			"id": 3,
+			"options": {
+				"cellHeight": "sm",
+				"showHeader": true,
+				"sortBy": [
+					{
+						"desc": false,
+						"displayName": "Started"
+					}
+				]
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"editorMode": "code",
+					"exemplar": false,
+					"expr": "avg by (name) (avg_over_time({\"__name__\"=\"kube_customresource_liferay_backup_start_time_seconds\", \"exported_namespace\"=\"$environment\"}[$__range])) * 1000",
+					"format": "table",
+					"instant": true,
+					"legendFormat": "__auto",
+					"range": false,
+					"refId": "started"
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${DS_PROMETHEUS}"
+					},
+					"editorMode": "code",
+					"exemplar": false,
+					"expr": "avg by (name) (avg_over_time({\"__name__\"=\"kube_customresource_liferay_backup_completion_time_seconds\", \"exported_namespace\"=\"$environment\"}[$__range])) * 1000",
+					"format": "table",
+					"instant": true,
+					"legendFormat": "__auto",
+					"range": false,
+					"refId": "finished"
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${DS_PROMETHEUS}"
+					},
+					"editorMode": "code",
+					"exemplar": false,
+					"expr": "(\n  avg by (name, reason) (\n    avg_over_time(kube_customresource_liferay_backup_status_condition{reason!=\"initiated\", exported_namespace=\"$environment\"}[$__range])\n  )\n)\nOR\n(\n  (\n    avg by (name, reason) (\n      avg_over_time(kube_customresource_liferay_backup_status_condition{reason=\"initiated\", exported_namespace=\"$environment\"}[$__range])\n    )\n    unless on(name)\n    avg by (name) (\n      avg_over_time(kube_customresource_liferay_backup_status_condition{reason!=\"initiated\", exported_namespace=\"$environment\"}[$__range])\n    )\n  ) + 0.5\n)",
+					"format": "table",
+					"instant": true,
+					"legendFormat": "__auto",
+					"range": false,
+					"refId": "status"
+				}
+			],
+			"title": "Backups",
+			"transformations": [
+				{
+					"id": "joinByField",
+					"options": {
+						"byField": "name",
+						"mode": "outerTabular"
+					}
+				},
+				{
+					"id": "convertFieldType",
+					"options": {
+						"conversions": [
+							{
+								"destinationType": "time",
+								"targetField": "Value #started"
+							},
+							{
+								"destinationType": "time",
+								"targetField": "Value #finished"
+							}
+						],
+						"fields": {
+						}
+					}
+				},
+				{
+					"id": "organize",
+					"options": {
+						"excludeByName": {
+							"Time 1": true,
+							"Time 2": true,
+							"Time 3": true
+						},
+						"includeByName": {
+						},
+						"indexByName": {
+							"Time 1": 5,
+							"Time 2": 6,
+							"Time 3": 7,
+							"Value #finished": 2,
+							"Value #started": 1,
+							"Value #status": 3,
+							"name": 0,
+							"reason": 4
+						},
+						"renameByName": {
+							"Value #A": "",
+							"Value #finished": "Finished",
+							"Value #started": "Started",
+							"Value #status": "Status",
+							"name": "Backup",
+							"reason": "Reason"
+						}
+					}
+				}
+			],
+			"type": "table"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "thresholds"
+					},
+					"mappings": [
+						{
+							"options": {
+								"match": "null",
+								"result": {
+									"index": 0,
+									"text": "N/A"
+								}
+							},
+							"type": "special"
+						}
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							}
+						]
+					},
+					"unit": "none"
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 6,
+				"w": 3,
+				"x": 15,
+				"y": 5
+			},
+			"id": 4,
+			"options": {
+				"colorMode": "background",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "horizontal",
+				"percentChangeColorMode": "standard",
+				"reduceOptions": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"fields": "",
+					"values": false
+				},
+				"showPercentChange": false,
+				"textMode": "auto",
+				"wideLayout": true
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${DS_PROMETHEUS}"
+					},
+					"disableTextWrap": false,
+					"editorMode": "code",
+					"exemplar": false,
+					"expr": "count(\n  max by (name) (\n    max_over_time(\n      kube_customresource_liferay_backup_status_condition{reason=\"succeeded\", exported_namespace=\"$environment\"}[$__range]\n    )\n  )\n)",
+					"format": "table",
+					"fullMetaSearch": false,
+					"includeNullMetadata": true,
+					"instant": true,
+					"legendFormat": "__auto",
+					"range": false,
+					"refId": "A",
+					"useBackend": false
+				}
+			],
+			"title": "SUCCESS RUNS #",
+			"type": "stat"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "thresholds"
+					},
+					"mappings": [
+						{
+							"options": {
+								"match": "null",
+								"result": {
+									"index": 0,
+									"text": "N/A"
+								}
+							},
+							"type": "special"
+						}
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							}
+						]
+					},
+					"unit": "none"
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 6,
+				"w": 3,
+				"x": 18,
+				"y": 5
+			},
+			"id": 5,
+			"options": {
+				"colorMode": "background",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "horizontal",
+				"percentChangeColorMode": "standard",
+				"reduceOptions": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"fields": "",
+					"values": false
+				},
+				"showPercentChange": false,
+				"textMode": "auto",
+				"wideLayout": true
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${DS_PROMETHEUS}"
+					},
+					"disableTextWrap": false,
+					"editorMode": "code",
+					"exemplar": false,
+					"expr": "count(\n  max by (name) (\n    max_over_time(\n      kube_customresource_liferay_backup_status_condition{reason!~\"succeeded|initiated\", exported_namespace=\"$environment\"}[$__range]\n    )\n  )\n)",
+					"format": "table",
+					"fullMetaSearch": false,
+					"includeNullMetadata": true,
+					"instant": true,
+					"legendFormat": "__auto",
+					"range": false,
+					"refId": "A",
+					"useBackend": false
+				}
+			],
+			"title": "FAILED RUNS #",
+			"type": "stat"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "thresholds"
+					},
+					"mappings": [
+						{
+							"options": {
+								"match": "null",
+								"result": {
+									"index": 0,
+									"text": "N/A"
+								}
+							},
+							"type": "special"
+						}
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							}
+						]
+					},
+					"unit": "none"
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 6,
+				"w": 3,
+				"x": 21,
+				"y": 5
+			},
+			"id": 6,
+			"options": {
+				"colorMode": "background",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "horizontal",
+				"percentChangeColorMode": "standard",
+				"reduceOptions": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"fields": "",
+					"values": false
+				},
+				"showPercentChange": false,
+				"textMode": "auto",
+				"wideLayout": true
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${DS_PROMETHEUS}"
+					},
+					"disableTextWrap": false,
+					"editorMode": "code",
+					"exemplar": false,
+					"expr": "count(\n  max by (name) (\n    max_over_time(\n      kube_customresource_liferay_backup_status_condition{reason!=\"initiated\", exported_namespace=\"$environment\"}[$__range]\n    )\n  )\n)",
+					"format": "table",
+					"fullMetaSearch": false,
+					"includeNullMetadata": true,
+					"instant": true,
+					"legendFormat": "__auto",
+					"range": false,
+					"refId": "A",
+					"useBackend": false
+				}
+			],
+			"title": "TOTAL RUNS #",
+			"type": "stat"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${DS_PROMETHEUS}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "thresholds"
+					},
+					"mappings": [
+						{
+							"options": {
+								"match": "null",
+								"result": {
+									"index": 0,
+									"text": "N/A"
+								}
+							},
+							"type": "special"
+						}
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": 0
+							},
+							{
+								"color": "orange",
+								"value": ""
+							},
+							{
+								"color": "red",
+								"value": 16
+							}
+						]
+					},
+					"unit": "percent"
+				},
+				"overrides": [
+				]
+			},
+			"gridPos": {
+				"h": 10,
+				"w": 9,
+				"x": 15,
+				"y": 11
+			},
+			"id": 7,
+			"options": {
+				"minVizHeight": 75,
+				"minVizWidth": 75,
+				"orientation": "auto",
+				"reduceOptions": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"fields": "",
+					"values": false
+				},
+				"showThresholdLabels": false,
+				"showThresholdMarkers": true,
+				"sizing": "auto"
+			},
+			"pluginVersion": "12.4.2",
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${DS_PROMETHEUS}"
+					},
+					"editorMode": "code",
+					"exemplar": false,
+					"expr": "count(\n  max by (name) (\n    max_over_time(\n      kube_customresource_liferay_backup_status_condition{reason!~\"succeeded|initiated\", exported_namespace=\"$environment\"}[$__range]\n    )\n  )\n)\n/\ncount(\n  max by (name) (\n    max_over_time(\n      kube_customresource_liferay_backup_status_condition{reason!=\"initiated\", exported_namespace=\"$environment\"}[$__range]\n    )\n  )\n) * 100",
+					"format": "table",
+					"instant": true,
+					"legendFormat": "__auto",
+					"range": false,
+					"refId": "A"
+				}
+			],
+			"title": "Build Failure Rate",
+			"type": "gauge"
+		}
+	],
+	"preload": false,
+	"schemaVersion": 42,
+	"tags": [
+		"Liferay",
+		"Backups"
+	],
+	"templating": {
+		"list": [
+			{
+				"allowCustomValue": false,
+				"current": {
+					"text": "",
+					"value": ""
+				},
+				"datasource": {
+					"type": "prometheus",
+					"uid": "${DS_PROMETHEUS}"
+				},
+				"definition": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
+				"label": "Environment",
+				"name": "environment",
+				"options": [
+				],
+				"query": {
+					"qryType": 1,
+					"query": "label_values(kube_namespace_labels{label_liferay_com_observable=\"true\"},namespace)",
+					"refId": "PrometheusVariableQueryEditor-VariableQuery"
+				},
+				"refresh": 1,
+				"regex": "/(?<value>.*-(?<text>.*))/",
+				"regexApplyTo": "value",
+				"sort": 1,
+				"type": "query"
+			}
+		]
+	},
+	"time": {
+		"from": "now-7d",
+		"to": "now"
+	},
+	"timepicker": {
+	},
+	"timezone": "browser",
+	"title": "Backups",
+	"uid": "backups",
+	"version": 1,
+	"weekStart": ""
+}

@@ -22,7 +22,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,21 +49,15 @@ public class SiteTemplateResourceImpl extends BaseSiteTemplateResourceImpl {
 				QueryUtil.ALL_POS, null);
 
 		if (ArrayUtil.isNotEmpty(excludedSiteExternalReferenceCodes)) {
-			List<LayoutSetPrototype> filteredLayoutSetPrototypes =
-				new ArrayList<>();
+			layoutSetPrototypes = ListUtil.filter(
+				layoutSetPrototypes,
+				layoutSetPrototype -> {
+					Group group = layoutSetPrototype.getGroup();
 
-			for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-				Group group = layoutSetPrototype.getGroup();
-
-				if (!ArrayUtil.contains(
+					return !ArrayUtil.contains(
 						excludedSiteExternalReferenceCodes,
-						group.getExternalReferenceCode())) {
-
-					filteredLayoutSetPrototypes.add(layoutSetPrototype);
-				}
-			}
-
-			layoutSetPrototypes = filteredLayoutSetPrototypes;
+						group.getExternalReferenceCode());
+				});
 		}
 
 		return Page.of(

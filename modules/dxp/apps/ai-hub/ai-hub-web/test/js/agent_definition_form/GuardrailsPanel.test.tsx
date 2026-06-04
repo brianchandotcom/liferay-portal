@@ -10,7 +10,7 @@ import React from 'react';
 import GuardrailsPanel from '../../../src/main/resources/META-INF/resources/js/agent_definition_form/GuardrailsPanel';
 
 import type {RelationshipPicker} from '../../../src/main/resources/META-INF/resources/js/agent_definition_form/hooks/useRelationshipPicker';
-import type {ModelArmorTemplate} from '../../../src/main/resources/META-INF/resources/js/agent_definition_form/types/ModelArmorTemplate';
+import type {Guardrail} from '../../../src/main/resources/META-INF/resources/js/agent_definition_form/types/Guardrail';
 
 jest.mock('@clayui/multi-select', () => {
 	const React = require('react');
@@ -95,8 +95,8 @@ jest.mock('@clayui/multi-select', () => {
 };
 
 function buildPicker(
-	overrides: Partial<RelationshipPicker<ModelArmorTemplate>> = {}
-): RelationshipPicker<ModelArmorTemplate> {
+	overrides: Partial<RelationshipPicker<Guardrail>> = {}
+): RelationshipPicker<Guardrail> {
 	return {
 		inputValue: '',
 		reset: jest.fn(),
@@ -119,9 +119,7 @@ describe('GuardrailsPanel', () => {
 			sourceList: [{externalReferenceCode: 'MAT_1', title: 'Guard A'}],
 		});
 
-		render(
-			<GuardrailsPanel modelArmorTemplates={picker} readOnly={false} />
-		);
+		render(<GuardrailsPanel guardrails={picker} readOnly={false} />);
 
 		fireEvent.click(screen.getByTestId('add-MAT_1'));
 
@@ -138,9 +136,7 @@ describe('GuardrailsPanel', () => {
 			],
 		});
 
-		render(
-			<GuardrailsPanel modelArmorTemplates={picker} readOnly={false} />
-		);
+		render(<GuardrailsPanel guardrails={picker} readOnly={false} />);
 
 		fireEvent.click(screen.getByTestId('remove-MAT_1'));
 
@@ -150,12 +146,7 @@ describe('GuardrailsPanel', () => {
 	});
 
 	it('disables the multi-select when readOnly is true', () => {
-		render(
-			<GuardrailsPanel
-				modelArmorTemplates={buildPicker()}
-				readOnly={true}
-			/>
-		);
+		render(<GuardrailsPanel guardrails={buildPicker()} readOnly={true} />);
 
 		expect(
 			screen.getByTestId('multi-select-input-assignedGuardrails')
@@ -170,21 +161,14 @@ describe('GuardrailsPanel', () => {
 			],
 		});
 
-		render(
-			<GuardrailsPanel modelArmorTemplates={picker} readOnly={false} />
-		);
+		render(<GuardrailsPanel guardrails={picker} readOnly={false} />);
 
 		expect(screen.getByText('Guard A')).toBeInTheDocument();
 		expect(screen.getByText('Guard B')).toBeInTheDocument();
 	});
 
 	it('renders the title and assigned-guardrails label', () => {
-		render(
-			<GuardrailsPanel
-				modelArmorTemplates={buildPicker()}
-				readOnly={false}
-			/>
-		);
+		render(<GuardrailsPanel guardrails={buildPicker()} readOnly={false} />);
 
 		expect(screen.getByText('guardrails')).toBeInTheDocument();
 		expect(screen.getByText('assigned-guardrails')).toBeInTheDocument();

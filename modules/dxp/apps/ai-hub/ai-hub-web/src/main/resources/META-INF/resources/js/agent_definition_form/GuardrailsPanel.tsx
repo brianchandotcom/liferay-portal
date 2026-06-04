@@ -8,14 +8,14 @@ import ClayPanel from '@clayui/panel';
 import React from 'react';
 
 import {RelationshipPicker} from './hooks/useRelationshipPicker';
-import {ModelArmorTemplate} from './types/ModelArmorTemplate';
+import {Guardrail} from './types/Guardrail';
 
 interface IProps {
-	modelArmorTemplates: RelationshipPicker<ModelArmorTemplate>;
+	guardrails: RelationshipPicker<Guardrail>;
 	readOnly: boolean;
 }
 
-const GuardrailsPanel: React.FC<IProps> = ({modelArmorTemplates, readOnly}) => {
+const GuardrailsPanel: React.FC<IProps> = ({guardrails, readOnly}) => {
 	return (
 		<ClayPanel
 			className="agent-definition-form-guardrails"
@@ -35,20 +35,18 @@ const GuardrailsPanel: React.FC<IProps> = ({modelArmorTemplates, readOnly}) => {
 					allowsCustomLabel={false}
 					disabled={readOnly}
 					inputName="assignedGuardrails"
-					items={modelArmorTemplates.selected}
+					items={guardrails.selected}
 					loadingState={4}
 					locator={{
 						label: 'title',
 						value: 'externalReferenceCode',
 					}}
-					onChange={modelArmorTemplates.setInputValue}
+					onChange={guardrails.setInputValue}
 					onItemsChange={(items) =>
-						modelArmorTemplates.setSelected(
-							items as ModelArmorTemplate[]
-						)
+						guardrails.setSelected(items as Guardrail[])
 					}
-					sourceItems={modelArmorTemplates.sourceList}
-					value={modelArmorTemplates.inputValue}
+					sourceItems={guardrails.sourceList}
+					value={guardrails.inputValue}
 				/>
 			</ClayPanel.Body>
 		</ClayPanel>

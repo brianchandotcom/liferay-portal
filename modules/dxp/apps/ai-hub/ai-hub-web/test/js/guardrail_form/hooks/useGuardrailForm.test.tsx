@@ -5,22 +5,19 @@
 
 import {act, renderHook, waitFor} from '@testing-library/react';
 
-import {useModelArmorTemplateForm} from '../../../../src/main/resources/META-INF/resources/js/model_armor_template_form/hooks/useModelArmorTemplateForm';
+import {useGuardrailForm} from '../../../../src/main/resources/META-INF/resources/js/guardrail_form/hooks/useGuardrailForm';
 
-const mockGetModelArmorTemplate = jest.fn();
-const mockPostModelArmorTemplate = jest.fn();
-const mockPutModelArmorTemplate = jest.fn();
+const mockGetGuardrail = jest.fn();
+const mockPostGuardrail = jest.fn();
+const mockPutGuardrail = jest.fn();
 const mockOpenToast = jest.fn();
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/model_armor_template_form/services/ModelArmorTemplateService',
+	'../../../../src/main/resources/META-INF/resources/js/guardrail_form/services/GuardrailService',
 	() => ({
-		getModelArmorTemplate: (...args: any[]) =>
-			mockGetModelArmorTemplate(...args),
-		postModelArmorTemplate: (...args: any[]) =>
-			mockPostModelArmorTemplate(...args),
-		putModelArmorTemplate: (...args: any[]) =>
-			mockPutModelArmorTemplate(...args),
+		getGuardrail: (...args: any[]) => mockGetGuardrail(...args),
+		postGuardrail: (...args: any[]) => mockPostGuardrail(...args),
+		putGuardrail: (...args: any[]) => mockPutGuardrail(...args),
 	})
 );
 
@@ -34,13 +31,13 @@ jest.mock('@liferay/object-js-components-web', () => ({
 	},
 };
 
-function renderModelArmorHook({
+function renderGuardrailHook({
 	externalReferenceCode = '',
 }: {
 	externalReferenceCode?: string;
 } = {}) {
 	return renderHook(() =>
-		useModelArmorTemplateForm({
+		useGuardrailForm({
 			externalReferenceCode,
 		})
 	);
@@ -48,12 +45,12 @@ function renderModelArmorHook({
 
 describe('fetch lifecycle', () => {
 	beforeEach(() => {
-		mockGetModelArmorTemplate.mockReset();
+		mockGetGuardrail.mockReset();
 		mockOpenToast.mockReset();
 	});
 
 	it('loads the template and replaces values on mount in edit mode', async () => {
-		mockGetModelArmorTemplate.mockResolvedValueOnce({
+		mockGetGuardrail.mockResolvedValueOnce({
 			active: false,
 			description: 'Loaded from API',
 			externalReferenceCode: 'TEMPLATE_X',
@@ -70,7 +67,7 @@ describe('fetch lifecycle', () => {
 			title_i18n: {en_US: 'Loaded Title'},
 		});
 
-		const {result} = renderModelArmorHook({
+		const {result} = renderGuardrailHook({
 			externalReferenceCode: 'TEMPLATE_X',
 		});
 
@@ -86,9 +83,9 @@ describe('fetch lifecycle', () => {
 	});
 
 	it('shows an error toast when the fetch rejects', async () => {
-		mockGetModelArmorTemplate.mockRejectedValueOnce(new Error('Boom'));
+		mockGetGuardrail.mockRejectedValueOnce(new Error('Boom'));
 
-		renderModelArmorHook({externalReferenceCode: 'TEMPLATE_X'});
+		renderGuardrailHook({externalReferenceCode: 'TEMPLATE_X'});
 
 		await waitFor(() => {
 			expect(mockOpenToast).toHaveBeenCalledWith(
@@ -101,25 +98,25 @@ describe('fetch lifecycle', () => {
 	});
 
 	it('skips the fetch when externalReferenceCode is empty', async () => {
-		renderModelArmorHook({externalReferenceCode: ''});
+		renderGuardrailHook({externalReferenceCode: ''});
 
 		await waitFor(() => {
-			expect(mockGetModelArmorTemplate).not.toHaveBeenCalled();
+			expect(mockGetGuardrail).not.toHaveBeenCalled();
 		});
 	});
 });
 
-describe('useModelArmorTemplateForm', () => {
+describe('useGuardrailForm', () => {
 	beforeEach(() => {
-		mockGetModelArmorTemplate.mockReset();
-		mockPostModelArmorTemplate.mockReset();
-		mockPutModelArmorTemplate.mockReset();
+		mockGetGuardrail.mockReset();
+		mockPostGuardrail.mockReset();
+		mockPutGuardrail.mockReset();
 		mockOpenToast.mockReset();
 	});
 
 	describe('initial values', () => {
 		it('applies sensible defaults for picker and boolean fields', () => {
-			const {result} = renderModelArmorHook();
+			const {result} = renderGuardrailHook();
 
 			expect(result.current.values.active).toBe(true);
 			expect(result.current.values.guardrailType).toBe('');
@@ -133,7 +130,7 @@ describe('useModelArmorTemplateForm', () => {
 
 	describe('setField', () => {
 		it('preserves type safety across boolean fields', async () => {
-			const {result} = renderModelArmorHook();
+			const {result} = renderGuardrailHook();
 
 			await act(async () => {
 				result.current.setField('multilanguageDetectionEnabled', true);
@@ -145,7 +142,7 @@ describe('useModelArmorTemplateForm', () => {
 		});
 
 		it('updates one field without touching the rest', async () => {
-			const {result} = renderModelArmorHook();
+			const {result} = renderGuardrailHook();
 
 			await act(async () => {
 				result.current.setField('title_i18n', {en_US: 'New Title'});
@@ -161,11 +158,11 @@ describe('useModelArmorTemplateForm', () => {
 
 	describe('submit', () => {
 		it("surfaces the thrown error's message in a danger toast", async () => {
-			mockPostModelArmorTemplate.mockRejectedValueOnce(
+			mockPostGuardrail.mockRejectedValueOnce(
 				new Error('External reference code already in use')
 			);
 
-			const {result} = renderModelArmorHook();
+			const {result} = renderGuardrailHook();
 
 			await act(async () => {
 				result.current.setField('title_i18n', {
@@ -189,9 +186,9 @@ describe('useModelArmorTemplateForm', () => {
 		});
 
 		it('falls back to the localized error when the thrown error has no message', async () => {
-			mockPostModelArmorTemplate.mockRejectedValueOnce(new Error());
+			mockPostGuardrail.mockRejectedValueOnce(new Error());
 
-			const {result} = renderModelArmorHook();
+			const {result} = renderGuardrailHook();
 
 			await act(async () => {
 				result.current.setField('title_i18n', {
@@ -214,12 +211,12 @@ describe('useModelArmorTemplateForm', () => {
 			});
 		});
 
-		it('calls postModelArmorTemplate in create mode', async () => {
-			mockPostModelArmorTemplate.mockResolvedValueOnce({
+		it('calls postGuardrail in create mode', async () => {
+			mockPostGuardrail.mockResolvedValueOnce({
 				externalReferenceCode: 'TEMPLATE_X',
 			});
 
-			const {result} = renderModelArmorHook();
+			const {result} = renderGuardrailHook();
 
 			await act(async () => {
 				result.current.setField('title_i18n', {
@@ -233,10 +230,10 @@ describe('useModelArmorTemplateForm', () => {
 			});
 
 			await waitFor(() => {
-				expect(mockPostModelArmorTemplate).toHaveBeenCalled();
+				expect(mockPostGuardrail).toHaveBeenCalled();
 			});
 
-			expect(mockPutModelArmorTemplate).not.toHaveBeenCalled();
+			expect(mockPutGuardrail).not.toHaveBeenCalled();
 			expect(mockOpenToast).toHaveBeenCalledWith(
 				expect.objectContaining({
 					message: 'guardrail-saved-successfully',
@@ -245,8 +242,8 @@ describe('useModelArmorTemplateForm', () => {
 			);
 		});
 
-		it('calls putModelArmorTemplate in edit mode', async () => {
-			mockGetModelArmorTemplate.mockResolvedValueOnce({
+		it('calls putGuardrail in edit mode', async () => {
+			mockGetGuardrail.mockResolvedValueOnce({
 				active: true,
 				description: '',
 				externalReferenceCode: 'TEMPLATE_X',
@@ -263,11 +260,11 @@ describe('useModelArmorTemplateForm', () => {
 				sdpFilterEnabled: false,
 				title_i18n: {en_US: 'My Template'},
 			});
-			mockPutModelArmorTemplate.mockResolvedValueOnce({
+			mockPutGuardrail.mockResolvedValueOnce({
 				externalReferenceCode: 'TEMPLATE_X',
 			});
 
-			const {result} = renderModelArmorHook({
+			const {result} = renderGuardrailHook({
 				externalReferenceCode: 'TEMPLATE_X',
 			});
 
@@ -282,10 +279,10 @@ describe('useModelArmorTemplateForm', () => {
 			});
 
 			await waitFor(() => {
-				expect(mockPutModelArmorTemplate).toHaveBeenCalled();
+				expect(mockPutGuardrail).toHaveBeenCalled();
 			});
 
-			expect(mockPostModelArmorTemplate).not.toHaveBeenCalled();
+			expect(mockPostGuardrail).not.toHaveBeenCalled();
 			expect(mockOpenToast).toHaveBeenCalledWith(
 				expect.objectContaining({
 					message: 'guardrail-saved-successfully',
@@ -297,7 +294,7 @@ describe('useModelArmorTemplateForm', () => {
 
 	describe('validate', () => {
 		it('clears errors once required fields are filled', async () => {
-			const {result} = renderModelArmorHook();
+			const {result} = renderGuardrailHook();
 
 			await act(async () => {
 				result.current.handleSubmit();
@@ -307,7 +304,7 @@ describe('useModelArmorTemplateForm', () => {
 				expect(result.current.errors.title_i18n).toBe('required');
 			});
 
-			mockPostModelArmorTemplate.mockResolvedValueOnce({
+			mockPostGuardrail.mockResolvedValueOnce({
 				externalReferenceCode: 'TEMPLATE_X',
 			});
 
@@ -331,7 +328,7 @@ describe('useModelArmorTemplateForm', () => {
 		});
 
 		it('flags missing required fields on submit', async () => {
-			const {result} = renderModelArmorHook();
+			const {result} = renderGuardrailHook();
 
 			await act(async () => {
 				result.current.setField('externalReferenceCode', '');
@@ -348,8 +345,8 @@ describe('useModelArmorTemplateForm', () => {
 				);
 			});
 
-			expect(mockPostModelArmorTemplate).not.toHaveBeenCalled();
-			expect(mockPutModelArmorTemplate).not.toHaveBeenCalled();
+			expect(mockPostGuardrail).not.toHaveBeenCalled();
+			expect(mockPutGuardrail).not.toHaveBeenCalled();
 		});
 	});
 });

@@ -9,7 +9,7 @@ export {default as ChatbotItemTitlePropsTransformer} from './chatbot_item_title/
 export {default as ListTitlePropsTransformer} from './components/listTitlePropsTransformer';
 export {default as ConfigurationForm} from './configuration_form/ConfigurationForm';
 export {default as ContentRetrieverForm} from './content_retriever_form/ContentRetrieverForm';
+export {default as GuardrailForm} from './guardrail_form/GuardrailForm';
 export {default as HomeDashboard} from './home_dashboard/HomeDashboard';
 export {default as InstructionDefinitionForm} from './instruction_definition_form/InstructionDefinitionForm';
 export {default as InstructionDefinitionItemTitlePropsTransformer} from './instruction_definition_item_title/InstructionDefinitionItemTitlePropsTransformer';
-export {default as ModelArmorTemplateForm} from './model_armor_template_form/ModelArmorTemplateForm';

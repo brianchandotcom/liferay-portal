@@ -13,6 +13,8 @@ String refreshCaptchaId = PortalUtil.generateRandomKey(request, "refreshCaptchaI
 
 String errorMessage = (String)request.getAttribute("liferay-captcha:captcha:errorMessage");
 String url = (String)request.getAttribute("liferay-captcha:captcha:url");
+
+String namespace = portletDisplay.getNamespace();
 %>
 
 <c:if test="<%= captchaEnabled %>">
@@ -43,10 +45,10 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 		/>
 
 		<aui:input name="captchaId" type="hidden" value="<%= captchaId %>" />
-		<aui:input aria-labelledby="<portlet:namespace />captchaLabel <portlet:namespace />captchaError" class="form-control" ignoreRequestValue="<%= true %>" label="text-verification" name="captchaText" required="<%= true %>" size="10" type="text" value="" />
+		<aui:input aria-labelledby='<%= namespace + "captchaLabel " + namespace + "captchaError" %>' class="form-control" ignoreRequestValue="<%= true %>" label="text-verification" name="captchaText" required="<%= true %>" size="10" type="text" value="" />
 
 		<c:if test="<%= Validator.isNotNull(errorMessage) %>">
-			<p class="font-weight-semi-bold mt-1 text-danger" id="<portlet:namespace />captchaError">
+			<p class="font-weight-semi-bold mt-1 text-danger" id="<%= namespace %>captchaError">
 				<clay:icon
 					symbol="info-circle"
 				/>

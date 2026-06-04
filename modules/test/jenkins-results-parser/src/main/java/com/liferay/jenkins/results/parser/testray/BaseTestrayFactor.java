@@ -12,28 +12,35 @@ import org.json.JSONObject;
  */
 public abstract class BaseTestrayFactor implements TestrayFactor {
 
+	@Override
 	public Category getCategory() {
 		return _category;
 	}
 
+	@Override
 	public Long getID() {
-		return _jsonObject.getLong("id");
+		JSONObject jsonObject = getJSONObject();
+
+		return jsonObject.getLong("id");
 	}
 
+	@Override
 	public JSONObject getJSONObject() {
 		return _jsonObject;
 	}
 
-	public String getName() {
-		return _jsonObject.getString("name");
-	}
-
+	@Override
 	public Option getOption() {
 		return _option;
 	}
 
+	@Override
 	public TestrayServer getTestrayServer() {
 		return _testrayServer;
+	}
+
+	protected BaseTestrayFactor(TestrayServer testrayServer) {
+		_testrayServer = testrayServer;
 	}
 
 	protected BaseTestrayFactor(
@@ -45,22 +52,24 @@ public abstract class BaseTestrayFactor implements TestrayFactor {
 		JSONObject categoryJSONObject = jsonObject.getJSONObject(
 			"factorCategoryToFactors");
 
-		_category = new Category(categoryJSONObject);
+		_category = TestrayFactory.newTestrayFactorCategory(
+			_testrayServer, categoryJSONObject);
 
 		JSONObject optionJSONObject = jsonObject.optJSONObject(
 			"factorOptionToFactors");
 
 		if (optionJSONObject != null) {
-			_option = new Option(optionJSONObject);
+			_option = TestrayFactory.newTestrayFactorOption(
+				_testrayServer, optionJSONObject);
 		}
 		else {
 			_option = null;
 		}
 	}
 
-	private final Category _category;
-	private final JSONObject _jsonObject;
-	private final Option _option;
+	private Category _category;
+	private JSONObject _jsonObject;
+	private Option _option;
 	private final TestrayServer _testrayServer;
 
 }

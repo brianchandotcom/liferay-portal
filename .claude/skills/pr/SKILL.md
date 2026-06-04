@@ -25,19 +25,13 @@ Create a GitHub PR for the current branch, transition the linked Jira ticket to 
 
 The current Git branch must contain the commits ready to ship.
 
-### Jira Ticket
+### Jira Tickets
 
-Resolve a ticket key in priority order:
-
-1. **User Argument** — when `${ARGUMENTS}` supplies a ticket key, prefer that value.
-
-1. **Branch Name** — extract the ticket from the current branch (e.g., branch `LPD-83847` yields ticket `LPD-83847`).
-
-1. **Recent Commits** — when neither produces a ticket, scan recent commit messages for a ticket prefix.
-
-1. **Fallback** — when nothing surfaces, prompt the user.
+A branch may span more than one ticket. Resolve the **ticket set** — every ticket the PR touches. All tickets are transitioned, given the PR URL, and listed in the PR body. The PR title is prefixed with the branch-name ticket, or the first ticket in the set when the branch name carries none.
 
 The ticket key follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and similar forms (uppercase letters, hyphen, digits).
+
+Collect every distinct ticket key from the subjects of the branch's commits relative to `master`. Each subject is prefixed with its ticket (`LPD-12345 <subject>`); extract every distinct key, in commit order (oldest first). When no commit carries a ticket, prompt the user for one.
 
 ### Target Repository
 
@@ -72,13 +66,13 @@ Push the current branch to the user's remote when it has not been pushed yet or 
 
 ### Pull Request
 
-The title is concise (under 72 characters) and prefixed with the Jira ticket:
+The title is concise (under 72 characters) and prefixed with the title ticket (the branch-name ticket, or the first ticket in the set):
 
 ```
 LPD-83847 Fix OutOfMemoryError during batch engine import
 ```
 
-The body follows this format:
+The body follows this format, with one `browse` link per ticket in the set:
 
 ```markdown
 https://liferay.atlassian.net/browse/TICKET-ID
@@ -131,9 +125,11 @@ gh pr create \
 rm "${body_file}"
 ```
 
-### Transitioned Jira Ticket
+### Transitioned Jira Tickets
 
-Fetch the input ticket (issue type, status, subtasks) and resolve the **target ticket** — the one whose status reflects active work and on which the PR URL is recorded:
+Apply the steps below to **every ticket in the ticket set**, recording the outcome per ticket and continuing on failure.
+
+For each ticket, fetch it (issue type, status, subtasks) and resolve the **target ticket** — the one whose status reflects active work and on which the PR URL is recorded:
 
 | Ticket Type | Target |
 | --- | --- |
@@ -161,6 +157,8 @@ Set the **Git Pull Request** field (`customfield_10201`) on the target ticket to
 
 ### Existing Pull Request
 
+This handling applies per target ticket, while recording the PR URL above.
+
 When the **Git Pull Request** field already holds one or more PR URLs, ask the user whether the new PR **supersedes** the existing one or is **added** alongside it.
 
 When the user chooses **supersede**:
@@ -179,5 +177,5 @@ When the user chooses **add**:
 
 Report back to the user with:
 
-- The Jira ticket status and link.
+- Each ticket in the set, with its resulting status and link.
 - The PR URL.

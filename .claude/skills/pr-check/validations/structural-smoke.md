@@ -2,49 +2,62 @@
 
 ## Trigger
 
-Always, except when every diff path matches `*.md`, `.claude/**`, `.editorconfig`, `.gitattributes`, `.github/**`, `.gitignore`, `.project`, `Language*.properties`, `cloud/**`, or `workspaces/**` — no smoke assertion reads these paths, so a failure would only signal baseline drift in the checkout.
+Runs when the diff touches a file one of the three scanners reads; see **Selection** for the path-to-scanner mapping.
 
 ## Match
 
-`!\.md$|^\.(claude/|editorconfig$|gitattributes$|github/|gitignore$|project$)|/Language(_[a-zA-Z_]+)?\.properties$|^(cloud|workspaces)/`
+`/configuration/.*Configuration\.java$|^portal-impl/src/portal-osgi-configuration\.properties$|^lib/|^\.classpath$|\.iml$|^\.idea/|/nbproject/project\.(properties|xml)$|\.gradle$|(^|/)(bnd|app)\.bnd$|^modules/.+/\.gitignore$|^modules/.+/README\.md$|portal-log4j(-ext)?\.xml$|\.lfrbuild|^\.github/`
 
 ## Command
 
-A fixed five-class set: `ConfigurationEnvBuilderTest`, `LibraryReferenceTest`, `Log4jConfigUtilTest`, `ModulesStructureTest`, `SampleSQLBuilderTest`.
+### Install Portal Snapshots
 
-The five tests live in three places: two in `portal-impl/test/unit`, two in `portal-kernel/test/unit`, and one in `modules/util/portal-tools-sample-sql-builder`. Run **three** invocations, not five — each invocation forks a single JUnit JVM that runs every class matching its include pattern in one batch:
+Run before the scanners:
 
 ```bash
-(cd "${REPO_ROOT}/portal-impl" && ant test-class -Dtest.class="ConfigurationEnvBuilderTest.class **/Log4jConfigUtilTest")
+(cd "${REPO_ROOT}" && ant compile install-portal-snapshots)
+```
+
+### Selection
+
+Run only the scanners whose inputs the diff touches:
+
+| Diff Touches | Run |
+| --- | --- |
+| `*Configuration.java` under a `configuration` package, or `portal-impl/src/portal-osgi-configuration.properties` | `ConfigurationEnvBuilderTest` |
+| `lib/**`, `.classpath`, `*.iml`, `.idea/**`, `nbproject/project.{properties,xml}` | `LibraryReferenceTest` |
+| `*.gradle`, `bnd.bnd`, `app.bnd`, a module `.gitignore` or `README.md`, `portal-log4j*.xml`, `.lfrbuild*`, `.github/**` | `ModulesStructureTest` |
+
+### Scanners
+
+Run the selected scanners:
+
+```bash
+(cd "${REPO_ROOT}/portal-impl" && ant test-class -Dtest.class="ConfigurationEnvBuilderTest")
 ```
 
 ```bash
-(cd "${REPO_ROOT}/portal-kernel" && ant test-class -Dtest.class="LibraryReferenceTest.class **/ModulesStructureTest")
+(cd "${REPO_ROOT}/portal-kernel" && ant test-class -Dtest.class="LibraryReferenceTest")
 ```
 
 ```bash
-"${REPO_ROOT}/gradlew" \
-	--continue \
-	--project-dir "${REPO_ROOT}/modules" \
-	--tests "*.SampleSQLBuilderTest" \
-	-Dtest.ignore.failures=false \
-	:util:portal-tools-sample-sql-builder:test
+(cd "${REPO_ROOT}/portal-kernel" && ant test-class -Dtest.class="ModulesStructureTest")
 ```
-
-The `ant test-class` target in `build-common.xml` evaluates `test.includes="**/${test.class}.class"`, and Ant filesets accept space-separated patterns inside that attribute, so passing two classes in one invocation works. The first argument includes the `.class` suffix (so `**/${test.class}.class` expands to `**/ConfigurationEnvBuilderTest.class`); the second argument starts with `**/`, so the second pattern reads `**/Log4jConfigUtilTest.class` after the `.class` suffix is appended. This collapses five JVM forks down to three.
 
 ## Checklist
 
+One subitem per selected scanner:
+
 ```
-- [ ] portal-impl: ConfigurationEnvBuilderTest + Log4jConfigUtilTest
-- [ ] portal-kernel: LibraryReferenceTest + ModulesStructureTest
-- [ ] modules :util:portal-tools-sample-sql-builder: SampleSQLBuilderTest
+- [ ] portal-impl: ConfigurationEnvBuilderTest
+- [ ] portal-kernel: LibraryReferenceTest
+- [ ] portal-kernel: ModulesStructureTest
 ```
 
 ## Notes
 
-Do not pick these classes again when computing **Java Unit Tests** — they are already covered here.
+Only these three scanners belong here. Do not add `Log4jConfigUtilTest` or `SampleSQLBuilderTest` — they do not run in CI, and **Java Unit Tests** skips them.
 
 ## Time Estimate
 
-~2-3 min.
+~1-2 min for the scanners, plus the `install-portal-snapshots` build (fast when already built, a few minutes on a fresh checkout).

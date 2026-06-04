@@ -43,14 +43,6 @@ public class OPConnectDescriptor
 		refreshSecretValues();
 	}
 
-	public boolean containsVaultName(String vaultName) {
-		if ((_vaultNames != null) && _vaultNames.contains(vaultName)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public FormValidation doTestConnection(
 		@QueryParameter("connectURL") String connectURL,
 		@QueryParameter("accessToken") String accessToken) {
@@ -120,9 +112,7 @@ public class OPConnectDescriptor
 			return "Never";
 		}
 
-		return new Date(
-			_lastRefreshTime
-		).toString();
+		return String.valueOf(new Date(_lastRefreshTime));
 	}
 
 	public long getRefreshIntervalMinutes() {
@@ -157,10 +147,12 @@ public class OPConnectDescriptor
 		}
 	}
 
-	public void refreshSecretValues() {
-		if (!_isConfigured() || (_vaultNames == null) ||
-			_vaultNames.isEmpty()) {
+	public boolean hasVaultName(String vaultName) {
+		return _vaultNames.contains(vaultName);
+	}
 
+	public void refreshSecretValues() {
+		if (!_isConfigured() || _vaultNames.isEmpty()) {
 			_secretValues = Collections.emptyList();
 
 			_lastRefreshTime = System.currentTimeMillis();
@@ -200,10 +192,17 @@ public class OPConnectDescriptor
 			_lastRefreshTime = System.currentTimeMillis();
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Successfully connected to 1Password Connect at " +
-						_connectURL + " and loaded " + _secretValues.size() +
-							" values from " + _vaultNames.size() + " vaults");
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Successfully connected to 1Password Connect at ");
+				sb.append(_connectURL);
+				sb.append(" and loaded ");
+				sb.append(_secretValues.size());
+				sb.append(" values from ");
+				sb.append(_vaultNames.size());
+				sb.append(" vaults");
+
+				_log.info(sb.toString());
 			}
 		}
 		catch (IOException ioException) {
@@ -257,6 +256,6 @@ public class OPConnectDescriptor
 	private long _refreshIntervalMinutes = 60;
 	private transient volatile List<String> _secretValues =
 		Collections.emptyList();
-	private List<String> _vaultNames = new ArrayList<>();
+	private final List<String> _vaultNames = new ArrayList<>();
 
 }

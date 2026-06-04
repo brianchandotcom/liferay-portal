@@ -55,9 +55,9 @@ public class OPConnectConsoleLogFilter
 	}
 
 	private Pattern _getSecretValuesPattern() {
-		List<String> secretValues = new ArrayList<>();
-
 		List<String> ignoredValues = OPConnectUtil.getIgnoredValues();
+
+		List<String> secretValues = new ArrayList<>();
 
 		for (String secretValue : OPConnectUtil.getSecretValues()) {
 			if (secretValue == null) {
@@ -133,12 +133,10 @@ public class OPConnectConsoleLogFilter
 
 			Matcher matcher = _pattern.matcher(line);
 
-			line = matcher.replaceAll(_MASK);
+			line = matcher.replaceAll("[REDACTED]");
 
 			_outputStream.write(line.getBytes(StandardCharsets.UTF_8));
 		}
-
-		private static final String _MASK = "[REDACTED]";
 
 		private final OutputStream _outputStream;
 		private final Pattern _pattern;

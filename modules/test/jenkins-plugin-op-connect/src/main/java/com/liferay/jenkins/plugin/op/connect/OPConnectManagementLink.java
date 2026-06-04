@@ -31,11 +31,11 @@ import org.kohsuke.stapler.StaplerResponse;
 @Extension
 public class OPConnectManagementLink extends ManagementLink {
 
-	public void doOpConnectConfiguration(
+	public void doOPConnectConfiguration(
 			StaplerRequest staplerRequest, StaplerResponse staplerResponse)
 		throws IOException, ServletException {
 
-		OPConnectDescriptor opConnectDescriptor = getOpConnectDescriptor();
+		OPConnectDescriptor opConnectDescriptor = getOPConnectDescriptor();
 
 		if (opConnectDescriptor == null) {
 			return;
@@ -113,7 +113,7 @@ public class OPConnectManagementLink extends ManagementLink {
 	@Override
 	public String getDescription() {
 		return "Connect to a 1Password Connect server and hide the values of " +
-			"a chosen vault in build logs";
+			"a chosen vault in build logs.";
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class OPConnectManagementLink extends ManagementLink {
 		return "clipboard.png";
 	}
 
-	public OPConnectDescriptor getOpConnectDescriptor() {
+	public OPConnectDescriptor getOPConnectDescriptor() {
 		Jenkins jenkins = Jenkins.getInstanceOrNull();
 
 		if (jenkins == null) {

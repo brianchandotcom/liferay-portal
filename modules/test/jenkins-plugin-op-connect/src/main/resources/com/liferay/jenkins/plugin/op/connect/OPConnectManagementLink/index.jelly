@@ -43,7 +43,7 @@
 					<f:entry title="Ignored Values (one per line)">
 						<f:textarea name="ignoredValues" value="${it.opConnectDescriptor.getIgnoredValuesString()}" />
 					</f:entry>
-					<f:entry title="Refresh Interval (minutes, 0 to disable)">
+					<f:entry title="Refresh Interval (Minutes, 0 to Disable)">
 						<f:number name="refreshIntervalMinutes" value="${it.opConnectDescriptor.getRefreshIntervalMinutes()}" />
 					</f:entry>
 					<div class="op-connect-last-refreshed">

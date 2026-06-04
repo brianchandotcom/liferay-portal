@@ -5,27 +5,27 @@
 
 package com.liferay.ai.hub.rest.manager.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.ModelArmorTemplate;
+import com.liferay.ai.hub.rest.dto.v1_0.Guardrail;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 /**
  * @author João Victor Alves
  */
-public interface ModelArmorTemplateManager {
+public interface GuardrailManager {
 
-	public void deleteModelArmorTemplate(
+	public void deleteGuardrail(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode)
 		throws Exception;
 
-	public ModelArmorTemplate postModelArmorTemplate(
+	public Guardrail postGuardrail(
 			long companyId, DTOConverterContext dtoConverterContext,
-			ModelArmorTemplate modelArmorTemplate)
+			Guardrail guardrail)
 		throws Exception;
 
-	public ModelArmorTemplate putModelArmorTemplate(
+	public Guardrail putGuardrail(
 			long companyId, DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ModelArmorTemplate modelArmorTemplate)
+			String externalReferenceCode, Guardrail guardrail)
 		throws Exception;
 
 }

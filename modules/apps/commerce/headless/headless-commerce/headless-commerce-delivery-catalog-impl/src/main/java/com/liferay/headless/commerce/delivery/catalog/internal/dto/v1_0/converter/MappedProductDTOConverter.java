@@ -143,6 +143,22 @@ public class MappedProductDTOConverter
 						cpInstance.getCPInstanceId());
 		}
 
+		BigDecimal defaultQuantity;
+		String defaultUnitOfMeasureKey;
+
+		if (cpInstanceUnitOfMeasures.isEmpty()) {
+			defaultQuantity = BigDecimal.ONE;
+			defaultUnitOfMeasureKey = StringPool.BLANK;
+		}
+		else {
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				cpInstanceUnitOfMeasures.get(0);
+
+			defaultQuantity =
+				cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
+			defaultUnitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
+		}
+
 		return new MappedProduct() {
 			{
 				setActions(mappedProductDTOConverterContext::getActions);
@@ -150,15 +166,6 @@ public class MappedProductDTOConverter
 					() -> {
 						if (cpInstance == null) {
 							return null;
-						}
-
-						String unitOfMeasureKey = StringPool.BLANK;
-
-						if (!cpInstanceUnitOfMeasures.isEmpty()) {
-							CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-								cpInstanceUnitOfMeasures.get(0);
-
-							unitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
 						}
 
 						return _getAvailability(
@@ -169,7 +176,7 @@ public class MappedProductDTOConverter
 								cpInstance.getGroupId()),
 							cpInstance,
 							mappedProductDTOConverterContext.getLocale(),
-							cpInstance.getSku(), unitOfMeasureKey);
+							cpInstance.getSku(), defaultUnitOfMeasureKey);
 					});
 				setFirstAvailableReplacementMappedProduct(
 					() -> {
@@ -208,25 +215,10 @@ public class MappedProductDTOConverter
 					});
 				setId(csDiagramEntry::getCSDiagramEntryId);
 				setPrice(
-					() -> {
-						String unitOfMeasureKey = StringPool.BLANK;
-						BigDecimal priceQuantity = BigDecimal.ONE;
-
-						if (!cpInstanceUnitOfMeasures.isEmpty()) {
-							CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-								cpInstanceUnitOfMeasures.get(0);
-
-							priceQuantity =
-								cpInstanceUnitOfMeasure.
-									getIncrementalOrderQuantity();
-							unitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
-						}
-
-						return _getPrice(
-							commerceContext, cpInstance,
-							mappedProductDTOConverterContext.getLocale(),
-							priceQuantity, unitOfMeasureKey);
-					});
+					() -> _getPrice(
+						commerceContext, cpInstance,
+						mappedProductDTOConverterContext.getLocale(),
+						defaultQuantity, defaultUnitOfMeasureKey));
 				setProductConfiguration(
 					() -> {
 						if (cpDefinition == null) {

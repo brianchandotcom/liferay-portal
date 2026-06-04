@@ -83,10 +83,9 @@ public class OPConnectConsoleLogFilter
 			return null;
 		}
 
-		secretValues.sort(
-			Comparator.comparingInt(
-				String::length
-			).reversed());
+		Comparator<String> comparator = Comparator.comparingInt(String::length);
+
+		secretValues.sort(comparator.reversed());
 
 		StringBuilder sb = new StringBuilder();
 

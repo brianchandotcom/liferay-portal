@@ -237,13 +237,13 @@ public class OPConnectDescriptor
 		String accessToken = getAccessToken();
 		String connectURL = getConnectURL();
 
-		if ((accessToken == null) || accessToken.isEmpty() ||
-			(connectURL == null) || connectURL.isEmpty()) {
+		if ((accessToken != null) && !accessToken.isEmpty() &&
+			(connectURL != null) && !connectURL.isEmpty()) {
 
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private static final Log _log = LogFactory.getLog(

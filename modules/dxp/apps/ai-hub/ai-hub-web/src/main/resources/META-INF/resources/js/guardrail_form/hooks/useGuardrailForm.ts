@@ -8,21 +8,21 @@ import {useFormik} from 'formik';
 import {useCallback, useEffect, useMemo} from 'react';
 
 import {generateExternalReferenceCode} from '../../utils/externalReferenceCode';
-import {DEFAULT_MODEL_ARMOR_TEMPLATE} from '../constants';
+import {DEFAULT_GUARDRAIL} from '../constants';
 import {
-	getModelArmorTemplate,
-	postModelArmorTemplate,
-	putModelArmorTemplate,
-} from '../services/ModelArmorTemplateService';
-import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
+	getGuardrail,
+	postGuardrail,
+	putGuardrail,
+} from '../services/GuardrailService';
+import {Guardrail} from '../types/Guardrail';
 
-interface UseModelArmorTemplateFormProps {
+interface UseGuardrailFormProps {
 	externalReferenceCode: string;
 }
 
-export function useModelArmorTemplateForm({
+export function useGuardrailForm({
 	externalReferenceCode,
-}: UseModelArmorTemplateFormProps) {
+}: UseGuardrailFormProps) {
 	const generatedExternalReferenceCode = useMemo(
 		() => generateExternalReferenceCode(),
 		[]
@@ -38,18 +38,18 @@ export function useModelArmorTemplateForm({
 		setValues,
 		touched,
 		values,
-	} = useFormik<ModelArmorTemplate>({
+	} = useFormik<Guardrail>({
 		initialValues: {
-			...DEFAULT_MODEL_ARMOR_TEMPLATE,
+			...DEFAULT_GUARDRAIL,
 			externalReferenceCode: generatedExternalReferenceCode,
 		},
 		onSubmit: async (formValues) => {
 			try {
 				if (externalReferenceCode) {
-					await putModelArmorTemplate(formValues);
+					await putGuardrail(formValues);
 				}
 				else {
-					await postModelArmorTemplate(formValues);
+					await postGuardrail(formValues);
 				}
 
 				openToast({
@@ -70,9 +70,8 @@ export function useModelArmorTemplateForm({
 			}
 		},
 		validate: (formValues) => {
-			const validationErrors: Partial<
-				Record<keyof ModelArmorTemplate, string>
-			> = {};
+			const validationErrors: Partial<Record<keyof Guardrail, string>> =
+				{};
 
 			if (
 				!formValues.title_i18n ||
@@ -91,10 +90,7 @@ export function useModelArmorTemplateForm({
 	});
 
 	const setField = useCallback(
-		<K extends keyof ModelArmorTemplate>(
-			field: K,
-			value: ModelArmorTemplate[K]
-		) => {
+		<K extends keyof Guardrail>(field: K, value: Guardrail[K]) => {
 			setFieldValue(field, value);
 		},
 		[setFieldValue]
@@ -107,31 +103,28 @@ export function useModelArmorTemplateForm({
 
 		async function fetchFormData() {
 			try {
-				const modelArmorTemplate = await getModelArmorTemplate(
-					externalReferenceCode
-				);
+				const guardrail = await getGuardrail(externalReferenceCode);
 
 				setValues({
-					active: modelArmorTemplate.active,
-					description: modelArmorTemplate.description,
-					externalReferenceCode:
-						modelArmorTemplate.externalReferenceCode,
-					guardrailType: modelArmorTemplate.guardrailType,
+					active: guardrail.active,
+					description: guardrail.description,
+					externalReferenceCode: guardrail.externalReferenceCode,
+					guardrailType: guardrail.guardrailType,
 					maliciousUriFilterEnabled:
-						modelArmorTemplate.maliciousUriFilterEnabled,
+						guardrail.maliciousUriFilterEnabled,
 					multilanguageDetectionEnabled:
-						modelArmorTemplate.multilanguageDetectionEnabled,
+						guardrail.multilanguageDetectionEnabled,
 					piAndJailbreakConfidenceLevel:
-						modelArmorTemplate.piAndJailbreakConfidenceLevel,
+						guardrail.piAndJailbreakConfidenceLevel,
 					piAndJailbreakFilterEnabled:
-						modelArmorTemplate.piAndJailbreakFilterEnabled,
-					raiDangerousLevel: modelArmorTemplate.raiDangerousLevel,
-					raiHarassmentLevel: modelArmorTemplate.raiHarassmentLevel,
-					raiHateSpeechLevel: modelArmorTemplate.raiHateSpeechLevel,
+						guardrail.piAndJailbreakFilterEnabled,
+					raiDangerousLevel: guardrail.raiDangerousLevel,
+					raiHarassmentLevel: guardrail.raiHarassmentLevel,
+					raiHateSpeechLevel: guardrail.raiHateSpeechLevel,
 					raiSexuallyExplicitLevel:
-						modelArmorTemplate.raiSexuallyExplicitLevel,
-					sdpFilterEnabled: modelArmorTemplate.sdpFilterEnabled,
-					title_i18n: modelArmorTemplate.title_i18n,
+						guardrail.raiSexuallyExplicitLevel,
+					sdpFilterEnabled: guardrail.sdpFilterEnabled,
+					title_i18n: guardrail.title_i18n,
 				});
 			}
 			catch (error) {

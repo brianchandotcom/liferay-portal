@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.fragment.renderer;
 
-import com.liferay.ai.hub.web.internal.display.context.ViewModelArmorTemplatesDisplayContext;
+import com.liferay.ai.hub.web.internal.display.context.ViewGuardrailsDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -24,8 +24,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author João Victor Alves
  */
 @Component(service = FragmentRenderer.class)
-public class ViewModelArmorTemplatesFragmentRenderer
-	extends BaseFragmentRenderer<ViewModelArmorTemplatesDisplayContext> {
+public class ViewGuardrailsFragmentRenderer
+	extends BaseFragmentRenderer<ViewGuardrailsDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -54,15 +54,15 @@ public class ViewModelArmorTemplatesFragmentRenderer
 	}
 
 	@Override
-	protected ViewModelArmorTemplatesDisplayContext getDisplayContext(
+	protected ViewGuardrailsDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewModelArmorTemplatesDisplayContext(httpServletRequest);
+		return new ViewGuardrailsDisplayContext(httpServletRequest);
 	}
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_model_armor_templates.jsp";
+		return "/view_guardrails.jsp";
 	}
 
 	@Reference

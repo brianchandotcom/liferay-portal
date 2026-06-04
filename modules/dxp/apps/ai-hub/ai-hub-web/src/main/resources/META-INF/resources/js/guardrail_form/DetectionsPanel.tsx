@@ -8,25 +8,22 @@ import ClayPanel from '@clayui/panel';
 import React from 'react';
 
 import {DETECTIONS} from './constants';
-import {ModelArmorTemplate} from './types/ModelArmorTemplate';
+import {Guardrail} from './types/Guardrail';
 
 interface IProps {
 	readOnly: boolean;
-	setField: <K extends keyof ModelArmorTemplate>(
+	setField: <K extends keyof Guardrail>(
 		field: K,
-		value: ModelArmorTemplate[K]
+		value: Guardrail[K]
 	) => void;
-	values: ModelArmorTemplate;
+	values: Guardrail;
 }
 
 const DetectionsPanel: React.FC<IProps> = ({readOnly, setField, values}) => {
 	return (
-		<ClayPanel
-			className="model-armor-template-form-detections"
-			collapsable={false}
-		>
+		<ClayPanel className="guardrail-form-detections" collapsable={false}>
 			<ClayPanel.Body>
-				<div className="model-armor-template-form-header">
+				<div className="guardrail-form-header">
 					<h2>{Liferay.Language.get('detections')}</h2>
 				</div>
 
@@ -41,7 +38,7 @@ const DetectionsPanel: React.FC<IProps> = ({readOnly, setField, values}) => {
 							}
 						/>
 
-						<p className="model-armor-template-form-detection-description">
+						<p className="guardrail-form-detection-description">
 							{description}
 						</p>
 					</ClayForm.Group>

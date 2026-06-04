@@ -13,19 +13,19 @@ import React, {FocusEventHandler} from 'react';
 
 import {maskExternalReferenceCode} from '../utils/externalReferenceCode';
 import {GUARDRAIL_TYPE_OPTIONS} from './constants';
-import {ModelArmorTemplate} from './types/ModelArmorTemplate';
+import {Guardrail} from './types/Guardrail';
 
 interface IProps {
-	errors: FormikErrors<ModelArmorTemplate>;
+	errors: FormikErrors<Guardrail>;
 	handleBlur: FocusEventHandler;
 	readOnly: boolean;
-	setField: <K extends keyof ModelArmorTemplate>(
+	setField: <K extends keyof Guardrail>(
 		field: K,
-		value: ModelArmorTemplate[K]
+		value: Guardrail[K]
 	) => void;
 	setFieldTouched: (field: string, isTouched?: boolean) => void;
-	touched: FormikTouched<ModelArmorTemplate>;
-	values: ModelArmorTemplate;
+	touched: FormikTouched<Guardrail>;
+	values: Guardrail;
 }
 
 const DetailsPanel: React.FC<IProps> = ({
@@ -38,12 +38,9 @@ const DetailsPanel: React.FC<IProps> = ({
 	values,
 }) => {
 	return (
-		<ClayPanel
-			className="model-armor-template-form-details"
-			collapsable={false}
-		>
+		<ClayPanel className="guardrail-form-details" collapsable={false}>
 			<ClayPanel.Body>
-				<div className="model-armor-template-form-header">
+				<div className="guardrail-form-header">
 					<h2>{Liferay.Language.get('details')}</h2>
 
 					<ClayToggle
@@ -138,7 +135,7 @@ const DetailsPanel: React.FC<IProps> = ({
 					</label>
 
 					<Picker
-						className="model-armor-template-form-picker"
+						className="guardrail-form-picker"
 						disabled={readOnly}
 						id="guardrailType"
 						items={GUARDRAIL_TYPE_OPTIONS}

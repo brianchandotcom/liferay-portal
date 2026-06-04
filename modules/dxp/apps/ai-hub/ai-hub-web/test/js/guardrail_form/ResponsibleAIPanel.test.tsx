@@ -7,9 +7,9 @@ import '@testing-library/jest-dom';
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
-import ResponsibleAIPanel from '../../../src/main/resources/META-INF/resources/js/model_armor_template_form/ResponsibleAIPanel';
+import ResponsibleAIPanel from '../../../src/main/resources/META-INF/resources/js/guardrail_form/ResponsibleAIPanel';
 
-import type {ModelArmorTemplate} from '../../../src/main/resources/META-INF/resources/js/model_armor_template_form/types/ModelArmorTemplate';
+import type {Guardrail} from '../../../src/main/resources/META-INF/resources/js/guardrail_form/types/Guardrail';
 
 jest.mock('@clayui/core', () => {
 	const React = require('react');
@@ -44,7 +44,7 @@ jest.mock('@clayui/core', () => {
 	},
 };
 
-const baseValues: ModelArmorTemplate = {
+const baseValues: Guardrail = {
 	active: true,
 	description: '',
 	externalReferenceCode: '',
@@ -61,7 +61,7 @@ const baseValues: ModelArmorTemplate = {
 	title_i18n: {},
 };
 
-function renderPanel(overrides: Partial<ModelArmorTemplate> = {}) {
+function renderPanel(overrides: Partial<Guardrail> = {}) {
 	const setField = jest.fn();
 
 	render(

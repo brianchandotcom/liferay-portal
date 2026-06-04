@@ -5,41 +5,23 @@
 
 package com.liferay.portal.kernel.security.fips;
 
-import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import java.security.Provider;
 import java.security.Security;
-import java.security.Signature;
-import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.ECGenParameterSpec;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAKeyGenParameterSpec;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.crypto.Cipher;
-import javax.crypto.Mac;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.PBEParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 /**
  * @author Caio Farias
@@ -47,272 +29,122 @@ import javax.crypto.spec.SecretKeySpec;
 public class FIPSComplianceChecker {
 
 	public static void check() {
-		_check(Security.getProviders());
-	}
+		Provider[] providers = Security.getProviders();
 
-	private static void _check(Provider[] providers) {
-		_checkSecurityProvidersCompliance(providers);
+		_checkProviders(providers);
 
-		_checkFIPSProviderIntegrity(providers[0]);
-
-		_check(
-			"DES/CBC/PKCS5Padding",
-			() -> _generateCipher(
-				"DES/CBC/PKCS5Padding", new SecretKeySpec(new byte[8], "DES"),
-				new IvParameterSpec(new byte[8])));
-		_check(
-			"DESede",
-			() -> _generateCipher(
-				"DESede/CBC/PKCS5Padding",
-				new SecretKeySpec(new byte[24], "DESede"),
-				new IvParameterSpec(new byte[8])));
-		_check(
-			"RC4",
-			() -> _generateCipher(
-				"RC4", new SecretKeySpec(new byte[16], "RC4"), null));
-		_check(
-			"PBEWithMD5AndDES",
-			() -> {
-				SecretKey key = SecretKeyFactory.getInstance(
-					"PBEWithMD5AndDES"
-				).generateSecret(
-					new PBEKeySpec("password".toCharArray())
-				);
-
-				return _generateCipher(
-					"PBEWithMD5AndDES", key,
-					new PBEParameterSpec(new byte[8], 1000));
-			});
-		_check(
-			"HmacMD5",
-			() -> {
-				Mac mac = Mac.getInstance("HmacMD5");
-
-				mac.init(new SecretKeySpec(new byte[16], "HmacMD5"));
-
-				mac.doFinal(new byte[0]);
-
-				return mac.getProvider();
-			});
-		_check("MD5", () -> _messageDigest("MD5"));
-		_check(
-			"EC/secp192r1",
-			() -> _generateKey("EC", new ECGenParameterSpec("secp192r1")));
-		_check(
-			"RSA/512",
-			() -> _generateKey(
-				"RSA",
-				new RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4)));
-		_check(
-			"RSA/1024",
-			() -> _generateKey(
-				"RSA",
-				new RSAKeyGenParameterSpec(1024, RSAKeyGenParameterSpec.F4)));
-		_check(
-			"SHA1withECDSA",
-			() -> _generateSignature(
-				"SHA1withECDSA", "EC", new ECGenParameterSpec("secp256r1")));
-		_check(
-			"SHA1withRSA",
-			() -> _generateSignature(
-				"SHA1withRSA", "RSA",
-				new RSAKeyGenParameterSpec(2048, RSAKeyGenParameterSpec.F4)));
+		_checkFIPSProvider(providers[0]);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("FIPS checks passed");
+			_log.info("FIPS check has passed");
 		}
 	}
 
-	private static void _check(
-		String algorithmName,
-		UnsafeSupplier<Provider, Exception> unsafeSupplier) {
+	private static void _checkFIPSProvider(Provider provider) {
+		String providerName = provider.getName();
 
-		Provider provider;
+		if (!_allowedProviders.containsKey(providerName)) {
+			throw new SecurityException(
+				"Invalid FIPS provider: " + providerName);
+		}
 
 		try {
-			provider = unsafeSupplier.get();
-		}
-		catch (Error | InvalidAlgorithmParameterException |
-			   InvalidKeyException | InvalidKeySpecException |
-			   NoSuchAlgorithmException | NoSuchPaddingException |
-			   SecurityException exception) {
+			if (providerName.equals("BCFIPS")) {
+				ClassLoader classLoader = provider.getClass().getClassLoader();
 
-			return;
-		}
-		catch (Exception exception) {
-			throw new SecurityException(
-				"FIPS check failed unexpectedly: " + exception.getMessage(),
-				exception);
-		}
+				Class<?> fipsStatusClass = Class.forName(
+					"org.bouncycastle.crypto.fips.FipsStatus", true,
+					classLoader);
 
-		if ((provider != null) &&
-			_fipsSecurityProvidersMap.containsKey(provider.getName())) {
+				Method isReadyMethod = ReflectionUtil.getDeclaredMethod(
+					fipsStatusClass, "isReady");
 
-			return;
-		}
+				if (!GetterUtil.getBoolean(isReadyMethod.invoke(null))) {
+					Method getStatusMessageMethod =
+						ReflectionUtil.getDeclaredMethod(
+							fipsStatusClass, "getStatusMessage");
 
-		String providerInfoString = "";
+					throw new SecurityException(
+						"BCFIPS integrity check failed: " +
+							getStatusMessageMethod.invoke(null));
+				}
 
-		if (provider != null) {
-			providerInfoString = " (provided by " + provider.getName() + ")";
-		}
+				Class<?> cryptoServicesRegistrarClass = Class.forName(
+					"org.bouncycastle.crypto.CryptoServicesRegistrar", true,
+					classLoader);
 
-		throw new SecurityException(
-			StringBundler.concat(
-				"FIPS check failed: ", algorithmName,
-				" should not be accessible in FIPS mode", providerInfoString));
-	}
+				Method isInApprovedOnlyModeMethod =
+					ReflectionUtil.getDeclaredMethod(
+						cryptoServicesRegistrarClass, "isInApprovedOnlyMode");
 
-	private static void _checkFIPSProviderIntegrity(Provider fipsProvider) {
-		String nameString = fipsProvider.getName();
+				if (!GetterUtil.getBoolean(
+						isInApprovedOnlyModeMethod.invoke(null))) {
 
-		if (nameString.equals("BCFIPS")) {
-			_executeFIPSProviderIntegrityCheck(
-				() -> {
-					Class<?> fipsStatus = Class.forName(
-						"org.bouncycastle.crypto.fips.FipsStatus");
-
-					boolean ready = (Boolean)ReflectionUtil.getDeclaredMethod(
-						fipsStatus, "isReady"
-					).invoke(
-						null
-					);
-
-					if (!ready) {
-						String messageString =
-							(String)ReflectionUtil.getDeclaredMethod(
-								fipsStatus, "getStatusMessage"
-							).invoke(
-								null
-							);
-
-						throw new SecurityException(
-							"\"BCFIPS\" integrity failure: " + messageString);
-					}
-
-					Class<?> cryptoServicesRegistrar = Class.forName(
-						"org.bouncycastle.crypto.CryptoServicesRegistrar");
-
-					boolean approved =
-						(Boolean)ReflectionUtil.getDeclaredMethod(
-							cryptoServicesRegistrar, "isInApprovedOnlyMode"
-						).invoke(
-							null
-						);
-
-					if (!approved) {
-						throw new SecurityException(
-							"\"BCFIPS\" not in approved-only mode");
-					}
-				});
-		}
-		else if (nameString.equals("AmazonCorrettoCryptoProvider")) {
-			_executeFIPSProviderIntegrityCheck(
-				() -> {
-					Class<?> amazonCorrettoCryptoProvider = Class.forName(
-						"com.amazon.corretto.crypto.provider." +
-							"AmazonCorrettoCryptoProvider");
-
-					Object instance = ReflectionUtil.getDeclaredField(
-						amazonCorrettoCryptoProvider, "INSTANCE"
-					).get(
-						null
-					);
-
-					Throwable loadingErrorThrowable =
-						(Throwable)ReflectionUtil.getDeclaredMethod(
-							amazonCorrettoCryptoProvider, "getLoadingError"
-						).invoke(
-							instance
-						);
-
-					String failurePrefixString =
-						"\"AmazonCorrettoCryptoProvider\" integrity failure: ";
-
-					if (loadingErrorThrowable != null) {
-						throw new SecurityException(
-							failurePrefixString +
-								loadingErrorThrowable.getMessage(),
-							loadingErrorThrowable);
-					}
-
-					boolean fipsVersion =
-						(Boolean)ReflectionUtil.getDeclaredMethod(
-							amazonCorrettoCryptoProvider, "isFips"
-						).invoke(
-							instance
-						);
-
-					if (!fipsVersion) {
-						throw new SecurityException(
-							"\"AmazonCorrettoCryptoProvider\" is not a FIPS " +
-								"build");
-					}
-
-					Object status = ReflectionUtil.getDeclaredMethod(
-						amazonCorrettoCryptoProvider, "runSelfTests"
-					).invoke(
-						instance
-					);
-
-					if (!Objects.equals(String.valueOf(status), "PASSED")) {
-						throw new SecurityException(
-							failurePrefixString + status);
-					}
-				});
-		}
-		else {
-			throw new SecurityException(
-				"No integrity check implemented for: " + nameString);
-		}
-	}
-
-	private static void _checkSecurityProvidersCompliance(
-		Provider[] providers) {
-
-		if (providers.length == 0) {
-			throw new SecurityException("No security providers are registered");
-		}
-
-		String fipsProviderName = providers[0].getName();
-
-		if (!_fipsSecurityProvidersMap.containsKey(fipsProviderName)) {
-			throw new SecurityException("FIPS provider is not supported");
-		}
-
-		List<String> unapprovedProviderNames = new ArrayList<>();
-
-		List<String> approvedProviders = _fipsSecurityProvidersMap.get(
-			fipsProviderName);
-
-		for (Provider provider : providers) {
-			String providerName = provider.getName();
-
-			if (!approvedProviders.contains(providerName)) {
-				unapprovedProviderNames.add(providerName);
+					throw new SecurityException(
+						"BCFIPS is not in approved-only mode");
+				}
 			}
-		}
+			else if (providerName.equals("AmazonCorrettoCryptoProvider")) {
+				Class<?> amazonCorrettoCryptoProviderClass =
+					provider.getClass();
 
-		if (unapprovedProviderNames.isEmpty()) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"All registered security providers are approved for FIPS " +
-						"mode");
+				Field instanceField = ReflectionUtil.getDeclaredField(
+					amazonCorrettoCryptoProviderClass, "INSTANCE");
+
+				Method getLoadingErrorMethod = ReflectionUtil.getDeclaredMethod(
+					amazonCorrettoCryptoProviderClass, "getLoadingError");
+
+				Object instance = instanceField.get(null);
+
+				if (instance == null) {
+					throw new SecurityException(
+						"AmazonCorrettoCryptoProvider INSTANCE is null");
+				}
+
+				Throwable loadingErrorThrowable =
+					(Throwable)getLoadingErrorMethod.invoke(instance);
+
+				if (loadingErrorThrowable != null) {
+					throw new SecurityException(
+						StringBundler.concat(
+							"AmazonCorrettoCryptoProvider integrity check ",
+							"failed: ", loadingErrorThrowable.getMessage()),
+						loadingErrorThrowable);
+				}
+
+				Method isFipsMethod = ReflectionUtil.getDeclaredMethod(
+					amazonCorrettoCryptoProviderClass, "isFips");
+
+				if (!GetterUtil.getBoolean(isFipsMethod.invoke(instance))) {
+					throw new SecurityException(
+						"AmazonCorrettoCryptoProvider is not a FIPS build");
+				}
+
+				Method isExperimentalFipsMethod =
+					ReflectionUtil.getDeclaredMethod(
+						amazonCorrettoCryptoProviderClass,
+						"isExperimentalFips");
+
+				if (GetterUtil.getBoolean(
+						isExperimentalFipsMethod.invoke(instance))) {
+
+					throw new SecurityException(
+						"AmazonCorrettoCryptoProvider is an experimental " +
+							"FIPS build");
+				}
+
+				Method runSelfTestsMethod = ReflectionUtil.getDeclaredMethod(
+					amazonCorrettoCryptoProviderClass, "runSelfTests");
+
+				Object result = runSelfTestsMethod.invoke(instance);
+
+				if (!Objects.equals(String.valueOf(result), "PASSED")) {
+					throw new SecurityException(
+						StringBundler.concat(
+							"AmazonCorrettoCryptoProvider integrity check ",
+							"failed: ", result));
+				}
 			}
-
-			return;
-		}
-
-		throw new SecurityException(
-			"Unapproved security providers registered in FIPS mode: " +
-				unapprovedProviderNames);
-	}
-
-	private static void _executeFIPSProviderIntegrityCheck(
-		UnsafeRunnable<Throwable> unsafeRunnable) {
-
-		try {
-			unsafeRunnable.run();
 		}
 		catch (SecurityException securityException) {
 			throw securityException;
@@ -325,81 +157,57 @@ public class FIPSComplianceChecker {
 			}
 
 			throw new SecurityException(
-				"FIPS provider integrity failure: " +
+				"FIPS provider integrity failed: " +
 					causeThrowable.getMessage(),
 				causeThrowable);
 		}
 	}
 
-	private static Provider _generateCipher(
-			String transformation, SecretKey key, AlgorithmParameterSpec spec)
-		throws Exception {
+	private static void _checkProviders(Provider[] providers) {
+		if (ArrayUtil.isEmpty(providers)) {
+			throw new SecurityException("There are no providers registered");
+		}
 
-		Cipher cipher = Cipher.getInstance(transformation);
+		Provider firstProvider = providers[0];
 
-		cipher.init(Cipher.ENCRYPT_MODE, key, spec);
+		if (!_allowedProviders.containsKey(firstProvider.getName())) {
+			throw new SecurityException(
+				"The first provider must be an allowed FIPS provider");
+		}
 
-		cipher.doFinal(new byte[0]);
+		List<String> allowedProviders = _allowedProviders.get(
+			firstProvider.getName());
 
-		return cipher.getProvider();
-	}
+		Provider[] notAllowedProviders = ArrayUtil.filter(
+			providers,
+			provider -> !allowedProviders.contains(provider.getName()));
 
-	private static Provider _generateKey(
-			String algorithm, AlgorithmParameterSpec spec)
-		throws Exception {
+		if (ArrayUtil.isEmpty(notAllowedProviders)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("All registered providers are allowed for FIPS mode");
+			}
 
-		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(
-			algorithm);
+			return;
+		}
 
-		keyPairGenerator.initialize(spec);
-
-		keyPairGenerator.generateKeyPair();
-
-		return keyPairGenerator.getProvider();
-	}
-
-	private static Provider _generateSignature(
-			String signatureAlgorithm, String keyAlgorithm,
-			AlgorithmParameterSpec keySpec)
-		throws Exception {
-
-		Signature signature = Signature.getInstance(signatureAlgorithm);
-
-		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(
-			keyAlgorithm);
-
-		keyPairGenerator.initialize(keySpec);
-
-		KeyPair keyPair = keyPairGenerator.generateKeyPair();
-
-		signature.initSign(keyPair.getPrivate());
-
-		signature.sign();
-
-		return signature.getProvider();
-	}
-
-	private static Provider _messageDigest(String algorithm) throws Exception {
-		MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-
-		messageDigest.digest(new byte[0]);
-
-		return messageDigest.getProvider();
+		throw new SecurityException(
+			StringBundler.concat(
+				"The providers ", Arrays.toString(notAllowedProviders),
+				" are not allowed in FIPS mode for ", firstProvider.getName()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FIPSComplianceChecker.class);
 
-	private static final Map<String, List<String>> _fipsSecurityProvidersMap =
-		Map.of(
-			"BCFIPS",
-			List.of(
-				"BCFIPS", "BCJSSE", "SUN", "SunJCE", "XMLDSig", "SunJGSS",
-				"SunSASL", "JdkLDAP", "JdkSASL"),
-			"AmazonCorrettoCryptoProvider",
-			List.of(
-				"AmazonCorrettoCryptoProvider", "SUN", "SunRsaSign", "SunEC",
-				"SunJSSE", "SunJCE", "SunJGSS", "SunSASL", "XMLDSig", "JdkLDAP",
-				"JdkSASL"));
+	private static final Map<String, List<String>> _allowedProviders = Map.of(
+		"AmazonCorrettoCryptoProvider",
+		List.of(
+			"AmazonCorrettoCryptoProvider", "SUN", "SunRsaSign", "SunEC",
+			"SunJSSE", "SunJCE", "SunJGSS", "SunSASL", "XMLDSig", "JdkLDAP",
+			"JdkSASL"),
+		"BCFIPS",
+		List.of(
+			"BCFIPS", "BCJSSE", "SUN", "SunJCE", "XMLDSig", "SunJGSS",
+			"SunSASL", "JdkLDAP", "JdkSASL"));
 
 }

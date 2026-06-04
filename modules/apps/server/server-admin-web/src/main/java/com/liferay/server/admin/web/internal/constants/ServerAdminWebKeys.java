@@ -10,7 +10,7 @@ package com.liferay.server.admin.web.internal.constants;
  */
 public class ServerAdminWebKeys {
 
-	public static final String FRIENDLY_URL_PUBLIC_MAPPING_CONFLICTS =
-		"FRIENDLY_URL_PUBLIC_MAPPING_CONFLICTS";
+	public static final String SERVER_DISPLAY_CONTEXT =
+		"SERVER_DISPLAY_CONTEXT";
 
 }

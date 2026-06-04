@@ -8,7 +8,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<FriendlyURLPublicMappingConflict> friendlyURLPublicMappingConflicts = (List<FriendlyURLPublicMappingConflict>)request.getAttribute(ServerAdminWebKeys.FRIENDLY_URL_PUBLIC_MAPPING_CONFLICTS);
+ServerDisplayContext serverDisplayContext = (ServerDisplayContext)request.getAttribute(ServerAdminWebKeys.SERVER_DISPLAY_CONTEXT);
+
+List<FriendlyURLPublicMappingConflict> friendlyURLPublicMappingConflicts = serverDisplayContext.getFriendlyURLPublicMappingConflicts();
 %>
 
 <div class="sheet">
@@ -19,7 +21,7 @@ List<FriendlyURLPublicMappingConflict> friendlyURLPublicMappingConflicts = (List
 					<liferay-ui:message key="check-whether-the-public-friendly-url-mapping-can-be-safely-disabled" />
 				</p>
 			</c:when>
-			<c:when test="<%= friendlyURLPublicMappingConflicts.isEmpty() %>">
+			<c:when test="<%= (friendlyURLPublicMappingConflicts != null) && friendlyURLPublicMappingConflicts.isEmpty() %>">
 				<clay:alert
 					displayType="success"
 					message="no-conflicts-were-found-the-public-friendly-url-mapping-can-be-safely-disabled"
@@ -31,14 +33,8 @@ List<FriendlyURLPublicMappingConflict> friendlyURLPublicMappingConflicts = (List
 					message='<%= LanguageUtil.format(request, "x-conflicts-were-found-resolve-each-before-disabling-the-public-friendly-url-mapping", friendlyURLPublicMappingConflicts.size()) %>'
 				/>
 
-				<%
-				SearchContainer<FriendlyURLPublicMappingConflict> friendlyURLPublicMappingConflictsSearchContainer = new SearchContainer<FriendlyURLPublicMappingConflict>(liferayPortletRequest, renderResponse.createRenderURL(), null, null);
-
-				friendlyURLPublicMappingConflictsSearchContainer.setResultsAndTotal(friendlyURLPublicMappingConflicts);
-				%>
-
 				<liferay-ui:search-container
-					searchContainer="<%= friendlyURLPublicMappingConflictsSearchContainer %>"
+					searchContainer="<%= serverDisplayContext.getFriendlyURLPublicMappingConflictsSearchContainer() %>"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.friendly.url.checker.FriendlyURLPublicMappingConflict"
@@ -82,8 +78,6 @@ List<FriendlyURLPublicMappingConflict> friendlyURLPublicMappingConflicts = (List
 			</c:otherwise>
 		</c:choose>
 
-		<aui:form action='<%= PortletURLBuilder.createActionURL(renderResponse).setActionName("/server_admin/check_friendly_urls").buildString() %>' method="post">
-			<aui:button primary="<%= friendlyURLPublicMappingConflicts == null %>" type="submit" value='<%= (friendlyURLPublicMappingConflicts == null) ? "run-check" : "run-check-again" %>' />
-		</aui:form>
+		<aui:button href="<%= serverDisplayContext.getCheckFriendlyURLsURL() %>" primary="<%= friendlyURLPublicMappingConflicts == null %>" value='<%= (friendlyURLPublicMappingConflicts == null) ? "run-check" : "run-check-again" %>' />
 	</div>
 </div>

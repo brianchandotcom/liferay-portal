@@ -5,10 +5,14 @@
 
 package com.liferay.server.admin.web.internal.display.context;
 
+import com.liferay.friendly.url.checker.FriendlyURLPublicMappingChecker;
+import com.liferay.friendly.url.checker.FriendlyURLPublicMappingConflict;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,10 +29,60 @@ import java.util.List;
 public class ServerDisplayContext {
 
 	public ServerDisplayContext(
+		FriendlyURLPublicMappingChecker friendlyURLPublicMappingChecker,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_friendlyURLPublicMappingChecker = friendlyURLPublicMappingChecker;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+	}
+
+	public String getCheckFriendlyURLsURL() {
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setTabs1(
+			"friendly-urls"
+		).setParameter(
+			"checkFriendlyURLs", true
+		).buildString();
+	}
+
+	public List<FriendlyURLPublicMappingConflict>
+		getFriendlyURLPublicMappingConflicts() {
+
+		if (_friendlyURLPublicMappingConflicts != null) {
+			return _friendlyURLPublicMappingConflicts;
+		}
+
+		if (!ParamUtil.getBoolean(_renderRequest, "checkFriendlyURLs")) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_friendlyURLPublicMappingConflicts =
+			_friendlyURLPublicMappingChecker.
+				getFriendlyURLPublicMappingConflicts(
+					themeDisplay.getCompanyId());
+
+		return _friendlyURLPublicMappingConflicts;
+	}
+
+	public SearchContainer<FriendlyURLPublicMappingConflict>
+		getFriendlyURLPublicMappingConflictsSearchContainer() {
+
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		_searchContainer = new SearchContainer<>(
+			_renderRequest, _renderResponse.createRenderURL(), null, null);
+
+		_searchContainer.setResultsAndTotal(
+			getFriendlyURLPublicMappingConflicts());
+
+		return _searchContainer;
 	}
 
 	public List<NavigationItem> getServerNavigationItems() {
@@ -92,7 +146,12 @@ public class ServerDisplayContext {
 		"external-services", "friendly-urls", "script", "shutdown"
 	};
 
+	private final FriendlyURLPublicMappingChecker
+		_friendlyURLPublicMappingChecker;
+	private List<FriendlyURLPublicMappingConflict>
+		_friendlyURLPublicMappingConflicts;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private SearchContainer<FriendlyURLPublicMappingConflict> _searchContainer;
 
 }

@@ -1,0 +1,31 @@
+buildscript {
+	dependencies {
+		classpath group: "org.jenkins-ci.jpi", name: "org.jenkins-ci.jpi.gradle.plugin", version: "0.48.0-rc.1"
+	}
+
+	repositories {
+		gradlePluginPortal()
+	}
+}
+
+apply plugin: "org.jenkins-ci.jpi"
+
+dependencies {
+	api group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
+	api group: "org.json", name: "json", version: "20231013"
+}
+
+generateJenkinsPluginClassManifest {
+	mustRunAfter generatePomFileForMavenPublication
+	mustRunAfter processResources
+}
+
+generateJenkinsSupportDynamicLoadingManifest {
+	mustRunAfter generatePomFileForMavenPublication
+	mustRunAfter processResources
+}
+
+jenkinsPlugin {
+	configurePublishing = false
+	jenkinsVersion = "2.387.3"
+}

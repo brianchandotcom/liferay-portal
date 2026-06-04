@@ -1,0 +1,59 @@
+<?jelly escape-by-default="true"?>
+
+<j:jelly xmlns:f="/lib/form" xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+	<l:layout title="1Password Connect">
+		<l:side-panel>
+			<l:tasks>
+				<l:task href="${rootURL}/" icon="icon-md icon-up" title="Back to Dashboard" />
+				<l:task href="${rootURL}/manage" icon="icon-setting icon-md" title="Manage Jenkins" />
+			</l:tasks>
+		</l:side-panel>
+		<l:main-panel>
+			<div>
+				<div>
+					<h1>1Password Connect</h1>
+				</div>
+
+				<j:set value="${it.opConnectDescriptor}" var="descriptor" />
+
+				<st:adjunct includes="com.liferay.jenkins.plugin.op.connect.OPConnectManagementLink.reveal" />
+
+				<f:form action="opConnectConfiguration" method="post" name="opConnectConfiguration">
+					<f:entry title="Connect URL">
+						<f:textbox name="connectURL" value="${it.opConnectDescriptor.getConnectURL()}" />
+					</f:entry>
+					<f:entry title="Access Token">
+						<input class="setting-input" id="op-connect-token" name="accessToken" type="password" value="${it.opConnectDescriptor.getAccessToken()}" />
+						<div>
+							<a class="op-connect-reveal-token" href="#">Show</a>
+						</div>
+					</f:entry>
+					<f:validateButton method="testConnection" title="Test Connection" with="connectURL,accessToken" />
+					<f:section title="Vaults">
+						<j:set value="${it.opConnectDescriptor.getVaults()}" var="vaults" />
+						<j:if test="${!empty(vaults)}">
+							<input name="vaultsRendered" type="hidden" value="true" />
+						</j:if>
+						<j:forEach items="${vaults}" var="vault">
+							<f:entry title="${vault.name}">
+								<f:checkbox checked="${it.opConnectDescriptor.containsVaultName(vault.name)}" name="vault:${vault.name}" />
+							</f:entry>
+						</j:forEach>
+					</f:section>
+					<f:entry title="Ignored Values (one per line)">
+						<f:textarea name="ignoredValues" value="${it.opConnectDescriptor.getIgnoredValuesString()}" />
+					</f:entry>
+					<f:entry title="Refresh Interval (minutes, 0 to disable)">
+						<f:number name="refreshIntervalMinutes" value="${it.opConnectDescriptor.getRefreshIntervalMinutes()}" />
+					</f:entry>
+					<div class="op-connect-last-refreshed">
+						Last refreshed ${it.opConnectDescriptor.getLastRefreshTimeString()}
+					</div>
+					<f:entry>
+						<f:submit value="Save" />
+					</f:entry>
+				</f:form>
+			</div>
+		</l:main-panel>
+	</l:layout>
+</j:jelly>

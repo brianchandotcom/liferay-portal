@@ -28,6 +28,7 @@ export default function CalendarView({items}: CalendarViewProps) {
 	return (
 		<div className="lfr__calendar-view">
 			<FullCalendar
+				dayHeaderFormat={{weekday: 'long'}}
 				events={events}
 				initialView="dayGridMonth"
 				plugins={[dayGridPlugin]}

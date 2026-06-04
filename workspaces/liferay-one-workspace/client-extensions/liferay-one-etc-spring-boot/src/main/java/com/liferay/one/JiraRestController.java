@@ -78,6 +78,7 @@ public class JiraRestController extends BaseRestController {
 			_businessEventPermission.check(
 				jwt, externalReferenceCode, ActionKeys.VIEW);
 
+			JSONObject responseJSONObject = new JSONObject();
 			JSONArray itemsJSONArray = new JSONArray();
 
 			List<BusinessEvent> businessEvents = _jiraService.getBusinessEvents(
@@ -86,8 +87,6 @@ public class JiraRestController extends BaseRestController {
 			for (BusinessEvent businessEvent : businessEvents) {
 				itemsJSONArray.put(businessEvent.toJSONObject());
 			}
-
-			JSONObject responseJSONObject = new JSONObject();
 
 			responseJSONObject.put("items", itemsJSONArray);
 
@@ -115,9 +114,10 @@ public class JiraRestController extends BaseRestController {
 
 			BusinessEvent businessEvent = _jiraService.getBusinessEvent(id);
 
-			JSONObject jsonObject = businessEvent.toJSONObject();
-
-			return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+			return new ResponseEntity<>(
+				businessEvent.toJSONObject(
+				).toString(),
+				HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -140,18 +140,17 @@ public class JiraRestController extends BaseRestController {
 			_businessEventPermission.check(
 				jwt, externalReferenceCode, ActionKeys.VIEW);
 
+			JSONObject responseJSONObject = new JSONObject();
+			JSONArray itemsJSONArray = new JSONArray();
+
 			List<BusinessEventVersion> businessEventVersions =
 				_jiraService.getBusinessEventVersions(id);
-
-			JSONArray itemsJSONArray = new JSONArray();
 
 			for (BusinessEventVersion businessEventVersion :
 					businessEventVersions) {
 
 				itemsJSONArray.put(businessEventVersion.toJSONObject());
 			}
-
-			JSONObject responseJSONObject = new JSONObject();
 
 			responseJSONObject.put("items", itemsJSONArray);
 
@@ -178,17 +177,18 @@ public class JiraRestController extends BaseRestController {
 			_businessEventPermission.check(
 				jwt, externalReferenceCode, ActionKeys.VIEW);
 
-			JSONArray jsonArray = new JSONArray();
+			JSONArray ticketsJSONArray = new JSONArray();
 
 			List<JiraSupportIssue> jiraSupportIssues =
 				_jiraService.getJSMJiraSupportIssues(
 					externalReferenceCode, ticketIds);
 
 			for (JiraSupportIssue jiraSupportIssue : jiraSupportIssues) {
-				jsonArray.put(jiraSupportIssue.toJSONObject());
+				ticketsJSONArray.put(jiraSupportIssue.toJSONObject());
 			}
 
-			return new ResponseEntity<>(jsonArray.toString(), HttpStatus.OK);
+			return new ResponseEntity<>(
+				ticketsJSONArray.toString(), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -212,20 +212,20 @@ public class JiraRestController extends BaseRestController {
 			JSONObject myUserAccountJSONObject = _getMyUserAccountJSONObject(
 				jwt);
 
-			BusinessEvent businessEvent = new BusinessEvent(
-				externalReferenceCode,
-				myUserAccountJSONObject.getString("emailAddress"), json);
-
-			List<BusinessEvent> businessEvents =
-				_jiraService.createBusinessEvent(businessEvent);
-
-			JSONArray itemsJSONArray = new JSONArray();
-
-			for (BusinessEvent curBusinessEvent : businessEvents) {
-				itemsJSONArray.put(curBusinessEvent.toJSONObject());
-			}
+			_jiraService.createBusinessEvent(
+				new BusinessEvent(
+					externalReferenceCode,
+					myUserAccountJSONObject.getString("emailAddress"), json));
 
 			JSONObject responseJSONObject = new JSONObject();
+			JSONArray itemsJSONArray = new JSONArray();
+
+			List<BusinessEvent> businessEvents = _jiraService.getBusinessEvents(
+				externalReferenceCode);
+
+			for (BusinessEvent businessEvent : businessEvents) {
+				itemsJSONArray.put(businessEvent.toJSONObject());
+			}
 
 			responseJSONObject.put("items", itemsJSONArray);
 
@@ -264,9 +264,10 @@ public class JiraRestController extends BaseRestController {
 
 			businessEvent = _jiraService.updateBusinessEvent(id, businessEvent);
 
-			JSONObject jsonObject = businessEvent.toJSONObject();
-
-			return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+			return new ResponseEntity<>(
+				businessEvent.toJSONObject(
+				).toString(),
+				HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to update business event " + id, exception);

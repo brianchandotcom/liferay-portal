@@ -1174,13 +1174,17 @@ test.describe('General Configuration', () => {
 
 			await pageEditorPage.goToConfigurationTab('General');
 
-			await page.getByLabel('Number').fill('0');
+			const numberInput = page
+				.getByRole('tabpanel', {name: 'General'})
+				.getByLabel('Number', {exact: true});
+
+			await numberInput.fill('0');
 
 			await expect(
 				page.getByText('You have entered invalid data.')
 			).toBeVisible();
 
-			await page.getByLabel('Number').fill('11');
+			await numberInput.fill('11');
 
 			await expect(
 				page.getByText('You have entered invalid data.')

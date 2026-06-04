@@ -84,6 +84,74 @@ beforeEach(() => {
 });
 
 describe('cmpTabPersistence', () => {
+	describe('refresh FDS on tab switch', () => {
+		it('ignores activePanel events for panels outside the CMP tabs container', () => {
+			buildTabsContainer(0);
+
+			const {STORAGE_KEY, installCMPTabPersistence, registerTabFDS} =
+				loadModule();
+
+			registerTabFDS('allTasksFDS', 0);
+
+			installCMPTabPersistence();
+
+			const handleActivePanel = mockOn.mock.calls[0][1];
+			const otherPanel = document.createElement('div');
+
+			document.body.appendChild(otherPanel);
+
+			handleActivePanel({panel: otherPanel});
+
+			expect(mockFire).not.toHaveBeenCalled();
+			expect(window.sessionStorage.getItem(STORAGE_KEY)).toBeNull();
+		});
+
+		it('skips FDS refresh when the activated tab has no registered FDS id', () => {
+			const container = buildTabsContainer(0);
+
+			const {STORAGE_KEY, installCMPTabPersistence} = loadModule();
+
+			installCMPTabPersistence();
+
+			const handleActivePanel = mockOn.mock.calls[0][1];
+			const projectTasksPanel = container.querySelectorAll(
+				'.tab-panel-item'
+			)[1] as HTMLElement;
+
+			handleActivePanel({panel: projectTasksPanel});
+
+			expect(window.sessionStorage.getItem(STORAGE_KEY)).toBe('1');
+
+			expect(mockFire).not.toHaveBeenCalled();
+		});
+
+		it('writes the new tab index to sessionStorage and fires FDS refresh', () => {
+			const container = buildTabsContainer(0);
+
+			const {STORAGE_KEY, installCMPTabPersistence, registerTabFDS} =
+				loadModule();
+
+			registerTabFDS('allTasksFDS', 0);
+			registerTabFDS('projectTasksFDS', 1);
+			registerTabFDS('workflowTasksFDS', 2);
+
+			installCMPTabPersistence();
+
+			const handleActivePanel = mockOn.mock.calls[0][1];
+			const projectTasksPanel = container.querySelectorAll(
+				'.tab-panel-item'
+			)[1] as HTMLElement;
+
+			handleActivePanel({panel: projectTasksPanel});
+
+			expect(window.sessionStorage.getItem(STORAGE_KEY)).toBe('1');
+
+			expect(mockFire).toHaveBeenCalledWith('fds-update-display', {
+				id: 'projectTasksFDS',
+			});
+		});
+	});
+
 	describe('restore tab on page load', () => {
 		it('clicks the persisted tab when sessionStorage has a non-zero index', () => {
 			buildTabsContainer(0);

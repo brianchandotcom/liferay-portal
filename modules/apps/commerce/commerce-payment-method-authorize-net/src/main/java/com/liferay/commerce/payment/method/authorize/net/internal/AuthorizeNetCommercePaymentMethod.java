@@ -427,7 +427,7 @@ public class AuthorizeNetCommercePaymentMethod
 		if (billingCommerceAddress != null) {
 			CustomerAddressType customerAddressType = new CustomerAddressType();
 
-			_setNameAndAddressType(customerAddressType, billingCommerceAddress);
+			_setNameAndAddressType(billingCommerceAddress, customerAddressType);
 
 			String phoneNumber = billingCommerceAddress.getPhoneNumber();
 
@@ -444,7 +444,7 @@ public class AuthorizeNetCommercePaymentMethod
 		if (shippingCommerceAddress != null) {
 			NameAndAddressType nameAndAddressType = new NameAndAddressType();
 
-			_setNameAndAddressType(nameAndAddressType, shippingCommerceAddress);
+			_setNameAndAddressType(shippingCommerceAddress, nameAndAddressType);
 
 			transactionRequestType.setShipTo(nameAndAddressType);
 		}
@@ -453,8 +453,8 @@ public class AuthorizeNetCommercePaymentMethod
 	}
 
 	private void _setNameAndAddressType(
-			NameAndAddressType nameAndAddressType,
-			CommerceAddress commerceAddress)
+			CommerceAddress commerceAddress,
+			NameAndAddressType nameAndAddressType)
 		throws Exception {
 
 		String name = commerceAddress.getName();
@@ -467,13 +467,14 @@ public class AuthorizeNetCommercePaymentMethod
 
 			nameAndAddressType.setFirstName(names[0]);
 
-			if (StringUtil.split(name, StringPool.SPACE).length > 1) {
+			String[] nameParts = StringUtil.split(name, StringPool.SPACE);
+
+			if (nameParts.length > 1) {
 				nameAndAddressType.setLastName(names[2]);
 			}
 		}
 
 		nameAndAddressType.setAddress(commerceAddress.getStreet1());
-
 		nameAndAddressType.setCity(commerceAddress.getCity());
 		nameAndAddressType.setZip(commerceAddress.getZip());
 

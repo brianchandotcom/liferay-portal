@@ -99,26 +99,7 @@ components:
                     readOnly: true
                     type: string
             type: object
-        Message:
-            properties:
-                chat:
-                    $ref: "#/components/schemas/Chat"
-                    readOnly: true
-                chatbotExternalReferenceCode:
-                    type: string
-                context:
-                    additionalProperties: true
-                    type: object
-                instructionDefinitionScope:
-                    enum:
-                        -   clickToChat
-                        -   cms
-                        -   everywhere
-                    type: string
-                text:
-                    type: string
-            type: object
-        ModelArmorTemplate:
+        Guardrail:
             properties:
                 active:
                     type: boolean
@@ -187,6 +168,25 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+            type: object
+        Message:
+            properties:
+                chat:
+                    $ref: "#/components/schemas/Chat"
+                    readOnly: true
+                chatbotExternalReferenceCode:
+                    type: string
+                context:
+                    additionalProperties: true
+                    type: object
+                instructionDefinitionScope:
+                    enum:
+                        -   clickToChat
+                        -   cms
+                        -   everywhere
+                    type: string
+                text:
+                    type: string
             type: object
         ProvisioningRequest:
             properties:
@@ -476,30 +476,30 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Credential"
             tags: ["Credential"]
-    "/model-armor-templates":
+    "/guardrails":
         post:
-            operationId: postModelArmorTemplate
+            operationId: postGuardrail
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ModelArmorTemplate"
+                            $ref: "#/components/schemas/Guardrail"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ModelArmorTemplate"
+                            $ref: "#/components/schemas/Guardrail"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/ModelArmorTemplate"
+                                $ref: "#/components/schemas/Guardrail"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/ModelArmorTemplate"
-            tags: ["ModelArmorTemplate"]
-    "/model-armor-templates/by-external-reference-code/{externalReferenceCode}":
+                                $ref: "#/components/schemas/Guardrail"
+            tags: ["Guardrail"]
+    "/guardrails/by-external-reference-code/{externalReferenceCode}":
         delete:
-            operationId: deleteModelArmorTemplateByExternalReferenceCode
+            operationId: deleteGuardrailByExternalReferenceCode
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -511,9 +511,9 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
-            tags: ["ModelArmorTemplate"]
+            tags: ["Guardrail"]
         put:
-            operationId: putModelArmorTemplateByExternalReferenceCode
+            operationId: putGuardrailByExternalReferenceCode
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -524,20 +524,20 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ModelArmorTemplate"
+                            $ref: "#/components/schemas/Guardrail"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ModelArmorTemplate"
+                            $ref: "#/components/schemas/Guardrail"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/ModelArmorTemplate"
+                                $ref: "#/components/schemas/Guardrail"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/ModelArmorTemplate"
-            tags: ["ModelArmorTemplate"]
+                                $ref: "#/components/schemas/Guardrail"
+            tags: ["Guardrail"]
     "/provisioning":
         post:
             operationId: postProvisioning

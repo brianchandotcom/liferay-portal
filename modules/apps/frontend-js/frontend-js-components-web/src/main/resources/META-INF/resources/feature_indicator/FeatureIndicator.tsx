@@ -180,14 +180,28 @@ export default function FeatureIndicator({
 						) : null}
 					</ClayPopover>
 				</ClayTooltipProvider>
+			) : iconOnly ? (
+				<span
+					aria-label={label}
+					className={classNames(
+						'badge',
+						`badge-${displayType}`,
+						'badge-translucent',
+						className,
+						{'clay-dark': dark}
+					)}
+					role="img"
+				>
+					<span className="badge-item">
+						<ClayIcon symbol={symbol} />
+					</span>
+				</span>
 			) : (
 				<ClayBadge
-					aria-label={iconOnly ? label : undefined}
 					className={classNames('text-uppercase', className)}
 					dark={dark}
 					displayType={displayType}
-					label={iconOnly ? undefined : label}
-					role={iconOnly ? 'img' : undefined}
+					label={label}
 					symbol={symbol}
 					translucent
 				/>

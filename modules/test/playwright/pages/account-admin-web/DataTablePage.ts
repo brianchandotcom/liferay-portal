@@ -201,6 +201,10 @@ export class DataTablePage {
 			await this.selectViewListButton.click({force: true});
 			await expect(this.viewStatus(view)).toBeVisible();
 
+			if (await this.selectViewListButton.isVisible()) {
+				await this.selectViewListButton.press('Escape');
+			}
+
 			return;
 		}
 		else if (view === 'Cards') {
@@ -214,6 +218,10 @@ export class DataTablePage {
 
 			await this.selectViewCardButton.click({force: true});
 			await expect(this.viewStatus(view)).toBeVisible();
+
+			if (await this.selectViewCardButton.isVisible()) {
+				await this.selectViewCardButton.press('Escape');
+			}
 
 			return;
 		}
@@ -229,6 +237,10 @@ export class DataTablePage {
 		}).toPass({timeout: 5000});
 
 		await expect(this.viewStatus(view)).toBeVisible();
+
+		if (await this.selectViewTableButton.isVisible()) {
+			await this.selectViewTableButton.press('Escape');
+		}
 	}
 
 	async search(value?: string) {

@@ -32,82 +32,117 @@
 	</clay:row>
 
 	<clay:row
-		cssClass="p-3"
+		cssClass="align-items-center p-2"
 	>
-		<clay:col>
-			<h3>Beta Interactive</h3>
-
-			<liferay-frontend:feature-indicator
-				interactive="<%= true %>"
-				type="beta"
-			/>
+		<clay:col
+			size="2"
+		>
+			<h4>Type</h4>
 		</clay:col>
 
 		<clay:col>
-			<h3>Beta</h3>
-
-			<liferay-frontend:feature-indicator
-				type="beta"
-			/>
+			<h4>Interactive</h4>
 		</clay:col>
 
 		<clay:col>
-			<h3>Deprecated Interactive</h3>
-
-			<liferay-frontend:feature-indicator
-				interactive="<%= true %>"
-				type="deprecated"
-			/>
+			<h4>Default</h4>
 		</clay:col>
 
 		<clay:col>
-			<h3>Deprecated</h3>
+			<h4>Icon Only</h4>
+		</clay:col>
 
-			<liferay-frontend:feature-indicator
-				type="deprecated"
-			/>
+		<clay:col>
+			<h4>Interactive Icon Only</h4>
 		</clay:col>
 	</clay:row>
 
-	<clay:row
-		cssClass="bg-dark p-3 text-light"
-	>
-		<clay:col>
-			<h3>Dark Beta Interactive</h3>
+	<%
+	for (String featureIndicatorType : new String[] {"beta", "deprecated", "enterprise", "maintenance", "private-beta"}) {
+	%>
 
-			<liferay-frontend:feature-indicator
-				dark="<%= true %>"
-				interactive="<%= true %>"
-				type="beta"
-			/>
-		</clay:col>
+		<clay:row
+			cssClass="align-items-center mb-2"
+		>
+			<clay:col
+				size="2"
+			>
+				<strong class="text-uppercase"><%= featureIndicatorType %></strong>
+			</clay:col>
 
-		<clay:col>
-			<h3>Dark Beta</h3>
+			<clay:col>
+				<liferay-frontend:feature-indicator
+					interactive="<%= true %>"
+					type="<%= featureIndicatorType %>"
+				/>
+			</clay:col>
 
-			<liferay-frontend:feature-indicator
-				dark="<%= true %>"
-				type="beta"
-			/>
-		</clay:col>
+			<clay:col>
+				<liferay-frontend:feature-indicator
+					type="<%= featureIndicatorType %>"
+				/>
+			</clay:col>
 
-		<clay:col>
-			<h3>Dark Deprecated Interactive</h3>
+			<clay:col>
+				<liferay-frontend:feature-indicator
+					iconOnly="<%= true %>"
+					type="<%= featureIndicatorType %>"
+				/>
+			</clay:col>
 
-			<liferay-frontend:feature-indicator
-				dark="<%= true %>"
-				interactive="<%= true %>"
-				type="deprecated"
-			/>
-		</clay:col>
+			<clay:col>
+				<liferay-frontend:feature-indicator
+					iconOnly="<%= true %>"
+					interactive="<%= true %>"
+					type="<%= featureIndicatorType %>"
+				/>
+			</clay:col>
+		</clay:row>
 
-		<clay:col>
-			<h3>Dark Deprecated</h3>
+		<clay:row
+			cssClass="align-items-center bg-dark mb-3 p-2 text-light"
+		>
+			<clay:col
+				size="2"
+			>
+				<strong class="text-uppercase"><%= featureIndicatorType %> (dark)</strong>
+			</clay:col>
 
-			<liferay-frontend:feature-indicator
-				dark="<%= true %>"
-				type="deprecated"
-			/>
-		</clay:col>
-	</clay:row>
+			<clay:col>
+				<liferay-frontend:feature-indicator
+					dark="<%= true %>"
+					interactive="<%= true %>"
+					type="<%= featureIndicatorType %>"
+				/>
+			</clay:col>
+
+			<clay:col>
+				<liferay-frontend:feature-indicator
+					dark="<%= true %>"
+					type="<%= featureIndicatorType %>"
+				/>
+			</clay:col>
+
+			<clay:col>
+				<liferay-frontend:feature-indicator
+					dark="<%= true %>"
+					iconOnly="<%= true %>"
+					type="<%= featureIndicatorType %>"
+				/>
+			</clay:col>
+
+			<clay:col>
+				<liferay-frontend:feature-indicator
+					dark="<%= true %>"
+					iconOnly="<%= true %>"
+					interactive="<%= true %>"
+					type="<%= featureIndicatorType %>"
+				/>
+			</clay:col>
+		</clay:row>
+
+	<%
+	}
+	%>
+
 </clay:container-fluid>

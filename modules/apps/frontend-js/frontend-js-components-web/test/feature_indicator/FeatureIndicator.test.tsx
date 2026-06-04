@@ -31,7 +31,7 @@ describe('FeatureIndicator', () => {
 			);
 
 			expect(
-				container.querySelector('svg.lexicon-icon-info-circle-open')
+				container.querySelector('svg.lexicon-icon-test')
 			).toBeInTheDocument();
 		});
 
@@ -127,6 +127,42 @@ describe('FeatureIndicator', () => {
 			expect(screen.getByRole('button')).not.toHaveAttribute(
 				'aria-label'
 			);
+		});
+
+		it('renders the test icon for beta type', () => {
+			const {container} = render(<FeatureIndicator type="beta" />);
+
+			expect(
+				container.querySelector('svg.lexicon-icon-test')
+			).toBeInTheDocument();
+		});
+	});
+
+	describe('Type: Private Beta', () => {
+		it('renders the lock icon and label for the non-interactive badge', () => {
+			const {container} = render(
+				<FeatureIndicator type="private-beta" />
+			);
+
+			expect(screen.getByText('private-beta')).toBeInTheDocument();
+			expect(
+				container.querySelector('svg.lexicon-icon-lock')
+			).toBeInTheDocument();
+		});
+
+		it('renders an interactive button with the lock icon', () => {
+			const {container} = render(
+				<FeatureIndicator
+					interactive={true}
+					learnResourceContext="https://learn.liferay.com/test-url"
+					type="private-beta"
+				/>
+			);
+
+			expect(screen.getByRole('button')).toBeInTheDocument();
+			expect(
+				container.querySelector('svg.lexicon-icon-lock')
+			).toBeInTheDocument();
 		});
 	});
 

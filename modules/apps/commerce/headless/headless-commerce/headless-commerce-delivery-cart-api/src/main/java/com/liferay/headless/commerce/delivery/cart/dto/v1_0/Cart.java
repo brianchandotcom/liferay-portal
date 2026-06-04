@@ -841,7 +841,7 @@ public class Cart implements Serializable {
 	private Supplier<String> _deliveryTermLabelSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Validation messages collected during cart-level validation. Each message names a missing or invalid field.",
+		description = "Validation messages collected during cart-level validation. Each message names a missing or invalid field. Populated when a single cart is fetched, created, or updated, when a coupon code is applied, and on a failed checkout. Omitted in cart list responses.",
 		example = "[Billing address is required., Shipping method is required.]"
 	)
 	public String[] getErrorMessages() {
@@ -878,7 +878,7 @@ public class Cart implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Validation messages collected during cart-level validation. Each message names a missing or invalid field."
+		description = "Validation messages collected during cart-level validation. Each message names a missing or invalid field. Populated when a single cart is fetched, created, or updated, when a coupon code is applied, and on a failed checkout. Omitted in cart list responses."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] errorMessages;
@@ -2343,7 +2343,7 @@ public class Cart implements Serializable {
 	private Supplier<Boolean> _useAsBillingSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Aggregate validation flag -- true when no cart-level error messages and no item-level errors are present. Read-only.",
+		description = "Aggregate validation flag. True when no cart-level error messages and no item-level errors are present. Populated when a single cart is fetched, created, or updated, when a coupon code is applied, and when the cart is checked out. Omitted in cart list responses. Read-only.",
 		example = "true"
 	)
 	public Boolean getValid() {
@@ -2380,7 +2380,7 @@ public class Cart implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Aggregate validation flag -- true when no cart-level error messages and no item-level errors are present. Read-only."
+		description = "Aggregate validation flag. True when no cart-level error messages and no item-level errors are present. Populated when a single cart is fetched, created, or updated, when a coupon code is applied, and when the cart is checked out. Omitted in cart list responses. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean valid;
@@ -3351,4 +3351,4 @@ public class Cart implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1113803437
+// LIFERAY-REST-BUILDER-HASH:-772923515

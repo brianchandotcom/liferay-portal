@@ -14,7 +14,10 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {
+	PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
+	PROPERTY_SITE_COLUMN_INDEX,
 	enableCommerceChannel,
+	expectPropertyColumn,
 	findChannel,
 	goToSettingsStep,
 	syncAnalyticsCloud,
@@ -152,5 +155,41 @@ test(
 					.catch(() => {});
 			}
 		}
+	}
+);
+
+test(
+	'A property with commerce disabled shows a dash for channels and counts its sites',
+	{
+		tag: '@LRAC-12575',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		await syncAnalyticsCloud({
+			apiHelpers,
+			channel,
+			page,
+			project,
+			siteName: site.name,
+		});
+
+		await goToSettingsStep({page, stepName: 'Properties'});
+
+		// With the commerce toggle disabled the channels column shows a dash
+
+		await expectPropertyColumn({
+			channelName: channel.name,
+			expectedValue: '-',
+			index: PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
+			page,
+		});
+
+		// The synced site is counted
+
+		await expectPropertyColumn({
+			channelName: channel.name,
+			expectedValue: '1',
+			index: PROPERTY_SITE_COLUMN_INDEX,
+			page,
+		});
 	}
 );

@@ -12,9 +12,17 @@ const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
 let aiHubURL = '';
 let liferayDXPURL = '';
 
+let cellAuthorizationAvailable: boolean | null = null;
+
 export function setURLs(aiHub: string, liferayDXP: string) {
 	aiHubURL = aiHub;
 	liferayDXPURL = liferayDXP;
+}
+
+function shouldUseCellAuthorization(): boolean {
+	return (
+		Boolean((window as any).Liferay) && cellAuthorizationAvailable !== false
+	);
 }
 
 async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
@@ -30,6 +38,12 @@ async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
 				method: 'POST',
 			}
 		);
+
+		if (response.status === 404) {
+			cellAuthorizationAvailable = false;
+
+			return null;
+		}
 
 		if (!response.ok) {
 			throw new Error(
@@ -51,11 +65,11 @@ async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
 			throw new Error('Unable to find service URL.');
 		}
 
+		cellAuthorizationAvailable = true;
+
 		return data as AuthorizationToken;
 	}
-	catch (error) {
-		console.warn(error instanceof Error ? error.message : String(error));
-
+	catch {
 		return null;
 	}
 }
@@ -86,7 +100,7 @@ export async function createEventSource(): Promise<EventSource | null> {
 		fetch: async (input, init) => {
 			const headers = new Headers({Accept: 'text/event-stream'});
 
-			if ((window as any).Liferay) {
+			if (shouldUseCellAuthorization()) {
 				const authorizationToken = await postAuthorizationToken();
 
 				if (authorizationToken?.accessToken) {
@@ -116,23 +130,19 @@ export async function postChatMessage(
 		'Content-Type': 'application/json',
 	});
 
-	if ((window as any).Liferay) {
+	if (shouldUseCellAuthorization()) {
 		const authorizationToken = await postAuthorizationToken();
 
-		if (!authorizationToken) {
-			throw new Error(
-				'Unable to obtain authorization token for chat message.'
+		if (authorizationToken) {
+			headers.set(
+				'Authorization',
+				`Bearer ${authorizationToken.accessToken}`
+			);
+			headers.set(
+				'Liferay-AI-Hub-Cell-On-Behalf-Of',
+				authorizationToken.userToken
 			);
 		}
-
-		headers.set(
-			'Authorization',
-			`Bearer ${authorizationToken.accessToken}`
-		);
-		headers.set(
-			'Liferay-AI-Hub-Cell-On-Behalf-Of',
-			authorizationToken.userToken
-		);
 	}
 
 	return fetch(

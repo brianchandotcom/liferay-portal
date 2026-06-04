@@ -44,9 +44,12 @@ function main {
 	local bucket_name=""
 	local region=""
 
-	local terraform_args
+	local terraform_args=()
 
-	readarray -t terraform_args < <(_get_terraform_apply_args "${1}" "${2}")
+	while IFS= read -r terraform_arg
+	do
+		terraform_args+=("${terraform_arg}")
+	done < <(_get_terraform_apply_args "${1}" "${2}")
 
 	if jq --exit-status '.variables.tfstate_bucket_name' "${1}" &> /dev/null
 	then
@@ -334,7 +337,16 @@ function _resolve_path {
 		exit 1
 	fi
 
-	printf '%s\n' "$(cd "$(dirname "${file_path}")" && pwd)/$(basename "${file_path}")"
+	local dir_path
+
+	if ! dir_path=$(cd "$(dirname "${file_path}")" && pwd)
+	then
+		echo "Failed to resolve directory for ${file_path}." >&2
+
+		exit 1
+	fi
+
+	printf '%s/%s\n' "${dir_path}" "$(basename "${file_path}")"
 }
 
 function _set_up_gcp_gitops {

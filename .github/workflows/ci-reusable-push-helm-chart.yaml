@@ -15,7 +15,7 @@ jobs:
                     filter: blob:none
                     show-progress: false
             -   env:
-                    HELM_CHART_REGISTRY_NONPRD: ${{vars.HELM_CHART_REGISTRY_NONPRD}}
+                    HELM_CHART_REGISTRY_NON_PRODUCTION: ${{vars.HELM_CHART_REGISTRY_NON_PRODUCTION}}
                 id: vars
                 name: Set up variables
                 run: |
@@ -33,7 +33,7 @@ jobs:
                         echo "CHART_VERSION=${chart_version}" >> ${GITHUB_ENV}
                         echo "chart_version=${chart_version}" >> ${GITHUB_OUTPUT}
 
-                        local registry_path="${HELM_CHART_REGISTRY_NONPRD}/$(echo "${GITHUB_REF_NAME}" | tr 'A-Z/' 'a-z-')"
+                        local registry_path="${HELM_CHART_REGISTRY_NON_PRODUCTION}/$(echo "${GITHUB_REF_NAME}" | tr 'A-Z/' 'a-z-')"
 
                         local image_ref="${registry_path}/${{inputs.chart_name}}:${chart_version}${{inputs.image_tag_suffix}}"
 
@@ -47,8 +47,8 @@ jobs:
                 name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRD}}
-                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NONPRD}}
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NON_PRODUCTION}}
+                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NON_PRODUCTION}}
             -   name: Install oras
                 uses: oras-project/setup-oras@v1
             -   name: Log in to GAR

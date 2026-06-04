@@ -243,7 +243,7 @@ test(
 
 		await expect(
 			page.getByText(
-				'Builds the data-analytics-asset-* attributes for an asset entry.'
+				'Build the data-analytics-asset-* attributes for an asset entry.'
 			)
 		).toBeVisible();
 

@@ -194,6 +194,8 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
+import jakarta.portlet.Portlet;
+
 import java.io.Serializable;
 
 import java.sql.Connection;
@@ -216,6 +218,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -4306,6 +4313,28 @@ public class ObjectDefinitionLocalServiceTest {
 			));
 	}
 
+	private String _getPortletDisplayCategory(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectDefinitionLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		for (ServiceReference<Portlet> serviceReference :
+				bundleContext.getServiceReferences(
+					Portlet.class,
+					"(jakarta.portlet.name=" + objectDefinition.getPortletId() +
+						")")) {
+
+			return String.valueOf(
+				serviceReference.getProperty(
+					"com.liferay.portlet.display-category"));
+		}
+
+		return null;
+	}
+
 	private int _getSharingEntriesCount(ObjectDefinition objectDefinition) {
 		return _sharingEntryLocalService.getCompanySharingEntriesCount(
 			objectDefinition.getCompanyId(),
@@ -5051,8 +5080,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertFalse(objectDefinition.isAllowStandaloneObjectEntry());
 
-		// Panel app is not visible when the allow standalone object entry
-		// setting is disabled
+		// Panel app is not visible and the portlet is not selectable as a page
+		// widget when the allow standalone object entry setting is disabled
 
 		objectDefinition.setPanelCategoryKey(RandomTestUtil.randomString());
 
@@ -5068,9 +5097,11 @@ public class ObjectDefinitionLocalServiceTest {
 				).build()));
 
 		Assert.assertFalse(_isPanelAppRegistered(objectDefinition));
+		Assert.assertEquals(
+			"category.hidden", _getPortletDisplayCategory(objectDefinition));
 
-		// Panel app is visible when the allow standalone object entry setting
-		// is enabled
+		// Panel app is visible and the portlet is selectable as a page widget
+		// when the allow standalone object entry setting is enabled
 
 		objectDefinition = _updateCustomObjectDefinition(
 			objectDefinition.getClassName(), objectDefinition,
@@ -5084,6 +5115,8 @@ public class ObjectDefinitionLocalServiceTest {
 				).build()));
 
 		Assert.assertTrue(_isPanelAppRegistered(objectDefinition));
+		Assert.assertEquals(
+			"category.object", _getPortletDisplayCategory(objectDefinition));
 	}
 
 	private ObjectDefinition _updateCustomObjectDefinition(

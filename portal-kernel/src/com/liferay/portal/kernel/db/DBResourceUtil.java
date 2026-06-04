@@ -59,34 +59,26 @@ public class DBResourceUtil {
 		throws Exception {
 
 		if (DBInspector.isSchemaSnapshotEnabled()) {
-			if (_liferayTableNames != null) {
-				Set<String> tableNames = new TreeSet<>(
-					String.CASE_INSENSITIVE_ORDER);
+			Set<String> liferayTableNames = _liferayTableNames;
 
-				tableNames.addAll(_liferayTableNames);
+			if (liferayTableNames == null) {
+				synchronized (DBResourceUtil.class) {
+					liferayTableNames = _liferayTableNames;
 
-				return tableNames;
-			}
+					if (liferayTableNames == null) {
+						liferayTableNames = _buildLiferayTableNames(connection);
 
-			synchronized (DBResourceUtil.class) {
-				if (_liferayTableNames != null) {
-					Set<String> tableNames = new TreeSet<>(
-						String.CASE_INSENSITIVE_ORDER);
-
-					tableNames.addAll(_liferayTableNames);
-
-					return tableNames;
+						_liferayTableNames = liferayTableNames;
+					}
 				}
-
-				_liferayTableNames = _buildLiferayTableNames(connection);
-
-				Set<String> tableNames = new TreeSet<>(
-					String.CASE_INSENSITIVE_ORDER);
-
-				tableNames.addAll(_liferayTableNames);
-
-				return tableNames;
 			}
+
+			Set<String> tableNames = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			tableNames.addAll(liferayTableNames);
+
+			return tableNames;
 		}
 
 		return _buildLiferayTableNames(connection);
@@ -102,34 +94,26 @@ public class DBResourceUtil {
 
 	public static Set<String> getModuleTableNames() {
 		if (DBInspector.isSchemaSnapshotEnabled()) {
-			if (_moduleTableNames != null) {
-				Set<String> tableNames = new TreeSet<>(
-					String.CASE_INSENSITIVE_ORDER);
+			Set<String> moduleTableNames = _moduleTableNames;
 
-				tableNames.addAll(_moduleTableNames);
+			if (moduleTableNames == null) {
+				synchronized (DBResourceUtil.class) {
+					moduleTableNames = _moduleTableNames;
 
-				return tableNames;
-			}
+					if (moduleTableNames == null) {
+						moduleTableNames = _buildModuleTableNames();
 
-			synchronized (DBResourceUtil.class) {
-				if (_moduleTableNames != null) {
-					Set<String> tableNames = new TreeSet<>(
-						String.CASE_INSENSITIVE_ORDER);
-
-					tableNames.addAll(_moduleTableNames);
-
-					return tableNames;
+						_moduleTableNames = moduleTableNames;
+					}
 				}
-
-				_moduleTableNames = _buildModuleTableNames();
-
-				Set<String> tableNames = new TreeSet<>(
-					String.CASE_INSENSITIVE_ORDER);
-
-				tableNames.addAll(_moduleTableNames);
-
-				return tableNames;
 			}
+
+			Set<String> tableNames = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			tableNames.addAll(moduleTableNames);
+
+			return tableNames;
 		}
 
 		return _buildModuleTableNames();
@@ -192,34 +176,26 @@ public class DBResourceUtil {
 	}
 
 	public static Set<String> getPortalTableNames() {
-		if (_portalTableNames != null) {
-			Set<String> tableNames = new TreeSet<>(
-				String.CASE_INSENSITIVE_ORDER);
+		Set<String> portalTableNames = _portalTableNames;
 
-			tableNames.addAll(_portalTableNames);
+		if (portalTableNames == null) {
+			synchronized (DBResourceUtil.class) {
+				portalTableNames = _portalTableNames;
 
-			return tableNames;
-		}
+				if (portalTableNames == null) {
+					portalTableNames = parseCreateTableSQL(
+						getPortalTablesSQL());
 
-		synchronized (DBResourceUtil.class) {
-			if (_portalTableNames != null) {
-				Set<String> tableNames = new TreeSet<>(
-					String.CASE_INSENSITIVE_ORDER);
-
-				tableNames.addAll(_portalTableNames);
-
-				return tableNames;
+					_portalTableNames = portalTableNames;
+				}
 			}
-
-			_portalTableNames = parseCreateTableSQL(getPortalTablesSQL());
-
-			Set<String> tableNames = new TreeSet<>(
-				String.CASE_INSENSITIVE_ORDER);
-
-			tableNames.addAll(_portalTableNames);
-
-			return tableNames;
 		}
+
+		Set<String> tableNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+
+		tableNames.addAll(portalTableNames);
+
+		return tableNames;
 	}
 
 	public static Map<String, String[]> getPortalTablesPrimaryKeyColumnNames() {

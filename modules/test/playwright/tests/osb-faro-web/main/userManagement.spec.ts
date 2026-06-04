@@ -762,3 +762,35 @@ test(
 		}
 	}
 );
+
+test(
+	'Admin and Owner users can add data sources',
+	{
+		tag: ['@LRAC-9090', '@LRAC-9093'],
+	},
+	async ({page, project}) => {
+		const privilegedUsers = [
+			'michelle.hoshi@faro.io',
+			'bryan.cheung@faro.io',
+		];
+
+		try {
+			for (const email of privilegedUsers) {
+				await signInToAnalyticsCloud(page, email);
+
+				await navigateToACSettingsViaURL({
+					acPage: ACPage.dataSourcePage,
+					page,
+					projectID: project.groupId,
+				});
+
+				await expect(
+					page.getByRole('button', {name: 'Add Data Source'})
+				).toBeVisible();
+			}
+		}
+		finally {
+			await signInToAnalyticsCloud(page, faroConfig.user.login);
+		}
+	}
+);

@@ -4,9 +4,10 @@
  */
 
 import ClayButton from '@clayui/button';
+import {openToast} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
-import {getDefaultConfig} from '../constants';
+import {buildInitialConfig} from '../constants';
 import {
 	EngineConfig,
 	EngineKey,
@@ -38,19 +39,24 @@ function isConfigValid(config: HealthScanConfig): boolean {
 
 interface Props {
 	defaultTimeZoneId: string;
+	domainId: number | null;
+	scanConfig: string | null;
+	schedule: Partial<ScheduleConfig> | null;
 	timeZones: TimeZoneOption[];
 }
 
 export default function HealthScanConfiguration({
 	defaultTimeZoneId,
+	domainId,
+	scanConfig,
+	schedule,
 	timeZones,
 }: Props) {
-	const [savedConfig] = useState<HealthScanConfig>(() =>
-		getDefaultConfig(defaultTimeZoneId)
+	const [savedConfig, setSavedConfig] = useState<HealthScanConfig>(() =>
+		buildInitialConfig(defaultTimeZoneId, scanConfig, schedule)
 	);
-	const [config, setConfig] = useState<HealthScanConfig>(() =>
-		getDefaultConfig(defaultTimeZoneId)
-	);
+	const [config, setConfig] = useState<HealthScanConfig>(savedConfig);
+	const [saving, setSaving] = useState(false);
 
 	const valid = useMemo(() => isConfigValid(config), [config]);
 
@@ -61,12 +67,66 @@ export default function HealthScanConfiguration({
 		}));
 	}
 
-	function handleScheduleChange(schedule: ScheduleConfig) {
-		setConfig((current) => ({...current, schedule}));
+	function handleScheduleChange(nextSchedule: ScheduleConfig) {
+		setConfig((current) => ({...current, schedule: nextSchedule}));
 	}
 
 	function handleCancel() {
 		setConfig(savedConfig);
+	}
+
+	async function handleSave() {
+		if (!domainId) {
+			return;
+		}
+
+		setSaving(true);
+
+		try {
+			const response = await Liferay.Util.fetch(
+				`/o/seo-studio/domains/${domainId}`,
+				{
+					body: JSON.stringify({
+						autoScanEnabled: config.schedule.autoScanEnabled,
+						scanConfig: JSON.stringify({engines: config.engines}),
+						scanDayOfMonth: config.schedule.scanDayOfMonth,
+						scanDayOfWeek: config.schedule.scanDayOfWeek,
+						scanFrequency: config.schedule.scanFrequency,
+						scanTime: config.schedule.scanTime,
+						scanTimeZone: config.schedule.scanTimeZone,
+					}),
+					headers: {'Content-Type': 'application/json'},
+					method: 'PATCH',
+				}
+			);
+
+			if (response.ok) {
+				setSavedConfig(config);
+
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-completed-successfully'
+					),
+					type: 'success',
+				});
+			}
+			else {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			}
+		}
+		catch {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+		}
+
+		setSaving(false);
 	}
 
 	return (
@@ -91,11 +151,16 @@ export default function HealthScanConfiguration({
 
 				<div className="sheet-footer">
 					<ClayButton.Group spaced>
-						<ClayButton disabled={!valid} displayType="primary">
+						<ClayButton
+							disabled={!valid || !domainId || saving}
+							displayType="primary"
+							onClick={handleSave}
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 
 						<ClayButton
+							disabled={saving}
 							displayType="secondary"
 							onClick={handleCancel}
 						>

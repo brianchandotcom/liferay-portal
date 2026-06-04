@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {EngineKey, HealthScanConfig} from './types';
+import {EngineKey, HealthScanConfig, ScheduleConfig} from './types';
 
 interface EngineDescriptor {
 	key: EngineKey;
@@ -109,4 +109,35 @@ export function getDefaultConfig(defaultTimeZoneId: string): HealthScanConfig {
 			scanTimeZone: defaultTimeZoneId,
 		},
 	};
+}
+
+export function buildInitialConfig(
+	defaultTimeZoneId: string,
+	scanConfig: string | null,
+	schedule: Partial<ScheduleConfig> | null
+): HealthScanConfig {
+	const config = getDefaultConfig(defaultTimeZoneId);
+
+	if (scanConfig) {
+		const parsedConfig = JSON.parse(
+			scanConfig
+		) as Partial<HealthScanConfig>;
+
+		if (parsedConfig.engines) {
+			for (const key of Object.keys(config.engines) as EngineKey[]) {
+				if (parsedConfig.engines[key]) {
+					config.engines[key] = {
+						...config.engines[key],
+						...parsedConfig.engines[key],
+					};
+				}
+			}
+		}
+	}
+
+	if (schedule) {
+		config.schedule = {...config.schedule, ...schedule};
+	}
+
+	return config;
 }

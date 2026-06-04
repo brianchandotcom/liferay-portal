@@ -12,9 +12,19 @@ function main {
 	if [ "${#}" -ne 2 ]
 	then
 		echo "Usage: ${0} <configuration-json-file> <versions-tfvars-file>" >&2
+		echo "" >&2
+		echo "See cloud/scripts/config.json.example_aws for a sample." >&2
 
 		exit 1
 	fi
+
+	_check_utils aws jq kubectl terraform
+
+	_check_terraform_version "1.10.0"
+
+	_validate_config_json "${1}"
+
+	_validate_versions_tfvars "${2}"
 
 	_generate_tfvars "${1}" "${_SCRIPTS_DIR}/global_terraform.tfvars"
 
@@ -62,6 +72,38 @@ function main {
 	_set_up_aws_gitops "${terraform_args}" "${bucket_name}" "${region}" "${deployment_name}"
 
 	_port_forward_argo_cd
+}
+
+function _check_terraform_version {
+	local found_version
+
+	found_version=$(terraform --version | awk '/^Terraform v/ {print $2; exit}')
+	found_version="${found_version#v}"
+
+	local required_version="${1}"
+
+	local lowest_version
+
+	lowest_version=$(printf "%s\n%s\n" "${required_version}" "${found_version}" | sort --version-sort | head -n 1)
+
+	if [ "${lowest_version}" != "${required_version}" ]
+	then
+		echo "The installed Terraform version ${found_version} is below minimum version ${required_version}." >&2
+
+		exit 1
+	fi
+}
+
+function _check_utils {
+	for util in "${@}"
+	do
+		if (! command -v "${util}" &> /dev/null)
+		then
+			echo "The utility ${util} is not installed."
+
+			exit 1
+		fi
+	done
 }
 
 function _configure_s3_bucket {
@@ -195,21 +237,6 @@ function _create_s3_bucket {
 
 function _generate_tfvars {
 	local configuration_json_file="${1}"
-
-	if [ ! -f "${configuration_json_file}" ]
-	then
-		echo "Configuration JSON file ${configuration_json_file} does not exist." >&2
-
-		exit 1
-	fi
-
-	if ! jq --exit-status '.variables | objects' "${configuration_json_file}" > /dev/null
-	then
-		echo "The configuration JSON file must contain a root object named \"variables\"." >&2
-
-		exit 1
-	fi
-
 	local tfvars_file="${2}"
 
 	echo "Generating ${tfvars_file} from ${configuration_json_file}."
@@ -253,16 +280,9 @@ function _get_terraform_apply_args {
 
 	local versions_tfvars_file="${2}"
 
-	if [ ! -f "${versions_tfvars_file}" ]
-	then
-		echo "${versions_tfvars_file} does not exist." >&2
-
-		exit 1
-	fi
-
 	local versions_tfvars_file_path
 
-	versions_tfvars_file_path=$(realpath "${versions_tfvars_file}")
+	versions_tfvars_file_path=$(_resolve_path "${versions_tfvars_file}")
 
 	local apply_args=(
 		"-var-file=${versions_tfvars_file_path}"
@@ -328,6 +348,12 @@ function _port_forward_argo_cd {
 
 function _pushd {
 	pushd "${1}" > /dev/null
+}
+
+function _resolve_path {
+	local file_path="${1}"
+
+	printf '%s\n' "$(cd "$(dirname "${file_path}")" && pwd)/$(basename "${file_path}")"
 }
 
 function _set_up_aws_eks {
@@ -471,6 +497,42 @@ EOF
 	terraform apply ${terraform_args} "${@:7}"
 
 	_popd
+}
+
+function _validate_config_json {
+	local configuration_json_file="${1}"
+
+	if [ ! -f "${configuration_json_file}" ]
+	then
+		echo "Configuration JSON file ${configuration_json_file} does not exist." >&2
+
+		exit 1
+	fi
+
+	if ! jq empty "${configuration_json_file}" &> /dev/null
+	then
+		echo "Configuration JSON file ${configuration_json_file} is not valid JSON." >&2
+
+		exit 1
+	fi
+
+	if ! jq --exit-status '.variables | objects' "${configuration_json_file}" > /dev/null
+	then
+		echo "The configuration JSON file must contain a root object named \"variables\"." >&2
+
+		exit 1
+	fi
+}
+
+function _validate_versions_tfvars {
+	local versions_tfvars_file="${1}"
+
+	if [ ! -f "${versions_tfvars_file}" ]
+	then
+		echo "Versions tfvars file ${versions_tfvars_file} does not exist." >&2
+
+		exit 1
+	fi
 }
 
 main "${@}"

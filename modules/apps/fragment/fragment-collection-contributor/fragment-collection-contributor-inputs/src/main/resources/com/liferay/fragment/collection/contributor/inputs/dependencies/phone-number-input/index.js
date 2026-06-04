@@ -214,6 +214,16 @@ async function main() {
 		focusInput(inputElement);
 	}
 
+	// Restrict typed characters to digits, spaces, dashes, parentheses and dots
+
+	inputElement.addEventListener('input', () => {
+		const filtered = inputElement.value.replace(/[^0-9\s\-().]/g, '');
+
+		if (filtered !== inputElement.value) {
+			inputElement.value = filtered;
+		}
+	});
+
 	// Add prefix picker listeners
 
 	if (!IS_FIXED && prefixTrigger && prefixMenu) {

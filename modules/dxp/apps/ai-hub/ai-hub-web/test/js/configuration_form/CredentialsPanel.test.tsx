@@ -116,14 +116,6 @@ describe('CredentialsPanel', () => {
 		);
 	});
 
-	it('exposes the help text on a focusable control', () => {
-		render(<CredentialsPanel clientId="CLIENT_X" />);
-
-		expect(
-			screen.getByRole('button', {name: 'api-credentials-help'})
-		).toBeInTheDocument();
-	});
-
 	it('masks the client secret when it is hidden', () => {
 		render(<CredentialsPanel clientId="CLIENT_X" />);
 

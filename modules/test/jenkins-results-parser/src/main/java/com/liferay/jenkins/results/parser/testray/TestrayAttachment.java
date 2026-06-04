@@ -7,10 +7,14 @@ package com.liferay.jenkins.results.parser.testray;
 
 import java.net.URL;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public interface TestrayAttachment {
+
+	public JSONObject getJSONObject();
 
 	public String getKey();
 

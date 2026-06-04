@@ -9,6 +9,10 @@ import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
@@ -26,6 +30,21 @@ public class TopLevelStandaloneBuildTestrayCaseResult
 	@Override
 	public String getName() {
 		return "Top Level Build";
+	}
+
+	@Override
+	public List<TestrayAttachment> getTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		testrayAttachments.add(getTopLevelBuildDatabaseTestrayAttachment());
+		testrayAttachments.add(getTopLevelBuildReportTestrayAttachment());
+		testrayAttachments.add(getTopLevelJenkinsConsoleTestrayAttachment());
+		testrayAttachments.add(getTopLevelJenkinsReportTestrayAttachment());
+		testrayAttachments.add(getTopLevelJobSummaryTestrayAttachment());
+
+		testrayAttachments.removeAll(Collections.singleton(null));
+
+		return testrayAttachments;
 	}
 
 	@Override

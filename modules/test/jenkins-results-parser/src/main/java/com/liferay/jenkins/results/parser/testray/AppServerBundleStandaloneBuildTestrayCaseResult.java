@@ -57,6 +57,7 @@ public class AppServerBundleStandaloneBuildTestrayCaseResult
 			super.getTestrayAttachments();
 
 		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
+		testrayAttachments.add(getParentTestrayCaseResultTestrayAttachment());
 
 		testrayAttachments.removeAll(Collections.singleton(null));
 

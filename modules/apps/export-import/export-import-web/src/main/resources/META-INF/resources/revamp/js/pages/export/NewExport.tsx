@@ -23,10 +23,7 @@ import {
 } from '../../services/getExportPreview';
 import {postExportProcess} from '../../services/postExportProcess';
 import {ExportPreview} from '../../types/exportImportPreview';
-import {
-	CONTENT_SECTION_KEY,
-	SITE_BUILDER_SECTION_KEY,
-} from '../../utils/contentSelection';
+import {toProcessRequestFlags} from '../../utils/contentSelection';
 import {toRequestPortletDataHandlers} from '../../utils/toRequestPortletDataHandlers';
 import DataSelection from './components/DataSelection';
 import {PageTreeModalConfiguration} from './components/PageTreeModal';
@@ -120,30 +117,18 @@ export function NewExport({
 					| ContentSelection
 					| undefined;
 
-				const commentsAndRatings = contentSelection?.[
-					CONTENT_SECTION_KEY
-				]?.commentsAndRatings as Record<string, boolean> | undefined;
-				const lookAndFeel = contentSelection?.[SITE_BUILDER_SECTION_KEY]
-					?.lookAndFeel as Record<string, boolean> | undefined;
-
 				const result = await postExportProcess({
 					exportProcessRequest: {
 						...normalizeDateFilter(values.dateFilter),
-						comments: !!commentsAndRatings?.comments,
+						...toProcessRequestFlags(contentSelection),
 						deletions: !!values.deletions,
-						logo: !!lookAndFeel?.logo,
 						name: values.name,
 						permissions: !!values.permissions,
-						ratings: !!commentsAndRatings?.ratings,
 						requestPortletDataHandlers:
 							toRequestPortletDataHandlers(
 								sections,
 								values.contentSelection
 							),
-						sitePagesSettings: !!lookAndFeel?.sitePagesSettings,
-						siteTemplateSettings:
-							!!lookAndFeel?.siteTemplateSettings,
-						themeSettings: !!lookAndFeel?.themeSettings,
 					},
 					url: exportProcessAPIURL,
 				});

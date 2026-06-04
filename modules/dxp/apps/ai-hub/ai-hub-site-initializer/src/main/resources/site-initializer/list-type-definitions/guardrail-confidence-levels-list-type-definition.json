@@ -1,5 +1,5 @@
 {
-	"externalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE_CONFIDENCE_LEVELS",
+	"externalReferenceCode": "L_AI_HUB_GUARDRAIL_CONFIDENCE_LEVELS",
 	"listTypeEntries": [
 		{
 			"externalReferenceCode": "HIGH",
@@ -20,6 +20,6 @@
 			"system": true
 		}
 	],
-	"name": "AI Hub Model Armor Template Confidence Levels",
+	"name": "AI Hub Guardrail Confidence Levels",
 	"system": true
 }

@@ -4,7 +4,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "com.liferay.ai.hub.web.internal.fragment.renderer.EditModelArmorTemplateFragmentRenderer"
+						"key": "com.liferay.ai.hub.web.internal.fragment.renderer.EditGuardrailFragmentRenderer"
 					},
 					"fragmentConfig": {
 					},

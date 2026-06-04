@@ -1,5 +1,5 @@
 {
-	"externalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE_RESPONSIBLE_AI_LEVELS",
+	"externalReferenceCode": "L_AI_HUB_GUARDRAIL_RESPONSIBLE_AI_LEVELS",
 	"listTypeEntries": [
 		{
 			"externalReferenceCode": "HIGH",
@@ -26,6 +26,6 @@
 			"system": true
 		}
 	],
-	"name": "AI Hub Model Armor Template Responsible AI Levels",
+	"name": "AI Hub Guardrail Responsible AI Levels",
 	"system": true
 }

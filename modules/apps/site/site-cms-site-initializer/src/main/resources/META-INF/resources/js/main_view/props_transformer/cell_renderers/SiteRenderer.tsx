@@ -14,7 +14,7 @@ const SiteRenderer = ({itemData, value}: {itemData: any; value: string}) => {
 	if (itemData.type === SITE_TEMPLATE_TYPE) {
 		label = `${value} (${Liferay.Language.get('site-template')})`;
 	}
-	else if (itemData.stagingType && itemData.stagingType === 'STAGING') {
+	else if (itemData.stagingType === 'STAGING') {
 		label = `${value} (${Liferay.Language.get('staging')})`;
 	}
 

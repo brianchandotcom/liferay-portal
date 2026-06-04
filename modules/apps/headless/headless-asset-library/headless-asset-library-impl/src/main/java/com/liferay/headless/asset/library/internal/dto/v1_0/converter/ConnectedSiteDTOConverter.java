@@ -87,12 +87,12 @@ public class ConnectedSiteDTOConverter
 				setSearchable(depotEntryGroupRel::isSearchable);
 				setStagingType(
 					() -> {
-						if (_stagingGroupHelper.isStagingGroup(group)) {
-							return ConnectedSite.StagingType.STAGING;
-						}
-
 						if (_stagingGroupHelper.isLiveGroup(group)) {
 							return ConnectedSite.StagingType.LIVE;
+						}
+
+						if (_stagingGroupHelper.isStagingGroup(group)) {
+							return ConnectedSite.StagingType.STAGING;
 						}
 
 						return null;

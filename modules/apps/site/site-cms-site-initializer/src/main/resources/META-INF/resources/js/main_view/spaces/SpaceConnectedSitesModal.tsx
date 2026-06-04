@@ -44,7 +44,7 @@ const getConnectionLabel = (site: Site) => {
 		return `${site.descriptiveName} (${Liferay.Language.get('site-template')})`;
 	}
 
-	if (site.stagingType && site.stagingType === 'STAGING') {
+	if (site.stagingType === 'STAGING') {
 		return `${site.descriptiveName} (${Liferay.Language.get('staging')})`;
 	}
 

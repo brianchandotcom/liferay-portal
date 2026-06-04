@@ -1,53 +1,53 @@
 concurrency:
     cancel-in-progress: true
-    group: publish-cloud-preview-helm-charts-${{github.ref_name}}
+    group: push-cloud-preview-helm-charts-${{github.ref_name}}
 defaults:
     run:
         shell: bash
 jobs:
-    publish-aws:
+    push-aws:
         needs: set-up-variables
         uses: ./.github/workflows/ci-reusable-push-helm-chart.yaml
         with:
             chart_name: liferay-aws
             image_tag_suffix: ${{needs.set-up-variables.outputs.image_tag_suffix}}
             working_directory: ./cloud/helm/aws
-    publish-aws-infrastructure:
+    push-aws-infrastructure:
         needs: set-up-variables
         uses: ./.github/workflows/ci-reusable-push-helm-chart.yaml
         with:
             chart_name: liferay-aws-infrastructure
             image_tag_suffix: ${{needs.set-up-variables.outputs.image_tag_suffix}}
             working_directory: ./cloud/helm/aws-infrastructure
-    publish-aws-infrastructure-provider:
+    push-aws-infrastructure-provider:
         needs: set-up-variables
         uses: ./.github/workflows/ci-reusable-push-helm-chart.yaml
         with:
             chart_name: liferay-aws-infrastructure-provider
             image_tag_suffix: ${{needs.set-up-variables.outputs.image_tag_suffix}}
             working_directory: ./cloud/helm/aws-infrastructure-provider
-    publish-default:
+    push-default:
         needs: set-up-variables
         uses: ./.github/workflows/ci-reusable-push-helm-chart.yaml
         with:
             chart_name: liferay-default
             image_tag_suffix: ${{needs.set-up-variables.outputs.image_tag_suffix}}
             working_directory: ./cloud/helm/default
-    publish-gcp:
+    push-gcp:
         needs: set-up-variables
         uses: ./.github/workflows/ci-reusable-push-helm-chart.yaml
         with:
             chart_name: liferay-gcp
             image_tag_suffix: ${{needs.set-up-variables.outputs.image_tag_suffix}}
             working_directory: ./cloud/helm/gcp
-    publish-gcp-infrastructure:
+    push-gcp-infrastructure:
         needs: set-up-variables
         uses: ./.github/workflows/ci-reusable-push-helm-chart.yaml
         with:
             chart_name: liferay-gcp-infrastructure
             image_tag_suffix: ${{needs.set-up-variables.outputs.image_tag_suffix}}
             working_directory: ./cloud/helm/gcp-infrastructure
-    publish-gcp-infrastructure-provider:
+    push-gcp-infrastructure-provider:
         needs: set-up-variables
         uses: ./.github/workflows/ci-reusable-push-helm-chart.yaml
         with:

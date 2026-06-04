@@ -151,6 +151,11 @@ public class OpenSearchSearchEngineInformation
 		return "OpenSearch";
 	}
 
+	@Override
+	public boolean isInferenceAPISupported() {
+		return false;
+	}
+
 	@Reference
 	protected ConfigurationAdmin configurationAdmin;
 

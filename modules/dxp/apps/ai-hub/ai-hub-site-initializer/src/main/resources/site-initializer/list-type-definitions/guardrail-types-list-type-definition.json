@@ -1,5 +1,5 @@
 {
-	"externalReferenceCode": "L_AI_HUB_MODEL_ARMOR_TEMPLATE_GUARDRAIL_TYPES",
+	"externalReferenceCode": "L_AI_HUB_GUARDRAIL_GUARDRAIL_TYPES",
 	"listTypeEntries": [
 		{
 			"externalReferenceCode": "INPUT",
@@ -14,6 +14,6 @@
 			"system": true
 		}
 	],
-	"name": "AI Hub Model Armor Template Guardrail Types",
+	"name": "AI Hub Guardrail Types",
 	"system": true
 }

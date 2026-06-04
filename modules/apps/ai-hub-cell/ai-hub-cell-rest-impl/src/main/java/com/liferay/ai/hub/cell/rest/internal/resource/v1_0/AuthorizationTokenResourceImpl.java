@@ -6,7 +6,6 @@
 package com.liferay.ai.hub.cell.rest.internal.resource.v1_0;
 
 import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
-import com.liferay.ai.hub.cell.constants.AIHubCellConstants;
 import com.liferay.ai.hub.cell.rest.dto.v1_0.AuthorizationToken;
 import com.liferay.ai.hub.cell.rest.internal.web.cache.AIHubCellAccessTokenWebCacheItem;
 import com.liferay.ai.hub.cell.rest.internal.web.cache.AIHubCellUserTokenWebCacheItem;
@@ -58,8 +57,7 @@ public class AuthorizationTokenResourceImpl
 						OAuth2Application oAuth2Application =
 							_oAuth2ApplicationLocalService.
 								getOAuth2ApplicationByExternalReferenceCode(
-									AIHubCellConstants.
-										AI_HUB_CELL_OAUTH2_APPLICATION_ERC,
+									"AI-HUB-CELL-OAUTH2-APPLICATION",
 									contextCompany.getCompanyId());
 
 						return AIHubCellUserTokenWebCacheItem.get(

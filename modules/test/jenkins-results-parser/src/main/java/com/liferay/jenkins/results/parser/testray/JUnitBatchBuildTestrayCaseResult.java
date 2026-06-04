@@ -292,12 +292,10 @@ public class JUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public List<TestrayAttachment> getTestrayAttachments() {
-		List<TestrayAttachment> testrayAttachments =
-			super.getTestrayAttachments();
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
 		testrayAttachments.add(getFailureMessagesTestrayAttachment());
-		testrayAttachments.addAll(getLiferayLogTestrayAttachments());
-		testrayAttachments.addAll(getLiferayOSGiLogTestrayAttachments());
+		testrayAttachments.add(getParentTestrayCaseResultTestrayAttachment());
 
 		testrayAttachments.removeAll(Collections.singleton(null));
 

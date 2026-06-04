@@ -139,6 +139,10 @@ public class TestrayCaseResult {
 		return testrayCase.getName();
 	}
 
+	public TestrayCaseResult getParentTestrayCaseResult() {
+		return _parentTestrayCaseResult;
+	}
+
 	public String getPortalSHA() {
 		TestrayBuild testrayBuild = getTestrayBuild();
 
@@ -394,6 +398,12 @@ public class TestrayCaseResult {
 
 	public String[] getWarnings() {
 		return null;
+	}
+
+	public void setParentTestrayCaseResult(
+		TestrayCaseResult parentTestrayCaseResult) {
+
+		_parentTestrayCaseResult = parentTestrayCaseResult;
 	}
 
 	public void setTestrayCase(TestrayCase testrayCase) {
@@ -684,6 +694,7 @@ public class TestrayCaseResult {
 
 	private ErrorType _errorType;
 	private final JSONObject _jsonObject;
+	private TestrayCaseResult _parentTestrayCaseResult;
 	private TestrayBuild _testrayBuild;
 	private TestrayCase _testrayCase;
 	private boolean _testrayCaseCached;

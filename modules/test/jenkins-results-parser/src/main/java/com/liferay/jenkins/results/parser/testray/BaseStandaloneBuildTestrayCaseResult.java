@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,21 +88,6 @@ public abstract class BaseStandaloneBuildTestrayCaseResult
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	@Override
-	public List<TestrayAttachment> getTestrayAttachments() {
-		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
-
-		testrayAttachments.add(getTopLevelBuildDatabaseTestrayAttachment());
-		testrayAttachments.add(getTopLevelBuildReportTestrayAttachment());
-		testrayAttachments.add(getTopLevelJenkinsConsoleTestrayAttachment());
-		testrayAttachments.add(getTopLevelJenkinsReportTestrayAttachment());
-		testrayAttachments.add(getTopLevelJobSummaryTestrayAttachment());
-
-		testrayAttachments.removeAll(Collections.singleton(null));
-
-		return testrayAttachments;
 	}
 
 	@Override

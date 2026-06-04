@@ -80,6 +80,26 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		return _buildReport;
 	}
 
+	protected TestrayAttachment getParentTestrayCaseResultTestrayAttachment() {
+		TestrayCaseResult parentTestrayCaseResult =
+			getParentTestrayCaseResult();
+
+		if (parentTestrayCaseResult == null) {
+			return null;
+		}
+
+		String testrayCaseResultURL = String.valueOf(
+			parentTestrayCaseResult.getTestrayCaseResultURL());
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		return new DefaultTestrayAttachment(
+			this, parentTestrayCaseResult.getName(),
+			testrayCaseResultURL.replace(
+				String.valueOf(testrayServer.getURL()), ""),
+			parentTestrayCaseResult.getTestrayCaseResultURL());
+	}
+
 	protected TestrayAttachment getTestrayAttachment(
 		BuildReport buildReport, String name, String key) {
 

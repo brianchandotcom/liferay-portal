@@ -16,6 +16,9 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -197,6 +200,17 @@ public class ModulesBatchBuildTestrayCaseResult
 		}
 
 		return _testClassReport;
+	}
+
+	@Override
+	public List<TestrayAttachment> getTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		testrayAttachments.add(getParentTestrayCaseResultTestrayAttachment());
+
+		testrayAttachments.removeAll(Collections.singleton(null));
+
+		return testrayAttachments;
 	}
 
 	@Override

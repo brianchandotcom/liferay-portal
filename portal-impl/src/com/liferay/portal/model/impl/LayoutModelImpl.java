@@ -87,8 +87,7 @@ public class LayoutModelImpl
 		{"hidden_", Types.BOOLEAN}, {"system_", Types.BOOLEAN},
 		{"friendlyURL", Types.VARCHAR}, {"iconImageId", Types.BIGINT},
 		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
-		{"styleBookEntryERC", Types.VARCHAR},
-		{"styleBookEntryScopeERC", Types.VARCHAR}, {"css", Types.CLOB},
+		{"styleBookEntryERC", Types.VARCHAR}, {"css", Types.CLOB},
 		{"priority", Types.INTEGER}, {"faviconFileEntryERC", Types.VARCHAR},
 		{"faviconFileEntryScopeERC", Types.VARCHAR},
 		{"masterLPTEERC", Types.VARCHAR}, {"portletLPTEERC", Types.VARCHAR},
@@ -134,7 +133,6 @@ public class LayoutModelImpl
 		TABLE_COLUMNS_MAP.put("themeId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("colorSchemeId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("styleBookEntryERC", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("styleBookEntryScopeERC", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("faviconFileEntryERC", Types.VARCHAR);
@@ -153,7 +151,7 @@ public class LayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryERC VARCHAR(75) null,styleBookEntryScopeERC VARCHAR(75) null,css TEXT null,priority INTEGER,faviconFileEntryERC VARCHAR(75) null,faviconFileEntryScopeERC VARCHAR(75) null,masterLPTEERC VARCHAR(75) null,portletLPTEERC VARCHAR(75) null,portletLPTESERC VARCHAR(75) null,portletLPTELE BOOLEAN,layoutSetPrototypeLayoutERC VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
+		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryERC VARCHAR(75) null,css TEXT null,priority INTEGER,faviconFileEntryERC VARCHAR(75) null,faviconFileEntryScopeERC VARCHAR(75) null,masterLPTEERC VARCHAR(75) null,portletLPTEERC VARCHAR(75) null,portletLPTESERC VARCHAR(75) null,portletLPTELE BOOLEAN,layoutSetPrototypeLayoutERC VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
@@ -456,8 +454,6 @@ public class LayoutModelImpl
 				"colorSchemeId", Layout::getColorSchemeId);
 			attributeGetterFunctions.put(
 				"styleBookEntryERC", Layout::getStyleBookEntryERC);
-			attributeGetterFunctions.put(
-				"styleBookEntryScopeERC", Layout::getStyleBookEntryScopeERC);
 			attributeGetterFunctions.put("css", Layout::getCss);
 			attributeGetterFunctions.put("priority", Layout::getPriority);
 			attributeGetterFunctions.put(
@@ -580,9 +576,6 @@ public class LayoutModelImpl
 			attributeSetterBiConsumers.put(
 				"styleBookEntryERC",
 				(BiConsumer<Layout, String>)Layout::setStyleBookEntryERC);
-			attributeSetterBiConsumers.put(
-				"styleBookEntryScopeERC",
-				(BiConsumer<Layout, String>)Layout::setStyleBookEntryScopeERC);
 			attributeSetterBiConsumers.put(
 				"css", (BiConsumer<Layout, String>)Layout::setCss);
 			attributeSetterBiConsumers.put(
@@ -1828,26 +1821,6 @@ public class LayoutModelImpl
 
 	@JSON
 	@Override
-	public String getStyleBookEntryScopeERC() {
-		if (_styleBookEntryScopeERC == null) {
-			return "";
-		}
-		else {
-			return _styleBookEntryScopeERC;
-		}
-	}
-
-	@Override
-	public void setStyleBookEntryScopeERC(String styleBookEntryScopeERC) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_styleBookEntryScopeERC = styleBookEntryScopeERC;
-	}
-
-	@JSON
-	@Override
 	public String getCss() {
 		if (_css == null) {
 			return "";
@@ -2524,7 +2497,6 @@ public class LayoutModelImpl
 		layoutImpl.setThemeId(getThemeId());
 		layoutImpl.setColorSchemeId(getColorSchemeId());
 		layoutImpl.setStyleBookEntryERC(getStyleBookEntryERC());
-		layoutImpl.setStyleBookEntryScopeERC(getStyleBookEntryScopeERC());
 		layoutImpl.setCss(getCss());
 		layoutImpl.setPriority(getPriority());
 		layoutImpl.setFaviconFileEntryERC(getFaviconFileEntryERC());
@@ -2601,8 +2573,6 @@ public class LayoutModelImpl
 			this.<String>getColumnOriginalValue("colorSchemeId"));
 		layoutImpl.setStyleBookEntryERC(
 			this.<String>getColumnOriginalValue("styleBookEntryERC"));
-		layoutImpl.setStyleBookEntryScopeERC(
-			this.<String>getColumnOriginalValue("styleBookEntryScopeERC"));
 		layoutImpl.setCss(this.<String>getColumnOriginalValue("css"));
 		layoutImpl.setPriority(
 			this.<Integer>getColumnOriginalValue("priority"));
@@ -2890,16 +2860,6 @@ public class LayoutModelImpl
 			layoutCacheModel.styleBookEntryERC = null;
 		}
 
-		layoutCacheModel.styleBookEntryScopeERC = getStyleBookEntryScopeERC();
-
-		String styleBookEntryScopeERC = layoutCacheModel.styleBookEntryScopeERC;
-
-		if ((styleBookEntryScopeERC != null) &&
-			(styleBookEntryScopeERC.length() == 0)) {
-
-			layoutCacheModel.styleBookEntryScopeERC = null;
-		}
-
 		layoutCacheModel.css = getCss();
 
 		String css = layoutCacheModel.css;
@@ -3119,7 +3079,6 @@ public class LayoutModelImpl
 	private String _themeId;
 	private String _colorSchemeId;
 	private String _styleBookEntryERC;
-	private String _styleBookEntryScopeERC;
 	private String _css;
 	private int _priority;
 	private String _faviconFileEntryERC;
@@ -3198,8 +3157,6 @@ public class LayoutModelImpl
 		_columnOriginalValues.put("themeId", _themeId);
 		_columnOriginalValues.put("colorSchemeId", _colorSchemeId);
 		_columnOriginalValues.put("styleBookEntryERC", _styleBookEntryERC);
-		_columnOriginalValues.put(
-			"styleBookEntryScopeERC", _styleBookEntryScopeERC);
 		_columnOriginalValues.put("css", _css);
 		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("faviconFileEntryERC", _faviconFileEntryERC);
@@ -3316,37 +3273,35 @@ public class LayoutModelImpl
 
 		columnBitmasks.put("styleBookEntryERC", 1073741824L);
 
-		columnBitmasks.put("styleBookEntryScopeERC", 2147483648L);
+		columnBitmasks.put("css", 2147483648L);
 
-		columnBitmasks.put("css", 4294967296L);
+		columnBitmasks.put("priority", 4294967296L);
 
-		columnBitmasks.put("priority", 8589934592L);
+		columnBitmasks.put("faviconFileEntryERC", 8589934592L);
 
-		columnBitmasks.put("faviconFileEntryERC", 17179869184L);
+		columnBitmasks.put("faviconFileEntryScopeERC", 17179869184L);
 
-		columnBitmasks.put("faviconFileEntryScopeERC", 34359738368L);
+		columnBitmasks.put("masterLPTEERC", 34359738368L);
 
-		columnBitmasks.put("masterLPTEERC", 68719476736L);
+		columnBitmasks.put("portletLPTEERC", 68719476736L);
 
-		columnBitmasks.put("portletLPTEERC", 137438953472L);
+		columnBitmasks.put("portletLPTESERC", 137438953472L);
 
-		columnBitmasks.put("portletLPTESERC", 274877906944L);
+		columnBitmasks.put("portletLPTELE", 274877906944L);
 
-		columnBitmasks.put("portletLPTELE", 549755813888L);
+		columnBitmasks.put("layoutSetPrototypeLayoutERC", 549755813888L);
 
-		columnBitmasks.put("layoutSetPrototypeLayoutERC", 1099511627776L);
+		columnBitmasks.put("publishDate", 1099511627776L);
 
-		columnBitmasks.put("publishDate", 2199023255552L);
+		columnBitmasks.put("lastPublishDate", 2199023255552L);
 
-		columnBitmasks.put("lastPublishDate", 4398046511104L);
+		columnBitmasks.put("status", 4398046511104L);
 
-		columnBitmasks.put("status", 8796093022208L);
+		columnBitmasks.put("statusByUserId", 8796093022208L);
 
-		columnBitmasks.put("statusByUserId", 17592186044416L);
+		columnBitmasks.put("statusByUserName", 17592186044416L);
 
-		columnBitmasks.put("statusByUserName", 35184372088832L);
-
-		columnBitmasks.put("statusDate", 70368744177664L);
+		columnBitmasks.put("statusDate", 35184372088832L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
@@ -3355,4 +3310,4 @@ public class LayoutModelImpl
 	private Layout _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2023542510
+// LIFERAY-SERVICE-BUILDER-HASH:-648258715

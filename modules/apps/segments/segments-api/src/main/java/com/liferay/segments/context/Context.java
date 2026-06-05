@@ -35,6 +35,8 @@ public class Context
 
 	public static final String LOCAL_DATE = "localDate";
 
+	public static final String LOCAL_TIME = "localTime";
+
 	public static final String PATHNAME = "pathname";
 
 	public static final String REFERRER_URL = "referrerURL";

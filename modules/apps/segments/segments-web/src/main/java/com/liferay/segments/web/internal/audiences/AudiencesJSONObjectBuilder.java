@@ -142,6 +142,8 @@ public class AudiencesJSONObjectBuilder {
 		).put(
 			Context.LOCAL_DATE, "local_date"
 		).put(
+			Context.LOCAL_TIME, "local_time"
+		).put(
 			Context.REFERRER_URL, "referrer"
 		).put(
 			Context.REQUEST_PARAMETERS, "request_parameters"

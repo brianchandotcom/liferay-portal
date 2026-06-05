@@ -5,42 +5,42 @@ set -o nounset
 set -o pipefail
 
 function main {
-    local script_dir
-    script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+	local script_dir
+	script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
-    local cloud_dir
-    cloud_dir=$(cd "${script_dir}/../.." && pwd)
+	local cloud_dir
+	cloud_dir=$(cd "${script_dir}/../.." && pwd)
 
-    local charts=(
-        aws
-        aws-infrastructure
-        aws-infrastructure-provider
-        aws-marketplace
-        default
-        gcp
-        gcp-infrastructure
-        gcp-infrastructure-provider
-    )
+	local charts=(
+		aws
+		aws-infrastructure
+		aws-infrastructure-provider
+		aws-marketplace
+		default
+		gcp
+		gcp-infrastructure
+		gcp-infrastructure-provider
+	)
 
-    for chart in "${charts[@]}"
-    do
-        local test_files
+	for chart in "${charts[@]}"
+	do
+		local test_files
 
-        test_files=$(ls "${cloud_dir}/helm/${chart}/tests/"*_test.yaml 2>/dev/null || echo "")
+		test_files=$(ls "${cloud_dir}/helm/${chart}/tests/"*_test.yaml 2>/dev/null || echo "")
 
-        if [ "${test_files}" ]
-        then
-            local test_reports_folder="${cloud_dir}/scripts/tests/test-reports"
-            mkdir --parents "${test_reports_folder}"
+		if [ "${test_files}" ]
+		then
+			local test_reports_folder="${cloud_dir}/scripts/tests/test-reports"
+			mkdir --parents "${test_reports_folder}"
 
-            helm dependency update --skip-refresh "${cloud_dir}/helm/${chart}"
+			helm dependency update --skip-refresh "${cloud_dir}/helm/${chart}"
 
-            helm unittest \
-                --output-file "${test_reports_folder}/helm-unittest-${chart}.xml" \
-                --output-type JUnit \
-                "${cloud_dir}/helm/${chart}"
-        fi
-    done
+			helm unittest \
+				--output-file "${test_reports_folder}/helm-unittest-${chart}.xml" \
+				--output-type JUnit \
+				"${cloud_dir}/helm/${chart}"
+		fi
+	done
 }
 
 main "${@}"

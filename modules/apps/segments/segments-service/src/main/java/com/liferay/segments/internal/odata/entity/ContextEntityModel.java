@@ -63,6 +63,8 @@ public class ContextEntityModel implements EntityModel {
 					Context.PATHNAME, locale -> Context.PATHNAME),
 				new StringEntityField(
 					Context.REFERRER_URL, locale -> Context.REFERRER_URL),
+				new StringEntityField(
+					Context.TIME_ZONE, locale -> Context.TIME_ZONE),
 				new StringEntityField(Context.URL, locale -> Context.URL),
 				new StringEntityField(
 					Context.USER_AGENT, locale -> Context.USER_AGENT)));

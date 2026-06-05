@@ -128,6 +128,8 @@ public class GetAudiencesServletTest {
 				_createRuleJSONObject(
 					Context.SIGNED_IN, RandomTestUtil.randomString()),
 				_createRuleJSONObject(
+					Context.TIME_ZONE, RandomTestUtil.randomString()),
+				_createRuleJSONObject(
 					Context.URL, RandomTestUtil.randomString()),
 				_createRuleJSONObject(
 					Context.USER_AGENT, RandomTestUtil.randomString()),
@@ -154,7 +156,7 @@ public class GetAudiencesServletTest {
 			"browser_name", "browser_version", "ip_geocoder_country",
 			"language", "last_sign_in_date", "local_date", "local_time",
 			"pathname", "referrer_url", "request_parameters", "signed_in",
-			"user_agent", "url"
+			"time_zone", "user_agent", "url"
 		};
 
 		Assert.assertEquals(

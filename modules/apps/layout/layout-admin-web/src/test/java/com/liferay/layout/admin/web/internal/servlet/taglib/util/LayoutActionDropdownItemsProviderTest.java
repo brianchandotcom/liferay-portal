@@ -59,8 +59,7 @@ public class LayoutActionDropdownItemsProviderTest {
 			LayoutConstants.TYPE_FULL_PAGE_APPLICATION, true, true);
 		_testIsShowMakeACopyAction(LayoutConstants.TYPE_PANEL, false, false);
 		_testIsShowMakeACopyAction(LayoutConstants.TYPE_PANEL, true, true);
-		_testIsShowMakeACopyAction(
-			LayoutConstants.TYPE_PORTLET, false, false);
+		_testIsShowMakeACopyAction(LayoutConstants.TYPE_PORTLET, false, false);
 		_testIsShowMakeACopyAction(LayoutConstants.TYPE_PORTLET, true, true);
 	}
 

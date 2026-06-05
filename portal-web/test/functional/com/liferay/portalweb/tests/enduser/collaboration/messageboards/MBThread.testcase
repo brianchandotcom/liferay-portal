@@ -21,6 +21,8 @@ definition {
 			groupName = "Guest",
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
+
+		PagesAdmin.enableWidgetPages();
 	}
 
 	tearDown {

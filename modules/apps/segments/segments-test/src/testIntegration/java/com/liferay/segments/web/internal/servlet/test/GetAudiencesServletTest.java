@@ -113,6 +113,8 @@ public class GetAudiencesServletTest {
 				_createRuleJSONObject(
 					Context.DEVICE_TYPE, RandomTestUtil.randomString()),
 				_createRuleJSONObject(
+					Context.GEOLOCATION, RandomTestUtil.randomString()),
+				_createRuleJSONObject(
 					Context.LANGUAGE_ID, RandomTestUtil.randomString()),
 				_createRuleJSONObject(
 					Context.LAST_SIGN_IN_DATE_TIME,
@@ -155,7 +157,7 @@ public class GetAudiencesServletTest {
 		}
 
 		String[] expectedAttributeNames = {
-			"browser_name", "browser_version", "device_type",
+			"browser_name", "browser_version", "device_type", "geolocation",
 			"ip_geocoder_country", "language", "last_sign_in_date",
 			"local_date", "local_time", "pathname", "referrer_url",
 			"request_parameters", "signed_in", "time_zone", "user_agent", "url"

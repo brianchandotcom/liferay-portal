@@ -9,7 +9,7 @@ import React from 'react';
 
 import useAnalyticsQuery from '../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery';
 import MostActiveVisitors from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/MostActiveVisitors';
-import {mostActiveVisitorsDevEnvData} from '../fixtures/analyticsDevEnvData';
+import {mostActiveVisitorsFixture} from '../fixtures/MostActiveVisitorsFixture';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
@@ -35,14 +35,14 @@ jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery',
 	() => {
 		const {
-			mostActiveVisitorsDevEnvData,
-		} = require('../fixtures/analyticsDevEnvData');
+			mostActiveVisitorsFixture,
+		} = require('../fixtures/MostActiveVisitorsFixture');
 
 		return {
 			__esModule: true,
 			default: jest.fn(() => ({
 				isLoading: false,
-				response: mostActiveVisitorsDevEnvData,
+				response: mostActiveVisitorsFixture,
 				sendRequest: jest.fn(),
 			})),
 		};
@@ -61,7 +61,7 @@ describe('MostActiveVisitors', () => {
 
 		(useAnalyticsQuery as jest.Mock).mockImplementation(() => ({
 			isLoading: false,
-			response: mostActiveVisitorsDevEnvData,
+			response: mostActiveVisitorsFixture,
 			sendRequest: jest.fn(),
 		}));
 	});

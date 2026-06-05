@@ -64,14 +64,14 @@ jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery',
 	() => {
 		const {
-			roomDocumentsStatisticsDevEnvData,
-		} = require('../fixtures/analyticsDevEnvData');
+			roomDocumentsStatisticsFixture,
+		} = require('../fixtures/RoomDocumentsStatisticsFixture');
 
 		return {
 			__esModule: true,
 			default: jest.fn(() => ({
 				isLoading: false,
-				response: roomDocumentsStatisticsDevEnvData,
+				response: roomDocumentsStatisticsFixture,
 				sendRequest: jest.fn(),
 			})),
 		};

@@ -37,14 +37,14 @@ jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery',
 	() => {
 		const {
-			timelineEngagementChartDevEnvData,
-		} = require('../fixtures/analyticsDevEnvData');
+			timelineEngagementChartFixture,
+		} = require('../fixtures/TimelineEngagementChartFixture');
 
 		return {
 			__esModule: true,
 			default: jest.fn(() => ({
 				isLoading: false,
-				response: timelineEngagementChartDevEnvData,
+				response: timelineEngagementChartFixture,
 				sendRequest: jest.fn(),
 			})),
 		};

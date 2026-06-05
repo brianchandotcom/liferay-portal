@@ -9,7 +9,7 @@ import React from 'react';
 
 import useAnalyticsQuery from '../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery';
 import LatestActivity from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/LatestActivity';
-import {latestActivityDevEnvData} from '../fixtures/analyticsDevEnvData';
+import {latestActivityFixture} from '../fixtures/LatestActivityFixture';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
@@ -58,14 +58,14 @@ jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery',
 	() => {
 		const {
-			latestActivityDevEnvData,
-		} = require('../fixtures/analyticsDevEnvData');
+			latestActivityFixture,
+		} = require('../fixtures/LatestActivityFixture');
 
 		return {
 			__esModule: true,
 			default: jest.fn(() => ({
 				isLoading: false,
-				response: latestActivityDevEnvData,
+				response: latestActivityFixture,
 				sendRequest: jest.fn(),
 			})),
 		};
@@ -83,7 +83,7 @@ describe('LatestActivity', () => {
 
 		(useAnalyticsQuery as jest.Mock).mockImplementation(() => ({
 			isLoading: false,
-			response: latestActivityDevEnvData,
+			response: latestActivityFixture,
 			sendRequest: jest.fn(),
 		}));
 	});

@@ -2,7 +2,7 @@
 
 ## Trigger
 
-Runs when the diff touches a file one of the three scanners reads; see **Selection** for the path-to-scanner mapping.
+Runs when the diff touches a file that one of the three scanners reads; see **Selection** for the path-to-scanner mapping.
 
 ## Match
 

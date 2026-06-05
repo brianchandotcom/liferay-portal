@@ -23,6 +23,8 @@ public class Context
 
 	public static final String BROWSER = "browser";
 
+	public static final String BROWSER_VERSION = "browserVersion";
+
 	public static final String COOKIES = "cookies";
 
 	public static final String HOSTNAME = "hostname";

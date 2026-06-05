@@ -118,6 +118,8 @@ public class GetAudiencesServletTest {
 				_createRuleJSONObject(
 					Context.LOCAL_DATE, RandomTestUtil.randomString()),
 				_createRuleJSONObject(
+					Context.PATHNAME, RandomTestUtil.randomString()),
+				_createRuleJSONObject(
 					Context.REFERRER_URL, RandomTestUtil.randomString()),
 				_createRuleJSONObject(
 					Context.REQUEST_PARAMETERS, RandomTestUtil.randomString()),
@@ -148,8 +150,9 @@ public class GetAudiencesServletTest {
 
 		String[] expectedAttributeNames = {
 			"browser_name", "browser_version", "ip_geocoder_country",
-			"language", "last_sign_in_date", "local_date", "referrer_url",
-			"request_parameters", "signed_in", "user_agent", "url"
+			"language", "last_sign_in_date", "local_date", "pathname",
+			"referrer_url", "request_parameters", "signed_in", "user_agent",
+			"url"
 		};
 
 		Assert.assertEquals(

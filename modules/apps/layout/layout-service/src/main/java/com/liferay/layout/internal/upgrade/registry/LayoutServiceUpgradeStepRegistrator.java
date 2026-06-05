@@ -158,11 +158,6 @@ public class LayoutServiceUpgradeStepRegistrator
 			"5.0.0", "6.0.0",
 			new com.liferay.layout.internal.upgrade.v6_0_0.
 				LayoutUpgradeProcess());
-
-		registry.register(
-			"6.0.0", "6.1.0",
-			UpgradeProcessFactory.addColumns(
-				"Layout", "styleBookEntryScopeERC VARCHAR(75) null"));
 	}
 
 	@Reference

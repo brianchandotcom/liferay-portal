@@ -75,10 +75,10 @@ describe('useReportFeedback', () => {
 		expect(outcome).toBe(true);
 		expect(mockedPost).toHaveBeenCalledWith({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			chatbotExternalReferenceCode: 'chatbot-1',
 			feedback: 'negative',
 			reason: 'piiExposure',
 			surface: 'clickToChat',
-			chatbotExternalReferenceCode: 'chatbot-1',
 			userMessage: 'sensitive',
 		});
 	});
@@ -101,10 +101,10 @@ describe('useReportFeedback', () => {
 
 		expect(mockedPost).toHaveBeenCalledWith({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			chatbotExternalReferenceCode: 'chatbot-1',
 			feedback: 'negative',
 			reason: 'other',
 			surface: 'clickToChat',
-			chatbotExternalReferenceCode: 'chatbot-1',
 		});
 	});
 

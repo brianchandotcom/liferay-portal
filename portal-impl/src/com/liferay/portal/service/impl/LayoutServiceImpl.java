@@ -1503,7 +1503,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, hasIconImage, iconBytes, styleBookEntryERC,
-			null, faviconFileEntryERC, faviconFileEntryScopeERC,
+			faviconFileEntryERC, faviconFileEntryScopeERC,
 			masterLayoutPageTemplateEntryERC, serviceContext);
 
 		if (!(layout.getLayoutType() instanceof LayoutTypePortlet)) {

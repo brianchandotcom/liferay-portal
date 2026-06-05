@@ -3,8 +3,7 @@ components:
         accountExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code of the buyer account that owns the placed orders. Addresses the account scope
-                when listing orders by account-ERC within a channel-ERC.
+                External reference code of the buyer account that owns the placed orders. Addresses the account scope when listing orders by account-ERC within a channel-ERC.
             name: accountExternalReferenceCode
             required: true
             schema:
@@ -12,8 +11,7 @@ components:
         accountIdPathParam:
             in: path
             description:
-                Identifier of the buyer account that owns the placed orders. Addresses the account scope when listing
-                orders by account within a channel.
+                Identifier of the buyer account that owns the placed orders. Addresses the account scope when listing orders by account within a channel.
             explode: false
             name: accountId
             required: true
@@ -26,8 +24,7 @@ components:
         attachmentExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code of the order attachment. Addresses a single attachment within the parent placed
-                order ERC scope.
+                External reference code of the order attachment. Addresses a single attachment within the parent placed order ERC scope.
             name: attachmentExternalReferenceCode
             required: true
             schema:
@@ -35,8 +32,7 @@ components:
         attachmentIdPathParam:
             in: path
             description:
-                Internal identifier of an order attachment. Addresses a single attachment within the parent placed
-                order.
+                Internal identifier of an order attachment. Addresses a single attachment within the parent placed order.
             explode: false
             name: attachmentId
             required: true
@@ -51,8 +47,7 @@ components:
         callbackURLQueryParam:
             in: query
             description:
-                Optional URL the payment gateway redirects the buyer to after the payment flow completes. When omitted,
-                the buyer is routed back to the order-confirmation step on the storefront checkout.
+                Optional URL the payment gateway redirects the buyer to after the payment flow completes. When omitted, the buyer is routed back to the order-confirmation step on the storefront checkout.
             name: callbackURL
             required: false
             schema:
@@ -60,8 +55,7 @@ components:
         channelExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code of the commerce channel that owns the placed orders. Addresses the channel scope
-                when listing or filtering orders by channel ERC.
+                External reference code of the commerce channel that owns the placed orders. Addresses the channel scope when listing or filtering orders by channel ERC.
             name: channelExternalReferenceCode
             required: true
             schema:
@@ -69,8 +63,7 @@ components:
         channelIdPathParam:
             in: path
             description:
-                Identifier of the commerce channel that owns the placed orders. Addresses the channel scope when listing
-                orders by channel.
+                Identifier of the commerce channel that owns the placed orders. Addresses the channel scope when listing orders by channel.
             explode: false
             name: channelId
             required: true
@@ -83,8 +76,7 @@ components:
         externalReferenceCodeMinLengthPathParam:
             in: path
             description:
-                External reference code that addresses the target resource on the by-externalReferenceCode paths. The
-                code is the integration-supplied idempotency key, unique within the resource scope.
+                External reference code that addresses the target resource on the by-externalReferenceCode paths. The code is the integration-supplied idempotency key, unique within the resource scope.
             name: externalReferenceCode
             required: true
             schema:
@@ -96,8 +88,7 @@ components:
         externalReferenceCodePathParam:
             in: path
             description:
-                External reference code that addresses the target resource on the by-externalReferenceCode paths. The
-                code is the integration-supplied idempotency key, unique within the resource scope.
+                External reference code that addresses the target resource on the by-externalReferenceCode paths. The code is the integration-supplied idempotency key, unique within the resource scope.
             name: externalReferenceCode
             required: true
             schema:
@@ -105,9 +96,7 @@ components:
         filterQueryParam:
             in: query
             description:
-                OData v4 filter expression that narrows the result set. Supported fields depend on the endpoint and are
-                sourced from the matching entity model (for PlacedOrder typically account, author, createDate,
-                externalReferenceCode, modifiedDate, name, orderStatus, orderType, purchaseOrderNumber).
+                OData v4 filter expression that narrows the result set. Supported fields depend on the endpoint and are sourced from the matching entity model (for PlacedOrder typically account, author, createDate, externalReferenceCode, modifiedDate, name, orderStatus, orderType, purchaseOrderNumber).
             name: filter
             required: false
             schema:
@@ -133,8 +122,7 @@ components:
         pageSizeFormQueryParam:
             in: query
             description:
-                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the
-                portal configuration to prevent unbounded reads.
+                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the portal configuration to prevent unbounded reads.
             explode: true
             name: pageSize
             required: false
@@ -144,8 +132,7 @@ components:
         pageSizeQueryParam:
             in: query
             description:
-                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the
-                portal configuration to prevent unbounded reads.
+                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the portal configuration to prevent unbounded reads.
             name: pageSize
             required: false
             schema:
@@ -166,8 +153,7 @@ components:
         placedOrderIdPathParam:
             in: path
             description:
-                Internal identifier of a placed order. Addresses a single non-open placed order owned by the
-                authenticated buyer or a delegated account user.
+                Internal identifier of a placed order. Addresses a single non-open placed order owned by the authenticated buyer or a delegated account user.
             explode: false
             name: placedOrderId
             required: true
@@ -180,8 +166,7 @@ components:
         placedOrderIdScopedPathParam:
             in: path
             description:
-                Internal identifier of a placed order used as the path scope for nested attachment endpoints. Addresses
-                the parent placed order under which the attachment is created, listed, or deleted.
+                Internal identifier of a placed order used as the path scope for nested attachment endpoints. Addresses the parent placed order under which the attachment is created, listed, or deleted.
             explode: false
             name: placedOrderId
             required: true
@@ -196,8 +181,7 @@ components:
         placedOrderIdSimplePathParam:
             in: path
             description:
-                Internal identifier of a placed order. Addresses a single non-open placed order owned by the
-                authenticated buyer or a delegated account user.
+                Internal identifier of a placed order. Addresses a single non-open placed order owned by the authenticated buyer or a delegated account user.
             name: placedOrderId
             required: true
             schema:
@@ -206,8 +190,7 @@ components:
         placedOrderItemIdPathParam:
             in: path
             description:
-                Internal identifier of a placed order item under a non-open placed order. Addresses the line-item scope
-                for read and nested-shipment listing.
+                Internal identifier of a placed order item under a non-open placed order. Addresses the line-item scope for read and nested-shipment listing.
             explode: false
             name: placedOrderItemId
             required: true
@@ -220,8 +203,7 @@ components:
         searchQueryParam:
             in: query
             description:
-                Full-text search expression. Matched against the indexed fields of the target entity (for PlacedOrder
-                typically account name, author, externalReferenceCode, name, orderType, and purchaseOrderNumber).
+                Full-text search expression. Matched against the indexed fields of the target entity (for PlacedOrder typically account name, author, externalReferenceCode, name, orderType, and purchaseOrderNumber).
             name: search
             required: false
             schema:
@@ -229,8 +211,7 @@ components:
         skuIdQueryParam:
             in: query
             description:
-                Optional SKU identifier used to narrow placed-order-item results to a single purchasable variant. When
-                omitted, every parent item is returned.
+                Optional SKU identifier used to narrow placed-order-item results to a single purchasable variant. When omitted, every parent item is returned.
             name: skuId
             required: false
             schema:
@@ -239,8 +220,7 @@ components:
         sortQueryParam:
             in: query
             description:
-                Sort expression in OData order syntax (field asc|desc, comma-separated). Sortable fields depend on the
-                endpoint and are sourced from the matching entity model.
+                Sort expression in OData order syntax (field asc|desc, comma-separated). Sortable fields depend on the endpoint and are sourced from the matching entity model.
             name: sort
             required: false
             schema:
@@ -248,9 +228,7 @@ components:
     schemas:
         Attachment:
             description:
-                Buyer-visible file attached to a placed order (for example, an invoice PDF, a delivery note, or a
-                customer-uploaded supporting document). Returned by the order attachment list endpoint and created via
-                the upload-by-base64 endpoint.
+                Buyer-visible file attached to a placed order (for example, an invoice PDF, a delivery note, or a customer-uploaded supporting document). Returned by the order attachment list endpoint and created via the upload-by-base64 endpoint.
             properties:
                 actions:
                     additionalProperties:
@@ -258,29 +236,25 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 dateModified:
                     description:
-                        Last modification timestamp in ISO 8601 (UTC). Read-only; set by the service when the attachment
-                        metadata or underlying file is updated.
+                        Last modification timestamp in ISO 8601 (UTC). Read-only; set by the service when the attachment metadata or underlying file is updated.
                     example: 2017-07-21T19:30:00Z
                     format: date-time
                     readOnly: true
                     type: string
                 extension:
                     description:
-                        File extension of the attached document, derived from the underlying document-library file entry
-                        (for example, pdf, jpg). Read-only.
+                        File extension of the attached document, derived from the underlying document-library file entry (for example, pdf, jpg). Read-only.
                     example: pdf
                     readOnly: true
                     type: string
                 externalReferenceCode:
                     description:
-                        External reference code copied from the underlying document-library file entry or the order
-                        attachment record. Idempotency key for downstream lookups; read-only on this surface.
+                        External reference code copied from the underlying document-library file entry or the order attachment record. Idempotency key for downstream lookups; read-only on this surface.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
@@ -293,30 +267,26 @@ components:
                     type: integer
                 priority:
                     description:
-                        Sort weight used to order attachments within the order's attachment list; higher values are
-                        returned first. Read-only on this surface.
+                        Sort weight used to order attachments within the order's attachment list; higher values are returned first. Read-only on this surface.
                     example: 1.2
                     format: double
                     readOnly: true
                     type: number
                 restricted:
                     description:
-                        When true the attachment is restricted to admin or supplier eyes only and is not exposed to the
-                        storefront buyer. Read-only.
+                        When true the attachment is restricted to admin or supplier eyes only and is not exposed to the storefront buyer. Read-only.
                     example: false
                     readOnly: true
                     type: boolean
                 title:
                     description:
-                        Display title of the attachment. Falls back to the underlying file name when none is supplied.
-                        Read-only.
+                        Display title of the attachment. Falls back to the underlying file name when none is supplied. Read-only.
                     example: Invoice 30130
                     readOnly: true
                     type: string
                 type:
                     description:
-                        Free-form type code (for example, invoice, delivery-note) drawn from the configured commerce
-                        order attachment list type definition. Read-only.
+                        Free-form type code (for example, invoice, delivery-note) drawn from the configured commerce order attachment list type definition. Read-only.
                     example: invoice
                     readOnly: true
                     type: string
@@ -328,40 +298,33 @@ components:
                     type: string
                 url:
                     description:
-                        Portal download URL for the attachment binary. Resolved server-side from the underlying
-                        document-library file; suitable for direct browser download by the buyer. Read-only.
+                        Portal download URL for the attachment binary. Resolved server-side from the underlying document-library file; suitable for direct browser download by the buyer. Read-only.
                     example: https://example.com/documents/30130/AB-34098-789-N
                     readOnly: true
                     type: string
         AttachmentBase64:
             description:
-                Input payload for the upload-by-base64 endpoints. The file body is supplied inline as Base64 in
-                attachment; the server decodes and persists it as a new document-library file under the parent placed
-                order.
+                Input payload for the upload-by-base64 endpoints. The file body is supplied inline as Base64 in attachment; the server decodes and persists it as a new document-library file under the parent placed order.
             properties:
                 attachment:
                     description:
-                        Base64-encoded payload of the file to upload. Required; decoded server-side and stored as a new
-                        document-library file entry under the placed order.
+                        Base64-encoded payload of the file to upload. Required; decoded server-side and stored as a new document-library file entry under the placed order.
                     example: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for the upload; must be unique per attachment within the company. Stored on the
-                        underlying file entry when supplied.
+                        Idempotency key for the upload; must be unique per attachment within the company. Stored on the underlying file entry when supplied.
                     example: AB-34098-789-N
                     type: string
                 priority:
                     description:
-                        Sort weight used to order attachments within the order's attachment list. Defaults to 0.0 when
-                        omitted.
+                        Sort weight used to order attachments within the order's attachment list. Defaults to 0.0 when omitted.
                     example: 1.2
                     format: double
                     type: number
                 restricted:
                     description:
-                        When true the attachment is hidden from the storefront buyer view and only visible to admin or
-                        supplier users. Defaults to false.
+                        When true the attachment is hidden from the storefront buyer view and only visible to admin or supplier users. Defaults to false.
                     example: false
                     type: boolean
                 title:
@@ -371,34 +334,29 @@ components:
                     type: string
                 type:
                     description:
-                        Free-form type code identifying the attachment category (for example, invoice, delivery-note);
-                        validated against the commerce order attachment list type definition when configured.
+                        Free-form type code identifying the attachment category (for example, invoice, delivery-note); validated against the commerce order attachment list type definition when configured.
                     example: invoice
                     type: string
             type: object
         Error:
             description:
-                Standard error envelope returned on non-2xx responses. Carries an HTTP status, an optional internal
-                error code, a human-readable description, and the raw exception message.
+                Standard error envelope returned on non-2xx responses. Carries an HTTP status, an optional internal error code, a human-readable description, and the raw exception message.
             properties:
                 errorCode:
                     description:
-                        Internal error code mapping. Read-only; populated when the underlying exception is tagged with a
-                        numeric code.
+                        Internal error code mapping. Read-only; populated when the underlying exception is tagged with a numeric code.
                     example: 996
                     readOnly: true
                     type: integer
                 errorDescription:
                     description:
-                        Human-readable explanation of the error, localized to the request locale when a translation
-                        exists. Read-only.
+                        Human-readable explanation of the error, localized to the request locale when a translation exists. Read-only.
                     example: Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format.
                     readOnly: true
                     type: string
                 message:
                     description:
-                        Raw exception message returned by the underlying service. Read-only; intended for diagnostics
-                        rather than buyer-facing display.
+                        Raw exception message returned by the underlying service. Read-only; intended for diagnostics rather than buyer-facing display.
                     example: No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}
                     readOnly: true
                     type: string
@@ -411,34 +369,27 @@ components:
             type: object
         OrderTransition:
             description:
-                Workflow or storefront transition available to the buyer on a placed order (for example, cancel a
-                pending order, process a quote, or reorder). Returned by the transition list endpoint and consumed by
-                the POST transition endpoint to trigger the action.
+                Workflow or storefront transition available to the buyer on a placed order (for example, cancel a pending order, process a quote, or reorder). Returned by the transition list endpoint and consumed by the POST transition endpoint to trigger the action.
             properties:
                 comment:
                     description:
-                        Optional buyer comment attached to the transition; persisted with the workflow task when a
-                        workflowTaskId is supplied.
+                        Optional buyer comment attached to the transition; persisted with the workflow task when a workflowTaskId is supplied.
                     example: Cancelling because the order was placed in error.
                     type: string
                 label:
                     description:
-                        Localized human-readable label for the transition, resolved from the transition name in the
-                        request locale. Read-only.
+                        Localized human-readable label for the transition, resolved from the transition name in the request locale. Read-only.
                     example: Cancel
                     readOnly: true
                     type: string
                 name:
                     description:
-                        Canonical name of the transition (for example, approve, cancel, process-quote, reorder).
-                        Supplied on POST to identify which transition to trigger.
+                        Canonical name of the transition (for example, approve, cancel, process-quote, reorder). Supplied on POST to identify which transition to trigger.
                     example: process-quote
                     type: string
                 orderId:
                     description:
-                        Identifier of the new placed order produced by the transition (for example, the reorder
-                        transition creates a new draft order). Populated only when the transition spawns a successor
-                        order; read-only.
+                        Identifier of the new placed order produced by the transition (for example, the reorder transition creates a new draft order). Populated only when the transition spawns a successor order; read-only.
                     example: 30131
                     format: int64
                     readOnly: true
@@ -452,17 +403,13 @@ components:
                     type: integer
                 workflowTaskId:
                     description:
-                        Identifier of the workflow task assigned to the buyer (when the order is in a workflow).
-                        Supplied on POST to route the transition through the workflow engine; zero on transitions that
-                        bypass workflow (process-quote, reorder).
+                        Identifier of the workflow task assigned to the buyer (when the order is in a workflow). Supplied on POST to route the transition through the workflow engine; zero on transitions that bypass workflow (process-quote, reorder).
                     example: 0
                     format: int64
                     type: integer
         PlacedOrder:
             description:
-                Buyer-facing projection of a committed (non-open) commerce order. Read via the placed-orders list or by
-                id and ERC; PATCH applies JSON Merge Patch to a small set of buyer-editable fields (name, printedNote,
-                purchaseOrderNumber). The open cart counterpart lives in headless-commerce-delivery-cart.
+                Buyer-facing projection of a committed (non-open) commerce order. Read via the placed-orders list or by id and ERC; PATCH applies JSON Merge Patch to a small set of buyer-editable fields (name, printedNote, purchaseOrderNumber). The open cart counterpart lives in headless-commerce-delivery-cart.
             properties:
                 account:
                     description:
@@ -472,30 +419,26 @@ components:
                     type: string
                 accountId:
                     description:
-                        Reference to the buyer account that owns the order (FK identifier). Read-only; sortable and
-                        filterable via the OData query parameter.
+                        Reference to the buyer account that owns the order (FK identifier). Read-only; sortable and filterable via the OData query parameter.
                     example: 30130
                     format: int64
                     readOnly: true
                     type: integer
                 attachments:
                     description:
-                        Attachments uploaded against the order (for example, invoices, delivery notes). Resolved
-                        server-side from the document-library files linked to the order.
+                        Attachments uploaded against the order (for example, invoices, delivery notes). Resolved server-side from the document-library files linked to the order.
                     items:
                         $ref: "#/components/schemas/Attachment"
                     type: array
                 author:
                     description:
-                        Display name of the user that created the order. Read-only; sortable via the OData query
-                        parameter.
+                        Display name of the user that created the order. Read-only; sortable via the OData query parameter.
                     example: John
                     readOnly: true
                     type: string
                 authorId:
                     description:
-                        Reference to the user that created the order (FK identifier). Read-only; filterable via the
-                        OData query parameter.
+                        Reference to the user that created the order (FK identifier). Read-only; filterable via the OData query parameter.
                     example: 30130
                     format: int64
                     readOnly: true
@@ -515,8 +458,7 @@ components:
                     type: string
                 createDate:
                     description:
-                        Creation date of the order. ISO 8601 date. Read-only; sortable and filterable via the OData
-                        query parameter.
+                        Creation date of the order. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-21
                     format: date
                     readOnly: true
@@ -530,14 +472,11 @@ components:
                 customFields:
                     additionalProperties: true
                     description:
-                        Custom expando attributes attached to the order. On PATCH the supplied entries are merged into
-                        the order's expando bridge.
+                        Custom expando attributes attached to the order. On PATCH the supplied entries are merged into the order's expando bridge.
                     type: object
                 errorMessages:
                     description:
-                        Localized validation or fulfillment errors associated with the order (for example, a removed
-                        SKU, an expired price, a stock shortfall). Each entry is a human-readable sentence in the
-                        request locale. Read-only.
+                        Localized validation or fulfillment errors associated with the order (for example, a removed SKU, an expired price, a stock shortfall). Each entry is a human-readable sentence in the request locale. Read-only.
                     example:
                         -   The product is no longer available.
                     items:
@@ -546,16 +485,13 @@ components:
                     type: array
                 externalReferenceCode:
                     description:
-                        Idempotency key copied from the underlying commerce order. Used to address the order on the
-                        by-externalReferenceCode paths. Read-only; sortable and filterable via the OData query
-                        parameter.
+                        Idempotency key copied from the underlying commerce order. Used to address the order on the by-externalReferenceCode paths. Read-only; sortable and filterable via the OData query parameter.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
                 friendlyURLSeparator:
                     description:
-                        Friendly-URL separator string configured for the order's company. Populated only when the
-                        friendly-URL feature flag is enabled. Read-only.
+                        Friendly-URL separator string configured for the order's company. Populated only when the friendly-URL feature flag is enabled. Read-only.
                     example: /-/
                     readOnly: true
                     type: string
@@ -575,16 +511,14 @@ components:
                     type: string
                 modifiedDate:
                     description:
-                        Last modification date of the order. ISO 8601 date. Read-only; sortable and filterable via the
-                        OData query parameter.
+                        Last modification date of the order. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-21
                     format: date
                     readOnly: true
                     type: string
                 name:
                     description:
-                        Buyer-supplied name for the order. Editable via PATCH; sortable and filterable via the OData
-                        query parameter.
+                        Buyer-supplied name for the order. Editable via PATCH; sortable and filterable via the OData query parameter.
                     example: Order Name
                     type: string
                 orderStatusInfo:
@@ -592,15 +526,13 @@ components:
                     readOnly: true
                 orderType:
                     description:
-                        Localized name of the commerce order type assigned to the order. Read-only; sortable and
-                        filterable via the OData query parameter.
+                        Localized name of the commerce order type assigned to the order. Read-only; sortable and filterable via the OData query parameter.
                     example: Default
                     readOnly: true
                     type: string
                 orderTypeExternalReferenceCode:
                     description:
-                        External reference code of the commerce order type assigned to the order. Read-only; sortable
-                        via the OData query parameter.
+                        External reference code of the commerce order type assigned to the order. Read-only; sortable via the OData query parameter.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
@@ -613,8 +545,7 @@ components:
                     type: integer
                 orderUUID:
                     description:
-                        Stable UUID of the order, distinct from id and preserved across data migrations. Use this value
-                        when persisting a reference to the order in external systems. Read-only.
+                        Stable UUID of the order, distinct from id and preserved across data migrations. Use this value when persisting a reference to the order in external systems. Read-only.
                     example: f0b1c2d3-4e5f-6a7b-8c9d-0e1f2a3b4c5d
                     readOnly: true
                     type: string
@@ -626,15 +557,13 @@ components:
                     type: string
                 paymentMethodLabel:
                     description:
-                        Localized display name of the selected payment method group, resolved in the channel's site
-                        scope. Read-only.
+                        Localized display name of the selected payment method group, resolved in the channel's site scope. Read-only.
                     example: Money Order
                     readOnly: true
                     type: string
                 paymentStatus:
                     description:
-                        Integer payment status. Mapping -- 0=Authorized, 6=Pending, 4=Completed, 5=Failed, 8=Cancelled,
-                        17=Refunded, 23=Not Required. Read-only.
+                        Integer payment status. Mapping -- 0=Authorized, 6=Pending, 4=Completed, 5=Failed, 8=Cancelled, 17=Refunded, 23=Not Required. Read-only.
                     example: 0
                     format: int32
                     readOnly: true
@@ -644,8 +573,7 @@ components:
                     readOnly: true
                 paymentStatusLabel:
                     description:
-                        Canonical label key for the payment status (for example, authorized, completed, pending,
-                        refunded, cancelled, failed, not-required). Read-only.
+                        Canonical label key for the payment status (for example, authorized, completed, pending, refunded, cancelled, failed, not-required). Read-only.
                     example: authorized
                     readOnly: true
                     type: string
@@ -661,16 +589,14 @@ components:
                     type: integer
                 placedOrderComments:
                     description:
-                        Comments (notes) recorded against the order by the buyer or by support staff. Nested field; use
-                        the dedicated list endpoint for paginated access.
+                        Comments (notes) recorded against the order by the buyer or by support staff. Nested field; use the dedicated list endpoint for paginated access.
                     items:
                         $ref: "#/components/schemas/PlacedOrderComment"
                     readOnly: true
                     type: array
                 placedOrderItems:
                     description:
-                        Top-level line items on the order. Children of a parent item are exposed on the nested
-                        placedOrderItems property of PlacedOrderItem.
+                        Top-level line items on the order. Children of a parent item are exposed on the nested placedOrderItems property of PlacedOrderItem.
                     items:
                         $ref: "#/components/schemas/PlacedOrderItem"
                     readOnly: true
@@ -687,20 +613,17 @@ components:
                     type: integer
                 printedNote:
                     description:
-                        Buyer-visible printed note (for example, gift message, packing instructions). Editable via
-                        PATCH.
+                        Buyer-visible printed note (for example, gift message, packing instructions). Editable via PATCH.
                     example: Please include a gift receipt.
                     type: string
                 purchaseOrderNumber:
                     description:
-                        Buyer-supplied purchase order number for accounting and reconciliation. Editable via PATCH;
-                        sortable and filterable via the OData query parameter.
+                        Buyer-supplied purchase order number for accounting and reconciliation. Editable via PATCH; sortable and filterable via the OData query parameter.
                     example: PO-2024-30130
                     type: string
                 requestedDeliveryDate:
                     description:
-                        Date the buyer requested the order to be delivered. ISO 8601 date. Read-only; sortable and
-                        filterable via the OData query parameter.
+                        Date the buyer requested the order to be delivered. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-21
                     format: date
                     readOnly: true
@@ -710,8 +633,7 @@ components:
                     readOnly: true
                 shippingMethod:
                     description:
-                        Engine key of the shipping method selected at checkout (for example, fixed, by-weight).
-                        Read-only.
+                        Engine key of the shipping method selected at checkout (for example, fixed, by-weight). Read-only.
                     example: fixed
                     readOnly: true
                     type: string
@@ -723,15 +645,13 @@ components:
                     type: string
                 status:
                     description:
-                        Workflow status label resolved from the underlying integer status (for example, approved,
-                        pending). Read-only.
+                        Workflow status label resolved from the underlying integer status (for example, approved, pending). Read-only.
                     example: approved
                     readOnly: true
                     type: string
                 steps:
                     description:
-                        Ordered list of checkout steps with their state (active, completed, pending). Computed for the
-                        request locale; useful for rendering an order-progress breadcrumb on the storefront.
+                        Ordered list of checkout steps with their state (active, completed, pending). Computed for the request locale; useful for rendering an order-progress breadcrumb on the storefront.
                     items:
                         $ref: "#/components/schemas/Step"
                     type: array
@@ -746,8 +666,7 @@ components:
                     type: boolean
                 valid:
                     description:
-                        When true the order passes every line-item and pricing validation. False indicates that one or
-                        more entries in errorMessages must be resolved before fulfillment. Read-only.
+                        When true the order passes every line-item and pricing validation. False indicates that one or more entries in errorMessages must be resolved before fulfillment. Read-only.
                     example: true
                     readOnly: true
                     type: boolean
@@ -757,8 +676,7 @@ components:
             type: object
         PlacedOrderAddress:
             description:
-                Buyer-facing projection of the address snapshotted onto a placed order. Returned by the placed-order
-                billing-address and shipping-address endpoints. Read-only.
+                Buyer-facing projection of the address snapshotted onto a placed order. Returned by the placed-order billing-address and shipping-address endpoints. Read-only.
             properties:
                 city:
                     description:
@@ -780,8 +698,7 @@ components:
                     type: string
                 description:
                     description:
-                        Free-form description annotated on the address (for example, delivery instructions).
-                        Read-only.
+                        Free-form description annotated on the address (for example, delivery instructions). Read-only.
                     example: right stairs, first room on the left
                     readOnly: true
                     type: string
@@ -856,8 +773,7 @@ components:
                     type: string
                 subtype:
                     description:
-                        Free-form subtype label drawn from the configured address subtype list (for example, home,
-                        office). Read-only.
+                        Free-form subtype label drawn from the configured address subtype list (for example, home, office). Read-only.
                     example: office
                     readOnly: true
                     type: string
@@ -869,8 +785,7 @@ components:
                     type: string
                 typeId:
                     description:
-                        Integer type code of the address. Mapping -- 1=Billing, 2=Shipping, 3=Billing And Shipping.
-                        Read-only.
+                        Integer type code of the address. Mapping -- 1=Billing, 2=Shipping, 3=Billing And Shipping. Read-only.
                     example: 2
                     format: int32
                     readOnly: true
@@ -890,9 +805,7 @@ components:
             type: object
         PlacedOrderComment:
             description:
-                Note (comment) recorded against a placed order. Returned by the order comments list and the by-id and
-                by-ERC read endpoints. Corresponds to the standard Liferay Commerce Order Note; the PlacedOrderComment
-                name is preserved for client compatibility.
+                Note (comment) recorded against a placed order. Returned by the order comments list and the by-id and by-ERC read endpoints. Corresponds to the standard Liferay Commerce Order Note; the PlacedOrderComment name is preserved for client compatibility.
             properties:
                 author:
                     description:
@@ -928,21 +841,18 @@ components:
                     type: integer
                 restricted:
                     description:
-                        When true the comment is restricted to admin or supplier eyes only and is not exposed to the
-                        storefront buyer. Read-only.
+                        When true the comment is restricted to admin or supplier eyes only and is not exposed to the storefront buyer. Read-only.
                     example: false
                     readOnly: true
                     type: boolean
             type: object
         PlacedOrderItem:
             description:
-                Buyer-facing projection of a single line item on a placed order. Carries the priced SKU, quantity,
-                options, child items, and the shipments that fulfill the line.
+                Buyer-facing projection of a single line item on a placed order. Carries the priced SKU, quantity, options, child items, and the shipments that fulfill the line.
             properties:
                 adaptiveMediaImageHTMLTag:
                     description:
-                        Pre-rendered HTML img tag for the item's adaptive-media thumbnail, scoped to the buyer's
-                        account. The example shows the underlying src URL the tag references. Read-only.
+                        Pre-rendered HTML img tag for the item's adaptive-media thumbnail, scoped to the buyer's account. The example shows the underlying src URL the tag references. Read-only.
                     example: https://example.com/o/adaptive-media/image/30130/Preview-300x300/hand-saw.png
                     readOnly: true
                     type: string
@@ -955,8 +865,7 @@ components:
                 deliveryGroup:
                     deprecated: true
                     description:
-                        Deprecated -- use deliveryGroupName instead. Retained for client compatibility; both fields
-                        carry the same delivery-group label.
+                        Deprecated -- use deliveryGroupName instead. Retained for client compatibility; both fields carry the same delivery-group label.
                     example: Group A
                     readOnly: true
                     type: string
@@ -968,8 +877,7 @@ components:
                     type: string
                 errorMessages:
                     description:
-                        Localized validation messages for the line item (for example, the linked SKU is no longer
-                        available). Read-only.
+                        Localized validation messages for the line item (for example, the linked SKU is no longer available). Read-only.
                     example:
                         -   The product is no longer available.
                     items:
@@ -978,8 +886,7 @@ components:
                     type: array
                 externalReferenceCode:
                     description:
-                        Idempotency key copied from the underlying commerce order item. Used to address the line item on
-                        the by-externalReferenceCode paths. Read-only.
+                        Idempotency key copied from the underlying commerce order item. Used to address the line item on the by-externalReferenceCode paths. Read-only.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
@@ -1004,24 +911,21 @@ components:
                     type: string
                 parentOrderItemId:
                     description:
-                        Reference to the parent line item when this item is a child of a bundle or grouped purchase (FK
-                        identifier). Zero or omitted for top-level items. Read-only.
+                        Reference to the parent line item when this item is a child of a bundle or grouped purchase (FK identifier). Zero or omitted for top-level items. Read-only.
                     example: 0
                     format: int64
                     readOnly: true
                     type: integer
                 placedOrderItemShipments:
                     description:
-                        Shipments that fulfill this line item, including supplier-side shipments for drop-ship flows.
-                        Read-only.
+                        Shipments that fulfill this line item, including supplier-side shipments for drop-ship flows. Read-only.
                     items:
                         $ref: "#/components/schemas/PlacedOrderItemShipment"
                     readOnly: true
                     type: array
                 placedOrderItems:
                     description:
-                        Child line items aggregated under this item (for example, items belonging to a bundle or grouped
-                        product). Read-only.
+                        Child line items aggregated under this item (for example, items belonging to a bundle or grouped product). Read-only.
                     items:
                         $ref: "#/components/schemas/PlacedOrderItem"
                     readOnly: true
@@ -1040,8 +944,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized friendly-URL slug map keyed by locale code; values are the per-locale URL slug for the
-                        parent product page. Read-only.
+                        Localized friendly-URL slug map keyed by locale code; values are the per-locale URL slug for the parent product page. Read-only.
                     example:
                         en_US: hand-saw
                         hr_HR: rucna-pila
@@ -1057,8 +960,7 @@ components:
                     type: number
                 replacedSku:
                     description:
-                        When the item's SKU was replaced after the order was committed, the SKU code of the replacement.
-                        Read-only.
+                        When the item's SKU was replaced after the order was committed, the SKU code of the replacement. Read-only.
                     example: SKU-5678
                     readOnly: true
                     type: string
@@ -1074,15 +976,13 @@ components:
                     readOnly: true
                 shippingAddressExternalReferenceCode:
                     description:
-                        External reference code of the per-line shipping address, when the line ships to a different
-                        address than the order. Read-only.
+                        External reference code of the per-line shipping address, when the line ships to a different address than the order. Read-only.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
                 shippingAddressId:
                     description:
-                        Reference to the per-line shipping address (FK identifier). Zero when the line follows the
-                        order's shipping address. Read-only.
+                        Reference to the per-line shipping address (FK identifier). Zero when the line follows the order's shipping address. Read-only.
                     example: 30130
                     format: int64
                     readOnly: true
@@ -1120,22 +1020,19 @@ components:
                     type: string
                 unitOfMeasureKey:
                     description:
-                        Canonical key of the unit of measure used to price and ship the line (for example, m, kg).
-                        Read-only.
+                        Canonical key of the unit of measure used to price and ship the line (for example, m, kg). Read-only.
                     example: m
                     readOnly: true
                     type: string
                 valid:
                     description:
-                        When true the line item passes validation; false signals that one or more entries in
-                        errorMessages must be resolved. Read-only.
+                        When true the line item passes validation; false signals that one or more entries in errorMessages must be resolved. Read-only.
                     example: true
                     readOnly: true
                     type: boolean
                 virtualItemURLs:
                     description:
-                        Resolved download URLs for the virtual goods attached to this line item, ready for the buyer to
-                        follow. Populated only for active virtual order items. Read-only.
+                        Resolved download URLs for the virtual goods attached to this line item, ready for the buyer to follow. Populated only for active virtual order items. Read-only.
                     example:
                         -   https://example.com/o/commerce-media/download-virtual/30130/30131
                     items:
@@ -1144,9 +1041,7 @@ components:
                     type: array
                 virtualItems:
                     description:
-                        Detailed virtual-item entries attached to this line item (one per downloadable file). Each entry
-                        exposes the resolved download URL, the optional version string, and the remaining usage count.
-                        Read-only.
+                        Detailed virtual-item entries attached to this line item (one per downloadable file). Each entry exposes the resolved download URL, the optional version string, and the remaining usage count. Read-only.
                     items:
                         $ref: "#/components/schemas/VirtualItem"
                     readOnly: true
@@ -1154,8 +1049,7 @@ components:
             type: object
         PlacedOrderItemShipment:
             description:
-                Buyer-facing projection of a shipment that fulfills a placed order item. Returned by the
-                placed-order-item shipments list; carries the carrier, tracking, status, and per-line shipped quantity.
+                Buyer-facing projection of a shipment that fulfills a placed order item. Returned by the placed-order-item shipments list; carries the carrier, tracking, status, and per-line shipped quantity.
             properties:
                 accountId:
                     description:
@@ -1186,16 +1080,14 @@ components:
                     type: string
                 estimatedDeliveryDate:
                     description:
-                        Expected delivery date of the shipment (mapped from the underlying expectedDate). ISO 8601 date.
-                        Read-only.
+                        Expected delivery date of the shipment (mapped from the underlying expectedDate). ISO 8601 date. Read-only.
                     example: 2017-07-25
                     format: date
                     readOnly: true
                     type: string
                 estimatedShippingDate:
                     description:
-                        Expected ship-out date of the shipment (mapped from the underlying shippingDate). ISO 8601 date.
-                        Read-only.
+                        Expected ship-out date of the shipment (mapped from the underlying shippingDate). ISO 8601 date. Read-only.
                     example: 2017-07-22
                     format: date
                     readOnly: true
@@ -1231,8 +1123,7 @@ components:
                     type: integer
                 quantity:
                     description:
-                        Quantity of the line item included in this shipment, formatted against the SKU's unit of
-                        measure. Read-only.
+                        Quantity of the line item included in this shipment, formatted against the SKU's unit of measure. Read-only.
                     example: 10.1
                     format: bigdecimal
                     readOnly: true
@@ -1264,8 +1155,7 @@ components:
                     readOnly: true
                 supplierShipment:
                     description:
-                        When true the shipment was created against a supplier order in a drop-ship flow rather than
-                        against the buyer's own order. Read-only.
+                        When true the shipment was created against a supplier order in a drop-ship flow rather than against the buyer's own order. Read-only.
                     example: false
                     readOnly: true
                     type: boolean
@@ -1290,9 +1180,7 @@ components:
             type: object
         Price:
             description:
-                Pricing breakdown of a single placed-order line item, computed from the unit price, promotional price,
-                discount levels, and final priced amount. Tax inclusion depends on the channel's price-display
-                configuration. Read-only.
+                Pricing breakdown of a single placed-order line item, computed from the unit price, promotional price, discount levels, and final priced amount. Tax inclusion depends on the channel's price-display configuration. Read-only.
             properties:
                 currency:
                     description:
@@ -1309,8 +1197,7 @@ components:
                     type: number
                 discountFormatted:
                     description:
-                        Pre-formatted discount amount with currency symbol, ready for display in the request locale.
-                        Read-only.
+                        Pre-formatted discount amount with currency symbol, ready for display in the request locale. Read-only.
                     example: $10.10
                     readOnly: true
                     type: string
@@ -1390,13 +1277,11 @@ components:
             type: object
         Settings:
             description:
-                Inventory order-quantity settings inherited from the SKU's product-definition inventory configuration.
-                Drives the buyer-facing quantity constraints for the line item. Read-only.
+                Inventory order-quantity settings inherited from the SKU's product-definition inventory configuration. Drives the buyer-facing quantity constraints for the line item. Read-only.
             properties:
                 allowedQuantities:
                     description:
-                        Explicit list of allowed order quantities for the SKU. Populated only when the SKU's inventory
-                        configuration declares an explicit allowed-quantities list. Read-only.
+                        Explicit list of allowed order quantities for the SKU. Populated only when the SKU's inventory configuration declares an explicit allowed-quantities list. Read-only.
                     example:
                         -   1
                         -   5
@@ -1408,24 +1293,21 @@ components:
                     type: array
                 maxQuantity:
                     description:
-                        Maximum order quantity permitted for the SKU. Defaults to the product-definition inventory
-                        default when no override is set. Read-only.
+                        Maximum order quantity permitted for the SKU. Defaults to the product-definition inventory default when no override is set. Read-only.
                     example: 100
                     format: bigdecimal
                     readOnly: true
                     type: number
                 minQuantity:
                     description:
-                        Minimum order quantity permitted for the SKU. Defaults to the product-definition inventory
-                        default when no override is set. Read-only.
+                        Minimum order quantity permitted for the SKU. Defaults to the product-definition inventory default when no override is set. Read-only.
                     example: 1
                     format: bigdecimal
                     readOnly: true
                     type: number
                 multipleQuantity:
                     description:
-                        Quantity step the order quantity must be a multiple of. Defaults to the product-definition
-                        inventory default when no override is set. Read-only.
+                        Quantity step the order quantity must be a multiple of. Defaults to the product-definition inventory default when no override is set. Read-only.
                     example: 1
                     format: bigdecimal
                     readOnly: true
@@ -1433,8 +1315,7 @@ components:
             type: object
         Shipment:
             description:
-                Buyer-facing projection of a shipment dispatched against a placed order. Returned by the placed-order
-                shipments list; carries the carrier, tracking, status, item count, and shipping address summary.
+                Buyer-facing projection of a shipment dispatched against a placed order. Returned by the placed-order shipments list; carries the carrier, tracking, status, item count, and shipping address summary.
             properties:
                 accountId:
                     description:
@@ -1446,23 +1327,20 @@ components:
                     type: integer
                 carrier:
                     description:
-                        Name of the shipping carrier (for example, FedEx, UPS). Read-only; sortable and filterable via
-                        the OData query parameter.
+                        Name of the shipping carrier (for example, FedEx, UPS). Read-only; sortable and filterable via the OData query parameter.
                     example: FedEx
                     readOnly: true
                     type: string
                 createDate:
                     description:
-                        Creation date of the shipment. ISO 8601 date. Read-only; sortable and filterable via the OData
-                        query parameter.
+                        Creation date of the shipment. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-21
                     format: date
                     readOnly: true
                     type: string
                 expectedDate:
                     description:
-                        Expected delivery date of the shipment. ISO 8601 date. Read-only; sortable and filterable via
-                        the OData query parameter.
+                        Expected delivery date of the shipment. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-25
                     format: date
                     readOnly: true
@@ -1483,8 +1361,7 @@ components:
                     type: integer
                 itemsCount:
                     description:
-                        Number of distinct line items included in the shipment. Read-only; sourced from the shipment
-                        indexer.
+                        Number of distinct line items included in the shipment. Read-only; sourced from the shipment indexer.
                     example: 3
                     format: int32
                     readOnly: true
@@ -1498,8 +1375,7 @@ components:
                     type: string
                 oneLineAddress:
                     description:
-                        Pre-formatted single-line shipping address summary suitable for display next to the shipment
-                        row. Sourced from the shipment indexer. Read-only.
+                        Pre-formatted single-line shipping address summary suitable for display next to the shipment row. Sourced from the shipment indexer. Read-only.
                     example: 1400 Montefino Ave, Diamond Bar, CA 91765, United States
                     readOnly: true
                     type: string
@@ -1530,8 +1406,7 @@ components:
                     type: integer
                 shippingDate:
                     description:
-                        Date the shipment was dispatched. ISO 8601 date. Read-only; sortable and filterable via the
-                        OData query parameter.
+                        Date the shipment was dispatched. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-22
                     format: date
                     readOnly: true
@@ -1555,8 +1430,7 @@ components:
                     readOnly: true
                 trackingNumber:
                     description:
-                        Carrier tracking number assigned to the shipment. Filterable via the OData query parameter on
-                        the tracking field. Read-only.
+                        Carrier tracking number assigned to the shipment. Filterable via the OData query parameter on the tracking field. Read-only.
                     example: 123AD-asd
                     readOnly: true
                     type: string
@@ -1575,8 +1449,7 @@ components:
             type: object
         ShippingAddress:
             description:
-                Snapshot of the shipping address attached to a shipment row, returned in the shipment list. Sourced from
-                the underlying commerce address at fulfillment time. Read-only.
+                Snapshot of the shipping address attached to a shipment row, returned in the shipment list. Sourced from the underlying commerce address at fulfillment time. Read-only.
             properties:
                 city:
                     description:
@@ -1669,8 +1542,7 @@ components:
             type: object
         ShippingMethod:
             description:
-                Shipping method available on the order's channel. Carries the localized name, description, ERC, and the
-                selected shipping option (carrier service tier).
+                Shipping method available on the order's channel. Carries the localized name, description, ERC, and the selected shipping option (carrier service tier).
             properties:
                 description:
                     description:
@@ -1703,8 +1575,7 @@ components:
             type: object
         ShippingOption:
             description:
-                Specific carrier service tier offered by a ShippingMethod (for example, Standard Delivery, Express).
-                Read-only.
+                Specific carrier service tier offered by a ShippingMethod (for example, Standard Delivery, Express). Read-only.
             properties:
                 amount:
                     description:
@@ -1740,14 +1611,11 @@ components:
             type: object
         Status:
             description:
-                Status descriptor that pairs the integer status code with its canonical label and the localized label
-                resolved in the request locale. Used by orderStatusInfo, paymentStatusInfo, workflowStatusInfo on
-                PlacedOrder, and by status on Shipment and PlacedOrderItemShipment.
+                Status descriptor that pairs the integer status code with its canonical label and the localized label resolved in the request locale. Used by orderStatusInfo, paymentStatusInfo, workflowStatusInfo on PlacedOrder, and by status on Shipment and PlacedOrderItemShipment.
             properties:
                 code:
                     description:
-                        Integer status code. Refer to the parent property description for the integer-to-meaning
-                        mapping. Read-only.
+                        Integer status code. Refer to the parent property description for the integer-to-meaning mapping. Read-only.
                     example: 0
                     format: int32
                     readOnly: true
@@ -1767,13 +1635,11 @@ components:
             type: object
         Step:
             description:
-                Checkout-progress step on a placed order (for example, cart, address, shipping, payment, confirmation).
-                Returned in the steps array on PlacedOrder. Read-only.
+                Checkout-progress step on a placed order (for example, cart, address, shipping, payment, confirmation). Returned in the steps array on PlacedOrder. Read-only.
             properties:
                 id:
                     description:
-                        Canonical step identifier (for example, address, shipping, payment, order-confirmation).
-                        Read-only.
+                        Canonical step identifier (for example, address, shipping, payment, order-confirmation). Read-only.
                     example: order-confirmation
                     readOnly: true
                     type: string
@@ -1785,16 +1651,13 @@ components:
                     type: string
                 state:
                     description:
-                        State of the step in the checkout progression (for example, active, completed, pending).
-                        Read-only.
+                        State of the step in the checkout progression (for example, active, completed, pending). Read-only.
                     example: completed
                     readOnly: true
                     type: string
         Summary:
             description:
-                Aggregated pricing summary of a placed order. Carries item counts, subtotals, shipping, tax, and
-                discount breakdowns formatted in the order's currency. Tax inclusion depends on the channel's
-                price-display configuration. Read-only.
+                Aggregated pricing summary of a placed order. Carries item counts, subtotals, shipping, tax, and discount breakdowns formatted in the order's currency. Tax inclusion depends on the channel's price-display configuration. Read-only.
             properties:
                 currency:
                     description:
@@ -1818,8 +1681,7 @@ components:
                     type: number
                 shippingDiscountPercentages:
                     description:
-                        Four-entry list of pre-formatted shipping discount percentages, one per discount level.
-                        Populated only when a shipping discount applies. Read-only.
+                        Four-entry list of pre-formatted shipping discount percentages, one per discount level. Populated only when a shipping discount applies. Read-only.
                     example:
                         -   10%
                         -   5%
@@ -1857,8 +1719,7 @@ components:
                     type: string
                 shippingValueWithTaxAmount:
                     description:
-                        Shipping amount including tax in the order's currency. Falls back to shippingValue when no tax
-                        is configured. Read-only.
+                        Shipping amount including tax in the order's currency. Falls back to shippingValue when no tax is configured. Read-only.
                     example: 10.99
                     format: double
                     readOnly: true
@@ -1878,8 +1739,7 @@ components:
                     type: number
                 subtotalDiscountPercentages:
                     description:
-                        Four-entry list of pre-formatted subtotal discount percentages, one per discount level.
-                        Read-only.
+                        Four-entry list of pre-formatted subtotal discount percentages, one per discount level. Read-only.
                     example:
                         -   10%
                         -   0%
@@ -1910,8 +1770,7 @@ components:
                     type: string
                 taxValue:
                     description:
-                        Total tax amount in the order's currency. Populated only when tax is configured on the channel.
-                        Read-only.
+                        Total tax amount in the order's currency. Populated only when tax is configured on the channel. Read-only.
                     example: 2.69
                     format: double
                     readOnly: true
@@ -1924,8 +1783,7 @@ components:
                     type: string
                 total:
                     description:
-                        Order total in the order's currency (subtotal plus shipping plus tax minus discounts, with tax
-                        inclusion controlled by the channel configuration). Read-only.
+                        Order total in the order's currency (subtotal plus shipping plus tax minus discounts, with tax inclusion controlled by the channel configuration). Read-only.
                     example: 43.52
                     format: double
                     readOnly: true
@@ -1964,8 +1822,7 @@ components:
             type: object
         Term:
             description:
-                Reusable delivery or payment term assigned to a placed order. Returned by the placed-order delivery-term
-                and payment-term endpoints. Read-only on this surface.
+                Reusable delivery or payment term assigned to a placed order. Returned by the placed-order delivery-term and payment-term endpoints. Read-only on this surface.
             properties:
                 description:
                     description:
@@ -1994,22 +1851,17 @@ components:
             type: object
         VirtualItem:
             description:
-                Single downloadable virtual item attached to a placed order item (for example, an e-book PDF, a license
-                key, a digital asset). Carries the resolved download URL, the optional version string, and the remaining
-                download-usage count. Read-only.
+                Single downloadable virtual item attached to a placed order item (for example, an e-book PDF, a license key, a digital asset). Carries the resolved download URL, the optional version string, and the remaining download-usage count. Read-only.
             properties:
                 url:
                     description:
-                        Resolved download URL the buyer follows to obtain the virtual asset. Falls back to a
-                        portal-generated download URL when no explicit external URL is set on the underlying file entry.
-                        Read-only.
+                        Resolved download URL the buyer follows to obtain the virtual asset. Falls back to a portal-generated download URL when no explicit external URL is set on the underlying file entry. Read-only.
                     example: https://example.com/o/commerce-media/download-virtual/30130/30131
                     readOnly: true
                     type: string
                 usages:
                     description:
-                        Number of download usages permitted for the virtual asset. Decremented on each successful buyer
-                        download until the cap is reached. Read-only.
+                        Number of download usages permitted for the virtual asset. Decremented on each successful buyer download until the cap is reached. Read-only.
                     example: 5
                     format: int32
                     readOnly: true
@@ -2034,9 +1886,7 @@ paths:
     /channels/by-externalReferenceCode/{channelExternalReferenceCode}/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/placed-orders:
         get:
             description:
-                Lists the placed orders the authenticated buyer can view within the given channel ERC and account ERC
-                scope. Searches the order index filtered to the account and channel; orders in the OPEN draft state are
-                excluded so only committed orders are returned. Supports search, filter, sort, and pagination.
+                Lists the placed orders the authenticated buyer can view within the given channel ERC and account ERC scope. Searches the order index filtered to the account and channel; orders in the OPEN draft state are excluded so only committed orders are returned. Supports search, filter, sort, and pagination.
             parameters:
                 -   $ref: "#/components/parameters/accountExternalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -2094,9 +1944,7 @@ paths:
     /channels/by-externalReferenceCode/{externalReferenceCode}/placed-orders:
         get:
             description:
-                Lists the placed orders the authenticated buyer can view within the given channel ERC scope. Resolves
-                the channel by external reference code and delegates to the channel-id-scoped listing; orders in the
-                OPEN draft state are excluded. Supports search, filter, sort, and pagination.
+                Lists the placed orders the authenticated buyer can view within the given channel ERC scope. Resolves the channel by external reference code and delegates to the channel-id-scoped listing; orders in the OPEN draft state are excluded. Supports search, filter, sort, and pagination.
             operationId: getChannelByExternalReferenceCodePlacedOrdersPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2154,10 +2002,7 @@ paths:
     /channels/{channelId}/accounts/{accountId}/placed-orders:
         get:
             description:
-                Lists the placed orders the authenticated buyer can view within the given channel and account scope.
-                Searches the order index restricted to the supplied account and channel; orders in the OPEN draft state
-                are excluded. Supports search, filter, sort, and pagination over fields exposed by the placed-order
-                entity model.
+                Lists the placed orders the authenticated buyer can view within the given channel and account scope. Searches the order index restricted to the supplied account and channel; orders in the OPEN draft state are excluded. Supports search, filter, sort, and pagination over fields exposed by the placed-order entity model.
             parameters:
                 -   $ref: "#/components/parameters/accountIdPathParam"
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -2215,10 +2060,7 @@ paths:
     /channels/{channelId}/placed-orders:
         get:
             description:
-                Lists the placed orders the authenticated buyer can view within the given channel. When the buyer holds
-                the MANAGE_ALL_ACCOUNTS permission on the channel scope every account's orders are returned; otherwise
-                the result is restricted to the buyer's own commerce accounts. Orders in the OPEN draft state are
-                excluded. Supports search, filter, sort, and pagination.
+                Lists the placed orders the authenticated buyer can view within the given channel. When the buyer holds the MANAGE_ALL_ACCOUNTS permission on the channel scope every account's orders are returned; otherwise the result is restricted to the buyer's own commerce accounts. Orders in the OPEN draft state are excluded. Supports search, filter, sort, and pagination.
             operationId: getChannelPlacedOrdersPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -2276,9 +2118,7 @@ paths:
     /placed-order-comments/by-externalReferenceCode/{externalReferenceCode}:
         get:
             description:
-                Returns a single placed-order comment addressed by external reference code. Resolves the comment under
-                the authenticated buyer's company and ensures the parent order is not OPEN (draft cart). Returns 404
-                when the ERC does not resolve.
+                Returns a single placed-order comment addressed by external reference code. Resolves the comment under the authenticated buyer's company and ensures the parent order is not OPEN (draft cart). Returns 404 when the ERC does not resolve.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -2340,8 +2180,7 @@ paths:
     /placed-order-comments/{placedOrderCommentId}:
         get:
             description:
-                Returns a single placed-order comment addressed by its internal identifier. The parent order must not be
-                in the OPEN draft state; if it is, 404 is returned.
+                Returns a single placed-order comment addressed by its internal identifier. The parent order must not be in the OPEN draft state; if it is, 404 is returned.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderCommentIdPathParam"
             responses:
@@ -2403,8 +2242,7 @@ paths:
     /placed-order-items/by-externalReferenceCode/{externalReferenceCode}:
         get:
             description:
-                Returns a single placed-order line item addressed by external reference code. Resolves the item under
-                the authenticated buyer's company. Returns 404 when the ERC does not resolve.
+                Returns a single placed-order line item addressed by external reference code. Resolves the item under the authenticated buyer's company. Returns 404 when the ERC does not resolve.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -2465,9 +2303,7 @@ paths:
     /placed-order-items/by-externalReferenceCode/{externalReferenceCode}/placed-order-item-shipments:
         get:
             description:
-                Lists the shipments that fulfill the placed-order line item addressed by ERC. Includes drop-ship
-                supplier shipments when the line was fulfilled through supplier orders. The parent order must not be
-                OPEN.
+                Lists the shipments that fulfill the placed-order line item addressed by ERC. Includes drop-ship supplier shipments when the line was fulfilled through supplier orders. The parent order must not be OPEN.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -2519,8 +2355,7 @@ paths:
     /placed-order-items/{placedOrderItemId}:
         get:
             description:
-                Returns a single placed-order line item addressed by its internal identifier. The parent order must not
-                be OPEN; if it is, 404 is returned.
+                Returns a single placed-order line item addressed by its internal identifier. The parent order must not be OPEN; if it is, 404 is returned.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderItemIdPathParam"
             responses:
@@ -2581,8 +2416,7 @@ paths:
     /placed-order-items/{placedOrderItemId}/placed-order-item-shipments:
         get:
             description:
-                Lists the shipments that fulfill the placed-order line item addressed by id. Includes drop-ship supplier
-                shipments when the line was fulfilled through supplier orders. The parent order must not be OPEN.
+                Lists the shipments that fulfill the placed-order line item addressed by id. Includes drop-ship supplier shipments when the line was fulfilled through supplier orders. The parent order must not be OPEN.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderItemIdPathParam"
             responses:
@@ -2634,9 +2468,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}:
         get:
             description:
-                Returns a single placed order addressed by external reference code. Resolves the order under the
-                authenticated buyer's company; only orders owned by the buyer or by a delegated account user are
-                returned. Returns 404 when the ERC does not resolve.
+                Returns a single placed order addressed by external reference code. Resolves the order under the authenticated buyer's company; only orders owned by the buyer or by a delegated account user are returned. Returns 404 when the ERC does not resolve.
             operationId: getPlacedOrderByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2697,10 +2529,7 @@ paths:
             tags: ["PlacedOrder"]
         patch:
             description:
-                Partially updates the placed order addressed by external reference code. Applies JSON Merge Patch
-                semantics to a small set of buyer-editable fields (name, printedNote, purchaseOrderNumber) plus custom
-                expando attributes; the order must not be OPEN. Returns 404 when the ERC does not resolve and 422 when
-                the order status forbids the patch.
+                Partially updates the placed order addressed by external reference code. Applies JSON Merge Patch semantics to a small set of buyer-editable fields (name, printedNote, purchaseOrderNumber) plus custom expando attributes; the order must not be OPEN. Returns 404 when the ERC does not resolve and 422 when the order status forbids the patch.
             operationId: patchPlacedOrderByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodeMinLengthPathParam"
@@ -2766,9 +2595,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the placed order from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the placed order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2784,10 +2611,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments:
         get:
             description:
-                Lists the attachments uploaded against the placed order addressed by ERC. When the feature flag is
-                enabled the attachments are searched against the commerce order attachment index (with search, filter,
-                sort, and pagination); otherwise the underlying document-library file entries are returned in priority
-                order. Returns 404 when the ERC does not resolve.
+                Lists the attachments uploaded against the placed order addressed by ERC. When the feature flag is enabled the attachments are searched against the commerce order attachment index (with search, filter, sort, and pagination); otherwise the underlying document-library file entries are returned in priority order. Returns 404 when the ERC does not resolve.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
@@ -2845,10 +2669,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64:
         post:
             description:
-                Creates a new attachment on the placed order addressed by ERC, with the file body supplied inline as
-                Base64. When the feature flag is enabled the attachment is persisted as a commerce order attachment
-                record; otherwise it is stored as a file entry directly on the order. Returns 404 when the ERC does not
-                resolve.
+                Creates a new attachment on the placed order addressed by ERC, with the file body supplied inline as Base64. When the feature flag is enabled the attachment is persisted as a commerce order attachment record; otherwise it is stored as a file entry directly on the order. Returns 404 when the ERC does not resolve.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -2919,9 +2740,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the attachment from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the attachment from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2937,9 +2756,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-externalReferenceCode/{attachmentExternalReferenceCode}:
         delete:
             description:
-                Deletes the attachment addressed by ERC under the placed order addressed by ERC. When the feature flag
-                is enabled the commerce order attachment record is removed; otherwise the underlying document-library
-                file entry is detached from the order. Returns 404 when either ERC does not resolve.
+                Deletes the attachment addressed by ERC under the placed order addressed by ERC. When the feature flag is enabled the commerce order attachment record is removed; otherwise the underlying document-library file entry is detached from the order. Returns 404 when either ERC does not resolve.
             parameters:
                 -   $ref: "#/components/parameters/attachmentExternalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2993,8 +2810,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/delivery-term:
         get:
             description:
-                Returns the delivery term assigned to the placed order addressed by ERC. The order must not be OPEN; if
-                it is, the request is rejected. Returns 404 when the ERC does not resolve.
+                Returns the delivery term assigned to the placed order addressed by ERC. The order must not be OPEN; if it is, the request is rejected. Returns 404 when the ERC does not resolve.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodeMinLengthPathParam"
             responses:
@@ -3055,8 +2871,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/payment-term:
         get:
             description:
-                Returns the payment term assigned to the placed order addressed by ERC. The order must not be OPEN; if
-                it is, the request is rejected. Returns 404 when the ERC does not resolve.
+                Returns the payment term assigned to the placed order addressed by ERC. The order must not be OPEN; if it is, the request is rejected. Returns 404 when the ERC does not resolve.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodeMinLengthPathParam"
             responses:
@@ -3117,10 +2932,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/payment-url:
         get:
             description:
-                Returns a portal URL that routes the buyer through the payment flow for the placed order addressed by
-                ERC. The URL embeds a guest token when the order is a guest order, and a nextStep parameter that either
-                follows the supplied callbackURL or returns the buyer to the order-confirmation step of the storefront
-                checkout. The order must not be OPEN.
+                Returns a portal URL that routes the buyer through the payment flow for the placed order addressed by ERC. The URL embeds a guest token when the order is a guest order, and a nextStep parameter that either follows the supplied callbackURL or returns the buyer to the order-confirmation step of the storefront checkout. The order must not be OPEN.
             operationId: getPlacedOrderByExternalReferenceCodePaymentURL
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3180,9 +2992,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-billing-address:
         get:
             description:
-                Returns the billing address snapshot for the placed order addressed by ERC. The order must not be OPEN;
-                when the billing address is unset an empty PlacedOrderAddress is returned. Returns 404 when the ERC does
-                not resolve.
+                Returns the billing address snapshot for the placed order addressed by ERC. The order must not be OPEN; when the billing address is unset an empty PlacedOrderAddress is returned. Returns 404 when the ERC does not resolve.
             operationId: getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3244,8 +3054,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-comments:
         get:
             description:
-                Lists the comments (notes) recorded against the placed order addressed by ERC. The order must not be
-                OPEN. Supports pagination via page and pageSize.
+                Lists the comments (notes) recorded against the placed order addressed by ERC. The order must not be OPEN. Supports pagination via page and pageSize.
             operationId: getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3304,9 +3113,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-items:
         get:
             description:
-                Lists the top-level line items of the placed order addressed by ERC. Restricts the result to parent
-                items (child items are exposed on the nested placedOrderItems property). Supports search, sort,
-                pagination, and an optional skuId filter to narrow to a single purchasable variant.
+                Lists the top-level line items of the placed order addressed by ERC. Restricts the result to parent items (child items are exposed on the nested placedOrderItems property). Supports search, sort, pagination, and an optional skuId filter to narrow to a single purchasable variant.
             operationId: getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3364,8 +3171,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-shipping-address:
         get:
             description:
-                Returns the shipping address snapshot for the placed order addressed by ERC. The order must not be OPEN.
-                Returns 404 when the ERC does not resolve or the shipping address has been removed.
+                Returns the shipping address snapshot for the placed order addressed by ERC. The order must not be OPEN. Returns 404 when the ERC does not resolve or the shipping address has been removed.
             operationId: getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3427,9 +3233,7 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/shipments:
         get:
             description:
-                Lists the shipments dispatched against the placed order addressed by ERC. Each row carries the carrier,
-                tracking number, tracking URL, status, and a one-line address summary -- the same data point a buyer
-                uses to follow the carrier redirect. Supports search, filter, sort, and pagination.
+                Lists the shipments dispatched against the placed order addressed by ERC. Each row carries the carrier, tracking number, tracking URL, status, and a one-line address summary -- the same data point a buyer uses to follow the carrier redirect. Supports search, filter, sort, and pagination.
             operationId: getPlacedOrderByExternalReferenceCodeShipmentsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3551,9 +3355,7 @@ paths:
             tags: ["PlacedOrder"]
         patch:
             description:
-                Partially updates the placed order addressed by id. Applies JSON Merge Patch semantics to a small set of
-                buyer-editable fields (name, printedNote, purchaseOrderNumber) plus custom expando attributes; the order
-                must not be OPEN. Returns 422 when the order status forbids the patch.
+                Partially updates the placed order addressed by id. Applies JSON Merge Patch semantics to a small set of buyer-editable fields (name, printedNote, purchaseOrderNumber) plus custom expando attributes; the order must not be OPEN. Returns 422 when the order status forbids the patch.
             operationId: patchPlacedOrder
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
@@ -3619,9 +3421,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the placed order from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the placed order from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3637,9 +3437,7 @@ paths:
     /placed-orders/{placedOrderId}/attachments:
         get:
             description:
-                Lists the attachments uploaded against the placed order addressed by id. When the feature flag is
-                enabled the attachments are searched against the commerce order attachment index with search, filter,
-                sort, and pagination; otherwise the underlying document-library file entries are returned.
+                Lists the attachments uploaded against the placed order addressed by id. When the feature flag is enabled the attachments are searched against the commerce order attachment index with search, filter, sort, and pagination; otherwise the underlying document-library file entries are returned.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdScopedPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
@@ -3697,9 +3495,7 @@ paths:
     /placed-orders/{placedOrderId}/attachments/by-base64:
         post:
             description:
-                Creates a new attachment on the placed order addressed by id, with the file body supplied inline as
-                Base64. When the feature flag is enabled the attachment is persisted as a commerce order attachment
-                record; otherwise it is stored as a file entry directly on the order.
+                Creates a new attachment on the placed order addressed by id, with the file body supplied inline as Base64. When the feature flag is enabled the attachment is persisted as a commerce order attachment record; otherwise it is stored as a file entry directly on the order.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdScopedPathParam"
             requestBody:
@@ -3770,9 +3566,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the attachment from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the attachment from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3788,9 +3582,7 @@ paths:
     /placed-orders/{placedOrderId}/attachments/{attachmentId}:
         delete:
             description:
-                Deletes the attachment addressed by id under the placed order addressed by id. When the feature flag is
-                enabled the commerce order attachment record is removed; otherwise the underlying document-library file
-                entry is detached from the order.
+                Deletes the attachment addressed by id under the placed order addressed by id. When the feature flag is enabled the commerce order attachment record is removed; otherwise the underlying document-library file entry is detached from the order.
             parameters:
                 -   $ref: "#/components/parameters/attachmentIdPathParam"
                 -   $ref: "#/components/parameters/placedOrderIdScopedPathParam"
@@ -3844,8 +3636,7 @@ paths:
     /placed-orders/{placedOrderId}/delivery-term:
         get:
             description:
-                Returns the delivery term assigned to the placed order addressed by id. The order must not be OPEN; if
-                it is, the request is rejected.
+                Returns the delivery term assigned to the placed order addressed by id. The order must not be OPEN; if it is, the request is rejected.
             operationId: getPlacedOrderDeliveryTerm
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
@@ -3907,9 +3698,7 @@ paths:
     /placed-orders/{placedOrderId}/order-transitions:
         get:
             description:
-                Lists the workflow and storefront transitions the authenticated buyer can trigger on the placed order
-                addressed by id. Combines workflow transitions resolved against the buyer's permissions with the
-                platform-defined process-quote and reorder transitions. The order must not be OPEN.
+                Lists the workflow and storefront transitions the authenticated buyer can trigger on the placed order addressed by id. Combines workflow transitions resolved against the buyer's permissions with the platform-defined process-quote and reorder transitions. The order must not be OPEN.
             operationId: getPlacedOrderOrderTransitionsPage
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
@@ -3971,10 +3760,7 @@ paths:
             tags: ["OrderTransition"]
         post:
             description:
-                Triggers a transition on the placed order addressed by id. When a workflowTaskId is supplied the
-                transition is routed through the workflow engine; otherwise the name selects between the
-                platform-defined process-quote and reorder transitions. The reorder transition creates a new draft order
-                and returns its identifier in the orderId field. The order must not be OPEN.
+                Triggers a transition on the placed order addressed by id. When a workflowTaskId is supplied the transition is routed through the workflow engine; otherwise the name selects between the platform-defined process-quote and reorder transitions. The reorder transition creates a new draft order and returns its identifier in the orderId field. The order must not be OPEN.
             operationId: postPlacedOrderOrderTransition
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdSimplePathParam"
@@ -4040,9 +3826,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the order transition from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the order transition from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4057,8 +3841,7 @@ paths:
     /placed-orders/{placedOrderId}/payment-term:
         get:
             description:
-                Returns the payment term assigned to the placed order addressed by id. The order must not be OPEN; if it
-                is, the request is rejected.
+                Returns the payment term assigned to the placed order addressed by id. The order must not be OPEN; if it is, the request is rejected.
             operationId: getPlacedOrderPaymentTerm
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
@@ -4120,10 +3903,7 @@ paths:
     /placed-orders/{placedOrderId}/payment-url:
         get:
             description:
-                Returns a portal URL that routes the buyer through the payment flow for the placed order addressed by
-                id. The URL embeds a guest token when the order is a guest order, and a nextStep parameter that either
-                follows the supplied callbackURL or returns the buyer to the order-confirmation step of the storefront
-                checkout. The order must not be OPEN.
+                Returns a portal URL that routes the buyer through the payment flow for the placed order addressed by id. The URL embeds a guest token when the order is a guest order, and a nextStep parameter that either follows the supplied callbackURL or returns the buyer to the order-confirmation step of the storefront checkout. The order must not be OPEN.
             operationId: getPlacedOrderPaymentURL
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdSimplePathParam"
@@ -4183,8 +3963,7 @@ paths:
     /placed-orders/{placedOrderId}/placed-order-billing-address:
         get:
             description:
-                Returns the billing address snapshot for the placed order addressed by id. The order must not be OPEN.
-                When the billing address is unset an empty PlacedOrderAddress is returned.
+                Returns the billing address snapshot for the placed order addressed by id. The order must not be OPEN. When the billing address is unset an empty PlacedOrderAddress is returned.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
             responses:
@@ -4245,8 +4024,7 @@ paths:
     /placed-orders/{placedOrderId}/placed-order-comments:
         get:
             description:
-                Lists the comments (notes) recorded against the placed order addressed by id. The order must not be
-                OPEN. Supports pagination via page and pageSize.
+                Lists the comments (notes) recorded against the placed order addressed by id. The order must not be OPEN. Supports pagination via page and pageSize.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
@@ -4304,9 +4082,7 @@ paths:
     /placed-orders/{placedOrderId}/placed-order-items:
         get:
             description:
-                Lists the top-level line items of the placed order addressed by id. Restricts the result to parent items
-                (child items are exposed on the nested placedOrderItems property). Supports search, sort, pagination,
-                and an optional skuId filter to narrow to a single purchasable variant.
+                Lists the top-level line items of the placed order addressed by id. Restricts the result to parent items (child items are exposed on the nested placedOrderItems property). Supports search, sort, pagination, and an optional skuId filter to narrow to a single purchasable variant.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
@@ -4363,8 +4139,7 @@ paths:
     /placed-orders/{placedOrderId}/placed-order-shipping-address:
         get:
             description:
-                Returns the shipping address snapshot for the placed order addressed by id. The order must not be OPEN.
-                Returns 404 when the shipping address has been removed.
+                Returns the shipping address snapshot for the placed order addressed by id. The order must not be OPEN. Returns 404 when the shipping address has been removed.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
             responses:
@@ -4425,9 +4200,7 @@ paths:
     /placed-orders/{placedOrderId}/shipments:
         get:
             description:
-                Lists the shipments dispatched against the placed order addressed by id. Each row carries the carrier,
-                tracking number, tracking URL, status, and a one-line address summary -- the same data point a buyer
-                uses to follow the carrier redirect. Supports search, filter, sort, and pagination.
+                Lists the shipments dispatched against the placed order addressed by id. Each row carries the carrier, tracking number, tracking URL, status, and a one-line address summary -- the same data point a buyer uses to follow the carrier redirect. Supports search, filter, sort, and pagination.
             operationId: getPlacedOrderShipmentsPage
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
@@ -4484,35 +4257,28 @@ paths:
             tags: ["Shipment"]
 tags:
     -   description:
-            Buyer-visible attachments uploaded against a placed order, such as invoices, delivery notes, or supporting
-            documents. List, create by base64, and delete by id or external reference code.
+            Buyer-visible attachments uploaded against a placed order, such as invoices, delivery notes, or supporting documents. List, create by base64, and delete by id or external reference code.
         name: Attachment
     -   description:
-            Workflow and storefront transitions the buyer can trigger on a placed order (for example, cancel a pending
-            order, process a quote, reorder).
+            Workflow and storefront transitions the buyer can trigger on a placed order (for example, cancel a pending order, process a quote, reorder).
         name: OrderTransition
     -   description:
-            Committed (non-open) commerce orders the buyer or a delegated account user is authorized to view. Includes
-            read endpoints, partial update via JSON Merge Patch, billing and shipping address lookups, comments, items,
-            shipments, payment URL generation, and the buyer-permitted order transitions.
+            Committed (non-open) commerce orders the buyer or a delegated account user is authorized to view. Includes read endpoints, partial update via JSON Merge Patch, billing and shipping address lookups, comments, items, shipments, payment URL generation, and the buyer-permitted order transitions.
         name: PlacedOrder
     -   description:
             Snapshot of the billing or shipping address attached to a placed order. Read-only.
         name: PlacedOrderAddress
     -   description:
-            Comments (notes) recorded by the buyer or support staff against a placed order. Corresponds to the standard
-            Commerce Order Note.
+            Comments (notes) recorded by the buyer or support staff against a placed order. Corresponds to the standard Commerce Order Note.
         name: PlacedOrderComment
     -   description:
-            Individual line items on a placed order. Carries the purchased SKU, quantity, options, child items, and the
-            shipments that fulfill the line.
+            Individual line items on a placed order. Carries the purchased SKU, quantity, options, child items, and the shipments that fulfill the line.
         name: PlacedOrderItem
     -   description:
             Shipments resolved against a single placed-order line item, including drop-ship supplier shipments.
         name: PlacedOrderItemShipment
     -   description:
-            Shipments dispatched against a placed order. Carries the carrier, tracking, status, item count, and
-            shipping-address summary.
+            Shipments dispatched against a placed order. Carries the carrier, tracking, status, item count, and shipping-address summary.
         name: Shipment
     -   description:
             Reusable delivery or payment term assigned to a placed order.

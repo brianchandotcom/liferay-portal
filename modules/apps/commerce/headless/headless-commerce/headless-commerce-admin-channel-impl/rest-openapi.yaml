@@ -1333,8 +1333,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -1502,8 +1501,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -1777,8 +1775,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -1946,8 +1943,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -2285,8 +2281,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -2739,8 +2734,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -2940,8 +2934,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -3141,8 +3134,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -3308,8 +3300,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -3828,8 +3819,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -4029,8 +4019,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -4230,8 +4219,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -4397,8 +4385,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -4778,8 +4765,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -4945,8 +4931,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -5520,8 +5505,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:
@@ -5687,8 +5671,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A resource with the same external reference code already exists, or the requested change
-                        violates a state invariant.
+                        A resource with the same external reference code already exists, or the requested change violates a state invariant.
                 422:
                     content:
                         application/json:

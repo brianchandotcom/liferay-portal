@@ -3,8 +3,7 @@ components:
         accountExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code identifying the account whose carts are being queried in the given channel.
-                Resolved against the company scope before filtering carts.
+                External reference code identifying the account whose carts are being queried in the given channel. Resolved against the company scope before filtering carts.
             explode: false
             name: accountExternalReferenceCode
             required: true
@@ -16,8 +15,7 @@ components:
         accountIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the account whose carts are being queried in the given channel.
-                Counterpart to the by-externalReferenceCode variant.
+                Internal numeric identifier of the account whose carts are being queried in the given channel. Counterpart to the by-externalReferenceCode variant.
             explode: false
             name: accountId
             required: true
@@ -30,8 +28,7 @@ components:
         attachmentExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code that addresses the target attachment under the parent cart on the
-                by-externalReferenceCode sub-path. Idempotency key, unique per attachment within the cart scope.
+                External reference code that addresses the target attachment under the parent cart on the by-externalReferenceCode sub-path. Idempotency key, unique per attachment within the cart scope.
             explode: false
             name: attachmentExternalReferenceCode
             required: true
@@ -58,8 +55,7 @@ components:
         callbackURLQueryParam:
             in: query
             description:
-                Optional URL the payment gateway redirects the buyer to after the payment flow completes or is
-                abandoned. When omitted, the gateway-default callback configured on the channel is used.
+                Optional URL the payment gateway redirects the buyer to after the payment flow completes or is abandoned. When omitted, the gateway-default callback configured on the channel is used.
             explode: true
             name: callbackURL
             required: false
@@ -69,8 +65,7 @@ components:
         cartCommentIdPathParam:
             in: path
             description:
-                Internal numeric identifier of a comment (cart comment). Counterpart to the by-externalReferenceCode
-                variant.
+                Internal numeric identifier of a comment (cart comment). Counterpart to the by-externalReferenceCode variant.
             explode: false
             name: cartCommentId
             required: true
@@ -83,8 +78,7 @@ components:
         cartIdPathParam:
             in: path
             description:
-                Internal numeric identifier of a cart. Counterpart to the by-externalReferenceCode path variant;
-                identifiers are server-assigned and stable across the cart's lifetime.
+                Internal numeric identifier of a cart. Counterpart to the by-externalReferenceCode path variant; identifiers are server-assigned and stable across the cart's lifetime.
             explode: false
             name: cartId
             required: true
@@ -97,8 +91,7 @@ components:
         cartItemIdPathParam:
             in: path
             description:
-                Internal numeric identifier of a cart item (cart line item). Counterpart to the by-externalReferenceCode
-                variant.
+                Internal numeric identifier of a cart item (cart line item). Counterpart to the by-externalReferenceCode variant.
             explode: false
             name: cartItemId
             required: true
@@ -111,8 +104,7 @@ components:
         channelExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code identifying the CommerceChannel that scopes the carts. The channel determines
-                currency, available payment methods, available shipping methods, and visibility rules.
+                External reference code identifying the CommerceChannel that scopes the carts. The channel determines currency, available payment methods, available shipping methods, and visibility rules.
             explode: false
             name: channelExternalReferenceCode
             required: true
@@ -124,8 +116,7 @@ components:
         channelIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the CommerceChannel that scopes the carts. Counterpart to the
-                by-externalReferenceCode variant.
+                Internal numeric identifier of the CommerceChannel that scopes the carts. Counterpart to the by-externalReferenceCode variant.
             explode: false
             name: channelId
             required: true
@@ -138,9 +129,7 @@ components:
         externalReferenceCodePathParam:
             in: path
             description:
-                External reference code that addresses the target resource on the by-externalReferenceCode paths. The
-                code is the integration-supplied idempotency key, unique within the resource scope; POST against this
-                path is upsert (create when absent, replace when present).
+                External reference code that addresses the target resource on the by-externalReferenceCode paths. The code is the integration-supplied idempotency key, unique within the resource scope; POST against this path is upsert (create when absent, replace when present).
             explode: false
             name: externalReferenceCode
             required: true
@@ -154,13 +143,7 @@ components:
         filterQueryParam:
             in: query
             description:
-                OData v4 filter expression that narrows the result set. Supported fields depend on the endpoint and come
-                from the matching entity model. For /carts list endpoints, supported fields include accountId,
-                orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author, externalReferenceCode,
-                name, orderType, and purchaseOrderNumber. For /carts/<cartId>/attachments, restricted, dateCreated,
-                dateModified, priority, commerceOrderId, externalReferenceCode, title, and type are supported. For
-                /carts/<cartId>/items, quantity, name, sku, and unitOfMeasure are supported. Example -- filter=accountId
-                eq 12345.
+                OData v4 filter expression that narrows the result set. Supported fields depend on the endpoint and come from the matching entity model. For /carts list endpoints, supported fields include accountId, orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author, externalReferenceCode, name, orderType, and purchaseOrderNumber. For /carts/<cartId>/attachments, restricted, dateCreated, dateModified, priority, commerceOrderId, externalReferenceCode, title, and type are supported. For /carts/<cartId>/items, quantity, name, sku, and unitOfMeasure are supported. Example -- filter=accountId eq 12345.
             explode: true
             name: filter
             required: false
@@ -180,8 +163,7 @@ components:
         pageSizeQueryParam:
             in: query
             description:
-                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the
-                portal configuration to prevent unbounded reads.
+                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the portal configuration to prevent unbounded reads.
             explode: true
             name: pageSize
             required: false
@@ -191,9 +173,7 @@ components:
         searchQueryParam:
             in: query
             description:
-                Full-text search query. For /carts list endpoints the search corpus is the cart index (matches against
-                account, author, name, and other indexed fields). For nested /items and /attachments endpoints the
-                corpus is the corresponding cart item or attachment index.
+                Full-text search query. For /carts list endpoints the search corpus is the cart index (matches against account, author, name, and other indexed fields). For nested /items and /attachments endpoints the corpus is the corresponding cart item or attachment index.
             explode: true
             name: search
             required: false
@@ -214,8 +194,7 @@ components:
         sortQueryParam:
             in: query
             description:
-                Sort expression. Comma-separated `field:direction` pairs (direction `asc` or `desc`). Supported sort
-                fields are the same as the filterable fields documented on filter for the same endpoint.
+                Sort expression. Comma-separated `field:direction` pairs (direction `asc` or `desc`). Supported sort fields are the same as the filterable fields documented on filter for the same endpoint.
             explode: true
             name: sort
             required: false
@@ -225,9 +204,7 @@ components:
     schemas:
         Address:
             description:
-                Billing or shipping address attached to a cart. Carries the structured fields -- street, city, region,
-                country, ZIP, phone, VAT -- plus a type code that classifies the address as billing-only, shipping-only,
-                or both.
+                Billing or shipping address attached to a cart. Carries the structured fields -- street, city, region, country, ZIP, phone, VAT -- plus a type code that classifies the address as billing-only, shipping-only, or both.
             properties:
                 city:
                     description:
@@ -251,8 +228,7 @@ components:
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update; must be unique per address within the company. Read-only
-                        on the wire and set automatically when omitted.
+                        Idempotency key for create and update; must be unique per address within the company. Read-only on the wire and set automatically when omitted.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
@@ -286,8 +262,7 @@ components:
                     type: string
                 region:
                     description:
-                        State or province display name resolved from the region reference identified by the region ISO
-                        code.
+                        State or province display name resolved from the region reference identified by the region ISO code.
                     example: California
                     type: string
                 regionISOCode:
@@ -345,8 +320,7 @@ components:
             type: object
         Attachment:
             description:
-                File linked to a cart -- typically an invoice, signed quote, or spec sheet. Returned read-only on cart
-                payloads; created through the by-base64 endpoint and removed through the matching delete endpoint.
+                File linked to a cart -- typically an invoice, signed quote, or spec sheet. Returned read-only on cart payloads; created through the by-base64 endpoint and removed through the matching delete endpoint.
             properties:
                 actions:
                     additionalProperties:
@@ -354,8 +328,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 dateModified:
@@ -373,8 +346,7 @@ components:
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for the underlying attachment record; unique per attachment within the cart
-                        scope. Read-only on the wire.
+                        Idempotency key for the underlying attachment record; unique per attachment within the cart scope. Read-only on the wire.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
@@ -394,8 +366,7 @@ components:
                     type: number
                 restricted:
                     description:
-                        When true, the attachment is visible only to staff with the manage-comments permission on the
-                        parent cart. Read-only.
+                        When true, the attachment is visible only to staff with the manage-comments permission on the parent cart. Read-only.
                     example: false
                     readOnly: true
                     type: boolean
@@ -425,8 +396,7 @@ components:
                     type: string
         AttachmentBase64:
             description:
-                Request payload for uploading a cart attachment as a base64-encoded file. Used by the
-                /attachments/by-base64 endpoint to create a single attachment under a cart.
+                Request payload for uploading a cart attachment as a base64-encoded file. Used by the /attachments/by-base64 endpoint to create a single attachment under a cart.
             properties:
                 attachment:
                     description:
@@ -446,8 +416,7 @@ components:
                     type: number
                 restricted:
                     description:
-                        When true, the resulting attachment is visible only to staff with the manage-comments
-                        permission.
+                        When true, the resulting attachment is visible only to staff with the manage-comments permission.
                     example: false
                     type: boolean
                 title:
@@ -463,9 +432,7 @@ components:
             type: object
         Cart:
             description:
-                Shopping cart for a buyer flow while the order is still open. Aggregates line items, billing and
-                shipping addresses, applied coupon, delivery and payment terms, order type, currency, computed totals,
-                and the order, payment, and workflow status snapshots.
+                Shopping cart for a buyer flow while the order is still open. Aggregates line items, billing and shipping addresses, applied coupon, delivery and payment terms, order type, currency, computed totals, and the order, payment, and workflow status snapshots.
             properties:
                 account:
                     description:
@@ -481,8 +448,7 @@ components:
                     type: integer
                 attachments:
                     description:
-                        File attachments linked to the cart. Read-only on the cart payload; mutate through the
-                        attachments endpoints.
+                        File attachments linked to the cart. Read-only on the cart payload; mutate through the attachments endpoints.
                     items:
                         $ref: "#/components/schemas/Attachment"
                     type: array
@@ -496,8 +462,7 @@ components:
                     $ref: "#/components/schemas/Address"
                 billingAddressExternalReferenceCode:
                     description:
-                        External reference code of the address to use as the billing address. Alternative to the
-                        billing-address ID.
+                        External reference code of the address to use as the billing address. Alternative to the billing-address ID.
                     example: AB-34098-789-N
                     type: string
                 billingAddressId:
@@ -514,8 +479,7 @@ components:
                     type: array
                 channelId:
                     description:
-                        Reference to the channel that scopes the cart (FK identifier). Read-only; the channel is fixed
-                        at cart creation.
+                        Reference to the channel that scopes the cart (FK identifier). Read-only; the channel is fixed at cart creation.
                     example: 20078
                     format: int64
                     readOnly: true
@@ -552,8 +516,7 @@ components:
                 customFields:
                     additionalProperties: true
                     description:
-                        Custom attribute bag. Keys are the configured custom-field names; values are typed by the
-                        custom-field definition.
+                        Custom attribute bag. Keys are the configured custom-field names; values are typed by the custom-field definition.
                     example:
                         priorityCode: GOLD
                         salesRepEmail: rep@example.com
@@ -572,8 +535,7 @@ components:
                     type: string
                 errorMessages:
                     description:
-                        Validation messages collected during cart-level validation. Each message names a missing or
-                        invalid field.
+                        Validation messages collected during cart-level validation. Each message names a missing or invalid field.
                     example:
                     -   Billing address is required.
                     -   Shipping method is required.
@@ -582,8 +544,7 @@ components:
                     type: array
                 externalReferenceCode:
                     description:
-                        Idempotency key for the underlying cart; unique per cart within the company. Read-only on the
-                        wire and set automatically when omitted.
+                        Idempotency key for the underlying cart; unique per cart within the company. Read-only on the wire and set automatically when omitted.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
@@ -621,8 +582,7 @@ components:
                     type: string
                 notes:
                     description:
-                        Comments attached to the cart. Read-only on the cart payload; mutate through the comments
-                        endpoints. Restricted notes are filtered by permission.
+                        Comments attached to the cart. Read-only on the cart payload; mutate through the comments endpoints. Restricted notes are filtered by permission.
                     items:
                         $ref: "#/components/schemas/CartComment"
                     type: array
@@ -654,8 +614,7 @@ components:
                     type: string
                 paymentMethod:
                     description:
-                        Currently selected payment method key. Matches the payment method engine key on the
-                        payment-methods enumeration.
+                        Currently selected payment method key. Matches the payment method engine key on the payment-methods enumeration.
                     example: money-order
                     type: string
                 paymentMethodLabel:
@@ -719,8 +678,7 @@ components:
                     $ref: "#/components/schemas/Address"
                 shippingAddressExternalReferenceCode:
                     description:
-                        External reference code of the address to use as the shipping address. Alternative to the
-                        shipping-address ID.
+                        External reference code of the address to use as the shipping address. Alternative to the shipping-address ID.
                     example: AB-34098-789-N
                     type: string
                 shippingAddressId:
@@ -731,8 +689,7 @@ components:
                     type: integer
                 shippingMethod:
                     description:
-                        Currently selected shipping method key. Matches the shipping method engine key on the
-                        shipping-methods enumeration.
+                        Currently selected shipping method key. Matches the shipping method engine key on the shipping-methods enumeration.
                     example: fixed
                     type: string
                 shippingOption:
@@ -761,8 +718,7 @@ components:
                     type: boolean
                 valid:
                     description:
-                        Aggregate validation flag -- true when no cart-level error messages and no item-level errors are
-                        present. Read-only.
+                        Aggregate validation flag -- true when no cart-level error messages and no item-level errors are present. Read-only.
                     example: true
                     readOnly: true
                     type: boolean
@@ -772,8 +728,7 @@ components:
             type: object
         CartComment:
             description:
-                Note attached to a cart. Restricted comments are visible only to staff with the manage-comments
-                permission on the parent cart; unrestricted comments are buyer-visible.
+                Note attached to a cart. Restricted comments are visible only to staff with the manage-comments permission on the parent cart; unrestricted comments are buyer-visible.
             properties:
                 author:
                     description:
@@ -801,8 +756,7 @@ components:
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for the comment; unique per comment within the cart scope. Read-only on the wire
-                        and set automatically when omitted.
+                        Idempotency key for the comment; unique per comment within the cart scope. Read-only on the wire and set automatically when omitted.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
@@ -829,16 +783,13 @@ components:
                     type: integer
                 restricted:
                     description:
-                        When true, the comment is visible only to staff with the manage-comments permission on the
-                        parent cart.
+                        When true, the comment is visible only to staff with the manage-comments permission on the parent cart.
                     example: false
                     type: boolean
             type: object
         CartItem:
             description:
-                Cart line item. Binds a purchasable SKU and a quantity to its parent cart, with unit pricing, selected
-                options, the resolved unit-of-measure tier, an optional per-item shipping address, and any bundle
-                children.
+                Cart line item. Binds a purchasable SKU and a quantity to its parent cart, with unit pricing, selected options, the resolved unit-of-measure tier, an optional per-item shipping address, and any bundle children.
             properties:
                 adaptiveMediaImageHTMLTag:
                     description:
@@ -855,8 +806,7 @@ components:
                 customFields:
                     additionalProperties: true
                     description:
-                        Custom attribute bag for the cart item. Keys are the configured custom-field names; values are
-                        typed by the custom-field definition.
+                        Custom attribute bag for the cart item. Keys are the configured custom-field names; values are typed by the custom-field definition.
                     example:
                         engravingText: For Alex
                         giftWrap: true
@@ -864,8 +814,7 @@ components:
                 deliveryGroup:
                     deprecated: true
                     description:
-                        Deprecated -- use the delivery group name field instead. Retained for backward compatibility;
-                        both fields are written but only the new field is honored on create and update.
+                        Deprecated -- use the delivery group name field instead. Retained for backward compatibility; both fields are written but only the new field is honored on create and update.
                     example: warehouse-east
                     type: string
                 deliveryGroupName:
@@ -875,8 +824,7 @@ components:
                     type: string
                 errorMessages:
                     description:
-                        Validation messages collected during item-level validation -- for example, quantity outside the
-                        configured bounds.
+                        Validation messages collected during item-level validation -- for example, quantity outside the configured bounds.
                     example:
                     -   Quantity must be at least 1.
                     -   SKU is no longer available.
@@ -885,8 +833,7 @@ components:
                     type: array
                 externalReferenceCode:
                     description:
-                        Idempotency key for the cart item; unique per item within the company. Read-only on the wire and
-                        set automatically when omitted.
+                        Idempotency key for the cart item; unique per item within the company. Read-only on the wire and set automatically when omitted.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
@@ -910,8 +857,7 @@ components:
                     type: string
                 parentCartItemId:
                     description:
-                        Reference to the parent cart item when this row is a bundle child (FK identifier); 0 for
-                        top-level items. Read-only.
+                        Reference to the parent cart item when this row is a bundle child (FK identifier); 0 for top-level items. Read-only.
                     example: 0
                     format: int64
                     readOnly: true
@@ -937,15 +883,13 @@ components:
                     type: object
                 quantity:
                     description:
-                        Ordered quantity expressed in the item's unit of measure. Validated against the item settings --
-                        minimum, maximum, multiple, allowed quantities.
+                        Ordered quantity expressed in the item's unit of measure. Validated against the item settings -- minimum, maximum, multiple, allowed quantities.
                     example: 10.1
                     format: bigdecimal
                     type: number
                 replacedSku:
                     description:
-                        Original SKU code when this line replaces another SKU after an out-of-stock substitution or
-                        similar swap. Read-only.
+                        Original SKU code when this line replaces another SKU after an out-of-stock substitution or similar swap. Read-only.
                     example: "12341234"
                     readOnly: true
                     type: string
@@ -962,8 +906,7 @@ components:
                     type: integer
                 requestedDeliveryDate:
                     description:
-                        Item-specific requested delivery date in ISO 8601 (date only). Overrides the cart-level
-                        requested delivery date when set.
+                        Item-specific requested delivery date in ISO 8601 (date only). Overrides the cart-level requested delivery date when set.
                     example: 2017-07-21
                     format: date
                     type: string
@@ -978,8 +921,7 @@ components:
                     type: string
                 shippingAddressId:
                     description:
-                        Reference to the address used as item-level shipping address (FK identifier). Overrides the
-                        cart-level shipping address for this line.
+                        Reference to the address used as item-level shipping address (FK identifier). Overrides the cart-level shipping address for this line.
                     example: 10131
                     format: int64
                     type: integer
@@ -1026,9 +968,7 @@ components:
             type: object
         CartTransition:
             description:
-                Workflow or order-status transition available on the cart. Each entry names the transition (a workflow
-                task name or one of request-quote, submit, quick-checkout, checkout), its localized label, whether the
-                transition is currently allowed, and an optional comment captured when the transition is fired.
+                Workflow or order-status transition available on the cart. Each entry names the transition (a workflow task name or one of request-quote, submit, quick-checkout, checkout), its localized label, whether the transition is currently allowed, and an optional comment captured when the transition is fired.
             properties:
                 cartId:
                     description:
@@ -1061,33 +1001,28 @@ components:
                     type: boolean
                 restricted:
                     description:
-                        When true, firing the transition requires an elevated permission -- typically the manage-orders
-                        permission on the cart.
+                        When true, firing the transition requires an elevated permission -- typically the manage-orders permission on the cart.
                     example: false
                     type: boolean
                 workflowTaskId:
                     description:
-                        Reference to the active workflow task when the transition is a workflow transition (FK
-                        identifier); 0 when the transition is an order-status transition.
+                        Reference to the active workflow task when the transition is a workflow transition (FK identifier); 0 when the transition is an order-status transition.
                     example: 30130
                     format: int64
                     type: integer
         CouponCode:
             description:
-                Request payload for applying a coupon to a cart. Carries the coupon code string the discount engine
-                resolves against the active promotion rules.
+                Request payload for applying a coupon to a cart. Carries the coupon code string the discount engine resolves against the active promotion rules.
             properties:
                 code:
                     description:
-                        Coupon code string to apply. Resolved against the active discount rules; raises an error when
-                        the code is unknown, expired, or not applicable to the cart.
+                        Coupon code string to apply. Resolved against the active discount rules; raises an error when the code is unknown, expired, or not applicable to the cart.
                     example: SUMMER25
                     type: string
             type: object
         Error:
             description:
-                Standard error envelope returned on non-2xx responses. Carries the HTTP status, an internal error code,
-                a developer-facing description, and a localized message.
+                Standard error envelope returned on non-2xx responses. Carries the HTTP status, an internal error code, a developer-facing description, and a localized message.
             properties:
                 errorCode:
                     description:
@@ -1121,8 +1056,7 @@ components:
             type: object
         PaymentMethod:
             description:
-                Payment method qualified for a cart. The entries returned for a given cart depend on the billing address
-                country, the order type qualifiers, the buyer's view permission, and subscription eligibility.
+                Payment method qualified for a cart. The entries returned for a given cart depend on the billing address country, the order type qualifiers, the buyer's view permission, and subscription eligibility.
             properties:
                 description:
                     description:
@@ -1131,8 +1065,7 @@ components:
                     type: string
                 key:
                     description:
-                        Stable engine key identifying the payment integration. Used as the value of the cart's payment
-                        method field.
+                        Stable engine key identifying the payment integration. Used as the value of the cart's payment method field.
                     example: money-order
                     type: string
                 name:
@@ -1143,11 +1076,7 @@ components:
             type: object
         Price:
             description:
-                Computed unit price snapshot for a cart item. Carries the base price, the promotional price, the
-                absolute and percentage discount levels, and the final price. The currency is inherited from the parent
-                cart; the price-on-application flag indicates the price is negotiated and not displayed on the
-                storefront. All monetary amounts are per unit and tax-exclusive -- cart-level tax is computed by the
-                active tax engine and reported on the cart Summary (taxValue, total), not on this per-unit snapshot.
+                Computed unit price snapshot for a cart item. Carries the base price, the promotional price, the absolute and percentage discount levels, and the final price. The currency is inherited from the parent cart; the price-on-application flag indicates the price is negotiated and not displayed on the storefront. All monetary amounts are per unit and tax-exclusive -- cart-level tax is computed by the active tax engine and reported on the cart Summary (taxValue, total), not on this per-unit snapshot.
             properties:
                 currency:
                     description:
@@ -1156,8 +1085,7 @@ components:
                     type: string
                 discount:
                     description:
-                        Absolute discount amount applied to the unit price, expressed tax-exclusive in the cart
-                        currency.
+                        Absolute discount amount applied to the unit price, expressed tax-exclusive in the cart currency.
                     example: 5.0
                     format: double
                     type: number
@@ -1197,8 +1125,7 @@ components:
                     type: number
                 finalPrice:
                     description:
-                        Unit price after all applicable discounts, tax-exclusive in the cart currency. Multiply by the
-                        item quantity for the line subtotal; cart-level tax is reported on the cart Summary.
+                        Unit price after all applicable discounts, tax-exclusive in the cart currency. Multiply by the item quantity for the line subtotal; cart-level tax is reported on the cart Summary.
                     example: 45.0
                     format: double
                     type: number
@@ -1209,8 +1136,7 @@ components:
                     type: string
                 price:
                     description:
-                        Base catalog unit price before promotional or volume discounts, tax-exclusive in the cart
-                        currency.
+                        Base catalog unit price before promotional or volume discounts, tax-exclusive in the cart currency.
                     example: 50.0
                     format: double
                     type: number
@@ -1221,8 +1147,7 @@ components:
                     type: string
                 priceOnApplication:
                     description:
-                        When true, the price is negotiated and not displayed on the storefront (`Call for price`).
-                        Read-only.
+                        When true, the price is negotiated and not displayed on the storefront (`Call for price`). Read-only.
                     example: false
                     readOnly: true
                     type: boolean
@@ -1240,14 +1165,11 @@ components:
             type: object
         Settings:
             description:
-                Quantity constraints for a cart item. The minimum and maximum bound the orderable range; the multiple
-                forces quantities to a fixed step; when the allowed-quantities list is set, it overrides the other
-                constraints with an explicit allow-list.
+                Quantity constraints for a cart item. The minimum and maximum bound the orderable range; the multiple forces quantities to a fixed step; when the allowed-quantities list is set, it overrides the other constraints with an explicit allow-list.
             properties:
                 allowedQuantities:
                     description:
-                        Explicit allow-list of orderable quantities. When set, overrides the minimum, maximum, and
-                        multiple constraints.
+                        Explicit allow-list of orderable quantities. When set, overrides the minimum, maximum, and multiple constraints.
                     example:
                     -   1
                     -   5
@@ -1278,8 +1200,7 @@ components:
             type: object
         ShippingMethod:
             description:
-                Shipping method qualified for a cart. The nested shipping options are computed by the active shipping
-                engine against the cart's shipping address country.
+                Shipping method qualified for a cart. The nested shipping options are computed by the active shipping engine against the cart's shipping address country.
             properties:
                 description:
                     description:
@@ -1288,8 +1209,7 @@ components:
                     type: string
                 engineKey:
                     description:
-                        Stable engine key identifying the shipping integration. Used as the value of the cart's shipping
-                        method field.
+                        Stable engine key identifying the shipping integration. Used as the value of the cart's shipping method field.
                     example: fixed
                     type: string
                 id:
@@ -1312,8 +1232,7 @@ components:
             type: object
         ShippingOption:
             description:
-                Single shipping option within a parent shipping method. Carries the option name, its localized label,
-                the computed cost, and the currency-formatted display string.
+                Single shipping option within a parent shipping method. Carries the option name, its localized label, the computed cost, and the currency-formatted display string.
             properties:
                 amount:
                     description:
@@ -1333,16 +1252,13 @@ components:
                     type: string
                 name:
                     description:
-                        Option identifier within the parent shipping method. Used as the value of the cart's shipping
-                        option field.
+                        Option identifier within the parent shipping method. Used as the value of the cart's shipping option field.
                     example: Standard
                     type: string
             type: object
         SkuUnitOfMeasure:
             description:
-                Unit-of-measure tier bound to the SKU on a cart item. The key and name identify the tier (for example a
-                Pallet tier on a base unit); the rate is the conversion factor against the base unit; the incremental
-                order quantity is the minimum order increment in this tier.
+                Unit-of-measure tier bound to the SKU on a cart item. The key and name identify the tier (for example a Pallet tier on a base unit); the rate is the conversion factor against the base unit; the incremental order quantity is the minimum order increment in this tier.
             properties:
                 incrementalOrderQuantity:
                     description:
@@ -1380,8 +1296,7 @@ components:
                     type: number
                 rate:
                     description:
-                        Conversion factor from this tier to the base unit -- for example, the number of base units per
-                        pallet.
+                        Conversion factor from this tier to the base unit -- for example, the number of base units per pallet.
                     example: 202.1
                     format: bigdecimal
                     minimum: 0
@@ -1389,13 +1304,11 @@ components:
             type: object
         Status:
             description:
-                Generic status snapshot returned alongside the structured order, payment, and workflow states. The code
-                is the integer status code; the label is the canonical key; the localized label is the display string.
+                Generic status snapshot returned alongside the structured order, payment, and workflow states. The code is the integer status code; the label is the canonical key; the localized label is the display string.
             properties:
                 code:
                     description:
-                        Integer status code. The semantic mapping depends on the host field (order, payment, workflow).
-                        Read-only.
+                        Integer status code. The semantic mapping depends on the host field (order, payment, workflow). Read-only.
                     example: 0
                     format: int32
                     readOnly: true
@@ -1413,8 +1326,7 @@ components:
             type: object
         Step:
             description:
-                Checkout step descriptor. The id is the step key (cart, shipping, payment, confirmation); the state is
-                its progress -- pending, active, or completed.
+                Checkout step descriptor. The id is the step key (cart, shipping, payment, confirmation); the state is its progress -- pending, active, or completed.
             properties:
                 id:
                     description:
@@ -1436,9 +1348,7 @@ components:
                     type: string
         Summary:
             description:
-                Computed totals for a cart. Carries the subtotal, the shipping and tax components, the absolute and
-                percentage discounts at each level (subtotal, shipping, total), and the final total. The currency is
-                inherited from the parent cart.
+                Computed totals for a cart. Carries the subtotal, the shipping and tax components, the absolute and percentage discounts at each level (subtotal, shipping, total), and the final total. The currency is inherited from the parent cart.
             properties:
                 currency:
                     description:
@@ -1582,8 +1492,7 @@ components:
             type: object
         Term:
             description:
-                Delivery or payment term. Returned filtered by order type and the currently selected shipping method
-                (for delivery terms) or payment method (for payment terms).
+                Delivery or payment term. Returned filtered by order type and the currently selected shipping method (for delivery terms) or payment method (for payment terms).
             properties:
                 description:
                     description:
@@ -1662,8 +1571,7 @@ paths:
             -   CartComment
         get:
             description:
-                Retrieves a single comment by external reference code. Restricted notes are returned only to users with
-                the manage-comments permission on the parent cart.
+                Retrieves a single comment by external reference code. Restricted notes are returned only to users with the manage-comments permission on the parent cart.
             operationId: getCartCommentByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1726,8 +1634,7 @@ paths:
             -   CartComment
         patch:
             description:
-                Updates the comment addressed by external reference code with JSON Merge Patch semantics (only supplied
-                fields are modified). Mutates content and restricted.
+                Updates the comment addressed by external reference code with JSON Merge Patch semantics (only supplied fields are modified). Mutates content and restricted.
             operationId: patchCartCommentByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1793,9 +1700,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart comment from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart comment from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -1811,8 +1716,7 @@ paths:
             -   CartComment
         put:
             description:
-                Replaces the comment addressed by external reference code. PUT is upsert when the externalReferenceCode
-                is unknown.
+                Replaces the comment addressed by external reference code. PUT is upsert when the externalReferenceCode is unknown.
             operationId: putCartCommentByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1878,9 +1782,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart comment from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart comment from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -1931,8 +1833,7 @@ paths:
             -   CartComment
         get:
             description:
-                Retrieves a single comment by ID. Restricted notes are returned only to users with the manage-comments
-                permission on the parent cart.
+                Retrieves a single comment by ID. Restricted notes are returned only to users with the manage-comments permission on the parent cart.
             operationId: getCartComment
             parameters:
             -   $ref: "#/components/parameters/cartCommentIdPathParam"
@@ -1995,8 +1896,7 @@ paths:
             -   CartComment
         patch:
             description:
-                Updates the comment addressed by ID with JSON Merge Patch semantics (only supplied fields are modified).
-                Mutates content and restricted.
+                Updates the comment addressed by ID with JSON Merge Patch semantics (only supplied fields are modified). Mutates content and restricted.
             operationId: patchCartComment
             parameters:
             -   $ref: "#/components/parameters/cartCommentIdPathParam"
@@ -2062,9 +1962,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart comment from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart comment from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2146,9 +2044,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart comment from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart comment from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2165,9 +2061,7 @@ paths:
     /cart-items/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the cart item addressed by external reference code. The deletion runs through the cart context
-                bound to the parent cart, so cascading inventory and pricing recalculations on the cart fire as a side
-                effect.
+                Deletes the cart item addressed by external reference code. The deletion runs through the cart context bound to the parent cart, so cascading inventory and pricing recalculations on the cart fire as a side effect.
             operationId: deleteCartItemByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2264,9 +2158,7 @@ paths:
             -   CartItem
         patch:
             description:
-                Updates the cart item addressed by external reference code with JSON Merge Patch semantics. Mutates
-                quantity, skuId, shippingAddressId, requestedDeliveryDate, and customFields; recalculates parent cart
-                pricing as a side effect.
+                Updates the cart item addressed by external reference code with JSON Merge Patch semantics. Mutates quantity, skuId, shippingAddressId, requestedDeliveryDate, and customFields; recalculates parent cart pricing as a side effect.
             operationId: patchCartItemByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2332,9 +2224,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart item from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2350,8 +2240,7 @@ paths:
             -   CartItem
         put:
             description:
-                Replaces the cart item addressed by external reference code. PUT is upsert when the
-                externalReferenceCode is unknown; the cart pricing is recalculated as a side effect.
+                Replaces the cart item addressed by external reference code. PUT is upsert when the externalReferenceCode is unknown; the cart pricing is recalculated as a side effect.
             operationId: putCartItemByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2417,9 +2306,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart item from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2436,8 +2323,7 @@ paths:
     /cart-items/{cartItemId}:
         delete:
             description:
-                Deletes the cart item addressed by its internal identifier. Triggers cart pricing recalculation through
-                the cart context.
+                Deletes the cart item addressed by its internal identifier. Triggers cart pricing recalculation through the cart context.
             operationId: deleteCartItem
             parameters:
             -   $ref: "#/components/parameters/cartItemIdPathParam"
@@ -2534,9 +2420,7 @@ paths:
             -   CartItem
         patch:
             description:
-                Updates the cart item addressed by ID with JSON Merge Patch semantics (only supplied fields are
-                modified). Mutates quantity, skuId, shippingAddressId, requestedDeliveryDate, and customFields; cart
-                pricing is recalculated as a side effect.
+                Updates the cart item addressed by ID with JSON Merge Patch semantics (only supplied fields are modified). Mutates quantity, skuId, shippingAddressId, requestedDeliveryDate, and customFields; cart pricing is recalculated as a side effect.
             operationId: patchCartItem
             parameters:
             -   $ref: "#/components/parameters/cartItemIdPathParam"
@@ -2602,9 +2486,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart item from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2686,9 +2568,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart item from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart item from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2705,8 +2585,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the cart addressed by external reference code. The cart must be in the Open state; deleting a
-                placed order raises a status conflict.
+                Deletes the cart addressed by external reference code. The cart must be in the Open state; deleting a placed order raises a status conflict.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -2742,8 +2621,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
             summary: Deletes a Cart by external reference code.
             tags:
             -   Cart
@@ -2811,10 +2689,7 @@ paths:
             -   Cart
         patch:
             description:
-                Updates the cart addressed by external reference code with JSON Merge Patch semantics (only supplied
-                fields are modified). Mutates shipping/billing addresses (by ID or ERC), delivery/payment terms, order
-                type, coupon, shipping method, and payment method. Requires the cart to be in the Open state; raises a
-                status conflict if the cart has been placed.
+                Updates the cart addressed by external reference code with JSON Merge Patch semantics (only supplied fields are modified). Mutates shipping/billing addresses (by ID or ERC), delivery/payment terms, order type, coupon, shipping method, and payment method. Requires the cart to be in the Open state; raises a status conflict if the cart has been placed.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -2879,8 +2754,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
                 422:
                     content:
                         application/json:
@@ -2890,9 +2764,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2908,8 +2780,7 @@ paths:
             -   Cart
         put:
             description:
-                Replaces the cart addressed by external reference code. PUT is upsert when the externalReferenceCode is
-                unknown; the cart must be (or become) in the Open state.
+                Replaces the cart addressed by external reference code. PUT is upsert when the externalReferenceCode is unknown; the cart must be (or become) in the Open state.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -2974,8 +2845,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
                 422:
                     content:
                         application/json:
@@ -2985,9 +2855,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3004,9 +2872,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/attachments:
         get:
             description:
-                Lists attachment files linked to the cart addressed by external reference code. Filterable by
-                restricted, dateCreated, dateModified, priority, commerceOrderId, externalReferenceCode, title, and type
-                via AttachmentEntityModel; pageable; searchable through the corresponding index.
+                Lists attachment files linked to the cart addressed by external reference code. Filterable by restricted, dateCreated, dateModified, priority, commerceOrderId, externalReferenceCode, title, and type via AttachmentEntityModel; pageable; searchable through the corresponding index.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/filterQueryParam"
@@ -3065,9 +2931,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64:
         post:
             description:
-                Creates an attachment from a base64-encoded payload (AttachmentBase64) and links it to the cart
-                addressed by external reference code. The file is stored either as a dedicated attachment record or as a
-                document-library file entry depending on the active attachment-storage configuration.
+                Creates an attachment from a base64-encoded payload (AttachmentBase64) and links it to the cart addressed by external reference code. The file is stored either as a dedicated attachment record or as a document-library file entry depending on the active attachment-storage configuration.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -3132,9 +2996,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3151,8 +3013,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/attachments/by-externalReferenceCode/{attachmentExternalReferenceCode}:
         delete:
             description:
-                Deletes the attachment addressed by its external reference code under the parent cart (also addressed by
-                ERC).
+                Deletes the attachment addressed by its external reference code under the parent cart (also addressed by ERC).
             parameters:
             -   $ref: "#/components/parameters/attachmentExternalReferenceCodePathParam"
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3272,9 +3133,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/checkout:
         post:
             description:
-                Runs the checkout validator chain against the cart addressed by external reference code (billing
-                address, shipping method, payment method, items) through the checkout engine and transitions the cart
-                from the Open state to the In Progress state. Synchronous; returns the updated cart on success.
+                Runs the checkout validator chain against the cart addressed by external reference code (billing address, shipping method, payment method, items) through the checkout engine and transitions the cart from the Open state to the In Progress state. Synchronous; returns the updated cart on success.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -3317,8 +3176,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
                 422:
                     content:
                         application/json:
@@ -3328,17 +3186,14 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
             summary: Checks out a cart by external reference code.
             tags:
             -   Cart
     /carts/by-externalReferenceCode/{externalReferenceCode}/comments:
         get:
             description:
-                Lists comment entries attached to the cart addressed by external reference code. Restricted notes are
-                filtered out unless the caller has the manage-comments permission on the cart.
+                Lists comment entries attached to the cart addressed by external reference code. Restricted notes are filtered out unless the caller has the manage-comments permission on the cart.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/pageQueryParam"
@@ -3396,8 +3251,7 @@ paths:
             -   CartComment
         post:
             description:
-                Creates (or upserts when CartComment.externalReferenceCode is provided) a comment on the cart addressed
-                by external reference code.
+                Creates (or upserts when CartComment.externalReferenceCode is provided) a comment on the cart addressed by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -3462,9 +3316,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3481,8 +3333,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/coupon-code:
         post:
             description:
-                Applies a coupon code (CouponCode.code) to the cart addressed by external reference code and returns the
-                updated cart with the recalculated Summary. Requires the cart to be in the Open state.
+                Applies a coupon code (CouponCode.code) to the cart addressed by external reference code and returns the updated cart with the recalculated Summary. Requires the cart to be in the Open state.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -3547,8 +3398,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
                 422:
                     content:
                         application/json:
@@ -3558,9 +3408,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3577,8 +3425,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/delivery-terms:
         get:
             description:
-                Lists the term rows qualified as delivery terms for the cart addressed by external reference code,
-                filtered by order type and the currently selected shipping method.
+                Lists the term rows qualified as delivery terms for the cart addressed by external reference code, filtered by order type and the currently selected shipping method.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -3632,9 +3479,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/items:
         get:
             description:
-                Lists the top-level cart item rows on the cart addressed by external reference code (children of bundle
-                items are excluded). Filterable by quantity, name, sku, and unitOfMeasure via CartItemEntityModel;
-                searchable through the cart item index; restrictable to a specific SKU via skuId.
+                Lists the top-level cart item rows on the cart addressed by external reference code (children of bundle items are excluded). Filterable by quantity, name, sku, and unitOfMeasure via CartItemEntityModel; searchable through the cart item index; restrictable to a specific SKU via skuId.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/pageQueryParam"
@@ -3691,8 +3536,7 @@ paths:
             -   CartItem
         post:
             description:
-                Adds a new cart item to the cart addressed by external reference code. CartItem.skuId is required.
-                Triggers cart pricing recalculation.
+                Adds a new cart item to the cart addressed by external reference code. CartItem.skuId is required. Triggers cart pricing recalculation.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -3757,9 +3601,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3776,9 +3618,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/payment-methods:
         get:
             description:
-                Lists the payment method entries qualified for the cart addressed by external reference code -- filtered
-                by billing address country, order type qualifiers, view permission, and subscription eligibility, sorted
-                by the payment-method priority order.
+                Lists the payment method entries qualified for the cart addressed by external reference code -- filtered by billing address country, order type qualifiers, view permission, and subscription eligibility, sorted by the payment-method priority order.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -3832,8 +3672,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/payment-terms:
         get:
             description:
-                Lists the term rows qualified as payment terms for the cart addressed by external reference code,
-                filtered by order type and the currently selected payment method.
+                Lists the term rows qualified as payment terms for the cart addressed by external reference code, filtered by order type and the currently selected payment method.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -3887,8 +3726,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/payment-url:
         get:
             description:
-                Returns the encrypted payment-gateway redirect URL for the cart addressed by external reference code.
-                The optional callbackURL is encoded into the encrypted token; the response is a plain-text URL.
+                Returns the encrypted payment-gateway redirect URL for the cart addressed by external reference code. The optional callbackURL is encoded into the encrypted token; the response is a plain-text URL.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/callbackURLQueryParam"
@@ -4012,8 +3850,7 @@ paths:
     /carts/by-externalReferenceCode/{externalReferenceCode}/shipping-methods:
         get:
             description:
-                Lists the shipping method entries qualified for the cart addressed by external reference code, with the
-                nested ShippingOption set computed by each shipping engine against the cart's shipping address.
+                Lists the shipping method entries qualified for the cart addressed by external reference code, with the nested ShippingOption set computed by each shipping engine against the cart's shipping address.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             responses:
@@ -4104,8 +3941,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
             summary: Deletes a Cart by ID.
             tags:
             -   Cart
@@ -4174,10 +4010,7 @@ paths:
             -   Cart
         patch:
             description:
-                Updates the cart addressed by ID with JSON Merge Patch semantics (only supplied fields are modified).
-                Mutates shipping/billing addresses, delivery/payment terms, order type, coupon, shipping method, and
-                payment method. Requires the cart to be in the Open state; raises a status conflict if the cart has been
-                placed.
+                Updates the cart addressed by ID with JSON Merge Patch semantics (only supplied fields are modified). Mutates shipping/billing addresses, delivery/payment terms, order type, coupon, shipping method, and payment method. Requires the cart to be in the Open state; raises a status conflict if the cart has been placed.
             operationId: patchCart
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -4243,8 +4076,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
                 422:
                     content:
                         application/json:
@@ -4254,9 +4086,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4338,8 +4168,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
                 422:
                     content:
                         application/json:
@@ -4349,9 +4178,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4368,9 +4195,7 @@ paths:
     /carts/{cartId}/attachments:
         get:
             description:
-                Lists attachment files linked to the cart addressed by ID. Filterable by restricted, dateCreated,
-                dateModified, priority, commerceOrderId, externalReferenceCode, title, and type via
-                AttachmentEntityModel; pageable; searchable.
+                Lists attachment files linked to the cart addressed by ID. Filterable by restricted, dateCreated, dateModified, priority, commerceOrderId, externalReferenceCode, title, and type via AttachmentEntityModel; pageable; searchable.
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
             -   $ref: "#/components/parameters/filterQueryParam"
@@ -4429,9 +4254,7 @@ paths:
     /carts/{cartId}/attachments/by-base64:
         post:
             description:
-                Creates an attachment from a base64-encoded payload (AttachmentBase64) and links it to the cart
-                addressed by ID. The file is stored either as a dedicated attachment record or as a document-library
-                file entry depending on the active attachment-storage configuration.
+                Creates an attachment from a base64-encoded payload (AttachmentBase64) and links it to the cart addressed by ID. The file is stored either as a dedicated attachment record or as a document-library file entry depending on the active attachment-storage configuration.
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
             requestBody:
@@ -4496,9 +4319,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4636,9 +4457,7 @@ paths:
     /carts/{cartId}/cart-transitions:
         get:
             description:
-                Lists the available CartTransition entries on the cart addressed by ID. Combines workflow task
-                transitions (when the cart has an active workflow instance) and order-status transitions (request-quote,
-                submit, quick-checkout, checkout) derived from the order-status registry.
+                Lists the available CartTransition entries on the cart addressed by ID. Combines workflow task transitions (when the cart has an active workflow instance) and order-status transitions (request-quote, submit, quick-checkout, checkout) derived from the order-status registry.
             operationId: getCartCartTransitionsPage
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -4692,10 +4511,7 @@ paths:
             -   CartTransition
         post:
             description:
-                Fires a CartTransition by name against the cart addressed by ID. Workflow task names are dispatched
-                through the workflow helper; order-status names are dispatched through the checkout
-                engine.transitionCommerceOrder. Requires the cart to be in the Open state and a valid combination of
-                billing address, payment method, and items.
+                Fires a CartTransition by name against the cart addressed by ID. Workflow task names are dispatched through the workflow helper; order-status names are dispatched through the checkout engine.transitionCommerceOrder. Requires the cart to be in the Open state and a valid combination of billing address, payment method, and items.
             operationId: postCartCartTransition
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -4761,8 +4577,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
                 422:
                     content:
                         application/json:
@@ -4772,9 +4587,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4791,9 +4604,7 @@ paths:
     /carts/{cartId}/checkout:
         post:
             description:
-                Runs the checkout validator chain against the cart addressed by ID (billing address, shipping method,
-                payment method, items) through the checkout engine and transitions the cart from the Open state to the
-                In Progress state. Synchronous; returns the updated cart on success.
+                Runs the checkout validator chain against the cart addressed by ID (billing address, shipping method, payment method, items) through the checkout engine and transitions the cart from the Open state to the In Progress state. Synchronous; returns the updated cart on success.
             operationId: postCartCheckout
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -4837,8 +4648,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
                 422:
                     content:
                         application/json:
@@ -4848,17 +4658,14 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
             summary: Checks out a cart.
             tags:
             -   Cart
     /carts/{cartId}/comments:
         get:
             description:
-                Lists comment entries attached to the cart addressed by ID. Restricted notes are filtered out unless the
-                caller has the manage-comments permission on the cart.
+                Lists comment entries attached to the cart addressed by ID. Restricted notes are filtered out unless the caller has the manage-comments permission on the cart.
             operationId: getCartCommentsPage
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -4917,8 +4724,7 @@ paths:
             -   CartComment
         post:
             description:
-                Creates (or upserts when CartComment.externalReferenceCode is provided) a comment on the cart addressed
-                by ID.
+                Creates (or upserts when CartComment.externalReferenceCode is provided) a comment on the cart addressed by ID.
             operationId: postCartComment
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -4984,9 +4790,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5003,8 +4807,7 @@ paths:
     /carts/{cartId}/coupon-code:
         post:
             description:
-                Applies a coupon code (CouponCode.code) to the cart addressed by ID and returns the updated cart with
-                the recalculated Summary. Requires the cart to be in the Open state.
+                Applies a coupon code (CouponCode.code) to the cart addressed by ID and returns the updated cart with the recalculated Summary. Requires the cart to be in the Open state.
             operationId: postCartCouponCode
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -5070,8 +4873,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The cart is not in the Open state, the requested transition is not currently allowed, or a
-                        workflow state conflict occurred.
+                        The cart is not in the Open state, the requested transition is not currently allowed, or a workflow state conflict occurred.
                 422:
                     content:
                         application/json:
@@ -5081,9 +4883,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5100,8 +4900,7 @@ paths:
     /carts/{cartId}/delivery-terms:
         get:
             description:
-                Lists the term rows qualified as delivery terms for the cart addressed by ID, filtered by order type and
-                the currently selected shipping method.
+                Lists the term rows qualified as delivery terms for the cart addressed by ID, filtered by order type and the currently selected shipping method.
             operationId: getCartDeliveryTermsPage
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -5156,9 +4955,7 @@ paths:
     /carts/{cartId}/items:
         get:
             description:
-                Lists the top-level cart item rows on the cart addressed by ID (children of bundle items are excluded).
-                Filterable by quantity, name, sku, and unitOfMeasure via CartItemEntityModel; searchable; restrictable
-                to a specific SKU via skuId.
+                Lists the top-level cart item rows on the cart addressed by ID (children of bundle items are excluded). Filterable by quantity, name, sku, and unitOfMeasure via CartItemEntityModel; searchable; restrictable to a specific SKU via skuId.
             operationId: getCartItemsPage
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -5216,8 +5013,7 @@ paths:
             -   CartItem
         post:
             description:
-                Adds a new cart item to the cart addressed by ID. CartItem.skuId is required. Triggers cart pricing
-                recalculation.
+                Adds a new cart item to the cart addressed by ID. CartItem.skuId is required. Triggers cart pricing recalculation.
             operationId: postCartItem
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -5283,9 +5079,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5302,9 +5096,7 @@ paths:
     /carts/{cartId}/payment-methods:
         get:
             description:
-                Lists the payment method entries qualified for the cart addressed by ID -- filtered by billing address
-                country, order type qualifiers, view permission, and subscription eligibility, sorted by the
-                payment-method priority order.
+                Lists the payment method entries qualified for the cart addressed by ID -- filtered by billing address country, order type qualifiers, view permission, and subscription eligibility, sorted by the payment-method priority order.
             operationId: getCartPaymentMethodsPage
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -5359,8 +5151,7 @@ paths:
     /carts/{cartId}/payment-terms:
         get:
             description:
-                Lists the term rows qualified as payment terms for the cart addressed by ID, filtered by order type and
-                the currently selected payment method.
+                Lists the term rows qualified as payment terms for the cart addressed by ID, filtered by order type and the currently selected payment method.
             operationId: getCartPaymentTermsPage
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -5415,8 +5206,7 @@ paths:
     /carts/{cartId}/payment-url:
         get:
             description:
-                Returns the encrypted payment-gateway redirect URL for the cart addressed by ID. The optional
-                callbackURL is encoded into the encrypted token; the response is a plain-text URL.
+                Returns the encrypted payment-gateway redirect URL for the cart addressed by ID. The optional callbackURL is encoded into the encrypted token; the response is a plain-text URL.
             operationId: getCartPaymentURL
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -5542,8 +5332,7 @@ paths:
     /carts/{cartId}/shipping-methods:
         get:
             description:
-                Lists the shipping method entries qualified for the cart addressed by ID, with the nested ShippingOption
-                set computed by each shipping engine against the cart's shipping address.
+                Lists the shipping method entries qualified for the cart addressed by ID, with the nested ShippingOption set computed by each shipping engine against the cart's shipping address.
             operationId: getCartShippingMethodsPage
             parameters:
             -   $ref: "#/components/parameters/cartIdPathParam"
@@ -5598,10 +5387,7 @@ paths:
     /channels/by-externalReferenceCode/{channelExternalReferenceCode}/account/by-externalReferenceCode/{accountExternalReferenceCode}/carts:
         get:
             description:
-                Lists open carts (the Open state carts) for the account, scoped to the channel, both addressed by
-                external reference code. Filterable by accountId, orderStatus, createDate, modifiedDate, orderDate, id,
-                orderId, account, author, externalReferenceCode, name, orderType, and purchaseOrderNumber via
-                CartEntityModel; searchable through the cart index; pageable.
+                Lists open carts (the Open state carts) for the account, scoped to the channel, both addressed by external reference code. Filterable by accountId, orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author, externalReferenceCode, name, orderType, and purchaseOrderNumber via CartEntityModel; searchable through the cart index; pageable.
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage
             parameters:
             -   $ref: "#/components/parameters/accountExternalReferenceCodePathParam"
@@ -5662,8 +5448,7 @@ paths:
     /channels/by-externalReferenceCode/{externalReferenceCode}/carts:
         post:
             description:
-                Creates a new cart under the channel addressed by external reference code, then applies the provided
-                Cart fields (account, currency, addresses, terms, items).
+                Creates a new cart under the channel addressed by external reference code, then applies the provided Cart fields (account, currency, addresses, terms, items).
             operationId: postChannelCartByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5729,9 +5514,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5748,10 +5531,7 @@ paths:
     /channels/{channelId}/account/{accountId}/carts:
         get:
             description:
-                Lists open carts (the Open state carts) for the account, scoped to the channel, both addressed by ID.
-                Filterable by accountId, orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author,
-                externalReferenceCode, name, orderType, and purchaseOrderNumber via CartEntityModel; searchable through
-                the cart index; pageable.
+                Lists open carts (the Open state carts) for the account, scoped to the channel, both addressed by ID. Filterable by accountId, orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author, externalReferenceCode, name, orderType, and purchaseOrderNumber via CartEntityModel; searchable through the cart index; pageable.
             operationId: getChannelAccountCartsPage
             parameters:
             -   $ref: "#/components/parameters/accountIdPathParam"
@@ -5812,8 +5592,7 @@ paths:
     /channels/{channelId}/carts:
         get:
             description:
-                Lists open carts (the Open state carts) scoped to the channel addressed by ID. Filterable, searchable,
-                and pageable through CartEntityModel.
+                Lists open carts (the Open state carts) scoped to the channel addressed by ID. Filterable, searchable, and pageable through CartEntityModel.
             operationId: getChannelCartsPage
             parameters:
             -   $ref: "#/components/parameters/channelIdPathParam"
@@ -5872,8 +5651,7 @@ paths:
             -   Cart
         post:
             description:
-                Creates a new cart under the channel addressed by ID, then applies the provided Cart fields (account,
-                currency, addresses, terms, items).
+                Creates a new cart under the channel addressed by ID, then applies the provided Cart fields (account, currency, addresses, terms, items).
             operationId: postChannelCart
             parameters:
             -   $ref: "#/components/parameters/channelIdPathParam"
@@ -5939,9 +5717,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the cart from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the cart from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5957,42 +5733,29 @@ paths:
             -   Cart
 tags:
 -   description:
-        Billing and shipping addresses attached to a cart, returned as nested read-only views off the parent cart. The
-        same address record can be reused across multiple carts for the same buyer account; addresses are addressed by
-        ID or by external reference code.
+        Billing and shipping addresses attached to a cart, returned as nested read-only views off the parent cart. The same address record can be reused across multiple carts for the same buyer account; addresses are addressed by ID or by external reference code.
     name: Address
 -   description:
-        Files linked to a cart -- typically invoices, signed quotes, spec sheets, and similar buyer-facing documents.
-        Created via the by-base64 endpoint; deleted via the matching ID or external-reference-code path. The download
-        URL is computed at response time.
+        Files linked to a cart -- typically invoices, signed quotes, spec sheets, and similar buyer-facing documents. Created via the by-base64 endpoint; deleted via the matching ID or external-reference-code path. The download URL is computed at response time.
     name: Attachment
 -   description:
-        Top-level shopping cart for the storefront buyer flow. Aggregates line items, billing and shipping addresses,
-        applied coupon, delivery and payment terms, order type, currency, and the computed totals; the workflow status
-        moves the cart from open through checkout into fulfillment.
+        Top-level shopping cart for the storefront buyer flow. Aggregates line items, billing and shipping addresses, applied coupon, delivery and payment terms, order type, currency, and the computed totals; the workflow status moves the cart from open through checkout into fulfillment.
     name: Cart
 -   description:
-        Comments attached to a cart by buyers or back-office staff. Unrestricted comments are visible to the buyer;
-        restricted comments are visible only to staff with the manage-comments permission on the parent cart.
+        Comments attached to a cart by buyers or back-office staff. Unrestricted comments are visible to the buyer; restricted comments are visible only to staff with the manage-comments permission on the parent cart.
     name: CartComment
 -   description:
-        Cart line items. Each item binds a purchasable SKU and quantity to its parent cart, with unit pricing, selected
-        options, the resolved unit-of-measure tier, an optional per-item shipping address, and any bundle children.
+        Cart line items. Each item binds a purchasable SKU and quantity to its parent cart, with unit pricing, selected options, the resolved unit-of-measure tier, an optional per-item shipping address, and any bundle children.
     name: CartItem
 -   description:
-        Workflow and order-status transitions available on a cart. Combines workflow task transitions (when the cart has
-        an active workflow instance) with order-status transitions -- request-quote, submit, quick-checkout, and
-        checkout -- derived from the cart's current state.
+        Workflow and order-status transitions available on a cart. Combines workflow task transitions (when the cart has an active workflow instance) with order-status transitions -- request-quote, submit, quick-checkout, and checkout -- derived from the cart's current state.
     name: CartTransition
 -   description:
-        Read-only enumeration of payment methods qualified for a cart. The methods returned depend on the cart's billing
-        address country, the order-type qualifiers, the buyer's view permission, and subscription eligibility.
+        Read-only enumeration of payment methods qualified for a cart. The methods returned depend on the cart's billing address country, the order-type qualifiers, the buyer's view permission, and subscription eligibility.
     name: PaymentMethod
 -   description:
-        Read-only enumeration of shipping methods qualified for a cart. The nested shipping options are computed by the
-        active shipping engine against the cart's shipping address country.
+        Read-only enumeration of shipping methods qualified for a cart. The nested shipping options are computed by the active shipping engine against the cart's shipping address country.
     name: ShippingMethod
 -   description:
-        Delivery and payment terms qualified for a cart. The list is filtered by the cart's order type and by the
-        currently selected shipping method (for delivery terms) or payment method (for payment terms).
+        Delivery and payment terms qualified for a cart. The list is filtered by the cart's order type and by the currently selected shipping method (for delivery terms) or payment method (for payment terms).
     name: Term

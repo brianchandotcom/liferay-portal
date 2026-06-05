@@ -6,9 +6,7 @@ components:
             required: false
             schema:
                 description:
-                    Ending date of the timespan for which to retrieve updated warehouse items, in ISO 8601 date format
-                    (YYYY-MM-DD). When omitted, defaults to today; when start is also omitted, the implementation uses
-                    today as the window end.
+                    Ending date of the timespan for which to retrieve updated warehouse items, in ISO 8601 date format (YYYY-MM-DD). When omitted, defaults to today; when start is also omitted, the implementation uses today as the window end.
                 format: date
                 type: string
         externalReferenceCodePathParam:
@@ -17,8 +15,7 @@ components:
             required: true
             schema:
                 description:
-                    Idempotency key supplied by the client to identify the entity across systems. Unique per entity type
-                    within the company.
+                    Idempotency key supplied by the client to identify the entity across systems. Unique per entity type within the company.
                 example: AB-34098-789-N
                 minLength: 1
                 type: string
@@ -28,9 +25,7 @@ components:
             required: false
             schema:
                 description:
-                    OData v4 filter expression applied to the listing. Filterable fields on Warehouse -- active,
-                    latitude, longitude, city, countryISOCode, name, regionISOCode, street1. Other list endpoints in
-                    this module ignore the filter parameter.
+                    OData v4 filter expression applied to the listing. Filterable fields on Warehouse -- active, latitude, longitude, city, countryISOCode, name, regionISOCode, street1. Other list endpoints in this module ignore the filter parameter.
                 type: string
         idPathParam:
             in: path
@@ -76,8 +71,7 @@ components:
             required: false
             schema:
                 description:
-                    Full-text search expression applied to the indexed fields of the listing. On Warehouse, matches
-                    against the indexed warehouse fields; on binding listings, matches against the related entity name.
+                    Full-text search expression applied to the indexed fields of the listing. On Warehouse, matches against the indexed warehouse fields; on binding listings, matches against the related entity name.
                 type: string
         skuPathParam:
             in: path
@@ -94,9 +88,7 @@ components:
             required: false
             schema:
                 description:
-                    Comma-separated list of fields with optional :asc or :desc suffix. Sortable fields on Warehouse --
-                    active, latitude, longitude, city, countryISOCode, name, regionISOCode, street1. Other list
-                    endpoints in this module ignore the sort parameter.
+                    Comma-separated list of fields with optional :asc or :desc suffix. Sortable fields on Warehouse -- active, latitude, longitude, city, countryISOCode, name, regionISOCode, street1. Other list endpoints in this module ignore the sort parameter.
                 type: string
         startQueryParam:
             in: query
@@ -104,9 +96,7 @@ components:
             required: false
             schema:
                 description:
-                    Starting date of the timespan for which to retrieve updated warehouse items, in ISO 8601 date format
-                    (YYYY-MM-DD). When omitted but end is supplied, the implementation rewinds 30 days from end; when
-                    both are omitted, the window is the trailing 30 days.
+                    Starting date of the timespan for which to retrieve updated warehouse items, in ISO 8601 date format (YYYY-MM-DD). When omitted but end is supplied, the implementation rewinds 30 days from end; when both are omitted, the window is the trailing 30 days.
                 format: date
                 type: string
         warehouseAccountGroupIdPathParam:
@@ -115,8 +105,7 @@ components:
             required: true
             schema:
                 description:
-                    Internal numeric primary key of the WarehouseAccountGroup binding (commerceInventoryWarehouseRelId
-                    where the related entity is an AccountGroup).
+                    Internal numeric primary key of the WarehouseAccountGroup binding (commerceInventoryWarehouseRelId where the related entity is an AccountGroup).
                 example: 30130
                 format: int64
                 minimum: 0
@@ -127,8 +116,7 @@ components:
             required: true
             schema:
                 description:
-                    Internal numeric primary key of the WarehouseAccount binding (commerceInventoryWarehouseRelId where
-                    the related entity is an AccountEntry).
+                    Internal numeric primary key of the WarehouseAccount binding (commerceInventoryWarehouseRelId where the related entity is an AccountEntry).
                 example: 30130
                 format: int64
                 minimum: 0
@@ -139,8 +127,7 @@ components:
             required: true
             schema:
                 description:
-                    Internal numeric primary key of the WarehouseChannel binding (commerceChannelRelId on the
-                    CommerceChannelRel row).
+                    Internal numeric primary key of the WarehouseChannel binding (commerceChannelRelId on the CommerceChannelRel row).
                 example: 30130
                 format: int64
                 minimum: 0
@@ -162,8 +149,7 @@ components:
             required: true
             schema:
                 description:
-                    Internal numeric primary key of the WarehouseOrderType binding (commerceInventoryWarehouseRelId
-                    where the related entity is a CommerceOrderType).
+                    Internal numeric primary key of the WarehouseOrderType binding (commerceInventoryWarehouseRelId where the related entity is a CommerceOrderType).
                 example: 30130
                 format: int64
                 minimum: 0
@@ -171,8 +157,7 @@ components:
     schemas:
         Account:
             description:
-                Read-only projection of the account referenced by a WarehouseAccount binding -- exposes only id, logoId,
-                and name.
+                Read-only projection of the account referenced by a WarehouseAccount binding -- exposes only id, logoId, and name.
             properties:
                 id:
                     description:
@@ -183,8 +168,7 @@ components:
                     type: integer
                 logoId:
                     description:
-                        Reference to the image asset that holds the account's logo (FK identifier). Zero when no logo is
-                        attached. Read-only.
+                        Reference to the image asset that holds the account's logo (FK identifier). Zero when no logo is attached. Read-only.
                     example: 20078
                     format: int64
                     minimum: 0
@@ -197,8 +181,7 @@ components:
             type: object
         AccountGroup:
             description:
-                Read-only projection of the AccountGroup referenced by a WarehouseAccountGroup binding -- exposes only
-                id and name.
+                Read-only projection of the AccountGroup referenced by a WarehouseAccountGroup binding -- exposes only id and name.
             properties:
                 id:
                     description:
@@ -216,8 +199,7 @@ components:
             type: object
         Channel:
             description:
-                Read-only projection of the channel referenced by a WarehouseChannel binding -- exposes only id,
-                externalReferenceCode, name, currencyCode, siteGroupId, and channel type.
+                Read-only projection of the channel referenced by a WarehouseChannel binding -- exposes only id, externalReferenceCode, name, currencyCode, siteGroupId, and channel type.
             properties:
                 currencyCode:
                     description:
@@ -248,28 +230,23 @@ components:
                     type: integer
                 type:
                     description:
-                        Channel type discriminator. The only in-tree value is `site`; other values are reserved for OSGi
-                        extensions. Read-only.
+                        Channel type discriminator. The only in-tree value is `site`; other values are reserved for OSGi extensions. Read-only.
                     example: site
                     type: string
             type: object
         Error:
             description:
-                Standard error envelope returned on every non-2xx response. Populated by the request-handler exception
-                mappers with an internal errorCode, the HTTP status code, a human-readable message, and a stable
-                errorDescription category.
+                Standard error envelope returned on every non-2xx response. Populated by the request-handler exception mappers with an internal errorCode, the HTTP status code, a human-readable message, and a stable errorDescription category.
             properties:
                 errorCode:
                     description:
-                        Internal error code identifying the specific failure within the request-handler exception
-                        mapper. Read-only.
+                        Internal error code identifying the specific failure within the request-handler exception mapper. Read-only.
                     example: 996
                     readOnly: true
                     type: integer
                 errorDescription:
                     description:
-                        Stable, machine-friendly category of the failure (for example, the kind of validation that
-                        rejected the request). Read-only.
+                        Stable, machine-friendly category of the failure (for example, the kind of validation that rejected the request). Read-only.
                     example: Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format.
                     readOnly: true
                     type: string
@@ -293,8 +270,7 @@ components:
             type: object
         OrderType:
             description:
-                Read-only projection of the order type referenced by a WarehouseOrderType binding -- exposes only id and
-                the localized name map.
+                Read-only projection of the order type referenced by a WarehouseOrderType binding -- exposes only id and the localized name map.
             properties:
                 id:
                     description:
@@ -308,8 +284,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized order-type display name. Map keys are locale codes; values are the translated strings.
-                        Read-only.
+                        Localized order-type display name. Map keys are locale codes; values are the translated strings. Read-only.
                     example:
                         en_US: Hand Saw
                         hr_HR: Product Name HR
@@ -318,48 +293,39 @@ components:
             type: object
         ReplenishmentItem:
             description:
-                Planned restock event for a SKU at a warehouse. Records the expected quantity (strictly positive) and
-                the date it becomes available; on create the underlying warehouse item identified by warehouseId and sku
-                must already exist.
+                Planned restock event for a SKU at a warehouse. Records the expected quantity (strictly positive) and the date it becomes available; on create the underlying warehouse item identified by warehouseId and sku must already exist.
             properties:
                 availabilityDate:
                     description:
-                        Date the planned restock becomes available, in ISO 8601 date format (YYYY-MM-DD). Optional -- a
-                        missing value is allowed.
+                        Date the planned restock becomes available, in ISO 8601 date format (YYYY-MM-DD). Optional -- a missing value is allowed.
                     example: 2017-07-21
                     format: date
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update; must be unique per replenishment item within the company.
-                        Optional on create; the runtime accepts a blank value.
+                        Idempotency key for create and update; must be unique per replenishment item within the company. Optional on create; the runtime accepts a blank value.
                     example: AB-34098-789-N
                     type: string
                 id:
                     description:
-                        Internal numeric identifier of the replenishment item; read-only and assigned by the service on
-                        create; immutable thereafter.
+                        Internal numeric identifier of the replenishment item; read-only and assigned by the service on create; immutable thereafter.
                     example: 30130
                     format: int64
                     type: integer
                 quantity:
                     description:
-                        Planned restock quantity, scaled to the unitOfMeasureKey precision. Must be strictly positive;
-                        values of zero or below are rejected. The runtime formats the persisted decimal through the
-                        commerce quantity formatter on read.
+                        Planned restock quantity, scaled to the unitOfMeasureKey precision. Must be strictly positive; values of zero or below are rejected. The runtime formats the persisted decimal through the commerce quantity formatter on read.
                     example: 10.1
                     format: bigdecimal
                     type: number
                 sku:
                     description:
-                        SKU (stock keeping unit) the planned restock targets. Required and non-blank on create;
-                        immutable on update -- a different SKU cannot be patched onto an existing replenishment item.
+                        SKU (stock keeping unit) the planned restock targets. Required and non-blank on create; immutable on update -- a different SKU cannot be patched onto an existing replenishment item.
                     example: SKU
                     type: string
                 unitOfMeasureKey:
                     description:
-                        Key of the unit-of-measure the quantity is expressed in. Empty string denotes the SKU's default
-                        unit. Immutable on update.
+                        Key of the unit-of-measure the quantity is expressed in. Empty string denotes the SKU's default unit. Immutable on update.
                     example: lt
                     type: string
                 warehouseId:
@@ -371,11 +337,7 @@ components:
             type: object
         Warehouse:
             description:
-                Fulfillment location that holds inventory for one or more channels, accounts, account groups, and order
-                types. Carries the address, geo-coordinates, and active flag; cannot be activated unless latitude or
-                longitude is non-zero. Supports OData filter and sort over active, latitude, longitude, city,
-                countryISOCode, name, regionISOCode, and street1, plus full-text search over the indexed warehouse
-                fields.
+                Fulfillment location that holds inventory for one or more channels, accounts, account groups, and order types. Carries the address, geo-coordinates, and active flag; cannot be activated unless latitude or longitude is non-zero. Supports OData filter and sort over active, latitude, longitude, city, countryISOCode, name, regionISOCode, and street1, plus full-text search over the indexed warehouse fields.
             properties:
                 actions:
                     additionalProperties:
@@ -383,26 +345,22 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 active:
                     description:
-                        When true, the warehouse is eligible to source inventory. Activating the warehouse requires that
-                        latitude or longitude is non-zero; otherwise the service rejects the change.
+                        When true, the warehouse is eligible to source inventory. Activating the warehouse requires that latitude or longitude is non-zero; otherwise the service rejects the change.
                     example: true
                     type: boolean
                 city:
                     description:
-                        City line of the warehouse postal address. Matched by the search query parameter. Filterable and
-                        sortable via the OData query parameter.
+                        City line of the warehouse postal address. Matched by the search query parameter. Filterable and sortable via the OData query parameter.
                     example: Diamond Bar
                     type: string
                 countryISOCode:
                     description:
-                        Two-letter ISO 3166-1 alpha-2 country code of the warehouse address. Matched by the search query
-                        parameter. Filterable and sortable via the OData query parameter.
+                        Two-letter ISO 3166-1 alpha-2 country code of the warehouse address. Matched by the search query parameter. Filterable and sortable via the OData query parameter.
                     example: US
                     type: string
                 description:
@@ -417,8 +375,7 @@ components:
                     type: object
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update; must be unique per warehouse within the company. Optional
-                        on create -- when blank the runtime accepts the row without an external reference code.
+                        Idempotency key for create and update; must be unique per warehouse within the company. Optional on create -- when blank the runtime accepts the row without an external reference code.
                     example: AB-34098-789-N
                     type: string
                 id:
@@ -430,17 +387,13 @@ components:
                     type: integer
                 latitude:
                     description:
-                        Geographic latitude of the warehouse in decimal degrees. Required to be non-zero (in combination
-                        with longitude) before the warehouse can be activated. Filterable and sortable via the OData
-                        query parameter.
+                        Geographic latitude of the warehouse in decimal degrees. Required to be non-zero (in combination with longitude) before the warehouse can be activated. Filterable and sortable via the OData query parameter.
                     example: 33.9976884
                     format: double
                     type: number
                 longitude:
                     description:
-                        Geographic longitude of the warehouse in decimal degrees. Required to be non-zero (in
-                        combination with latitude) before the warehouse can be activated. Filterable and sortable via
-                        the OData query parameter.
+                        Geographic longitude of the warehouse in decimal degrees. Required to be non-zero (in combination with latitude) before the warehouse can be activated. Filterable and sortable via the OData query parameter.
                     example: -117.8144595
                     format: double
                     type: number
@@ -448,9 +401,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized warehouse display name. Map keys are locale codes; values are the translated strings.
-                        Required on create -- a blank or empty map is rejected. Matched by the search query parameter.
-                        Filterable and sortable via the OData query parameter.
+                        Localized warehouse display name. Map keys are locale codes; values are the translated strings. Required on create -- a blank or empty map is rejected. Matched by the search query parameter. Filterable and sortable via the OData query parameter.
                     example:
                         en_US: Warehouse Name US
                         hr_HR: Warehouse Name HR
@@ -458,14 +409,12 @@ components:
                     type: object
                 regionISOCode:
                     description:
-                        Region code of the warehouse address (sub-national administrative division). Filterable and
-                        sortable via the OData query parameter.
+                        Region code of the warehouse address (sub-national administrative division). Filterable and sortable via the OData query parameter.
                     example: CA
                     type: string
                 street1:
                     description:
-                        First line of the warehouse street address. Matched by the search query parameter. Filterable
-                        and sortable via the OData query parameter.
+                        First line of the warehouse street address. Matched by the search query parameter. Filterable and sortable via the OData query parameter.
                     example: 1400 Montefino Ave
                     type: string
                 street2:
@@ -480,16 +429,12 @@ components:
                     type: string
                 type:
                     description:
-                        Warehouse classification string carried verbatim from the persisted column. No validated set of
-                        allowed values; the service neither writes nor reads the column on create or update, so the
-                        field round-trips on read only.
+                        Warehouse classification string carried verbatim from the persisted column. No validated set of allowed values; the service neither writes nor reads the column on create or update, so the field round-trips on read only.
                     example: warehouse
                     type: string
                 warehouseItems:
                     description:
-                        Optional nested list of warehouse-item rows to upsert alongside the warehouse on create or
-                        update. Each entry is matched on externalReferenceCode and cascaded through the warehouse-item
-                        upsert path.
+                        Optional nested list of warehouse-item rows to upsert alongside the warehouse on create or update. Each entry is matched on externalReferenceCode and cascaded through the warehouse-item upsert path.
                     items:
                         $ref: "#/components/schemas/WarehouseItem"
                     type: array
@@ -501,23 +446,19 @@ components:
             type: object
         WarehouseAccount:
             description:
-                Binding that scopes a warehouse to a specific account, restricting which buyer the warehouse can source
-                inventory for. Created by POSTing under a warehouse and deleted through its own top-level resource path.
-                Adding or removing the binding reindexes the parent warehouse.
+                Binding that scopes a warehouse to a specific account, restricting which buyer the warehouse can source inventory for. Created by POSTing under a warehouse and deleted through its own top-level resource path. Adding or removing the binding reindexes the parent warehouse.
             properties:
                 account:
                     $ref: "#/components/schemas/Account"
                     readOnly: true
                 accountExternalReferenceCode:
                     description:
-                        Idempotency key of the bound account. Either accountId or accountExternalReferenceCode must
-                        resolve to an existing account on create.
+                        Idempotency key of the bound account. Either accountId or accountExternalReferenceCode must resolve to an existing account on create.
                     example: DAB-34098-789-N
                     type: string
                 accountId:
                     description:
-                        Reference to the bound account (FK identifier). Either accountId or accountExternalReferenceCode
-                        must resolve to an existing account on create.
+                        Reference to the bound account (FK identifier). Either accountId or accountExternalReferenceCode must resolve to an existing account on create.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -528,8 +469,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 warehouseAccountId:
@@ -542,14 +482,12 @@ components:
                     type: integer
                 warehouseExternalReferenceCode:
                     description:
-                        Idempotency key of the warehouse side of the binding. Either warehouseId or
-                        warehouseExternalReferenceCode must resolve to an existing warehouse on create.
+                        Idempotency key of the warehouse side of the binding. Either warehouseId or warehouseExternalReferenceCode must resolve to an existing warehouse on create.
                     example: PAB-34098-789-N
                     type: string
                 warehouseId:
                     description:
-                        Reference to the warehouse side of the binding (FK identifier). Either warehouseId or
-                        warehouseExternalReferenceCode must resolve to an existing warehouse on create.
+                        Reference to the warehouse side of the binding (FK identifier). Either warehouseId or warehouseExternalReferenceCode must resolve to an existing warehouse on create.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -560,23 +498,19 @@ components:
             type: object
         WarehouseAccountGroup:
             description:
-                Binding that scopes a warehouse to a specific account group, restricting which buyer cohort the
-                warehouse can source inventory for. Created by POSTing under a warehouse and deleted through its own
-                top-level resource path. Adding or removing the binding reindexes the parent warehouse.
+                Binding that scopes a warehouse to a specific account group, restricting which buyer cohort the warehouse can source inventory for. Created by POSTing under a warehouse and deleted through its own top-level resource path. Adding or removing the binding reindexes the parent warehouse.
             properties:
                 accountGroup:
                     $ref: "#/components/schemas/AccountGroup"
                     readOnly: true
                 accountGroupExternalReferenceCode:
                     description:
-                        Idempotency key of the bound account group. Either accountGroupId or
-                        accountGroupExternalReferenceCode must resolve to an existing account group on create.
+                        Idempotency key of the bound account group. Either accountGroupId or accountGroupExternalReferenceCode must resolve to an existing account group on create.
                     example: DAB-34098-789-N
                     type: string
                 accountGroupId:
                     description:
-                        Reference to the bound account group (FK identifier). Either accountGroupId or
-                        accountGroupExternalReferenceCode must resolve to an existing account group on create.
+                        Reference to the bound account group (FK identifier). Either accountGroupId or accountGroupExternalReferenceCode must resolve to an existing account group on create.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -587,8 +521,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 warehouseAccountGroupId:
@@ -617,10 +550,7 @@ components:
             type: object
         WarehouseChannel:
             description:
-                Binding that scopes a warehouse to a specific channel, restricting which storefront the warehouse can
-                source inventory for. Created by POSTing under a warehouse and deleted through its own top-level
-                resource path. A duplicate (warehouse, channel) pair is rejected with a 409. Does not reindex the parent
-                warehouse on add or delete.
+                Binding that scopes a warehouse to a specific channel, restricting which storefront the warehouse can source inventory for. Created by POSTing under a warehouse and deleted through its own top-level resource path. A duplicate (warehouse, channel) pair is rejected with a 409. Does not reindex the parent warehouse on add or delete.
             properties:
                 actions:
                     additionalProperties:
@@ -628,8 +558,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 channel:
@@ -637,14 +566,12 @@ components:
                     readOnly: true
                 channelExternalReferenceCode:
                     description:
-                        Idempotency key of the bound channel. Either channelId or channelExternalReferenceCode must
-                        resolve to an existing channel on create.
+                        Idempotency key of the bound channel. Either channelId or channelExternalReferenceCode must resolve to an existing channel on create.
                     example: DAB-34098-789-N
                     type: string
                 channelId:
                     description:
-                        Reference to the bound channel (FK identifier). Either channelId or channelExternalReferenceCode
-                        must resolve to an existing channel on create.
+                        Reference to the bound channel (FK identifier). Either channelId or channelExternalReferenceCode must resolve to an existing channel on create.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -675,48 +602,36 @@ components:
             type: object
         WarehouseItem:
             description:
-                On-hand inventory record for one SKU at one warehouse, scaled to a unit-of-measure key. The triple
-                (warehouse, sku, unitOfMeasureKey) is unique; when the SKU has exactly one unit-of-measure defined the
-                key may be omitted and the runtime resolves it automatically.
+                On-hand inventory record for one SKU at one warehouse, scaled to a unit-of-measure key. The triple (warehouse, sku, unitOfMeasureKey) is unique; when the SKU has exactly one unit-of-measure defined the key may be omitted and the runtime resolves it automatically.
             properties:
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update; must be unique per warehouse item within the company.
-                        Optional on create.
+                        Idempotency key for create and update; must be unique per warehouse item within the company. Optional on create.
                     example: AB-34098-789-N
                     type: string
                 id:
                     description:
-                        Internal numeric identifier of the warehouse item; read-only and assigned by the service on
-                        create.
+                        Internal numeric identifier of the warehouse item; read-only and assigned by the service on create.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 modifiedDate:
                     description:
-                        Last-modified timestamp of the warehouse-item row, in ISO 8601 date format. Maintained
-                        automatically by the persistence layer and surfaces only through the dedicated
-                        /warehouseItems/updated listing; not populated on the standard read paths.
+                        Last-modified timestamp of the warehouse-item row, in ISO 8601 date format. Maintained automatically by the persistence layer and surfaces only through the dedicated /warehouseItems/updated listing; not populated on the standard read paths.
                     example: 2017-07-21
                     format: date
                     type: string
                 quantity:
                     description:
-                        Total on-hand quantity at the warehouse, scaled to the unitOfMeasureKey precision. The runtime
-                        formats the persisted decimal through the commerce quantity formatter on read. Stock available
-                        for sale is the difference between quantity and reservedQuantity; it is not surfaced as a
-                        separate property and consumers compute it from these two fields.
+                        Total on-hand quantity at the warehouse, scaled to the unitOfMeasureKey precision. The runtime formats the persisted decimal through the commerce quantity formatter on read. Stock available for sale is the difference between quantity and reservedQuantity; it is not surfaced as a separate property and consumers compute it from these two fields.
                     example: 1.1
                     format: bigdecimal
                     minimum: 0
                     type: number
                 reservedQuantity:
                     description:
-                        Quantity currently held by open orders against future fulfillment, scaled to the
-                        unitOfMeasureKey precision. The runtime formats the persisted decimal through the commerce
-                        quantity formatter on read. Subtracted from quantity to derive stock available for sale; the
-                        difference is not surfaced as a separate property.
+                        Quantity currently held by open orders against future fulfillment, scaled to the unitOfMeasureKey precision. The runtime formats the persisted decimal through the commerce quantity formatter on read. Subtracted from quantity to derive stock available for sale; the difference is not surfaced as a separate property.
                     example: 2.1
                     format: bigdecimal
                     minimum: 0
@@ -728,21 +643,17 @@ components:
                     type: string
                 unitOfMeasureKey:
                     description:
-                        Key of the unit-of-measure the quantities are expressed in. When omitted on create and the SKU
-                        has exactly one unit-of-measure defined, the runtime resolves the key automatically; when the
-                        SKU has more than one, an explicit key is required.
+                        Key of the unit-of-measure the quantities are expressed in. When omitted on create and the SKU has exactly one unit-of-measure defined, the runtime resolves the key automatically; when the SKU has more than one, an explicit key is required.
                     example: lt
                     type: string
                 warehouseExternalReferenceCode:
                     description:
-                        Idempotency key of the warehouse the warehouse item belongs to. Either warehouseId or
-                        warehouseExternalReferenceCode must resolve to an existing warehouse on create.
+                        Idempotency key of the warehouse the warehouse item belongs to. Either warehouseId or warehouseExternalReferenceCode must resolve to an existing warehouse on create.
                     example: AB-34098-789-N
                     type: string
                 warehouseId:
                     description:
-                        Reference to the warehouse the warehouse item belongs to (FK identifier). Either warehouseId or
-                        warehouseExternalReferenceCode must resolve to an existing warehouse on create.
+                        Reference to the warehouse the warehouse item belongs to (FK identifier). Either warehouseId or warehouseExternalReferenceCode must resolve to an existing warehouse on create.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -750,9 +661,7 @@ components:
             type: object
         WarehouseOrderType:
             description:
-                Binding that scopes a warehouse to a specific order type, restricting which order kinds the warehouse
-                can source inventory for. Created by POSTing under a warehouse and deleted through its own top-level
-                resource path. Adding or removing the binding reindexes the parent warehouse.
+                Binding that scopes a warehouse to a specific order type, restricting which order kinds the warehouse can source inventory for. Created by POSTing under a warehouse and deleted through its own top-level resource path. Adding or removing the binding reindexes the parent warehouse.
             properties:
                 actions:
                     additionalProperties:
@@ -760,8 +669,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name; each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 orderType:
@@ -769,23 +677,19 @@ components:
                     readOnly: true
                 orderTypeExternalReferenceCode:
                     description:
-                        Idempotency key of the bound order type. Either orderTypeId or orderTypeExternalReferenceCode
-                        must resolve to an existing order type on create.
+                        Idempotency key of the bound order type. Either orderTypeId or orderTypeExternalReferenceCode must resolve to an existing order type on create.
                     example: DAB-34098-789-N
                     type: string
                 orderTypeId:
                     description:
-                        Reference to the bound order type (FK identifier). Either orderTypeId or
-                        orderTypeExternalReferenceCode must resolve to an existing order type on create.
+                        Reference to the bound order type (FK identifier). Either orderTypeId or orderTypeExternalReferenceCode must resolve to an existing order type on create.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 priority:
                     description:
-                        Reserved ordering hint for the binding. The runtime does not currently persist or read this
-                        field -- the underlying binding row has no priority column -- so the value round-trips on the
-                        request body but has no effect.
+                        Reserved ordering hint for the binding. The runtime does not currently persist or read this field -- the underlying binding row has no priority column -- so the value round-trips on the request body but has no effect.
                     example: 1
                     format: int32
                     minimum: 0
@@ -827,10 +731,7 @@ paths:
     /replenishment-items/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the replenishment item identified by externalReferenceCode. Calls
-                CommerceInventoryReplenishmentItemService.deleteCommerceInventoryReplenishmentItem after looking the row
-                up by externalReferenceCode within the request company. Validation --
-                NoSuchInventoryReplenishmentItemException -> 404 when the externalReferenceCode does not resolve.
+                Deletes the replenishment item identified by externalReferenceCode. Calls CommerceInventoryReplenishmentItemService.deleteCommerceInventoryReplenishmentItem after looking the row up by externalReferenceCode within the request company. Validation -- NoSuchInventoryReplenishmentItemException -> 404 when the externalReferenceCode does not resolve.
             operationId: deleteReplenishmentItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -864,10 +765,7 @@ paths:
                 -   ReplenishmentItem
         get:
             description:
-                Returns the replenishment item identified by externalReferenceCode. Calls
-                CommerceInventoryReplenishmentItemService.fetchCommerceInventoryReplenishmentItemByExternalReferenceCode.
-                Validation -- NoSuchInventoryReplenishmentItemException -> 404 when the externalReferenceCode does not
-                resolve.
+                Returns the replenishment item identified by externalReferenceCode. Calls CommerceInventoryReplenishmentItemService.fetchCommerceInventoryReplenishmentItemByExternalReferenceCode. Validation -- NoSuchInventoryReplenishmentItemException -> 404 when the externalReferenceCode does not resolve.
             operationId: getReplenishmentItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -930,11 +828,7 @@ paths:
                 -   ReplenishmentItem
         patch:
             description:
-                Applies a JSON Merge Patch to the replenishment item identified by externalReferenceCode. Only the
-                fields supplied in the body are modified -- availabilityDate, quantity, and unitOfMeasureKey fall back
-                to the persisted value when omitted. Validation -- NoSuchInventoryReplenishmentItemException -> 404 when
-                the externalReferenceCode does not resolve; CommerceInventoryReplenishmentQuantityException -> 400 when
-                quantity is non-positive.
+                Applies a JSON Merge Patch to the replenishment item identified by externalReferenceCode. Only the fields supplied in the body are modified -- availabilityDate, quantity, and unitOfMeasureKey fall back to the persisted value when omitted. Validation -- NoSuchInventoryReplenishmentItemException -> 404 when the externalReferenceCode does not resolve; CommerceInventoryReplenishmentQuantityException -> 400 when quantity is non-positive.
             operationId: patchReplenishmentItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1000,9 +894,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the replenishment item from being created or updated (for
-                        example, the quantity is non-positive, the availability date is invalid, or a duplicate entry
-                        already exists for the same SKU and warehouse).
+                        A domain validation error prevented the replenishment item from being created or updated (for example, the quantity is non-positive, the availability date is invalid, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -1018,11 +910,7 @@ paths:
                 -   ReplenishmentItem
         put:
             description:
-                Upserts the replenishment item identified by externalReferenceCode. When a row with that
-                externalReferenceCode already exists, every field is replaced (nulls are coerced to defaults). When it
-                does not, a new replenishment item is created. Validation -- the underlying warehouse item identified by
-                warehouseId and sku must exist (NoSuchInventoryWarehouseItemException -> 404 otherwise); duplicate
-                externalReferenceCode raises DuplicateCommerceInventoryReplenishmentItemException -> 400.
+                Upserts the replenishment item identified by externalReferenceCode. When a row with that externalReferenceCode already exists, every field is replaced (nulls are coerced to defaults). When it does not, a new replenishment item is created. Validation -- the underlying warehouse item identified by warehouseId and sku must exist (NoSuchInventoryWarehouseItemException -> 404 otherwise); duplicate externalReferenceCode raises DuplicateCommerceInventoryReplenishmentItemException -> 400.
             operationId: putReplenishmentItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1088,9 +976,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the replenishment item from being created or updated (for
-                        example, the quantity is non-positive, the availability date is invalid, or a duplicate entry
-                        already exists for the same SKU and warehouse).
+                        A domain validation error prevented the replenishment item from being created or updated (for example, the quantity is non-positive, the availability date is invalid, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -1107,9 +993,7 @@ paths:
     /replenishment-items/{replenishmentItemId}:
         delete:
             description:
-                Deletes the replenishment item identified by replenishmentItemId. Calls
-                CommerceInventoryReplenishmentItemService.deleteCommerceInventoryReplenishmentItem. Validation --
-                NoSuchInventoryReplenishmentItemException -> 404 when the id does not resolve.
+                Deletes the replenishment item identified by replenishmentItemId. Calls CommerceInventoryReplenishmentItemService.deleteCommerceInventoryReplenishmentItem. Validation -- NoSuchInventoryReplenishmentItemException -> 404 when the id does not resolve.
             operationId: deleteReplenishmentItem
             parameters:
                 -   $ref: "#/components/parameters/replenishmentItemIdPathParam"
@@ -1143,9 +1027,7 @@ paths:
                 -   ReplenishmentItem
         get:
             description:
-                Returns the replenishment item identified by replenishmentItemId. Calls
-                CommerceInventoryReplenishmentItemService.getCommerceInventoryReplenishmentItem. Validation --
-                NoSuchInventoryReplenishmentItemException -> 404 when the id does not resolve.
+                Returns the replenishment item identified by replenishmentItemId. Calls CommerceInventoryReplenishmentItemService.getCommerceInventoryReplenishmentItem. Validation -- NoSuchInventoryReplenishmentItemException -> 404 when the id does not resolve.
             operationId: getReplenishmentItem
             parameters:
                 -   $ref: "#/components/parameters/replenishmentItemIdPathParam"
@@ -1208,10 +1090,7 @@ paths:
                 -   ReplenishmentItem
         patch:
             description:
-                Applies a JSON Merge Patch to the replenishment item identified by replenishmentItemId. Only the fields
-                supplied in the body are modified -- availabilityDate and quantity fall back to the persisted value when
-                omitted; externalReferenceCode in the body, when present, is written to the row. Validation --
-                CommerceInventoryReplenishmentQuantityException -> 400 when quantity is non-positive.
+                Applies a JSON Merge Patch to the replenishment item identified by replenishmentItemId. Only the fields supplied in the body are modified -- availabilityDate and quantity fall back to the persisted value when omitted; externalReferenceCode in the body, when present, is written to the row. Validation -- CommerceInventoryReplenishmentQuantityException -> 400 when quantity is non-positive.
             operationId: patchReplenishmentItem
             parameters:
                 -   $ref: "#/components/parameters/replenishmentItemIdPathParam"
@@ -1277,9 +1156,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the replenishment item from being created or updated (for
-                        example, the quantity is non-positive, the availability date is invalid, or a duplicate entry
-                        already exists for the same SKU and warehouse).
+                        A domain validation error prevented the replenishment item from being created or updated (for example, the quantity is non-positive, the availability date is invalid, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -1296,11 +1173,7 @@ paths:
     /skus/by-sku/{sku}/replenishment-items:
         get:
             description:
-                Returns the paginated list of replenishment items for the given SKU scoped to the request company,
-                expressed in the SKU's default unit of measure (unitOfMeasureKey is hard-coded to empty by the
-                implementation). Items whose unitOfMeasureKey is non-empty are not returned by this endpoint -- use
-                /warehouses/<warehouseId>/replenishment-items instead. The endpoint exposes no filter, search, or sort
-                parameters; only page and pageSize.
+                Returns the paginated list of replenishment items for the given SKU scoped to the request company, expressed in the SKU's default unit of measure (unitOfMeasureKey is hard-coded to empty by the implementation). Items whose unitOfMeasureKey is non-empty are not returned by this endpoint -- use /warehouses/<warehouseId>/replenishment-items instead. The endpoint exposes no filter, search, or sort parameters; only page and pageSize.
             operationId: getReplenishmentItemsPage
             parameters:
                 -   $ref: "#/components/parameters/skuPathParam"
@@ -1360,9 +1233,7 @@ paths:
     /warehouse-account-groups/{warehouseAccountGroupId}:
         delete:
             description:
-                Deletes the warehouse-account-group binding identified by warehouseAccountGroupId. Calls
-                CommerceInventoryWarehouseRelService.deleteCommerceInventoryWarehouseRel. Side effects -- removes the
-                row that scopes the warehouse to the bound account group; the account group itself is not affected.
+                Deletes the warehouse-account-group binding identified by warehouseAccountGroupId. Calls CommerceInventoryWarehouseRelService.deleteCommerceInventoryWarehouseRel. Side effects -- removes the row that scopes the warehouse to the bound account group; the account group itself is not affected.
             parameters:
                 -   $ref: "#/components/parameters/warehouseAccountGroupIdPathParam"
             responses:
@@ -1396,10 +1267,7 @@ paths:
     /warehouse-account-groups/{warehouseAccountGroupId}/account-group:
         get:
             description:
-                Returns the account group referenced by the warehouse-account-group binding identified by
-                warehouseAccountGroupId. Resolves the binding via CommerceInventoryWarehouseRelService and reads the
-                account group through AccountGroupService.getAccountGroup using the binding's classPK. Read-only nested
-                expansion of the binding's accountGroup field.
+                Returns the account group referenced by the warehouse-account-group binding identified by warehouseAccountGroupId. Resolves the binding via CommerceInventoryWarehouseRelService and reads the account group through AccountGroupService.getAccountGroup using the binding's classPK. Read-only nested expansion of the binding's accountGroup field.
             parameters:
                 -   $ref: "#/components/parameters/warehouseAccountGroupIdPathParam"
             responses:
@@ -1435,8 +1303,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account group binding.
                 404:
                     content:
                         application/json:
@@ -1463,9 +1330,7 @@ paths:
     /warehouse-accounts/{warehouseAccountId}:
         delete:
             description:
-                Deletes the warehouse-account binding identified by warehouseAccountId. Calls
-                CommerceInventoryWarehouseRelService.deleteCommerceInventoryWarehouseRel. Side effects -- removes the
-                row that scopes the warehouse to the bound account; the account itself is not affected.
+                Deletes the warehouse-account binding identified by warehouseAccountId. Calls CommerceInventoryWarehouseRelService.deleteCommerceInventoryWarehouseRel. Side effects -- removes the row that scopes the warehouse to the bound account; the account itself is not affected.
             parameters:
                 -   $ref: "#/components/parameters/warehouseAccountIdPathParam"
             responses:
@@ -1492,18 +1357,14 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account binding.
             summary: Deletes a warehouse account by ID.
             tags:
                 -   WarehouseAccount
     /warehouse-accounts/{warehouseAccountId}/account:
         get:
             description:
-                Returns the account referenced by the warehouse-account binding identified by warehouseAccountId.
-                Resolves the binding via CommerceInventoryWarehouseRelService and reads the account through
-                AccountEntryService using the binding's classPK. Read-only nested expansion of the binding's account
-                field.
+                Returns the account referenced by the warehouse-account binding identified by warehouseAccountId. Resolves the binding via CommerceInventoryWarehouseRelService and reads the account through AccountEntryService using the binding's classPK. Read-only nested expansion of the binding's account field.
             parameters:
                 -   $ref: "#/components/parameters/warehouseAccountIdPathParam"
             responses:
@@ -1539,8 +1400,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account binding.
                 404:
                     content:
                         application/json:
@@ -1567,9 +1427,7 @@ paths:
     /warehouse-channels/{warehouseChannelId}:
         delete:
             description:
-                Deletes the warehouse-channel binding identified by warehouseChannelId. Calls
-                CommerceChannelRelService.deleteCommerceChannelRel. Side effects -- removes the row that scopes the
-                warehouse to the bound channel; the channel itself is not affected.
+                Deletes the warehouse-channel binding identified by warehouseChannelId. Calls CommerceChannelRelService.deleteCommerceChannelRel. Side effects -- removes the row that scopes the warehouse to the bound channel; the channel itself is not affected.
             operationId: deleteWarehouseChannel
             parameters:
                 -   $ref: "#/components/parameters/warehouseChannelIdPathParam"
@@ -1597,17 +1455,14 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse channel binding.
             summary: Deletes a warehouse channel by ID.
             tags:
                 -   WarehouseChannel
     /warehouse-channels/{warehouseChannelId}/channel:
         get:
             description:
-                Returns the channel referenced by the warehouse-channel binding identified by warehouseChannelId.
-                Resolves the binding via CommerceChannelRelService and reads the channel through CommerceChannelService.
-                Read-only nested expansion of the binding's channel field.
+                Returns the channel referenced by the warehouse-channel binding identified by warehouseChannelId. Resolves the binding via CommerceChannelRelService and reads the channel through CommerceChannelService. Read-only nested expansion of the binding's channel field.
             operationId: getWarehouseChannelChannel
             parameters:
                 -   $ref: "#/components/parameters/warehouseChannelIdPathParam"
@@ -1644,8 +1499,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse channel binding.
                 404:
                     content:
                         application/json:
@@ -1672,9 +1526,7 @@ paths:
     /warehouse-order-types/{warehouseOrderTypeId}:
         delete:
             description:
-                Deletes the warehouse-order-type binding identified by warehouseOrderTypeId. Calls
-                CommerceInventoryWarehouseRelService.deleteCommerceInventoryWarehouseRel. Side effects -- removes the
-                row that scopes the warehouse to the bound order type; the order type itself is not affected.
+                Deletes the warehouse-order-type binding identified by warehouseOrderTypeId. Calls CommerceInventoryWarehouseRelService.deleteCommerceInventoryWarehouseRel. Side effects -- removes the row that scopes the warehouse to the bound order type; the order type itself is not affected.
             parameters:
                 -   $ref: "#/components/parameters/warehouseOrderTypeIdPathParam"
             responses:
@@ -1701,18 +1553,14 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse order type binding.
             summary: Deletes a warehouse order type by ID.
             tags:
                 -   WarehouseOrderType
     /warehouse-order-types/{warehouseOrderTypeId}/order-type:
         get:
             description:
-                Returns the order type referenced by the warehouse-order-type binding identified by
-                warehouseOrderTypeId. Resolves the binding via CommerceInventoryWarehouseRelService and reads the order
-                type through CommerceOrderTypeService using the binding's classPK. Read-only nested expansion of the
-                binding's orderType field.
+                Returns the order type referenced by the warehouse-order-type binding identified by warehouseOrderTypeId. Resolves the binding via CommerceInventoryWarehouseRelService and reads the order type through CommerceOrderTypeService using the binding's classPK. Read-only nested expansion of the binding's orderType field.
             parameters:
                 -   $ref: "#/components/parameters/warehouseOrderTypeIdPathParam"
             responses:
@@ -1748,8 +1596,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse order type binding.
                 404:
                     content:
                         application/json:
@@ -1776,10 +1623,7 @@ paths:
     /warehouseItems/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the warehouse item identified by externalReferenceCode. Calls
-                CommerceInventoryWarehouseItemService.deleteCommerceInventoryWarehouseItem after looking the row up
-                within the request company. Validation -- NoSuchInventoryWarehouseItemException -> 404 when the
-                externalReferenceCode does not resolve.
+                Deletes the warehouse item identified by externalReferenceCode. Calls CommerceInventoryWarehouseItemService.deleteCommerceInventoryWarehouseItem after looking the row up within the request company. Validation -- NoSuchInventoryWarehouseItemException -> 404 when the externalReferenceCode does not resolve.
             operationId: deleteWarehouseItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1813,10 +1657,7 @@ paths:
                 -   WarehouseItem
         get:
             description:
-                Returns the warehouse item identified by externalReferenceCode. Calls
-                CommerceInventoryWarehouseItemService.fetchCommerceInventoryWarehouseItemByExternalReferenceCode.
-                Validation -- NoSuchInventoryWarehouseItemException -> 404 when the externalReferenceCode does not
-                resolve.
+                Returns the warehouse item identified by externalReferenceCode. Calls CommerceInventoryWarehouseItemService.fetchCommerceInventoryWarehouseItemByExternalReferenceCode. Validation -- NoSuchInventoryWarehouseItemException -> 404 when the externalReferenceCode does not resolve.
             operationId: getWarehouseItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1879,12 +1720,7 @@ paths:
                 -   WarehouseItem
         patch:
             description:
-                Applies a JSON Merge Patch to the warehouse item identified by externalReferenceCode. Only the supplied
-                fields among quantity, reservedQuantity, and unitOfMeasureKey are modified; others fall back to the
-                persisted value. Validation -- NoSuchInventoryWarehouseItemException -> 404 when the
-                externalReferenceCode does not resolve; CPInstanceUnitOfMeasureKeyException -> 400 when unitOfMeasureKey
-                is rejected. The 202 response declared by the spec is reserved for future async use and is not currently
-                emitted.
+                Applies a JSON Merge Patch to the warehouse item identified by externalReferenceCode. Only the supplied fields among quantity, reservedQuantity, and unitOfMeasureKey are modified; others fall back to the persisted value. Validation -- NoSuchInventoryWarehouseItemException -> 404 when the externalReferenceCode does not resolve; CPInstanceUnitOfMeasureKeyException -> 400 when unitOfMeasureKey is rejected. The 202 response declared by the spec is reserved for future async use and is not currently emitted.
             operationId: patchWarehouseItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1946,9 +1782,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse item from being created or updated (for
-                        example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a
-                        duplicate entry already exists for the same SKU and warehouse).
+                        A domain validation error prevented the warehouse item from being created or updated (for example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -1964,11 +1798,7 @@ paths:
                 -   WarehouseItem
         post:
             description:
-                Creates a warehouse item with the supplied externalReferenceCode. The body must resolve a warehouse
-                through either warehouseId or warehouseExternalReferenceCode. Validation --
-                NoSuchInventoryWarehouseException -> 404 when the warehouse cannot be resolved;
-                DuplicateCommerceInventoryWarehouseItemException -> 400 when a warehouse item with the same
-                externalReferenceCode already exists. For upsert semantics use PUT against the same path instead.
+                Creates a warehouse item with the supplied externalReferenceCode. The body must resolve a warehouse through either warehouseId or warehouseExternalReferenceCode. Validation -- NoSuchInventoryWarehouseException -> 404 when the warehouse cannot be resolved; DuplicateCommerceInventoryWarehouseItemException -> 400 when a warehouse item with the same externalReferenceCode already exists. For upsert semantics use PUT against the same path instead.
             operationId: postWarehouseItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2040,9 +1870,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse item from being created or updated (for
-                        example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a
-                        duplicate entry already exists for the same SKU and warehouse).
+                        A domain validation error prevented the warehouse item from being created or updated (for example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -2058,12 +1886,7 @@ paths:
                 -   WarehouseItem
         put:
             description:
-                Upserts the warehouse item identified by externalReferenceCode. When a warehouse item with that
-                externalReferenceCode already exists, quantity, reservedQuantity, and unitOfMeasureKey are updated. When
-                it does not, a new warehouse item is created against the warehouse resolved by
-                warehouseExternalReferenceCode in the body. Validation -- NoSuchInventoryWarehouseException -> 404 when
-                the warehouse cannot be resolved. Side effects -- quantity defaults to one and reservedQuantity defaults
-                to zero on create.
+                Upserts the warehouse item identified by externalReferenceCode. When a warehouse item with that externalReferenceCode already exists, quantity, reservedQuantity, and unitOfMeasureKey are updated. When it does not, a new warehouse item is created against the warehouse resolved by warehouseExternalReferenceCode in the body. Validation -- NoSuchInventoryWarehouseException -> 404 when the warehouse cannot be resolved. Side effects -- quantity defaults to one and reservedQuantity defaults to zero on create.
             operationId: putWarehouseItemByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2135,9 +1958,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse item from being created or updated (for
-                        example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a
-                        duplicate entry already exists for the same SKU and warehouse).
+                        A domain validation error prevented the warehouse item from being created or updated (for example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -2154,11 +1975,7 @@ paths:
     /warehouseItems/updated:
         get:
             description:
-                Returns the paginated list of warehouse items modified within the (start, end) date window scoped to the
-                request company. Defaults -- when only end is supplied, start is rewound 30 days; when only start is
-                supplied, end is advanced 30 days; when both are omitted, end is set to today and start is rewound 30
-                days. Validation -- CommerceInventoryInvalidDateException -> 400 when start is after end. The endpoint
-                exposes no filter, search, or sort parameters.
+                Returns the paginated list of warehouse items modified within the (start, end) date window scoped to the request company. Defaults -- when only end is supplied, start is rewound 30 days; when only start is supplied, end is advanced 30 days; when both are omitted, end is set to today and start is rewound 30 days. Validation -- CommerceInventoryInvalidDateException -> 400 when start is after end. The endpoint exposes no filter, search, or sort parameters.
             operationId: getWarehouseItemsUpdatedPage
             parameters:
                 -   $ref: "#/components/parameters/endQueryParam"
@@ -2219,9 +2036,7 @@ paths:
     /warehouseItems/{id}:
         delete:
             description:
-                Deletes the warehouse item identified by id. Calls
-                CommerceInventoryWarehouseItemService.deleteCommerceInventoryWarehouseItem. Validation --
-                NoSuchInventoryWarehouseItemException -> 404 when the id does not resolve.
+                Deletes the warehouse item identified by id. Calls CommerceInventoryWarehouseItemService.deleteCommerceInventoryWarehouseItem. Validation -- NoSuchInventoryWarehouseItemException -> 404 when the id does not resolve.
             operationId: deleteWarehouseItem
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2255,9 +2070,7 @@ paths:
                 -   WarehouseItem
         get:
             description:
-                Returns the warehouse item identified by id. Calls
-                CommerceInventoryWarehouseItemService.getCommerceInventoryWarehouseItem. Validation --
-                NoSuchInventoryWarehouseItemException -> 404 when the id does not resolve.
+                Returns the warehouse item identified by id. Calls CommerceInventoryWarehouseItemService.getCommerceInventoryWarehouseItem. Validation -- NoSuchInventoryWarehouseItemException -> 404 when the id does not resolve.
             operationId: getWarehouseItem
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2320,11 +2133,7 @@ paths:
                 -   WarehouseItem
         patch:
             description:
-                Applies a JSON Merge Patch to the warehouse item identified by id. Only the supplied fields among
-                quantity, reservedQuantity, and unitOfMeasureKey are modified; others fall back to the persisted value.
-                Validation -- CPInstanceUnitOfMeasureKeyException -> 400 when unitOfMeasureKey is rejected. Returns 200
-                OK with an empty body on success; the 202 response declared by the spec is reserved for future async
-                use.
+                Applies a JSON Merge Patch to the warehouse item identified by id. Only the supplied fields among quantity, reservedQuantity, and unitOfMeasureKey are modified; others fall back to the persisted value. Validation -- CPInstanceUnitOfMeasureKeyException -> 400 when unitOfMeasureKey is rejected. Returns 200 OK with an empty body on success; the 202 response declared by the spec is reserved for future async use.
             operationId: patchWarehouseItem
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2386,9 +2195,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse item from being created or updated (for
-                        example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a
-                        duplicate entry already exists for the same SKU and warehouse).
+                        A domain validation error prevented the warehouse item from being created or updated (for example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -2405,11 +2212,7 @@ paths:
     /warehouses:
         get:
             description:
-                Returns the paginated list of warehouses for the request company. Supports an OData v4 filter expression
-                (filterable fields -- active, latitude, longitude, city, countryISOCode, name, regionISOCode, street1),
-                a full-text search expression, and a sort expression over the same field set, all sourced from the
-                warehouse entity model. Backed by SearchUtil.search against the indexed CommerceInventoryWarehouse
-                documents.
+                Returns the paginated list of warehouses for the request company. Supports an OData v4 filter expression (filterable fields -- active, latitude, longitude, city, countryISOCode, name, regionISOCode, street1), a full-text search expression, and a sort expression over the same field set, all sourced from the warehouse entity model. Backed by SearchUtil.search against the indexed CommerceInventoryWarehouse documents.
             operationId: getWarehousesPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
@@ -2470,11 +2273,7 @@ paths:
                 -   Warehouse
         post:
             description:
-                Creates a warehouse, or updates an existing one with the same externalReferenceCode supplied in the body
-                (upsert by externalReferenceCode). Side effects -- on create, active defaults to true and
-                latitude/longitude default to 0.0; optional nested warehouseItems are cascaded through
-                addOrUpdateCommerceInventoryWarehouseItem. Validation -- CommerceInventoryWarehouseNameException -> 400
-                when name is blank.
+                Creates a warehouse, or updates an existing one with the same externalReferenceCode supplied in the body (upsert by externalReferenceCode). Side effects -- on create, active defaults to true and latitude/longitude default to 0.0; optional nested warehouseItems are cascaded through addOrUpdateCommerceInventoryWarehouseItem. Validation -- CommerceInventoryWarehouseNameException -> 400 when name is blank.
             operationId: postWarehouse
             requestBody:
                 content:
@@ -2534,8 +2333,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse from being created or updated (for example,
-                        the name is empty, an address field is invalid, or a referenced entity is unresolved).
+                        A domain validation error prevented the warehouse from being created or updated (for example, the name is empty, an address field is invalid, or a referenced entity is unresolved).
                 500:
                     content:
                         application/json:
@@ -2552,10 +2350,7 @@ paths:
     /warehouses/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the warehouse identified by externalReferenceCode. Validation --
-                NoSuchInventoryWarehouseException -> 404 when the externalReferenceCode does not resolve. Side effects
-                -- cascades through all warehouse-item rows, all warehouse-account, warehouse-account-group, and
-                warehouse-order-type bindings, and all warehouse-channel bindings that reference the warehouse.
+                Deletes the warehouse identified by externalReferenceCode. Validation -- NoSuchInventoryWarehouseException -> 404 when the externalReferenceCode does not resolve. Side effects -- cascades through all warehouse-item rows, all warehouse-account, warehouse-account-group, and warehouse-order-type bindings, and all warehouse-channel bindings that reference the warehouse.
             operationId: deleteWarehouseByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2589,9 +2384,7 @@ paths:
                 -   Warehouse
         get:
             description:
-                Returns the warehouse identified by externalReferenceCode. Calls
-                CommerceInventoryWarehouseService.fetchCommerceInventoryWarehouseByExternalReferenceCode. Validation --
-                NoSuchInventoryWarehouseException -> 404 when the externalReferenceCode does not resolve.
+                Returns the warehouse identified by externalReferenceCode. Calls CommerceInventoryWarehouseService.fetchCommerceInventoryWarehouseByExternalReferenceCode. Validation -- NoSuchInventoryWarehouseException -> 404 when the externalReferenceCode does not resolve.
             operationId: getWarehouseByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2654,9 +2447,7 @@ paths:
                 -   Warehouse
         patch:
             description:
-                Applies a JSON Merge Patch to the warehouse identified by externalReferenceCode. Each null field in the
-                body falls back to the persisted value. Side effects -- optional nested warehouseItems are cascaded
-                through addOrUpdateCommerceInventoryWarehouseItem. Returns 200 OK on success.
+                Applies a JSON Merge Patch to the warehouse identified by externalReferenceCode. Each null field in the body falls back to the persisted value. Side effects -- optional nested warehouseItems are cascaded through addOrUpdateCommerceInventoryWarehouseItem. Returns 200 OK on success.
             operationId: patchWarehouseByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2718,8 +2509,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse from being created or updated (for example,
-                        the name is empty, an address field is invalid, or a referenced entity is unresolved).
+                        A domain validation error prevented the warehouse from being created or updated (for example, the name is empty, an address field is invalid, or a referenced entity is unresolved).
                 500:
                     content:
                         application/json:
@@ -2735,11 +2525,7 @@ paths:
                 -   Warehouse
         put:
             description:
-                Upserts the warehouse identified by externalReferenceCode. When a warehouse with that
-                externalReferenceCode already exists, every field is replaced (nulls become defaults -- empty strings,
-                0.0 for coordinates, false for active). When it does not, a new warehouse is created. Validation --
-                CommerceInventoryWarehouseNameException -> 400 when name is blank. Side effects -- optional nested
-                warehouseItems cascade through addOrUpdateCommerceInventoryWarehouseItem.
+                Upserts the warehouse identified by externalReferenceCode. When a warehouse with that externalReferenceCode already exists, every field is replaced (nulls become defaults -- empty strings, 0.0 for coordinates, false for active). When it does not, a new warehouse is created. Validation -- CommerceInventoryWarehouseNameException -> 400 when name is blank. Side effects -- optional nested warehouseItems cascade through addOrUpdateCommerceInventoryWarehouseItem.
             operationId: putWarehouseByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2811,8 +2597,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse from being created or updated (for example,
-                        the name is empty, an address field is invalid, or a referenced entity is unresolved).
+                        A domain validation error prevented the warehouse from being created or updated (for example, the name is empty, an address field is invalid, or a referenced entity is unresolved).
                 500:
                     content:
                         application/json:
@@ -2829,8 +2614,7 @@ paths:
     /warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-account-groups:
         get:
             description:
-                Returns the paginated list of warehouse-account-group bindings for the warehouse identified by
-                externalReferenceCode. No filter, search, or sort parameters are honored.
+                Returns the paginated list of warehouse-account-group bindings for the warehouse identified by externalReferenceCode. No filter, search, or sort parameters are honored.
             operationId: getWarehouseByExternalReferenceCodeWarehouseAccountGroupsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2870,8 +2654,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account group binding.
                 404:
                     content:
                         application/json:
@@ -2897,10 +2680,7 @@ paths:
                 -   WarehouseAccountGroup
         post:
             description:
-                Creates a warehouse-account-group binding between the warehouse identified by externalReferenceCode and
-                the account group resolved by accountGroupId or accountGroupExternalReferenceCode in the body. Not an
-                upsert. Validation -- NoSuchEntryException -> 404 when the account group cannot be resolved; a duplicate
-                binding raises a duplicate exception -> 400.
+                Creates a warehouse-account-group binding between the warehouse identified by externalReferenceCode and the account group resolved by accountGroupId or accountGroupExternalReferenceCode in the body. Not an upsert. Validation -- NoSuchEntryException -> 404 when the account group cannot be resolved; a duplicate binding raises a duplicate exception -> 400.
             operationId: postWarehouseByExternalReferenceCodeWarehouseAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2952,8 +2732,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account group binding.
                 404:
                     content:
                         application/json:
@@ -2973,8 +2752,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the WarehouseAccountGroup binding from being created (for
-                        example, the referenced AccountGroup does not exist or a duplicate binding already exists).
+                        A domain validation error prevented the WarehouseAccountGroup binding from being created (for example, the referenced AccountGroup does not exist or a duplicate binding already exists).
                 500:
                     content:
                         application/json:
@@ -2991,9 +2769,7 @@ paths:
     /warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-accounts:
         get:
             description:
-                Returns the paginated list of warehouse-account bindings for the warehouse identified by
-                externalReferenceCode. Supports the search query parameter, which matches against the bound account
-                name. No filter or sort.
+                Returns the paginated list of warehouse-account bindings for the warehouse identified by externalReferenceCode. Supports the search query parameter, which matches against the bound account name. No filter or sort.
             operationId: getWarehouseByExternalReferenceCodeWarehouseAccountsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3033,8 +2809,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account binding.
                 404:
                     content:
                         application/json:
@@ -3060,10 +2835,7 @@ paths:
                 -   WarehouseAccount
         post:
             description:
-                Creates a warehouse-account binding between the warehouse identified by externalReferenceCode and the
-                account resolved by accountId or accountExternalReferenceCode in the body. Not an upsert. Validation --
-                NoSuchEntryException -> 404 when the account cannot be resolved; a duplicate binding raises a duplicate
-                exception -> 400.
+                Creates a warehouse-account binding between the warehouse identified by externalReferenceCode and the account resolved by accountId or accountExternalReferenceCode in the body. Not an upsert. Validation -- NoSuchEntryException -> 404 when the account cannot be resolved; a duplicate binding raises a duplicate exception -> 400.
             operationId: postWarehouseByExternalReferenceCodeWarehouseAccount
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3115,8 +2887,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account binding.
                 404:
                     content:
                         application/json:
@@ -3136,8 +2907,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the WarehouseAccount binding from being created (for
-                        example, the referenced AccountEntry does not exist or a duplicate binding already exists).
+                        A domain validation error prevented the WarehouseAccount binding from being created (for example, the referenced AccountEntry does not exist or a duplicate binding already exists).
                 500:
                     content:
                         application/json:
@@ -3154,9 +2924,7 @@ paths:
     /warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-channels:
         get:
             description:
-                Returns the paginated list of warehouse-channel bindings for the warehouse identified by
-                externalReferenceCode. Supports the search query parameter, which matches against the bound channel
-                name. No filter or sort.
+                Returns the paginated list of warehouse-channel bindings for the warehouse identified by externalReferenceCode. Supports the search query parameter, which matches against the bound channel name. No filter or sort.
             operationId: getWarehouseByExternalReferenceCodeWarehouseChannelsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3196,8 +2964,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse channel binding.
                 404:
                     content:
                         application/json:
@@ -3223,10 +2990,7 @@ paths:
                 -   WarehouseChannel
         post:
             description:
-                Creates a warehouse-channel binding between the warehouse identified by externalReferenceCode and the
-                channel resolved by channelId or channelExternalReferenceCode in the body. Not an upsert. Validation --
-                NoSuchChannelException -> 404 when the channel cannot be resolved; DuplicateCommerceChannelRelException
-                -> 409 when the binding already exists.
+                Creates a warehouse-channel binding between the warehouse identified by externalReferenceCode and the channel resolved by channelId or channelExternalReferenceCode in the body. Not an upsert. Validation -- NoSuchChannelException -> 404 when the channel cannot be resolved; DuplicateCommerceChannelRelException -> 409 when the binding already exists.
             operationId: postWarehouseByExternalReferenceCodeWarehouseChannel
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3278,8 +3042,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse channel binding.
                 404:
                     content:
                         application/json:
@@ -3309,9 +3072,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the WarehouseChannel binding from being created (for
-                        example, the referenced CommerceChannel does not exist or another cross-reference is
-                        unresolved).
+                        A domain validation error prevented the WarehouseChannel binding from being created (for example, the referenced CommerceChannel does not exist or another cross-reference is unresolved).
                 500:
                     content:
                         application/json:
@@ -3328,10 +3089,7 @@ paths:
     /warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-order-types:
         get:
             description:
-                Returns the paginated list of warehouse-order-type bindings for the warehouse identified by
-                externalReferenceCode. Supports the search query parameter, which matches against the bound order-type
-                name. No filter or sort. Validation -- NoSuchInventoryWarehouseException -> 404 when the
-                externalReferenceCode does not resolve.
+                Returns the paginated list of warehouse-order-type bindings for the warehouse identified by externalReferenceCode. Supports the search query parameter, which matches against the bound order-type name. No filter or sort. Validation -- NoSuchInventoryWarehouseException -> 404 when the externalReferenceCode does not resolve.
             operationId: getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3371,8 +3129,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse order type binding.
                 404:
                     content:
                         application/json:
@@ -3398,9 +3155,7 @@ paths:
                 -   WarehouseOrderType
         post:
             description:
-                Creates a warehouse-order-type binding between the warehouse identified by externalReferenceCode and the
-                order type resolved by orderTypeId or orderTypeExternalReferenceCode in the body. Not an upsert.
-                Validation -- 404 when the order type cannot be resolved.
+                Creates a warehouse-order-type binding between the warehouse identified by externalReferenceCode and the order type resolved by orderTypeId or orderTypeExternalReferenceCode in the body. Not an upsert. Validation -- 404 when the order type cannot be resolved.
             operationId: postWarehouseByExternalReferenceCodeWarehouseOrderType
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3452,8 +3207,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse order type binding.
                 404:
                     content:
                         application/json:
@@ -3473,8 +3227,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the WarehouseOrderType binding from being created (for
-                        example, the referenced CommerceOrderType does not exist or a duplicate binding already exists).
+                        A domain validation error prevented the WarehouseOrderType binding from being created (for example, the referenced CommerceOrderType does not exist or a duplicate binding already exists).
                 500:
                     content:
                         application/json:
@@ -3491,8 +3244,7 @@ paths:
     /warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouseItems:
         get:
             description:
-                Returns the paginated list of warehouse items for the warehouse identified by externalReferenceCode. The
-                list is unfiltered (no filter, search, or sort parameters).
+                Returns the paginated list of warehouse items for the warehouse identified by externalReferenceCode. The list is unfiltered (no filter, search, or sort parameters).
             operationId: getWarehouseByExternalReferenceCodeWarehouseItemsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3561,10 +3313,7 @@ paths:
                 -   WarehouseItem
         post:
             description:
-                Creates a warehouse item under the warehouse identified by externalReferenceCode. Validation --
-                NoSuchInventoryWarehouseException -> 404 when the externalReferenceCode does not resolve;
-                DuplicateCommerceInventoryWarehouseItemException -> 400 when a warehouse item with the supplied
-                externalReferenceCode already exists.
+                Creates a warehouse item under the warehouse identified by externalReferenceCode. Validation -- NoSuchInventoryWarehouseException -> 404 when the externalReferenceCode does not resolve; DuplicateCommerceInventoryWarehouseItemException -> 400 when a warehouse item with the supplied externalReferenceCode already exists.
             operationId: postWarehouseByExternalReferenceCodeWarehouseItem
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3636,9 +3385,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse item from being created or updated (for
-                        example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a
-                        duplicate entry already exists for the same SKU and warehouse).
+                        A domain validation error prevented the warehouse item from being created or updated (for example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -3655,10 +3402,7 @@ paths:
     /warehouses/{id}:
         delete:
             description:
-                Deletes the warehouse identified by id. Validation -- NoSuchInventoryWarehouseException -> 404 when the
-                id does not resolve. Side effects -- cascades through all warehouse-item rows, all warehouse-account,
-                warehouse-account-group, and warehouse-order-type bindings, and all warehouse-channel bindings that
-                reference the warehouse.
+                Deletes the warehouse identified by id. Validation -- NoSuchInventoryWarehouseException -> 404 when the id does not resolve. Side effects -- cascades through all warehouse-item rows, all warehouse-account, warehouse-account-group, and warehouse-order-type bindings, and all warehouse-channel bindings that reference the warehouse.
             operationId: deleteWarehouseId
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3692,9 +3436,7 @@ paths:
                 -   Warehouse
         get:
             description:
-                Returns the warehouse identified by id. Calls
-                CommerceInventoryWarehouseService.getCommerceInventoryWarehouse. Validation --
-                NoSuchInventoryWarehouseException -> 404 when the id does not resolve.
+                Returns the warehouse identified by id. Calls CommerceInventoryWarehouseService.getCommerceInventoryWarehouse. Validation -- NoSuchInventoryWarehouseException -> 404 when the id does not resolve.
             operationId: getWarehouseId
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3757,9 +3499,7 @@ paths:
                 -   Warehouse
         patch:
             description:
-                Applies a JSON Merge Patch to the warehouse identified by id. Each null field in the body falls back to
-                the persisted value. Side effects -- optional nested warehouseItems are cascaded through
-                addOrUpdateCommerceInventoryWarehouseItem. Returns 204 No Content on success.
+                Applies a JSON Merge Patch to the warehouse identified by id. Each null field in the body falls back to the persisted value. Side effects -- optional nested warehouseItems are cascaded through addOrUpdateCommerceInventoryWarehouseItem. Returns 204 No Content on success.
             operationId: patchWarehouseId
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3821,8 +3561,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse from being created or updated (for example,
-                        the name is empty, an address field is invalid, or a referenced entity is unresolved).
+                        A domain validation error prevented the warehouse from being created or updated (for example, the name is empty, an address field is invalid, or a referenced entity is unresolved).
                 500:
                     content:
                         application/json:
@@ -3839,9 +3578,7 @@ paths:
     /warehouses/{id}/warehouse-account-groups:
         get:
             description:
-                Returns the paginated list of warehouse-account-group bindings for the warehouse identified by id.
-                Supports the search query parameter against the bound account-group name. No filter or sort honored by
-                the implementation.
+                Returns the paginated list of warehouse-account-group bindings for the warehouse identified by id. Supports the search query parameter against the bound account-group name. No filter or sort honored by the implementation.
             operationId: getWarehouseIdWarehouseAccountGroupsPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3884,8 +3621,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account group binding.
                 404:
                     content:
                         application/json:
@@ -3911,9 +3647,7 @@ paths:
                 -   WarehouseAccountGroup
         post:
             description:
-                Creates a warehouse-account-group binding between the warehouse identified by id and the account group
-                resolved by accountGroupId or accountGroupExternalReferenceCode in the body. Not an upsert. Validation
-                -- NoSuchEntryException -> 404 when the account group cannot be resolved.
+                Creates a warehouse-account-group binding between the warehouse identified by id and the account group resolved by accountGroupId or accountGroupExternalReferenceCode in the body. Not an upsert. Validation -- NoSuchEntryException -> 404 when the account group cannot be resolved.
             operationId: postWarehouseIdWarehouseAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3965,8 +3699,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account group binding.
                 404:
                     content:
                         application/json:
@@ -3986,8 +3719,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the WarehouseAccountGroup binding from being created (for
-                        example, the referenced AccountGroup does not exist or a duplicate binding already exists).
+                        A domain validation error prevented the WarehouseAccountGroup binding from being created (for example, the referenced AccountGroup does not exist or a duplicate binding already exists).
                 500:
                     content:
                         application/json:
@@ -4004,9 +3736,7 @@ paths:
     /warehouses/{id}/warehouse-accounts:
         get:
             description:
-                Returns the paginated list of warehouse-account bindings for the warehouse identified by id. Supports
-                the search query parameter against the bound account name. No filter or sort honored by the
-                implementation.
+                Returns the paginated list of warehouse-account bindings for the warehouse identified by id. Supports the search query parameter against the bound account name. No filter or sort honored by the implementation.
             operationId: getWarehouseIdWarehouseAccountsPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4049,8 +3779,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account binding.
                 404:
                     content:
                         application/json:
@@ -4076,10 +3805,7 @@ paths:
                 -   WarehouseAccount
         post:
             description:
-                Creates a warehouse-account binding between the warehouse identified by id and the account resolved by
-                accountId or accountExternalReferenceCode in the body. Not an upsert. Validation --
-                NoSuchInventoryWarehouseException -> 404 when the warehouse id does not resolve; NoSuchEntryException ->
-                404 when the account cannot be resolved.
+                Creates a warehouse-account binding between the warehouse identified by id and the account resolved by accountId or accountExternalReferenceCode in the body. Not an upsert. Validation -- NoSuchInventoryWarehouseException -> 404 when the warehouse id does not resolve; NoSuchEntryException -> 404 when the account cannot be resolved.
             operationId: postWarehouseIdWarehouseAccount
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4131,8 +3857,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse account binding.
                 404:
                     content:
                         application/json:
@@ -4152,8 +3877,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the WarehouseAccount binding from being created (for
-                        example, the referenced AccountEntry does not exist or a duplicate binding already exists).
+                        A domain validation error prevented the WarehouseAccount binding from being created (for example, the referenced AccountEntry does not exist or a duplicate binding already exists).
                 500:
                     content:
                         application/json:
@@ -4170,9 +3894,7 @@ paths:
     /warehouses/{id}/warehouse-channels:
         get:
             description:
-                Returns the paginated list of warehouse-channel bindings for the warehouse identified by id. Supports
-                the search query parameter against the bound channel name. Returns an empty page when the warehouse does
-                not exist (does not raise).
+                Returns the paginated list of warehouse-channel bindings for the warehouse identified by id. Supports the search query parameter against the bound channel name. Returns an empty page when the warehouse does not exist (does not raise).
             operationId: getWarehouseIdWarehouseChannelsPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4215,8 +3937,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse channel binding.
                 404:
                     content:
                         application/json:
@@ -4242,10 +3963,7 @@ paths:
                 -   WarehouseChannel
         post:
             description:
-                Creates a warehouse-channel binding between the warehouse identified by id and the channel resolved by
-                channelId or channelExternalReferenceCode in the body. Validation -- NoSuchChannelException -> 404 when
-                the channel cannot be resolved; DuplicateCommerceChannelRelException -> 409 when the binding already
-                exists.
+                Creates a warehouse-channel binding between the warehouse identified by id and the channel resolved by channelId or channelExternalReferenceCode in the body. Validation -- NoSuchChannelException -> 404 when the channel cannot be resolved; DuplicateCommerceChannelRelException -> 409 when the binding already exists.
             operationId: postWarehouseIdWarehouseChannel
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4297,8 +4015,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse channel binding.
                 404:
                     content:
                         application/json:
@@ -4328,9 +4045,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the WarehouseChannel binding from being created (for
-                        example, the referenced CommerceChannel does not exist or another cross-reference is
-                        unresolved).
+                        A domain validation error prevented the WarehouseChannel binding from being created (for example, the referenced CommerceChannel does not exist or another cross-reference is unresolved).
                 500:
                     content:
                         application/json:
@@ -4347,9 +4062,7 @@ paths:
     /warehouses/{id}/warehouse-order-types:
         get:
             description:
-                Returns the paginated list of warehouse-order-type bindings for the warehouse identified by id. Supports
-                the search query parameter against the bound order-type name. Validation --
-                NoSuchInventoryWarehouseException -> 404 when the id does not resolve.
+                Returns the paginated list of warehouse-order-type bindings for the warehouse identified by id. Supports the search query parameter against the bound order-type name. Validation -- NoSuchInventoryWarehouseException -> 404 when the id does not resolve.
             operationId: getWarehouseIdWarehouseOrderTypesPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4392,8 +4105,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse order type binding.
                 404:
                     content:
                         application/json:
@@ -4419,9 +4131,7 @@ paths:
                 -   WarehouseOrderType
         post:
             description:
-                Creates a warehouse-order-type binding between the warehouse identified by id and the order type
-                resolved by orderTypeId or orderTypeExternalReferenceCode in the body. Not an upsert. Validation -- 404
-                when the order type cannot be resolved.
+                Creates a warehouse-order-type binding between the warehouse identified by id and the order type resolved by orderTypeId or orderTypeExternalReferenceCode in the body. Not an upsert. Validation -- 404 when the order type cannot be resolved.
             operationId: postWarehouseIdWarehouseOrderType
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4473,8 +4183,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this warehouse order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this warehouse order type binding.
                 404:
                     content:
                         application/json:
@@ -4494,8 +4203,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the WarehouseOrderType binding from being created (for
-                        example, the referenced CommerceOrderType does not exist or a duplicate binding already exists).
+                        A domain validation error prevented the WarehouseOrderType binding from being created (for example, the referenced CommerceOrderType does not exist or a duplicate binding already exists).
                 500:
                     content:
                         application/json:
@@ -4512,8 +4220,7 @@ paths:
     /warehouses/{id}/warehouseItems:
         get:
             description:
-                Returns the paginated list of warehouse items for the warehouse identified by id. The list is unfiltered
-                (no filter, search, or sort parameters).
+                Returns the paginated list of warehouse items for the warehouse identified by id. The list is unfiltered (no filter, search, or sort parameters).
             operationId: getWarehouseIdWarehouseItemsPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4582,10 +4289,7 @@ paths:
                 -   WarehouseItem
         post:
             description:
-                Creates a warehouse item under the warehouse identified by id. Validation --
-                NoSuchInventoryWarehouseException -> 404 when the id does not resolve;
-                DuplicateCommerceInventoryWarehouseItemException -> 400 when a warehouse item with the supplied
-                externalReferenceCode already exists.
+                Creates a warehouse item under the warehouse identified by id. Validation -- NoSuchInventoryWarehouseException -> 404 when the id does not resolve; DuplicateCommerceInventoryWarehouseItemException -> 400 when a warehouse item with the supplied externalReferenceCode already exists.
             operationId: postWarehouseIdWarehouseItem
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4657,9 +4361,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the warehouse item from being created or updated (for
-                        example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a
-                        duplicate entry already exists for the same SKU and warehouse).
+                        A domain validation error prevented the warehouse item from being created or updated (for example, the SKU cannot be resolved, the unit-of-measure key does not match the catalog, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -4676,8 +4378,7 @@ paths:
     /warehouses/{warehouseId}/replenishment-items:
         get:
             description:
-                Returns the paginated list of replenishment items scoped to the warehouse identified by warehouseId. The
-                list is unfiltered (no filter, search, or sort parameters); only page and pageSize.
+                Returns the paginated list of replenishment items scoped to the warehouse identified by warehouseId. The list is unfiltered (no filter, search, or sort parameters); only page and pageSize.
             operationId: getWarehouseIdReplenishmentItemsPage
             parameters:
                 -   $ref: "#/components/parameters/warehouseIdPathParam"
@@ -4747,12 +4448,7 @@ paths:
     /warehouses/{warehouseId}/skus/by-sku/{sku}/replenishment-items:
         post:
             description:
-                Creates a replenishment item for the SKU at the warehouse identified by warehouseId. Validation -- the
-                underlying warehouse item (warehouseId, sku, default unit of measure) must exist
-                (NoSuchInventoryWarehouseItemException -> 404 otherwise);
-                CommerceInventoryReplenishmentQuantityException -> 400 when quantity is non-positive;
-                DuplicateCommerceInventoryReplenishmentItemException -> 400 when externalReferenceCode collides with an
-                existing entry.
+                Creates a replenishment item for the SKU at the warehouse identified by warehouseId. Validation -- the underlying warehouse item (warehouseId, sku, default unit of measure) must exist (NoSuchInventoryWarehouseItemException -> 404 otherwise); CommerceInventoryReplenishmentQuantityException -> 400 when quantity is non-positive; DuplicateCommerceInventoryReplenishmentItemException -> 400 when externalReferenceCode collides with an existing entry.
             operationId: postReplenishmentItem
             parameters:
                 -   $ref: "#/components/parameters/warehouseIdPathParam"
@@ -4825,9 +4521,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the replenishment item from being created or updated (for
-                        example, the quantity is non-positive, the availability date is invalid, or a duplicate entry
-                        already exists for the same SKU and warehouse).
+                        A domain validation error prevented the replenishment item from being created or updated (for example, the quantity is non-positive, the availability date is invalid, or a duplicate entry already exists for the same SKU and warehouse).
                 500:
                     content:
                         application/json:
@@ -4843,54 +4537,35 @@ paths:
                 -   ReplenishmentItem
 tags:
     -   description:
-            Read-only projection of the account record referenced by a warehouse-account binding. Exposes the id, logo,
-            and display name only; the writable account surface lives in the account admin API.
+            Read-only projection of the account record referenced by a warehouse-account binding. Exposes the id, logo, and display name only; the writable account surface lives in the account admin API.
         name: Account
     -   description:
-            Read-only projection of the account group referenced by a warehouse-account-group binding. Exposes the id
-            and display name only; the writable account-group surface lives in the account admin API.
+            Read-only projection of the account group referenced by a warehouse-account-group binding. Exposes the id and display name only; the writable account-group surface lives in the account admin API.
         name: AccountGroup
     -   description:
-            Read-only projection of the channel referenced by a warehouse-channel binding. Exposes the id,
-            externalReferenceCode, name, currency code, site group, and channel type; the writable channel surface lives
-            in the channel admin API.
+            Read-only projection of the channel referenced by a warehouse-channel binding. Exposes the id, externalReferenceCode, name, currency code, site group, and channel type; the writable channel surface lives in the channel admin API.
         name: Channel
     -   description:
-            Read-only projection of the order type referenced by a warehouse-order-type binding. Exposes the id and
-            localized name only; the writable order-type surface lives in the order admin API.
+            Read-only projection of the order type referenced by a warehouse-order-type binding. Exposes the id and localized name only; the writable order-type surface lives in the order admin API.
         name: OrderType
     -   description:
-            Planned restock event for a SKU at a warehouse. Records the expected quantity and the availability date so
-            on-hand stock can be reconciled with future arrivals; addressable by id or externalReferenceCode and created
-            either under the SKU or under a specific warehouse.
+            Planned restock event for a SKU at a warehouse. Records the expected quantity and the availability date so on-hand stock can be reconciled with future arrivals; addressable by id or externalReferenceCode and created either under the SKU or under a specific warehouse.
         name: ReplenishmentItem
     -   description:
-            Physical or logical fulfillment location that holds inventory. Carries the address, geo-coordinates, and the
-            active flag that decides eligibility for sourcing stock; the upsert path keys on externalReferenceCode and
-            cascades through every binding when the warehouse is deleted.
+            Physical or logical fulfillment location that holds inventory. Carries the address, geo-coordinates, and the active flag that decides eligibility for sourcing stock; the upsert path keys on externalReferenceCode and cascades through every binding when the warehouse is deleted.
         name: Warehouse
     -   description:
-            Binding that scopes a warehouse to a specific account, restricting which buyer the warehouse can source
-            inventory for. Created under the parent warehouse and removed through its own top-level resource path;
-            duplicate bindings raise 400.
+            Binding that scopes a warehouse to a specific account, restricting which buyer the warehouse can source inventory for. Created under the parent warehouse and removed through its own top-level resource path; duplicate bindings raise 400.
         name: WarehouseAccount
     -   description:
-            Binding that scopes a warehouse to a specific account group, restricting which buyer cohort the warehouse
-            can source inventory for. Created under the parent warehouse and removed through its own top-level resource
-            path; duplicate bindings raise 400.
+            Binding that scopes a warehouse to a specific account group, restricting which buyer cohort the warehouse can source inventory for. Created under the parent warehouse and removed through its own top-level resource path; duplicate bindings raise 400.
         name: WarehouseAccountGroup
     -   description:
-            Binding that scopes a warehouse to a specific channel, restricting which storefront the warehouse can source
-            inventory for. Created under the parent warehouse and removed through its own top-level resource path;
-            duplicate bindings raise 409.
+            Binding that scopes a warehouse to a specific channel, restricting which storefront the warehouse can source inventory for. Created under the parent warehouse and removed through its own top-level resource path; duplicate bindings raise 409.
         name: WarehouseChannel
     -   description:
-            On-hand inventory record for one SKU at one warehouse, scaled to a unit-of-measure key. Carries the total
-            quantity and the reserved quantity; the available-for-sale figure is the difference between the two and is
-            not surfaced as a separate property.
+            On-hand inventory record for one SKU at one warehouse, scaled to a unit-of-measure key. Carries the total quantity and the reserved quantity; the available-for-sale figure is the difference between the two and is not surfaced as a separate property.
         name: WarehouseItem
     -   description:
-            Binding that scopes a warehouse to a specific order type, restricting which order kinds the warehouse can
-            source inventory for. Created under the parent warehouse and removed through its own top-level resource
-            path; duplicate bindings raise 400.
+            Binding that scopes a warehouse to a specific order type, restricting which order kinds the warehouse can source inventory for. Created under the parent warehouse and removed through its own top-level resource path; duplicate bindings raise 400.
         name: WarehouseOrderType

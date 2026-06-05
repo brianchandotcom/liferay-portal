@@ -3,9 +3,7 @@ components:
         accountIdQueryParam:
             in: query
             description:
-                Reference to the AccountEntry the request is scoped to. When omitted, AccountUtil resolves the effective
-                account from the authenticated user's commerce account assignments and channel eligibility; when the
-                user has multiple accounts the explicit value is required (NoSuchEntryException otherwise).
+                Reference to the AccountEntry the request is scoped to. When omitted, AccountUtil resolves the effective account from the authenticated user's commerce account assignments and channel eligibility; when the user has multiple accounts the explicit value is required (NoSuchEntryException otherwise).
             explode: true
             name: accountId
             required: false
@@ -18,8 +16,7 @@ components:
         channelExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code of the addressed CommerceChannel; raises 404 when no channel with this code
-                exists in the company.
+                External reference code of the addressed CommerceChannel; raises 404 when no channel with this code exists in the company.
             explode: false
             name: channelExternalReferenceCode
             required: true
@@ -48,8 +45,7 @@ components:
         currencyCodeQueryParam:
             in: query
             description:
-                ISO 4217 currency code applied to the request's CommerceContext for price resolution. When omitted, the
-                channel's default currency is used; a non-active currency raises 422.
+                ISO 4217 currency code applied to the request's CommerceContext for price resolution. When omitted, the channel's default currency is used; a non-active currency raises 422.
             explode: true
             name: currencyCode
             required: false
@@ -60,8 +56,7 @@ components:
         externalReferenceCodePathParam:
             in: path
             description:
-                External reference code of the addressed CommerceChannel; raises 404 when no channel with this code
-                exists in the company.
+                External reference code of the addressed CommerceChannel; raises 404 when no channel with this code exists in the company.
             explode: false
             name: externalReferenceCode
             required: true
@@ -75,12 +70,7 @@ components:
         filterQueryParam:
             in: query
             description:
-                OData v4 $filter expression applied to the indexed entity. Supported fields are sourced from the entity
-                model -- ChannelEntityModel exposes siteGroupId, name; AccountEntityModel exposes dateCreated,
-                dateModified, name, type; ProductEntityModel exposes categoryIds, categoryNames, gtins,
-                specificationNames, specificationValues, tags, createDate, modifiedDate, catalogId, statusCode,
-                externalReferenceCode, name, productType plus every expando custom column. Currency, mapped product, and
-                most child endpoints do not publish an entity model and ignore filter.
+                OData v4 $filter expression applied to the indexed entity. Supported fields are sourced from the entity model -- ChannelEntityModel exposes siteGroupId, name; AccountEntityModel exposes dateCreated, dateModified, name, type; ProductEntityModel exposes categoryIds, categoryNames, gtins, specificationNames, specificationValues, tags, createDate, modifiedDate, catalogId, statusCode, externalReferenceCode, name, productType plus every expando custom column. Currency, mapped product, and most child endpoints do not publish an entity model and ignore filter.
             explode: true
             name: filter
             required: false
@@ -90,9 +80,7 @@ components:
         friendlyUrlPathPathParam:
             in: path
             description:
-                Localized friendly URL slug of the addressed Product (sourced from the storefront URL). Resolved against
-                the company group via CPDefinitionLocalService.fetchCPDefinitionByFriendlyURL; raises 404 when no
-                product matches.
+                Localized friendly URL slug of the addressed Product (sourced from the storefront URL). Resolved against the company group via CPDefinitionLocalService.fetchCPDefinitionByFriendlyURL; raises 404 when no product matches.
             explode: false
             name: friendlyUrlPath
             required: true
@@ -106,8 +94,7 @@ components:
         pageQueryParam:
             in: query
             description:
-                One-based page index for paginated results. Combine with pageSize to walk pages; when omitted the server
-                returns page 1.
+                One-based page index for paginated results. Combine with pageSize to walk pages; when omitted the server returns page 1.
             explode: true
             name: page
             required: false
@@ -117,8 +104,7 @@ components:
         pageSizeQueryParam:
             in: query
             description:
-                Number of items per page. When omitted the server applies the configured default page size; the maximum
-                page size is bounded by the portal's PortalUtil.PROPS_REST_MAX_RETURN_SIZE.
+                Number of items per page. When omitted the server applies the configured default page size; the maximum page size is bounded by the portal's PortalUtil.PROPS_REST_MAX_RETURN_SIZE.
             explode: true
             name: pageSize
             required: false
@@ -128,8 +114,7 @@ components:
         productExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code of the addressed CProduct; raises 404 when no product with this code exists in
-                the company.
+                External reference code of the addressed CProduct; raises 404 when no product with this code exists in the company.
             explode: false
             name: productExternalReferenceCode
             required: true
@@ -143,8 +128,7 @@ components:
         productIdPathParam:
             in: path
             description:
-                Reference to the addressed CProduct (product head). The resource resolves the active CPDefinition
-                through fetchCPDefinitionByCProductId; raises 404 when missing.
+                Reference to the addressed CProduct (product head). The resource resolves the active CPDefinition through fetchCPDefinitionByCProductId; raises 404 when missing.
             explode: false
             name: productId
             required: true
@@ -159,8 +143,7 @@ components:
         productOptionExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code of the addressed CPOption (parent of the CPDefinitionOptionRel); raises 404 when
-                missing.
+                External reference code of the addressed CPOption (parent of the CPDefinitionOptionRel); raises 404 when missing.
             explode: false
             name: productOptionExternalReferenceCode
             required: true
@@ -189,8 +172,7 @@ components:
         productOptionValueIdQueryParam:
             in: query
             description:
-                Reference to the CPDefinitionOptionValueRel currently selected by the buyer. Forwarded to the DTO
-                converter so price and selectability for each returned value reflect this candidate selection.
+                Reference to the CPDefinitionOptionValueRel currently selected by the buyer. Forwarded to the DTO converter so price and selectability for each returned value reflect this candidate selection.
             explode: true
             name: productOptionValueId
             required: false
@@ -203,9 +185,7 @@ components:
         quantityQueryParam:
             in: query
             description:
-                Requested order quantity expressed in base units. Used by the pricing engine to evaluate tier pricing
-                and unit-of-measure conversions; defaults to BigDecimal.ONE or the unit-of-measure incremental order
-                quantity when omitted.
+                Requested order quantity expressed in base units. Used by the pricing engine to evaluate tier pricing and unit-of-measure conversions; defaults to BigDecimal.ONE or the unit-of-measure incremental order quantity when omitted.
             explode: true
             name: quantity
             required: false
@@ -217,10 +197,7 @@ components:
         searchQueryParam:
             in: query
             description:
-                Free-text keyword applied to the indexed entity. The corpus is sourced from the indexer -- AccountEntry
-                indexes name and email; CommerceChannel indexes name; CPDefinition indexes title, description, SKU,
-                GTIN, and expando custom fields registered via EntityFieldsUtil; CSDiagramEntry indexes the referenced
-                product title.
+                Free-text keyword applied to the indexed entity. The corpus is sourced from the indexer -- AccountEntry indexes name and email; CommerceChannel indexes name; CPDefinition indexes title, description, SKU, GTIN, and expando custom fields registered via EntityFieldsUtil; CSDiagramEntry indexes the referenced product title.
             explode: true
             name: search
             required: false
@@ -259,8 +236,7 @@ components:
         skuIdQueryParam:
             in: query
             description:
-                Reference to a candidate CPInstance the buyer is configuring. Forwarded to the DTO converter so price
-                and selectability for each option value reflect this candidate SKU.
+                Reference to a candidate CPInstance the buyer is configuring. Forwarded to the DTO converter so price and selectability for each option value reflect this candidate SKU.
             explode: true
             name: skuId
             required: false
@@ -273,8 +249,7 @@ components:
         skuUnitOfMeasureKeyQueryParam:
             in: query
             description:
-                Key of the SkuUnitOfMeasure the buyer is ordering in. When omitted the SKU's primary unit of measure is
-                used; ignored when the SKU is single-unit.
+                Key of the SkuUnitOfMeasure the buyer is ordering in. When omitted the SKU's primary unit of measure is used; ignored when the SKU is single-unit.
             explode: true
             name: skuUnitOfMeasureKey
             required: false
@@ -284,10 +259,7 @@ components:
         sortQueryParam:
             in: query
             description:
-                OData v4 $orderby expression. Supported fields mirror the filterable entity-model columns --
-                AccountEntityModel (dateCreated, dateModified, name, type), ChannelEntityModel (siteGroupId, name),
-                ProductEntityModel (the full set of indexed product fields). Endpoints without an entity model ignore
-                sort.
+                OData v4 $orderby expression. Supported fields mirror the filterable entity-model columns -- AccountEntityModel (dateCreated, dateModified, name, type), ChannelEntityModel (siteGroupId, name), ProductEntityModel (the full set of indexed product fields). Endpoints without an entity model ignore sort.
             explode: true
             name: sort
             required: false
@@ -297,8 +269,7 @@ components:
         typeQueryParam:
             in: query
             description:
-                RelatedProduct.type filter applied to /channels/{channelId}/products/{productId}/related-products (for
-                example, up-sell, cross-sell, related). When omitted, every APPROVED link is returned.
+                RelatedProduct.type filter applied to /channels/{channelId}/products/{productId}/related-products (for example, up-sell, cross-sell, related). When omitted, every APPROVED link is returned.
             explode: true
             name: type
             required: false
@@ -308,8 +279,7 @@ components:
         wishListIdPathParam:
             in: path
             description:
-                Reference to the addressed CommerceWishList; raises 404 when missing or when the caller lacks VIEW
-                permission.
+                Reference to the addressed CommerceWishList; raises 404 when missing or when the caller lacks VIEW permission.
             explode: false
             name: wishListId
             required: true
@@ -324,8 +294,7 @@ components:
         wishListItemIdPathParam:
             in: path
             description:
-                Reference to the addressed CommerceWishListItem; raises 404 when missing or when the caller lacks VIEW
-                on the parent wish list.
+                Reference to the addressed CommerceWishListItem; raises 404 when missing or when the caller lacks VIEW on the parent wish list.
             explode: false
             name: wishListItemId
             required: true
@@ -340,8 +309,7 @@ components:
     schemas:
         Account:
             description:
-                Buyer account (business, person, guest, or supplier) used to scope catalog access, orders, and pricing
-                within a commerce channel.
+                Buyer account (business, person, guest, or supplier) used to scope catalog access, orders, and pricing within a commerce channel.
             properties:
                 actions:
                     additionalProperties:
@@ -349,46 +317,40 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 customFields:
                     description:
-                        Caller-defined extension attributes attached to the account through the platform's expando
-                        mechanism. Read-only on this API.
+                        Caller-defined extension attributes attached to the account through the platform's expando mechanism. Read-only on this API.
                     items:
                         type: customField
                     readOnly: true
                     type: array
                 dateCreated:
                     description:
-                        Creation timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query parameters.
-                        Read-only; set when the account is first persisted.
+                        Creation timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query parameters. Read-only; set when the account is first persisted.
                     example: 2017-07-21T19:30:00Z
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
                     description:
-                        Last-modification timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query
-                        parameters. Read-only; updated on every save.
+                        Last-modification timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query parameters. Read-only; updated on every save.
                     example: 2017-08-21T19:30:00Z
                     format: date-time
                     readOnly: true
                     type: string
                 defaultBillingAddressId:
                     description:
-                        Reference to the address selected as the account's default billing destination (FK identifier).
-                        Must resolve to an existing address; zero or absent when no default is set.
+                        Reference to the address selected as the account's default billing destination (FK identifier). Must resolve to an existing address; zero or absent when no default is set.
                     example: 10130
                     format: int64
                     minimum: 0
                     type: integer
                 defaultShippingAddressId:
                     description:
-                        Reference to the address selected as the account's default shipping destination (FK identifier).
-                        Must resolve to an existing address; zero or absent when no default is set.
+                        Reference to the address selected as the account's default shipping destination (FK identifier). Must resolve to an existing address; zero or absent when no default is set.
                     example: 10131
                     format: int64
                     minimum: 0
@@ -400,9 +362,7 @@ components:
                     type: string
                 domains:
                     description:
-                        Email-domain allow-list used to auto-associate self-registering users with this account when
-                        their email matches one of these domains. Stored as a comma-separated list on the underlying
-                        record; surfaced here as an array of domain strings.
+                        Email-domain allow-list used to auto-associate self-registering users with this account when their email matches one of these domains. Stored as a comma-separated list on the underlying record; surfaced here as an array of domain strings.
                     example:
                         -   example.com
                         -   example.org
@@ -411,8 +371,7 @@ components:
                     type: array
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update; must be unique per account within the company. When
-                        omitted on create the server generates one.
+                        Idempotency key for create and update; must be unique per account within the company. When omitted on create the server generates one.
                     example: AB-34098-789-N
                     type: string
                 id:
@@ -424,29 +383,24 @@ components:
                     type: integer
                 logoId:
                     description:
-                        Reference to the file entry that stores the account's logo image (FK identifier). Must resolve
-                        to an existing file entry; zero or absent when no logo is set. Updating this field triggers a
-                        reindex.
+                        Reference to the file entry that stores the account's logo image (FK identifier). Must resolve to an existing file entry; zero or absent when no logo is set. Updating this field triggers a reindex.
                     example: 20078
                     format: int64
                     minimum: 0
                     type: integer
                 logoURL:
                     description:
-                        Resolved URL where the account's logo image can be fetched. Read-only; computed from logoId at
-                        response time.
+                        Resolved URL where the account's logo image can be fetched. Read-only; computed from logoId at response time.
                     example: https://example.com/logo.png
                     type: string
                 name:
                     description:
-                        Display name of the account. Required on create. Updating this field triggers a reindex;
-                        filterable, sortable, and matched by the search query parameter.
+                        Display name of the account. Required on create. Updating this field triggers a reindex; filterable, sortable, and matched by the search query parameter.
                     example: Account Name
                     type: string
                 organizationIds:
                     description:
-                        References to the organizations the account is associated with (FK identifiers). Synchronizing
-                        this list adds or removes the corresponding account-to-organization links.
+                        References to the organizations the account is associated with (FK identifiers). Synchronizing this list adds or removes the corresponding account-to-organization links.
                     example:
                         -   10130
                         -   10131
@@ -456,8 +410,7 @@ components:
                     type: array
                 status:
                     description:
-                        Integer workflow status. 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Denied, 5=Inactive,
-                        7=Scheduled. Read-only; controlled by the workflow engine.
+                        Integer workflow status. 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Denied, 5=Inactive, 7=Scheduled. Read-only; controlled by the workflow engine.
                     example: 0
                     type: integer
                 taxId:
@@ -467,8 +420,7 @@ components:
                     type: string
                 type:
                     description:
-                        Account category. One of business, guest, person, or supplier. Required on create. Filterable
-                        via the OData query parameter; updating this field triggers a reindex.
+                        Account category. One of business, guest, person, or supplier. Required on create. Filterable via the OData query parameter; updating this field triggers a reindex.
                     enum:
                         -   business
                         -   guest
@@ -480,46 +432,39 @@ components:
             type: object
         Attachment:
             description:
-                Media or document attached to a catalog product, used for images, downloadable resources, or gallery
-                entries.
+                Media or document attached to a catalog product, used for images, downloadable resources, or gallery entries.
             properties:
                 attachment:
                     description:
-                        Base64-encoded file payload accepted on create or update. The payload is written to the document
-                        library, and the resulting file entry is referenced by fileEntryId.
+                        Base64-encoded file payload accepted on create or update. The payload is written to the document library, and the resulting file entry is referenced by fileEntryId.
                     example: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==
                     type: string
                 cdnEnabled:
                     description:
-                        When true, the attachment is served from the configured CDN host rather than the document
-                        library. Defaults to false.
+                        When true, the attachment is served from the configured CDN host rather than the document library. Defaults to false.
                     example: true
                     type: boolean
                 cdnURL:
                     description:
-                        Fully qualified CDN URL for the attachment when CDN delivery is enabled. Read-only; computed at
-                        response time.
+                        Fully qualified CDN URL for the attachment when CDN delivery is enabled. Read-only; computed at response time.
                     example: https://cdn.example.com/attachment.png
                     type: string
                 customFields:
                     description:
-                        Caller-defined extension attributes attached to the attachment through the platform's expando
-                        mechanism. Read-only on this API.
+                        Caller-defined extension attributes attached to the attachment through the platform's expando mechanism. Read-only on this API.
                     items:
                         type: customField
                     readOnly: true
                     type: array
                 displayDate:
                     description:
-                        Date from which the attachment becomes visible to storefront callers, in ISO 8601 (date only).
-                        Optional; absent means visible immediately.
+                        Date from which the attachment becomes visible to storefront callers, in ISO 8601 (date only). Optional; absent means visible immediately.
                     example: 2017-07-21
                     format: date
                     type: string
                 expirationDate:
                     description:
-                        Date after which the attachment is no longer visible to storefront callers, in ISO 8601 (date
-                        only). Ignored when neverExpire is true.
+                        Date after which the attachment is no longer visible to storefront callers, in ISO 8601 (date only). Ignored when neverExpire is true.
                     example: 2017-08-21
                     format: date
                     type: string
@@ -530,8 +475,7 @@ components:
                     type: string
                 fileEntryId:
                     description:
-                        Reference to the document library file entry that holds the binary content (FK identifier).
-                        Read-only; set when the attachment payload is uploaded.
+                        Reference to the document library file entry that holds the binary content (FK identifier). Read-only; set when the attachment payload is uploaded.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -539,8 +483,7 @@ components:
                     type: integer
                 galleryEnabled:
                     description:
-                        Whether this attachment is displayed in the product gallery. Read-only; derived from the
-                        attachment's type (image attachments are gallery-enabled).
+                        Whether this attachment is displayed in the product gallery. Read-only; derived from the attachment's type (image attachments are gallery-enabled).
                     example: true
                     readOnly: true
                     type: boolean
@@ -561,9 +504,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Map of option key/value pairs that bind this attachment to a specific SKU variant. Stored as a
-                        serialized JSON array on the underlying record. Updating this field triggers a reindex of the
-                        owning product.
+                        Map of option key/value pairs that bind this attachment to a specific SKU variant. Stored as a serialized JSON array on the underlying record. Updating this field triggers a reindex of the owning product.
                     example:
                         color: yellow
                         optionKey: optionValueKey
@@ -571,8 +512,7 @@ components:
                     type: object
                 priority:
                     description:
-                        Display priority within the product's attachment list; lower values sort first. Sortable via the
-                        OData query parameter.
+                        Display priority within the product's attachment list; lower values sort first. Sortable via the OData query parameter.
                     example: 1.2
                     format: double
                     type: number
@@ -607,13 +547,11 @@ components:
             type: object
         Availability:
             description:
-                Stock-availability snapshot for a SKU resolved in the active commerce channel and inventory engine.
-                Computed at response time and never persisted.
+                Stock-availability snapshot for a SKU resolved in the active commerce channel and inventory engine. Computed at response time and never persisted.
             properties:
                 label:
                     description:
-                        Untranslated availability label key. Computed from the inventory engine's view of current stock
-                        against the SKU's thresholds.
+                        Untranslated availability label key. Computed from the inventory engine's view of current stock against the SKU's thresholds.
                     example: available
                     type: string
                 label_i18n:
@@ -623,8 +561,7 @@ components:
                     type: string
                 stockQuantity:
                     description:
-                        Quantity currently available across the active inventory engine, expressed in the SKU's primary
-                        unit of measure.
+                        Quantity currently available across the active inventory engine, expressed in the SKU's primary unit of measure.
                     example: 10.1
                     format: bigdecimal
                     type: number
@@ -647,8 +584,7 @@ components:
                     type: string
                 siteId:
                     description:
-                        Reference to the site that owns the vocabulary the category belongs to (FK identifier).
-                        Filterable via the OData query parameter.
+                        Reference to the site that owns the vocabulary the category belongs to (FK identifier). Filterable via the OData query parameter.
                     example: 20078
                     format: int64
                     type: integer
@@ -667,13 +603,11 @@ components:
             type: object
         Channel:
             description:
-                Commerce channel (site or external endpoint) that scopes pricing, currency, inventory, and catalog
-                visibility for the buyer.
+                Commerce channel (site or external endpoint) that scopes pricing, currency, inventory, and catalog visibility for the buyer.
             properties:
                 currencyCode:
                     description:
-                        ISO 4217 currency code used for prices in this channel. Required on create; must reference an
-                        active currency configured on the company. Updating this field triggers a reindex.
+                        ISO 4217 currency code used for prices in this channel. Required on create; must reference an active currency configured on the company. Updating this field triggers a reindex.
                     example: USD
                     type: string
                 externalReferenceCode:
@@ -689,22 +623,18 @@ components:
                     type: integer
                 name:
                     description:
-                        Display name of the channel. Required on create. Updating this field triggers a reindex;
-                        filterable, sortable, and matched by the search query parameter.
+                        Display name of the channel. Required on create. Updating this field triggers a reindex; filterable, sortable, and matched by the search query parameter.
                     example: Storefront Channel
                     type: string
                 siteGroupId:
                     description:
-                        Reference to the site the channel is bound to (FK identifier). Filterable via the OData query
-                        parameter.
+                        Reference to the site the channel is bound to (FK identifier). Filterable via the OData query parameter.
                     example: 20078
                     format: int64
                     type: integer
                 type:
                     description:
-                        Channel kind discriminator. Required on create. Filterable via the OData query parameter. The
-                        built-in value is `site`; additional values may be contributed by custom CommerceChannelType
-                        OSGi components and are accepted here as free-form strings.
+                        Channel kind discriminator. Required on create. Filterable via the OData query parameter. The built-in value is `site`; additional values may be contributed by custom CommerceChannelType OSGi components and are accepted here as free-form strings.
                     example: site
                     type: string
             required:
@@ -714,13 +644,11 @@ components:
             type: object
         Currency:
             description:
-                Commerce currency definition including its ISO code, locale-specific formatting rules, exchange rate,
-                and rounding behavior.
+                Commerce currency definition including its ISO code, locale-specific formatting rules, exchange rate, and rounding behavior.
             properties:
                 active:
                     description:
-                        When true, the currency is enabled for use in commerce flows. A non-active currency supplied as
-                        a request parameter is rejected.
+                        When true, the currency is enabled for use in commerce flows. A non-active currency supplied as a request parameter is rejected.
                     example: true
                     type: boolean
                 code:
@@ -737,8 +665,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized text. Map keys are locale codes; values are decimal-format patterns applied when
-                        rendering monetary amounts for the locale.
+                        Localized text. Map keys are locale codes; values are decimal-format patterns applied when rendering monetary amounts for the locale.
                     example:
                         en_US: ¤#,##0.00
                         hr_HR: "#,##0.00 ¤"
@@ -753,16 +680,14 @@ components:
                     type: integer
                 maxFractionDigits:
                     description:
-                        Upper bound on the number of fractional digits rendered when formatting monetary values in this
-                        currency.
+                        Upper bound on the number of fractional digits rendered when formatting monetary values in this currency.
                     example: 2
                     format: int32
                     minimum: 0
                     type: integer
                 minFractionDigits:
                     description:
-                        Lower bound on the number of fractional digits rendered when formatting monetary values in this
-                        currency.
+                        Lower bound on the number of fractional digits rendered when formatting monetary values in this currency.
                     example: 2
                     format: int32
                     minimum: 0
@@ -779,8 +704,7 @@ components:
                     type: object
                 primary:
                     description:
-                        When true, this is the company-wide primary currency used as the base for exchange-rate
-                        conversions. At most one currency per company is primary; its rate is always 1.
+                        When true, this is the company-wide primary currency used as the base for exchange-rate conversions. At most one currency per company is primary; its rate is always 1.
                     example: true
                     type: boolean
                 priority:
@@ -791,15 +715,13 @@ components:
                     type: number
                 rate:
                     description:
-                        Exchange rate relative to the primary currency. The primary currency itself always carries the
-                        rate 1.
+                        Exchange rate relative to the primary currency. The primary currency itself always carries the rate 1.
                     example: 33.54
                     format: bigdecimal
                     type: number
                 roundingMode:
                     description:
-                        Rounding strategy applied to monetary calculations. One of UP, DOWN, CEILING, FLOOR, HALF_UP,
-                        HALF_DOWN, HALF_EVEN, UNNECESSARY. Defaults to HALF_EVEN.
+                        Rounding strategy applied to monetary calculations. One of UP, DOWN, CEILING, FLOOR, HALF_UP, HALF_DOWN, HALF_EVEN, UNNECESSARY. Defaults to HALF_EVEN.
                     enum:
                         -   UP
                         -   DOWN
@@ -822,8 +744,7 @@ components:
             type: object
         DDMOption:
             description:
-                Dynamic-data-mapping form option captured against a configurable SKU. Represents either a free-form or a
-                selected value supplied by the buyer when ordering.
+                Dynamic-data-mapping form option captured against a configurable SKU. Represents either a free-form or a selected value supplied by the buyer when ordering.
             properties:
                 key:
                     description:
@@ -837,8 +758,7 @@ components:
                     type: boolean
                 value:
                     description:
-                        Submitted values for the option. The array shape supports multi-valued fields; single-valued
-                        fields carry one element.
+                        Submitted values for the option. The array shape supports multi-valued fields; single-valued fields carry one element.
                     example:
                         -   Happy Birthday
                     items:
@@ -881,8 +801,7 @@ components:
             type: object
         LinkedProduct:
             description:
-                Lightweight reference linking a product to another product without inlining the linked product's full
-                payload.
+                Lightweight reference linking a product to another product without inlining the linked product's full payload.
             properties:
                 productExternalReferenceCode:
                     description:
@@ -907,8 +826,7 @@ components:
             type: object
         MappedProduct:
             description:
-                Shop-by-diagram payload that ties a region of a parent product's diagram image to a referenced product
-                or SKU, together with the resolved availability and pricing for the buyer.
+                Shop-by-diagram payload that ties a region of a parent product's diagram image to a referenced product or SKU, together with the resolved availability and pricing for the buyer.
             properties:
                 actions:
                     additionalProperties:
@@ -916,8 +834,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 availability:
@@ -966,15 +883,13 @@ components:
                     type: array
                 purchasable:
                     description:
-                        Whether the mapped product can currently be purchased through this channel. Read-only; computed
-                        from availability and channel/account eligibility.
+                        Whether the mapped product can currently be purchased through this channel. Read-only; computed from availability and channel/account eligibility.
                     example: true
                     readOnly: true
                     type: boolean
                 quantity:
                     description:
-                        Number of units represented by this pin, typically the count required by the diagram position.
-                        Defaults to 1.
+                        Number of units represented by this pin, typically the count required by the diagram position. Defaults to 1.
                     example: 1
                     format: int32
                     minimum: 0
@@ -983,15 +898,13 @@ components:
                     $ref: "#/components/schemas/MappedProduct"
                 replacementMessage:
                     description:
-                        User-facing message describing why a replacement is shown in place of the original mapped
-                        product. Read-only.
+                        User-facing message describing why a replacement is shown in place of the original mapped product. Read-only.
                     example: MIN3123 has been replaced by MIN1289
                     readOnly: true
                     type: string
                 sequence:
                     description:
-                        Free-form sequence identifier ordering pins within the parent diagram. Sortable via the OData
-                        query parameter.
+                        Free-form sequence identifier ordering pins within the parent diagram. Sortable via the OData query parameter.
                     example: 1
                     type: string
                 sku:
@@ -1025,8 +938,7 @@ components:
                     type: string
                 type:
                     description:
-                        Mapping target discriminator. One of diagram, external, or sku. Determines how the pin resolves
-                        a purchasable target.
+                        Mapping target discriminator. One of diagram, external, or sku. Determines how the pin resolves a purchasable target.
                     enum:
                         -   diagram
                         -   external
@@ -1037,8 +949,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized text. Map keys are locale codes; values are the friendly URL paths of the referenced
-                        product.
+                        Localized text. Map keys are locale codes; values are the friendly URL paths of the referenced product.
                     example:
                         en_US: product-url-us
                         hr_HR: product-url-hr
@@ -1047,8 +958,7 @@ components:
             type: object
         Pin:
             description:
-                Coordinates on a product-diagram image that locate a mapped product, used to render interactive
-                shop-by-diagram views.
+                Coordinates on a product-diagram image that locate a mapped product, used to render interactive shop-by-diagram views.
             properties:
                 id:
                     description:
@@ -1061,15 +971,13 @@ components:
                     $ref: "#/components/schemas/MappedProduct"
                 positionX:
                     description:
-                        Horizontal coordinate of the pin on the diagram image, expressed as a percentage (0-100) of the
-                        image width.
+                        Horizontal coordinate of the pin on the diagram image, expressed as a percentage (0-100) of the image width.
                     example: 33.54
                     format: double
                     type: number
                 positionY:
                     description:
-                        Vertical coordinate of the pin on the diagram image, expressed as a percentage (0-100) of the
-                        image height.
+                        Vertical coordinate of the pin on the diagram image, expressed as a percentage (0-100) of the image height.
                     example: 33.54
                     format: double
                     type: number
@@ -1081,20 +989,16 @@ components:
             type: object
         Price:
             description:
-                Resolved price snapshot for a SKU in the active channel and currency, including discounts, promotional
-                prices, and tier breakpoints. Tax inclusion follows the channel display setting; values are computed at
-                response time and never persisted on the SKU.
+                Resolved price snapshot for a SKU in the active channel and currency, including discounts, promotional prices, and tier breakpoints. Tax inclusion follows the channel display setting; values are computed at response time and never persisted on the SKU.
             properties:
                 currency:
                     description:
-                        Display name of the channel's currency resolved for the request locale. This is the
-                        human-readable name, not the ISO code.
+                        Display name of the channel's currency resolved for the request locale. This is the human-readable name, not the ISO code.
                     example: US Dollar
                     type: string
                 discount:
                     description:
-                        Absolute discount amount applied to the unit price, formatted as a string in the channel
-                        currency.
+                        Absolute discount amount applied to the unit price, formatted as a string in the channel currency.
                     example: $2.00
                     type: string
                 discountPercentage:
@@ -1135,8 +1039,7 @@ components:
                     type: boolean
                 pricingQuantityPrice:
                     description:
-                        Unit price multiplied by the unit-of-measure incremental quantity (the price for the priced
-                        quantity).
+                        Unit price multiplied by the unit-of-measure incremental quantity (the price for the priced quantity).
                     example: 10.99
                     format: double
                     type: number
@@ -1147,8 +1050,7 @@ components:
                     type: string
                 promoPrice:
                     description:
-                        Promotional unit price as a numeric value in the channel currency, applied before order-level
-                        discounts.
+                        Promotional unit price as a numeric value in the channel currency, applied before order-level discounts.
                     example: 8.99
                     format: double
                     type: number
@@ -1159,8 +1061,7 @@ components:
                     type: string
                 tierPrice:
                     description:
-                        Resolved tier-pricing unit price for the requested quantity, as a numeric value in the channel
-                        currency.
+                        Resolved tier-pricing unit price for the requested quantity, as a numeric value in the channel currency.
                     example: 9.99
                     format: double
                     type: number
@@ -1172,8 +1073,7 @@ components:
             type: object
         Product:
             description:
-                Catalog product exposed to storefront callers; includes media, options, specifications, SKUs, and SEO
-                metadata. Read-only on this API; product lifecycle is managed through the admin catalog API.
+                Catalog product exposed to storefront callers; includes media, options, specifications, SKUs, and SEO metadata. Read-only on this API; product lifecycle is managed through the admin catalog API.
             properties:
                 attachments:
                     description:
@@ -1195,22 +1095,19 @@ components:
                     type: array
                 createDate:
                     description:
-                        Product creation timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query
-                        parameters.
+                        Product creation timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query parameters.
                     example: 2017-07-21
                     format: date
                     type: string
                 customFields:
                     description:
-                        Caller-defined extension attributes attached to the product through the platform's expando
-                        mechanism. Each registered attribute is also filterable via the OData query parameter.
+                        Caller-defined extension attributes attached to the product through the platform's expando mechanism. Each registered attribute is also filterable via the OData query parameter.
                     items:
                         type: customField
                     type: array
                 description:
                     description:
-                        Long-form HTML description of the product, resolved for the request locale. Matched by the
-                        search query parameter.
+                        Long-form HTML description of the product, resolved for the request locale. Matched by the search query parameter.
                     example: Cordless circular saw with brushless motor.
                     type: string
                 expando:
@@ -1222,8 +1119,7 @@ components:
                     type: object
                 externalReferenceCode:
                     description:
-                        Idempotency key; must be unique per product within the company. Filterable via the OData query
-                        parameter.
+                        Idempotency key; must be unique per product within the company. Filterable via the OData query parameter.
                     example: AB-34098-789-N
                     type: string
                 id:
@@ -1263,8 +1159,7 @@ components:
                     type: string
                 modifiedDate:
                     description:
-                        Timestamp of the last product modification in ISO 8601 (UTC). Filterable and sortable via the
-                        OData query parameters.
+                        Timestamp of the last product modification in ISO 8601 (UTC). Filterable and sortable via the OData query parameters.
                     example: 2017-08-21
                     format: date
                     type: string
@@ -1276,16 +1171,14 @@ components:
                     type: integer
                 name:
                     description:
-                        Localized product name resolved for the request locale. Filterable, sortable, and matched by the
-                        search query parameter.
+                        Localized product name resolved for the request locale. Filterable, sortable, and matched by the search query parameter.
                     example: Hand Saw
                     type: string
                 productConfiguration:
                     $ref: "#/components/schemas/ProductConfiguration"
                 productId:
                     description:
-                        Reference to the product head used as a stable identifier across product versions (FK
-                        identifier). Read-only.
+                        Reference to the product head used as a stable identifier across product versions (FK identifier). Read-only.
                     example: 30129
                     format: int64
                     readOnly: true
@@ -1304,10 +1197,7 @@ components:
                     type: array
                 productType:
                     description:
-                        Product-type name discriminator. Filterable via the OData query parameter and matched by the
-                        search query parameter. Built-in values are `simple`, `grouped`, `virtual`, and `bundle`;
-                        additional values may be contributed by custom CPType OSGi components and are accepted here as
-                        free-form strings.
+                        Product-type name discriminator. Filterable via the OData query parameter and matched by the search query parameter. Built-in values are `simple`, `grouped`, `virtual`, and `bundle`; additional values may be contributed by custom CPType OSGi components and are accepted here as free-form strings.
                     example: simple
                     type: string
                 relatedProducts:
@@ -1318,8 +1208,7 @@ components:
                     type: array
                 shortDescription:
                     description:
-                        Localized short summary of the product, resolved for the request locale. Matched by the search
-                        query parameter.
+                        Localized short summary of the product, resolved for the request locale. Matched by the search query parameter.
                     example: Hand Saw, 10-inch blade.
                     type: string
                 skus:
@@ -1352,8 +1241,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized text. Map keys are locale codes; values are the friendly URL paths of the product.
-                        Read-only.
+                        Localized text. Map keys are locale codes; values are the friendly URL paths of the product. Read-only.
                     example:
                         en_US: product-url-us
                         hr_HR: product-url-hr
@@ -1363,8 +1251,7 @@ components:
             type: object
         ProductConfiguration:
             description:
-                Inventory and ordering constraints attached to a product or SKU; defines stock display, back-order
-                policy, quantity bounds, and the inventory engine used to source stock.
+                Inventory and ordering constraints attached to a product or SKU; defines stock display, back-order policy, quantity bounds, and the inventory engine used to source stock.
             properties:
                 allowBackOrder:
                     description:
@@ -1373,8 +1260,7 @@ components:
                     type: boolean
                 allowedOrderQuantities:
                     description:
-                        Discrete order quantities buyers may select. When populated, only listed values are accepted on
-                        an order line; absent means any quantity within the min/max bounds is allowed.
+                        Discrete order quantities buyers may select. When populated, only listed values are accepted on an order line; absent means any quantity within the min/max bounds is allowed.
                     example:
                         -   10
                         -   20
@@ -1387,8 +1273,7 @@ components:
                     type: array
                 availabilityEstimateId:
                     description:
-                        Reference to the availability estimate advertised when the SKU is out of stock (FK identifier).
-                        Read-only.
+                        Reference to the availability estimate advertised when the SKU is out of stock (FK identifier). Read-only.
                     example: 31130
                     format: int64
                     minimum: 0
@@ -1447,8 +1332,7 @@ components:
             type: object
         ProductOption:
             description:
-                Configurable product option attached to a product definition. The set of selectable values shapes the
-                resolved SKU when the buyer configures the product.
+                Configurable product option attached to a product definition. The set of selectable values shapes the resolved SKU when the buyer configures the product.
             properties:
                 catalogId:
                     description:
@@ -1481,8 +1365,7 @@ components:
                     type: string
                 name:
                     description:
-                        Localized display name of the option, resolved for the request locale. Filterable, sortable, and
-                        matched by the search query parameter on the option list endpoint.
+                        Localized display name of the option, resolved for the request locale. Filterable, sortable, and matched by the search query parameter on the option list endpoint.
                     example: Color
                     type: string
                 optionExternalReferenceCode:
@@ -1499,8 +1382,7 @@ components:
                     type: integer
                 priority:
                     description:
-                        Display priority within the product's option list; lower values sort first. Sortable via the
-                        OData query parameter.
+                        Display priority within the product's option list; lower values sort first. Sortable via the OData query parameter.
                     example: 1.2
                     format: double
                     type: number
@@ -1518,8 +1400,7 @@ components:
                     type: boolean
                 skuContributor:
                     description:
-                        When true, the option's selection contributes to the resolved SKU variant; option values may
-                        link to specific SKUs. Read-only.
+                        When true, the option's selection contributes to the resolved SKU variant; option values may link to specific SKUs. Read-only.
                     example: true
                     readOnly: true
                     type: boolean
@@ -1549,8 +1430,7 @@ components:
                     type: string
                 name:
                     description:
-                        Localized display name of the value, resolved for the request locale. Filterable, sortable, and
-                        matched by the search query parameter on the option-value list endpoint.
+                        Localized display name of the value, resolved for the request locale. Filterable, sortable, and matched by the search query parameter on the option-value list endpoint.
                     example: Red
                     type: string
                 preselected:
@@ -1561,8 +1441,7 @@ components:
                     type: boolean
                 price:
                     description:
-                        Formatted price delta applied when this value is selected; the sign matches priceType.
-                        Read-only.
+                        Formatted price delta applied when this value is selected; the sign matches priceType. Read-only.
                     example: $10.00
                     readOnly: true
                     type: string
@@ -1574,8 +1453,7 @@ components:
                     type: string
                 priority:
                     description:
-                        Display priority within the option's values; lower values sort first. Sortable via the OData
-                        query parameter.
+                        Display priority within the option's values; lower values sort first. Sortable via the OData query parameter.
                     example: 1.2
                     format: double
                     type: number
@@ -1589,29 +1467,25 @@ components:
                     type: integer
                 quantity:
                     description:
-                        Inventory quantity bound to the value when the option is configured as a SKU contributor.
-                        Read-only.
+                        Inventory quantity bound to the value when the option is configured as a SKU contributor. Read-only.
                     example: "1"
                     readOnly: true
                     type: string
                 relativePriceFormatted:
                     description:
-                        Formatted relative price contribution rendered with the appropriate sign and currency symbol.
-                        Read-only.
+                        Formatted relative price contribution rendered with the appropriate sign and currency symbol. Read-only.
                     example: +$10.00
                     readOnly: true
                     type: string
                 selectable:
                     description:
-                        Whether the value can currently be selected given the other selections and stock. Read-only;
-                        computed at response time.
+                        Whether the value can currently be selected given the other selections and stock. Read-only; computed at response time.
                     example: true
                     readOnly: true
                     type: boolean
                 skuId:
                     description:
-                        Reference to the SKU bound to this value when the option is a SKU contributor (FK identifier).
-                        Read-only.
+                        Reference to the SKU bound to this value when the option is a SKU contributor (FK identifier). Read-only.
                     example: 30130
                     format: int64
                     readOnly: true
@@ -1637,8 +1511,7 @@ components:
             type: object
         ProductSpecification:
             description:
-                Static product attribute (a specification option value) attached to a product, used for storefront
-                filtering and product-detail rendering.
+                Static product attribute (a specification option value) attached to a product, used for storefront filtering and product-detail rendering.
             properties:
                 id:
                     description:
@@ -1656,8 +1529,7 @@ components:
                     type: integer
                 priority:
                     description:
-                        Display priority of this specification within its group; lower values sort first. Sortable via
-                        the OData query parameter.
+                        Display priority of this specification within its group; lower values sort first. Sortable via the OData query parameter.
                     example: 1.2
                     format: double
                     minimum: 0
@@ -1671,14 +1543,12 @@ components:
                     type: integer
                 specificationGroupKey:
                     description:
-                        Stable key of the specification group the option belongs to. Filterable via the OData query
-                        parameter.
+                        Stable key of the specification group the option belongs to. Filterable via the OData query parameter.
                     example: general
                     type: string
                 specificationGroupTitle:
                     description:
-                        Localized title of the specification group, resolved for the request locale. Filterable and
-                        sortable via the OData query parameters.
+                        Localized title of the specification group, resolved for the request locale. Filterable and sortable via the OData query parameters.
                     example: General
                     type: string
                 specificationId:
@@ -1690,8 +1560,7 @@ components:
                     type: integer
                 specificationKey:
                     description:
-                        Stable key of the specification option. Filterable via the OData query parameter and matched by
-                        the search query parameter.
+                        Stable key of the specification option. Filterable via the OData query parameter and matched by the search query parameter.
                     example: specification-key
                     type: string
                 specificationPriority:
@@ -1704,14 +1573,12 @@ components:
                     type: number
                 specificationTitle:
                     description:
-                        Localized title of the specification option, resolved for the request locale. Filterable,
-                        sortable, and matched by the search query parameter.
+                        Localized title of the specification option, resolved for the request locale. Filterable, sortable, and matched by the search query parameter.
                     example: Color
                     type: string
                 value:
                     description:
-                        Localized value of the specification, resolved for the request locale. Filterable, sortable, and
-                        matched by the search query parameter.
+                        Localized value of the specification, resolved for the request locale. Filterable, sortable, and matched by the search query parameter.
                     example: Red
                     type: string
             type: object
@@ -1729,8 +1596,7 @@ components:
                     type: integer
                 priority:
                     description:
-                        Display priority of the related product within its type bucket; lower values sort first.
-                        Sortable via the OData query parameter.
+                        Display priority of the related product within its type bucket; lower values sort first. Sortable via the OData query parameter.
                     example: 1.2
                     format: double
                     type: number
@@ -1748,15 +1614,13 @@ components:
                     type: integer
                 type:
                     description:
-                        Relation type discriminator. Filterable via the type query parameter on the related-products
-                        endpoint.
+                        Relation type discriminator. Filterable via the type query parameter on the related-products endpoint.
                     example: cross-sell
                     type: string
             type: object
         ReplacementSku:
             description:
-                Replacement SKU surfaced when the primary SKU is discontinued. Exposes the swap target's identifiers,
-                price, and options so the storefront can offer the buyer a continuation path.
+                Replacement SKU surfaced when the primary SKU is discontinued. Exposes the swap target's identifiers, price, and options so the storefront can offer the buyer a continuation path.
             properties:
                 price:
                     $ref: "#/components/schemas/Price"
@@ -1798,8 +1662,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized text. Map keys are locale codes; values are the friendly URL paths of the replacement
-                        SKU's product. Read-only.
+                        Localized text. Map keys are locale codes; values are the friendly URL paths of the replacement SKU's product. Read-only.
                     example:
                         en_US: product-url-us
                         hr_HR: product-url-hr
@@ -1809,13 +1672,11 @@ components:
             type: object
         Sku:
             description:
-                Stock-keeping unit of a product; carries physical dimensions, pricing, availability, options, and units
-                of measure for a single purchasable variant.
+                Stock-keeping unit of a product; carries physical dimensions, pricing, availability, options, and units of measure for a single purchasable variant.
             properties:
                 DDMOptions:
                     description:
-                        Form-option captures for this SKU when it is configured through a dynamic-data-mapping
-                        structure. Read-only.
+                        Form-option captures for this SKU when it is configured through a dynamic-data-mapping structure. Read-only.
                     items:
                         $ref: "#/components/schemas/DDMOption"
                     readOnly: true
@@ -1841,8 +1702,7 @@ components:
                     type: boolean
                 customFields:
                     description:
-                        Caller-defined extension attributes attached to the SKU through the platform's expando
-                        mechanism. Read-only on this API.
+                        Caller-defined extension attributes attached to the SKU through the platform's expando mechanism. Read-only on this API.
                     items:
                         type: customField
                     readOnly: true
@@ -1856,8 +1716,7 @@ components:
                     type: number
                 discontinued:
                     description:
-                        Whether the SKU is marked as discontinued. When true, the storefront may surface a replacement
-                        SKU in its place.
+                        Whether the SKU is marked as discontinued. When true, the storefront may surface a replacement SKU in its place.
                     example: false
                     type: boolean
                 discontinuedDate:
@@ -1879,8 +1738,7 @@ components:
                     type: boolean
                 expirationDate:
                     description:
-                        Date after which the SKU is no longer visible to buyers, in ISO 8601 (date only). Ignored when
-                        neverExpire is true.
+                        Date after which the SKU is no longer visible to buyers, in ISO 8601 (date only). Ignored when neverExpire is true.
                     example: 2017-08-21
                     format: date
                     type: string
@@ -1891,8 +1749,7 @@ components:
                     type: string
                 gtin:
                     description:
-                        Global Trade Item Number (UPC/EAN) of the SKU. Matched by the search query parameter on the
-                        product list endpoint.
+                        Global Trade Item Number (UPC/EAN) of the SKU. Matched by the search query parameter on the product list endpoint.
                     example: "12341234"
                     type: string
                 height:
@@ -1975,8 +1832,7 @@ components:
                     type: integer
                 sku:
                     description:
-                        SKU code (human-readable inventory identifier). Updating this field triggers a reindex; matched
-                        by the search query parameter on the product list endpoint.
+                        SKU code (human-readable inventory identifier). Updating this field triggers a reindex; matched by the search query parameter on the product list endpoint.
                     example: SKU01
                     type: string
                 skuOptions:
@@ -1993,8 +1849,7 @@ components:
                     type: array
                 tierPrices:
                     description:
-                        Inline tier-pricing breakpoints applied to the SKU's pricing. Absent when the SKU has units of
-                        measure configured (tier prices are then nested per unit of measure).
+                        Inline tier-pricing breakpoints applied to the SKU's pricing. Absent when the SKU has units of measure configured (tier prices are then nested per unit of measure).
                     items:
                         $ref: "#/components/schemas/TierPrice"
                     type: array
@@ -2015,8 +1870,7 @@ components:
             type: object
         SkuOption:
             description:
-                Resolved option selection captured for a specific SKU variant; carries the option key/value pair plus
-                its price impact.
+                Resolved option selection captured for a specific SKU variant; carries the option key/value pair plus its price impact.
             properties:
                 key:
                     description:
@@ -2098,13 +1952,11 @@ components:
             type: object
         SkuUnitOfMeasure:
             description:
-                Unit of measure available for a SKU, including its conversion rate to the SKU's primary unit, its
-                decimal precision, and its own pricing.
+                Unit of measure available for a SKU, including its conversion rate to the SKU's primary unit, its decimal precision, and its own pricing.
             properties:
                 incrementalOrderQuantity:
                     description:
-                        Order-quantity step (in base units) that order lines must respect when using this unit of
-                        measure. Defaults to 1.
+                        Order-quantity step (in base units) that order lines must respect when using this unit of measure. Defaults to 1.
                     example: 1.5
                     format: bigdecimal
                     minimum: 0
@@ -2128,8 +1980,7 @@ components:
                     $ref: "#/components/schemas/Price"
                 primary:
                     description:
-                        When true, this is the SKU's primary (base) unit of measure. At most one unit of measure per SKU
-                        is primary.
+                        When true, this is the SKU's primary (base) unit of measure. At most one unit of measure per SKU is primary.
                     example: true
                     type: boolean
                 priority:
@@ -2141,8 +1992,7 @@ components:
                     type: number
                 rate:
                     description:
-                        Conversion factor from this unit to the SKU's primary unit. The primary unit itself always
-                        carries the rate 1.
+                        Conversion factor from this unit to the SKU's primary unit. The primary unit itself always carries the rate 1.
                     example: 202.1
                     format: bigdecimal
                     minimum: 0
@@ -2156,19 +2006,16 @@ components:
             type: object
         TierPrice:
             description:
-                Quantity-based pricing breakpoint applied to a SKU; the unit price changes once the buyer's quantity
-                reaches the breakpoint. Computed at response time.
+                Quantity-based pricing breakpoint applied to a SKU; the unit price changes once the buyer's quantity reaches the breakpoint. Computed at response time.
             properties:
                 currency:
                     description:
-                        Display name of the channel's currency resolved for the request locale. This is the
-                        human-readable name, not the ISO code.
+                        Display name of the channel's currency resolved for the request locale. This is the human-readable name, not the ISO code.
                     example: US Dollar
                     type: string
                 price:
                     description:
-                        Unit price applied at and above this breakpoint, as a numeric value in the channel currency.
-                        Read-only.
+                        Unit price applied at and above this breakpoint, as a numeric value in the channel currency. Read-only.
                     example: 9.99
                     format: double
                     readOnly: true
@@ -2203,13 +2050,11 @@ components:
             type: object
         WishList:
             description:
-                Named buyer wish list scoping a collection of wish-list items for the authenticated account within a
-                commerce channel.
+                Named buyer wish list scoping a collection of wish-list items for the authenticated account within a commerce channel.
             properties:
                 defaultWishList:
                     description:
-                        When true, this is the account's default wish list (the one that receives items when no list is
-                        specified).
+                        When true, this is the account's default wish list (the one that receives items when no list is specified).
                     example: true
                     type: boolean
                 id:
@@ -2220,8 +2065,7 @@ components:
                     type: integer
                 name:
                     description:
-                        Display name of the wish list. Required on create. Filterable, sortable, and matched by the
-                        search query parameter.
+                        Display name of the wish list. Required on create. Filterable, sortable, and matched by the search query parameter.
                     example: My Wish List
                     type: string
                 wishListItems:
@@ -2233,13 +2077,11 @@ components:
             type: object
         WishListItem:
             description:
-                Single entry in a wish list referencing a product or SKU together with snapshot display fields the
-                storefront uses to render the saved item.
+                Single entry in a wish list referencing a product or SKU together with snapshot display fields the storefront uses to render the saved item.
             properties:
                 finalPrice:
                     description:
-                        Resolved final price of the referenced SKU at the time the response is built, formatted in the
-                        channel currency.
+                        Resolved final price of the referenced SKU at the time the response is built, formatted in the channel currency.
                     example: $8.99
                     type: string
                 friendlyURL:
@@ -2288,10 +2130,7 @@ paths:
     /channels:
         get:
             description:
-                Lists CommerceChannel entries visible to the caller. Calls Vulcan SearchUtil.search over the
-                CommerceChannel index scoped to the request company; converts each hit through ChannelDTOConverter.
-                Validation -- None (returns empty page when no matches). List query support — filterable and sortable
-                fields -- ChannelEntityModel (siteGroupId, name); search fields -- indexed channel fields.
+                Lists CommerceChannel entries visible to the caller. Calls Vulcan SearchUtil.search over the CommerceChannel index scoped to the request company; converts each hit through ChannelDTOConverter. Validation -- None (returns empty page when no matches). List query support — filterable and sortable fields -- ChannelEntityModel (siteGroupId, name); search fields -- indexed channel fields.
             operationId: getChannelsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
@@ -2350,10 +2189,7 @@ paths:
     /channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/pins:
         get:
             description:
-                External-reference-code variant of getChannelProductPinsPage. Resolves both the CommerceChannel and the
-                CProduct through their getByExternalReferenceCode lookups and delegates to the numeric handler.
-                Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination
-                only (search and sort declared on the base but not wired); filterable fields -- none.
+                External-reference-code variant of getChannelProductPinsPage. Resolves both the CommerceChannel and the CProduct through their getByExternalReferenceCode lookups and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only (search and sort declared on the base but not wired); filterable fields -- none.
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePinsPage
             parameters:
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -2417,9 +2253,7 @@ paths:
     /channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/product-options:
         get:
             description:
-                External-reference-code variant of getChannelProductProductOptionsPage. Resolves the CommerceChannel and
-                CProduct via their ERC lookups and delegates to the numeric handler. Validation -- NoSuchModelException
-                -> 404 when either ERC is missing. List query support -- pagination only; filterable fields -- none.
+                External-reference-code variant of getChannelProductProductOptionsPage. Resolves the CommerceChannel and CProduct via their ERC lookups and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionsPage
             parameters:
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -2477,11 +2311,7 @@ paths:
     /channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/product-options/by-externalReferenceCode/{productOptionExternalReferenceCode}/product-option-values:
         get:
             description:
-                External-reference-code variant of getChannelProductProductOptionProductOptionValuesPage. Resolves
-                CommerceChannel, CProduct and CPOption through their ERC lookups and delegates to the numeric handler so
-                permission checks, CommerceContext setup, and the returned option value list are identical. Validation
-                -- NoSuchModelException -> 404 when any ERC is missing. List query support -- pagination only;
-                filterable fields -- none.
+                External-reference-code variant of getChannelProductProductOptionProductOptionValuesPage. Resolves CommerceChannel, CProduct and CPOption through their ERC lookups and delegates to the numeric handler so permission checks, CommerceContext setup, and the returned option value list are identical. Validation -- NoSuchModelException -> 404 when any ERC is missing. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage
             parameters:
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -2543,11 +2373,7 @@ paths:
                 -   ProductOptionValue
         post:
             description:
-                External-reference-code variant of postChannelProductProductOptionProductOptionValuesPage. Resolves
-                channel, product and option by ERC and delegates to the numeric POST handler. The endpoint is a preview
-                call -- the SkuOption[] body is scored against the option values to compute pricing and selectability
-                for the candidate configuration. Not an upsert -- nothing is persisted. Validation --
-                NoSuchModelException -> 404 when any ERC is missing.
+                External-reference-code variant of postChannelProductProductOptionProductOptionValuesPage. Resolves channel, product and option by ERC and delegates to the numeric POST handler. The endpoint is a preview call -- the SkuOption[] body is scored against the option values to compute pricing and selectability for the candidate configuration. Not an upsert -- nothing is persisted. Validation -- NoSuchModelException -> 404 when any ERC is missing.
             operationId: postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage
             parameters:
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -2619,8 +2445,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -2637,10 +2462,7 @@ paths:
     /channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/product-specifications:
         get:
             description:
-                External-reference-code variant of getChannelProductProductSpecificationsPage. Resolves the
-                CommerceChannel and CProduct by ERC and delegates to the numeric handler. Validation --
-                NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only;
-                filterable fields -- none.
+                External-reference-code variant of getChannelProductProductSpecificationsPage. Resolves the CommerceChannel and CProduct by ERC and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage
             parameters:
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -2698,9 +2520,7 @@ paths:
     /channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus:
         get:
             description:
-                External-reference-code variant of getChannelProductSkusPage. Resolves the CommerceChannel and CProduct
-                by ERC and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC
-                is missing. List query support -- pagination only; filterable fields -- none.
+                External-reference-code variant of getChannelProductSkusPage. Resolves the CommerceChannel and CProduct by ERC and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage
             parameters:
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -2759,11 +2579,7 @@ paths:
                 -   Sku
         post:
             description:
-                External-reference-code variant of postChannelProductSku. Resolves the CommerceChannel and CProduct by
-                ERC and delegates. Not an upsert -- the underlying method throws UnsupportedOperationException for the
-                DDMOption[] body shape, so callers must use the by-sku-option endpoint instead. Validation --
-                NoSuchModelException -> 404 when either ERC is missing; UnsupportedOperationException -> 500 for any
-                request body.
+                External-reference-code variant of postChannelProductSku. Resolves the CommerceChannel and CProduct by ERC and delegates. Not an upsert -- the underlying method throws UnsupportedOperationException for the DDMOption[] body shape, so callers must use the by-sku-option endpoint instead. Validation -- NoSuchModelException -> 404 when either ERC is missing; UnsupportedOperationException -> 500 for any request body.
             operationId: postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku
             parameters:
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -2836,8 +2652,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -2854,12 +2669,7 @@ paths:
     /channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus/by-externalReferenceCode/{skuExternalReferenceCode}:
         get:
             description:
-                External-reference-code variant of getChannelProductSku addressed at
-                /channels/by-externalReferenceCode/{...}/products/by-externalReferenceCode/{...}/skus/by-externalReferenceCode/{skuExternalReferenceCode}.
-                Resolves CommerceChannel, CProduct and CPInstance by ERC and delegates to getChannelProductSku, applying
-                CommerceProductViewPermission and the standard CommerceContext for pricing and availability. Validation
-                -- NoSuchModelException -> 404 when any ERC is missing; PrincipalException -> 403 when the caller lacks
-                VIEW permission on the product.
+                External-reference-code variant of getChannelProductSku addressed at /channels/by-externalReferenceCode/{...}/products/by-externalReferenceCode/{...}/skus/by-externalReferenceCode/{skuExternalReferenceCode}. Resolves CommerceChannel, CProduct and CPInstance by ERC and delegates to getChannelProductSku, applying CommerceProductViewPermission and the standard CommerceContext for pricing and availability. Validation -- NoSuchModelException -> 404 when any ERC is missing; PrincipalException -> 403 when the caller lacks VIEW permission on the product.
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -2924,11 +2734,7 @@ paths:
     /channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus/by-sku-option:
         post:
             description:
-                External-reference-code variant of postChannelProductSkuBySkuOption. Resolves channel and product by ERC
-                and delegates. The endpoint is a SKU lookup (not a create) -- it serializes the SkuOption[] body and
-                calls CPInstanceHelper.fetchCPInstance to locate the matching CPInstance. Not an upsert -- nothing is
-                persisted. Validation -- NoSuchModelException -> 404 when either ERC is missing;
-                NoSuchCPInstanceException -> 404 when no SKU matches the option selection.
+                External-reference-code variant of postChannelProductSkuBySkuOption. Resolves channel and product by ERC and delegates. The endpoint is a SKU lookup (not a create) -- it serializes the SkuOption[] body and calls CPInstanceHelper.fetchCPInstance to locate the matching CPInstance. Not an upsert -- nothing is persisted. Validation -- NoSuchModelException -> 404 when either ERC is missing; NoSuchCPInstanceException -> 404 when no SKU matches the option selection.
             operationId: postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption
             parameters:
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
@@ -3003,8 +2809,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -3021,12 +2826,7 @@ paths:
     /channels/by-externalReferenceCode/{externalReferenceCode}/currencies:
         get:
             description:
-                External-reference-code variant of getChannelCurrenciesPage addressed at
-                /channels/by-externalReferenceCode/{externalReferenceCode}/currencies. Resolves the CommerceChannel
-                through CommerceChannelLocalService.getCommerceChannelByExternalReferenceCode and delegates to the
-                numeric handler so search, filter and sort behave identically. Validation -- NoSuchChannelException ->
-                404 when the channel ERC is missing. List query support — filterable and sortable fields -- currency
-                index fields; search fields -- indexed currency fields.
+                External-reference-code variant of getChannelCurrenciesPage addressed at /channels/by-externalReferenceCode/{externalReferenceCode}/currencies. Resolves the CommerceChannel through CommerceChannelLocalService.getCommerceChannelByExternalReferenceCode and delegates to the numeric handler so search, filter and sort behave identically. Validation -- NoSuchChannelException -> 404 when the channel ERC is missing. List query support — filterable and sortable fields -- currency index fields; search fields -- indexed currency fields.
             operationId: getChannelByExternalReferenceCodeCurrenciesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3086,11 +2886,7 @@ paths:
     /channels/by-externalReferenceCode/{externalReferenceCode}/wishlists:
         get:
             description:
-                External-reference-code variant of getChannelWishListsPage. Resolves the CommerceChannel via
-                CommerceChannelLocalService.getCommerceChannelByExternalReferenceCode and delegates to the numeric
-                handler. Pagination behaves identically to the numeric variant; accountId and currencyCode are accepted
-                for parity but not used in the query. Validation -- NoSuchChannelException -> 404 when the channel ERC
-                is missing. List query support -- pagination only; filterable fields -- none.
+                External-reference-code variant of getChannelWishListsPage. Resolves the CommerceChannel via CommerceChannelLocalService.getCommerceChannelByExternalReferenceCode and delegates to the numeric handler. Pagination behaves identically to the numeric variant; accountId and currencyCode are accepted for parity but not used in the query. Validation -- NoSuchChannelException -> 404 when the channel ERC is missing. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelByExternalReferenceCodeWishListsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3148,11 +2944,7 @@ paths:
                 -   WishList
         post:
             description:
-                External-reference-code variant of postChannelWishList. Resolves the CommerceChannel by ERC and
-                delegates to the numeric handler. Not an upsert -- CommerceWishListService.addCommerceWishList is always
-                invoked, so the channel and account can hold multiple wish lists by name. Validation --
-                NoSuchChannelException -> 404 when the channel ERC is missing. Side effects -- Persists a new
-                CommerceWishList row scoped to the channel's site group and the resolved account.
+                External-reference-code variant of postChannelWishList. Resolves the CommerceChannel by ERC and delegates to the numeric handler. Not an upsert -- CommerceWishListService.addCommerceWishList is always invoked, so the channel and account can hold multiple wish lists by name. Validation -- NoSuchChannelException -> 404 when the channel ERC is missing. Side effects -- Persists a new CommerceWishList row scoped to the channel's site group and the resolved account.
             operationId: postChannelByExternalReferenceCodeWishList
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3219,8 +3011,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -3237,14 +3028,7 @@ paths:
     /channels/{channelId}/accounts:
         get:
             description:
-                Lists AccountEntry rows eligible for the channel under /channels/{channelId}/accounts. Loads the
-                CommerceChannel via CommerceChannelLocalService, gathers eligibility-typed
-                CommerceChannelAccountEntryRel rows, and calls Vulcan SearchUtil.search on AccountEntry restricted to
-                commerceChannelIds. Exposes ADD_ACCOUNT_ENTRY / VIEW HATEOAS actions. Validation --
-                NoSuchChannelException -> 404 when an eligibility rel exists and the caller lacks
-                CommerceAccountActionKeys.VIEW_CHANNELS_ACCOUNTS or ownership of an eligible account. List query support
-                — filterable and sortable fields -- AccountEntityModel (dateCreated, dateModified, name, type); search
-                fields -- indexed AccountEntry fields.
+                Lists AccountEntry rows eligible for the channel under /channels/{channelId}/accounts. Loads the CommerceChannel via CommerceChannelLocalService, gathers eligibility-typed CommerceChannelAccountEntryRel rows, and calls Vulcan SearchUtil.search on AccountEntry restricted to commerceChannelIds. Exposes ADD_ACCOUNT_ENTRY / VIEW HATEOAS actions. Validation -- NoSuchChannelException -> 404 when an eligibility rel exists and the caller lacks CommerceAccountActionKeys.VIEW_CHANNELS_ACCOUNTS or ownership of an eligible account. List query support — filterable and sortable fields -- AccountEntityModel (dateCreated, dateModified, name, type); search fields -- indexed AccountEntry fields.
             operationId: getChannelAccountsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3303,15 +3087,7 @@ paths:
                 -   Account
         post:
             description:
-                Creates a new AccountEntry under /channels/<channelId>/accounts via AccountEntryService.addAccountEntry.
-                The request body supplies externalReferenceCode, name, description, domains, taxId, type (defaults to
-                business) and status (defaults to approved); logo bytes are loaded from DLAppLocalService when logoId is
-                set. Not an upsert -- addAccountEntry is always invoked, so a duplicate externalReferenceCode raises
-                422. Validation -- NoSuchChannelException -> 404 when channel eligibility re-validation fails. Side
-                effects -- When the channel restricts accounts, creates a CommerceChannelAccountEntryRel of
-                TYPE_ELIGIBILITY linking the new account to the channel; applies default billing and shipping address
-                IDs via AccountEntryLocalService; synchronizes organization rels through
-                AccountEntryOrganizationRelLocalService.
+                Creates a new AccountEntry under /channels/<channelId>/accounts via AccountEntryService.addAccountEntry. The request body supplies externalReferenceCode, name, description, domains, taxId, type (defaults to business) and status (defaults to approved); logo bytes are loaded from DLAppLocalService when logoId is set. Not an upsert -- addAccountEntry is always invoked, so a duplicate externalReferenceCode raises 422. Validation -- NoSuchChannelException -> 404 when channel eligibility re-validation fails. Side effects -- When the channel restricts accounts, creates a CommerceChannelAccountEntryRel of TYPE_ELIGIBILITY linking the new account to the channel; applies default billing and shipping address IDs via AccountEntryLocalService; synchronizes organization rels through AccountEntryOrganizationRelLocalService.
             operationId: postChannelAccount
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3377,8 +3153,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -3395,11 +3170,7 @@ paths:
     /channels/{channelId}/currencies:
         get:
             description:
-                Lists CommerceCurrency entries visible to /channels/{channelId}/currencies. Loads the channel by ID;
-                when one or more CommerceChannelRel rows restrict its currencies the result is filtered to those,
-                otherwise every active currency on the company is returned. Validation -- None (returns empty page when
-                no matches). List query support — filterable and sortable fields -- currency index fields; search fields
-                -- indexed currency fields.
+                Lists CommerceCurrency entries visible to /channels/{channelId}/currencies. Loads the channel by ID; when one or more CommerceChannelRel rows restrict its currencies the result is filtered to those, otherwise every active currency on the company is returned. Validation -- None (returns empty page when no matches). List query support — filterable and sortable fields -- currency index fields; search fields -- indexed currency fields.
             operationId: getChannelCurrenciesPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3459,17 +3230,7 @@ paths:
     /channels/{channelId}/products:
         get:
             description:
-                Lists products visible on /channels/{channelId}/products. Resolves the channel and the effective
-                accountId via AccountUtil; when the account fails the channel's eligibility check an empty page is
-                returned. Builds a SearchContext seeded with status=APPROVED, accountEntryId, commerceAccountGroupIds
-                (from AccountGroupLocalService) and the channel group; merges the OData `filter` into a BooleanQuery and
-                applies a CPQuery sorted by title ASC and modifiedDate DESC. Search runs through
-                CPDefinitionHelper.search/searchCount; each CPCatalogEntry is converted via ProductDTOConverter.
-                Validation -- None (returns empty page when no matches or account ineligible). List query support —
-                filterable and sortable fields -- ProductEntityModel (categoryIds, categoryNames, gtins,
-                specificationNames, specificationValues, tags, createDate, modifiedDate, catalogId, statusCode,
-                externalReferenceCode, name, productType) plus every expando custom column exposed via EntityFieldsUtil;
-                search fields -- indexed CPDefinition fields.
+                Lists products visible on /channels/{channelId}/products. Resolves the channel and the effective accountId via AccountUtil; when the account fails the channel's eligibility check an empty page is returned. Builds a SearchContext seeded with status=APPROVED, accountEntryId, commerceAccountGroupIds (from AccountGroupLocalService) and the channel group; merges the OData `filter` into a BooleanQuery and applies a CPQuery sorted by title ASC and modifiedDate DESC. Search runs through CPDefinitionHelper.search/searchCount; each CPCatalogEntry is converted via ProductDTOConverter. Validation -- None (returns empty page when no matches or account ineligible). List query support — filterable and sortable fields -- ProductEntityModel (categoryIds, categoryNames, gtins, specificationNames, specificationValues, tags, createDate, modifiedDate, catalogId, statusCode, externalReferenceCode, name, productType) plus every expando custom column exposed via EntityFieldsUtil; search fields -- indexed CPDefinition fields.
             operationId: getChannelProductsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3530,12 +3291,7 @@ paths:
     /channels/{channelId}/products/by-friendly-url-path/{friendlyUrlPath}:
         get:
             description:
-                Returns a single Product under /channels/{channelId}/products/by-friendly-url-path/{friendlyUrlPath}.
-                Loads the channel, resolves the account through AccountUtil, returns null when the account is not
-                eligible, then resolves the CPDefinition through CPDefinitionLocalService.fetchCPDefinitionByFriendlyURL
-                against the company group. Enforces CommerceProductViewPermission and converts via ProductDTOConverter.
-                Validation -- NoSuchCProductException -> 404 when the friendly URL does not resolve; PrincipalException
-                -> 403 when the caller lacks VIEW permission on the product.
+                Returns a single Product under /channels/{channelId}/products/by-friendly-url-path/{friendlyUrlPath}. Loads the channel, resolves the account through AccountUtil, returns null when the account is not eligible, then resolves the CPDefinition through CPDefinitionLocalService.fetchCPDefinitionByFriendlyURL against the company group. Enforces CommerceProductViewPermission and converts via ProductDTOConverter. Validation -- NoSuchCProductException -> 404 when the friendly URL does not resolve; PrincipalException -> 403 when the caller lacks VIEW permission on the product.
             operationId: getChannelProductByFriendlyUrlPath
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3598,13 +3354,7 @@ paths:
     /channels/{channelId}/products/{productId}:
         get:
             description:
-                Returns a single Product under /channels/{channelId}/products/{productId}. Resolves the active
-                CPDefinition via CPDefinitionLocalService.fetchCPDefinitionByCProductId, the CommerceChannel, and the
-                effective accountId through AccountUtil. Short-circuits and returns null when the resolved account is
-                not on the channel's eligibility list and the channel has restrictions. Converts via ProductDTOConverter
-                against a fresh CommerceContext for the requested locale and currency. Validation --
-                NoSuchCProductException -> 404 when the productId is missing; PrincipalException -> 403 when the caller
-                lacks CommerceProductViewPermission.
+                Returns a single Product under /channels/{channelId}/products/{productId}. Resolves the active CPDefinition via CPDefinitionLocalService.fetchCPDefinitionByCProductId, the CommerceChannel, and the effective accountId through AccountUtil. Short-circuits and returns null when the resolved account is not on the channel's eligibility list and the channel has restrictions. Converts via ProductDTOConverter against a fresh CommerceContext for the requested locale and currency. Validation -- NoSuchCProductException -> 404 when the productId is missing; PrincipalException -> 403 when the caller lacks CommerceProductViewPermission.
             operationId: getChannelProduct
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3667,14 +3417,7 @@ paths:
     /channels/{channelId}/products/{productId}/attachments:
         get:
             description:
-                Lists non-image CPAttachmentFileEntry rows (TYPE_OTHER, status APPROVED) attached to the product under
-                /channels/{channelId}/products/{productId}/attachments. Resolves the active CPDefinition via
-                CPDefinitionLocalService.fetchCPDefinitionByCProductId, loads the CommerceChannel, resolves the
-                effective accountId via AccountUtil and pages
-                CPAttachmentFileEntryLocalService.getCPAttachmentFileEntries scoped to the CPDefinition. Also exposed as
-                the `attachments` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the
-                productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable
-                fields -- none.
+                Lists non-image CPAttachmentFileEntry rows (TYPE_OTHER, status APPROVED) attached to the product under /channels/{channelId}/products/{productId}/attachments. Resolves the active CPDefinition via CPDefinitionLocalService.fetchCPDefinitionByCProductId, loads the CommerceChannel, resolves the effective accountId via AccountUtil and pages CPAttachmentFileEntryLocalService.getCPAttachmentFileEntries scoped to the CPDefinition. Also exposed as the `attachments` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelProductAttachmentsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3733,12 +3476,7 @@ paths:
     /channels/{channelId}/products/{productId}/categories:
         get:
             description:
-                Lists AssetCategory entries tagged on the product under
-                /channels/{channelId}/products/{productId}/categories. Resolves the active CPDefinition through
-                CPDefinitionLocalService.fetchCPDefinitionByCProductId and calls AssetCategoryService.getCategories
-                using the CPDefinition classNameId and primary key. Exposed as the `categories` field of the Product
-                DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active
-                CPDefinition. List query support -- pagination only; filterable fields -- none.
+                Lists AssetCategory entries tagged on the product under /channels/{channelId}/products/{productId}/categories. Resolves the active CPDefinition through CPDefinitionLocalService.fetchCPDefinitionByCProductId and calls AssetCategoryService.getCategories using the CPDefinition classNameId and primary key. Exposed as the `categories` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelProductCategoriesPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3796,13 +3534,7 @@ paths:
     /channels/{channelId}/products/{productId}/images:
         get:
             description:
-                Lists image-type CPAttachmentFileEntry rows (TYPE_IMAGE, status APPROVED) attached to the product under
-                /channels/{channelId}/products/{productId}/images. Resolves the active CPDefinition, loads the channel,
-                resolves the account via AccountUtil and pages
-                CPAttachmentFileEntryLocalService.getCPAttachmentFileEntries scoped to the CPDefinition. Exposed as the
-                `images` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId
-                does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields --
-                none.
+                Lists image-type CPAttachmentFileEntry rows (TYPE_IMAGE, status APPROVED) attached to the product under /channels/{channelId}/products/{productId}/images. Resolves the active CPDefinition, loads the channel, resolves the account via AccountUtil and pages CPAttachmentFileEntryLocalService.getCPAttachmentFileEntries scoped to the CPDefinition. Exposed as the `images` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelProductImagesPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3861,14 +3593,7 @@ paths:
     /channels/{channelId}/products/{productId}/linked-products:
         get:
             description:
-                Lists products linked to a product as grouped entries or shop-by-diagram references under
-                /channels/{channelId}/products/{productId}/linked-products. Resolves the channel, the effective
-                accountId via AccountUtil and the CProduct, then enforces CommerceProductViewPermission. Concatenates
-                results from CPDefinitionGroupedEntryLocalService.getEntryCProductCPDefinitionGroupedEntries (typed
-                GroupedCPTypeConstants.NAME) and CSDiagramEntryLocalService.getCProductCSDiagramEntries (typed
-                CSDiagramCPTypeConstants.NAME); pagination is applied to the merged list in memory. Exposed as the
-                `linkedProducts` field of the Product DTO. Validation -- PrincipalException -> 403 when the caller lacks
-                VIEW permission on the product. List query support -- pagination only; filterable fields -- none.
+                Lists products linked to a product as grouped entries or shop-by-diagram references under /channels/{channelId}/products/{productId}/linked-products. Resolves the channel, the effective accountId via AccountUtil and the CProduct, then enforces CommerceProductViewPermission. Concatenates results from CPDefinitionGroupedEntryLocalService.getEntryCProductCPDefinitionGroupedEntries (typed GroupedCPTypeConstants.NAME) and CSDiagramEntryLocalService.getCProductCSDiagramEntries (typed CSDiagramCPTypeConstants.NAME); pagination is applied to the merged list in memory. Exposed as the `linkedProducts` field of the Product DTO. Validation -- PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelProductLinkedProductsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -3930,15 +3655,7 @@ paths:
     /channels/{channelId}/products/{productId}/mapped-products:
         get:
             description:
-                Lists CSDiagramEntry shop-by-diagram mappings for
-                /channels/{channelId}/products/{productId}/mapped-products. Resolves the active CPDefinition, the
-                channel, and the account via AccountUtil, then enforces CommerceProductViewPermission. Builds a
-                CommerceContext from the currencyCode and calls Vulcan SearchUtil.search on the CSDiagramEntry index
-                filtered by CPField.CP_DEFINITION_ID. Validation -- NoSuchCPDefinitionException -> 404 when the
-                productId does not resolve to an active CPDefinition; PrincipalException -> 403 when the caller lacks
-                VIEW permission on the product. List query support — sortable fields -- indexed CSDiagramEntry fields;
-                search fields -- indexed CSDiagramEntry fields; filterable fields -- none (no OData filter and no
-                published entity model).
+                Lists CSDiagramEntry shop-by-diagram mappings for /channels/{channelId}/products/{productId}/mapped-products. Resolves the active CPDefinition, the channel, and the account via AccountUtil, then enforces CommerceProductViewPermission. Builds a CommerceContext from the currencyCode and calls Vulcan SearchUtil.search on the CSDiagramEntry index filtered by CPField.CP_DEFINITION_ID. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support — sortable fields -- indexed CSDiagramEntry fields; search fields -- indexed CSDiagramEntry fields; filterable fields -- none (no OData filter and no published entity model).
             operationId: getChannelProductMappedProductsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4003,13 +3720,7 @@ paths:
     /channels/{channelId}/products/{productId}/pins:
         get:
             description:
-                Lists CSDiagramPin coordinates for /channels/{channelId}/products/{productId}/pins. Resolves the active
-                CPDefinition, the channel, and the effective account via AccountUtil; enforces
-                CommerceProductViewPermission. Pages CSDiagramPinLocalService.getCSDiagramPins by CPDefinitionId.
-                Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active
-                CPDefinition; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query
-                support -- pagination only (search and sort declared on the base but not wired); filterable fields --
-                none.
+                Lists CSDiagramPin coordinates for /channels/{channelId}/products/{productId}/pins. Resolves the active CPDefinition, the channel, and the effective account via AccountUtil; enforces CommerceProductViewPermission. Pages CSDiagramPinLocalService.getCSDiagramPins by CPDefinitionId. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only (search and sort declared on the base but not wired); filterable fields -- none.
             operationId: getChannelProductPinsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4073,12 +3784,7 @@ paths:
     /channels/{channelId}/products/{productId}/product-options:
         get:
             description:
-                Lists CPDefinitionOptionRel rows for /channels/{channelId}/products/{productId}/product-options.
-                Resolves the active CPDefinition through CPDefinitionLocalService.fetchCPDefinitionByCProductId and
-                pages CPDefinitionOptionRelLocalService.getCPDefinitionOptionRels. No permission check is applied.
-                Exposed as the `productOptions` field of the Product DTO. Validation -- NoSuchCPDefinitionException ->
-                404 when the productId does not resolve to an active CPDefinition. List query support -- pagination
-                only; filterable fields -- none.
+                Lists CPDefinitionOptionRel rows for /channels/{channelId}/products/{productId}/product-options. Resolves the active CPDefinition through CPDefinitionLocalService.fetchCPDefinitionByCProductId and pages CPDefinitionOptionRelLocalService.getCPDefinitionOptionRels. No permission check is applied. Exposed as the `productOptions` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelProductProductOptionsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4136,16 +3842,7 @@ paths:
     /channels/{channelId}/products/{productId}/product-options/{productOptionId}/product-option-values:
         get:
             description:
-                Lists CPDefinitionOptionValueRel entries for
-                /channels/{channelId}/products/{productId}/product-options/{productOptionId}/product-option-values.
-                Resolves the CPDefinition, the channel, and the effective accountId through AccountUtil; enforces
-                CommerceProductViewPermission; pushes a ServiceContext through ServiceContextHelper and builds a
-                CommerceContext from currencyCode. Pages
-                CPDefinitionOptionValueRelLocalService.getCPDefinitionOptionValueRels. Optional productOptionValueId and
-                skuId parameters are forwarded to the DTO converter so the response reflects the candidate
-                configuration's pricing and selectability. Validation -- NoSuchCProductException -> 404 when the
-                productId does not resolve; PrincipalException -> 403 when the caller lacks VIEW permission on the
-                product. List query support -- pagination only; filterable fields -- none.
+                Lists CPDefinitionOptionValueRel entries for /channels/{channelId}/products/{productId}/product-options/{productOptionId}/product-option-values. Resolves the CPDefinition, the channel, and the effective accountId through AccountUtil; enforces CommerceProductViewPermission; pushes a ServiceContext through ServiceContextHelper and builds a CommerceContext from currencyCode. Pages CPDefinitionOptionValueRelLocalService.getCPDefinitionOptionValueRels. Optional productOptionValueId and skuId parameters are forwarded to the DTO converter so the response reflects the candidate configuration's pricing and selectability. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelProductProductOptionProductOptionValuesPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4207,12 +3904,7 @@ paths:
                 -   ProductOptionValue
         post:
             description:
-                POST counterpart of getChannelProductProductOptionProductOptionValuesPage. Accepts a SkuOption[] body
-                that lets the DTO converter score each option value against a partially-selected configuration
-                (selectability, price impact, availability). The response shape and pagination match the GET, just
-                enriched with the body's selections. Not an upsert -- nothing is persisted. Validation --
-                NoSuchCProductException -> 404 when the productId does not resolve; PrincipalException -> 403 when the
-                caller lacks VIEW permission on the product.
+                POST counterpart of getChannelProductProductOptionProductOptionValuesPage. Accepts a SkuOption[] body that lets the DTO converter score each option value against a partially-selected configuration (selectability, price impact, availability). The response shape and pagination match the GET, just enriched with the body's selections. Not an upsert -- nothing is persisted. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; PrincipalException -> 403 when the caller lacks VIEW permission on the product.
             operationId: postChannelProductProductOptionProductOptionValuesPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4284,8 +3976,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -4302,12 +3993,7 @@ paths:
     /channels/{channelId}/products/{productId}/product-specifications:
         get:
             description:
-                Lists CPDefinitionSpecificationOptionValue rows (filterable=true) for
-                /channels/{channelId}/products/{productId}/product-specifications. Resolves the active CPDefinition and
-                pages CPDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValues. Exposed
-                as the `productSpecifications` field of the Product DTO. Validation -- NoSuchCPDefinitionException ->
-                404 when the productId does not resolve to an active CPDefinition. List query support -- pagination
-                only; filterable fields -- none.
+                Lists CPDefinitionSpecificationOptionValue rows (filterable=true) for /channels/{channelId}/products/{productId}/product-specifications. Resolves the active CPDefinition and pages CPDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValues. Exposed as the `productSpecifications` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelProductProductSpecificationsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4365,12 +4051,7 @@ paths:
     /channels/{channelId}/products/{productId}/related-products:
         get:
             description:
-                Lists CPDefinitionLink rows for /channels/{channelId}/products/{productId}/related-products. Resolves
-                the active CPDefinition. When the `type` query parameter is omitted, every APPROVED link is returned;
-                otherwise links are filtered to the supplied type (for example, up-sell, cross-sell). Exposed as the
-                `relatedProducts` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the
-                productId does not resolve to an active CPDefinition. List query support -- pagination and `type` filter
-                only; filterable fields -- type.
+                Lists CPDefinitionLink rows for /channels/{channelId}/products/{productId}/related-products. Resolves the active CPDefinition. When the `type` query parameter is omitted, every APPROVED link is returned; otherwise links are filtered to the supplied type (for example, up-sell, cross-sell). Exposed as the `relatedProducts` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination and `type` filter only; filterable fields -- type.
             operationId: getChannelProductRelatedProductsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4429,13 +4110,7 @@ paths:
     /channels/{channelId}/products/{productId}/skus:
         get:
             description:
-                Lists CPInstance rows (status APPROVED) for /channels/{channelId}/products/{productId}/skus. Resolves
-                the CPDefinition, the channel, the account via AccountUtil, and enforces CommerceProductViewPermission.
-                Pages CPInstanceLocalService.getCPDefinitionInstances and converts each entry via SkuDTOConverter using
-                a per-row CommerceContext. Exposed as the `skus` field of the Product DTO. Validation --
-                NoSuchCProductException -> 404 when the productId does not resolve; PrincipalException -> 403 when the
-                caller lacks VIEW permission on the product. List query support -- pagination only; filterable fields --
-                none.
+                Lists CPInstance rows (status APPROVED) for /channels/{channelId}/products/{productId}/skus. Resolves the CPDefinition, the channel, the account via AccountUtil, and enforces CommerceProductViewPermission. Pages CPInstanceLocalService.getCPDefinitionInstances and converts each entry via SkuDTOConverter using a per-row CommerceContext. Exposed as the `skus` field of the Product DTO. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelProductSkusPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4494,9 +4169,7 @@ paths:
                 -   Sku
         post:
             description:
-                Endpoint declared on the base resource accepting a DDMOption[] body. Not an upsert -- the current
-                implementation throws UnsupportedOperationException, so callers must use the by-sku-option endpoint to
-                look up a SKU instead. Validation -- UnsupportedOperationException -> 500 for any request body.
+                Endpoint declared on the base resource accepting a DDMOption[] body. Not an upsert -- the current implementation throws UnsupportedOperationException, so callers must use the by-sku-option endpoint to look up a SKU instead. Validation -- UnsupportedOperationException -> 500 for any request body.
             operationId: postChannelProductSku
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4569,8 +4242,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -4587,15 +4259,7 @@ paths:
     /channels/{channelId}/products/{productId}/skus/by-sku-option:
         post:
             description:
-                Looks up the SKU that matches a SkuOption[] selection under
-                /channels/{channelId}/products/{productId}/skus/by-sku-option -- it is a search call, not a create.
-                Resolves the CPDefinition, the channel, builds a CommerceContext and enforces
-                CommerceProductViewPermission. Serializes the body to a JSONArray and calls
-                CPInstanceHelper.fetchCPInstance to locate the matching CPInstance. When skuUnitOfMeasureKey is omitted
-                the SKU's default unit of measure is used; quantity defaults to BigDecimal.ONE or the unit of measure's
-                incremental order quantity. Not an upsert -- nothing is persisted. Validation -- NoSuchCProductException
-                -> 404 when the productId does not resolve; NoSuchCPInstanceException -> 404 when no SKU matches the
-                option selection; PrincipalException -> 403 when the caller lacks VIEW permission on the product.
+                Looks up the SKU that matches a SkuOption[] selection under /channels/{channelId}/products/{productId}/skus/by-sku-option -- it is a search call, not a create. Resolves the CPDefinition, the channel, builds a CommerceContext and enforces CommerceProductViewPermission. Serializes the body to a JSONArray and calls CPInstanceHelper.fetchCPInstance to locate the matching CPInstance. When skuUnitOfMeasureKey is omitted the SKU's default unit of measure is used; quantity defaults to BigDecimal.ONE or the unit of measure's incremental order quantity. Not an upsert -- nothing is persisted. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; NoSuchCPInstanceException -> 404 when no SKU matches the option selection; PrincipalException -> 403 when the caller lacks VIEW permission on the product.
             operationId: postChannelProductSkuBySkuOption
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4670,8 +4334,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -4688,14 +4351,7 @@ paths:
     /channels/{channelId}/products/{productId}/skus/{skuId}:
         get:
             description:
-                Returns a single Sku under /channels/{channelId}/products/{productId}/skus/{skuId}. Resolves the
-                CPDefinition and the channel; builds a CommerceContext that picks an AccountEntry from the explicit
-                accountId, the user's eligible commerce accounts, or the guest account. Enforces
-                CommerceProductViewPermission, fetches the CPInstance, resolves the default unit-of-measure key and
-                converts via SkuDTOConverter. Validation -- NoSuchCProductException -> 404 when the productId does not
-                resolve; NoSuchCPInstanceException -> 404 when the skuId does not resolve; NoSuchEntryException -> 404
-                when the user has multiple eligible accounts and supplied none; PrincipalException -> 403 when the
-                caller lacks VIEW permission on the product.
+                Returns a single Sku under /channels/{channelId}/products/{productId}/skus/{skuId}. Resolves the CPDefinition and the channel; builds a CommerceContext that picks an AccountEntry from the explicit accountId, the user's eligible commerce accounts, or the guest account. Enforces CommerceProductViewPermission, fetches the CPInstance, resolves the default unit-of-measure key and converts via SkuDTOConverter. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; NoSuchCPInstanceException -> 404 when the skuId does not resolve; NoSuchEntryException -> 404 when the user has multiple eligible accounts and supplied none; PrincipalException -> 403 when the caller lacks VIEW permission on the product.
             operationId: getChannelProductSku
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4760,11 +4416,7 @@ paths:
     /channels/{channelId}/wishlists:
         get:
             description:
-                Lists CommerceWishList rows for /channels/{channelId}/wishlists. Loads the channel through
-                fetchCommerceChannel and pages CommerceWishListService.getCommerceWishLists by the channel's site group.
-                accountId and currencyCode are accepted on the request for parity with sibling endpoints but are not
-                currently used in the query. Validation -- NoSuchChannelException -> 404 when the channelId does not
-                resolve. List query support -- pagination only; filterable fields -- none.
+                Lists CommerceWishList rows for /channels/{channelId}/wishlists. Loads the channel through fetchCommerceChannel and pages CommerceWishListService.getCommerceWishLists by the channel's site group. accountId and currencyCode are accepted on the request for parity with sibling endpoints but are not currently used in the query. Validation -- NoSuchChannelException -> 404 when the channelId does not resolve. List query support -- pagination only; filterable fields -- none.
             operationId: getChannelWishListsPage
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4822,13 +4474,7 @@ paths:
                 -   WishList
         post:
             description:
-                Creates a new CommerceWishList under /channels/<channelId>/wishlists via
-                CommerceWishListService.addCommerceWishList scoped to the channel's site group, using the body's name
-                and defaultWishList flag. Not an upsert at the wish-list level -- addCommerceWishList is always invoked,
-                so a duplicate name within the same channel and account produces a second row. Validation -- None at the
-                wish-list level (request shape is enforced by the service). Side effects -- When the body contains
-                wishListItems, each is forwarded to WishListItemResource.postWishlistWishListWishListItem (an upsert by
-                (accountId, wishListId, cpInstanceUuid, productId)) so the wish list is populated atomically.
+                Creates a new CommerceWishList under /channels/<channelId>/wishlists via CommerceWishListService.addCommerceWishList scoped to the channel's site group, using the body's name and defaultWishList flag. Not an upsert at the wish-list level -- addCommerceWishList is always invoked, so a duplicate name within the same channel and account produces a second row. Validation -- None at the wish-list level (request shape is enforced by the service). Side effects -- When the body contains wishListItems, each is forwarded to WishListItemResource.postWishlistWishListWishListItem (an upsert by (accountId, wishListId, cpInstanceUuid, productId)) so the wish list is populated atomically.
             operationId: postChannelWishList
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
@@ -4895,8 +4541,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -4913,10 +4558,7 @@ paths:
     /wishlist-items/{wishListItemId}:
         delete:
             description:
-                Deletes the CommerceWishListItem at /wishlist-items/{wishListItemId} via
-                CommerceWishListItemService.deleteCommerceWishListItem. Validation -- NoSuchWishListItemException -> 404
-                when the row is missing; PrincipalException -> 403 when the caller lacks UPDATE permission on the parent
-                wish list.
+                Deletes the CommerceWishListItem at /wishlist-items/{wishListItemId} via CommerceWishListItemService.deleteCommerceWishListItem. Validation -- NoSuchWishListItemException -> 404 when the row is missing; PrincipalException -> 403 when the caller lacks UPDATE permission on the parent wish list.
             operationId: deleteWishListItem
             parameters:
                 -   $ref: "#/components/parameters/wishListItemIdPathParam"
@@ -4962,11 +4604,7 @@ paths:
                 -   WishListItem
         get:
             description:
-                Returns a single WishListItem at /wishlist-items/{wishListItemId}. Loads the entity via
-                CommerceWishListItemService, resolves its CommerceChannel through fetchCommerceChannelBySiteGroupId,
-                builds a CommerceContext from the resolved accountId and currencyCode, and converts through
-                WishListItemDTOConverter. Validation -- NoSuchChannelException -> 404 when the parent channel is
-                missing; NoSuchWishListItemException -> 404 when the wishListItemId does not resolve.
+                Returns a single WishListItem at /wishlist-items/{wishListItemId}. Loads the entity via CommerceWishListItemService, resolves its CommerceChannel through fetchCommerceChannelBySiteGroupId, builds a CommerceContext from the resolved accountId and currencyCode, and converts through WishListItemDTOConverter. Validation -- NoSuchChannelException -> 404 when the parent channel is missing; NoSuchWishListItemException -> 404 when the wishListItemId does not resolve.
             operationId: getWishListItem
             parameters:
                 -   $ref: "#/components/parameters/wishListItemIdPathParam"
@@ -5029,9 +4667,7 @@ paths:
     /wishlists/{wishListId}:
         delete:
             description:
-                Deletes the wish list at /wishlists/{wishListId} via CommerceWishListService.deleteCommerceWishList.
-                Validation -- NoSuchWishListException -> 404 when the row is missing; PrincipalException -> 403 when the
-                caller lacks DELETE permission.
+                Deletes the wish list at /wishlists/{wishListId} via CommerceWishListService.deleteCommerceWishList. Validation -- NoSuchWishListException -> 404 when the row is missing; PrincipalException -> 403 when the caller lacks DELETE permission.
             operationId: deleteWishList
             parameters:
                 -   $ref: "#/components/parameters/wishListIdPathParam"
@@ -5077,9 +4713,7 @@ paths:
                 -   WishList
         get:
             description:
-                Returns the wish list at /wishlists/{wishListId} via CommerceWishListService.getCommerceWishList.
-                Validation -- NoSuchWishListException -> 404 when the row is missing; PrincipalException -> 403 when the
-                caller lacks VIEW permission.
+                Returns the wish list at /wishlists/{wishListId} via CommerceWishListService.getCommerceWishList. Validation -- NoSuchWishListException -> 404 when the row is missing; PrincipalException -> 403 when the caller lacks VIEW permission.
             operationId: getWishList
             parameters:
                 -   $ref: "#/components/parameters/wishListIdPathParam"
@@ -5139,14 +4773,7 @@ paths:
                 -   WishList
         patch:
             description:
-                Updates the wish list at /wishlists/<wishListId>. Not a JSON Merge Patch -- the handler performs a
-                manual GetterUtil.getString/getBoolean fallback merge for name and defaultWishList before calling
-                CommerceWishListService.updateCommerceWishList. Validation -- NoSuchWishListException -> 404 when the
-                row is missing; PrincipalException -> 403 when the caller lacks UPDATE permission. Side effects -- When
-                the body includes wishListItems, deletes the existing items via
-                CommerceWishListItemService.deleteCommerceWishListItems and re-adds each entry through
-                WishListItemResource.postWishlistWishListWishListItem (upsert by (accountId, wishListId, cpInstanceUuid,
-                productId)).
+                Updates the wish list at /wishlists/<wishListId>. Not a JSON Merge Patch -- the handler performs a manual GetterUtil.getString/getBoolean fallback merge for name and defaultWishList before calling CommerceWishListService.updateCommerceWishList. Validation -- NoSuchWishListException -> 404 when the row is missing; PrincipalException -> 403 when the caller lacks UPDATE permission. Side effects -- When the body includes wishListItems, deletes the existing items via CommerceWishListItemService.deleteCommerceWishListItems and re-adds each entry through WishListItemResource.postWishlistWishListWishListItem (upsert by (accountId, wishListId, cpInstanceUuid, productId)).
             operationId: patchWishList
             parameters:
                 -   $ref: "#/components/parameters/wishListIdPathParam"
@@ -5213,8 +4840,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:
@@ -5231,13 +4857,7 @@ paths:
     /wishlists/{wishListId}/wishlist-items:
         get:
             description:
-                Lists CommerceWishListItem rows for /wishlists/{wishListId}/wishlist-items. Loads the parent
-                CommerceWishList, resolves its CommerceChannel through fetchCommerceChannelBySiteGroupId, and pages
-                CommerceWishListItemService.getCommerceWishListItems. Each row is converted through
-                WishListItemDTOConverter against a shared CommerceContext for the resolved account and currency. Exposed
-                as the `wishListItems` field of the WishList DTO. Validation -- NoSuchChannelException -> 404 when the
-                parent channel is missing; NoSuchWishListException -> 404 when the wishListId does not resolve. List
-                query support -- pagination only; filterable fields -- none.
+                Lists CommerceWishListItem rows for /wishlists/{wishListId}/wishlist-items. Loads the parent CommerceWishList, resolves its CommerceChannel through fetchCommerceChannelBySiteGroupId, and pages CommerceWishListItemService.getCommerceWishListItems. Each row is converted through WishListItemDTOConverter against a shared CommerceContext for the resolved account and currency. Exposed as the `wishListItems` field of the WishList DTO. Validation -- NoSuchChannelException -> 404 when the parent channel is missing; NoSuchWishListException -> 404 when the wishListId does not resolve. List query support -- pagination only; filterable fields -- none.
             operationId: getWishlistWishListWishListItemsPage
             parameters:
                 -   $ref: "#/components/parameters/wishListIdPathParam"
@@ -5295,13 +4915,7 @@ paths:
                 -   WishListItem
         post:
             description:
-                Adds or updates a line item on the wish list at /wishlists/{wishListId}/wishlist-items. Reads skuId from
-                the body, fetches the matching CPInstance through CPInstanceLocalService (falls back to a blank
-                cpInstanceUuid when not found), loads the wish list and its channel, resolves the accountId through
-                AccountUtil and calls CommerceWishListItemService.addOrUpdateCommerceWishListItem. POST is upsert by
-                (accountId, wishListId, cpInstanceUuid, productId) -- creates a new entity when the tuple is unknown,
-                otherwise updates the existing one. Validation -- NoSuchChannelException -> 404 when the parent channel
-                is missing; NoSuchWishListException -> 404 when the wishListId does not resolve.
+                Adds or updates a line item on the wish list at /wishlists/{wishListId}/wishlist-items. Reads skuId from the body, fetches the matching CPInstance through CPInstanceLocalService (falls back to a blank cpInstanceUuid when not found), loads the wish list and its channel, resolves the accountId through AccountUtil and calls CommerceWishListItemService.addOrUpdateCommerceWishListItem. POST is upsert by (accountId, wishListId, cpInstanceUuid, productId) -- creates a new entity when the tuple is unknown, otherwise updates the existing one. Validation -- NoSuchChannelException -> 404 when the parent channel is missing; NoSuchWishListException -> 404 when the wishListId does not resolve.
             operationId: postWishlistWishListWishListItem
             parameters:
                 -   $ref: "#/components/parameters/wishListIdPathParam"
@@ -5368,8 +4982,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request payload references an unknown lookup key, omits a required cross-reference, or
-                        carries an out-of-range value.
+                        The request payload references an unknown lookup key, omits a required cross-reference, or carries an out-of-range value.
                 500:
                     content:
                         application/json:

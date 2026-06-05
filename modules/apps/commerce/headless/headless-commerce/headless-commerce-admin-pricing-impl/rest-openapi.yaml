@@ -3,9 +3,7 @@ components:
         externalReferenceCodePathParam:
             in: path
             description:
-                External reference code that addresses the target resource on the `by-externalReferenceCode` paths. The
-                code is the integration-supplied idempotency key, unique within the resource scope; POST against this
-                path is upsert (create when absent, replace when present).
+                External reference code that addresses the target resource on the `by-externalReferenceCode` paths. The code is the integration-supplied idempotency key, unique within the resource scope; POST against this path is upsert (create when absent, replace when present).
             explode: false
             name: externalReferenceCode
             required: true
@@ -19,9 +17,7 @@ components:
         filterQueryParam:
             in: query
             description:
-                OData v4 filter expression that narrows the result set. Only the price-list listing endpoint honours
-                this parameter, and the filterable field is `name` (sourced from PriceListEntityModel). Example --
-                filter=name eq "Default Price List".
+                OData v4 filter expression that narrows the result set. Only the price-list listing endpoint honours this parameter, and the filterable field is `name` (sourced from PriceListEntityModel). Example -- filter=name eq "Default Price List".
             explode: true
             name: filter
             required: false
@@ -31,8 +27,7 @@ components:
         idPathParam:
             in: path
             description:
-                Internal numeric identifier of the target resource. Counterpart to the `by-externalReferenceCode` path
-                variant; identifiers are server-assigned and stable across the resource's lifetime.
+                Internal numeric identifier of the target resource. Counterpart to the `by-externalReferenceCode` path variant; identifiers are server-assigned and stable across the resource's lifetime.
             explode: false
             name: id
             required: true
@@ -57,8 +52,7 @@ components:
         pageSizeQueryParam:
             in: query
             description:
-                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the
-                portal configuration to prevent unbounded reads.
+                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the portal configuration to prevent unbounded reads.
             explode: true
             name: pageSize
             required: false
@@ -68,9 +62,7 @@ components:
         sortQueryParam:
             in: query
             description:
-                Sort expression with one or more field:asc|desc pairs separated by commas. Only the price-list listing
-                endpoint honours this parameter, and the sortable field is `name` (sourced from PriceListEntityModel).
-                Example -- sort=name:asc.
+                Sort expression with one or more field:asc|desc pairs separated by commas. Only the price-list listing endpoint honours this parameter, and the sortable field is `name` (sourced from PriceListEntityModel). Example -- sort=name:asc.
             explode: true
             name: sort
             required: false
@@ -101,187 +93,150 @@ components:
     schemas:
         Discount:
             description:
-                Promotional discount program scoped to a single company. Backed by discount; carries the target slice
-                (subtotal, total, products, categories, skus, product-groups, or shipping), the limitation policy that
-                caps reuse, an optional couponCode gate, the percentage tiers (or fixed-amount cap), and four cascading
-                rel collections (account-group, category, product, rule). Workflow-aware -- the runtime only honours
-                discounts whose status is approved (Approved).
+                Promotional discount program scoped to a single company. Backed by discount; carries the target slice (subtotal, total, products, categories, skus, product-groups, or shipping), the limitation policy that caps reuse, an optional couponCode gate, the percentage tiers (or fixed-amount cap), and four cascading rel collections (account-group, category, product, rule). Workflow-aware -- the runtime only honours discounts whose status is approved (Approved).
             properties:
                 active:
                     description:
-                        Whether the discount is currently enabled. Inverted from discount.isActive in the runtime; when
-                        false the price calculation engine skips the discount during cart evaluation.
+                        Whether the discount is currently enabled. Inverted from discount.isActive in the runtime; when false the price calculation engine skips the discount during cart evaluation.
                     example: true
                     type: boolean
                 couponCode:
                     description:
-                        Optional coupon code that the buyer must supply at checkout when `useCouponCode` is true.
-                        Case-sensitive; matched on the persisted record; ignored when `useCouponCode` is false.
+                        Optional coupon code that the buyer must supply at checkout when `useCouponCode` is true. Case-sensitive; matched on the persisted record; ignored when `useCouponCode` is false.
                     example: SAVE20
                     type: string
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form Expando custom fields attached to the underlying discount entity. Keys are Expando
-                        attribute names; values follow each attribute's declared column type. Read and write through
-                        ExpandoBridge on the entity.
+                        Free-form Expando custom fields attached to the underlying discount entity. Keys are Expando attribute names; values follow each attribute's declared column type. Read and write through ExpandoBridge on the entity.
                     example:
                         customField1: value1
                     type: object
                 discountAccountGroups:
                     description:
-                        Account-group bindings cascaded on upsert. Each entry attaches the discount to one AccountGroup;
-                        supplying this array on POST/PUT replaces the previous bindings.
+                        Account-group bindings cascaded on upsert. Each entry attaches the discount to one AccountGroup; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountAccountGroup"
                     type: array
                 discountCategories:
                     description:
-                        AssetCategory bindings cascaded on upsert. Each entry restricts the discount to one category;
-                        supplying this array on POST/PUT replaces the previous bindings.
+                        AssetCategory bindings cascaded on upsert. Each entry restricts the discount to one category; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountCategory"
                     type: array
                 discountProducts:
                     description:
-                        product bindings cascaded on upsert. Each entry restricts the discount to one product; supplying
-                        this array on POST/PUT replaces the previous bindings.
+                        product bindings cascaded on upsert. Each entry restricts the discount to one product; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountProduct"
                     type: array
                 discountRules:
                     description:
-                        Validator rules cascaded on upsert. Each entry attaches a pre-qualification, post-qualification,
-                        or target validator; supplying this array on POST/PUT replaces the previous rules.
+                        Validator rules cascaded on upsert. Each entry attaches a pre-qualification, post-qualification, or target validator; supplying this array on POST/PUT replaces the previous rules.
                     items:
                         $ref: "#/components/schemas/DiscountRule"
                     type: array
                 displayDate:
                     description:
-                        Date and time at which the discount becomes eligible for cart evaluation. Accepted in the
-                        request locale and time zone, normalized to the portal's time zone, and compared against the
-                        current server clock at price calculation time.
+                        Date and time at which the discount becomes eligible for cart evaluation. Accepted in the request locale and time zone, normalized to the portal's time zone, and compared against the current server clock at price calculation time.
                     example: 2025-01-01
                     format: date
                     type: string
                 expirationDate:
                     description:
-                        Date and time after which the discount stops applying. Ignored when `neverExpire` is true;
-                        accepted in the request locale and time zone and normalized to the portal's time zone.
+                        Date and time after which the discount stops applying. Ignored when `neverExpire` is true; accepted in the request locale and time zone and normalized to the portal's time zone.
                     example: 2099-12-31
                     format: date
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update. Must be unique per discount within the company; matched
-                        on the persisted record; indexed for exact-match search.
+                        Idempotency key for create and update. Must be unique per discount within the company; matched on the persisted record; indexed for exact-match search.
                     example: DISC-SUMMER-2025
                     type: string
                 id:
                     description:
-                        Internal numeric identifier of the discount; read-only and assigned by the service on create.
-                        Stable across the discount's lifetime.
+                        Internal numeric identifier of the discount; read-only and assigned by the service on create. Stable across the discount's lifetime.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 limitationTimes:
                     description:
-                        Cap on the total number of applications across orders. Interpreted together with
-                        `limitationType` -- `unlimited` ignores this value, `limited` enforces a global cap,
-                        `limited-for-accounts` enforces a per-account cap, and `limited-for-accounts-and-total` enforces
-                        both. Stored as int; 0 means unlimited.
+                        Cap on the total number of applications across orders. Interpreted together with `limitationType` -- `unlimited` ignores this value, `limited` enforces a global cap, `limited-for-accounts` enforces a per-account cap, and `limited-for-accounts-and-total` enforces both. Stored as int; 0 means unlimited.
                     example: 100
                     format: int32
                     minimum: 0
                     type: integer
                 limitationType:
                     description:
-                        Strategy that decides how the discount usage cap is enforced. One of `unlimited`, `limited`,
-                        `limited-for-accounts`, `limited-for-accounts-and-total` (sourced from a discount constant).
-                        Required on create.
+                        Strategy that decides how the discount usage cap is enforced. One of `unlimited`, `limited`, `limited-for-accounts`, `limited-for-accounts-and-total` (sourced from a discount constant). Required on create.
                     example: unlimited
                     type: string
                 maximumDiscountAmount:
                     description:
-                        Maximum monetary amount that can be discounted in a single application. Expressed in the order's
-                        currency with the same scale as the price entries; honoured only when `usePercentage` is true
-                        and the computed percentage payout exceeds this cap.
+                        Maximum monetary amount that can be discounted in a single application. Expressed in the order's currency with the same scale as the price entries; honoured only when `usePercentage` is true and the computed percentage payout exceeds this cap.
                     example: 50
                     format: bigdecimal
                     minimum: 0
                     type: number
                 neverExpire:
                     description:
-                        When true the discount has no expiration date and `expirationDate` is ignored. Defaults to true
-                        on the DTO when `expirationDate` is null; persisted as expirationDate == null in the backend.
+                        When true the discount has no expiration date and `expirationDate` is ignored. Defaults to true on the DTO when `expirationDate` is null; persisted as expirationDate == null in the backend.
                     example: false
                     type: boolean
                 numberOfUse:
                     description:
-                        How many times the discount has been applied to a placed order. Read-only; incremented by the
-                        runtime when the discount fires on a checkout.
+                        How many times the discount has been applied to a placed order. Read-only; incremented by the runtime when the discount fires on a checkout.
                     example: 12
                     format: int32
                     minimum: 0
                     type: integer
                 percentageLevel1:
                     description:
-                        First tier of the discount percentage. Used when `usePercentage` is true; expressed as a decimal
-                        where 20 means 20%. Targets like `subtotal` and `total` only consume Level 1; SKU and category
-                        targets can chain Levels 1-4.
+                        First tier of the discount percentage. Used when `usePercentage` is true; expressed as a decimal where 20 means 20%. Targets like `subtotal` and `total` only consume Level 1; SKU and category targets can chain Levels 1-4.
                     example: 20
                     format: bigdecimal
                     minimum: 0
                     type: number
                 percentageLevel2:
                     description:
-                        Second tier of the discount percentage. Applies to multi-tier discount targets (chained off
-                        Level 1). Expressed as a decimal; 0 means no second tier.
+                        Second tier of the discount percentage. Applies to multi-tier discount targets (chained off Level 1). Expressed as a decimal; 0 means no second tier.
                     example: 0
                     format: bigdecimal
                     minimum: 0
                     type: number
                 percentageLevel3:
                     description:
-                        Third tier of the discount percentage. Applies to multi-tier discount targets. Expressed as a
-                        decimal; 0 means no third tier.
+                        Third tier of the discount percentage. Applies to multi-tier discount targets. Expressed as a decimal; 0 means no third tier.
                     example: 0
                     format: bigdecimal
                     minimum: 0
                     type: number
                 percentageLevel4:
                     description:
-                        Fourth tier of the discount percentage. Applies to multi-tier discount targets. Expressed as a
-                        decimal; 0 means no fourth tier.
+                        Fourth tier of the discount percentage. Applies to multi-tier discount targets. Expressed as a decimal; 0 means no fourth tier.
                     example: 0
                     format: bigdecimal
                     minimum: 0
                     type: number
                 target:
                     description:
-                        Slice of the order the discount applies to. One of `subtotal`, `total`, `products`,
-                        `categories`, `skus`, `product-groups`, `shipping` (sourced from a discount constant). Required
-                        on create. The choice decides which of the four rel collections (categories, products, account
-                        groups) the price calculation engine consults.
+                        Slice of the order the discount applies to. One of `subtotal`, `total`, `products`, `categories`, `skus`, `product-groups`, `shipping` (sourced from a discount constant). Required on create. The choice decides which of the four rel collections (categories, products, account groups) the price calculation engine consults.
                     example: subtotal
                     type: string
                 title:
                     description:
-                        Human-readable title of the discount. Shown in the admin UI, in usage reports, and in any
-                        HATEOAS link that references the discount.
+                        Human-readable title of the discount. Shown in the admin UI, in usage reports, and in any HATEOAS link that references the discount.
                     example: Summer 20% Off
                     type: string
                 useCouponCode:
                     description:
-                        When true the discount only applies when the buyer supplies the matching `couponCode` at
-                        checkout. Storefront enforces this via the cart's coupon-code workflow.
+                        When true the discount only applies when the buyer supplies the matching `couponCode` at checkout. Storefront enforces this via the cart's coupon-code workflow.
                     example: true
                     type: boolean
                 usePercentage:
                     description:
-                        When true the discount payout is computed from `percentageLevel1` ... `percentageLevel4`. When
-                        false the discount uses the `maximumDiscountAmount` fixed-amount payout.
+                        When true the discount payout is computed from `percentageLevel1` ... `percentageLevel4`. When false the discount uses the `maximumDiscountAmount` fixed-amount payout.
                     example: true
                     type: boolean
             required:
@@ -291,42 +246,35 @@ components:
             type: object
         DiscountAccountGroup:
             description:
-                Account-group binding that restricts a discount to a specific AccountGroup. Backed by discount account
-                group link; one row per (discount, accountGroup) pair, the pair is enforced unique by the underlying
-                service.
+                Account-group binding that restricts a discount to a specific AccountGroup. Backed by discount account group link; one row per (discount, accountGroup) pair, the pair is enforced unique by the underlying service.
             properties:
                 accountGroupExternalReferenceCode:
                     description:
-                        External reference code of the target AccountGroup. Either this or `accountGroupId` must be
-                        supplied on create; resolved through AccountGroupLocalService.fetchByExternalReferenceCode.
+                        External reference code of the target AccountGroup. Either this or `accountGroupId` must be supplied on create; resolved through AccountGroupLocalService.fetchByExternalReferenceCode.
                     example: ACG-PARTNERS
                     type: string
                 accountGroupId:
                     description:
-                        Internal numeric identifier of the target AccountGroup. Either this or
-                        `accountGroupExternalReferenceCode` must be supplied on create.
+                        Internal numeric identifier of the target AccountGroup. Either this or `accountGroupExternalReferenceCode` must be supplied on create.
                     example: 41001
                     format: int64
                     minimum: 0
                     type: integer
                 discountExternalReferenceCode:
                     description:
-                        External reference code of the parent discount. Populated by the server on response; on create
-                        the discount is resolved from the URL path.
+                        External reference code of the parent discount. Populated by the server on response; on create the discount is resolved from the URL path.
                     example: DISC-SUMMER-2025
                     type: string
                 discountId:
                     description:
-                        Internal numeric identifier of the parent discount. Populated by the server on response; on
-                        create the discount is resolved from the URL path.
+                        Internal numeric identifier of the parent discount. Populated by the server on response; on create the discount is resolved from the URL path.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 id:
                     description:
-                        Internal numeric identifier of the discount account group link; read-only and assigned by the
-                        service on create.
+                        Internal numeric identifier of the discount account group link; read-only and assigned by the service on create.
                     example: 30643
                     format: int64
                     minimum: 0
@@ -335,42 +283,35 @@ components:
             type: object
         DiscountCategory:
             description:
-                Category binding that restricts a discount to products tagged with a specific AssetCategory. Backed by
-                discount link where classNameId resolves to AssetCategory; honoured only when the parent discount's
-                `target` is `categories`.
+                Category binding that restricts a discount to products tagged with a specific AssetCategory. Backed by discount link where classNameId resolves to AssetCategory; honoured only when the parent discount's `target` is `categories`.
             properties:
                 categoryExternalReferenceCode:
                     description:
-                        External reference code of the target AssetCategory. Either this or `categoryId` must be
-                        supplied on create; resolved through AssetCategoryLocalService.fetchByExternalReferenceCode.
+                        External reference code of the target AssetCategory. Either this or `categoryId` must be supplied on create; resolved through AssetCategoryLocalService.fetchByExternalReferenceCode.
                     example: CAT-LAPTOPS
                     type: string
                 categoryId:
                     description:
-                        Internal numeric identifier of the target AssetCategory. Either this or
-                        `categoryExternalReferenceCode` must be supplied on create.
+                        Internal numeric identifier of the target AssetCategory. Either this or `categoryExternalReferenceCode` must be supplied on create.
                     example: 41002
                     format: int64
                     minimum: 0
                     type: integer
                 discountExternalReferenceCode:
                     description:
-                        External reference code of the parent discount. Populated by the server on response; on create
-                        the discount is resolved from the URL path.
+                        External reference code of the parent discount. Populated by the server on response; on create the discount is resolved from the URL path.
                     example: DISC-SUMMER-2025
                     type: string
                 discountId:
                     description:
-                        Internal numeric identifier of the parent discount. Populated by the server on response; on
-                        create the discount is resolved from the URL path.
+                        Internal numeric identifier of the parent discount. Populated by the server on response; on create the discount is resolved from the URL path.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 id:
                     description:
-                        Internal numeric identifier of the discount link (AssetCategory binding); read-only and assigned
-                        by the service on create.
+                        Internal numeric identifier of the discount link (AssetCategory binding); read-only and assigned by the service on create.
                     example: 30644
                     format: int64
                     minimum: 0
@@ -379,27 +320,23 @@ components:
             type: object
         DiscountProduct:
             description:
-                Product binding that restricts a discount to a specific product. Backed by discount link where
-                classNameId resolves to product; honoured only when the parent discount's `target` is `products`.
+                Product binding that restricts a discount to a specific product. Backed by discount link where classNameId resolves to product; honoured only when the parent discount's `target` is `products`.
             properties:
                 discountExternalReferenceCode:
                     description:
-                        External reference code of the parent discount. Populated by the server on response; on create
-                        the discount is resolved from the URL path.
+                        External reference code of the parent discount. Populated by the server on response; on create the discount is resolved from the URL path.
                     example: DISC-SUMMER-2025
                     type: string
                 discountId:
                     description:
-                        Internal numeric identifier of the parent discount. Populated by the server on response; on
-                        create the discount is resolved from the URL path.
+                        Internal numeric identifier of the parent discount. Populated by the server on response; on create the discount is resolved from the URL path.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 id:
                     description:
-                        Internal numeric identifier of the discount link (product binding); read-only and assigned by
-                        the service on create.
+                        Internal numeric identifier of the discount link (product binding); read-only and assigned by the service on create.
                     example: 30645
                     format: int64
                     minimum: 0
@@ -407,14 +344,12 @@ components:
                     type: integer
                 productExternalReferenceCode:
                     description:
-                        External reference code of the target product. Either this or `productId` must be supplied on
-                        create; resolved through the catalog service.
+                        External reference code of the target product. Either this or `productId` must be supplied on create; resolved through the catalog service.
                     example: PROD-HAND-SAW
                     type: string
                 productId:
                     description:
-                        Internal numeric identifier of the target product. Either this or `productExternalReferenceCode`
-                        must be supplied on create.
+                        Internal numeric identifier of the target product. Either this or `productExternalReferenceCode` must be supplied on create.
                     example: 42001
                     format: int64
                     minimum: 0
@@ -422,14 +357,11 @@ components:
             type: object
         DiscountRule:
             description:
-                Validator rule attached to a discount. Backed by discount rule; the `type` string selects the discount
-                rule type implementation (registered via OSGi), and `typeSettings` carries the JSON configuration the
-                validator consumes at price-calculation time.
+                Validator rule attached to a discount. Backed by discount rule; the `type` string selects the discount rule type implementation (registered via OSGi), and `typeSettings` carries the JSON configuration the validator consumes at price-calculation time.
             properties:
                 discountId:
                     description:
-                        Internal numeric identifier of the parent discount. Read-only; populated by the server from the
-                        URL path on create.
+                        Internal numeric identifier of the parent discount. Read-only; populated by the server from the URL path on create.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -437,8 +369,7 @@ components:
                     type: integer
                 id:
                     description:
-                        Internal numeric identifier of the discount rule; read-only and assigned by the service on
-                        create.
+                        Internal numeric identifier of the discount rule; read-only and assigned by the service on create.
                     example: 30646
                     format: int64
                     minimum: 0
@@ -446,16 +377,12 @@ components:
                     type: integer
                 type:
                     description:
-                        Validator type that selects the discount rule type implementation. Common values include
-                        `cart-total`, `categories`, `products`, and `coupon`. Required on create; unknown types raise
-                        DiscountRuleTypeException -> 400.
+                        Validator type that selects the discount rule type implementation. Common values include `cart-total`, `categories`, `products`, and `coupon`. Required on create; unknown types raise DiscountRuleTypeException -> 400.
                     example: cart-total
                     type: string
                 typeSettings:
                     description:
-                        JSON-encoded configuration consumed by the matching discount rule type. The shape depends on
-                        `type` -- for `cart-total` it carries a numeric threshold, for `categories` it carries the
-                        eligible category list, and so on.
+                        JSON-encoded configuration consumed by the matching discount rule type. The shape depends on `type` -- for `cart-total` it carries a numeric threshold, for `categories` it carries the eligible category list, and so on.
                     example: "22.50"
                     type: string
             required:
@@ -463,29 +390,23 @@ components:
             type: object
         Error:
             description:
-                Standard error envelope returned by the JAX-RS exception mappers in the impl module. Wraps the HTTP
-                status, an internal error code, and a human-readable message and description for failed requests;
-                emitted as application/json or application/xml based on the request's Accept header.
+                Standard error envelope returned by the JAX-RS exception mappers in the impl module. Wraps the HTTP status, an internal error code, and a human-readable message and description for failed requests; emitted as application/json or application/xml based on the request's Accept header.
             properties:
                 errorCode:
                     description:
-                        Internal Liferay error code that classifies the failure. Stable across releases for the same
-                        error condition; used by integration code to branch on specific failure modes without parsing
-                        the message.
+                        Internal Liferay error code that classifies the failure. Stable across releases for the same error condition; used by integration code to branch on specific failure modes without parsing the message.
                     example: 996
                     readOnly: true
                     type: integer
                 errorDescription:
                     description:
-                        Detailed, human-readable explanation of the failure intended for log entries and
-                        developer-facing tooling. May embed lookup keys that identify the offending entity.
+                        Detailed, human-readable explanation of the failure intended for log entries and developer-facing tooling. May embed lookup keys that identify the offending entity.
                     example: Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format.
                     readOnly: true
                     type: string
                 message:
                     description:
-                        Short, human-readable summary of the failure intended for end-user display. May embed lookup
-                        keys that identify the offending entity.
+                        Short, human-readable summary of the failure intended for end-user display. May embed lookup keys that identify the offending entity.
                     example: No currency exists with the key (companyId=41811, code=USD)
                     readOnly: true
                     type: string
@@ -503,27 +424,23 @@ components:
             type: object
         PriceEntry:
             description:
-                Per-SKU price entry inside a price list. Backed by price entry; binds a SKU to a regular price and an
-                optional promo price. Entries with one or more tier price overrides expose `hasTierPrice` as true.
+                Per-SKU price entry inside a price list. Backed by price entry; binds a SKU to a regular price and an optional promo price. Entries with one or more tier price overrides expose `hasTierPrice` as true.
             properties:
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form Expando custom fields attached to the underlying price entry entity. Keys are Expando
-                        attribute names; values follow each attribute's declared column type.
+                        Free-form Expando custom fields attached to the underlying price entry entity. Keys are Expando attribute names; values follow each attribute's declared column type.
                     example:
                         customField1: value1
                     type: object
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update. Must be unique per price entry within the company;
-                        matched on the persisted record.
+                        Idempotency key for create and update. Must be unique per price entry within the company; matched on the persisted record.
                     example: PE-HAND-SAW-DEFAULT
                     type: string
                 hasTierPrice:
                     description:
-                        Whether the entry has one or more tier price overrides. Read-only; computed by the runtime from
-                        the tier-price collection on every fetch.
+                        Whether the entry has one or more tier price overrides. Read-only; computed by the runtime from the tier-price collection on every fetch.
                     example: true
                     type: boolean
                 id:
@@ -535,58 +452,50 @@ components:
                     type: integer
                 price:
                     description:
-                        Regular selling price for the SKU within this price list. Expressed in the price list's currency
-                        with the price-list scale (typically 2 decimals); rejected when negative.
+                        Regular selling price for the SKU within this price list. Expressed in the price list's currency with the price-list scale (typically 2 decimals); rejected when negative.
                     example: 99.99
                     format: bigdecimal
                     minimum: 0
                     type: number
                 priceListExternalReferenceCode:
                     description:
-                        External reference code of the parent price list. Populated by the server on response; on create
-                        the parent is resolved from the URL path.
+                        External reference code of the parent price list. Populated by the server on response; on create the parent is resolved from the URL path.
                     example: PL-DEFAULT-USD
                     type: string
                 priceListId:
                     description:
-                        Internal numeric identifier of the parent price list. Populated by the server on response; on
-                        create the parent is resolved from the URL path.
+                        Internal numeric identifier of the parent price list. Populated by the server on response; on create the parent is resolved from the URL path.
                     example: 20078
                     format: int64
                     minimum: 0
                     type: integer
                 promoPrice:
                     description:
-                        Promotional price applied when a promotion is active for the SKU. Expressed in the price list's
-                        currency; rejected when negative.
+                        Promotional price applied when a promotion is active for the SKU. Expressed in the price list's currency; rejected when negative.
                     example: 89.99
                     format: bigdecimal
                     minimum: 0
                     type: number
                 sku:
                     description:
-                        SKU code of the target SKU. Read-only on update; on create the SKU is resolved by `skuId` or
-                        `skuExternalReferenceCode`.
+                        SKU code of the target SKU. Read-only on update; on create the SKU is resolved by `skuId` or `skuExternalReferenceCode`.
                     example: HAND-SAW-A1
                     type: string
                 skuExternalReferenceCode:
                     description:
-                        External reference code of the target SKU. Either this or `skuId` must be supplied on create;
-                        resolved through the catalog service.
+                        External reference code of the target SKU. Either this or `skuId` must be supplied on create; resolved through the catalog service.
                     example: SKU-HAND-SAW-A1
                     type: string
                 skuId:
                     description:
-                        Internal numeric identifier of the target SKU. Either this or `skuExternalReferenceCode` must be
-                        supplied on create.
+                        Internal numeric identifier of the target SKU. Either this or `skuExternalReferenceCode` must be supplied on create.
                     example: 42101
                     format: int64
                     minimum: 0
                     type: integer
                 tierPrices:
                     description:
-                        Quantity-break overrides cascaded on upsert. Supplying this array on POST/PATCH replaces the
-                        previous tier-price collection.
+                        Quantity-break overrides cascaded on upsert. Supplying this array on POST/PATCH replaces the previous tier-price collection.
                     items:
                         $ref: "#/components/schemas/TierPrice"
                     type: array
@@ -595,56 +504,47 @@ components:
             type: object
         PriceList:
             description:
-                Versioned price catalog scoped to a catalog. Backed by price list; carries the currency, the resolution
-                priority, an optional display/expiration window, and nested priceEntries and priceListAccountGroups
-                collections. The DTO field `active` is the logical inverse of the backend `inactive` flag.
+                Versioned price catalog scoped to a catalog. Backed by price list; carries the currency, the resolution priority, an optional display/expiration window, and nested priceEntries and priceListAccountGroups collections. The DTO field `active` is the logical inverse of the backend `inactive` flag.
             properties:
                 active:
                     description:
-                        Whether the price list is currently enabled. Inverse of the backend `inactive` flag; when false
-                        the runtime skips the list during price resolution.
+                        Whether the price list is currently enabled. Inverse of the backend `inactive` flag; when false the runtime skips the list during price resolution.
                     example: true
                     type: boolean
                 catalogId:
                     description:
-                        Internal numeric identifier of the parent catalog. Resolved by the converter on the price list's
-                        groupId; 0 when the lookup fails.
+                        Internal numeric identifier of the parent catalog. Resolved by the converter on the price list's groupId; 0 when the lookup fails.
                     example: 23130
                     format: int64
                     minimum: 0
                     type: integer
                 currencyCode:
                     description:
-                        ISO 4217 code of the currency the prices are expressed in. Must match an existing currency in
-                        the company scope (matched on the persisted record).
+                        ISO 4217 code of the currency the prices are expressed in. Must match an existing currency in the company scope (matched on the persisted record).
                     example: USD
                     type: string
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form Expando custom fields attached to the underlying price list entity. Keys are Expando
-                        attribute names; values follow each attribute's declared column type.
+                        Free-form Expando custom fields attached to the underlying price list entity. Keys are Expando attribute names; values follow each attribute's declared column type.
                     example:
                         customField1: value1
                     type: object
                 displayDate:
                     description:
-                        Date and time at which the price list becomes eligible for price resolution. Accepted in the
-                        request locale and time zone, normalized to the portal's time zone.
+                        Date and time at which the price list becomes eligible for price resolution. Accepted in the request locale and time zone, normalized to the portal's time zone.
                     example: 2025-01-01
                     format: date
                     type: string
                 expirationDate:
                     description:
-                        Date and time after which the price list stops applying. Ignored when `neverExpire` is true;
-                        accepted in the request locale and time zone.
+                        Date and time after which the price list stops applying. Ignored when `neverExpire` is true; accepted in the request locale and time zone.
                     example: 2099-12-31
                     format: date
                     type: string
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update. Must be unique per price list within the company; matched
-                        on the persisted record.
+                        Idempotency key for create and update. Must be unique per price list within the company; matched on the persisted record.
                     example: PL-DEFAULT-USD
                     type: string
                 id:
@@ -656,34 +556,29 @@ components:
                     type: integer
                 name:
                     description:
-                        Human-readable name of the price list shown in the admin UI. Indexed for search and exposed as
-                        the OData `name` field for filter and sort.
+                        Human-readable name of the price list shown in the admin UI. Indexed for search and exposed as the OData `name` field for filter and sort.
                     example: Default USD Price List
                     type: string
                 neverExpire:
                     description:
-                        When true the price list has no expiration date and `expirationDate` is ignored. Defaults to
-                        true on the DTO when `expirationDate` is null.
+                        When true the price list has no expiration date and `expirationDate` is ignored. Defaults to true on the DTO when `expirationDate` is null.
                     example: false
                     type: boolean
                 priceEntries:
                     description:
-                        Per-SKU price entries cascaded on upsert. Supplying this array on POST/PUT replaces the previous
-                        price-entry collection.
+                        Per-SKU price entries cascaded on upsert. Supplying this array on POST/PUT replaces the previous price-entry collection.
                     items:
                         $ref: "#/components/schemas/PriceEntry"
                     type: array
                 priceListAccountGroups:
                     description:
-                        Account-group bindings cascaded on upsert. Supplying this array on POST/PUT replaces the
-                        previous binding collection.
+                        Account-group bindings cascaded on upsert. Supplying this array on POST/PUT replaces the previous binding collection.
                     items:
                         $ref: "#/components/schemas/PriceListAccountGroup"
                     type: array
                 priority:
                     description:
-                        Resolution priority used when more than one eligible price list applies to a buyer. Higher
-                        values win; ties are broken by externalReferenceCode lexicographic order.
+                        Resolution priority used when more than one eligible price list applies to a buyer. Higher values win; ties are broken by externalReferenceCode lexicographic order.
                     example: 1.0
                     format: double
                     type: number
@@ -693,28 +588,23 @@ components:
             type: object
         PriceListAccountGroup:
             description:
-                Account-group binding that restricts a price list to a specific AccountGroup. Backed by price list
-                account group link; the `order` integer controls the resolution priority when multiple account-group
-                bindings match the buyer.
+                Account-group binding that restricts a price list to a specific AccountGroup. Backed by price list account group link; the `order` integer controls the resolution priority when multiple account-group bindings match the buyer.
             properties:
                 accountGroupExternalReferenceCode:
                     description:
-                        External reference code of the target AccountGroup. Either this or `accountGroupId` must be
-                        supplied on create; resolved through AccountGroupLocalService.fetchByExternalReferenceCode.
+                        External reference code of the target AccountGroup. Either this or `accountGroupId` must be supplied on create; resolved through AccountGroupLocalService.fetchByExternalReferenceCode.
                     example: ACG-PARTNERS
                     type: string
                 accountGroupId:
                     description:
-                        Internal numeric identifier of the target AccountGroup. Either this or
-                        `accountGroupExternalReferenceCode` must be supplied on create.
+                        Internal numeric identifier of the target AccountGroup. Either this or `accountGroupExternalReferenceCode` must be supplied on create.
                     example: 41001
                     format: int64
                     minimum: 0
                     type: integer
                 id:
                     description:
-                        Internal numeric identifier of the price list account group link; read-only and assigned by the
-                        service on create.
+                        Internal numeric identifier of the price list account group link; read-only and assigned by the service on create.
                     example: 30647
                     format: int64
                     minimum: 0
@@ -722,22 +612,19 @@ components:
                     type: integer
                 order:
                     description:
-                        Resolution priority within the (price list, account group) bindings. Used as a tie-breaker when
-                        multiple account-group bindings match the buyer; lower values evaluated first.
+                        Resolution priority within the (price list, account group) bindings. Used as a tie-breaker when multiple account-group bindings match the buyer; lower values evaluated first.
                     example: 1
                     format: int32
                     minimum: 0
                     type: integer
                 priceListExternalReferenceCode:
                     description:
-                        External reference code of the parent price list. Populated by the server on response; on create
-                        the parent is resolved from the URL path.
+                        External reference code of the parent price list. Populated by the server on response; on create the parent is resolved from the URL path.
                     example: PL-DEFAULT-USD
                     type: string
                 priceListId:
                     description:
-                        Internal numeric identifier of the parent price list. Populated by the server on response; on
-                        create the parent is resolved from the URL path.
+                        Internal numeric identifier of the parent price list. Populated by the server on response; on create the parent is resolved from the URL path.
                     example: 30130
                     format: int64
                     minimum: 0
@@ -745,22 +632,18 @@ components:
             type: object
         TierPrice:
             description:
-                Quantity-break override on a price entry. Backed by tier price; the DTO's `minimumQuantity` maps to the
-                backend `minQuantity` BigDecimal threshold above which `price` (and optional `promoPrice`) supersede the
-                parent price entry.
+                Quantity-break override on a price entry. Backed by tier price; the DTO's `minimumQuantity` maps to the backend `minQuantity` BigDecimal threshold above which `price` (and optional `promoPrice`) supersede the parent price entry.
             properties:
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form Expando custom fields attached to the underlying tier price entity. Keys are Expando
-                        attribute names; values follow each attribute's declared column type.
+                        Free-form Expando custom fields attached to the underlying tier price entity. Keys are Expando attribute names; values follow each attribute's declared column type.
                     example:
                         customField1: value1
                     type: object
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update. Must be unique per tier price within the company; matched
-                        on the persisted record.
+                        Idempotency key for create and update. Must be unique per tier price within the company; matched on the persisted record.
                     example: TP-HAND-SAW-Q10
                     type: string
                 id:
@@ -772,39 +655,33 @@ components:
                     type: integer
                 minimumQuantity:
                     description:
-                        Quantity threshold above which the tier `price` (and optional `promoPrice`) supersedes the
-                        parent price entry. Maps to tier price.minQuantity (BigDecimal); supplied as integer in the DTO
-                        and converted on persistence.
+                        Quantity threshold above which the tier `price` (and optional `promoPrice`) supersedes the parent price entry. Maps to tier price.minQuantity (BigDecimal); supplied as integer in the DTO and converted on persistence.
                     example: 10
                     format: int32
                     minimum: 0
                     type: integer
                 price:
                     description:
-                        Override price applied at or above `minimumQuantity`. Expressed in the parent price list's
-                        currency with the price-list scale; rejected when negative.
+                        Override price applied at or above `minimumQuantity`. Expressed in the parent price list's currency with the price-list scale; rejected when negative.
                     example: 89.99
                     format: bigdecimal
                     minimum: 0
                     type: number
                 priceEntryExternalReferenceCode:
                     description:
-                        External reference code of the parent price entry. Populated by the server on response; on
-                        create the parent is resolved from the URL path.
+                        External reference code of the parent price entry. Populated by the server on response; on create the parent is resolved from the URL path.
                     example: PE-HAND-SAW-DEFAULT
                     type: string
                 priceEntryId:
                     description:
-                        Internal numeric identifier of the parent price entry. Populated by the server on response; on
-                        create the parent is resolved from the URL path.
+                        Internal numeric identifier of the parent price entry. Populated by the server on response; on create the parent is resolved from the URL path.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 promoPrice:
                     description:
-                        Promotional override price applied at or above `minimumQuantity` when a promotion is active.
-                        Expressed in the parent price list's currency; rejected when negative.
+                        Promotional override price applied at or above `minimumQuantity` when a promotion is active. Expressed in the parent price list's currency; rejected when negative.
                     example: 79.99
                     format: bigdecimal
                     minimum: 0
@@ -812,33 +689,7 @@ components:
             type: object
 info:
     description:
-        "Administrative REST API for the Liferay Commerce pricing domain. It manages discount programs and price-list
-        catalogs used to price products for buyers -- discounts (with their coupon codes, tier percentages, expiration
-        windows, and account-group/category/product/rule scope), price lists (with their per-SKU price entries,
-        tier-quantity break prices, and account-group eligibility), and the rules that decide when each program applies.
-        The API targets back-office administrators and integration tooling; storefront price resolution belongs to
-        headless-commerce-delivery-cart and the runtime the price calculation engine services instead. Most resources
-        are addressable both by internal ID (`/<id>`) and by external reference code
-        (`/by-externalReferenceCode/<externalReferenceCode>`); POST against the external-reference-code path is upsert.
-        PATCH applies JSON Merge Patch (only the supplied fields are modified), while PUT replaces the resource. For the
-        catalog, account, channel, order, and payment surfaces see the matching `headless-commerce-admin-*` modules. --
-        Common workflows: Define a tiered discount end-to-end -- (1) POST /discounts with title, target (for example
-        `products` or `subtotal`), limitationType, and the percentage levels (or a fixed maximumDiscountAmount) to
-        create the discount (POST /discounts/by-externalReferenceCode/<externalReferenceCode> is upsert); (2) POST
-        /discounts/<id>/discountAccountGroups, /discountCategories, and /discountProducts to scope eligibility; (3) POST
-        /discounts/<id>/discountRules to attach pre-qualification, post-qualification, or target validators carrying a
-        JSON typeSettings payload; (4) PATCH /discounts/<id> to flip `active`, rotate the couponCode, or adjust the
-        displayDate/expirationDate window. -- Publish a contract or promotion price list -- (1) POST /priceLists with
-        name, currencyCode, catalogId, and priority to create the price list; (2) POST /priceLists/<id>/priceEntries per
-        SKU with sku (or skuExternalReferenceCode), price, and optional promoPrice to set the per-SKU price; (3) POST
-        /priceEntries/<id>/tierPrices to add quantity-break overrides keyed by minimumQuantity; (4) POST
-        /priceLists/<id>/priceListAccountGroups to limit visibility to specific AccountGroups with an ordering priority.
-        -- Maintain an existing price entry -- (1) GET /priceLists/<id>/priceEntries (or
-        /priceLists/by-externalReferenceCode/<externalReferenceCode>/priceEntries) to enumerate the per-SKU entries; (2)
-        PATCH /priceEntries/<id> (or /priceEntries/by-externalReferenceCode/<externalReferenceCode>) to adjust price or
-        promoPrice; (3) PATCH /tierPrices/<id> or DELETE /tierPrices/<id> to refresh or retire a quantity-break
-        override. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.commerce.admin.pricing.client', and version '4.0.49'."
+        "Administrative REST API for the Liferay Commerce pricing domain. It manages discount programs and price-list catalogs used to price products for buyers -- discounts (with their coupon codes, tier percentages, expiration windows, and account-group/category/product/rule scope), price lists (with their per-SKU price entries, tier-quantity break prices, and account-group eligibility), and the rules that decide when each program applies. The API targets back-office administrators and integration tooling; storefront price resolution belongs to headless-commerce-delivery-cart and the runtime the price calculation engine services instead. Most resources are addressable both by internal ID (`/<id>`) and by external reference code (`/by-externalReferenceCode/<externalReferenceCode>`); POST against the external-reference-code path is upsert. PATCH applies JSON Merge Patch (only the supplied fields are modified), while PUT replaces the resource. For the catalog, account, channel, order, and payment surfaces see the matching `headless-commerce-admin-*` modules. -- Common workflows: Define a tiered discount end-to-end -- (1) POST /discounts with title, target (for example `products` or `subtotal`), limitationType, and the percentage levels (or a fixed maximumDiscountAmount) to create the discount (POST /discounts/by-externalReferenceCode/<externalReferenceCode> is upsert); (2) POST /discounts/<id>/discountAccountGroups, /discountCategories, and /discountProducts to scope eligibility; (3) POST /discounts/<id>/discountRules to attach pre-qualification, post-qualification, or target validators carrying a JSON typeSettings payload; (4) PATCH /discounts/<id> to flip `active`, rotate the couponCode, or adjust the displayDate/expirationDate window. -- Publish a contract or promotion price list -- (1) POST /priceLists with name, currencyCode, catalogId, and priority to create the price list; (2) POST /priceLists/<id>/priceEntries per SKU with sku (or skuExternalReferenceCode), price, and optional promoPrice to set the per-SKU price; (3) POST /priceEntries/<id>/tierPrices to add quantity-break overrides keyed by minimumQuantity; (4) POST /priceLists/<id>/priceListAccountGroups to limit visibility to specific AccountGroups with an ordering priority. -- Maintain an existing price entry -- (1) GET /priceLists/<id>/priceEntries (or /priceLists/by-externalReferenceCode/<externalReferenceCode>/priceEntries) to enumerate the per-SKU entries; (2) PATCH /priceEntries/<id> (or /priceEntries/by-externalReferenceCode/<externalReferenceCode>) to adjust price or promoPrice; (3) PATCH /tierPrices/<id> or DELETE /tierPrices/<id> to refresh or retire a quantity-break override. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.pricing.client', and version '4.0.49'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -849,8 +700,7 @@ paths:
     /discount/by-externalReferenceCode/{externalReferenceCode}/discountRules:
         get:
             description:
-                Lists the discount rule entries attached to a discount addressed by externalReferenceCode. ERC resolved
-                before the rule lookup; 404 when ERC unknown.
+                Lists the discount rule entries attached to a discount addressed by externalReferenceCode. ERC resolved before the rule lookup; 404 when ERC unknown.
             operationId: getDiscountByExternalReferenceCodeDiscountRulesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -909,8 +759,7 @@ paths:
                 -   DiscountRule
         post:
             description:
-                Creates a discount rule under a discount addressed by externalReferenceCode. Same create pipeline as
-                postDiscountIdDiscountRule with ERC-based discount resolution.
+                Creates a discount rule under a discount addressed by externalReferenceCode. Same create pipeline as postDiscountIdDiscountRule with ERC-based discount resolution.
             operationId: postDiscountByExternalReferenceCodeDiscountRule
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -982,9 +831,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount rule from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the discount rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -1028,8 +875,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount account group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount account group binding.
             summary: Deletes a Discount Account Group by ID.
             tags:
                 -   DiscountAccountGroup
@@ -1063,8 +909,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount category
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount category binding.
             summary: Deletes a Discount Category by ID.
             tags:
                 -   DiscountCategory
@@ -1098,8 +943,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount product
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount product binding.
             security:
                 -   BasicAuth: []
                 -   BearerAuth: []
@@ -1144,8 +988,7 @@ paths:
                 -   DiscountRule
         get:
             description:
-                Fetches a discount rule by internal ID. Delegates to the service. Validation -- a not-found error for
-                discount rule -> 404 when the ID is unknown.
+                Fetches a discount rule by internal ID. Delegates to the service. Validation -- a not-found error for discount rule -> 404 when the ID is unknown.
             operationId: getDiscountRule
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -1270,9 +1113,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount rule from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the discount rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -1289,8 +1130,7 @@ paths:
     /discounts:
         get:
             description:
-                Lists active discount entries scoped to the current company. Delegates to the service with Pagination.
-                No OData filter or sort surface is exposed; results follow the service default ordering.
+                Lists active discount entries scoped to the current company. Delegates to the service with Pagination. No OData filter or sort surface is exposed; results follow the service default ordering.
             operationId: getDiscountsPage
             parameters:
                 -   $ref: "#/components/parameters/pageQueryParam"
@@ -1345,12 +1185,7 @@ paths:
                 -   Discount
         post:
             description:
-                Creates or updates a discount via upsert-by-ERC. Delegates to the service with the supplied DTO and
-                cascades the nested discountAccountGroups, discountCategories, discountProducts, and discountRules
-                collections through the matching `add` helpers. Validation -- a title validation error, a target
-                validation error, a coupon-code validation error, DiscountLimitationTypeException,
-                DiscountMaxPriceValueException, DiscountMinPriceValueException, DiscountDisplayDateException, and
-                DiscountExpirationDateException all map to 400 Bad Request via module-local exception mappers.
+                Creates or updates a discount via upsert-by-ERC. Delegates to the service with the supplied DTO and cascades the nested discountAccountGroups, discountCategories, discountProducts, and discountRules collections through the matching `add` helpers. Validation -- a title validation error, a target validation error, a coupon-code validation error, DiscountLimitationTypeException, DiscountMaxPriceValueException, DiscountMinPriceValueException, DiscountDisplayDateException, and DiscountExpirationDateException all map to 400 Bad Request via module-local exception mappers.
             operationId: postDiscount
             requestBody:
                 content:
@@ -1420,9 +1255,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -1439,8 +1272,7 @@ paths:
     /discounts/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes a discount addressed by externalReferenceCode. Same cascade semantics as deleteDiscount; 404
-                when the ERC is unknown.
+                Deletes a discount addressed by externalReferenceCode. Same cascade semantics as deleteDiscount; 404 when the ERC is unknown.
             operationId: deleteDiscountByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1473,8 +1305,7 @@ paths:
                 -   Discount
         get:
             description:
-                Fetches a discount by externalReferenceCode (ERC). Delegates to the service. Validation -- 404 when no
-                discount with that ERC exists in the company scope.
+                Fetches a discount by externalReferenceCode (ERC). Delegates to the service. Validation -- 404 when no discount with that ERC exists in the company scope.
             operationId: getDiscountByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1537,8 +1368,7 @@ paths:
                 -   Discount
         patch:
             description:
-                Partially updates a discount addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when
-                the ERC is unknown.
+                Partially updates a discount addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when the ERC is unknown.
             operationId: patchDiscountByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1600,9 +1430,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -1618,8 +1446,7 @@ paths:
                 -   Discount
         put:
             description:
-                Creates or replaces a discount addressed by externalReferenceCode. Same upsert pipeline as postDiscount
-                -- delegates to the service and cascades the nested rel collections.
+                Creates or replaces a discount addressed by externalReferenceCode. Same upsert pipeline as postDiscount -- delegates to the service and cascades the nested rel collections.
             operationId: putDiscountByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1691,9 +1518,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -1710,8 +1535,7 @@ paths:
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discountAccountGroups:
         get:
             description:
-                Lists the account-group rels attached to a discount addressed by externalReferenceCode. Resolves the
-                discount (404 when ERC unknown), then delegates to the service.
+                Lists the account-group rels attached to a discount addressed by externalReferenceCode. Resolves the discount (404 when ERC unknown), then delegates to the service.
             operationId: getDiscountByExternalReferenceCodeDiscountAccountGroupsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1767,8 +1591,7 @@ paths:
                 -   DiscountAccountGroup
         post:
             description:
-                Attaches an AccountGroup to a discount addressed by externalReferenceCode. Same create pipeline as
-                postDiscountIdDiscountAccountGroup with ERC-based discount resolution.
+                Attaches an AccountGroup to a discount addressed by externalReferenceCode. Same create pipeline as postDiscountIdDiscountAccountGroup with ERC-based discount resolution.
             operationId: postDiscountByExternalReferenceCodeDiscountAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1850,9 +1673,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -1869,8 +1690,7 @@ paths:
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discountCategories:
         get:
             description:
-                Lists the AssetCategory bindings attached to a discount addressed by externalReferenceCode. ERC resolved
-                before the rel lookup; 404 when ERC unknown.
+                Lists the AssetCategory bindings attached to a discount addressed by externalReferenceCode. ERC resolved before the rel lookup; 404 when ERC unknown.
             operationId: getDiscountByExternalReferenceCodeDiscountCategoriesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1926,8 +1746,7 @@ paths:
                 -   DiscountCategory
         post:
             description:
-                Attaches an AssetCategory to a discount addressed by externalReferenceCode. Same create pipeline as
-                postDiscountIdDiscountCategory with ERC-based discount resolution.
+                Attaches an AssetCategory to a discount addressed by externalReferenceCode. Same create pipeline as postDiscountIdDiscountCategory with ERC-based discount resolution.
             operationId: postDiscountByExternalReferenceCodeDiscountCategory
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -1999,9 +1818,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2018,8 +1835,7 @@ paths:
     /discounts/by-externalReferenceCode/{externalReferenceCode}/discountProducts:
         get:
             description:
-                Lists the product bindings attached to a discount addressed by externalReferenceCode. ERC resolved
-                before the rel lookup; 404 when ERC unknown.
+                Lists the product bindings attached to a discount addressed by externalReferenceCode. ERC resolved before the rel lookup; 404 when ERC unknown.
             operationId: getDiscountByExternalReferenceCodeDiscountProductsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2075,8 +1891,7 @@ paths:
                 -   DiscountProduct
         post:
             description:
-                Attaches a product product to a discount addressed by externalReferenceCode. Same create pipeline as
-                postDiscountIdDiscountProduct with ERC-based discount resolution.
+                Attaches a product product to a discount addressed by externalReferenceCode. Same create pipeline as postDiscountIdDiscountProduct with ERC-based discount resolution.
             operationId: postDiscountByExternalReferenceCodeDiscountProduct
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2148,9 +1963,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2167,9 +1980,7 @@ paths:
     /discounts/{id}:
         delete:
             description:
-                Deletes a discount by internal ID. Delegates to the service. Side effects -- cascades the deletion of
-                discount account group link, discount link (account, category, product, channel, order-type), and
-                discount rule rows.
+                Deletes a discount by internal ID. Delegates to the service. Side effects -- cascades the deletion of discount account group link, discount link (account, category, product, channel, order-type), and discount rule rows.
             operationId: deleteDiscount
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2202,9 +2013,7 @@ paths:
                 -   Discount
         get:
             description:
-                Fetches a discount by internal ID. Delegates to the service and returns a Discount DTO including its
-                account-group, category, product, and rule rels. Validation -- a not-found error for discount -> 404
-                when the ID is unknown.
+                Fetches a discount by internal ID. Delegates to the service and returns a Discount DTO including its account-group, category, product, and rule rels. Validation -- a not-found error for discount -> 404 when the ID is unknown.
             operationId: getDiscount
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2267,9 +2076,7 @@ paths:
                 -   Discount
         patch:
             description:
-                Partially updates a discount by internal ID. Applies JSON Merge Patch over the supplied fields, then
-                cascades any supplied nested rel collections. Validation -- a not-found error for discount -> 404 when
-                the ID is unknown.
+                Partially updates a discount by internal ID. Applies JSON Merge Patch over the supplied fields, then cascades any supplied nested rel collections. Validation -- a not-found error for discount -> 404 when the ID is unknown.
             operationId: patchDiscount
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2331,9 +2138,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2406,8 +2211,7 @@ paths:
                 -   DiscountAccountGroup
         post:
             description:
-                Attaches an AccountGroup to a discount addressed by internal ID. Delegates to the service. Validation --
-                a duplicate-key error -> 409 Conflict when the (discount, accountGroup) pair already exists.
+                Attaches an AccountGroup to a discount addressed by internal ID. Delegates to the service. Validation -- a duplicate-key error -> 409 Conflict when the (discount, accountGroup) pair already exists.
             operationId: postDiscountIdDiscountAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2489,9 +2293,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2508,8 +2310,7 @@ paths:
     /discounts/{id}/discountCategories:
         get:
             description:
-                Lists the AssetCategory bindings attached to a discount addressed by internal ID. Reads discount link
-                rows filtered by the AssetCategory class name.
+                Lists the AssetCategory bindings attached to a discount addressed by internal ID. Reads discount link rows filtered by the AssetCategory class name.
             operationId: getDiscountIdDiscountCategoriesPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2565,8 +2366,7 @@ paths:
                 -   DiscountCategory
         post:
             description:
-                Attaches an AssetCategory to a discount addressed by internal ID. Delegates to the service with the
-                AssetCategory class name. The category is resolved by ID or externalReferenceCode from the supplied DTO.
+                Attaches an AssetCategory to a discount addressed by internal ID. Delegates to the service with the AssetCategory class name. The category is resolved by ID or externalReferenceCode from the supplied DTO.
             operationId: postDiscountIdDiscountCategory
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2638,9 +2438,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2657,8 +2455,7 @@ paths:
     /discounts/{id}/discountProducts:
         get:
             description:
-                Lists the product bindings attached to a discount addressed by internal ID. Reads discount link rows
-                filtered by the product class name.
+                Lists the product bindings attached to a discount addressed by internal ID. Reads discount link rows filtered by the product class name.
             operationId: getDiscountIdDiscountProductsPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2714,8 +2511,7 @@ paths:
                 -   DiscountProduct
         post:
             description:
-                Attaches a product product to a discount addressed by internal ID. Delegates to the service with the
-                product class name. The product is resolved by ID or externalReferenceCode from the supplied DTO.
+                Attaches a product product to a discount addressed by internal ID. Delegates to the service with the product class name. The product is resolved by ID or externalReferenceCode from the supplied DTO.
             operationId: postDiscountIdDiscountProduct
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2787,9 +2583,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -2806,8 +2600,7 @@ paths:
     /discounts/{id}/discountRules:
         get:
             description:
-                Lists the discount rule entries attached to a discount addressed by internal ID. Delegates to the
-                service.
+                Lists the discount rule entries attached to a discount addressed by internal ID. Delegates to the service.
             operationId: getDiscountIdDiscountRulesPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2866,9 +2659,7 @@ paths:
                 -   DiscountRule
         post:
             description:
-                Creates a discount rule under a discount addressed by internal ID. Delegates to the service with the
-                supplied type (validator type, for example `cart-total`) and typeSettings JSON. Validation --
-                DiscountRuleTypeException -> 400 Bad Request when the type is unknown.
+                Creates a discount rule under a discount addressed by internal ID. Delegates to the service with the supplied type (validator type, for example `cart-total`) and typeSettings JSON. Validation -- DiscountRuleTypeException -> 400 Bad Request when the type is unknown.
             operationId: postDiscountIdDiscountRule
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2940,9 +2731,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3055,8 +2844,7 @@ paths:
                 -   PriceEntry
         patch:
             description:
-                Partially updates a price entry addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when
-                ERC unknown.
+                Partially updates a price entry addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when ERC unknown.
             operationId: patchPriceEntryByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3118,9 +2906,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price entry from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price entry from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3137,8 +2923,7 @@ paths:
     /priceEntries/by-externalReferenceCode/{externalReferenceCode}/tierPrices:
         get:
             description:
-                Lists the tier price rows under a price entry addressed by externalReferenceCode. ERC resolved before
-                the lookup; 404 when ERC unknown.
+                Lists the tier price rows under a price entry addressed by externalReferenceCode. ERC resolved before the lookup; 404 when ERC unknown.
             operationId: getPriceEntryByExternalReferenceCodeTierPricesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3197,8 +2982,7 @@ paths:
                 -   TierPrice
         post:
             description:
-                Creates a tier price under the parent price entry by externalReferenceCode. Same create pipeline as
-                postPriceEntryIdTierPrice with ERC-based parent resolution.
+                Creates a tier price under the parent price entry by externalReferenceCode. Same create pipeline as postPriceEntryIdTierPrice with ERC-based parent resolution.
             operationId: postPriceEntryByExternalReferenceCodeTierPrice
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3270,8 +3054,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        a duplicate-key error -- a tier price for this minimum quantity already exists in the price
-                        entry.
+                        a duplicate-key error -- a tier price for this minimum quantity already exists in the price entry.
                 422:
                     content:
                         application/json:
@@ -3281,9 +3064,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price entry from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price entry from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3300,8 +3081,7 @@ paths:
     /priceEntries/{id}:
         delete:
             description:
-                Deletes a price entry by internal ID. Delegates to the service. Side effects -- cascades the deletion of
-                all tier price rows pointing at the entry.
+                Deletes a price entry by internal ID. Delegates to the service. Side effects -- cascades the deletion of all tier price rows pointing at the entry.
             operationId: deletePriceEntry
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3334,8 +3114,7 @@ paths:
                 -   PriceEntry
         get:
             description:
-                Fetches a price entry by internal ID. Delegates to the service. Validation -- NoSuchPriceEntryException
-                -> 404 when the ID is unknown.
+                Fetches a price entry by internal ID. Delegates to the service. Validation -- NoSuchPriceEntryException -> 404 when the ID is unknown.
             operationId: getPriceEntry
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3398,8 +3177,7 @@ paths:
                 -   PriceEntry
         patch:
             description:
-                Partially updates a price entry by internal ID. JSON Merge Patch over price, promoPrice, and the nested
-                tierPrices collection.
+                Partially updates a price entry by internal ID. JSON Merge Patch over price, promoPrice, and the nested tierPrices collection.
             operationId: patchPriceEntry
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3461,9 +3239,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price entry from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price entry from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3480,8 +3256,7 @@ paths:
     /priceEntries/{id}/tierPrices:
         get:
             description:
-                Lists the tier price rows under a price entry addressed by internal ID. Delegates to the service.
-                Validation -- NoSuchPriceEntryException -> 404 when the parent ID is unknown.
+                Lists the tier price rows under a price entry addressed by internal ID. Delegates to the service. Validation -- NoSuchPriceEntryException -> 404 when the parent ID is unknown.
             operationId: getPriceEntryIdTierPricesPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3540,10 +3315,7 @@ paths:
                 -   TierPrice
         post:
             description:
-                Creates a tier price under the parent price entry by internal ID. Calls
-                TierPriceUtil.addOrUpdateCommerceTierPriceEntry -> the service; the request body's minimumQuantity maps
-                to the backend minQuantity BigDecimal. Validation -- a duplicate-key error -> 409 Conflict when the
-                (priceEntry, minimumQuantity) pair already exists; TierPriceMinimumQuantityException -> 400 Bad Request.
+                Creates a tier price under the parent price entry by internal ID. Calls TierPriceUtil.addOrUpdateCommerceTierPriceEntry -> the service; the request body's minimumQuantity maps to the backend minQuantity BigDecimal. Validation -- a duplicate-key error -> 409 Conflict when the (priceEntry, minimumQuantity) pair already exists; TierPriceMinimumQuantityException -> 400 Bad Request.
             operationId: postPriceEntryIdTierPrice
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -3615,8 +3387,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        a duplicate-key error -- a tier price for this minimum quantity already exists in the price
-                        entry.
+                        a duplicate-key error -- a tier price for this minimum quantity already exists in the price entry.
                 422:
                     content:
                         application/json:
@@ -3626,9 +3397,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price entry from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price entry from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3672,16 +3441,14 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list account
-                        group binding.
+                        The authenticated user lacks permission for the requested action on this price list account group binding.
             summary: Deletes a Price List Account Group by ID.
             tags:
                 -   PriceListAccountGroup
     /priceLists:
         get:
             description:
-                Lists price list entries scoped to the current company. Calls SearchUtil.search backed by price list.
-                Filterable -- `name` (sourced from PriceListEntityModel). Sortable -- `name`.
+                Lists price list entries scoped to the current company. Calls SearchUtil.search backed by price list. Filterable -- `name` (sourced from PriceListEntityModel). Sortable -- `name`.
             operationId: getPriceListsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
@@ -3738,10 +3505,7 @@ paths:
                 -   PriceList
         post:
             description:
-                Creates or updates a price list via upsert-by-ERC. Delegates to the service with the supplied DTO and
-                cascades the nested priceEntries and priceListAccountGroups collections. Validation --
-                PriceListDisplayDateException, PriceListExpirationDateException, PriceListMinPriceValueException,
-                PriceListMaxPriceValueException, and RequiredBasePriceListException -> 400 Bad Request.
+                Creates or updates a price list via upsert-by-ERC. Delegates to the service with the supplied DTO and cascades the nested priceEntries and priceListAccountGroups collections. Validation -- PriceListDisplayDateException, PriceListExpirationDateException, PriceListMinPriceValueException, PriceListMaxPriceValueException, and RequiredBasePriceListException -> 400 Bad Request.
             operationId: postPriceList
             requestBody:
                 content:
@@ -3811,9 +3575,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3926,8 +3688,7 @@ paths:
                 -   PriceList
         patch:
             description:
-                Partially updates a price list addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when
-                ERC unknown.
+                Partially updates a price list addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when ERC unknown.
             operationId: patchPriceListByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3989,9 +3750,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4007,8 +3766,7 @@ paths:
                 -   PriceList
         put:
             description:
-                Creates or replaces a price list addressed by externalReferenceCode. Same upsert pipeline as
-                postPriceList -- delegates to the service.
+                Creates or replaces a price list addressed by externalReferenceCode. Same upsert pipeline as postPriceList -- delegates to the service.
             operationId: putPriceListByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4080,9 +3838,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4099,8 +3855,7 @@ paths:
     /priceLists/by-externalReferenceCode/{externalReferenceCode}/priceEntries:
         get:
             description:
-                Lists the price entry rows under a price list addressed by externalReferenceCode. ERC resolved before
-                the entry lookup; 404 when ERC unknown.
+                Lists the price entry rows under a price list addressed by externalReferenceCode. ERC resolved before the entry lookup; 404 when ERC unknown.
             operationId: getPriceListByExternalReferenceCodePriceEntriesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4156,8 +3911,7 @@ paths:
                 -   PriceEntry
         post:
             description:
-                Upserts a price entry under the parent price list by externalReferenceCode. Same pipeline as
-                postPriceListIdPriceEntry with ERC-based price-list resolution.
+                Upserts a price entry under the parent price list by externalReferenceCode. Same pipeline as postPriceListIdPriceEntry with ERC-based price-list resolution.
             operationId: postPriceListByExternalReferenceCodePriceEntry
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4239,9 +3993,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4258,8 +4010,7 @@ paths:
     /priceLists/by-externalReferenceCode/{externalReferenceCode}/priceListAccountGroup:
         get:
             description:
-                Lists the account-group rels attached to a price list addressed by externalReferenceCode. ERC resolved
-                before the rel lookup; 404 when ERC unknown.
+                Lists the account-group rels attached to a price list addressed by externalReferenceCode. ERC resolved before the rel lookup; 404 when ERC unknown.
             operationId: getPriceListByExternalReferenceCodePriceListAccountGroupPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4315,8 +4066,7 @@ paths:
                 -   PriceListAccountGroup
         post:
             description:
-                Attaches an AccountGroup to a price list addressed by externalReferenceCode. Same create pipeline as
-                postPriceListIdPriceListAccountGroup with ERC-based price-list resolution.
+                Attaches an AccountGroup to a price list addressed by externalReferenceCode. Same create pipeline as postPriceListIdPriceListAccountGroup with ERC-based price-list resolution.
             operationId: postPriceListByExternalReferenceCodePriceListAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4388,8 +4138,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        DuplicatePriceListAccountGroupRelException -- the price list is already bound to this account
-                        group.
+                        DuplicatePriceListAccountGroupRelException -- the price list is already bound to this account group.
                 422:
                     content:
                         application/json:
@@ -4399,9 +4148,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4418,8 +4165,7 @@ paths:
     /priceLists/{id}:
         delete:
             description:
-                Deletes a price list by internal ID. Delegates to the service. Side effects -- cascades the deletion of
-                all price entry, tier price, and account/account-group/channel/order-type rel rows pointing at the list.
+                Deletes a price list by internal ID. Delegates to the service. Side effects -- cascades the deletion of all price entry, tier price, and account/account-group/channel/order-type rel rows pointing at the list.
             operationId: deletePriceList
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4452,8 +4198,7 @@ paths:
                 -   PriceList
         get:
             description:
-                Fetches a price list by internal ID. Delegates to the service. Validation -- NoSuchPriceListException ->
-                404 when the ID is unknown.
+                Fetches a price list by internal ID. Delegates to the service. Validation -- NoSuchPriceListException -> 404 when the ID is unknown.
             operationId: getPriceList
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4516,8 +4261,7 @@ paths:
                 -   PriceList
         patch:
             description:
-                Partially updates a price list by internal ID. JSON Merge Patch over the supplied fields, then cascades
-                any supplied nested collections.
+                Partially updates a price list by internal ID. JSON Merge Patch over the supplied fields, then cascades any supplied nested collections.
             operationId: patchPriceList
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4579,9 +4323,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4598,8 +4340,7 @@ paths:
     /priceLists/{id}/priceEntries:
         get:
             description:
-                Lists the price entry rows under a price list addressed by internal ID. Delegates to the service.
-                Validation -- NoSuchPriceListException -> 404 when the parent ID is unknown.
+                Lists the price entry rows under a price list addressed by internal ID. Delegates to the service. Validation -- NoSuchPriceListException -> 404 when the parent ID is unknown.
             operationId: getPriceListIdPriceEntriesPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4655,11 +4396,7 @@ paths:
                 -   PriceEntry
         post:
             description:
-                Upserts a price entry under the parent price list by internal ID. Delegates to the service. The SKU is
-                resolved by skuId or skuExternalReferenceCode; nested tierPrices are cascaded through TierPriceUtil.
-                Validation -- a duplicate-key error -> 409 Conflict when the (priceList, sku) pair already exists;
-                PriceListMinPriceValueException, PriceListMaxPriceValueException, and PriceEntryUnitOfMeasureException
-                -> 400 Bad Request.
+                Upserts a price entry under the parent price list by internal ID. Delegates to the service. The SKU is resolved by skuId or skuExternalReferenceCode; nested tierPrices are cascaded through TierPriceUtil. Validation -- a duplicate-key error -> 409 Conflict when the (priceList, sku) pair already exists; PriceListMinPriceValueException, PriceListMaxPriceValueException, and PriceEntryUnitOfMeasureException -> 400 Bad Request.
             operationId: postPriceListIdPriceEntry
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4741,9 +4478,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4760,8 +4495,7 @@ paths:
     /priceLists/{id}/priceListAccountGroups:
         get:
             description:
-                Lists the account-group rels attached to a price list addressed by internal ID. Delegates to the
-                service.
+                Lists the account-group rels attached to a price list addressed by internal ID. Delegates to the service.
             operationId: getPriceListIdPriceListAccountGroupsPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4817,10 +4551,7 @@ paths:
                 -   PriceListAccountGroup
         post:
             description:
-                Attaches an AccountGroup to a price list addressed by internal ID. Delegates to the service; the `order`
-                integer in the request body sets the resolution priority. Validation --
-                DuplicatePriceListAccountGroupRelException -> 409 Conflict when the (priceList, accountGroup) pair
-                already exists.
+                Attaches an AccountGroup to a price list addressed by internal ID. Delegates to the service; the `order` integer in the request body sets the resolution priority. Validation -- DuplicatePriceListAccountGroupRelException -> 409 Conflict when the (priceList, accountGroup) pair already exists.
             operationId: postPriceListIdPriceListAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -4892,8 +4623,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        DuplicatePriceListAccountGroupRelException -- the price list is already bound to this account
-                        group.
+                        DuplicatePriceListAccountGroupRelException -- the price list is already bound to this account group.
                 422:
                     content:
                         application/json:
@@ -4903,9 +4633,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5018,8 +4746,7 @@ paths:
                 -   TierPrice
         patch:
             description:
-                Partially updates a tier price addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when
-                ERC unknown.
+                Partially updates a tier price addressed by externalReferenceCode. JSON Merge Patch semantics; 404 when ERC unknown.
             operationId: patchTierPriceByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5081,9 +4808,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the tier price from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the tier price from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5133,8 +4858,7 @@ paths:
                 -   TierPrice
         get:
             description:
-                Fetches a tier price by internal ID. Delegates to the service. Validation --
-                NoSuchTierPriceEntryException -> 404 when the ID is unknown.
+                Fetches a tier price by internal ID. Delegates to the service. Validation -- NoSuchTierPriceEntryException -> 404 when the ID is unknown.
             operationId: getTierPrice
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -5197,8 +4921,7 @@ paths:
                 -   TierPrice
         patch:
             description:
-                Partially updates a tier price by internal ID. JSON Merge Patch over price, promoPrice, and
-                minimumQuantity.
+                Partially updates a tier price by internal ID. JSON Merge Patch over price, promoPrice, and minimumQuantity.
             operationId: patchTierPrice
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -5260,9 +4983,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the tier price from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the tier price from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5278,40 +4999,29 @@ paths:
                 -   TierPrice
 tags:
     -   description:
-            Discount programs scoped to a company. Each discount carries a target (subtotal, total, products,
-            categories, skus, product-groups, or shipping), a limitation policy (unlimited, limited,
-            limited-for-accounts, limited-for-accounts-and-total), and a percentage or fixed-amount payout, and may be
-            gated by an optional couponCode.
+            Discount programs scoped to a company. Each discount carries a target (subtotal, total, products, categories, skus, product-groups, or shipping), a limitation policy (unlimited, limited, limited-for-accounts, limited-for-accounts-and-total), and a percentage or fixed-amount payout, and may be gated by an optional couponCode.
         name: Discount
     -   description:
-            Account-group bindings that restrict a discount's eligibility to a specific set of AccountGroups. Backed by
-            discount account group link.
+            Account-group bindings that restrict a discount's eligibility to a specific set of AccountGroups. Backed by discount account group link.
         name: DiscountAccountGroup
     -   description:
-            Category bindings that restrict a discount to products tagged with specific asset categories. Backed by
-            discount link with the AssetCategory class name.
+            Category bindings that restrict a discount to products tagged with specific asset categories. Backed by discount link with the AssetCategory class name.
         name: DiscountCategory
     -   description:
-            Product bindings that restrict a discount to specific products. Backed by discount link with the product
-            class name.
+            Product bindings that restrict a discount to specific products. Backed by discount link with the product class name.
         name: DiscountProduct
     -   description:
-            Pre-qualification, post-qualification, or target validators attached to a discount. Each rule carries a type
-            string and a JSON typeSettings payload interpreted by the matching discount rule type.
+            Pre-qualification, post-qualification, or target validators attached to a discount. Each rule carries a type string and a JSON typeSettings payload interpreted by the matching discount rule type.
         name: DiscountRule
     -   description:
-            Per-SKU price entries inside a price list. Each entry binds a SKU to a regular price and an optional promo
-            price; entries with quantity-break overrides expose `hasTierPrice`.
+            Per-SKU price entries inside a price list. Each entry binds a SKU to a regular price and an optional promo price; entries with quantity-break overrides expose `hasTierPrice`.
         name: PriceEntry
     -   description:
-            Versioned price catalogs that price SKUs in a specific currency for a catalog. Each price list has a
-            priority, a display/expiration window, and may be account-group-scoped.
+            Versioned price catalogs that price SKUs in a specific currency for a catalog. Each price list has a priority, a display/expiration window, and may be account-group-scoped.
         name: PriceList
     -   description:
-            Account-group bindings that restrict a price list's eligibility to a specific set of AccountGroups, with an
-            `order` integer that controls the resolution priority.
+            Account-group bindings that restrict a price list's eligibility to a specific set of AccountGroups, with an `order` integer that controls the resolution priority.
         name: PriceListAccountGroup
     -   description:
-            Quantity-break overrides on a price entry. Each tier price binds a minimumQuantity threshold to an override
-            price (and an optional promo price) that supersedes the parent price entry above that quantity.
+            Quantity-break overrides on a price entry. Each tier price binds a minimumQuantity threshold to an override price (and an optional promo price) that supersedes the parent price entry above that quantity.
         name: TierPrice

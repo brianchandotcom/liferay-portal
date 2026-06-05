@@ -128,11 +128,40 @@ public class InfoRequestFieldValuesProviderHelper {
 			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 				themeDisplay.getSiteGroupId());
 
-			for (String inputName :
-					_getInputNames(
-						infoField, LocaleUtil.toLanguageIds(availableLocales),
-						multipartParameterMap, regularParameterMap)) {
+			Set<String> inputNames = _getInputNames(
+				infoField, LocaleUtil.toLanguageIds(availableLocales),
+				multipartParameterMap, regularParameterMap);
 
+			if (inputNames.isEmpty() && !infoField.isLocalizable()) {
+				if ((infoField.getInfoFieldType() instanceof
+						BooleanInfoFieldType) &&
+					ArrayUtil.contains(
+						checkboxNames, infoField.getUniqueId())) {
+
+					infoFieldValues.put(
+						infoField.getUniqueId(),
+						_getInfoFieldValue(
+							true, infoField, themeDisplay.getLocale(), false));
+
+					continue;
+				}
+
+				if ((infoField.getInfoFieldType() instanceof
+						MultiselectInfoFieldType) &&
+					ArrayUtil.contains(
+						checkboxNames, infoField.getUniqueId())) {
+
+					infoFieldValues.put(
+						infoField.getUniqueId(),
+						_getInfoFieldValue(
+							true, infoField, themeDisplay.getLocale(),
+							Collections.emptyList()));
+
+					continue;
+				}
+			}
+
+			for (String inputName : inputNames) {
 				if (infoField.isLocalizable()) {
 					infoFieldValues.put(
 						inputName,
@@ -171,36 +200,6 @@ public class InfoRequestFieldValuesProviderHelper {
 
 				List<String> regularParameters = regularParameterMap.get(
 					inputName);
-
-				if (regularParameters == null) {
-					if ((infoField.getInfoFieldType() instanceof
-							BooleanInfoFieldType) &&
-						ArrayUtil.contains(
-							checkboxNames, infoField.getUniqueId())) {
-
-						infoFieldValues.put(
-							infoField.getUniqueId(),
-							_getInfoFieldValue(
-								true, infoField, themeDisplay.getLocale(),
-								false));
-
-						continue;
-					}
-
-					if ((infoField.getInfoFieldType() instanceof
-							MultiselectInfoFieldType) &&
-						ArrayUtil.contains(
-							checkboxNames, infoField.getUniqueId())) {
-
-						infoFieldValues.put(
-							infoField.getUniqueId(),
-							_getInfoFieldValue(
-								true, infoField, themeDisplay.getLocale(),
-								Collections.emptyList()));
-
-						continue;
-					}
-				}
 
 				Object value = _parseValue(
 					groupId, infoField, themeDisplay.getLocale(),

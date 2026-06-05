@@ -470,9 +470,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 			String urlSeparator = friendlyURLResolver.getURLSeparator();
 
-			if (urlSeparator.contains(friendlyURL) ||
-				friendlyURL.startsWith(urlSeparator)) {
-
+			if (_isConflictingFriendlyURLSeparator(friendlyURL, urlSeparator)) {
 				keywordConflict = urlSeparator;
 			}
 
@@ -481,8 +479,8 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 			if (Validator.isNull(keywordConflict) &&
 				friendlyURLResolver.isURLSeparatorConfigurable() &&
-				(defaultURLSeparator.contains(friendlyURL) ||
-				 friendlyURL.startsWith(defaultURLSeparator))) {
+				_isConflictingFriendlyURLSeparator(
+					friendlyURL, defaultURLSeparator)) {
 
 				keywordConflict = defaultURLSeparator;
 			}
@@ -729,6 +727,20 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 	@BeanReference(type = ResourcePermissionLocalService.class)
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	private boolean _isConflictingFriendlyURLSeparator(
+		String friendlyURL, String urlSeparator) {
+
+		String friendlyURLPath = friendlyURL + StringPool.SLASH;
+
+		if (urlSeparator.startsWith(friendlyURLPath) ||
+			friendlyURLPath.startsWith(urlSeparator)) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	private boolean _isDraftLayout(
 		long classNameId, long classPK, String type) {

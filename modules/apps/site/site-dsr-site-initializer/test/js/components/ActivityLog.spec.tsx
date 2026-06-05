@@ -137,6 +137,12 @@ describe('ActivityLog Component', () => {
 		expect(screen.getAllByText('Paul Gerome').length).toBe(1);
 	});
 
+	it('falls back to the anonymous label when a user session has no user name', () => {
+		render(<ActivityLog isAnalyticsEnabled={true} />);
+
+		expect(screen.getByText('anonymous')).toBeInTheDocument();
+	});
+
 	it('renders an asset title per event', () => {
 		render(<ActivityLog isAnalyticsEnabled={true} />);
 

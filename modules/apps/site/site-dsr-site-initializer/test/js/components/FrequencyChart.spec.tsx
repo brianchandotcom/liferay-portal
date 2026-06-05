@@ -37,14 +37,14 @@ jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery',
 	() => {
 		const {
-			frequencyChartDevEnvData,
-		} = require('../fixtures/analyticsDevEnvData');
+			frequencyChartFixture,
+		} = require('../fixtures/FrequencyChartFixture');
 
 		return {
 			__esModule: true,
 			default: jest.fn(() => ({
 				isLoading: false,
-				response: frequencyChartDevEnvData,
+				response: frequencyChartFixture,
 				sendRequest: jest.fn(),
 			})),
 		};

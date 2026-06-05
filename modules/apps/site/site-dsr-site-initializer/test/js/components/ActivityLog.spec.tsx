@@ -51,15 +51,13 @@ jest.mock(
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/common/hooks/useAnalyticsQuery',
 	() => {
-		const {
-			activityLogDevEnvData,
-		} = require('../fixtures/analyticsDevEnvData');
+		const {activityLogFixture} = require('../fixtures/ActivityLogFixture');
 
 		return {
 			__esModule: true,
 			default: jest.fn(() => ({
 				isLoading: false,
-				response: activityLogDevEnvData,
+				response: activityLogFixture,
 				sendRequest: jest.fn(),
 			})),
 		};

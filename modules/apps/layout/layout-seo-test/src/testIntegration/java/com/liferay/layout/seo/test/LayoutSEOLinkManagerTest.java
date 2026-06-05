@@ -425,7 +425,8 @@ public class LayoutSEOLinkManagerTest {
 		}
 
 		return StringBundler.concat(
-			_PORTAL_URL, expectedLanguagePath, _groupFriendlyURL, urlPrefix,
+			_PORTAL_URL, _portal.getPortalServerPort(false),
+			expectedLanguagePath, _groupFriendlyURL, urlPrefix,
 			_expectedFriendlyURLs.get(locale));
 	}
 
@@ -502,7 +503,7 @@ public class LayoutSEOLinkManagerTest {
 			_group.getPublicLayoutSet(), _themeDisplay, false, false);
 
 		_canonicalURL = StringBundler.concat(
-			_PORTAL_URL, _groupFriendlyURL,
+			_PORTAL_URL, _portal.getPortalServerPort(false), _groupFriendlyURL,
 			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
 			_expectedFriendlyURLs.get(LocaleUtil.US));
 	}
@@ -531,8 +532,8 @@ public class LayoutSEOLinkManagerTest {
 			_group.getPublicLayoutSet(), _themeDisplay, false, false);
 
 		_canonicalURL = StringBundler.concat(
-			_PORTAL_URL, _groupFriendlyURL, StringPool.SLASH,
-			_expectedFriendlyURLs.get(LocaleUtil.US));
+			_PORTAL_URL, _portal.getPortalServerPort(false), _groupFriendlyURL,
+			StringPool.SLASH, _expectedFriendlyURLs.get(LocaleUtil.US));
 	}
 
 	private Layout _setUpLayoutJournalArticleDefaultDisplayPageTemplate()
@@ -626,8 +627,7 @@ public class LayoutSEOLinkManagerTest {
 		"com.liferay.layout.seo.internal.configuration." +
 			"LayoutSEOCompanyConfiguration";
 
-	private static final String _PORTAL_URL =
-		"http://localhost:" + PortalUtil.getPortalServerPort(false);
+	private static final String _PORTAL_URL = "http://localhost:";
 
 	@Inject
 	private AssetDisplayPageEntryLocalService

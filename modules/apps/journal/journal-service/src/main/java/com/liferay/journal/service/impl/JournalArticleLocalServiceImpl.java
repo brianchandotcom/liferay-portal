@@ -6111,11 +6111,11 @@ public class JournalArticleLocalServiceImpl
 						return indexer.getDocument(article);
 					}
 				}
-				catch (PortalException portalException) {
+				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Unable to expire article " + article.getId(),
-							portalException);
+							exception);
 					}
 				}
 

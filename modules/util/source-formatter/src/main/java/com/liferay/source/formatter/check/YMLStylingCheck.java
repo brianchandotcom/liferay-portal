@@ -159,6 +159,7 @@ public class YMLStylingCheck extends BaseFileCheck {
 				description.replaceAll("\n +", StringPool.SPACE));
 
 			if (!trimmedDescription.startsWith("\"") &&
+				!trimmedDescription.startsWith("'") &&
 				trimmedDescription.contains(": ")) {
 
 				continue;

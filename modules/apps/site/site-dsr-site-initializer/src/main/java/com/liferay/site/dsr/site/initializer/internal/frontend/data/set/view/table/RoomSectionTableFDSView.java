@@ -48,9 +48,13 @@ public class RoomSectionTableFDSView extends BaseTableFDSView {
 			_getDateFDSTableSchemaField(
 				"embedded.dateModified", "last-modified")
 		).add(
-			"embedded.trend", "trend"
+			"embedded.trend", "trend",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"roomTrendTableCellRenderer")
 		).add(
-			"embedded.status.label_i18n", "status"
+			"embedded.status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"roomStatusTableCellRenderer")
 		).build();
 	}
 

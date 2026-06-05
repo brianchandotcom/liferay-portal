@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Nilton Vieira
  */
-@Component
+@Component(service = {})
 @Path("/{groupId}/asset-summary-mime-types")
 @Produces(MediaType.APPLICATION_JSON)
 public class AssetSummaryMimeTypeFaroController extends BaseFaroController {

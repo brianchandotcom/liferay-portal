@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Matthew Kong
  */
-@Component
+@Component(service = {})
 @Path("/{groupId}")
 @Produces(MediaType.APPLICATION_JSON)
 public class MainFaroController extends BaseFaroController {

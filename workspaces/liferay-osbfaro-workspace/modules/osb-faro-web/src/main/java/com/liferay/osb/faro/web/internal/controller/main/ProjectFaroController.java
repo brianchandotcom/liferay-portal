@@ -117,7 +117,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Matthew Kong
  */
-@Component
+@Component(service = {})
 @Path("/project")
 @Produces(MediaType.APPLICATION_JSON)
 public class ProjectFaroController extends BaseFaroController {

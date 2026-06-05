@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component
+@Component(service = {})
 @Path("/graphql")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component
+@Component(service = ContextProvider.class)
 @Provider
 public class GroupInfoContextProvider implements ContextProvider<GroupInfo> {
 

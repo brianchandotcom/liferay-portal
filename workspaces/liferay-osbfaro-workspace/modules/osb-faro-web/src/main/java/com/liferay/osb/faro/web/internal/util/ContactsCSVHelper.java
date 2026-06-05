@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shinn Lok
  */
-@Component
+@Component(service = {})
 public class ContactsCSVHelper {
 
 	public long addContactsCSV(

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rachael Koestartyo
  */
-@Component
+@Component(service = {})
 @Path("/demandbase_accounts")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresScope("Liferay.Analytics.Cloud.REST.accounts.write")

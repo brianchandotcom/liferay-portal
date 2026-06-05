@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Nilton Vieira
  */
-@Component
+@Component(service = {})
 @Path("/marketo_webhooks")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresScope(ApiApplication.OAuth2ScopeAliases.MARKETO_WRITE)

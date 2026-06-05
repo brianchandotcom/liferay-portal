@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Nilton Vieira
  */
-@Component
+@Component(service = {})
 @Path("/{groupId}/data-source-metrics")
 @Produces(MediaType.APPLICATION_JSON)
 public class DataSourceMetricsFaroController extends BaseFaroController {

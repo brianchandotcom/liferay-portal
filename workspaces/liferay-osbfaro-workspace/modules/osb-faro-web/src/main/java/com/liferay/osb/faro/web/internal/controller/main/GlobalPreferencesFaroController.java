@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcos Martins
  */
-@Component
+@Component(service = {})
 @Path("/preferences")
 @Produces(MediaType.APPLICATION_JSON)
 public class GlobalPreferencesFaroController extends BaseFaroController {

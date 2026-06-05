@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcos Martins
  */
-@Component
+@Component(service = {})
 @Path("{groupId}/reports")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope

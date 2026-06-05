@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component
+@Component(service = {})
 public class PhotoURLHelper {
 
 	public String getPhotoURL(String url) throws Exception {

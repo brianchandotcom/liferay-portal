@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component
+@Component(service = {})
 @Path("/recommendations")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope

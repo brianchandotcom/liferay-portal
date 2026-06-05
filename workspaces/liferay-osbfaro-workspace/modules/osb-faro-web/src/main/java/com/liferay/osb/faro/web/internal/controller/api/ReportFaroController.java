@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component
+@Component(service = {})
 @Path("/reports")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope

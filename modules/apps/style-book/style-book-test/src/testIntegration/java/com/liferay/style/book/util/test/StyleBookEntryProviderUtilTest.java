@@ -133,17 +133,18 @@ public class StyleBookEntryProviderUtilTest {
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 
-		StyleBookEntry actualStyleBookEntry =
+		StyleBookEntry resolvedStyleBookEntry =
 			StyleBookEntryProviderUtil.getStyleBookEntry(_layout);
 
 		Assert.assertEquals(
 			siteStyleBookEntry.getStyleBookEntryId(),
-			actualStyleBookEntry.getStyleBookEntryId());
+			resolvedStyleBookEntry.getStyleBookEntryId());
 
-		Group group = GroupTestUtil.addGroup();
+		Group depotGroup = GroupTestUtil.addGroup();
 
-		_layout.setStyleBookEntryERC(RandomTestUtil.randomString());
-		_layout.setStyleBookEntryScopeERC(group.getExternalReferenceCode());
+		_layout.setStyleBookEntryERC("nonexistent-entry-erc");
+		_layout.setStyleBookEntryScopeERC(
+			depotGroup.getExternalReferenceCode());
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 
@@ -151,24 +152,25 @@ public class StyleBookEntryProviderUtilTest {
 			StyleBookEntryProviderUtil.getStyleBookEntry(_layout));
 
 		StyleBookEntry depotStyleBookEntry = _addStyleBookEntry(
-			group.getGroupId());
+			depotGroup.getGroupId());
 
 		_layout.setStyleBookEntryERC(
 			depotStyleBookEntry.getExternalReferenceCode());
 
-		_layout.setStyleBookEntryScopeERC(group.getExternalReferenceCode());
+		_layout.setStyleBookEntryScopeERC(
+			depotGroup.getExternalReferenceCode());
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 
-		actualStyleBookEntry = StyleBookEntryProviderUtil.getStyleBookEntry(
+		resolvedStyleBookEntry = StyleBookEntryProviderUtil.getStyleBookEntry(
 			_layout);
 
 		Assert.assertEquals(
 			depotStyleBookEntry.getStyleBookEntryId(),
-			actualStyleBookEntry.getStyleBookEntryId());
+			resolvedStyleBookEntry.getStyleBookEntryId());
 
 		_layout.setStyleBookEntryERC(RandomTestUtil.randomString());
-		_layout.setStyleBookEntryScopeERC(RandomTestUtil.randomString());
+		_layout.setStyleBookEntryScopeERC("nonexistent-scope-erc");
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 

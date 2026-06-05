@@ -46,6 +46,20 @@ describe('FieldValueFilter', () => {
 		expect(getByText('All Industries')).toBeInTheDocument();
 	});
 
+	it('should expose an accessible name on the filter trigger', () => {
+		const useRequest = require('shared/hooks/useRequest');
+		useRequest.useRequest = jest.fn(() => ({
+			data: {items: ['Tech', 'Finance']},
+			loading: false
+		}));
+
+		const {getByRole} = renderFilter();
+
+		expect(
+			getByRole('combobox', {name: 'Filter By Industries'})
+		).toBeInTheDocument();
+	});
+
 	it('should pass the fieldMappingFieldName through to the request', () => {
 		const useRequest = require('shared/hooks/useRequest');
 		const spy = jest.fn(() => ({data: {items: []}, loading: false}));

@@ -13,8 +13,12 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-payment-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:oauth-client:oauth-client-api")
+	compileOnly project(":apps:oauth2-provider:oauth2-provider-api")
 	compileOnly project(":apps:portal:portal-catapult-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
+	testImplementation project(":apps:account:account-api")
+	testImplementation project(":apps:commerce:commerce-currency-api")
 }

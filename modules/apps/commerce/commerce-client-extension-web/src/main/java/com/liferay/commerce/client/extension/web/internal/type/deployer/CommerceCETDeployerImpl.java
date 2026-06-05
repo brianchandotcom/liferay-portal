@@ -12,9 +12,12 @@ import com.liferay.commerce.client.extension.web.internal.util.ClientExtensionCo
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.oauth.client.LocalOAuthClient;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.Http;
 
 import jakarta.servlet.ServletContext;
 
@@ -40,9 +43,10 @@ public class CommerceCETDeployerImpl implements CommerceCETDeployer {
 				CommerceCheckoutStep.class,
 				new ClientExtensionCommerceCheckoutStep(
 					(CommerceCheckoutStepCET)cet,
-					_commercePaymentMethodGroupRelLocalService, _jsonFactory,
-					_jspRenderer, _portalCatapult, _servletContext,
-					_userService)));
+					_commercePaymentMethodGroupRelLocalService, _http,
+					_jsonFactory, _jspRenderer, _localOAuthClient,
+					_oAuth2ApplicationLocalService, _portalCatapult,
+					_servletContext, _userService)));
 	}
 
 	@Activate
@@ -64,10 +68,19 @@ public class CommerceCETDeployerImpl implements CommerceCETDeployer {
 		_commercePaymentMethodGroupRelLocalService;
 
 	@Reference
+	private Http _http;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private LocalOAuthClient _localOAuthClient;
+
+	@Reference
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 	@Reference
 	private PortalCatapult _portalCatapult;

@@ -444,7 +444,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		Matcher matcher = null;
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(description)) {
-			matcher = _descriptionPattern.matches(description);
+			matcher = _descriptionMultiPattern.matches(description);
 		}
 
 		String topLevelBuildNumber = null;
@@ -643,17 +643,18 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return null;
 	}
 
-	private static final MultiPattern _descriptionPattern = new MultiPattern(
-		JenkinsResultsParserUtil.combine(
-			".*<a href=\"https://(?<topLevelMasterHostname>test-\\d+-\\d+)",
-			"\\.liferay\\.com/userContent/jobs/(?<topLevelJobName>[^/]+)/",
-			"builds/(?<topLevelBuildNumber>\\d+)/jenkins-report\\.html\">",
-			"Jenkins Report</a>.*"),
-		JenkinsResultsParserUtil.combine(
-			".*<a href=\".+/testray-results/\\d{4}-\\d{2}/",
-			"(?<topLevelMasterHostname>test-\\d+-\\d+)/",
-			"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>\\d+)/",
-			"[^\"]+\">Jenkins Report</a>.*"));
+	private static final MultiPattern _descriptionMultiPattern =
+		new MultiPattern(
+			JenkinsResultsParserUtil.combine(
+				".*<a href=\"https://(?<topLevelMasterHostname>test-\\d+-\\d+)",
+				"\\.liferay\\.com/userContent/jobs/(?<topLevelJobName>[^/]+)/",
+				"builds/(?<topLevelBuildNumber>\\d+)/jenkins-report\\.html\">",
+				"Jenkins Report</a>.*"),
+			JenkinsResultsParserUtil.combine(
+				".*<a href=\".+/testray-results/\\d{4}-\\d{2}/",
+				"(?<topLevelMasterHostname>test-\\d+-\\d+)/",
+				"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>\\d+)/",
+				"[^\"]+\">Jenkins Report</a>.*"));
 	private static final Pattern _portalBranchPattern = Pattern.compile(
 		"Portal Branch: (?<portalBranch>[^;]+);");
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(

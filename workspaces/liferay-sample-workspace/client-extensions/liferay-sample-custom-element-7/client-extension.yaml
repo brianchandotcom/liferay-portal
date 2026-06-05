@@ -4,11 +4,9 @@ assemble:
 liferay-sample-custom-element-7:
     friendlyURLMapping: liferay-sample-custom-element-7
     htmlElementName: liferay-sample-custom-element-7
-    instanceable: false
+    instanceable: true
     name: Liferay Sample Custom Element 7
     portletCategoryName: category.client-extensions
-    properties:
-        fds-name: com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-classic
     type: customElement
     urls:
         -   index.*.js

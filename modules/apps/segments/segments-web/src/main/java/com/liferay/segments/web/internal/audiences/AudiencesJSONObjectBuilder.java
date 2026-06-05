@@ -136,6 +136,8 @@ public class AudiencesJSONObjectBuilder {
 		).put(
 			Context.BROWSER_VERSION, "browser_version"
 		).put(
+			Context.DEVICE_TYPE, "device_type"
+		).put(
 			Context.LANGUAGE_ID, "language"
 		).put(
 			Context.LAST_SIGN_IN_DATE_TIME, "last_sign_in_date"

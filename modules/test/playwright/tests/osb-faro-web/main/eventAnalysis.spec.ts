@@ -1568,3 +1568,156 @@ test(
 		).toHaveCount(0);
 	}
 );
+
+test(
+	'The event picker lists events under the All, Default and Custom tabs',
+	{
+		tag: '@LRAC-10295',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const customEventName = 'tabs' + getRandomString();
+
+		const date = new Date();
+
+		// A default event (pageViewed) and a custom event
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: 'My Page',
+				userId: '1',
+			},
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: customEventName,
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: customEventName,
+				eventAttributeDefinitions: [],
+				name: customEventName,
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await page.getByLabel('Add').click();
+
+		const defaultEvent = page.getByRole('menuitem', {name: 'pageViewed'});
+
+		const customEvent = page.getByRole('menuitem', {name: customEventName});
+
+		// The All tab lists both the default and the custom event
+
+		await page
+			.locator('.card-tab')
+			.filter({hasText: 'All'})
+			.first()
+			.click();
+
+		await expect(defaultEvent).toBeVisible();
+
+		await expect(customEvent).toBeVisible();
+
+		// The Default tab lists only the default event
+
+		await page
+			.locator('.card-tab')
+			.filter({hasText: 'Default'})
+			.first()
+			.click();
+
+		await expect(defaultEvent).toBeVisible();
+
+		await expect(customEvent).toHaveCount(0);
+
+		// The Custom tab lists only the custom event
+
+		await page
+			.locator('.card-tab')
+			.filter({hasText: 'Custom'})
+			.first()
+			.click();
+
+		await expect(customEvent).toBeVisible();
+
+		await expect(defaultEvent).toHaveCount(0);
+	}
+);
+
+test(
+	'The breakdown picker Event tab lists the default and custom attributes',
+	{
+		tag: '@LRAC-10301',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		// Open the breakdown picker on the Event tab
+
+		await page
+			.locator('.attribute-breakdown-section-root')
+			.getByLabel('Add')
+			.click();
+
+		await page
+			.locator('.card-tab')
+			.filter({hasText: 'Event'})
+			.first()
+			.click();
+
+		// The default and custom attributes are listed
+
+		await expect(
+			page.getByRole('menuitem', {exact: true, name: 'pageTitle'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {exact: true, name: 'category'})
+		).toBeVisible();
+	}
+);

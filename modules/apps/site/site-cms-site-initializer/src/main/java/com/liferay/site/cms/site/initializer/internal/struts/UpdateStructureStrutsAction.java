@@ -37,7 +37,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
@@ -115,6 +118,46 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
 
 		return null;
+	}
+
+	private void _addObjectRelationships(
+			ObjectDefinition objectDefinition, long objectDefinitionId,
+			ObjectDefinitionResource objectDefinitionResource)
+		throws Exception {
+
+		ObjectDefinition existingObjectDefinition =
+			objectDefinitionResource.getObjectDefinition(objectDefinitionId);
+
+		ObjectRelationship[] existingObjectRelationships =
+			existingObjectDefinition.getObjectRelationships();
+
+		if (ArrayUtil.isEmpty(existingObjectRelationships)) {
+			return;
+		}
+
+		Map<String, ObjectRelationship> objectRelationshipsMap =
+			new LinkedHashMap<>();
+
+		for (ObjectRelationship objectRelationship :
+				ListUtil.fromArray(objectDefinition.getObjectRelationships())) {
+
+			objectRelationshipsMap.put(
+				objectRelationship.getName(), objectRelationship);
+		}
+
+		for (ObjectRelationship existingObjectRelationship :
+				existingObjectRelationships) {
+
+			objectRelationshipsMap.putIfAbsent(
+				existingObjectRelationship.getName(),
+				existingObjectRelationship);
+		}
+
+		Collection<ObjectRelationship> objectRelationships =
+			objectRelationshipsMap.values();
+
+		objectDefinition.setObjectRelationships(
+			() -> objectRelationships.toArray(new ObjectRelationship[0]));
 	}
 
 	private void _deleteRelationships(long objectDefinitionId)
@@ -310,6 +353,10 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 							objectDefinition);
 				}
 			}
+
+			_addObjectRelationships(
+				_objectDefinition, _objectDefinitionId,
+				objectDefinitionResource);
 
 			objectDefinitionResource.putObjectDefinition(
 				_objectDefinitionId, _objectDefinition);

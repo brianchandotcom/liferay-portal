@@ -126,14 +126,45 @@ async function main() {
 		}
 	}
 
-	function togglePrefixMenu(open) {
-		const next =
-			typeof open === 'boolean'
-				? open
+	function togglePrefixMenu(forceOpen) {
+		const open =
+			typeof forceOpen === 'boolean'
+				? forceOpen
 				: !prefixMenu.classList.contains('show');
 
-		prefixMenu.classList.toggle('show', next);
-		prefixTrigger.setAttribute('aria-expanded', next);
+		prefixMenu.classList.toggle('show', open);
+		prefixTrigger.setAttribute('aria-expanded', open);
+
+		if (open) {
+			positionPrefixMenu();
+		}
+	}
+
+	function positionPrefixMenu() {
+		if (!document.body.contains(fragmentElement)) {
+			window.removeEventListener('resize', positionPrefixMenu);
+			window.removeEventListener('scroll', positionPrefixMenu, {
+				capture: true,
+			});
+
+			return;
+		}
+
+		if (!prefixMenu.classList.contains('show')) {
+			return;
+		}
+
+		const triggerRect = prefixTrigger.getBoundingClientRect();
+		const menuHeight = prefixMenu.offsetHeight;
+		const spaceBelow = window.innerHeight - triggerRect.bottom;
+
+		const top =
+			spaceBelow < menuHeight && triggerRect.top > menuHeight
+				? triggerRect.top - menuHeight
+				: triggerRect.bottom;
+
+		prefixMenu.style.top = `${top}px`;
+		prefixMenu.style.left = `${triggerRect.left}px`;
 	}
 
 	function syncFromValue(value) {
@@ -233,6 +264,11 @@ async function main() {
 		prefixMenu.addEventListener('click', handleMenuClick);
 
 		document.addEventListener('click', handleDocumentClick);
+
+		window.addEventListener('resize', positionPrefixMenu);
+		window.addEventListener('scroll', positionPrefixMenu, {
+			capture: true,
+		});
 	}
 
 	// Register input

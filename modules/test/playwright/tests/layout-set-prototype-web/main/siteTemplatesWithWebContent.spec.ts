@@ -20,6 +20,7 @@ import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPage
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdminPagesTest';
 import createSiteTemplate from './utils/createSiteTemplate';
 
 export const test = mergeTests(
@@ -34,6 +35,7 @@ export const test = mergeTests(
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
 	productMenuPageTest,
+	sitesAdminPagesTest,
 	sitesPageTest,
 	uiElementsPageTest,
 	webContentDisplayPageTest
@@ -49,6 +51,7 @@ test(
 		pageEditorPage,
 		pagesAdminPage,
 		productMenuPage,
+		sitesAdminPage,
 		sitesPage,
 		uiElementsPage,
 		webContentDisplayPage,
@@ -98,7 +101,7 @@ test(
 			titleMap: {en_US: webContentName},
 		});
 
-		await globalMenuPage.goToControlPanel('Sites');
+		await sitesAdminPage.goto();
 
 		const siteName = getRandomString();
 

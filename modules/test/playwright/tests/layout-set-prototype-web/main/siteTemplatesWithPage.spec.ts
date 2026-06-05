@@ -15,6 +15,7 @@ import {sitesPageTest} from '../../../fixtures/sitesPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import getRandomString from '../../../utils/getRandomString';
 import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
+import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdminPagesTest';
 import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest';
 import createSiteTemplate from './utils/createSiteTemplate';
 
@@ -26,6 +27,7 @@ export const test = mergeTests(
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
 	productMenuPageTest,
+	sitesAdminPagesTest,
 	sitesPageTest,
 	uiElementsPageTest
 );
@@ -35,11 +37,11 @@ test(
 	{tag: ['@LPD-49053', '@LPS-131903', '@LPS-132256']},
 	async ({
 		apiHelpers,
-		globalMenuPage,
 		page,
 		pageEditorPage,
 		pagesAdminPage,
 		productMenuPage,
+		sitesAdminPage,
 		sitesPage,
 		uiElementsPage,
 	}) => {
@@ -75,7 +77,7 @@ test(
 
 		// Create a site using the site template
 
-		await globalMenuPage.goToControlPanel('Sites');
+		await sitesAdminPage.goto();
 
 		const siteName: string = 'Site-' + getRandomString();
 
@@ -156,10 +158,10 @@ test(
 	{tag: '@LPD-70284'},
 	async ({
 		apiHelpers,
-		globalMenuPage,
 		page,
 		pagesAdminPage,
 		productMenuPage,
+		sitesAdminPage,
 		sitesPage,
 		uiElementsPage,
 	}) => {
@@ -194,7 +196,7 @@ test(
 
 		// Create site based on that template
 
-		await globalMenuPage.goToControlPanel('Sites');
+		await sitesAdminPage.goto();
 
 		const siteName = 'Site-' + getRandomString();
 

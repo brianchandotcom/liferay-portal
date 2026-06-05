@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -42,8 +41,6 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.List;
 import java.util.Locale;
@@ -546,16 +543,9 @@ public class StagingLocalServiceTest {
 		try {
 			Layout layout = LayoutTestUtil.addTypePortletLayout(group);
 
-			StyleBookEntry styleBookEntry =
-				_styleBookEntryLocalService.addStyleBookEntry(
-					null, TestPropsValues.getUserId(), scopeGroup.getGroupId(),
-					false, null, RandomTestUtil.randomString(), null,
-					RandomTestUtil.randomString(),
-					ServiceContextTestUtil.getServiceContext(
-						scopeGroup.getGroupId(), TestPropsValues.getUserId()));
+			String styleBookEntryERC = RandomTestUtil.randomString();
 
-			layout.setStyleBookEntryERC(
-				styleBookEntry.getExternalReferenceCode());
+			layout.setStyleBookEntryERC(styleBookEntryERC);
 
 			layout.setStyleBookEntryScopeERC(
 				scopeGroup.getExternalReferenceCode());
@@ -572,8 +562,7 @@ public class StagingLocalServiceTest {
 					layout.getUuid(), stagingGroup.getGroupId(), false);
 
 			Assert.assertEquals(
-				styleBookEntry.getExternalReferenceCode(),
-				stagingLayout.getStyleBookEntryERC());
+				styleBookEntryERC, stagingLayout.getStyleBookEntryERC());
 			Assert.assertEquals(
 				scopeGroup.getExternalReferenceCode(),
 				stagingLayout.getStyleBookEntryScopeERC());
@@ -644,9 +633,6 @@ public class StagingLocalServiceTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
-
-	@Inject
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	private User _user;
 

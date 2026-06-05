@@ -15,6 +15,7 @@
 	max-height: 18rem;
 	min-width: 16rem;
 	overflow-y: auto;
+	position: fixed;
 }
 
 .phone-number-input-prefix-menu.show {

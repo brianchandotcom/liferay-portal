@@ -5,13 +5,44 @@
 
 package com.liferay.portal.kernel.model.role;
 
+import com.liferay.portal.kernel.model.Role;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Stefano Motta
  */
 public class RoleConstantsTest {
+
+	@Test
+	public void testIsUnmodifiable() {
+		Assert.assertFalse(RoleConstants.isUnmodifiable(null));
+		Assert.assertFalse(
+			RoleConstants.isUnmodifiable(Mockito.mock(Role.class)));
+
+		Role role = Mockito.mock(Role.class);
+
+		Mockito.when(
+			role.getName()
+		).thenReturn(
+			RoleConstants.CMS_ADMINISTRATOR
+		);
+
+		Assert.assertTrue(RoleConstants.isUnmodifiable(role));
+
+		role = Mockito.mock(Role.class);
+
+		Mockito.when(
+			role.isSystem()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(RoleConstants.isUnmodifiable(role));
+	}
 
 	@Test
 	public void testToSystemRoleExternalReferenceCode() {

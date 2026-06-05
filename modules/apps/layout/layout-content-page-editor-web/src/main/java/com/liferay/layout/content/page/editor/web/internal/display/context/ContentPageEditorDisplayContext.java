@@ -139,6 +139,7 @@ import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorC
 import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import com.liferay.style.book.util.StyleBookEntryProviderUtil;
 import com.liferay.style.book.util.StyleBookUtil;
@@ -193,6 +194,7 @@ public class ContentPageEditorDisplayContext {
 		SegmentsExperimentRelLocalService segmentsExperimentRelLocalService,
 		SegmentsEntryService segmentsEntryService, Staging staging,
 		StagingGroupHelper stagingGroupHelper,
+		StyleBookEntryLocalService styleBookEntryLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		_contentPageEditorSidebarPanels = contentPageEditorSidebarPanels;
@@ -222,6 +224,7 @@ public class ContentPageEditorDisplayContext {
 		_segmentsExperimentRelLocalService = segmentsExperimentRelLocalService;
 		_segmentsEntryService = segmentsEntryService;
 		_staging = staging;
+		_styleBookEntryLocalService = styleBookEntryLocalService;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 
@@ -2284,6 +2287,7 @@ public class ContentPageEditorDisplayContext {
 		_segmentsExperimentRelLocalService;
 	private List<Map<String, Object>> _sidebarPanels;
 	private final Staging _staging;
+	private final StyleBookEntryLocalService _styleBookEntryLocalService;
 	private ItemSelectorCriterion _urlItemSelectorCriterion;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;

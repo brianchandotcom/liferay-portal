@@ -1,0 +1,40 @@
+[#assign appCategories = configuration.appCategories?eval_json]
+
+<div class="marketplace-hero-banner">
+	<img alt="" class="marketplace-hero-banner-image" src="[resources:hero_banner_gradient_bubbles.png]" />
+
+	<div class="container">
+		<div class="marketplace-hero-banner-content">
+			<nav aria-label="Breadcrumb" class="marketplace-hero-banner-breadcrumb">
+				<a href="/web/one/home">Home</a>
+
+				[@clay["icon"] symbol="angle-right-small" /]
+
+				<span class="marketplace-hero-banner-breadcrumb-current">Marketplace</span>
+			</nav>
+
+			<h1 class="marketplace-hero-banner-title" data-lfr-editable-id="main-content" data-lfr-editable-type="text">
+				Browse Liferay's Marketplace
+			</h1>
+
+			<div class="marketplace-categories">
+				<div class="marketplace-categories-title">
+					${configuration.sectionTitle}
+				</div>
+
+				[#if appCategories?has_content]
+					<div class="marketplace-categories-list">
+						[#list appCategories as category]
+							<a class="marketplace-category-button" href="/web/one/marketplace/applications?Category=${category.id?url('UTF-8')}" target="_self">
+								<span class="marketplace-category-icon" style="--category-color:${category.color};">
+									[@clay["icon"] symbol="${category.icon}" /]
+								</span>
+								<span class="marketplace-category-name">${category.name}</span>
+							</a>
+						[/#list]
+					</div>
+				[/#if]
+			</div>
+		</div>
+	</div>
+</div>

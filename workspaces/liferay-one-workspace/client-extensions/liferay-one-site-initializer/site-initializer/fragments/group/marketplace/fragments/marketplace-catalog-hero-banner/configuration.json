@@ -1,0 +1,32 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "applications",
+					"label": "Background Image",
+					"name": "backgroundImage",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Applications",
+								"value": "applications"
+							},
+							{
+								"label": "Products",
+								"value": "products"
+							},
+							{
+								"label": "Solutions",
+								"value": "solutions"
+							}
+						]
+					}
+				}
+			],
+			"label": "Hero Banner"
+		}
+	]
+}

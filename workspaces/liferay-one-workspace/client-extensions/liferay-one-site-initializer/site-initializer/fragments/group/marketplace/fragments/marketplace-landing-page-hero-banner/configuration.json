@@ -1,0 +1,23 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "[{\"color\": \"#ffb46e\", \"icon\": \"cog\", \"id\": \"Batch\", \"name\": \"Batch\"}, {\"color\": \"#9be169\", \"icon\": \"shopping-cart\", \"id\": \"Checkout\", \"name\": \"Checkout\"}, {\"color\": \"#ff5f5f\", \"icon\": \"code\", \"id\": \"Fragments\", \"name\": \"Fragment\"}, {\"color\": \"#5fc8ff\", \"icon\": \"catalog\", \"id\": \"Object Definition\", \"name\": \"Object Action\"}, {\"color\": \"#4b9bff\", \"icon\": \"credit-card\", \"id\": \"Payment Methods\", \"name\": \"Payment Method\"}, {\"color\": \"#50d2a0\", \"icon\": \"display\", \"id\": \"Site Initializer\", \"name\": \"Site Initializer\"}, {\"color\": \"#af78ff\", \"icon\": \"theme\", \"id\": \"Theme\", \"name\": \"Theme\"}, {\"color\": \"#7785ff\", \"icon\": \"workflow\", \"id\": \"Workflow Action\", \"name\": \"Workflow Action\"}]",
+					"label": "App Categories",
+					"name": "appCategories",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "Explore Apps by Category",
+					"label": "Section Title",
+					"name": "sectionTitle",
+					"type": "text"
+				}
+			],
+			"label": "Hero Banner"
+		}
+	]
+}

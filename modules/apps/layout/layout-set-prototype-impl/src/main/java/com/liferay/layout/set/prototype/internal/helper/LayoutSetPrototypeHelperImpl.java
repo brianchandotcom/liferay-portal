@@ -332,6 +332,72 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	@Override
+	public Map<String, String[]> getLayoutSetPrototypesParameters(
+		boolean initialSync) {
+
+		return LinkedHashMapBuilder.put(
+			PortletDataHandlerKeys.DATA_STRATEGY,
+			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR}
+		).put(
+			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
+			new String[] {Boolean.FALSE.toString()}
+		).put(
+			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
+			new String[] {Boolean.FALSE.toString()}
+		).put(
+			PortletDataHandlerKeys.FAVICON,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
+			new String[] {
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE
+			}
+		).put(
+			PortletDataHandlerKeys.LOGO, new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PERMISSIONS,
+			new String[] {String.valueOf(initialSync)}
+		).put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.THEME_REFERENCE,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
+			new String[] {Boolean.FALSE.toString()}
+		).put(
+			PortletDataHandlerKeys.USER_ID_STRATEGY,
+			new String[] {UserIdStrategy.CURRENT_USER_ID}
+		).build();
+	}
+
+	@Override
 	public boolean hasDuplicatedFriendlyURLs(
 			String layoutExternalReferenceCode, long groupId,
 			boolean privateLayout, String friendlyURL)
@@ -423,7 +489,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
 
-		Map<String, String[]> parameterMap = _getLayoutSetPrototypesParameters(
+		Map<String, String[]> parameterMap = getLayoutSetPrototypesParameters(
 			initialSync);
 
 		parameterMap.put(
@@ -641,71 +707,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					layoutSetPrototypeLayoutERCPredicate
 				)
 			));
-	}
-
-	private Map<String, String[]> _getLayoutSetPrototypesParameters(
-		boolean initialSync) {
-
-		return LinkedHashMapBuilder.put(
-			PortletDataHandlerKeys.DATA_STRATEGY,
-			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR}
-		).put(
-			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.FAVICON,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
-			new String[] {
-				PortletDataHandlerKeys.
-					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE
-			}
-		).put(
-			PortletDataHandlerKeys.LOGO, new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {String.valueOf(initialSync)}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.THEME_REFERENCE,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.USER_ID_STRATEGY,
-			new String[] {UserIdStrategy.CURRENT_USER_ID}
-		).build();
 	}
 
 	private boolean _hasDuplicatedFriendlyURLPrototypeLayout(

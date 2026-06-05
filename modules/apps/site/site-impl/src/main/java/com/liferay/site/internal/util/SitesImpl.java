@@ -10,14 +10,13 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
@@ -60,7 +59,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
@@ -645,71 +643,6 @@ public class SitesImpl implements Sites {
 		return cacheFile;
 	}
 
-	protected Map<String, String[]> getLayoutSetPrototypesParameters(
-		boolean initialPropagation) {
-
-		return LinkedHashMapBuilder.put(
-			PortletDataHandlerKeys.DATA_STRATEGY,
-			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR}
-		).put(
-			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.FAVICON,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
-			new String[] {
-				PortletDataHandlerKeys.
-					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE
-			}
-		).put(
-			PortletDataHandlerKeys.LOGO, new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {String.valueOf(initialPropagation)}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.THEME_REFERENCE,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.USER_ID_STRATEGY,
-			new String[] {UserIdStrategy.CURRENT_USER_ID}
-		).build();
-	}
-
 	protected void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, long groupId,
 			boolean privateLayout, Map<String, String[]> parameterMap,
@@ -812,7 +745,9 @@ public class SitesImpl implements Sites {
 
 						importLayoutSetPrototype(
 							layoutSetPrototype, groupId, privateLayout,
-							getLayoutSetPrototypesParameters(true), true);
+							_layoutSetPrototypeHelper.
+								getLayoutSetPrototypesParameters(true),
+							true);
 					}
 					finally {
 						MergeLayoutPrototypesThreadLocal.setInProgress(
@@ -982,6 +917,9 @@ public class SitesImpl implements Sites {
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

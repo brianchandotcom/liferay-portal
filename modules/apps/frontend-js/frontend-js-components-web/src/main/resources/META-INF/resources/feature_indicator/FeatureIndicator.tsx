@@ -134,6 +134,7 @@ export default function FeatureIndicator({
 								dark={dark}
 								data-tooltip-align={tooltipAlign}
 								displayType={displayType}
+								monospaced={iconOnly}
 								rounded
 								size="xs"
 								title={tooltipTitle}

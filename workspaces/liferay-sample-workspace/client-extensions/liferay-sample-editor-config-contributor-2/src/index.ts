@@ -34,6 +34,7 @@ const editorConfigTransformer: EditorConfigTransformer<any> = (config) => {
 				if (!displayEl) {
 					displayEl = document.createElement('div');
 					displayEl.className = 'mt-1 text-secondary';
+					displayEl.dataset.testid = 'word-count-container';
 
 					document
 						.querySelector('.ck-editor__editable')

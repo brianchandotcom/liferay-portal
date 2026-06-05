@@ -46,7 +46,7 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Full Portal Build](validations/full-portal-build.md)
 
-1. [Per-Module Deploy](validations/per-module-deploy.md)
+1. [Per-Module Compile](validations/per-module-compile.md)
 
 1. [Baseline](validations/baseline.md)
 
@@ -56,7 +56,7 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Integration Test Compile](validations/integration-test-compile.md)
 
-1. [API Consumer Compile](validations/api-consumer-compile.md)
+1. [Cross-Module Compile](validations/cross-module-compile.md)
 
 1. [Workspace Build](validations/workspace-build.md)
 

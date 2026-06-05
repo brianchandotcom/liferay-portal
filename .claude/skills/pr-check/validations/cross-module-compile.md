@@ -1,4 +1,4 @@
-# API Consumer Compile
+# Cross-Module Compile
 
 ## Trigger
 
@@ -6,9 +6,9 @@ A `*-api`, `portal-impl`, or `portal-kernel` signature changed (or a `*Constants
 
 - Modules carrying `.lfrbuild-portal-deprecated`, which the default `portal`/`dxp` profile excludes.
 
-- `testIntegration` sources in `-test` modules a producer did not change. Per-Module Deploy skips `-test` modules; Integration Test Compile runs only for a module whose own `testIntegration` changed.
+- `testIntegration` sources in `-test` modules a producer did not change. Per-Module Compile skips `-test` modules; Integration Test Compile runs only for a module whose own `testIntegration` changed.
 
-Both depend on the kernel as a binary, not a `project(...)` edge, so Per-Module Deploy's expansion cannot reach them. Find them by source symbol.
+Both depend on the kernel as a binary, not a `project(...)` edge, so Per-Module Compile's expansion cannot reach them. Find them by source symbol.
 
 ## Match
 

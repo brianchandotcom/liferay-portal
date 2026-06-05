@@ -1,4 +1,4 @@
-# Per-Module Deploy
+# Per-Module Compile
 
 ## Trigger
 
@@ -14,7 +14,7 @@ Exclude modules whose **only** Java change is under `src/testIntegration`. Integ
 
 Expand by consumers: for each changed module with an added, removed, or changed `public`/`protected` member — a method signature or a field/constant declaration (`^[-+]\s*(public|protected)\b`) — grep `modules/**/build.gradle` for `project(":<changed-module-path>")` and add every consumer to the deploy set. This applies to any module, not only `*-api`. The deploy set size N is used by [full-portal-build.md](full-portal-build.md)'s cost comparison.
 
-Consumers the project graph cannot reach — archived, `portal-kernel`/`portal-impl`, and `testIntegration`-only consumers — are covered by [api-consumer-compile.md](api-consumer-compile.md).
+Consumers the project graph cannot reach — archived, `portal-kernel`/`portal-impl`, and `testIntegration`-only consumers — are covered by [cross-module-compile.md](cross-module-compile.md).
 
 Both behavior-change and surface-only edits fire this validation — the build verifies compile and resource bundling regardless of intent.
 

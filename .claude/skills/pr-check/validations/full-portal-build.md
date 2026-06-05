@@ -8,9 +8,9 @@
 
 	- **Full Portal Build cost** = 8 min (the `ant all` baseline).
 
-	- **Per-Module Deploy cost** = 3 min setup + 1 min × ⌈N/4⌉ (4 approximates Gradle's effective parallelism on a dev box).
+	- **Per-Module Compile cost** = 3 min setup + 1 min × ⌈N/4⌉ (4 approximates Gradle's effective parallelism on a dev box).
 
-	N is the deploy set size as defined in [per-module-deploy.md](per-module-deploy.md). Show the cost math when picking this branch so the developer can override.
+	N is the deploy set size as defined in [per-module-compile.md](per-module-compile.md). Show the cost math when picking this branch so the developer can override.
 
 ## Match
 
@@ -26,7 +26,7 @@ ant all -Dgradle.stop.daemon.enabled=false
 
 ## Notes
 
-When this fires, **Per-Module Deploy** still runs for any modules in the touched set without a `.lfrbuild-portal` marker (`ant all`'s marketplace branch only deploys modules with the marker), and **Integration Test Compile** is obviated for `.lfrbuild-portal` modules.
+When this fires, **Per-Module Compile** still runs for any modules in the touched set without a `.lfrbuild-portal` marker (`ant all`'s marketplace branch only deploys modules with the marker), and **Integration Test Compile** is obviated for `.lfrbuild-portal` modules.
 
 ## Time Estimate
 

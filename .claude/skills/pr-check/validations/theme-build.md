@@ -2,7 +2,7 @@
 
 ## Trigger
 
-A shared CSS input that themes consume changed: `frontend-css-common`, `frontend-js-clay-web/clay/clay-css`, or the `frontend-theme-styled` or `frontend-theme-unstyled` parent themes. A theme's own `packageRunBuild` already runs when the theme is deployed (Per-Module Deploy covers that), but a change to a shared input recompiles no theme on its own.
+A shared CSS input that themes consume changed: `frontend-css-common`, `frontend-js-clay-web/clay/clay-css`, or the `frontend-theme-styled` or `frontend-theme-unstyled` parent themes. A theme's own `packageRunBuild` already runs when the theme is deployed (Per-Module Compile covers that), but a change to a shared input recompiles no theme on its own.
 
 ## Match
 

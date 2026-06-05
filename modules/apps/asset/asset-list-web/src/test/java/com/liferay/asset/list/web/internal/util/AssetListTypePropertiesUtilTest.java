@@ -453,8 +453,10 @@ public class AssetListTypePropertiesUtilTest {
 		);
 
 		_objectDefinitionLocalServiceUtilMockedStatic.when(
-			() -> ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				objectDefinitionId)
+			() ->
+				ObjectDefinitionLocalServiceUtil.
+					fetchObjectDefinitionByClassName(
+						_COMPANY_ID, "com.liferay.test.Class" + classNameId)
 		).thenReturn(
 			objectDefinition
 		);

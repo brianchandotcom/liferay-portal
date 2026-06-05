@@ -208,10 +208,38 @@ public class ${entity.name}PersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		<#if entity.hasCompoundPK()>
-			${entity.PKClassName} pk = new ${entity.PKClassName}(
+		<#if serviceBuilder.isVersionGTE_7_4_0() && !entity.versionEntity?? && !entity.versionedEntity??>
+			${entity.name} new${entity.name} = add${entity.name}();
+		<#else>
+			<#if entity.hasCompoundPK()>
+				${entity.PKClassName} pk = new ${entity.PKClassName}(
 
-			<#list entity.PKEntityColumns as entityColumn>
+				<#list entity.PKEntityColumns as entityColumn>
+					<#if stringUtil.equals(entityColumn.type, "int")>
+						RandomTestUtil.nextInt()
+					<#elseif stringUtil.equals(entityColumn.type, "long")>
+						RandomTestUtil.nextLong()
+					<#elseif stringUtil.equals(entityColumn.type, "String")>
+						<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
+
+						<#if maxLength < 8>
+							RandomTestUtil.randomString(${maxLength})
+						<#else>
+							RandomTestUtil.randomString()
+						</#if>
+					</#if>
+
+					<#if entityColumn_has_next>
+						,
+					</#if>
+				</#list>
+
+				);
+			<#else>
+				<#assign entityColumn = entity.PKEntityColumns[0] />
+
+				${entityColumn.type} pk =
+
 				<#if stringUtil.equals(entityColumn.type, "int")>
 					RandomTestUtil.nextInt()
 				<#elseif stringUtil.equals(entityColumn.type, "long")>
@@ -226,35 +254,11 @@ public class ${entity.name}PersistenceTest {
 					</#if>
 				</#if>
 
-				<#if entityColumn_has_next>
-					,
-				</#if>
-			</#list>
-
-			);
-		<#else>
-			<#assign entityColumn = entity.PKEntityColumns[0] />
-
-			${entityColumn.type} pk =
-
-			<#if stringUtil.equals(entityColumn.type, "int")>
-				RandomTestUtil.nextInt()
-			<#elseif stringUtil.equals(entityColumn.type, "long")>
-				RandomTestUtil.nextLong()
-			<#elseif stringUtil.equals(entityColumn.type, "String")>
-				<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
-
-				<#if maxLength < 8>
-					RandomTestUtil.randomString(${maxLength})
-				<#else>
-					RandomTestUtil.randomString()
-				</#if>
+				;
 			</#if>
 
-			;
+			${entity.name} new${entity.name} = _persistence.create(pk);
 		</#if>
-
-		${entity.name} new${entity.name} = _persistence.create(pk);
 
 		<#assign hasEagerBlob = false />
 

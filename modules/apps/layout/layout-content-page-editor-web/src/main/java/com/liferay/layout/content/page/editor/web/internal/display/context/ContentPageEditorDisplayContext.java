@@ -2083,8 +2083,7 @@ public class ContentPageEditorDisplayContext {
 			).build());
 
 		List<StyleBookEntry> styleBookEntries =
-			StyleBookEntryProviderUtil.getStyleBookEntries(
-				themeDisplay.getCompanyId(),
+			_styleBookEntryLocalService.getStyleBookEntries(
 				_staging.getLiveGroupId(themeDisplay.getScopeGroupId()),
 				frontendTokenDefinition.getThemeId());
 

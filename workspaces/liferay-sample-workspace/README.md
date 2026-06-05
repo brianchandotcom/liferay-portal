@@ -80,11 +80,11 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-editor-config-contributor-1*
 
-	Build a JavaScript function to configure WYSIWYG editors.
+	Build a JavaScript function to configure CKEditor 4 and AlloyEditor editors.
 
 - *liferay-sample-editor-config-contributor-2*
 
-	Build a JavaScript function to add the CKEditor 5 WordCount plugin via a client extension.
+	Build a JavaScript function to add the CKEditor 5 WordCount plugin.
 
 - *liferay-sample-etc-cron*
 

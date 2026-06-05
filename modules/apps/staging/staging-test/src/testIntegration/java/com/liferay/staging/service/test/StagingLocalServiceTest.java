@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -433,7 +432,6 @@ public class StagingLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-89203")
 	public void testEnableLocalStagingPreservesStyleBookEntryScopeERC()
 		throws Exception {
 

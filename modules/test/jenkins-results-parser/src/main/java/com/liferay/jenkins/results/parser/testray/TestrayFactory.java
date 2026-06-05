@@ -379,21 +379,21 @@ public class TestrayFactory {
 		}
 
 		synchronized (_testrayFactorOptionsNames) {
-			TestrayFactor.Option testrayFactorCategory =
+			TestrayFactor.Option testrayFactorOption =
 				_testrayFactorOptionsIDs.get(id);
 
-			if (testrayFactorCategory != null) {
-				return testrayFactorCategory;
+			if (testrayFactorOption != null) {
+				return testrayFactorOption;
 			}
 
-			testrayFactorCategory = new TestrayFactor.Option(testrayServer, id);
+			testrayFactorOption = new TestrayFactor.Option(testrayServer, id);
 
-			_testrayFactorOptionsIDs.put(id, testrayFactorCategory);
+			_testrayFactorOptionsIDs.put(id, testrayFactorOption);
 
 			_testrayFactorOptionsNames.put(
-				testrayFactorCategory.getName(), testrayFactorCategory);
+				testrayFactorOption.getName(), testrayFactorOption);
 
-			return testrayFactorCategory;
+			return testrayFactorOption;
 		}
 	}
 
@@ -401,22 +401,21 @@ public class TestrayFactory {
 		TestrayServer testrayServer, String name) {
 
 		synchronized (_testrayFactorOptionsNames) {
-			TestrayFactor.Option testrayFactorCategory =
+			TestrayFactor.Option testrayFactorOption =
 				_testrayFactorOptionsNames.get(name);
 
-			if (testrayFactorCategory != null) {
-				return testrayFactorCategory;
+			if (testrayFactorOption != null) {
+				return testrayFactorOption;
 			}
 
-			testrayFactorCategory = new TestrayFactor.Option(
-				testrayServer, name);
+			testrayFactorOption = new TestrayFactor.Option(testrayServer, name);
 
-			_testrayFactorOptionsNames.put(name, testrayFactorCategory);
+			_testrayFactorOptionsNames.put(name, testrayFactorOption);
 
 			_testrayFactorOptionsIDs.put(
-				testrayFactorCategory.getID(), testrayFactorCategory);
+				testrayFactorOption.getID(), testrayFactorOption);
 
-			return testrayFactorCategory;
+			return testrayFactorOption;
 		}
 	}
 

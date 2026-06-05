@@ -4,12 +4,13 @@
  */
 
 import classnames from 'classnames';
-import React, {ReactNode, useId, useState} from 'react';
+import React, {ReactNode, Ref, useId, useState} from 'react';
 
 import ControlRow from './ControlRow';
 
 export default function CollapsibleGroup({
 	bodyClassName,
+	bodyRef,
 	bodyVisibleClassName,
 	checkboxId,
 	children,
@@ -24,6 +25,7 @@ export default function CollapsibleGroup({
 	tags,
 }: {
 	bodyClassName?: string;
+	bodyRef?: Ref<HTMLDivElement>;
 	bodyVisibleClassName?: string;
 	checkboxId: string;
 	children: ReactNode;
@@ -75,6 +77,7 @@ export default function CollapsibleGroup({
 				)}
 				hidden={!expanded}
 				id={bodyId}
+				ref={bodyRef}
 			>
 				{children}
 			</div>

@@ -1,0 +1,44 @@
+set -o errexit
+set -o nounset
+set -o pipefail
+
+function main {
+	local requested_module="${1:-}"
+
+	local terraform_modules=(
+		aws/eks
+		aws/gitops/resources
+		aws/gitops/platform
+		gcp/gke
+		gcp/gitops/resources
+		gcp/gitops/platform
+	)
+
+	if [[ -n "${requested_module}" ]]
+	then
+		terraform_modules=("${requested_module}")
+	fi
+
+	local script_dir
+	script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+	local terraform_dir
+	terraform_dir=$(cd "${script_dir}/../../terraform" && pwd)
+
+	mkdir --parents "${terraform_dir}/test-results"
+
+	for terraform_module in "${terraform_modules[@]}"
+	do
+		cd "${terraform_dir}/${terraform_module}"
+
+		local sanitized_terraform_module_name
+		sanitized_terraform_module_name="$(echo "${terraform_module}" | tr "/" "-")"
+
+		terraform init -backend=false -input=false
+
+		terraform test \
+			-junit-xml="${terraform_dir}/test-results/${sanitized_terraform_module_name}.xml"
+	done
+}
+
+main "${@}"

@@ -1468,9 +1468,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  iconBytes the byte array of the layout's new icon image
 	 * @param  styleBookEntryERC the external reference code of the style book
 	 *         entry
-	 * @param  styleBookEntryScopeERC the external reference code of the group
-	 *         that owns the style book entry, when the style book entry lives
-	 *         in a different group than the layout (cross-scope)
 	 * @param  faviconFileEntryERC the file entry external reference code of the
 	 *         layout's new favicon
 	 * @param  faviconFileEntryScopeERC the file entry scope external reference
@@ -1491,8 +1488,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> robotsMap, String type, boolean hidden,
 			Map<Locale, String> friendlyURLMap, boolean hasIconImage,
 			byte[] iconBytes, String styleBookEntryERC,
-			String styleBookEntryScopeERC, String faviconFileEntryERC,
-			String faviconFileEntryScopeERC,
+			String faviconFileEntryERC, String faviconFileEntryScopeERC,
 			String masterLayoutPageTemplateEntryERC,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -1507,9 +1503,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, hasIconImage, iconBytes, styleBookEntryERC,
-			styleBookEntryScopeERC, faviconFileEntryERC,
-			faviconFileEntryScopeERC, masterLayoutPageTemplateEntryERC,
-			serviceContext);
+			null, faviconFileEntryERC, faviconFileEntryScopeERC,
+			masterLayoutPageTemplateEntryERC, serviceContext);
 
 		if (!(layout.getLayoutType() instanceof LayoutTypePortlet)) {
 			checkLayoutTypeSettings(

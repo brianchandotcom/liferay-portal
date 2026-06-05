@@ -215,9 +215,6 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 			String styleBookEntryERC = ParamUtil.getString(
 				uploadPortletRequest, "styleBookEntryERC",
 				layout.getStyleBookEntryERC());
-			String styleBookEntryScopeERC = ParamUtil.getString(
-				uploadPortletRequest, "styleBookEntryScopeERC",
-				layout.getStyleBookEntryScopeERC());
 
 			String faviconFileEntryERC = ParamUtil.getString(
 				uploadPortletRequest, "faviconFileEntryERC",
@@ -261,8 +258,7 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 				layout.getTitleMap(), layout.getDescriptionMap(),
 				layout.getKeywordsMap(), layout.getRobotsMap(),
 				layout.getType(), layout.isHidden(), layout.getFriendlyURLMap(),
-				!deleteLogo, iconBytes, styleBookEntryERC,
-				styleBookEntryScopeERC, faviconFileEntryERC,
+				!deleteLogo, iconBytes, styleBookEntryERC, faviconFileEntryERC,
 				faviconFileEntryScopeERC, masterLayoutPageTemplateEntryERC,
 				serviceContext);
 
@@ -289,8 +285,8 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 					draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(),
 					draftLayout.getType(), draftLayout.isHidden(),
 					draftLayout.getFriendlyURLMap(), !deleteLogo, iconBytes,
-					styleBookEntryERC, styleBookEntryScopeERC,
-					faviconFileEntryERC, faviconFileEntryScopeERC,
+					styleBookEntryERC, faviconFileEntryERC,
+					faviconFileEntryScopeERC,
 					draftLayout.getMasterLayoutPageTemplateEntryERC(),
 					serviceContext);
 

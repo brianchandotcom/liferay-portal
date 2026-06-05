@@ -1250,14 +1250,15 @@ public class PageSpecificationResourceTest
 			testGroup.getExternalReferenceCode(),
 			draftLayout.getExternalReferenceCode(), pageSpecification);
 
-		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
+		Layout updatedDraftLayout = _layoutLocalService.getLayout(
+			draftLayout.getPlid());
 
 		Assert.assertEquals(
 			styleBookEntry.getExternalReferenceCode(),
-			draftLayout.getStyleBookEntryERC());
+			updatedDraftLayout.getStyleBookEntryERC());
 		Assert.assertEquals(
 			irrelevantGroup.getExternalReferenceCode(),
-			draftLayout.getStyleBookEntryScopeERC());
+			updatedDraftLayout.getStyleBookEntryScopeERC());
 
 		Scope scope = itemExternalReference.getScope();
 
@@ -1267,11 +1268,12 @@ public class PageSpecificationResourceTest
 			testGroup.getExternalReferenceCode(),
 			draftLayout.getExternalReferenceCode(), pageSpecification);
 
-		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
+		updatedDraftLayout = _layoutLocalService.getLayout(
+			draftLayout.getPlid());
 
 		Assert.assertEquals(
 			scope.getExternalReferenceCode(),
-			draftLayout.getStyleBookEntryScopeERC());
+			updatedDraftLayout.getStyleBookEntryScopeERC());
 	}
 
 	private Layout _updateLayout(Layout layout, ServiceContext serviceContext)

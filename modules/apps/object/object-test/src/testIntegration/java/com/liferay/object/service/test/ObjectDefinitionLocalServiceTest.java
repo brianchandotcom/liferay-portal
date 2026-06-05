@@ -3232,7 +3232,27 @@ public class ObjectDefinitionLocalServiceTest {
 			FriendlyURLResolverConstants.URL_SEPARATOR_Y_OBJECT_ENTRY,
 			objectDefinition2.getFriendlyURLSeparator());
 
+		String name = "Test" + RandomTestUtil.randomString();
+
 		ObjectDefinition objectDefinition3 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				name,
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						StringUtil.randomId()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				TestPropsValues.getUserId());
+
+		Assert.assertEquals(
+			StringUtil.toLowerCase("c_" + name),
+			objectDefinition3.getFriendlyURLSeparator());
+
+		ObjectDefinition objectDefinition4 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				"Test",
 				Collections.singletonList(
@@ -3247,9 +3267,9 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId());
 
 		Assert.assertEquals(
-			"c_test", objectDefinition3.getFriendlyURLSeparator());
+			"c_test", objectDefinition4.getFriendlyURLSeparator());
 
-		ObjectDefinition objectDefinition4 =
+		ObjectDefinition objectDefinition5 =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), 0, null, true, false, true,
 				true, true, false, false, false, false, "api",
@@ -3271,12 +3291,13 @@ public class ObjectDefinitionLocalServiceTest {
 			"Other asset types may use this prefix.",
 			() -> _objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				objectDefinition4.getObjectDefinitionId()));
+				objectDefinition5.getObjectDefinitionId()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition4);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition5);
 	}
 
 	@FeatureFlag("LPD-17564")

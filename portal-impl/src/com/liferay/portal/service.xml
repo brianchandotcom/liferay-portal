@@ -636,7 +636,6 @@
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
 		<column name="styleBookEntryERC" type="String" />
-		<column name="styleBookEntryScopeERC" type="String" />
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
 		<column name="faviconFileEntryERC" type="String" />

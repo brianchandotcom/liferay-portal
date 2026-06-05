@@ -3923,7 +3923,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
-	public Layout updateStyleBookEntry(
+	public Layout updateStyleBookEntryERC(
 			long groupId, boolean privateLayout, long layoutId,
 			String styleBookEntryERC, String styleBookEntryScopeERC)
 		throws PortalException {

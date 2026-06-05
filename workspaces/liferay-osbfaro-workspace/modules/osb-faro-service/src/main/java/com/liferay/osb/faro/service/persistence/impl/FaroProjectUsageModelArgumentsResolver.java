@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -54,7 +54,7 @@ public class FaroProjectUsageModelArgumentsResolver
 		long columnBitmask = faroProjectUsageModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(faroProjectUsageModelImpl, finderPath, original);
+			return _getValue(faroProjectUsageModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class FaroProjectUsageModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(faroProjectUsageModelImpl, finderPath, original);
+			return _getValue(faroProjectUsageModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -91,26 +91,21 @@ public class FaroProjectUsageModelArgumentsResolver
 
 	private static Object[] _getValue(
 		FaroProjectUsageModelImpl faroProjectUsageModelImpl,
-		FinderPath finderPath, boolean original) {
-
-		String[] columnNames = finderPath.getColumnNames();
+		String[] columnNames, boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
-			Object value;
-
 			if (original) {
-				value = faroProjectUsageModelImpl.getColumnOriginalValue(
+				arguments[i] = faroProjectUsageModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				value = faroProjectUsageModelImpl.getColumnValue(columnName);
+				arguments[i] = faroProjectUsageModelImpl.getColumnValue(
+					columnName);
 			}
-
-			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -120,4 +115,4 @@ public class FaroProjectUsageModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:562459504
+// LIFERAY-SERVICE-BUILDER-HASH:243600704

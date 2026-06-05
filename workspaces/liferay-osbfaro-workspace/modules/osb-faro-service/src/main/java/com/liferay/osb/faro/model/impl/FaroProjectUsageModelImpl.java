@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -91,8 +91,6 @@ public class FaroProjectUsageModelImpl
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_FaroProjectUsage";
-
-	public static final String ENTITY_ALIAS = "faroProjectUsage";
 
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY faroProjectUsage.faroProjectUsageId ASC";
@@ -882,4 +880,4 @@ public class FaroProjectUsageModelImpl
 	private FaroProjectUsage _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2072316741
+// LIFERAY-SERVICE-BUILDER-HASH:297127535

@@ -92,8 +92,6 @@ public class FaroChannelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_FaroChannel";
 
-	public static final String ENTITY_ALIAS = "faroChannel";
-
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY faroChannel.faroChannelId ASC";
 
@@ -938,4 +936,4 @@ public class FaroChannelModelImpl
 	private FaroChannel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1289105832
+// LIFERAY-SERVICE-BUILDER-HASH:-338282198

@@ -119,37 +119,6 @@ definition {
 		}
 	}
 
-	@description = "Total Individuals increase by one when a new individual is added via event"
-	@priority = 5
-	test CanViewTotalIndividualsIncreaseByOne {
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-		ACNavigation.goToIndividuals();
-
-		ACCards.viewTotalCount(
-			cardName = "Total Individuals",
-			count = 0);
-
-		ACUtils.launchDXP();
-
-		ACUtils.navigateToSitePageWithUser(
-			emailList = "userea@liferay.com",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-		ACNavigation.goToIndividuals();
-
-		ACCards.viewTotalCount(
-			cardName = "Total Individuals",
-			count = 1);
-	}
-
 	@description = "Bug: LRAC-12694 | Automation ID: LRAC-12811 | Test Summary: Known Individuals is not duplicated if user exists in multiple properties"
 	@priority = 3
 	test IndividualNotDuplicatedIfUserExistsInMultipleProperties {

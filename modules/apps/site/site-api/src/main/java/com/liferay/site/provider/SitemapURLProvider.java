@@ -22,7 +22,7 @@ public interface SitemapURLProvider {
 
 	public String getClassName();
 
-	public Date getLastModifiedDate(long companyId, long groupId)
+	public Date getModifiedDate(long companyId, long groupId)
 		throws PortalException;
 
 	public default boolean isInclude(long companyId, long groupId)

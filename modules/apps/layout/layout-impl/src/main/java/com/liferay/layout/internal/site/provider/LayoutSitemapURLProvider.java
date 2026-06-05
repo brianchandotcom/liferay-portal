@@ -6,16 +6,22 @@
 package com.liferay.layout.internal.site.provider;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -29,7 +35,6 @@ import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -52,25 +57,13 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public Date getLastModifiedDate(long companyId, long groupId)
+	public Date getModifiedDate(long companyId, long groupId)
 		throws PortalException {
 
-		List<String> sitemapableLayoutTypes = new ArrayList<>();
+		List<String> layoutTypes = _getLayoutTypes(
+			LayoutTypeControllerTracker.getLayoutTypeControllers());
 
-		Map<String, LayoutTypeController> layoutTypeControllers =
-			LayoutTypeControllerTracker.getLayoutTypeControllers();
-
-		for (Map.Entry<String, LayoutTypeController> entry :
-				layoutTypeControllers.entrySet()) {
-
-			LayoutTypeController layoutTypeController = entry.getValue();
-
-			if (layoutTypeController.isSitemapable()) {
-				sitemapableLayoutTypes.add(entry.getKey());
-			}
-		}
-
-		if (sitemapableLayoutTypes.isEmpty()) {
+		if (layoutTypes.isEmpty()) {
 			return null;
 		}
 
@@ -86,7 +79,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 					LayoutTable.INSTANCE.privateLayout.eq(false)
 				).and(
 					LayoutTable.INSTANCE.type.in(
-						sitemapableLayoutTypes.toArray(new String[0]))
+						layoutTypes.toArray(new String[0]))
 				).and(
 					LayoutTable.INSTANCE.modifiedDate.isNotNull()
 				)
@@ -120,7 +113,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layoutUuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
-		visitLayout(element, layout, themeDisplay);
+		_visitLayout(element, layout, themeDisplay);
 	}
 
 	@Override
@@ -132,69 +125,34 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			return;
 		}
 
-		Map<String, LayoutTypeController> layoutTypeControllers =
-			LayoutTypeControllerTracker.getLayoutTypeControllers();
+		List<String> layoutTypes = _getLayoutTypes(
+			LayoutTypeControllerTracker.getLayoutTypeControllers());
 
-		for (Map.Entry<String, LayoutTypeController> entry :
-				layoutTypeControllers.entrySet()) {
-
-			LayoutTypeController layoutTypeController = entry.getValue();
-
-			if (!layoutTypeController.isSitemapable()) {
-				continue;
-			}
-
-			int start = QueryUtil.ALL_POS;
-			int end = QueryUtil.ALL_POS;
-
-			int count = _layoutService.getLayoutsCount(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				entry.getKey());
-
-			if (count > SitemapManager.MAXIMUM_ENTRIES) {
-				start = count - SitemapManager.MAXIMUM_ENTRIES;
-				end = count;
-			}
-
-			List<Layout> layouts = _layoutService.getLayouts(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				entry.getKey(), start, end);
-
-			for (Layout layout : layouts) {
-				visitLayout(element, layout, themeDisplay);
-			}
-		}
-	}
-
-	protected void visitLayout(
-			Element element, Layout layout, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		if (layout.isSystem() ||
-			_sitemapURLProviderHelper.isExcludeLayoutFromSitemap(layout)) {
-
+		if (layoutTypes.isEmpty()) {
 			return;
 		}
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			layout.getTypeSettingsProperties();
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutLocalService.getActionableDynamicQuery();
 
-		String layoutFullURL = _portal.getCanonicalURL(
-			_portal.getLayoutFullURL(layout, themeDisplay), themeDisplay,
-			layout);
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property privateLayoutProperty = PropertyFactoryUtil.forName(
+					"privateLayout");
 
-		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
-			layoutFullURL, themeDisplay, layout,
-			_getAvailableLocales(
-				layout,
-				_language.getAvailableLocales(themeDisplay.getScopeGroupId())));
+				dynamicQuery.add(
+					privateLayoutProperty.eq(layoutSet.isPrivateLayout()));
 
-		for (String alternateURL : alternateURLs.values()) {
-			_sitemapManager.addURLElement(
-				element, alternateURL, typeSettingsUnicodeProperties,
-				layout.getModifiedDate(), layoutFullURL, alternateURLs,
-				layout.getGroupId());
-		}
+				Property typeProperty = PropertyFactoryUtil.forName("type");
+
+				dynamicQuery.add(
+					typeProperty.in(layoutTypes.toArray(new String[0])));
+			});
+		actionableDynamicQuery.setGroupId(layoutSet.getGroupId());
+		actionableDynamicQuery.setPerformActionMethod(
+			(Layout layout) -> _visitLayout(element, layout, themeDisplay));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private Set<Locale> _getAvailableLocales(
@@ -225,6 +183,63 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		return availableLocales;
 	}
 
+	private List<String> _getLayoutTypes(
+		Map<String, LayoutTypeController> layoutTypeControllers) {
+
+		return TransformUtil.transform(
+			layoutTypeControllers.entrySet(),
+			entry -> {
+				LayoutTypeController layoutTypeController = entry.getValue();
+
+				if (layoutTypeController.isSitemapable()) {
+					return entry.getKey();
+				}
+
+				return null;
+			});
+	}
+
+	private void _visitLayout(
+			Element element, Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (layout.isSystem() ||
+			_sitemapURLProviderHelper.isExcludeLayoutFromSitemap(layout)) {
+
+			return;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker != null) &&
+			!_layoutModelResourcePermission.contains(
+				permissionChecker, layout, ActionKeys.VIEW)) {
+
+			return;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		String layoutFullURL = _portal.getCanonicalURL(
+			_portal.getLayoutFullURL(layout, themeDisplay), themeDisplay,
+			layout);
+
+		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
+			layoutFullURL, themeDisplay, layout,
+			_getAvailableLocales(
+				layout,
+				_language.getAvailableLocales(themeDisplay.getScopeGroupId())));
+
+		for (String alternateURL : alternateURLs.values()) {
+			_sitemapManager.addURLElement(
+				element, alternateURL, typeSettingsUnicodeProperties,
+				layout.getModifiedDate(), layoutFullURL, alternateURLs,
+				layout.getGroupId());
+		}
+	}
+
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
@@ -234,8 +249,10 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	@Reference
-	private LayoutService _layoutService;
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Layout)"
+	)
+	private ModelResourcePermission<Layout> _layoutModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

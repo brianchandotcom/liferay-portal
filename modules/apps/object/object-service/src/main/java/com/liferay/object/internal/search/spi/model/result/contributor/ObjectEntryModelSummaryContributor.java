@@ -29,7 +29,7 @@ public class ObjectEntryModelSummaryContributor
 		Document document, Locale locale, String snippet) {
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			document.get(ObjectEntrySearchConstants.DEFAULT_LANGUAGE_ID));
+			document.get(Field.DEFAULT_LANGUAGE_ID));
 
 		Summary summary = new Summary(
 			_getTitle(defaultLocale, document, locale),

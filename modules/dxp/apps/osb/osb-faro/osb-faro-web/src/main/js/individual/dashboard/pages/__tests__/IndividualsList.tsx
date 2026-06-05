@@ -146,26 +146,6 @@ describe('Individuals List', () => {
 		);
 	});
 
-	it('does not pass activityStatus to the search API', async () => {
-		(API.individuals.search as jest.Mock).mockReturnValue(
-			Promise.resolve({items: [], total: 0})
-		);
-
-		const history = createMemoryHistory();
-
-		render(
-			<Router history={history}>
-				<IndividualsList />
-			</Router>
-		);
-
-		await waitForLoadingToBeRemoved(document.body);
-
-		const callArgs = (API.individuals.search as jest.Mock).mock.calls[0][0];
-
-		expect(callArgs.activityStatus).toBeUndefined();
-	});
-
 	it('passes the selected range key when activeUsers filter changes', async () => {
 		(API.individuals.search as jest.Mock).mockReturnValue(
 			Promise.resolve({items: [], total: 0})

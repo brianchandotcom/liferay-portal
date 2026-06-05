@@ -18,7 +18,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -80,32 +79,16 @@ public class ViewModelArmorTemplatesDisplayContextTest {
 			fdsActionDropdownItems.toString(), 2,
 			fdsActionDropdownItems.size());
 
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0),
 			"http://localhost:8080/web/test/guardrails" +
 				"?externalReferenceCode={externalReferenceCode}",
 			"view", "view", "view", "get", null);
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1),
 			"/o/ai-hub/v1.0/model-armor-templates/by-external-reference-code" +
 				"/{externalReferenceCode}",
 			"trash", "delete", "delete", "delete", "async");
-	}
-
-	private void _assertFDSActionDropdownItem(
-		FDSActionDropdownItem fdsActionDropdownItem, String href, String icon,
-		String id, String label, String method, String target) {
-
-		Map<String, String> data =
-			(Map<String, String>)fdsActionDropdownItem.get("data");
-
-		Assert.assertEquals(id, data.get("id"));
-		Assert.assertEquals(method, data.get("method"));
-
-		Assert.assertEquals(href, fdsActionDropdownItem.get("href"));
-		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
-		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
-		Assert.assertEquals(target, fdsActionDropdownItem.get("target"));
 	}
 
 	private void _setUpLanguageUtil() {

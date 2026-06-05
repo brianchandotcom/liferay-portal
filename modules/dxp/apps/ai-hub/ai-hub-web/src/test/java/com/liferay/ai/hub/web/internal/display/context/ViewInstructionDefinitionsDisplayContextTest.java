@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
+import com.liferay.ai.hub.web.internal.test.util.DisplayContextTestUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -28,7 +28,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -79,45 +78,21 @@ public class ViewInstructionDefinitionsDisplayContextTest {
 			fdsActionDropdownItems.toString(), 3,
 			fdsActionDropdownItems.size());
 
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0),
 			StringBundler.concat(
 				_PORTAL_URL, "/web", _GROUP_FRIENDLY_URL, "/instruction",
 				"?externalReferenceCode={externalReferenceCode}"),
 			"view", "view", "view", "get", null);
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1),
 			"/o/ai-hub/instruction-definitions/by-external-reference-code" +
 				"/{externalReferenceCode}",
 			"trash", "delete", "delete", "delete", "async");
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2), _PERMISSIONS_URL,
 			"password-policies", "permissions", "permissions", "get",
 			"modal-permissions");
-	}
-
-	private void _assertFDSActionDropdownItem(
-		FDSActionDropdownItem fdsActionDropdownItem, String href, String icon,
-		String id, String label, String method, String target) {
-
-		Assert.assertNotNull(fdsActionDropdownItem);
-
-		Map<String, String> data =
-			(Map<String, String>)fdsActionDropdownItem.get("data");
-
-		Assert.assertEquals(id, data.get("id"));
-		Assert.assertEquals(method, data.get("method"));
-
-		if (Validator.isNotNull(href)) {
-			Assert.assertEquals(href, fdsActionDropdownItem.get("href"));
-		}
-		else {
-			Assert.assertNull(fdsActionDropdownItem.get("href"));
-		}
-
-		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
-		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
-		Assert.assertEquals(target, fdsActionDropdownItem.get("target"));
 	}
 
 	private void _setUpLanguageUtil() {

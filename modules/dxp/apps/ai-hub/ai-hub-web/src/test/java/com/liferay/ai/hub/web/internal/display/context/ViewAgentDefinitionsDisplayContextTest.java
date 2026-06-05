@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
+import com.liferay.ai.hub.web.internal.test.util.DisplayContextTestUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -28,7 +29,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -78,7 +78,7 @@ public class ViewAgentDefinitionsDisplayContextTest {
 			fdsActionDropdownItems.toString(), 6,
 			fdsActionDropdownItems.size());
 
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0),
 			StringBundler.concat(
 				_PORTAL_URL, "/web", _GROUP_FRIENDLY_URL,
@@ -90,39 +90,23 @@ public class ViewAgentDefinitionsDisplayContextTest {
 			"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code" +
 				"/{externalReferenceCode}";
 
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1), href + "/copy", "copy", "copy",
 			"duplicate", "post", "async");
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2), href, "trash", "delete", "delete",
 			"delete", "async");
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(3), href + "/update-active?active=false",
 			"block", "deactivate", "deactivate", "patch", "async");
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(4), href + "/update-active?active=true",
 			"logout", "activate", "activate", "patch", "async");
 
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(5), _PERMISSIONS_URL,
 			"password-policies", "permissions", "permissions", "get",
 			"modal-permissions");
-	}
-
-	private void _assertFDSActionDropdownItem(
-		FDSActionDropdownItem fdsActionDropdownItem, String href, String icon,
-		String id, String label, String method, String target) {
-
-		Map<String, String> data =
-			(Map<String, String>)fdsActionDropdownItem.get("data");
-
-		Assert.assertEquals(id, data.get("id"));
-		Assert.assertEquals(method, data.get("method"));
-
-		Assert.assertEquals(href, fdsActionDropdownItem.get("href"));
-		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
-		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
-		Assert.assertEquals(target, fdsActionDropdownItem.get("target"));
 	}
 
 	private void _setUpGroupLocalService() throws Exception {

@@ -22,6 +22,8 @@ jobs:
             -   name: Validate Terraform
                 run: terraform validate
                 working-directory: ./cloud/terraform/${{matrix.stack}}
+            -   name: Run Terraform unit tests
+                run: cloud/scripts/tests/run_terraform_tests.sh "${{matrix.stack}}"
             -   name: Run TFLint
                 run: cloud/scripts/tests/run_tflint.sh "${{matrix.stack}}"
             -   name: Run Checkov

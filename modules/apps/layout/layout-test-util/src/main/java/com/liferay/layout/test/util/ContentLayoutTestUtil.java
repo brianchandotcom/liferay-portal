@@ -525,7 +525,7 @@ public class ContentLayoutTestUtil {
 			new MockLiferayPortletActionResponse());
 
 		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest();
+			_getMockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
@@ -716,7 +716,7 @@ public class ContentLayoutTestUtil {
 		}
 	}
 
-	private static MockHttpServletRequest _createMockHttpServletRequest() {
+	private static MockHttpServletRequest _getMockHttpServletRequest() {
 		return new MockHttpServletRequest() {
 
 			@Override

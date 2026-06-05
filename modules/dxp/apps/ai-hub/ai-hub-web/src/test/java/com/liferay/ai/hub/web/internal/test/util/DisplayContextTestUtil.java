@@ -33,17 +33,6 @@ public class DisplayContextTestUtil {
 		MockedStatic<ObjectDefinitionLocalServiceUtil>
 			objectDefinitionLocalServiceUtilMockedStatic,
 		MockedStatic<ObjectEntryServiceUtil> objectEntryServiceUtilMockedStatic,
-		boolean hasUpdatePermission) {
-
-		setGetReactDataMocks(
-			objectDefinitionLocalServiceUtilMockedStatic,
-			objectEntryServiceUtilMockedStatic, hasUpdatePermission, false);
-	}
-
-	public static void setGetReactDataMocks(
-		MockedStatic<ObjectDefinitionLocalServiceUtil>
-			objectDefinitionLocalServiceUtilMockedStatic,
-		MockedStatic<ObjectEntryServiceUtil> objectEntryServiceUtilMockedStatic,
 		boolean hasUpdatePermission, boolean system) {
 
 		objectDefinitionLocalServiceUtilMockedStatic.when(

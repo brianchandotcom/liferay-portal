@@ -113,7 +113,7 @@ public class EditAgentDefinitionDisplayContextTest {
 
 			DisplayContextTestUtil.setGetReactDataMocks(
 				objectDefinitionLocalServiceUtilMockedStatic,
-				objectEntryServiceUtilMockedStatic, hasUpdatePermission);
+				objectEntryServiceUtilMockedStatic, hasUpdatePermission, false);
 
 			Map<String, Object> reactData =
 				_editAgentDefinitionDisplayContext.getReactData();

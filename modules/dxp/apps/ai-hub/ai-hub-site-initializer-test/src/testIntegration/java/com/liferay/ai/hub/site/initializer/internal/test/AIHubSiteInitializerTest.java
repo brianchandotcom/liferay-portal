@@ -173,12 +173,19 @@ public class AIHubSiteInitializerTest {
 		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 		_assertObjectDefinitionExists("L_AI_HUB_MODEL_ARMOR_TEMPLATE");
-		_assertObjectEntryExists("L_AI_HUB_ACTION_BOUNDARY");
-		_assertObjectEntryExists("L_AI_HUB_AI_TRANSPARENCY");
-		_assertObjectEntryExists("L_AI_HUB_DATA_MINIMIZATION_IN_CONTEXT");
-		_assertObjectEntryExists("L_AI_HUB_NO_HARMFUL_CONTENT");
-		_assertObjectEntryExists("L_AI_HUB_PII_NON_GENERATION");
-		_assertObjectEntryExists("L_AI_HUB_PROHIBITED_PRACTICES");
+		_assertObjectEntryExists(
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_ACTION_BOUNDARY");
+		_assertObjectEntryExists(
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_AI_TRANSPARENCY");
+		_assertObjectEntryExists(
+			"L_AI_HUB_INSTRUCTION_DEFINITION",
+			"L_AI_HUB_DATA_MINIMIZATION_IN_CONTEXT");
+		_assertObjectEntryExists(
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_NO_HARMFUL_CONTENT");
+		_assertObjectEntryExists(
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_PII_NON_GENERATION");
+		_assertObjectEntryExists(
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_PROHIBITED_PRACTICES");
 		_assertObjectFieldDefaultValue(
 			"L_AI_HUB_MODEL_ARMOR_TEMPLATE", "location", "europe-west1");
 		_assertObjectFieldsExist(
@@ -405,17 +412,20 @@ public class AIHubSiteInitializerTest {
 		Assert.assertTrue(objectDefinition.isSystem());
 	}
 
-	private void _assertObjectEntryExists(String externalReferenceCode)
+	private void _assertObjectEntryExists(
+			String objectDefinitionExternalReferenceCode,
+			String objectEntryExternalReferenceCode)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_INSTRUCTION_DEFINITION",
+					objectDefinitionExternalReferenceCode,
 					TestPropsValues.getCompanyId());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
+			objectEntryExternalReferenceCode, 0,
+			objectDefinition.getObjectDefinitionId());
 
 		Map<String, Serializable> values = objectEntry.getValues();
 

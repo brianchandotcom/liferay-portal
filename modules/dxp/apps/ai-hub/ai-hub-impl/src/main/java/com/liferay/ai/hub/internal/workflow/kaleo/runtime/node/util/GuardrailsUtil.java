@@ -6,8 +6,8 @@
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util;
 
 import com.liferay.ai.hub.guardrail.ModelArmorHandler;
-import com.liferay.ai.hub.internal.guardrail.InputGuardrailImpl;
-import com.liferay.ai.hub.internal.guardrail.OutputGuardrailImpl;
+import com.liferay.ai.hub.internal.langchain4j.guardrail.InputGuardrailImpl;
+import com.liferay.ai.hub.internal.langchain4j.guardrail.OutputGuardrailImpl;
 import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;

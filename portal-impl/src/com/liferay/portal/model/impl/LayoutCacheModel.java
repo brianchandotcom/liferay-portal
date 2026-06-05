@@ -67,7 +67,7 @@ public class LayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(95);
+		StringBundler sb = new StringBundler(93);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -131,8 +131,6 @@ public class LayoutCacheModel
 		sb.append(colorSchemeId);
 		sb.append(", styleBookEntryERC=");
 		sb.append(styleBookEntryERC);
-		sb.append(", styleBookEntryScopeERC=");
-		sb.append(styleBookEntryScopeERC);
 		sb.append(", css=");
 		sb.append(css);
 		sb.append(", priority=");
@@ -304,13 +302,6 @@ public class LayoutCacheModel
 			layoutImpl.setStyleBookEntryERC(styleBookEntryERC);
 		}
 
-		if (styleBookEntryScopeERC == null) {
-			layoutImpl.setStyleBookEntryScopeERC("");
-		}
-		else {
-			layoutImpl.setStyleBookEntryScopeERC(styleBookEntryScopeERC);
-		}
-
 		if (css == null) {
 			layoutImpl.setCss("");
 		}
@@ -454,7 +445,6 @@ public class LayoutCacheModel
 		themeId = objectInput.readUTF();
 		colorSchemeId = objectInput.readUTF();
 		styleBookEntryERC = objectInput.readUTF();
-		styleBookEntryScopeERC = objectInput.readUTF();
 		css = (String)objectInput.readObject();
 
 		priority = objectInput.readInt();
@@ -609,13 +599,6 @@ public class LayoutCacheModel
 			objectOutput.writeUTF(styleBookEntryERC);
 		}
 
-		if (styleBookEntryScopeERC == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(styleBookEntryScopeERC);
-		}
-
 		if (css == null) {
 			objectOutput.writeObject("");
 		}
@@ -717,7 +700,6 @@ public class LayoutCacheModel
 	public String themeId;
 	public String colorSchemeId;
 	public String styleBookEntryERC;
-	public String styleBookEntryScopeERC;
 	public String css;
 	public int priority;
 	public String faviconFileEntryERC;
@@ -735,4 +717,4 @@ public class LayoutCacheModel
 	public long statusDate;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1701508329
+// LIFERAY-SERVICE-BUILDER-HASH:886103591

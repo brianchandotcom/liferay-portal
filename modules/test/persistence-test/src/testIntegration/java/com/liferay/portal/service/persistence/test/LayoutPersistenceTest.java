@@ -179,8 +179,6 @@ public class LayoutPersistenceTest {
 
 		newLayout.setStyleBookEntryERC(RandomTestUtil.randomString());
 
-		newLayout.setStyleBookEntryScopeERC(RandomTestUtil.randomString());
-
 		newLayout.setCss(RandomTestUtil.randomString());
 
 		newLayout.setPriority(RandomTestUtil.nextInt());
@@ -277,9 +275,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			existingLayout.getStyleBookEntryERC(),
 			newLayout.getStyleBookEntryERC());
-		Assert.assertEquals(
-			existingLayout.getStyleBookEntryScopeERC(),
-			newLayout.getStyleBookEntryScopeERC());
 		Assert.assertEquals(existingLayout.getCss(), newLayout.getCss());
 		Assert.assertEquals(
 			existingLayout.getPriority(), newLayout.getPriority());
@@ -673,9 +668,8 @@ public class LayoutPersistenceTest {
 			"classPK", true, "name", true, "keywords", true, "robots", true,
 			"type", true, "hidden", true, "system", true, "friendlyURL", true,
 			"iconImageId", true, "themeId", true, "colorSchemeId", true,
-			"styleBookEntryERC", true, "styleBookEntryScopeERC", true,
-			"priority", true, "faviconFileEntryERC", true,
-			"faviconFileEntryScopeERC", true,
+			"styleBookEntryERC", true, "priority", true, "faviconFileEntryERC",
+			true, "faviconFileEntryScopeERC", true,
 			"masterLayoutPageTemplateEntryERC", true,
 			"portletLayoutPageTemplateEntryERC", true,
 			"portletLayoutPageTemplateEntryScopeERC", true,
@@ -1059,8 +1053,6 @@ public class LayoutPersistenceTest {
 
 		layout.setStyleBookEntryERC(RandomTestUtil.randomString());
 
-		layout.setStyleBookEntryScopeERC(RandomTestUtil.randomString());
-
 		layout.setCss(RandomTestUtil.randomString());
 
 		layout.setPriority(RandomTestUtil.nextInt());
@@ -1105,4 +1097,4 @@ public class LayoutPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2085730927
+// LIFERAY-SERVICE-BUILDER-HASH:-1848760556

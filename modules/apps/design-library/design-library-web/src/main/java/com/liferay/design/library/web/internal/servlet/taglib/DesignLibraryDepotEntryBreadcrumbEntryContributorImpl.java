@@ -140,7 +140,6 @@ public class DesignLibraryDepotEntryBreadcrumbEntryContributorImpl
 
 		breadcrumbEntry.setTitle(
 			_language.get(httpServletRequest, "design-libraries"));
-
 		breadcrumbEntry.setURL(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, themeDisplay.getControlPanelGroup(),

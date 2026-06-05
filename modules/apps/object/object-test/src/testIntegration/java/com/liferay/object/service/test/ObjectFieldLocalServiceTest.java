@@ -558,11 +558,11 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
 
 		String[] reservedNames = {
-			"actions", "companyId", "createDate", "creator", "dateCreated",
-			"dateModified", "externalReferenceCode", "groupId", "id",
-			"keywords", "lastPublishDate", "modifiedDate", "statusByUserId",
-			"statusByUserName", "statusDate", "taxonomycategoryids", "userId",
-			"userName"
+			"actions", "comments", "companyId", "createDate", "creator",
+			"dateCreated", "dateModified", "externalReferenceCode", "groupId",
+			"id", "keywords", "lastPublishDate", "modifiedDate",
+			"statusByUserId", "statusByUserName", "statusDate",
+			"taxonomycategoryids", "userId", "userName"
 		};
 
 		for (String reservedName : reservedNames) {

@@ -407,8 +407,9 @@ public class TestrayRun {
 	private synchronized int _getNextRunNumber() {
 		TestrayBuild testrayBuild = getTestrayBuild();
 
-		String filter =
-			"r_buildToRuns_c_buildId eq '" + testrayBuild.getID() + "'";
+		String filter = JenkinsResultsParserUtil.combine(
+			"r_buildToRuns_c_buildId eq '",
+			String.valueOf(testrayBuild.getID()), "'");
 
 		try {
 			TestrayServer testrayServer = getTestrayServer();
@@ -455,14 +456,16 @@ public class TestrayRun {
 			return null;
 		}
 
-		String filter = "r_runToFactors_c_runId eq '" + runID + "'";
+		String filter = JenkinsResultsParserUtil.combine(
+			"r_runToFactors_c_runId eq '", String.valueOf(runID), "'");
 
 		try {
 			JSONObject responseJSONObject = new JSONObject(
 				_testrayBuild.getTestrayServer(
 				).requestGet(
-					"/o/c/factors?filter=" +
-						URLEncoder.encode(filter, "UTF-8") + "&pageSize=100"
+					JenkinsResultsParserUtil.combine(
+						"/o/c/factors?filter=",
+						URLEncoder.encode(filter, "UTF-8"), "&pageSize=100")
 				));
 
 			JSONArray itemsJSONArray = responseJSONObject.optJSONArray("items");

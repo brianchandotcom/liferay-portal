@@ -96,10 +96,12 @@ public interface TestrayFactor {
 			String filter = null;
 
 			if (_id > 0) {
-				filter = "id eq '" + _id + "'";
+				filter = JenkinsResultsParserUtil.combine(
+					"id eq '", String.valueOf(_id), "'");
 			}
 			else if (!JenkinsResultsParserUtil.isNullOrEmpty(_name)) {
-				filter = "name eq '" + _name + "'";
+				filter = JenkinsResultsParserUtil.combine(
+					"name eq '", _name, "'");
 			}
 
 			if (filter == null) {
@@ -224,10 +226,12 @@ public interface TestrayFactor {
 			String filter = null;
 
 			if (_id > 0) {
-				filter = "id eq '" + _id + "'";
+				filter = JenkinsResultsParserUtil.combine(
+					"id eq '", String.valueOf(_id), "'");
 			}
 			else if (!JenkinsResultsParserUtil.isNullOrEmpty(_name)) {
-				filter = "name eq '" + _name + "'";
+				filter = JenkinsResultsParserUtil.combine(
+					"name eq '", _name, "'");
 			}
 
 			if (filter == null) {

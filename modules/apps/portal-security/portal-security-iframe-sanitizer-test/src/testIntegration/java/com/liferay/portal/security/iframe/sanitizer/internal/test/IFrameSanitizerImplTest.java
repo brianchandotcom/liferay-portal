@@ -66,7 +66,7 @@ public class IFrameSanitizerImplTest {
 			Configuration configuration = configurations[0];
 
 			if (configuration != null) {
-				configuration.delete();
+				ConfigurationTestUtil.deleteConfiguration(configuration);
 			}
 		}
 	}

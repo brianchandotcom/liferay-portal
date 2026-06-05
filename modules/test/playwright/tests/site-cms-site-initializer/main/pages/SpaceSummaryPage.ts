@@ -244,20 +244,46 @@ export class SpaceSummaryPage {
 			.getByText(`${siteTemplateName} (Site Template)`, {exact: true})
 			.waitFor();
 
+		await waitForAlert(
+			this.page,
+			`Success:Site template ${siteTemplateName} was successfully connected to the space.`,
+			{autoClose: false}
+		);
+
 		await this.closeButton.click();
 
 		await this.page.getByRole('dialog').waitFor({state: 'detached'});
 	}
 
-	async disconnectSiteFromModal(name: string) {
+	async disconnectSiteFromModal({
+		isSiteTemplate = false,
+		siteName,
+	}: {
+		isSiteTemplate?: boolean;
+		siteName: string;
+	}) {
+		const label = isSiteTemplate ? `${siteName} (Site Template)` : siteName;
+
 		await this.page
 			.getByLabel('Connected Sites')
 			.getByRole('listitem')
-			.filter({has: this.page.getByText(name, {exact: true})})
+			.filter({
+				has: this.page.getByText(label, {
+					exact: true,
+				}),
+			})
 			.getByRole('button', {name: /Actions/i})
 			.click();
 
 		await this.page.getByRole('menuitem', {name: 'Disconnect'}).click();
+
+		await waitForAlert(
+			this.page,
+			`Success:${
+				isSiteTemplate ? `Site template` : `Site`
+			} ${siteName} was successfully disconnected from the space.`,
+			{autoClose: false}
+		);
 	}
 
 	async openConnectedSitesModal() {

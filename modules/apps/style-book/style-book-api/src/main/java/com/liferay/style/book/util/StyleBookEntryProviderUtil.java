@@ -66,10 +66,10 @@ public class StyleBookEntryProviderUtil {
 		if ((styleBookEntry == null) && _log.isWarnEnabled()) {
 			_log.warn(
 				StringBundler.concat(
-					"Unable to find style book entry with external reference ",
+					"Unable to find Style Book entry with external reference ",
 					"code ", layout.getStyleBookEntryERC(),
 					" and scope external reference code ",
-					layout.getStyleBookEntryScopeERC(), " for layout ",
+					layout.getStyleBookEntryScopeERC(), " for Layout ",
 					layout.getPlid()));
 		}
 

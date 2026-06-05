@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueUtil;
@@ -37,7 +36,6 @@ import com.liferay.style.book.exception.StyleBookEntryThemeIdException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.base.StyleBookEntryLocalServiceBaseImpl;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -309,31 +307,6 @@ public class StyleBookEntryLocalServiceImpl
 		return styleBookEntryPersistence.findByG_LikeN_Head(
 			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
 			true, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<StyleBookEntry> getStyleBookEntries(
-		long[] groupIds, int start, int end,
-		OrderByComparator<StyleBookEntry> orderByComparator) {
-
-		if (ArrayUtil.isEmpty(groupIds)) {
-			return Collections.emptyList();
-		}
-
-		return styleBookEntryPersistence.findByGroupId_Head(
-			groupIds, true, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<StyleBookEntry> getStyleBookEntries(
-		long[] groupIds, String themeId) {
-
-		if (ArrayUtil.isEmpty(groupIds)) {
-			return Collections.emptyList();
-		}
-
-		return styleBookEntryPersistence.findByG_T_Head(
-			groupIds, themeId, true);
 	}
 
 	@Override

@@ -9,17 +9,17 @@ import com.liferay.account.configuration.AccountEntryValidatorConfiguration;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
 /**
  * @author Tancredi Covioli
  */
 public interface AccountEntryValidator {
 
-	public AccountEntryValidatorConfiguration getConfiguration(long companyId)
-		throws ConfigurationException;
+	public String getClassPK(AccountEntry accountEntry, JSONObject jsonObject)
+		throws PortalException;
 
-	public String getKey(AccountEntry accountEntry, JSONObject jsonObject);
+	public AccountEntryValidatorConfiguration getConfiguration(long companyId)
+		throws PortalException;
 
 	public AccountEntryValidatorResult validate(
 			AccountEntry accountEntry, JSONObject jsonObject)

@@ -113,7 +113,7 @@ public class OPConnectManagementLink extends ManagementLink {
 	@Override
 	public String getDescription() {
 		return "Connect to a 1Password Connect server and hide the values of " +
-			"a chosen vault in build logs";
+			"a chosen vault in build logs.";
 	}
 
 	@Override

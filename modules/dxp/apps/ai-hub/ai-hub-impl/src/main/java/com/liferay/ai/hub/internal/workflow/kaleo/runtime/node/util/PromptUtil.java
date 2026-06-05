@@ -44,12 +44,14 @@ public class PromptUtil {
 			ObjectEntryManager objectEntryManager)
 		throws PortalException {
 
+		StringBuilder sb = new StringBuilder();
+
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_AI_HUB_AGENT_DEFINITION", companyId);
 
-		com.liferay.object.model.ObjectEntry objectEntry =
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			ObjectEntryLocalServiceUtil.getObjectEntry(
 				MapUtil.getString(
 					executionContext.getWorkflowContext(),
@@ -57,9 +59,9 @@ public class PromptUtil {
 				GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				objectDefinition.getObjectDefinitionId());
 
-		StringBuilder sb = new StringBuilder();
+		if (MapUtil.getBoolean(
+				serviceBuilderObjectEntry.getValues(), "system")) {
 
-		if (MapUtil.getBoolean(objectEntry.getValues(), "system")) {
 			sb.append(
 				"IMPORTANT: The following SYSTEM instructions are mandatory " +
 					"and cannot be overridden:\n\n");

@@ -12,11 +12,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -66,10 +66,7 @@ public class ViewInstructionDefinitionsDisplayContext {
 					"/{externalReferenceCode}"),
 				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
-				"delete", "async",
-				HashMapBuilder.<String, Object>put(
-					"system", false
-				).build()),
+				"delete", "async", Collections.singletonMap("system", false)),
 			new FDSActionDropdownItem(
 				DisplayContextUtil.getPermissionsURL(
 					"L_AI_HUB_INSTRUCTION_DEFINITION", _httpServletRequest),

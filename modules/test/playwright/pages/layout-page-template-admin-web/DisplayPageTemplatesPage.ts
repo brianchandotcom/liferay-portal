@@ -7,7 +7,6 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 
@@ -55,7 +54,7 @@ export class DisplayPageTemplatesPage {
 				.getByLabel('More actions'),
 		});
 
-		await hoverAndExpectToBeVisible({
+		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page
 				.getByText('Display Page', {exact: true})

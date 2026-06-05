@@ -6,7 +6,6 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {zipFolder} from '../../utils/zip';
@@ -223,7 +222,7 @@ export class MasterPagesPage {
 
 		// Click desired option
 
-		await hoverAndExpectToBeVisible({
+		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page
 				.getByText(label, {exact: true})

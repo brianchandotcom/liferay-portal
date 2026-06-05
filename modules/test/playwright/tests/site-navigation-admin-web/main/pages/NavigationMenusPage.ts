@@ -172,11 +172,11 @@ export class NavigationMenusPage {
 			.getByRole('button', {name: 'View ' + parentPage + ' Options'})
 			.click();
 
-		await this.page.getByRole('menuitem', {name: 'Add Child'}).hover();
-
-		await this.page.waitForTimeout(500);
-
-		await this.page.getByRole('menuitem', {name: 'Page'}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Page'}),
+			trigger: this.page.getByRole('menuitem', {name: 'Add Child'}),
+		});
 
 		await this.pagesModal.getByText(childPage, {exact: true}).click();
 

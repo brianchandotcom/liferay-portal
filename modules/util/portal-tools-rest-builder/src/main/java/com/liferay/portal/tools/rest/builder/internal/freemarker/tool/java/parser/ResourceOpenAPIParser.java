@@ -977,50 +977,6 @@ public class ResourceOpenAPIParser {
 		return javaMethodParameters;
 	}
 
-	private static String _getJSONRequestBodyContent(
-		JavaMethodSignature javaMethodSignature) {
-
-		Set<String> requestBodyMediaTypes =
-			javaMethodSignature.getRequestBodyMediaTypes();
-
-		if (requestBodyMediaTypes.isEmpty() ||
-			requestBodyMediaTypes.contains("multipart/form-data")) {
-
-			return null;
-		}
-
-		Schema schema = _getOperationSchema(
-			javaMethodSignature.getOperation(), requestBodyMediaTypes);
-
-		if (schema == null) {
-			return null;
-		}
-
-		List<JavaMethodParameter> javaMethodParameters =
-			javaMethodSignature.getJavaMethodParameters();
-
-		if (javaMethodParameters.isEmpty()) {
-			return null;
-		}
-
-		JavaMethodParameter bodyJavaMethodParameter = javaMethodParameters.get(
-			javaMethodParameters.size() - 1);
-
-		String parameterType = bodyJavaMethodParameter.getParameterType();
-
-		if (parameterType.startsWith("[")) {
-			return null;
-		}
-
-		Iterator<String> iterator = requestBodyMediaTypes.iterator();
-
-		return StringBundler.concat(
-			"@io.swagger.v3.oas.annotations.media.Content(mediaType = \"",
-			iterator.next(),
-			"\", schema = @io.swagger.v3.oas.annotations.media.Schema(",
-			"implementation = ", parameterType, ".class))");
-	}
-
 	private static String _getMethodAnnotationConsumes(
 		ConfigYAML configYAML, Set<String> requestBodyMediaTypes) {
 
@@ -1502,7 +1458,7 @@ public class ResourceOpenAPIParser {
 			sb.append(_getRequestBodyContent(javaMethodSignature));
 		}
 		else {
-			String requestBodyContent = _getJSONRequestBodyContent(
+			String requestBodyContent = _getRequestBodyJSONContent(
 				javaMethodSignature);
 
 			if (requestBodyContent != null) {
@@ -1580,6 +1536,46 @@ public class ResourceOpenAPIParser {
 		}
 
 		return requestBody.getDescription();
+	}
+
+	private static String _getRequestBodyJSONContent(
+		JavaMethodSignature javaMethodSignature) {
+
+		Set<String> requestBodyMediaTypes =
+			javaMethodSignature.getRequestBodyMediaTypes();
+
+		if (!requestBodyMediaTypes.contains("application/json")) {
+			return null;
+		}
+
+		Schema schema = _getOperationSchema(
+			javaMethodSignature.getOperation(), requestBodyMediaTypes);
+
+		if (schema == null) {
+			return null;
+		}
+
+		List<JavaMethodParameter> javaMethodParameters =
+			javaMethodSignature.getJavaMethodParameters();
+
+		if (javaMethodParameters.isEmpty()) {
+			return null;
+		}
+
+		JavaMethodParameter bodyJavaMethodParameter = javaMethodParameters.get(
+			javaMethodParameters.size() - 1);
+
+		String parameterType = bodyJavaMethodParameter.getParameterType();
+
+		if (parameterType.startsWith("[")) {
+			return null;
+		}
+
+		return StringBundler.concat(
+			"@io.swagger.v3.oas.annotations.media.Content(mediaType = \"",
+			"application/json\", schema = ",
+			"@io.swagger.v3.oas.annotations.media.Schema(implementation = ",
+			parameterType, ".class))");
 	}
 
 	private static String _getReturnType(

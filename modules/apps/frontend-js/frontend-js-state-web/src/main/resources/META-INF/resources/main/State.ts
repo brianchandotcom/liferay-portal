@@ -211,11 +211,7 @@ const State = {
 
 			invalidated.push(selector);
 
-			this._invalidateDependencies(
-				selector,
-				invalidated,
-				previousValues
-			);
+			this._invalidateDependencies(selector, invalidated, previousValues);
 		}
 	},
 

@@ -801,6 +801,30 @@ public class RoleLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateRole() throws Exception {
+		Role role1 = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+		if (role1 == null) {
+			role1 = _roleLocalService.addRole(
+				null, TestPropsValues.getUserId(), null, 0,
+				RoleConstants.CMS_ADMINISTRATOR, null, null,
+				RoleConstants.TYPE_REGULAR, null, null);
+		}
+
+		String description = RandomTestUtil.randomString();
+
+		Role role2 = _roleLocalService.updateRole(
+			role1.getExternalReferenceCode(), role1.getRoleId(),
+			RandomTestUtil.randomString(), role1.getTitleMap(),
+			Collections.singletonMap(LocaleUtil.US, description),
+			role1.getSubtype(), null);
+
+		Assert.assertEquals(description, role2.getDescription(LocaleUtil.US));
+		Assert.assertEquals(role1.getName(), role2.getName());
+	}
+
+	@Test
 	public void testUpdateRoleWithLazyReferencingEnabled() throws Exception {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {

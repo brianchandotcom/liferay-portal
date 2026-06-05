@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {sub} from 'frontend-js-web';
+
 import {
 	PreviewPortletDataHandlerControl,
 	PreviewPortletDataHandlerSection,
@@ -99,10 +101,24 @@ export function getSelectionSummary(
 	controls: {label: string; name: string}[],
 	selection: Record<string, HandlerSelection>
 ): string {
-	return controls
+	const selectedLabels = controls
 		.filter((control) => selection[control.name] !== undefined)
-		.map((control) => control.label)
-		.join(', ');
+		.map((control) => control.label);
+
+	if (selectedLabels.length) {
+		return sub(
+			Liferay.Language.get('selected-x'),
+			selectedLabels.join(', ')
+		);
+	}
+
+	const labels = controls.map((control) => control.label);
+
+	if (labels.length) {
+		return sub(Liferay.Language.get('select-x'), labels.join(', '));
+	}
+
+	return '';
 }
 
 export function withSiteBuilderSection(

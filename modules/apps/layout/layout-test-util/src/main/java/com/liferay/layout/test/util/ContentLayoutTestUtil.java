@@ -525,7 +525,14 @@ public class ContentLayoutTestUtil {
 			new MockLiferayPortletActionResponse());
 
 		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest();
+			new MockHttpServletRequest() {
+
+				@Override
+				public RequestDispatcher getRequestDispatcher(String path) {
+					return _REQUEST_DISPATCHER;
+				}
+
+			};
 
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
@@ -714,17 +721,6 @@ public class ContentLayoutTestUtil {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
-	}
-
-	private static MockHttpServletRequest _createMockHttpServletRequest() {
-		return new MockHttpServletRequest() {
-
-			@Override
-			public RequestDispatcher getRequestDispatcher(String path) {
-				return _REQUEST_DISPATCHER;
-			}
-
-		};
 	}
 
 	private static final String _INPUT_HTML = StringBundler.concat(

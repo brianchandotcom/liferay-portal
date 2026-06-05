@@ -1,0 +1,127 @@
+ext.faroEnvironmentName = System.getenv().get("FARO_ENVIRONMENT_NAME") ?: "local"
+ext.faroImageTag = project.findProperty("docker.image.tag") ?: "latest"
+
+// Pin service builder to the last version compatible with release.dxp.api:2026.q1.5.
+// Versions >= 1.0.530 generate CollectionPersistenceFinder which is not in that API.
+subprojects {
+	plugins.withId("com.liferay.portal.tools.service.builder") {
+		configurations.serviceBuilder {
+			resolutionStrategy {
+				force "com.liferay:com.liferay.portal.tools.service.builder:1.0.529"
+			}
+		}
+	}
+}
+
+buildDockerImage {
+	def tag = faroEnvironmentName == "prd" ? "prd-" + new Date().format("yyyyMMdd") : faroImageTag
+
+	buildArgs = ["FARO_ENVIRONMENT_NAME": faroEnvironmentName]
+	images = ["liferay/com-liferay-osb-faro:${tag}"]
+}
+
+task buildTheme(type: Exec)
+
+buildTheme {
+	dependsOn yarnInstall
+	environment "PATH", "${project.buildDir}/node/bin:${System.getenv('PATH') ?: ''}"
+	commandLine "${project.buildDir}/node/bin/node",
+	"${project.buildDir}/node/lib/node_modules/npm/bin/npm-cli.js",
+	"run", "build"
+	workingDir "modules/osb-faro-theme"
+}
+
+createDockerfile {
+	doFirst {
+		file("Dockerfile.ext").text = file(faroEnvironmentName == "local" ? "modules/osb-faro-docker/local/Dockerfile.ext" : "modules/osb-faro-docker/cloud/Dockerfile.ext").text
+	}
+	doLast {
+		delete "Dockerfile.ext"
+	}
+}
+
+dockerDeploy {
+	dependsOn buildTheme
+
+	doLast {
+		copy {
+			from "modules/osb-faro-theme/dist"
+			include "*.war"
+			into "${buildDir}/docker/deploy"
+		}
+
+		copy {
+			from "modules/osb-faro-docker"
+			exclude "cloud"
+			into "${buildDir}/docker/docker"
+		}
+
+		copy {
+			from "modules/osb-faro-docker/scripts/100_liferay_image_setup.sh"
+			into "${buildDir}/docker"
+		}
+
+		if (faroEnvironmentName != "local") {
+			copy {
+				from "modules/osb-faro-docker/cloud"
+				into "${buildDir}/docker/docker"
+			}
+		}
+	}
+}
+
+def buildUserProperties = new Properties()
+
+def buildUserPropertiesFile = new File(rootProject.projectDir, "../../build.${System.getProperty('user.name')}.properties")
+
+if (buildUserPropertiesFile.exists()) {
+	buildUserPropertiesFile.withInputStream {
+		buildUserProperties.load(it)
+	}
+}
+
+allprojects {
+	repositories {
+		maven {
+			url new File(rootProject.projectDir, "../../.m2-tmp")
+		}
+
+		if (buildUserProperties["build.repository.private.url"]) {
+			maven {
+				credentials {
+					password buildUserProperties["build.repository.private.password"] ?: ""
+					username buildUserProperties["build.repository.private.username"] ?: ""
+				}
+
+				url buildUserProperties["build.repository.private.url"]
+			}
+		}
+
+		mavenCentral()
+	}
+}
+
+subprojects {
+	tasks.all {
+		Task task ->
+		if (task.name == "baseline") {
+			enabled = false
+		}
+	}
+
+	tasks.withType(Test) {
+		maxHeapSize = "4096m"
+	}
+}
+
+project(":modules:osb-faro-contacts-demo") {
+	tasks.all {
+		enabled = false
+	}
+}
+
+project(":modules:osb-faro-dependencies") {
+	tasks.all {
+		enabled = false
+	}
+}

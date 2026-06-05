@@ -599,13 +599,13 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		_layoutLocalService.updateStyleBookEntry(
+		_layoutLocalService.updateStyleBookEntryERC(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			styleBookEntry.getExternalReferenceCode(), null);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		_layoutLocalService.updateStyleBookEntry(
+		_layoutLocalService.updateStyleBookEntryERC(
 			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 			draftLayout.getLayoutId(),
 			styleBookEntry.getExternalReferenceCode(), null);

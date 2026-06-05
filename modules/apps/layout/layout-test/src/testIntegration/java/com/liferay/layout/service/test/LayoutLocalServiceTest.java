@@ -1125,7 +1125,7 @@ public class LayoutLocalServiceTest {
 		String styleBookEntryERC = RandomTestUtil.randomString();
 		String styleBookEntryScopeERC = RandomTestUtil.randomString();
 
-		Layout updatedLayout = _layoutLocalService.updateStyleBookEntry(
+		Layout updatedLayout = _layoutLocalService.updateStyleBookEntryERC(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			styleBookEntryERC, styleBookEntryScopeERC);
 

@@ -160,6 +160,21 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 		};
 	}
 
+	private ReportEntry _addReportEntry(
+			String classExternalReferenceCodePrefix, String modelNamePrefix,
+			int type)
+		throws Exception {
+
+		ReportEntry reportEntry = _randomReportEntry(type);
+
+		reportEntry.setClassExternalReferenceCode(
+			classExternalReferenceCodePrefix + RandomTestUtil.randomString());
+		reportEntry.setModelName(
+			modelNamePrefix + RandomTestUtil.randomString());
+
+		return _addReportEntry(reportEntry);
+	}
+
 	private void _assertReportEntries(
 			String filterString, String sortString,
 			Long... expectedReportEntryIds)
@@ -309,23 +324,10 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 	private void _testGetImportProcessReportEntriesPageWithSort()
 		throws Exception {
 
-		ReportEntry reportEntry1 = _randomReportEntry(
-			ExportImportReportEntryConstants.TYPE_EMPTY);
-
-		reportEntry1.setClassExternalReferenceCode(
-			"a" + RandomTestUtil.randomString());
-		reportEntry1.setModelName("z" + RandomTestUtil.randomString());
-
-		reportEntry1 = _addReportEntry(reportEntry1);
-
-		ReportEntry reportEntry2 = _randomReportEntry(
-			ExportImportReportEntryConstants.TYPE_ERROR);
-
-		reportEntry2.setClassExternalReferenceCode(
-			"z" + RandomTestUtil.randomString());
-		reportEntry2.setModelName("a" + RandomTestUtil.randomString());
-
-		reportEntry2 = _addReportEntry(reportEntry2);
+		ReportEntry reportEntry1 = _addReportEntry(
+			"a", "z", ExportImportReportEntryConstants.TYPE_EMPTY);
+		ReportEntry reportEntry2 = _addReportEntry(
+			"z", "a", ExportImportReportEntryConstants.TYPE_ERROR);
 
 		String filterString = StringBundler.concat(
 			"id eq ", reportEntry1.getId(), " or id eq ", reportEntry2.getId());

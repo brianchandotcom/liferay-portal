@@ -1,5 +1,3 @@
-@import 'cadmin-variables';
-
 html#{$cadmin-selector} .cadmin .page-editor__keyboard-movement-preview {
 	left: 0;
 	pointer-events: none;
@@ -12,9 +10,11 @@ html#{$cadmin-selector} .cadmin .page-editor__keyboard-movement-preview {
 		background-color: $cadmin-white;
 		border: 1px solid $cadmin-gray-500;
 		border-radius: 4px;
-		box-shadow: 0 8px 16px rgba(39, 40, 51, 0.16);
+		box-shadow: unquote(
+			'0 8px 16px hsl(from #{$cadmin-gray-900} h s l / 0.16)'
+		);
 		display: flex;
-		font-family: $font-family-base;
+		font-family: $cadmin-font-family-base;
 		font-size: 0.75rem;
 		font-weight: 600;
 		height: 32px;

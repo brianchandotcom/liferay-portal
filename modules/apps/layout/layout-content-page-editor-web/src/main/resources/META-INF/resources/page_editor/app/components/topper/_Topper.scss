@@ -1,5 +1,5 @@
 $borderWidth: 2px;
-$color: $white;
+$color: $cadmin-white;
 $dragOverWidth: 6px;
 $showDuration: 0.15s;
 
@@ -94,7 +94,7 @@ html#{$cadmin-selector} {
 		&:not(.page-editor__col):after,
 		& > .page-editor__col__border:after {
 			box-shadow: unquote(
-				'inset 0 0 0 #{$borderWidth} hsl(from #{$cadmin-primary-l2} h s l / 0)'
+				'inset 0 0 0 #{$borderWidth} hsl(from #{$primary-l2} h s l / 0)'
 			);
 			content: '';
 			display: block;
@@ -126,56 +126,56 @@ html#{$cadmin-selector} {
 		}
 
 		&__content .alert {
-			font-family: $cadmin-font-family-base;
+			font-family: $font-family-base;
 		}
 
 		&.hovered:after {
-			box-shadow: inset 0 0 0 $borderWidth $cadmin-primary-l1;
+			box-shadow: inset 0 0 0 $borderWidth $primary-l1;
 			z-index: $portletTopperHoveredZIndex;
 		}
 
 		&.hovered.not-allowed {
-			color: $cadmin-gray-600;
+			color: $gray-600;
 		}
 
 		&.active:not(.page-editor__col),
 		&.active > .page-editor__col__border,
 		&.highlighted {
-			@include highlighted($cadmin-primary, $borderWidth);
+			@include highlighted($primary, $borderWidth);
 		}
 
 		&.highlighted-from-rule {
 			@include highlighted(
-				unquote('hsl(from #{$cadmin-primary} h s l / 0.5)'),
+				unquote('hsl(from #{$primary} h s l / 0.5)'),
 				4px
 			);
 
 			&:after {
 				background-color: unquote(
-					'hsl(from #{$cadmin-primary-l1} h s l / 0.2)'
+					'hsl(from #{$primary-l1} h s l / 0.2)'
 				);
 			}
 		}
 
 		&.drag-over-bottom:after {
-			border-bottom: $dragOverWidth solid $cadmin-primary-l1;
+			border-bottom: $dragOverWidth solid $primary-l1;
 		}
 
 		// For left and right, we use box-shadow instead of border because border is
 		// automatically inverted in rtl, and we don't want that behavior here
 
 		&.drag-over-left:after {
-			box-shadow: inset $dragOverWidth 0 0 0 $cadmin-primary-l1;
+			box-shadow: inset $dragOverWidth 0 0 0 $primary-l1;
 			transition: none;
 		}
 
 		&.drag-over-right:after {
-			box-shadow: inset (-$dragOverWidth) 0 0 0 $cadmin-primary-l1;
+			box-shadow: inset calc(#{$dragOverWidth} * -1) 0 0 0 $primary-l1;
 			transition: none;
 		}
 
 		&.drag-over-top:after {
-			border-top: $dragOverWidth solid $cadmin-primary-l1;
+			border-top: $dragOverWidth solid $primary-l1;
 		}
 
 		&.drag-over-bottom.page-editor__col {
@@ -184,7 +184,7 @@ html#{$cadmin-selector} {
 			}
 
 			&:before {
-				border-bottom: $dragOverWidth solid $cadmin-primary-l1;
+				border-bottom: $dragOverWidth solid $primary-l1;
 			}
 		}
 
@@ -194,7 +194,7 @@ html#{$cadmin-selector} {
 			}
 
 			&:before {
-				border-top: $dragOverWidth solid $cadmin-primary-l1;
+				border-top: $dragOverWidth solid $primary-l1;
 			}
 		}
 
@@ -205,35 +205,35 @@ html#{$cadmin-selector} {
 			),
 		&.drag-over-middle.page-editor__col.empty:before,
 		&.drag-over-middle .page-editor__collection__message {
-			box-shadow: inset 0 0 0 $dragOverWidth $cadmin-primary-l1;
+			box-shadow: inset 0 0 0 $dragOverWidth $primary-l1;
 		}
 
 		&.drag-over-middle
 			> .page-editor__topper__content
 			> .page-editor__container
 			> :last-child:after {
-			box-shadow: inset (-$dragOverWidth) 0 0 0 $cadmin-primary-l1;
+			box-shadow: inset calc(#{$dragOverWidth} * -1) 0 0 0 $primary-l1;
 			transition: none;
 		}
 
 		&.drag-over-middle.page-editor__col
 			> .page-editor__col__border
 			> :last-child:after {
-			border-bottom: $dragOverWidth solid $cadmin-primary-l1;
+			border-bottom: $dragOverWidth solid $primary-l1;
 		}
 
 		&.drag-over-middle .page-editor__no-fragments-state {
 			border: none;
-			box-shadow: inset 0 0 0 $dragOverWidth $cadmin-primary-l1;
+			box-shadow: inset 0 0 0 $dragOverWidth $primary-l1;
 
 			.page-editor__no-fragments-state__message {
-				color: $cadmin-gray-400;
+				color: $gray-400;
 			}
 		}
 
 		&.drag-over-middle.page-editor__collection-item
 			.page-editor__no-fragments-state {
-			box-shadow: inset 0 0 0 $dragOverWidth $cadmin-purple-l4;
+			box-shadow: inset 0 0 0 $dragOverWidth $purple-l4;
 		}
 
 		&.highlighted:after {
@@ -243,9 +243,9 @@ html#{$cadmin-selector} {
 		&--hovered:after {
 			box-shadow: none;
 			outline: unquote(
-				'#{$borderWidth} dashed hsl(from #{$cadmin-purple} h s l / 0.5)'
+				'#{$borderWidth} dashed hsl(from #{$purple} h s l / 0.5)'
 			);
-			outline-offset: -$borderWidth;
+			outline-offset: calc(#{$borderWidth} * -1);
 		}
 
 		& > .page-editor__topper__content {

@@ -1,6 +1,3 @@
-@import 'atlas-variables';
-@import 'cadmin-variables';
-
 $prefix: '.page-editor__single-select-with-icon';
 
 html#{$cadmin-selector} .cadmin .page-editor__select-field {
@@ -56,7 +53,7 @@ html#{$cadmin-selector} .cadmin .page-editor__select-field {
 
 	label.page-editor__input-with-icon__label-icon,
 	#{$prefix} label#{$prefix}__label-icon {
-		font-size: $font-size-sm;
+		font-size: $cadmin-font-size-sm;
 	}
 
 	#{$prefix}__select,
@@ -81,6 +78,6 @@ html#{$cadmin-selector} .cadmin .page-editor__select-field {
 	}
 
 	#{$prefix}:focus-within {
-		box-shadow: $btn-focus-box-shadow;
+		box-shadow: $cadmin-btn-focus-box-shadow;
 	}
 }

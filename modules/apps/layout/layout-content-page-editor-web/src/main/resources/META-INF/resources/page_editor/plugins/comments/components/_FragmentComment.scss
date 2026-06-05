@@ -1,5 +1,3 @@
-@import 'cadmin-variables';
-
 @keyframes FragmentCommentDecrease {
 	from {
 		max-height: 100vh;
@@ -111,9 +109,9 @@ html#{$cadmin-selector} {
 
 				.form-control {
 					&:has(> .ck-focused) {
-						background-color: $input-focus-bg;
-						border-color: $input-focus-border-color;
-						box-shadow: $input-focus-box-shadow;
+						background-color: $cadmin-input-focus-bg;
+						border-color: $cadmin-input-focus-border-color;
+						box-shadow: $cadmin-input-focus-box-shadow;
 					}
 				}
 

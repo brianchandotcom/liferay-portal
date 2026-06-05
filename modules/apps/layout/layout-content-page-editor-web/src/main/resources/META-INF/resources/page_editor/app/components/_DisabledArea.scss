@@ -4,7 +4,7 @@ html#{$cadmin-selector} {
 		position: relative;
 
 		&::after {
-			background-color: rgba(255, 255, 255, 0);
+			background-color: unquote('hsl(from #{$white} h s l / 0)');
 			content: '';
 			display: block;
 			height: 100%;
@@ -17,7 +17,7 @@ html#{$cadmin-selector} {
 		}
 
 		&:hover:after {
-			background-color: rgba(255, 255, 255, 0.4);
+			background-color: unquote('hsl(from #{$white} h s l / 0.4)');
 		}
 	}
 }

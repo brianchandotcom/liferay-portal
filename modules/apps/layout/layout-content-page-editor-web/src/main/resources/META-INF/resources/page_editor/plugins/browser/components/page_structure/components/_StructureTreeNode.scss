@@ -1,6 +1,4 @@
-@import 'cadmin-variables';
-
-$treeNodeNameMappedColor: #8633ff;
+$treeNodeNameMappedColor: $cadmin-purple-d1;
 
 html#{$cadmin-selector} {
 	.cadmin {

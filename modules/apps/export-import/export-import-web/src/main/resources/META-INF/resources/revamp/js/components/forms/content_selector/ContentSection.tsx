@@ -57,6 +57,7 @@ export default function ContentSection({
 	const checkboxId = useId();
 	const [overflowing, setOverflowing] = useState(false);
 
+	const compact = section.name === 'objects';
 	const scrollable = section.name === 'objects';
 
 	useEffect(() => {
@@ -220,6 +221,7 @@ export default function ContentSection({
 			>
 				{allPreviewPortletDataHandlers.map((context) => (
 					<PortletDataControl
+						compact={compact}
 						control={context}
 						key={context.name}
 						onChange={(controlValue) =>

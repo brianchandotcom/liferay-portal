@@ -52,9 +52,14 @@ public class OPConnectClient {
 			int responseCode = httpURLConnection.getResponseCode();
 
 			if (responseCode != HttpURLConnection.HTTP_OK) {
-				throw new IOException(
-					"1Password Connect request to " + path +
-						" failed with response code " + responseCode);
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("1Password Connect request to ");
+				sb.append(path);
+				sb.append(" failed with response code ");
+				sb.append(responseCode);
+
+				throw new IOException(sb.toString());
 			}
 
 			try (InputStream inputStream = httpURLConnection.getInputStream();
@@ -162,9 +167,15 @@ public class OPConnectClient {
 				return fields;
 			}
 
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("/v1/vaults/");
+			sb.append(vaultId);
+			sb.append("/items/");
+			sb.append(getId());
+
 			JSONObject itemJSONObject = new JSONObject(
-				_opConnectClient.get(
-					"/v1/vaults/" + vaultId + "/items/" + getId()));
+				_opConnectClient.get(sb.toString()));
 
 			JSONArray fieldsJSONArray = itemJSONObject.optJSONArray("fields");
 

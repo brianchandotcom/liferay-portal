@@ -36,14 +36,14 @@
 						</j:if>
 						<j:forEach items="${vaults}" var="vault">
 							<f:entry title="${vault.name}">
-								<f:checkbox checked="${it.opConnectDescriptor.containsVaultName(vault.name)}" name="vault:${vault.name}" />
+								<f:checkbox checked="${it.opConnectDescriptor.hasVaultName(vault.name)}" name="vault:${vault.name}" />
 							</f:entry>
 						</j:forEach>
 					</f:section>
-					<f:entry title="Ignored Values (one per line)">
+					<f:entry title="Ignored Values (one per Line)">
 						<f:textarea name="ignoredValues" value="${it.opConnectDescriptor.getIgnoredValuesString()}" />
 					</f:entry>
-					<f:entry title="Refresh Interval (minutes, 0 to disable)">
+					<f:entry title="Refresh Interval (Minutes, 0 to Disable)">
 						<f:number name="refreshIntervalMinutes" value="${it.opConnectDescriptor.getRefreshIntervalMinutes()}" />
 					</f:entry>
 					<div class="op-connect-last-refreshed">

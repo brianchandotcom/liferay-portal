@@ -53,7 +53,7 @@ public class AssetListTypePropertiesUtil {
 			}
 
 			ObjectDefinition objectDefinition = _resolveObjectDefinition(
-				classNameIds[i], classTypeId, companyId);
+				classNameIds[i], companyId);
 
 			if (objectDefinition == null) {
 				continue;
@@ -188,17 +188,7 @@ public class AssetListTypePropertiesUtil {
 	}
 
 	private static ObjectDefinition _resolveObjectDefinition(
-		long classNameId, long classTypeId, long companyId) {
-
-		if (classTypeId > 0) {
-			ObjectDefinition objectDefinition =
-				ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-					classTypeId);
-
-			if (objectDefinition != null) {
-				return objectDefinition;
-			}
-		}
+		long classNameId, long companyId) {
 
 		if (classNameId <= 0) {
 			return null;

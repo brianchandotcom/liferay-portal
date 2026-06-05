@@ -60,17 +60,7 @@ public class AssetListFiltersUtil {
 	}
 
 	private static ObjectDefinition _resolveObjectDefinition(
-		long classNameId, long classTypeId, long companyId) {
-
-		if (classTypeId > 0) {
-			ObjectDefinition objectDefinition =
-				ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-					classTypeId);
-
-			if (objectDefinition != null) {
-				return objectDefinition;
-			}
-		}
+		long classNameId, long companyId) {
 
 		if (classNameId <= 0) {
 			return null;
@@ -82,10 +72,10 @@ public class AssetListFiltersUtil {
 	}
 
 	private static ObjectField _resolveObjectField(
-		long classNameId, long classTypeId, long companyId, String name) {
+		long classNameId, long companyId, String name) {
 
 		ObjectDefinition objectDefinition = _resolveObjectDefinition(
-			classNameId, classTypeId, companyId);
+			classNameId, companyId);
 
 		if (objectDefinition == null) {
 			return null;
@@ -156,8 +146,7 @@ public class AssetListFiltersUtil {
 		}
 
 		ObjectField objectField = _resolveObjectField(
-			filterJSONObject.getLong("classNameId"),
-			filterJSONObject.getLong("classTypeId"), companyId, propertyName);
+			filterJSONObject.getLong("classNameId"), companyId, propertyName);
 
 		if (objectField == null) {
 			return null;

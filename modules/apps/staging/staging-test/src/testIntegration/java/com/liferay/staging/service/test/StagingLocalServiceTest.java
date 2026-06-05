@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.impl.LayoutRevisionLocalServiceImpl;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -433,7 +432,6 @@ public class StagingLocalServiceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-57283")
 	@Test
 	@TestInfo("LPD-89203")
 	public void testEnableLocalStagingPreservesStyleBookEntryScopeERC()

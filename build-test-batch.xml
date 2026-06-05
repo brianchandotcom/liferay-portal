@@ -1210,7 +1210,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<or>
 					<contains string="${test.batch.name}" substring="opensearch2" />
 					<contains string="${test.batch.name}" substring="remote-elasticsearch" />
-					<contains string="${test.batch.name}" substring="solr" />
 				</or>
 				<then>
 					<if>
@@ -1231,20 +1230,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<contains string="${test.batch.name}" substring="remote-elasticsearch" />
 						<then>
 							<ant antfile="build-test-elasticsearch8.xml" target="start-elasticsearch" />
-						</then>
-					</if>
-
-					<if>
-						<contains string="${test.batch.name}" substring="solr" />
-						<then>
-							<ant antfile="build-test-solr.xml" target="start-solr" />
-
-							<if>
-								<contains string="${test.batch.name}" substring="unit" />
-								<then>
-									<property name="run.solr.unit.tests" value="true" />
-								</then>
-							</if>
 						</then>
 					</if>
 				</then>
@@ -1269,20 +1254,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
 						<then>
 							<ant antfile="build-test-elasticsearch8.xml" target="start-elasticsearch" />
-						</then>
-					</if>
-
-					<if>
-						<equals arg1="${suite.search.engine}" arg2="solr" />
-						<then>
-							<ant antfile="build-test-solr.xml" target="start-solr" />
-
-							<if>
-								<contains string="${test.batch.name}" substring="unit" />
-								<then>
-									<property name="run.solr.unit.tests" value="true" />
-								</then>
-							</if>
 						</then>
 					</if>
 				</else>
@@ -4913,13 +4884,6 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 			</if>
 
 			<if>
-				<equals arg1="${suite.search.engine}" arg2="solr" />
-				<then>
-					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
-				</then>
-			</if>
-
-			<if>
 				<contains string="${suite.search.engine}" substring="opensearch2" />
 				<then>
 					<ant antfile="build-test-opensearch2.xml" target="stop-opensearch" />
@@ -7123,14 +7087,6 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="functional-wildfly300-postgresql155-jdk21_zulu" />
 	</target>
 
-	<target name="functional-solr-tomcat101-mysql84">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.4" test.portal.log.assert="true" />
-	</target>
-
-	<target name="functional-solr-tomcat101-postgresql155">
-		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
-	</target>
-
 	<target name="functional-suse15-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
@@ -9311,14 +9267,6 @@ information. Make sure to commit in all format-javadoc results.
 		<run-modules-integration-test database.type="postgresql" database.version="16.3" />
 	</target>
 
-	<target name="modules-integration-solr-mysql84">
-		<run-modules-integration-test database.type="mysql" database.version="8.4" />
-	</target>
-
-	<target name="modules-integration-solr-postgresql163">
-		<run-modules-integration-test database.type="postgresql" database.version="16.3" />
-	</target>
-
 	<target name="modules-integration-sqlserver">
 		<run-modules-integration-test database.type="sqlserver" />
 	</target>
@@ -9535,11 +9483,7 @@ information. Make sure to commit in all format-javadoc results.
 					<isset property="project.templates.test.builds" />
 				</condition>
 
-				<condition else="" property="test.arg.solr.unit.tests" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true">
-					<istrue value="${run.solr.unit.tests}" />
-				</condition>
-
-				<property name="test.junit.args" value="--continue -Dbuild.exclude.ant.plugin=true ${test.arg.opensearch2.unit.tests} ${test.arg.project.templates} ${test.arg.solr.unit.tests} -Djunit.code.coverage=${test.batch.code.coverage} -Dtest.class.group.index=${axis.variable}" />
+				<property name="test.junit.args" value="--continue -Dbuild.exclude.ant.plugin=true ${test.arg.opensearch2.unit.tests} ${test.arg.project.templates} -Djunit.code.coverage=${test.batch.code.coverage} -Dtest.class.group.index=${axis.variable}" />
 
 				<if>
 					<isset property="test.task.group" />
@@ -9649,12 +9593,6 @@ junit.jvm.override.version=21</echo>
 
 	<target name="modules-unit-remote-elasticsearch">
 		<antcall target="modules-unit" />
-	</target>
-
-	<target name="modules-unit-solr">
-		<antcall target="modules-unit">
-			<param name="run.solr.unit.tests" value="true" />
-		</antcall>
 	</target>
 
 	<target name="modules-unit_stable">

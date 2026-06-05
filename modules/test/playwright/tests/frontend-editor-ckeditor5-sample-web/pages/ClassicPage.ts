@@ -13,7 +13,7 @@ export class ClassicPage {
 		buttonLabels: Locator;
 		container: Locator;
 	};
-	readonly wordCountLabel: Locator;
+	readonly wordCountContainer: Locator;
 
 	constructor(page: Page) {
 		this.editable = page.locator('.ck-editor__editable');
@@ -35,6 +35,8 @@ export class ClassicPage {
 			container: toolbarContainer,
 		};
 
-		this.wordCountLabel = page.locator('.mt-1.text-secondary');
+		this.wordCountContainer = page.locator(
+			'[data-testid="word-count-container"]'
+		);
 	}
 }

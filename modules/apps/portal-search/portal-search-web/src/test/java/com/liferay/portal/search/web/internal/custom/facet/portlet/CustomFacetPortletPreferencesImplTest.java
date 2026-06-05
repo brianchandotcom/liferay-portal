@@ -34,12 +34,12 @@ public class CustomFacetPortletPreferencesImplTest {
 
 		_mockValue(
 			portletPreferences,
-			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
-			StringPool.BLANK);
-		_mockValue(
-			portletPreferences,
 			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD,
 			"userName");
+		_mockValue(
+			portletPreferences,
+			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			"userName",
@@ -55,12 +55,12 @@ public class CustomFacetPortletPreferencesImplTest {
 
 		_mockValue(
 			portletPreferences,
-			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
-			"customParameter");
-		_mockValue(
-			portletPreferences,
 			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD,
 			"userName");
+		_mockValue(
+			portletPreferences,
+			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
+			"customParameter");
 
 		Assert.assertEquals(
 			"customParameter",

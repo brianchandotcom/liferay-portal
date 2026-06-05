@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.test.util;
 
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -21,6 +22,10 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.Serializable;
 
+import java.util.Map;
+
+import org.junit.Assert;
+
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -28,6 +33,22 @@ import org.mockito.Mockito;
  * @author Mario Gomes
  */
 public class DisplayContextTestUtil {
+
+	public static void assertFDSActionDropdownItem(
+		FDSActionDropdownItem fdsActionDropdownItem, String href, String icon,
+		String id, String label, String method, String target) {
+
+		Map<String, String> data =
+			(Map<String, String>)fdsActionDropdownItem.get("data");
+
+		Assert.assertEquals(id, data.get("id"));
+		Assert.assertEquals(method, data.get("method"));
+
+		Assert.assertEquals(href, fdsActionDropdownItem.get("href"));
+		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
+		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
+		Assert.assertEquals(target, fdsActionDropdownItem.get("target"));
+	}
 
 	public static void setGetReactDataMocks(
 		MockedStatic<ObjectDefinitionLocalServiceUtil>

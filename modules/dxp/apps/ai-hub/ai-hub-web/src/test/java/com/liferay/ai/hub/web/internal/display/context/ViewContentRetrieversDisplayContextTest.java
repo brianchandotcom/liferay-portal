@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
+import com.liferay.ai.hub.web.internal.test.util.DisplayContextTestUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -28,7 +29,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -79,44 +79,26 @@ public class ViewContentRetrieversDisplayContextTest {
 			fdsActionDropdownItems.toString(), 4,
 			fdsActionDropdownItems.size());
 
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0),
 			StringBundler.concat(
 				_PORTAL_URL, "/web", _GROUP_FRIENDLY_URL, "/content-retriever",
 				"?externalReferenceCode=%7BexternalReferenceCode%7D"),
 			"view", "view", "view", "get", null);
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1),
 			"/o/ai-hub/content-retrievers/by-external-reference-code" +
 				"/{externalReferenceCode}/object-actions/crawler",
 			"reload", "put", "sync-now", "put", "async");
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2),
 			"/o/ai-hub/v1.0/content-retrievers/by-external-reference-code" +
 				"/{externalReferenceCode}",
 			"trash", "delete", "delete", "delete", "async");
-		_assertFDSActionDropdownItem(
+		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(3), _PERMISSIONS_URL,
 			"password-policies", "permissions", "permissions", "get",
 			"modal-permissions");
-	}
-
-	private void _assertFDSActionDropdownItem(
-		FDSActionDropdownItem fdsActionDropdownItem, String href, String icon,
-		String id, String label, String method, String target) {
-
-		Assert.assertNotNull(fdsActionDropdownItem);
-
-		Map<String, String> data =
-			(Map<String, String>)fdsActionDropdownItem.get("data");
-
-		Assert.assertEquals(id, data.get("id"));
-		Assert.assertEquals(method, data.get("method"));
-
-		Assert.assertEquals(href, fdsActionDropdownItem.get("href"));
-		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
-		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
-		Assert.assertEquals(target, fdsActionDropdownItem.get("target"));
 	}
 
 	private void _setUpGroupLocalService() throws Exception {

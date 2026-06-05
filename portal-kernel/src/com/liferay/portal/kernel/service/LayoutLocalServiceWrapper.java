@@ -2246,12 +2246,12 @@ public class LayoutLocalServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
-	public Layout updateStyleBookEntry(
+	public Layout updateStyleBookEntryERC(
 			long groupId, boolean privateLayout, long layoutId,
 			String styleBookEntryERC, String styleBookEntryScopeERC)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _layoutLocalService.updateStyleBookEntry(
+		return _layoutLocalService.updateStyleBookEntryERC(
 			groupId, privateLayout, layoutId, styleBookEntryERC,
 			styleBookEntryScopeERC);
 	}
@@ -2337,4 +2337,4 @@ public class LayoutLocalServiceWrapper
 	private LayoutLocalService _layoutLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-80666971
+// LIFERAY-SERVICE-BUILDER-HASH:1446469103

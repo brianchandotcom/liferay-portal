@@ -76,6 +76,8 @@ public class CountryResourceDTOConverter
 							_portal,
 							_userLocalService.fetchUser(
 								serviceBuilderCountry.getUserId()))));
+				setDateCreated(serviceBuilderCountry::getCreateDate);
+				setDateModified(serviceBuilderCountry::getModifiedDate);
 				setExternalReferenceCode(
 					serviceBuilderCountry::getExternalReferenceCode);
 				setGroupFilterEnabled(

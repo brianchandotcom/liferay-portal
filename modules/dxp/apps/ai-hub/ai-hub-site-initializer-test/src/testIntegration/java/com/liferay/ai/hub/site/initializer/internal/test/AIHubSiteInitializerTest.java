@@ -34,8 +34,12 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -163,6 +167,16 @@ public class AIHubSiteInitializerTest {
 		_assertListTypeDefinitionExists(
 			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_RESPONSIBLE_AI_LEVELS", "high",
 			"lowAndAbove", "mediumAndAbove", "none");
+		_assertListTypeDefinitionUserRoleViewPermission(
+			"L_AI_HUB_CRAWLER_JOB_STATUSES");
+		_assertListTypeDefinitionUserRoleViewPermission(
+			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES");
+		_assertListTypeDefinitionUserRoleViewPermission(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_CONFIDENCE_LEVELS");
+		_assertListTypeDefinitionUserRoleViewPermission(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_GUARDRAIL_TYPES");
+		_assertListTypeDefinitionUserRoleViewPermission(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_RESPONSIBLE_AI_LEVELS");
 		_assertNotificationTemplateExists(
 			"L_AI_HUB_ACCOUNT_INVITE_USER_EMAIL_NOTIFICATION_TEMPLATE");
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
@@ -389,6 +403,27 @@ public class AIHubSiteInitializerTest {
 		}
 	}
 
+	private void _assertListTypeDefinitionUserRoleViewPermission(
+			String externalReferenceCode)
+		throws Exception {
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					externalReferenceCode, TestPropsValues.getCompanyId());
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				ListTypeDefinition.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(listTypeDefinition.getListTypeDefinitionId()),
+				role.getRoleId(), ActionKeys.VIEW));
+	}
+
 	private void _assertNotificationTemplateExists(String externalReferenceCode)
 		throws Exception {
 
@@ -556,6 +591,9 @@ public class AIHubSiteInitializerTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;

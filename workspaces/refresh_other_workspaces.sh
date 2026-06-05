@@ -14,6 +14,8 @@ function main {
 		rsync \
 			-a --delete \
 			--exclude "build.gradle" \
+			--exclude "gradle.properties" \
+			--exclude "Jenkinsfile" \
 			--exclude "package.json" \
 			--exclude "README.md" \
 			--exclude "test.properties" \

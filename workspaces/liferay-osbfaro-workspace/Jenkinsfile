@@ -1,0 +1,89 @@
+@Library('WorkflowCiSharedLib') _
+
+def osbFaroImage
+
+pipeline {
+	agent {
+		kubernetes {
+			label "java"
+		}
+	}
+
+	environment {
+		IMAGE_NAME = "liferaycloud/com-liferay-osb-faro"
+		IMAGE_TAG_SUFFIX = "${FARO_ENVIRONMENT}-${sh(script: "date +%Y%m%d", returnStdout: true).trim()}-${sh(script: "git rev-parse --short=7 ${GIT_COMMIT}", returnStdout: true).trim()}"
+		JAVA_HOME = "${JAVA_21_HOME}"
+		LABEL_BUILD_DATE = "${sh(script: "date -u +%Y-%m-%dT%H:%M:%SZ", returnStdout: true).trim()}"
+	}
+
+	stages {
+		stage("Build") {
+			steps {
+				withCredentials([
+					string(credentialsId: "analytics_cloud_ci_ssh", variable: "SECRET"),
+					string(credentialsId: "analytics_cloud_faro_license", variable: "LICENSE"),
+					string(credentialsId: "analytics_cloud_faro_pendo_api_key", variable: "FARO_PENDO_API_KEY"),
+					usernamePassword(credentialsId: "liferay_nexus_repository_credentials", passwordVariable: "NEXUS_PASSWORD", usernameVariable: "NEXUS_USERNAME")
+				]) {
+					dir("workspaces/liferay-osbfaro-workspace") {
+						sh '''
+							export FARO_ENVIRONMENT_NAME=$FARO_ENVIRONMENT
+							export GRADLE_OPTS=-Xmx6g
+
+							touch ~/.ssh/known_hosts
+
+							ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+
+							echo "$SECRET" | base64 --decode > ~/.ssh/id_ed25519
+							echo "\n" >> ~/.ssh/id_ed25519
+
+							chmod 0400 ~/.ssh/id_ed25519
+
+							echo "Host github.com" >> ~/.ssh/config
+							echo "  User git" >> ~/.ssh/config
+							echo "  Hostname github.com" >> ~/.ssh/config
+							echo "  IdentityFile ~/.ssh/id_ed25519" >> ~/.ssh/config
+
+							eval "$(ssh-agent -s)"
+
+							ssh-add ~/.ssh/id_ed25519
+
+
+							./gradlew createDockerfile dockerDeploy
+
+							echo "${LICENSE}" | base64 --decode > build/docker/deploy/license.xml
+						'''
+					}
+				}
+			}
+		}
+
+		stage("Build Docker Image") {
+			steps {
+				dir("workspaces/liferay-osbfaro-workspace") {
+					script {
+						osbFaroImage = docker.build(
+							"${IMAGE_NAME}:${IMAGE_TAG_SUFFIX}",
+							"--build-arg FARO_ENVIRONMENT_NAME=${FARO_ENVIRONMENT} --build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --file build/docker/Dockerfile --no-cache build/docker")
+					}
+				}
+			}
+		}
+
+		stage("Prisma Cloud Scan") {
+			steps {
+				prismaScanImage([osbFaroImage.imageName()])
+			}
+		}
+
+		stage("Push Docker Image") {
+			steps {
+				script {
+					withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+						osbFaroImage.push()
+					}
+				}
+			}
+		}
+	}
+}

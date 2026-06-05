@@ -590,12 +590,15 @@ public class StagingLocalServiceTest {
 		throws Exception {
 
 		Group group = GroupTestUtil.addGroup();
+		Group scopeGroup = GroupTestUtil.addGroup();
 
 		try {
 			Layout layout = LayoutTestUtil.addTypePortletLayout(group);
 
 			layout.setStyleBookEntryERC(RandomTestUtil.randomString());
-			layout.setStyleBookEntryScopeERC(RandomTestUtil.randomString());
+
+			layout.setStyleBookEntryScopeERC(
+				scopeGroup.getExternalReferenceCode());
 
 			layout = _layoutLocalService.updateLayout(layout);
 
@@ -634,6 +637,7 @@ public class StagingLocalServiceTest {
 		}
 		finally {
 			GroupLocalServiceUtil.deleteGroup(group.getGroupId());
+			GroupLocalServiceUtil.deleteGroup(scopeGroup.getGroupId());
 		}
 	}
 

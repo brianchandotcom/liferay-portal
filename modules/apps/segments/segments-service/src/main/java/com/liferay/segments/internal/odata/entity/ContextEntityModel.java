@@ -56,6 +56,8 @@ public class ContextEntityModel implements EntityModel {
 				new StringEntityField(
 					Context.BROWSER_VERSION, locale -> Context.BROWSER_VERSION),
 				new StringEntityField(
+					Context.DEVICE_TYPE, locale -> Context.DEVICE_TYPE),
+				new StringEntityField(
 					Context.HOSTNAME, locale -> Context.HOSTNAME),
 				new StringEntityField(
 					Context.LANGUAGE_ID, locale -> Context.LANGUAGE_ID),

@@ -7,18 +7,18 @@
 
 .analytics-filters-toolbar {
 	& .dsr-date-range-picker {
-		border-color: #9b92a5;
+		border-color: $secondary-l0;
 		border-radius: 0;
-		color: #6b6c7e;
+		color: $gray-600;
 	}
 
 	& .dsr-date-range-preset-select {
-		border-color: #9b92a5;
-		color: #6b6c7e;
+		border-color: $secondary-l0;
+		color: $gray-600;
 	}
 
 	& .input-group-inset-item-after {
-		border-color: #9b92a5;
+		border-color: $secondary-l0;
 	}
 }
 
@@ -41,7 +41,7 @@
 }
 
 .dsr-container-wrapper {
-	background-color: #fff;
+	background-color: $white;
 	flex: 0 0 calc(10 / 12 * 100%);
 	max-width: calc(10 / 12 * 100%);
 	padding: 2rem;
@@ -63,7 +63,7 @@
 			}
 
 			& > .col-lg-10 {
-				background-color: #fff;
+				background-color: $white;
 				padding: 2rem;
 			}
 		}
@@ -175,7 +175,7 @@
 }
 
 .portlet-digital-sales-room-management {
-	background-color: #fff;
+	background-color: $white;
 	border: 1px solid $gray-200;
 	border-radius: 0.5rem;
 	padding: 0.25rem 0;

@@ -111,23 +111,23 @@ public class SyncEnvironmentUrlsObjectActionExecutorImpl
 			return;
 		}
 
-		List<String> environmentUrlsList = TransformUtil.transform(
-			_objectEntryLocalService.getObjectEntries(
-				0, objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			objectEntry -> {
-				String environmentUrls = MapUtil.getString(
-					objectEntry.getValues(), "environmentUrls");
-
-				if (Validator.isNull(environmentUrls)) {
-					return null;
-				}
-
-				return environmentUrls;
-			});
-
 		Configuration configuration = configurations[0];
 
 		Dictionary<String, Object> properties = configuration.getProperties();
+
+		List<String> environmentUrls = TransformUtil.transform(
+			_objectEntryLocalService.getObjectEntries(
+				0, objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			objectEntry -> {
+				String environmentUrlsString = MapUtil.getString(
+					objectEntry.getValues(), "environmentUrls");
+
+				if (Validator.isNull(environmentUrlsString)) {
+					return null;
+				}
+
+				return environmentUrlsString;
+			});
 
 		properties.put(
 			"headers",
@@ -141,7 +141,7 @@ public class SyncEnvironmentUrlsObjectActionExecutorImpl
 					}
 
 					return "Access-Control-Allow-Origin: " +
-						StringUtil.merge(environmentUrlsList, StringPool.SPACE);
+						StringUtil.merge(environmentUrls, StringPool.SPACE);
 				},
 				String.class));
 

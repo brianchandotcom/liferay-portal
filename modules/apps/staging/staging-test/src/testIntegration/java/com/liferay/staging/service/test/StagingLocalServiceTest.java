@@ -451,7 +451,7 @@ public class StagingLocalServiceTest {
 			layout = _layoutLocalService.updateLayout(layout);
 
 			StagingLocalServiceUtil.enableLocalStaging(
-				_user.getUserId(), group, true, false, new ServiceContext());
+				_user.getUserId(), group, false, false, new ServiceContext());
 
 			Group stagingGroup = group.getStagingGroup();
 

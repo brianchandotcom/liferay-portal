@@ -167,10 +167,13 @@ export type ReportFeedbackReason =
 	| 'other'
 	| 'piiExposure';
 
+export type ReportFeedbackType = 'negative' | 'positive';
+
 export interface ReportFeedbackPayload {
 	agentDefinitionExternalReferenceCodes: string[];
 	chatbotExternalReferenceCode: string;
-	reason: ReportFeedbackReason;
+	feedback: ReportFeedbackType;
+	reason?: ReportFeedbackReason;
 	surface: 'clickToChat';
 	userMessage?: string;
 }
@@ -178,17 +181,14 @@ export interface ReportFeedbackPayload {
 export async function postAIIssueReport(
 	payload: ReportFeedbackPayload
 ): Promise<{id: string}> {
-	const response = await fetch(
-		`${aiHubURL}/o/ai-hub/v1.0/agent-issue-reports`,
-		{
-			body: JSON.stringify(payload),
-			headers: new Headers({
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			}),
-			method: 'POST',
-		}
-	);
+	const response = await fetch(`${aiHubURL}/o/ai-hub/v1.0/reports`, {
+		body: JSON.stringify(payload),
+		headers: new Headers({
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		}),
+		method: 'POST',
+	});
 
 	if (!response.ok) {
 		throw new Error(

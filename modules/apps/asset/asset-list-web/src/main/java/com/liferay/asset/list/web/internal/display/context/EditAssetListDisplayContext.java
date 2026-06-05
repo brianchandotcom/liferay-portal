@@ -1083,8 +1083,22 @@ public class EditAssetListDisplayContext {
 	}
 
 	public JSONArray getTypePropertiesJSONArray() {
+		long[] classNameIds = new long[0];
+		long[] classTypeIds = new long[0];
+
+		boolean anyAssetType = GetterUtil.getBoolean(
+			_unicodeProperties.getProperty(
+				"anyAssetType", Boolean.TRUE.toString()));
+		String selectionStyle = _unicodeProperties.getProperty(
+			"selectionStyle", "dynamic");
+
+		if (!anyAssetType && !selectionStyle.equals("manual")) {
+			classNameIds = getClassNameIds();
+			classTypeIds = getClassTypeIds();
+		}
+
 		return AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
-			getClassNameIds(), getClassTypeIds(), _themeDisplay.getCompanyId(),
+			classNameIds, classTypeIds, _themeDisplay.getCompanyId(),
 			_themeDisplay.getLocale());
 	}
 

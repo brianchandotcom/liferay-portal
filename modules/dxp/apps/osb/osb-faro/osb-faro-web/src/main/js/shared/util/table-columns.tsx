@@ -295,36 +295,6 @@ export const IndividualsListCDPColumns = {
 		label: Liferay.Language.get('account-name'),
 		sortable: true
 	},
-	activityStatus: {
-		accessor: 'activityStatus',
-		cellRenderer: ({
-			className,
-			data: {activityStatus}
-		}: {
-			className?: string;
-			data: {activityStatus: string};
-		}) => (
-			<td className={getCN('name-cell-root', className)}>
-				{activityStatus && (
-					<Label
-						display={
-							activityStatus === 'ACTIVE'
-								? 'success'
-								: 'secondary'
-						}
-						size='lg'
-						uppercase
-					>
-						{activityStatus === 'ACTIVE'
-							? Liferay.Language.get('active')
-							: Liferay.Language.get('inactive')}
-					</Label>
-				)}
-			</td>
-		),
-		label: Liferay.Language.get('activity-status'),
-		sortable: true
-	},
 	country: {
 		accessor: 'countries',
 		cellRenderer: ({

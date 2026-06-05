@@ -142,18 +142,6 @@ describe('AccountsDataSet', () => {
 		]);
 	});
 
-	it('should not include the activityStatus filter', () => {
-		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
-		);
-
-		const activityStatusFilter = lastFilters?.find(
-			f => f.id === 'activityStatus'
-		);
-
-		expect(activityStatusFilter).toBeUndefined();
-	});
-
 	it('should leave country and industry filters without preloadedData when no props are passed', () => {
 		render(
 			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />

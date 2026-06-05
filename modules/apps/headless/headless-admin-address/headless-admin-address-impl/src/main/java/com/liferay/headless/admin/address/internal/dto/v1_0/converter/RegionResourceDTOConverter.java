@@ -69,6 +69,8 @@ public class RegionResourceDTOConverter
 							_portal,
 							_userLocalService.fetchUser(
 								serviceBuilderRegion.getUserId()))));
+				setDateCreated(serviceBuilderRegion::getCreateDate);
+				setDateModified(serviceBuilderRegion::getModifiedDate);
 				setExternalReferenceCode(
 					serviceBuilderRegion::getExternalReferenceCode);
 				setId(serviceBuilderRegion::getRegionId);

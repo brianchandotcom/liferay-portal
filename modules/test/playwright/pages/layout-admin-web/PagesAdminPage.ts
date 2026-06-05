@@ -8,7 +8,6 @@ import {Locator, Page, expect} from '@playwright/test';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
-import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {waitForAllPortletsReady} from '../../utils/waitForAllPortletsReady';
@@ -389,7 +388,7 @@ export class PagesAdminPage {
 
 		// Click desired option
 
-		await hoverAndExpectToBeVisible({
+		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {exact: true, name: label}),
 			timeout: 5000,

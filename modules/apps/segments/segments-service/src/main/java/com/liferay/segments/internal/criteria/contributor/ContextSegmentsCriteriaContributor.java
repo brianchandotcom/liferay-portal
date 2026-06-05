@@ -90,7 +90,7 @@ public class ContextSegmentsCriteriaContributor
 	}
 
 	private static final Set<String> _audiencesFieldNames = SetUtil.fromArray(
-		Context.BROWSER_VERSION, Context.PATHNAME);
+		Context.BROWSER_VERSION, Context.LOCAL_TIME, Context.PATHNAME);
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,

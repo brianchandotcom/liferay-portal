@@ -22,7 +22,7 @@
 			"label": {
 				"en_US": "Environment URLs"
 			},
-			"name": "environmentUrls",
+			"name": "environmentURLs",
 			"system": true
 		},
 		{

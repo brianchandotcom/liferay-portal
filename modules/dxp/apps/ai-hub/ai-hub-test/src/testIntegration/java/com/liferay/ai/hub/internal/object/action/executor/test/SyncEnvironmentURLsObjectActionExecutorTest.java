@@ -64,7 +64,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 @FeatureFlag("LPD-62272")
 @RunWith(Arquillian.class)
-public class SyncEnvironmentUrlsObjectActionExecutorTest {
+public class SyncEnvironmentURLsObjectActionExecutorTest {
 
 	@ClassRule
 	@Rule
@@ -122,10 +122,10 @@ public class SyncEnvironmentUrlsObjectActionExecutorTest {
 
 		_assertHeader(
 			"Access-Control-Allow-Origin: " +
-				MapUtil.getString(objectEntry1.getValues(), "environmentUrls"));
+				MapUtil.getString(objectEntry1.getValues(), "environmentURLs"));
 		_assertHomePageURL(
 			accountEntry1,
-			MapUtil.getString(objectEntry1.getValues(), "environmentUrls"));
+			MapUtil.getString(objectEntry1.getValues(), "environmentURLs"));
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
@@ -137,13 +137,13 @@ public class SyncEnvironmentUrlsObjectActionExecutorTest {
 		_assertHeader(
 			StringBundler.concat(
 				"Access-Control-Allow-Origin: ",
-				MapUtil.getString(objectEntry1.getValues(), "environmentUrls"),
+				MapUtil.getString(objectEntry1.getValues(), "environmentURLs"),
 				StringPool.SPACE,
 				MapUtil.getString(
-					objectEntry2.getValues(), "environmentUrls")));
+					objectEntry2.getValues(), "environmentURLs")));
 		_assertHomePageURL(
 			accountEntry2,
-			MapUtil.getString(objectEntry2.getValues(), "environmentUrls"));
+			MapUtil.getString(objectEntry2.getValues(), "environmentURLs"));
 	}
 
 	private AccountEntry _addAccountEntry() throws Exception {
@@ -212,7 +212,7 @@ public class SyncEnvironmentUrlsObjectActionExecutorTest {
 	}
 
 	private void _assertHomePageURL(
-			AccountEntry accountEntry, String environmentUrls)
+			AccountEntry accountEntry, String environmentURLs)
 		throws Exception {
 
 		OAuth2Application oAuth2Application =
@@ -223,7 +223,7 @@ public class SyncEnvironmentUrlsObjectActionExecutorTest {
 					TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			StringUtil.extractFirst(environmentUrls, CharPool.SPACE),
+			StringUtil.extractFirst(environmentURLs, CharPool.SPACE),
 			oAuth2Application.getHomePageURL());
 	}
 
@@ -235,7 +235,7 @@ public class SyncEnvironmentUrlsObjectActionExecutorTest {
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			objectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
-				"environmentUrls",
+				"environmentURLs",
 				StringBundler.concat(
 					"http://", RandomTestUtil.randomString(), " http://",
 					RandomTestUtil.randomString())

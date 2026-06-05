@@ -92,7 +92,7 @@ describe('ConfigurationForm', () => {
 
 	it('hydrates the inputs after the fetch resolves in edit mode', async () => {
 		mockGetConfiguration.mockResolvedValueOnce({
-			environmentUrls: 'https://test.example.com',
+			environmentURLs: 'https://test.example.com',
 			externalReferenceCode: 'CONFIG_X',
 			recipientEmailAddress: 'test@example.com',
 		});
@@ -127,7 +127,7 @@ describe('ConfigurationForm', () => {
 
 	it('submits the values with the account relationship and shows a success toast', async () => {
 		mockGetConfiguration.mockResolvedValueOnce({
-			environmentUrls: '',
+			environmentURLs: '',
 			externalReferenceCode: 'CONFIG_X',
 			recipientEmailAddress: '',
 		});
@@ -161,7 +161,7 @@ describe('ConfigurationForm', () => {
 			expect(mockPutConfiguration).toHaveBeenCalledWith(
 				'CONFIG_X',
 				expect.objectContaining({
-					environmentUrls: 'https://www.example.com',
+					environmentURLs: 'https://www.example.com',
 					r_accountToAIHubConfigurations_accountEntryId: 12345,
 					recipientEmailAddress: 'test@example.com',
 				})

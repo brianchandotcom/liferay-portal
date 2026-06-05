@@ -41,20 +41,20 @@ export default function ConfigurationForm({
 						</h2>
 
 						<FieldBase
-							id="environmentUrls"
+							id="environmentURLs"
 							label={Liferay.Language.get('environment-url')}
 						>
 							<ClayInput
-								id="environmentUrls"
-								name="environmentUrls"
+								id="environmentURLs"
+								name="environmentURLs"
 								onChange={(event) =>
 									setField(
-										'environmentUrls',
+										'environmentURLs',
 										event.target.value
 									)
 								}
 								type="text"
-								value={values.environmentUrls}
+								value={values.environmentURLs}
 							/>
 						</FieldBase>
 

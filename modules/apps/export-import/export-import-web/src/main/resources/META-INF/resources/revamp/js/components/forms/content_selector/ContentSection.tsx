@@ -5,8 +5,9 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import classnames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {useId} from 'react';
+import React, {useEffect, useId, useRef, useState} from 'react';
 
 import '../../../../css/utilities.scss';
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
@@ -52,7 +53,31 @@ export default function ContentSection({
 	showDeletions,
 	value,
 }: ContentSectionProps) {
+	const bodyRef = useRef<HTMLDivElement>(null);
 	const checkboxId = useId();
+	const [overflowing, setOverflowing] = useState(false);
+
+	const scrollable = section.name === 'objects';
+
+	useEffect(() => {
+		const element = bodyRef.current;
+
+		if (!scrollable || !element || typeof ResizeObserver === 'undefined') {
+			return;
+		}
+
+		const resizeObserver = new ResizeObserver(() =>
+			setOverflowing(element.scrollHeight > element.clientHeight)
+		);
+
+		resizeObserver.observe(element);
+
+		for (const child of Array.from(element.children)) {
+			resizeObserver.observe(child);
+		}
+
+		return () => resizeObserver.disconnect();
+	}, [scrollable, section]);
 
 	const previewPortletDataHandlers =
 		section.previewPortletDataHandlers.map<PreviewPortletDataHandlerBoolean>(
@@ -136,7 +161,11 @@ export default function ContentSection({
 	return (
 		<ClayLayout.Sheet className="mt-0">
 			<CollapsibleGroup
-				bodyClassName="mt-2 pl-2"
+				bodyClassName={classnames('mt-2 pl-2', {
+					'border rounded': overflowing,
+					'content-section-scroll': scrollable,
+				})}
+				bodyRef={bodyRef}
 				checkboxId={checkboxId}
 				disclosure={({expanded, ...disclosureProps}) => (
 					<ClayButtonWithIcon
@@ -189,29 +218,25 @@ export default function ContentSection({
 					/>
 				}
 			>
-				<div className="content-section-controls overflow-auto">
-					{allPreviewPortletDataHandlers.map((context) => (
-						<PortletDataControl
-							control={context}
-							key={context.name}
-							onChange={(controlValue) =>
-								onChange(
-									updateSelection(
-										sectionSelection,
-										context.name,
-										controlValue
-									)
+				{allPreviewPortletDataHandlers.map((context) => (
+					<PortletDataControl
+						control={context}
+						key={context.name}
+						onChange={(controlValue) =>
+							onChange(
+								updateSelection(
+									sectionSelection,
+									context.name,
+									controlValue
 								)
-							}
-							pageTreeModalConfiguration={
-								pageTreeModalConfiguration
-							}
-							showDeletions={showDeletions}
-							topLevel
-							value={sectionSelection[context.name]}
-						/>
-					))}
-				</div>
+							)
+						}
+						pageTreeModalConfiguration={pageTreeModalConfiguration}
+						showDeletions={showDeletions}
+						topLevel
+						value={sectionSelection[context.name]}
+					/>
+				))}
 
 				{sectionFooters.map((sectionFooter) => (
 					<SectionFooter

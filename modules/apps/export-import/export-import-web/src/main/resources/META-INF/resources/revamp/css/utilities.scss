@@ -1,5 +1,13 @@
-.content-section-controls {
-	max-height: 400px;
+@import 'atlas-variables';
+
+.content-section-scroll {
+	max-height: 600px;
+	overflow: auto;
+
+	@include media-breakpoint-down(sm) {
+		max-height: none;
+		overflow: visible;
+	}
 }
 
 .cursor-pointer {

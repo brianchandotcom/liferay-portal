@@ -46,8 +46,8 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 
 				int size = fragmentEntryVersionIdsToDelete.size();
 
-				for (int i = 0; i < size; i += _BATCH_SIZE) {
-					int end = Math.min(i + _BATCH_SIZE, size);
+				for (int i = 0; i < size; i += _ORACLE_IN_CLAUSE_LIMIT) {
+					int end = Math.min(i + _ORACLE_IN_CLAUSE_LIMIT, size);
 
 					runSQL(
 						StringBundler.concat(
@@ -116,6 +116,6 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 		return fragmentEntryVersionIds;
 	}
 
-	private static final int _BATCH_SIZE = 1000;
+	private static final int _ORACLE_IN_CLAUSE_LIMIT = 1000;
 
 }

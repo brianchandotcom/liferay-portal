@@ -222,27 +222,17 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 
 		ReportEntry reportEntry1 = _addReportEntry(
 			_randomReportEntry(ExportImportReportEntryConstants.TYPE_ERROR));
+		ReportEntry reportEntry2 = _addReportEntry(
+			_randomReportEntry(ExportImportReportEntryConstants.TYPE_EMPTY));
 
 		_assertReportEntries(
 			"contains(classExternalReferenceCode, '" +
 				reportEntry1.getClassExternalReferenceCode() + "')",
 			null, reportEntry1.getId());
-
 		_assertReportEntries(
 			"contains(classExternalReferenceCode, '" +
 				RandomTestUtil.randomString() + "')",
 			null);
-
-		_assertReportEntries(
-			"startswith(modelName, '" + reportEntry1.getModelName() + "')",
-			null, reportEntry1.getId());
-		_assertReportEntries(
-			"startswith(modelName, '" + RandomTestUtil.randomString() + "')",
-			null);
-
-		ReportEntry reportEntry2 = _addReportEntry(
-			_randomReportEntry(ExportImportReportEntryConstants.TYPE_EMPTY));
-
 		_assertReportEntries(
 			StringBundler.concat(
 				"id eq ", reportEntry2.getId(), " and type/code eq ",
@@ -253,7 +243,6 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 				"id eq ", reportEntry2.getId(), " and type/code eq ",
 				ExportImportReportEntryConstants.TYPE_ERROR),
 			null);
-
 		_assertReportEntries(
 			StringBundler.concat(
 				"id eq ", reportEntry2.getId(), " and type/label eq '",
@@ -271,6 +260,12 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 					ExportImportReportEntryConstants.getTypeLabel(
 						ExportImportReportEntryConstants.TYPE_ERROR)),
 				"'"),
+			null);
+		_assertReportEntries(
+			"startswith(modelName, '" + reportEntry1.getModelName() + "')",
+			null, reportEntry1.getId());
+		_assertReportEntries(
+			"startswith(modelName, '" + RandomTestUtil.randomString() + "')",
 			null);
 	}
 

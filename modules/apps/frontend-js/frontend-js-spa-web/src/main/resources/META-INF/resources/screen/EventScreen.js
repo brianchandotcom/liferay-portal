@@ -201,6 +201,44 @@ class EventScreen extends HtmlScreen {
 	}
 
 	/**
+	 * Detects whether the navigation target enforces a different Content
+	 * Security Policy than the currently loaded document. Browsers bind the
+	 * CSP to the document at load time, so an SPA (PJAX) content swap keeps
+	 * enforcing the original document's policy. When the policy differs (for
+	 * example when navigating between a CSP protected page and a page whose
+	 * path is excluded from CSP), the nonce in the response no longer matches
+	 * the nonce of the document, and a full page reload is required so the
+	 * browser applies the correct header.
+	 * @return {!Boolean} True if the response and the document enforce
+	 *         different Content Security Policies
+	 */
+
+	isContentSecurityPolicyMismatch() {
+		const response = this.getResponse();
+
+		if (
+			!response ||
+			!response.headers ||
+			typeof response.headers.get !== 'function'
+		) {
+			return false;
+		}
+
+		const policy =
+			response.headers.get('content-security-policy') ||
+			response.headers.get('content-security-policy-report-only') ||
+			'';
+
+		const match = policy.match(/'nonce-([^']*)'/i);
+
+		const responseNonce = match ? match[1] : '';
+
+		const documentNonce = (Liferay.CSP && Liferay.CSP.nonce) || '';
+
+		return responseNonce !== documentNonce;
+	}
+
+	/**
 	 * Returns whether a given status code is considered valid
 	 * @param  {!Number} The status code to check
 	 * @return {!Boolean} True if the given status code is valid
@@ -223,6 +261,12 @@ class EventScreen extends HtmlScreen {
 	load(path) {
 		return super.load(path).then((content) => {
 			const redirectPath = this.beforeUpdateHistoryPath(path);
+
+			if (this.isContentSecurityPolicyMismatch()) {
+				window.location.href = redirectPath;
+
+				return new Promise(() => {});
+			}
 
 			this.checkRedirectPath(redirectPath);
 

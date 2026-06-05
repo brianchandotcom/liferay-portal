@@ -1535,3 +1535,36 @@ test(
 		);
 	}
 );
+
+test(
+	'A new Event Analysis offers an event add control but no breakdown or filter until an event is added',
+	{
+		tag: '@LRAC-10314',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		// The event section offers an add control
+
+		await expect(
+			page.locator('.event-section-root').getByLabel('Add')
+		).toBeVisible();
+
+		// The breakdown and filter sections do not offer an add control yet
+
+		await expect(
+			page.locator('.attribute-breakdown-section-root').getByLabel('Add')
+		).toHaveCount(0);
+
+		await expect(
+			page.locator('.attribute-filter-section-root').getByLabel('Add')
+		).toHaveCount(0);
+	}
+);

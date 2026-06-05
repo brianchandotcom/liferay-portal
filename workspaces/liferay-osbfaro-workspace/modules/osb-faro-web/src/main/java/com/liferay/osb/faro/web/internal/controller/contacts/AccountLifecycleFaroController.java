@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Riccardo Ferrari
  */
-@Component(service = AccountLifecycleFaroController.class)
+@Component
 @Path("/{groupId}/account-lifecycle")
 @Produces(MediaType.APPLICATION_JSON)
 public class AccountLifecycleFaroController extends BaseFaroController {

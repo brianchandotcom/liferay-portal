@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Thiago Buarque
  */
-@Component(service = AssetSummaryVocabularyFaroController.class)
+@Component
 @Path("/{groupId}/asset-summary-vocabularies")
 @Produces(MediaType.APPLICATION_JSON)
 public class AssetSummaryVocabularyFaroController extends BaseFaroController {

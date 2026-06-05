@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -248,15 +248,15 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 	}
 
 	@Override
+	protected void doReindex(String className, long classPK) throws Exception {
+		doReindex(_faroProjectLocalService.getFaroProject(classPK));
+	}
+
+	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		for (String id : ids) {
 			doReindex(FaroProject.class.getName(), GetterUtil.getLong(id));
 		}
-	}
-
-	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_faroProjectLocalService.getFaroProject(classPK));
 	}
 
 	protected IndexableActionableDynamicQuery

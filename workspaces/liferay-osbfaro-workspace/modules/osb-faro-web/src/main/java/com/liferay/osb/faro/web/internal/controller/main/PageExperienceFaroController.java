@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Thiago Buarque
  */
-@Component(service = PageExperienceFaroController.class)
+@Component
 @Path("/{groupId}/page-experiences")
 @Produces(MediaType.APPLICATION_JSON)
 public class PageExperienceFaroController extends BaseFaroController {

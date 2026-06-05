@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Ivica Cardic
  */
-@Component(service = AssetSummaryTagFaroController.class)
+@Component
 @Path("/{groupId}/asset-summary-tags")
 @Produces(MediaType.APPLICATION_JSON)
 public class AssetSummaryTagFaroController extends BaseFaroController {

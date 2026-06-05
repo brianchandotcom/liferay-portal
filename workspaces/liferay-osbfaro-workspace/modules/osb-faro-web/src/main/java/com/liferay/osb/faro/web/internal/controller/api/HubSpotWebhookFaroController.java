@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Nilton Vieira
  */
-@Component(service = HubSpotWebhookFaroController.class)
+@Component
 @Path("/hubspot_webhooks")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresScope(ApiApplication.OAuth2ScopeAliases.HUBSPOT_WRITE)

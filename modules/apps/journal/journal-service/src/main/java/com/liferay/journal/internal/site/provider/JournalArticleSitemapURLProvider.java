@@ -24,10 +24,12 @@ import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -37,6 +39,10 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -74,7 +80,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public Date getLastModifiedDate(long companyId, long groupId)
+	public Date getModifiedDate(long companyId, long groupId)
 		throws PortalException {
 
 		List<Date> modifiedDates = _journalArticleLocalService.dslQuery(
@@ -127,15 +133,15 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		}
 
 		if (layout.isTypeAssetDisplay()) {
-			visitArticles(
-				element, layout, layoutSet, themeDisplay,
-				getDisplayPageTemplateArticles(layout), false);
+			_visitArticles(
+				element, false, _getDisplayPageTemplateArticles(layout), layout,
+				layoutSet, themeDisplay);
 		}
 		else {
-			visitArticles(
-				element, null, layoutSet, themeDisplay,
+			_visitArticles(
+				element, true,
 				_getDisplayPageArticles(layoutSet.getGroupId(), layoutUuid),
-				true);
+				null, layoutSet, themeDisplay);
 		}
 	}
 
@@ -144,26 +150,68 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		ActionableDynamicQuery actionableDynamicQuery =
+			_journalArticleLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("classNameId", 0L)));
+		actionableDynamicQuery.setGroupId(layoutSet.getGroupId());
+
+		String portalURL = _portal.getPortalURL(layoutSet, themeDisplay);
+		Set<String> processedArticleIds = new HashSet<>();
+		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
+			themeDisplay.getScopeGroupId());
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(JournalArticle journalArticle) -> _visitArticle(
+				element, true, journalArticle, null, layoutSet, portalURL,
+				processedArticleIds, siteAvailableLocales, themeDisplay));
+
+		actionableDynamicQuery.performActions();
+	}
+
+	private Set<Locale> _getAvailableLocales(
+		JournalArticle journalArticle, Set<Locale> siteAvailableLocales) {
+
+		Set<Locale> availableLocales = new HashSet<>();
+
+		if (SetUtil.isEmpty(siteAvailableLocales)) {
+			return availableLocales;
+		}
+
+		for (String availableLanguageId :
+				journalArticle.getAvailableLanguageIds()) {
+
+			Locale locale = LocaleUtil.fromLanguageId(availableLanguageId);
+
+			if (siteAvailableLocales.contains(locale)) {
+				availableLocales.add(locale);
+			}
+		}
+
+		return availableLocales;
+	}
+
+	private List<JournalArticle> _getDisplayPageArticles(
+		long groupId, String layoutUuid) {
+
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
 
-		int count = _journalArticleService.getLayoutArticlesCount(
-			layoutSet.getGroupId(), 0);
+		int count = _journalArticleService.getArticlesByLayoutUuidCount(
+			groupId, layoutUuid);
 
 		if (count > SitemapManager.MAXIMUM_ENTRIES) {
 			start = count - SitemapManager.MAXIMUM_ENTRIES;
 			end = count;
 		}
 
-		List<JournalArticle> journalArticles =
-			_journalArticleService.getLayoutArticles(
-				layoutSet.getGroupId(), 0, start, end);
-
-		visitArticles(
-			element, null, layoutSet, themeDisplay, journalArticles, true);
+		return _journalArticleService.getArticlesByLayoutUuid(
+			groupId, layoutUuid, start, end);
 	}
 
-	protected List<JournalArticle> getDisplayPageTemplateArticles(Layout layout)
+	private List<JournalArticle> _getDisplayPageTemplateArticles(Layout layout)
 		throws PortalException {
 
 		List<JournalArticle> journalArticles = new ArrayList<>();
@@ -175,14 +223,12 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		DynamicQuery assetDisplayPageEntryDynamicQuery =
 			_assetDisplayPageEntryLocalService.dynamicQuery();
 
-		long classNameId = _portal.getClassNameId(
-			JournalArticle.class.getName());
-
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
 
 		assetDisplayPageEntryDynamicQuery.add(
-			classNameIdProperty.eq(classNameId));
+			classNameIdProperty.eq(
+				_portal.getClassNameId(JournalArticle.class.getName())));
 
 		Property layoutPageTemplateEntryIdProperty =
 			PropertyFactoryUtil.forName("layoutPageTemplateEntryId");
@@ -253,7 +299,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		return journalArticles;
 	}
 
-	protected Layout getDisplayPageTemplateLayout(
+	private Layout _getDisplayPageTemplateLayout(
 		long groupId, long journalArticleResourcePrimKey,
 		DDMStructure ddmStructure) {
 
@@ -284,134 +330,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			return null;
 		}
 
-		long assetDisplayPageEntryPlid = assetDisplayPageEntry.getPlid();
-
-		return _layoutLocalService.fetchLayout(assetDisplayPageEntryPlid);
-	}
-
-	protected void visitArticles(
-			Element element, Layout layout, LayoutSet layoutSet,
-			ThemeDisplay themeDisplay, List<JournalArticle> journalArticles,
-			boolean headCheck)
-		throws PortalException {
-
-		if (journalArticles.isEmpty()) {
-			return;
-		}
-
-		String portalURL = _portal.getPortalURL(layoutSet, themeDisplay);
-		Set<String> processedArticleIds = new HashSet<>();
-		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
-			themeDisplay.getScopeGroupId());
-
-		for (JournalArticle journalArticle : journalArticles) {
-			if (processedArticleIds.contains(journalArticle.getArticleId()) ||
-				(journalArticle.getStatus() !=
-					WorkflowConstants.STATUS_APPROVED) ||
-				(headCheck && !JournalUtil.isHead(journalArticle))) {
-
-				continue;
-			}
-
-			Layout articleLayout = layout;
-
-			if ((articleLayout == null) &&
-				Validator.isNotNull(journalArticle.getLayoutUuid())) {
-
-				articleLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-					journalArticle.getLayoutUuid(), layoutSet.getGroupId(),
-					layoutSet.isPrivateLayout());
-			}
-			else if (articleLayout == null) {
-				articleLayout = getDisplayPageTemplateLayout(
-					layoutSet.getGroupId(), journalArticle.getResourcePrimKey(),
-					journalArticle.getDDMStructure());
-			}
-
-			if (_sitemapURLProviderHelper.isExcludeLayoutFromSitemap(
-					articleLayout)) {
-
-				continue;
-			}
-
-			String groupFriendlyURL = _portal.getGroupFriendlyURL(
-				_layoutSetLocalService.getLayoutSet(
-					journalArticle.getGroupId(), false),
-				themeDisplay, false, false);
-
-			StringBundler sb = new StringBundler(4);
-
-			if (!groupFriendlyURL.startsWith(portalURL)) {
-				sb.append(portalURL);
-			}
-
-			sb.append(groupFriendlyURL);
-
-			if (Validator.isNotNull(journalArticle.getLayoutUuid())) {
-				sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
-			}
-			else {
-				sb.append(_getFriendlyURLSeparator());
-			}
-
-			sb.append(journalArticle.getUrlTitle());
-
-			String articleURL = _portal.getCanonicalURL(
-				sb.toString(), themeDisplay, articleLayout);
-
-			Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
-				articleURL, themeDisplay, articleLayout,
-				_getAvailableLocales(journalArticle, siteAvailableLocales));
-
-			for (String alternateURL : alternateURLs.values()) {
-				_sitemapManager.addURLElement(
-					element, alternateURL, null,
-					journalArticle.getModifiedDate(), articleURL, alternateURLs,
-					articleLayout.getGroupId());
-			}
-
-			processedArticleIds.add(journalArticle.getArticleId());
-		}
-	}
-
-	private Set<Locale> _getAvailableLocales(
-		JournalArticle journalArticle, Set<Locale> siteAvailableLocales) {
-
-		Set<Locale> availableLocales = new HashSet<>();
-
-		if (SetUtil.isEmpty(siteAvailableLocales)) {
-			return availableLocales;
-		}
-
-		for (String availableLanguageId :
-				journalArticle.getAvailableLanguageIds()) {
-
-			Locale locale = LocaleUtil.fromLanguageId(availableLanguageId);
-
-			if (siteAvailableLocales.contains(locale)) {
-				availableLocales.add(locale);
-			}
-		}
-
-		return availableLocales;
-	}
-
-	private List<JournalArticle> _getDisplayPageArticles(
-		long groupId, String layoutUuid) {
-
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		int count = _journalArticleService.getArticlesByLayoutUuidCount(
-			groupId, layoutUuid);
-
-		if (count > SitemapManager.MAXIMUM_ENTRIES) {
-			start = count - SitemapManager.MAXIMUM_ENTRIES;
-			end = count;
-		}
-
-		return _journalArticleService.getArticlesByLayoutUuid(
-			groupId, layoutUuid, start, end);
+		return _layoutLocalService.fetchLayout(assetDisplayPageEntry.getPlid());
 	}
 
 	private String _getFriendlyURLSeparator() {
@@ -427,6 +346,113 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		return FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE;
 	}
 
+	private void _visitArticle(
+			Element element, boolean headCheck, JournalArticle journalArticle,
+			Layout layout, LayoutSet layoutSet, String portalURL,
+			Set<String> processedArticleIds, Set<Locale> siteAvailableLocales,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (processedArticleIds.contains(journalArticle.getArticleId()) ||
+			(journalArticle.getStatus() != WorkflowConstants.STATUS_APPROVED) ||
+			(headCheck && !JournalUtil.isHead(journalArticle))) {
+
+			return;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker != null) &&
+			!_journalArticleModelResourcePermission.contains(
+				permissionChecker, journalArticle, ActionKeys.VIEW)) {
+
+			return;
+		}
+
+		Layout journalArticleLayout = layout;
+
+		if ((journalArticleLayout == null) &&
+			Validator.isNotNull(journalArticle.getLayoutUuid())) {
+
+			journalArticleLayout =
+				_layoutLocalService.fetchLayoutByUuidAndGroupId(
+					journalArticle.getLayoutUuid(), layoutSet.getGroupId(),
+					layoutSet.isPrivateLayout());
+		}
+		else if (journalArticleLayout == null) {
+			journalArticleLayout = _getDisplayPageTemplateLayout(
+				layoutSet.getGroupId(), journalArticle.getResourcePrimKey(),
+				journalArticle.getDDMStructure());
+		}
+
+		if (_sitemapURLProviderHelper.isExcludeLayoutFromSitemap(
+				journalArticleLayout)) {
+
+			return;
+		}
+
+		String groupFriendlyURL = _portal.getGroupFriendlyURL(
+			_layoutSetLocalService.getLayoutSet(
+				journalArticle.getGroupId(), false),
+			themeDisplay, false, false);
+
+		StringBundler sb = new StringBundler(4);
+
+		if (!groupFriendlyURL.startsWith(portalURL)) {
+			sb.append(portalURL);
+		}
+
+		sb.append(groupFriendlyURL);
+
+		if (Validator.isNotNull(journalArticle.getLayoutUuid())) {
+			sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+		}
+		else {
+			sb.append(_getFriendlyURLSeparator());
+		}
+
+		sb.append(journalArticle.getUrlTitle());
+
+		String canonicalURL = _portal.getCanonicalURL(
+			sb.toString(), themeDisplay, journalArticleLayout);
+
+		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
+			canonicalURL, themeDisplay, journalArticleLayout,
+			_getAvailableLocales(journalArticle, siteAvailableLocales));
+
+		for (String alternateURL : alternateURLs.values()) {
+			_sitemapManager.addURLElement(
+				element, alternateURL, null, journalArticle.getModifiedDate(),
+				canonicalURL, alternateURLs, journalArticleLayout.getGroupId());
+		}
+
+		processedArticleIds.add(journalArticle.getArticleId());
+	}
+
+	private void _visitArticles(
+			Element element, boolean headCheck,
+			List<JournalArticle> journalArticles, Layout layout,
+			LayoutSet layoutSet, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (journalArticles.isEmpty()) {
+			return;
+		}
+
+		String portalURL = _portal.getPortalURL(layoutSet, themeDisplay);
+		Set<String> processedArticleIds = new HashSet<>();
+		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
+			themeDisplay.getScopeGroupId());
+
+		for (JournalArticle journalArticle : journalArticles) {
+			_visitArticle(
+				element, headCheck, journalArticle, layout, layoutSet,
+				portalURL, processedArticleIds, siteAvailableLocales,
+				themeDisplay);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleSitemapURLProvider.class);
 
@@ -436,6 +462,12 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 
 	@Reference
 	private JournalArticleResourceLocalService

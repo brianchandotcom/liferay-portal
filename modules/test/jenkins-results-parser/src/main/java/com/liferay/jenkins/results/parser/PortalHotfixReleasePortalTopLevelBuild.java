@@ -39,7 +39,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				"Please set 'TEST_BUILD_HOTFIX_ZIP_URL'");
 		}
 
-		Matcher matcher = _hotfixZipURLPattern.find(testBuildHotfixZipURL);
+		Matcher matcher = _hotfixZipURLMultiPattern.find(testBuildHotfixZipURL);
 
 		if (matcher == null) {
 			throw new RuntimeException(
@@ -232,7 +232,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			}
 
 			Matcher patcherPortalVersionMatcher =
-				_patcherPortalVersionPattern.find(patcherPortalVersion);
+				_patcherPortalVersionMultiPattern.find(patcherPortalVersion);
 
 			if (patcherPortalVersionMatcher != null) {
 				StringBuilder sb = new StringBuilder();
@@ -261,7 +261,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			}
 		}
 
-		Matcher hotfixZipURLMatcher = _hotfixZipURLPattern.find(
+		Matcher hotfixZipURLMatcher = _hotfixZipURLMultiPattern.find(
 			getParameterValue("TEST_BUILD_HOTFIX_ZIP_URL"));
 
 		if (hotfixZipURLMatcher == null) {
@@ -358,7 +358,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			}
 
 			Matcher patcherPortalVersionMatcher =
-				_patcherPortalVersionPattern.find(patcherPortalVersion);
+				_patcherPortalVersionMultiPattern.find(patcherPortalVersion);
 
 			if (patcherPortalVersionMatcher == null) {
 				return null;
@@ -408,12 +408,13 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		return "master";
 	}
 
-	private static final MultiPattern _hotfixZipURLPattern = new MultiPattern(
-		"https?://.*(?<majorVersion>\\d)(?<minorVersion>\\d)" +
-			"(?<fixVersion>\\d{2})\\.(lpkg|zip)",
-		"https?://.*liferay-dxp-(?<majorVersion>\\d{4})." +
-			"(?<minorVersion>q\\d+).(?<fixVersion>\\d+)" +
-				"(-lts)?-hotfix-\\d+.(zip|tar.gz|lpkg)");
+	private static final MultiPattern _hotfixZipURLMultiPattern =
+		new MultiPattern(
+			"https?://.*(?<majorVersion>\\d)(?<minorVersion>\\d)" +
+				"(?<fixVersion>\\d{2})\\.(lpkg|zip)",
+			"https?://.*liferay-dxp-(?<majorVersion>\\d{4})." +
+				"(?<minorVersion>q\\d+).(?<fixVersion>\\d+)" +
+					"(-lts)?-hotfix-\\d+.(zip|tar.gz|lpkg)");
 	private static final Pattern _patcherPortalVersion62Pattern =
 		Pattern.compile(
 			"(?<majorVersion>6)\\.(?<minorVersion>2)\\." +
@@ -425,7 +426,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			"fix-pack-(?<fixpackType>de|dxp)-(?<fixpackVersion>\\d+)-" +
 				"(?<majorVersion>\\d)(?<minorVersion>\\d)" +
 					"(?<fixVersion>\\d{2})");
-	private static final MultiPattern _patcherPortalVersionPattern =
+	private static final MultiPattern _patcherPortalVersionMultiPattern =
 		new MultiPattern(
 			"(?<majorVersion>7)\\.(?<minorVersion>4)\\." +
 				"(?<fixVersion>\\d{2})(?<updateVersion>-(ep|u)\\d+)?",

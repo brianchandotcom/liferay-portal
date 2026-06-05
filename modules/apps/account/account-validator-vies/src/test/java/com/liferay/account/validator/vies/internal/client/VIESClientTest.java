@@ -5,7 +5,7 @@
 
 package com.liferay.account.validator.vies.internal.client;
 
-import com.liferay.account.validator.vies.internal.configuration.VIESClientConfiguration;
+import com.liferay.account.validator.vies.configuration.VIESAccountEntryValidatorConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -64,36 +64,42 @@ public class VIESClientTest {
 				configurationProviderUtilMockedStatic = Mockito.mockStatic(
 					ConfigurationProviderUtil.class)) {
 
-			VIESClientConfiguration viesClientConfiguration = Mockito.mock(
-				VIESClientConfiguration.class);
+			VIESAccountEntryValidatorConfiguration
+				viesAccountEntryValidatorConfiguration = Mockito.mock(
+					VIESAccountEntryValidatorConfiguration.class);
 
 			Mockito.when(
-				viesClientConfiguration.viesEndpointURL()
+				viesAccountEntryValidatorConfiguration.viesEndpointURL()
 			).thenReturn(
 				"http://localhost:" + _PORT + "/check-vat-number"
 			);
 
+			long companyId = RandomTestUtil.randomLong();
+
 			configurationProviderUtilMockedStatic.when(
-				() -> ConfigurationProviderUtil.getSystemConfiguration(
-					VIESClientConfiguration.class)
+				() -> ConfigurationProviderUtil.getCompanyConfiguration(
+					VIESAccountEntryValidatorConfiguration.class, companyId)
 			).thenReturn(
-				viesClientConfiguration
+				viesAccountEntryValidatorConfiguration
 			);
 
 			VIESClient viesClient = new VIESClient();
 
 			JSONObject jsonObject = viesClient.checkVatNumber(
-				_getRequestJSONObject());
+				companyId, _getRequestJSONObject());
 
 			_assertError("IO_ERROR", jsonObject);
 
 			_startHttpServer(
 				JSONUtil.put(
+					"actionSucceed", false
+				).put(
 					"errorWrappers",
 					JSONUtil.putAll(JSONUtil.put("error", "MS_UNAVAILABLE"))
 				).toString());
 
-			jsonObject = viesClient.checkVatNumber(_getRequestJSONObject());
+			jsonObject = viesClient.checkVatNumber(
+				companyId, _getRequestJSONObject());
 
 			_assertError("MS_UNAVAILABLE", jsonObject);
 
@@ -109,7 +115,8 @@ public class VIESClientTest {
 					"vatNumber", vatNumber
 				).toString());
 
-			jsonObject = viesClient.checkVatNumber(_getRequestJSONObject());
+			jsonObject = viesClient.checkVatNumber(
+				companyId, _getRequestJSONObject());
 
 			Assert.assertEquals(
 				countryCode, jsonObject.getString("countryCode"));

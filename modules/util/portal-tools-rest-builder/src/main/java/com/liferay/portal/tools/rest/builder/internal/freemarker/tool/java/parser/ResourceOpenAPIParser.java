@@ -1453,9 +1453,13 @@ public class ResourceOpenAPIParser {
 		sb.append("requestBody = @io.swagger.v3.oas.annotations.parameters.");
 		sb.append("RequestBody(");
 
+		boolean hasContent = false;
+
 		if (multipartBodySchemas != null) {
 			sb.append("content = ");
 			sb.append(_getRequestBodyContent(javaMethodSignature));
+
+			hasContent = true;
 		}
 		else {
 			String requestBodyContent = _getRequestBodyJSONContent(
@@ -1464,6 +1468,13 @@ public class ResourceOpenAPIParser {
 			if (requestBodyContent != null) {
 				sb.append("content = ");
 				sb.append(requestBodyContent);
+
+				hasContent = true;
+			}
+		}
+
+		if (requestBodyDescription != null) {
+			if (hasContent) {
 				sb.append(", ");
 			}
 

@@ -2263,6 +2263,8 @@ paths:
                                     format: binary
                                     type: string
                             type: object
+                description:
+                    "The multipart Test Entity to update. This exercises a multipart request body that also declares a description."
             responses:
                 200:
                     content:

@@ -622,9 +622,7 @@ public class StagingLocalServiceTest {
 
 				Assert.assertTrue(
 					message,
-					message.contains(
-						"Feature flag LPD-57283 is disabled for company " +
-							group.getCompanyId()));
+					message.contains("Style book scoping is not enabled"));
 			}
 
 			Group stagingGroup = group.getStagingGroup();

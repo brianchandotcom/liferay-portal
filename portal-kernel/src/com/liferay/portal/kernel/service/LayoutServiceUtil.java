@@ -898,6 +898,9 @@ public class LayoutServiceUtil {
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param styleBookEntryERC the external reference code of the style book
 	 entry
+	 * @param styleBookEntryScopeERC the external reference code of the group
+	 that owns the style book entry, when the style book entry lives
+	 in a different group than the layout (cross-scope)
 	 * @param faviconFileEntryERC the file entry external reference code of the
 	 layout's new favicon
 	 * @param faviconFileEntryScopeERC the file entry scope external reference
@@ -1139,4 +1142,4 @@ public class LayoutServiceUtil {
 	private static volatile LayoutService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1762366102
+// LIFERAY-SERVICE-BUILDER-HASH:850773462

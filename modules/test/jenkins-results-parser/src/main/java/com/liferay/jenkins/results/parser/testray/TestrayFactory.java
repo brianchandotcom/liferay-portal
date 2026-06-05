@@ -21,7 +21,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestCla
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
@@ -308,8 +307,11 @@ public class TestrayFactory {
 
 			_testrayFactorCategoriesIDs.put(id, testrayFactorCategory);
 
-			_testrayFactorCategoriesNames.put(
-				testrayFactorCategory.getName(), testrayFactorCategory);
+			String name = testrayFactorCategory.getName();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+				_testrayFactorCategoriesNames.put(name, testrayFactorCategory);
+			}
 
 			return testrayFactorCategory;
 		}
@@ -390,8 +392,11 @@ public class TestrayFactory {
 
 			_testrayFactorOptionsIDs.put(id, testrayFactorOption);
 
-			_testrayFactorOptionsNames.put(
-				testrayFactorOption.getName(), testrayFactorOption);
+			String name = testrayFactorOption.getName();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+				_testrayFactorOptionsNames.put(name, testrayFactorOption);
+			}
 
 			return testrayFactorOption;
 		}
@@ -582,22 +587,23 @@ public class TestrayFactory {
 	}
 
 	private static final Map<String, RunTestrayFactor> _runTestrayFactors =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private static final Map<Build, TestrayAttachmentRecorder>
 		_testrayAttachmentRecorders = new ConcurrentHashMap<>();
 	private static final Map<String, TestrayAttachmentUploader>
 		_testrayAttachmentUploaders = new ConcurrentHashMap<>();
 	private static final Map<Long, TestrayFactor.Category>
-		_testrayFactorCategoriesIDs = new HashMap<>();
+		_testrayFactorCategoriesIDs = new ConcurrentHashMap<>();
 	private static final Map<String, TestrayFactor.Category>
-		_testrayFactorCategoriesNames = new HashMap<>();
+		_testrayFactorCategoriesNames = new ConcurrentHashMap<>();
 	private static final Map<Long, TestrayFactor.Option>
-		_testrayFactorOptionsIDs = new HashMap<>();
+		_testrayFactorOptionsIDs = new ConcurrentHashMap<>();
 	private static final Map<String, TestrayFactor.Option>
-		_testrayFactorOptionsNames = new HashMap<>();
+		_testrayFactorOptionsNames = new ConcurrentHashMap<>();
 	private static final Map<String, TestrayRoutine> _testrayRoutines =
 		new ConcurrentHashMap<>();
-	private static final Map<String, TestrayRun> _testrayRuns = new HashMap<>();
+	private static final Map<String, TestrayRun> _testrayRuns =
+		new ConcurrentHashMap<>();
 	private static final Map<String, TestrayServer> _testrayServers =
 		new ConcurrentHashMap<>();
 	private static final Pattern _testrayURLPattern = Pattern.compile(

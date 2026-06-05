@@ -3,8 +3,7 @@ components:
         discountAccountGroupIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target discount-account-group binding. Server-assigned and stable
-                across the resource's lifetime.
+                Internal numeric identifier of the target discount-account-group binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: discountAccountGroupId
             required: true
@@ -19,8 +18,7 @@ components:
         discountAccountIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target discount-account binding. Server-assigned and stable across
-                the resource's lifetime.
+                Internal numeric identifier of the target discount-account binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: discountAccountId
             required: true
@@ -35,8 +33,7 @@ components:
         discountCategoryIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target discount-category binding. Server-assigned and stable across
-                the resource's lifetime.
+                Internal numeric identifier of the target discount-category binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: discountCategoryId
             required: true
@@ -51,8 +48,7 @@ components:
         discountChannelIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target discount-channel binding. Server-assigned and stable across
-                the resource's lifetime.
+                Internal numeric identifier of the target discount-channel binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: discountChannelId
             required: true
@@ -67,8 +63,7 @@ components:
         discountOrderTypeIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target discount-order-type binding. Server-assigned and stable across
-                the resource's lifetime.
+                Internal numeric identifier of the target discount-order-type binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: discountOrderTypeId
             required: true
@@ -83,8 +78,7 @@ components:
         discountProductGroupIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target discount-product-group binding. Server-assigned and stable
-                across the resource's lifetime.
+                Internal numeric identifier of the target discount-product-group binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: discountProductGroupId
             required: true
@@ -99,8 +93,7 @@ components:
         discountProductIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target discount-product binding. Server-assigned and stable across
-                the resource's lifetime.
+                Internal numeric identifier of the target discount-product binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: discountProductId
             required: true
@@ -115,8 +108,7 @@ components:
         discountSkuIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target discount-sku binding. Server-assigned and stable across the
-                resource's lifetime.
+                Internal numeric identifier of the target discount-sku binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: discountSkuId
             required: true
@@ -131,9 +123,7 @@ components:
         externalReferenceCodePathParam:
             in: path
             description:
-                External reference code that addresses the target resource on the `by-externalReferenceCode` paths. The
-                code is the integration-supplied idempotency key, unique within the resource scope; POST against this
-                path is upsert (create when absent, replace when present).
+                External reference code that addresses the target resource on the `by-externalReferenceCode` paths. The code is the integration-supplied idempotency key, unique within the resource scope; POST against this path is upsert (create when absent, replace when present).
             explode: false
             name: externalReferenceCode
             required: true
@@ -147,8 +137,7 @@ components:
         filterQueryParam:
             in: query
             description:
-                OData v4 filter expression that narrows the result set. Filterable fields are sourced from the matching
-                EntityModel and listed in each list operation's description.
+                OData v4 filter expression that narrows the result set. Filterable fields are sourced from the matching EntityModel and listed in each list operation's description.
             explode: true
             name: filter
             required: false
@@ -158,8 +147,7 @@ components:
         idPathParam:
             in: path
             description:
-                Internal numeric identifier of the target resource. Counterpart to the `by-externalReferenceCode` path
-                variant; identifiers are server-assigned and stable across the resource's lifetime.
+                Internal numeric identifier of the target resource. Counterpart to the `by-externalReferenceCode` path variant; identifiers are server-assigned and stable across the resource's lifetime.
             explode: false
             name: id
             required: true
@@ -184,8 +172,7 @@ components:
         pageSizeQueryParam:
             in: query
             description:
-                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the
-                portal configuration to prevent unbounded reads.
+                Number of items per page. Defaults to the portal's configured page size when omitted; capped by the portal configuration to prevent unbounded reads.
             explode: true
             name: pageSize
             required: false
@@ -195,8 +182,7 @@ components:
         priceEntryIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target price-entry binding. Server-assigned and stable across the
-                resource's lifetime.
+                Internal numeric identifier of the target price-entry binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: priceEntryId
             required: true
@@ -211,8 +197,7 @@ components:
         priceListAccountGroupIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target price-list-account-group binding. Server-assigned and stable
-                across the resource's lifetime.
+                Internal numeric identifier of the target price-list-account-group binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: priceListAccountGroupId
             required: true
@@ -227,8 +212,7 @@ components:
         priceListAccountIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target price-list-account binding. Server-assigned and stable across
-                the resource's lifetime.
+                Internal numeric identifier of the target price-list-account binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: priceListAccountId
             required: true
@@ -243,8 +227,7 @@ components:
         priceListChannelIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target price-list-channel binding. Server-assigned and stable across
-                the resource's lifetime.
+                Internal numeric identifier of the target price-list-channel binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: priceListChannelId
             required: true
@@ -259,8 +242,7 @@ components:
         priceListDiscountIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target price-list-discount binding. Server-assigned and stable across
-                the resource's lifetime.
+                Internal numeric identifier of the target price-list-discount binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: priceListDiscountId
             required: true
@@ -275,8 +257,7 @@ components:
         priceListOrderTypeIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target price-list-order-type binding. Server-assigned and stable
-                across the resource's lifetime.
+                Internal numeric identifier of the target price-list-order-type binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: priceListOrderTypeId
             required: true
@@ -291,8 +272,7 @@ components:
         priceModifierCategoryIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target price-modifier-category binding. Server-assigned and stable
-                across the resource's lifetime.
+                Internal numeric identifier of the target price-modifier-category binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: priceModifierCategoryId
             required: true
@@ -307,8 +287,7 @@ components:
         priceModifierProductGroupIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target price-modifier-product-group binding. Server-assigned and
-                stable across the resource's lifetime.
+                Internal numeric identifier of the target price-modifier-product-group binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: priceModifierProductGroupId
             required: true
@@ -323,8 +302,7 @@ components:
         priceModifierProductIdPathParam:
             in: path
             description:
-                Internal numeric identifier of the target price-modifier-product binding. Server-assigned and stable
-                across the resource's lifetime.
+                Internal numeric identifier of the target price-modifier-product binding. Server-assigned and stable across the resource's lifetime.
             explode: false
             name: priceModifierProductId
             required: true
@@ -339,8 +317,7 @@ components:
         searchQueryParam:
             in: query
             description:
-                Free-text search expression matched against the indexed fields of the underlying entity. The matched
-                fields are sourced from the matching Indexer and listed in each list operation's description.
+                Free-text search expression matched against the indexed fields of the underlying entity. The matched fields are sourced from the matching Indexer and listed in each list operation's description.
             explode: true
             name: search
             required: false
@@ -350,8 +327,7 @@ components:
         sortQueryParam:
             in: query
             description:
-                Sort expression with one or more field:asc|desc pairs separated by commas. Sortable fields are sourced
-                from the matching EntityModel and listed in each list operation's description.
+                Sort expression with one or more field:asc|desc pairs separated by commas. Sortable fields are sourced from the matching EntityModel and listed in each list operation's description.
             explode: true
             name: sort
             required: false
@@ -382,9 +358,7 @@ components:
     schemas:
         Account:
             description:
-                Read-only projection of a account referenced by a discount or price-list account binding. Carries the
-                account id, optional logo id, and display name; the full record lives in
-                headless-commerce-admin-account.
+                Read-only projection of a account referenced by a discount or price-list account binding. Carries the account id, optional logo id, and display name; the full record lives in headless-commerce-admin-account.
             properties:
                 id:
                     description:
@@ -408,8 +382,7 @@ components:
             type: object
         Category:
             description:
-                Read-only projection of an AssetCategory referenced by a discount, price-modifier, or product category
-                binding. Carries the category id, name, path, and the vocabulary the category belongs to.
+                Read-only projection of an AssetCategory referenced by a discount, price-modifier, or product category binding. Carries the category id, name, path, and the vocabulary the category belongs to.
             properties:
                 id:
                     description:
@@ -440,8 +413,7 @@ components:
             type: object
         Channel:
             description:
-                Read-only projection of a channel referenced by a discount or price-list channel binding. Carries the
-                channel id, name, ERC, type, default currencyCode, and the underlying siteGroupId.
+                Read-only projection of a channel referenced by a discount or price-list channel binding. Carries the channel id, name, ERC, type, default currencyCode, and the underlying siteGroupId.
             properties:
                 currencyCode:
                     description:
@@ -472,19 +444,13 @@ components:
                     type: integer
                 type:
                     description:
-                        Type discriminator for the record. Refer to the parent schema's documentation for the allowed
-                        values.
+                        Type discriminator for the record. Refer to the parent schema's documentation for the allowed values.
                     example: site
                     type: string
             type: object
         Discount:
             description:
-                Promotional discount program scoped to a single company. Backed by discount; carries the target slice
-                (subtotal, total, products, categories, skus, product-groups, order-types, or shipping), the limitation
-                policy that caps reuse, an optional couponCode gate, the percentage tiers (or fixed-amount cap), and the
-                cascading rel collections (account-group, account, category, channel, order-type, product,
-                product-group, sku, rule). Workflow-aware -- the runtime only honours discounts whose status is approved
-                (Approved).
+                Promotional discount program scoped to a single company. Backed by discount; carries the target slice (subtotal, total, products, categories, skus, product-groups, order-types, or shipping), the limitation policy that caps reuse, an optional couponCode gate, the percentage tiers (or fixed-amount cap), and the cascading rel collections (account-group, account, category, channel, order-type, product, product-group, sku, rule). Workflow-aware -- the runtime only honours discounts whose status is approved (Approved).
             properties:
                 actions:
                     additionalProperties:
@@ -492,14 +458,12 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 active:
                     description:
-                        Whether the discount is currently enabled. When false the price calculation engine skips the
-                        discount during cart evaluation.
+                        Whether the discount is currently enabled. When false the price calculation engine skips the discount during cart evaluation.
                     example: true
                     type: boolean
                 amountFormatted:
@@ -509,72 +473,62 @@ components:
                     type: string
                 couponCode:
                     description:
-                        Optional coupon code that the buyer must supply at checkout when `useCouponCode` is true.
-                        Case-sensitive; ignored when `useCouponCode` is false.
+                        Optional coupon code that the buyer must supply at checkout when `useCouponCode` is true. Case-sensitive; ignored when `useCouponCode` is false.
                     example: SAVE20
                     type: string
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form Expando custom fields attached to the underlying discount entity. Keys are Expando
-                        attribute names; values follow each attribute's declared column type.
+                        Free-form Expando custom fields attached to the underlying discount entity. Keys are Expando attribute names; values follow each attribute's declared column type.
                     example:
                         priority: high
                         segment: B2B
                     type: object
                 discountAccountGroups:
                     description:
-                        Account-group bindings cascaded on upsert. Each entry attaches the discount to one AccountGroup;
-                        supplying this array on POST/PUT replaces the previous bindings.
+                        Account-group bindings cascaded on upsert. Each entry attaches the discount to one AccountGroup; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountAccountGroup"
                     type: array
                 discountAccounts:
                     description:
-                        Account bindings cascaded on upsert. Each entry attaches the discount to one Account; supplying
-                        this array on POST/PUT replaces the previous bindings.
+                        Account bindings cascaded on upsert. Each entry attaches the discount to one Account; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountAccount"
                     type: array
                 discountCategories:
                     description:
-                        AssetCategory bindings cascaded on upsert. Each entry restricts the discount to one category;
-                        supplying this array on POST/PUT replaces the previous bindings.
+                        AssetCategory bindings cascaded on upsert. Each entry restricts the discount to one category; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountCategory"
                     type: array
                 discountChannels:
                     description:
-                        Channel bindings cascaded on upsert. Each entry restricts the discount to one channel; supplying
-                        this array on POST/PUT replaces the previous bindings.
+                        Channel bindings cascaded on upsert. Each entry restricts the discount to one channel; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountChannel"
                     type: array
                 discountOrderTypes:
                     description:
-                        Order-type bindings cascaded on upsert. Each entry restricts the discount to one order type;
-                        supplying this array on POST/PUT replaces the previous bindings.
+                        Order-type bindings cascaded on upsert. Each entry restricts the discount to one order type; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountOrderType"
                     type: array
                 discountProductGroups:
                     description:
-                        product group bindings cascaded on upsert. Each entry restricts the discount to one product
-                        group; supplying this array on POST/PUT replaces the previous bindings.
+                        product group bindings cascaded on upsert. Each entry restricts the discount to one product group; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountProductGroup"
                     type: array
                 discountProducts:
                     description:
-                        product bindings cascaded on upsert. Each entry restricts the discount to one product; supplying
-                        this array on POST/PUT replaces the previous bindings.
+                        product bindings cascaded on upsert. Each entry restricts the discount to one product; supplying this array on POST/PUT replaces the previous bindings.
                     items:
                         $ref: "#/components/schemas/DiscountProduct"
                     type: array
                 discountRules:
                     description:
-                        Validator rules cascaded on upsert. Each entry attaches a pre-qualification, post-qualification,
-                        or target validator; supplying this array on POST/PUT replaces the previous rules.
+                        Validator rules cascaded on upsert. Each entry attaches a pre-qualification, post-qualification, or target validator; supplying this array on POST/PUT replaces the previous rules.
                     items:
                         $ref: "#/components/schemas/DiscountRule"
                     type: array
@@ -586,8 +540,7 @@ components:
                     type: string
                 expirationDate:
                     description:
-                        Date when the discount expires. ISO 8601 (yyyy-MM-dd); the runtime stops honoring the discount
-                        past this date.
+                        Date when the discount expires. ISO 8601 (yyyy-MM-dd); the runtime stops honoring the discount past this date.
                     example: 2017-08-21
                     format: date
                     type: string
@@ -605,36 +558,31 @@ components:
                     type: integer
                 level:
                     description:
-                        Level qualifier (`L1`, `L2`, `L3`, `L4`) that selects which percentageLevel applies when
-                        usePercentage is true.
+                        Level qualifier (`L1`, `L2`, `L3`, `L4`) that selects which percentageLevel applies when usePercentage is true.
                     example: L1
                     type: string
                 limitationTimes:
                     description:
-                        Maximum number of times the discount may be used in total when limitationType is `limited`. Zero
-                        means unlimited.
+                        Maximum number of times the discount may be used in total when limitationType is `limited`. Zero means unlimited.
                     example: 0
                     format: int32
                     minimum: 0
                     type: integer
                 limitationTimesPerAccount:
                     description:
-                        Maximum number of times the discount may be used per account when limitationType is
-                        `limited-for-accounts` or `limited-for-accounts-and-total`.
+                        Maximum number of times the discount may be used per account when limitationType is `limited-for-accounts` or `limited-for-accounts-and-total`.
                     example: 0
                     format: int32
                     minimum: 0
                     type: integer
                 limitationType:
                     description:
-                        Caps how often the discount may be redeemed. One of `unlimited`, `limited`,
-                        `limited-for-accounts`, `limited-for-accounts-and-total`.
+                        Caps how often the discount may be redeemed. One of `unlimited`, `limited`, `limited-for-accounts`, `limited-for-accounts-and-total`.
                     example: unlimited
                     type: string
                 maximumDiscountAmount:
                     description:
-                        Fixed-amount cap on the discount payout, in the order's currency. Mutually exclusive with the
-                        percentage levels.
+                        Fixed-amount cap on the discount payout, in the order's currency. Mutually exclusive with the percentage levels.
                     example: 25
                     format: bigdecimal
                     minimum: 0
@@ -688,14 +636,12 @@ components:
                     type: number
                 rulesConjunction:
                     description:
-                        When true, all attached discount rules must pass for the discount to apply; when false, any
-                        single passing rule activates the discount.
+                        When true, all attached discount rules must pass for the discount to apply; when false, any single passing rule activates the discount.
                     example: true
                     type: boolean
                 target:
                     description:
-                        Which order slice the discount applies to. One of `subtotal`, `total`, `products`, `categories`,
-                        `skus`, `product-groups`, `shipping`.
+                        Which order slice the discount applies to. One of `subtotal`, `total`, `products`, `categories`, `skus`, `product-groups`, `shipping`.
                     example: subtotal
                     type: string
                 title:
@@ -705,14 +651,12 @@ components:
                     type: string
                 useCouponCode:
                     description:
-                        When true, the discount is gated by `couponCode` and is only applied when the buyer supplies the
-                        matching code at checkout.
+                        When true, the discount is gated by `couponCode` and is only applied when the buyer supplies the matching code at checkout.
                     example: true
                     type: boolean
                 usePercentage:
                     description:
-                        When true, the discount payout is calculated using `percentageLevel1..4` keyed by `level`; when
-                        false, the payout is `maximumDiscountAmount`.
+                        When true, the discount payout is calculated using `percentageLevel1..4` keyed by `level`; when false, the payout is `maximumDiscountAmount`.
                     example: true
                     type: boolean
             required:
@@ -724,8 +668,7 @@ components:
             type: object
         DiscountAccount:
             description:
-                Account binding that restricts a discount's eligibility to a specific Account. Backed by discount
-                account link.
+                Account binding that restricts a discount's eligibility to a specific Account. Backed by discount account link.
             properties:
                 account:
                     $ref: "#/components/schemas/Account"
@@ -748,8 +691,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 discountAccountId:
@@ -778,8 +720,7 @@ components:
             type: object
         DiscountAccountGroup:
             description:
-                Account-group binding that restricts a discount's eligibility to a specific AccountGroup. Backed by
-                discount account group link.
+                Account-group binding that restricts a discount's eligibility to a specific AccountGroup. Backed by discount account group link.
             properties:
                 accountGroup:
                     $ref: "#/components/schemas/PricingAccountGroup"
@@ -802,8 +743,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 discountAccountGroupId:
@@ -832,8 +772,7 @@ components:
             type: object
         DiscountCategory:
             description:
-                AssetCategory binding that restricts a discount to products tagged with a specific category. Backed by
-                discount link with the AssetCategory class name.
+                AssetCategory binding that restricts a discount to products tagged with a specific category. Backed by discount link with the AssetCategory class name.
             properties:
                 actions:
                     additionalProperties:
@@ -841,8 +780,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 category:
@@ -886,8 +824,7 @@ components:
             type: object
         DiscountChannel:
             description:
-                Channel binding that restricts a discount's eligibility to a specific channel. Backed by channel link
-                with the discount class name.
+                Channel binding that restricts a discount's eligibility to a specific channel. Backed by channel link with the discount class name.
             properties:
                 actions:
                     additionalProperties:
@@ -895,8 +832,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 channel:
@@ -940,8 +876,7 @@ components:
             type: object
         DiscountOrderType:
             description:
-                order type binding that restricts a discount's eligibility to a specific order type. Backed by discount
-                order type link.
+                order type binding that restricts a discount's eligibility to a specific order type. Backed by discount order type link.
             properties:
                 actions:
                     additionalProperties:
@@ -949,8 +884,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 discountExternalReferenceCode:
@@ -991,8 +925,7 @@ components:
                     type: integer
                 priority:
                     description:
-                        Priority value that orders this discountordertype relative to its peers. Lower numbers resolve
-                        first.
+                        Priority value that orders this discountordertype relative to its peers. Lower numbers resolve first.
                     example: 1
                     format: int32
                     minimum: 0
@@ -1002,8 +935,7 @@ components:
             type: object
         DiscountProduct:
             description:
-                product binding that restricts a discount to a specific product. Backed by discount link with the
-                product class name.
+                product binding that restricts a discount to a specific product. Backed by discount link with the product class name.
             properties:
                 actions:
                     additionalProperties:
@@ -1011,8 +943,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 discountExternalReferenceCode:
@@ -1056,8 +987,7 @@ components:
             type: object
         DiscountProductGroup:
             description:
-                product group binding that restricts a discount to products inside a product group. Backed by discount
-                link with the pricing class class name.
+                product group binding that restricts a discount to products inside a product group. Backed by discount link with the pricing class class name.
             properties:
                 actions:
                     additionalProperties:
@@ -1065,8 +995,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 discountExternalReferenceCode:
@@ -1110,8 +1039,7 @@ components:
             type: object
         DiscountRule:
             description:
-                Pre-qualification, post-qualification, or target validator attached to a discount. Carries a type string
-                and a JSON typeSettings payload interpreted by the matching discount rule type at evaluation time.
+                Pre-qualification, post-qualification, or target validator attached to a discount. Carries a type string and a JSON typeSettings payload interpreted by the matching discount rule type at evaluation time.
             properties:
                 actions:
                     additionalProperties:
@@ -1119,8 +1047,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 discountId:
@@ -1146,8 +1073,7 @@ components:
                     type: string
                 type:
                     description:
-                        Type discriminator for the record. Refer to the parent schema's documentation for the allowed
-                        values.
+                        Type discriminator for the record. Refer to the parent schema's documentation for the allowed values.
                     example: cart-total
                     type: string
                 typeSettings:
@@ -1160,8 +1086,7 @@ components:
             type: object
         DiscountSku:
             description:
-                SKU (SKU) binding that restricts a discount to a specific SKU. Backed by discount link with the SKU
-                class name.
+                SKU (SKU) binding that restricts a discount to a specific SKU. Backed by discount link with the SKU class name.
             properties:
                 actions:
                     additionalProperties:
@@ -1169,8 +1094,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 discountExternalReferenceCode:
@@ -1228,8 +1152,7 @@ components:
                     type: integer
                 unitOfMeasureKey:
                     description:
-                        Unit-of-measure key for the SKU on this entry. Defaults to the SKU's primary unit-of-measure
-                        when omitted.
+                        Unit-of-measure key for the SKU on this entry. Defaults to the SKU's primary unit-of-measure when omitted.
                     example: m
                     type: string
             required:
@@ -1237,8 +1160,7 @@ components:
             type: object
         Error:
             description:
-                Standard error envelope returned by every non-2xx response. Carries the HTTP status code, a short error
-                type, a long descriptive message, and (when available) the originating type and stack trace.
+                Standard error envelope returned by every non-2xx response. Carries the HTTP status code, a short error type, a long descriptive message, and (when available) the originating type and stack trace.
             properties:
                 errorCode:
                     description:
@@ -1274,8 +1196,7 @@ components:
             type: object
         OrderType:
             description:
-                Read-only projection of a order type referenced by a discount or price-list order-type binding. Carries
-                the order type id, name, and display order.
+                Read-only projection of a order type referenced by a discount or price-list order-type binding. Carries the order type id, name, and display order.
             properties:
                 id:
                     description:
@@ -1298,8 +1219,7 @@ components:
             type: object
         PriceEntry:
             description:
-                Per-SKU price entry inside a price list. Binds a SKU to a regular price and an optional promo price;
-                entries with quantity-break overrides expose `hasTierPrice`. Backed by price entry.
+                Per-SKU price entry inside a price list. Binds a SKU to a regular price and an optional promo price; entries with quantity-break overrides expose `hasTierPrice`. Backed by price entry.
             properties:
                 actions:
                     additionalProperties:
@@ -1307,27 +1227,23 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 active:
                     description:
-                        Whether the priceentry is currently enabled. When false the runtime skips this record during
-                        evaluation.
+                        Whether the priceentry is currently enabled. When false the runtime skips this record during evaluation.
                     example: true
                     type: boolean
                 bulkPricing:
                     description:
-                        When true, the priceentry enables bulk-pricing tier discovery on this SKU. Surfaces the
-                        underlying price entry.bulkPricing flag.
+                        When true, the priceentry enables bulk-pricing tier discovery on this SKU. Surfaces the underlying price entry.bulkPricing flag.
                     example: true
                     type: boolean
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute
-                        names; values follow each attribute's declared column type.
+                        Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute names; values follow each attribute's declared column type.
                     example:
                         priority: high
                         segment: B2B
@@ -1339,32 +1255,28 @@ components:
                     type: boolean
                 discountLevel1:
                     description:
-                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the
-                        level-1 band; sourced from price entry.discountLevel1.
+                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-1 band; sourced from price entry.discountLevel1.
                     example: 30130
                     format: bigdecimal
                     minimum: 0
                     type: number
                 discountLevel2:
                     description:
-                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the
-                        level-2 band; sourced from price entry.discountLevel2.
+                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-2 band; sourced from price entry.discountLevel2.
                     example: 30130
                     format: bigdecimal
                     minimum: 0
                     type: number
                 discountLevel3:
                     description:
-                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the
-                        level-3 band; sourced from price entry.discountLevel3.
+                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-3 band; sourced from price entry.discountLevel3.
                     example: 30130
                     format: bigdecimal
                     minimum: 0
                     type: number
                 discountLevel4:
                     description:
-                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the
-                        level-4 band; sourced from price entry.discountLevel4.
+                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-4 band; sourced from price entry.discountLevel4.
                     example: 30130
                     format: bigdecimal
                     minimum: 0
@@ -1433,8 +1345,7 @@ components:
                     type: integer
                 priceOnApplication:
                     description:
-                        When true, the SKU price is hidden from the storefront and the buyer is required to request a
-                        quote.
+                        When true, the SKU price is hidden from the storefront and the buyer is required to request a quote.
                     example: true
                     type: boolean
                 product:
@@ -1442,8 +1353,7 @@ components:
                     readOnly: true
                 quantity:
                     description:
-                        Quantity bound to this priceentry entry; used for tier resolution against the cart line
-                        quantity.
+                        Quantity bound to this priceentry entry; used for tier resolution against the cart line quantity.
                     example: 10.1
                     format: bigdecimal
                     type: number
@@ -1470,8 +1380,7 @@ components:
                     type: array
                 unitOfMeasureKey:
                     description:
-                        Unit-of-measure key for the SKU on this entry. Defaults to the SKU's primary unit-of-measure
-                        when omitted.
+                        Unit-of-measure key for the SKU on this entry. Defaults to the SKU's primary unit-of-measure when omitted.
                     example: m
                     type: string
             required:
@@ -1481,10 +1390,7 @@ components:
             type: object
         PriceList:
             description:
-                Versioned price catalog that prices SKUs in a specific currency for a catalog. Carries a priority, a
-                display/expiration window, the parent catalog, and the cascading rel collections (account-group,
-                account, channel, discount, order-type, modifier, entry). Workflow-aware -- the runtime only honours
-                price lists whose status is approved.
+                Versioned price catalog that prices SKUs in a specific currency for a catalog. Carries a priority, a display/expiration window, the parent catalog, and the cascading rel collections (account-group, account, channel, discount, order-type, modifier, entry). Workflow-aware -- the runtime only honours price lists whose status is approved.
             properties:
                 actions:
                     additionalProperties:
@@ -1492,14 +1398,12 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 active:
                     description:
-                        Whether the pricelist is currently enabled. When false the runtime skips this record during
-                        evaluation.
+                        Whether the pricelist is currently enabled. When false the runtime skips this record during evaluation.
                     example: true
                     type: boolean
                 author:
@@ -1509,8 +1413,7 @@ components:
                     type: string
                 catalogBasePriceList:
                     description:
-                        When true, the price list is the catalog's base list and serves as the fallback when no other
-                        price list resolves.
+                        When true, the price list is the catalog's base list and serves as the fallback when no other price list resolves.
                     example: true
                     type: boolean
                 catalogExternalReferenceCode:
@@ -1556,8 +1459,7 @@ components:
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute
-                        names; values follow each attribute's declared column type.
+                        Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute names; values follow each attribute's declared column type.
                     example:
                         priority: high
                         segment: B2B
@@ -1593,8 +1495,7 @@ components:
                     type: string
                 netPrice:
                     description:
-                        When true, prices in this price list are expressed net of tax; when false, prices are gross
-                        (tax-inclusive).
+                        When true, prices in this price list are expressed net of tax; when false, prices are gross (tax-inclusive).
                     example: true
                     type: boolean
                 neverExpire:
@@ -1659,8 +1560,7 @@ components:
                     type: number
                 type:
                     description:
-                        Type discriminator for the record. Refer to the parent schema's documentation for the allowed
-                        values.
+                        Type discriminator for the record. Refer to the parent schema's documentation for the allowed values.
                     enum:
                         -   price-list
                         -   promotion
@@ -1678,8 +1578,7 @@ components:
             type: object
         PriceListAccount:
             description:
-                Account binding that restricts a price list's eligibility to a specific Account. Backed by price list
-                account link.
+                Account binding that restricts a price list's eligibility to a specific Account. Backed by price list account link.
             properties:
                 account:
                     $ref: "#/components/schemas/Account"
@@ -1702,14 +1601,12 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 order:
                     description:
-                        Ordering integer that orders this pricelistaccount relative to its peers. Lower numbers resolve
-                        first.
+                        Ordering integer that orders this pricelistaccount relative to its peers. Lower numbers resolve first.
                     example: 1
                     format: int32
                     minimum: 0
@@ -1740,8 +1637,7 @@ components:
             type: object
         PriceListAccountGroup:
             description:
-                Account-group binding that restricts a price list's eligibility to a specific AccountGroup, with an
-                `order` integer that controls the resolution priority. Backed by price list account group link.
+                Account-group binding that restricts a price list's eligibility to a specific AccountGroup, with an `order` integer that controls the resolution priority. Backed by price list account group link.
             properties:
                 accountGroup:
                     $ref: "#/components/schemas/PricingAccountGroup"
@@ -1764,14 +1660,12 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 order:
                     description:
-                        Ordering integer that orders this pricelistaccountgroup relative to its peers. Lower numbers
-                        resolve first.
+                        Ordering integer that orders this pricelistaccountgroup relative to its peers. Lower numbers resolve first.
                     example: 1
                     format: int32
                     minimum: 0
@@ -1802,8 +1696,7 @@ components:
             type: object
         PriceListChannel:
             description:
-                Channel binding that restricts a price list's eligibility to a specific channel. Backed by price list
-                channel link.
+                Channel binding that restricts a price list's eligibility to a specific channel. Backed by price list channel link.
             properties:
                 actions:
                     additionalProperties:
@@ -1811,8 +1704,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 channel:
@@ -1832,8 +1724,7 @@ components:
                     type: integer
                 order:
                     description:
-                        Ordering integer that orders this pricelistchannel relative to its peers. Lower numbers resolve
-                        first.
+                        Ordering integer that orders this pricelistchannel relative to its peers. Lower numbers resolve first.
                     example: 1
                     format: int32
                     minimum: 0
@@ -1864,8 +1755,7 @@ components:
             type: object
         PriceListDiscount:
             description:
-                Discount linkage attached to a price list. Ties one discount to the price list so its rules participate
-                in price resolution against that list. Backed by price list discount link.
+                Discount linkage attached to a price list. Ties one discount to the price list so its rules participate in price resolution against that list. Backed by price list discount link.
             properties:
                 discountExternalReferenceCode:
                     description:
@@ -1887,8 +1777,7 @@ components:
                     type: string
                 order:
                     description:
-                        Ordering integer that orders this pricelistdiscount relative to its peers. Lower numbers resolve
-                        first.
+                        Ordering integer that orders this pricelistdiscount relative to its peers. Lower numbers resolve first.
                     example: 1
                     format: int32
                     minimum: 0
@@ -1919,8 +1808,7 @@ components:
             type: object
         PriceListOrderType:
             description:
-                order type binding that restricts a price list's eligibility to a specific order type. Backed by price
-                list order type link.
+                order type binding that restricts a price list's eligibility to a specific order type. Backed by price list order type link.
             properties:
                 actions:
                     additionalProperties:
@@ -1928,8 +1816,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 orderType:
@@ -1969,8 +1856,7 @@ components:
                     type: integer
                 priority:
                     description:
-                        Priority value that orders this pricelistordertype relative to its peers. Lower numbers resolve
-                        first.
+                        Priority value that orders this pricelistordertype relative to its peers. Lower numbers resolve first.
                     example: 1
                     format: int32
                     minimum: 0
@@ -1981,9 +1867,7 @@ components:
             type: object
         PriceModifier:
             description:
-                Add-on price calculation layered on a price list. Carries a target (categories, products, or
-                product-groups), a modifierAmount or modifierPercentage, a modifierType (absolute or percentage), a
-                limitationType, and a priority. Backed by price modifier.
+                Add-on price calculation layered on a price list. Carries a target (categories, products, or product-groups), a modifierAmount or modifierPercentage, a modifierType (absolute or percentage), a limitationType, and a priority. Backed by price modifier.
             properties:
                 actions:
                     additionalProperties:
@@ -1991,14 +1875,12 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 active:
                     description:
-                        Whether the pricemodifier is currently enabled. When false the runtime skips this record during
-                        evaluation.
+                        Whether the pricemodifier is currently enabled. When false the runtime skips this record during evaluation.
                     example: true
                     type: boolean
                 displayDate:
@@ -2027,15 +1909,13 @@ components:
                     type: integer
                 modifierAmount:
                     description:
-                        Absolute add-on amount the modifier contributes. Mutually exclusive with modifierPercentage;
-                        meaningful when modifierType is absolute.
+                        Absolute add-on amount the modifier contributes. Mutually exclusive with modifierPercentage; meaningful when modifierType is absolute.
                     example: 25
                     format: bigdecimal
                     type: number
                 modifierType:
                     description:
-                        Calculation kind for the modifier. One of `absolute` (modifierAmount used) or `percentage`
-                        (modifierPercentage used).
+                        Calculation kind for the modifier. One of `absolute` (modifierAmount used) or `percentage` (modifierPercentage used).
                     example: percentage
                     type: string
                 neverExpire:
@@ -2075,15 +1955,13 @@ components:
                     type: array
                 priority:
                     description:
-                        Priority value that orders this pricemodifier relative to its peers. Lower numbers resolve
-                        first.
+                        Priority value that orders this pricemodifier relative to its peers. Lower numbers resolve first.
                     example: 1.2
                     format: double
                     type: number
                 target:
                     description:
-                        Which slice of the parent the record applies to. Refer to the parent schema's documentation for
-                        the allowed values.
+                        Which slice of the parent the record applies to. Refer to the parent schema's documentation for the allowed values.
                     example: product
                     type: string
                 title:
@@ -2099,8 +1977,7 @@ components:
             type: object
         PriceModifierCategory:
             description:
-                AssetCategory binding that restricts a price modifier to products tagged with a specific category.
-                Backed by price modifier link with the AssetCategory class name.
+                AssetCategory binding that restricts a price modifier to products tagged with a specific category. Backed by price modifier link with the AssetCategory class name.
             properties:
                 actions:
                     additionalProperties:
@@ -2108,8 +1985,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 category:
@@ -2153,8 +2029,7 @@ components:
             type: object
         PriceModifierProduct:
             description:
-                product binding that restricts a price modifier to a specific product. Backed by price modifier link
-                with the product class name.
+                product binding that restricts a price modifier to a specific product. Backed by price modifier link with the product class name.
             properties:
                 actions:
                     additionalProperties:
@@ -2162,8 +2037,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 priceModifierExternalReferenceCode:
@@ -2207,8 +2081,7 @@ components:
             type: object
         PriceModifierProductGroup:
             description:
-                product group binding that restricts a price modifier to products inside a product group. Backed by
-                price modifier link with the pricing class class name.
+                product group binding that restricts a price modifier to products inside a product group. Backed by price modifier link with the pricing class class name.
             properties:
                 actions:
                     additionalProperties:
@@ -2216,8 +2089,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 priceModifierExternalReferenceCode:
@@ -2261,8 +2133,7 @@ components:
             type: object
         PricingAccountGroup:
             description:
-                Read-only projection of a account group referenced by a discount or price-list account-group binding.
-                Carries the account-group id and display name.
+                Read-only projection of a account group referenced by a discount or price-list account-group binding. Carries the account-group id and display name.
             properties:
                 id:
                     description:
@@ -2280,8 +2151,7 @@ components:
             type: object
         Product:
             description:
-                Read-only projection of a product (commerce product) referenced by a discount or price-modifier product
-                binding. Carries the product id and localized name.
+                Read-only projection of a product (commerce product) referenced by a discount or price-modifier product binding. Carries the product id and localized name.
             properties:
                 id:
                     description:
@@ -2316,8 +2186,7 @@ components:
             type: object
         ProductGroup:
             description:
-                Read-only projection of a product group referenced by a discount or price-modifier product-group
-                binding. Carries the product-group id and title.
+                Read-only projection of a product group referenced by a discount or price-modifier product-group binding. Carries the product-group id and title.
             properties:
                 id:
                     description:
@@ -2346,8 +2215,7 @@ components:
             type: object
         Sku:
             description:
-                Read-only projection of a SKU (SKU) referenced by a discount sku binding or a price entry. Carries the
-                SKU id, sku key, optional unit-of-measure key, and price-bearing identifiers.
+                Read-only projection of a SKU (SKU) referenced by a discount sku binding or a price entry. Carries the SKU id, sku key, optional unit-of-measure key, and price-bearing identifiers.
             properties:
                 basePrice:
                     description:
@@ -2388,14 +2256,11 @@ components:
             type: object
         Status:
             description:
-                Read-only workflow status snapshot carried on every workflow-aware schema. Pairs the integer status code
-                with the matching label (Approved, Pending, Draft, ...) and the user/date the last transition happened.
+                Read-only workflow status snapshot carried on every workflow-aware schema. Pairs the integer status code with the matching label (Approved, Pending, Draft, ...) and the user/date the last transition happened.
             properties:
                 code:
                     description:
-                        Integer workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Scheduled, 5=Denied,
-                        8=Inactive, 9=Incomplete. Only Approved records participate in runtime evaluation. Sourced from
-                        workflow status constant.
+                        Integer workflow status -- 0=Approved, 1=Pending, 2=Draft, 3=Expired, 4=Scheduled, 5=Denied, 8=Inactive, 9=Incomplete. Only Approved records participate in runtime evaluation. Sourced from workflow status constant.
                     example: 0
                     format: int32
                     readOnly: true
@@ -2413,9 +2278,7 @@ components:
             type: object
         TierPrice:
             description:
-                Quantity-break override on a price entry. Binds a minimumQuantity threshold to an override price; the
-                runtime resolves the highest-quantity tier whose minimumQuantity is at most the cart line quantity.
-                Backed by tier price.
+                Quantity-break override on a price entry. Binds a minimumQuantity threshold to an override price; the runtime resolves the highest-quantity tier whose minimumQuantity is at most the cart line quantity. Backed by tier price.
             properties:
                 actions:
                     additionalProperties:
@@ -2423,21 +2286,18 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 active:
                     description:
-                        Whether the tierprice is currently enabled. When false the runtime skips this record during
-                        evaluation.
+                        Whether the tierprice is currently enabled. When false the runtime skips this record during evaluation.
                     example: true
                     type: boolean
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute
-                        names; values follow each attribute's declared column type.
+                        Free-form Expando custom fields attached to the underlying entity. Keys are Expando attribute names; values follow each attribute's declared column type.
                     example:
                         priority: high
                         segment: B2B
@@ -2449,32 +2309,28 @@ components:
                     type: boolean
                 discountLevel1:
                     description:
-                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the
-                        level-1 band; sourced from price entry.discountLevel1.
+                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-1 band; sourced from price entry.discountLevel1.
                     example: 30130
                     format: bigdecimal
                     minimum: 0
                     type: number
                 discountLevel2:
                     description:
-                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the
-                        level-2 band; sourced from price entry.discountLevel2.
+                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-2 band; sourced from price entry.discountLevel2.
                     example: 30130
                     format: bigdecimal
                     minimum: 0
                     type: number
                 discountLevel3:
                     description:
-                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the
-                        level-3 band; sourced from price entry.discountLevel3.
+                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-3 band; sourced from price entry.discountLevel3.
                     example: 30130
                     format: bigdecimal
                     minimum: 0
                     type: number
                 discountLevel4:
                     description:
-                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the
-                        level-4 band; sourced from price entry.discountLevel4.
+                        Per-unit discount amount applied to this entry when the matching cart-line quantity falls in the level-4 band; sourced from price entry.discountLevel4.
                     example: 30130
                     format: bigdecimal
                     minimum: 0
@@ -2505,8 +2361,7 @@ components:
                     type: integer
                 minimumQuantity:
                     description:
-                        Quantity threshold at which the tier price applies; the runtime resolves the highest-threshold
-                        tier whose minimumQuantity is at most the cart line quantity.
+                        Quantity threshold at which the tier price applies; the runtime resolves the highest-threshold tier whose minimumQuantity is at most the cart line quantity.
                     example: 10.1
                     format: bigdecimal
                     minimum: 0
@@ -2541,8 +2396,7 @@ components:
                     type: string
                 unitOfMeasureKey:
                     description:
-                        Unit-of-measure key for the SKU on this entry. Defaults to the SKU's primary unit-of-measure
-                        when omitted.
+                        Unit-of-measure key for the SKU on this entry. Defaults to the SKU's primary unit-of-measure when omitted.
                     example: m
                     type: string
             required:
@@ -2594,15 +2448,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount account group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount account group binding.
             summary: Deletes a Discount Account Group by ID.
             tags: ["DiscountAccountGroup"]
     /discount-account-groups/{discountAccountGroupId}/account-group:
         get:
             description:
-                Returns the PricingAccountGroup nested in a DiscountAccountGroup (via discount account group link)
-                addressed by internal rel id.
+                Returns the PricingAccountGroup nested in a DiscountAccountGroup (via discount account group link) addressed by internal rel id.
             operationId: getDiscountAccountGroupAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/discountAccountGroupIdPathParam"
@@ -2639,8 +2491,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount account group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount account group binding.
                 404:
                     content:
                         application/json:
@@ -2666,8 +2517,7 @@ paths:
     /discount-accounts/{discountAccountId}:
         delete:
             description:
-                Deletes the discount account link addressed by internal id. Throws NoSuchDiscountException when relation
-                id is unknown.
+                Deletes the discount account link addressed by internal id. Throws NoSuchDiscountException when relation id is unknown.
             operationId: deleteDiscountAccount
             parameters:
                 -   $ref: "#/components/parameters/discountAccountIdPathParam"
@@ -2695,15 +2545,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount account binding.
             summary: Deletes a Discount Account by ID.
             tags: ["DiscountAccount"]
     /discount-accounts/{discountAccountId}/account:
         get:
             description:
-                Returns the Account nested in a DiscountAccount (via discount account link) addressed by internal rel
-                id.
+                Returns the Account nested in a DiscountAccount (via discount account link) addressed by internal rel id.
             operationId: getDiscountAccountAccount
             parameters:
                 -   $ref: "#/components/parameters/discountAccountIdPathParam"
@@ -2740,8 +2588,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount account binding.
                 404:
                     content:
                         application/json:
@@ -2795,8 +2642,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount category
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount category binding.
             summary: Deletes a Discount Category by ID.
             tags: ["DiscountCategory"]
     /discount-categories/{discountCategoryId}/category:
@@ -2839,8 +2685,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount category
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount category binding.
                 404:
                     content:
                         application/json:
@@ -2894,8 +2739,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount channel binding.
             summary: Deletes a Discount Channel by ID.
             tags: ["DiscountChannel"]
     /discount-channels/{discountChannelId}/channel:
@@ -2938,8 +2782,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount channel binding.
                 404:
                     content:
                         application/json:
@@ -2990,8 +2833,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount order type binding.
             summary: Deletes a Discount Order Type by ID.
             tags: ["DiscountOrderType"]
     /discount-order-types/{discountOrderTypeId}/order-type:
@@ -3031,8 +2873,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount order type binding.
                 404:
                     content:
                         application/json:
@@ -3086,15 +2927,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount product group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount product group binding.
             summary: Deletes a Discount Product Group by ID.
             tags: ["DiscountProductGroup"]
     /discount-product-groups/{discountProductGroupId}/product-group:
         get:
             description:
-                Returns the ProductGroup nested in a DiscountProductGroup (via discount link) addressed by internal rel
-                id.
+                Returns the ProductGroup nested in a DiscountProductGroup (via discount link) addressed by internal rel id.
             operationId: getDiscountProductGroupProductGroup
             parameters:
                 -   $ref: "#/components/parameters/discountProductGroupIdPathParam"
@@ -3131,8 +2970,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount product group
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount product group binding.
                 404:
                     content:
                         application/json:
@@ -3186,8 +3024,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount product
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount product binding.
             summary: Deletes a Discount Product by ID.
             tags: ["DiscountProduct"]
     /discount-products/{discountProductId}/product:
@@ -3230,8 +3067,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this discount product
-                        binding.
+                        The authenticated user lacks permission for the requested action on this discount product binding.
                 404:
                     content:
                         application/json:
@@ -3418,9 +3254,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount rule from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the discount rule from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3533,8 +3367,7 @@ paths:
     /discounts:
         get:
             description:
-                Pages discounts with search and OData filter via SearchUtil. Filterable fields are sourced from
-                DiscountEntityModel.
+                Pages discounts with search and OData filter via SearchUtil. Filterable fields are sourced from DiscountEntityModel.
             operationId: getDiscountsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
@@ -3591,8 +3424,7 @@ paths:
             tags: ["Discount"]
         post:
             description:
-                Creates or updates discount; upsert by external reference code semantics. Cascades supplied nested
-                relations (account-group, account, category, channel, order-type, product, product-group, sku, rule).
+                Creates or updates discount; upsert by external reference code semantics. Cascades supplied nested relations (account-group, account, category, channel, order-type, product, product-group, sku, rule).
             operationId: postDiscount
             requestBody:
                 content:
@@ -3652,9 +3484,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3670,8 +3500,7 @@ paths:
     /discounts/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the discount by company-scoped external reference code. Throws NoSuchDiscountException when ERC
-                is unknown.
+                Deletes the discount by company-scoped external reference code. Throws NoSuchDiscountException when ERC is unknown.
             operationId: deleteDiscountByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3704,8 +3533,7 @@ paths:
             tags: ["Discount"]
         get:
             description:
-                Returns the discount by company-scoped external reference code. Throws NoSuchDiscountException when ERC
-                is unknown.
+                Returns the discount by company-scoped external reference code. Throws NoSuchDiscountException when ERC is unknown.
             operationId: getDiscountByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3767,8 +3595,7 @@ paths:
             tags: ["Discount"]
         patch:
             description:
-                Updates discount by ERC using JSON Merge Patch semantics. Throws NoSuchDiscountException when ERC is
-                unknown.
+                Updates discount by ERC using JSON Merge Patch semantics. Throws NoSuchDiscountException when ERC is unknown.
             operationId: patchDiscountByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3834,9 +3661,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3923,9 +3748,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -3996,8 +3819,7 @@ paths:
             tags: ["DiscountAccountGroup"]
         post:
             description:
-                Creates discount account group link for Discount by ERC. Throws NoSuchDiscountException when discount
-                ERC is unknown.
+                Creates discount account group link for Discount by ERC. Throws NoSuchDiscountException when discount ERC is unknown.
             operationId: postDiscountByExternalReferenceCodeDiscountAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4069,9 +3891,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4142,8 +3962,7 @@ paths:
             tags: ["DiscountAccount"]
         post:
             description:
-                Creates discount account link for Discount by ERC. Throws NoSuchDiscountException when discount ERC is
-                unknown.
+                Creates discount account link for Discount by ERC. Throws NoSuchDiscountException when discount ERC is unknown.
             operationId: postDiscountByExternalReferenceCodeDiscountAccount
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4215,9 +4034,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4288,8 +4105,7 @@ paths:
             tags: ["DiscountCategory"]
         post:
             description:
-                Creates discount link (AssetCategory binding) for Discount by ERC. Throws NoSuchDiscountException when
-                discount ERC is unknown.
+                Creates discount link (AssetCategory binding) for Discount by ERC. Throws NoSuchDiscountException when discount ERC is unknown.
             operationId: postDiscountByExternalReferenceCodeDiscountCategory
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4361,9 +4177,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4434,8 +4248,7 @@ paths:
             tags: ["DiscountChannel"]
         post:
             description:
-                Creates channel link (discount channel binding) for Discount by ERC. Throws NoSuchDiscountException when
-                discount ERC is unknown.
+                Creates channel link (discount channel binding) for Discount by ERC. Throws NoSuchDiscountException when discount ERC is unknown.
             operationId: postDiscountByExternalReferenceCodeDiscountChannel
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4507,9 +4320,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4656,9 +4467,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4729,8 +4538,7 @@ paths:
             tags: ["DiscountProductGroup"]
         post:
             description:
-                Creates discount link (pricing class binding) for Discount by ERC. Throws NoSuchDiscountException when
-                discount ERC is unknown.
+                Creates discount link (pricing class binding) for Discount by ERC. Throws NoSuchDiscountException when discount ERC is unknown.
             operationId: postDiscountByExternalReferenceCodeDiscountProductGroup
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4802,9 +4610,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -4875,8 +4681,7 @@ paths:
             tags: ["DiscountProduct"]
         post:
             description:
-                Creates discount link (product binding) for Discount by ERC. Throws NoSuchDiscountException or
-                NoSuchCProductException on lookup failure.
+                Creates discount link (product binding) for Discount by ERC. Throws NoSuchDiscountException or NoSuchCProductException on lookup failure.
             operationId: postDiscountByExternalReferenceCodeDiscountProduct
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4948,9 +4753,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5096,9 +4899,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5169,8 +4970,7 @@ paths:
             tags: ["DiscountSku"]
         post:
             description:
-                Creates discount link (SKU binding) for Discount by ERC. Throws NoSuchDiscountException when discount
-                ERC is unknown.
+                Creates discount link (SKU binding) for Discount by ERC. Throws NoSuchDiscountException when discount ERC is unknown.
             operationId: postDiscountByExternalReferenceCodeDiscountSku
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5242,9 +5042,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5260,9 +5058,7 @@ paths:
     /discounts/{id}:
         delete:
             description:
-                Deletes the discount addressed by internal id. Cascades deletion of all associated discount rels
-                (account-group, account, category, channel, order-type, product, product-group, sku, rule). Throws
-                NoSuchDiscountException on unknown id.
+                Deletes the discount addressed by internal id. Cascades deletion of all associated discount rels (account-group, account, category, channel, order-type, product, product-group, sku, rule). Throws NoSuchDiscountException on unknown id.
             operationId: deleteDiscount
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -5357,8 +5153,7 @@ paths:
             tags: ["Discount"]
         patch:
             description:
-                Updates discount by id using JSON Merge Patch semantics (only supplied fields modified). Also updates
-                nested relations if supplied.
+                Updates discount by id using JSON Merge Patch semantics (only supplied fields modified). Also updates nested relations if supplied.
             operationId: patchDiscount
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -5424,9 +5219,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5572,9 +5365,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5720,9 +5511,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -5868,9 +5657,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6016,9 +5803,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6168,9 +5953,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6316,9 +6099,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6464,9 +6245,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6615,9 +6394,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6763,9 +6540,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the discount from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the discount from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -6781,8 +6556,7 @@ paths:
     /price-entries/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the price entry by company-scoped external reference code. Throws NoSuchPriceEntryException when
-                ERC is unknown.
+                Deletes the price entry by company-scoped external reference code. Throws NoSuchPriceEntryException when ERC is unknown.
             operationId: deletePriceEntryByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6815,8 +6589,7 @@ paths:
             tags: ["PriceEntry"]
         get:
             description:
-                Returns the price entry by company-scoped external reference code. Throws NoSuchPriceEntryException when
-                ERC is unknown.
+                Returns the price entry by company-scoped external reference code. Throws NoSuchPriceEntryException when ERC is unknown.
             operationId: getPriceEntryByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6878,8 +6651,7 @@ paths:
             tags: ["PriceEntry"]
         patch:
             description:
-                Updates price entry by ERC using JSON Merge Patch semantics. Throws NoSuchPriceEntryException when ERC
-                is unknown.
+                Updates price entry by ERC using JSON Merge Patch semantics. Throws NoSuchPriceEntryException when ERC is unknown.
             operationId: patchPriceEntryByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6945,9 +6717,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price entry from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price entry from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7021,8 +6791,7 @@ paths:
             tags: ["TierPrice"]
         post:
             description:
-                Creates tier price for PriceEntry by ERC. Throws NoSuchPriceEntryException when price entry ERC is
-                unknown.
+                Creates tier price for PriceEntry by ERC. Throws NoSuchPriceEntryException when price entry ERC is unknown.
             operationId: postPriceEntryByExternalReferenceCodeTierPrice
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -7094,9 +6863,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price entry from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price entry from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7273,9 +7040,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price entry from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price entry from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7291,8 +7056,7 @@ paths:
     /price-entries/{priceEntryId}/product:
         get:
             description:
-                Returns the Product nested in a PriceEntry (via SKU from price entry) addressed by internal price entry
-                id.
+                Returns the Product nested in a PriceEntry (via SKU from price entry) addressed by internal price entry id.
             operationId: getPriceEntryIdProduct
             parameters:
                 -   $ref: "#/components/parameters/priceEntryIdPathParam"
@@ -7355,8 +7119,7 @@ paths:
     /price-entries/{priceEntryId}/sku:
         get:
             description:
-                Returns the Sku nested in a PriceEntry (via SKU from price entry) addressed by internal price entry id,
-                with optional unitOfMeasureKey attribute.
+                Returns the Sku nested in a PriceEntry (via SKU from price entry) addressed by internal price entry id, with optional unitOfMeasureKey attribute.
             operationId: getPriceEntryIdSku
             parameters:
                 -   $ref: "#/components/parameters/priceEntryIdPathParam"
@@ -7549,9 +7312,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price entry from being created or updated (for example,
-                        a referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price entry from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -7595,15 +7356,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list account
-                        group binding.
+                        The authenticated user lacks permission for the requested action on this price list account group binding.
             summary: Deletes a Price List Account Group by ID.
             tags: ["PriceListAccountGroup"]
     /price-list-account-groups/{priceListAccountGroupId}/account-group:
         get:
             description:
-                Returns the PricingAccountGroup nested in a PriceListAccountGroup (via price list account group link)
-                addressed by internal rel id.
+                Returns the PricingAccountGroup nested in a PriceListAccountGroup (via price list account group link) addressed by internal rel id.
             operationId: getPriceListAccountGroupAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/priceListAccountGroupIdPathParam"
@@ -7640,8 +7399,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list account
-                        group binding.
+                        The authenticated user lacks permission for the requested action on this price list account group binding.
                 404:
                     content:
                         application/json:
@@ -7695,15 +7453,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price list account binding.
             summary: Deletes a Price List Account by ID.
             tags: ["PriceListAccount"]
     /price-list-accounts/{priceListAccountId}/account:
         get:
             description:
-                Returns the Account nested in a PriceListAccount (via price list account link) addressed by internal rel
-                id.
+                Returns the Account nested in a PriceListAccount (via price list account link) addressed by internal rel id.
             operationId: getPriceListAccountAccount
             parameters:
                 -   $ref: "#/components/parameters/priceListAccountIdPathParam"
@@ -7740,8 +7496,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list account
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price list account binding.
                 404:
                     content:
                         application/json:
@@ -7795,15 +7550,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price list channel binding.
             summary: Deletes a Price List Channel by ID.
             tags: ["PriceListChannel"]
     /price-list-channels/{priceListChannelId}/channel:
         get:
             description:
-                Returns the Channel nested in a PriceListChannel (via price list channel link) addressed by internal rel
-                id.
+                Returns the Channel nested in a PriceListChannel (via price list channel link) addressed by internal rel id.
             operationId: getPriceListChannelChannel
             parameters:
                 -   $ref: "#/components/parameters/priceListChannelIdPathParam"
@@ -7840,8 +7593,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list channel
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price list channel binding.
                 404:
                     content:
                         application/json:
@@ -7895,8 +7647,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list discount
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price list discount binding.
             summary: Deletes a Price List Discount by ID.
             tags: ["PriceListDiscount"]
     /price-list-order-types/{priceListOrderTypeId}:
@@ -7930,15 +7681,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price list order type binding.
             summary: Deletes a Price List Order Type by ID.
             tags: ["PriceListOrderType"]
     /price-list-order-types/{priceListOrderTypeId}/order-type:
         get:
             description:
-                Returns the OrderType nested in a PriceListOrderType (via price list order type link) addressed by
-                internal rel id.
+                Returns the OrderType nested in a PriceListOrderType (via price list order type link) addressed by internal rel id.
             operationId: getPriceListOrderTypeOrderType
             parameters:
                 -   $ref: "#/components/parameters/priceListOrderTypeIdPathParam"
@@ -7975,8 +7724,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price list order type
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price list order type binding.
                 404:
                     content:
                         application/json:
@@ -8060,8 +7808,7 @@ paths:
             tags: ["PriceList"]
         post:
             description:
-                Creates or updates price list; upsert by external reference code semantics. Cascades supplied nested
-                relations (account-group, account, channel, discount, order-type, modifier, entry).
+                Creates or updates price list; upsert by external reference code semantics. Cascades supplied nested relations (account-group, account, channel, discount, order-type, modifier, entry).
             operationId: postPriceList
             requestBody:
                 content:
@@ -8121,9 +7868,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8139,8 +7884,7 @@ paths:
     /price-lists/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the price list by company-scoped external reference code. Throws NoSuchPriceListException when
-                ERC is unknown.
+                Deletes the price list by company-scoped external reference code. Throws NoSuchPriceListException when ERC is unknown.
             operationId: deletePriceListByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8173,8 +7917,7 @@ paths:
             tags: ["PriceList"]
         get:
             description:
-                Returns the price list by company-scoped external reference code. Throws NoSuchPriceListException when
-                ERC is unknown.
+                Returns the price list by company-scoped external reference code. Throws NoSuchPriceListException when ERC is unknown.
             operationId: getPriceListByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8236,8 +7979,7 @@ paths:
             tags: ["PriceList"]
         patch:
             description:
-                Updates price list by ERC using JSON Merge Patch semantics. Throws NoSuchPriceListException when ERC is
-                unknown.
+                Updates price list by ERC using JSON Merge Patch semantics. Throws NoSuchPriceListException when ERC is unknown.
             operationId: patchPriceListByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8303,9 +8045,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8392,9 +8132,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8468,8 +8206,7 @@ paths:
             tags: ["PriceEntry"]
         post:
             description:
-                Creates price entry for PriceList by ERC. Throws NoSuchPriceListException when price list ERC is
-                unknown.
+                Creates price entry for PriceList by ERC. Throws NoSuchPriceListException when price list ERC is unknown.
             operationId: postPriceListByExternalReferenceCodePriceEntry
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8541,9 +8278,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8614,8 +8349,7 @@ paths:
             tags: ["PriceListAccountGroup"]
         post:
             description:
-                Creates price list account group link for PriceList by ERC. Throws NoSuchPriceListException when price
-                list ERC is unknown.
+                Creates price list account group link for PriceList by ERC. Throws NoSuchPriceListException when price list ERC is unknown.
             operationId: postPriceListByExternalReferenceCodePriceListAccountGroup
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8687,9 +8421,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8760,8 +8492,7 @@ paths:
             tags: ["PriceListAccount"]
         post:
             description:
-                Creates price list account link for PriceList by ERC. Throws NoSuchPriceListException when price list
-                ERC is unknown.
+                Creates price list account link for PriceList by ERC. Throws NoSuchPriceListException when price list ERC is unknown.
             operationId: postPriceListByExternalReferenceCodePriceListAccount
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8833,9 +8564,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -8906,8 +8635,7 @@ paths:
             tags: ["PriceListChannel"]
         post:
             description:
-                Creates price list channel link for PriceList by ERC. Throws NoSuchPriceListException when price list
-                ERC is unknown.
+                Creates price list channel link for PriceList by ERC. Throws NoSuchPriceListException when price list ERC is unknown.
             operationId: postPriceListByExternalReferenceCodePriceListChannel
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -8979,9 +8707,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9052,8 +8778,7 @@ paths:
             tags: ["PriceListDiscount"]
         post:
             description:
-                Creates price list discount link for PriceList by ERC. Throws NoSuchPriceListException when price list
-                ERC is unknown.
+                Creates price list discount link for PriceList by ERC. Throws NoSuchPriceListException when price list ERC is unknown.
             operationId: postPriceListByExternalReferenceCodePriceListDiscount
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -9125,9 +8850,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9198,8 +8921,7 @@ paths:
             tags: ["PriceListOrderType"]
         post:
             description:
-                Creates price list order type link for PriceList by ERC. Throws NoSuchPriceListException when price list
-                ERC is unknown.
+                Creates price list order type link for PriceList by ERC. Throws NoSuchPriceListException when price list ERC is unknown.
             operationId: postPriceListByExternalReferenceCodePriceListOrderType
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -9271,9 +8993,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9344,8 +9064,7 @@ paths:
             tags: ["PriceModifier"]
         post:
             description:
-                Creates price modifier for PriceList by ERC. Throws NoSuchPriceListException when price list ERC is
-                unknown.
+                Creates price modifier for PriceList by ERC. Throws NoSuchPriceListException when price list ERC is unknown.
             operationId: postPriceListByExternalReferenceCodePriceModifier
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -9417,9 +9136,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9596,9 +9313,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9744,9 +9459,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -9892,9 +9605,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -10039,9 +9750,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -10186,9 +9895,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -10331,9 +10038,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -10477,9 +10182,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -10624,9 +10327,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price list from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the price list from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -10670,15 +10371,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price modifier category
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price modifier category binding.
             summary: Deletes a Price Modifier Category by ID.
             tags: ["PriceModifierCategory"]
     /price-modifier-categories/{priceModifierCategoryId}/category:
         get:
             description:
-                Returns the Category nested in a PriceModifierCategory (via price modifier link) addressed by internal
-                rel id.
+                Returns the Category nested in a PriceModifierCategory (via price modifier link) addressed by internal rel id.
             operationId: getPriceModifierCategoryCategory
             parameters:
                 -   $ref: "#/components/parameters/priceModifierCategoryIdPathParam"
@@ -10715,8 +10414,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price modifier category
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price modifier category binding.
                 404:
                     content:
                         application/json:
@@ -10770,15 +10468,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price modifier product
-                        group binding.
+                        The authenticated user lacks permission for the requested action on this price modifier product group binding.
             summary: Deletes a Price Modifier Product Group by ID.
             tags: ["PriceModifierProductGroup"]
     /price-modifier-product-groups/{priceModifierProductGroupId}/product-group:
         get:
             description:
-                Returns the ProductGroup nested in a PriceModifierProductGroup (via price modifier link) addressed by
-                internal rel id.
+                Returns the ProductGroup nested in a PriceModifierProductGroup (via price modifier link) addressed by internal rel id.
             operationId: getPriceModifierProductGroupProductGroup
             parameters:
                 -   $ref: "#/components/parameters/priceModifierProductGroupIdPathParam"
@@ -10815,8 +10511,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price modifier product
-                        group binding.
+                        The authenticated user lacks permission for the requested action on this price modifier product group binding.
                 404:
                     content:
                         application/json:
@@ -10870,15 +10565,13 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price modifier product
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price modifier product binding.
             summary: Deletes a Price Modifier Product by ID.
             tags: ["PriceModifierProduct"]
     /price-modifier-products/{priceModifierProductId}/product:
         get:
             description:
-                Returns the Product nested in a PriceModifierProduct (via price modifier link) addressed by internal rel
-                id.
+                Returns the Product nested in a PriceModifierProduct (via price modifier link) addressed by internal rel id.
             operationId: getPriceModifierProductProduct
             parameters:
                 -   $ref: "#/components/parameters/priceModifierProductIdPathParam"
@@ -10915,8 +10608,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The authenticated user lacks permission for the requested action on this price modifier product
-                        binding.
+                        The authenticated user lacks permission for the requested action on this price modifier product binding.
                 404:
                     content:
                         application/json:
@@ -10942,8 +10634,7 @@ paths:
     /price-modifiers/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the price modifier by company-scoped external reference code. Throws
-                NoSuchPriceModifierException when ERC is unknown.
+                Deletes the price modifier by company-scoped external reference code. Throws NoSuchPriceModifierException when ERC is unknown.
             operationId: deletePriceModifierByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -10976,8 +10667,7 @@ paths:
             tags: ["PriceModifier"]
         get:
             description:
-                Returns the price modifier by company-scoped external reference code. Throws
-                NoSuchPriceModifierException when ERC is unknown.
+                Returns the price modifier by company-scoped external reference code. Throws NoSuchPriceModifierException when ERC is unknown.
             operationId: getPriceModifierByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -11039,8 +10729,7 @@ paths:
             tags: ["PriceModifier"]
         patch:
             description:
-                Updates price modifier by ERC using JSON Merge Patch semantics. Throws NoSuchPriceModifierException when
-                ERC is unknown.
+                Updates price modifier by ERC using JSON Merge Patch semantics. Throws NoSuchPriceModifierException when ERC is unknown.
             operationId: patchPriceModifierByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -11102,9 +10791,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price modifier from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the price modifier from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -11178,8 +10865,7 @@ paths:
             tags: ["PriceModifierCategory"]
         post:
             description:
-                Creates price modifier link (AssetCategory binding) for PriceModifier by ERC. Throws
-                NoSuchPriceModifierException when modifier ERC is unknown.
+                Creates price modifier link (AssetCategory binding) for PriceModifier by ERC. Throws NoSuchPriceModifierException when modifier ERC is unknown.
             operationId: postPriceModifierByExternalReferenceCodePriceModifierCategory
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -11251,9 +10937,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price modifier from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the price modifier from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -11327,8 +11011,7 @@ paths:
             tags: ["PriceModifierProductGroup"]
         post:
             description:
-                Creates price modifier link (pricing class binding) for PriceModifier by ERC. Throws
-                NoSuchPriceModifierException when modifier ERC is unknown.
+                Creates price modifier link (pricing class binding) for PriceModifier by ERC. Throws NoSuchPriceModifierException when modifier ERC is unknown.
             operationId: postPriceModifierByExternalReferenceCodePriceModifierProductGroup
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -11400,9 +11083,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price modifier from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the price modifier from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -11476,8 +11157,7 @@ paths:
             tags: ["PriceModifierProduct"]
         post:
             description:
-                Creates price modifier link (product binding) for PriceModifier by ERC. Throws
-                NoSuchPriceModifierException when modifier ERC is unknown.
+                Creates price modifier link (product binding) for PriceModifier by ERC. Throws NoSuchPriceModifierException when modifier ERC is unknown.
             operationId: postPriceModifierByExternalReferenceCodePriceModifierProduct
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -11549,9 +11229,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price modifier from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the price modifier from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -11662,8 +11340,7 @@ paths:
             tags: ["PriceModifier"]
         patch:
             description:
-                Updates price modifier by id using JSON Merge Patch semantics. Also updates nested modifier rels if
-                supplied.
+                Updates price modifier by id using JSON Merge Patch semantics. Also updates nested modifier rels if supplied.
             operationId: patchPriceModifier
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -11725,9 +11402,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price modifier from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the price modifier from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -11873,9 +11548,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price modifier from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the price modifier from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -12021,9 +11694,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price modifier from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the price modifier from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -12169,9 +11840,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the price modifier from being created or updated (for
-                        example, a referenced entity is missing, a required cross-reference is unresolved, or a value is
-                        out of range).
+                        A domain validation error prevented the price modifier from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -12187,8 +11856,7 @@ paths:
     /tier-prices/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             description:
-                Deletes the tier price by company-scoped external reference code. Throws NoSuchTierPriceEntryException
-                when ERC is unknown.
+                Deletes the tier price by company-scoped external reference code. Throws NoSuchTierPriceEntryException when ERC is unknown.
             operationId: deleteTierPriceByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -12221,8 +11889,7 @@ paths:
             tags: ["TierPrice"]
         get:
             description:
-                Returns the tier price by company-scoped external reference code. Throws NoSuchTierPriceEntryException
-                when ERC is unknown.
+                Returns the tier price by company-scoped external reference code. Throws NoSuchTierPriceEntryException when ERC is unknown.
             operationId: getTierPriceByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -12284,8 +11951,7 @@ paths:
             tags: ["TierPrice"]
         patch:
             description:
-                Updates tier price by ERC using JSON Merge Patch semantics. Throws NoSuchTierPriceEntryException when
-                ERC is unknown.
+                Updates tier price by ERC using JSON Merge Patch semantics. Throws NoSuchTierPriceEntryException when ERC is unknown.
             operationId: patchTierPriceByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -12347,9 +12013,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the tier price from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the tier price from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -12522,9 +12186,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A domain validation error prevented the tier price from being created or updated (for example, a
-                        referenced entity is missing, a required cross-reference is unresolved, or a value is out of
-                        range).
+                        A domain validation error prevented the tier price from being created or updated (for example, a referenced entity is missing, a required cross-reference is unresolved, or a value is out of range).
                 500:
                     content:
                         application/json:
@@ -12539,8 +12201,7 @@ paths:
             tags: ["TierPrice"]
 tags:
     -   description:
-            Read-only lookups of Account records referenced by other pricing resources -- exposed so a client that holds
-            a discount or price-list account binding can resolve the linked account without leaving the pricing module.
+            Read-only lookups of Account records referenced by other pricing resources -- exposed so a client that holds a discount or price-list account binding can resolve the linked account without leaving the pricing module.
         name: Account
     -   description:
             Read-only lookups of AssetCategory records referenced by discount and price-modifier category bindings.
@@ -12549,42 +12210,31 @@ tags:
             Read-only lookups of channel records referenced by discount and price-list channel bindings.
         name: Channel
     -   description:
-            Promotional discount programs scoped to a company. Each discount carries a target (subtotal, total,
-            products, categories, skus, product-groups, or shipping), a limitation policy (unlimited, limited,
-            limited-for-accounts, limited-for-accounts-and-total), a percentage or fixed-amount payout, and may be gated
-            by an optional couponCode. Backed by discount.
+            Promotional discount programs scoped to a company. Each discount carries a target (subtotal, total, products, categories, skus, product-groups, or shipping), a limitation policy (unlimited, limited, limited-for-accounts, limited-for-accounts-and-total), a percentage or fixed-amount payout, and may be gated by an optional couponCode. Backed by discount.
         name: Discount
     -   description:
-            Account bindings that restrict a discount's eligibility to a specific set of Accounts. Backed by discount
-            account link.
+            Account bindings that restrict a discount's eligibility to a specific set of Accounts. Backed by discount account link.
         name: DiscountAccount
     -   description:
-            Account-group bindings that restrict a discount's eligibility to a specific set of AccountGroups. Backed by
-            discount account group link.
+            Account-group bindings that restrict a discount's eligibility to a specific set of AccountGroups. Backed by discount account group link.
         name: DiscountAccountGroup
     -   description:
-            Category bindings that restrict a discount to products tagged with specific asset categories. Backed by
-            discount link with the AssetCategory class name.
+            Category bindings that restrict a discount to products tagged with specific asset categories. Backed by discount link with the AssetCategory class name.
         name: DiscountCategory
     -   description:
-            Channel bindings that restrict a discount's eligibility to a specific set of channels. Backed by discount
-            channel link.
+            Channel bindings that restrict a discount's eligibility to a specific set of channels. Backed by discount channel link.
         name: DiscountChannel
     -   description:
-            order type bindings that restrict a discount's eligibility to specific order types. Backed by discount order
-            type link.
+            order type bindings that restrict a discount's eligibility to specific order types. Backed by discount order type link.
         name: DiscountOrderType
     -   description:
-            Product bindings that restrict a discount to specific products. Backed by discount link with the product
-            class name.
+            Product bindings that restrict a discount to specific products. Backed by discount link with the product class name.
         name: DiscountProduct
     -   description:
-            product group bindings that restrict a discount to products inside a product group. Backed by discount
-            product group link.
+            product group bindings that restrict a discount to products inside a product group. Backed by discount product group link.
         name: DiscountProductGroup
     -   description:
-            Pre-qualification, post-qualification, or target validators attached to a discount. Each rule carries a type
-            string and a JSON typeSettings payload interpreted by the matching discount rule type.
+            Pre-qualification, post-qualification, or target validators attached to a discount. Each rule carries a type string and a JSON typeSettings payload interpreted by the matching discount rule type.
         name: DiscountRule
     -   description:
             SKU bindings that restrict a discount to specific SKUs. Backed by discount link with the SKU class name.
@@ -12593,50 +12243,37 @@ tags:
             Read-only lookups of order type records referenced by discount and price-list order-type bindings.
         name: OrderType
     -   description:
-            Per-SKU price entries inside a price list. Each entry binds a SKU to a regular price and an optional promo
-            price; entries with quantity-break overrides expose `hasTierPrice`.
+            Per-SKU price entries inside a price list. Each entry binds a SKU to a regular price and an optional promo price; entries with quantity-break overrides expose `hasTierPrice`.
         name: PriceEntry
     -   description:
-            Versioned price catalogs that price SKUs in a specific currency for a catalog. Each price list has a
-            priority, a display/expiration window, and may be scoped to specific accounts, account-groups, channels, or
-            order types.
+            Versioned price catalogs that price SKUs in a specific currency for a catalog. Each price list has a priority, a display/expiration window, and may be scoped to specific accounts, account-groups, channels, or order types.
         name: PriceList
     -   description:
-            Account bindings that restrict a price list's eligibility to a specific set of Accounts. Backed by price
-            list account link.
+            Account bindings that restrict a price list's eligibility to a specific set of Accounts. Backed by price list account link.
         name: PriceListAccount
     -   description:
-            Account-group bindings that restrict a price list's eligibility to a specific set of AccountGroups, with an
-            `order` integer that controls the resolution priority.
+            Account-group bindings that restrict a price list's eligibility to a specific set of AccountGroups, with an `order` integer that controls the resolution priority.
         name: PriceListAccountGroup
     -   description:
-            Channel bindings that restrict a price list's eligibility to a specific set of channels. Backed by price
-            list channel link.
+            Channel bindings that restrict a price list's eligibility to a specific set of channels. Backed by price list channel link.
         name: PriceListChannel
     -   description:
-            Discount linkages attached to a price list. Each binding ties one discount to the price list so its rules
-            participate in price resolution against that list. Backed by price list discount link.
+            Discount linkages attached to a price list. Each binding ties one discount to the price list so its rules participate in price resolution against that list. Backed by price list discount link.
         name: PriceListDiscount
     -   description:
-            order type bindings that restrict a price list's eligibility to specific order types. Backed by price list
-            order type link.
+            order type bindings that restrict a price list's eligibility to specific order types. Backed by price list order type link.
         name: PriceListOrderType
     -   description:
-            Add-on price calculations layered on a price list. Each modifier carries a target (categories, products, or
-            product-groups), a modifierAmount or modifierPercentage, a modifierType (absolute or percentage), a
-            limitationType, and a priority. Backed by price modifier.
+            Add-on price calculations layered on a price list. Each modifier carries a target (categories, products, or product-groups), a modifierAmount or modifierPercentage, a modifierType (absolute or percentage), a limitationType, and a priority. Backed by price modifier.
         name: PriceModifier
     -   description:
-            AssetCategory bindings that restrict a price modifier to products tagged with specific asset categories.
-            Backed by price modifier link with the AssetCategory class name.
+            AssetCategory bindings that restrict a price modifier to products tagged with specific asset categories. Backed by price modifier link with the AssetCategory class name.
         name: PriceModifierCategory
     -   description:
-            product bindings that restrict a price modifier to specific products. Backed by price modifier link with the
-            product class name.
+            product bindings that restrict a price modifier to specific products. Backed by price modifier link with the product class name.
         name: PriceModifierProduct
     -   description:
-            product group bindings that restrict a price modifier to products inside a product group. Backed by price
-            modifier link with the product group class name.
+            product group bindings that restrict a price modifier to products inside a product group. Backed by price modifier link with the product group class name.
         name: PriceModifierProductGroup
     -   description:
             Read-only lookups of account group records referenced by discount and price-list account-group bindings.
@@ -12651,7 +12288,5 @@ tags:
             Read-only lookups of SKU (SKU) records referenced by discount sku bindings and by price entries.
         name: Sku
     -   description:
-            Quantity-break overrides on a price entry. Each tier price binds a minimumQuantity threshold to an override
-            price; the runtime resolves the highest-quantity tier whose minimumQuantity is at most the cart line
-            quantity.
+            Quantity-break overrides on a price entry. Each tier price binds a minimumQuantity threshold to an override price; the runtime resolves the highest-quantity tier whose minimumQuantity is at most the cart line quantity.
         name: TierPrice

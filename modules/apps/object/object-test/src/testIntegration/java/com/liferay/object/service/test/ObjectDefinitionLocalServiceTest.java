@@ -2866,7 +2866,7 @@ public class ObjectDefinitionLocalServiceTest {
 								StringUtil.randomId()
 							).objectDefinitionId(
 								_addCustomObjectDefinition(
-									"Test" + RandomTestUtil.randomString()
+									ObjectDefinitionTestUtil.getRandomName()
 								).getObjectDefinitionId()
 							).required(
 								true
@@ -2887,7 +2887,7 @@ public class ObjectDefinitionLocalServiceTest {
 								StringUtil.randomId()
 							).objectDefinitionId(
 								_addCustomObjectDefinition(
-									"Test" + RandomTestUtil.randomString()
+									ObjectDefinitionTestUtil.getRandomName()
 								).getObjectDefinitionId()
 							).required(
 								true
@@ -3010,10 +3010,10 @@ public class ObjectDefinitionLocalServiceTest {
 				_objectRelationshipLocalService.addObjectRelationship(
 					null, TestPropsValues.getUserId(),
 					_addCustomObjectDefinition(
-						"Test" + RandomTestUtil.randomString()
+						ObjectDefinitionTestUtil.getRandomName()
 					).getObjectDefinitionId(),
 					_addCustomObjectDefinition(
-						"Test" + RandomTestUtil.randomString()
+						ObjectDefinitionTestUtil.getRandomName()
 					).getObjectDefinitionId(),
 					0, ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 					LocalizedMapUtil.getLocalizedMap(
@@ -3326,9 +3326,25 @@ public class ObjectDefinitionLocalServiceTest {
 			FriendlyURLResolverConstants.URL_SEPARATOR_Y_OBJECT_ENTRY,
 			objectDefinition2.getFriendlyURLSeparator());
 
+		String name = ObjectDefinitionTestUtil.getRandomName();
+
 		ObjectDefinition objectDefinition3 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				"Test",
+				name + RandomTestUtil.randomString(),
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						StringUtil.randomId()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				TestPropsValues.getUserId());
+
+		ObjectDefinition objectDefinition4 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				name,
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -3341,9 +3357,10 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId());
 
 		Assert.assertEquals(
-			"c_test", objectDefinition3.getFriendlyURLSeparator());
+			StringUtil.toLowerCase("c_" + name),
+			objectDefinition4.getFriendlyURLSeparator());
 
-		ObjectDefinition objectDefinition4 =
+		ObjectDefinition objectDefinition5 =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), 0, null, true, false, true,
 				true, true, false, false, false, false, "api",
@@ -3365,12 +3382,13 @@ public class ObjectDefinitionLocalServiceTest {
 			"Other asset types may use this prefix.",
 			() -> _objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				objectDefinition4.getObjectDefinitionId()));
+				objectDefinition5.getObjectDefinitionId()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition4);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition5);
 	}
 
 	@FeatureFlag("LPD-17564")

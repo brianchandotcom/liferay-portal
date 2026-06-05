@@ -54,6 +54,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Integration Test Compile](validations/integration-test-compile.md)
 
+1. [API Consumer Compile](validations/api-consumer-compile.md)
+
 1. [Workspace Build](validations/workspace-build.md)
 
 1. [Poshi Syntax](validations/poshi-syntax.md)

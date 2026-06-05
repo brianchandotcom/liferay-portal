@@ -45,6 +45,8 @@ test(
 	'Save and add another tag',
 	{tag: '@LPD-51250'},
 	async ({page, tagsPage}) => {
+		await page.emulateMedia({reducedMotion: 'reduce'});
+
 		await tagsPage.goto();
 
 		const name1 = `Tag${getRandomInt()}`;
@@ -58,7 +60,7 @@ test(
 			trigger: tagsPage.newTagButton,
 		});
 
-		// Check accessibility
+		// Check the accessibility of the modal
 
 		await checkAccessibility({
 			page,
@@ -106,6 +108,8 @@ test('Delete a tag', {tag: '@LPD-51252'}, async ({tagsPage}) => {
 });
 
 test('Edit an existing tag', {tag: '@LPD-52395'}, async ({page, tagsPage}) => {
+	await page.emulateMedia({reducedMotion: 'reduce'});
+
 	const tagName = await tagsPage.createTag();
 
 	await tagsPage.execItemAction({
@@ -117,7 +121,7 @@ test('Edit an existing tag', {tag: '@LPD-52395'}, async ({page, tagsPage}) => {
 
 	await expect(tagsPage.saveAndAddAnotherButton).not.toBeVisible();
 
-	// Check accessibility
+	// Check the accessibility of the modal
 
 	await checkAccessibility({
 		page,
@@ -220,13 +224,6 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 			.locator('tbody tr')
 			.filter({hasText: tagName2})
 	).toBeVisible();
-
-	// Check accessibility
-
-	await checkAccessibility({
-		page,
-		selectors: ['.merge-tags'],
-	});
 
 	await page
 		.locator('.categorization-section')

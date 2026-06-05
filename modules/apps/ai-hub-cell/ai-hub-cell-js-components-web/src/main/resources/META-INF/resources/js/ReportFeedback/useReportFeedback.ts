@@ -35,6 +35,7 @@ export default function useReportFeedback({
 
 		const payload: ReportFeedbackPayload = {
 			agentDefinitionExternalReferenceCodes,
+			feedback: 'negative',
 			reason,
 			surface,
 			...(userMessage.trim() ? {userMessage: userMessage.trim()} : {}),

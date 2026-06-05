@@ -6,7 +6,7 @@ html#{$cadmin-selector} #{$selector} {
 	position: relative;
 
 	&:not(.page-editor__layout-viewport--size-desktop) {
-		background-color: $cadmin-gray-400;
+		background-color: $gray-400;
 	}
 
 	#{$selector}__resizer {
@@ -82,9 +82,9 @@ html#{$cadmin-selector} #{$selector} {
 		z-index: 1;
 
 		span {
-			background-color: $cadmin-gray-800;
+			background-color: $gray-800;
 			border-radius: 4px;
-			color: $cadmin-light-l2;
+			color: $light-l2;
 			font-size: 14px;
 			font-weight: 600;
 			margin-right: 16px;
@@ -93,19 +93,19 @@ html#{$cadmin-selector} #{$selector} {
 	}
 
 	#{$selector}__handle {
-		background-color: $cadmin-gray-400;
+		background-color: $gray-400;
 		cursor: col-resize;
 		position: relative;
 		width: 16px;
 
 		&:active,
 		&:hover {
-			background-color: $cadmin-gray-500;
+			background-color: $gray-500;
 		}
 
 		&:before,
 		&:after {
-			border: 1px solid $cadmin-secondary;
+			border: 1px solid $secondary;
 			border-radius: 2px;
 			content: '';
 			height: 20px;

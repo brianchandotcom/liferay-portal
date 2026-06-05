@@ -14,7 +14,7 @@ html#{$cadmin-selector} {
 
 			&:hover .label-item-after,
 			&:focus-within .label-item-after {
-				background: $white;
+				background: $cadmin-white;
 				opacity: 1;
 				right: 4px;
 				top: calc(100% - 16px);

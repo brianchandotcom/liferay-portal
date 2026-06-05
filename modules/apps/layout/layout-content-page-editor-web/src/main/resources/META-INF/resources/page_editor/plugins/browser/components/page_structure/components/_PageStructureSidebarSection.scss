@@ -1,5 +1,3 @@
-@import 'cadmin-variables';
-
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__page-structure__section {
@@ -17,7 +15,7 @@ html#{$cadmin-selector} {
 
 			&__custom-styles {
 				border-bottom: 1px solid $cadmin-secondary-l3;
-				padding-bottom: $pageEditorSpacing * 2.5;
+				padding-bottom: calc(#{$pageEditorSpacing} * 2.5);
 			}
 
 			&__resize-handler {

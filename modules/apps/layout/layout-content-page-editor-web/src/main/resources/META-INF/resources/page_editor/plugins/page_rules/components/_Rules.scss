@@ -1,5 +1,3 @@
-@import 'cadmin-variables';
-
 html#{$cadmin-selector} .cadmin {
 	.page-editor__rule {
 		&:focus-visible,
@@ -26,7 +24,7 @@ html#{$cadmin-selector} .cadmin {
 	}
 
 	.layout__row-builder-item.page-editor__rule-builder-item--action {
-		border-left: 4px solid $purple;
+		border-left: 4px solid $cadmin-purple;
 	}
 
 	.page-editor__rule-builder-date-picker,

@@ -127,7 +127,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
 				layout.getRobotsMap(), type, hidden, friendlyURLMap,
 				layout.isIconImage(), null, layout.getStyleBookEntryERC(),
-				layout.getStyleBookEntryScopeERC(),
 				layout.getFaviconFileEntryERC(),
 				layout.getFaviconFileEntryScopeERC(),
 				layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
@@ -153,7 +152,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					type, draftLayout.isHidden(),
 					draftLayout.getFriendlyURLMap(), draftLayout.isIconImage(),
 					null, draftLayout.getStyleBookEntryERC(),
-					draftLayout.getStyleBookEntryScopeERC(),
 					draftLayout.getFaviconFileEntryERC(),
 					draftLayout.getFaviconFileEntryScopeERC(),
 					draftLayout.getMasterLayoutPageTemplateEntryERC(),

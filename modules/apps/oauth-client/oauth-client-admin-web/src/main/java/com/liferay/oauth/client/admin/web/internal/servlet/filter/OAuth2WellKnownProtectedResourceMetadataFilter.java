@@ -29,26 +29,19 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Serves OAuth 2.0 Protected Resource Metadata (RFC 9728) at the spec-mandated
- * host-root location. The path suffix after
- * <code>/.well-known/oauth-protected-resource</code> is appended to the request
- * authority to reconstruct the protected resource URL, which is then looked up
- * in the persisted metadata. With no suffix, the first enabled record for the
- * company is returned.
- *
  * @author Jorge García Jiménez
  */
 @Component(
 	property = {
 		"before-filter=Virtual Host Filter", "dispatcher=REQUEST",
 		"servlet-context-name=",
-		"servlet-filter-name=OAuth Protected Resource Metadata Well-Known Filter",
+		"servlet-filter-name=OAuth 2 Well-Known Protected Resource Metadata Filter",
 		"url-pattern=/.well-known/oauth-protected-resource",
 		"url-pattern=/.well-known/oauth-protected-resource/*"
 	},
 	service = Filter.class
 )
-public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
+public class OAuth2WellKnownProtectedResourceMetadataFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled(
@@ -70,7 +63,12 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		_setCORSHeaders(httpServletResponse);
+		httpServletResponse.setHeader(
+			"Access-Control-Allow-Headers", "Authorization, Content-Type");
+		httpServletResponse.setHeader(
+			"Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+		httpServletResponse.setHeader("Access-Control-Max-Age", "300");
 
 		String method = httpServletRequest.getMethod();
 
@@ -88,8 +86,9 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 			return;
 		}
 
-		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata = _resolve(
-			CompanyThreadLocal.getCompanyId(), httpServletRequest);
+		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
+			_resolveOAuthClientPRLocalMetadata(
+				CompanyThreadLocal.getCompanyId(), httpServletRequest);
 
 		if ((oAuthClientPRLocalMetadata == null) ||
 			!oAuthClientPRLocalMetadata.isLocalWellKnownEnabled()) {
@@ -114,7 +113,7 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 		httpServletResponse.flushBuffer();
 	}
 
-	private OAuthClientPRLocalMetadata _resolve(
+	private OAuthClientPRLocalMetadata _resolveOAuthClientPRLocalMetadata(
 		long companyId, HttpServletRequest httpServletRequest) {
 
 		String requestURI = httpServletRequest.getRequestURI();
@@ -159,9 +158,7 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 			return oAuthClientPRLocalMetadata;
 		}
 
-		if (resourcePath.isEmpty() ||
-			Objects.equals(resourcePath, StringPool.SLASH)) {
-
+		if (resourcePath.isEmpty() || resourcePath.equals(StringPool.SLASH)) {
 			return _oAuthClientPRLocalMetadataLocalService.
 				fetchOAuthClientPRLocalMetadata(companyId, true, null);
 		}
@@ -169,20 +166,11 @@ public class OAuthProtectedResourceMetadataWellKnownFilter extends BaseFilter {
 		return null;
 	}
 
-	private void _setCORSHeaders(HttpServletResponse httpServletResponse) {
-		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-		httpServletResponse.setHeader(
-			"Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
-		httpServletResponse.setHeader(
-			"Access-Control-Allow-Headers", "Authorization, Content-Type");
-		httpServletResponse.setHeader("Access-Control-Max-Age", "300");
-	}
-
 	private static final String _WELL_KNOWN_PATH =
 		"/.well-known/oauth-protected-resource";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OAuthProtectedResourceMetadataWellKnownFilter.class);
+		OAuth2WellKnownProtectedResourceMetadataFilter.class);
 
 	@Reference
 	private OAuthClientPRLocalMetadataLocalService

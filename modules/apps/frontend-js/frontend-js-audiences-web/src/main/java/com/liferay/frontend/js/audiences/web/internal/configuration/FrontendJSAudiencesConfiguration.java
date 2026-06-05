@@ -13,7 +13,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Iván Zaera Avellón
  */
 @ExtendedObjectClassDefinition(
-	category = "instance-configuration", featureFlagKey = "LPD-83647",
+	category = "infrastructure", featureFlagKey = "LPD-83647",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY, strictScope = true
 )
 @Meta.OCD(
@@ -28,8 +28,5 @@ public interface FrontendJSAudiencesConfiguration {
 		required = false
 	)
 	public boolean enableLog();
-
-	@Meta.AD(description = "handlers-url-help", name = "handlers-url")
-	public String handlersURL();
 
 }

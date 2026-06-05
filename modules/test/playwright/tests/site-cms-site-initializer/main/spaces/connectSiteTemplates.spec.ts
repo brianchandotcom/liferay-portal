@@ -14,7 +14,6 @@ import {
 	performLogout,
 	userData,
 } from '../../../../utils/performLogin';
-import {waitForAlert} from '../../../../utils/waitForAlert';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -76,12 +75,6 @@ test(
 
 		await spaceSummaryPage.connectSiteTemplate(siteTemplateName);
 
-		await waitForAlert(
-			page,
-			`Success:Site template ${siteTemplateName} was successfully connected to the space.`,
-			{autoClose: false}
-		);
-
 		await expect(
 			page.getByRole('heading', {name: 'Sites (2)'})
 		).toBeVisible();
@@ -89,15 +82,10 @@ test(
 		await expect(templateRowLocator).toBeVisible();
 
 		await spaceSummaryPage.openConnectedSitesModal();
-		await spaceSummaryPage.disconnectSiteFromModal(
-			templateLabel(siteTemplateName)
-		);
-
-		await waitForAlert(
-			page,
-			`Success:Site template ${siteTemplateName} was successfully disconnected from the space.`,
-			{autoClose: false}
-		);
+		await spaceSummaryPage.disconnectSiteFromModal({
+			isSiteTemplate: true,
+			siteName: siteTemplateName,
+		});
 
 		await spaceSummaryPage.closeButton.click();
 

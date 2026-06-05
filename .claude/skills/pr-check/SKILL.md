@@ -48,15 +48,15 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Per-Module Compile](validations/per-module-compile.md)
 
+1. [Integration Test Compile](validations/integration-test-compile.md)
+
+1. [Cross-Module Compile](validations/cross-module-compile.md)
+
 1. [Baseline](validations/baseline.md)
 
 1. [Theme Build](validations/theme-build.md)
 
 1. [JSP Compile](validations/jsp-compile.md)
-
-1. [Integration Test Compile](validations/integration-test-compile.md)
-
-1. [Cross-Module Compile](validations/cross-module-compile.md)
 
 1. [Workspace Build](validations/workspace-build.md)
 

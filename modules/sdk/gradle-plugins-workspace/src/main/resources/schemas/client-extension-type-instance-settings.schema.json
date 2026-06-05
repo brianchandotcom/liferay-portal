@@ -1994,25 +1994,19 @@
 			"properties": {
 				"enableLog": {
 					"default": false,
-					"description": "If this is checked, the Audiences framework will print diagnostic messages to the browser console.",
+					"description": "If this is checked the Frontend Audiences Infrastructure will print informational messages to the browser console.",
 					"title": "Enable Log",
 					"type": "boolean"
 				},
-				"handlersURL": {
-					"description": "Provide the URL of the JavaScript personalization handlers file.",
-					"title": "Handlers URL",
-					"type": "string"
-				},
 				"pid": {
 					"const": "com.liferay.frontend.js.audiences.web.internal.configuration.FrontendJSAudiencesConfiguration",
-					"title": "Audiences"
+					"title": "Frontend Audiences Infrastructure"
 				}
 			},
 			"required": [
-				"pid",
-				"handlersURL"
+				"pid"
 			],
-			"title": "Audiences"
+			"title": "Frontend Audiences Infrastructure"
 		},
 		{
 			"description": "For changes made here to take effect, you must reload the browser page after saving.",

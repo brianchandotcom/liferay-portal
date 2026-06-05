@@ -7,7 +7,7 @@ create table OA2Auths_OA2ScopeGrants (
 
 create table OAuth2Application (
 	uuid_ VARCHAR(75) null,
-	externalReferenceCode VARCHAR(1000) null,
+	externalReferenceCode VARCHAR(500) null,
 	oAuth2ApplicationId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

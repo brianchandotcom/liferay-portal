@@ -5,7 +5,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:client-extension:client-extension-type-api")
-	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:frontend-token:frontend-token-definition-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":core:petra:petra-function")

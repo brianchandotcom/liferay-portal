@@ -1,0 +1,70 @@
+import FieldValueFilter from '../FieldValueFilter';
+import React from 'react';
+import {cleanup, render} from '@testing-library/react';
+import {LifecycleContextProvider} from '../../context/LifecycleContext';
+
+jest.unmock('react-dom');
+
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({channelId: '456', groupId: '2000'})
+}));
+
+const renderFilter = (props = {}) =>
+	render(
+		<LifecycleContextProvider lifecycleId='1'>
+			<FieldValueFilter
+				entityLabel='Industries'
+				fieldMappingFieldName='industry'
+				filterKey='industryFilter'
+				{...props}
+			/>
+		</LifecycleContextProvider>
+	);
+
+describe('FieldValueFilter', () => {
+	afterEach(cleanup);
+
+	it('should render the loading state while the request is pending', () => {
+		const useRequest = require('shared/hooks/useRequest');
+		useRequest.useRequest = jest.fn(() => ({loading: true}));
+
+		const {container} = renderFilter();
+
+		expect(container.querySelector('.loading-root')).toBeInTheDocument();
+	});
+
+	it('should render the "all-x" label when the filter is empty', () => {
+		const useRequest = require('shared/hooks/useRequest');
+		useRequest.useRequest = jest.fn(() => ({
+			data: {items: ['Tech', 'Finance']},
+			loading: false
+		}));
+
+		const {getByText} = renderFilter();
+
+		expect(getByText('All Industries')).toBeInTheDocument();
+	});
+
+	it('should pass the fieldMappingFieldName through to the request', () => {
+		const useRequest = require('shared/hooks/useRequest');
+		const spy = jest.fn(() => ({data: {items: []}, loading: false}));
+		useRequest.useRequest = spy;
+
+		renderFilter({
+			entityLabel: 'Countries',
+			fieldMappingFieldName: 'country',
+			filterKey: 'countryFilter'
+		});
+
+		expect(spy).toHaveBeenCalledWith(
+			expect.objectContaining({
+				variables: expect.objectContaining({
+					channelId: '456',
+					fieldMappingFieldName: 'country',
+					groupId: '2000'
+				})
+			})
+		);
+	});
+});

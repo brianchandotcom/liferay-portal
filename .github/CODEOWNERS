@@ -7,6 +7,7 @@ modules/apps/analytics/    @liferay-ac
 modules/apps/announcements/    @liferay-content-management
 modules/apps/application-list/    @liferay-platform-experience
 modules/apps/archived/
+modules/apps/archived/portal-search-solr8/    @liferay-search
 modules/apps/archived/youtube-web    @liferay-page-management
 modules/apps/asset/
 modules/apps/asset/asset-auto-tagger-google-cloud-natural-language-test    @liferay-content-management
@@ -297,7 +298,6 @@ modules/apps/portal-scripting/
 modules/apps/portal-search/    @liferay-search
 modules/apps/portal-search-elasticsearch8/    @liferay-search
 modules/apps/portal-search-opensearch2/    @liferay-search
-modules/apps/portal-search-solr8/    @liferay-search
 modules/apps/portal-security/    @liferay-appsec
 modules/apps/portal-security/portal-security-content-security-policy    @liferay-frontend
 modules/apps/portal-security/portal-security-content-security-policy-test    @liferay-frontend

@@ -668,6 +668,9 @@ public class EditInfoItemStrutsActionTest {
 		mockMultipartHttpServletRequest.setContentType(
 			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
+		ListTypeEntry listTypeEntry1 = _listTypeEntries.get(0);
+		ListTypeEntry listTypeEntry2 = _listTypeEntries.get(1);
+
 		Map<String, List<String>> regularParameters =
 			HashMapBuilder.<String, List<String>>put(
 				"classNameId", Collections.singletonList(_classNameId)
@@ -677,7 +680,14 @@ public class EditInfoItemStrutsActionTest {
 				"groupId",
 				Collections.singletonList(String.valueOf(_group.getGroupId()))
 			).put(
-				"myBoolean", Collections.singletonList(Boolean.TRUE.toString())
+				"ObjectField_myBoolean",
+				Collections.singletonList(Boolean.TRUE.toString())
+			).put(
+				"ObjectField_myLocalizedMultiselectPicklist_en_US",
+				Arrays.asList(listTypeEntry1.getKey(), listTypeEntry2.getKey())
+			).put(
+				"ObjectField_myMultiselectPicklist",
+				Arrays.asList(listTypeEntry1.getKey(), listTypeEntry2.getKey())
 			).put(
 				"p_l_id",
 				Collections.singletonList(String.valueOf(_layout.getPlid()))
@@ -717,14 +727,22 @@ public class EditInfoItemStrutsActionTest {
 
 		regularParameters.put(
 			"checkboxNames",
-			Collections.singletonList("ObjectField_myBoolean"));
+			Arrays.asList(
+				"ObjectField_myBoolean",
+				"ObjectField_myLocalizedMultiselectPicklist",
+				"ObjectField_myMultiselectPicklist"));
 		regularParameters.put(
 			"classNameId", Collections.singletonList(_classNameId));
 		regularParameters.put(
 			"classPK",
 			Collections.singletonList(
 				String.valueOf(objectEntry.getObjectEntryId())));
-		regularParameters.remove("myBoolean");
+		regularParameters.put(
+			"ObjectField_myLocalizedMultiselectPicklist_en_US",
+			Collections.emptyList());
+
+		regularParameters.remove("ObjectField_myBoolean");
+		regularParameters.remove("ObjectField_myMultiselectPicklist");
 
 		mockHttpServletResponse = new MockHttpServletResponse();
 
@@ -747,6 +765,12 @@ public class EditInfoItemStrutsActionTest {
 
 		Assert.assertEquals(
 			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
+		Assert.assertTrue(
+			Validator.isNull(
+				String.valueOf(values.get("myLocalizedMultiselectPicklist"))));
+		Assert.assertTrue(
+			Validator.isNull(
+				String.valueOf(values.get("myMultiselectPicklist"))));
 	}
 
 	@Test
@@ -990,6 +1014,16 @@ public class EditInfoItemStrutsActionTest {
 				_listTypeDefinition.getListTypeDefinitionId()
 			).name(
 				"myMultiselectPicklist"
+			).build(),
+			new MultiselectPicklistObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).listTypeDefinitionId(
+				_listTypeDefinition.getListTypeDefinitionId()
+			).localized(
+				true
+			).name(
+				"myLocalizedMultiselectPicklist"
 			).build(),
 			ObjectFieldUtil.createObjectField(
 				ObjectFieldConstants.BUSINESS_TYPE_DATE,

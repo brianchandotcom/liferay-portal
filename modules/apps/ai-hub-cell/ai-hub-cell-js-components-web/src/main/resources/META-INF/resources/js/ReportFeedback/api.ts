@@ -24,7 +24,7 @@ export type ReportFeedbackType = 'negative' | 'positive';
 export interface ReportFeedbackPayload {
 	agentDefinitionExternalReferenceCodes: string[];
 	feedback: ReportFeedbackType;
-	reason: ReportFeedbackReason;
+	reason?: ReportFeedbackReason;
 	surface: ReportFeedbackSurface;
 	userMessage?: string;
 }

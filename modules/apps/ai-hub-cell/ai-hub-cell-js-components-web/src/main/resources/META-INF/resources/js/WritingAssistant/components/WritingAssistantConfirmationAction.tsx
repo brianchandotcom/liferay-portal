@@ -6,7 +6,6 @@
 import React, {useEffect, useState} from 'react';
 
 import FeedbackActionsRow from '../../ReportFeedback/FeedbackActionsRow';
-import showThanksForFeedbackToast from '../../ReportFeedback/showThanksForFeedbackToast';
 import ConfirmationBalloon from './ConfirmationBalloon';
 
 export default function WritingAssistantConfirmationAction({
@@ -15,14 +14,17 @@ export default function WritingAssistantConfirmationAction({
 	handleDiscard,
 	hideBalloon,
 	onReport,
+	onThumbsUp,
 }: {
 	containerRef: HTMLElement;
 	handleAccept: () => void;
 	handleDiscard: () => void;
 	hideBalloon: () => void;
 	onReport?: () => void;
+	onThumbsUp?: () => void;
 }) {
 	const [active, setActive] = useState(true);
+	const [feedbackGiven, setFeedbackGiven] = useState(false);
 
 	const actions = [
 		{
@@ -74,7 +76,7 @@ export default function WritingAssistantConfirmationAction({
 			actions={actions}
 			actionsRow={
 				<FeedbackActionsRow
-					onRegenerate={() => {}}
+					feedbackGiven={feedbackGiven}
 					onReport={() => {
 						if (onReport) {
 							setActive(false);
@@ -82,9 +84,15 @@ export default function WritingAssistantConfirmationAction({
 							onReport();
 						}
 					}}
-					onThumbsUp={showThanksForFeedbackToast}
-					regenerateDisabled
-					showRegenerate
+					onThumbsUp={
+						onThumbsUp
+							? () => {
+									setFeedbackGiven(true);
+
+									onThumbsUp();
+								}
+							: undefined
+					}
 				/>
 			}
 		/>

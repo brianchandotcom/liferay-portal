@@ -611,8 +611,8 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 					bucket.getChildAggregationResult("instanceCount");
 
 			processMetric.setInstanceCount(
-				() -> GetterUtil.getLong(
-					scriptedMetricAggregationResult.getValue()));
+				() -> _resourceHelper.getScriptedMetricAggregationResultValue(
+					scriptedMetricAggregationResult));
 		}
 	}
 

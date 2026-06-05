@@ -22,8 +22,6 @@ export default function ({
 	namespace,
 	propertiesURL,
 }) {
-	State.write(propertiesAtom, initialProperties || []);
-
 	const mapDDMStructures = {};
 
 	const assetMultipleSelector = document.getElementById(
@@ -72,18 +70,10 @@ export default function ({
 	const eventDelegates = [];
 
 	/**
-	 * Refetches the filterable properties using `propertiesURL` upon
-	 * changes to the asset source (type / subtype selectors) and writes
-	 * the result to `propertiesAtom`.
-	 *
-	 * CollectionFilterBuilder and CollectionOrdering React components
-	 * subscribe to that atom via `useTypeProperties`.
+	 * Reads the currently selected asset type(s) and subtype(s) from the
+	 * source panel selectors.
 	 */
-	const refreshProperties = () => {
-		if (!propertiesURL) {
-			return;
-		}
-
+	const getSelectedIds = () => {
 		const assetTypeValue = assetSelector?.value || '';
 
 		let classNameIds = [];
@@ -136,6 +126,39 @@ export default function ({
 			}
 		}
 
+		return {classNameIds, classTypeIds};
+	};
+
+	/**
+	 * When more than one asset type or subtype is selected, the per-type field
+	 * groups can collide, so expose only the first "Common Fields" group
+	 * shared across every type.
+	 */
+	const collapseToCommonFields = (groups, {classNameIds, classTypeIds}) =>
+		classNameIds.length > 1 || classTypeIds.length > 1
+			? groups.slice(0, 1)
+			: groups;
+
+	State.write(
+		propertiesAtom,
+		collapseToCommonFields(initialProperties || [], getSelectedIds())
+	);
+
+	/**
+	 * Refetches the filterable properties using `propertiesURL` upon
+	 * changes to the asset source (type / subtype selectors) and writes
+	 * the result to `propertiesAtom`.
+	 *
+	 * CollectionFilterBuilder and CollectionOrdering React components
+	 * subscribe to that atom via `useTypeProperties`.
+	 */
+	const refreshProperties = () => {
+		if (!propertiesURL) {
+			return;
+		}
+
+		const {classNameIds, classTypeIds} = getSelectedIds();
+
 		fetch(
 			addParams(
 				{
@@ -146,7 +169,15 @@ export default function ({
 			)
 		)
 			.then((response) => response.json())
-			.then((data) => State.write(propertiesAtom, data || []))
+			.then((data) =>
+				State.write(
+					propertiesAtom,
+					collapseToCommonFields(data || [], {
+						classNameIds,
+						classTypeIds,
+					})
+				)
+			)
 			.catch((error) => {
 				if (process.env.NODE_ENV === 'development') {
 					console.error('Failed to fetch type properties: ', error);

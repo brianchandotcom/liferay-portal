@@ -24,15 +24,6 @@ export enum DateRangePreset {
 	LAST_YEAR = 'last-year',
 }
 
-export type TTrendOptions = {
-	color?: string;
-	icon: string;
-	label: string;
-	percentage: number;
-	status: number;
-	useSpritemap?: boolean;
-};
-
 export interface ILogEntry extends IActivityLogEntry {
 	category: string;
 	icon: string;

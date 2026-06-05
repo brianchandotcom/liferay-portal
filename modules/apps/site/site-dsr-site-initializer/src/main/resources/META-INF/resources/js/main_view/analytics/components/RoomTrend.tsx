@@ -12,12 +12,17 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import '../../../../css/components/RoomTrend.scss';
 import RoomService from '../../../common/services/RoomService';
+import {
+	ROOM_TREND_OPTIONS,
+	TTrendOptions,
+	getImage,
+	getRoomTrendOption,
+} from '../../../common/utils/roomTrend';
 import {IRoomObjectEntry} from '../../../common/utils/types';
 import {
 	AnalyticsFilters,
 	TAnalyticsFilter,
 	TRoomAnalyticsFilterValue,
-	TTrendOptions,
 } from '../types';
 import AnalyticsFrame from './AnalyticsFrame';
 
@@ -27,83 +32,11 @@ function getDegrees(percentage: number) {
 	return Math.round(-90 + (clampedPercentage / 100) * 180);
 }
 
-function getImage(filename: string) {
-	return `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/site-dsr-site-initializer/images/${filename}`;
-}
-
-const OPTIONS: TTrendOptions[] = [
-	{
-		color: '#4B9FFF',
-		icon: 'snow',
-		label: Liferay.Language.get('cold'),
-		percentage: 12.5,
-		status: 0,
-		useSpritemap: true,
-	},
-	{
-		color: '#FFBB00',
-		icon: 'sun',
-		label: Liferay.Language.get('warming-up'),
-		percentage: 37.5,
-		status: 1,
-	},
-	{
-		color: '#FF8133',
-		icon: 'heating',
-		label: Liferay.Language.get('heating-up'),
-		percentage: 50,
-		status: 2,
-		useSpritemap: true,
-	},
-	{
-		color: '#6CE0CC',
-		icon: 'comments',
-		label: Liferay.Language.get('engaged'),
-		percentage: 62.5,
-		status: 3,
-	},
-	{
-		color: '#FF4F45',
-		icon: 'hot',
-		label: Liferay.Language.get('hot'),
-		percentage: 75,
-		status: 4,
-		useSpritemap: true,
-	},
-	{
-		color: '#5ACA75',
-		icon: 'shield-check',
-		label: Liferay.Language.get('ready-to-close'),
-		percentage: 87.5,
-		status: 5,
-	},
-	{
-		color: '#AA33FF',
-		icon: 'champion-cup',
-		label: Liferay.Language.get('closed-won'),
-		percentage: 100,
-		status: 6,
-		useSpritemap: true,
-	},
-	{
-		color: '#DA1414',
-		icon: 'times-circle-full',
-		label: Liferay.Language.get('closed-lost'),
-		percentage: 0,
-		status: 7,
-	},
-	{
-		icon: 'reload',
-		label: Liferay.Language.get('reignited'),
-		percentage: 25,
-		status: 8,
-		useSpritemap: true,
-	},
-];
-
 const RoomTrend = () => {
 	const [room, setRoom] = useState<IRoomObjectEntry | null>(null);
-	const [trendStatus, setTrendStatus] = useState<TTrendOptions>(OPTIONS[0]);
+	const [trendStatus, setTrendStatus] = useState<TTrendOptions>(
+		ROOM_TREND_OPTIONS[0]
+	);
 
 	const {color, icon, label, percentage, useSpritemap} = trendStatus;
 
@@ -117,7 +50,7 @@ const RoomTrend = () => {
 				trend,
 			})
 				.then((roomObjectEntry: IRoomObjectEntry) => {
-					setTrendStatus(OPTIONS[trend]);
+					setTrendStatus(getRoomTrendOption(trend));
 
 					Liferay.fire('dsr-room-updated', {room: roomObjectEntry});
 				})
@@ -135,7 +68,7 @@ const RoomTrend = () => {
 
 	useEffect(() => {
 		if (room) {
-			setTrendStatus(OPTIONS[room.trend]);
+			setTrendStatus(getRoomTrendOption(room.trend));
 		}
 
 		return () => {};
@@ -212,7 +145,7 @@ const RoomTrend = () => {
 								}
 							>
 								<DropDown.ItemList>
-									{OPTIONS.map((option, index) => (
+									{ROOM_TREND_OPTIONS.map((option, index) => (
 										<DropDown.Item
 											active={
 												room.trend === option.status

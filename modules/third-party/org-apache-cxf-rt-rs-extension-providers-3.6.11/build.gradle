@@ -1,0 +1,24 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-extension-providers", transitive: false, version: "3.6.11"
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	originalLibModuleName = "cxf-rt-rs-extension-providers"
+}

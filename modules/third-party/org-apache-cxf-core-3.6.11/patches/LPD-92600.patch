@@ -1,0 +1,52 @@
+diff --git a/org/apache/cxf/attachment/AttachmentSerializer.java b/org/apache/cxf/attachment/AttachmentSerializer.java
+--- a/org/apache/cxf/attachment/AttachmentSerializer.java
++++ b/org/apache/cxf/attachment/AttachmentSerializer.java
+@@ -382,7 +382,11 @@
+     // URL decoder would also decode '+' but according to  RFC-2392 we need to convert
+     // only the % encoded character to their equivalent US-ASCII characters. 
+     private static String decode(String s, Charset charset) {
+-        return URLDecoder.decode(s.replaceAll("([^%])[+]", "$1%2B"), charset);
++        try {
++            return URLDecoder.decode(s.replaceAll("([^%])[+]", "$1%2B"), charset.name());
++        } catch (java.io.UnsupportedEncodingException e) {
++            throw new IllegalStateException(e);
++        }
+     }
+ 
+     // Try to decode the string assuming the decoding may fail, the original string is going to
+diff --git a/org/apache/cxf/bus/spring/SpringBus.java b/org/apache/cxf/bus/spring/SpringBus.java
+--- a/org/apache/cxf/bus/spring/SpringBus.java
++++ b/org/apache/cxf/bus/spring/SpringBus.java
+@@ -159,7 +159,7 @@
+ 
+         @Override
+         public void onApplicationEvent(ApplicationEvent event) {
+-            var springBus = springBusReference.get();
++            SpringBus springBus = springBusReference.get();
+             if (springBus != null) {
+                 springBus.onApplicationEvent(event);
+             }
+diff --git a/org/apache/cxf/configuration/jsse/TLSClientParameters.java b/org/apache/cxf/configuration/jsse/TLSClientParameters.java
+--- a/org/apache/cxf/configuration/jsse/TLSClientParameters.java
++++ b/org/apache/cxf/configuration/jsse/TLSClientParameters.java
+@@ -320,7 +320,7 @@
+         return Arrays
+             .stream(protocols.split(","))
+             .map(String::trim)
+-            .filter(Predicate.not(String::isEmpty))
++            .filter(s -> !s.isEmpty())
+             .collect(Collectors.toCollection(LinkedHashSet::new));
+     }
+     
+diff --git a/org/apache/cxf/interceptor/ClientFaultConverter.java b/org/apache/cxf/interceptor/ClientFaultConverter.java
+--- a/org/apache/cxf/interceptor/ClientFaultConverter.java
++++ b/org/apache/cxf/interceptor/ClientFaultConverter.java
+@@ -200,7 +200,7 @@
+                     ReflectionUtil.setAccessible(f);
+                     f.set(ex, fault.getMessage());
+                 } catch (Exception e1) {
+-                    if (isJdkException(ex.getClass().getPackageName())) {
++                    if (isJdkException(ex.getClass().getPackage().getName())) {
+                         ex = cloneJdkException(ex, message);
+                     }
+                 }

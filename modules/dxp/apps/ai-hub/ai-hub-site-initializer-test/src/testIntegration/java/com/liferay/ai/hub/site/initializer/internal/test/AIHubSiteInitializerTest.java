@@ -179,7 +179,7 @@ public class AIHubSiteInitializerTest {
 			"introMessage", "notificationMessage", "placeholderMessage",
 			"r_accountToAIHubChatbots_accountEntryId", "title");
 		_assertObjectFieldsExist(
-			"L_AI_HUB_CONFIGURATION", "environmentUrls",
+			"L_AI_HUB_CONFIGURATION", "environmentURLs",
 			"r_accountToAIHubConfigurations_accountEntryId");
 		_assertObjectFieldsExist(
 			"L_AI_HUB_CONTENT_RETRIEVER", "crawlDate", "description",

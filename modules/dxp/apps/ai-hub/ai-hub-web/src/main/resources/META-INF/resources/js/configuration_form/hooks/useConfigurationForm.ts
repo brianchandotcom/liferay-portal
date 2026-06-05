@@ -27,7 +27,7 @@ export function useConfigurationForm({
 	const {handleSubmit, isSubmitting, setFieldValue, setValues, values} =
 		useFormik<Configuration>({
 			initialValues: {
-				environmentUrls: '',
+				environmentURLs: '',
 				externalReferenceCode,
 				recipientEmailAddress: '',
 			},
@@ -80,7 +80,7 @@ export function useConfigurationForm({
 		getConfiguration(externalReferenceCode)
 			.then((configuration) => {
 				setValues({
-					environmentUrls: configuration.environmentUrls || '',
+					environmentURLs: configuration.environmentURLs || '',
 					externalReferenceCode,
 					recipientEmailAddress:
 						configuration.recipientEmailAddress || '',

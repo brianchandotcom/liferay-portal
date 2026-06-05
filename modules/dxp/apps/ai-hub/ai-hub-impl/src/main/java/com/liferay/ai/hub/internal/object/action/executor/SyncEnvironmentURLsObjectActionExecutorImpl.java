@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pedro Leite
  */
 @Component(service = ObjectActionExecutor.class)
-public class SyncEnvironmentUrlsObjectActionExecutorImpl
+public class SyncEnvironmentURLsObjectActionExecutorImpl
 	extends BaseObjectActionExecutor implements ObjectDefinitionScoped {
 
 	@Override
@@ -62,22 +62,22 @@ public class SyncEnvironmentUrlsObjectActionExecutorImpl
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			payloadJSONObject.getLong("classPK"));
 
-		String environmentUrls = MapUtil.getString(values, "environmentUrls");
+		String environmentURLs = MapUtil.getString(values, "environmentURLs");
 
-		if (Validator.isNull(environmentUrls)) {
+		if (Validator.isNull(environmentURLs)) {
 			return;
 		}
 
 		_updateOAuth2Application(
 			MapUtil.getLong(
 				values, "r_accountToAIHubConfigurations_accountEntryId"),
-			companyId, environmentUrls);
+			companyId, environmentURLs);
 		_updatePortalCORSConfiguration(
 			companyId, payloadJSONObject.getLong("objectDefinitionId"));
 	}
 
 	private void _updateOAuth2Application(
-		long accountEntryId, long companyId, String environmentUrls) {
+		long accountEntryId, long companyId, String environmentURLs) {
 
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.
@@ -88,10 +88,10 @@ public class SyncEnvironmentUrlsObjectActionExecutorImpl
 			return;
 		}
 
-		String[] environmentUrlsArray = StringUtil.split(
-			environmentUrls, CharPool.SPACE);
+		String[] environmentURLsArray = StringUtil.split(
+			environmentURLs, CharPool.SPACE);
 
-		oAuth2Application.setHomePageURL(environmentUrlsArray[0]);
+		oAuth2Application.setHomePageURL(environmentURLsArray[0]);
 
 		_oAuth2ApplicationLocalService.updateOAuth2Application(
 			oAuth2Application);
@@ -115,18 +115,18 @@ public class SyncEnvironmentUrlsObjectActionExecutorImpl
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
-		List<String> environmentUrls = TransformUtil.transform(
+		List<String> environmentURLs = TransformUtil.transform(
 			_objectEntryLocalService.getObjectEntries(
 				0, objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 			objectEntry -> {
-				String environmentUrlsString = MapUtil.getString(
-					objectEntry.getValues(), "environmentUrls");
+				String environmentURLsString = MapUtil.getString(
+					objectEntry.getValues(), "environmentURLs");
 
-				if (Validator.isNull(environmentUrlsString)) {
+				if (Validator.isNull(environmentURLsString)) {
 					return null;
 				}
 
-				return environmentUrlsString;
+				return environmentURLsString;
 			});
 
 		properties.put(
@@ -141,7 +141,7 @@ public class SyncEnvironmentUrlsObjectActionExecutorImpl
 					}
 
 					return "Access-Control-Allow-Origin: " +
-						StringUtil.merge(environmentUrls, StringPool.SPACE);
+						StringUtil.merge(environmentURLs, StringPool.SPACE);
 				},
 				String.class));
 

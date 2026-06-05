@@ -6,7 +6,7 @@
 			"label": {
 				"en_US": "Sync Environment URLs"
 			},
-			"name": "syncEnvironmentUrls",
+			"name": "syncEnvironmentURLs",
 			"objectActionExecutorKey": "sync-environment-urls",
 			"objectActionTriggerKey": "onAfterUpdate",
 			"parameters": {

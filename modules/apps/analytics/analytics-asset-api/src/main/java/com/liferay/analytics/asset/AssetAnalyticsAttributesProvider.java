@@ -66,16 +66,6 @@ public class AssetAnalyticsAttributesProvider {
 		return HtmlUtil.buildData(_getAttributes(action, field));
 	}
 
-	private String _getAnalyticsCMSVersion() {
-		ObjectDefinition objectDefinition = _getObjectDefinition();
-
-		if ((objectDefinition != null) && objectDefinition.isCMS()) {
-			return "2.0";
-		}
-
-		return "1.0";
-	}
-
 	private String _getAnalyticsExternalReferenceCode() {
 		if (_assetRenderer == null) {
 			return null;
@@ -139,8 +129,6 @@ public class AssetAnalyticsAttributesProvider {
 	private Map<String, Object> _getAttributes(String action, String field) {
 		return TreeMapBuilder.<String, Object>put(
 			"analytics-asset-action", () -> action
-		).put(
-			"analytics-asset-cmsversion", () -> _getAnalyticsCMSVersion()
 		).put(
 			"analytics-asset-field", () -> field
 		).put(

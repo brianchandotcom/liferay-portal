@@ -23,21 +23,7 @@ jobs:
                 run: terraform validate
                 working-directory: ./cloud/terraform/${{matrix.stack}}
             -   name: Run TFLint
-                run: |
-                    function main {
-                        local cloud="${{matrix.stack}}"
-
-                        cloud="${cloud%%/*}"
-
-                        local config="${GITHUB_WORKSPACE}/cloud/terraform/${cloud}/.tflint.hcl"
-
-                        tflint --config="${config}" --init
-
-                        tflint --config="${config}"
-                    }
-
-                    main
-                working-directory: ./cloud/terraform/${{matrix.stack}}
+                run: cloud/scripts/tests/run_tflint.sh "${{matrix.stack}}"
             -   name: Run Checkov
                 uses: bridgecrewio/checkov-action@v12
                 with:

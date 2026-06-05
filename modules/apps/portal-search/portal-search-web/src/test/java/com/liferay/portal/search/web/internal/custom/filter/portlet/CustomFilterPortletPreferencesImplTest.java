@@ -34,12 +34,12 @@ public class CustomFilterPortletPreferencesImplTest {
 
 		_mockValue(
 			portletPreferences,
-			CustomFilterPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
-			StringPool.BLANK);
-		_mockValue(
-			portletPreferences,
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_FIELD,
 			"modified");
+		_mockValue(
+			portletPreferences,
+			CustomFilterPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			"modified",
@@ -55,12 +55,12 @@ public class CustomFilterPortletPreferencesImplTest {
 
 		_mockValue(
 			portletPreferences,
-			CustomFilterPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
-			"customParameter");
-		_mockValue(
-			portletPreferences,
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_FIELD,
 			"modified");
+		_mockValue(
+			portletPreferences,
+			CustomFilterPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
+			"customParameter");
 
 		Assert.assertEquals(
 			"customParameter",

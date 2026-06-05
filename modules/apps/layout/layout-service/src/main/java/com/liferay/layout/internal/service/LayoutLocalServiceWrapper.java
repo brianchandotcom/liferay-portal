@@ -1422,9 +1422,8 @@ public class LayoutLocalServiceWrapper
 				_targetLayout.getLayoutId(),
 				_getTypeSettings(_sourceLayout, _targetLayout), imageBytes,
 				_sourceLayout.getThemeId(), _sourceLayout.getColorSchemeId(),
-				_sourceLayout.getStyleBookEntryERC(),
-				_sourceLayout.getStyleBookEntryScopeERC(),
-				_sourceLayout.getCss(), _sourceLayout.getFaviconFileEntryERC(),
+				_sourceLayout.getStyleBookEntryERC(), _sourceLayout.getCss(),
+				_sourceLayout.getFaviconFileEntryERC(),
 				_sourceLayout.getFaviconFileEntryScopeERC(),
 				_sourceLayout.getMasterLayoutPageTemplateEntryERC());
 		}

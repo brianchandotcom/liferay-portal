@@ -183,7 +183,7 @@ public class SitesImpl implements Sites {
 				targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
 				targetLayout.isHidden(), targetLayout.getFriendlyURLMap(),
 				layoutPrototypeLayout.isIconImage(), iconBytes, null, null,
-				null, null,
+				null,
 				layoutPrototypeLayout.getMasterLayoutPageTemplateEntryERC(),
 				serviceContext);
 		}

@@ -1456,7 +1456,7 @@ test.describe('Page Contents Panel', () => {
 				'Animal'
 			);
 
-			const articleTitle = 'Animal 03 - Elephant';
+			const articleTitle = `Animal 03 - Elephant ${getRandomString()}`;
 
 			await journalEditArticlePage.fillTitle(articleTitle);
 			await journalEditArticlePage.publishArticle();

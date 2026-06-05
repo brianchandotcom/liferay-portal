@@ -171,15 +171,15 @@ public class YMLStylingCheck extends BaseFileCheck {
 
 			String shortFileName = fileName.substring(index + 1);
 
-			if (!shortFileName.matches("rest-openapi(-v\\d+\\.\\d+)?\\.yaml")) {
-				newDescription = _splitDescription(
-					matcher.group(2) + StringPool.FOUR_SPACES,
-					trimmedDescription, maxLineLength);
-			}
-			else {
+			if (shortFileName.matches("rest-openapi(-v\\d+\\.\\d+)?\\.yaml")) {
 				newDescription =
 					matcher.group(2) + StringPool.FOUR_SPACES +
 						trimmedDescription;
+			}
+			else {
+				newDescription = _splitDescription(
+					matcher.group(2) + StringPool.FOUR_SPACES,
+					trimmedDescription, maxLineLength);
 			}
 
 			newDescription = StringPool.NEW_LINE + newDescription;

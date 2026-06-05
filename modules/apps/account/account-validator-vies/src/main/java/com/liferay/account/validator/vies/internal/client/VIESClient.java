@@ -5,7 +5,7 @@
 
 package com.liferay.account.validator.vies.internal.client;
 
-import com.liferay.account.validator.vies.internal.configuration.VIESClientConfiguration;
+import com.liferay.account.validator.vies.configuration.VIESAccountEntryValidatorConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,6 +22,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
@@ -30,14 +31,10 @@ import org.apache.http.util.EntityUtils;
  */
 public class VIESClient {
 
-	public JSONObject checkVatNumber(JSONObject jsonObject) {
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build();
-
-			CloseableHttpResponse closeableHttpResponse =
-				closeableHttpClient.execute(_getHttpPost(jsonObject))) {
+	public JSONObject checkVatNumber(long companyId, JSONObject jsonObject) {
+		try (CloseableHttpResponse closeableHttpResponse =
+				_closeableHttpClient.execute(
+					_getHttpPost(companyId, jsonObject))) {
 
 			if (_log.isTraceEnabled()) {
 				StatusLine statusLine = closeableHttpResponse.getStatusLine();
@@ -54,25 +51,29 @@ public class VIESClient {
 			_log.error("Unable to check VAT number", exception);
 
 			return JSONUtil.put(
+				"actionSucceed", false
+			).put(
 				"errorWrappers",
 				JSONUtil.putAll(
 					JSONUtil.put(
 						"error", "IO_ERROR"
 					).put(
 						"message", exception.getMessage()
-					)));
+					))
+			);
 		}
 	}
 
-	private HttpPost _getHttpPost(JSONObject jsonObject)
+	private HttpPost _getHttpPost(long companyId, JSONObject jsonObject)
 		throws ConfigurationException {
 
-		VIESClientConfiguration viesClientConfiguration =
-			ConfigurationProviderUtil.getSystemConfiguration(
-				VIESClientConfiguration.class);
+		VIESAccountEntryValidatorConfiguration
+			viesAccountEntryValidatorConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					VIESAccountEntryValidatorConfiguration.class, companyId);
 
 		HttpPost httpPost = new HttpPost(
-			viesClientConfiguration.viesEndpointURL());
+			viesAccountEntryValidatorConfiguration.viesEndpointURL());
 
 		httpPost.addHeader("Accept", "application/json");
 		httpPost.setEntity(
@@ -88,5 +89,11 @@ public class VIESClient {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(VIESClient.class);
+
+	private static final CloseableHttpClient _closeableHttpClient =
+		HttpClientBuilder.create(
+		).setRetryHandler(
+			new DefaultHttpRequestRetryHandler(1, true)
+		).build();
 
 }

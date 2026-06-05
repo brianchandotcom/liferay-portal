@@ -19,9 +19,9 @@ function renderModal(
 ) {
 	const props = {
 		agentDefinitionExternalReferenceCodes: ['agent-1'],
+		chatbotExternalReferenceCode: 'chatbot-1',
 		onClose: vi.fn(),
 		onSubmitted: vi.fn(),
-		chatbotExternalReferenceCode: 'chatbot-1',
 		...overrides,
 	};
 
@@ -43,11 +43,34 @@ describe('SendFeedbackModal', () => {
 			screen.getByText('Incorrect or Inaccurate Response')
 		).toBeInTheDocument();
 		expect(
-			screen.getByText('Exposure of personal / Sensitive Data (PII)')
+			screen.getByText('Exposure of Personal or Sensitive Data (PII)')
 		).toBeInTheDocument();
 		expect(
-			screen.getByText('Agent Error / Malfunction')
+			screen.getByText('Agent Error or Malfunction')
 		).toBeInTheDocument();
+	});
+
+	it('labels the dialog with its title for assistive technology', () => {
+		renderModal();
+
+		const dialog = screen.getByRole('dialog');
+
+		expect(dialog).toHaveAttribute(
+			'aria-labelledby',
+			'aihub-feedback-modal-title'
+		);
+		expect(screen.getByText('Send Feedback')).toHaveAttribute(
+			'id',
+			'aihub-feedback-modal-title'
+		);
+	});
+
+	it('closes the modal when Escape is pressed', () => {
+		const {onClose} = renderModal();
+
+		fireEvent.keyDown(window, {key: 'Escape'});
+
+		expect(onClose).toHaveBeenCalledTimes(1);
 	});
 
 	it('keeps Send disabled until a reason is chosen', () => {

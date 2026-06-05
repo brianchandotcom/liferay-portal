@@ -1338,9 +1338,14 @@ public class LayoutStructureRenderer {
 
 		boolean readOnly = false;
 
-		if ((layoutDisplayPageObjectProvider != null) &&
-			!_hasPermission(
-				ActionKeys.UPDATE, layoutDisplayPageObjectProvider)) {
+		String layoutMode = ParamUtil.getString(
+			PortalUtil.getOriginalServletRequest(_httpServletRequest),
+			"p_l_mode", Constants.VIEW);
+
+		if (Objects.equals(layoutMode, Constants.READ) ||
+			((layoutDisplayPageObjectProvider != null) &&
+			 !_hasPermission(
+				 ActionKeys.UPDATE, layoutDisplayPageObjectProvider))) {
 
 			readOnly = true;
 		}

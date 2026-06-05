@@ -1,11 +1,3 @@
-{{- $templates := list -}}
-{{- range $path, $_ := .Files.Glob "liferayoverlay-composition/**" -}}
-    {{- $content := $.Files.Get $path | trim -}}
-    {{- if $content -}}
-        {{- $templates = append $templates $content -}}
-    {{- end -}}
-{{- end -}}
-{{- $templateHash := join "\n" (sortAlpha $templates) | sha256sum -}}
 apiVersion: apiextensions.crossplane.io/v2
 kind: CompositeResourceDefinition
 metadata:
@@ -64,9 +56,6 @@ kind: Composition
 metadata:
     annotations:
         argocd.argoproj.io/sync-wave: "-50"
-        liferay.com/template-hash: {{ $templateHash | quote }}
-    labels:
-        liferay.com/template-hash: {{ printf "h-%s" $templateHash | trunc 63 | quote }}
     name: liferay-gcp-overlay.gcp.liferay.com
 spec:
     compositeTypeRef:

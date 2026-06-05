@@ -29,6 +29,7 @@ import {
 	navigateToACSettingsViaURL,
 } from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
+import {selectPaginationItemsPerPage} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -1388,5 +1389,149 @@ test(
 		await expect(
 			page.getByText('There are no results found.')
 		).toBeVisible();
+	}
+);
+
+test(
+	'A custom event stays listed when searching and changing pagination',
+	{
+		tag: '@LRAC-10262',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const customEventName = 'paginate' + getRandomString();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: customEventName,
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: customEventName,
+				eventAttributeDefinitions: [],
+				name: customEventName,
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsEventsCustomPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		const customEventLink = page.getByRole('link', {name: customEventName});
+
+		await expect(customEventLink).toBeVisible();
+
+		// The event is found when searching for it
+
+		await page.getByPlaceholder('Search').first().fill(customEventName);
+
+		await page.keyboard.press('Enter');
+
+		await expect(customEventLink).toBeVisible();
+
+		// The event stays listed across pagination sizes
+
+		await selectPaginationItemsPerPage({itemsPerPage: '40', page});
+
+		await expect(customEventLink).toBeVisible();
+
+		await selectPaginationItemsPerPage({itemsPerPage: '20', page});
+
+		await expect(customEventLink).toBeVisible();
+	}
+);
+
+test(
+	'Event Analysis can filter a number attribute by greater than and less than',
+	{
+		tag: '@LRAC-10277',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: 'customEvent',
+				properties: [{name: 'price', value: '259.95'}],
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: [
+					{
+						dataType: 'NUMBER',
+						displayName: 'price',
+						name: 'price',
+						type: 'LOCAL',
+					},
+				],
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		// The event matches when the price is greater than 250
+
+		await addFilter({
+			filterName: 'price',
+			input: '250',
+			operator: 'is greater than',
+			page,
+		});
+
+		await expect(
+			page.getByRole('row', {name: 'customEvent'})
+		).toBeVisible();
+
+		// The event does not match when the price is less than 250
+
+		await removeAttribute({page, section: 'Filter'});
+
+		await addFilter({
+			filterName: 'price',
+			input: '250',
+			operator: 'is less than',
+			page,
+		});
+
+		await expect(page.getByRole('row', {name: 'customEvent'})).toHaveCount(
+			0
+		);
 	}
 );

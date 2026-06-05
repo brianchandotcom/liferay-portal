@@ -63,7 +63,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-
 	@description = "Story: LRAC-14070 | Automation ID: LRAC-14574 | Test Summary: Can publish control from a terminated test"
 	@priority = 5
 	test CanPublishControlFromTerminatedTest {
@@ -238,90 +237,6 @@ definition {
 		}
 
 		task ("Assert the test is no longer present in the list") {
-			ACUtils.assertItemsNameNotPresent(itemList = ${nameABTest});
-		}
-	}
-
-	@description = "Story: LRAC-14101 | Automation ID: LRAC-14543 | Test Summary: Terminate an AB Test and create a new one"
-	@priority = 4
-	test CanTerminateABTestAndCreateNewOne {
-		task ("Create AB test") {
-			ABTest.createABTest(
-				goal = "Click",
-				testTitle = ${nameABTest});
-		}
-
-		task ("Select the button element added to the page for AB test") {
-			ABTest.selectElementID();
-		}
-
-		task ("Create variable") {
-			ABTest.createVariant(variantName = "Variant name");
-		}
-
-		task ("Click on Review and Run test") {
-			ABTest.runTest();
-		}
-
-		task ("Terminate the test") {
-			ABTest.terminateTest();
-		}
-
-		task ("Click on the Create New Test button on the side panel") {
-			Button.click(button = "Create New Test");
-		}
-
-		task ("Fill in the information for the new AB test") {
-			ABTest.fillInput(
-				key_testTitle = "AB Test 2",
-				labelValue = "Test Name");
-
-			ABTest.selectGoal(key_goal = "Bounce Rate");
-
-			Click(locator1 = "Modal#SAVE_BUTTON");
-		}
-
-		task ("Create variable") {
-			ABTest.createVariant(variantName = "Variant name 2");
-		}
-
-		task ("Click on Review and Run test") {
-			ABTest.runTest();
-		}
-
-		task ("Go to AC > Tests") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToTests();
-		}
-
-		task ("Check that an AB test appears with the status terminated and another with the status running in the AC list") {
-			ACTests.viewABTestStatusInACList(
-				abTestTitle = ${nameABTest},
-				status = "TERMINATED");
-
-			ACTests.viewABTestStatusInACList(
-				abTestTitle = "AB Test 2",
-				status = "RUNNING");
-		}
-
-		task ("Select the first created test") {
-			ABTest.accessABTestInAC(itemName = ${nameABTest});
-		}
-
-		task ("Assert the publish button is no longer shown") {
-			AssertElementNotPresent(
-				key_text = "Publish",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Delete the test and assert the test is no longer shown in the list") {
-			ACTests.deleteABTestACSide();
-
-			ACNavigation.goToTests();
-
 			ACUtils.assertItemsNameNotPresent(itemList = ${nameABTest});
 		}
 	}

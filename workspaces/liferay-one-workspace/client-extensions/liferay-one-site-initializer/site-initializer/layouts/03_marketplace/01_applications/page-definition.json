@@ -6,11 +6,6 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {
-						"backgroundColor": "whiteColor",
-						"paddingBottom": "5",
-						"paddingTop": "5"
-					},
 					"indexed": true,
 					"layout": {
 						"widthType": "Fluid"
@@ -33,41 +28,39 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "BASIC_COMPONENT-heading"
+												"key": "marketplace-catalog-hero-banner",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"headingLevel": "h1"
+												"backgroundImage": "applications"
 											},
 											"fragmentFields": [
 												{
-													"id": "element-text",
+													"id": "breadcrumb",
 													"value": {
 														"text": {
 															"value_i18n": {
-																"en_US": "Applications Marketplace"
+																"en_US": "Applications Catalog"
 															}
 														}
 													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-paragraph"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
+												},
 												{
-													"id": "element-text",
+													"id": "subtitle",
 													"value": {
 														"text": {
 															"value_i18n": {
-																"en_US": "Expand Liferay's portfolio through apps from our partner and developer ecosystems to enhance your digital transformation"
+																"en_US": "Expand Liferay's portfolio through apps from our partner and developer ecosystems to enhance your digital transformation."
+															}
+														}
+													}
+												},
+												{
+													"id": "title",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Applications Catalog"
 															}
 														}
 													}

@@ -34,6 +34,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -60,6 +61,30 @@ public class DDMFormFieldOptionsFactoryImplTest {
 
 	@Test
 	public void testCreate() {
+		Mockito.when(
+			_portal.getLocale(_httpServletRequest)
+		).thenReturn(
+			LocaleUtil.BRAZIL
+		);
+
+		_ddmFormFieldOptionsFactoryImpl.create(
+			_ddmFormField, _ddmFormFieldRenderingContext);
+
+		ArgumentCaptor<DDMDataProviderRequest> argumentCaptor =
+			ArgumentCaptor.forClass(DDMDataProviderRequest.class);
+
+		Mockito.verify(
+			_ddmDataProviderInvoker
+		).invoke(
+			argumentCaptor.capture()
+		);
+
+		DDMDataProviderRequest ddmDataProviderRequest =
+			argumentCaptor.getValue();
+
+		Assert.assertEquals(
+			LocaleUtil.BRAZIL, ddmDataProviderRequest.getLocale());
+
 		_mockDDMDataProviderResponse(
 			ListUtil.fromArray(
 				new KeyValuePair("key1", "value1"),

@@ -6,18 +6,14 @@
 package com.liferay.style.book.util;
 
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.util.ScopeUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryServiceUtil;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
 import java.util.List;
@@ -44,46 +40,6 @@ public class StyleBookEntryProviderUtil {
 			_resolveGroupIds(companyId, groupId), themeId);
 	}
 
-	public static StyleBookEntry getStyleBookEntry(Layout layout) {
-		if (Validator.isNull(layout.getStyleBookEntryERC())) {
-			return null;
-		}
-
-		Long itemGroupId = ScopeUtil.getItemGroupId(
-			layout.getCompanyId(), layout.getStyleBookEntryScopeERC(),
-			layout.getGroupId());
-
-		if (itemGroupId == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to resolve Style Book scope group with ERC ",
-						layout.getStyleBookEntryScopeERC(), " for Layout ",
-						layout.getPlid(),
-						"; falling back to site default Style Book"));
-			}
-
-			return null;
-		}
-
-		StyleBookEntry styleBookEntry =
-			StyleBookEntryLocalServiceUtil.
-				fetchStyleBookEntryByExternalReferenceCode(
-					layout.getStyleBookEntryERC(),
-					StagingUtil.getLiveGroupId(itemGroupId));
-
-		if ((styleBookEntry == null) && _log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Unable to resolve Style Book entry with ERC ",
-					layout.getStyleBookEntryERC(), " in scope group ",
-					itemGroupId, " for Layout ", layout.getPlid(),
-					"; falling back to site default Style Book"));
-		}
-
-		return styleBookEntry;
-	}
-
 	private static long[] _resolveGroupIds(long companyId, long groupId)
 		throws PortalException {
 
@@ -108,8 +64,8 @@ public class StyleBookEntryProviderUtil {
 			getCurrentAndAncestorSiteAndDepotGroupIds(groupId);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		StyleBookEntryProviderUtil.class);
+	     private static final Log _log = LogFactoryUtil.getLog(
+             StyleBookEntryProviderUtil.class);
 
 	private static final Snapshot<SiteConnectedGroupGroupProvider>
 		_siteConnectedGroupGroupProviderSnapshot = new Snapshot<>(

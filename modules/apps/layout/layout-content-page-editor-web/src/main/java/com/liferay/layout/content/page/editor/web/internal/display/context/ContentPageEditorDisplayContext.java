@@ -141,7 +141,6 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
-import com.liferay.style.book.util.StyleBookEntryProviderUtil;
 import com.liferay.style.book.util.StyleBookUtil;
 
 import jakarta.portlet.PortletRequest;
@@ -730,19 +729,28 @@ public class ContentPageEditorDisplayContext {
 				() -> {
 					Layout layout = themeDisplay.getLayout();
 
-					StyleBookEntry styleBookEntry =
-						StyleBookEntryProviderUtil.getStyleBookEntry(layout);
+					String styleBookEntryERC = GetterUtil.getString(
+						layout.getStyleBookEntryERC());
 
-					FrontendTokenDefinition frontendTokenDefinition =
-						_frontendTokenDefinitionRegistry.
-							getFrontendTokenDefinition(layout);
+					if (Validator.isNotNull(styleBookEntryERC)) {
+						StyleBookEntry styleBookEntry =
+							_styleBookEntryLocalService.
+								fetchStyleBookEntryByExternalReferenceCode(
+									styleBookEntryERC,
+									_staging.getLiveGroupId(
+										layout.getGroupId()));
 
-					if ((styleBookEntry != null) &&
-						Objects.equals(
-							frontendTokenDefinition.getThemeId(),
-							styleBookEntry.getThemeId())) {
+						FrontendTokenDefinition frontendTokenDefinition =
+							_frontendTokenDefinitionRegistry.
+								getFrontendTokenDefinition(layout);
 
-						return styleBookEntry.getExternalReferenceCode();
+						if ((styleBookEntry != null) &&
+							Objects.equals(
+								frontendTokenDefinition.getThemeId(),
+								styleBookEntry.getThemeId())) {
+
+							return styleBookEntryERC;
+						}
 					}
 
 					return StringPool.BLANK;

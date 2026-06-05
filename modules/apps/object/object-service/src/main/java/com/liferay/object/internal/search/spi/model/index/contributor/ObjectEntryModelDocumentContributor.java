@@ -403,8 +403,7 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		document.addText(
-			ObjectEntrySearchConstants.DEFAULT_LANGUAGE_ID,
-			objectEntry.getDefaultLanguageId());
+			Field.DEFAULT_LANGUAGE_ID, objectEntry.getDefaultLanguageId());
 
 		document.add(
 			new Field(

@@ -2230,6 +2230,21 @@ public class LayoutLocalServiceWrapper
 			userId, plid, status, serviceContext);
 	}
 
+	/**
+	 * Updates the layout replacing its style book entry ERC and the optional
+	 * scope ERC identifying the group that owns the entry.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param styleBookEntryERC the external reference code of the style book
+	 entry
+	 * @param styleBookEntryScopeERC the external reference code of the group
+	 that owns the style book entry, or {@code null} when the entry
+	 lives in the layout's own group
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public Layout updateStyleBookEntry(
 			long groupId, boolean privateLayout, long layoutId,
@@ -2322,4 +2337,4 @@ public class LayoutLocalServiceWrapper
 	private LayoutLocalService _layoutLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:619717538
+// LIFERAY-SERVICE-BUILDER-HASH:-80666971

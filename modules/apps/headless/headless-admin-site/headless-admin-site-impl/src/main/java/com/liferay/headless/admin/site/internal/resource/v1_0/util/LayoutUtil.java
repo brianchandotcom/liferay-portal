@@ -743,12 +743,11 @@ public class LayoutUtil {
 		return itemExternalReference.getExternalReferenceCode();
 	}
 
-	private static StyleBookEntryReference _getStyleBookEntryReference(
-			long companyId, Settings settings, long scopeGroupId)
-		throws Exception {
+	private static String _getStyleBookEntryERC(
+		long companyId, long groupId, Settings settings) {
 
 		if (settings == null) {
-			return new StyleBookEntryReference(null, null);
+			return null;
 		}
 
 		ItemExternalReference itemExternalReference =
@@ -758,7 +757,37 @@ public class LayoutUtil {
 			Validator.isNull(
 				itemExternalReference.getExternalReferenceCode())) {
 
-			return new StyleBookEntryReference(null, null);
+			return null;
+		}
+
+		StyleBookEntry styleBookEntry =
+			StyleBookEntryLocalServiceUtil.
+				fetchStyleBookEntryByExternalReferenceCode(
+					itemExternalReference.getExternalReferenceCode(),
+					StagingUtil.getLiveGroupId(groupId));
+
+		if (styleBookEntry == null) {
+			LogUtil.logOptionalReference(
+				StyleBookEntry.class,
+				itemExternalReference.getExternalReferenceCode(), companyId);
+		}
+
+		return itemExternalReference.getExternalReferenceCode();
+	}
+
+	private static String _getStyleBookEntryScopeERC(
+			long companyId, Settings settings, long scopeGroupId)
+		throws Exception {
+
+		if (settings == null) {
+			return null;
+		}
+
+		ItemExternalReference itemExternalReference =
+			settings.getStyleBookItemExternalReference();
+
+		if (itemExternalReference == null) {
+			return null;
 		}
 
 		String styleBookEntryScopeERC =
@@ -772,29 +801,7 @@ public class LayoutUtil {
 				"Style book scoping is not enabled");
 		}
 
-		StyleBookEntry styleBookEntry = null;
-
-		Long groupId = ItemScopeUtil.getItemGroupId(
-			companyId, itemExternalReference.getScope(), scopeGroupId);
-
-		if (groupId != null) {
-			styleBookEntry =
-				StyleBookEntryLocalServiceUtil.
-					fetchStyleBookEntryByExternalReferenceCode(
-						itemExternalReference.getExternalReferenceCode(),
-						StagingUtil.getLiveGroupId(groupId));
-		}
-
-		if (styleBookEntry == null) {
-			LogUtil.logOptionalReference(
-				StyleBookEntry.class.getName(),
-				itemExternalReference.getExternalReferenceCode(),
-				itemExternalReference.getScope(), scopeGroupId);
-		}
-
-		return new StyleBookEntryReference(
-			itemExternalReference.getExternalReferenceCode(),
-			styleBookEntryScopeERC);
+		return styleBookEntryScopeERC;
 	}
 
 	private static void _importPortletConfiguration(
@@ -1099,15 +1106,13 @@ public class LayoutUtil {
 			}
 		}
 
-		StyleBookEntryReference styleBookEntryReference =
-			_getStyleBookEntryReference(
-				layout.getCompanyId(), settings,
-				serviceContext.getScopeGroupId());
-
 		layout = _updateLayout(
 			layout, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
-			styleBookEntryReference.getStyleBookEntryERC(),
-			styleBookEntryReference.getStyleBookEntryScopeERC(),
+			_getStyleBookEntryERC(
+				layout.getCompanyId(), layout.getGroupId(), settings),
+			_getStyleBookEntryScopeERC(
+				layout.getCompanyId(), settings,
+				serviceContext.getScopeGroupId()),
 			faviconFileEntryERC, faviconFileEntryScopeERC,
 			_getMasterLayoutPageTemplateEntryERC(
 				serviceContext.getScopeGroupId(), layout, settings),
@@ -1397,27 +1402,5 @@ public class LayoutUtil {
 		ListUtil.fromArray(
 			"portletSetupUseCustomTitle", "portletSetupPortletDecoratorId",
 			"portletSetupCss");
-
-	private static class StyleBookEntryReference {
-
-		public StyleBookEntryReference(
-			String styleBookEntryERC, String styleBookEntryScopeERC) {
-
-			_styleBookEntryERC = styleBookEntryERC;
-			_styleBookEntryScopeERC = styleBookEntryScopeERC;
-		}
-
-		public String getStyleBookEntryERC() {
-			return _styleBookEntryERC;
-		}
-
-		public String getStyleBookEntryScopeERC() {
-			return _styleBookEntryScopeERC;
-		}
-
-		private final String _styleBookEntryERC;
-		private final String _styleBookEntryScopeERC;
-
-	}
 
 }

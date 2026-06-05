@@ -87,6 +87,12 @@ public class StyleBookEntryProviderUtil {
 			_siteConnectedGroupGroupProviderSnapshot.get();
 
 		if (siteConnectedGroupGroupProvider == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"SiteConnectedGroupGroupProvider is not available; " +
+						"falling back to site-only Style Book entries");
+			}
+
 			return new long[] {groupId};
 		}
 

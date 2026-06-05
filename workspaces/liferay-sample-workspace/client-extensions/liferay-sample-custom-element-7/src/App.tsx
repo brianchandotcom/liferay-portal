@@ -4,8 +4,12 @@
  */
 
 import {FDSConnection} from '@liferay/js-api/data-set';
-import type {FDSConnectionInfo, FDSConnectionStatus} from '@liferay/js-api/data-set';
 import React, {useEffect, useRef, useState} from 'react';
+
+import type {
+	FDSConnectionInfo,
+	FDSConnectionStatus,
+} from '@liferay/js-api/data-set';
 
 interface AppProps {
 	fdsName: string;
@@ -20,7 +24,9 @@ const PLACEHOLDERS: Record<FDSConnectionStatus, string> = {
 
 function App({fdsName}: AppProps) {
 	const [disabled, setDisabled] = useState<boolean>(true);
-	const [placeholder, setPlaceholder] = useState<string>(PLACEHOLDERS.connecting);
+	const [placeholder, setPlaceholder] = useState<string>(
+		PLACEHOLDERS.connecting
+	);
 	const [query, setQuery] = useState('');
 	const fdsConnectionRef = useRef<FDSConnection | null>(null);
 
@@ -30,11 +36,11 @@ function App({fdsName}: AppProps) {
 			{
 				search: (query: string) => {
 					setQuery(query);
-				}
+				},
 			},
 			(fdsConnectionInfo: FDSConnectionInfo) => {
-				setPlaceholder(PLACEHOLDERS[fdsConnectionInfo.status])
-				setDisabled(fdsConnectionInfo.status != 'ready');
+				setPlaceholder(PLACEHOLDERS[fdsConnectionInfo.status]);
+				setDisabled(fdsConnectionInfo.status !== 'ready');
 			}
 		);
 

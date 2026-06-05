@@ -81,6 +81,7 @@ public interface RegionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Region addRegion(Region region);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Region addRegion(
 			String externalReferenceCode, long countryId, boolean active,
 			String name, double position, String regionCode,
@@ -358,6 +359,7 @@ public interface RegionLocalService
 			OrderByComparator<Region> orderByComparator)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Region updateActive(long regionId, boolean active)
 		throws PortalException;
 
@@ -374,6 +376,7 @@ public interface RegionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Region updateRegion(Region region);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Region updateRegion(
 			String externalReferenceCode, long regionId, boolean active,
 			String name, double position, String regionCode)
@@ -402,4 +405,4 @@ public interface RegionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:73527107
+// LIFERAY-SERVICE-BUILDER-HASH:-751349059

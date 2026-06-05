@@ -80,6 +80,7 @@ public interface CountryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Country addCountry(Country country);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Country addCountry(
 			String externalReferenceCode, String a2, String a3, boolean active,
 			boolean billingAllowed, String idd, String name, String number,
@@ -377,6 +378,7 @@ public interface CountryLocalService
 			OrderByComparator<Country> orderByComparator)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Country updateActive(long countryId, boolean active)
 		throws PortalException;
 
@@ -393,6 +395,7 @@ public interface CountryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Country updateCountry(Country country);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Country updateCountry(
 			String externalReferenceCode, long countryId, String a2, String a3,
 			boolean active, boolean billingAllowed, String idd, String name,
@@ -408,6 +411,7 @@ public interface CountryLocalService
 			Country country, Map<String, String> titleMap)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Country updateGroupFilterEnabled(
 			long countryId, boolean groupFilterEnabled)
 		throws PortalException;
@@ -427,4 +431,4 @@ public interface CountryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1470862526
+// LIFERAY-SERVICE-BUILDER-HASH:-2003063802

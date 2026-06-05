@@ -15,6 +15,7 @@ export class RolePage {
 	readonly backButton: Locator;
 	readonly definePermissionsLink: Locator;
 	readonly descriptionInput: Locator;
+	readonly disabledKeyInput: Locator;
 	readonly keyInput: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
@@ -30,6 +31,9 @@ export class RolePage {
 			name: 'Define Permissions',
 		});
 		this.descriptionInput = page.getByLabel('Description');
+		this.disabledKeyInput = page.locator(
+			'#_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_viewNameField'
+		);
 		this.keyInput = page.locator(
 			'#_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_name'
 		);

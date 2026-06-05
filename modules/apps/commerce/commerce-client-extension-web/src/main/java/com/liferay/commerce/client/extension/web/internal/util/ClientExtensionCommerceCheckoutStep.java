@@ -15,6 +15,11 @@ import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.oauth.client.LocalOAuthClient;
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,6 +29,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -36,6 +46,8 @@ import jakarta.portlet.ActionResponse;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.net.HttpURLConnection;
 
 import java.util.Dictionary;
 import java.util.Locale;
@@ -51,14 +63,19 @@ public class ClientExtensionCommerceCheckoutStep
 		CommerceCheckoutStepCET commerceCheckoutStepCET,
 		CommercePaymentMethodGroupRelLocalService
 			commercePaymentMethodGroupRelLocalService,
-		JSONFactory jsonFactory, JSPRenderer jspRenderer,
+		Http http, JSONFactory jsonFactory, JSPRenderer jspRenderer,
+		LocalOAuthClient localOAuthClient,
+		OAuth2ApplicationLocalService oAuth2ApplicationLocalService,
 		PortalCatapult portalCatapult, ServletContext servletContext,
 		UserService userService) {
 
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
+		_http = http;
 		_jsonFactory = jsonFactory;
 		_jspRenderer = jspRenderer;
+		_localOAuthClient = localOAuthClient;
+		_oAuth2ApplicationLocalService = oAuth2ApplicationLocalService;
 		_portalCatapult = portalCatapult;
 		_servletContext = servletContext;
 		_userService = userService;
@@ -105,9 +122,20 @@ public class ClientExtensionCommerceCheckoutStep
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		if (!_active) {
+			return false;
+		}
+
 		CommerceOrder commerceOrder =
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
+		if (Validator.isNotNull(_paymentMethodKey) &&
+			!_paymentMethodKey.equals(
+				commerceOrder.getCommercePaymentMethodKey())) {
+
+			return false;
+		}
 
 		JSONObject jsonObject = JSONUtil.put(
 			"commerceOrderId", commerceOrder.getCommerceOrderId());
@@ -115,26 +143,26 @@ public class ClientExtensionCommerceCheckoutStep
 		User currentUser = _userService.getCurrentUser();
 
 		try {
+			Http.Response response = new Http.Response();
+
 			String status = new String(
-				_portalCatapult.launch(
-					commerceOrder.getCompanyId(), Http.Method.GET,
-					_oAuth2ApplicationExternalReferenceCode, jsonObject,
-					"/ready", currentUser.getUserId()
-				).get());
+				_launch(
+					commerceOrder, Http.Method.GET, jsonObject, "/ready",
+					response, currentUser));
 
-			if (Objects.equals(status, "READY") && _active &&
-				(Validator.isNull(_paymentMethodKey) ||
-				 _paymentMethodKey.equals(
-					 commerceOrder.getCommercePaymentMethodKey()))) {
+			if (!_isSuccess(response) ||
+				!Objects.equals(status, "READY")) {
 
-				_portalCatapult.launch(
-					commerceOrder.getCompanyId(), Http.Method.POST,
-					_oAuth2ApplicationExternalReferenceCode, jsonObject,
-					"/active", currentUser.getUserId()
-				).get();
-
-				return true;
+				return false;
 			}
+
+			response = new Http.Response();
+
+			_launch(
+				commerceOrder, Http.Method.POST, jsonObject, "/active",
+				response, currentUser);
+
+			return _isSuccess(response);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -143,8 +171,6 @@ public class ClientExtensionCommerceCheckoutStep
 
 			return false;
 		}
-
-		return false;
 	}
 
 	@Override
@@ -221,6 +247,84 @@ public class ClientExtensionCommerceCheckoutStep
 		return _showControls;
 	}
 
+	private String _getLocation(
+		OAuth2Application oAuth2Application, String resourcePath) {
+
+		if (resourcePath.contains(Http.PROTOCOL_DELIMITER)) {
+			return resourcePath;
+		}
+
+		String homePageURL = oAuth2Application.getHomePageURL();
+
+		if (homePageURL.endsWith(StringPool.SLASH)) {
+			homePageURL = homePageURL.substring(0, homePageURL.length() - 1);
+		}
+
+		if (resourcePath.startsWith(StringPool.SLASH)) {
+			resourcePath = resourcePath.substring(1);
+		}
+
+		return StringBundler.concat(
+			homePageURL, StringPool.SLASH, resourcePath);
+	}
+
+	private boolean _isSuccess(Http.Response response) {
+		int responseCode = response.getResponseCode();
+
+		if ((responseCode >= HttpURLConnection.HTTP_OK) &&
+			(responseCode < HttpURLConnection.HTTP_MULT_CHOICE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private byte[] _launch(
+			CommerceOrder commerceOrder, Http.Method method,
+			JSONObject payloadJSONObject, String resourcePath,
+			Http.Response response, User user)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+
+		options.setBody(
+			payloadJSONObject.toString(), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.
+				getOAuth2ApplicationByExternalReferenceCode(
+					_oAuth2ApplicationExternalReferenceCode,
+					commerceOrder.getCompanyId());
+
+		options.setLocation(_getLocation(oAuth2Application, resourcePath));
+
+		options.setMethod(method);
+		options.setResponse(response);
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_localOAuthClient.consumeAccessToken(
+						accessToken -> options.addHeader(
+							"Authorization", "Bearer " + accessToken),
+						oAuth2Application, user.getUserId());
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new RuntimeException(throwable);
+		}
+
+		return _http.URLtoByteArray(options);
+	}
+
 	private void _renderPayment(HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -264,17 +368,24 @@ public class ClientExtensionCommerceCheckoutStep
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClientExtensionCommerceCheckoutStep.class);
 
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
+
 	private final boolean _active;
 	private final String _baseURL;
 	private final int _commerceCheckoutStepOrder;
 	private final CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
 	private final Dictionary<String, Object> _dictionary;
+	private final Http _http;
 	private final JSONFactory _jsonFactory;
 	private final JSPRenderer _jspRenderer;
 	private final String _label;
+	private final LocalOAuthClient _localOAuthClient;
 	private final String _name;
 	private final String _oAuth2ApplicationExternalReferenceCode;
+	private final OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 	private final boolean _order;
 	private final String _paymentMethodKey;
 	private final PortalCatapult _portalCatapult;

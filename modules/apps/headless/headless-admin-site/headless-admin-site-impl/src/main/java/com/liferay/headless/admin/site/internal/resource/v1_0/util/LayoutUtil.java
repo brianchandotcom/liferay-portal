@@ -769,10 +769,10 @@ public class LayoutUtil {
 			FeatureFlagManagerUtil.checkEnabled(companyId, "LPD-57283");
 		}
 
+		StyleBookEntry styleBookEntry = null;
+
 		Long groupId = ItemScopeUtil.getItemGroupId(
 			companyId, itemExternalReference.getScope(), scopeGroupId);
-
-		StyleBookEntry styleBookEntry = null;
 
 		if (groupId != null) {
 			styleBookEntry =

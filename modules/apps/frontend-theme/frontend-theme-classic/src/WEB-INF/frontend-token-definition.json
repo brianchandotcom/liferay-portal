@@ -1648,7 +1648,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#9b92a5",
+							"defaultValue": "#9191a1",
 							"editorType": "ColorPicker",
 							"label": "secondary-l0",
 							"mappings": [

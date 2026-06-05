@@ -50,6 +50,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Baseline](validations/baseline.md)
 
+1. [Theme Build](validations/theme-build.md)
+
 1. [JSP Compile](validations/jsp-compile.md)
 
 1. [Integration Test Compile](validations/integration-test-compile.md)

@@ -12,7 +12,9 @@ A module is in the deploy set when it has changed sources or resources — Java,
 
 Exclude modules whose **only** Java change is under `src/testIntegration`. Integration Test Compile already runs `compileTestIntegrationJava` for those, and `-test` modules do not deploy a runtime bundle — `gradlew :path:deploy` would be redundant. A diff that touches `src/testIntegration` *and* anything else in the same module still puts the module in the deploy set.
 
-Expand by API consumers: for each `*-api/**/*.java` with added or removed `public` method signatures (`^[-+]\s*(public|protected).*\(.*\)`), grep `modules/**/build.gradle` for `project(":<api-path>")` and add those modules. The deploy set size N is used by [full-portal-build.md](full-portal-build.md)'s cost comparison.
+Expand by consumers: for each changed module with an added, removed, or changed `public`/`protected` member — a method signature or a field/constant declaration (`^[-+]\s*(public|protected)\b`) — grep `modules/**/build.gradle` for `project(":<changed-module-path>")` and add every consumer to the deploy set. This applies to any module, not only `*-api`. The deploy set size N is used by [full-portal-build.md](full-portal-build.md)'s cost comparison.
+
+Consumers the project graph cannot reach — archived, `portal-kernel`/`portal-impl`, and `testIntegration`-only consumers — are covered by [api-consumer-compile.md](api-consumer-compile.md).
 
 Both behavior-change and surface-only edits fire this validation — the build verifies compile and resource bundling regardless of intent.
 
@@ -25,8 +27,10 @@ Both behavior-change and surface-only edits fire this validation — the build v
 Set up once, then deploy each module:
 
 ```bash
-(cd "${REPO_ROOT}/portal-impl" && ant compile install-portal-snapshot)
+(cd "${REPO_ROOT}" && ant compile install-portal-snapshots)
 ```
+
+The setup step is a precondition: it rebuilds the `portal-kernel`/`portal-impl` snapshot from the branch tree before any module compiles, so a module referencing a portal-core symbol is checked against the branch's kernel rather than a stale snapshot. A kernel change from a separate, not-yet-merged PR is only caught once local `master` includes it, since pr-check never fetches a remote.
 
 ```bash
 ("${REPO_ROOT}/gradlew" \
@@ -38,7 +42,7 @@ Set up once, then deploy each module:
 ## Checklist
 
 ```
-- [ ] Setup: ant compile install-portal-snapshot
+- [ ] Setup: ant compile install-portal-snapshots
 - [ ] (One subitem per deploy-set module:) Deploy <module path>
 ```
 

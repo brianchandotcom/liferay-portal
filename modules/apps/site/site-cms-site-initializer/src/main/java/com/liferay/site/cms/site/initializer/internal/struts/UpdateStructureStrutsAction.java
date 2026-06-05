@@ -12,6 +12,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.ExceptionMapperUtil;
 
@@ -38,6 +40,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
@@ -115,6 +118,38 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
 
 		return null;
+	}
+
+	private void _addObjectRelationships(
+			ObjectDefinition objectDefinition, long objectDefinitionId,
+			ObjectDefinitionResource objectDefinitionResource)
+		throws Exception {
+
+		ObjectDefinition existingObjectDefinition =
+			objectDefinitionResource.getObjectDefinition(objectDefinitionId);
+
+		ObjectRelationship[] existingObjectRelationships =
+			existingObjectDefinition.getObjectRelationships();
+
+		if (ArrayUtil.isEmpty(existingObjectRelationships)) {
+			return;
+		}
+
+		List<ObjectRelationship> objectRelationships = ListUtil.fromArray(
+			objectDefinition.getObjectRelationships());
+
+		Set<String> objectRelationshipNames = SetUtil.fromCollection(
+			TransformUtil.transform(
+				objectRelationships, ObjectRelationship::getName));
+
+		objectRelationships.addAll(
+			ListUtil.filter(
+				ListUtil.fromArray(existingObjectRelationships),
+				existingObjectRelationship -> !objectRelationshipNames.contains(
+					existingObjectRelationship.getName())));
+
+		objectDefinition.setObjectRelationships(
+			() -> objectRelationships.toArray(new ObjectRelationship[0]));
 	}
 
 	private void _deleteRelationships(long objectDefinitionId)
@@ -310,6 +345,10 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 							objectDefinition);
 				}
 			}
+
+			_addObjectRelationships(
+				_objectDefinition, _objectDefinitionId,
+				objectDefinitionResource);
 
 			objectDefinitionResource.putObjectDefinition(
 				_objectDefinitionId, _objectDefinition);

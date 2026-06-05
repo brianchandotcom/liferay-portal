@@ -60,6 +60,7 @@ import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.staging.StagingGroupHelper;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletURL;
@@ -108,6 +109,7 @@ public class ContentPageLayoutEditorDisplayContext
 		SegmentsExperimentRelLocalService segmentsExperimentRelLocalService,
 		SegmentsEntryService segmentsEntryService, Staging staging,
 		StagingGroupHelper stagingGroupHelper,
+		StyleBookEntryLocalService styleBookEntryLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		super(
@@ -123,7 +125,8 @@ public class ContentPageLayoutEditorDisplayContext
 			portletURLFactory, renderResponse, segmentsConfigurationProvider,
 			segmentsExperienceManager, segmentsExperienceLocalService,
 			segmentsExperimentRelLocalService, segmentsEntryService, staging,
-			stagingGroupHelper, workflowDefinitionLinkLocalService);
+			stagingGroupHelper, styleBookEntryLocalService,
+			workflowDefinitionLinkLocalService);
 
 		_groupLocalService = groupLocalService;
 		_layoutPageTemplateStructureLocalService =

@@ -182,7 +182,7 @@ public class AIHubSiteInitializerTest {
 		_assertObjectEntryExists(
 			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_NO_HARMFUL_CONTENT");
 		_assertObjectEntryExists(
-			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_PII_NON_GENERATION");
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_PII_NONGENERATION");
 		_assertObjectEntryExists(
 			"L_AI_HUB_INSTRUCTION_DEFINITION", "L_AI_HUB_PROHIBITED_PRACTICES");
 		_assertObjectFieldDefaultValue(

@@ -31,7 +31,7 @@ public class LayoutSetBranchPrototypeSyncModelListener
 		LayoutSetBranch originalLayoutSetBranch,
 		LayoutSetBranch layoutSetBranch) {
 
-		if (!_isInitialLink(originalLayoutSetBranch, layoutSetBranch)) {
+		if (!_isInitialLink(layoutSetBranch, originalLayoutSetBranch)) {
 			return;
 		}
 
@@ -62,8 +62,8 @@ public class LayoutSetBranchPrototypeSyncModelListener
 	}
 
 	private boolean _isInitialLink(
-		LayoutSetBranch originalLayoutSetBranch,
-		LayoutSetBranch layoutSetBranch) {
+		LayoutSetBranch layoutSetBranch,
+		LayoutSetBranch originalLayoutSetBranch) {
 
 		if ((originalLayoutSetBranch == null) || (layoutSetBranch == null)) {
 			return false;

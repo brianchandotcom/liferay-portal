@@ -29,6 +29,8 @@ public class Context
 
 	public static final String DEVICE_TYPE = "deviceType";
 
+	public static final String GEOLOCATION = "geolocation";
+
 	public static final String HOSTNAME = "hostname";
 
 	public static final String LANGUAGE_ID = "languageId";

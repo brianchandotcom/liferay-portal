@@ -24,6 +24,7 @@ export const test = mergeTests(
 	pagesAdminPagesTest,
 	loginTest(),
 	featureFlagsTest({
+		'LPD-76864': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	pageEditorPagesTest,
@@ -304,13 +305,14 @@ test.describe('Style Book Editor Preview', () => {
 					secondContentPageTemplateName,
 				]) {
 					await pageTemplatesPage.addContentPageTemplate(name);
+
 					await pageEditorPage.addFragment(
 						FRAGMENTS.BASIC_COMPONENTS,
-						'Button',
-						undefined,
-						undefined
+						'Button'
 					);
+
 					await pageEditorPage.waitForChangesSaved();
+
 					await pageEditorPage.publishPage();
 				}
 			});

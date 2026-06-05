@@ -128,7 +128,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		tomcatNode2.syncExecute(this::_deployEnterpriseLicense);
 
 		try {
-			tomcatNode2.wait(6L, TimeUnit.MINUTES);
+			tomcatNode2.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
 
 			Assert.fail();
 		}
@@ -209,10 +209,10 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		_testConsoleMessageListener.assertMessageListened(messageFuture5);
 
-		tomcatNode2.wait(6L, TimeUnit.MINUTES);
-		tomcatNode3.wait(6L, TimeUnit.MINUTES);
-		tomcatNode4.wait(6L, TimeUnit.MINUTES);
-		tomcatNode5.wait(6L, TimeUnit.MINUTES);
+		tomcatNode2.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
+		tomcatNode3.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
+		tomcatNode4.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
+		tomcatNode5.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
 
 		_testConsoleMessageListener.assertMessageListened(messageFuture1);
 	}
@@ -274,7 +274,8 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 			field.setAccessible(true);
 
-			field.setLong(null, timestamp + (5L * Time.MINUTE));
+			field.setLong(
+				null, timestamp + ((_NODE_SHUTDOWN_MINUTES - 1) * Time.MINUTE));
 
 			return null;
 		};
@@ -320,6 +321,8 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			"and will be automatically deactivated and shut down after the " +
 				"grace period expires";
 
+	private static final long _NODE_SHUTDOWN_MINUTES = 6L;
+
 	private static final String _PAGE_KEY_EXCEEDED_LIMIT =
 		"You have exceeded the developer mode connection limit";
 
@@ -335,7 +338,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		public void assertMessageListened(Future<String> future)
 			throws Exception {
 
-			Assert.assertNotNull(future.get(3, TimeUnit.MINUTES));
+			Assert.assertNotNull(future.get(3L, TimeUnit.MINUTES));
 		}
 
 		public void onMessage(String message) {

@@ -90,8 +90,7 @@ public class FragmentEntryVersionTestUtil {
 		}
 	}
 
-	public static List<Integer> getFragmentEntryVersions(
-			FragmentEntry fragmentEntry)
+	public static List<Integer> getVersions(FragmentEntry fragmentEntry)
 		throws Throwable {
 
 		return TransactionInvokerUtil.invoke(

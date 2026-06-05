@@ -57,9 +57,8 @@ public class FragmentEntryVersionCTEventListenerTest {
 	public void testOnAfterPublish() throws Throwable {
 		FragmentEntry fragmentEntry1 = _addFragmentEntry();
 
-		List<Integer> versions =
-			FragmentEntryVersionTestUtil.getFragmentEntryVersions(
-				fragmentEntry1);
+		List<Integer> versions = FragmentEntryVersionTestUtil.getVersions(
+			fragmentEntry1);
 
 		int oldestVersion = versions.get(0);
 
@@ -89,8 +88,7 @@ public class FragmentEntryVersionCTEventListenerTest {
 			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry1));
 
-		versions = FragmentEntryVersionTestUtil.getFragmentEntryVersions(
-			fragmentEntry1);
+		versions = FragmentEntryVersionTestUtil.getVersions(fragmentEntry1);
 
 		Assert.assertFalse(
 			versions.toString(), versions.contains(oldestVersion));

@@ -66,7 +66,7 @@ public class FragmentEntryVersionUpgradeProcessTest {
 		_testUpgradePreservesFragmentEntryVersionsPerCtCollection();
 	}
 
-	private List<Integer> _getFragmentEntryVersions(
+	private List<Integer> _getVersions(
 			long ctCollectionId, FragmentEntry fragmentEntry)
 		throws Exception {
 
@@ -117,7 +117,7 @@ public class FragmentEntryVersionUpgradeProcessTest {
 		FragmentEntry fragmentEntry =
 			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
-		List<Integer> initialProductionVersions = _getFragmentEntryVersions(
+		List<Integer> initialProductionVersions = _getVersions(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
 
 		long ctCollectionId = RandomTestUtil.randomLong();
@@ -148,7 +148,7 @@ public class FragmentEntryVersionUpgradeProcessTest {
 			allProductionVersions.subList(
 				allProductionVersions.size() - expectedProductionVersionsCount,
 				allProductionVersions.size()),
-			_getFragmentEntryVersions(
+			_getVersions(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry));
 
 		if (actualCtCollectionVersionsCount > 0) {
@@ -157,7 +157,7 @@ public class FragmentEntryVersionUpgradeProcessTest {
 					insertedCtCollectionVersions.size() -
 						expectedCtCollectionVersionsCount,
 					insertedCtCollectionVersions.size()),
-				_getFragmentEntryVersions(ctCollectionId, fragmentEntry));
+				_getVersions(ctCollectionId, fragmentEntry));
 		}
 	}
 

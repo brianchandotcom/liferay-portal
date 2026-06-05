@@ -56,9 +56,8 @@ public class FragmentEntryVersionModelListenerTest {
 		FragmentEntry fragmentEntry =
 			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
-		List<Integer> versions =
-			FragmentEntryVersionTestUtil.getFragmentEntryVersions(
-				fragmentEntry);
+		List<Integer> versions = FragmentEntryVersionTestUtil.getVersions(
+			fragmentEntry);
 
 		Assert.assertEquals(versions.toString(), 1, versions.size());
 
@@ -70,8 +69,7 @@ public class FragmentEntryVersionModelListenerTest {
 			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 2,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
 
-		versions = FragmentEntryVersionTestUtil.getFragmentEntryVersions(
-			fragmentEntry);
+		versions = FragmentEntryVersionTestUtil.getVersions(fragmentEntry);
 
 		Assert.assertEquals(
 			versions.toString(),
@@ -81,8 +79,7 @@ public class FragmentEntryVersionModelListenerTest {
 
 		FragmentEntryVersionTestUtil.updateFragmentEntry(fragmentEntry);
 
-		versions = FragmentEntryVersionTestUtil.getFragmentEntryVersions(
-			fragmentEntry);
+		versions = FragmentEntryVersionTestUtil.getVersions(fragmentEntry);
 
 		Assert.assertEquals(
 			versions.toString(),
@@ -92,8 +89,7 @@ public class FragmentEntryVersionModelListenerTest {
 
 		FragmentEntryVersionTestUtil.updateFragmentEntry(fragmentEntry);
 
-		versions = FragmentEntryVersionTestUtil.getFragmentEntryVersions(
-			fragmentEntry);
+		versions = FragmentEntryVersionTestUtil.getVersions(fragmentEntry);
 
 		Assert.assertEquals(
 			versions.toString(),

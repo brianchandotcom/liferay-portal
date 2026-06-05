@@ -1,0 +1,99 @@
+suite: overlay init container
+templates:
+    -   templates/configmap.yaml
+    -   templates/liferay-init-scripts-cm.yaml
+    -   templates/workloads.yaml
+tests:
+    -   asserts:
+            -   contains:
+                    any: true
+                    content:
+                        name: liferay-overlay
+                    path: spec.template.spec.initContainers
+        documentSelector:
+            path: kind
+            skipEmptyTemplates: true
+            value: StatefulSet
+        it: should add the overlay init container when the overlay is enabled
+        set:
+            overlay.copy:
+                -   into: /dest
+            overlay.enabled: true
+    -   asserts:
+            -   matchRegex:
+                    path: spec.template.spec.initContainers[?(@.name=="liferay-overlay")].command[2]
+                    pattern: osgi/
+            -   matchRegex:
+                    path: spec.template.spec.initContainers[?(@.name=="liferay-overlay")].command[2]
+                    pattern: osgi/configs/
+        documentSelector:
+            path: kind
+            skipEmptyTemplates: true
+            value: StatefulSet
+        it: should generate a sync command for each copy block
+        set:
+            overlay.copy:
+                -   from: overlay-build-1/osgi/*
+                    into: osgi/
+                -   from: overlay-build-1/configs/*.config
+                    into: osgi/configs/
+            overlay.enabled: true
+    -   asserts:
+            -   contains:
+                    any: true
+                    content:
+                        mountPath: /liferay-init-scripts/overlay-sync.sh
+                        name: custom-init-scripts
+                        subPath: overlay-sync.sh
+                    path: spec.template.spec.initContainers[?(@.name=="liferay-overlay")].volumeMounts
+        documentSelector:
+            path: kind
+            skipEmptyTemplates: true
+            value: StatefulSet
+        it: should mount the overlay sync script from the configured init scripts volume
+        set:
+            overlay.copy:
+                -   into: /dest
+            overlay.enabled: true
+            overlay.initScriptsVolumeName: custom-init-scripts
+    -   asserts:
+            -   notContains:
+                    any: true
+                    content:
+                        name: liferay-overlay
+                    path: spec.template.spec.initContainers
+        documentSelector:
+            path: kind
+            skipEmptyTemplates: true
+            value: StatefulSet
+        it: should omit the overlay init container when the overlay is disabled
+        set:
+            overlay.enabled: false
+    -   asserts:
+            -   equal:
+                    path: spec.template.spec.initContainers[?(@.name=="liferay-overlay")].image
+                    value: amazon/aws-cli:2.27.63
+        documentSelector:
+            path: kind
+            skipEmptyTemplates: true
+            value: StatefulSet
+        it: should use the overridden overlay image
+        set:
+            overlay.copy:
+                -   into: /dest
+            overlay.enabled: true
+            overlay.image.repository: amazon/aws-cli
+            overlay.image.tag: 2.27.63
+    -   asserts:
+            -   equal:
+                    path: spec.template.spec.initContainers[?(@.name=="liferay-overlay")].image
+                    value: rclone/rclone:1.66
+        documentSelector:
+            path: kind
+            skipEmptyTemplates: true
+            value: StatefulSet
+        it: should use the rclone overlay image by default
+        set:
+            overlay.copy:
+                -   into: /dest
+            overlay.enabled: true

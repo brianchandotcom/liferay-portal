@@ -4,7 +4,8 @@ import React from 'react';
 import {
 	columns,
 	FrontendDataSet,
-	pagination
+	pagination,
+	rangeSelectors
 } from 'shared/components/FrontendDataSet';
 import {
 	LifecycleStages,
@@ -14,41 +15,6 @@ import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {Routes} from 'shared/util/router';
 import {toThousands} from 'shared/util/numbers';
 import {useRequest} from 'shared/hooks/useRequest';
-
-const activeUsersItems = [
-	{
-		label: Liferay.Language.get('last-24-hours'),
-		value: RangeKeyTimeRanges.Last24Hours
-	},
-	{
-		label: Liferay.Language.get('yesterday'),
-		value: RangeKeyTimeRanges.Yesterday
-	},
-	{
-		label: Liferay.Language.get('last-seven-days'),
-		value: RangeKeyTimeRanges.Last7Days
-	},
-	{
-		label: Liferay.Language.get('last-28-days'),
-		value: RangeKeyTimeRanges.Last28Days
-	},
-	{
-		label: Liferay.Language.get('last-30-days'),
-		value: RangeKeyTimeRanges.Last30Days
-	},
-	{
-		label: Liferay.Language.get('last-90-days'),
-		value: RangeKeyTimeRanges.Last90Days
-	},
-	{
-		label: Liferay.Language.get('last-180-days'),
-		value: RangeKeyTimeRanges.Last180Days
-	},
-	{
-		label: Liferay.Language.get('last-year'),
-		value: RangeKeyTimeRanges.LastYear
-	}
-];
 
 interface IAccountsDataSetProps {
 	accountLifecycleId?: string;
@@ -152,7 +118,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 				filters={[
 					{
 						id: 'rangeKey',
-						items: activeUsersItems,
+						items: rangeSelectors,
 						label: Liferay.Language.get('active-individuals'),
 						name: 'rangeKey',
 						preloadedData: buildSelectionPreloadedData(

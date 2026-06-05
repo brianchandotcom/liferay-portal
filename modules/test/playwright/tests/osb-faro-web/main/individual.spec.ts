@@ -207,3 +207,36 @@ test(
 		});
 	}
 );
+
+test(
+	'The Individuals dashboard overview shows all of its summary cards',
+	{
+		tag: '@LRAC-8903',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		await navigateToACPageViaURL({
+			acPage: ACPage.individualPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// The Total Individuals, Known and Anonymous trend summaries
+
+		for (const trendName of ['Total Individuals', 'Known', 'Anonymous']) {
+			await expect(
+				page.locator('.trend-item-root').filter({hasText: trendName})
+			).toBeVisible();
+		}
+
+		// The remaining overview cards
+
+		for (const cardTitle of [
+			'Enriched Profiles',
+			'Active Individuals',
+			'Top Interests',
+		]) {
+			await expect(page.getByText(cardTitle).first()).toBeVisible();
+		}
+	}
+);

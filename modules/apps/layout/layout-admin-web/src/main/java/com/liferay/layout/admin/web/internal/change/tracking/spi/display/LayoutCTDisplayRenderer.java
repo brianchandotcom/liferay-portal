@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.util.StyleBookEntryProviderUtil;
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import jakarta.portlet.PortletRequest;
 
@@ -247,7 +247,7 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 			"style-book",
 			() -> {
 				StyleBookEntry styleBookEntry =
-					StyleBookEntryProviderUtil.getStyleBookEntry(layout);
+					DefaultStyleBookEntryUtil.getStyleBookEntry(layout);
 
 				if (styleBookEntry == null) {
 					return null;

@@ -131,6 +131,8 @@ public class StyleBookEntryProviderUtilTest {
 		_layout.setStyleBookEntryERC(
 			siteStyleBookEntry.getExternalReferenceCode());
 
+		_layout.setStyleBookEntryScopeERC(null);
+
 		_layout = _layoutLocalService.updateLayout(_layout);
 
 		StyleBookEntry resolvedStyleBookEntry =

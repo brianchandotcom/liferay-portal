@@ -12,6 +12,7 @@ import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 
 import ReportFeedbackModal from '../ReportFeedback/ReportFeedbackModal';
+import submitPositiveReportFeedback from '../ReportFeedback/submitPositiveReportFeedback';
 import {createEventSource, postAgentInstance} from './api';
 import WritingAssistantActions from './components/WritingAssistantActions';
 import WritingAssistantConfirmationAction from './components/WritingAssistantConfirmationAction';
@@ -380,6 +381,15 @@ export default class WritingAssistant extends Plugin {
 						this._hideBalloon(balloon);
 					}}
 					onReport={() => this._showReportFeedbackModal()}
+					onThumbsUp={() =>
+						submitPositiveReportFeedback({
+							agentDefinitionExternalReferenceCodes: this
+								.lastActionType
+								? [this.lastActionType]
+								: [],
+							surface: 'writingAssistant',
+						})
+					}
 				/>
 			);
 

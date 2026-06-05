@@ -13,7 +13,7 @@ import {EventSource} from 'eventsource';
 import React, {useEffect, useRef, useState} from 'react';
 
 import ReportFeedbackModal from '../ReportFeedback/ReportFeedbackModal';
-import showThanksForFeedbackToast from '../ReportFeedback/showThanksForFeedbackToast';
+import submitPositiveReportFeedback from '../ReportFeedback/submitPositiveReportFeedback';
 import {
 	ChatContext,
 	createEventSource,
@@ -28,13 +28,13 @@ import './chat.scss';
 interface message {
 	agentDefinitionExternalReferenceCodes?: string[];
 	error?: boolean;
-	messageId?: string;
 	sender: string;
 	text: string;
 }
 
 interface ReportContext {
 	agentDefinitionExternalReferenceCodes: string[];
+	index: number;
 }
 
 interface AIAssistantChatProps {
@@ -47,12 +47,32 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 	instructionDefinitionScope,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
+	const [feedbackGiven, setFeedbackGiven] = useState<Record<number, boolean>>(
+		{}
+	);
 	const [isGenerating, setIsGenerating] = useState<boolean>(false);
 	const [messages, setMessages] = useState<message[]>([]);
 	const [message, setMessage] = useState<string>('');
 	const [reportContext, setReportContext] = useState<ReportContext | null>(
 		null
 	);
+
+	const handleThumbsUp = (index: number, item: message) => {
+		if (feedbackGiven[index]) {
+			return;
+		}
+
+		setFeedbackGiven((previousFeedbackGiven) => ({
+			...previousFeedbackGiven,
+			[index]: true,
+		}));
+
+		submitPositiveReportFeedback({
+			agentDefinitionExternalReferenceCodes:
+				item.agentDefinitionExternalReferenceCodes ?? [],
+			surface: 'aiAssistant',
+		});
+	};
 	const eventSourceRef = useRef<EventSource | null>(null);
 	const eventSourceReference = useRef<string | null>(null);
 	const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -171,13 +191,6 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 										dataJSON[
 											'agentDefinitionExternalReferenceCodes'
 										] ?? [],
-									messageId:
-										typeof crypto !== 'undefined' &&
-										crypto.randomUUID
-											? crypto.randomUUID()
-											: Math.random()
-													.toString(36)
-													.substring(2, 15),
 									sender: 'assistant',
 									text: dataJSON['data'],
 								},
@@ -204,7 +217,14 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 			eventSourceRef.current.addEventListener(
 				'Agent Invocation Failed',
 				(event) => {
-					const dataJSON = JSON.parse(event.data);
+					let text = '';
+
+					try {
+						text = JSON.parse(event.data)['data'];
+					}
+					catch {
+						text = '';
+					}
 
 					setMessages((previousMessages) => {
 						setTimeout(() => {
@@ -218,7 +238,7 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 							{
 								error: true,
 								sender: 'assistant',
-								text: dataJSON['data'],
+								text,
 							},
 						];
 					});
@@ -319,21 +339,23 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 						) : (
 							<AIAssistantMessageBalloon
 								error={item.error ?? false}
+								feedbackGiven={Boolean(feedbackGiven[index])}
 								key={index}
 								message={item.text}
 								onReport={
-									item.messageId
+									!item.error
 										? () =>
 												setReportContext({
 													agentDefinitionExternalReferenceCodes:
 														item.agentDefinitionExternalReferenceCodes ??
 														[],
+													index,
 												})
 										: undefined
 								}
 								onThumbsUp={
-									item.messageId
-										? showThanksForFeedbackToast
+									!item.error
+										? () => handleThumbsUp(index, item)
 										: undefined
 								}
 							/>
@@ -405,6 +427,12 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 						reportContext.agentDefinitionExternalReferenceCodes
 					}
 					onClose={() => setReportContext(null)}
+					onSubmitted={() =>
+						setFeedbackGiven((previousFeedbackGiven) => ({
+							...previousFeedbackGiven,
+							[reportContext.index]: true,
+						}))
+					}
 					surface="aiAssistant"
 				/>
 			)}

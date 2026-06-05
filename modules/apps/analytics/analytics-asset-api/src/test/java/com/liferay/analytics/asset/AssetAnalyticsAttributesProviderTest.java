@@ -59,7 +59,6 @@ public class AssetAnalyticsAttributesProviderTest {
 	@Test
 	@TestInfo("LPD-83537")
 	public void testBuildAttributes() {
-		_testBuildAttributesCMSVersion();
 		_testBuildAttributesForBlogsEntry();
 		_testBuildAttributesForDLFileEntry();
 		_testBuildAttributesForJournalArticle();
@@ -68,19 +67,6 @@ public class AssetAnalyticsAttributesProviderTest {
 		_testBuildAttributesWithoutAssetRenderer();
 		_testBuildAttributesWithoutField();
 		_testBuildAttributesWithoutLocale();
-	}
-
-	private void _assertCMSVersion(
-		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider,
-		String expectedVersion) {
-
-		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
-			AssetAnalyticsAttributesProvider.ACTION_VIEW,
-			AssetAnalyticsAttributesProvider.FIELD_CONTENT);
-
-		Assert.assertTrue(
-			attributes.contains(
-				"analytics-asset-cmsversion=\"" + expectedVersion + "\""));
 	}
 
 	private void _assertObjectDefinitionName(
@@ -152,54 +138,6 @@ public class AssetAnalyticsAttributesProviderTest {
 		);
 
 		return assetRenderer;
-	}
-
-	private void _testBuildAttributesCMSVersion() {
-		String className = "com.liferay.object.model.ObjectDefinition#42";
-		long companyId = RandomTestUtil.randomLong();
-
-		AssetEntry assetEntry = _mockAssetEntry(
-			className, RandomTestUtil.randomLong(), companyId);
-
-		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
-			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
-
-		ObjectDefinition objectDefinition = Mockito.mock(
-			ObjectDefinition.class);
-
-		_objectDefinitionLocalServiceUtilMockedStatic.when(
-			() ->
-				ObjectDefinitionLocalServiceUtil.
-					fetchObjectDefinitionByClassName(companyId, className)
-		).thenReturn(
-			objectDefinition
-		);
-
-		Mockito.when(
-			objectDefinition.isCMS()
-		).thenReturn(
-			true
-		);
-
-		_assertCMSVersion(assetAnalyticsAttributesProvider, "2.0");
-
-		Mockito.when(
-			objectDefinition.isCMS()
-		).thenReturn(
-			false
-		);
-
-		_assertCMSVersion(assetAnalyticsAttributesProvider, "1.0");
-
-		_objectDefinitionLocalServiceUtilMockedStatic.when(
-			() ->
-				ObjectDefinitionLocalServiceUtil.
-					fetchObjectDefinitionByClassName(companyId, className)
-		).thenReturn(
-			null
-		);
-
-		_assertCMSVersion(assetAnalyticsAttributesProvider, "1.0");
 	}
 
 	private void _testBuildAttributesForBlogsEntry() {
@@ -279,8 +217,6 @@ public class AssetAnalyticsAttributesProviderTest {
 			attributes.contains(
 				"analytics-asset-action=\"" +
 					AssetAnalyticsAttributesProvider.ACTION_VIEW + "\""));
-		Assert.assertTrue(
-			attributes.contains("analytics-asset-cmsversion=\"1.0\""));
 		Assert.assertTrue(
 			attributes.contains(
 				"analytics-asset-field=\"" +

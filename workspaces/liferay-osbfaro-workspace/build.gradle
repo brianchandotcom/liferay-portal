@@ -32,11 +32,15 @@ buildTheme {
 }
 
 createDockerfile {
-	doFirst {
-		file("Dockerfile.ext").text = file(faroEnvironmentName == "local" ? "modules/osb-faro-docker/local/Dockerfile.ext" : "modules/osb-faro-docker/cloud/Dockerfile.ext").text
+	def extFile = file(faroEnvironmentName == "local" ? "modules/osb-faro-docker/local/Dockerfile.ext" : "modules/osb-faro-docker/cloud/Dockerfile.ext")
+
+	inputs.file extFile
+	outputs.upToDateWhen {
+		false
 	}
+
 	doLast {
-		delete "Dockerfile.ext"
+		file("${buildDir}/docker/Dockerfile") << "\n" + extFile.text
 	}
 }
 
@@ -61,11 +65,24 @@ dockerDeploy {
 			into "${buildDir}/docker"
 		}
 
+		def configsEnv = faroEnvironmentName == "local" ? "local" : "cloud"
+
 		if (faroEnvironmentName != "local") {
 			copy {
 				from "modules/osb-faro-docker/cloud"
 				into "${buildDir}/docker/docker"
 			}
+		}
+
+		copy {
+			from "modules/osb-faro-docker/portal-ext.properties"
+			from "modules/osb-faro-docker/portal-setup-wizard.properties"
+			into "${buildDir}/docker/configs/${configsEnv}"
+		}
+
+		copy {
+			from "modules/osb-faro-docker/${configsEnv}/portal-env.properties"
+			into "${buildDir}/docker/configs/${configsEnv}"
 		}
 	}
 }

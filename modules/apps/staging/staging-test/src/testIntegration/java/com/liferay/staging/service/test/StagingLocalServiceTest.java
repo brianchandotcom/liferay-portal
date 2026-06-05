@@ -456,7 +456,7 @@ public class StagingLocalServiceTest {
 			Group stagingGroup = group.getStagingGroup();
 
 			Layout stagingLayout =
-				_layoutLocalService.getLayoutByUuidAndGroupId(
+				_layoutLocalService.fetchLayoutByUuidAndGroupId(
 					layout.getUuid(), stagingGroup.getGroupId(), false);
 
 			Assert.assertEquals(

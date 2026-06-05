@@ -370,7 +370,7 @@ public abstract class BaseMultipartTestEntityResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/portal-tools-rest-builder-test/v1.0/sites/{siteExternalReferenceCode}/multipart-test-entity'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "multipart/form-data", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PutSiteMultipartTestEntityRequestBody.class)))
+		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "multipart/form-data", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PutSiteMultipartTestEntityRequestBody.class)), description = "The multipart Test Entity to update. This exercises a multipart request body that also declares a description.")
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1151,4 +1151,4 @@ public abstract class BaseMultipartTestEntityResourceImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:775561261
+// LIFERAY-REST-BUILDER-HASH:2010847609

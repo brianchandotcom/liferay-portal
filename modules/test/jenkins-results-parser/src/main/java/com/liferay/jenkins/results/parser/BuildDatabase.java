@@ -119,6 +119,8 @@ public interface BuildDatabase {
 	public void putWorkspaceGitRepository(
 		String key, WorkspaceGitRepository workspaceGitRepository);
 
+	public void read();
+
 	public FilePropagator rsyncBuildDatabaseFile(
 		List<String> distNodes, String distPath, String preDistCommand,
 		String postDistCommand, int threadCount);
@@ -129,6 +131,8 @@ public interface BuildDatabase {
 	public void uploadBuildDatabaseFileToCloudBucket();
 
 	public void uploadBuildDatabaseFileToCloudBucket(String path);
+
+	public void write();
 
 	public void writeFilteredPropertiesToFile(
 		String destFilePath, Pattern pattern, String key);

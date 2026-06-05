@@ -130,6 +130,29 @@ export async function selectClickElement({
 	return title;
 }
 
+export async function runTest(page: Page) {
+	await page.getByText('Review and Run Test').click();
+
+	await page
+		.locator('.modal-item-last')
+		.getByText('Run', {exact: true})
+		.click();
+
+	await page.locator('.modal-item-last').getByText('OK').click();
+}
+
+export async function terminateTest(page: Page) {
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page
+			.locator('.modal-item-last')
+			.getByText('Terminate', {exact: true}),
+		trigger: page.getByText('Terminate Test'),
+	});
+
+	await waitForAlert(page);
+}
+
 export async function openABTesSidebar(page: Page) {
 	const sidebar = page.locator('#segmentsExperimentSidebar');
 

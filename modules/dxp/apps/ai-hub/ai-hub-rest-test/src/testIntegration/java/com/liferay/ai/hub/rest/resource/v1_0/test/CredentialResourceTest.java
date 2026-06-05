@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -113,28 +112,15 @@ public class CredentialResourceTest extends BaseCredentialResourceTestCase {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_oAuth2ApplicationLocalService.deleteOAuth2Application(
-			_oAuth2Application);
-
-		_accountEntryLocalService.deleteAccountEntry(
-			_accountEntry.getAccountEntryId());
-
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
 		PrincipalThreadLocal.setName(_originalName);
-
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Override
 	@Test
 	public void testGetCredential() throws Exception {
-		_testGetCredentialWithAIHubAgentManagerRole();
-		_testGetCredentialWithoutAIHubAgentManagerRole();
-	}
-
-	private User _addUser() throws Exception {
-		return UserTestUtil.addUser(
+		User user = UserTestUtil.addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD,
 			RandomTestUtil.randomString() + "@liferay.com",
@@ -142,10 +128,13 @@ public class CredentialResourceTest extends BaseCredentialResourceTestCase {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
-	}
 
-	private CredentialResource _createCredentialResource(User user) {
-		return CredentialResource.builder(
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_accountEntry.getAccountEntryId(), user.getUserId());
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_aiHubAccountEntry.getAccountEntryId(), user.getUserId());
+
+		CredentialResource credentialResource = CredentialResource.builder(
 		).authentication(
 			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
@@ -154,17 +143,11 @@ public class CredentialResourceTest extends BaseCredentialResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
-	}
 
-	private void _testGetCredentialWithAIHubAgentManagerRole()
-		throws Exception {
+		HttpInvoker.HttpResponse httpResponse =
+			credentialResource.getCredentialHttpResponse();
 
-		User user = _addUser();
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			_accountEntry.getAccountEntryId(), user.getUserId());
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			_aiHubAccountEntry.getAccountEntryId(), user.getUserId());
+		Assert.assertEquals(400, httpResponse.getStatusCode());
 
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), "AI Hub Agent Manager");
@@ -176,36 +159,12 @@ public class CredentialResourceTest extends BaseCredentialResourceTestCase {
 			_accountEntry.getAccountEntryId(), accountRole.getAccountRoleId(),
 			user.getUserId());
 
-		CredentialResource credentialResource = _createCredentialResource(user);
-
 		Credential credential = credentialResource.getCredential();
 
 		Assert.assertEquals(
 			_oAuth2Application.getClientId(), credential.getClientId());
 		Assert.assertEquals(
 			_oAuth2Application.getClientSecret(), credential.getClientSecret());
-
-		_userLocalService.deleteUser(user.getUserId());
-	}
-
-	private void _testGetCredentialWithoutAIHubAgentManagerRole()
-		throws Exception {
-
-		User user = _addUser();
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			_accountEntry.getAccountEntryId(), user.getUserId());
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			_aiHubAccountEntry.getAccountEntryId(), user.getUserId());
-
-		CredentialResource credentialResource = _createCredentialResource(user);
-
-		HttpInvoker.HttpResponse httpResponse =
-			credentialResource.getCredentialHttpResponse();
-
-		Assert.assertEquals(404, httpResponse.getStatusCode());
-
-		_userLocalService.deleteUser(user.getUserId());
 	}
 
 	private static AccountEntry _accountEntry;
@@ -233,8 +192,5 @@ public class CredentialResourceTest extends BaseCredentialResourceTestCase {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

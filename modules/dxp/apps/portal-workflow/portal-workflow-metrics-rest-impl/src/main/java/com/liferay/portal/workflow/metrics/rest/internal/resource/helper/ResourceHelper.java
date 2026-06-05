@@ -337,7 +337,8 @@ public class ResourceHelper {
 				filterAggregationResult.getChildAggregationResult(
 					"breachedInstanceCount");
 
-		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
+		return getScriptedMetricAggregationResultValue(
+			scriptedMetricAggregationResult);
 	}
 
 	public double getBreachedInstancePercentage(Bucket bucket) {
@@ -413,7 +414,8 @@ public class ResourceHelper {
 				filterAggregationResult.getChildAggregationResult(
 					"instanceCount");
 
-		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
+		return getScriptedMetricAggregationResultValue(
+			scriptedMetricAggregationResult);
 	}
 
 	public long getOnTimeTaskCount(Bucket bucket) {
@@ -428,7 +430,8 @@ public class ResourceHelper {
 			(ScriptedMetricAggregationResult)
 				filterAggregationResult.getChildAggregationResult("taskCount");
 
-		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
+		return getScriptedMetricAggregationResultValue(
+			scriptedMetricAggregationResult);
 	}
 
 	public long getOverdueInstanceCount(Bucket bucket) {
@@ -441,7 +444,8 @@ public class ResourceHelper {
 				filterAggregationResult.getChildAggregationResult(
 					"instanceCount");
 
-		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
+		return getScriptedMetricAggregationResultValue(
+			scriptedMetricAggregationResult);
 	}
 
 	public long getOverdueTaskCount(Bucket bucket) {
@@ -457,7 +461,19 @@ public class ResourceHelper {
 			(ScriptedMetricAggregationResult)
 				filterAggregationResult.getChildAggregationResult("taskCount");
 
-		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
+		return getScriptedMetricAggregationResultValue(
+			scriptedMetricAggregationResult);
+	}
+
+	public long getScriptedMetricAggregationResultValue(
+		ScriptedMetricAggregationResult scriptedMetricAggregationResult) {
+
+		if (scriptedMetricAggregationResult == null) {
+			return 0;
+		}
+
+		return GetterUtil.getLong(
+			String.valueOf(scriptedMetricAggregationResult.getValue()));
 	}
 
 	@Activate

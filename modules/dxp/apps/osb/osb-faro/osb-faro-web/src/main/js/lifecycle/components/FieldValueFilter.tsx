@@ -74,6 +74,11 @@ const FieldValueFilter = ({
 
 	return (
 		<Picker
+			aria-label={
+				sub(Liferay.Language.get('filter-by-x'), [
+					entityLabel
+				]) as string
+			}
 			as={TriggerButton}
 			buttonClassName={className}
 			className='ml-3'

@@ -57,8 +57,7 @@ components:
                     $ref: "#/components/schemas/GoogleAnalyticsConfiguration"
                 matomoAnalyticsScript:
                     description:
-                        Set the script for Matomo that is used for this set of pages. Enter the full script code
-                        including the script start and end tags.
+                        Set the script for Matomo that is used for this set of pages. Enter the full script code including the script start and end tags.
                     type: string
             type: object
         BackgroundImageFragmentEditableElementValue:
@@ -255,20 +254,17 @@ components:
                         numberOfItems:
                             # @review
                             description:
-                                The maximum number of items to display in the collection display page element when
-                                pagination is disabled.
+                                The maximum number of items to display in the collection display page element when pagination is disabled.
                             type: integer
                         numberOfItemsPerPage:
                             # @review
                             description:
-                                The maximum number of items per page to display in the collection display page element
-                                when pagination is enabled.
+                                The maximum number of items per page to display in the collection display page element when pagination is enabled.
                             type: integer
                         numberOfPages:
                             # @review
                             description:
-                                The maximum number of pages to display in the collection display page element when
-                                pagination is enabled.
+                                The maximum number of pages to display in the collection display page element when pagination is enabled.
                             type: integer
                         paginationType:
                             # @review
@@ -301,8 +297,7 @@ components:
                                 numberOfColumns:
                                     # @review
                                     description:
-                                        The number of columns of the collection viewport if a grid list style is
-                                        selected.
+                                        The number of columns of the collection viewport if a grid list style is selected.
                                     type: integer
                     description:
                         The definition of the collection display viewport.
@@ -529,8 +524,7 @@ components:
                         draftContentPageSpecificationExternalReferenceCode:
                             # @review
                             description:
-                                The draft content page specification external reference code or null if it is a draft
-                                content page specification.
+                                The draft content page specification external reference code or null if it is a draft content page specification.
                             type: string
                         pageExperiences:
                             items:
@@ -540,8 +534,7 @@ components:
                             $ref: "#/components/schemas/Settings"
             # @review
             description:
-                A page specification of a content page. A content page will contain 1 page specification for its draft
-                layout and 1 page specification for its published layout.
+                A page specification of a content page. A content page will contain 1 page specification for its draft layout and 1 page specification for its published layout.
             type: object
         ContentPageTemplate:
             allOf:
@@ -692,8 +685,7 @@ components:
             type: object
         DisplayPageNavigationMenuItemSettings:
             description:
-                Type-specific settings for "Blogs Entry", "Document", "Knowledge Base Article", "Product", "Web Content"
-                navigation menu item types.
+                Type-specific settings for "Blogs Entry", "Document", "Knowledge Base Article", "Product", "Web Content" navigation menu item types.
             properties:
                 className:
                     description:
@@ -705,8 +697,7 @@ components:
                     type: string
                 scopeExternalReferenceCode:
                     description:
-                        The external reference code of the site associated with the entity that this navigation menu
-                        item is set to.
+                        The external reference code of the site associated with the entity that this navigation menu item is set to.
                     type: string
                 title:
                     description:
@@ -730,8 +721,7 @@ components:
                     $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
-                        The display page template's creator. It is not returned by default. It can be embedded via
-                        nestedFields.
+                        The display page template's creator. It is not returned by default. It can be embedded via nestedFields.
                     readOnly: true
                 dateCreated:
                     # @review
@@ -765,8 +755,7 @@ components:
                     $ref: "#/components/schemas/FriendlyUrlHistory"
                     # @review
                     description:
-                        The history of previously used URLs to the display page template's rendered content. This field
-                        is not returned by default. It can be requested via nestedFields.
+                        The history of previously used URLs to the display page template's rendered content. This field is not returned by default. It can be requested via nestedFields.
                 friendlyUrlPath_i18n:
                     additionalProperties:
                         type: string
@@ -792,9 +781,7 @@ components:
                 pageSpecifications:
                     # @review
                     description:
-                        The display page template's specifications. A display page template will contain 1 page
-                        specification for its draft layout and 1 page specification for its published layout. This field
-                        is not returned by default. It can be requested via nestedFields.
+                        The display page template's specifications. A display page template will contain 1 page specification for its draft layout and 1 page specification for its published layout. This field is not returned by default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
@@ -827,8 +814,7 @@ components:
                     $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
-                        The display page template folder's creator. It is not returned by default. It can be embedded
-                        via nestedFields.
+                        The display page template folder's creator. It is not returned by default. It can be embedded via nestedFields.
                     readOnly: true
                 dateCreated:
                     # @review
@@ -1006,16 +992,14 @@ components:
                 displayMessage:
                     # @review
                     description:
-                        Whether to display a message when the collection is empty or no results match the applied
-                        filters (true by default).
+                        Whether to display a message when the collection is empty or no results match the applied filters (true by default).
                     type: boolean
                 message_i18n:
                     additionalProperties:
                         type: string
                     # @review
                     description:
-                        The localized message to display when the collection is empty or no results match the applied
-                        filters ('No Results Found' by default).
+                        The localized message to display when the collection is empty or no results match the applied filters ('No Results Found' by default).
                     type: object
         FavIcon:
             # @review
@@ -1048,8 +1032,7 @@ components:
                 -   $ref: "#/components/schemas/ItemExternalReference"
             # @review
             description:
-                A unique reference to a FavIcon of type ItemExternalReference which remains constant across
-                environments.
+                A unique reference to a FavIcon of type ItemExternalReference which remains constant across environments.
             type: object
         FormContainerClassSubtypeReference:
             # @review
@@ -1057,8 +1040,7 @@ components:
                 -   $ref: "#/components/schemas/ClassSubtypeReference"
                 -   $ref: "#/components/schemas/FormContainerReference"
             description:
-                A unique reference to a FormContainerReference of type FormContainerClassSubtypeReference which remains
-                constant across environments.
+                A unique reference to a FormContainerReference of type FormContainerClassSubtypeReference which remains constant across environments.
             type: object
         FormContainerConfig:
             # @review
@@ -1104,8 +1086,7 @@ components:
                 -   $ref: "#/components/schemas/ContextReference"
                 -   $ref: "#/components/schemas/FormContainerReference"
             description:
-                A unique reference to a FormContainerReference of type FormContainerContextReference which remains
-                constant across environments.
+                A unique reference to a FormContainerReference of type FormContainerContextReference which remains constant across environments.
             type: object
         FormContainerPageElementDefinition:
             allOf:
@@ -1278,8 +1259,7 @@ components:
                 type:
                     # @review
                     description:
-                        The configuration field's type (category, checkbox, collection, colorPalette, colorPicker, item,
-                        length, navigationMenu, select, targetCollectionDisplay, text, URL, video).
+                        The configuration field's type (category, checkbox, collection, colorPalette, colorPicker, item, length, navigationMenu, select, targetCollectionDisplay, text, URL, video).
                     enum: [Category, Checkbox, Collection, ColorPalette, ColorPicker, Item, Length, NavigationMenu, Select, TargetCollectionDisplay, Text, URL, Video]
                     type: string
             required:
@@ -1469,8 +1449,7 @@ components:
                 draftFragmentInstanceExternalReferenceCode:
                     # @review
                     description:
-                        The external reference code of the corresponding fragment instance in the draft of the page.
-                        Available only in the published page specification.
+                        The external reference code of the corresponding fragment instance in the draft of the page. Available only in the published page specification.
                     type: string
                 fragmentConfigurationFieldValues:
                     additionalProperties:
@@ -1571,8 +1550,7 @@ components:
                 -   $ref: "#/components/schemas/FragmentInlineValue"
                 -   $ref: "#/components/schemas/FragmentLinkValue"
             description:
-                A unique reference to a FragmentLinkValue of type FragmentInlineValue which remains constant across
-                environments.
+                A unique reference to a FragmentLinkValue of type FragmentInlineValue which remains constant across environments.
             type: object
         FragmentLinkMappedValue:
             # @review
@@ -1580,8 +1558,7 @@ components:
                 -   $ref: "#/components/schemas/FragmentLinkValue"
                 -   $ref: "#/components/schemas/FragmentMappedValue"
             description:
-                A unique reference to a FragmentLinkValue of type FragmentMappedValue which remains constant across
-                environments.
+                A unique reference to a FragmentLinkValue of type FragmentMappedValue which remains constant across environments.
             type: object
         FragmentLinkTextValue:
             # @review
@@ -1612,8 +1589,7 @@ components:
                 type:
                     # @review
                     description:
-                        The fragment link value's hypertext reference. Can be an inline value or mapped to an external
-                        value.
+                        The fragment link value's hypertext reference. Can be an inline value or mapped to an external value.
                     enum: [FragmentInlineValue, FragmentMappedValue]
                     type: string
             type: object
@@ -1643,8 +1619,7 @@ components:
                 -   $ref: "#/components/schemas/ContextReference"
                 -   $ref: "#/components/schemas/FragmentMappedValueItemReference"
             description:
-                A unique reference to a FragmentMappedValueItemReference of type FragmentMappedValueItemContextReference
-                which remains constant across environments.
+                A unique reference to a FragmentMappedValueItemReference of type FragmentMappedValueItemContextReference which remains constant across environments.
             type: object
         FragmentMappedValueItemExternalReference:
             # @review
@@ -1652,8 +1627,7 @@ components:
                 -   $ref: "#/components/schemas/FragmentMappedValueItemReference"
                 -   $ref: "#/components/schemas/ItemExternalReference"
             description:
-                A unique reference to a FragmentMappedValueItemReference of type
-                FragmentMappedValueItemExternalReference which remains constant across environments.
+                A unique reference to a FragmentMappedValueItemReference of type FragmentMappedValueItemExternalReference which remains constant across environments.
             type: object
         FragmentMappedValueItemReference:
             description:
@@ -1666,8 +1640,7 @@ components:
             properties:
                 type:
                     description:
-                        The fragment mapped item reference. Can be a context reference value or external reference to an
-                        external value.
+                        The fragment mapped item reference. Can be a context reference value or external reference to an external value.
                     enum: [ContextReference, ItemExternalReference]
         FragmentReference:
             # @review
@@ -1853,8 +1826,7 @@ components:
         FriendlyUrlHistory:
             # @review
             description:
-                Represents the history of previously used URLs for a page to prevent broken links and provide an easy
-                way to revert changes.
+                Represents the history of previously used URLs for a page to prevent broken links and provide an easy way to revert changes.
             properties:
                 friendlyUrlPath_i18n:
                     additionalProperties:
@@ -1872,8 +1844,7 @@ components:
             properties:
                 googleAnalytics4CustomConfig:
                     description:
-                        Set the Google Analytics 4 (GA4) custom options that are used for this set of pages. This is a
-                        JSON configuration for gtag().
+                        Set the Google Analytics 4 (GA4) custom options that are used for this set of pages. This is a JSON configuration for gtag().
                     type: string
                 googleAnalytics4Id:
                     description:
@@ -1881,8 +1852,7 @@ components:
                     type: string
                 googleAnalyticsCreateCustomConfig:
                     description:
-                        Set the Google Analytics (UA/GA3) create method's custom options that are used for this set of
-                        pages.
+                        Set the Google Analytics (UA/GA3) create method's custom options that are used for this set of pages.
                     type: string
                 googleAnalyticsCustomConfig:
                     description:
@@ -2248,14 +2218,12 @@ components:
                                 gutters:
                                     # @review
                                     description:
-                                        A flag that indicates whether the collection display page element has gutters if
-                                        a grid list style is selected.
+                                        A flag that indicates whether the collection display page element has gutters if a grid list style is selected.
                                     type: boolean
                                 verticalAlignment:
                                     # @review
                                     description:
-                                        The vertical alignment property of the collection display page element if a grid
-                                        list style is selected.
+                                        The vertical alignment property of the collection display page element if a grid list style is selected.
                                     enum: [Bottom, Middle, Top]
                                     type: string
                             type: object
@@ -2343,9 +2311,7 @@ components:
                 pageSpecifications:
                     # @review
                     description:
-                        The master page's specifications. A master page will contain 1 page specification for its draft
-                        layout and 1 page specification for its published layout. This field is not returned by default.
-                        It can be requested via nestedFields.
+                        The master page's specifications. A master page will contain 1 page specification for its draft layout and 1 page specification for its published layout. This field is not returned by default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
@@ -2421,15 +2387,13 @@ components:
                     type: object
                 auto:
                     description:
-                        A Boolean value that specifies whether or not the Navigation Menu displays as an option when
-                        creating a new page
+                        A Boolean value that specifies whether or not the Navigation Menu displays as an option when creating a new page
                     type: boolean
                 creator:
                     $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
-                        The navigation menu's creator. It is not returned by default. It can be embedded via
-                        nestedFields.
+                        The navigation menu's creator. It is not returned by default. It can be embedded via nestedFields.
                     readOnly: true
                 dateCreated:
                     # @review
@@ -2520,8 +2484,7 @@ components:
                     $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
-                        The navigation menu item's creator. It is not returned by default. It can be embedded via
-                        nestedFields.
+                        The navigation menu item's creator. It is not returned by default. It can be embedded via nestedFields.
                     readOnly: true
                 customFields:
                     # @review
@@ -2770,9 +2733,7 @@ components:
                     type: string
                 position:
                     description:
-                        The 0-based position this page element occupies with respect to its siblings (0 for first child,
-                        1 for second child, ...). If not specified when creating a page element the page element will be
-                        added at the last valid position.
+                        The 0-based position this page element occupies with respect to its siblings (0 for first child, 1 for second child, ...). If not specified when creating a page element the page element will be added at the last valid position.
                     minimum: 0
                     type: integer
         PageElementDefinition:
@@ -2799,9 +2760,7 @@ components:
                 type:
                     # @review
                     description:
-                        The page element definition's type (basic fragment, collection display, collection item,
-                        container, drop zone, form container, form fragment, form step, form step container, fragment
-                        drop zone, grid,  module or widget).
+                        The page element definition's type (basic fragment, collection display, collection item, container, drop zone, form container, form fragment, form step, form step container, fragment drop zone, grid,  module or widget).
                     enum:
                         -   BasicFragment
                         -   CollectionDisplay
@@ -2854,9 +2813,7 @@ components:
                 priority:
                     # @review
                     description:
-                        The experience's priority. It must be a unique value within the page specification. The default
-                        experience will always be assigned priority 0. A priority higher than 0 will result in an
-                        experience being active and a priority lower than 0 will result in an experience being inactive.
+                        The experience's priority. It must be a unique value within the page specification. The default experience will always be assigned priority 0. A priority higher than 0 will result in an experience being active and a priority lower than 0 will result in an experience being inactive.
                     type: integer
                 segmentItemExternalReference:
                     $ref: "#/components/schemas/ItemExternalReference"
@@ -2924,8 +2881,7 @@ components:
                 priority:
                     # @review
                     description:
-                        The priority of the page, determining the order in which the page will be listed, for example
-                        within the page administration.
+                        The priority of the page, determining the order in which the page will be listed, for example within the page administration.
                     format: int32
                     maximum: 2147483647
                     minimum: 0
@@ -2943,9 +2899,7 @@ components:
         PageSpecification:
             # @review
             description:
-                A page specification of a content page, content page template, widget page, or widget page template. A
-                content page will contain 1 page specification for its draft layout and 1 page specification for its
-                published layout. A widget page contains only 1 page specification for its published layout.
+                A page specification of a content page, content page template, widget page, or widget page template. A content page will contain 1 page specification for its draft layout and 1 page specification for its published layout. A widget page contains only 1 page specification for its published layout.
             discriminator:
                 mapping:
                     ContentPageSpecification: "#/components/schemas/ContentPageSpecification"
@@ -2959,8 +2913,7 @@ components:
                 customFields:
                     # @review
                     description:
-                        Custom fields associated with the page specification. Not available if this page specification
-                        belongs to a utility page.
+                        Custom fields associated with the page specification. Not available if this page specification belongs to a utility page.
                     items:
                         type: customField
                     type: array
@@ -3049,10 +3002,7 @@ components:
                 pageSpecifications:
                     # @review
                     description:
-                        The page template's specifications. A page template of type content will contain 1 page
-                        specification for its draft layout and 1 page specification for its published layout. A page
-                        template of type widget contains only 1 page specification for its published layout. This field
-                        is not returned by default. It can be requested via nestedFields.
+                        The page template's specifications. A page template of type content will contain 1 page specification for its draft layout and 1 page specification for its published layout. A page template of type widget contains only 1 page specification for its published layout. This field is not returned by default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
@@ -3105,8 +3055,7 @@ components:
                     $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
-                        The page template set's creator. It is not returned by default. It can be embedded via
-                        nestedFields.
+                        The page template set's creator. It is not returned by default. It can be embedded via nestedFields.
                     readOnly: true
                 dateCreated:
                     # @review
@@ -3344,8 +3293,7 @@ components:
                     $ref: "#/components/schemas/ItemExternalReference"
                     # @review
                     description:
-                        A reference to the page specification's master page. This property is not applied if the page
-                        specification belongs to a master page.
+                        A reference to the page specification's master page. This property is not applied if the page specification belongs to a master page.
                 styleBookItemExternalReference:
                     $ref: "#/components/schemas/ItemExternalReference"
                     # @review
@@ -3489,8 +3437,7 @@ components:
                     type: boolean
                 trashEntriesMaxAge:
                     description:
-                        The time, in minutes, that entries are kept in the Recycle Bin. Entries that have been in the
-                        Recycle Bin for more than this time are automatically deleted.
+                        The time, in minutes, that entries are kept in the Recycle Bin. Entries that have been in the Recycle Bin for more than this time are automatically deleted.
                     format: int32
                     type: integer
             required:
@@ -3550,8 +3497,7 @@ components:
                     $ref: "#/components/schemas/FriendlyUrlHistory"
                     # @review
                     description:
-                        The history of previously used URLs to the page's rendered content. This field is not returned
-                        by default. It can be requested via nestedFields.
+                        The history of previously used URLs to the page's rendered content. This field is not returned by default. It can be requested via nestedFields.
                 friendlyUrlPath_i18n:
                     additionalProperties:
                         type: string
@@ -3580,11 +3526,7 @@ components:
                 pageSpecifications:
                     # @review
                     description:
-                        The page's specifications. A page of type content will contain 1 page specification for its
-                        draft layout and 1 page specification for its published layout. A page of type widget contains
-                        only 1 page specification for its published layout. A page of type content may also be created
-                        by sending a single content page specification. This field is not returned by default. It can be
-                        requested via nestedFields.
+                        The page's specifications. A page of type content will contain 1 page specification for its draft layout and 1 page specification for its published layout. A page of type widget contains only 1 page specification for its published layout. A page of type content may also be created by sending a single content page specification. This field is not returned by default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
@@ -3822,8 +3764,7 @@ components:
                     type: string
                 themeId:
                     description:
-                        The theme id or the themeCSS client extension external reference code this style book is based
-                        on.
+                        The theme id or the themeCSS client extension external reference code this style book is based on.
                     type: string
             type: object
         SuccessFormContainerSubmissionResult:
@@ -4037,29 +3978,20 @@ components:
             type: object
         ThumbnailURLReference:
             description:
-                A reference to a thumbnail file. On read, `externalReferenceCode` and `url` are populated from the
-                underlying file entry; during a staging export, `url` is a `lar://` URL pointing at bytes embedded in
-                the LAR archive. On write, the binary source is resolved by the precedence `externalReferenceCode` →
-                `fileBase64` → `url`. An `externalReferenceCode` that resolves to an existing file binds it; otherwise a
-                new file is materialized from `fileBase64` (or downloaded from `url` when `fileBase64` is absent),
-                carrying the supplied or server-generated `externalReferenceCode`.
+                A reference to a thumbnail file. On read, `externalReferenceCode` and `url` are populated from the underlying file entry; during a staging export, `url` is a `lar://` URL pointing at bytes embedded in the LAR archive. On write, the binary source is resolved by the precedence `externalReferenceCode` → `fileBase64` → `url`. An `externalReferenceCode` that resolves to an existing file binds it; otherwise a new file is materialized from `fileBase64` (or downloaded from `url` when `fileBase64` is absent), carrying the supplied or server-generated `externalReferenceCode`.
             properties:
                 externalReferenceCode:
                     description:
-                        The thumbnail file's external reference code. On write, the canonical identifier of the file to
-                        bind.
+                        The thumbnail file's external reference code. On write, the canonical identifier of the file to bind.
                     type: string
                 fileBase64:
                     description:
-                        Base64-encoded file content. Used to create a new file when `externalReferenceCode` does not
-                        resolve in the destination.
+                        Base64-encoded file content. Used to create a new file when `externalReferenceCode` does not resolve in the destination.
                     type: string
                     writeOnly: true
                 url:
                     description:
-                        A URL the thumbnail can be fetched from. On read, the canonical URL of the stored file. On
-                        write, used to download bytes (supports `http://`, `https://` and `lar://`) when
-                        `externalReferenceCode` does not resolve and `fileBase64` is absent.
+                        A URL the thumbnail can be fetched from. On read, the canonical URL of the stored file. On write, used to download bytes (supports `http://`, `https://` and `lar://`) when `externalReferenceCode` does not resolve and `fileBase64` is absent.
                     type: string
             type: object
         URLActionInteraction:
@@ -4183,8 +4115,7 @@ components:
                     $ref: "#/components/schemas/FriendlyUrlHistory"
                     # @review
                     description:
-                        The history of previously used URLs to the utility page's rendered content. This field is not
-                        returned by default. It can be requested via nestedFields.
+                        The history of previously used URLs to the utility page's rendered content. This field is not returned by default. It can be requested via nestedFields.
                 friendlyUrlPath_i18n:
                     additionalProperties:
                         type: string
@@ -4205,9 +4136,7 @@ components:
                 pageSpecifications:
                     # @review
                     description:
-                        The utility page's specifications. A utility page will contain 1 page specification for its
-                        draft layout and 1 page specification for its published layout. This field is not returned by
-                        default. It can be requested via nestedFields.
+                        The utility page's specifications. A utility page will contain 1 page specification for its draft layout and 1 page specification for its published layout. This field is not returned by default. It can be requested via nestedFields.
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
@@ -4311,13 +4240,11 @@ components:
                     type: string
                 scopeExternalReferenceCode:
                     description:
-                        The external reference code of the site associated with the entity that this navigation menu
-                        item is set to.
+                        The external reference code of the site associated with the entity that this navigation menu item is set to.
                     type: string
                 showAssetVocabularyLevel:
                     description:
-                        Whether to display the vocabulary's name as the first level with children nested a level deeper.
-                        If false, only vocabulary's children are displayed at the top level.
+                        Whether to display the vocabulary's name as the first level with children nested a level deeper. If false, only vocabulary's children are displayed at the top level.
                     type: boolean
                 title:
                     description:
@@ -4331,8 +4258,7 @@ components:
         WidgetInstance:
             # @review
             description:
-                A widget instance, containing the common properties of both a content page widget instance and a widget
-                page widget instance.
+                A widget instance, containing the common properties of both a content page widget instance and a widget page widget instance.
             properties:
                 widgetConfig:
                     additionalProperties:
@@ -4763,8 +4689,7 @@ components:
                         inheritChanges:
                             # @review
                             description:
-                                Whether this widget page will inherit changes made to the associated widget page
-                                template.
+                                Whether this widget page will inherit changes made to the associated widget page template.
                             type: boolean
                         layoutTemplateId:
                             # @review
@@ -4804,8 +4729,7 @@ components:
                             type: array
             # @review
             description:
-                A page specification of a widget page. A widget page contains always 1 page specification in published
-                status.
+                A page specification of a widget page. A widget page contains always 1 page specification in published status.
             type: object
         WidgetPageTemplate:
             allOf:
@@ -4833,8 +4757,7 @@ components:
                         hiddenFromNavigation:
                             # @review
                             description:
-                                A flag that indicates whether the page created based on this page template is hidden
-                                from navigation.
+                                A flag that indicates whether the page created based on this page template is hidden from navigation.
                             type: boolean
                         name_i18n:
                             additionalProperties:
@@ -4875,19 +4798,15 @@ components:
                             type: string
                         parentSectionId:
                             description:
-                                The section's ID of the widget page or the nested application widget instance this
-                                widget belongs to.
+                                The section's ID of the widget page or the nested application widget instance this widget belongs to.
                             type: string
                         parentWidgetInstanceExternalReferenceCode:
                             description:
-                                The external reference code of the parent widget instance. Only available if this widget
-                                instance is within a nested applications widget instance.
+                                The external reference code of the parent widget instance. Only available if this widget instance is within a nested applications widget instance.
                             type: string
                         position:
                             description:
-                                The 0-based position this widget instance occupies with respect to its siblings (0 for
-                                first child, 1 for second child, ...). If not specified when creating a widget instance
-                                the widget instance will be added at the last valid position.
+                                The 0-based position this widget instance occupies with respect to its siblings (0 for first child, 1 for second child, ...). If not specified when creating a widget instance the widget instance will be added at the last valid position.
                             minimum: 0
                             type: integer
                         type:
@@ -4911,8 +4830,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.site.client', and version '1.0.31'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.site.client', and version '1.0.31'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -5124,8 +5042,7 @@ paths:
         put:
             # @review
             description:
-                Updates the display page template folder with the given external reference code, or creates it if it
-                does not exist.
+                Updates the display page template folder with the given external reference code, or creates it if it does not exist.
             operationId: putSiteDisplayPageTemplateFolder
             parameters:
                 -   in: path
@@ -5522,8 +5439,7 @@ paths:
         put:
             # @review
             description:
-                Updates the display page template with the given external reference code, or creates it if it does not
-                exist.
+                Updates the display page template with the given external reference code, or creates it if it does not exist.
             operationId: putSiteDisplayPageTemplate
             parameters:
                 -   in: path
@@ -6383,8 +6299,7 @@ paths:
         delete:
             # @review
             description:
-                Deletes an experience of a specific page specification of a site page within a site. The default
-                experience cannot be deleted.
+                Deletes an experience of a specific page specification of a site page within a site. The default experience cannot be deleted.
             operationId: deleteSitePageExperience
             parameters:
                 -   in: path
@@ -6456,8 +6371,7 @@ paths:
         patch:
             # @review
             description:
-                Updates an experience of a specific page specification of a site page within a site. Updates only the
-                fields received in the request body, leaving any other fields untouched.
+                Updates an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchSitePageExperience
             parameters:
                 -   in: path
@@ -6622,8 +6536,7 @@ paths:
         patch:
             # @review
             description:
-                Updates a page specification of a site page. Updates only the fields received in the request body,
-                leaving any other fields untouched.
+                Updates a page specification of a site page. Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchSitePageSpecification
             parameters:
                 -   in: path
@@ -6912,8 +6825,7 @@ paths:
         delete:
             # @review
             description:
-                Deletes a page element within an experience of a specific page specification of a site page within a
-                site.
+                Deletes a page element within an experience of a specific page specification of a site page within a site.
             operationId: deleteSitePageSpecificationPageExperiencePageElement
             parameters:
                 -   in: path
@@ -6945,8 +6857,7 @@ paths:
         get:
             # @review
             description:
-                Retrieves a page element within an experience of a specific page specification of a site page within a
-                site.
+                Retrieves a page element within an experience of a specific page specification of a site page within a site.
             operationId: getSitePageSpecificationPageExperiencePageElement
             parameters:
                 -   in: path
@@ -6994,8 +6905,7 @@ paths:
         patch:
             # @review
             description:
-                Updates a page element within an experience of a specific page specification of a site page within a
-                site. Updates only the fields received in the request body, leaving any other fields untouched.
+                Updates a page element within an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchSitePageSpecificationPageExperiencePageElement
             parameters:
                 -   in: path
@@ -7051,8 +6961,7 @@ paths:
         put:
             # @review
             description:
-                Updates a page element within an experience of a specific page specification of a site page within a
-                site.
+                Updates a page element within an experience of a specific page specification of a site page within a site.
             operationId: putSitePageSpecificationPageExperiencePageElement
             parameters:
                 -   in: path
@@ -7109,8 +7018,7 @@ paths:
         get:
             # @review
             description:
-                Retrieves all the descendant page elements of a page element within an experience in a page
-                specification of a site page.
+                Retrieves all the descendant page elements of a page element within an experience in a page specification of a site page.
             operationId: getSitePageSpecificationPageExperiencePageElementPageElementsPage
             parameters:
                 -   in: path
@@ -7412,8 +7320,7 @@ paths:
         put:
             # @review
             description:
-                Updates the page template set with the given external reference code, or creates it if it does not
-                exist.
+                Updates the page template set with the given external reference code, or creates it if it does not exist.
             operationId: putSitePageTemplateSet
             parameters:
                 -   in: path
@@ -8656,8 +8563,7 @@ paths:
         patch:
             # @review
             description:
-                Updates a widget instance of a widget page or widget page template within a site. Updates only the
-                fields received in the request body, leaving any other fields untouched.
+                Updates a widget instance of a widget page or widget page template within a site. Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchSiteSitePageWidgetInstance
             parameters:
                 -   in: path

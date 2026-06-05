@@ -93,6 +93,8 @@ describe('NewImport', () => {
 					'collapse-x': 'Collapse {0}',
 					'expand-x': 'Expand {0}',
 					'hide-all-x': 'Hide All {0}',
+					'select-x': 'Select {0}',
+					'selected-x': 'Selected {0}',
 					'show-all-x': 'Show All {0}',
 				})[key] ?? key
 		);
@@ -271,7 +273,17 @@ describe('NewImport', () => {
 			screen.getByRole('checkbox', {name: 'Design'})
 		).toBePartiallyChecked();
 
-		expect(screen.getByText('Theme Settings, Logo')).toBeInTheDocument();
+		expect(
+			screen.getByText('Selected Theme Settings, Logo')
+		).toBeInTheDocument();
+	});
+
+	it('lists the available handlers with a Select prefix when nothing is selected', async () => {
+		await goToDataSelectionStep();
+
+		expect(
+			screen.getByText('Select Theme Settings, Logo, Fragments')
+		).toBeInTheDocument();
 	});
 
 	it('reveals and hides the nested handler controls through the Show all and Hide all toggle', async () => {

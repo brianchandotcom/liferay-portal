@@ -12,7 +12,6 @@ import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.segments.context.Context;
 
@@ -49,8 +48,6 @@ public class ContextEntityModel implements EntityModel {
 					Context.LAST_SIGN_IN_DATE_TIME,
 					locale -> Context.LAST_SIGN_IN_DATE_TIME,
 					locale -> Context.LAST_SIGN_IN_DATE_TIME),
-				new IntegerEntityField(
-					Context.LOCAL_TIME, locale -> Context.LOCAL_TIME),
 				new StringEntityField(
 					Context.BROWSER, locale -> Context.BROWSER),
 				new StringEntityField(
@@ -63,6 +60,8 @@ public class ContextEntityModel implements EntityModel {
 					Context.HOSTNAME, locale -> Context.HOSTNAME),
 				new StringEntityField(
 					Context.LANGUAGE_ID, locale -> Context.LANGUAGE_ID),
+				new StringEntityField(
+					Context.LOCAL_TIME, locale -> Context.LOCAL_TIME),
 				new StringEntityField(
 					Context.PATHNAME, locale -> Context.PATHNAME),
 				new StringEntityField(

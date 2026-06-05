@@ -163,6 +163,35 @@ public class GetAudiencesServletTest {
 	}
 
 	@Test
+	@TestInfo("LPD-93510")
+	public void testGetAudiencesMapsCollectionOperators() throws Exception {
+		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+			_createGroupJSONObject(
+				"and",
+				_createRuleJSONObject(
+					Context.COOKIES, "contains", RandomTestUtil.randomString()),
+				_createRuleJSONObject(
+					Context.COOKIES, "not-contains",
+					RandomTestUtil.randomString())),
+			RandomTestUtil.randomString(),
+			SegmentsEntryConstants.SOURCE_AUDIENCE);
+
+		JSONObject audienceJSONObject = _getAudienceJSONObject(
+			_getAudiencesJSONArray(), segmentsEntry.getSegmentsEntryKey());
+
+		JSONArray rulesJSONArray = audienceJSONObject.getJSONArray("rules");
+
+		JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(0);
+
+		Assert.assertEquals("includes", ruleJSONObject.getString("operator"));
+
+		ruleJSONObject = rulesJSONArray.getJSONObject(1);
+
+		Assert.assertEquals(
+			"not_includes", ruleJSONObject.getString("operator"));
+	}
+
+	@Test
 	@TestInfo("LPD-92872")
 	public void testGetAudiencesMapsValues() throws Exception {
 		LocalDate localDate = LocalDate.now();
@@ -349,8 +378,14 @@ public class GetAudiencesServletTest {
 	private JSONObject _createRuleJSONObject(
 		String propertyName, String value) {
 
+		return _createRuleJSONObject(propertyName, _TYPE_EQUALS, value);
+	}
+
+	private JSONObject _createRuleJSONObject(
+		String propertyName, String operatorName, String value) {
+
 		return JSONUtil.put(
-			"operatorName", _TYPE_EQUALS
+			"operatorName", operatorName
 		).put(
 			"propertyName", propertyName
 		).put(

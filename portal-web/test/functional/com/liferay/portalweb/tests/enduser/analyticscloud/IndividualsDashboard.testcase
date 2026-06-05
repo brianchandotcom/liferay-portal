@@ -248,39 +248,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8903 | Test Summary: As an Business User, I should be able to assert the cards on the Overview tab of the Individual's Dashboard page"
-	@priority = 4
-	test ViewCardsInTheOverviewTabOfIndividualsDashBoard {
-		task ("View the site page with new user") {
-			ACUtils.navigateToSitePageWithUser(
-				emailList = "userea@liferay.com",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close Sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigate to the Overview on the Individuals dashboard") {
-			ACNavigation.goToIndividuals();
-
-			ACIndividualsDashboard.goToOverviewTab();
-		}
-
-		task ("View the cards in the Overview tab") {
-			for (var cardTitle : list "Total Individuals,Known,Anonymous,Enriched Profiles,Active Individuals,Top Interests as of Yesterday") {
-				ACCards.viewCards(cardTitle = ${cardTitle});
-			}
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8902 | Test Summary: As an Business User, I should be able to assert the cards on the Overview tab of an Individual's page"
 	@priority = 4
 	test ViewCardsInTheOverviewTabOfIndividualsPage {

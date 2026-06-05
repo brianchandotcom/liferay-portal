@@ -41,9 +41,7 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImplTest
 
 		// Company scope
 
-		long companyId = RandomTestUtil.randomLong();
 		long objectDefinitionId = RandomTestUtil.randomLong();
-
 		String objectDefinitionName = RandomTestUtil.randomString();
 		String objectRelationshipName = RandomTestUtil.randomString();
 
@@ -56,6 +54,8 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImplTest
 
 		ObjectRelationship objectRelationship = mockObjectRelationship(
 			objectDefinitionId, objectDefinitionId, objectRelationshipName);
+
+		long companyId = RandomTestUtil.randomLong();
 
 		assertPredicateString(
 			"= ?",

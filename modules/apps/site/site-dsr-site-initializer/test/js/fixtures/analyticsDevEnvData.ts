@@ -35,6 +35,16 @@ export const activityLogDevEnvData = {
 					},
 				],
 			},
+			{
+				userSessionEvents: [
+					{
+						assetTitle: 'document_d',
+						createDate: '2026-03-07T11:00:00Z',
+						emailAddressHashed: 'unknown@example.com',
+						name: 'documentDownloaded',
+					},
+				],
+			},
 		],
 	},
 };

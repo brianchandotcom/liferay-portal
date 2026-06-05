@@ -11,11 +11,9 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.ai.hub.rest.dto.v1_0.Credential;
 import com.liferay.ai.hub.rest.resource.v1_0.CredentialResource;
 import com.liferay.ai.hub.util.AccountEntryUtil;
-import com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RoleLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,12 +34,6 @@ public class CredentialResourceImpl extends BaseCredentialResourceImpl {
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
 			contextUser.getUserId());
 
-		if (accountEntry == null) {
-			throw new PrincipalException(
-				"User " + contextUser.getUserId() +
-					" is not associated with an AI Hub account");
-		}
-
 		Role role = _roleLocalService.getRole(
 			contextCompany.getCompanyId(), "AI Hub Agent Manager");
 
@@ -52,9 +44,7 @@ public class CredentialResourceImpl extends BaseCredentialResourceImpl {
 				accountEntry.getAccountEntryId(),
 				accountRole.getAccountRoleId(), contextUser.getUserId())) {
 
-			throw new PrincipalException(
-				"User " + contextUser.getUserId() +
-					" is not an AI Hub agent manager");
+			throw new UnsupportedOperationException();
 		}
 
 		OAuth2Application oAuth2Application =
@@ -63,12 +53,6 @@ public class CredentialResourceImpl extends BaseCredentialResourceImpl {
 					accountEntry.getAccountEntryId() +
 						"-ai-hub-oauth2-application",
 					contextCompany.getCompanyId());
-
-		if (oAuth2Application == null) {
-			throw new NoSuchOAuth2ApplicationException(
-				"No OAuth2 application exists for account " +
-					accountEntry.getAccountEntryId());
-		}
 
 		contextHttpServletResponse.setHeader("Cache-Control", "no-store");
 

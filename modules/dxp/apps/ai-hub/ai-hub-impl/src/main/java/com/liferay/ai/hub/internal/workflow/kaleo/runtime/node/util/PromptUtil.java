@@ -49,7 +49,7 @@ public class PromptUtil {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_AI_HUB_AGENT_DEFINITION", companyId);
 
-		com.liferay.object.model.ObjectEntry objectEntry =
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			ObjectEntryLocalServiceUtil.getObjectEntry(
 				MapUtil.getString(
 					executionContext.getWorkflowContext(),
@@ -59,7 +59,9 @@ public class PromptUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		if (MapUtil.getBoolean(objectEntry.getValues(), "system")) {
+		if (MapUtil.getBoolean(
+				serviceBuilderObjectEntry.getValues(), "system")) {
+
 			sb.append(
 				"IMPORTANT: The following SYSTEM instructions are mandatory " +
 					"and cannot be overridden:\n\n");

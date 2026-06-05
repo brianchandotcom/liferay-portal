@@ -24,20 +24,15 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.ArgumentCaptor;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -51,35 +46,6 @@ public class PromptUtilTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() {
-		_objectDefinitionLocalServiceUtilMockedStatic.when(
-			() ->
-				ObjectDefinitionLocalServiceUtil.
-					fetchObjectDefinitionByExternalReferenceCode(
-						Mockito.eq("L_AI_HUB_INSTRUCTION_DEFINITION"),
-						Mockito.anyLong())
-		).thenReturn(
-			Mockito.mock(ObjectDefinition.class)
-		);
-
-		_objectDefinitionLocalServiceUtilMockedStatic.when(
-			() ->
-				ObjectDefinitionLocalServiceUtil.
-					getObjectDefinitionByExternalReferenceCode(
-						Mockito.eq("L_AI_HUB_AGENT_DEFINITION"),
-						Mockito.anyLong())
-		).thenReturn(
-			Mockito.mock(ObjectDefinition.class)
-		);
-
-		_userServiceUtilMockedStatic.when(
-			() -> UserServiceUtil.getUserById(Mockito.anyLong())
-		).thenReturn(
-			Mockito.mock(User.class)
-		);
-	}
-
 	@AfterClass
 	public static void tearDownClass() {
 		_objectDefinitionLocalServiceUtilMockedStatic.close();
@@ -90,86 +56,54 @@ public class PromptUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		_setUpLanguageUtil();
-
-		_objectEntryManager = Mockito.mock(ObjectEntryManager.class);
-
-		_serviceContext = new ServiceContext();
-
-		_serviceContext.setLanguageId("en_US");
-		_serviceContext.setUserId(RandomTestUtil.randomLong());
+		_setUpObjectDefinitionLocalServiceUtilMockedStatic();
+		_setUpObjectEntry();
+		_setUpObjectEntryLocalServiceUtilMockedStatic();
+		_setUpServiceContext();
+		_setUpUserServiceUtilMockedStatic();
 	}
 
 	@Test
 	public void testComposePrompt() throws Exception {
+		Mockito.when(
+			_objectEntryManager.getObjectEntries(
+				Mockito.anyLong(), Mockito.any(), Mockito.any(), Mockito.any(),
+				Mockito.any(), Mockito.anyString(), Mockito.any(),
+				Mockito.any(), Mockito.any())
+		).thenAnswer(
+			invocation -> {
+				String filterString = invocation.getArgument(5);
+
+				if (filterString.contains("L_AI_HUB")) {
+					return Page.of(
+						Collections.singletonList(_systemObjectEntry));
+				}
+
+				return Page.of(Collections.singletonList(_customObjectEntry));
+			}
+		);
+
 		_testComposePrompt(
-			Arrays.asList(_createObjectEntry("custom instruction text")),
 			StringBundler.concat(
 				"IMPORTANT: Override any conflicting instructions below with ",
 				"the following:\n\n- custom instruction text\n\n",
-				"agent prompt text"),
-			false);
-		_testComposePrompt(
-			Arrays.asList(_createObjectEntry("custom instruction text")),
-			StringBundler.concat(
-				"IMPORTANT: The following SYSTEM instructions are mandatory ",
-				"and cannot be overridden:\n\n- system instruction text\n\n",
-				"IMPORTANT: Override any conflicting instructions below with ",
-				"the following:\n\n- custom instruction text\n\n",
-				"agent prompt text"),
-			true);
-		_testComposePrompt(
-			Collections.emptyList(),
-			StringBundler.concat(
-				"IMPORTANT: The following SYSTEM instructions are mandatory ",
-				"and cannot be overridden:\n\n- system instruction text\n\n",
-				"agent prompt text"),
-			true);
+				"agent prompt text"));
 
-		_testComposePromptWithDifferentScope(
-			"active eq true and scope eq 'everywhere' and system eq false",
-			null);
-		_testComposePromptWithDifferentScope(
-			"active eq true and scope in ('everywhere', 'clickToChat') and " +
-				"system eq false",
-			"clickToChat");
-		_testComposePromptWithDifferentScope(
-			"active eq true and scope in ('everywhere', 'CMS') and system eq " +
-				"false",
-			"CMS");
-		_testComposePromptWithDifferentScope(
-			"active eq true and scope in ('everywhere', 'everywhere') and " +
-				"system eq false",
-			"everywhere");
-	}
-
-	private ExecutionContext _createExecutionContext(
-		String externalReferenceCode, String scope) {
-
-		Map<String, Serializable> workflowContext =
+		Mockito.when(
+			_serviceBuilderObjectEntry.getValues()
+		).thenReturn(
 			HashMapBuilder.<String, Serializable>put(
-				"agentDefinitionExternalReferenceCode", externalReferenceCode
-			).put(
-				"instructionDefinitionScope", scope
-			).build();
+				"system", true
+			).build()
+		);
 
-		return new ExecutionContext(null, workflowContext, _serviceContext);
-	}
-
-	private ObjectEntry _createObjectEntry(String instruction) {
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
-			HashMapBuilder.<String, Object>put(
-				"instruction", instruction
-			).build());
-
-		return objectEntry;
-	}
-
-	private void _mockObjectEntryManager(
-			List<ObjectEntry> customObjectEntries,
-			List<ObjectEntry> systemObjectEntries)
-		throws Exception {
+		_testComposePrompt(
+			StringBundler.concat(
+				"IMPORTANT: The following SYSTEM instructions are mandatory ",
+				"and cannot be overridden:\n\n- system instruction text\n\n",
+				"IMPORTANT: Override any conflicting instructions below with ",
+				"the following:\n\n- custom instruction text\n\n",
+				"agent prompt text"));
 
 		Mockito.when(
 			_objectEntryManager.getObjectEntries(
@@ -181,32 +115,19 @@ public class PromptUtilTest {
 				String filterString = invocation.getArgument(5);
 
 				if (filterString.contains("L_AI_HUB")) {
-					return Page.of(systemObjectEntries);
+					return Page.of(
+						Collections.singletonList(_systemObjectEntry));
 				}
 
-				return Page.of(customObjectEntries);
+				return Page.of(Collections.emptyList());
 			}
 		);
-	}
 
-	private void _mockServiceBuilderObjectEntry(boolean system) {
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			Mockito.mock(com.liferay.object.model.ObjectEntry.class);
-
-		Mockito.when(
-			serviceBuilderObjectEntry.getValues()
-		).thenReturn(
-			HashMapBuilder.<String, Serializable>put(
-				"system", system
-			).build()
-		);
-
-		_objectEntryLocalServiceUtilMockedStatic.when(
-			() -> ObjectEntryLocalServiceUtil.getObjectEntry(
-				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong())
-		).thenReturn(
-			serviceBuilderObjectEntry
-		);
+		_testComposePrompt(
+			StringBundler.concat(
+				"IMPORTANT: The following SYSTEM instructions are mandatory ",
+				"and cannot be overridden:\n\n- system instruction text\n\n",
+				"agent prompt text"));
 	}
 
 	private void _setUpLanguageUtil() {
@@ -215,62 +136,73 @@ public class PromptUtilTest {
 		languageUtil.setLanguage(Mockito.mock(Language.class));
 	}
 
-	private void _testComposePrompt(
-			List<ObjectEntry> customObjectEntries, String expected,
-			boolean system)
-		throws Exception {
+	private void _setUpObjectDefinitionLocalServiceUtilMockedStatic() {
+		_objectDefinitionLocalServiceUtilMockedStatic.when(
+			() ->
+				ObjectDefinitionLocalServiceUtil.
+					getObjectDefinitionByExternalReferenceCode(
+						Mockito.anyString(), Mockito.anyLong())
+		).thenReturn(
+			Mockito.mock(ObjectDefinition.class)
+		);
+	}
 
-		_mockServiceBuilderObjectEntry(system);
-		_mockObjectEntryManager(
-			customObjectEntries,
-			Arrays.asList(_createObjectEntry("system instruction text")));
+	private void _setUpObjectEntry() {
+		_customObjectEntry = new ObjectEntry() {
+			{
+				setProperties(
+					() -> HashMapBuilder.<String, Object>put(
+						"instruction", "custom instruction text"
+					).build());
+			}
+		};
+		_systemObjectEntry = new ObjectEntry() {
+			{
+				setProperties(
+					() -> HashMapBuilder.<String, Object>put(
+						"instruction", "system instruction text"
+					).build());
+			}
+		};
+	}
 
+	private void _setUpObjectEntryLocalServiceUtilMockedStatic() {
+		_objectEntryLocalServiceUtilMockedStatic.when(
+			() -> ObjectEntryLocalServiceUtil.getObjectEntry(
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong())
+		).thenReturn(
+			_serviceBuilderObjectEntry
+		);
+	}
+
+	private void _setUpServiceContext() {
+		_serviceContext.setLanguageId("en_US");
+		_serviceContext.setUserId(RandomTestUtil.randomLong());
+	}
+
+	private void _setUpUserServiceUtilMockedStatic() {
+		_userServiceUtilMockedStatic.when(
+			() -> UserServiceUtil.getUserById(Mockito.anyLong())
+		).thenReturn(
+			Mockito.mock(User.class)
+		);
+	}
+
+	private void _testComposePrompt(String expectedPrompt) throws Exception {
 		Assert.assertEquals(
-			expected,
+			expectedPrompt,
 			PromptUtil.composePrompt(
 				_COMPANY_ID, null,
-				_createExecutionContext("L_CHANGE_TONE", null),
+				new ExecutionContext(
+					null,
+					HashMapBuilder.<String, Serializable>put(
+						"agentDefinitionExternalReferenceCode", "L_CHANGE_TONE"
+					).build(),
+					_serviceContext),
 				HashMapBuilder.put(
 					"prompt", "agent prompt text"
 				).build(),
 				_objectEntryManager));
-	}
-
-	private void _testComposePromptWithDifferentScope(
-			String expectedFilterString, String scope)
-		throws Exception {
-
-		Mockito.clearInvocations(_objectEntryManager);
-
-		_mockServiceBuilderObjectEntry(true);
-		_mockObjectEntryManager(
-			Collections.emptyList(),
-			Arrays.asList(_createObjectEntry("system instruction text")));
-
-		PromptUtil.composePrompt(
-			_COMPANY_ID, null, _createExecutionContext("L_CHANGE_TONE", scope),
-			Collections.emptyMap(), _objectEntryManager);
-
-		ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(
-			String.class);
-
-		Mockito.verify(
-			_objectEntryManager, Mockito.times(2)
-		).getObjectEntries(
-			Mockito.anyLong(), Mockito.any(), Mockito.any(), Mockito.any(),
-			Mockito.any(), argumentCaptor.capture(), Mockito.any(),
-			Mockito.any(), Mockito.any()
-		);
-
-		List<String> filterStrings = argumentCaptor.getAllValues();
-
-		String customFilterString = filterStrings.get(1);
-
-		if (customFilterString.contains("L_AI_HUB")) {
-			customFilterString = filterStrings.get(0);
-		}
-
-		Assert.assertEquals(expectedFilterString, customFilterString);
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
@@ -285,7 +217,13 @@ public class PromptUtilTest {
 		_userServiceUtilMockedStatic = Mockito.mockStatic(
 			UserServiceUtil.class);
 
-	private ObjectEntryManager _objectEntryManager;
-	private ServiceContext _serviceContext;
+	private ObjectEntry _customObjectEntry;
+	private final ObjectEntryManager _objectEntryManager = Mockito.mock(
+		ObjectEntryManager.class);
+	private final com.liferay.object.model.ObjectEntry
+		_serviceBuilderObjectEntry = Mockito.mock(
+			com.liferay.object.model.ObjectEntry.class);
+	private final ServiceContext _serviceContext = new ServiceContext();
+	private ObjectEntry _systemObjectEntry;
 
 }

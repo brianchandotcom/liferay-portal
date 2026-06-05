@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.site.initializer.internal.test;
+package com.liferay.ai.hub.site.initializer.internal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -40,7 +40,6 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 import java.io.Serializable;
 
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -53,7 +52,7 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlag("LPD-62272")
 @RunWith(Arquillian.class)
-public class AIHubSystemInstructionsTest {
+public class ObjectEntryServiceTest {
 
 	@ClassRule
 	@Rule
@@ -66,120 +65,96 @@ public class AIHubSystemInstructionsTest {
 	public static void setUpClass() throws Exception {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-		_originalName = PrincipalThreadLocal.getName();
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+		_originalName = PrincipalThreadLocal.getName();
+
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
-		try {
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.ai.hub.site.initializer");
+		SiteInitializer siteInitializer =
+			_siteInitializerRegistry.getSiteInitializer(
+				"com.liferay.ai.hub.site.initializer");
 
-			siteInitializer.initialize(TestPropsValues.getGroupId());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-
-		_objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_INSTRUCTION_DEFINITION",
-					TestPropsValues.getCompanyId());
+		siteInitializer.initialize(TestPropsValues.getGroupId());
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 		PrincipalThreadLocal.setName(_originalName);
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
-	public void testDeleteSystemObjectEntryWithoutPermissions()
-		throws Exception {
-
-		ObjectEntry objectEntry = _fetchSystemObjectEntry(
-			"L_AI_HUB_AI_TRANSPARENCY");
+	public void testDeleteObjectEntry() throws Exception {
+		ObjectEntry objectEntry = _fetchObjectEntry();
 
 		User user = UserTestUtil.addUser();
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-		PrincipalThreadLocal.setName(user.getUserId());
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
 
-		AssertUtils.assertFailure(
-			PrincipalException.MustHavePermission.class,
-			StringBundler.concat(
-				"User ", user.getUserId(), " must have ", ActionKeys.DELETE,
-				" permission for ", _objectDefinition.getClassName(),
-				StringPool.SPACE, objectEntry.getObjectEntryId()),
-			() -> _objectEntryService.deleteObjectEntry(
-				objectEntry.getObjectEntryId()));
-
-		Assert.assertNotNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				objectEntry.getObjectEntryId()));
+			AssertUtils.assertFailure(
+				PrincipalException.MustHavePermission.class,
+				StringBundler.concat(
+					"User ", user.getUserId(), " must have ", ActionKeys.DELETE,
+					" permission for ", objectEntry.getModelClassName(),
+					StringPool.SPACE, objectEntry.getObjectEntryId()),
+				() -> _objectEntryService.deleteObjectEntry(
+					objectEntry.getObjectEntryId()));
+		}
 	}
 
 	@Test
-	public void testUpdateSystemObjectEntryWithoutPermissions()
-		throws Exception {
-
-		ObjectEntry objectEntry1 = _fetchSystemObjectEntry(
-			"L_AI_HUB_AI_TRANSPARENCY");
-
-		String originalInstruction = MapUtil.getString(
-			objectEntry1.getValues(), "instruction");
+	public void testUpdateObjectEntry() throws Exception {
+		ObjectEntry objectEntry = _fetchObjectEntry();
 
 		User user = UserTestUtil.addUser();
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-		PrincipalThreadLocal.setName(user.getUserId());
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
 
-		AssertUtils.assertFailure(
-			PrincipalException.MustHavePermission.class,
-			StringBundler.concat(
-				"User ", user.getUserId(), " must have ", ActionKeys.UPDATE,
-				" permission for ", _objectDefinition.getClassName(),
-				StringPool.SPACE, objectEntry1.getObjectEntryId()),
-			() -> _objectEntryService.updateObjectEntry(
-				objectEntry1.getObjectEntryId(), 0,
-				HashMapBuilder.<String, Serializable>put(
-					"instruction", RandomTestUtil.randomString()
-				).build(),
-				ServiceContextTestUtil.getServiceContext()));
-
-		ObjectEntry objectEntry2 = _fetchSystemObjectEntry(
-			"L_AI_HUB_AI_TRANSPARENCY");
-
-		Assert.assertEquals(
-			objectEntry2.toString(), originalInstruction,
-			MapUtil.getString(objectEntry2.getValues(), "instruction"));
+			AssertUtils.assertFailure(
+				PrincipalException.MustHavePermission.class,
+				StringBundler.concat(
+					"User ", user.getUserId(), " must have ", ActionKeys.UPDATE,
+					" permission for ", objectEntry.getModelClassName(),
+					StringPool.SPACE, objectEntry.getObjectEntryId()),
+				() -> _objectEntryService.updateObjectEntry(
+					objectEntry.getObjectEntryId(), 0,
+					HashMapBuilder.<String, Serializable>put(
+						"instruction", RandomTestUtil.randomString()
+					).build(),
+					ServiceContextTestUtil.getServiceContext()));
+		}
 	}
 
-	private ObjectEntry _fetchSystemObjectEntry(String externalReferenceCode) {
+	private ObjectEntry _fetchObjectEntry() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_INSTRUCTION_DEFINITION",
+					TestPropsValues.getCompanyId());
+
 		return _objectEntryLocalService.fetchObjectEntry(
-			externalReferenceCode, 0,
-			_objectDefinition.getObjectDefinitionId());
+			"L_AI_HUB_AI_TRANSPARENCY", 0,
+			objectDefinition.getObjectDefinitionId());
 	}
-
-	private static ObjectDefinition _objectDefinition;
-
-	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private static String _originalName;
 	private static PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

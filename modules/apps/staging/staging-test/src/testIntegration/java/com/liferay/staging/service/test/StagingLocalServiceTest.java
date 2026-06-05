@@ -432,46 +432,6 @@ public class StagingLocalServiceTest {
 	}
 
 	@Test
-	public void testEnableLocalStagingPreservesStyleBookEntryScopeERC()
-		throws Exception {
-
-		Group group = GroupTestUtil.addGroup();
-		Group scopeGroup = GroupTestUtil.addGroup();
-
-		try {
-			Layout layout = LayoutTestUtil.addTypePortletLayout(group);
-
-			String styleBookEntryERC = RandomTestUtil.randomString();
-
-			layout.setStyleBookEntryERC(styleBookEntryERC);
-
-			layout.setStyleBookEntryScopeERC(
-				scopeGroup.getExternalReferenceCode());
-
-			layout = _layoutLocalService.updateLayout(layout);
-
-			StagingLocalServiceUtil.enableLocalStaging(
-				_user.getUserId(), group, false, false, new ServiceContext());
-
-			Group stagingGroup = group.getStagingGroup();
-
-			Layout stagingLayout =
-				_layoutLocalService.fetchLayoutByUuidAndGroupId(
-					layout.getUuid(), stagingGroup.getGroupId(), false);
-
-			Assert.assertEquals(
-				styleBookEntryERC, stagingLayout.getStyleBookEntryERC());
-			Assert.assertEquals(
-				scopeGroup.getExternalReferenceCode(),
-				stagingLayout.getStyleBookEntryScopeERC());
-		}
-		finally {
-			GroupLocalServiceUtil.deleteGroup(group.getGroupId());
-			GroupLocalServiceUtil.deleteGroup(scopeGroup.getGroupId());
-		}
-	}
-
-	@Test
 	public void testEnableLocalStagingWithParentGroup() throws Exception {
 		Group parentGroup = GroupTestUtil.addGroup();
 

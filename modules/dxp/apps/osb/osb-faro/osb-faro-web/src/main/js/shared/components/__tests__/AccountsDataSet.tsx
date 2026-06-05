@@ -87,11 +87,7 @@ describe('AccountsDataSet', () => {
 
 	it('should render the FrontendDataSet with id "accounts-list-dataset"', () => {
 		render(
-			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
-			/>
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
 		);
 
 		expect(screen.getByTestId('fds-component')).toHaveAttribute(
@@ -102,11 +98,7 @@ describe('AccountsDataSet', () => {
 
 	it('should pass the apiURL directly to FrontendDataSet without appending range params', () => {
 		render(
-			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
-			/>
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
 		);
 
 		expect(lastApiURL).toBe('fake-url');
@@ -114,11 +106,7 @@ describe('AccountsDataSet', () => {
 
 	it('should preload the rangeKey filter with Last 30 Days by default', () => {
 		render(
-			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
-			/>
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
 		);
 
 		const rangeKeyFilter = lastFilters?.find(f => f.id === 'rangeKey');
@@ -136,11 +124,7 @@ describe('AccountsDataSet', () => {
 
 	it('should include all 8 time range options in the rangeKey filter', () => {
 		render(
-			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
-			/>
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
 		);
 
 		const rangeKeyFilter = lastFilters?.find(f => f.id === 'rangeKey');
@@ -160,11 +144,7 @@ describe('AccountsDataSet', () => {
 
 	it('should not include the activityStatus filter', () => {
 		render(
-			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
-			/>
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
 		);
 
 		const activityStatusFilter = lastFilters?.find(
@@ -176,11 +156,7 @@ describe('AccountsDataSet', () => {
 
 	it('should leave country and industry filters without preloadedData when no props are passed', () => {
 		render(
-			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
-			/>
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
 		);
 
 		const countryFilter = lastFilters?.find(f => f.id === 'country');
@@ -192,11 +168,7 @@ describe('AccountsDataSet', () => {
 
 	it('should omit the lifecycleStatus filter when accountLifecycleId is not provided', () => {
 		render(
-			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
-			/>
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
 		);
 
 		const lifecycleStatusFilter = lastFilters?.find(
@@ -307,11 +279,7 @@ describe('AccountsDataSet', () => {
 
 	it('should render the account name link with channelId in the href', () => {
 		render(
-			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
-			/>
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
 		);
 
 		const {container} = render(

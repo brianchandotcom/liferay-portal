@@ -1,5 +1,5 @@
 import ClayLink from '@clayui/link';
-import FaroConstants from 'shared/util/constants';
+import FaroConstants, {RangeKeyTimeRanges} from 'shared/util/constants';
 import Label from '@clayui/label';
 import Loading from 'shared/components/Loading';
 import React, {useEffect, useState} from 'react';
@@ -14,6 +14,41 @@ import {toRoute} from 'shared/util/router';
 export * from '@liferay/frontend-data-set-web';
 
 const {cur, delta, deltaValues} = FaroConstants.pagination;
+
+export const rangeSelectors = [
+	{
+		label: Liferay.Language.get('last-24-hours'),
+		value: RangeKeyTimeRanges.Last24Hours
+	},
+	{
+		label: Liferay.Language.get('yesterday'),
+		value: RangeKeyTimeRanges.Yesterday
+	},
+	{
+		label: Liferay.Language.get('last-seven-days'),
+		value: RangeKeyTimeRanges.Last7Days
+	},
+	{
+		label: Liferay.Language.get('last-28-days'),
+		value: RangeKeyTimeRanges.Last28Days
+	},
+	{
+		label: Liferay.Language.get('last-30-days'),
+		value: RangeKeyTimeRanges.Last30Days
+	},
+	{
+		label: Liferay.Language.get('last-90-days'),
+		value: RangeKeyTimeRanges.Last90Days
+	},
+	{
+		label: Liferay.Language.get('last-180-days'),
+		value: RangeKeyTimeRanges.Last180Days
+	},
+	{
+		label: Liferay.Language.get('last-year'),
+		value: RangeKeyTimeRanges.LastYear
+	}
+];
 
 export const pagination = {
 	deltas: deltaValues.map(delta => ({label: delta})),

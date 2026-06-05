@@ -470,8 +470,8 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 			String urlSeparator = friendlyURLResolver.getURLSeparator();
 
-			if (urlSeparator.contains(friendlyURL) ||
-				friendlyURL.startsWith(urlSeparator)) {
+			if (friendlyURL.startsWith(urlSeparator) ||
+				urlSeparator.startsWith(friendlyURL + StringPool.SLASH)) {
 
 				keywordConflict = urlSeparator;
 			}
@@ -481,8 +481,9 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 			if (Validator.isNull(keywordConflict) &&
 				friendlyURLResolver.isURLSeparatorConfigurable() &&
-				(defaultURLSeparator.contains(friendlyURL) ||
-				 friendlyURL.startsWith(defaultURLSeparator))) {
+				(friendlyURL.startsWith(defaultURLSeparator) ||
+				 defaultURLSeparator.startsWith(
+					 friendlyURL + StringPool.SLASH))) {
 
 				keywordConflict = defaultURLSeparator;
 			}

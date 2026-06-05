@@ -150,6 +150,8 @@ public class AudiencesJSONObjectBuilder {
 		).put(
 			Context.SIGNED_IN, "signed_in"
 		).put(
+			Context.TIME_ZONE, "time_zone"
+		).put(
 			Context.USER_AGENT, "user_agent"
 		).put(
 			"customContext/ipGeocoderCountry", "ip_geocoder_country"

@@ -13,6 +13,10 @@ compileJava {
 	options.release = 8
 }
 
+copyPatchOriginalLibClasses {
+	exclude "org/apache/cxf/transport/http/HttpClientHTTPConduit*"
+}
+
 dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", transitive: false, version: "4.0.1"
 	compileOnly group: "org.apache.aries.blueprint", name: "blueprint-parser", transitive: false, version: "1.6.1"

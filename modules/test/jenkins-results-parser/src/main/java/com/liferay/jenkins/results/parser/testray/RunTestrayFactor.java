@@ -45,10 +45,15 @@ public class RunTestrayFactor extends BaseTestrayFactor {
 			return _jsonObject;
 		}
 
-		final TestrayServer testrayServer = _testrayBuild.getTestrayServer();
-
 		final Category category = getCategory();
 		final Option option = getOption();
+
+		if ((category == null) || (option == null)) {
+			return null;
+		}
+
+		final TestrayServer testrayServer = _testrayBuild.getTestrayServer();
+
 		final TestrayRun testrayRun = getTestrayRun();
 
 		final String filter = JenkinsResultsParserUtil.combine(

@@ -138,7 +138,7 @@ public class DDMFormFieldOptionsFactoryImpl
 				).withGroupId(
 					_getGroupId(httpServletRequest)
 				).withLocale(
-					ddmFormFieldRenderingContext.getLocale()
+					portal.getLocale(httpServletRequest)
 				).withParameter(
 					"filterParameterValue",
 					HtmlUtil.escapeURL(

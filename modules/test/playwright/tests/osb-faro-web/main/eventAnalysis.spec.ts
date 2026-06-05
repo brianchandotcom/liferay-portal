@@ -1217,3 +1217,106 @@ test(
 		});
 	}
 );
+
+async function sendCustomEventWithAttributes({
+	apiHelpers,
+	channelId,
+}: {
+	apiHelpers: any;
+	channelId: string;
+}) {
+	const date = new Date();
+
+	await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+		{
+			applicationId: 'CustomEvent',
+			canonicalUrl: 'https://www.liferay.com',
+			channelId,
+			eventDate: date.toISOString(),
+			eventId: 'customEvent',
+			properties: [
+				{name: 'category', value: 'wetsuit'},
+				{name: 'pageTitle', value: 'My Page'},
+				{name: 'url', value: 'https://www.liferay.com'},
+			],
+			title: 'Liferay',
+			userId: '1',
+		},
+	]);
+
+	await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+		{
+			applicationId: 'CustomEvent',
+			displayName: 'customEvent',
+			eventAttributeDefinitions: ['category', 'pageTitle', 'url'].map(
+				(name) => ({
+					dataType: 'STRING',
+					displayName: name,
+					name,
+					type: 'LOCAL',
+				})
+			),
+			name: 'customEvent',
+			type: 'CUSTOM',
+		},
+	]);
+}
+
+test(
+	'Event Analysis keeps the event, breakdown and filter and clears them when the event is removed',
+	{
+		tag: '@LRAC-10266',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		// The event, its breakdown and the result are all present
+
+		await expect(
+			page.locator('.event-container').filter({hasText: 'customEvent'})
+		).toBeVisible();
+
+		await expect(
+			page.locator('.attribute-breakdown-section-root').filter({
+				hasText: 'pageTitle',
+			})
+		).toBeVisible();
+
+		// Removing the event clears the analysis
+
+		await removeAttribute({page, section: 'Event'});
+
+		await expect(
+			page.locator('.event-container').filter({hasText: 'customEvent'})
+		).toHaveCount(0);
+
+		await expect(
+			page.locator('.attribute-breakdown-section-root').filter({
+				hasText: 'pageTitle',
+			})
+		).toHaveCount(0);
+	}
+);

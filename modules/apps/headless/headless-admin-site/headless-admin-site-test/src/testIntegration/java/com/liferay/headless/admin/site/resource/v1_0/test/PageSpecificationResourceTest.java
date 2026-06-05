@@ -8,7 +8,6 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
-import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -17,7 +16,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
-import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
@@ -69,8 +67,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags(
 	featureFlags = {
-		@FeatureFlag(value = "LPD-35443"), @FeatureFlag(value = "LPD-57283"),
-		@FeatureFlag("LPD-74328")
+		@FeatureFlag(value = "LPD-35443"), @FeatureFlag(value = "LPD-74328")
 	}
 )
 @RunWith(Arquillian.class)
@@ -232,8 +229,6 @@ public class PageSpecificationResourceTest
 		_testGetSitePageSpecification(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
 			layoutPageTemplateEntry.getExternalReferenceCode());
-
-		_testGetSitePageSpecificationWithStyleBookEntryScopeERC(serviceContext);
 	}
 
 	@Override
@@ -379,8 +374,6 @@ public class PageSpecificationResourceTest
 		_testPutSitePageSpecification(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
 			layoutPageTemplateEntry.getExternalReferenceCode(), serviceContext);
-
-		_testPutSitePageSpecificationWithStyleBookEntryScopeERC(serviceContext);
 	}
 
 	@Override
@@ -960,51 +953,6 @@ public class PageSpecificationResourceTest
 			draftLayout, draftLayout.getExternalReferenceCode());
 	}
 
-	private void _testGetSitePageSpecificationWithStyleBookEntryScopeERC(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		StyleBookEntry scopedStyleBookEntry =
-			_styleBookEntryLocalService.addStyleBookEntry(
-				null, TestPropsValues.getUserId(), irrelevantGroup.getGroupId(),
-				false, null, RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext(
-					irrelevantGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		Layout layout = _addLayout(
-			LayoutConstants.TYPE_CONTENT, serviceContext);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		draftLayout.setStyleBookEntryERC(
-			scopedStyleBookEntry.getExternalReferenceCode());
-		draftLayout.setStyleBookEntryScopeERC(
-			irrelevantGroup.getExternalReferenceCode());
-
-		draftLayout = _layoutLocalService.updateLayout(draftLayout);
-
-		PageSpecification pageSpecification =
-			pageSpecificationResource.getSitePageSpecification(
-				testGroup.getExternalReferenceCode(),
-				draftLayout.getExternalReferenceCode());
-
-		Settings settings = SettingsTestUtil.getSettings(pageSpecification);
-
-		ItemExternalReference styleBookItemExternalReference =
-			settings.getStyleBookItemExternalReference();
-
-		Assert.assertEquals(
-			scopedStyleBookEntry.getExternalReferenceCode(),
-			styleBookItemExternalReference.getExternalReferenceCode());
-
-		Scope scope = styleBookItemExternalReference.getScope();
-
-		Assert.assertEquals(
-			irrelevantGroup.getExternalReferenceCode(),
-			scope.getExternalReferenceCode());
-	}
-
 	private void _testPageSpecificationsPage(
 			Layout layout, ServiceContext serviceContext,
 			UnsafeSupplier<Page<PageSpecification>, Exception> unsafeSupplier)
@@ -1203,77 +1151,6 @@ public class PageSpecificationResourceTest
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		_assertPutSiteContentPageSpecification(draftLayout, serviceContext);
-	}
-
-	private void _testPutSitePageSpecificationWithStyleBookEntryScopeERC(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		StyleBookEntry scopedStyleBookEntry =
-			_styleBookEntryLocalService.addStyleBookEntry(
-				null, TestPropsValues.getUserId(), irrelevantGroup.getGroupId(),
-				false, null, RandomTestUtil.randomString(), null,
-				RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext(
-					irrelevantGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		Layout layout = _addLayout(
-			LayoutConstants.TYPE_CONTENT, serviceContext);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		PageSpecification pageSpecification =
-			pageSpecificationResource.getSitePageSpecification(
-				testGroup.getExternalReferenceCode(),
-				draftLayout.getExternalReferenceCode());
-
-		Settings settings = SettingsTestUtil.getSettings(pageSpecification);
-
-		Scope scope = new Scope();
-
-		scope.setExternalReferenceCode(
-			irrelevantGroup.getExternalReferenceCode());
-
-		ItemExternalReference styleBookItemExternalReference =
-			new ItemExternalReference();
-
-		styleBookItemExternalReference.setExternalReferenceCode(
-			scopedStyleBookEntry.getExternalReferenceCode());
-		styleBookItemExternalReference.setScope(scope);
-
-		settings.setStyleBookItemExternalReference(
-			styleBookItemExternalReference);
-
-		pageSpecification.setStatus(PageSpecification.Status.DRAFT);
-
-		pageSpecificationResource.putSitePageSpecification(
-			testGroup.getExternalReferenceCode(),
-			draftLayout.getExternalReferenceCode(), pageSpecification);
-
-		Layout updatedDraftLayout = _layoutLocalService.getLayout(
-			draftLayout.getPlid());
-
-		Assert.assertEquals(
-			scopedStyleBookEntry.getExternalReferenceCode(),
-			updatedDraftLayout.getStyleBookEntryERC());
-		Assert.assertEquals(
-			irrelevantGroup.getExternalReferenceCode(),
-			updatedDraftLayout.getStyleBookEntryScopeERC());
-
-		String unresolvableScopeERC = RandomTestUtil.randomString();
-
-		scope.setExternalReferenceCode(unresolvableScopeERC);
-
-		pageSpecificationResource.putSitePageSpecification(
-			testGroup.getExternalReferenceCode(),
-			draftLayout.getExternalReferenceCode(), pageSpecification);
-
-		updatedDraftLayout = _layoutLocalService.getLayout(
-			draftLayout.getPlid());
-
-		Assert.assertEquals(
-			unresolvableScopeERC,
-			updatedDraftLayout.getStyleBookEntryScopeERC());
 	}
 
 	private Layout _updateLayout(Layout layout, ServiceContext serviceContext)

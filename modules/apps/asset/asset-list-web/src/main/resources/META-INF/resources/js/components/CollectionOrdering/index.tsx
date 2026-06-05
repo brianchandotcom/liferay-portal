@@ -188,7 +188,7 @@ function OrderByField({
 
 						<pre
 							style={{
-								background: '#f5f5f5',
+								border: '1px #f5f5f5 dashed',
 								borderRadius: 4,
 								fontSize: 11,
 								marginTop: 8,
@@ -206,7 +206,7 @@ function OrderByField({
 
 						<pre
 							style={{
-								background: '#f5f5f5',
+								border: '1px #f5f5f5 dashed',
 								borderRadius: 4,
 								fontSize: 11,
 								marginTop: 8,

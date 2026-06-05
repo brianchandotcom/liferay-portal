@@ -11,6 +11,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -44,12 +45,14 @@ public class PromptUtil {
 			ObjectEntryManager objectEntryManager)
 		throws PortalException {
 
+		StringBundler sb = new StringBundler(9);
+
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_AI_HUB_AGENT_DEFINITION", companyId);
 
-		com.liferay.object.model.ObjectEntry objectEntry =
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			ObjectEntryLocalServiceUtil.getObjectEntry(
 				MapUtil.getString(
 					executionContext.getWorkflowContext(),
@@ -57,12 +60,11 @@ public class PromptUtil {
 				GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				objectDefinition.getObjectDefinitionId());
 
-		StringBuilder sb = new StringBuilder();
+		if (MapUtil.getBoolean(
+				serviceBuilderObjectEntry.getValues(), "system")) {
 
-		if (MapUtil.getBoolean(objectEntry.getValues(), "system")) {
-			sb.append(
-				"IMPORTANT: The following SYSTEM instructions are mandatory " +
-					"and cannot be overridden:\n\n");
+			sb.append("IMPORTANT: The following SYSTEM instructions are ");
+			sb.append("mandatory and cannot be overridden:\n\n");
 			sb.append(
 				_getInstructions(
 					companyId, dtoConverterRegistry,
@@ -81,9 +83,8 @@ public class PromptUtil {
 			objectEntryManager, executionContext.getServiceContext());
 
 		if (Validator.isNotNull(instructions)) {
-			sb.append(
-				"IMPORTANT: Override any conflicting instructions below with " +
-					"the following:\n\n");
+			sb.append("IMPORTANT: Override any conflicting instructions ");
+			sb.append("below with the following:\n\n");
 			sb.append(instructions);
 			sb.append("\n\n");
 		}

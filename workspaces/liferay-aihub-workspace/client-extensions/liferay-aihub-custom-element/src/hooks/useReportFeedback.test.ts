@@ -21,9 +21,9 @@ describe('useReportFeedback', () => {
 	it('cannot submit until a reason is selected', () => {
 		const {result} = renderHook(() =>
 			useReportFeedback({
-			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			chatbotExternalReferenceCode: 'chatbot-1',
-		})
+				agentDefinitionExternalReferenceCodes: ['agent-1'],
+				chatbotExternalReferenceCode: 'chatbot-1',
+			})
 		);
 
 		expect(result.current.canSubmit).toBe(false);
@@ -36,9 +36,9 @@ describe('useReportFeedback', () => {
 	it('does not post when no reason is selected', async () => {
 		const {result} = renderHook(() =>
 			useReportFeedback({
-			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			chatbotExternalReferenceCode: 'chatbot-1',
-		})
+				agentDefinitionExternalReferenceCodes: ['agent-1'],
+				chatbotExternalReferenceCode: 'chatbot-1',
+			})
 		);
 
 		let outcome: boolean | undefined;
@@ -56,9 +56,9 @@ describe('useReportFeedback', () => {
 
 		const {result} = renderHook(() =>
 			useReportFeedback({
-			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			chatbotExternalReferenceCode: 'chatbot-1',
-		})
+				agentDefinitionExternalReferenceCodes: ['agent-1'],
+				chatbotExternalReferenceCode: 'chatbot-1',
+			})
 		);
 
 		act(() => {
@@ -75,6 +75,7 @@ describe('useReportFeedback', () => {
 		expect(outcome).toBe(true);
 		expect(mockedPost).toHaveBeenCalledWith({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			feedback: 'negative',
 			reason: 'piiExposure',
 			surface: 'clickToChat',
 			chatbotExternalReferenceCode: 'chatbot-1',
@@ -87,9 +88,9 @@ describe('useReportFeedback', () => {
 
 		const {result} = renderHook(() =>
 			useReportFeedback({
-			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			chatbotExternalReferenceCode: 'chatbot-1',
-		})
+				agentDefinitionExternalReferenceCodes: ['agent-1'],
+				chatbotExternalReferenceCode: 'chatbot-1',
+			})
 		);
 
 		act(() => result.current.setReason('other'));
@@ -100,6 +101,7 @@ describe('useReportFeedback', () => {
 
 		expect(mockedPost).toHaveBeenCalledWith({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			feedback: 'negative',
 			reason: 'other',
 			surface: 'clickToChat',
 			chatbotExternalReferenceCode: 'chatbot-1',
@@ -111,9 +113,9 @@ describe('useReportFeedback', () => {
 
 		const {result} = renderHook(() =>
 			useReportFeedback({
-			agentDefinitionExternalReferenceCodes: ['agent-1'],
-			chatbotExternalReferenceCode: 'chatbot-1',
-		})
+				agentDefinitionExternalReferenceCodes: ['agent-1'],
+				chatbotExternalReferenceCode: 'chatbot-1',
+			})
 		);
 
 		act(() => result.current.setReason('other'));

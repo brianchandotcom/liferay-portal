@@ -35,6 +35,7 @@ export default function useReportFeedback({
 		const payload: ReportFeedbackPayload = {
 			agentDefinitionExternalReferenceCodes,
 			chatbotExternalReferenceCode,
+			feedback: 'negative',
 			reason,
 			surface: 'clickToChat',
 			...(userMessage.trim() ? {userMessage: userMessage.trim()} : {}),

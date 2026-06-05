@@ -11,6 +11,7 @@ import {
 	getChatbotConfiguration,
 	postChatMessage,
 } from '../api';
+import {submitPositiveFeedback} from '../feedback';
 import {getLanguageId, getLocalizedValue} from '../locale';
 import AssistantMessage from './AssistantMessage';
 import ChatbotFooter from './ChatbotFooter';
@@ -30,20 +31,15 @@ import type {
 	WidgetConfiguration,
 } from '../types';
 
+const FEEDBACK_TOAST_MESSAGE = 'Thanks for your feedback!';
+
 interface ChatbotWidgetProps {
 	widgetConfiguration: WidgetConfiguration;
 }
 
 interface ReportContext {
 	agentDefinitionExternalReferenceCodes: string[];
-}
-
-function generateMessageId(): string {
-	if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-		return crypto.randomUUID();
-	}
-
-	return Math.random().toString(36).substring(2, 15);
+	index: number;
 }
 
 export default function ChatbotWidget({
@@ -51,6 +47,9 @@ export default function ChatbotWidget({
 }: ChatbotWidgetProps) {
 	const [chatbotConfiguration, setChatbotConfiguration] =
 		useState<ChatbotConfiguration | null>(null);
+	const [feedbackGiven, setFeedbackGiven] = useState<Record<number, boolean>>(
+		{}
+	);
 	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [notificationDismissed, setNotificationDismissed] = useState(false);
@@ -121,7 +120,6 @@ export default function ChatbotWidget({
 								agentDefinitionExternalReferenceCodes:
 									data.agentDefinitionExternalReferenceCodes ??
 									[],
-								messageId: generateMessageId(),
 								sender: 'assistant',
 								text: data.data,
 							},
@@ -161,7 +159,10 @@ export default function ChatbotWidget({
 							);
 						}
 
-						setMessages((prev) => [...prev, {sender: 'error', text}]);
+						setMessages((prev) => [
+							...prev,
+							{sender: 'error', text},
+						]);
 						setLoading(false);
 					}
 				);
@@ -255,6 +256,33 @@ export default function ChatbotWidget({
 		[widgetConfiguration.chatbotExternalReferenceCode]
 	);
 
+	const handleThumbsDown = (index: number, message: ChatMessage) => {
+		setReportContext({
+			agentDefinitionExternalReferenceCodes:
+				message.agentDefinitionExternalReferenceCodes ?? [],
+			index,
+		});
+	};
+
+	const handleThumbsUp = (index: number, message: ChatMessage) => {
+		if (feedbackGiven[index]) {
+			return;
+		}
+
+		setFeedbackGiven((prev) => ({...prev, [index]: true}));
+
+		submitPositiveFeedback(
+			{
+				agentDefinitionExternalReferenceCodes:
+					message.agentDefinitionExternalReferenceCodes ?? [],
+				chatbotExternalReferenceCode:
+					widgetConfiguration.chatbotExternalReferenceCode,
+				surface: 'clickToChat',
+			},
+			() => setToastMessage(FEEDBACK_TOAST_MESSAGE)
+		);
+	};
+
 	const localized = useMemo(() => {
 		if (!chatbotConfiguration) {
 			return null;
@@ -311,24 +339,15 @@ export default function ChatbotWidget({
 							return (
 								<AssistantMessage
 									avatar={avatarURL}
+									feedbackGiven={Boolean(
+										feedbackGiven[index]
+									)}
 									key={index}
-									onReport={
-										msg.messageId
-											? () =>
-													setReportContext({
-														agentDefinitionExternalReferenceCodes:
-															msg.agentDefinitionExternalReferenceCodes ??
-															[],
-													})
-											: undefined
+									onThumbsDown={() =>
+										handleThumbsDown(index, msg)
 									}
-									onThumbsUp={
-										msg.messageId
-											? () =>
-													setToastMessage(
-														'Thanks for your feedback!'
-													)
-											: undefined
+									onThumbsUp={() =>
+										handleThumbsUp(index, msg)
 									}
 									text={msg.text}
 									title={localized.title}
@@ -395,8 +414,12 @@ export default function ChatbotWidget({
 					}
 					onClose={() => setReportContext(null)}
 					onSubmitted={() => {
+						setFeedbackGiven((previousFeedbackGiven) => ({
+							...previousFeedbackGiven,
+							[reportContext.index]: true,
+						}));
 						setReportContext(null);
-						setToastMessage('Thanks for your feedback!');
+						setToastMessage(FEEDBACK_TOAST_MESSAGE);
 					}}
 				/>
 			)}

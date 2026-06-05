@@ -1934,7 +1934,7 @@ test(
 
 		await accountUsersPage.usersTable
 			.filterMenuItem('No Assigned Account')
-			.click();
+			.click({force: true});
 
 		await expect(
 			accountUsersPage.usersTable.cell(user1.emailAddress)
@@ -1956,7 +1956,7 @@ test(
 
 		await accountUsersPage.usersTable
 			.filterMenuItem('Selected Accounts')
-			.click();
+			.click({force: true});
 
 		await expect(
 			accountUsersAccountSelectorPage.accountsTable.searchInput
@@ -2007,6 +2007,8 @@ test(
 			accountUsersPage.usersTable.cell(user3.emailAddress)
 		).toHaveCount(0);
 
+		await accountUsersPage.usersTable.clearButton.click();
+
 		await expect(async () => {
 			await accountUsersPage.usersTable.filterButton.click();
 
@@ -2017,7 +2019,7 @@ test(
 
 		await accountUsersPage.usersTable
 			.filterMenuItem('Selected Accounts')
-			.click();
+			.click({force: true});
 
 		await expect(
 			accountUsersAccountSelectorPage.accountsTable.searchInput

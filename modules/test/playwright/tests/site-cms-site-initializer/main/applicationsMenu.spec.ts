@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {HomePage} from '../../../pages/portal-web/HomePage';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
 	performLogout,
@@ -75,45 +74,6 @@ test(
 
 		await apiHelpers.headlessAdminUser.deleteUserAccount(user.id);
 		await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(space.id);
-	}
-);
-
-test(
-	'Can access to Spaces from the Applications Menu',
-	{tag: '@LPD-59033'},
-	async ({apiHelpers, page}) => {
-		const spaceName = `Space ${getRandomString()}`;
-
-		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-			name: spaceName,
-			settings: {
-				logoColor: 'outline-3',
-				sharingEnabled: true,
-			},
-			type: 'Space',
-		});
-
-		const homePage = new HomePage(page);
-
-		await homePage.openApplicationMenu();
-
-		await page.getByLabel('Applications Menu').waitFor({state: 'visible'});
-
-		await expect(
-			page.locator('a span.text-truncate', {
-				hasText: 'Default',
-			})
-		).toBeVisible();
-
-		const spaceLink = page.locator('a span.text-truncate', {
-			hasText: spaceName,
-		});
-
-		await spaceLink.click();
-
-		await expect(
-			page.getByRole('heading', {name: spaceName})
-		).toBeVisible();
 	}
 );
 

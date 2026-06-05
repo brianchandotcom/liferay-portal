@@ -69,7 +69,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags(
 	featureFlags = {
-		@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-57283"),
+		@FeatureFlag(value = "LPD-35443"), @FeatureFlag(value = "LPD-57283"),
 		@FeatureFlag("LPD-74328")
 	}
 )

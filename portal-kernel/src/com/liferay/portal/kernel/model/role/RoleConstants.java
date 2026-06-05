@@ -8,6 +8,8 @@ package com.liferay.portal.kernel.model.role;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
@@ -183,6 +185,20 @@ public class RoleConstants {
 		return TYPE_REGULAR_LABEL;
 	}
 
+	public static boolean isUnmodifiable(Role role) {
+		if (role == null) {
+			return false;
+		}
+
+		if (ArrayUtil.contains(_UNMODIFIABLE_ROLE_NAMES, role.getName()) ||
+			role.isSystem()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static String toSystemRoleExternalReferenceCode(String roleName) {
 		roleName = StringUtil.toUpperCase(
 			StringUtil.replace(roleName, CharPool.SPACE, CharPool.UNDERLINE));
@@ -190,5 +206,9 @@ public class RoleConstants {
 		return RoleConstants.EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_ROLE +
 			roleName;
 	}
+
+	private static final String[] _UNMODIFIABLE_ROLE_NAMES = {
+		CMS_ADMINISTRATOR
+	};
 
 }

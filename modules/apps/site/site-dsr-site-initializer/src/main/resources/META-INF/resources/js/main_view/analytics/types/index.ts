@@ -32,7 +32,7 @@ export interface ILogEntry extends IActivityLogEntry {
 
 export interface IUserLogsEntry {
 	logs: ILogEntry[];
-	userName: string;
+	userName?: string;
 }
 
 export type TActivityLog = Record<string, IUserLogsEntry[]>;
@@ -43,7 +43,7 @@ export interface IActivityLogEntry {
 	label?: string;
 	title: string;
 	type: string;
-	userName: string;
+	userName?: string;
 }
 
 export interface IAnalyticsFilter {

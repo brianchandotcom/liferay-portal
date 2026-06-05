@@ -10,17 +10,20 @@ import {ILogEntry, IUserLogsEntry} from '../types/index';
 import LogEntry from './LogEntry';
 
 const UserLogEntry: React.FC<IUserLogsEntry> = (userLogsEntry) => {
+	const userName =
+		userLogsEntry.userName || Liferay.Language.get('anonymous');
+
 	return (
 		<>
 			<div className="d-flex inline-item pl-3">
 				<AccountSticker
 					className="sticker-user-icon"
-					name={userLogsEntry.userName}
+					name={userName}
 					shape="circle"
 					size="lg"
 				/>
 
-				<span className="fw-600 ml-2">{userLogsEntry.userName}</span>
+				<span className="fw-600 ml-2">{userName}</span>
 			</div>
 			<ul className="pl-5 timeline">
 				{userLogsEntry.logs.map(

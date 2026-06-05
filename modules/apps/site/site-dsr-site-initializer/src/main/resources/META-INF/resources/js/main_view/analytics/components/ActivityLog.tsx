@@ -75,7 +75,7 @@ interface IUserSessionEvent {
 interface IUserSessionsPage {
 	totalEvents?: number;
 	userSessions?: Array<{
-		userName: string;
+		userName?: string;
 		userSessionEvents?: IUserSessionEvent[];
 	}>;
 }

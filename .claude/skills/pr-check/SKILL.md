@@ -42,6 +42,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Source Format](validations/source-format.md)
 
+1. [Module Registration](validations/module-registration.md)
+
 1. [Full Portal Build](validations/full-portal-build.md)
 
 1. [Per-Module Deploy](validations/per-module-deploy.md)

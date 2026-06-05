@@ -27,7 +27,7 @@ export interface ReportFeedbackPayload {
 }
 
 export async function postAIIssueReport(payload: ReportFeedbackPayload) {
-	const response = await fetch(`${AI_HUB_ENDPOINT}/agent-issue-reports`, {
+	const response = await fetch(`${AI_HUB_ENDPOINT}/reports`, {
 		body: JSON.stringify(payload),
 		headers: new Headers({
 			'Accept': 'application/json',

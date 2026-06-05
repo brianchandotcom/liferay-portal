@@ -730,15 +730,12 @@ public class ContentPageEditorDisplayContext {
 					StyleBookEntry styleBookEntry =
 						StyleBookEntryProviderUtil.getStyleBookEntry(layout);
 
-					if (styleBookEntry == null) {
-						return StringPool.BLANK;
-					}
-
 					FrontendTokenDefinition frontendTokenDefinition =
 						_frontendTokenDefinitionRegistry.
 							getFrontendTokenDefinition(layout);
 
-					if (Objects.equals(
+					if ((styleBookEntry != null) &&
+						Objects.equals(
 							frontendTokenDefinition.getThemeId(),
 							styleBookEntry.getThemeId())) {
 

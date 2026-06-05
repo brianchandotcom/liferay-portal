@@ -136,6 +136,9 @@ public class ResourceOpenAPIParser {
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
+		String requestBodyAnnotation = _getRequestBodyAnnotation(
+			javaMethodSignature, operation);
+
 		if ((operation.getDescription() != null) || operation.isDeprecated()) {
 			StringBundler sb = new StringBundler(
 				"@io.swagger.v3.oas.annotations.Operation(");
@@ -163,9 +166,6 @@ public class ResourceOpenAPIParser {
 					sb.append("\"");
 				}
 
-				String requestBodyAnnotation = _getRequestBodyAnnotation(
-					javaMethodSignature, operation);
-
 				if (!requestBodyAnnotation.isEmpty()) {
 					sb.append(", ");
 					sb.append(requestBodyAnnotation);
@@ -177,9 +177,6 @@ public class ResourceOpenAPIParser {
 			methodAnnotations.add(sb.toString());
 		}
 		else {
-			String requestBodyAnnotation = _getRequestBodyAnnotation(
-				javaMethodSignature, operation);
-
 			if (!requestBodyAnnotation.isEmpty()) {
 				methodAnnotations.add(
 					StringBundler.concat(

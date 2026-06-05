@@ -119,8 +119,7 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 										fieldName: 'dataSourceName',
 										label: Liferay.Language.get(
 											'data-source'
-										),
-										sortable: true
+										)
 									},
 									{
 										contentRenderer: 'lastModifiedRenderer',

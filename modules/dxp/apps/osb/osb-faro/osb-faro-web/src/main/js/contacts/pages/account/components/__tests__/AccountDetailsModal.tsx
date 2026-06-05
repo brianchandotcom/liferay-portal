@@ -7,19 +7,23 @@ import {useRequest} from 'shared/hooks/useRequest';
 jest.unmock('react-dom');
 
 let lastOnItemsPropSearch: ((item: any, query: string) => boolean) | undefined;
+let lastViews: any[] | undefined;
 
 jest.mock('@liferay/frontend-data-set-web', () => ({
 	...jest.requireActual('@liferay/frontend-data-set-web'),
 	FrontendDataSet: ({
 		id,
 		items,
-		onItemsPropSearch
+		onItemsPropSearch,
+		views
 	}: {
 		id: string;
 		items: any[];
 		onItemsPropSearch?: (item: any, query: string) => boolean;
+		views?: any[];
 	}) => {
 		lastOnItemsPropSearch = onItemsPropSearch;
+		lastViews = views;
 
 		return (
 			<div data-testid='fds-component' id={id}>
@@ -135,6 +139,14 @@ describe('AccountDetailsModal', () => {
 		renderModal();
 
 		expect(screen.queryAllByTestId('fds-item')).toHaveLength(0);
+	});
+
+	it('should not offer any column as sortable since the data set is fed a static items array', () => {
+		renderModal();
+
+		const fields = lastViews![0].schema.fields;
+
+		expect(fields.every((field: any) => !field.sortable)).toBe(true);
 	});
 
 	it('should match items by name when the data set search has a query', () => {

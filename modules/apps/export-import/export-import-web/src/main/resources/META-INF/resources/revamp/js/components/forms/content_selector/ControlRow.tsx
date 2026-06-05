@@ -8,6 +8,8 @@ import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
 import React, {ReactNode} from 'react';
 
+const noop = () => {};
+
 export default function ControlRow({
 	checkboxId,
 	description,
@@ -79,7 +81,7 @@ export default function ControlRow({
 						<ClayCheckbox
 							checked={false}
 							disabled
-							onChange={() => {}}
+							onChange={noop}
 						/>
 					</ClayLayout.ContentCol>
 

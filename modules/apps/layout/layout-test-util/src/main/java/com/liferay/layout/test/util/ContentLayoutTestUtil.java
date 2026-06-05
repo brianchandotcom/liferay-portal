@@ -721,21 +721,7 @@ public class ContentLayoutTestUtil {
 
 			@Override
 			public RequestDispatcher getRequestDispatcher(String path) {
-				return new RequestDispatcher() {
-
-					@Override
-					public void forward(
-						ServletRequest servletRequest,
-						ServletResponse servletResponse) {
-					}
-
-					@Override
-					public void include(
-						ServletRequest servletRequest,
-						ServletResponse servletResponse) {
-					}
-
-				};
+				return _REQUEST_DISPATCHER;
 			}
 
 		};
@@ -746,5 +732,22 @@ public class ContentLayoutTestUtil {
 		"<div id=\"${fragmentEntryLinkNamespace}-inputTemplateNode\">",
 		"<p>InputName:${input.name}</p>",
 		"<p>InputJSONObject:${input.toJSONObject()}</p></div></div>");
+
+	private static final RequestDispatcher _REQUEST_DISPATCHER =
+		new RequestDispatcher() {
+
+			@Override
+			public void forward(
+				ServletRequest servletRequest,
+				ServletResponse servletResponse) {
+			}
+
+			@Override
+			public void include(
+				ServletRequest servletRequest,
+				ServletResponse servletResponse) {
+			}
+
+		};
 
 }

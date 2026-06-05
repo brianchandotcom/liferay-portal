@@ -33,6 +33,7 @@ export function FormikFieldRadioGroup({
 		<div
 			aria-describedby={ariaDescribedby}
 			aria-labelledby={ariaLabelledby}
+			className="option-group"
 			role="radiogroup"
 		>
 			{options.map(({description, label, value}) => (

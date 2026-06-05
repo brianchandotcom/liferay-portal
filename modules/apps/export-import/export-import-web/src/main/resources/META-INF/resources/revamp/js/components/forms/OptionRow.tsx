@@ -54,7 +54,7 @@ export function OptionRow({
 	return (
 		<label
 			className={classnames(
-				'cursor-pointer d-block mb-2 text-3',
+				'cursor-pointer d-block text-3',
 				bordered && 'border p-3 rounded'
 			)}
 		>

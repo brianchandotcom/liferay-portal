@@ -9,8 +9,8 @@ import React from 'react';
 
 import SectionHeader from '../../../components/SectionHeader';
 import {DateFilterValues} from '../../../components/date_filter';
-import CheckboxSheet from '../../../components/forms/CheckboxSheet';
 import {
+	FormikFieldCheckbox,
 	FormikFieldContentSelector,
 	FormikFieldDateFilter,
 } from '../../../components/forms/formik';
@@ -49,31 +49,35 @@ export default function DataSelection({
 				title={Liferay.Language.get('data-selection')}
 			/>
 
-			<ClayLayout.Sheet>
+			<ClayLayout.Sheet className="option-group">
+				<FormikFieldCheckbox
+					description={Liferay.Language.get(
+						'export-import-permissions-help'
+					)}
+					label={Liferay.Language.get('export-permissions')}
+					name="permissions"
+				/>
+
+				{deletionCount > 0 && (
+					<FormikFieldCheckbox
+						description={Liferay.Language.get(
+							'deletions-help-export'
+						)}
+						label={Liferay.Language.get(
+							'export-individual-deletions'
+						)}
+						name="deletions"
+					/>
+				)}
+			</ClayLayout.Sheet>
+
+			<ClayLayout.Sheet className="mt-4">
 				<FormikFieldDateFilter
 					itemsCount={itemsCount}
 					name="dateFilter"
 					onApplyFilter={onApplyFilter}
 				/>
 			</ClayLayout.Sheet>
-
-			{deletionCount > 0 && (
-				<CheckboxSheet
-					description={Liferay.Language.get('deletions-help-export')}
-					label={Liferay.Language.get('export-individual-deletions')}
-					name="deletions"
-					title={Liferay.Language.get('deletions')}
-				/>
-			)}
-
-			<CheckboxSheet
-				description={Liferay.Language.get(
-					'export-import-permissions-help'
-				)}
-				label={Liferay.Language.get('export-permissions')}
-				name="permissions"
-				title={Liferay.Language.get('permissions')}
-			/>
 
 			<div className="sr-only" role="status">
 				{loading

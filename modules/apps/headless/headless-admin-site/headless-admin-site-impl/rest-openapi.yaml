@@ -3606,10 +3606,7 @@ components:
                     type: array
                 type:
                     description:
-                        The page type. As of LPD-76864, "WidgetPage" is deprecated; creating new widget pages is
-                        rejected with a 400 response on new installs where the LPD-76864 feature flag is disabled. Use
-                        "ContentPage" instead. Existing widget pages continue to render unchanged on upgraded installs
-                        where the flag is enabled.
+                        The page type. As of LPD-76864, "WidgetPage" is deprecated; creating new widget pages is rejected with a 400 response on new installs where the LPD-76864 feature flag is disabled. Use "ContentPage" instead. Existing widget pages continue to render unchanged on upgraded installs where the flag is enabled.
                     enum:
                         -   ContentPage
                         -   EmbeddedPage

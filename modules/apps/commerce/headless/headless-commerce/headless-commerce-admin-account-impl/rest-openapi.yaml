@@ -3,8 +3,7 @@ components:
         accountExternalReferenceCodePathParam:
             in: path
             description:
-                External reference code of the related Account. Idempotency key for create and update; must be unique
-                per Account within the company.
+                External reference code of the related Account. Idempotency key for create and update; must be unique per Account within the company.
             explode: false
             name: accountExternalReferenceCode
             required: true
@@ -18,8 +17,7 @@ components:
         externalReferenceCodePathParam:
             in: path
             description:
-                External reference code that identifies the resource. Idempotency key for create and update; must be
-                unique per entity within the company.
+                External reference code that identifies the resource. Idempotency key for create and update; must be unique per entity within the company.
             explode: false
             name: externalReferenceCode
             required: true
@@ -33,8 +31,7 @@ components:
         filterQueryParam:
             in: query
             description:
-                OData v4 filter expression that narrows the result set. The filterable fields depend on the endpoint;
-                see the operation description for the supported field list.
+                OData v4 filter expression that narrows the result set. The filterable fields depend on the endpoint; see the operation description for the supported field list.
             explode: true
             name: filter
             required: false
@@ -94,8 +91,7 @@ components:
         searchQueryParam:
             in: query
             description:
-                Free-text search expression matched against the indexed string fields of the underlying entity. The
-                matched fields depend on the endpoint; see the operation description for the searched field list.
+                Free-text search expression matched against the indexed string fields of the underlying entity. The matched fields depend on the endpoint; see the operation description for the searched field list.
             explode: true
             name: search
             required: false
@@ -105,8 +101,7 @@ components:
         sortQueryParam:
             in: query
             description:
-                Comma-separated list of sort expressions in the form <field>:asc or <field>:desc. The sortable fields
-                depend on the endpoint; see the operation description for the supported field list.
+                Comma-separated list of sort expressions in the form <field>:asc or <field>:desc. The sortable fields depend on the endpoint; see the operation description for the supported field list.
             explode: true
             name: sort
             required: false
@@ -152,15 +147,11 @@ components:
     schemas:
         Account:
             description:
-                Commerce buyer organization or end customer that places orders. Owns addresses, members (users with
-                account-scoped roles), and links to organizations and account groups. Created on POST, updated on PATCH,
-                and returned by the matching list endpoint.
+                Commerce buyer organization or end customer that places orders. Owns addresses, members (users with account-scoped roles), and links to organizations and account groups. Created on POST, updated on PATCH, and returned by the matching list endpoint.
             properties:
                 accountAddresses:
                     description:
-                        Addresses owned by this account, accepted on POST or PATCH and persisted in the same
-                        transaction; existing addresses are matched by `id` and updated when supplied, otherwise added.
-                        Not returned on read; fetch them through the addresses sub-resource.
+                        Addresses owned by this account, accepted on POST or PATCH and persisted in the same transaction; existing addresses are matched by `id` and updated when supplied, otherwise added. Not returned on read; fetch them through the addresses sub-resource.
                     example:
                     -   city: Diamond Bar
                         countryISOCode: US
@@ -183,9 +174,7 @@ components:
                     type: array
                 accountMembers:
                     description:
-                        Members (user-to-account links) on this account, each carrying the user's account-scoped roles,
-                        accepted on POST or PATCH and persisted in the same transaction; existing memberships are kept,
-                        never removed. Not returned on read; fetch them through the members sub-resource.
+                        Members (user-to-account links) on this account, each carrying the user's account-scoped roles, accepted on POST or PATCH and persisted in the same transaction; existing memberships are kept, never removed. Not returned on read; fetch them through the members sub-resource.
                     example:
                     -   description:
                             en_US: Account Administrator Description US
@@ -199,9 +188,7 @@ components:
                     type: array
                 accountOrganizations:
                     description:
-                        Organizations linked to this account, accepted on POST or PATCH and persisted in the same
-                        transaction; existing links are kept, never removed. Not returned on read; fetch them through
-                        the organizations sub-resource.
+                        Organizations linked to this account, accepted on POST or PATCH and persisted in the same transaction; existing links are kept, never removed. Not returned on read; fetch them through the organizations sub-resource.
                     example:
                     -   id: 20546
                         name: Liferay Italy
@@ -212,53 +199,45 @@ components:
                     type: array
                 active:
                     description:
-                        Whether the account is active. Inactive accounts cannot place orders but remain visible in the
-                        admin UI. Defaults to true on create; mapped to the workflow status of the underlying account
-                        record (active when approved, inactive otherwise).
+                        Whether the account is active. Inactive accounts cannot place orders but remain visible in the admin UI. Defaults to true on create; mapped to the workflow status of the underlying account record (active when approved, inactive otherwise).
                     example: true
                     type: boolean
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form custom field map populated by the platform expando mechanism. Keys are the registered
-                        custom field names; values follow the type declared on the field definition.
+                        Free-form custom field map populated by the platform expando mechanism. Keys are the registered custom field names; values follow the type declared on the field definition.
                     type: object
                 dateCreated:
                     description:
-                        Creation timestamp in ISO 8601 (UTC). Read-only; set when the account is first persisted.
-                        Filterable and sortable via the OData query parameter.
+                        Creation timestamp in ISO 8601 (UTC). Read-only; set when the account is first persisted. Filterable and sortable via the OData query parameter.
                     example: 2017-07-21T19:30:00Z
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
                     description:
-                        Last modification timestamp in ISO 8601 (UTC). Read-only; updated on each save. Filterable and
-                        sortable via the OData query parameter.
+                        Last modification timestamp in ISO 8601 (UTC). Read-only; updated on each save. Filterable and sortable via the OData query parameter.
                     example: 2017-07-21T19:30:00Z
                     format: date-time
                     readOnly: true
                     type: string
                 defaultBillingAccountAddressId:
                     description:
-                        Reference to the address (FK identifier) used as the default billing address for the account.
-                        Setting this field clears the previous default billing flag on sibling addresses.
+                        Reference to the address (FK identifier) used as the default billing address for the account. Setting this field clears the previous default billing flag on sibling addresses.
                     example: 10130
                     format: int64
                     minimum: 0
                     type: integer
                 defaultShippingAccountAddressId:
                     description:
-                        Reference to the address (FK identifier) used as the default shipping address for the account.
-                        Setting this field clears the previous default shipping flag on sibling addresses.
+                        Reference to the address (FK identifier) used as the default shipping address for the account. Setting this field clears the previous default shipping flag on sibling addresses.
                     example: 10131
                     format: int64
                     minimum: 0
                     type: integer
                 emailAddresses:
                     description:
-                        Email addresses associated with the account. The first entry is the primary contact email; on
-                        create or update only the first entry is persisted as the account email.
+                        Email addresses associated with the account. The first entry is the primary contact email; on create or update only the first entry is persisted as the account email.
                     example:
                     -   joe.1@commerce.com
                     -   joe.2@commerce.com
@@ -269,8 +248,7 @@ components:
                     type: array
                 externalReferenceCode:
                     description:
-                        Idempotency key for create and update; must be unique per account within the company. Used as
-                        the addressing key on the by-externalReferenceCode endpoints.
+                        Idempotency key for create and update; must be unique per account within the company. Used as the addressing key on the by-externalReferenceCode endpoints.
                     example: AB-34098-789-N
                     type: string
                 id:
@@ -282,41 +260,34 @@ components:
                     type: integer
                 logoId:
                     description:
-                        Reference to the document library entry (FK identifier) that stores the account logo image.
-                        Read-only on this schema; set through the dedicated logo upload endpoint.
+                        Reference to the document library entry (FK identifier) that stores the account logo image. Read-only on this schema; set through the dedicated logo upload endpoint.
                     example: 20078
                     format: int64
                     minimum: 0
                     type: integer
                 logoURL:
                     description:
-                        Relative URL the back-office uses to fetch the account logo image. Computed from the logo
-                        identifier and a cache-busting token; read-only.
+                        Relative URL the back-office uses to fetch the account logo image. Computed from the logo identifier and a cache-busting token; read-only.
                     example: /image/organization_logo?img_id=20078&t=1500000000000
                     type: string
                 name:
                     description:
-                        Display name of the account. Required on create. Filterable and sortable via the OData query
-                        parameter; matched by the search query parameter.
+                        Display name of the account. Required on create. Filterable and sortable via the OData query parameter; matched by the search query parameter.
                     example: Account Name
                     type: string
                 root:
                     description:
-                        Whether this account sits at the root of the account hierarchy. Read-only; true when the account
-                        has no parent account.
+                        Whether this account sits at the root of the account hierarchy. Read-only; true when the account has no parent account.
                     example: true
                     type: boolean
                 taxId:
                     description:
-                        Tax identifier of the account such as a VAT or EIN number. Persisted as supplied and surfaced on
-                        invoices.
+                        Tax identifier of the account such as a VAT or EIN number. Persisted as supplied and surfaced on invoices.
                     example: Abcd1234
                     type: string
                 type:
                     description:
-                        Integer account type -- 0=Guest, 1=Personal, 2=Business. Determines the available members and
-                        address flows. Defaults to Personal on create. Filterable and sortable via the OData query
-                        parameter.
+                        Integer account type -- 0=Guest, 1=Personal, 2=Business. Determines the available members and address flows. Defaults to Personal on create. Filterable and sortable via the OData query parameter.
                     example: 1
                     format: int32
                     maximum: 2
@@ -328,8 +299,7 @@ components:
             type: object
         AccountAddress:
             description:
-                Billing, shipping, or combined-purpose address owned by an account. Marking an address as default
-                billing or shipping clears the previously default address on the same account.
+                Billing, shipping, or combined-purpose address owned by an account. Marking an address as default billing or shipping clears the previously default address on the same account.
             properties:
                 city:
                     description:
@@ -338,20 +308,17 @@ components:
                     type: string
                 countryISOCode:
                     description:
-                        Country code in ISO 3166-1 alpha-2 form. Required on create; resolved against the company's
-                        registered countries.
+                        Country code in ISO 3166-1 alpha-2 form. Required on create; resolved against the company's registered countries.
                     example: US
                     type: string
                 defaultBilling:
                     description:
-                        Whether this address is the default billing address for the owning account. Setting this to true
-                        clears the same flag on sibling addresses on the account.
+                        Whether this address is the default billing address for the owning account. Setting this to true clears the same flag on sibling addresses on the account.
                     example: true
                     type: boolean
                 defaultShipping:
                     description:
-                        Whether this address is the default shipping address for the owning account. Setting this to
-                        true clears the same flag on sibling addresses on the account.
+                        Whether this address is the default shipping address for the owning account. Setting this to true clears the same flag on sibling addresses on the account.
                     example: true
                     type: boolean
                 description:
@@ -395,8 +362,7 @@ components:
                     type: string
                 regionISOCode:
                     description:
-                        Region code in ISO 3166-2 form. Optional; resolved against the regions registered on the country
-                        and left blank when no matching region is found.
+                        Region code in ISO 3166-2 form. Optional; resolved against the regions registered on the country and left blank when no matching region is found.
                     example: CA
                     type: string
                 street1:
@@ -416,8 +382,7 @@ components:
                     type: string
                 type:
                     description:
-                        Integer address purpose -- 1=Billing, 2=Billing and shipping, 3=Shipping. Defaults to Billing
-                        and shipping on create when not supplied.
+                        Integer address purpose -- 1=Billing, 2=Billing and shipping, 3=Shipping. Defaults to Billing and shipping on create when not supplied.
                     example: 1
                     format: int32
                     maximum: 3
@@ -437,22 +402,17 @@ components:
         AccountChannelEntry:
             deprecated: true
             description:
-                Deprecated -- per-account override of a channel-level commerce rule (currency, delivery or payment term,
-                discount, payment method, price list, reserved billing or shipping address, or assigned user). The
-                effective override type is derived from the endpoint path rather than from the payload. New integrations
-                should use the per-account shipping option override or the nested account sub-resources.
+                Deprecated -- per-account override of a channel-level commerce rule (currency, delivery or payment term, discount, payment method, price list, reserved billing or shipping address, or assigned user). The effective override type is derived from the endpoint path rather than from the payload. New integrations should use the per-account shipping option override or the nested account sub-resources.
             properties:
                 accountExternalReferenceCode:
                     description:
-                        Idempotency key of the parent account that owns the override. Read-only on this schema; mirrored
-                        from the parent account record.
+                        Idempotency key of the parent account that owns the override. Read-only on this schema; mirrored from the parent account record.
                     example: AB-34098-789-N
                     readOnly: true
                     type: string
                 accountId:
                     description:
-                        Reference to the parent account that owns the override (FK identifier). Read-only on this
-                        schema; mirrored from the parent account record.
+                        Reference to the parent account that owns the override (FK identifier). Read-only on this schema; mirrored from the parent account record.
                     example: 30130
                     format: int64
                     readOnly: true
@@ -463,8 +423,7 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 channelExternalReferenceCode:
@@ -474,22 +433,18 @@ components:
                     type: string
                 channelId:
                     description:
-                        Reference to the channel being overridden (FK identifier). Alternative to
-                        `channelExternalReferenceCode` on POST.
+                        Reference to the channel being overridden (FK identifier). Alternative to `channelExternalReferenceCode` on POST.
                     example: 30130
                     format: int64
                     type: integer
                 classExternalReferenceCode:
                     description:
-                        External reference code of the target entity (currency, term, discount, payment method, price
-                        list, address, or user) being attached to the channel-account pair. The interpretation of this
-                        code depends on the override type derived from the endpoint path.
+                        External reference code of the target entity (currency, term, discount, payment method, price list, address, or user) being attached to the channel-account pair. The interpretation of this code depends on the override type derived from the endpoint path.
                     example: AB-34098-789-N
                     type: string
                 classPK:
                     description:
-                        Internal primary key of the target entity being attached (FK identifier). Read in conjunction
-                        with the override type derived from the endpoint path.
+                        Internal primary key of the target entity being attached (FK identifier). Read in conjunction with the override type derived from the endpoint path.
                     example: 30130
                     format: int64
                     type: integer
@@ -502,28 +457,23 @@ components:
                     type: integer
                 overrideEligibility:
                     description:
-                        Whether this override bypasses channel-level eligibility checks. When true the rule is applied
-                        to the account regardless of channel-level filters.
+                        Whether this override bypasses channel-level eligibility checks. When true the rule is applied to the account regardless of channel-level filters.
                     example: true
                     type: boolean
                 priority:
                     description:
-                        Sort priority among overrides of the same type for the same account. Lower values are applied
-                        first.
+                        Sort priority among overrides of the same type for the same account. Lower values are applied first.
                     example: 1.0
                     format: double
                     type: number
             type: object
         AccountChannelShippingOption:
             description:
-                Per-account override of a shipping option on a commerce channel. Pairs the owning account, the channel,
-                a shipping method engine key, and a specific fixed option key; an override is unique per account,
-                channel, shipping method, and option key.
+                Per-account override of a shipping option on a commerce channel. Pairs the owning account, the channel, a shipping method engine key, and a specific fixed option key; an override is unique per account, channel, shipping method, and option key.
             properties:
                 accountExternalReferenceCode:
                     description:
-                        Idempotency key of the parent account that owns the override. Read-only on this schema; mirrored
-                        from the parent account record.
+                        Idempotency key of the parent account that owns the override. Read-only on this schema; mirrored from the parent account record.
                     example: AB-34098-789-N
                     type: string
                 accountId:
@@ -539,20 +489,17 @@ components:
                             type: string
                         type: object
                     description:
-                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries
-                        the href template and HTTP method, computed dynamically from user permissions. Read-only.
+                        Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only.
                     readOnly: true
                     type: object
                 channelExternalReferenceCode:
                     description:
-                        External reference code of the channel on which the shipping option override applies.
-                        Alternative to `channelId` on POST.
+                        External reference code of the channel on which the shipping option override applies. Alternative to `channelId` on POST.
                     example: AB-34098-789-N
                     type: string
                 channelId:
                     description:
-                        Reference to the channel on which the shipping option override applies (FK identifier).
-                        Alternative to `channelExternalReferenceCode` on POST.
+                        Reference to the channel on which the shipping option override applies (FK identifier). Alternative to `channelExternalReferenceCode` on POST.
                     example: 30130
                     format: int64
                     type: integer
@@ -565,50 +512,43 @@ components:
                     type: integer
                 shippingMethodId:
                     description:
-                        Reference to the resolved shipping method (FK identifier). Read-only output computed from
-                        `shippingMethodKey` against the channel; 0 when the key matches no active method.
+                        Reference to the resolved shipping method (FK identifier). Read-only output computed from `shippingMethodKey` against the channel; 0 when the key matches no active method.
                     example: 30324
                     format: int64
                     minimum: 0
                     type: integer
                 shippingMethodKey:
                     description:
-                        Engine key of the shipping method, persisted as supplied. The method must be active and
-                        registered on the channel.
+                        Engine key of the shipping method, persisted as supplied. The method must be active and registered on the channel.
                     example: fixed
                     type: string
                 shippingOptionId:
                     description:
-                        Reference to the resolved fixed shipping option (FK identifier). Read-only output computed from
-                        `shippingOptionKey`; 0 when the key matches no fixed option.
+                        Reference to the resolved fixed shipping option (FK identifier). Read-only output computed from `shippingOptionKey`; 0 when the key matches no fixed option.
                     example: 30324
                     format: int64
                     minimum: 0
                     type: integer
                 shippingOptionKey:
                     description:
-                        Engine key of the fixed shipping option, persisted as supplied. The option must be registered on
-                        the resolved shipping method.
+                        Engine key of the fixed shipping option, persisted as supplied. The option must be registered on the resolved shipping method.
                     example: expedited
                     type: string
             type: object
         AccountMember:
             description:
-                Membership relation between an account and a user. Carries the user's account-scoped roles and the
-                identifiers needed to resolve the user on create. Returned as a sub-resource of the owning account.
+                Membership relation between an account and a user. Carries the user's account-scoped roles and the identifiers needed to resolve the user on create. Returned as a sub-resource of the owning account.
             properties:
                 accountId:
                     description:
-                        Reference to the parent account on which the membership is created (FK identifier). Read-only on
-                        this schema.
+                        Reference to the parent account on which the membership is created (FK identifier). Read-only on this schema.
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
                 accountRoles:
                     description:
-                        Account-scoped roles assigned to the user on this account. Each entry carries the localized
-                        title and description of the role.
+                        Account-scoped roles assigned to the user on this account. Each entry carries the localized title and description of the role.
                     example:
                     -   description:
                             en_US: Account Administrator Description US
@@ -623,8 +563,7 @@ components:
                     type: array
                 email:
                     description:
-                        Email address of the user being attached as a member. Required on create; resolved against the
-                        platform user directory and rejected when no matching user exists.
+                        Email address of the user being attached as a member. Required on create; resolved against the platform user directory and rejected when no matching user exists.
                     example: joe.1@commerce.com
                     type: string
                 externalReferenceCode:
@@ -639,15 +578,12 @@ components:
                     type: string
                 userExternalReferenceCode:
                     description:
-                        External reference code of the user attached as a member. Alternative to `email` or `userId` on
-                        POST; resolved against the platform user directory and rejected when no matching user exists.
-                        Not returned on read.
+                        External reference code of the user attached as a member. Alternative to `email` or `userId` on POST; resolved against the platform user directory and rejected when no matching user exists. Not returned on read.
                     example: AB-34098-789-N
                     type: string
                 userId:
                     description:
-                        Reference to the user attached as a member (FK identifier). Alternative to `email` or
-                        `userExternalReferenceCode` on POST.
+                        Reference to the user attached as a member (FK identifier). Alternative to `email` or `userExternalReferenceCode` on POST.
                     example: 30002
                     format: int64
                     minimum: 0
@@ -657,8 +593,7 @@ components:
             type: object
         AccountOrganization:
             description:
-                Link between an account and a Liferay organization. Used to mirror an organizational hierarchy into the
-                commerce domain so that users tied to the organization inherit the account context.
+                Link between an account and a Liferay organization. Used to mirror an organizational hierarchy into the commerce domain so that users tied to the organization inherit the account context.
             properties:
                 accountId:
                     description:
@@ -674,37 +609,31 @@ components:
                     type: string
                 organizationExternalReferenceCode:
                     description:
-                        External reference code of the linked organization. Alternative to `organizationId` on POST;
-                        resolved against the platform organization directory and rejected when no matching organization
-                        exists. Not returned on read.
+                        External reference code of the linked organization. Alternative to `organizationId` on POST; resolved against the platform organization directory and rejected when no matching organization exists. Not returned on read.
                     example: AB-34098-789-N
                     type: string
                 organizationId:
                     description:
-                        Reference to the linked organization (FK identifier). Alternative to
-                        `organizationExternalReferenceCode` on POST.
+                        Reference to the linked organization (FK identifier). Alternative to `organizationExternalReferenceCode` on POST.
                     example: 30002
                     format: int64
                     minimum: 0
                     type: integer
                 treePath:
                     description:
-                        Slash-delimited path from the root of the organization tree to the linked organization.
-                        Read-only; mirrored from the organization record.
+                        Slash-delimited path from the root of the organization tree to the linked organization. Read-only; mirrored from the organization record.
                     example: /Parent Organization/Organization Name
                     type: string
             type: object
         AccountRole:
             description:
-                Account-scoped role assigned to a user through their account membership. Carries the localized title and
-                description that surface in the back-office.
+                Account-scoped role assigned to a user through their account membership. Carries the localized title and description that surface in the back-office.
             properties:
                 description:
                     additionalProperties:
                         type: string
                     description:
-                        Localized description of the role. Map keys are locale codes; values are the translated
-                        strings. Read-only; mirrored from the role record.
+                        Localized description of the role. Map keys are locale codes; values are the translated strings. Read-only; mirrored from the role record.
                     example:
                         en_US: Role Description US
                         hr_HR: Role Description HR
@@ -712,8 +641,7 @@ components:
                     type: object
                 name:
                     description:
-                        Internal name of the role, used as its stable identifier in the role registry. Required on
-                        create.
+                        Internal name of the role, used as its stable identifier in the role registry. Required on create.
                     example: Role Name
                     type: string
                 roleId:
@@ -727,8 +655,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        Localized title of the role. Map keys are locale codes; values are the translated strings.
-                        Read-only; mirrored from the role record.
+                        Localized title of the role. Map keys are locale codes; values are the translated strings. Read-only; mirrored from the role record.
                     example:
                         en_US: Role Title US
                         hr_HR: Role Title HR
@@ -739,15 +666,12 @@ components:
             type: object
         AdminAccountGroup:
             description:
-                Collection of accounts that share commerce rules, price lists, or discounts. The schema name carries the
-                `Admin` prefix to avoid colliding with the account group schema exposed by the headless admin-user
-                module.
+                Collection of accounts that share commerce rules, price lists, or discounts. The schema name carries the `Admin` prefix to avoid colliding with the account group schema exposed by the headless admin-user module.
             properties:
                 customFields:
                     additionalProperties: true
                     description:
-                        Free-form custom field map populated by the platform expando mechanism. Keys are the registered
-                        custom field names; values follow the type declared on the field definition.
+                        Free-form custom field map populated by the platform expando mechanism. Keys are the registered custom field names; values follow the type declared on the field definition.
                     type: object
                 description:
                     description:
@@ -769,8 +693,7 @@ components:
                     type: integer
                 name:
                     description:
-                        Display name of the account group. Required on create. Filterable and sortable via the OData
-                        query parameter.
+                        Display name of the account group. Required on create. Filterable and sortable via the OData query parameter.
                     example: AdminAccountGroup Name
                     type: string
             required:
@@ -778,13 +701,11 @@ components:
             type: object
         Error:
             description:
-                Standard error envelope returned by every non-success response. Carries the HTTP status, an internal
-                error code, and a human-readable description.
+                Standard error envelope returned by every non-success response. Carries the HTTP status, an internal error code, and a human-readable description.
             properties:
                 errorCode:
                     description:
-                        Internal numeric error code, distinct from the HTTP status. Mapped from the underlying exception
-                        that produced the response. Read-only.
+                        Internal numeric error code, distinct from the HTTP status. Mapped from the underlying exception that produced the response. Read-only.
                     example: 996
                     readOnly: true
                     type: integer
@@ -814,14 +735,11 @@ components:
             type: object
         User:
             description:
-                Portal user record. Returned by the createUser endpoint when a new user is provisioned as part of an
-                account membership invitation; carries the identifiers and profile fields needed to address the user in
-                subsequent calls.
+                Portal user record. Returned by the createUser endpoint when a new user is provisioned as part of an account membership invitation; carries the identifiers and profile fields needed to address the user in subsequent calls.
             properties:
                 email:
                     description:
-                        Primary email address of the user. Required on create; used as the login when the portal is
-                        configured to log in by email.
+                        Primary email address of the user. Required on create; used as the login when the portal is configured to log in by email.
                     example: joe.1@commerce.com
                     type: string
                 externalReferenceCode:
@@ -853,8 +771,7 @@ components:
                     type: string
                 male:
                     description:
-                        Whether the user is recorded as male in the profile. Legacy field; new integrations should not
-                        rely on it.
+                        Whether the user is recorded as male in the profile. Legacy field; new integrations should not rely on it.
                     example: true
                     type: boolean
                 middleName:
@@ -864,8 +781,7 @@ components:
                     type: string
                 roles:
                     description:
-                        Names of the regular portal-scoped roles to assign to the user. Each entry is the stable role
-                        name in the role registry.
+                        Names of the regular portal-scoped roles to assign to the user. Each entry is the stable role name in the role registry.
                     example:
                     -   User
                     -   Power User
@@ -879,57 +795,27 @@ components:
             type: object
         body:
             description:
-                Multipart upload envelope for an account logo addressed by internal identifier. Contains a single binary
-                file field named `logo` that replaces the current account logo.
+                Multipart upload envelope for an account logo addressed by internal identifier. Contains a single binary file field named `logo` that replaces the current account logo.
             properties:
                 logo:
                     description:
-                        Binary image file uploaded as the account logo. Standard image formats (PNG, JPEG, GIF) are
-                        accepted; the uploaded bytes replace the existing logo when supplied.
+                        Binary image file uploaded as the account logo. Standard image formats (PNG, JPEG, GIF) are accepted; the uploaded bytes replace the existing logo when supplied.
                     format: binary
                     type: string
             type: object
         body_1:
             description:
-                Multipart upload envelope for an account logo addressed by external reference code. Contains a single
-                binary file field named `logo` that replaces the current account logo.
+                Multipart upload envelope for an account logo addressed by external reference code. Contains a single binary file field named `logo` that replaces the current account logo.
             properties:
                 logo:
                     description:
-                        Binary image file uploaded as the account logo. Standard image formats (PNG, JPEG, GIF) are
-                        accepted; the uploaded bytes replace the existing logo when supplied.
+                        Binary image file uploaded as the account logo. Standard image formats (PNG, JPEG, GIF) are accepted; the uploaded bytes replace the existing logo when supplied.
                     format: binary
                     type: string
             type: object
 info:
     description:
-        "Liferay Commerce Admin Account API. Manages B2B and B2C Commerce accounts and their relationships from the
-        admin perspective. -- Primary entities -- Account (the commerce buyer organization), AccountGroup (collections
-        of accounts that share rules), AccountMember (links users to accounts with account-scoped roles),
-        AccountOrganization (links accounts to Liferay Organizations), AccountAddress (billing and shipping addresses),
-        AccountChannelEntry (deprecated per-account overrides of channel-level rules including currency, delivery and
-        payment terms, discounts, payment methods, price lists, and reserved shipping or billing addresses), and
-        AccountChannelShippingOption (per-account overrides of available shipping methods on a channel). -- Perspective
-        -- administrators with the CommerceOpenApiAdmin.read or CommerceOpenApiAdmin.write scope. Endpoints expose the
-        full account graph, including HATEOAS action descriptors and custom fields, regardless of the requesting user's
-        account membership. -- Related modules -- buyer-perspective endpoints live in
-        com.liferay.headless.commerce.delivery.cart and com.liferay.headless.commerce.delivery.catalog. Channel and
-        pricing configuration lives in com.liferay.headless.commerce.admin.channel and
-        com.liferay.headless.commerce.admin.pricing. -- Common workflows: Provision an account, addresses, and members
-        from the back-office -- POST /accounts with externalReferenceCode upserts the account, and nested addresses and
-        members are persisted in the same call; add further memberships through POST
-        /accounts/by-externalReferenceCode/<externalReferenceCode>/accountMembers (existing user) or
-        .../accountMembers/createUser (new user). -- Link an existing user as an account member -- POST
-        /accounts/by-externalReferenceCode/<externalReferenceCode>/accountMembers with userId or
-        userExternalReferenceCode and the desired AccountRoles, and PATCH on the member endpoint replaces the user's
-        role set on the account. -- Override channel-level rules for one account -- POST
-        /accounts/<id>/account-channel-* (or the by-externalReferenceCode variant) creates an override that takes
-        precedence over the channel default; the top-level /account-channel-* endpoints are deprecated, so prefer the
-        nested forms scoped under an account. -- Group accounts for bulk rule application -- POST /accountGroups creates
-        the group (upsert by externalReferenceCode), and POST
-        /accountGroups/by-externalReferenceCode/<externalReferenceCode>/accounts links an account into the group while
-        the DELETE counterpart unlinks it. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.account.client', and version '4.0.44'."
+        "Liferay Commerce Admin Account API. Manages B2B and B2C Commerce accounts and their relationships from the admin perspective. -- Primary entities -- Account (the commerce buyer organization), AccountGroup (collections of accounts that share rules), AccountMember (links users to accounts with account-scoped roles), AccountOrganization (links accounts to Liferay Organizations), AccountAddress (billing and shipping addresses), AccountChannelEntry (deprecated per-account overrides of channel-level rules including currency, delivery and payment terms, discounts, payment methods, price lists, and reserved shipping or billing addresses), and AccountChannelShippingOption (per-account overrides of available shipping methods on a channel). -- Perspective -- administrators with the CommerceOpenApiAdmin.read or CommerceOpenApiAdmin.write scope. Endpoints expose the full account graph, including HATEOAS action descriptors and custom fields, regardless of the requesting user's account membership. -- Related modules -- buyer-perspective endpoints live in com.liferay.headless.commerce.delivery.cart and com.liferay.headless.commerce.delivery.catalog. Channel and pricing configuration lives in com.liferay.headless.commerce.admin.channel and com.liferay.headless.commerce.admin.pricing. -- Common workflows: Provision an account, addresses, and members from the back-office -- POST /accounts with externalReferenceCode upserts the account, and nested addresses and members are persisted in the same call; add further memberships through POST /accounts/by-externalReferenceCode/<externalReferenceCode>/accountMembers (existing user) or .../accountMembers/createUser (new user). -- Link an existing user as an account member -- POST /accounts/by-externalReferenceCode/<externalReferenceCode>/accountMembers with userId or userExternalReferenceCode and the desired AccountRoles, and PATCH on the member endpoint replaces the user's role set on the account. -- Override channel-level rules for one account -- POST /accounts/<id>/account-channel-* (or the by-externalReferenceCode variant) creates an override that takes precedence over the channel default; the top-level /account-channel-* endpoints are deprecated, so prefer the nested forms scoped under an account. -- Group accounts for bulk rule application -- POST /accountGroups creates the group (upsert by externalReferenceCode), and POST /accountGroups/by-externalReferenceCode/<externalReferenceCode>/accounts links an account into the group while the DELETE counterpart unlinks it. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.account.client', and version '4.0.44'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -941,8 +827,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes the per-account billing address channel override identified by its internal ID. Returns 204 on
-                success.
+                Deletes the per-account billing address channel override identified by its internal ID. Returns 204 on success.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -978,8 +863,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads the per-account billing address channel override identified by its internal ID. Returns 404 when
-                no entry exists.
+                Reads the per-account billing address channel override identified by its internal ID. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -1042,9 +926,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates the per-account billing address channel override identified by its internal ID. JSON
-                Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are
-                modified.
+                Partially updates the per-account billing address channel override identified by its internal ID. JSON Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -1109,8 +991,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -1164,8 +1045,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads the per-account currency channel override identified by its internal ID. Returns 404 when no entry
-                exists.
+                Reads the per-account currency channel override identified by its internal ID. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -1228,8 +1108,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates the per-account currency channel override identified by its internal ID. JSON Merge
-                Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
+                Partially updates the per-account currency channel override identified by its internal ID. JSON Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -1294,8 +1173,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -1313,8 +1191,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes the per-account delivery term channel override identified by its internal ID. Returns 204 on
-                success.
+                Deletes the per-account delivery term channel override identified by its internal ID. Returns 204 on success.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -1350,8 +1227,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads the per-account delivery term channel override identified by its internal ID. Returns 404 when no
-                entry exists.
+                Reads the per-account delivery term channel override identified by its internal ID. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -1414,9 +1290,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates the per-account delivery term channel override identified by its internal ID. JSON
-                Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are
-                modified.
+                Partially updates the per-account delivery term channel override identified by its internal ID. JSON Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -1481,8 +1355,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -1536,8 +1409,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads the per-account discount channel override identified by its internal ID. Returns 404 when no entry
-                exists.
+                Reads the per-account discount channel override identified by its internal ID. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -1600,8 +1472,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates the per-account discount channel override identified by its internal ID. JSON Merge
-                Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
+                Partially updates the per-account discount channel override identified by its internal ID. JSON Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -1666,8 +1537,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -1685,8 +1555,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes the per-account payment method channel override identified by its internal ID. Returns 204 on
-                success.
+                Deletes the per-account payment method channel override identified by its internal ID. Returns 204 on success.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -1722,8 +1591,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads the per-account payment method channel override identified by its internal ID. Returns 404 when no
-                entry exists.
+                Reads the per-account payment method channel override identified by its internal ID. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -1786,9 +1654,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates the per-account payment method channel override identified by its internal ID. JSON
-                Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are
-                modified.
+                Partially updates the per-account payment method channel override identified by its internal ID. JSON Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -1853,8 +1719,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -1872,8 +1737,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes the per-account payment term channel override identified by its internal ID. Returns 204 on
-                success.
+                Deletes the per-account payment term channel override identified by its internal ID. Returns 204 on success.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -1909,8 +1773,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads the per-account payment term channel override identified by its internal ID. Returns 404 when no
-                entry exists.
+                Reads the per-account payment term channel override identified by its internal ID. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -1973,9 +1836,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates the per-account payment term channel override identified by its internal ID. JSON
-                Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are
-                modified.
+                Partially updates the per-account payment term channel override identified by its internal ID. JSON Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -2040,8 +1901,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -2059,8 +1919,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes the per-account price list channel override identified by its internal ID. Returns 204 on
-                success.
+                Deletes the per-account price list channel override identified by its internal ID. Returns 204 on success.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -2096,8 +1955,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads the per-account price list channel override identified by its internal ID. Returns 404 when no
-                entry exists.
+                Reads the per-account price list channel override identified by its internal ID. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -2160,8 +2018,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates the per-account price list channel override identified by its internal ID. JSON Merge
-                Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
+                Partially updates the per-account price list channel override identified by its internal ID. JSON Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -2226,8 +2083,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -2245,8 +2101,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes the per-account shipping address channel override identified by its internal ID. Returns 204 on
-                success.
+                Deletes the per-account shipping address channel override identified by its internal ID. Returns 204 on success.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -2282,8 +2137,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads the per-account shipping address channel override identified by its internal ID. Returns 404 when
-                no entry exists.
+                Reads the per-account shipping address channel override identified by its internal ID. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -2346,9 +2200,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates the per-account shipping address channel override identified by its internal ID. JSON
-                Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are
-                modified.
+                Partially updates the per-account shipping address channel override identified by its internal ID. JSON Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -2413,8 +2265,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -2466,8 +2317,7 @@ paths:
             -   AccountChannelShippingOption
         get:
             description:
-                Reads a per-account channel shipping option by its internal ID. Returns the per-account channel shipping
-                option. Returns 404 when no entry exists.
+                Reads a per-account channel shipping option by its internal ID. Returns the per-account channel shipping option. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -2529,8 +2379,7 @@ paths:
             -   AccountChannelShippingOption
         patch:
             description:
-                Partially updates a per-account channel shipping option by its internal ID. JSON Merge Patch semantics;
-                updates the channel binding, shipping method key, and shipping option key.
+                Partially updates a per-account channel shipping option by its internal ID. JSON Merge Patch semantics; updates the channel binding, shipping method key, and shipping option key.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -2595,8 +2444,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -2650,8 +2498,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads the per-account user channel override identified by its internal ID. Returns 404 when no entry
-                exists.
+                Reads the per-account user channel override identified by its internal ID. Returns 404 when no entry exists.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -2714,8 +2561,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates the per-account user channel override identified by its internal ID. JSON Merge Patch
-                semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
+                Partially updates the per-account user channel override identified by its internal ID. JSON Merge Patch semantics; only the supplied fields (channel binding, priority, overrideEligibility) are modified.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -2780,8 +2626,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -2799,10 +2644,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes an account address by its external reference code. Returns 404 when no address exists with the
-                supplied ERC. Deprecated. Use `DELETE
-                /o/headless-admin-user/v1.0/postal-addresses/by-external-reference-code/{externalReferenceCode}` from
-                the headless-admin-user module instead.
+                Deletes an account address by its external reference code. Returns 404 when no address exists with the supplied ERC. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/postal-addresses/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: deleteAccountAddressByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2836,9 +2678,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads an account address by its external reference code. Returns the account address. Deprecated. Use
-                `GET /o/headless-admin-user/v1.0/postal-addresses/by-external-reference-code/{externalReferenceCode}`
-                from the headless-admin-user module instead.
+                Reads an account address by its external reference code. Returns the account address. Deprecated. Use `GET /o/headless-admin-user/v1.0/postal-addresses/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: getAccountAddressByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2902,11 +2742,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates an account address by its external reference code. JSON Merge Patch semantics; only
-                the supplied fields are modified. Side effect -- when defaultBilling or defaultShipping is set to true
-                the previously default address on the same account is cleared. Deprecated. Use `PATCH
-                /o/headless-admin-user/v1.0/postal-addresses/by-external-reference-code/{externalReferenceCode}` from
-                the headless-admin-user module instead.
+                Partially updates an account address by its external reference code. JSON Merge Patch semantics; only the supplied fields are modified. Side effect -- when defaultBilling or defaultShipping is set to true the previously default address on the same account is cleared. Deprecated. Use `PATCH /o/headless-admin-user/v1.0/postal-addresses/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: patchAccountAddressByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -2968,8 +2804,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -2987,9 +2822,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes an account address by its internal ID. Returns 204. Deprecated. Use `DELETE
-                /o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}` from the headless-admin-user module
-                instead.
+                Deletes an account address by its internal ID. Returns 204. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}` from the headless-admin-user module instead.
             operationId: deleteAccountAddress
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -3023,9 +2856,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads an account address by its internal ID. Returns the account address. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}` from the headless-admin-user module
-                instead.
+                Reads an account address by its internal ID. Returns the account address. Deprecated. Use `GET /o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}` from the headless-admin-user module instead.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             responses:
@@ -3088,11 +2919,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates an account address by its internal ID. JSON Merge Patch semantics; only the supplied
-                fields are modified. Side effect -- when defaultBilling or defaultShipping is set to true the previously
-                default address on the same account is cleared. Deprecated. Use `PATCH
-                /o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}` from the headless-admin-user module
-                instead.
+                Partially updates an account address by its internal ID. JSON Merge Patch semantics; only the supplied fields are modified. Side effect -- when defaultBilling or defaultShipping is set to true the previously default address on the same account is cleared. Deprecated. Use `PATCH /o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}` from the headless-admin-user module instead.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -3157,8 +2984,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -3175,11 +3001,7 @@ paths:
         put:
             deprecated: true
             description:
-                Replaces an account address by its internal ID. Every supplied field overwrites the persisted value;
-                omitted fields are reset to their defaults. Side effect -- when defaultBilling or defaultShipping is set
-                to true the previously default address on the same account is cleared. Deprecated. Use `PUT
-                /o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}` from the headless-admin-user module
-                instead.
+                Replaces an account address by its internal ID. Every supplied field overwrites the persisted value; omitted fields are reset to their defaults. Side effect -- when defaultBilling or defaultShipping is set to true the previously default address on the same account is cleared. Deprecated. Use `PUT /o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}` from the headless-admin-user module instead.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -3244,8 +3066,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -3263,9 +3084,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists AccountGroups with paging, search, filter, and sort. Filterable and sortable field -- name. Search
-                corpus -- the account group's indexed name field. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/account-groups` from the headless-admin-user module instead.
+                Lists AccountGroups with paging, search, filter, and sort. Filterable and sortable field -- name. Search corpus -- the account group's indexed name field. Deprecated. Use `GET /o/headless-admin-user/v1.0/account-groups` from the headless-admin-user module instead.
             operationId: getAccountGroupsPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
@@ -3324,10 +3143,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates or upserts an AccountGroup keyed by external reference code. When the supplied ERC matches an
-                existing group, the group is updated; otherwise a new group is created. Returns 201 with the created
-                group, or 204 when an existing group is updated. Deprecated. Use `POST
-                /o/headless-admin-user/v1.0/account-groups` from the headless-admin-user module instead.
+                Creates or upserts an AccountGroup keyed by external reference code. When the supplied ERC matches an existing group, the group is updated; otherwise a new group is created. Returns 201 with the created group, or 204 when an existing group is updated. Deprecated. Use `POST /o/headless-admin-user/v1.0/account-groups` from the headless-admin-user module instead.
             operationId: postAccountGroup
             requestBody:
                 content:
@@ -3387,8 +3203,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -3406,9 +3221,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes an AccountGroup by its external reference code. Deprecated. Use `DELETE
-                /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}` from the
-                headless-admin-user module instead.
+                Deletes an AccountGroup by its external reference code. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: deleteAccountGroupByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3442,9 +3255,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads an AccountGroup by its external reference code. Returns the account group. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}` from the
-                headless-admin-user module instead.
+                Reads an AccountGroup by its external reference code. Returns the account group. Deprecated. Use `GET /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: getAccountGroupByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3508,10 +3319,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates an AccountGroup by its external reference code. JSON Merge Patch semantics; updates
-                name, description, and custom fields. Deprecated. Use `PATCH
-                /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}` from the
-                headless-admin-user module instead.
+                Partially updates an AccountGroup by its external reference code. JSON Merge Patch semantics; updates name, description, and custom fields. Deprecated. Use `PATCH /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: patchAccountGroupByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3573,8 +3381,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -3592,10 +3399,7 @@ paths:
         post:
             deprecated: true
             description:
-                Links an Account to an AccountGroup. The AccountGroup is identified by its external reference code; the
-                Account is identified either by ID or by ERC inside the request body. Deprecated. Use `POST
-                /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountGroupExternalReferenceCode}/accounts`
-                from the headless-admin-user module instead.
+                Links an Account to an AccountGroup. The AccountGroup is identified by its external reference code; the Account is identified either by ID or by ERC inside the request body. Deprecated. Use `POST /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountGroupExternalReferenceCode}/accounts` from the headless-admin-user module instead.
             operationId: postAccountGroupByExternalReferenceCodeAccount
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -3670,8 +3474,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -3689,10 +3492,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Removes the link between an Account and an AccountGroup, both addressed by external reference code.
-                Deprecated. Use `DELETE
-                /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountGroupExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}`
-                from the headless-admin-user module instead.
+                Removes the link between an Account and an AccountGroup, both addressed by external reference code. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountGroupExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: deleteAccountGroupByExternalReferenceCodeAccount
             parameters:
             -   $ref: "#/components/parameters/accountExternalReferenceCodePathParam"
@@ -3757,9 +3557,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes an AccountGroup by its internal ID. Deprecated. Use `DELETE
-                /o/headless-admin-user/v1.0/account-groups/{accountGroupId}` from the headless-admin-user module
-                instead.
+                Deletes an AccountGroup by its internal ID. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/account-groups/{accountGroupId}` from the headless-admin-user module instead.
             operationId: deleteAccountGroup
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -3793,9 +3591,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads an AccountGroup by its internal ID. Returns the account group. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/account-groups/{accountGroupId}` from the headless-admin-user module
-                instead.
+                Reads an AccountGroup by its internal ID. Returns the account group. Deprecated. Use `GET /o/headless-admin-user/v1.0/account-groups/{accountGroupId}` from the headless-admin-user module instead.
             operationId: getAccountGroup
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -3859,10 +3655,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates an AccountGroup by its internal ID. JSON Merge Patch semantics; updates name,
-                description, and custom fields. Deprecated. Use `PATCH
-                /o/headless-admin-user/v1.0/account-groups/{accountGroupId}` from the headless-admin-user module
-                instead.
+                Partially updates an AccountGroup by its internal ID. JSON Merge Patch semantics; updates name, description, and custom fields. Deprecated. Use `PATCH /o/headless-admin-user/v1.0/account-groups/{accountGroupId}` from the headless-admin-user module instead.
             operationId: patchAccountGroup
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -3924,8 +3717,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -3943,10 +3735,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists Accounts with paging, search, filter, and sort. Filterable and sortable fields -- dateCreated,
-                dateModified, externalReferenceCode, name, active, taxId, and type. Search corpus -- the account's
-                indexed name and description fields. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts` from the
-                headless-admin-user module instead.
+                Lists Accounts with paging, search, filter, and sort. Filterable and sortable fields -- dateCreated, dateModified, externalReferenceCode, name, active, taxId, and type. Search corpus -- the account's indexed name and description fields. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts` from the headless-admin-user module instead.
             operationId: getAccountsPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
@@ -4005,11 +3794,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates or upserts an Account keyed by external reference code. Nested addresses, members, and
-                organizations supplied in the body are persisted in the same transaction. When the ERC matches an
-                existing account, the account is updated; otherwise a new account is created. Returns 201 with the
-                created account, or 204 when an existing account is updated. Deprecated. Use `POST
-                /o/headless-admin-user/v1.0/accounts` from the headless-admin-user module instead.
+                Creates or upserts an Account keyed by external reference code. Nested addresses, members, and organizations supplied in the body are persisted in the same transaction. When the ERC matches an existing account, the account is updated; otherwise a new account is created. Returns 201 with the created account, or 204 when an existing account is updated. Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts` from the headless-admin-user module instead.
             operationId: postAccount
             requestBody:
                 content:
@@ -4079,8 +3864,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -4098,10 +3882,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes an Account by its external reference code. Cascades to addresses, memberships, and channel
-                overrides per the underlying service contract. Deprecated. Use `DELETE
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}` from the
-                headless-admin-user module instead.
+                Deletes an Account by its external reference code. Cascades to addresses, memberships, and channel overrides per the underlying service contract. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: deleteAccountByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4135,11 +3916,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads an Account by its external reference code. Returns the account; nested addresses, members, and
-                organizations are not included inline and are fetched through the corresponding sub-resources.
-                Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}` from the
-                headless-admin-user module instead.
+                Reads an Account by its external reference code. Returns the account; nested addresses, members, and organizations are not included inline and are fetched through the corresponding sub-resources. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: getAccountByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4203,11 +3980,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates an Account by its external reference code. JSON Merge Patch semantics; only the
-                supplied fields (name, taxId, type, status, addresses, members, organizations, custom fields) are
-                modified. Deprecated. Use `PATCH
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}` from the
-                headless-admin-user module instead.
+                Partially updates an Account by its external reference code. JSON Merge Patch semantics; only the supplied fields (name, taxId, type, status, addresses, members, organizations, custom fields) are modified. Deprecated. Use `PATCH /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: patchAccountByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -4269,8 +4042,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -4288,8 +4060,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the per-account billing address channel overrides for the Account identified by external reference
-                code.
+                Lists the per-account billing address channel overrides for the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/pageQueryParam"
@@ -4348,8 +4119,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates a per-account billing address channel override under the Account identified by external
-                reference code.
+                Creates a per-account billing address channel override under the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -4430,8 +4200,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -4589,8 +4358,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -4608,8 +4376,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the per-account delivery term channel overrides for the Account identified by external reference
-                code.
+                Lists the per-account delivery term channel overrides for the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/pageQueryParam"
@@ -4668,8 +4435,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates a per-account delivery term channel override under the Account identified by external reference
-                code.
+                Creates a per-account delivery term channel override under the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -4750,8 +4516,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -4909,8 +4674,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -4928,8 +4692,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the per-account payment method channel overrides for the Account identified by external reference
-                code.
+                Lists the per-account payment method channel overrides for the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/pageQueryParam"
@@ -4988,8 +4751,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates a per-account payment method channel override under the Account identified by external reference
-                code.
+                Creates a per-account payment method channel override under the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -5070,8 +4832,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -5089,8 +4850,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the per-account payment term channel overrides for the Account identified by external reference
-                code.
+                Lists the per-account payment term channel overrides for the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/pageQueryParam"
@@ -5149,8 +4909,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates a per-account payment term channel override under the Account identified by external reference
-                code.
+                Creates a per-account payment term channel override under the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -5231,8 +4990,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -5250,8 +5008,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the per-account price list channel overrides for the Account identified by external reference
-                code.
+                Lists the per-account price list channel overrides for the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/pageQueryParam"
@@ -5310,8 +5067,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates a per-account price list channel override under the Account identified by external reference
-                code.
+                Creates a per-account price list channel override under the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -5392,8 +5148,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -5411,8 +5166,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the per-account shipping address channel overrides for the Account identified by external
-                reference code.
+                Lists the per-account shipping address channel overrides for the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             -   $ref: "#/components/parameters/pageQueryParam"
@@ -5471,8 +5225,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates a per-account shipping address channel override under the Account identified by external
-                reference code.
+                Creates a per-account shipping address channel override under the Account identified by external reference code.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -5553,8 +5306,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -5629,9 +5381,7 @@ paths:
             -   AccountChannelShippingOption
         post:
             description:
-                Creates or updates a per-account channel shipping option under the Account identified by external
-                reference code. Validates the supplied shipping method key, fixed option key, and channel binding before
-                persisting.
+                Creates or updates a per-account channel shipping option under the Account identified by external reference code. Validates the supplied shipping method key, fixed option key, and channel binding before persisting.
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
             requestBody:
@@ -5702,8 +5452,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A shipping option override for the same account, channel, shipping method, and option key
-                        already exists.
+                        A shipping option override for the same account, channel, shipping method, and option key already exists.
                 422:
                     content:
                         application/json:
@@ -5713,8 +5462,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -5872,8 +5620,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -5891,9 +5638,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists addresses for the Account identified by external reference code. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/postal-addresses`
-                from the headless-admin-user module instead.
+                Lists addresses for the Account identified by external reference code. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/postal-addresses` from the headless-admin-user module instead.
             operationId: getAccountByExternalReferenceCodeAccountAddressesPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -5953,12 +5698,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates or upserts an account address under the Account identified by external reference code. When the
-                supplied address ERC matches an existing address on the same account the address is updated; otherwise a
-                new address is created. Side effect -- when defaultBilling or defaultShipping is true the previously
-                default address on the same account is cleared. Deprecated. Use `POST
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/postal-addresses`
-                from the headless-admin-user module instead.
+                Creates or upserts an account address under the Account identified by external reference code. When the supplied address ERC matches an existing address on the same account the address is updated; otherwise a new address is created. Side effect -- when defaultBilling or defaultShipping is true the previously default address on the same account is cleared. Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/postal-addresses` from the headless-admin-user module instead.
             operationId: postAccountByExternalReferenceCodeAccountAddress
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6030,8 +5770,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -6049,10 +5788,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the AccountGroups the Account belongs to, addressed by Account external reference code.
-                Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-groups`
-                from the headless-admin-user module instead.
+                Lists the AccountGroups the Account belongs to, addressed by Account external reference code. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-groups` from the headless-admin-user module instead.
             operationId: getAccountByExternalReferenceCodeAccountGroupsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6110,10 +5846,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the AccountMembers of the Account identified by external reference code. Each entry pairs a user
-                with their account-scoped AccountRoles. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts`
-                from the headless-admin-user module instead.
+                Lists the AccountMembers of the Account identified by external reference code. Each entry pairs a user with their account-scoped AccountRoles. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts` from the headless-admin-user module instead.
             operationId: getAccountByExternalReferenceCodeAccountMembersPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6173,11 +5906,7 @@ paths:
         post:
             deprecated: true
             description:
-                Adds an existing user as a member of the Account identified by external reference code. The user is
-                referenced by userId or userExternalReferenceCode in the body; the supplied accountRoles become the
-                user's account-scoped roles. Deprecated. Use `POST
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts`
-                from the headless-admin-user module instead.
+                Adds an existing user as a member of the Account identified by external reference code. The user is referenced by userId or userExternalReferenceCode in the body; the supplied accountRoles become the user's account-scoped roles. Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts` from the headless-admin-user module instead.
             operationId: postAccountByExternalReferenceCodeAccountMember
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6249,8 +5978,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -6268,11 +5996,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates a new User and immediately adds them as a member of the Account identified by external reference
-                code. Useful for inviting buyers who do not yet exist in Liferay. The newly created user inherits the
-                supplied accountRoles. Deprecated. Use `POST
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts`
-                from the headless-admin-user module instead.
+                Creates a new User and immediately adds them as a member of the Account identified by external reference code. Useful for inviting buyers who do not yet exist in Liferay. The newly created user inherits the supplied accountRoles. Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts` from the headless-admin-user module instead.
             operationId: postAccountByExternalReferenceCodeAccountMemberCreateUser
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6354,8 +6078,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -6373,10 +6096,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Removes a member from the Account, addressed by Account external reference code and User internal ID.
-                Deprecated. Use `DELETE
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}`
-                from the headless-admin-user module instead.
+                Removes a member from the Account, addressed by Account external reference code and User internal ID. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: deleteAccountByExternalReferenceCodeAccountMember
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6411,10 +6131,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads a single AccountMember, addressed by Account external reference code and User internal ID.
-                Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}`
-                from the headless-admin-user module instead.
+                Reads a single AccountMember, addressed by Account external reference code and User internal ID. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}` from the headless-admin-user module instead.
             operationId: getAccountByExternalReferenceCodeAccountMember
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6479,12 +6196,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Updates the AccountRoles of a member, addressed by Account external reference code and User internal ID.
-                Side effect -- the supplied accountRoles fully replace the user's previous account-scoped role set;
-                roles not present in the body are removed. Deprecated. Assign or remove account-scoped roles through
-                `POST` and `DELETE
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}`
-                in the headless-admin-user module instead.
+                Updates the AccountRoles of a member, addressed by Account external reference code and User internal ID. Side effect -- the supplied accountRoles fully replace the user's previous account-scoped role set; roles not present in the body are removed. Deprecated. Assign or remove account-scoped roles through `POST` and `DELETE /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}` in the headless-admin-user module instead.
             operationId: patchAccountByExternalReferenceCodeAccountMember
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6547,8 +6259,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -6566,10 +6277,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the Organizations linked to the Account, addressed by Account external reference code. Deprecated.
-                Use `GET
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/organizations`
-                from the headless-admin-user module instead.
+                Lists the Organizations linked to the Account, addressed by Account external reference code. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/organizations` from the headless-admin-user module instead.
             operationId: getAccountByExternalReferenceCodeAccountOrganizationsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6629,11 +6337,7 @@ paths:
         post:
             deprecated: true
             description:
-                Links a Liferay Organization to the Account, addressed by Account external reference code. The
-                organization is referenced by organizationId or organizationExternalReferenceCode in the body.
-                Deprecated. Use `POST
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}`
-                from the headless-admin-user module instead.
+                Links a Liferay Organization to the Account, addressed by Account external reference code. The organization is referenced by organizationId or organizationExternalReferenceCode in the body. Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}` from the headless-admin-user module instead.
             operationId: postAccountByExternalReferenceCodeAccountOrganization
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6705,8 +6409,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -6724,10 +6427,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Removes the link between the Account and a Liferay Organization, addressed by Account external reference
-                code and Organization internal ID. Deprecated. Use `DELETE
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}`
-                from the headless-admin-user module instead.
+                Removes the link between the Account and a Liferay Organization, addressed by Account external reference code and Organization internal ID. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}` from the headless-admin-user module instead.
             operationId: deleteAccountByExternalReferenceCodeAccountOrganization
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6762,10 +6462,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads a single Account-Organization link, addressed by Account external reference code and Organization
-                internal ID. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}`
-                from the headless-admin-user module instead.
+                Reads a single Account-Organization link, addressed by Account external reference code and Organization internal ID. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}` from the headless-admin-user module instead.
             operationId: getAccountByExternalReferenceCodeAccountOrganization
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6831,10 +6528,7 @@ paths:
         post:
             deprecated: true
             description:
-                Uploads or replaces the logo of the Account identified by external reference code. The body is a
-                multipart form upload with a single binary file field named logo. Deprecated. Set the account logo
-                through `PATCH /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}`
-                with the logoBase64 field in the headless-admin-user module instead.
+                Uploads or replaces the logo of the Account identified by external reference code. The body is a multipart form upload with a single binary file field named logo. Deprecated. Set the account logo through `PATCH /o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}` with the logoBase64 field in the headless-admin-user module instead.
             operationId: postAccountByExternalReferenceCodeLogo
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
@@ -6896,8 +6590,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -6915,9 +6608,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Deletes an Account by its internal ID. Cascades to addresses, memberships, and channel overrides per the
-                underlying service contract. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/accounts/{accountId}`
-                from the headless-admin-user module instead.
+                Deletes an Account by its internal ID. Cascades to addresses, memberships, and channel overrides per the underlying service contract. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/accounts/{accountId}` from the headless-admin-user module instead.
             operationId: deleteAccount
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -6951,9 +6642,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads an Account by its internal ID. Returns the account; nested addresses, members, and organizations
-                are not included inline and are fetched through the corresponding sub-resources. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/{accountId}` from the headless-admin-user module instead.
+                Reads an Account by its internal ID. Returns the account; nested addresses, members, and organizations are not included inline and are fetched through the corresponding sub-resources. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/{accountId}` from the headless-admin-user module instead.
             operationId: getAccount
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -7017,10 +6706,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Partially updates an Account by its internal ID. JSON Merge Patch semantics; only the supplied fields
-                (name, taxId, type, status, addresses, members, organizations, custom fields) are modified. Deprecated.
-                Use `PATCH /o/headless-admin-user/v1.0/accounts/{accountId}` from the headless-admin-user module
-                instead.
+                Partially updates an Account by its internal ID. JSON Merge Patch semantics; only the supplied fields (name, taxId, type, status, addresses, members, organizations, custom fields) are modified. Deprecated. Use `PATCH /o/headless-admin-user/v1.0/accounts/{accountId}` from the headless-admin-user module instead.
             operationId: patchAccount
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -7082,8 +6768,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -7241,8 +6926,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -7400,8 +7084,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -7559,8 +7242,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -7718,8 +7400,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -7877,8 +7558,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -8036,8 +7716,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -8195,8 +7874,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -8354,8 +8032,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -8430,8 +8107,7 @@ paths:
             -   AccountChannelShippingOption
         post:
             description:
-                Creates or updates a per-account channel shipping option under the Account identified by internal ID.
-                Validates the supplied shipping method key, fixed option key, and channel binding before persisting.
+                Creates or updates a per-account channel shipping option under the Account identified by internal ID. Validates the supplied shipping method key, fixed option key, and channel binding before persisting.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -8502,8 +8178,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        A shipping option override for the same account, channel, shipping method, and option key
-                        already exists.
+                        A shipping option override for the same account, channel, shipping method, and option key already exists.
                 422:
                     content:
                         application/json:
@@ -8513,8 +8188,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -8672,8 +8346,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -8691,9 +8364,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists addresses for the Account identified by internal ID. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/{accountId}/postal-addresses` from the headless-admin-user module
-                instead.
+                Lists addresses for the Account identified by internal ID. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/{accountId}/postal-addresses` from the headless-admin-user module instead.
             operationId: getAccountIdAccountAddressesPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -8753,10 +8424,7 @@ paths:
         post:
             deprecated: true
             description:
-                Creates an account address under the Account identified by internal ID. Side effect -- when
-                defaultBilling or defaultShipping is true the previously default address on the same account is cleared.
-                Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts/{accountId}/postal-addresses` from the
-                headless-admin-user module instead.
+                Creates an account address under the Account identified by internal ID. Side effect -- when defaultBilling or defaultShipping is true the previously default address on the same account is cleared. Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts/{accountId}/postal-addresses` from the headless-admin-user module instead.
             operationId: postAccountIdAccountAddress
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -8828,8 +8496,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -8847,9 +8514,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the AccountGroups the Account belongs to, addressed by Account internal ID. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/{accountId}/account-groups` from the headless-admin-user module
-                instead.
+                Lists the AccountGroups the Account belongs to, addressed by Account internal ID. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/{accountId}/account-groups` from the headless-admin-user module instead.
             operationId: getAccountIdAccountGroupsPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -8907,10 +8572,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the AccountMembers of the Account identified by internal ID. Each entry pairs a user with their
-                account-scoped AccountRoles. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts` from the headless-admin-user module
-                instead.
+                Lists the AccountMembers of the Account identified by internal ID. Each entry pairs a user with their account-scoped AccountRoles. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts` from the headless-admin-user module instead.
             operationId: getAccountIdAccountMembersPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -8970,11 +8632,7 @@ paths:
         post:
             deprecated: true
             description:
-                Adds an existing user as a member of the Account identified by internal ID. The user is referenced by
-                userId or userExternalReferenceCode in the body; the supplied accountRoles become the user's
-                account-scoped roles. Deprecated. Use `POST
-                /o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts` from the headless-admin-user module
-                instead.
+                Adds an existing user as a member of the Account identified by internal ID. The user is referenced by userId or userExternalReferenceCode in the body; the supplied accountRoles become the user's account-scoped roles. Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts` from the headless-admin-user module instead.
             operationId: postAccountIdAccountMember
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -9046,8 +8704,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -9065,9 +8722,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Removes a member from the Account, addressed by Account internal ID and User internal ID. Deprecated.
-                Use `DELETE /o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts/{userAccountId}` from the
-                headless-admin-user module instead.
+                Removes a member from the Account, addressed by Account internal ID and User internal ID. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts/{userAccountId}` from the headless-admin-user module instead.
             operationId: deleteAccountIdAccountMember
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -9102,9 +8757,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads a single AccountMember, addressed by Account internal ID and User internal ID. Deprecated. Use
-                `GET /o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts/{userAccountId}` from the
-                headless-admin-user module instead.
+                Reads a single AccountMember, addressed by Account internal ID and User internal ID. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts/{userAccountId}` from the headless-admin-user module instead.
             operationId: getAccountIdAccountMember
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -9169,12 +8822,7 @@ paths:
         patch:
             deprecated: true
             description:
-                Updates the AccountRoles of a member, addressed by Account internal ID and User internal ID. Side effect
-                -- the supplied accountRoles fully replace the user's previous account-scoped role set; roles not
-                present in the body are removed. Deprecated. Assign or remove account-scoped roles through `POST` and
-                `DELETE
-                /o/headless-admin-user/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/user-accounts/{userAccountId}`
-                in the headless-admin-user module instead.
+                Updates the AccountRoles of a member, addressed by Account internal ID and User internal ID. Side effect -- the supplied accountRoles fully replace the user's previous account-scoped role set; roles not present in the body are removed. Deprecated. Assign or remove account-scoped roles through `POST` and `DELETE /o/headless-admin-user/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/user-accounts/{userAccountId}` in the headless-admin-user module instead.
             operationId: patchAccountIdAccountMember
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -9237,8 +8885,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -9256,9 +8903,7 @@ paths:
         get:
             deprecated: true
             description:
-                Lists the Organizations linked to the Account, addressed by Account internal ID. Deprecated. Use `GET
-                /o/headless-admin-user/v1.0/accounts/{accountId}/organizations` from the headless-admin-user module
-                instead.
+                Lists the Organizations linked to the Account, addressed by Account internal ID. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/{accountId}/organizations` from the headless-admin-user module instead.
             operationId: getAccountIdAccountOrganizationsPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -9318,10 +8963,7 @@ paths:
         post:
             deprecated: true
             description:
-                Links a Liferay Organization to the Account, addressed by Account internal ID. The organization is
-                referenced by organizationId or organizationExternalReferenceCode in the body. Deprecated. Use `POST
-                /o/headless-admin-user/v1.0/accounts/{accountId}/organizations/{organizationId}` from the
-                headless-admin-user module instead.
+                Links a Liferay Organization to the Account, addressed by Account internal ID. The organization is referenced by organizationId or organizationExternalReferenceCode in the body. Deprecated. Use `POST /o/headless-admin-user/v1.0/accounts/{accountId}/organizations/{organizationId}` from the headless-admin-user module instead.
             operationId: postAccountIdAccountOrganization
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -9393,8 +9035,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -9412,10 +9053,7 @@ paths:
         delete:
             deprecated: true
             description:
-                Removes the link between the Account and a Liferay Organization, addressed by Account internal ID and
-                Organization internal ID. Deprecated. Use `DELETE
-                /o/headless-admin-user/v1.0/accounts/{accountId}/organizations/{organizationId}` from the
-                headless-admin-user module instead.
+                Removes the link between the Account and a Liferay Organization, addressed by Account internal ID and Organization internal ID. Deprecated. Use `DELETE /o/headless-admin-user/v1.0/accounts/{accountId}/organizations/{organizationId}` from the headless-admin-user module instead.
             operationId: deleteAccountIdAccountOrganization
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -9450,9 +9088,7 @@ paths:
         get:
             deprecated: true
             description:
-                Reads a single Account-Organization link, addressed by Account internal ID and Organization internal ID.
-                Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/{accountId}/organizations/{organizationId}`
-                from the headless-admin-user module instead.
+                Reads a single Account-Organization link, addressed by Account internal ID and Organization internal ID. Deprecated. Use `GET /o/headless-admin-user/v1.0/accounts/{accountId}/organizations/{organizationId}` from the headless-admin-user module instead.
             operationId: getAccountIdAccountOrganization
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -9518,10 +9154,7 @@ paths:
         post:
             deprecated: true
             description:
-                Uploads or replaces the logo of the Account identified by internal ID. The body is a multipart form
-                upload with a single binary file field named logo. Deprecated. Set the account logo through `PATCH
-                /o/headless-admin-user/v1.0/accounts/{accountId}` with the logoBase64 field in the headless-admin-user
-                module instead.
+                Uploads or replaces the logo of the Account identified by internal ID. The body is a multipart form upload with a single binary file field named logo. Deprecated. Set the account logo through `PATCH /o/headless-admin-user/v1.0/accounts/{accountId}` with the logoBase64 field in the headless-admin-user module instead.
             operationId: postAccountLogo
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
@@ -9583,8 +9216,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The request body failed domain validation -- for example, an unknown lookup key, a missing
-                        required cross-reference, or a value outside the accepted range.
+                        The request body failed domain validation -- for example, an unknown lookup key, a missing required cross-reference, or a value outside the accepted range.
                 500:
                     content:
                         application/json:
@@ -9600,38 +9232,26 @@ paths:
             -   Account
 tags:
 -   description:
-        Manages Account entities -- the commerce buyer organizations or end customers that place orders. Endpoints
-        expose CRUD, the by-externalReferenceCode addressing scheme, and per-account sub-resources for addresses,
-        members, organizations, channel-shipping-option overrides, and logo uploads.
+        Manages Account entities -- the commerce buyer organizations or end customers that place orders. Endpoints expose CRUD, the by-externalReferenceCode addressing scheme, and per-account sub-resources for addresses, members, organizations, channel-shipping-option overrides, and logo uploads.
     name: Account
 -   description:
-        Manages billing, shipping, and combined addresses owned by an Account. Endpoints expose per-address CRUD plus
-        the addresses sub-resource on an Account. Marking an address as default billing or shipping clears the
-        previously default address on the same account.
+        Manages billing, shipping, and combined addresses owned by an Account. Endpoints expose per-address CRUD plus the addresses sub-resource on an Account. Marking an address as default billing or shipping clears the previously default address on the same account.
     name: AccountAddress
 -   description:
-        Deprecated -- per-account overrides of channel-level rules for currency, delivery and payment terms, discounts,
-        payment methods, price lists, and reserved billing or shipping addresses. New integrations should use the nested
-        endpoints under an Account.
+        Deprecated -- per-account overrides of channel-level rules for currency, delivery and payment terms, discounts, payment methods, price lists, and reserved billing or shipping addresses. New integrations should use the nested endpoints under an Account.
     name: AccountChannelEntry
 -   description:
-        Manages per-account overrides of the shipping options available on a channel. Each entry pairs a shipping method
-        with a specific fixed option key.
+        Manages per-account overrides of the shipping options available on a channel. Each entry pairs a shipping method with a specific fixed option key.
     name: AccountChannelShippingOption
 -   description:
-        Manages the membership relation between an Account and a User. Each AccountMember carries the user's
-        account-scoped AccountRoles. PATCH replaces the role set; DELETE removes the membership.
+        Manages the membership relation between an Account and a User. Each AccountMember carries the user's account-scoped AccountRoles. PATCH replaces the role set; DELETE removes the membership.
     name: AccountMember
 -   description:
-        Manages the link between an Account and a Liferay Organization. Used to mirror an organizational hierarchy into
-        the commerce domain.
+        Manages the link between an Account and a Liferay Organization. Used to mirror an organizational hierarchy into the commerce domain.
     name: AccountOrganization
 -   description:
-        Manages AccountGroups -- collections of accounts that share rules, price lists, or discounts. The schema is
-        named AdminAccountGroup to avoid colliding with the AccountGroup schema in com.liferay.headless.admin.user; both
-        describe the same underlying entity from different admin perspectives.
+        Manages AccountGroups -- collections of accounts that share rules, price lists, or discounts. The schema is named AdminAccountGroup to avoid colliding with the AccountGroup schema in com.liferay.headless.admin.user; both describe the same underlying entity from different admin perspectives.
     name: AdminAccountGroup
 -   description:
-        Creates Users in the context of an Account. The User endpoint is a thin facade that creates the user, assigns
-        the supplied external reference code, and adds the membership in a single call.
+        Creates Users in the context of an Account. The User endpoint is a thin facade that creates the user, assigns the supplied external reference code, and adds the membership in a single call.
     name: User

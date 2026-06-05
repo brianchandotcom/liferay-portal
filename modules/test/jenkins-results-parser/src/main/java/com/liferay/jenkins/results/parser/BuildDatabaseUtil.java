@@ -37,6 +37,12 @@ public class BuildDatabaseUtil {
 		}
 	}
 
+	public static void clearInstances() {
+		synchronized (_buildDatabases) {
+			_buildDatabases.clear();
+		}
+	}
+
 	public static void downloadBuildDatabase(String buildURL) {
 		String buildDirPath = JenkinsResultsParserUtil.getBuildDirPath(
 			buildURL);
@@ -105,6 +111,18 @@ public class BuildDatabaseUtil {
 		}
 
 		return getBuildDatabase(topLevelBuild);
+	}
+
+	public static void setBuildDatabase(BuildDatabase buildDatabase) {
+		setBuildDatabase(_getBuildDir(null), buildDatabase);
+	}
+
+	public static void setBuildDatabase(
+		File buildDir, BuildDatabase buildDatabase) {
+
+		synchronized (_buildDatabases) {
+			_buildDatabases.put(buildDir, buildDatabase);
+		}
 	}
 
 	private static void _downloadBuildDatabaseFile(File buildDir, Build build) {

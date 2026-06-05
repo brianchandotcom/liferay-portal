@@ -5,3 +5,9 @@
 .cursor-pointer {
 	cursor: pointer;
 }
+
+.option-group {
+	> label + label {
+		margin-top: 1rem;
+	}
+}

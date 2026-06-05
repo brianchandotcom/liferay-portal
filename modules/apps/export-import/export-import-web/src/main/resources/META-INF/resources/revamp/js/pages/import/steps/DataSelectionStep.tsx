@@ -3,10 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import CheckboxSheet from '../../../components/forms/CheckboxSheet';
-import {FormikFieldContentSelector} from '../../../components/forms/formik';
+import {
+	FormikFieldCheckbox,
+	FormikFieldContentSelector,
+} from '../../../components/forms/formik';
 import {ImportPreview} from '../../../types/exportImportPreview';
 import FileSummary from './FileSummary';
 
@@ -27,23 +30,25 @@ export default function DataSelectionStep({
 		<>
 			<FileSummary importPreview={importPreview} />
 
-			{importPreview.deletionCount > 0 && (
-				<CheckboxSheet
-					description={Liferay.Language.get('deletions-help')}
-					label={Liferay.Language.get('replicate-selected-deletions')}
-					name="deletions"
-					title={Liferay.Language.get('deletions')}
+			<ClayLayout.Sheet className="mt-4 option-group">
+				<FormikFieldCheckbox
+					description={Liferay.Language.get(
+						'export-import-permissions-help'
+					)}
+					label={Liferay.Language.get('import-permissions')}
+					name="permissions"
 				/>
-			)}
 
-			<CheckboxSheet
-				description={Liferay.Language.get(
-					'export-import-permissions-help'
+				{importPreview.deletionCount > 0 && (
+					<FormikFieldCheckbox
+						description={Liferay.Language.get('deletions-help')}
+						label={Liferay.Language.get(
+							'replicate-selected-deletions'
+						)}
+						name="deletions"
+					/>
 				)}
-				label={Liferay.Language.get('import-permissions')}
-				name="permissions"
-				title={Liferay.Language.get('permissions')}
-			/>
+			</ClayLayout.Sheet>
 
 			<FormikFieldContentSelector
 				commentsAndRatingsEnabled={commentsAndRatingsEnabled}

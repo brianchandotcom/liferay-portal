@@ -78,6 +78,7 @@ describe('useReportFeedback', () => {
 		expect(outcome).toBe(true);
 		expect(mockPostAIIssueReport).toHaveBeenCalledWith({
 			agentDefinitionExternalReferenceCodes: ['agent-1', 'agent-2'],
+			feedback: 'negative',
 			reason: 'piiExposure',
 			surface: 'aiAssistant',
 			userMessage: 'leaked data',
@@ -102,6 +103,7 @@ describe('useReportFeedback', () => {
 
 		expect(mockPostAIIssueReport).toHaveBeenCalledWith({
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
+			feedback: 'negative',
 			reason: 'other',
 			surface: 'aiAssistant',
 		});

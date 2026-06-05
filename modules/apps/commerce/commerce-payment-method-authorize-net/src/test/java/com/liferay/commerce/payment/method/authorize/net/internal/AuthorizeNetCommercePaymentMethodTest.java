@@ -5,17 +5,22 @@
 
 package com.liferay.commerce.payment.method.authorize.net.internal;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.math.BigDecimal;
 
 import net.authorize.api.contract.v1.CustomerAddressType;
+import net.authorize.api.contract.v1.CustomerDataType;
 import net.authorize.api.contract.v1.NameAndAddressType;
 import net.authorize.api.contract.v1.TransactionRequestType;
 
@@ -38,29 +43,52 @@ public class AuthorizeNetCommercePaymentMethodTest {
 
 	@Test
 	public void testGetTransactionRequestType() throws Exception {
+		String billingFirstName = RandomTestUtil.randomString();
+		String billingLastName = RandomTestUtil.randomString();
+		String shippingFirstName = RandomTestUtil.randomString();
+		String shippingLastName = RandomTestUtil.randomString();
+
+		CommerceOrder commerceOrder = _getCommerceOrder(
+			_getCommerceAddress(
+				StringBundler.concat(
+					billingFirstName, StringPool.SPACE, billingLastName)),
+			_getCommerceAddress(
+				StringBundler.concat(
+					shippingFirstName, StringPool.SPACE,
+					RandomTestUtil.randomString(), StringPool.SPACE,
+					shippingLastName)),
+			new BigDecimal("10.555"));
+
 		TransactionRequestType transactionRequestType =
-			_getTransactionRequestType(
-				_getCommerceOrder(
-					_getCommerceAddress("US", "John Smith", "billing", "CA"),
-					_getCommerceAddress(
-						"IT", "Anna Maria De Rossi", "shipping", "MI"),
-					new BigDecimal("10.555")));
+			_getTransactionRequestType(commerceOrder);
 
 		Assert.assertEquals(
 			new BigDecimal("10.56"), transactionRequestType.getAmount());
 
+		AccountEntry accountEntry = commerceOrder.getAccountEntry();
+		CustomerDataType customerDataType =
+			transactionRequestType.getCustomer();
+
+		Assert.assertEquals(
+			accountEntry.getEmailAddress(), customerDataType.getEmail());
+
+		CommerceAddress billingCommerceAddress =
+			commerceOrder.getBillingAddress();
 		CustomerAddressType customerAddressType =
 			transactionRequestType.getBillTo();
 
 		_assertNameAndAddressType(
-			"US", "John", "Smith", customerAddressType, "billing", "CA");
-
+			billingCommerceAddress, billingFirstName, billingLastName,
+			customerAddressType);
 		Assert.assertEquals(
-			"billingPhoneNumber", customerAddressType.getPhoneNumber());
+			accountEntry.getEmailAddress(), customerAddressType.getEmail());
+		Assert.assertEquals(
+			billingCommerceAddress.getPhoneNumber(),
+			customerAddressType.getPhoneNumber());
 
 		_assertNameAndAddressType(
-			"IT", "Anna", "Rossi", transactionRequestType.getShipTo(),
-			"shipping", "MI");
+			commerceOrder.getShippingAddress(), shippingFirstName,
+			shippingLastName, transactionRequestType.getShipTo());
 	}
 
 	@Test
@@ -70,7 +98,8 @@ public class AuthorizeNetCommercePaymentMethodTest {
 		TransactionRequestType transactionRequestType =
 			_getTransactionRequestType(
 				_getCommerceOrder(
-					Mockito.mock(CommerceAddress.class), null, BigDecimal.ONE));
+					Mockito.mock(CommerceAddress.class), null,
+					new BigDecimal(RandomTestUtil.randomDouble())));
 
 		CustomerAddressType customerAddressType =
 			transactionRequestType.getBillTo();
@@ -91,7 +120,8 @@ public class AuthorizeNetCommercePaymentMethodTest {
 
 		TransactionRequestType transactionRequestType =
 			_getTransactionRequestType(
-				_getCommerceOrder(null, null, BigDecimal.ONE));
+				_getCommerceOrder(
+					null, null, new BigDecimal(RandomTestUtil.randomDouble())));
 
 		Assert.assertNull(transactionRequestType.getBillTo());
 		Assert.assertNull(transactionRequestType.getShipTo());
@@ -101,44 +131,52 @@ public class AuthorizeNetCommercePaymentMethodTest {
 	public void testGetTransactionRequestTypeWithSingleWordName()
 		throws Exception {
 
+		String firstName = RandomTestUtil.randomString();
+
 		TransactionRequestType transactionRequestType =
 			_getTransactionRequestType(
 				_getCommerceOrder(
-					_getCommerceAddress("US", "Cher", "billing", "CA"), null,
-					BigDecimal.ONE));
+					_getCommerceAddress(firstName), null,
+					new BigDecimal(RandomTestUtil.randomDouble())));
 
 		CustomerAddressType customerAddressType =
 			transactionRequestType.getBillTo();
 
-		Assert.assertEquals("Cher", customerAddressType.getFirstName());
+		Assert.assertEquals(firstName, customerAddressType.getFirstName());
 		Assert.assertNull(customerAddressType.getLastName());
 	}
 
 	private void _assertNameAndAddressType(
-		String a2, String firstName, String lastName,
-		NameAndAddressType nameAndAddressType, String prefix,
-		String regionCode) {
+			CommerceAddress commerceAddress, String firstName, String lastName,
+			NameAndAddressType nameAndAddressType)
+		throws Exception {
 
 		Assert.assertEquals(firstName, nameAndAddressType.getFirstName());
 		Assert.assertEquals(lastName, nameAndAddressType.getLastName());
 		Assert.assertEquals(
-			prefix + "Street1", nameAndAddressType.getAddress());
-		Assert.assertEquals(prefix + "City", nameAndAddressType.getCity());
-		Assert.assertEquals(prefix + "Zip", nameAndAddressType.getZip());
-		Assert.assertEquals(a2, nameAndAddressType.getCountry());
-		Assert.assertEquals(regionCode, nameAndAddressType.getState());
+			commerceAddress.getStreet1(), nameAndAddressType.getAddress());
+		Assert.assertEquals(
+			commerceAddress.getCity(), nameAndAddressType.getCity());
+		Assert.assertEquals(
+			commerceAddress.getZip(), nameAndAddressType.getZip());
+
+		Country country = commerceAddress.fetchCountry();
+
+		Assert.assertEquals(country.getA2(), nameAndAddressType.getCountry());
+
+		Region region = commerceAddress.getRegion();
+
+		Assert.assertEquals(
+			region.getRegionCode(), nameAndAddressType.getState());
 	}
 
-	private CommerceAddress _getCommerceAddress(
-			String a2, String name, String prefix, String regionCode)
-		throws Exception {
-
+	private CommerceAddress _getCommerceAddress(String name) throws Exception {
 		CommerceAddress commerceAddress = Mockito.mock(CommerceAddress.class);
 
 		Mockito.when(
 			commerceAddress.getCity()
 		).thenReturn(
-			prefix + "City"
+			RandomTestUtil.randomString()
 		);
 
 		Mockito.when(
@@ -150,22 +188,22 @@ public class AuthorizeNetCommercePaymentMethodTest {
 		Mockito.when(
 			commerceAddress.getPhoneNumber()
 		).thenReturn(
-			prefix + "PhoneNumber"
+			RandomTestUtil.randomString()
 		);
 
 		Mockito.when(
 			commerceAddress.getStreet1()
 		).thenReturn(
-			prefix + "Street1"
+			RandomTestUtil.randomString()
 		);
 
 		Mockito.when(
 			commerceAddress.getZip()
 		).thenReturn(
-			prefix + "Zip"
+			RandomTestUtil.randomString()
 		);
 
-		Country country = _getCountry(a2);
+		Country country = _getCountry();
 
 		Mockito.when(
 			commerceAddress.fetchCountry()
@@ -173,7 +211,7 @@ public class AuthorizeNetCommercePaymentMethodTest {
 			country
 		);
 
-		Region region = _getRegion(regionCode);
+		Region region = _getRegion();
 
 		Mockito.when(
 			commerceAddress.getRegion()
@@ -206,6 +244,20 @@ public class AuthorizeNetCommercePaymentMethodTest {
 			"HALF_UP"
 		);
 
+		AccountEntry accountEntry = Mockito.mock(AccountEntry.class);
+
+		Mockito.when(
+			accountEntry.getEmailAddress()
+		).thenReturn(
+			RandomTestUtil.randomString() + "@liferay.com"
+		);
+
+		Mockito.when(
+			commerceOrder.getAccountEntry()
+		).thenReturn(
+			accountEntry
+		);
+
 		Mockito.when(
 			commerceOrder.getBillingAddress()
 		).thenReturn(
@@ -233,25 +285,25 @@ public class AuthorizeNetCommercePaymentMethodTest {
 		return commerceOrder;
 	}
 
-	private Country _getCountry(String a2) {
+	private Country _getCountry() {
 		Country country = Mockito.mock(Country.class);
 
 		Mockito.when(
 			country.getA2()
 		).thenReturn(
-			a2
+			RandomTestUtil.randomString()
 		);
 
 		return country;
 	}
 
-	private Region _getRegion(String regionCode) {
+	private Region _getRegion() {
 		Region region = Mockito.mock(Region.class);
 
 		Mockito.when(
 			region.getRegionCode()
 		).thenReturn(
-			regionCode
+			RandomTestUtil.randomString()
 		);
 
 		return region;

@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.payment.method.authorize.net.internal;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -26,9 +27,12 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -49,6 +53,7 @@ import java.util.ResourceBundle;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfSetting;
 import net.authorize.api.contract.v1.CustomerAddressType;
+import net.authorize.api.contract.v1.CustomerDataType;
 import net.authorize.api.contract.v1.GetHostedPaymentPageRequest;
 import net.authorize.api.contract.v1.GetHostedPaymentPageResponse;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
@@ -386,6 +391,36 @@ public class AuthorizeNetCommercePaymentMethod
 				AuthorizeNetCommercePaymentMethodConstants.SERVICE_NAME));
 	}
 
+	private String _getEmailAddress(CommerceOrder commerceOrder)
+		throws Exception {
+
+		AccountEntry accountEntry = commerceOrder.getAccountEntry();
+
+		List<EmailAddress> emailAddresses = accountEntry.getEmailAddresses();
+
+		for (EmailAddress emailAddress : emailAddresses) {
+			if (emailAddress.isPrimary()) {
+				return emailAddress.getAddress();
+			}
+		}
+
+		if (!emailAddresses.isEmpty()) {
+			EmailAddress emailAddress = emailAddresses.get(0);
+
+			return emailAddress.getAddress();
+		}
+
+		String emailAddress = accountEntry.getEmailAddress();
+
+		if (Validator.isNull(emailAddress)) {
+			User user = _userLocalService.getUser(commerceOrder.getUserId());
+
+			emailAddress = user.getEmailAddress();
+		}
+
+		return emailAddress;
+	}
+
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -421,6 +456,14 @@ public class AuthorizeNetCommercePaymentMethod
 				commerceCurrency.getMaxFractionDigits(),
 				RoundingMode.valueOf(commerceCurrency.getRoundingMode())));
 
+		CustomerDataType customerDataType = new CustomerDataType();
+
+		String emailAddress = _getEmailAddress(commerceOrder);
+
+		customerDataType.setEmail(emailAddress);
+
+		transactionRequestType.setCustomer(customerDataType);
+
 		CommerceAddress billingCommerceAddress =
 			commerceOrder.getBillingAddress();
 
@@ -428,6 +471,8 @@ public class AuthorizeNetCommercePaymentMethod
 			CustomerAddressType customerAddressType = new CustomerAddressType();
 
 			_setNameAndAddressType(billingCommerceAddress, customerAddressType);
+
+			customerAddressType.setEmail(emailAddress);
 
 			String phoneNumber = billingCommerceAddress.getPhoneNumber();
 
@@ -508,5 +553,8 @@ public class AuthorizeNetCommercePaymentMethod
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

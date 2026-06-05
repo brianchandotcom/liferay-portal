@@ -49,6 +49,19 @@ public class AudiencesJSONObjectBuilder {
 		);
 	}
 
+	private static String _getOperator(String operatorName) {
+		String operator = StringUtil.replace(operatorName, '-', '_');
+
+		if (Objects.equals(operator, "contains")) {
+			return "includes";
+		}
+		else if (Objects.equals(operator, "not_contains")) {
+			return "not_includes";
+		}
+
+		return operator;
+	}
+
 	private static String _getValue(String propertyName, String value) {
 		if (Objects.equals(propertyName, Context.LANGUAGE_ID)) {
 			return LocaleUtil.toBCP47LanguageId(value);
@@ -83,8 +96,7 @@ public class AudiencesJSONObjectBuilder {
 				_attributeNames.getOrDefault(propertyName, propertyName)
 			).put(
 				"operator",
-				StringUtil.replace(
-					queryJSONObject.getString("operatorName"), '-', '_')
+				_getOperator(queryJSONObject.getString("operatorName"))
 			).put(
 				"value",
 				_getValue(propertyName, queryJSONObject.getString("value"))

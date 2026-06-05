@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,6 +8,7 @@ package com.liferay.portal.tools.service.builder.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
+import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -22,6 +23,8 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
 import com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence;
+
+import java.io.ByteArrayInputStream;
 
 import java.sql.Blob;
 
@@ -65,21 +68,25 @@ public class LazyBlobEntryTest {
 	}
 
 	@Test
-	public void testLazyBlobLoadedValueIsNull() {
+	public void testLazyBlobEntryWithGettingFromSession() throws Exception {
 		_lazyBlobEntryPersistence.clearCache();
 
 		Session session = _lazyBlobEntryPersistence.openSession();
 
 		try {
-			LazyBlobEntry loadedLazyBlobEntry = (LazyBlobEntry)session.load(
+			session.flush();
+
+			session.clear();
+
+			LazyBlobEntry lazyBlobEntry = (LazyBlobEntry)session.get(
 				_lazyBlobEntry.getClass(), _lazyBlobEntry.getLazyBlobEntryId());
 
 			Assert.assertNull(
 				ReflectionTestUtil.getFieldValue(
-					loadedLazyBlobEntry, "_blob1BlobModel"));
+					lazyBlobEntry, "_blob1BlobModel"));
 			Assert.assertNull(
 				ReflectionTestUtil.getFieldValue(
-					loadedLazyBlobEntry, "_blob2BlobModel"));
+					lazyBlobEntry, "_blob2BlobModel"));
 
 			SessionImplementor sessionImplementor =
 				(SessionImplementor)session.getWrappedSession();
@@ -88,14 +95,14 @@ public class LazyBlobEntryTest {
 				sessionImplementor.getPersistenceContext();
 
 			EntityEntry entityEntry = persistenceContext.getEntry(
-				loadedLazyBlobEntry);
+				lazyBlobEntry);
 
-			Assert.assertNull(
-				"Loaded value of lazy blob property should be null.",
-				entityEntry.getLoadedValue("blob1BlobModel"));
-			Assert.assertNull(
-				"Loaded value of lazy blob property should be null.",
-				entityEntry.getLoadedValue("blob2BlobModel"));
+			Assert.assertNull(entityEntry.getLoadedValue("blob1BlobModel"));
+			Assert.assertNull(entityEntry.getLoadedValue("blob2BlobModel"));
+
+			Assert.assertNotSame(_lazyBlobEntry, lazyBlobEntry);
+
+			_assertLazyBlobEntry(_blobContent, lazyBlobEntry);
 		}
 		finally {
 			_lazyBlobEntryPersistence.closeSession(session);
@@ -103,18 +110,37 @@ public class LazyBlobEntryTest {
 	}
 
 	@Test
-	public void testSerialize() throws Exception {
+	public void testLazyBlobEntryWithSerialization() throws Exception {
 		Serializer serializer = new Serializer();
 
 		serializer.writeObject(_lazyBlobEntry);
 
 		Deserializer deserializer = new Deserializer(serializer.toByteBuffer());
 
-		LazyBlobEntry serializedLazyBlobEntry = deserializer.readObject();
+		LazyBlobEntry lazyBlobEntry = deserializer.readObject();
 
-		Assert.assertEquals(_lazyBlobEntry, serializedLazyBlobEntry);
+		Assert.assertEquals(_lazyBlobEntry, lazyBlobEntry);
 
-		_assertLazyBlobEntry(_blobContent, serializedLazyBlobEntry);
+		_assertLazyBlobEntry(_blobContent, lazyBlobEntry);
+	}
+
+	@Test
+	public void testLazyBlobEntryWithUpdate() throws Exception {
+		String blobString = RandomTestUtil.randomString();
+
+		byte[] blobBytes = blobString.getBytes();
+
+		_lazyBlobEntry.setBlob1(
+			new OutputBlob(
+				new ByteArrayInputStream(blobBytes), blobBytes.length));
+		_lazyBlobEntry.setBlob2(
+			new OutputBlob(
+				new ByteArrayInputStream(blobBytes), blobBytes.length));
+
+		_lazyBlobEntry = _lazyBlobEntryLocalService.updateLazyBlobEntry(
+			_lazyBlobEntry);
+
+		_assertLazyBlobEntry(blobString, _lazyBlobEntry);
 	}
 
 	private void _assertLazyBlobEntry(

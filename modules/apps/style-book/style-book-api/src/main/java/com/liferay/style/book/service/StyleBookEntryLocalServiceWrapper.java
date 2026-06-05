@@ -478,24 +478,6 @@ public class StyleBookEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<StyleBookEntry> getStyleBookEntries(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntry>
-			orderByComparator) {
-
-		return _styleBookEntryLocalService.getStyleBookEntries(
-			groupIds, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<StyleBookEntry> getStyleBookEntries(
-		long[] groupIds, String themeId) {
-
-		return _styleBookEntryLocalService.getStyleBookEntries(
-			groupIds, themeId);
-	}
-
-	@Override
 	public java.util.List<StyleBookEntry> getStyleBookEntriesByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -723,4 +705,4 @@ public class StyleBookEntryLocalServiceWrapper
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-850818559
+// LIFERAY-SERVICE-BUILDER-HASH:-348384131

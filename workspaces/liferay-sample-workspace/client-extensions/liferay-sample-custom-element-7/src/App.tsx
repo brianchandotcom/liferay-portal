@@ -3,71 +3,51 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {SearchSubscription, subscribeSearch} from '@liferay/js-api/data-set';
-import React, {useEffect, useState} from 'react';
+import {FDSConnection} from '@liferay/js-api/data-set';
+import type {FDSConnectionInfo, FDSConnectionStatus} from '@liferay/js-api/data-set';
+import React, {useEffect, useRef, useState} from 'react';
 
 interface AppProps {
 	fdsName: string;
 }
 
-type SearchAPI = {
-	setSearch: (query: string) => void;
+const PLACEHOLDERS: Record<FDSConnectionStatus, string> = {
+	connecting: 'waiting',
+	disconnected: 'Search is not available',
+	ready: 'Type search query...',
+	timeout: 'Search is not available',
 };
 
 function App({fdsName}: AppProps) {
+	const [disabled, setDisabled] = useState<boolean>(true);
+	const [placeholder, setPlaceholder] = useState<string>(PLACEHOLDERS.connecting);
 	const [query, setQuery] = useState('');
-	const [searchApi, setSearchApi] = useState<SearchAPI | null>(null);
+	const fdsConnectionRef = useRef<FDSConnection | null>(null);
 
 	useEffect(() => {
-		let disposed = false;
-		let searchSubscription : SearchSubscription | null = null;
-
-		const handleQueryValue = (query: string) => {
-			console.log("Search query handler for", fdsName, ". New query: ", query);
-			setQuery(query);
-		}
-
-		console.log("Effect running for", fdsName);
-		subscribeSearch(
-			fdsName, handleQueryValue, {timeout: 10000}
-		)
-			.then((subscription: SearchSubscription) => {
-				console.log("Search subscription handler for", fdsName);
-				if (disposed) {
-					console.log("Preexisting Search subscription exists");
-					subscription.dispose()
-					return;
+		fdsConnectionRef.current = new FDSConnection(
+			fdsName,
+			{
+				search: (query: string) => {
+					setQuery(query);
 				}
-				console.log("Search subscription is ready for", fdsName, ", with query", subscription.getSearch());
-
-				searchSubscription = subscription;
-				setSearchApi({setSearch: subscription.setSearch});
-				handleQueryValue(subscription.getSearch());
-			})
-			.catch((error: Error) => {
-				console.warn(
-					`[liferay-sample-custom-element-7] ${error.message}`
-				);
-			});
+			},
+			(fdsConnectionInfo: FDSConnectionInfo) => {
+				setPlaceholder(PLACEHOLDERS[fdsConnectionInfo.status])
+				setDisabled(fdsConnectionInfo.status != 'ready');
+			}
+		);
 
 		return () => {
-			console.log("Effect cleanup for", fdsName);
-			disposed = true;
-			if (searchSubscription) {
-				console.log("Subscription disposal for", fdsName, "subscription: " + searchSubscription);
-				
-				searchSubscription.dispose();
-				searchSubscription = null;
+			if (fdsConnectionRef?.current) {
+				fdsConnectionRef?.current.disconnect();
+				fdsConnectionRef.current = null;
 			}
-			setSearchApi(null);
 		};
 	}, [fdsName]);
 
-	const disabled = !searchApi;
-
 	const handleSearch = () => {
-		console.log("Search triggered from CX for", fdsName, "with query", query);
-		searchApi?.setSearch(query);
+		fdsConnectionRef.current?.setSearch(query);
 	};
 
 	return (
@@ -81,11 +61,7 @@ function App({fdsName}: AppProps) {
 						handleSearch();
 					}
 				}}
-				placeholder={
-					disabled
-						? `Waiting for FDS "${fdsName}"...`
-						: `Search in ${fdsName}`
-				}
+				placeholder={placeholder}
 				style={{flex: 1}}
 				type="text"
 				value={query}

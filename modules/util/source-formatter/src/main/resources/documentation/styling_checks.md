@@ -219,6 +219,5 @@ XMLWorkflowDefinitionFileStylingCheck | .action, .function, .jelly, .jrxml, .mac
 YMLDefinitionOrderCheck | .tpl, .yaml, or .yml | Sorts definitions alphabetically in `.yml` files. |
 YMLEmptyLinesCheck | .tpl, .yaml, or .yml | Finds missing and unnecessary empty lines. |
 YMLIndentationCheck | .tpl, .yaml, or .yml | Finds incorrect indentation in YAML files. |
-YMLLongLinesCheck | .tpl, .yaml, or .yml | Finds lines that are longer than the specified maximum line length. |
 YMLStylingCheck | .tpl, .yaml, or .yml | Applies rules to enforce consistency in code style. |
 YMLWhitespaceCheck | .tpl, .yaml, or .yml | Finds missing and unnecessary whitespace in `.yml` files. |

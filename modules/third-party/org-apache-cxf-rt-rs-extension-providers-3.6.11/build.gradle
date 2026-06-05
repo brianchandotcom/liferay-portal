@@ -7,8 +7,23 @@ task patch(type: PatchTask)
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+compileJava {
+	options.release = 8
+}
+
 dependencies {
+	compileOnly group: "javax.json", name: "javax.json-api", transitive: false, version: "1.1.4"
+	compileOnly group: "javax.json.bind", name: "javax.json.bind-api", transitive: false, version: "1.0"
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", transitive: false, version: "4.0.1"
+	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", transitive: false, version: "2.1.1"
+	compileOnly group: "javax.xml.bind", name: "jaxb-api", transitive: false, version: "2.3.1"
+	compileOnly group: "org.apache.cxf", name: "cxf-core", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-databinding-aegis", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", transitive: false, version: "3.6.11"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-extension-providers", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-json-basic", transitive: false, version: "3.6.11"
+	compileOnly group: "org.codehaus.jettison", name: "jettison", transitive: false, version: "1.5.4"
+	compileOnly group: "org.dom4j", name: "dom4j", transitive: false, version: "2.1.4"
 }
 
 jarSources {
@@ -19,6 +34,8 @@ patch {
 	ext {
 		autoClean = false
 	}
+
+	fileNames "**/*.java"
 
 	originalLibModuleName = "cxf-rt-rs-extension-providers"
 }

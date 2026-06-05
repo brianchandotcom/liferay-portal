@@ -7,8 +7,33 @@ task patch(type: PatchTask)
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+compileJava {
+	exclude "org/apache/cxf/transport/http/HttpClientHTTPConduit.java"
+
+	options.release = 8
+}
+
 dependencies {
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", transitive: false, version: "4.0.1"
+	compileOnly group: "org.apache.aries.blueprint", name: "blueprint-parser", transitive: false, version: "1.6.1"
+	compileOnly group: "org.apache.aries.blueprint", name: "org.apache.aries.blueprint.api", transitive: false, version: "1.0.1"
+	compileOnly group: "org.apache.aries.blueprint", name: "org.apache.aries.blueprint.core", transitive: false, version: "1.10.3"
+	compileOnly group: "org.apache.cxf", name: "cxf-core", transitive: false, version: "3.6.11"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-transports-http", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-ws-policy", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-wsdl", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.neethi", name: "neethi", transitive: false, version: "3.2.2"
+	compileOnly group: "org.osgi", name: "org.osgi.core", transitive: false, version: "6.0.0"
+	compileOnly group: "org.osgi", name: "osgi.cmpn", transitive: false, version: "6.0.0"
+	compileOnly group: "org.springframework", name: "spring-beans", transitive: false, version: "5.3.39"
+	compileOnly group: "org.springframework", name: "spring-context", transitive: false, version: "5.3.39"
+	compileOnly group: "org.springframework", name: "spring-core", transitive: false, version: "5.3.39"
+	compileOnly group: "org.springframework", name: "spring-web", transitive: false, version: "5.3.39"
+	compileOnly group: "wsdl4j", name: "wsdl4j", transitive: false, version: "1.6.3"
+}
+
+jar {
+	exclude "org/apache/cxf/transport/http/HttpClientHTTPConduit*"
 }
 
 jarSources {
@@ -19,6 +44,8 @@ patch {
 	ext {
 		autoClean = false
 	}
+
+	fileNames "**/*.java"
 
 	originalLibModuleName = "cxf-rt-transports-http"
 }

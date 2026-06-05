@@ -1,0 +1,37 @@
+diff --git a/org/apache/cxf/transport/http/HTTPTransportFactory.java b/org/apache/cxf/transport/http/HTTPTransportFactory.java
+--- a/org/apache/cxf/transport/http/HTTPTransportFactory.java
++++ b/org/apache/cxf/transport/http/HTTPTransportFactory.java
+@@ -239,11 +239,7 @@
+             conduit = factory.createConduit(this, bus, endpointInfo, target);
+         }
+         if (conduit == null) {
+-            if (HTTPTransportFactory.isForceURLConnectionConduit()) {
+-                conduit = new URLConnectionHTTPConduit(bus, endpointInfo, target);
+-            } else {
+-                conduit = new HttpClientHTTPConduit(bus, endpointInfo, target);
+-            }
++            conduit = new URLConnectionHTTPConduit(bus, endpointInfo, target);
+         }
+ 
+         // Spring configure the conduit.
+diff --git a/org/apache/cxf/transport/http/Headers.java b/org/apache/cxf/transport/http/Headers.java
+--- a/org/apache/cxf/transport/http/Headers.java
++++ b/org/apache/cxf/transport/http/Headers.java
+@@ -28,6 +28,7 @@
+ import java.util.Date;
+ import java.util.Enumeration;
+ import java.util.HashMap;
++import java.util.HashSet;
+ import java.util.List;
+ import java.util.Locale;
+ import java.util.Map;
+@@ -73,7 +74,8 @@
+     private static final Logger LOG = LogUtils.getL7dLogger(Headers.class);
+ 
+     private static final String SENSITIVE_HEADERS_PROP_NAME = "org.apache.http.sensitive.headers";
+-    private static final Set<String> DEFAULT_SENSITIVE_HEADERS = Set.of("Authorization", "Proxy-Authorization");
++    private static final Set<String> DEFAULT_SENSITIVE_HEADERS = Collections.unmodifiableSet(
++            new HashSet<>(Arrays.asList("Authorization", "Proxy-Authorization")));
+     private static final List<Object> SENSITIVE_HEADER_MARKER = Collections.singletonList("***");
+     private static final String ALLOW_LOGGING_SENSITIVE_HEADERS = "allow.logging.sensitive.headers";
+ 

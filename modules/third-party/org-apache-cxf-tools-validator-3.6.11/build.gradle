@@ -7,8 +7,19 @@ task patch(type: PatchTask)
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+compileJava {
+	options.release = 8
+}
+
 dependencies {
+	compileOnly group: "javax.xml.ws", name: "jaxws-api", transitive: false, version: "2.3.1"
+	compileOnly group: "org.apache.cxf", name: "cxf-core", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-bindings-soap", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-wsdl", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.cxf", name: "cxf-tools-common", transitive: false, version: "3.6.11"
 	compileOnly group: "org.apache.cxf", name: "cxf-tools-validator", transitive: false, version: "3.6.11"
+	compileOnly group: "org.apache.ws.xmlschema", name: "xmlschema-core", transitive: false, version: "2.3.2"
+	compileOnly group: "wsdl4j", name: "wsdl4j", transitive: false, version: "1.6.3"
 }
 
 jarSources {
@@ -19,6 +30,8 @@ patch {
 	ext {
 		autoClean = false
 	}
+
+	fileNames "**/*.java"
 
 	originalLibModuleName = "cxf-tools-validator"
 }

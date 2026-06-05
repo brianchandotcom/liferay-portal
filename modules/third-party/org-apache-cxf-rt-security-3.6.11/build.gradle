@@ -7,7 +7,12 @@ task patch(type: PatchTask)
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+compileJava {
+	options.release = 8
+}
+
 dependencies {
+	compileOnly group: "org.apache.cxf", name: "cxf-core", transitive: false, version: "3.6.11"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-security", transitive: false, version: "3.6.11"
 }
 
@@ -19,6 +24,8 @@ patch {
 	ext {
 		autoClean = false
 	}
+
+	fileNames "**/*.java"
 
 	originalLibModuleName = "cxf-rt-security"
 }

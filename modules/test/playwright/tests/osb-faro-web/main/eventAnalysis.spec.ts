@@ -1320,3 +1320,73 @@ test(
 		).toHaveCount(0);
 	}
 );
+
+test(
+	'The custom events list can be searched by name',
+	{
+		tag: '@LRAC-10007',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const date = new Date();
+
+		const customEventNames = [
+			'searchA' + getRandomString(),
+			'searchB' + getRandomString(),
+		];
+
+		for (const eventName of customEventNames) {
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: eventName,
+					title: 'Liferay',
+					userId: '1',
+				},
+			]);
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: eventName,
+					eventAttributeDefinitions: [],
+					name: eventName,
+					type: 'CUSTOM',
+				},
+			]);
+		}
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsEventsCustomPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Searching each event name returns it
+
+		for (const eventName of customEventNames) {
+			await page.getByPlaceholder('Search').first().fill(eventName);
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByRole('link', {name: eventName})
+			).toBeVisible();
+		}
+
+		// Searching a name that does not exist shows the empty message
+
+		await page
+			.getByPlaceholder('Search')
+			.first()
+			.fill('missing' + getRandomString());
+
+		await page.keyboard.press('Enter');
+
+		await expect(
+			page.getByText('There are no results found.')
+		).toBeVisible();
+	}
+);

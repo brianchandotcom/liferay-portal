@@ -374,7 +374,7 @@ public class TestrayFactory {
 	public static TestrayFactor.Option newTestrayFactorOption(
 		TestrayServer testrayServer, Long id) {
 
-		if (id <= 0) {
+		if ((id == null) || (id <= 0)) {
 			return null;
 		}
 

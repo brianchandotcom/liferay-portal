@@ -6,16 +6,22 @@
 package com.liferay.layout.internal.site.provider;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -135,35 +141,40 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		Map<String, LayoutTypeController> layoutTypeControllers =
 			LayoutTypeControllerTracker.getLayoutTypeControllers();
 
-		for (Map.Entry<String, LayoutTypeController> entry :
-				layoutTypeControllers.entrySet()) {
+		List<String> sitemapableTypes = TransformUtil.transform(
+			layoutTypeControllers.entrySet(),
+			entry -> {
+				LayoutTypeController layoutTypeController = entry.getValue();
 
-			LayoutTypeController layoutTypeController = entry.getValue();
+				return layoutTypeController.isSitemapable() ? entry.getKey() :
+					null;
+			});
 
-			if (!layoutTypeController.isSitemapable()) {
-				continue;
-			}
-
-			int start = QueryUtil.ALL_POS;
-			int end = QueryUtil.ALL_POS;
-
-			int count = _layoutService.getLayoutsCount(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				entry.getKey());
-
-			if (count > SitemapManager.MAXIMUM_ENTRIES) {
-				start = count - SitemapManager.MAXIMUM_ENTRIES;
-				end = count;
-			}
-
-			List<Layout> layouts = _layoutService.getLayouts(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				entry.getKey(), start, end);
-
-			for (Layout layout : layouts) {
-				visitLayout(element, layout, themeDisplay);
-			}
+		if (sitemapableTypes.isEmpty()) {
+			return;
 		}
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property privateLayoutProperty = PropertyFactoryUtil.forName(
+					"privateLayout");
+
+				dynamicQuery.add(
+					privateLayoutProperty.eq(layoutSet.isPrivateLayout()));
+
+				Property typeProperty = PropertyFactoryUtil.forName("type");
+
+				dynamicQuery.add(
+					typeProperty.in(sitemapableTypes.toArray(new String[0])));
+			});
+		actionableDynamicQuery.setGroupId(layoutSet.getGroupId());
+		actionableDynamicQuery.setPerformActionMethod(
+			(Layout layout) -> visitLayout(element, layout, themeDisplay));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void visitLayout(
@@ -172,6 +183,16 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 
 		if (layout.isSystem() ||
 			_sitemapURLProviderHelper.isExcludeLayoutFromSitemap(layout)) {
+
+			return;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker != null) &&
+			!_layoutModelResourcePermission.contains(
+				permissionChecker, layout, ActionKeys.VIEW)) {
 
 			return;
 		}
@@ -234,8 +255,10 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	@Reference
-	private LayoutService _layoutService;
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Layout)"
+	)
+	private ModelResourcePermission<Layout> _layoutModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

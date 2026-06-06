@@ -23,7 +23,7 @@ import com.liferay.osb.faro.engine.client.model.Rels;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.engine.client.web.client.ResponseErrorHandler;
-import com.liferay.osb.faro.engine.client.web.util.UriTemplateHandler;
+import com.liferay.osb.faro.engine.client.web.util.UriBuilderFactory;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.util.FaroThreadLocal;
@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -48,9 +50,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
+import org.apache.hc.core5.http.ClassicHttpRequest;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.Cache;
@@ -62,6 +63,7 @@ import org.springframework.hateoas.mediatype.hal.Jackson2HalModule;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -98,11 +100,11 @@ public abstract class BaseEngineClient {
 
 		RestTemplate restTemplate = getRestTemplate(faroProject);
 
-		UriTemplateHandler uriTemplateHandler =
-			(UriTemplateHandler)restTemplate.getUriTemplateHandler();
+		UriBuilderFactory uriBuilderFactory =
+			(UriBuilderFactory)restTemplate.getUriTemplateHandler();
 
 		for (int i = 0; i < uriVariablesList.size(); i++) {
-			URI uri = uriTemplateHandler.expand(
+			URI uri = uriBuilderFactory.expand(
 				templatedURL, uriVariablesList.get(i));
 
 			Object body = null;
@@ -325,13 +327,17 @@ public abstract class BaseEngineClient {
 			return null;
 		}
 
-		Cache cache = (Cache)FaroThreadLocal.getCache();
+		Object object = FaroThreadLocal.getCache();
 
-		if (cache != null) {
+		if (object instanceof Cache cache) {
 			return cache;
 		}
 
-		cache = new FaroCache();
+		if (object != null) {
+			FaroThreadLocal.setCache(null);
+		}
+
+		Cache cache = new FaroCache();
 
 		FaroThreadLocal.setCache(cache);
 
@@ -357,7 +363,7 @@ public abstract class BaseEngineClient {
 		RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
 
 		restTemplateBuilder = restTemplateBuilder.uriTemplateHandler(
-			new UriTemplateHandler());
+			new UriBuilderFactory());
 
 		MappingJackson2HttpMessageConverter
 			mappingJackson2HttpMessageConverter =
@@ -403,21 +409,12 @@ public abstract class BaseEngineClient {
 			new HttpComponentsClientHttpRequestFactory() {
 
 				@Override
-				protected HttpUriRequest createHttpUriRequest(
+				protected ClassicHttpRequest createHttpUriRequest(
 					HttpMethod httpMethod, URI uri) {
 
 					if (httpMethod == HttpMethod.GET) {
-						return new HttpEntityEnclosingRequestBase() {
-							{
-								setURI(uri);
-							}
-
-							@Override
-							public String getMethod() {
-								return HttpMethod.GET.name();
-							}
-
-						};
+						return new HttpUriRequestBase(
+							HttpMethod.GET.name(), uri);
 					}
 
 					return super.createHttpUriRequest(httpMethod, uri);
@@ -443,7 +440,9 @@ public abstract class BaseEngineClient {
 			},
 			getUriVariables(faroProject));
 
-		if (responseEntity.getStatusCodeValue() != HttpStatus.SC_OK) {
+		HttpStatusCode httpStatusCode = responseEntity.getStatusCode();
+
+		if (httpStatusCode.value() != HttpServletResponse.SC_OK) {
 			throw new IllegalStateException("Invalid url: " + engineURL);
 		}
 

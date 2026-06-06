@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpResponse;
 
 /**
@@ -26,7 +27,7 @@ public class FaroClientHttpResponse
 	implements ClientHttpResponse, Cloneable, Serializable {
 
 	public FaroClientHttpResponse(
-		byte[] bytes, HttpHeaders httpHeaders, HttpStatus httpStatus) {
+		byte[] bytes, HttpHeaders httpHeaders, HttpStatusCode httpStatusCode) {
 
 		if (bytes == null) {
 			_bytes = new byte[0];
@@ -42,7 +43,7 @@ public class FaroClientHttpResponse
 			_httpHeaders = httpHeaders;
 		}
 
-		_httpStatus = httpStatus;
+		_httpStatusCode = httpStatusCode;
 	}
 
 	public FaroClientHttpResponse(ClientHttpResponse clientHttpResponse)
@@ -63,7 +64,7 @@ public class FaroClientHttpResponse
 		}
 
 		return new FaroClientHttpResponse(
-			_bytes.clone(), httpHeaders, _httpStatus);
+			_bytes.clone(), httpHeaders, _httpStatusCode);
 	}
 
 	@Override
@@ -82,23 +83,27 @@ public class FaroClientHttpResponse
 
 	@Override
 	public int getRawStatusCode() {
-		return _httpStatus.value();
+		return _httpStatusCode.value();
 	}
 
 	@Override
-	public HttpStatus getStatusCode() {
-		return _httpStatus;
+	public HttpStatusCode getStatusCode() {
+		return _httpStatusCode;
 	}
 
 	@Override
 	public String getStatusText() {
-		return _httpStatus.getReasonPhrase();
+		if (_httpStatusCode instanceof HttpStatus httpStatus) {
+			return httpStatus.getReasonPhrase();
+		}
+
+		return "";
 	}
 
 	private static final long serialVersionUID = 1L;
 
 	private final byte[] _bytes;
 	private final HttpHeaders _httpHeaders;
-	private final HttpStatus _httpStatus;
+	private final HttpStatusCode _httpStatusCode;
 
 }

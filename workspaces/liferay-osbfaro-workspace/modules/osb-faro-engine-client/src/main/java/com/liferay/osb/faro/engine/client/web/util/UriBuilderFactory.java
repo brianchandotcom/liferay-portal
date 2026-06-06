@@ -11,12 +11,12 @@ import java.net.URI;
 
 import java.util.Map;
 
-import org.springframework.web.util.DefaultUriTemplateHandler;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Shinn Lok
  */
-public class UriTemplateHandler extends DefaultUriTemplateHandler {
+public class UriBuilderFactory extends DefaultUriBuilderFactory {
 
 	@Override
 	public URI expand(String uriTemplateString, Map<String, ?> uriVariables) {

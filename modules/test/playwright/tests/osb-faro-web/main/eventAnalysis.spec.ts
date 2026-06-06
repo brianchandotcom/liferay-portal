@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
@@ -1802,5 +1802,111 @@ test(
 		await expect(
 			page.getByText('There are no results found.')
 		).toBeVisible();
+	}
+);
+
+async function addAttributeFilter({
+	attributeName,
+	condition,
+	page,
+	value,
+}: {
+	attributeName: string;
+	condition: string;
+	page: Page;
+	value: string;
+}) {
+	await page
+		.locator('.attribute-filter-section-root')
+		.getByRole('button')
+		.click();
+
+	await page
+		.getByRole('menuitem', {exact: true, name: attributeName})
+		.click();
+
+	await page.getByLabel('Condition').click();
+
+	await selectAndExpectToHaveValue({
+		optionLabel: condition,
+		select: page.getByLabel('Condition'),
+	});
+
+	await page
+		.locator(
+			"xpath=//div[contains(@class,'event-analysis-editor-attribute-dropdown-root show')]//input"
+		)
+		.first()
+		.fill(value);
+
+	await page.getByRole('option', {exact: true, name: value}).click();
+
+	await page.getByRole('button', {name: 'Apply'}).click();
+
+	await expect(
+		page
+			.locator('.attribute-filter-section-root')
+			.filter({hasText: attributeName})
+	).toBeVisible();
+}
+
+test(
+	'Event Analysis can filter a string attribute by is and is not',
+	{
+		tag: '@LRAC-10275',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		// The event matches when the category is wetsuit
+
+		await addAttributeFilter({
+			attributeName: 'category',
+			condition: 'is',
+			page,
+			value: 'wetsuit',
+		});
+
+		await expect(
+			page.getByRole('row', {exact: true, name: 'customEvent 1'})
+		).toBeVisible();
+
+		// The event does not match when the category is not wetsuit
+
+		await removeAttribute({page, section: 'Filter'});
+
+		await addAttributeFilter({
+			attributeName: 'category',
+			condition: 'is not',
+			page,
+			value: 'wetsuit',
+		});
+
+		await expect(
+			page.getByRole('row', {exact: true, name: 'customEvent 1'})
+		).toHaveCount(0);
 	}
 );

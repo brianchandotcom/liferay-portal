@@ -94,7 +94,7 @@ public abstract class BaseDownstreamBuildReport
 	}
 
 	@Override
-	public List<TestClassReport> getTestClassReports() {
+	public synchronized List<TestClassReport> getTestClassReports() {
 		if (_testClassReportsMap != null) {
 			return new ArrayList<>(_testClassReportsMap.values());
 		}
@@ -121,7 +121,7 @@ public abstract class BaseDownstreamBuildReport
 	}
 
 	@Override
-	public List<TestReport> getTestReports() {
+	public synchronized List<TestReport> getTestReports() {
 		if (_testReports != null) {
 			return _testReports;
 		}

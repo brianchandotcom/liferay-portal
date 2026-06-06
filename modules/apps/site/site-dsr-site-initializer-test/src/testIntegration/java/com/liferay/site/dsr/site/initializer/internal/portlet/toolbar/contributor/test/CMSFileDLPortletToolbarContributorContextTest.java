@@ -15,6 +15,8 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -47,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -76,6 +80,10 @@ public class CMSFileDLPortletToolbarContributorContextTest {
 
 	@Before
 	public void setUp() throws Exception {
+		if (DBManagerUtil.getDBType() == DBType.HYPERSONIC) {
+			_indexStatusManager.setIndexReadOnly(true);
+		}
+
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			StringPool.BLANK, TestPropsValues.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
@@ -87,6 +95,13 @@ public class CMSFileDLPortletToolbarContributorContextTest {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_DSR_ROOM", TestPropsValues.getCompanyId());
+	}
+
+	@After
+	public void tearDown() {
+		if (DBManagerUtil.getDBType() == DBType.HYPERSONIC) {
+			_indexStatusManager.setIndexReadOnly(false);
+		}
 	}
 
 	@Test
@@ -206,6 +221,9 @@ public class CMSFileDLPortletToolbarContributorContextTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private IndexStatusManager _indexStatusManager;
 
 	private ObjectDefinition _objectDefinition;
 

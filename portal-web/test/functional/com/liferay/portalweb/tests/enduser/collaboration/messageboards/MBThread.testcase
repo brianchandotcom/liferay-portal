@@ -97,7 +97,7 @@ definition {
 
 	@priority = 4
 	@refactordone
-	test CanAddLinkToDocument {
+	test CanAddLinksToThreadBody {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -111,23 +111,19 @@ definition {
 			dmDocumentTitle = "Document_1.jpg",
 			fieldLabel = "Body",
 			siteURLKey = "guest",
-			threadSubject = "MB Thread Message Subject");
+			threadSubject = "MB Document Link Thread");
 
 		MessageboardsThread.viewLinkedEntry(
 			imageFileName = "document_1-jpg",
 			linkedEntry = "Link to Document");
-	}
 
-	@priority = 4
-	@refactordone
-	test CanAddLinkToPage {
 		MessageboardsThread.addCP(
 			displayText = "Link to Page",
 			displayTextWithLink = "true",
 			fieldLabel = "Body",
 			pageName = "Message Boards Page",
 			siteURLKey = "guest",
-			threadSubject = "MB Thread Message Subject");
+			threadSubject = "MB Page Link Thread");
 
 		MessageboardsThread.viewLinkedEntry(
 			linkedEntry = "Link to Page",

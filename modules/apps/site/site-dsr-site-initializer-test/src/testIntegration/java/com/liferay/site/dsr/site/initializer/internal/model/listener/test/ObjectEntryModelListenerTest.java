@@ -17,8 +17,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -63,7 +61,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -90,11 +87,6 @@ public class ObjectEntryModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Assume.assumeFalse(
-			"HSQL deadlocks on the inline background task triggered by " +
-				"addObjectEntry, skip test. See LPD-84607.",
-			DBManagerUtil.getDBType() == DBType.HYPERSONIC);
-
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			StringPool.BLANK, TestPropsValues.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,

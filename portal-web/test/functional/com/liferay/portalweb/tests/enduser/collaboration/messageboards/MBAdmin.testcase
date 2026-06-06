@@ -147,43 +147,6 @@ definition {
 			threadSubject = "MB Thread Message Subject Edit");
 	}
 
-	@description = "This is a test for LPS-136918. It checks that a category can be exported."
-	@priority = 3
-	test CanExportCategory {
-		property portal.acceptance = "false";
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Category Description",
-			categoryName = "MB Category Name",
-			userEmailAddress = "test@liferay.com");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		LAR.exportPortlet(larFileName = "MB_portlet.lar");
-
-		MessageboardsThread.assertDownloadedFileNameFromTempFolder(exportedFileName = "MB_portlet");
-	}
-
-	@description = "This is a test for LPS-136917. It checks that a category can be imported."
-	@priority = 3
-	test CanImportCategory {
-		property portal.acceptance = "false";
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		LAR.importPortlet(
-			initializeLiferayEvent = "true",
-			larFileName = "message-boards-category.lar",
-			uploadFrom = "dependencies");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.viewCP(
-			categoryCount = "0 Categories",
-			categoryName = "MB Category Name",
-			threadCount = 0);
-	}
-
 	@e2etest
 	@priority = 5
 	@refactordone

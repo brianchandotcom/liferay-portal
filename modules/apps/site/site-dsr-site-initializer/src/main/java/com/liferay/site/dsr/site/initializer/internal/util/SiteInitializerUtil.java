@@ -5,6 +5,7 @@
 
 package com.liferay.site.dsr.site.initializer.internal.util;
 
+import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -36,6 +37,7 @@ public class SiteInitializerUtil {
 			return;
 		}
 
+		String fileName = BatchEngineUnitThreadLocal.getFileName();
 		String name = PrincipalThreadLocal.getName();
 
 		PermissionChecker permissionChecker =
@@ -54,6 +56,8 @@ public class SiteInitializerUtil {
 			siteInitializer.initialize(group.getGroupId());
 		}
 		finally {
+			BatchEngineUnitThreadLocal.setFileName(fileName);
+
 			PrincipalThreadLocal.setName(name);
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);

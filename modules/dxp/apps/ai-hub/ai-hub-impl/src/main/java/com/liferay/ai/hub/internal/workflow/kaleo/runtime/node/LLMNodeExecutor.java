@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowNodeManager;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -107,12 +108,24 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 
 		AtomicReference<ChatResponse> chatResponseAtomicReference =
 			new AtomicReference<>();
+
 		Map<String, String> kaleoNodeSettingValues =
 			KaleoNodeSettingUtil.getKaleoNodeSettingValuesMap(
 				currentKaleoNode.getKaleoNodeId());
+
+		List<String> mcpServerExternalReferenceCodes =
+			ToolsUtil.getMCPServerExternalReferenceCodes(
+				_jsonFactory, kaleoNodeSettingValues);
+
+		String modelName = null;
+
+		if (ListUtil.isNotEmpty(mcpServerExternalReferenceCodes)) {
+			modelName = VertexAiGeminiUtil.TOOL_CALLING_MODEL_NAME;
+		}
+
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiUtil.createVertexAiGeminiStreamingChatModel(
-				_quotaManager, serviceContext);
+				modelName, _quotaManager, serviceContext);
 
 		String prompt = PromptUtil.composePrompt(
 			kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
@@ -195,10 +208,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				MCPToolProviderUtil.create(
 					kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
 					kaleoInstanceToken.getGroupId(), serviceContext.getLocale(),
-					ToolsUtil.getMCPServerExternalReferenceCodes(
-						_jsonFactory, kaleoNodeSettingValues),
-					_objectEntryManager, sseEventSinkKey,
-					serviceContext.getUserId(), workflowContext)
+					mcpServerExternalReferenceCodes, _objectEntryManager,
+					sseEventSinkKey, serviceContext.getUserId(),
+					workflowContext)
 			).userMessage(
 				userMessage
 			).vertexAiGeminiStreamingChatModel(

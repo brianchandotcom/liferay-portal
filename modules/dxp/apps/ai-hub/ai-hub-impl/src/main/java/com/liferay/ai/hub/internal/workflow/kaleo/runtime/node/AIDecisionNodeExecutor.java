@@ -174,7 +174,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiUtil.createVertexAiGeminiStreamingChatModel(
-				_quotaManager, serviceContext);
+				VertexAiGeminiUtil.TOOL_CALLING_MODEL_NAME, _quotaManager,
+				serviceContext);
 
 		String sseEventSinkKey = GetterUtil.getString(
 			workflowContext.get("sseEventSinkKey"));

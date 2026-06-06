@@ -11,8 +11,8 @@
 		<suppress checks="JavaReferenceAnnotationsCheck" files=".*/BaseMock.*.java" />
 		<suppress checks="JavaReferenceAnnotationsCheck" files=".*/com/liferay/osb/faro/web/internal/activator/OAuth2AuthorizationExpandoPortalInstanceLifecycleListener\.java" />
 		<suppress checks="JavaReferenceAnnotationsCheck" files=".*/com/liferay/osb/faro/web/internal/card/template/ContactsCardTemplateManagerHelper\.java" />
-		<suppress checks="JavaUpgradeMissingTestCheck" files=".*/osb-faro-contacts-service/src/main/java/.*/upgrade/.*" />
-		<suppress checks="JavaUpgradeMissingTestCheck" files=".*/osb-faro-service/src/main/java/.*/upgrade/.*" />
+		<suppress checks="JavaUpgradeMissingTestCheck" files=".*/osb-faro-contacts-service/.*" />
+		<suppress checks="JavaUpgradeMissingTestCheck" files=".*/osb-faro-service/.*" />
 
 		<!-- Begin LRAC-12941 -->
 

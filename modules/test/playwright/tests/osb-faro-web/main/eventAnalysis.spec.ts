@@ -1818,7 +1818,7 @@ async function addAttributeFilter({
 }) {
 	await page
 		.locator('.attribute-filter-section-root')
-		.getByRole('button')
+		.getByLabel('Add')
 		.click();
 
 	await page
@@ -1908,5 +1908,66 @@ test(
 		await expect(
 			page.getByRole('row', {exact: true, name: 'customEvent 1'})
 		).toHaveCount(0);
+	}
+);
+
+test(
+	'Event Analysis allows adding the same filter twice',
+	{
+		tag: '@LRAC-10316',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		// Add the same category filter twice
+
+		await addAttributeFilter({
+			attributeName: 'category',
+			condition: 'is',
+			page,
+			value: 'wetsuit',
+		});
+
+		await addAttributeFilter({
+			attributeName: 'category',
+			condition: 'is',
+			page,
+			value: 'wetsuit',
+		});
+
+		// Both equal filters are present in the dashboard
+
+		await expect(
+			page.locator('.attribute-filter-section-root').getByText('wetsuit')
+		).toHaveCount(2);
+
+		// The analysis result still appears
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		await expect(
+			page.getByRole('row', {exact: true, name: 'customEvent 1'})
+		).toBeVisible();
 	}
 );

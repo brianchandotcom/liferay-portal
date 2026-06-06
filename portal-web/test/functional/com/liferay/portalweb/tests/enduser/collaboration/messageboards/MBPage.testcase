@@ -169,23 +169,6 @@ definition {
 			threadSubject = "Thread Subject");
 	}
 
-	@priority = 4
-	@refactordone
-	test CanDeleteCategory {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "MB Category Name",
-			userEmailAddress = "test@liferay.com");
-
-		JSONMBMessage.deleteCategory(
-			categoryName = "MB Category Name",
-			groupName = "Guest");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewDefault();
-	}
-
 	@e2etest
 	@priority = 5
 	@refactordone
@@ -202,7 +185,7 @@ definition {
 
 	@priority = 4
 	@refactordone
-	test CanEditCategory {
+	test CanEditAndDeleteCategory {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "MB Category Name",
@@ -218,6 +201,14 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.viewPG(categoryName = "MB Category Name Edit");
+
+		JSONMBMessage.deleteCategory(
+			categoryName = "MB Category Name Edit",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewDefault();
 	}
 
 	@priority = 4

@@ -248,11 +248,17 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 	}
 
 	@Override
+	protected void doReindex(String[] ids) throws Exception {
+		for (String id : ids) {
+			doReindex(FaroProject.class.getName(), GetterUtil.getLong(id));
+		}
+	}
+
+	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		doReindex(_faroProjectLocalService.getFaroProject(classPK));
 	}
 
-	@Override
 	protected IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

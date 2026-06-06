@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,16 +10,17 @@ import com.liferay.osb.faro.engine.client.constants.OSBAsahHeaderConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 import java.util.List;
-
-import org.apache.http.HttpStatus;
 
 import org.springframework.cache.Cache;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
@@ -67,7 +68,9 @@ public class CacheClientHttpRequestInterceptor
 		ClientHttpResponse clientHttpResponse =
 			clientHttpRequestExecution.execute(httpRequest, bytes);
 
-		if (clientHttpResponse.getRawStatusCode() != HttpStatus.SC_OK) {
+		HttpStatusCode httpStatusCode = clientHttpResponse.getStatusCode();
+
+		if (httpStatusCode.value() != HttpServletResponse.SC_OK) {
 			return clientHttpResponse;
 		}
 

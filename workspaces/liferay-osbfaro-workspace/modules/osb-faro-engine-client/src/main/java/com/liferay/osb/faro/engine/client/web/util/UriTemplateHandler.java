@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -11,12 +11,12 @@ import java.net.URI;
 
 import java.util.Map;
 
-import org.springframework.web.util.DefaultUriTemplateHandler;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Shinn Lok
  */
-public class UriTemplateHandler extends DefaultUriTemplateHandler {
+public class UriTemplateHandler extends DefaultUriBuilderFactory {
 
 	@Override
 	public URI expand(String uriTemplateString, Map<String, ?> uriVariables) {

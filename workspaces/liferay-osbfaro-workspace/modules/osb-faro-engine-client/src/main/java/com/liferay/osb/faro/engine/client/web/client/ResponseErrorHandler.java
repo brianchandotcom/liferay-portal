@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -11,9 +11,9 @@ import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
 import com.liferay.osb.faro.engine.client.exception.NoSuchEntryException;
 import com.liferay.portal.kernel.util.FileUtil;
 
-import java.io.IOException;
+import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpStatus;
+import java.io.IOException;
 
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
@@ -27,9 +27,10 @@ public class ResponseErrorHandler extends DefaultResponseErrorHandler {
 	public void handleError(ClientHttpResponse clientHttpResponse)
 		throws IOException {
 
-		int statusCode = clientHttpResponse.getRawStatusCode();
+		int statusCode = clientHttpResponse.getStatusCode(
+		).value();
 
-		if (statusCode < 400) {
+		if (statusCode < HttpServletResponse.SC_BAD_REQUEST) {
 			super.handleError(clientHttpResponse);
 
 			return;
@@ -38,15 +39,15 @@ public class ResponseErrorHandler extends DefaultResponseErrorHandler {
 		String response = new String(
 			FileUtil.getBytes(clientHttpResponse.getBody()));
 
-		if (statusCode == HttpStatus.SC_CONFLICT) {
+		if (statusCode == HttpServletResponse.SC_CONFLICT) {
 			throw new DuplicateEntryException(response);
 		}
 
-		if (statusCode == HttpStatus.SC_NOT_FOUND) {
+		if (statusCode == HttpServletResponse.SC_NOT_FOUND) {
 			throw new NoSuchEntryException(response);
 		}
 
-		if (statusCode == HttpStatus.SC_UNPROCESSABLE_ENTITY) {
+		if (statusCode == 422) {
 			throw new InvalidFilterException(response);
 		}
 

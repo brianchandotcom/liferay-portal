@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpResponse;
 
 /**
@@ -26,7 +27,7 @@ public class FaroClientHttpResponse
 	implements ClientHttpResponse, Cloneable, Serializable {
 
 	public FaroClientHttpResponse(
-		byte[] bytes, HttpHeaders httpHeaders, HttpStatus httpStatus) {
+		byte[] bytes, HttpHeaders httpHeaders, HttpStatusCode httpStatus) {
 
 		if (bytes == null) {
 			_bytes = new byte[0];
@@ -86,19 +87,23 @@ public class FaroClientHttpResponse
 	}
 
 	@Override
-	public HttpStatus getStatusCode() {
+	public HttpStatusCode getStatusCode() {
 		return _httpStatus;
 	}
 
 	@Override
 	public String getStatusText() {
-		return _httpStatus.getReasonPhrase();
+		if (_httpStatus instanceof HttpStatus httpStatus) {
+			return httpStatus.getReasonPhrase();
+		}
+
+		return "";
 	}
 
 	private static final long serialVersionUID = 1L;
 
 	private final byte[] _bytes;
 	private final HttpHeaders _httpHeaders;
-	private final HttpStatus _httpStatus;
+	private final HttpStatusCode _httpStatus;
 
 }

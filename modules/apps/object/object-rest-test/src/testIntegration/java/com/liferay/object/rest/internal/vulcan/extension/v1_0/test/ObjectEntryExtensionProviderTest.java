@@ -285,15 +285,14 @@ public class ObjectEntryExtensionProviderTest {
 			};
 
 			_assertSetAndGetExtendedPropertiesWithCommerceProduct(
-				customFieldName, product);
-
-			_assertSetAndGetExtendedPropertiesWithCommerceProduct(
 				customFieldName,
 				HashMapBuilder.<String, Object>put(
 					"id", cpDefinition.getCPDefinitionId()
 				).put(
 					"productId", cpDefinition.getCProductId()
 				).build());
+			_assertSetAndGetExtendedPropertiesWithCommerceProduct(
+				customFieldName, product);
 		}
 		finally {
 			PersistedModelLocalService persistedModelLocalService =

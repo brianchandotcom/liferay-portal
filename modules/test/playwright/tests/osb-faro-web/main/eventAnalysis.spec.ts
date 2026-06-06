@@ -1971,3 +1971,91 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Event Analysis creation with a breakdown and a filtered attribute',
+	{
+		tag: '@LRAC-10264',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: 'customEvent',
+				properties: [
+					{name: 'pageTitle', value: 'My Page'},
+					{name: 'url', value: 'https://www.liferay.com/web/site'},
+				],
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: ['pageTitle', 'url'].map((name) => ({
+					dataType: 'STRING',
+					displayName: name,
+					name,
+					type: 'LOCAL',
+				})),
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		// Only one event can be analyzed, so the event add control is gone
+
+		await expect(
+			page.locator('.event-section-root').getByLabel('Add')
+		).toHaveCount(0);
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		await addFilter({
+			filterName: 'url',
+			input: 'site',
+			operator: 'contains',
+			page,
+		});
+
+		// The dashboard shows the event, the breakdown, the filter and a result
+
+		await expect(
+			page
+				.locator('.attribute-breakdown-section-root')
+				.getByText('pageTitle')
+		).toBeVisible();
+
+		await expect(
+			page.locator('.attribute-filter-section-root').getByText('site')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('row', {exact: true, name: 'customEvent 1'})
+		).toBeVisible();
+	}
+);

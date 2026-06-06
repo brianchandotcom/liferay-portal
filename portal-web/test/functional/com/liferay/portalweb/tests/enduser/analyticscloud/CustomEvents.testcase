@@ -74,61 +74,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10264 | Test Summary: Event Analysis creation with Attribute ad Filter Attribute"
-	@priority = 5
-	test AddAttributeAndAttributeFilterInEventsAnalysis {
-		property test.run.type = "single";
-
-		var attributeName = "pageTitle";
-		var filterName = "url";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEvent(customEventName = ${customEventName});
-		}
-
-		task ("After adding an event, assert there is no '+' under Analyze") {
-			AssertElementNotPresent(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
-		}
-
-		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = ${attributeName});
-		}
-
-		task ("Add the filter to analysis") {
-			ACEventAnalysis.addFilter(
-				filterName = ${filterName},
-				inputValue = "site",
-				optionValue = "contains");
-		}
-
-		task ("Check that the analysis dashboard contains the event,attribute and filter") {
-			ACEventAnalysis.viewAnalysisDashboard(
-				attributeNameList = ${attributeName},
-				eventName = ${customEventName},
-				filterNameList = ${filterName});
-		}
-	}
-
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10265 | Test Summary: Max of 3 breakdowns options are allowed"
 	@priority = 4
 	test AddMaxOf3AttributesToEvent {

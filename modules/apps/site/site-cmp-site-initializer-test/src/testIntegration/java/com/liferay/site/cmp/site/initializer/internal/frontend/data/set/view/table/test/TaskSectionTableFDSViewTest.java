@@ -39,13 +39,11 @@ public class TaskSectionTableFDSViewTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetFDSTableSchemaForAllTasks() throws Exception {
-		_assertSchema("com.liferay.site.cmp.site.initializer-all-tasks");
-	}
-
-	@Test
-	public void testGetFDSTableSchemaForProjectTasks() throws Exception {
-		_assertSchema("com.liferay.site.cmp.site.initializer-project-tasks");
+	public void testGetFDSTableSchema() throws Exception {
+		_testGetFDSTableSchema(
+			"com.liferay.site.cmp.site.initializer-all-tasks");
+		_testGetFDSTableSchema(
+			"com.liferay.site.cmp.site.initializer-project-tasks");
 	}
 
 	@Override
@@ -53,7 +51,7 @@ public class TaskSectionTableFDSViewTest
 		return "com.liferay.site.cmp.site.initializer-project-tasks";
 	}
 
-	private void _assertSchema(String fdsName) {
+	private void _testGetFDSTableSchema(String fdsName) {
 		FDSView fdsView = _fdsViewRegistry.getFDSViews(
 			fdsName
 		).get(

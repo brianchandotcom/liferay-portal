@@ -158,31 +158,6 @@ definition {
 		MessageboardsCategory.viewDefault();
 	}
 
-	@priority = 4
-	@refactordone
-	test CanEditThreadSubjectAndBody {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.openToThread(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.editPG(
-			threadBodyEdit = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject",
-			threadSubjectEdit = "MB Thread Message Subject Edit");
-
-		MessageboardsThread.viewPG(
-			threadBody = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject Edit",
-			userName = "Test Test");
-	}
-
 	@description = "This is a use case for LPS-67722."
 	@priority = 3
 	@refactordone

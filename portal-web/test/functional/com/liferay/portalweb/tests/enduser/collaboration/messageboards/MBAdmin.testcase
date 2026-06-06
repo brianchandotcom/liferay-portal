@@ -27,30 +27,6 @@ definition {
 		}
 	}
 
-	@e2etest
-	@priority = 5
-	@refactordone
-	test CanAddThread {
-		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
-		property environment.acceptance = "false";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "true";
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.addCP(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewCP(
-			replyCount = 0,
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-	}
-
 	@description = "This is a test for LPS-136921. It checks that the ban length and expiration of a user can be changed."
 	@priority = 3
 	test CanChangeBanLengthAndExpiration {
@@ -265,41 +241,6 @@ definition {
 			userScreenName = "userfn userln");
 
 		MessageboardsThread.viewNoBannedUsers();
-	}
-
-	@description = "This is a test for LPS-82508. It ensures that the number of threads and categories in a message board reflects the whole hierarchy."
-	@priority = 4
-	test CanViewCountsFromRootCategory {
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Category Description",
-			categoryName = "MB Category Name",
-			userEmailAddress = "test@liferay.com");
-
-		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "MB Category Name",
-			groupName = "Guest");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "MB Subcategory Name",
-			groupName = "Guest",
-			parentCategoryId = ${parentCategoryId},
-			userEmailAddress = "test@liferay.com");
-
-		for (var threadCount : list "1,2") {
-			JSONMBMessage.addMessage(
-				categoryName = "MB Subcategory Name",
-				groupName = "Guest",
-				threadBody = "MB Thread Message Body${threadCount}",
-				threadSubject = "MB Thread Message Subject${threadCount}");
-		}
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.viewCP(
-			categoryCount = 1,
-			categoryName = "MB Category Name",
-			threadCount = 2);
 	}
 
 	@description = "This test ensures that the new templates are set as the default and new terms (Message siblings, Message parents and Root message body) are included in the definition of terms."

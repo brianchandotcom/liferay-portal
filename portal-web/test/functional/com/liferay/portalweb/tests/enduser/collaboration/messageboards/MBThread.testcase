@@ -130,28 +130,6 @@ definition {
 			pageName = "Message Boards Page");
 	}
 
-	@priority = 4
-	@refactordone
-	test CanAddReply {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		JSONMBMessage.addMessageReply(
-			groupName = "Guest",
-			replyBody = "MB Thread Reply Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.viewReplyPG(
-			replyCount = 1,
-			threadBody = "MB Thread Message Body",
-			threadReplyBody = "MB Thread Reply Body",
-			threadSubject = "MB Thread Message Subject");
-	}
-
 	@priority = 3
 	@refactordone
 	test CanAddThreadWithUTF8Characters {

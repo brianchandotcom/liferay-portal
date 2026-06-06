@@ -26,11 +26,9 @@ Import-Package:\
 	\
 	!com.caucho.*,\
 	\
-	!com.fasterxml.aalto.*,\
-	!com.fasterxml.jackson.dataformat.cbor.*,\
-	!com.fasterxml.jackson.dataformat.smile.*,\
-	!com.fasterxml.jackson.dataformat.xml.*,\
-	!com.fasterxml.jackson.dataformat.yaml.*,\
+	!com.damnhandy.*,\
+	\
+	!com.fasterxml.*,\
 	\
 	!com.github.mustachejava.*,\
 	\
@@ -68,7 +66,11 @@ Import-Package:\
 	\
 	!groovy.*,\
 	\
+	!io.micrometer.*,\
+	\
 	!io.netty.*,\
+	\
+	!io.netty5.*,\
 	\
 	!io.r2dbc.*,\
 	\
@@ -80,7 +82,33 @@ Import-Package:\
 	\
 	!io.undertow.*,\
 	\
+	!jakarta.annotation.*,\
+	\
+	!jakarta.ejb.*,\
+	\
+	!jakarta.enterprise.concurrent,\
+	\
 	!jakarta.faces.*,\
+	\
+	!jakarta.inject.*,\
+	\
+	!jakarta.interceptor,\
+	\
+	!jakarta.jms.*,\
+	\
+	!jakarta.json.bind.*,\
+	\
+	!jakarta.money.*,\
+	\
+	!jakarta.persistence.*,\
+	\
+	!jakarta.servlet.*,\
+	\
+	!jakarta.transaction.*,\
+	\
+	!jakarta.validation.*,\
+	\
+	!jakarta.xml.ws.*,\
 	\
 	!javax.annotation.*,\
 	\
@@ -110,6 +138,8 @@ Import-Package:\
 	\
 	!javax.xml.ws.*,\
 	\
+	!jdk.internal.*,\
+	\
 	!jdk.jfr.*,\
 	\
 	!joptsimple.*,\
@@ -127,6 +157,8 @@ Import-Package:\
 	!net.minidev.*,\
 	\
 	!okhttp3.*,\
+	\
+	!okio.*,\
 	\
 	!oracle.jdbc.*,\
 	\
@@ -163,6 +195,8 @@ Import-Package:\
 	\
 	!org.conscrypt.*,\
 	\
+	!org.crac.*,\
+	\
 	!org.eclipse.jetty.*,\
 	\
 	!org.flywaydb.*,\
@@ -172,6 +206,8 @@ Import-Package:\
 	!org.hibernate.*,\
 	\
 	!org.jboss.*,\
+	\
+	!org.joda.*,\
 	\
 	!org.jooq.*,\
 	\
@@ -185,25 +221,10 @@ Import-Package:\
 	\
 	!org.reactivestreams.*,\
 	\
-	!org.slf4j.*,\
-	\
-	!org.springframework.core.metrics.*,\
-	!org.springframework.instrument.*,\
-	!org.springframework.messaging.rsocket.*,\
-	!org.springframework.orm.jpa.*,\
-	!org.springframework.oxm.*,\
-	!org.springframework.plugin.*,\
-	!org.springframework.r2dbc.connection.*,\
-	!org.springframework.security.authentication.*,\
-	!org.springframework.security.core.*,\
-	!org.springframework.security.web.access.*,\
-	!org.springframework.security.web.server.util.matcher.*,\
-	!org.springframework.security.web.util.matcher.*,\
-	!org.springframework.test.web.reactive.*,\
-	!org.springframework.web.reactive.*,\
-	!org.springframework.web.servlet.*,\
-	!org.springframework.ws.*,\
-	!org.springframework.xml.transform.*,\
+	!org.springframework.boot.*,\
+	!org.springframework.hateoas.*,\
+	!org.springframework.http.*,\
+	!org.springframework.web.*,\
 	\
 	!org.synchronoss.cloud.nio.*,\
 	\
@@ -227,6 +248,6 @@ Import-Package:\
 	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\
 	\
-	*
+	*;resolution:=optional
 -dsannotations-options: inherit
 -fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=ignore

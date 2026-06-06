@@ -30,56 +30,6 @@ definition {
 	@e2etest
 	@priority = 5
 	@refactordone
-	test CanManageCategories {
-		property portal.acceptance = "true";
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.addCP(categoryName = "MB Category Name");
-
-		MessageboardsCategory.viewCP(
-			categoryCount = "0 Categories",
-			categoryName = "MB Category Name",
-			threadCount = 0);
-
-		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "MB Category Name",
-			groupName = "Guest");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "MB Subcategory Name",
-			groupName = "Guest",
-			parentCategoryId = ${parentCategoryId},
-			userEmailAddress = "test@liferay.com");
-
-		MessageboardsCategory.openToCategory(
-			categoryName = "MB Category Name",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		MessageboardsCategory.viewCP(
-			categoryCount = "0 Categories",
-			categoryName = "MB Subcategory Name",
-			threadCount = 0);
-
-		for (var num : list "2,3") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "MB Category Description",
-				categoryName = "MB Category${num} Name",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.deleteCP();
-
-		MessageboardsCategory.viewDefault();
-	}
-
-	@e2etest
-	@priority = 5
-	@refactordone
 	test CanAddThread {
 		property app.server.types = "jboss,tomcat,weblogic,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
@@ -232,6 +182,56 @@ definition {
 			categoryCount = "0 Categories",
 			categoryName = "MB Category Name",
 			threadCount = 0);
+	}
+
+	@e2etest
+	@priority = 5
+	@refactordone
+	test CanManageCategories {
+		property portal.acceptance = "true";
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.addCP(categoryName = "MB Category Name");
+
+		MessageboardsCategory.viewCP(
+			categoryCount = "0 Categories",
+			categoryName = "MB Category Name",
+			threadCount = 0);
+
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "MB Category Name",
+			groupName = "Guest");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "MB Subcategory Name",
+			groupName = "Guest",
+			parentCategoryId = ${parentCategoryId},
+			userEmailAddress = "test@liferay.com");
+
+		MessageboardsCategory.openToCategory(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		MessageboardsCategory.viewCP(
+			categoryCount = "0 Categories",
+			categoryName = "MB Subcategory Name",
+			threadCount = 0);
+
+		for (var num : list "2,3") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Category Description",
+				categoryName = "MB Category${num} Name",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.deleteCP();
+
+		MessageboardsCategory.viewDefault();
 	}
 
 	@description = "This is a test for LPS-136923. It checks that a user can be unbanned."

@@ -30,7 +30,7 @@ definition {
 	@e2etest
 	@priority = 5
 	@refactordone
-	test CanAddCategory {
+	test CanManageCategories {
 		property portal.acceptance = "true";
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
@@ -41,17 +41,6 @@ definition {
 			categoryCount = "0 Categories",
 			categoryName = "MB Category Name",
 			threadCount = 0);
-	}
-
-	@priority = 3
-	@refactordone
-	test CanAddSubcategory {
-		property portal.acceptance = "false";
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Category Description",
-			categoryName = "MB Category Name",
-			userEmailAddress = "test@liferay.com");
 
 		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
 			categoryName = "MB Category Name",
@@ -73,6 +62,19 @@ definition {
 			categoryCount = "0 Categories",
 			categoryName = "MB Subcategory Name",
 			threadCount = 0);
+
+		for (var num : list "2,3") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Category Description",
+				categoryName = "MB Category${num} Name",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.deleteCP();
+
+		MessageboardsCategory.viewDefault();
 	}
 
 	@e2etest
@@ -171,25 +173,6 @@ definition {
 			disableAutoExpire = "true",
 			siteURLKey = "Guest",
 			userScreenName = "userfn1 userln1");
-	}
-
-	@priority = 3
-	@refactordone
-	test CanDeleteCategories {
-		property portal.acceptance = "false";
-
-		for (var num : list "1,2,3") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "MB Category Description",
-				categoryName = "MB Category${num} Name",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.deleteCP();
-
-		MessageboardsCategory.viewDefault();
 	}
 
 	@priority = 5

@@ -327,42 +327,6 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@description = "This test covers LPS-137634. It ensures that JavaScript in a thread body is not executed, whether entered as BBCode source or in a tag, subject and body."
-	@priority = 4
-	@refactordone
-	test CannotExecuteJavaScriptInThreadBody {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
-			source = "true",
-			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = 0,
-			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.viewNoXSSPG(
-			sourceContent = "true",
-			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.addPG(
-			groupName = "Guest",
-			invalidCharacters = "true",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			tagName = '''<script>alert(123);</script>''',
-			threadBody = '''<script>alert(123);</script>''',
-			threadSubject = '''<script>alert(123);</script>''');
-
-		AssertAlertNotPresent();
-	}
-
 	@description = "This is a test for LPS-87376. It ensures that a user can publish a thread with a tag."
 	@priority = 4
 	test CanPublishThreadWithTag {

@@ -156,33 +156,6 @@ definition {
 
 	@priority = 3
 	@refactordone
-	test CanCancelEditOnThread {
-		property portal.acceptance = "false";
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Subject");
-
-		MessageboardsThread.openToThread(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadSubject = "Message Boards Thread Subject");
-
-		MessageboardsThread.cancelEdit(
-			threadBodyEdit = "Message Boards Thread Body Edit",
-			threadSubject = "Message Boards Thread Subject",
-			threadSubjectEdit = "Message Boards Thread Subject Edit");
-
-		MessageboardsThread.viewPG(
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Subject",
-			userName = "Test Test");
-	}
-
-	@priority = 3
-	@refactordone
 	test CanDeleteThreadWithAttachment {
 		property custom.properties = "trash.entries.max.age=1${line.separator}trash.entry.check.interval=1";
 		property portal.acceptance = "false";

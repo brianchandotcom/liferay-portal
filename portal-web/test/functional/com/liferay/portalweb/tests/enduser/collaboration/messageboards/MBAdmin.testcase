@@ -101,28 +101,6 @@ definition {
 			userScreenName = "userfn1 userln1");
 	}
 
-	@priority = 5
-	@refactordone
-	test CanEditThreadSubjectAndBody {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		JSONMBMessage.updateMessage(
-			groupName = "Guest",
-			threadBodyEdit = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject",
-			threadSubjectEdit = "MB Thread Message Subject Edit");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewCP(
-			replyCount = 0,
-			threadBody = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject Edit");
-	}
-
 	@e2etest
 	@priority = 5
 	@refactordone

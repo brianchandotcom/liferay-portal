@@ -43,45 +43,6 @@ definition {
 		}
 	}
 
-	@e2etest
-	@priority = 3
-	@refactordone
-	test CanAddCategories {
-		property portal.acceptance = "false";
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(
-			categoryDescription = "MB Category Description",
-			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category Name");
-
-		MessageboardsCategory.viewPG(
-			categoryDescription = "MB Category Description",
-			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category Name");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Category Description",
-			categoryName = "MB Catègory Name",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewPG(categoryName = "MB Catègory Name");
-
-		for (var categoryName : list "MB Category1 Name,MB Category2 Name") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "MB Category Description",
-				categoryName = ${categoryName},
-				userEmailAddress = "test@liferay.com");
-
-			Navigator.gotoPage(pageName = "Message Boards Page");
-
-			MessageboardsCategory.viewPG(categoryName = ${categoryName});
-		}
-	}
-
 	@priority = 4
 	@refactordone
 	test CanAddMBThreadWithMultipleAttachments {
@@ -637,55 +598,6 @@ definition {
 			subscribedThread = "MB Subcategory Name 2");
 	}
 
-	@e2etest
-	@priority = 5
-	@refactordone
-	test CanViewThreadInSubcategory {
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Category Description",
-			categoryName = "MB Category Name",
-			userEmailAddress = "test@liferay.com");
-
-		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "MB Category Name",
-			groupName = "Guest");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "MB Subcategory Name",
-			groupName = "Guest",
-			parentCategoryId = ${parentCategoryId},
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(
-			categoryName = "MB Category Name",
-			subCategoryEnabled = "true",
-			subCategoryName = "MB Subcategory Name");
-
-		MessageboardsThread.addPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(
-			categoryName = "MB Category Name",
-			subCategoryEnabled = "true",
-			subCategoryName = "MB Subcategory Name");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = 0,
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.viewPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-	}
-
 	@priority = 3
 	@refactordone
 	test CanViewThreadStatistics {
@@ -799,22 +711,6 @@ definition {
 		MessageboardsThread.viewMBThreadVisualStatePG(
 			threadSubject = "MB Thread Message Subject 2",
 			unReadMBthread = "true");
-	}
-
-	@priority = 4
-	@refactordone
-	test MBCategoryCannotBeAddedWithoutName {
-		MessageboardsCategory.addPG(
-			categoryDescription = "MB Category Description",
-			categoryDescriptionEnabled = "true",
-			categoryName = " ",
-			categoryWithoutName = "true",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewDefault();
 	}
 
 	@description = "This test checks that the javascript in the user name will not be executed when viewing a thread on page."

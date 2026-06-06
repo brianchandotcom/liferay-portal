@@ -46,7 +46,7 @@ definition {
 	@e2etest
 	@priority = 3
 	@refactordone
-	test CanAddCategoryWithDescription {
+	test CanAddCategories {
 		property portal.acceptance = "false";
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -60,12 +60,6 @@ definition {
 			categoryDescription = "MB Category Description",
 			categoryDescriptionEnabled = "true",
 			categoryName = "MB Category Name");
-	}
-
-	@priority = 3
-	@refactordone
-	test CanAddCategoryWithUTF8Characters {
-		property portal.acceptance = "false";
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
@@ -75,6 +69,17 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.viewPG(categoryName = "MB Catègory Name");
+
+		for (var categoryName : list "MB Category1 Name,MB Category2 Name") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Category Description",
+				categoryName = ${categoryName},
+				userEmailAddress = "test@liferay.com");
+
+			Navigator.gotoPage(pageName = "Message Boards Page");
+
+			MessageboardsCategory.viewPG(categoryName = ${categoryName});
+		}
 	}
 
 	@priority = 4
@@ -89,23 +94,6 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewThreadAttachment(mbAttachmentFileList = "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4");
-	}
-
-	@priority = 3
-	@refactordone
-	test CanAddMultipleCategories {
-		property portal.acceptance = "false";
-
-		for (var categoryName : list "MB Category1 Name,MB Category2 Name") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "MB Category Description",
-				categoryName = ${categoryName},
-				userEmailAddress = "test@liferay.com");
-
-			Navigator.gotoPage(pageName = "Message Boards Page");
-
-			MessageboardsCategory.viewPG(categoryName = ${categoryName});
-		}
 	}
 
 	@priority = 3

@@ -11,10 +11,11 @@ import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
 import com.liferay.osb.faro.engine.client.exception.NoSuchEntryException;
 import com.liferay.portal.kernel.util.FileUtil;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
-import org.apache.http.HttpStatus;
-
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 
@@ -27,9 +28,11 @@ public class ResponseErrorHandler extends DefaultResponseErrorHandler {
 	public void handleError(ClientHttpResponse clientHttpResponse)
 		throws IOException {
 
-		int statusCode = clientHttpResponse.getRawStatusCode();
+		HttpStatusCode httpStatusCode = clientHttpResponse.getStatusCode();
 
-		if (statusCode < 400) {
+		int statusCode = httpStatusCode.value();
+
+		if (statusCode < HttpServletResponse.SC_BAD_REQUEST) {
 			super.handleError(clientHttpResponse);
 
 			return;
@@ -38,15 +41,15 @@ public class ResponseErrorHandler extends DefaultResponseErrorHandler {
 		String response = new String(
 			FileUtil.getBytes(clientHttpResponse.getBody()));
 
-		if (statusCode == HttpStatus.SC_CONFLICT) {
+		if (statusCode == HttpServletResponse.SC_CONFLICT) {
 			throw new DuplicateEntryException(response);
 		}
 
-		if (statusCode == HttpStatus.SC_NOT_FOUND) {
+		if (statusCode == HttpServletResponse.SC_NOT_FOUND) {
 			throw new NoSuchEntryException(response);
 		}
 
-		if (statusCode == HttpStatus.SC_UNPROCESSABLE_ENTITY) {
+		if (statusCode == 422) {
 			throw new InvalidFilterException(response);
 		}
 

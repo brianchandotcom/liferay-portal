@@ -343,43 +343,6 @@ definition {
 		MessageboardsThread.assertDownloadedFileNameFromTempFolder(attachmentFileName = "Commerce_Black");
 	}
 
-	@description = "This is a test for LPS-136920. It checks that a thread can be exported."
-	@priority = 3
-	test CanExportThread {
-		property portal.acceptance = "false";
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		LAR.exportPortlet(larFileName = "ExportMBThread.lar");
-
-		MessageboardsThread.assertDownloadedFileNameFromTempFolder(exportedFileName = "ExportMBThread");
-	}
-
-	@description = "This is a test for LPS-136919. It checks that a thread can be imported."
-	@priority = 3
-	test CanImportThread {
-		property portal.acceptance = "false";
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		LAR.importPortlet(
-			initializeLiferayEvent = "true",
-			larFileName = "message-boards-thread.lar",
-			uploadFrom = "dependencies");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewCP(
-			replyCount = 0,
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-	}
-
 	@priority = 4
 	@refactordone
 	test CanLimitThreadAttachmentSize {

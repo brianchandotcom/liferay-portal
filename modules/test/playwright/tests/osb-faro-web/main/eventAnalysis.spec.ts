@@ -1721,3 +1721,86 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'The event attributes list can be searched by name',
+	{
+		tag: '@LRAC-10017',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const attributes = [
+			{dataType: 'STRING', name: 'category', value: 'wetsuit'},
+			{dataType: 'NUMBER', name: 'price', value: '259.95'},
+			{dataType: 'NUMBER', name: 'temp', value: '11'},
+			{
+				dataType: 'DATE',
+				name: 'birthdate',
+				value: '2021-11-25T14:36:30.685Z',
+			},
+			{dataType: 'BOOLEAN', name: 'like', value: 'true'},
+			{dataType: 'DURATION', name: 'duration', value: '3600000'},
+		];
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: 'customEvent',
+				properties: attributes.map(({name, value}) => ({name, value})),
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: attributes.map(
+					({dataType, name}) => ({
+						dataType,
+						displayName: name,
+						name,
+						type: 'LOCAL',
+					})
+				),
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.eventAttributesPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {exact: true, name: 'Attributes'}).click();
+
+		// Each attribute is found when searching for it
+
+		for (const {name} of attributes) {
+			await page.getByPlaceholder('Search').fill(name);
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByRole('link', {exact: true, name})
+			).toBeVisible();
+		}
+
+		// A name that does not exist shows the empty message
+
+		await page
+			.getByPlaceholder('Search')
+			.fill('missing' + getRandomString());
+
+		await page.keyboard.press('Enter');
+
+		await expect(
+			page.getByText('There are no results found.')
+		).toBeVisible();
+	}
+);

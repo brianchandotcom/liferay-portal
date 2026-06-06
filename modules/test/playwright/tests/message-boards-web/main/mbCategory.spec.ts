@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 
 const test = mergeTests(
@@ -17,6 +18,40 @@ const test = mergeTests(
 	loginTest(),
 	messageBoardsPagesTest
 );
+
+test('Can manage categories from the admin', async ({
+	messageBoardsPage,
+	page,
+	site,
+}) => {
+	const categoryName = getRandomString();
+
+	page.on('dialog', (dialog) => dialog.accept());
+
+	await messageBoardsPage.goto(site.friendlyUrlPath);
+
+	// Add a category through the admin portlet
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Category'}),
+		trigger: page.getByRole('button', {exact: true, name: 'New'}),
+	});
+
+	await page.locator('[id$="_MBAdminPortlet_name"]').fill(categoryName);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	const categoryLink = page.getByRole('link', {name: categoryName});
+
+	await expect(categoryLink).toBeVisible();
+
+	// Delete the category
+
+	await messageBoardsPage.deleteAllMBEntries();
+
+	await expect(categoryLink).toBeHidden();
+});
 
 test('Can add a category', async ({messageBoardsWidgetPage, page, site}) => {
 	const categoryName = getRandomString();

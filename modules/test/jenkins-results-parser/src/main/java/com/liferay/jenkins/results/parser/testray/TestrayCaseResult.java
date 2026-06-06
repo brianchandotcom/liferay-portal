@@ -176,7 +176,7 @@ public class TestrayCaseResult {
 		return "";
 	}
 
-	public String getTeamName() {
+	public synchronized String getTeamName() {
 		if (_testrayComponent == null) {
 			return null;
 		}
@@ -192,7 +192,7 @@ public class TestrayCaseResult {
 		return new ArrayList<>(testrayAttachments.values());
 	}
 
-	public TestrayBuild getTestrayBuild() {
+	public synchronized TestrayBuild getTestrayBuild() {
 		if (_testrayBuild != null) {
 			return _testrayBuild;
 		}

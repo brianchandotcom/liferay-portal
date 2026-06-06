@@ -58,7 +58,7 @@ public class TestrayCloudBucket {
 		return getInstance(name);
 	}
 
-	public static TestrayCloudBucket getInstance(String name) {
+	public static synchronized TestrayCloudBucket getInstance(String name) {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
 			name = DEFAULT_BUCKET_NAME;
 		}

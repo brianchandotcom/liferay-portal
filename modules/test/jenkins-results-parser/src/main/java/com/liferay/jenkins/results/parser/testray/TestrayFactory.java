@@ -757,7 +757,7 @@ public class TestrayFactory {
 		return new TestrayTeam(testrayProject, jsonObject);
 	}
 
-	public static TopLevelStandaloneBuildTestrayCaseResult
+	public static synchronized TopLevelStandaloneBuildTestrayCaseResult
 		newTopLevelStandaloneBuildTestrayCaseResult(
 			TestrayBuild testrayBuild,
 			TopLevelBuildReport topLevelBuildReport) {

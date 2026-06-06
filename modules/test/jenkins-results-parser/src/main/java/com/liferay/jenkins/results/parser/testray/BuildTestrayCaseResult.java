@@ -107,7 +107,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			parentTestrayCaseResultURL);
 	}
 
-	protected TestrayAttachment getTestrayAttachment(
+	protected synchronized TestrayAttachment getTestrayAttachment(
 		BuildReport buildReport, String name, String key) {
 
 		if (_testrayAttachments.containsKey(key)) {
@@ -262,7 +262,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		_buildReport = buildReport;
 	}
 
-	protected TestrayAttachment uploadTestrayAttachment(
+	protected synchronized TestrayAttachment uploadTestrayAttachment(
 		String name, String key, Callable<File> callable) {
 
 		File file = null;

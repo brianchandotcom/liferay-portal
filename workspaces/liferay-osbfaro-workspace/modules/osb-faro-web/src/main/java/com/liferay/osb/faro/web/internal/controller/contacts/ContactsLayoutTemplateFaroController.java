@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @Component(
-	service = {ContactsLayoutTemplateFaroController.class, FaroController.class}
+	service = FaroController.class
 )
 @Path("/{groupId}/contacts_layout_template")
 @Produces(MediaType.APPLICATION_JSON)

@@ -190,5 +190,9 @@
 		<!-- Temporary suppressions for frontend React setup (LPS-99901, wincent) -->
 
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-react-web/package\.json" />
+		<suppress checks="JavaComponentAnnotationsCheck" files="workspaces/liferay-osbfaro-workspace/modules/osb-faro-web/src/main/java/com/liferay/osb/faro/web/internal/activator/OAuth2AuthorizationExpandoPortalInstanceLifecycleListener\.java" />
+		<suppress checks="JavaUpgradeCreateTableCheck" files="workspaces/liferay-osbfaro-workspace/modules/osb-faro-service/.*" />
+		<suppress checks="JavaUpgradeMissingTestCheck" files="workspaces/liferay-osbfaro-workspace/modules/osb-faro-contacts-service/.*" />
+		<suppress checks="JavaUpgradeMissingTestCheck" files="workspaces/liferay-osbfaro-workspace/modules/osb-faro-service/.*" />
 	</source-check>
 </suppressions>

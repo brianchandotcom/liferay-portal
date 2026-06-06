@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @Component(
-	service = {FaroController.class, IndividualSegmentFaroController.class}
+	service = FaroController.class
 )
 @Path("/{groupId}/individual_segment")
 @Produces(MediaType.APPLICATION_JSON)

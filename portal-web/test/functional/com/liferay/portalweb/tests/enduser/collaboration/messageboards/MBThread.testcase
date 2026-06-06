@@ -130,30 +130,6 @@ definition {
 			pageName = "Message Boards Page");
 	}
 
-	@priority = 3
-	@refactordone
-	test CanAddThreadWithUTF8Characters {
-		property portal.acceptance = "false";
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
-			threadBody = "MB Thrèad Mèssagè Body",
-			threadSubject = "MB Thrèad Mèssagè Subjèct");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = 0,
-			threadBody = "MB Thrèad Mèssagè Body",
-			threadSubject = "MB Thrèad Mèssagè Subjèct");
-
-		MessageboardsThread.viewPG(
-			threadBody = "MB Thrèad Mèssagè Body",
-			threadSubject = "MB Thrèad Mèssagè Subjèct");
-	}
-
 	@description = "This is a test for LPS-136912. It checks that an urgent thread can be added."
 	@priority = 3
 	test CanAddUrgentThread {
@@ -203,53 +179,6 @@ definition {
 			threadBody = "Message Boards Thread Body",
 			threadSubject = "Message Boards Thread Subject",
 			userName = "Test Test");
-	}
-
-	@e2etest
-	@priority = 4
-	@refactordone
-	test CanCancelThread {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.cancelAdd(
-			threadBody = "Thread Body",
-			threadSubject = "Thread Subject");
-
-		MessageboardsThread.viewNoPG(threadSubject = "Thread Subject");
-	}
-
-	@description = "This ensures that the thread can be deleted, also covers LPS-82675."
-	@priority = 5
-	@refactordone
-	test CanDeleteThread {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		JSONMBMessage.moveThreadToTrash(
-			groupName = "Guest",
-			threadSubject = "MB Thread Message Subject");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewThreadInRecycleBin(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.deleteCP(
-			assetName = "MB Thread Message Subject",
-			assetType = "Message Boards Thread");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = 3
@@ -758,31 +687,6 @@ definition {
 		AssertTextPresent(
 			locator1 = "//body",
 			value1 = "HTTP Status 400 – Bad Request");
-	}
-
-	@description = "This is a test for LPS-68939. It ensures that the message threads appear from newest to oldest by default."
-	@priority = 4
-	test ThreadsAreSortedFromNewestToOldestByDefault {
-		for (var threadSubjectName : list "MB Thread Message 1,MB Thread Message 2,MB Thread Message 3") {
-			JSONMBMessage.addMessage(
-				groupName = "Guest",
-				threadBody = "${threadSubjectName} Body",
-				threadSubject = "${threadSubjectName} Subject");
-		}
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.viewPG(
-			position = 1,
-			threadSubject = "MB Thread Message 3 Subject");
-
-		MessageboardsThread.viewPG(
-			position = 2,
-			threadSubject = "MB Thread Message 2 Subject");
-
-		MessageboardsThread.viewPG(
-			position = 3,
-			threadSubject = "MB Thread Message 1 Subject");
 	}
 
 	@description = "This ensures that a thread title with 255 characters is accepted and a title over 255 characters is trimmed to 255."

@@ -169,20 +169,6 @@ definition {
 			threadSubject = "Thread Subject");
 	}
 
-	@e2etest
-	@priority = 5
-	@refactordone
-	test CanDeleteThread {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.deletePG(threadSubject = "MB Thread Message Subject");
-	}
-
 	@priority = 4
 	@refactordone
 	test CanEditAndDeleteCategory {

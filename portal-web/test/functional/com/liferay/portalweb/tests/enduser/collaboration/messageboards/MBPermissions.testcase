@@ -654,9 +654,9 @@ definition {
 		MessageboardsThread.viewNoPG(threadSubject = "Thread Subject");
 	}
 
-	@description = "This is a test for LPS-136933. It checks that a site member cannot delete a category without permissions."
+	@description = "This is a test for LPS-136933, LPS-136934, LPS-136936 and LPS-136938. It checks that a site member cannot delete, edit, or subscribe to message board content without permissions."
 	@priority = 3
-	test SiteMemberCannotDeleteCategory {
+	test SiteMemberCannotManageThreadWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
@@ -689,6 +689,17 @@ definition {
 			categoryName = "MB Category Name",
 			userEmailAddress = "test@liferay.com");
 
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "Message Boards Thread");
+
+		JSONMBMessage.addMessage(
+			addGroupPermissions = "false",
+			groupName = "Guest",
+			threadBody = "Message Boards Thread No Subscribe Body",
+			threadSubject = "Message Boards Thread No Subscribe");
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
@@ -698,52 +709,18 @@ definition {
 		DMDocument.viewNoPermission(
 			menuItem = "Delete",
 			rowEntry = "MB Category Name");
-	}
-
-	@description = "This is a test for LPS-136934. It checks that a site member cannot delete a thread without permissions."
-	@priority = 3
-	test SiteMemberCannotDeleteThread {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONUser.addUserToSite(
-			groupName = "Guest",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 2,
-			groupName = "Guest",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		DMDocument.viewNoPermission(
 			menuItem = "Delete",
 			rowEntry = "Message Boards Thread");
+
+		DMDocument.viewNoPermission(
+			menuItem = "Edit",
+			rowEntry = "Message Boards Thread");
+
+		DMDocument.viewNoPermission(
+			menuItem = "Subscribe",
+			rowEntry = "Message Boards Thread No Subscribe");
 	}
 
 	@description = "This is a test for LPS-136935. It checks that a site member cannot reply to a thread without permissions."
@@ -799,99 +776,6 @@ definition {
 			threadSubject = "Message Boards Thread");
 
 		Button.viewNotPresent(button = "Reply");
-	}
-
-	@description = "This is a test for LPS-136938. It checks that a site member cannot subscribe to a thread without permissions."
-	@priority = 3
-	test SiteMemberCannotSubscribeToThread {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONUser.addUserToSite(
-			groupName = "Guest",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 2,
-			groupName = "Guest",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
-
-		JSONMBMessage.addMessage(
-			addGroupPermissions = "false",
-			groupName = "Guest",
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		DMDocument.viewNoPermission(
-			menuItem = "Subscribe",
-			rowEntry = "Message Boards Thread");
-	}
-
-	@description = "This is a test for LPS-136936. It checks that a site member cannot update a thread without permissions."
-	@priority = 3
-	test SiteMemberCannotUpdateThread {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONUser.addUserToSite(
-			groupName = "Guest",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 2,
-			groupName = "Guest",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		DMDocument.viewNoPermission(
-			menuItem = "Edit",
-			rowEntry = "Message Boards Thread");
 	}
 
 	@description = "This is a test for LPS-69728. It checks that site member can view their saved draft message."

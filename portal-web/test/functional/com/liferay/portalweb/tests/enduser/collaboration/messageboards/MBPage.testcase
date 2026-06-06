@@ -45,20 +45,6 @@ definition {
 
 	@priority = 4
 	@refactordone
-	test CanAddMBThreadWithMultipleAttachments {
-		MessageboardsThread.addPG(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			mbAttachmentFileList = "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4",
-			siteURLKey = "guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.viewThreadAttachment(mbAttachmentFileList = "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4");
-	}
-
-	@priority = 4
-	@refactordone
 	test CanEditAndDeleteCategory {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",

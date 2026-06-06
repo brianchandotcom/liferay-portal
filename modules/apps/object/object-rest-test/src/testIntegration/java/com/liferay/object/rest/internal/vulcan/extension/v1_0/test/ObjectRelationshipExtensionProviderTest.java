@@ -268,17 +268,16 @@ public class ObjectRelationshipExtensionProviderTest {
 			NestedFieldsContextThreadLocal.setNestedFieldsContext(
 				_getNestedFieldsContext(objectRelationship.getName()));
 
-			Product product = new Product() {
-				{
-					id = cpDefinition.getCPDefinitionId();
-					productId = cpDefinition.getCProductId();
-				}
-			};
-
 			Map<String, Serializable> extendedProperties =
 				_extensionProvider.getExtendedProperties(
 					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					Product.class.getName(), product);
+					Product.class.getName(),
+					new Product() {
+						{
+							id = cpDefinition.getCPDefinitionId();
+							productId = cpDefinition.getCProductId();
+						}
+					});
 
 			Assert.assertEquals(
 				extendedProperties.toString(), 1, extendedProperties.size());

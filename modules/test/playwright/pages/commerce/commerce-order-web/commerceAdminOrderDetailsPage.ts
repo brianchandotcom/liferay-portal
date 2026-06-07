@@ -13,6 +13,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly cancelButton: Locator;
 	readonly checkoutButton: Locator;
 	readonly commerceOrderAccountEntryName: Locator;
+	readonly completeOrderButton: Locator;
 	readonly createShipmentButton: Locator;
 	readonly editEntryActionLink: (
 		labelName: string,
@@ -89,6 +90,9 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		this.commerceOrderAccountEntryName = page.getByTestId(
 			'commerceOrderAccountEntryName'
 		);
+		this.completeOrderButton = page
+			.getByRole('link', {exact: true, name: 'Completed'})
+			.or(page.getByRole('button', {exact: true, name: 'Completed'}));
 		this.createShipmentButton = page.getByRole('link', {
 			exact: true,
 			name: 'Create Shipment',

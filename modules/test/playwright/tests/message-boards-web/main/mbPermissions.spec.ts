@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
+import createUserWithPermissions from '../../../utils/createUserWithPermissions';
 import getRandomString from '../../../utils/getRandomString';
 import {
 	performLogout,
@@ -137,3 +138,52 @@ test(
 		await expect(page.getByRole('link', {name: headline})).toBeHidden();
 	}
 );
+
+test('A regular role with portlet access can open the message boards admin', async ({
+	apiHelpers,
+	messageBoardsPage,
+	page,
+	site,
+}) => {
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
+		);
+
+	// A regular role granting only message boards portlet access
+
+	const user = await createUserWithPermissions({
+		apiHelpers,
+		rolePermissions: [
+			{
+				actionIds: ['VIEW'],
+				primaryKey: company.companyId,
+				resourceName: 'com.liferay.message.boards',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW_SITE_ADMINISTRATION'],
+				primaryKey: company.companyId,
+				resourceName: 'com.liferay.portal.kernel.model.Group',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+				primaryKey: company.companyId,
+				resourceName:
+					'com_liferay_message_boards_web_portlet_MBAdminPortlet',
+				scope: 1,
+			},
+		],
+	});
+
+	await performUserSwitch(page, user.alternateName);
+
+	// The user can reach the message boards admin
+
+	await messageBoardsPage.goto(site.friendlyUrlPath);
+
+	await expect(
+		page.getByText('There are no threads or categories.')
+	).toBeVisible();
+});

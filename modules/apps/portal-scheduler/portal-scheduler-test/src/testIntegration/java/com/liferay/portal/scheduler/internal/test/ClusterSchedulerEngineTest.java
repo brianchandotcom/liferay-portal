@@ -71,6 +71,66 @@ public class ClusterSchedulerEngineTest implements Serializable {
 	}
 
 	@Test
+	public void testDoMasterTokenAcquiredWithJobScheduledOnAllNodes()
+		throws Exception {
+		String jobName = RandomTestUtil.randomString();
+
+		TomcatNode masterTomcatNode = _tomcatNode2;
+		TomcatNode slaveTomcatNode = _tomcatNode1;
+
+		if (_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster)) {
+			masterTomcatNode = _tomcatNode1;
+			slaveTomcatNode = _tomcatNode2;
+		}
+
+		Future<?> slaveJobExecutionFuture = slaveTomcatNode.execute(
+			() -> {
+				TestSchedulerJobConfiguration.registerAndAwaitExecution(
+					jobName);
+
+				return null;
+			});
+
+		masterTomcatNode.syncExecute(
+			() -> {
+				TestSchedulerJobConfiguration.registerAndAwaitExecution(
+					jobName);
+
+				return null;
+			});
+
+		Assert.assertFalse(slaveJobExecutionFuture.isDone());
+
+		Future<?> slaveMasterTokenFuture = slaveTomcatNode.execute(
+			() -> {
+				TestClusterMasterTokenTransitionListener.
+					registerAndAwaitMasterToken();
+
+				return null;
+			});
+
+		masterTomcatNode.stop();
+
+		try {
+			slaveMasterTokenFuture.get();
+
+			Assert.assertTrue(
+				slaveTomcatNode.syncExecute(
+					ClusterMasterExecutorUtil::isMaster));
+
+			slaveJobExecutionFuture.get();
+
+			Assert.assertNotNull(
+				slaveTomcatNode.syncExecute(
+					() -> SchedulerEngineHelperUtil.getScheduledJob(
+						jobName, jobName, StorageType.MEMORY_CLUSTERED)));
+		}
+		finally {
+			masterTomcatNode.start(true);
+		}
+	}
+
+	@Test
 	public void testDoMasterTokenAcquiredWithJobScheduledOnMaster()
 		throws Exception {
 		String jobName = RandomTestUtil.randomString();

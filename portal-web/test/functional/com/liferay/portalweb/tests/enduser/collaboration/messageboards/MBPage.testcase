@@ -43,39 +43,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-67722."
-	@priority = 3
-	@refactordone
-	test CanReplyAfterDownloadingMBThreadAttachmentTwice {
-		property portal.acceptance = "false";
-
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "MB Thread Message Subject");
-
-		JSONMBMessage.addAttachmentToMessage(
-			fileName = "Document_1.jpg",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.openToThread(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.downloadAttachmentPG();
-
-		MessageboardsThread.downloadAttachmentPG();
-
-		JSONMBMessage.addMessageReply(
-			groupName = "Guest",
-			replyBody = "MB Thread Reply Body",
-			threadSubject = "MB Thread Message Subject");
-	}
-
 	@priority = 3
 	@refactordone
 	test CanReplyToThreadAsGuest {
@@ -112,7 +79,7 @@ definition {
 			userName = "Anonymous");
 	}
 
-@priority = 3
+	@priority = 3
 	@refactordone
 	test CanSearchForAttachment {
 		property portal.acceptance = "false";

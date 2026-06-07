@@ -70,6 +70,42 @@ test('Can add a thread with multiple attachments', async ({
 	).toBeVisible();
 });
 
+test('Can reply after downloading a thread attachment twice', async ({
+	messageBoardsEditThreadPage,
+	page,
+	site,
+}) => {
+	const fileName = `${getRandomString()}.txt`;
+	const replyBody = getRandomString();
+
+	await messageBoardsEditThreadPage.goto(site.friendlyUrlPath);
+
+	await messageBoardsEditThreadPage.subjectSelector.fill(getRandomString());
+	await messageBoardsEditThreadPage.bodyTextBox.fill(getRandomString());
+
+	await addAttachment(messageBoardsEditThreadPage, fileName, page);
+
+	await messageBoardsEditThreadPage.publishButton.click();
+
+	// Download the attachment twice
+
+	const attachmentLink = page.getByRole('link', {name: new RegExp(fileName)});
+
+	for (let index = 0; index < 2; index++) {
+		const downloadPromise = page.waitForEvent('download');
+
+		await attachmentLink.click();
+
+		await downloadPromise;
+	}
+
+	// Replying still succeeds
+
+	await messageBoardsEditThreadPage.publishReply(replyBody);
+
+	await expect(page.getByText(replyBody)).toBeVisible();
+});
+
 test(
 	'Can download a thread attachment',
 	{tag: '@LPS-136914'},

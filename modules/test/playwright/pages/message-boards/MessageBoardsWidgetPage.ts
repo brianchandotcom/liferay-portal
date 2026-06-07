@@ -55,12 +55,7 @@ export class MessageBoardsWidgetPage {
 		await this.page.getByRole('button', {name: buttonName}).click();
 	}
 
-	async replyToThread(
-		site: Site,
-		layout: Layout,
-		threadSubject: string,
-		replyBody: string
-	) {
+	async goToThread(site: Site, layout: Layout, threadSubject: string) {
 		await this.page.goto(
 			`/web${site.friendlyUrlPath}${layout.friendlyURL}`
 		);
@@ -84,6 +79,17 @@ export class MessageBoardsWidgetPage {
 		}, threadSubject);
 
 		await this.page.goto(threadURL);
+
+		await this.page.waitForLoadState('networkidle');
+	}
+
+	async replyToThread(
+		site: Site,
+		layout: Layout,
+		threadSubject: string,
+		replyBody: string
+	) {
+		await this.goToThread(site, layout, threadSubject);
 
 		await this.page.getByRole('button', {name: 'Reply'}).click();
 

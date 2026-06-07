@@ -469,7 +469,6 @@ public abstract class BaseBundlePersistentResource
 				setControllerBuildURL(controllerBuildURL);
 				setProducerBuildURL(
 					dataJSONObject.optString("producer_build_url"));
-				setProducerJenkinsMaster(null);
 
 				String producerJenkinsMasterName = dataJSONObject.optString(
 					"producer_jenkins_master");
@@ -479,6 +478,9 @@ public abstract class BaseBundlePersistentResource
 
 					setProducerJenkinsMaster(
 						JenkinsMaster.getInstance(producerJenkinsMasterName));
+				}
+				else {
+					setProducerJenkinsMaster(null);					
 				}
 
 				setProducerQueueId(dataJSONObject.optLong("producer_queue_id"));

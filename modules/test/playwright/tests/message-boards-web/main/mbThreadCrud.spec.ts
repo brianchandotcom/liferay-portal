@@ -70,6 +70,82 @@ test('Can add a thread with UTF-8 characters', async ({
 	await expect(page.getByText(body)).toBeVisible();
 });
 
+test(
+	'Can add an urgent thread',
+	{tag: '@LPS-136912'},
+	async ({messageBoardsEditThreadPage, messageBoardsPage, page, site}) => {
+		const subject = getRandomString();
+
+		await messageBoardsEditThreadPage.goto(site.friendlyUrlPath);
+
+		await messageBoardsEditThreadPage.subjectSelector.fill(subject);
+		await messageBoardsEditThreadPage.bodyTextBox.fill(getRandomString());
+
+		// Set the priority to Urgent under More Settings
+
+		await page
+			.getByRole('button', {exact: true, name: 'More Settings'})
+			.click();
+
+		await page
+			.locator('select[id*="priority"]')
+			.selectOption({label: 'Urgent'});
+
+		await messageBoardsEditThreadPage.publishButton.click();
+
+		await page.waitForLoadState('networkidle');
+
+		// The thread is listed with an urgent priority marker
+
+		await messageBoardsPage.goto(site.friendlyUrlPath);
+
+		await expect(page.getByRole('link', {name: subject})).toBeVisible();
+
+		await expect(page.locator('[title="Urgent"]').first()).toBeVisible();
+	}
+);
+
+test(
+	'Can publish a thread with a tag',
+	{tag: '@LPS-87376'},
+	async ({messageBoardsEditThreadPage, page, site}) => {
+		const subject = getRandomString();
+		const tagName = getRandomString().toLowerCase();
+
+		await messageBoardsEditThreadPage.goto(site.friendlyUrlPath);
+
+		await messageBoardsEditThreadPage.subjectSelector.fill(subject);
+		await messageBoardsEditThreadPage.bodyTextBox.fill(getRandomString());
+
+		// Add a tag under Categorization
+
+		await page
+			.getByRole('button', {exact: true, name: 'Categorization'})
+			.click();
+
+		const tagsField = page.locator(
+			'[id*="assetTagsSelector"] input.form-control-inset'
+		);
+
+		await tagsField.fill(tagName);
+		await tagsField.press('Enter');
+
+		await expect(
+			page.locator('[id*="assetTagsSelector"]').getByText(tagName).first()
+		).toBeVisible();
+
+		await page.keyboard.press('Escape');
+
+		await messageBoardsEditThreadPage.publishButton.click();
+
+		await page.waitForLoadState('networkidle');
+
+		// The published thread shows the tag
+
+		await expect(page.getByRole('link', {name: tagName})).toBeVisible();
+	}
+);
+
 test('Can save a thread as a draft', async ({
 	messageBoardsEditThreadPage,
 	messageBoardsPage,

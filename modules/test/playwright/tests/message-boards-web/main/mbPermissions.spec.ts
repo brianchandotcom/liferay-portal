@@ -14,6 +14,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {
 	performLogout,
 	performUserSwitch,
+	performUserSwitchViaApi,
 	userData,
 } from '../../../utils/performLogin';
 
@@ -136,6 +137,76 @@ test(
 		).toBeVisible();
 
 		await expect(page.getByRole('link', {name: headline})).toBeHidden();
+	}
+);
+
+test(
+	'A banned user cannot create a thread',
+	{tag: '@LPS-136922'},
+	async ({
+		apiHelpers,
+		messageBoardsEditThreadPage,
+		messageBoardsPage,
+		messageBoardsWidgetPage,
+		page,
+		site,
+	}) => {
+		const threadSubject = getRandomString();
+
+		const layout =
+			await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+
+		await messageBoardsEditThreadPage.gotoAndPublishNewBasicThread(
+			threadSubject,
+			getRandomString(),
+			site.friendlyUrlPath
+		);
+
+		// A site member replies to the thread
+
+		const siteMemberRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		const member = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteMemberRole.id,
+			site.id,
+			member.id
+		);
+
+		userData[member.alternateName] = {
+			name: member.givenName,
+			password: 'test',
+			surname: member.familyName,
+		};
+
+		await performUserSwitchViaApi(page, member.alternateName);
+
+		await messageBoardsWidgetPage.replyToThread(
+			site,
+			layout,
+			threadSubject,
+			getRandomString()
+		);
+
+		// The administrator bans the member through the reply
+
+		await performUserSwitchViaApi(page, 'test');
+
+		await messageBoardsPage.goToThread(threadSubject, site.friendlyUrlPath);
+
+		await messageBoardsPage.banReplyAuthor();
+
+		// The banned member sees the banned message on the widget page
+
+		await performUserSwitchViaApi(page, member.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(
+			page.getByText('You have been banned by the moderator.')
+		).toBeVisible();
 	}
 );
 

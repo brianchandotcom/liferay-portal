@@ -168,9 +168,11 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 		throws Exception {
 
 		Long groupId1 = testGroup.getGroupId();
-		Long groupId2 = irrelevantGroup.getGroupId();
 
 		BlogsEntry blogsEntry1 = _addBlogsEntry(groupId1);
+
+		Long groupId2 = irrelevantGroup.getGroupId();
+
 		BlogsEntry blogsEntry2 = _addBlogsEntry(groupId2);
 
 		Page<AssetEntry> page = assetEntryResource.getAssetEntriesPage(
@@ -187,7 +189,6 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 		Long groupId = testGroup.getGroupId();
 
 		BlogsEntry approvedBlogsEntry = _addBlogsEntry(groupId);
-
 		BlogsEntry draftBlogsEntry = _addBlogsEntry(groupId);
 
 		BlogsEntryLocalServiceUtil.updateStatus(
@@ -212,15 +213,15 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 	private AssetEntry _toAssetEntry(String className, long classPK) {
 		AssetEntry assetEntry = new AssetEntry();
 
-		com.liferay.asset.kernel.model.AssetEntry persistedAssetEntry =
+		com.liferay.asset.kernel.model.AssetEntry serviceBuilderAssetEntry =
 			_assetEntryLocalService.fetchEntry(className, classPK);
 
-		assetEntry.setAssetEntryId(persistedAssetEntry.getEntryId());
+		assetEntry.setAssetEntryId(serviceBuilderAssetEntry.getEntryId());
 
 		assetEntry.setClassName(className);
 		assetEntry.setClassPK(classPK);
 		assetEntry.setTitle(
-			persistedAssetEntry.getTitle(LocaleUtil.getDefault()));
+			serviceBuilderAssetEntry.getTitle(LocaleUtil.getDefault()));
 
 		return assetEntry;
 	}

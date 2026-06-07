@@ -5,11 +5,19 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
+import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitchViaApi, userData} from '../../../utils/performLogin';
 
-const test = mergeTests(isolatedSiteTest, loginTest(), messageBoardsPagesTest);
+const test = mergeTests(
+	apiHelpersTest,
+	isolatedSiteTest,
+	loginTest(),
+	messageBoardsPagesTest
+);
 
 const TERMS = [
 	{
@@ -50,3 +58,79 @@ test('Message parent, sibling, and root body terms are defined in the default em
 		}
 	}
 });
+
+test(
+	'A banned user can be unbanned',
+	{tag: '@LPS-136923'},
+	async ({
+		apiHelpers,
+		messageBoardsEditThreadPage,
+		messageBoardsPage,
+		messageBoardsWidgetPage,
+		page,
+		site,
+	}) => {
+		const threadSubject = getRandomString();
+
+		const layout =
+			await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+
+		await messageBoardsEditThreadPage.gotoAndPublishNewBasicThread(
+			threadSubject,
+			getRandomString(),
+			site.friendlyUrlPath
+		);
+
+		// A site member replies to the thread
+
+		const siteMemberRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		const member = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteMemberRole.id,
+			site.id,
+			member.id
+		);
+
+		userData[member.alternateName] = {
+			name: member.givenName,
+			password: 'test',
+			surname: member.familyName,
+		};
+
+		await performUserSwitchViaApi(page, member.alternateName);
+
+		await messageBoardsWidgetPage.replyToThread(
+			site,
+			layout,
+			threadSubject,
+			getRandomString()
+		);
+
+		// The administrator bans the member through the reply
+
+		await performUserSwitchViaApi(page, 'test');
+
+		await messageBoardsPage.goToThread(threadSubject, site.friendlyUrlPath);
+
+		await messageBoardsPage.banReplyAuthor();
+
+		// The banned member is listed under banned users
+
+		await messageBoardsPage.goToBannedUsers(site.friendlyUrlPath);
+
+		await expect(
+			page.getByText(`${member.givenName} ${member.familyName}`)
+		).toBeVisible();
+
+		// The member can be unbanned
+
+		await messageBoardsPage.unbanUser();
+
+		await expect(
+			page.getByText('There are no banned users.')
+		).toBeVisible();
+	}
+);

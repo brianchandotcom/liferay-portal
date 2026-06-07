@@ -70,6 +70,32 @@ test('Can add a thread with UTF-8 characters', async ({
 	await expect(page.getByText(body)).toBeVisible();
 });
 
+test('Can save a thread as a draft', async ({
+	messageBoardsEditThreadPage,
+	messageBoardsPage,
+	page,
+	site,
+}) => {
+	const subject = getRandomString();
+
+	await messageBoardsEditThreadPage.goto(site.friendlyUrlPath);
+
+	await messageBoardsEditThreadPage.subjectSelector.fill(subject);
+	await messageBoardsEditThreadPage.bodyTextBox.fill(getRandomString());
+
+	await page.getByRole('button', {name: 'Save as Draft'}).click();
+
+	await page.waitForLoadState('networkidle');
+
+	await messageBoardsPage.goto(site.friendlyUrlPath);
+
+	// The thread is listed with a draft status
+
+	await expect(page.getByRole('link', {name: subject})).toBeVisible();
+
+	await expect(page.getByText('Draft', {exact: true}).first()).toBeVisible();
+});
+
 test('Can cancel adding a thread', async ({
 	messageBoardsEditThreadPage,
 	messageBoardsPage,

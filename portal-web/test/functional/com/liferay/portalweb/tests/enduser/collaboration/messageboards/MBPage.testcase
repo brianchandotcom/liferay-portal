@@ -140,25 +140,7 @@ definition {
 			userName = "Anonymous");
 	}
 
-	@priority = 5
-	@refactordone
-	test CanSaveThreadAsDraft {
-		MessageboardsThread.openToAddThread(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest");
-
-		MessageboardsThread.saveNewThreadAsDraft(
-			skipNavigation = "true",
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Draft");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.viewDraftThread(threadSubject = "Message Boards Thread Draft");
-	}
-
-	@priority = 3
+@priority = 3
 	@refactordone
 	test CanSearchForAttachment {
 		property portal.acceptance = "false";

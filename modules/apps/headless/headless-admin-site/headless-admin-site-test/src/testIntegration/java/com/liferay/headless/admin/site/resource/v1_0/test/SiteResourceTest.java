@@ -500,6 +500,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private void _testGetSitesPageWithExcludedExternalReferenceCodes()
 		throws Exception {
 
+		boolean excludedSiteFound = false;
+		boolean includedSiteFound = false;
+
 		Site excludedSite = randomSite();
 
 		excludedSite.setActive(true);
@@ -515,9 +518,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Page<Site> sitesPage = siteResource.getSitesPage(
 			true, new String[] {postExcludedSite.getExternalReferenceCode()},
 			null, Pagination.of(1, 100));
-
-		boolean excludedSiteFound = false;
-		boolean includedSiteFound = false;
 
 		for (Site site : sitesPage.getItems()) {
 			String externalReferenceCode = site.getExternalReferenceCode();

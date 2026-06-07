@@ -97,6 +97,9 @@ public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
 	private void _testGetSiteTemplatesPageWithExcludedSiteExternalReferenceCodes()
 		throws Exception {
 
+		boolean excludedSiteTemplateFound = false;
+		boolean includedSiteTemplateFound = false;
+
 		SiteTemplate siteTemplate1 = randomSiteTemplate();
 
 		siteTemplate1.setActive(true);
@@ -134,9 +137,6 @@ public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
 		siteTemplatesPage = siteTemplateResource.getSiteTemplatesPage(
 			true, new String[] {excludedSiteExternalReferenceCode},
 			Pagination.of(1, 100));
-
-		boolean excludedSiteTemplateFound = false;
-		boolean includedSiteTemplateFound = false;
 
 		for (SiteTemplate siteTemplate : siteTemplatesPage.getItems()) {
 			String siteExternalReferenceCode =

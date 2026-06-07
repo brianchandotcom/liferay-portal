@@ -106,6 +106,12 @@ public interface JournalServiceConfiguration {
 	public boolean indexAllArticleVersionsEnabled();
 
 	@Meta.AD(
+		deflt = "100", description = "journal-article-check-limit-description",
+		min = "1", name = "journal-article-check-limit", required = false
+	)
+	public int journalArticleCheckLimit();
+
+	@Meta.AD(
 		deflt = "true",
 		description = "journal-article-export-import-processor-cache-enabled-help",
 		name = "journal-article-export-import-processor-cache-enabled",

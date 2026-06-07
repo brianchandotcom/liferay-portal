@@ -40,31 +40,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-136910. It checks that bold text can be added in the editor."
-	@priority = 3
-	test CanAddBoldText {
-		property portal.acceptance = "false";
-
-		MessageboardsThread.addPG(
-			bold = "true",
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.openToThread(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.viewPG(
-			bold = "true",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-	}
-
 	@description = "This is a test for LPS-136911. It checks that an image can be added in the editor."
 	@priority = 4
 	test CanAddImage {

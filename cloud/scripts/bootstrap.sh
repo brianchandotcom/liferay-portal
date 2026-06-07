@@ -75,15 +75,12 @@ function _download_and_extract_files {
 	local version="${3}"
 
 	local bucket_name="liferay-cloud-native-bootstrap"
-
 	local download_base_url="https://cdn.liferay.cloud"
-
 	local prefix="bootstrap/liferay-${provider}-bootstrap"
 
 	if [ -n "${branch}" ]
 	then
 		bucket_name="liferay-cloud-native-bootstrap-nonprd"
-
 		download_base_url="https://cdn.liferay.sh"
 
 		local sanitized_branch

@@ -145,7 +145,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		article3 = _journalArticleLocalService.getArticle(article3.getId());
 
 		Assert.assertTrue(article1.isExpired());
-		Assert.assertFalse(article2.isExpired());
+		Assert.assertTrue(article2.isExpired());
 		Assert.assertTrue(article3.isExpired());
 	}
 

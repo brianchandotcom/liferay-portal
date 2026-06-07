@@ -215,45 +215,6 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@description = "This is a test case for UC-6."
-	@priority = 4
-	@refactordone
-	test CanLockAndUnlockThread {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread Subject");
-
-		MessageboardsThread.lockPG(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadSubject = "Message Boards Thread Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.viewLockedPG(threadSubject = "Message Boards Thread Subject");
-
-		MessageboardsThread.unlockPG(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadSubject = "Message Boards Thread Subject");
-
-		JSONMBMessage.addMessageReply(
-			groupName = "Guest",
-			replyBody = "Message Boards Thread Reply Body",
-			threadSubject = "Message Boards Thread Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.viewReplyPG(
-			replyCount = 1,
-			threadBody = "Message Boards Thread Body",
-			threadReplyBody = "Message Boards Thread Reply Body",
-			threadSubject = "Message Boards Thread Subject");
-	}
-
 	@priority = 4
 	@refactordone
 	test CanMoveMBCategory1ThreadToCategory2 {

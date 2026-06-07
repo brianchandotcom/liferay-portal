@@ -10,7 +10,11 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
 import getRandomString from '../../../utils/getRandomString';
-import {performUserSwitch, userData} from '../../../utils/performLogin';
+import {
+	performLogout,
+	performUserSwitch,
+	userData,
+} from '../../../utils/performLogin';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -92,5 +96,44 @@ test(
 		await expect(
 			dropdownMenu.getByText('Delete', {exact: true})
 		).toHaveCount(0);
+	}
+);
+
+test(
+	'A guest cannot view a thread without permissions',
+	{tag: '@LPS-136939'},
+	async ({apiHelpers, messageBoardsWidgetPage, page, site}) => {
+		const headline = getRandomString();
+
+		const layout =
+			await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+
+		// A thread seeded through the API carries no guest view permission
+
+		await apiHelpers.headlessDelivery.postMessageBoardThread({
+			articleBody: getRandomString(),
+			headline,
+			siteId: site.id,
+		});
+
+		// The administrator sees the thread on the widget page
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(
+			page.getByRole('link', {name: headline}).first()
+		).toBeVisible();
+
+		// A guest cannot see the thread
+
+		await performLogout(page);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(
+			page.getByText('There are no threads or categories.')
+		).toBeVisible();
+
+		await expect(page.getByRole('link', {name: headline})).toBeHidden();
 	}
 );

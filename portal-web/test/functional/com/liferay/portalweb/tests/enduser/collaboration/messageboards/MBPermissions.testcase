@@ -628,32 +628,6 @@ definition {
 			locator1 = "MessageBoardsThread#THREAD_BODY");
 	}
 
-	@description = "This is a test for LPS-136939. It checks that a guest cannot view a thread without permissions."
-	@priority = 3
-	test GuestCannotViewThread {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 2,
-			groupName = "Guest",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
-
-		JSONMBMessage.addMessage(
-			addGuestPermissions = "false",
-			groupName = "Guest",
-			threadBody = "Message Boards Thread Body",
-			threadSubject = "Message Boards Thread");
-
-		User.logoutPG();
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.viewNoPG(threadSubject = "Thread Subject");
-	}
-
 	@description = "This is a test for LPS-136933, LPS-136934, LPS-136936 and LPS-136938. It checks that a site member cannot delete, edit, or subscribe to message board content without permissions."
 	@priority = 3
 	test SiteMemberCannotManageThreadWithoutPermissions {

@@ -4,7 +4,7 @@
 
 Fires when both conditions hold:
 
-1. One of the following changed:
+1. One of these changed:
 
 	- JS or TS source with behavior intent — logic added, removed, or modified. Surface-only edits (renames, formatting, comments, jsdoc) do not fire this validation; the build's bundling step is enough.
 

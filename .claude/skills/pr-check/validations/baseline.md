@@ -23,7 +23,7 @@ Per selected module, with its directory converted to a Gradle project path:
 	:<path>:baseline)
 ```
 
-A non-empty `modules/<module>/build/reports/baseline/baseline.log` is a FAIL; empty is a PASS. The task builds the module jar and resolves the last released artifact from Nexus, so it requires network access.
+A nonempty `modules/<module>/build/reports/baseline/baseline.log` is a FAIL; empty is a PASS. The task builds the module jar and resolves the last released artifact from Nexus, so it requires network access.
 
 ## Checklist
 

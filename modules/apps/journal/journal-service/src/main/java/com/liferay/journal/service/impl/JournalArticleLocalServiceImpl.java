@@ -7265,7 +7265,8 @@ public class JournalArticleLocalServiceImpl
 			if (article.getStatus() == WorkflowConstants.STATUS_EXPIRED) {
 				assetEntry.setExpirationDate(article.getExpirationDate());
 
-				_assetEntryLocalService.updateAssetEntry(assetEntry);
+				assetEntry = _assetEntryLocalService.updateAssetEntry(
+					assetEntry);
 			}
 		}
 		else {

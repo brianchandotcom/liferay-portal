@@ -25,11 +25,11 @@ html#{$cadmin-selector} {
 		&__collection {
 			&__block {
 				box-shadow: unquote(
-					'inset 0 0 0 1px hsl(from #{$cadmin-purple} h s l / 0.3)'
+					'inset 0 0 0 1px hsl(from #{$purple} h s l / 0.3)'
 				);
 
 				&.empty {
-					box-shadow: inset 0 0 0 1px $cadmin-primary-l2;
+					box-shadow: inset 0 0 0 1px $primary-l2;
 				}
 
 				&.disabled {
@@ -39,9 +39,9 @@ html#{$cadmin-selector} {
 			}
 
 			&__message {
-				background-color: $cadmin-gray-100;
-				box-shadow: inset 0 0 0 1px $cadmin-primary-l2;
-				color: $cadmin-gray-500;
+				background-color: $gray-100;
+				box-shadow: inset 0 0 0 1px $primary-l2;
+				color: $gray-500;
 				font-family: $cadmin-font-family-base;
 				font-size: 14px;
 				font-weight: 600;
@@ -51,13 +51,11 @@ html#{$cadmin-selector} {
 			}
 
 			&-item {
-				border: unquote(
-					'1px solid hsl(from #{$cadmin-purple} h s l / 0.1)'
-				);
+				border: unquote('1px solid hsl(from #{$purple} h s l / 0.1)');
 				min-height: 80px;
 
 				&__title {
-					color: $cadmin-purple-d3;
+					color: $purple-d3;
 					font-size: 14px;
 					font-style: italic;
 					font-weight: 500;
@@ -66,7 +64,7 @@ html#{$cadmin-selector} {
 		}
 
 		&__col .page-editor__col__resizer {
-			background-color: $cadmin-primary;
+			background-color: $primary;
 			border-radius: 50%;
 			border-width: 0;
 			cursor: col-resize;
@@ -92,22 +90,20 @@ html#{$cadmin-selector} {
 		}
 
 		&__col__border {
-			border: 1px solid $cadmin-primary-l2;
+			border: 1px solid $primary-l2;
 			height: 100%;
 		}
 
 		&__container,
 		&__container:before,
 		&__row:before {
-			box-shadow: inset 0 0 0 1px $cadmin-primary-l2;
+			box-shadow: inset 0 0 0 1px $primary-l2;
 		}
 
 		&__collection-item {
 			.page-editor__no-fragments-state {
-				background: unquote(
-					'hsl(from #{$cadmin-purple-l4} h s l / 0.1)'
-				);
-				border: $dashedBorderWidth dashed $cadmin-purple-l4;
+				background: unquote('hsl(from #{$purple-l4} h s l / 0.1)');
+				border: $dashedBorderWidth dashed $purple-l4;
 			}
 		}
 
@@ -135,7 +131,7 @@ html#{$cadmin-selector} {
 		}
 
 		&__form-step {
-			box-shadow: inset 0 0 0 1px $cadmin-primary-l2;
+			box-shadow: inset 0 0 0 1px $primary-l2;
 			height: 100%;
 		}
 
@@ -195,12 +191,12 @@ html#{$cadmin-selector} {
 			}
 
 			&--hovered {
-				box-shadow: inset 0 0 0 $editablesBorderWidth $cadmin-primary-l1;
+				box-shadow: inset 0 0 0 $editablesBorderWidth $primary-l1;
 			}
 
 			&--content-hovered {
 				outline: unquote(
-					'#{$dashedBorderWidth} dashed hsl(from #{$cadmin-purple} h s l / 0.5)'
+					'#{$dashedBorderWidth} dashed hsl(from #{$purple} h s l / 0.5)'
 				);
 				outline-offset: -$dashedBorderWidth;
 
@@ -211,39 +207,38 @@ html#{$cadmin-selector} {
 
 			&--mapped {
 				box-shadow: unquote(
-					'inset 0 0 0 #{$editablesBorderWidth} hsl(from #{$cadmin-purple} h s l / 0.3)'
+					'inset 0 0 0 #{$editablesBorderWidth} hsl(from #{$purple} h s l / 0.3)'
 				);
 
 				&.page-editor__editable--hovered {
 					box-shadow: unquote(
-						'inset 0 0 0 #{$editablesBorderWidth} hsl(from #{$cadmin-purple} h s l / 0.7)'
+						'inset 0 0 0 #{$editablesBorderWidth} hsl(from #{$purple} h s l / 0.7)'
 					);
 				}
 
 				&.page-editor__editable--active {
-					box-shadow: inset 0 0 0 $editablesBorderWidth $cadmin-purple;
+					box-shadow: inset 0 0 0 $editablesBorderWidth $purple;
 				}
 			}
 
 			&--translated {
 				box-shadow: unquote(
-					'inset 0 0 0 #{$editablesBorderWidth} hsl(from #{$cadmin-success-l1} h s l / 0.3)'
+					'inset 0 0 0 #{$editablesBorderWidth} hsl(from #{$success-l1} h s l / 0.3)'
 				);
 
 				&.page-editor__editable--hovered {
 					box-shadow: unquote(
-						'inset 0 0 0 #{$editablesBorderWidth} hsl(from #{$cadmin-success-l1} h s l / 0.7)'
+						'inset 0 0 0 #{$editablesBorderWidth} hsl(from #{$success-l1} h s l / 0.7)'
 					);
 				}
 
 				&.page-editor__editable--active {
-					box-shadow: inset 0 0 0 $editablesBorderWidth
-						$cadmin-success-l1;
+					box-shadow: inset 0 0 0 $editablesBorderWidth $success-l1;
 				}
 			}
 
 			&--active {
-				box-shadow: inset 0 0 0 $editablesBorderWidth $cadmin-primary;
+				box-shadow: inset 0 0 0 $editablesBorderWidth $primary;
 
 				&:not(.page-editor__editable--mapped) {
 					@each $type in $editableTypes {
@@ -259,7 +254,7 @@ html#{$cadmin-selector} {
 		&__row
 			> .page-editor__col.hovered:not(.active)
 			> .page-editor__col__border:after {
-			box-shadow: inset 0 0 0 2px $cadmin-primary-l1;
+			box-shadow: inset 0 0 0 2px $primary-l1;
 			z-index: $portletTopperHoveredZIndex;
 		}
 
@@ -279,8 +274,8 @@ html#{$cadmin-selector} {
 
 		&__no-fragments-state {
 			align-items: center;
-			background: $cadmin-primary-l3;
-			border: $dashedBorderWidth dashed $cadmin-primary-l2;
+			background: $primary-l3;
+			border: $dashedBorderWidth dashed $primary-l2;
 			border-radius: 8px;
 			// stylelint-disable-next-line property-no-unknown
 			container-type: inline-size;
@@ -288,9 +283,9 @@ html#{$cadmin-selector} {
 			padding: 15vh 12%;
 
 			&.page-editor__form-unmapped-state {
-				background: $cadmin-light-l1;
+				background: $light-l1;
 				border: none;
-				box-shadow: inset 0 0 0 1px $cadmin-primary-l2;
+				box-shadow: inset 0 0 0 1px $primary-l2;
 				padding: 40px 12%;
 			}
 
@@ -376,7 +371,7 @@ html#{$cadmin-selector} {
 		}
 
 		.lfr-ck {
-			outline: $cadmin-primary-d2 auto 1px;
+			outline: $primary-d2 auto 1px;
 
 			.ck.ck-editor__editable_inline {
 				border: 0;
@@ -398,50 +393,50 @@ html#{$cadmin-selector} {
 		outline-offset: -$editablesBorderWidth;
 
 		&--hovered.page-editor__editable {
-			outline: solid $editablesBorderWidth $cadmin-primary-l1;
+			outline: solid $editablesBorderWidth $primary-l1;
 		}
 
 		&--mapped {
 			outline: unquote(
-				'solid #{$editablesBorderWidth} hsl(from #{$cadmin-purple} h s l / 0.3)'
+				'solid #{$editablesBorderWidth} hsl(from #{$purple} h s l / 0.3)'
 			);
 
 			&.page-editor__editable--hovered {
 				outline: unquote(
-					'solid #{$editablesBorderWidth} hsl(from #{$cadmin-purple} h s l / 0.7)'
+					'solid #{$editablesBorderWidth} hsl(from #{$purple} h s l / 0.7)'
 				);
 			}
 
 			&.page-editor__editable--active {
-				outline: solid $editablesBorderWidth $cadmin-purple;
+				outline: solid $editablesBorderWidth $purple;
 			}
 		}
 
 		&--content-hovered {
 			outline: unquote(
-				'#{$dashedBorderWidth} dashed hsl(from #{$cadmin-purple} h s l / 0.5)'
+				'#{$dashedBorderWidth} dashed hsl(from #{$purple} h s l / 0.5)'
 			);
 			outline-offset: -$dashedBorderWidth;
 		}
 
 		&--translated {
 			outline: unquote(
-				'solid #{$editablesBorderWidth} hsl(from #{$cadmin-success-l1} h s l / 0.3)'
+				'solid #{$editablesBorderWidth} hsl(from #{$success-l1} h s l / 0.3)'
 			);
 
 			&.page-editor__editable--hovered {
 				outline: unquote(
-					'solid #{$editablesBorderWidth} hsl(from #{$cadmin-success-l1} h s l / 0.7)'
+					'solid #{$editablesBorderWidth} hsl(from #{$success-l1} h s l / 0.7)'
 				);
 			}
 
 			&.page-editor__editable--active {
-				outline: solid $editablesBorderWidth $cadmin-success-l1;
+				outline: solid $editablesBorderWidth $success-l1;
 			}
 		}
 
 		&--active {
-			outline: solid $editablesBorderWidth $cadmin-primary;
+			outline: solid $editablesBorderWidth $primary;
 		}
 	}
 

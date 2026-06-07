@@ -1882,6 +1882,42 @@ async function addBooleanFilter({
 	).toBeVisible();
 }
 
+async function addDateFilter({
+	attributeName,
+	operator,
+	page,
+	value,
+}: {
+	attributeName: string;
+	operator: string;
+	page: Page;
+	value: string;
+}) {
+	await page
+		.locator('.attribute-filter-section-root')
+		.getByLabel('Add')
+		.click();
+
+	await page
+		.getByRole('menuitem', {exact: true, name: attributeName})
+		.click();
+
+	await selectAndExpectToHaveValue({
+		optionLabel: operator,
+		select: page.getByLabel('Condition'),
+	});
+
+	await page.getByTestId('date-input').fill(value);
+
+	await page.getByRole('button', {name: 'Apply'}).click();
+
+	await expect(
+		page
+			.locator('.attribute-filter-section-root')
+			.filter({hasText: attributeName})
+	).toBeVisible();
+}
+
 test(
 	'Event Analysis can filter a string attribute by is and is not',
 	{
@@ -2337,5 +2373,171 @@ test(
 		await addBooleanFilter({attributeName: 'dislike', page, value: 'true'});
 
 		await expect(resultRow).toHaveCount(0);
+	}
+);
+
+test(
+	'Event Analysis can filter a date attribute by is, before, after and between',
+	{
+		tag: '@LRAC-10280',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+
+		// Anchor the dates to the previous month so the date range calendar is
+		// always one "previous month" click away and the dates stay in the past
+
+		const now = new Date();
+
+		const previousMonth = new Date(
+			now.getFullYear(),
+			now.getMonth() - 1,
+			1
+		);
+
+		const pad = (value: number) => String(value).padStart(2, '0');
+
+		const toYMD = (day: number) =>
+			`${previousMonth.getFullYear()}-${pad(
+				previousMonth.getMonth() + 1
+			)}-${pad(day)}`;
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: now.toISOString(),
+				eventId: 'customEvent',
+				properties: [
+					{name: 'birthdate', value: `${toYMD(15)}T12:00:00.000Z`},
+					{name: 'pageTitle', value: 'My Page'},
+				],
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: [
+					{
+						dataType: 'DATE',
+						displayName: 'birthdate',
+						name: 'birthdate',
+						type: 'LOCAL',
+					},
+					{
+						dataType: 'STRING',
+						displayName: 'pageTitle',
+						name: 'pageTitle',
+						type: 'LOCAL',
+					},
+				],
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		const resultRow = page.getByRole('row', {
+			exact: true,
+			name: 'customEvent 1',
+		});
+
+		// birthdate is the 15th, so "is" that date matches
+
+		await addDateFilter({
+			attributeName: 'birthdate',
+			operator: 'is',
+			page,
+			value: toYMD(15),
+		});
+
+		await expect(resultRow).toBeVisible();
+
+		// before the 14th does not match
+
+		await removeAttribute({page, section: 'Filter'});
+
+		await addDateFilter({
+			attributeName: 'birthdate',
+			operator: 'before',
+			page,
+			value: toYMD(14),
+		});
+
+		await expect(resultRow).toHaveCount(0);
+
+		// after the 14th matches
+
+		await removeAttribute({page, section: 'Filter'});
+
+		await addDateFilter({
+			attributeName: 'birthdate',
+			operator: 'after',
+			page,
+			value: toYMD(14),
+		});
+
+		await expect(resultRow).toBeVisible();
+
+		// between the 14th and the 16th matches
+
+		await removeAttribute({page, section: 'Filter'});
+
+		await page
+			.locator('.attribute-filter-section-root')
+			.getByLabel('Add')
+			.click();
+
+		await page
+			.getByRole('menuitem', {exact: true, name: 'birthdate'})
+			.click();
+
+		await selectAndExpectToHaveValue({
+			optionLabel: 'is between',
+			select: page.getByLabel('Condition'),
+		});
+
+		await page.getByTestId('date-range-input').click();
+
+		await page.getByTestId('previous-month').click();
+
+		const calendar = page.locator('.calendar-root');
+
+		await calendar
+			.locator('.day-root:not(.outside-month)')
+			.filter({hasText: /^14$/})
+			.click();
+
+		await calendar
+			.locator('.day-root:not(.outside-month)')
+			.filter({hasText: /^16$/})
+			.click();
+
+		await page.getByRole('button', {name: 'Apply'}).click();
+
+		await expect(resultRow).toBeVisible();
 	}
 );

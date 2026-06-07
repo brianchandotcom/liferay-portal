@@ -2609,3 +2609,86 @@ test(
 		await expectOrder(['category', 'pageTitle', 'url']);
 	}
 );
+
+test(
+	'Event Analysis can edit an attribute display name from the breakdown picker',
+	{
+		tag: '@LRAC-10304',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: 'customEvent',
+				properties: [{name: 'color', value: 'red'}],
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: [
+					{
+						dataType: 'STRING',
+						displayName: 'color',
+						name: 'color',
+						type: 'LOCAL',
+					},
+				],
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		// Open the breakdown picker and edit the color attribute display name
+
+		await page
+			.locator('.attribute-breakdown-section-root')
+			.getByLabel('Add')
+			.click();
+
+		await page.getByRole('menuitem', {exact: true, name: 'color'}).hover();
+
+		await page.getByRole('button', {name: 'edit'}).click();
+
+		await page.getByLabel('Display Name').fill('color Display Name');
+
+		await page.getByRole('button', {exact: true, name: 'Save'}).click();
+
+		// Reopen the picker and confirm the new display name is listed
+
+		await page
+			.locator('.attribute-breakdown-section-root')
+			.getByLabel('Add')
+			.click();
+
+		await expect(
+			page.getByRole('menuitem', {
+				exact: true,
+				name: 'color Display Name',
+			})
+		).toBeVisible();
+	}
+);

@@ -121,6 +121,48 @@ test('Can lock and unlock a thread', async ({
 	await expect(page.getByText(replyBody)).toBeVisible();
 });
 
+test('Can view thread statistics post count', async ({
+	apiHelpers,
+	messageBoardsPage,
+	page,
+	site,
+}) => {
+	await apiHelpers.headlessDelivery.postMessageBoardThread({
+		articleBody: getRandomString(),
+		headline: getRandomString(),
+		siteId: site.id,
+	});
+
+	await messageBoardsPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('link', {name: 'Statistics'}).click();
+
+	await page.waitForLoadState('networkidle');
+
+	const postsCount = page
+		.locator('.statistics-panel .overview-container', {hasText: 'Posts'})
+		.locator('p')
+		.first();
+
+	await expect(postsCount).toHaveText('1');
+
+	// A second thread bumps the post count
+
+	await apiHelpers.headlessDelivery.postMessageBoardThread({
+		articleBody: getRandomString(),
+		headline: getRandomString(),
+		siteId: site.id,
+	});
+
+	await messageBoardsPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('link', {name: 'Statistics'}).click();
+
+	await page.waitForLoadState('networkidle');
+
+	await expect(postsCount).toHaveText('2');
+});
+
 test('Can cancel editing a thread', async ({
 	apiHelpers,
 	messageBoardsEditThreadPage,

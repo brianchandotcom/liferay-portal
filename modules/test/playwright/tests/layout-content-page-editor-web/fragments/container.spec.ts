@@ -157,6 +157,39 @@ test('Can duplicate a container and the mapping and configuration are preserved'
 	);
 });
 
+test(
+	'Renders a border around page editor elements',
+	{tag: '@LPD-93832'},
+	async ({apiHelpers, pageEditorPage, site}) => {
+
+		// Create a page with a container
+
+		const containerId = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getContainerDefinition({id: containerId}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Navigate to the page editor
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Assert style is present
+
+		const boxShadow = await pageEditorPage.getFragmentStyle({
+			fragmentId: containerId,
+			style: 'boxShadow',
+		});
+
+		expect(boxShadow).not.toBe('none');
+		expect(boxShadow).toContain('inset');
+	}
+);
+
 test.describe('Container configuration', () => {
 	test('Can change the tag of a container', async ({
 		apiHelpers,

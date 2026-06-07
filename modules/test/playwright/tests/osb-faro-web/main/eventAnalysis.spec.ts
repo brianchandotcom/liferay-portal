@@ -2059,3 +2059,85 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Event Analysis allows a maximum of five breakdowns',
+	{
+		tag: '@LRAC-10265',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const attributeNames = [
+			'category',
+			'color',
+			'pageTitle',
+			'size',
+			'url',
+		];
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: 'customEvent',
+				properties: attributeNames.map((name) => ({name, value: name})),
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: attributeNames.map((name) => ({
+					dataType: 'STRING',
+					displayName: name,
+					name,
+					type: 'LOCAL',
+				})),
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		const breakdownAddButton = page
+			.locator('.attribute-breakdown-section-root')
+			.getByLabel('Add');
+
+		// The add control is still offered after four breakdowns
+
+		for (const breakdownName of attributeNames.slice(0, 4)) {
+			await addBreakdown({breakdownName, page, tab: 'Event'});
+		}
+
+		await expect(breakdownAddButton).toBeVisible();
+
+		// The add control is gone once the fifth breakdown is added
+
+		await addBreakdown({
+			breakdownName: attributeNames[4],
+			page,
+			tab: 'Event',
+		});
+
+		await expect(breakdownAddButton).toHaveCount(0);
+	}
+);

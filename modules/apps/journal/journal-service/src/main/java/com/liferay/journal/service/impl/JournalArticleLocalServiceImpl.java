@@ -944,13 +944,23 @@ public class JournalArticleLocalServiceImpl
 	public void checkArticles(long companyId) throws PortalException {
 		Date date = new Date();
 
-		long checkInterval = getArticleCheckInterval(companyId);
+		JournalServiceConfiguration journalServiceConfiguration =
+			configurationProvider.getCompanyConfiguration(
+				JournalServiceConfiguration.class, companyId);
 
-		checkArticlesByExpirationDate(companyId, date, checkInterval);
+		long checkInterval =
+			journalServiceConfiguration.checkInterval() * Time.MINUTE;
+
+		int journalArticleCheckLimit =
+			journalServiceConfiguration.journalArticleCheckLimit();
+
+		checkArticlesByExpirationDate(
+			companyId, date, checkInterval, journalArticleCheckLimit);
 
 		checkArticlesByReviewDate(companyId, date);
 
-		checkArticlesByDisplayDate(date, checkInterval);
+		checkArticlesByDisplayDate(
+			date, checkInterval, journalArticleCheckLimit);
 
 		_companyIdPreviousCheckDate.put(companyId, date);
 	}
@@ -6014,7 +6024,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void checkArticlesByCompanyIdAndExpirationDate(
-			long companyId, Date expirationDate, Date nextExpirationDate)
+			long companyId, Date expirationDate, Date nextExpirationDate,
+			int journalArticleCheckLimit)
 		throws PortalException {
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
@@ -6047,6 +6058,8 @@ public class JournalArticleLocalServiceImpl
 							RestrictionsFactoryUtil.eq(
 								"status",
 								WorkflowConstants.STATUS_SCHEDULED))));
+
+				dynamicQuery.setLimit(0, journalArticleCheckLimit);
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
@@ -6117,7 +6130,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void checkArticlesByDisplayDate(
-			Date displayDate, long checkInterval)
+			Date displayDate, long checkInterval, int journalArticleCheckLimit)
 		throws PortalException {
 
 		Date nextExpirationDate = new Date(
@@ -6151,6 +6164,8 @@ public class JournalArticleLocalServiceImpl
 
 				dynamicQuery.add(
 					statusProperty.eq(WorkflowConstants.STATUS_SCHEDULED));
+
+				dynamicQuery.setLimit(0, journalArticleCheckLimit);
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
@@ -6187,7 +6202,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void checkArticlesByExpirationDate(
-			long companyId, Date expirationDate, long checkInterval)
+			long companyId, Date expirationDate, long checkInterval,
+			int journalArticleCheckLimit)
 		throws PortalException {
 
 		Date nextExpirationDate = new Date(
@@ -6202,7 +6218,8 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		checkArticlesByCompanyIdAndExpirationDate(
-			companyId, expirationDate, nextExpirationDate);
+			companyId, expirationDate, nextExpirationDate,
+			journalArticleCheckLimit);
 
 		_companyIdPreviousCheckDate.computeIfAbsent(
 			companyId,
@@ -6405,19 +6422,6 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			ddmFormFieldValue.setValue(newValue);
-		}
-	}
-
-	protected long getArticleCheckInterval(long companyId) {
-		try {
-			JournalServiceConfiguration journalServiceConfiguration =
-				configurationProvider.getCompanyConfiguration(
-					JournalServiceConfiguration.class, companyId);
-
-			return journalServiceConfiguration.checkInterval() * Time.MINUTE;
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
 		}
 	}
 

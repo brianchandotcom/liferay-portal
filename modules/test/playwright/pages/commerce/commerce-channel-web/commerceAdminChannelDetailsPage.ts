@@ -933,4 +933,20 @@ export class CommerceAdminChannelDetailsPage {
 	async goToCurrencies() {
 		await this.currencyTab.click();
 	}
+
+	async setShippingMethodTrackingURL(
+		name: string,
+		trackingURL: string,
+		tableName: string
+	) {
+		await (await this.generalCommerceAdminChannelTableLink(name)).click();
+		await (
+			await this.sidePanelFrameInput('Tracking URL', tableName)
+		).fill(trackingURL);
+		await (await this.frameSaveButton(false, tableName)).click();
+
+		await waitForAlert(await this.sidePanelFrame(tableName));
+
+		await (await this.closeSidePanelFrame(false, tableName)).click();
+	}
 }

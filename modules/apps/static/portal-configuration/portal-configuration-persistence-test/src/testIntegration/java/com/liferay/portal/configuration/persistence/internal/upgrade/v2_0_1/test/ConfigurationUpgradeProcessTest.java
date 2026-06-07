@@ -157,15 +157,15 @@ public class ConfigurationUpgradeProcessTest {
 	}
 
 	private void _createConfiguration() throws Exception {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		Group group = _groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
-
 		String factoryPid = _CONFIGURATION_ID + ".scoped";
 
 		String configurationId =
 			factoryPid + "~" + RandomTestUtil.randomString();
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		Group group = _groupLocalService.getGroup(
+			companyId, GroupConstants.GUEST);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.configuration.admin.web.internal.configuration." +

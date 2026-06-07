@@ -377,17 +377,24 @@ public abstract class BaseBundlePersistentResource
 	}
 
 	private void _invokeBuild() {
-		String key = _JOB_VARIANT + "/start.properties";
+		setControllerBuildURL(getCurrentTopLevelBuildURL());
+
+		JenkinsMaster producerJenkinsMaster =
+			JenkinsResultsParserUtil.getMostAvailableJenkinsMaster(
+				_getBaseInvocationURL(), 1);
+
+		setProducerJenkinsMaster(producerJenkinsMaster);
+
+		Map<String, String> buildParameters = new HashMap<>();
 
 		BuildDatabase buildDatabase = getBuildDatabase();
 
 		Properties startProperties = getStartProperties();
 
-		buildDatabase.putProperties(key, startProperties, true);
+		buildDatabase.putProperties(
+			_JOB_VARIANT + "/start.properties", startProperties, true);
 
 		buildDatabase.uploadBuildDatabaseFileToCloudBucket();
-
-		Map<String, String> buildParameters = new HashMap<>();
 
 		for (String startPropertyName : startProperties.stringPropertyNames()) {
 			String startPropertyValue = JenkinsResultsParserUtil.getProperty(
@@ -405,15 +412,9 @@ public abstract class BaseBundlePersistentResource
 		buildParameters.put("JOB_VARIANT", _JOB_VARIANT);
 		buildParameters.put("SLAVE_LABEL", "slave-bundle-builder");
 
-		JenkinsMaster producerJenkinsMaster =
-			JenkinsResultsParserUtil.getMostAvailableJenkinsMaster(
-				_getBaseInvocationURL(), 1);
-
 		long producerQueueId = JenkinsResultsParserUtil.invokeJenkinsBuild(
 			producerJenkinsMaster, _JOB_NAME, buildParameters);
 
-		setControllerBuildURL(getCurrentTopLevelBuildURL());
-		setProducerJenkinsMaster(producerJenkinsMaster);
 		setProducerQueueId(producerQueueId);
 
 		setStatus(Status.IN_QUEUE);

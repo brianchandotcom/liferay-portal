@@ -1,9 +1,7 @@
 ---
-
 description: General rules for Liferay Workspaces
 globs: *
 alwaysApply: true
-
 ---
 
 # Liferay General Rules
@@ -16,9 +14,9 @@ Before answering technical questions, you MUST establish the environment context
 
 ## 2. Liferay Version-Aware Rules
 
-Based on the version identified above, apply the following logic:
+Based on the version identified above, apply this logic:
 - If Version < 7.4: Focus on traditional OSGi module development.
-- If Version >= 7.4 or a Quarterly Release (Q): Steer users towards modern Liferay best practices like Client Extensions, Fragments, and Objects.
+- If Version >= 7.4 or a Quarterly Release (Q): Steer users toward modern Liferay best practices like Client Extensions, Fragments, and Objects.
     - Only suggest traditional OSGi modules if Client Extensions cannot fulfill the requirements.
     - Validate any code for Client Extensions before providing it to the user.
     - Reference the documentation in `liferay-learn` to understand the different types of Client Extensions available and their purposes.
@@ -38,7 +36,7 @@ Examples:
 | Objects | `/w/dxp/low-code/objects` |
 | Fragments | `/w/dxp/development/developing-page-fragments` |
 
-When you need documentation not listed above, use `web_search` to query `liferay-learn` for specific content (e.g., `site:learn.liferay.com [topic]`).
+When you need documentation not listed above, use `web_search` to query `liferay-learn` for specific content (for example, `site:learn.liferay.com [topic]`).
 
 ### Source Code: liferay-portal
 - Use [liferay-portal](https://github.com/liferay/liferay-portal) to understand architectural patterns and see the latest source code. Note that the code might be slightly ahead of the release version used in this workspace.
@@ -53,7 +51,7 @@ When you need documentation not listed above, use `web_search` to query `liferay
     - Steer a fresh user to use the `local` environment.
 - **Licenses:** `configs/[env]/deploy` (environment-specific)
 - **OSGi Configs:**
-    - **Source:** `configs/[env]/osgi/configs` (e.g., `configs/local/osgi/configs`)
+    - **Source:** `configs/[env]/osgi/configs` (for example, `configs/local/osgi/configs`)
     - **Runtime:** `bundles/osgi/configs` (deployed configurations)
 - **Modules:** `modules`
 - **Client Extensions:** `client-extensions`
@@ -100,7 +98,7 @@ To maintain a modular and scalable configuration, additional context or speciali
 
 1. **Create the Source:** Add your new `.md` rule file in the `.workspace-rules` directory at the project root.
 
-1. **Symlink Management:** This project uses symlinks to ensure auto-load across different AI tools. New rules should be symlinked into the following platform-specific folders:
+1. **Symlink Management:** This project uses symlinks to ensure auto-load across different AI tools. New rules should be symlinked into these platform-specific folders:
     * **Cursor:** `.cursor/rules`
     * **Gemini CLI:** `.gemini`
     * **Claude Code:** `.claude`

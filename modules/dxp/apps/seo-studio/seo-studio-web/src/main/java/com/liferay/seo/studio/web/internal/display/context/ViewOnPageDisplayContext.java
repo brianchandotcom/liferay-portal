@@ -44,14 +44,6 @@ public class ViewOnPageDisplayContext {
 		String lastScanDateString = null;
 
 		if (_objectEntry != null) {
-			Map<String, Object> properties = _objectEntry.getProperties();
-
-			Date requestDate = GetterUtil.getDate(
-				properties.get("requestDate"),
-				DateFormatFactoryUtil.getSimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
-				null);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -59,6 +51,14 @@ public class ViewOnPageDisplayContext {
 			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 				"MMM d, yyyy 'at' h:mm a", themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
+
+			Map<String, Object> properties = _objectEntry.getProperties();
+
+			Date requestDate = GetterUtil.getDate(
+				properties.get("requestDate"),
+				DateFormatFactoryUtil.getSimpleDateFormat(
+					"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
+				null);
 
 			lastScanDateString = format.format(requestDate);
 		}

@@ -210,6 +210,64 @@ test(
 	}
 );
 
+test(
+	'A site member cannot reply to a thread without permissions',
+	{tag: '@LPS-136935'},
+	async ({
+		apiHelpers,
+		messageBoardsEditThreadPage,
+		messageBoardsPage,
+		messageBoardsWidgetPage,
+		page,
+		site,
+	}) => {
+		const threadSubject = getRandomString();
+
+		const layout =
+			await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+
+		await messageBoardsEditThreadPage.gotoAndPublishNewBasicThread(
+			threadSubject,
+			getRandomString(),
+			site.friendlyUrlPath
+		);
+
+		// The site member role keeps view but loses reply on the category
+
+		await messageBoardsPage.removeRoleReplyPermission(
+			'site-member',
+			site.friendlyUrlPath
+		);
+
+		// A site member is added to the site
+
+		const siteMemberRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		const member = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteMemberRole.id,
+			site.id,
+			member.id
+		);
+
+		userData[member.alternateName] = {
+			name: member.givenName,
+			password: 'test',
+			surname: member.familyName,
+		};
+
+		await performUserSwitch(page, member.alternateName);
+
+		// The member can open the thread but is offered no reply action
+
+		await messageBoardsWidgetPage.goToThread(site, layout, threadSubject);
+
+		await expect(page.getByRole('button', {name: 'Reply'})).toBeHidden();
+	}
+);
+
 test('A regular role with portlet access can open the message boards admin', async ({
 	apiHelpers,
 	messageBoardsPage,

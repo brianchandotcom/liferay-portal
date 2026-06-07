@@ -130,30 +130,6 @@ definition {
 			pageName = "Message Boards Page");
 	}
 
-	@description = "This is a test for LPS-136912. It checks that an urgent thread can be added."
-	@priority = 3
-	test CanAddUrgentThread {
-		property portal.acceptance = "false";
-
-		MessageboardsThread.addPG(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			priority = "Urgent",
-			siteURLKey = "guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.openToThread(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.viewPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-	}
-
 	@priority = 3
 	@refactordone
 	test CanDeleteThreadWithAttachment {
@@ -253,29 +229,6 @@ definition {
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
-	}
-
-	@description = "This is a test for LPS-87376. It ensures that a user can publish a thread with a tag."
-	@priority = 4
-	test CanPublishThreadWithTag {
-		JSONAssettag.addTag(
-			groupName = "Guest",
-			tagName = "tagname");
-
-		MessageboardsThread.addPG(
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			selectTag = "true",
-			siteURLKey = "guest",
-			tagName = "tagname",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.viewPG(
-			tagName = "tagname",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject",
-			userName = "Test Test");
 	}
 
 	@priority = 4

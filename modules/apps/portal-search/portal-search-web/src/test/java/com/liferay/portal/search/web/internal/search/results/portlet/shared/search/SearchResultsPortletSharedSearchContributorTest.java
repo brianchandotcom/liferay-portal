@@ -31,29 +31,26 @@ public class SearchResultsPortletSharedSearchContributorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testContributeWithPaginationDeltaAboveMaxDelta() {
-		_assertPaginationDelta(
+	public void testContribute() {
+		_testContribute(
 			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA,
 			String.valueOf(PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA + 1));
-	}
 
-	@Test
-	public void testContributeWithPaginationDeltaBelowMaxDelta() {
 		int paginationDelta = PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA - 1;
 
-		_assertPaginationDelta(
+		_testContribute(
 			paginationDelta, String.valueOf(paginationDelta));
 	}
 
-	private void _assertPaginationDelta(
+	private void _testContribute(
 		int expectedPaginationDelta, String paginationDeltaParameterValue) {
-
-		PortletSharedSearchSettings portletSharedSearchSettings =
-			_createPortletSharedSearchSettings(paginationDeltaParameterValue);
 
 		SearchResultsPortletSharedSearchContributor
 			searchResultsPortletSharedSearchContributor =
 				new SearchResultsPortletSharedSearchContributor();
+
+		PortletSharedSearchSettings portletSharedSearchSettings =
+			_createPortletSharedSearchSettings(paginationDeltaParameterValue);
 
 		searchResultsPortletSharedSearchContributor.contribute(
 			portletSharedSearchSettings);

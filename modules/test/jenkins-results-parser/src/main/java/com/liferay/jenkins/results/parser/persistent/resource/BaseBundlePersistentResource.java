@@ -377,12 +377,7 @@ public abstract class BaseBundlePersistentResource
 	}
 
 	private void _invokeBuild() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(_JOB_VARIANT);
-		sb.append("/start.properties");
-
-		String key = sb.toString();
+		String key = _JOB_VARIANT + "/start.properties";
 
 		BuildDatabase buildDatabase = getBuildDatabase();
 

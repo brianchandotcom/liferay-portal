@@ -41,7 +41,7 @@ public class LiferayObjectService extends BaseService {
 		).queryParam(
 			"filter",
 			StringBundler.concat(
-				"r_seoStudioDomainToSEOStudioGSCCredEntries_seoStudioDomainId eq ",
+				"r_seoStudioDomainToSEOStudioGSCCEntries_seoStudioDomainId eq ",
 				"'", seoStudioDomainId, "'")
 		).build();
 

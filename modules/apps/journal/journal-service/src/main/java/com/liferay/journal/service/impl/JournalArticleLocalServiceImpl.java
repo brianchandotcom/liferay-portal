@@ -7251,10 +7251,16 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle previousApprovedArticle = getPreviousApprovedArticle(
 			article);
 
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		if (assetEntry == null) {
+			return;
+		}
+
 		if (previousApprovedArticle.getVersion() == article.getVersion()) {
-			AssetEntry assetEntry = _assetEntryLocalService.updateVisible(
-				JournalArticle.class.getName(), article.getResourcePrimKey(),
-				false);
+			assetEntry = _assetEntryLocalService.updateVisible(
+				assetEntry, false);
 
 			if (article.getStatus() == WorkflowConstants.STATUS_EXPIRED) {
 				assetEntry.setExpirationDate(article.getExpirationDate());
@@ -7263,11 +7269,13 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 		else {
-			AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
-				JournalArticle.class.getName(), article.getResourcePrimKey(),
-				previousApprovedArticle.getDisplayDate(),
-				previousApprovedArticle.getExpirationDate(),
-				isListable(article), true);
+			assetEntry.setListable(isListable(article));
+			assetEntry.setPublishDate(previousApprovedArticle.getDisplayDate());
+			assetEntry.setExpirationDate(
+				previousApprovedArticle.getExpirationDate());
+
+			assetEntry = _assetEntryLocalService.updateVisible(
+				assetEntry, true);
 
 			assetEntry.setModifiedDate(
 				previousApprovedArticle.getModifiedDate());

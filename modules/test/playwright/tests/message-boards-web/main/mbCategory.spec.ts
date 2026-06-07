@@ -46,11 +46,36 @@ test('Can manage categories from the admin', async ({
 
 	await expect(categoryLink).toBeVisible();
 
+	// Rename the category through its row action
+
+	const editedName = getRandomString();
+
+	const editItem = page
+		.locator('.dropdown-menu:visible')
+		.getByText('Edit', {exact: true});
+
+	await expect(async () => {
+		await page
+			.locator('a.component-action.dropdown-toggle')
+			.first()
+			.click();
+
+		await expect(editItem).toBeVisible({timeout: 3000});
+	}).toPass();
+
+	await editItem.click();
+
+	await page.locator('[id$="_MBAdminPortlet_name"]').fill(editedName);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await expect(page.getByRole('link', {name: editedName})).toBeVisible();
+
 	// Delete the category
 
 	await messageBoardsPage.deleteAllMBEntries();
 
-	await expect(categoryLink).toBeHidden();
+	await expect(page.getByRole('link', {name: editedName})).toBeHidden();
 });
 
 test('Can add a category', async ({messageBoardsWidgetPage, page, site}) => {

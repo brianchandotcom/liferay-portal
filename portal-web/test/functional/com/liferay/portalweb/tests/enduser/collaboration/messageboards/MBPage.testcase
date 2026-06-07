@@ -43,34 +43,6 @@ definition {
 		}
 	}
 
-	@priority = 4
-	@refactordone
-	test CanEditAndDeleteCategory {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "MB Category Name",
-			userEmailAddress = "test@liferay.com");
-
-		MessageboardsCategory.editPG(
-			categoryName = "MB Category Name",
-			categoryNameEdit = "MB Category Name Edit",
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewPG(categoryName = "MB Category Name Edit");
-
-		JSONMBMessage.deleteCategory(
-			categoryName = "MB Category Name Edit",
-			groupName = "Guest");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewDefault();
-	}
-
 	@description = "This is a use case for LPS-67722."
 	@priority = 3
 	@refactordone

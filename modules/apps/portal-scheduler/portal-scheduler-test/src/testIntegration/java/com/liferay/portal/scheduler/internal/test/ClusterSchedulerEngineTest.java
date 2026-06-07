@@ -9,14 +9,24 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.test.cluster.tomcat.TomcatCluster;
 import com.liferay.portal.test.cluster.tomcat.TomcatNode;
 import com.liferay.portal.test.log.LogCapture;
@@ -25,6 +35,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
@@ -73,6 +87,7 @@ public class ClusterSchedulerEngineTest implements Serializable {
 	@Test
 	public void testDoMasterTokenAcquiredWithJobScheduledOnAllNodes()
 		throws Exception {
+
 		String jobName = RandomTestUtil.randomString();
 
 		TomcatNode masterTomcatNode = _tomcatNode2;
@@ -133,6 +148,7 @@ public class ClusterSchedulerEngineTest implements Serializable {
 	@Test
 	public void testDoMasterTokenAcquiredWithJobScheduledOnMaster()
 		throws Exception {
+
 		String jobName = RandomTestUtil.randomString();
 
 		TomcatNode masterTomcatNode = _tomcatNode2;
@@ -199,6 +215,130 @@ public class ClusterSchedulerEngineTest implements Serializable {
 		}
 		finally {
 			masterTomcatNode.start(true);
+		}
+	}
+
+	@Test
+	public void testGetScheduledJobs() throws Exception {
+		TomcatNode masterTomcatNode = _tomcatNode2;
+		TomcatNode slaveTomcatNode = _tomcatNode1;
+
+		if (_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster)) {
+			masterTomcatNode = _tomcatNode1;
+			slaveTomcatNode = _tomcatNode2;
+		}
+
+		_testGetScheduledJobs(
+			masterTomcatNode, masterTomcatNode, slaveTomcatNode,
+			StorageType.MEMORY);
+		_testGetScheduledJobs(
+			masterTomcatNode, slaveTomcatNode, slaveTomcatNode,
+			StorageType.MEMORY);
+		_testGetScheduledJobs(
+			masterTomcatNode, masterTomcatNode, slaveTomcatNode,
+			StorageType.MEMORY_CLUSTERED);
+		_testGetScheduledJobs(
+			masterTomcatNode, slaveTomcatNode, slaveTomcatNode,
+			StorageType.MEMORY_CLUSTERED);
+		_testGetScheduledJobs(
+			masterTomcatNode, masterTomcatNode, slaveTomcatNode,
+			StorageType.PERSISTED);
+		_testGetScheduledJobs(
+			masterTomcatNode, slaveTomcatNode, slaveTomcatNode,
+			StorageType.PERSISTED);
+	}
+
+	private SchedulerResponse _getSingleScheduledJob(
+			TomcatNode tomcatNode, String groupName, StorageType storageType)
+		throws Exception {
+
+		SchedulerResponse[] schedulerResponses = tomcatNode.syncExecute(
+			() -> {
+				List<SchedulerResponse> schedulerResponseList =
+					SchedulerEngineHelperUtil.getScheduledJobs(
+						groupName, storageType);
+
+				return schedulerResponseList.toArray(new SchedulerResponse[0]);
+			});
+
+		Assert.assertEquals(
+			Arrays.toString(schedulerResponses), 1, schedulerResponses.length);
+
+		return schedulerResponses[0];
+	}
+
+	private void _testGetScheduledJobs(
+			TomcatNode masterTomcatNode, TomcatNode mutatorTomcatNode,
+			TomcatNode slaveTomcatNode, StorageType storageType)
+		throws Exception {
+
+		String suffix = RandomTestUtil.randomString();
+
+		String destinationName = "liferay/test_fire_" + suffix;
+		String jobName = "test.job.name." + suffix;
+
+		TomcatNode observerTomcatNode = masterTomcatNode;
+
+		if (mutatorTomcatNode == masterTomcatNode) {
+			observerTomcatNode = slaveTomcatNode;
+		}
+
+		Assert.assertEquals(
+			0,
+			(int)observerTomcatNode.syncExecute(
+				() -> {
+					List<SchedulerResponse> schedulerResponses =
+						SchedulerEngineHelperUtil.getScheduledJobs(
+							jobName, storageType);
+
+					return schedulerResponses.size();
+				}));
+
+		slaveTomcatNode.syncExecute(
+			() -> {
+				TestSchedulerMessageListener.register(destinationName);
+
+				return null;
+			});
+
+		Future<?> future = masterTomcatNode.execute(
+			() -> {
+				TestSchedulerMessageListener.register(destinationName);
+
+				TestSchedulerMessageListener.await(destinationName);
+
+				return null;
+			});
+
+		try {
+			mutatorTomcatNode.syncExecute(
+				() -> {
+					SchedulerEngineHelperUtil.schedule(
+						TriggerFactoryUtil.createTrigger(
+							jobName, jobName, 10, TimeUnit.SECOND),
+						storageType, RandomTestUtil.randomString(),
+						destinationName, new Message());
+
+					return null;
+				});
+
+			future.get();
+
+			SchedulerResponse schedulerResponse = _getSingleScheduledJob(
+				observerTomcatNode, jobName, storageType);
+
+			Assert.assertEquals(jobName, schedulerResponse.getJobName());
+			Assert.assertEquals(
+				destinationName, schedulerResponse.getDestinationName());
+		}
+		finally {
+			mutatorTomcatNode.syncExecute(
+				() -> {
+					SchedulerEngineHelperUtil.delete(
+						jobName, jobName, storageType);
+
+					return null;
+				});
 		}
 	}
 
@@ -284,6 +424,72 @@ public class ClusterSchedulerEngineTest implements Serializable {
 
 		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 		private final String _name;
+
+	}
+
+	private static class TestSchedulerMessageListener
+		implements MessageListener {
+
+		public static void await(String destinationName) throws Exception {
+			CountDownLatch countDownLatch = _getCountDownLatch(destinationName);
+
+			countDownLatch.await();
+		}
+
+		public static void countDown(String destinationName) {
+			CountDownLatch countDownLatch = _getCountDownLatch(destinationName);
+
+			countDownLatch.countDown();
+		}
+
+		public static void register(String destinationName) {
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			DestinationFactory destinationFactory = bundleContext.getService(
+				bundleContext.getServiceReference(DestinationFactory.class));
+
+			bundleContext.registerService(
+				Destination.class,
+				destinationFactory.createDestination(
+					DestinationConfiguration.
+						createSerialDestinationConfiguration(destinationName)),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"destination.name", destinationName
+				).build());
+
+			bundleContext.registerService(
+				MessageListener.class,
+				new TestSchedulerMessageListener(destinationName),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"destination.name", destinationName
+				).build());
+		}
+
+		@Override
+		public void receive(Message message) {
+			ClusterMasterExecutorUtil.executeOnMaster(
+				new MethodHandler(
+					new MethodKey(
+						TestSchedulerMessageListener.class, "countDown",
+						String.class),
+					_destinationName));
+		}
+
+		private static CountDownLatch _getCountDownLatch(
+			String destinationName) {
+
+			return _countDownLatches.computeIfAbsent(
+				destinationName, key -> new CountDownLatch(1));
+		}
+
+		private TestSchedulerMessageListener(String destinationName) {
+			_destinationName = destinationName;
+		}
+
+		private static final Map<String, CountDownLatch> _countDownLatches =
+			new ConcurrentHashMap<>();
+
+		private final String _destinationName;
 
 	}
 

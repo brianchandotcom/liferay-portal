@@ -151,6 +151,24 @@ export class MessageBoardsPage {
 		await this.page.waitForLoadState('networkidle');
 	}
 
+	async removeRoleReplyPermission(
+		roleName: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goto(siteUrl);
+
+		await this.optionsMenu.click();
+		await this.homeCategoryPermissionsMenuItem.click();
+
+		await this.homeCategoryPermissionsFrame
+			.locator(`#${roleName}_ACTION_REPLY_TO_MESSAGE`)
+			.uncheck();
+
+		await this.saveButton.click();
+
+		await this.page.getByLabel('Close', {exact: true}).click();
+	}
+
 	async setGuestCategoryPermissions(siteUrl?: Site['friendlyUrlPath']) {
 		await this.goto(siteUrl);
 

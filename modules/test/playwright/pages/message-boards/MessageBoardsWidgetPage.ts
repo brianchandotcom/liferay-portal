@@ -107,6 +107,30 @@ export class MessageBoardsWidgetPage {
 		await this.page.waitForLoadState('networkidle');
 	}
 
+	async replyToThreadAsDraft(
+		site: Site,
+		layout: Layout,
+		threadSubject: string,
+		replyBody: string
+	) {
+		await this.goToThread(site, layout, threadSubject);
+
+		await this.page.getByRole('button', {name: 'Reply'}).click();
+
+		await this.page.getByRole('button', {name: 'Advanced Reply'}).click();
+
+		await this.page.waitForLoadState('networkidle');
+
+		await this.page
+			.frameLocator('iframe[title*="bodyEditor"]')
+			.locator('body')
+			.fill(replyBody);
+
+		await this.page.getByRole('button', {name: 'Save as Draft'}).click();
+
+		await this.page.waitForLoadState('networkidle');
+	}
+
 	async addCategory(site: Site, layout: Layout, categoryName: string) {
 		await this.page.goto(
 			`/web${site.friendlyUrlPath}${layout.friendlyURL}`

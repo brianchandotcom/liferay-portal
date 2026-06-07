@@ -2141,3 +2141,60 @@ test(
 		await expect(breakdownAddButton).toHaveCount(0);
 	}
 );
+
+test(
+	'Event Analysis keeps the event result after removing the breakdown',
+	{
+		tag: '@LRAC-10306',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		// The breakdown is part of the analysis
+
+		await expect(
+			page
+				.locator('.attribute-breakdown-section-root')
+				.getByText('pageTitle')
+		).toBeVisible();
+
+		// Removing the breakdown clears it from the analysis
+
+		await removeAttribute({page, section: 'Breakdown'});
+
+		await expect(
+			page
+				.locator('.attribute-breakdown-section-root')
+				.getByText('pageTitle')
+		).toHaveCount(0);
+
+		// The event result still appears without the breakdown
+
+		await expect(
+			page.getByRole('row', {name: 'customEvent'})
+		).toBeVisible();
+	}
+);

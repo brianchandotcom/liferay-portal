@@ -1833,12 +1833,17 @@ async function addAttributeFilter({
 		select: page.getByLabel('Condition'),
 	});
 
-	await page
+	const valueInput = page
 		.locator(
 			"xpath=//div[contains(@class,'event-analysis-editor-attribute-dropdown-root show')]//input"
 		)
-		.first()
-		.fill(value);
+		.first();
+
+	await valueInput.click();
+
+	// Type character by character so the autocomplete suggestions are fetched
+
+	await valueInput.pressSequentially(value);
 
 	await page.getByRole('option', {exact: true, name: value}).click();
 

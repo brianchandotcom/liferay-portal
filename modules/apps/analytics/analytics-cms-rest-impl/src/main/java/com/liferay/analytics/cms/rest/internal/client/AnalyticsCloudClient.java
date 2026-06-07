@@ -619,26 +619,25 @@ public class AnalyticsCloudClient {
 			names.add(performanceAssetConsumptionItem.getTitle());
 		}
 
-		List<Object[]> objectDefinitions =
-			_objectDefinitionLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					ObjectDefinitionTable.INSTANCE.name,
-					ObjectDefinitionTable.INSTANCE.externalReferenceCode,
-					ObjectDefinitionTable.INSTANCE.label
-				).from(
-					ObjectDefinitionTable.INSTANCE
-				).where(
-					ObjectDefinitionTable.INSTANCE.companyId.eq(
-						CompanyThreadLocal.getCompanyId()
-					).and(
-						ObjectDefinitionTable.INSTANCE.name.in(
-							names.toArray(new String[0]))
-					)
-				));
-
 		Map<String, Object[]> objectDefinitionsMap = new HashMap<>();
 
-		for (Object[] objectDefinition : objectDefinitions) {
+		for (Object[] objectDefinition :
+				_objectDefinitionLocalService.dslQuery(
+					DSLQueryFactoryUtil.select(
+						ObjectDefinitionTable.INSTANCE.name,
+						ObjectDefinitionTable.INSTANCE.externalReferenceCode,
+						ObjectDefinitionTable.INSTANCE.label
+					).from(
+						ObjectDefinitionTable.INSTANCE
+					).where(
+						ObjectDefinitionTable.INSTANCE.companyId.eq(
+							CompanyThreadLocal.getCompanyId()
+						).and(
+							ObjectDefinitionTable.INSTANCE.name.in(
+								names.toArray(new String[0]))
+						)
+					))) {
+
 			objectDefinitionsMap.put(
 				(String)objectDefinition[2], objectDefinition);
 		}

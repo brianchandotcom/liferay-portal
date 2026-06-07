@@ -44,10 +44,8 @@ public class AssetEntryDTOConverter
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				serviceBuilderAssetEntry.getClassName());
-
 		Group group = _groupLocalService.fetchGroup(
 			serviceBuilderAssetEntry.getGroupId());
-
 		Locale locale = dtoConverterContext.getLocale();
 
 		return new AssetEntry() {

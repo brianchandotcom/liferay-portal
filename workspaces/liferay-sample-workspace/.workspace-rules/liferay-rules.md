@@ -26,9 +26,8 @@ Based on the version identified above, apply this logic:
 
 ### Primary Documentation: liferay-learn
 
-The authoritative source for Liferay documentation is the [liferay-learn](https://learn.liferay.com) website. Use these key paths to retrieve documentation for all aspects of development within this workspace.
+The authoritative source for Liferay documentation is the [liferay-learn](https://learn.liferay.com) website. Use these key paths to retrieve documentation for all aspects of development within this workspace:
 
-Examples:
 | Topic | Path in liferay-learn |
 |-------|----------------------|
 | Client Extensions Overview | `/w/dxp/development/client-extensions` |
@@ -76,7 +75,7 @@ feature.flag.LPD-63311=true
 | Setting | Value |
 |---------|-------|
 | URL | `http://localhost:8080/o/mcp/sse` |
-| Transport | HTTP Server Sent Events (SSE) |
+| Transport | HTTP Server-Sent Events (SSE) |
 | Authorization Header | `Basic dGVzdEBsaWZlcmF5LmNvbTp0ZXN0` |
 
 The default credentials (`test@liferay.com:test`) are base64-encoded in the header. Update if using different credentials.
@@ -98,7 +97,7 @@ To maintain a modular and scalable configuration, additional context or speciali
 
 1. **Create the Source:** Add your new `.md` rule file in the `.workspace-rules` directory at the project root.
 
-1. **Symlink Management:** This project uses symlinks to ensure auto-load across different AI tools. New rules should be symlinked into these platform-specific folders:
+1. **Symlink Management:** This project uses symlinks to ensure autoload across different AI tools. New rules should be symlinked into these platform-specific folders:
     * **Cursor:** `.cursor/rules`
     * **Gemini CLI:** `.gemini`
     * **Claude Code:** `.claude`

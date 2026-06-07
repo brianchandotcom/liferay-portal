@@ -6,9 +6,7 @@ alwaysApply: true
 
 # Liferay Workspace Setup Guide
 
-This is the initial setup guide for users brand new to Liferay Workspace.
-
-For a first time user, follow this sequence:
+For a first-time user, follow this sequence:
 
 ## 1. Workspace Verification
 - Check for `gradle.properties` and `settings.gradle` in the root directory.
@@ -18,11 +16,11 @@ For a first time user, follow this sequence:
 
 ## 2. Bundle Initialization
 - Instruct the user to run `blade server init`.
-- Explain this downloads Liferay Portal (Tomcat bundle) into the `/bundles` folder.
+- Explain that this downloads Liferay Portal (Tomcat bundle) into the `/bundles` folder.
 - Confirm the `/bundles` folder exists before proceeding.
 
 ## 3. Starting the Server
-- Instruct user to run `blade server start`.
+- Instruct the user to run `blade server start`.
     - Direct the user to watch the logs at `bundles/tomcat/logs/catalina.out`.
     - Inform the user there are different variations depending on their use case.
         - `blade server start -t` starts the server and automatically tails the logs (catalina.out).

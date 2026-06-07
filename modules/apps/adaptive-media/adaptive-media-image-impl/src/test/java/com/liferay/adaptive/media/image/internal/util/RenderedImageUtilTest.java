@@ -27,14 +27,12 @@ public class RenderedImageUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testReadImageClosesStreamWhenImageTypeIsUnsupported()
-		throws Exception {
-
-		CloseTrackingInputStream closeTrackingInputStream =
-			new CloseTrackingInputStream(RandomTestUtil.randomBytes());
+	public void testReadImage() throws Exception {
+		CloseTrackingByteArrayInputStream closeTrackingByteArrayInputStream =
+			new CloseTrackingByteArrayInputStream(RandomTestUtil.randomBytes());
 
 		try {
-			RenderedImageUtil.readImage(closeTrackingInputStream);
+			RenderedImageUtil.readImage(closeTrackingByteArrayInputStream);
 
 			Assert.fail();
 		}
@@ -43,12 +41,13 @@ public class RenderedImageUtilTest {
 				"Unsupported image type", ioException.getMessage());
 		}
 
-		Assert.assertTrue(closeTrackingInputStream._closed);
+		Assert.assertTrue(closeTrackingByteArrayInputStream._closed);
 	}
 
-	private static class CloseTrackingInputStream extends ByteArrayInputStream {
+	private static class CloseTrackingByteArrayInputStream
+		extends ByteArrayInputStream {
 
-		public CloseTrackingInputStream(byte[] bytes) {
+		public CloseTrackingByteArrayInputStream(byte[] bytes) {
 			super(bytes);
 		}
 

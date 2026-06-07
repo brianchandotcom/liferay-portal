@@ -258,7 +258,7 @@ public class AssetEntryServiceTest {
 	}
 
 	@Test
-	public void testSearchWithSorts() throws Exception {
+	public void testSearch() throws Exception {
 		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0);
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(

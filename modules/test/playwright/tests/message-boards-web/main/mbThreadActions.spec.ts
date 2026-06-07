@@ -33,6 +33,25 @@ async function openThreadAction({headline, name, page}) {
 	});
 }
 
+async function openThreadRowAction({name, page}) {
+	const menuItem = page
+		.locator('.dropdown-menu:visible')
+		.getByText(name, {exact: true});
+
+	await expect(async () => {
+		await page
+			.locator('a.component-action.dropdown-toggle')
+			.first()
+			.click();
+
+		await expect(menuItem).toBeVisible({timeout: 3000});
+	}).toPass();
+
+	await menuItem.click();
+
+	await page.waitForLoadState('networkidle');
+}
+
 test('Can edit a thread subject and body', async ({
 	apiHelpers,
 	messageBoardsEditThreadPage,
@@ -61,6 +80,45 @@ test('Can edit a thread subject and body', async ({
 
 	await expect(page.getByTestId('headerTitle')).toHaveText(editedSubject);
 	await expect(page.getByText(editedBody)).toBeVisible();
+});
+
+test('Can lock and unlock a thread', async ({
+	apiHelpers,
+	messageBoardsPage,
+	page,
+	site,
+}) => {
+	const headline = getRandomString();
+	const replyBody = getRandomString();
+
+	const thread = await apiHelpers.headlessDelivery.postMessageBoardThread({
+		articleBody: getRandomString(),
+		headline,
+		siteId: site.id,
+	});
+
+	await messageBoardsPage.goto(site.friendlyUrlPath);
+
+	// Locking the thread surfaces a locked status
+
+	await openThreadRowAction({name: 'Lock', page});
+
+	await expect(page.getByText('Locked')).toBeVisible();
+
+	// Unlocking restores replying
+
+	await openThreadRowAction({name: 'Unlock', page});
+
+	await apiHelpers.headlessDelivery.postMessageBoardMessage({
+		articleBody: replyBody,
+		messageBoardThreadId: String(thread.id),
+	});
+
+	await messageBoardsPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('link', {name: headline}).click();
+
+	await expect(page.getByText(replyBody)).toBeVisible();
 });
 
 test('Can cancel editing a thread', async ({

@@ -423,19 +423,17 @@ public abstract class BaseBundlePersistentResource
 	}
 
 	private void _redispatchBuild(JSONObject cachedDataJSONObject) {
-		JSONObject historyEntryJSONObject = new JSONObject();
-
-		historyEntryJSONObject.put(
-			"controller_build_url",
-			cachedDataJSONObject.optString("controller_build_url")
-		).put(
-			"producer_build_url",
-			cachedDataJSONObject.optString("producer_build_url")
-		).put(
-			"status", cachedDataJSONObject.optString("status")
-		);
-
-		_redispatchHistoryJSONArray.put(historyEntryJSONObject);
+		_redispatchHistoryJSONArray.put(
+			new JSONObject(
+			).put(
+				"controller_build_url",
+				cachedDataJSONObject.optString("controller_build_url")
+			).put(
+				"producer_build_url",
+				cachedDataJSONObject.optString("producer_build_url")
+			).put(
+				"status", cachedDataJSONObject.optString("status")
+			));
 
 		while (_redispatchHistoryJSONArray.length() >
 					_MAX_REDISPATCH_ATTEMPTS) {

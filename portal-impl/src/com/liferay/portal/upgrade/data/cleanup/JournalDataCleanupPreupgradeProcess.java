@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
@@ -45,15 +46,21 @@ public class JournalDataCleanupPreupgradeProcess
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null,
-				"[$SOURCE_TABLE_ALIAS$].name = 'com.liferay.journal.model." +
-					"JournalArticle'",
+				StringBundler.concat(
+					"[$SOURCE_TABLE_ALIAS$].scope = ",
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					" and [$SOURCE_TABLE_ALIAS$].name = ",
+					"'com.liferay.journal.model.JournalArticle'"),
 				"primKeyId", "ResourcePermission", "resourcePrimKey",
 				"JournalArticle"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null,
-				"[$SOURCE_TABLE_ALIAS$].name = 'com.liferay.journal.model." +
-					"JournalFeed'",
+				StringBundler.concat(
+					"[$SOURCE_TABLE_ALIAS$].scope = ",
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					" and [$SOURCE_TABLE_ALIAS$].name = ",
+					"'com.liferay.journal.model.JournalFeed'"),
 				"primKeyId", "ResourcePermission", "id_", "JournalFeed"));
 	}
 

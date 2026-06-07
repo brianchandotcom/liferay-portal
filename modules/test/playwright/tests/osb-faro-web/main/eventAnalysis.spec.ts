@@ -13,6 +13,7 @@ import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import dragAndDropElement from '../../../utils/dragAndDropElement';
 import getRandomString from '../../../utils/getRandomString';
 import {selectAndExpectToHaveValue} from '../../../utils/selectAndExpectToHaveValue';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
@@ -2539,5 +2540,72 @@ test(
 		await page.getByRole('button', {name: 'Apply'}).click();
 
 		await expect(resultRow).toBeVisible();
+	}
+);
+
+test(
+	'Event Analysis reorders breakdowns and restores the original order',
+	{
+		tag: '@LRAC-10267',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		for (const breakdownName of ['category', 'pageTitle', 'url']) {
+			await addBreakdown({breakdownName, page, tab: 'Event'});
+		}
+
+		const breakdownChips = page.locator(
+			'.attribute-breakdown-section-root .attribute-chip-container'
+		);
+
+		const expectOrder = async (order: string[]) => {
+			for (let index = 0; index < order.length; index++) {
+				await expect(breakdownChips.nth(index)).toContainText(
+					order[index]
+				);
+			}
+		};
+
+		// The breakdowns keep the order in which they were added
+
+		await expectOrder(['category', 'pageTitle', 'url']);
+
+		// Moving the second breakdown before the first reorders them
+
+		await dragAndDropElement({
+			dragTarget: breakdownChips.nth(1).locator('.drag-handle'),
+			dropTarget: breakdownChips.nth(0),
+		});
+
+		await expectOrder(['pageTitle', 'category', 'url']);
+
+		// Moving it back restores the original order
+
+		await dragAndDropElement({
+			dragTarget: breakdownChips.nth(1).locator('.drag-handle'),
+			dropTarget: breakdownChips.nth(0),
+		});
+
+		await expectOrder(['category', 'pageTitle', 'url']);
 	}
 );

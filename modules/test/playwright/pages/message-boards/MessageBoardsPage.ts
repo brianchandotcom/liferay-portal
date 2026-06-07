@@ -67,8 +67,11 @@ export class MessageBoardsPage {
 		});
 	}
 
-	async goToThreadPriorities(siteUrl?: Site['friendlyUrlPath']) {
-		this.goto(siteUrl);
+	async goToConfigurationTab(
+		tabName: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goto(siteUrl);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -78,9 +81,11 @@ export class MessageBoardsPage {
 			trigger: this.optionsMenu,
 		});
 
-		await this.page
-			.getByRole('menuitem', {name: 'Thread Priorities'})
-			.click();
+		await this.page.getByRole('menuitem', {name: tabName}).click();
+	}
+
+	async goToThreadPriorities(siteUrl?: Site['friendlyUrlPath']) {
+		await this.goToConfigurationTab('Thread Priorities', siteUrl);
 	}
 
 	async setGuestCategoryPermissions(siteUrl?: Site['friendlyUrlPath']) {

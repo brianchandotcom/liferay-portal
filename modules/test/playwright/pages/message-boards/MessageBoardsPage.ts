@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
@@ -86,6 +86,69 @@ export class MessageBoardsPage {
 
 	async goToThreadPriorities(siteUrl?: Site['friendlyUrlPath']) {
 		await this.goToConfigurationTab('Thread Priorities', siteUrl);
+	}
+
+	async banReplyAuthor() {
+		await this._clickThreadMenuItem(
+			this.page.locator('.panel-heading .dropdown-toggle').last(),
+			'Ban This User'
+		);
+	}
+
+	async goToBannedUsers(siteUrl?: Site['friendlyUrlPath']) {
+		await this.goto(siteUrl);
+
+		await this.page.getByRole('link', {name: 'Banned Users'}).click();
+
+		await this.page.waitForLoadState('networkidle');
+	}
+
+	async goToThread(threadSubject: string, siteUrl?: Site['friendlyUrlPath']) {
+		await this.goto(siteUrl);
+
+		await this.page.waitForLoadState('networkidle');
+
+		// The thread row link is covered by the card overlay, so read its href
+		// and navigate directly
+
+		const threadURL = await this.page.evaluate((subject) => {
+			const anchors = Array.from(document.querySelectorAll('a'));
+
+			const anchor = anchors.find(
+				(element) =>
+					element.textContent?.includes(subject) &&
+					(element.getAttribute('href') || '').includes('message')
+			);
+
+			return anchor?.getAttribute('href') || '';
+		}, threadSubject);
+
+		await this.page.goto(threadURL);
+
+		await this.page.waitForLoadState('networkidle');
+	}
+
+	async unbanUser() {
+		await this._clickThreadMenuItem(
+			this.page.locator('[data-qa-id="row"] .dropdown-toggle').last(),
+			'Unban This User'
+		);
+	}
+
+	async _clickThreadMenuItem(trigger: Locator, itemName: string) {
+		const menuItem = this.page
+			.locator('.dropdown-menu:visible')
+			.getByText(itemName, {exact: true});
+
+		await expect(async () => {
+			await trigger.click();
+
+			await expect(menuItem).toBeVisible({timeout: 3000});
+		}).toPass();
+
+		await menuItem.click();
+
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	async setGuestCategoryPermissions(siteUrl?: Site['friendlyUrlPath']) {

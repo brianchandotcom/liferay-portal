@@ -2797,7 +2797,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 							"Skipping page with friendly URL ",
 							pageJSONObject.getString("friendlyURL"),
 							" and any associated child pages because widget ",
-							"pages are deprecated (LPD-76864)"));
+							"pages are deprecated"));
 				}
 
 				return Collections.emptyMap();
@@ -2807,7 +2807,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_log.warn(
 					"Widget page with friendly URL " +
 						pageJSONObject.getString("friendlyURL") +
-							" is deprecated (LPD-76864)");
+							" is deprecated");
 			}
 		}
 

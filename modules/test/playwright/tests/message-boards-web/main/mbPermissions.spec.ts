@@ -268,6 +268,83 @@ test(
 	}
 );
 
+test(
+	'A site member can view their saved draft message',
+	{tag: '@LPS-69728'},
+	async ({
+		apiHelpers,
+		messageBoardsEditThreadPage,
+		messageBoardsWidgetPage,
+		page,
+		site,
+	}) => {
+		const replyBody = getRandomString();
+		const threadSubject = getRandomString();
+
+		const layout =
+			await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+
+		await messageBoardsEditThreadPage.gotoAndPublishNewBasicThread(
+			threadSubject,
+			getRandomString(),
+			site.friendlyUrlPath
+		);
+
+		// A site member saves a reply as a draft
+
+		const siteMemberRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		const member = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteMemberRole.id,
+			site.id,
+			member.id
+		);
+
+		userData[member.alternateName] = {
+			name: member.givenName,
+			password: 'test',
+			surname: member.familyName,
+		};
+
+		await performUserSwitch(page, member.alternateName);
+
+		await messageBoardsWidgetPage.replyToThreadAsDraft(
+			site,
+			layout,
+			threadSubject,
+			replyBody
+		);
+
+		// The member sees their draft reply with a draft status
+
+		await messageBoardsWidgetPage.goToThread(site, layout, threadSubject);
+
+		await expect(page.getByText(replyBody)).toBeVisible();
+
+		await expect(
+			page.getByText('Draft', {exact: true}).first()
+		).toBeVisible();
+
+		// The member can edit their own draft
+
+		const editMenuItem = page
+			.locator('.dropdown-menu:visible')
+			.getByText('Edit', {exact: true});
+
+		await expect(async () => {
+			await page
+				.locator('.panel-heading .dropdown-toggle')
+				.last()
+				.click();
+
+			await expect(editMenuItem).toBeVisible({timeout: 3000});
+		}).toPass();
+	}
+);
+
 test('A regular role with portlet access can open the message boards admin', async ({
 	apiHelpers,
 	messageBoardsPage,

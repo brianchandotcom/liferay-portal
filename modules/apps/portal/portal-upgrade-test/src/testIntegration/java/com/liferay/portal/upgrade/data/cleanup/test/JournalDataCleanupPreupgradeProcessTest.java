@@ -16,14 +16,22 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -38,6 +46,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -61,10 +70,15 @@ public class JournalDataCleanupPreupgradeProcessTest
 	public void setUp() throws Exception {
 		_classNames = _classNameLocalService.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		if (_group != null) {
+			_groupLocalService.deleteGroup(_group);
+		}
+
 		List<ClassName> classNames = ListUtil.remove(
 			_classNameLocalService.getClassNames(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
@@ -77,17 +91,16 @@ public class JournalDataCleanupPreupgradeProcessTest
 
 	@Test
 	public void testUpgrade() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			Collections.emptyMap());
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		JournalFeed journalFeed = JournalTestUtil.addFeed(
-			group.getGroupId(), layout.getPlid(), RandomTestUtil.randomString(),
-			journalArticle.getDDMStructureId(),
+			_group.getGroupId(), layout.getPlid(),
+			RandomTestUtil.randomString(), journalArticle.getDDMStructureId(),
 			journalArticle.getDDMTemplateKey(),
 			journalArticle.getDDMTemplateKey());
 
@@ -103,16 +116,7 @@ public class JournalDataCleanupPreupgradeProcessTest
 		_ddmTemplateLocalService.deleteTemplate(
 			journalArticle.getDDMTemplate());
 
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		DDMStructureVersion ddmStructureVersion =
-			ddmStructure.getStructureVersion();
-
-		_ddmFieldLocalService.deleteDDMFields(
-			ddmStructureVersion.getStructureId());
-
-		_ddmStructureLocalService.deleteStructure(
-			journalArticle.getDDMStructure());
+		_deleteDDMStructure(journalArticle);
 
 		String originalName = PrincipalThreadLocal.getName();
 
@@ -124,8 +128,75 @@ public class JournalDataCleanupPreupgradeProcessTest
 		finally {
 			PrincipalThreadLocal.setName(originalName);
 		}
+	}
 
-		_groupLocalService.deleteGroup(group);
+	@Test
+	public void testUpgradeJournalArticleResourcePermissionScopeCheck()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			Collections.emptyMap());
+
+		long companyId = TestPropsValues.getCompanyId();
+
+		Role role = RoleLocalServiceUtil.getRole(companyId, "Owner");
+
+		long roleId = role.getRoleId();
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			companyId, JournalArticle.class.getName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			roleId, new String[] {ActionKeys.VIEW});
+
+		runSQL(
+			"delete from JournalArticle where articleId = '" +
+				journalArticle.getArticleId() + "'");
+
+		upgrade();
+
+		CacheRegistryUtil.clear();
+
+		Assert.assertFalse(
+			_resourcePermissionLocalService.hasResourcePermission(
+				companyId, JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(journalArticle.getResourcePrimKey()),
+				roleId, ActionKeys.VIEW));
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				companyId, JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_GROUP,
+				String.valueOf(_group.getGroupId()), roleId,
+				ActionKeys.VIEW));
+
+		runSQL(
+			StringBundler.concat(
+				"delete from ResourcePermission where name = '",
+				JournalArticle.class.getName(), "' and scope = ",
+				ResourceConstants.SCOPE_GROUP, " and primKey = '",
+				_group.getGroupId(), "'"));
+
+		_ddmTemplateLocalService.deleteTemplate(
+			journalArticle.getDDMTemplate());
+
+		_deleteDDMStructure(journalArticle);
+	}
+
+	private void _deleteDDMStructure(JournalArticle journalArticle)
+		throws Exception {
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		DDMStructureVersion ddmStructureVersion =
+			ddmStructure.getStructureVersion();
+
+		_ddmFieldLocalService.deleteDDMFields(
+			ddmStructureVersion.getStructureId());
+
+		_ddmStructureLocalService.deleteStructure(ddmStructure);
 	}
 
 	@Inject
@@ -142,10 +213,15 @@ public class JournalDataCleanupPreupgradeProcessTest
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
+	private Group _group;
+
 	@Inject
 	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

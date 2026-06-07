@@ -1850,6 +1850,38 @@ async function addAttributeFilter({
 	).toBeVisible();
 }
 
+async function addBooleanFilter({
+	attributeName,
+	page,
+	value,
+}: {
+	attributeName: string;
+	page: Page;
+	value: 'false' | 'true';
+}) {
+	await page
+		.locator('.attribute-filter-section-root')
+		.getByLabel('Add')
+		.click();
+
+	await page
+		.getByRole('menuitem', {exact: true, name: attributeName})
+		.click();
+
+	await selectAndExpectToHaveValue({
+		optionValue: value,
+		select: page.getByLabel('Condition'),
+	});
+
+	await page.getByRole('button', {name: 'Apply'}).click();
+
+	await expect(
+		page
+			.locator('.attribute-filter-section-root')
+			.filter({hasText: attributeName})
+	).toBeVisible();
+}
+
 test(
 	'Event Analysis can filter a string attribute by is and is not',
 	{
@@ -2196,5 +2228,114 @@ test(
 		await expect(
 			page.getByRole('row', {name: 'customEvent'})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Event Analysis can filter a boolean attribute by true and false',
+	{
+		tag: '@LRAC-10286',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: 'customEvent',
+				properties: [
+					{name: 'dislike', value: 'false'},
+					{name: 'like', value: 'true'},
+					{name: 'pageTitle', value: 'My Page'},
+				],
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: [
+					{
+						dataType: 'BOOLEAN',
+						displayName: 'dislike',
+						name: 'dislike',
+						type: 'LOCAL',
+					},
+					{
+						dataType: 'BOOLEAN',
+						displayName: 'like',
+						name: 'like',
+						type: 'LOCAL',
+					},
+					{
+						dataType: 'STRING',
+						displayName: 'pageTitle',
+						name: 'pageTitle',
+						type: 'LOCAL',
+					},
+				],
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		const resultRow = page.getByRole('row', {
+			exact: true,
+			name: 'customEvent 1',
+		});
+
+		// like is true, so filtering like by true matches and by false does not
+
+		await addBooleanFilter({attributeName: 'like', page, value: 'true'});
+
+		await expect(resultRow).toBeVisible();
+
+		await removeAttribute({page, section: 'Filter'});
+
+		await addBooleanFilter({attributeName: 'like', page, value: 'false'});
+
+		await expect(resultRow).toHaveCount(0);
+
+		// dislike is false, so filtering dislike by false matches and by true does not
+
+		await removeAttribute({page, section: 'Filter'});
+
+		await addBooleanFilter({
+			attributeName: 'dislike',
+			page,
+			value: 'false',
+		});
+
+		await expect(resultRow).toBeVisible();
+
+		await removeAttribute({page, section: 'Filter'});
+
+		await addBooleanFilter({attributeName: 'dislike', page, value: 'true'});
+
+		await expect(resultRow).toHaveCount(0);
 	}
 );

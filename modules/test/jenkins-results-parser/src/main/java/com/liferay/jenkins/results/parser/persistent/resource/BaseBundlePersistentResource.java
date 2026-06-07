@@ -412,10 +412,9 @@ public abstract class BaseBundlePersistentResource
 		buildParameters.put("JOB_VARIANT", _JOB_VARIANT);
 		buildParameters.put("SLAVE_LABEL", "slave-bundle-builder");
 
-		long producerQueueId = JenkinsResultsParserUtil.invokeJenkinsBuild(
-			producerJenkinsMaster, _JOB_NAME, buildParameters);
-
-		setProducerQueueId(producerQueueId);
+		setProducerQueueId(
+			JenkinsResultsParserUtil.invokeJenkinsBuild(
+				producerJenkinsMaster, _JOB_NAME, buildParameters));
 
 		setStatus(Status.IN_QUEUE);
 
@@ -480,7 +479,7 @@ public abstract class BaseBundlePersistentResource
 						JenkinsMaster.getInstance(producerJenkinsMasterName));
 				}
 				else {
-					setProducerJenkinsMaster(null);					
+					setProducerJenkinsMaster(null);
 				}
 
 				setProducerQueueId(dataJSONObject.optLong("producer_queue_id"));

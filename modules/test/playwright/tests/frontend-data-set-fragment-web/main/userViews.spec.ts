@@ -599,7 +599,7 @@ test(
 		});
 
 		await test.step('Save the share and confirm a success toast appears', async () => {
-			await shareModal.getByRole('button', {name: 'Save'}).click();
+			await shareModal.getByRole('button', {name: 'Share'}).click();
 
 			await waitForAlert(page, 'was shared successfully');
 		});
@@ -645,8 +645,8 @@ test(
 			).toHaveCount(0);
 		});
 
-		await test.step('Save the removal and confirm a success toast appears', async () => {
-			await shareModal.getByRole('button', {name: 'Save'}).click();
+		await test.step('Share the removal and confirm a success toast appears', async () => {
+			await shareModal.getByRole('button', {name: 'Share'}).click();
 
 			await waitForAlert(page, 'was updated successfully');
 		});

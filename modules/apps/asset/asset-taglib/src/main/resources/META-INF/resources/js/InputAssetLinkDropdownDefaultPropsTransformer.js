@@ -3,108 +3,209 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openSelectionModal} from 'frontend-js-components-web';
+import ClayLabel from '@clayui/label';
+import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
+import {sub} from 'frontend-js-web';
+import React from 'react';
+
+const ASSET_ENTRIES_API_URL = '/o/headless-delivery/v1.0/asset-entries';
+
+const STATUSES = {
+	0: {displayType: 'success', label: Liferay.Language.get('approved')},
+	1: {displayType: 'info', label: Liferay.Language.get('pending')},
+	2: {displayType: 'secondary', label: Liferay.Language.get('draft')},
+	3: {displayType: 'warning', label: Liferay.Language.get('expired')},
+	4: {displayType: 'danger', label: Liferay.Language.get('denied')},
+	8: {displayType: 'info', label: Liferay.Language.get('scheduled')},
+};
+
+function StatusCell({value}) {
+	const status = STATUSES[value];
+
+	if (!status) {
+		return null;
+	}
+
+	return (
+		<ClayLabel displayType={status.displayType}>{status.label}</ClayLabel>
+	);
+}
+
+function buildAPIURL(groupId, classNameIds) {
+	const url = new URL(ASSET_ENTRIES_API_URL, window.location.origin);
+
+	url.searchParams.set('groupIds', groupId);
+
+	if (classNameIds.length === 1) {
+		url.searchParams.set('filter', `classNameId eq ${classNameIds[0]}`);
+	}
+	else if (classNameIds.length > 1) {
+		url.searchParams.set(
+			'filter',
+			`classNameId in (${classNameIds.join(',')})`
+		);
+	}
+
+	return url.toString();
+}
 
 export default function propsTransformer({
-	actions,
 	additionalProps,
-	items,
 	portletNamespace,
 	...props
 }) {
-	const updateItem = (item) => {
-		const newItem = {
-			...item,
-			onClick(event) {
-				event.preventDefault();
-
-				const searchContainerName = `${portletNamespace}assetLinksSearchContainer`;
-
-				const searchContainer =
-					Liferay.SearchContainer.get(searchContainerName);
-
-				let searchContainerData = searchContainer.getData();
-
-				if (searchContainerData) {
-					searchContainerData = searchContainerData.split(',');
-				}
-				else {
-					searchContainerData = [];
-				}
-
-				openSelectionModal({
-					buttonAddLabel: Liferay.Language.get('done'),
-					customSelectEvent: true,
-					multiple: true,
-					onSelect(data) {
-						if (data.value && data.value.length) {
-							const selectedItems = data.value;
-
-							Array.from(selectedItems).forEach(
-								(selectedItem) => {
-									const assetEntry = JSON.parse(selectedItem);
-
-									const entityId = assetEntry.assetEntryId;
-
-									if (
-										searchContainerData.indexOf(
-											entityId
-										) === -1
-									) {
-										const rowColumns = [];
-
-										rowColumns.push(`<div class="list-group-title">
-												${Liferay.Util.escapeHTML(assetEntry.title)}
-											</div>
-											<p class="list-group-subtitle">
-												${Liferay.Util.escapeHTML(assetEntry.assetType)}
-											</p>
-											<p class="list-group-subtitle">
-												${Liferay.Language.get('scope')}: ${Liferay.Util.escapeHTML(
-													assetEntry.groupDescriptiveName
-												)}
-											</p>`);
-
-										rowColumns.push(
-											`<button 
-												aria-label=${Liferay.Language.get('remove')}
-												class="btn btn-monospaced btn-outline-borderless btn-outline-secondary float-right lfr-portal-tooltip modify-link"
-												data-rowId="${entityId}"
-												title=${Liferay.Language.get('remove')}
-												type="button"
-											>
-												${additionalProps.removeIcon}
-											</button>`
-										);
-
-										searchContainer.addRow(
-											rowColumns,
-											entityId
-										);
-
-										searchContainer.updateDataStore();
-									}
-								}
-							);
-						}
-					},
-					selectEventName: `${portletNamespace}selectAsset`,
-					title: item.data.title,
-					url: item.data.href,
-				});
-			},
-		};
-
-		if (Array.isArray(item.items)) {
-			newItem.items = item.items.map(updateItem);
-		}
-
-		return newItem;
-	};
+	const {assetEntryTypes = [], groupId, removeIcon} = additionalProps;
 
 	return {
 		...props,
-		actions: actions?.map(updateItem),
-		items: items?.map(updateItem),
+		onClick(event) {
+			event.preventDefault();
+
+			const searchContainer = Liferay.SearchContainer.get(
+				`${portletNamespace}assetLinksSearchContainer`
+			);
+
+			const searchContainerData = searchContainer.getData();
+
+			const existingEntryIds = searchContainerData
+				? searchContainerData.split(',')
+				: [];
+
+			const classNameIds = assetEntryTypes.map(
+				(assetEntryType) => assetEntryType.classNameId
+			);
+
+			const singleAssetEntryType = assetEntryTypes.length === 1;
+
+			openItemSelectorModal({
+				apiURL: buildAPIURL(groupId, classNameIds),
+				fdsProps: {
+					configInURLBehavior: 'OFF',
+					customRenderers: {
+						tableCell: [
+							{
+								component: StatusCell,
+								name: 'assetEntryStatus',
+								type: 'internal',
+							},
+						],
+					},
+					filters: singleAssetEntryType
+						? []
+						: [
+								{
+									entityFieldType: 'integer',
+									id: 'classNameId',
+									items: assetEntryTypes.map(
+										(assetEntryType) => ({
+											label: assetEntryType.label,
+											value: String(
+												assetEntryType.classNameId
+											),
+										})
+									),
+									label: Liferay.Language.get('type'),
+									multiple: true,
+									type: 'selection',
+								},
+							],
+					id: `${portletNamespace}assetEntriesItemSelector`,
+					pagination: {
+						deltas: [{label: 20}, {label: 40}, {label: 60}],
+						initialDelta: 20,
+					},
+					views: [
+						{
+							contentRenderer: 'table',
+							label: '',
+							name: 'table',
+							schema: {
+								fields: [
+									{
+										fieldName: 'title',
+										label: Liferay.Language.get('title'),
+									},
+									{
+										fieldName: 'assetType',
+										label: Liferay.Language.get('type'),
+									},
+									{
+										fieldName: 'creator.name',
+										label: Liferay.Language.get('author'),
+									},
+									{
+										contentRenderer: 'dateTime',
+										fieldName: 'dateModified',
+										label: Liferay.Language.get(
+											'modified-date'
+										),
+									},
+									{
+										contentRenderer: 'assetEntryStatus',
+										fieldName: 'status',
+										label: Liferay.Language.get('status'),
+									},
+								],
+							},
+						},
+					],
+				},
+				itemTypeLabel: singleAssetEntryType
+					? assetEntryTypes[0].label
+					: Liferay.Language.get('asset'),
+				items: existingEntryIds.map((entryId) => ({
+					assetEntryId: Number(entryId),
+				})),
+				locator: {
+					id: 'assetEntryId',
+					label: 'title',
+					value: 'assetEntryId',
+				},
+				multiSelect: true,
+				onItemsChange(selectedAssetEntries) {
+					if (!selectedAssetEntries) {
+						return;
+					}
+
+					selectedAssetEntries.forEach((selectedAssetEntry) => {
+						const entryId = selectedAssetEntry.assetEntryId;
+
+						if (existingEntryIds.indexOf(String(entryId)) !== -1) {
+							return;
+						}
+
+						searchContainer.addRow(
+							[
+								`<div class="list-group-title">${Liferay.Util.escapeHTML(
+									selectedAssetEntry.title
+								)}</div><p class="list-group-subtitle">${Liferay.Util.escapeHTML(
+									selectedAssetEntry.assetType
+								)}</p><p class="list-group-subtitle">${Liferay.Language.get(
+									'scope'
+								)}: ${Liferay.Util.escapeHTML(
+									selectedAssetEntry.groupDescriptiveName
+								)}</p>`,
+								`<button aria-label="${Liferay.Language.get(
+									'remove'
+								)}" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary float-right lfr-portal-tooltip modify-link" data-rowId="${entryId}" title="${Liferay.Language.get(
+									'remove'
+								)}" type="button">${removeIcon}</button>`,
+							],
+							entryId
+						);
+
+						searchContainer.updateDataStore();
+
+						existingEntryIds.push(String(entryId));
+					});
+				},
+				title: singleAssetEntryType
+					? sub(
+							Liferay.Language.get('select-x'),
+							assetEntryTypes[0].label
+						)
+					: Liferay.Language.get('select-asset'),
+			});
+		},
 	};
 }

@@ -22,11 +22,11 @@ jobs:
                     project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_PRODUCTION}}
                     token_format: access_token
                     workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_PRODUCTION}}
-            -   name: Install oras
+            -   name: Install ORAS
                 uses: oras-project/setup-oras@v1
             -   env:
                     HELM_CHART_REGISTRY_PRODUCTION: ${{vars.HELM_CHART_REGISTRY_PRODUCTION}}
-                name: Promote helm chart
+                name: Promote Helm chart
                 run: |
                     set -o errexit
                     set -o nounset

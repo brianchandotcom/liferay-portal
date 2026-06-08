@@ -49,7 +49,7 @@ jobs:
                 with:
                     project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NON_PRODUCTION}}
                     workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NON_PRODUCTION}}
-            -   name: Install oras
+            -   name: Install ORAS
                 uses: oras-project/setup-oras@v1
             -   name: Log in to GAR
                 run: |

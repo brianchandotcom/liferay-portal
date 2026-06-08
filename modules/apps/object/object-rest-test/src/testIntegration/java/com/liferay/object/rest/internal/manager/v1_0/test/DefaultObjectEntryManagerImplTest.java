@@ -8413,6 +8413,23 @@ public class DefaultObjectEntryManagerImplTest
 		_assertObjectEntriesSize1(_objectDefinition3, "Delta", 1);
 	}
 
+	@Test
+	public void testSearchObjectEntriesWithPreferredLocale() throws Exception {
+		_objectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = new HashMap<>(_localizedObjectFieldI18nValues);
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_assertObjectEntriesSizeWithLocale(
+			_objectDefinition2, "pt_BR", LocaleUtil.BRAZIL, 1);
+		_assertObjectEntriesSizeWithLocale(
+			_objectDefinition2, "pt_BR", LocaleUtil.US, 0);
+	}
+
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testSubscribeObjectEntry() throws Exception {
@@ -10815,6 +10832,24 @@ public class DefaultObjectEntryManagerImplTest
 				false, Collections.emptyMap(), dtoConverterRegistry, null,
 				LocaleUtil.getDefault(), null, _user),
 			StringPool.BLANK, null, StringPool.BLANK, null);
+
+		Collection<ObjectEntry> objectEntries = page.getItems();
+
+		Assert.assertEquals(
+			objectEntries.toString(), size, objectEntries.size());
+	}
+
+	private void _assertObjectEntriesSizeWithLocale(
+			ObjectDefinition objectDefinition, String search, Locale locale,
+			long size)
+		throws Exception {
+
+		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
+			companyId, objectDefinition, null, null,
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), dtoConverterRegistry, null,
+				locale, null, adminUser),
+			(Filter)null, null, search, null);
 
 		Collection<ObjectEntry> objectEntries = page.getItems();
 

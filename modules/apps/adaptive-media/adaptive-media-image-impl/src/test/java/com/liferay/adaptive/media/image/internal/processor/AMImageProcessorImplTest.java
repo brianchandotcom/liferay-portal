@@ -451,6 +451,70 @@ public class AMImageProcessorImplTest {
 		);
 	}
 
+	@Test(expected = AMRuntimeException.IOException.class)
+	public void testProcessDoesNotDeleteAMImageEntryWhenScaleFails()
+		throws Exception {
+
+		Mockito.when(
+			_amImageValidator.isProcessingSupported(_fileVersion)
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				Mockito.anyLong(), Mockito.nullable(String.class))
+		).thenReturn(
+			new AMImageConfigurationEntryImpl(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				Collections.emptyMap())
+		);
+
+		Mockito.when(
+			_amImageEntryLocalService.fetchAMImageEntry(
+				Mockito.nullable(String.class), Mockito.anyLong())
+		).thenReturn(
+			_amImageEntry
+		);
+
+		Mockito.when(
+			_amImageScalerRegistry.getAMImageScaler(
+				Mockito.nullable(String.class))
+		).thenReturn(
+			_amImageScaler
+		);
+
+		Mockito.doThrow(
+			AMRuntimeException.IOException.class
+		).when(
+			_amImageScaler
+		).scaleImage(
+			Mockito.any(FileVersion.class),
+			Mockito.any(AMImageConfigurationEntry.class)
+		);
+
+		try {
+			_amImageAMProcessor.process(
+				_fileVersion, RandomTestUtil.randomString());
+		}
+		finally {
+			Mockito.verify(
+				_amImageEntryLocalService, Mockito.never()
+			).deleteAMImageEntry(
+				Mockito.anyLong()
+			);
+
+			Mockito.verify(
+				_amImageEntryLocalService, Mockito.never()
+			).addAMImageEntry(
+				Mockito.any(AMImageConfigurationEntry.class),
+				Mockito.any(FileVersion.class), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.any(InputStream.class),
+				Mockito.anyLong()
+			);
+		}
+	}
+
 	@Test(expected = DuplicateAMImageEntryException.class)
 	public void testProcessDuplicateAMImageEntryExceptionInImageService()
 		throws Exception {

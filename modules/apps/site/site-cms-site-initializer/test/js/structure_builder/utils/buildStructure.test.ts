@@ -85,6 +85,24 @@ const SAMPLE_STRUCTURE_FIELDS: Field[] = [
 		uuid: getUuid(),
 	},
 	{
+		erc: 'email-field',
+		indexableConfig: {indexed: false},
+		label: {en_US: 'email-field'},
+		localized: false,
+		locked: false,
+		name: 'email-field',
+		parent,
+		required: false,
+		settings: {
+			autocompleteDomains: '@liferay.com',
+			autocompleteEnabled: true,
+			blockedDomains: '@example.com',
+			uniqueValues: true,
+		},
+		type: 'email',
+		uuid: getUuid(),
+	},
+	{
 		erc: 'integer-field',
 		indexableConfig: {indexed: false},
 		label: {en_US: 'integer-field'},
@@ -245,6 +263,37 @@ describe('buildStructure', () => {
 				expect.objectContaining({type})
 			);
 		}
+	});
+
+	it('Restores email field settings from the EmailAddress business type', () => {
+		const objectDefinition = buildObjectDefinition({
+			children: getChildren(SAMPLE_STRUCTURE_FIELDS),
+			erc: 'main-structure-erc',
+			label: {en_US: 'Main Structure'},
+			name: 'mainStructure',
+			spaces: [],
+		});
+
+		const structure = buildStructure({
+			mainObjectDefinition: objectDefinition,
+			objectDefinitions: {},
+		});
+
+		const emailField = Array.from(structure.children.values()).find(
+			(child) => child.erc === 'email-field'
+		);
+
+		expect(emailField).toEqual(
+			expect.objectContaining({
+				settings: {
+					autocompleteDomains: '@liferay.com',
+					autocompleteEnabled: true,
+					blockedDomains: '@example.com',
+					uniqueValues: true,
+				},
+				type: 'email',
+			})
+		);
 	});
 
 	it('Includes allowed system fields for L_CMS_BLOG and filters unknown ones', () => {

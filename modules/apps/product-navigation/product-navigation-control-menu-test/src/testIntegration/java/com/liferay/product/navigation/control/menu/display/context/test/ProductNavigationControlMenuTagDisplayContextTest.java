@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -97,8 +98,10 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 	public void testWriteProductNavigationControlMenuEntriesWithMultipleEntries()
 		throws Exception {
 
-		_serviceRegistrations.add(_registerEntry("entry-1", 100));
-		_serviceRegistrations.add(_registerEntry("entry-2", 200));
+		_serviceRegistrations.add(
+			_registerEntry(RandomTestUtil.randomString(), 100));
+		_serviceRegistrations.add(
+			_registerEntry(RandomTestUtil.randomString(), 200));
 
 		String html = _render();
 
@@ -120,7 +123,8 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 	public void testWriteProductNavigationControlMenuEntriesWithSingleEntry()
 		throws Exception {
 
-		_serviceRegistrations.add(_registerEntry("entry-1", 100));
+		_serviceRegistrations.add(
+			_registerEntry(RandomTestUtil.randomString(), 100));
 
 		String html = _render();
 
@@ -142,6 +146,7 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_layout.getLayoutSet());
 		themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)_layout.getLayoutType());
 		themeDisplay.setLocale(LocaleUtil.ENGLISH);
@@ -151,6 +156,7 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSignedIn(true);
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
@@ -227,8 +233,7 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 		return mockHttpServletResponse.getContentAsString();
 	}
 
-	private static final String _CATEGORY_KEY =
-		"test-control-menu-category-LPP-64278";
+	private static final String _CATEGORY_KEY = RandomTestUtil.randomString();
 
 	private BundleContext _bundleContext;
 

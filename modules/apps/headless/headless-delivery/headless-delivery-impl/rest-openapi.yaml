@@ -87,6 +87,17 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The user who owns the asset entry.
+                    readOnly: true
+                dateModified:
+                    description:
+                        The asset entry's most recent modification date.
+                    format: date-time
+                    readOnly: true
+                    type: string
                 description:
                     description:
                         The asset entry's description in the requesting locale.
@@ -97,6 +108,12 @@ components:
                         The localized descriptive name of the group where the asset entry lives.
                     readOnly: true
                     type: string
+                status:
+                    description:
+                        The asset entry's workflow status.
+                    format: int32
+                    readOnly: true
+                    type: integer
                 title:
                     description:
                         The asset entry's title in the requesting locale.

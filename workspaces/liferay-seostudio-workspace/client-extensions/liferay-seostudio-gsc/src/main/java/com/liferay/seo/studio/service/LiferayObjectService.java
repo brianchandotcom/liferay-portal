@@ -142,7 +142,7 @@ public class LiferayObjectService extends BaseService {
 
 	private String _getAuthorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-seostudio-google-search-console-oahs");
+			"liferay-seostudio-gsc-oahs");
 	}
 
 	private CredentialEntry _toCredentialEntry(JSONObject jsonObject) {

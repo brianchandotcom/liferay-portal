@@ -1,14 +1,14 @@
 assemble:
     -   fromTask: bootJar
-liferay-seostudio-google-search-console-oahs:
+liferay-seostudio-gsc-oahs:
     .serviceAddress: localhost:58081
     .serviceScheme: http
-    name: Liferay SEO Studio Google Search Console OAuth Application Headless Server
+    name: Liferay SEO Studio GSC OAuth Application Headless Server
     scopes:
         -   c_seostudiogsccredentialentry.everything
     type: oAuthApplicationHeadlessServer
-liferay-seostudio-google-search-console-oaua:
+liferay-seostudio-gsc-oaua:
     .serviceAddress: localhost:58081
     .serviceScheme: http
-    name: Liferay SEO Studio Google Search Console OAuth Application User Agent
+    name: Liferay SEO Studio GSC OAuth Application User Agent
     type: oAuthApplicationUserAgent

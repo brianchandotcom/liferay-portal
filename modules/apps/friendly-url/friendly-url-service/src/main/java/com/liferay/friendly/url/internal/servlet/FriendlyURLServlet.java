@@ -145,6 +145,9 @@ public class FriendlyURLServlet extends HttpServlet {
 		if ((group != null) &&
 			SiteVirtualHostUtil.isRestricted(httpServletRequest, group)) {
 
+			httpServletRequest.setAttribute(
+				WebKeys.STRICT_VIRTUAL_HOST_BLOCKED, Boolean.TRUE);
+
 			throw new NoSuchGroupException(
 				StringBundler.concat(
 					"{companyId=", companyId, ", friendlyURL=",

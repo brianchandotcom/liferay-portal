@@ -633,6 +633,9 @@ public interface WebKeys {
 
 	public static final String STARTUP_FINISHED = "STARTUP_FINISHED";
 
+	public static final String STRICT_VIRTUAL_HOST_BLOCKED =
+		"STRICT_VIRTUAL_HOST_BLOCKED";
+
 	public static final String SUBJECT = "SUBJECT";
 
 	public static final String TAB_INDEX = "TAB_INDEX";

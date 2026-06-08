@@ -270,10 +270,10 @@ public class VirtualHostFilter extends BasePortalFilter {
 				CompanyThreadLocal.getCompanyId(), groupFriendlyURL);
 
 			if ((group != null) &&
-				SiteVirtualHostUtil.isRestricted(httpServletRequest, group)) {
+				SiteVirtualHostUtil.isRestricted(group, httpServletRequest)) {
 
 				httpServletRequest.setAttribute(
-					WebKeys.STRICT_VIRTUAL_HOST_BLOCKED, Boolean.TRUE);
+					WebKeys.SITE_VIRTUAL_HOST_RESTRICTED, Boolean.TRUE);
 
 				PortalUtil.sendError(
 					new NoSuchGroupException(), httpServletRequest,
@@ -376,10 +376,10 @@ public class VirtualHostFilter extends BasePortalFilter {
 				companyId, groupFriendlyURL);
 
 			if ((group != null) &&
-				SiteVirtualHostUtil.isRestricted(httpServletRequest, group)) {
+				SiteVirtualHostUtil.isRestricted(group, httpServletRequest)) {
 
 				httpServletRequest.setAttribute(
-					WebKeys.STRICT_VIRTUAL_HOST_BLOCKED, Boolean.TRUE);
+					WebKeys.SITE_VIRTUAL_HOST_RESTRICTED, Boolean.TRUE);
 
 				PortalUtil.sendError(
 					new NoSuchLayoutException(), httpServletRequest,

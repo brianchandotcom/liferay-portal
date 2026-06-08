@@ -27,7 +27,7 @@ import java.util.Objects;
 public class SiteVirtualHostUtil {
 
 	public static boolean isRestricted(
-		HttpServletRequest httpServletRequest, Group group) {
+		Group group, HttpServletRequest httpServletRequest) {
 
 		long companyId = group.getCompanyId();
 

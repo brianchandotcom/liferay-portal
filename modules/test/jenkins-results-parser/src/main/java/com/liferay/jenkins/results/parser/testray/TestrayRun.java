@@ -179,7 +179,7 @@ public class TestrayRun {
 		final TestrayBuild testrayBuild = getTestrayBuild();
 		final TestrayServer testrayServer = getTestrayServer();
 
-		final String filter = JenkinsResultsParserUtil.combine(
+		final String filterString = JenkinsResultsParserUtil.combine(
 			"environmentHash eq '", getEnvironmentHash(), "' and name eq '",
 			getRunIDString(), "' and r_buildToRuns_c_buildId eq '",
 			String.valueOf(testrayBuild.getID()), "'");
@@ -193,7 +193,7 @@ public class TestrayRun {
 					JSONObject existingJSONObject = new JSONObject(
 						testrayServer.requestGet(
 							"/o/c/runs?filter=" +
-								URLEncoder.encode(filter, "UTF-8")));
+								URLEncoder.encode(filterString, "UTF-8")));
 
 					JSONArray existingItemsJSONArray =
 						existingJSONObject.optJSONArray("items");
@@ -407,7 +407,7 @@ public class TestrayRun {
 	private synchronized int _getNextRunNumber() {
 		TestrayBuild testrayBuild = getTestrayBuild();
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"r_buildToRuns_c_buildId eq '",
 			String.valueOf(testrayBuild.getID()), "'");
 
@@ -416,7 +416,8 @@ public class TestrayRun {
 
 			JSONObject jsonObject = new JSONObject(
 				testrayServer.requestGet(
-					"/o/c/runs?filter=" + URLEncoder.encode(filter, "UTF-8")));
+					"/o/c/runs?filter=" +
+						URLEncoder.encode(filterString, "UTF-8")));
 
 			return jsonObject.optInt("totalCount") + 1;
 		}
@@ -456,7 +457,7 @@ public class TestrayRun {
 			return null;
 		}
 
-		String filter = JenkinsResultsParserUtil.combine(
+		String filterString = JenkinsResultsParserUtil.combine(
 			"r_runToFactors_c_runId eq '", String.valueOf(runID), "'");
 
 		try {
@@ -465,7 +466,8 @@ public class TestrayRun {
 				).requestGet(
 					JenkinsResultsParserUtil.combine(
 						"/o/c/factors?filter=",
-						URLEncoder.encode(filter, "UTF-8"), "&pageSize=100")
+						URLEncoder.encode(filterString, "UTF-8"),
+						"&pageSize=100")
 				));
 
 			JSONArray itemsJSONArray = responseJSONObject.optJSONArray("items");

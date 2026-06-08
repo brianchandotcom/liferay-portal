@@ -93,18 +93,18 @@ public interface TestrayFactor {
 				return _jsonObject;
 			}
 
-			String filter = null;
+			String filterString = null;
 
 			if (_id > 0) {
-				filter = JenkinsResultsParserUtil.combine(
+				filterString = JenkinsResultsParserUtil.combine(
 					"id eq '", String.valueOf(_id), "'");
 			}
 			else if (!JenkinsResultsParserUtil.isNullOrEmpty(_name)) {
-				filter = JenkinsResultsParserUtil.combine(
+				filterString = JenkinsResultsParserUtil.combine(
 					"name eq '", _name, "'");
 			}
 
-			if (filter == null) {
+			if (filterString == null) {
 				_cached = true;
 
 				return null;
@@ -114,7 +114,7 @@ public interface TestrayFactor {
 				JSONObject jsonObject = new JSONObject(
 					_testrayServer.requestGet(
 						"/o/c/factorcategories?filter=" +
-							URLEncoder.encode(filter, "UTF-8")));
+							URLEncoder.encode(filterString, "UTF-8")));
 
 				JSONArray itemsJSONArray = jsonObject.optJSONArray("items");
 
@@ -223,18 +223,18 @@ public interface TestrayFactor {
 				return _jsonObject;
 			}
 
-			String filter = null;
+			String filterString = null;
 
 			if (_id > 0) {
-				filter = JenkinsResultsParserUtil.combine(
+				filterString = JenkinsResultsParserUtil.combine(
 					"id eq '", String.valueOf(_id), "'");
 			}
 			else if (!JenkinsResultsParserUtil.isNullOrEmpty(_name)) {
-				filter = JenkinsResultsParserUtil.combine(
+				filterString = JenkinsResultsParserUtil.combine(
 					"name eq '", _name, "'");
 			}
 
-			if (filter == null) {
+			if (filterString == null) {
 				_cached = true;
 
 				return null;
@@ -244,7 +244,7 @@ public interface TestrayFactor {
 				JSONObject jsonObject = new JSONObject(
 					_testrayServer.requestGet(
 						"/o/c/factoroptions?filter=" +
-							URLEncoder.encode(filter, "UTF-8")));
+							URLEncoder.encode(filterString, "UTF-8")));
 
 				JSONArray itemsJSONArray = jsonObject.optJSONArray("items");
 

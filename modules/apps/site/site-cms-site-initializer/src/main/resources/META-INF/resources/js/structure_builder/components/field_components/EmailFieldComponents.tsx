@@ -119,7 +119,7 @@ function AdvancedTabComponent({
 							items={toItems(emailField.settings.blockedDomains)}
 							onItemsChange={(items: DomainItem[]) => {
 								updateSettings({
-									blockedDomains: fromItems(items),
+									blockedDomains: toDomains(items),
 								});
 							}}
 						/>
@@ -153,7 +153,8 @@ function AdvancedTabComponent({
 							)}
 							onItemsChange={(items: DomainItem[]) => {
 								updateSettings({
-									autocompleteDomains: fromItems(items),
+									autocompleteDomains: toDomains(items),
+									autocompleteEnabled: Boolean(items.length),
 								});
 							}}
 						/>
@@ -164,10 +165,26 @@ function AdvancedTabComponent({
 	);
 }
 
-function toItems(values?: string[]): DomainItem[] {
-	return (values ?? []).map((value) => ({label: value, value}));
+function toItems(value?: string): DomainItem[] {
+	if (!value) {
+		return [];
+	}
+
+	return value.split(',').map((domain) => ({label: domain, value: domain}));
 }
 
-function fromItems(items: DomainItem[]): string[] {
-	return items.map((item) => item.value);
+function toDomains(items: DomainItem[]): string | undefined {
+	return (
+		items.map((item) => normalizeDomain(item.value)).join(',') || undefined
+	);
+}
+
+function normalizeDomain(value: string): string {
+	const domain = value.trim();
+
+	if (!domain || domain.startsWith('@')) {
+		return domain;
+	}
+
+	return `@${domain}`;
 }

@@ -84,6 +84,8 @@ function ActionLinkRenderer({
 		currentAction.href &&
 		formatActionURL(currentAction.href, itemData, currentAction.target);
 
+	const showValue = hasValue(value);
+
 	function handleClickOnLink(event: React.MouseEvent) {
 		const doAction = () => {
 			if (currentAction?.target === 'modal') {
@@ -166,6 +168,11 @@ function ActionLinkRenderer({
 			className={classNames({'table-list-title': !options?.displayType})}
 		>
 			<ClayLink
+				aria-label={
+					showValue
+						? undefined
+						: currentAction.accessibleName || currentAction.label
+				}
 				data-senna-off
 				decoration={options?.decoration}
 				displayType={options?.displayType}
@@ -195,7 +202,7 @@ function ActionLinkRenderer({
 							}
 				}
 			>
-				{hasValue(value)
+				{showValue
 					? value
 					: currentAction.icon && (
 							<ClayIcon symbol={currentAction.icon} />

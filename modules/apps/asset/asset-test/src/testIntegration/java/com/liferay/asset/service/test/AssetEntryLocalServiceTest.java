@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -86,6 +89,18 @@ public class AssetEntryLocalServiceTest {
 			assetEntry1.getClassUuid() + StringPool.POUND +
 				assetEntry2.getClassUuid(),
 			systemEvent.getClassUuid());
+	}
+
+	@Test
+	public void testSearchWithNullSort() throws Exception {
+		Hits hits = _assetEntryLocalService.search(
+			TestPropsValues.getCompanyId(),
+			new long[] {TestPropsValues.getGroupId()},
+			TestPropsValues.getUserId(), AssetEntry.class.getName(), 0,
+			StringPool.BLANK, false, new int[] {WorkflowConstants.STATUS_ANY},
+			0, 10, (Sort)null);
+
+		Assert.assertNotNull(hits);
 	}
 
 	@Test

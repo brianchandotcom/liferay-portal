@@ -2961,3 +2961,80 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Event Analysis warns when saving a report with an existing name',
+	{
+		tag: '@LRAC-10561',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		await createAndSaveEventAnalysis({
+			channelId: channel.id,
+			eventName: 'customEvent',
+			name: 'Save Analysis 1',
+			page,
+			projectId: project.groupId,
+		});
+
+		// Build a second analysis and try to save it with the same name
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: 'Save Analysis 1',
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		const saveButton = page
+			.locator('.event-analysis-toolbar-right-content')
+			.getByRole('button', {name: 'Save Analysis'});
+
+		await saveButton.click();
+
+		// The duplicate name is rejected with a warning
+
+		await expect(
+			page.getByText(
+				'This analysis name is currently in use. Please try a different one.'
+			)
+		).toBeVisible();
+
+		// Renaming to a unique name saves successfully
+
+		await setEventAnalysisName({
+			eventAnalysisName: 'Save Analysis 2',
+			page,
+		});
+
+		await saveButton.click();
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(
+			page.getByRole('link', {name: 'Save Analysis 1'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {name: 'Save Analysis 2'})
+		).toBeVisible();
+	}
+);

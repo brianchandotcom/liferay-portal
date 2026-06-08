@@ -41,6 +41,7 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 	public void testGetAssetEntriesPage() throws Exception {
 		super.testGetAssetEntriesPage();
 
+		_testGetAssetEntriesPageAssetEntryFields();
 		_testGetAssetEntriesPageWithClassNameIdFilter();
 		_testGetAssetEntriesPageWithClassTypeIdFilter();
 		_testGetAssetEntriesPageWithMultipleClassNameIdsFilter();
@@ -87,6 +88,37 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 		}
 
 		return false;
+	}
+
+	private void _testGetAssetEntriesPageAssetEntryFields() throws Exception {
+		Long groupId = testGroup.getGroupId();
+
+		BlogsEntry blogsEntry = _addBlogsEntry(groupId);
+
+		Page<AssetEntry> page = assetEntryResource.getAssetEntriesPage(
+			new Long[] {groupId}, null, null,
+			"classNameId eq " +
+				PortalUtil.getClassNameId(BlogsEntry.class.getName()),
+			Pagination.of(1, 20), null);
+
+		AssetEntry assetEntry = null;
+
+		for (AssetEntry curAssetEntry : (List<AssetEntry>)page.getItems()) {
+			Long classPK = curAssetEntry.getClassPK();
+
+			if ((classPK != null) && (classPK == blogsEntry.getEntryId())) {
+				assetEntry = curAssetEntry;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(assetEntry);
+		Assert.assertNotNull(assetEntry.getCreator());
+		Assert.assertNotNull(assetEntry.getDateModified());
+		Assert.assertEquals(
+			Integer.valueOf(WorkflowConstants.STATUS_APPROVED),
+			assetEntry.getStatus());
 	}
 
 	private void _testGetAssetEntriesPageWithClassNameIdFilter()

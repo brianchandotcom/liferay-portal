@@ -46,7 +46,7 @@ diff --git a/org/apache/cxf/interceptor/ClientFaultConverter.java b/org/apache/c
                      f.set(ex, fault.getMessage());
                  } catch (Exception e1) {
 -                    if (isJdkException(ex.getClass().getPackageName())) {
-+                    if (isJdkException(ex.getClass().getPackage().getName())) {
++                    if (isJdkException(ex.getClass().getName())) {
                          ex = cloneJdkException(ex, message);
                      }
                  }

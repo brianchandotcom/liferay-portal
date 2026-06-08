@@ -1,4 +1,4 @@
-[#assign preferredDomains=(input.attributes.preferredDomains)!["@gmail.com", "@hotmail.com", "@liferay.com", "@outlook.com"] /]
+[#assign preferredDomains=(input.attributes.preferredDomains)![] /]
 
 <div class="email-input">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentElementId}-form-group">

@@ -20,6 +20,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.RelatedInfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
+import com.liferay.info.field.type.EmailInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
@@ -411,6 +412,14 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		return inputTemplateNode;
 	}
 
+	private void _addEmailInfoFieldTypeInputTemplateNodeAttributes(
+		InfoField infoField, InputTemplateNode inputTemplateNode) {
+
+		inputTemplateNode.addAttribute(
+			"preferredDomains",
+			infoField.getAttribute(EmailInfoFieldType.PREFERRED_DOMAINS));
+	}
+
 	private void _addFileInfoFieldTypeInputTemplateNodeAttributes(
 		FragmentEntryLink fragmentEntryLink, long groupId,
 		HttpServletRequest httpServletRequest, InfoField infoField,
@@ -536,7 +545,11 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		InputTemplateNode inputTemplateNode, String label, Locale locale,
 		Locale siteDefaultLocale, String value, Map<Locale, String> valueI18n) {
 
-		if (infoField.getInfoFieldType() instanceof FileInfoFieldType) {
+		if (infoField.getInfoFieldType() instanceof EmailInfoFieldType) {
+			_addEmailInfoFieldTypeInputTemplateNodeAttributes(
+				infoField, inputTemplateNode);
+		}
+		else if (infoField.getInfoFieldType() instanceof FileInfoFieldType) {
 			_addFileInfoFieldTypeInputTemplateNodeAttributes(
 				fragmentEntryLink, groupId, httpServletRequest, infoField,
 				inputTemplateNode, value, valueI18n);

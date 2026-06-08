@@ -95,6 +95,7 @@ boolean viewMode = Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServ
 						cssClass="header-back-to lfr-portal-tooltip"
 						href="<%= redirect %>"
 						icon="angle-left"
+						rel="nofollow"
 						title='<%= LanguageUtil.get(request, "back") %>'
 					/>
 				</c:if>

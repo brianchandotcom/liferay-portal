@@ -7,6 +7,7 @@ package com.liferay.consent.management.platform.integration.internal.servlet.tag
 
 import com.liferay.consent.management.platform.integration.configuration.ConsentManagementPlatformConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,6 +23,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -72,15 +76,22 @@ public class ConsentManagementPlatformTopHeadDynamicInclude
 			return;
 		}
 
+		String nonceAttribute =
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest);
+
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.println(consentManagementPlatformConfiguration.scriptTag());
+		printWriter.println(
+			_addNonce(
+				consentManagementPlatformConfiguration.scriptTag(),
+				nonceAttribute));
 
 		String bridgeScript =
 			consentManagementPlatformConfiguration.bridgeScript();
 
 		if (Validator.isNotNull(bridgeScript)) {
-			printWriter.println(bridgeScript);
+			printWriter.println(_addNonce(bridgeScript, nonceAttribute));
 		}
 	}
 
@@ -90,7 +101,21 @@ public class ConsentManagementPlatformTopHeadDynamicInclude
 			"/html/common/themes/top_head.jsp#consent_management_platform");
 	}
 
+	private String _addNonce(String html, String nonceAttribute) {
+		if (Validator.isNull(nonceAttribute)) {
+			return html;
+		}
+
+		Matcher matcher = _scriptPattern.matcher(html);
+
+		return matcher.replaceAll(
+			matchResult -> matchResult.group() + nonceAttribute);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConsentManagementPlatformTopHeadDynamicInclude.class);
+
+	private static final Pattern _scriptPattern = Pattern.compile(
+		"<script(?=[\\s>])", Pattern.CASE_INSENSITIVE);
 
 }

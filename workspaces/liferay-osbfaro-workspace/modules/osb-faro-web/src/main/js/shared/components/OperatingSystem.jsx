@@ -1,8 +1,12 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import ChartTooltip from 'shared/components/chart-tooltip';
+import {range} from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {AXIS, getAxisTickText} from 'shared/util/recharts';
 import {
 	Bar,
 	CartesianGrid,
@@ -11,12 +15,13 @@ import {
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
-import {Colors} from 'shared/util/charts';
-import {range} from 'lodash';
-import {sub} from 'shared/util/lang';
-import {toRounded, toThousands} from 'shared/util/numbers';
+import ChartTooltip from '~/shared/components/chart-tooltip';
+import {Colors} from '~/shared/util/charts';
+import {sub} from '~/shared/util/lang';
+import {toRounded, toThousands} from '~/shared/util/numbers';
+import {AXIS, getAxisTickText} from '~/shared/util/recharts';
 
 const CLASSNAME = 'analytics-operating-system-chart';
 const MIN_VALUE = '< 0.1%';
@@ -29,13 +34,13 @@ class OperatingSystem extends React.Component {
 	static defaultProps = {
 		devices: [],
 		height: 370,
-		metricLabel: Liferay.Language.get('views')
+		metricLabel: Liferay.Language.get('views'),
 	};
 
 	static propTypes = {
 		devices: PropTypes.array,
 		height: PropTypes.number,
-		metricLabel: PropTypes.string
+		metricLabel: PropTypes.string,
 	};
 
 	getItemPercentage(percentage) {
@@ -52,25 +57,25 @@ class OperatingSystem extends React.Component {
 
 		if (active && payload && !!payload.length) {
 			const {
-				payload: {label, percentageOfTotal, totalViews}
+				payload: {label, percentageOfTotal, totalViews},
 			} = payload[0];
 
 			const header = [
 				{
 					columns: [
 						{
-							label
+							label,
 						},
 						{
 							align: 'right',
-							label: `${toThousands(totalViews)} ${metricLabel}`
+							label: `${toThousands(totalViews)} ${metricLabel}`,
 						},
 						{
 							align: 'right',
-							label: `${toRounded(toRounded(percentageOfTotal))}%`
-						}
-					]
-				}
+							label: `${toRounded(toRounded(percentageOfTotal))}%`,
+						},
+					],
+				},
 			];
 
 			const rows = payload.map(({color, payload: {data}}, i) => {
@@ -81,26 +86,26 @@ class OperatingSystem extends React.Component {
 						{
 							color,
 							label: type,
-							width: 100
+							width: 100,
 						},
 						{
 							align: 'right',
 							label: toThousands(views),
-							width: 80
+							width: 80,
 						},
 						type !== 'Other' && {
 							align: 'right',
 							label: this.getItemPercentage(percentage),
 							weight: 'semibold',
-							width: 50
-						}
-					].filter(Boolean)
+							width: 50,
+						},
+					].filter(Boolean),
 				};
 			});
 
 			return (
 				<div
-					className='bb-tooltip-container'
+					className="bb-tooltip-container"
 					style={{position: 'static'}}
 				>
 					<ChartTooltip header={header} rows={rows} />
@@ -126,11 +131,11 @@ class OperatingSystem extends React.Component {
 					<ComposedChart data={devices}>
 						<CartesianGrid
 							stroke={AXIS.gridStroke}
-							strokeDasharray='3 3'
+							strokeDasharray="3 3"
 							vertical={false}
 						>
 							<Label
-								position='center'
+								position="center"
 								value={sub(
 									Liferay.Language.get(
 										'empty-message-metric'
@@ -142,8 +147,8 @@ class OperatingSystem extends React.Component {
 
 						<XAxis
 							axisLine={{stroke: AXIS.borderStroke}}
-							dataKey='label'
-							interval='preserveStart'
+							dataKey="label"
+							interval="preserveStart"
 							padding={{left: 20, right: 20}}
 							tick={getAxisTickText('x')}
 							tickLine={false}
@@ -152,12 +157,12 @@ class OperatingSystem extends React.Component {
 
 						<XAxis
 							axisLine={{stroke: AXIS.borderStroke}}
-							dataKey='label'
+							dataKey="label"
 							height={1}
-							orientation='top'
+							orientation="top"
 							tick={false}
 							tickLine={false}
-							xAxisId='top'
+							xAxisId="top"
 						/>
 
 						<YAxis
@@ -167,29 +172,29 @@ class OperatingSystem extends React.Component {
 							tick={getAxisTickText('y', toThousands)}
 							tickCount={6}
 							tickLine={false}
-							type='number'
+							type="number"
 							width={30}
 						/>
 
 						<YAxis
 							axisLine={{stroke: AXIS.borderStroke}}
-							orientation='right'
+							orientation="right"
 							tick={false}
 							tickLine={false}
-							type='number'
+							type="number"
 							width={1}
-							yAxisId='right'
+							yAxisId="right"
 						/>
 
 						<Tooltip content={this.renderTooltip} />
 
-						{range(0, barCount).map(i => (
+						{range(0, barCount).map((i) => (
 							<Bar
 								dataKey={`data[${i}].views`}
 								fill={Colors.pallete[i]}
 								isAnimationActive={false}
 								key={i}
-								stackId='devices'
+								stackId="devices"
 							/>
 						))}
 					</ComposedChart>

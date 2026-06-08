@@ -1,35 +1,44 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {graphql} from '@apollo/client/react/hoc';
 import ClayLink from '@clayui/link';
-import getMetricsMapper from 'shared/hoc/mappers/metrics';
-import knownIndividualsListAssetQuery from 'shared/queries/knownIndividualsListAssetQuery';
 import React, {useState} from 'react';
-import URLConstants from 'shared/util/url-constants';
+import Card from '~/shared/components/Card';
 import {
 	compose,
 	withBaseResults,
 	withQueryPagination,
-	withQueryRangeSelectors
-} from 'shared/hoc';
-import {createOrderIOMap, DOWNLOADS_METRIC, NAME} from 'shared/util/pagination';
-import {graphql} from '@apollo/client/react/hoc';
-import {metricsListColumns} from 'shared/util/table-columns';
-import {RangeSelectors} from 'shared/types';
-import {Routes} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
+	withQueryRangeSelectors,
+} from '~/shared/hoc';
+import getMetricsMapper from '~/shared/hoc/mappers/metrics';
+import knownIndividualsListAssetQuery from '~/shared/queries/knownIndividualsListAssetQuery';
+import {RangeSelectors} from '~/shared/types';
+import {Sizes} from '~/shared/util/constants';
+import {
+	DOWNLOADS_METRIC,
+	NAME,
+	createOrderIOMap,
+} from '~/shared/util/pagination';
+import {Routes} from '~/shared/util/router';
+import {metricsListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
 
 const withData = () =>
 	graphql(
 		knownIndividualsListAssetQuery('document', DOWNLOADS_METRIC),
-		getMetricsMapper(result => ({
+		getMetricsMapper((result) => ({
 			items: result.document.downloadsMetric.individuals.individuals,
-			total: result.document.downloadsMetric.individuals.total
+			total: result.document.downloadsMetric.individuals.total,
 		}))
 	);
 
 const TableWithData = withBaseResults(withData, {
 	emptyDescription: (
 		<>
-			<span className='mr-1'>
+			<span className="mr-1">
 				{Liferay.Language.get(
 					'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 				)}
@@ -37,8 +46,8 @@ const TableWithData = withBaseResults(withData, {
 
 			<ClayLink
 				href={URLConstants.IndividualsDashboardDocumentation}
-				key='DOCUMENTATION'
-				target='_blank'
+				key="DOCUMENTATION"
+				target="_blank"
 			>
 				{Liferay.Language.get('learn-more-about-individuals')}
 			</ClayLink>
@@ -47,24 +56,24 @@ const TableWithData = withBaseResults(withData, {
 	emptyIcon: {
 		border: false,
 		size: Sizes.XXXLarge,
-		symbol: 'ac_satellite'
+		symbol: 'ac_satellite',
 	},
 	emptyTitle: Liferay.Language.get('there-are-no-individuals-found'),
 	getColumns: ({
 		router: {
-			params: {channelId, groupId}
-		}
+			params: {channelId, groupId},
+		},
 	}: {
 		router: {params: {channelId: string; groupId: string}};
 	}) => [
 		metricsListColumns.getNameEmail({
 			channelId,
 			groupId,
-			route: Routes.CONTACTS_INDIVIDUAL
-		})
+			route: Routes.CONTACTS_INDIVIDUAL,
+		}),
 	],
 	legacyDropdownRangeKey: false,
-	rowIdentifier: 'id'
+	rowIdentifier: 'id',
 });
 
 interface IKnownIndividualsListCardProps {
@@ -81,7 +90,7 @@ const KnownIndividualsListCard = ({
 	);
 
 	return (
-		<Card className='known-individuals-root' pageDisplay>
+		<Card className="known-individuals-root" pageDisplay>
 			<TableWithData
 				{...otherProps}
 				onRangeSelectorsChange={setRangeSelectors}

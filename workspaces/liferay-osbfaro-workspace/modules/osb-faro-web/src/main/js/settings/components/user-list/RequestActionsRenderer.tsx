@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import React from 'react';
 
@@ -12,23 +17,23 @@ const RequestActionsRenderer: React.FC<IRequestActionsRendererProps> = ({
 	className,
 	data: {emailAddress, id},
 	onAccept,
-	onDecline
+	onDecline,
 }) => (
 	<td className={className}>
 		<ClayButton
-			className='button-root mr-3'
-			displayType='primary'
+			className="button-root mr-3"
+			displayType="primary"
 			onClick={() => onAccept({emailAddress, id})}
-			size='sm'
+			size="sm"
 		>
 			{Liferay.Language.get('accept')}
 		</ClayButton>
 
 		<ClayButton
-			className='button-root'
-			displayType='secondary'
+			className="button-root"
+			displayType="secondary"
 			onClick={() => onDecline({emailAddress, id})}
-			size='sm'
+			size="sm"
 		>
 			{Liferay.Language.get('decline')}
 		</ClayButton>

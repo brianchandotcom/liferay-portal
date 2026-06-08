@@ -1,7 +1,12 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import ChartTooltip from '../../shared/components/chart-tooltip';
+import {get} from 'lodash';
+import {PropTypes} from 'prop-types';
 import React from 'react';
-import TextTruncate from 'shared/components/TextTruncate';
 import {
 	Cell,
 	Legend,
@@ -9,13 +14,14 @@ import {
 	PieChart,
 	ResponsiveContainer,
 	Sector,
-	Tooltip
+	Tooltip,
 } from 'recharts';
-import {Colors} from 'shared/util/charts';
-import {get} from 'lodash';
-import {getPercentage} from 'shared/util/util';
-import {PropTypes} from 'prop-types';
-import {toRounded, toThousands} from 'shared/util/numbers';
+import TextTruncate from '~/shared/components/TextTruncate';
+import {Colors} from '~/shared/util/charts';
+import {toRounded, toThousands} from '~/shared/util/numbers';
+import {getPercentage} from '~/shared/util/util';
+
+import ChartTooltip from '../../shared/components/chart-tooltip';
 
 const CLASSNAME = 'analytics-web-browser-chart';
 
@@ -28,16 +34,16 @@ const getChartPercentage = (value, total) =>
 class WebBrowser extends React.Component {
 	static defaultProps = {
 		browsers: [],
-		height: 370
+		height: 370,
 	};
 
 	static propTypes = {
 		browsers: PropTypes.array,
-		height: PropTypes.number
+		height: PropTypes.number,
 	};
 
 	state = {
-		hoverIndex: -1
+		hoverIndex: -1,
 	};
 	@autobind
 	renderActiveShape({
@@ -47,7 +53,7 @@ class WebBrowser extends React.Component {
 		fill,
 		innerRadius,
 		outerRadius,
-		startAngle
+		startAngle,
 	}) {
 		return (
 			<g>
@@ -73,7 +79,7 @@ class WebBrowser extends React.Component {
 
 			return (
 				<div
-					className='bb-tooltip-container'
+					className="bb-tooltip-container"
 					style={{position: 'static'}}
 				>
 					<ChartTooltip
@@ -81,13 +87,13 @@ class WebBrowser extends React.Component {
 							{
 								columns: [
 									{
-										label: valueKey
+										label: valueKey,
 									},
 									{
-										label: ''
-									}
-								]
-							}
+										label: '',
+									},
+								],
+							},
 						]}
 						rows={[
 							{
@@ -96,16 +102,16 @@ class WebBrowser extends React.Component {
 										label: `${toThousands(
 											value
 										)} ${metricLabel}`,
-										width: 120
+										width: 120,
 									},
 									{
 										align: 'right',
 										label: getChartPercentage(value, total),
 										weight: 'semibold',
-										width: 50
-									}
-								]
-							}
+										width: 50,
+									},
+								],
+							},
 						]}
 					/>
 				</div>
@@ -118,7 +124,7 @@ class WebBrowser extends React.Component {
 	render() {
 		const {
 			props: {browsers, height, total},
-			state: {hoverIndex}
+			state: {hoverIndex},
 		} = this;
 
 		return (
@@ -130,7 +136,7 @@ class WebBrowser extends React.Component {
 						{/* eslint-disable jsx-a11y/mouse-events-have-key-events
 						 */}
 						<Legend
-							align='right'
+							align="right"
 							formatter={(val, {payload: {value, valueKey}}) => (
 								<>
 									<TextTruncate
@@ -139,33 +145,33 @@ class WebBrowser extends React.Component {
 										title={valueKey}
 									/>
 
-									<span className='legend-percentage'>
+									<span className="legend-percentage">
 										{getChartPercentage(value, total)}
 									</span>
 								</>
 							)}
 							iconSize={14}
-							layout='vertical'
-							onMouseMove={(e, index) =>
+							layout="vertical"
+							onMouseMove={(event, index) =>
 								this.setState({hoverIndex: index})
 							}
 							onMouseOut={() => this.setState({hoverIndex: -1})}
-							verticalAlign='middle'
+							verticalAlign="middle"
 						/>
 
 						<Pie
 							activeIndex={hoverIndex}
 							activeShape={this.renderActiveShape}
 							blendStroke
-							className='col-7'
+							className="col-7"
 							cy={185}
 							data={browsers}
-							dataKey='value'
+							dataKey="value"
 							endAngle={-270}
-							innerRadius='50%'
+							innerRadius="50%"
 							isAnimationActive={false}
-							legendType='circle'
-							onMouseMove={(e, index) =>
+							legendType="circle"
+							onMouseMove={(event, index) =>
 								this.setState({hoverIndex: index})
 							}
 							onMouseOut={() => this.setState({hoverIndex: -1})}
@@ -188,6 +194,7 @@ class WebBrowser extends React.Component {
 								/>
 							))}
 						</Pie>
+
 						{/* eslint-enable jsx-a11y/mouse-events-have-key-events */}
 					</PieChart>
 				</ResponsiveContainer>

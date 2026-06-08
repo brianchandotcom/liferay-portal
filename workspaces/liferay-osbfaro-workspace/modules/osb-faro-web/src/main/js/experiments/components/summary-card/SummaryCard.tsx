@@ -1,13 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {IExperiment, Status} from './types';
+import {useStore} from 'react-redux';
+import {useParams} from 'react-router-dom';
+
 import {SummaryCompletedCard} from './SummaryCompletedCard';
 import {SummaryDraftCard} from './SummaryDraftCard';
 import {SummaryNoWinnerCard} from './SummaryNoWinnerCard';
 import {SummaryRunningCard} from './SummaryRunningCard';
 import {SummaryTerminatedCard} from './SummaryTerminatedCard';
 import {SummaryWinnerCard} from './SummaryWinnerCard';
-import {useParams} from 'react-router-dom';
-import {useStore} from 'react-redux';
+import {IExperiment, Status} from './types';
 
 const Component: Record<
 	string,
@@ -21,10 +27,14 @@ const Component: Record<
 	[Status.Running]: SummaryRunningCard as React.FC<any>,
 	[Status.FinishedNoWinner]: SummaryNoWinnerCard as React.FC<any>,
 	[Status.Terminated]: SummaryTerminatedCard as React.FC<any>,
-	[Status.FinishedWinner]: SummaryWinnerCard as React.FC<any>
+	[Status.FinishedWinner]: SummaryWinnerCard as React.FC<any>,
 };
 
-export const SummaryCard = ({experiment}: {experiment: IExperiment}) => {
+export const SummaryCard = function SummaryCard({
+	experiment,
+}: {
+	experiment: IExperiment;
+}) {
 	const {groupId} = useParams<{groupId: string}>();
 	const store = useStore();
 	const timeZoneId = store

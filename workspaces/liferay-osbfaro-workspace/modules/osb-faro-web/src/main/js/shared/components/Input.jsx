@@ -1,8 +1,13 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 const SIZES = ['lg', 'sm'];
 
@@ -27,7 +32,7 @@ class InputText extends React.Component {
 
 class InputButton extends React.Component {
 	static propTypes = {
-		position: PropTypes.oneOf(APPEND_POSITIONS).isRequired
+		position: PropTypes.oneOf(APPEND_POSITIONS).isRequired,
 	};
 
 	render() {
@@ -47,14 +52,14 @@ class InputButton extends React.Component {
 
 class InputInset extends React.Component {
 	static propTypes = {
-		position: PropTypes.oneOf(INSET_POSITIONS)
+		position: PropTypes.oneOf(INSET_POSITIONS),
 	};
 
 	render() {
 		const {className, position} = this.props;
 
 		const classes = getCN('input-group-inset-item', className, {
-			[`input-group-inset-item-${position}`]: position
+			[`input-group-inset-item-${position}`]: position,
 		});
 
 		return <div className={classes}>{this.props.children}</div>;
@@ -63,12 +68,12 @@ class InputInset extends React.Component {
 
 class InputGroupItem extends React.Component {
 	static defaultProps = {
-		shrink: false
+		shrink: false,
 	};
 
 	static propTypes = {
 		position: PropTypes.oneOf(APPEND_POSITIONS),
-		shrink: PropTypes.bool
+		shrink: PropTypes.bool,
 	};
 
 	render() {
@@ -76,7 +81,7 @@ class InputGroupItem extends React.Component {
 
 		const classes = getCN('input-group-item', className, {
 			'input-group-item-shrink': shrink,
-			[`input-group-${position}`]: position
+			[`input-group-${position}`]: position,
 		});
 
 		return <div className={classes}>{this.props.children}</div>;
@@ -85,14 +90,14 @@ class InputGroupItem extends React.Component {
 
 class InputGroup extends React.Component {
 	static propTypes = {
-		size: PropTypes.oneOf(SIZES)
+		size: PropTypes.oneOf(SIZES),
 	};
 
 	render() {
 		const {children, className, size, ...otherProps} = this.props;
 
 		const classes = getCN('input-group', className, {
-			[`input-group-${size}`]: size
+			[`input-group-${size}`]: size,
 		});
 
 		return (
@@ -108,7 +113,7 @@ class InputGroup extends React.Component {
 
 class Input extends React.Component {
 	static defaultProps = {
-		type: 'text'
+		type: 'text',
 	};
 
 	static propTypes = {
@@ -116,7 +121,7 @@ class Input extends React.Component {
 		inset: PropTypes.oneOf(INSET_POSITIONS),
 		size: PropTypes.oneOf(SIZES),
 		type: PropTypes.string,
-		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	};
 
 	constructor(props) {
@@ -159,7 +164,7 @@ class Input extends React.Component {
 		const classes = getCN('input-root', 'form-control', className, {
 			['input-group-inset']: inset,
 			[`input-group-inset-${inset}`]: inset,
-			[`form-control-${size}`]: size
+			[`form-control-${size}`]: size,
 		});
 
 		const ComponentFn = type === 'textarea' ? type : 'input';
@@ -167,7 +172,9 @@ class Input extends React.Component {
 		return (
 			<ComponentFn
 				{...omitDefinedProps(otherProps, Input.propTypes)}
+
 				// TODO: Is defaultChecked required here? should we be using this for checkbox?
+
 				className={classes}
 				defaultChecked={checked}
 				ref={this._elementRef}

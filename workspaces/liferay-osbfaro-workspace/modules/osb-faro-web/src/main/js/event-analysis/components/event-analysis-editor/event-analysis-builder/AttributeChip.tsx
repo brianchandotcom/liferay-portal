@@ -1,13 +1,19 @@
-import Chip from 'shared/components/Chip';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
-import {DATA_TYPE_ICONS_MAP} from 'event-analysis/utils/utils';
-import {DataTypes} from 'event-analysis/utils/types';
-import {DeleteBreakdown, DeleteFilter} from '../context/attributes';
 import {DropTargetMonitor, useDrag, useDrop} from 'react-dnd';
-import {mergeRef} from 'shared/util/util';
+import {DataTypes} from '~/event-analysis/utils/types';
+import {DATA_TYPE_ICONS_MAP} from '~/event-analysis/utils/utils';
+import Chip from '~/shared/components/Chip';
+import {mergeRef} from '~/shared/util/util';
+
+import {DeleteBreakdown, DeleteFilter} from '../context/attributes';
 
 interface DragItem {
 	index: number;
@@ -16,20 +22,20 @@ interface DragItem {
 
 export enum DragTypes {
 	AttributeBreakdownChip = 'attribute-breakdown-chip',
-	AttributeFilterChip = 'attribute-filter-chip'
+	AttributeFilterChip = 'attribute-filter-chip',
 }
 
 export enum HoverTypes {
 	Left = 'left',
-	Right = 'right'
+	Right = 'right',
 }
 
 interface IAttributeChipProps {
 	dataType: DataTypes;
-	draggable?: boolean;
-	dragType: DragTypes;
 	description?: string;
 	displayName: string;
+	dragType: DragTypes;
+	draggable?: boolean;
 	id: string;
 	index: number;
 	label: string;
@@ -53,7 +59,7 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 			onClick,
 			onCloseClick,
 			onMove,
-			value
+			value,
 		},
 		ref
 	) => {
@@ -73,7 +79,7 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 			},
 			collect: (monitor: DropTargetMonitor) => ({
 				canDrop: monitor.canDrop(),
-				isOver: monitor.isOver()
+				isOver: monitor.isOver(),
 			}),
 			drop: ({index: dragIndex}: DragItem) => {
 				let dropIndex = index;
@@ -86,7 +92,8 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 
 				if (insertLeft) {
 					dropIndex = index - 1;
-				} else if (insertRight) {
+				}
+				else if (insertRight) {
 					dropIndex = index + 1;
 				}
 
@@ -99,6 +106,7 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 				const hoverIndex = index;
 
 				// Determine whether hover is on left or right side of hovered AttributeChip
+
 				if (_wrapperRef.current) {
 					const {right, width} =
 						_wrapperRef.current.getBoundingClientRect();
@@ -115,67 +123,71 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 
 					if (destIndex === dragIndex) {
 						setHoverPosition(null);
-					} else if (hoverLeft) {
+					}
+					else if (hoverLeft) {
 						setHoverPosition(HoverTypes.Left);
-					} else {
+					}
+					else {
 						setHoverPosition(HoverTypes.Right);
 					}
 				}
-			}
+			},
 		});
 
 		const [{isDragging}, drag, preview] = useDrag({
 			collect: (monitor: any) => ({
-				isDragging: monitor.isDragging()
+				isDragging: monitor.isDragging(),
 			}),
 			item: {
 				index,
-				type: dragType
-			}
+				type: dragType,
+			},
 		});
 
 		useEffect(() => {
 			drop(_wrapperRef);
 			preview(_chipRef);
+
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 
 		return (
 			<div
 				className={getCN('attribute-chip-container', {
 					[`hover-${hoverPosition}`]:
-						isOver && canDrop && hoverPosition
+						isOver && canDrop && hoverPosition,
 				})}
 				ref={_wrapperRef}
 			>
 				<Chip
 					className={getCN('attribute-chip-root', {
-						dragging: isDragging
+						dragging: isDragging,
 					})}
 					onCloseClick={() => onCloseClick({id})}
 					ref={mergeRef(ref, _chipRef)}
 				>
 					{draggable && (
-						<div className='drag-handle' ref={drag}>
-							<ClayIcon className='icon-root' symbol='drag' />
+						<div className="drag-handle" ref={drag}>
+							<ClayIcon className="icon-root" symbol="drag" />
 						</div>
 					)}
 
 					<ClayButton
-						className='button-root edit-attribute-button d-flex'
-						displayType='unstyled'
+						className="button-root d-flex edit-attribute-button"
+						displayType="unstyled"
 						onClick={onClick}
 					>
-						<div className='sticker'>
+						<div className="sticker">
 							<ClayIcon
-								className='icon-root'
+								className="icon-root"
 								symbol={DATA_TYPE_ICONS_MAP[dataType]}
 							/>
 						</div>
 
 						<div>
-							<div className='attribute-label'>{label}</div>
+							<div className="attribute-label">{label}</div>
 
-							<div className='attribute-value'>{value}</div>
+							<div className="attribute-value">{value}</div>
 						</div>
 					</ClayButton>
 				</Chip>

@@ -1,28 +1,34 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import DistributionBase, {
-	CONTEXT_OPTIONS
-} from 'contacts/components/Distribution';
-const Distribution = DistributionBase as React.ComponentType<any>;
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React from 'react';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import URLConstants from 'shared/util/url-constants';
-import {compose, withQuery} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
-import {
-	fetchIndividualsDistribution,
-	INDIVIDUALS_DASHBOARD_DISTRUBTIONS_KEY
-} from 'shared/actions/distributions';
 import {get} from 'lodash';
-import {Routes, toRoute} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSources} from 'shared/context/dataSources';
+import React from 'react';
+import {ConnectedProps, connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
+import DistributionBase, {
+	CONTEXT_OPTIONS,
+} from '~/contacts/components/Distribution';
+import {
+	INDIVIDUALS_DASHBOARD_DISTRUBTIONS_KEY,
+	fetchIndividualsDistribution,
+} from '~/shared/actions/distributions';
+import * as API from '~/shared/api';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {useDataSources} from '~/shared/context/dataSources';
+import {compose, withQuery} from '~/shared/hoc';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {Sizes} from '~/shared/util/constants';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
+
+const Distribution = DistributionBase as React.ComponentType<any>;
 
 const connector = connect(null, {
-	fetchDistribution: fetchIndividualsDistribution
+	fetchDistribution: fetchIndividualsDistribution,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -31,9 +37,10 @@ interface IIndividualsDistributionProps extends PropsFromRedux {
 	knownIndividualCount: number | null;
 }
 
-export const IndividualsDistribution: React.FC<
-	IIndividualsDistributionProps
-> = ({knownIndividualCount, ...otherProps}) => {
+export const IndividualsDistribution = function IndividualsDistribution({
+	knownIndividualCount,
+	...otherProps
+}: IIndividualsDistributionProps) {
 	const {groupId} = useParams();
 	const dataSourceStates = useDataSources();
 	const currentUser = useCurrentUser();
@@ -47,16 +54,16 @@ export const IndividualsDistribution: React.FC<
 						{authorized
 							? Liferay.Language.get(
 									'connect-a-data-source-to-get-started'
-							  )
+								)
 							: Liferay.Language.get(
 									'please-contact-your-workspace-administrator-to-add-data-sources'
-							  )}
+								)}
 
 						<ClayLink
-							className='d-block mb-3'
+							className="d-block mb-3"
 							href={URLConstants.DataSourceConnection}
-							key='DOCUMENTATION'
-							target='_blank'
+							key="DOCUMENTATION"
+							target="_blank"
 						>
 							{Liferay.Language.get(
 								'access-our-documentation-to-learn-more'
@@ -66,12 +73,12 @@ export const IndividualsDistribution: React.FC<
 						{authorized && (
 							<ClayLink
 								button
-								className='button-root'
-								displayType='primary'
+								className="button-root"
+								displayType="primary"
 								href={toRoute(
 									Routes.SETTINGS_DATA_SOURCE_LIST,
 									{
-										groupId
+										groupId,
 									}
 								)}
 							>
@@ -85,9 +92,9 @@ export const IndividualsDistribution: React.FC<
 			/>
 
 			<StatesRenderer.Success>
-				<div className='individuals-dashboard-distribution-root container-fluid'>
-					<div className='row'>
-						<div className='col-xl-12'>
+				<div className="container-fluid individuals-dashboard-distribution-root">
+					<div className="row">
+						<div className="col-xl-12">
 							<Distribution
 								contextOptions={[CONTEXT_OPTIONS[0]]}
 								distributionsKey={
@@ -105,12 +112,12 @@ export const IndividualsDistribution: React.FC<
 												)}
 
 												<ClayLink
-													className='d-block'
+													className="d-block"
 													href={
 														URLConstants.IndividualsDashboardBreakdownDocumentation
 													}
-													key='DOCUMENTATION'
-													target='_blank'
+													key="DOCUMENTATION"
+													target="_blank"
 												>
 													{Liferay.Language.get(
 														'learn-more-about-distribution'
@@ -121,7 +128,7 @@ export const IndividualsDistribution: React.FC<
 										icon={{
 											border: false,
 											size: Sizes.XXXLarge,
-											symbol: 'ac_satellite'
+											symbol: 'ac_satellite',
 										}}
 										title={Liferay.Language.get(
 											'there-are-no-results-found'
@@ -143,11 +150,11 @@ export default compose<any>(
 			API.individuals.search({
 				channelId,
 				groupId,
-				includeAnonymousUsers: false
+				includeAnonymousUsers: false,
 			}),
 		(val: unknown) => val,
 		({data, error}: {data: unknown; error: unknown}) => ({
-			knownIndividualCount: error ? 0 : get(data, 'total', null)
+			knownIndividualCount: error ? 0 : get(data, 'total', null),
 		})
 	),
 	connector

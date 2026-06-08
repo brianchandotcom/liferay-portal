@@ -1,11 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
-import {IBreadcrumbArgs} from 'shared/util/breadcrumbs';
-import {Link} from 'react-router-dom';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import {IBreadcrumbArgs} from '~/shared/util/breadcrumbs';
 
 interface IBreadcrumbProps {
 	bufferSize?: number;
@@ -23,28 +27,30 @@ interface IBreadcrumbItemProps {
 const BreadcrumbItem: React.FC<IBreadcrumbItemProps> = ({
 	children,
 	item: {active, href, id},
-	onClick
+	onClick,
 }) => {
 	const classes = getCN('breadcrumb-item', {active});
 
 	function renderItem() {
 		const contentClasses = getCN('breadcrumb-text-truncate', {
-			'breadcrumb-link': href
+			'breadcrumb-link': href,
 		});
 
 		if (active) {
 			return <span className={contentClasses}>{children}</span>;
-		} else if (href) {
+		}
+		else if (href) {
 			return (
 				<Link className={contentClasses} to={href}>
 					{children}
 				</Link>
 			);
-		} else {
+		}
+		else {
 			return (
 				<ClayButton
 					className={contentClasses}
-					displayType='unstyled'
+					displayType="unstyled"
 					onClick={onClick ? () => onClick(id) : () => {}}
 				>
 					{children}
@@ -60,7 +66,7 @@ const Breadcrumb: React.FC<IBreadcrumbProps> = ({
 	bufferSize = 3,
 	className,
 	items,
-	onClick
+	onClick,
 }) => {
 	const history = useHistory();
 	const totalItems = items.length;
@@ -80,17 +86,17 @@ const Breadcrumb: React.FC<IBreadcrumbProps> = ({
 			{dropdownItems && (
 				<ClayDropDown
 					alignmentPosition={Align.BottomCenter}
-					className='dropdown-root breadcrumb-item'
-					containerElement='li'
+					className="breadcrumb-item dropdown-root"
+					containerElement="li"
 					trigger={
 						<ClayButton
 							aria-label={Liferay.Language.get('menu')}
-							className='breadcrumb-link'
-							displayType='unstyled'
+							className="breadcrumb-link"
+							displayType="unstyled"
 						>
 							<ClayIcon
-								className='icon-root'
-								symbol='ellipsis-h'
+								className="icon-root"
+								symbol="ellipsis-h"
 							/>
 						</ClayButton>
 					}

@@ -1,25 +1,30 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {useEffect} from 'react';
-import {
-	ActionType,
-	useUnassignedSegmentsContext
-} from 'shared/context/unassignedSegments';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {connect, ConnectedProps} from 'react-redux';
+import {ConnectedProps, connect} from 'react-redux';
+import {close, modalTypes, open} from '~/shared/actions/modals';
 import {
 	fetchUpgradeModalSeen,
-	updateUpgradeModalSeen
-} from 'shared/actions/preferences';
-import {RootState} from 'shared/store';
-import {useChannelContext} from 'shared/context/channel';
-import {useRequest} from 'shared/hooks/useRequest';
+	updateUpgradeModalSeen,
+} from '~/shared/actions/preferences';
+import * as API from '~/shared/api';
+import {useChannelContext} from '~/shared/context/channel';
+import {
+	ActionType,
+	useUnassignedSegmentsContext,
+} from '~/shared/context/unassignedSegments';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {RootState} from '~/shared/store';
 
 const connector = connect(
 	(state: RootState) => ({
 		upgradeModalSeen: state.getIn(
 			['preferences', 'user', 'upgradeModalSeen', 'data'],
 			true
-		)
+		),
 	}),
 	{close, fetchUpgradeModalSeen, open, updateUpgradeModalSeen}
 );
@@ -52,12 +57,14 @@ const withUnassignedSegments = (
 			dataSourceFn: API.individualSegment.searchUnassigned,
 			variables: {
 				delta: 10000,
-				groupId
-			}
+				groupId,
+			},
 		});
 
 		useEffect(() => {
 			fetchUpgradeModalSeen(groupId);
+
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 
 		useEffect(() => {
@@ -66,7 +73,7 @@ const withUnassignedSegments = (
 
 				unassignedSegmentsDispatch?.({
 					payload: items,
-					type: ActionType.setSegments
+					type: ActionType.setSegments,
 				});
 
 				if (
@@ -82,16 +89,18 @@ const withUnassignedSegments = (
 							onClose: () => {
 								updateUpgradeModalSeen({
 									groupId,
-									upgradeModalSeen: true
+									upgradeModalSeen: true,
 								});
 
 								close();
-							}
+							},
 						},
 						{closeOnBlur: false}
 					);
 				}
 			}
+
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [data, error, loading, upgradeModalSeen]);
 
 		return <WrappedComponent groupId={groupId} {...otherProps} />;

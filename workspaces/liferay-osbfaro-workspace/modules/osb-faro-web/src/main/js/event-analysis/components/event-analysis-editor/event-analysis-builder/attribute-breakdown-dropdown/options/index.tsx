@@ -1,28 +1,33 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import DateBreakdown from './DateBreakdown';
-import DurationBreakdown from './DurationBreakdown';
-import FilterInfo from '../../FilterInfo';
-import NumberBreakdown from './NumberBreakdown';
 import React from 'react';
-import {
-	AddBreakdown,
-	EditBreakdown,
-	withAttributesConsumer
-} from '../../../context/attributes';
 import {
 	Attribute,
 	AttributeOwnerTypes,
 	Breakdowns,
-	DataTypes
-} from 'event-analysis/utils/types';
+	DataTypes,
+	IBreakdownProps,
+} from '~/event-analysis/utils/types';
 
-import {IBreakdownProps} from 'event-analysis/utils/types';
+import {
+	AddBreakdown,
+	EditBreakdown,
+	withAttributesConsumer,
+} from '../../../context/attributes';
+import FilterInfo from '../../FilterInfo';
+import DateBreakdown from './DateBreakdown';
+import DurationBreakdown from './DurationBreakdown';
+import NumberBreakdown from './NumberBreakdown';
 
 const BREAKDOWNS_MAP: Partial<Record<DataTypes, React.FC<IBreakdownProps>>> = {
 	[DataTypes.Date]: DateBreakdown,
 	[DataTypes.Duration]: DurationBreakdown,
-	[DataTypes.Number]: NumberBreakdown
+	[DataTypes.Number]: NumberBreakdown,
 };
 
 interface IBreakdownOptionsProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -46,14 +51,14 @@ const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
 	editBreakdown,
 	onActiveChange,
 	onAttributeChange,
-	onEditClick
+	onEditClick,
 }) => {
 	const {
 		dataType,
 		description,
 		displayName,
 		id: attributeId,
-		name
+		name,
 	} = attribute;
 
 	const breakdown = breakdownId ? breakdowns[breakdownId] : undefined;
@@ -65,17 +70,17 @@ const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
 	}
 
 	return (
-		<div className='attribute-options'>
-			<div className='options-header'>
+		<div className="attribute-options">
+			<div className="options-header">
 				<ClayButton
-					className='button-root back-to-attributes-button'
-					displayType='unstyled'
+					className="back-to-attributes-button button-root"
+					displayType="unstyled"
 					onClick={() => onAttributeChange(undefined)}
-					size='sm'
+					size="sm"
 				>
 					<ClayIcon
-						className='icon-root mr-2'
-						symbol='angle-left-small'
+						className="icon-root mr-2"
+						symbol="angle-left-small"
 					/>
 
 					{Liferay.Language.get('back-to-attributes')}
@@ -103,12 +108,13 @@ const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
 						editBreakdown({
 							attribute,
 							breakdown: newBreakdown!,
-							id: breakdownId
+							id: breakdownId,
 						});
-					} else {
+					}
+					else {
 						addBreakdown({
 							attribute,
-							breakdown: newBreakdown!
+							breakdown: newBreakdown!,
 						});
 					}
 

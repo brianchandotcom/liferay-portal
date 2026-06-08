@@ -1,7 +1,12 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import getCN from 'classnames';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {FC} from 'react';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
 
 interface IErrorDisplayProps extends React.HTMLAttributes<HTMLElement> {
 	buttonLabel?: string;
@@ -15,7 +20,7 @@ const ErrorDisplay: FC<IErrorDisplayProps> = ({
 	className,
 	message = Liferay.Language.get('an-unexpected-error-occurred'),
 	onReload,
-	spacer = false
+	spacer = false,
 }) => (
 	<NoResultsDisplay
 		className={getCN(
@@ -28,8 +33,8 @@ const ErrorDisplay: FC<IErrorDisplayProps> = ({
 	>
 		{onReload && (
 			<ClayButton
-				className='button-root'
-				displayType='secondary'
+				className="button-root"
+				displayType="secondary"
 				onClick={() => onReload()}
 			>
 				{buttonLabel}

@@ -1,26 +1,31 @@
-import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import debounce from 'shared/util/debounce-decorator';
-import Form, {validateRequired} from 'shared/components/form';
-import InfoPopover from 'shared/components/InfoPopover';
-import Loading from 'shared/components/Loading';
+import autobind from 'autobind-decorator';
 import React from 'react';
-import TitleEditor from 'shared/components/TitleEditor';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
-import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import InfoPopover from '~/shared/components/InfoPopover';
+import Loading from '~/shared/components/Loading';
+import TitleEditor from '~/shared/components/TitleEditor';
+import Form, {validateRequired} from '~/shared/components/form';
+import {Modal} from '~/shared/types';
+import {SegmentTypes} from '~/shared/util/constants';
+import debounce from '~/shared/util/debounce-decorator';
+import {sub} from '~/shared/util/lang';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
+import {hasChanges} from '~/shared/util/react';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
+import {INDIVIDUALS, Routes, SEGMENTS, toRoute} from '~/shared/util/router';
+import {individualsListColumns} from '~/shared/util/table-columns';
+
 import {Criteria} from './utils/types';
-import {hasChanges} from 'shared/util/react';
-import {INDIVIDUALS} from 'shared/util/router';
-import {individualsListColumns} from 'shared/util/table-columns';
-import {Modal} from 'shared/types';
-import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
-import {SegmentTypes} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
 import {validateSegmentInputs} from './utils/utils';
 
 interface IToolbarProps {
@@ -32,8 +37,8 @@ interface IToolbarProps {
 	id: string;
 	includeAnonymousUsers: boolean;
 	open: Modal.open;
-	valid: boolean;
 	segmentType: SegmentTypes;
+	valid: boolean;
 }
 
 interface IToolbarState {
@@ -47,7 +52,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 	state = {
 		countLoading: true,
 		criteriaValid: false,
-		membersCount: 0
+		membersCount: 0,
 	};
 
 	componentDidMount() {
@@ -74,7 +79,9 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 	}
 
 	componentWillUnmount() {
+
 		// @ts-ignore: Property 'cancel' does not exist on type '() => any'.
+
 		this.getMembersCount.cancel();
 	}
 
@@ -87,7 +94,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 			channelId,
 			filter: criteriaString,
 			groupId,
-			...params
+			...params,
 		});
 	}
 
@@ -95,12 +102,13 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 	getMembersCount() {
 		const {
 			props: {criteria, includeAnonymousUsers},
-			state: {criteriaValid}
+			state: {criteriaValid},
 		} = this;
 
 		if (criteria) {
 			this.setState({countLoading: true});
-		} else {
+		}
+		else {
 			this.setState({countLoading: false, membersCount: 0});
 		}
 
@@ -109,8 +117,8 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 				.then(({total}) =>
 					this.setState({countLoading: false, membersCount: total})
 				)
-				.catch(err => {
-					if (!err.IS_CANCELLATION_ERROR) {
+				.catch((error) => {
+					if (!error.IS_CANCELLATION_ERROR) {
 						this.setState({countLoading: false});
 					}
 				});
@@ -130,7 +138,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 			onClose: close,
 			rowIdentifier: 'id',
 			size: 'lg',
-			title: Liferay.Language.get('known-segment-members')
+			title: Liferay.Language.get('known-segment-members'),
 		});
 	}
 
@@ -142,20 +150,20 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 			: {
 					'data-tooltip': true,
 					'data-tooltip-align': 'bottom',
-					title: Liferay.Language.get(
+					'title': Liferay.Language.get(
 						'some-of-your-criteria-are-incomplete-or-invalid'
-					)
-			  };
+					),
+				};
 	}
 
 	render() {
 		const {
 			props: {channelId, groupId, id, segmentType, valid},
-			state: {countLoading, criteriaValid, membersCount}
+			state: {countLoading, criteriaValid, membersCount},
 		} = this;
 
 		const totalMembersCount = countLoading ? (
-			<Loading key='LOADING' />
+			<Loading key="LOADING" />
 		) : (
 			membersCount.toLocaleString()
 		);
@@ -164,22 +172,22 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
 		const viewMembersButtonContent = isBatch ? (
 			<span {...this.getPreviewCriteriaTooltipProps()}>
-				<ClayIcon className='icon-root' symbol='view' />
+				<ClayIcon className="icon-root" symbol="view" />
 			</span>
 		) : (
 			<div {...this.getPreviewCriteriaTooltipProps()}>
-				<ClayIcon className='icon-root mr-2' symbol='view' />
+				<ClayIcon className="icon-root mr-2" symbol="view" />
 				{Liferay.Language.get('view-members')}
 			</div>
 		);
 
 		return (
-			<div className='form-header'>
-				<div className='page-container'>
-					<div className='container-fluid form-header-container'>
-						<div className='form-header-section-left'>
+			<div className="form-header">
+				<div className="page-container">
+					<div className="container-fluid form-header-container">
+						<div className="form-header-section-left">
 							<TitleEditor
-								name='name'
+								name="name"
 								placeholder={Liferay.Language.get(
 									'unnamed-segment'
 								)}
@@ -187,22 +195,22 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 							/>
 						</div>
 
-						<div className='form-header-section-right'>
+						<div className="form-header-section-right">
 							{isBatch && (
-								<div className='btn-group'>
-									<div className='btn-group-item'>
+								<div className="btn-group">
+									<div className="btn-group-item">
 										<Form.ToggleSwitch
-											className='include-anonymous'
+											className="include-anonymous"
 											label={Liferay.Language.get(
 												'include-anonymous'
 											)}
-											name='includeAnonymousUsers'
+											name="includeAnonymousUsers"
 										/>
 									</div>
 
-									<div className='btn-group-item'>
+									<div className="btn-group-item">
 										<InfoPopover
-											className='include-anon-help-icon'
+											className="include-anon-help-icon"
 											content={Liferay.Language.get(
 												'criteria-containing-individual-or-account-attributes-excludes-anonymous-individuals'
 											)}
@@ -211,21 +219,21 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 								</div>
 							)}
 
-							<div className='btn-group'>
+							<div className="btn-group">
 								{isBatch && (
-									<div className='btn-group-item'>
-										<div className='total-members'>
+									<div className="btn-group-item">
+										<div className="total-members">
 											{sub(
 												Liferay.Language.get(
 													'total-members-x'
 												),
 												[
 													<div
-														className='total-members-count'
-														key='TOTAL_MEMBERS_COUNT'
+														className="total-members-count"
+														key="TOTAL_MEMBERS_COUNT"
 													>
 														{totalMembersCount}
-													</div>
+													</div>,
 												],
 												false
 											)}
@@ -233,22 +241,22 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 									</div>
 								)}
 
-								<div className='btn-group-item'>
+								<div className="btn-group-item">
 									<ClayButton
 										aria-label={Liferay.Language.get(
 											'view-members'
 										)}
 										borderless
-										className='button-root preview-criteria'
-										data-testid='preview-criteria-button'
+										className="button-root preview-criteria"
+										data-testid="preview-criteria-button"
 										data-tooltip
 										disabled={
 											!criteriaValid ||
 											(criteriaValid && !membersCount)
 										}
-										displayType='secondary'
+										displayType="secondary"
 										onClick={this.handlePreviewClick}
-										size='sm'
+										size="sm"
 										title={Liferay.Language.get(
 											'view-members'
 										)}
@@ -258,24 +266,24 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 								</div>
 							</div>
 
-							<div className='btn-group'>
-								<div className='btn-group-item save'>
+							<div className="btn-group">
+								<div className="btn-group-item save">
 									<ClayButton
-										className='button-root'
+										className="button-root"
 										disabled={!valid}
-										displayType='primary'
-										size='sm'
-										type='submit'
+										displayType="primary"
+										size="sm"
+										type="submit"
 									>
 										{Liferay.Language.get('save-segment')}
 									</ClayButton>
 								</div>
 
-								<div className='btn-group-item cancel'>
+								<div className="btn-group-item cancel">
 									<ClayLink
 										button
-										className='button-root'
-										displayType='secondary'
+										className="button-root"
+										displayType="secondary"
 										href={
 											id
 												? toRoute(
@@ -283,17 +291,17 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 														{
 															channelId,
 															groupId,
-															id
+															id,
 														}
-												  )
+													)
 												: toRoute(
 														Routes.CONTACTS_LIST_SEGMENT,
 														{
 															channelId,
 															groupId,
-															type: SEGMENTS
+															type: SEGMENTS,
 														}
-												  )
+													)
 										}
 										small
 									>
@@ -311,5 +319,5 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
 export default connect(null, {
 	close,
-	open
+	open,
 })(Toolbar);

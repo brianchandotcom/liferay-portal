@@ -1,28 +1,33 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
-import FaroConstants from 'shared/util/constants';
-import React, {useMemo, useState} from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
-import {FrontendDataSet, pagination} from 'shared/components/FrontendDataSet';
-import {getMimeType} from 'assets/components/mime-type';
-import {InfoPanel} from 'assets/components/InfoPanel';
 import {pickBy} from 'lodash';
-import {RangeSelectors} from 'shared/types';
-import {
-	removeUriQueryParam,
-	Routes,
-	setUriQueryValues,
-	toRoute
-} from 'shared/util/router';
-import {toThousands} from 'shared/util/numbers';
-import {useChannelContext} from 'shared/context/channel';
+import React, {useMemo, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
-import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
+import {InfoPanel} from '~/assets/components/InfoPanel';
+import {getMimeType} from '~/assets/components/mime-type';
+import Card from '~/shared/components/Card';
+import {FrontendDataSet, pagination} from '~/shared/components/FrontendDataSet';
+import BasePage from '~/shared/components/base-page';
+import {DropdownRangeKey} from '~/shared/components/dropdown-range-key/DropdownRangeKey';
+import {useChannelContext} from '~/shared/context/channel';
+import {useQueryRangeSelectors} from '~/shared/hooks/useQueryRangeSelectors';
+import {RangeSelectors} from '~/shared/types';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import FaroConstants from '~/shared/util/constants';
+import {toThousands} from '~/shared/util/numbers';
+import {
+	Routes,
+	removeUriQueryParam,
+	setUriQueryValues,
+	toRoute,
+} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 const {cur: DEFAULT_CUR} = FaroConstants.pagination;
 
@@ -30,7 +35,7 @@ const mapRoutes = {
 	blog: Routes.ASSETS_BLOGS_OVERVIEW,
 	document: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW,
 	form: Routes.ASSETS_FORMS_OVERVIEW,
-	webContent: Routes.ASSETS_WEB_CONTENT_OVERVIEW
+	webContent: Routes.ASSETS_WEB_CONTENT_OVERVIEW,
 };
 
 const getAssetURL = ({
@@ -38,7 +43,7 @@ const getAssetURL = ({
 	groupId,
 	itemData,
 	rangeSelectorParams,
-	value = ''
+	value = '',
 }: {
 	channelId: string;
 	groupId: string;
@@ -59,11 +64,11 @@ const getAssetURL = ({
 		groupId,
 		touchpoint: 'Any',
 		...(itemData.assetType && {
-			type: encodeURIComponent(itemData.assetType)
+			type: encodeURIComponent(itemData.assetType),
 		}),
 		...(assetTitle && {
-			title: encodeURIComponent(assetTitle)
-		})
+			title: encodeURIComponent(assetTitle),
+		}),
 	})}?${rangeSelectorParams}`;
 };
 
@@ -75,7 +80,7 @@ const columns = {
 		({
 			channelId,
 			groupId,
-			rangeSelectorParams
+			rangeSelectorParams,
 		}: {
 			channelId: string;
 			groupId: string;
@@ -87,38 +92,38 @@ const columns = {
 				groupId,
 				itemData,
 				rangeSelectorParams,
-				value
+				value,
 			});
 
 			const mimeType = getMimeType({
 				assetType: itemData?.assetType,
-				mimeType: itemData?.mimeType
+				mimeType: itemData?.mimeType,
 			});
 
 			return (
-				<div className='align-items-center d-flex'>
-					<div className='mr-3'>
+				<div className="align-items-center d-flex">
+					<div className="mr-3">
 						<ClaySticker
 							className={mimeType.className}
-							displayType='dark'
+							displayType="dark"
 						>
 							<ClayIcon symbol={mimeType.icon} />
 						</ClaySticker>
 					</div>
 
 					<div>
-						<ClayLink displayType='tertiary' href={URL}>
+						<ClayLink displayType="tertiary" href={URL}>
 							{value || itemData.id}
 						</ClayLink>
 					</div>
 				</div>
 			);
-		}
+		},
 };
 
 const assetsEmptyStateDescription = (
 	<>
-		<span className='mr-1'>
+		<span className="mr-1">
 			{Liferay.Language.get(
 				'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 			)}
@@ -126,8 +131,8 @@ const assetsEmptyStateDescription = (
 
 		<ClayLink
 			href={URLConstants.AssetsDefinitionDocumentation}
-			key='DOCUMENTATION'
-			target='_blank'
+			key="DOCUMENTATION"
+			target="_blank"
 		>
 			{Liferay.Language.get('learn-more-about-assets')}
 		</ClayLink>
@@ -167,7 +172,7 @@ const List = () => {
 				label: Liferay.Language.get('type'),
 				multiple: true,
 				searchable: true,
-				type: 'selection'
+				type: 'selection',
 			},
 			{
 				apiURL: `/o/faro/contacts/${groupId}/asset-summary-tags?channelId=${channelId}&${rangeSelectorParams}`,
@@ -178,7 +183,7 @@ const List = () => {
 				label: Liferay.Language.get('tags'),
 				multiple: true,
 				searchable: true,
-				type: 'selection'
+				type: 'selection',
 			},
 			{
 				apiURL: `/o/faro/contacts/${groupId}/asset-summary-categories?channelId=${channelId}&${rangeSelectorParams}`,
@@ -189,7 +194,7 @@ const List = () => {
 				label: Liferay.Language.get('categories'),
 				multiple: true,
 				searchable: true,
-				type: 'selection'
+				type: 'selection',
 			},
 			{
 				apiURL: `/o/faro/contacts/${groupId}/asset-summary-mime-types?channelId=${channelId}&${rangeSelectorParams}`,
@@ -200,9 +205,11 @@ const List = () => {
 				label: Liferay.Language.get('file-type'),
 				multiple: true,
 				searchable: true,
-				type: 'selection'
-			}
+				type: 'selection',
+			},
 		],
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[groupId, rangeSelectorParams]
 	);
 
@@ -213,8 +220,8 @@ const List = () => {
 					breadcrumbs.getHome({
 						channelId: channelId!,
 						groupId: groupId!,
-						label: selectedChannel?.name
-					})
+						label: selectedChannel?.name,
+					}),
 				]}
 				fluid
 				groupId={groupId!}
@@ -225,15 +232,15 @@ const List = () => {
 			</BasePage.Header>
 
 			<BasePage.SubHeader fluid>
-				<div className='d-flex justify-content-end w-100'>
+				<div className="d-flex justify-content-end w-100">
 					<DropdownRangeKey
 						legacy={false}
-						onRangeSelectorChange={rangeSelectors => {
+						onRangeSelectorChange={(rangeSelectors) => {
 							history.push(
 								setUriQueryValues(
 									pickBy({
 										page: DEFAULT_CUR,
-										...rangeSelectors
+										...rangeSelectors,
 									}),
 									removeUriQueryParam(
 										window.location.href,
@@ -259,8 +266,8 @@ const List = () => {
 							assetTitleRenderer: columns.assetTitleRenderer({
 								channelId: channelId!,
 								groupId: groupId!,
-								rangeSelectorParams
-							})
+								rangeSelectorParams,
+							}),
 						}}
 						emptyState={{
 							description:
@@ -268,22 +275,22 @@ const List = () => {
 							image: '/states/satellite.svg',
 							title: Liferay.Language.get(
 								'there-are-no-assets-found'
-							)
+							),
 						}}
 						filters={filters}
-						id='assetTable'
+						id="assetTable"
 						itemsActions={[
 							{
 								data: {
-									id: 'infoPanel'
+									id: 'infoPanel',
 								},
 								icon: 'info-circle-open',
 								label: Liferay.Language.get('show-details'),
-								onClick: setInfoPanelData
+								onClick: setInfoPanelData,
 							},
 							{
 								data: {
-									id: 'viewAsset'
+									id: 'viewAsset',
 								},
 								icon: 'view',
 								label: Liferay.Language.get('view'),
@@ -293,12 +300,13 @@ const List = () => {
 											channelId: channelId!,
 											groupId: groupId!,
 											itemData,
-											rangeSelectorParams
+											rangeSelectorParams,
 										})
 									);
-								}
-							}
+								},
+							},
 						]}
+
 						// Trick to restart FDS every time the rangeSelectors changes.
 
 						key={Object.values(rangeSelectors).join()}
@@ -321,12 +329,12 @@ const List = () => {
 												'title'
 											),
 											sortable: true,
-											truncate: true
+											truncate: true,
 										},
 										{
 											fieldName: 'assetType',
 											label: Liferay.Language.get('type'),
-											sortable: true
+											sortable: true,
 										},
 										{
 											contentRenderer:
@@ -335,7 +343,7 @@ const List = () => {
 											label: Liferay.Language.get(
 												'views'
 											),
-											sortable: true
+											sortable: true,
 										},
 										{
 											contentRenderer:
@@ -344,7 +352,7 @@ const List = () => {
 											label: Liferay.Language.get(
 												'impressions'
 											),
-											sortable: true
+											sortable: true,
 										},
 										{
 											contentRenderer:
@@ -353,12 +361,12 @@ const List = () => {
 											label: Liferay.Language.get(
 												'downloads'
 											),
-											sortable: true
-										}
-									]
+											sortable: true,
+										},
+									],
 								},
-								thumbnail: 'table'
-							}
+								thumbnail: 'table',
+							},
 						]}
 					/>
 				</Card>

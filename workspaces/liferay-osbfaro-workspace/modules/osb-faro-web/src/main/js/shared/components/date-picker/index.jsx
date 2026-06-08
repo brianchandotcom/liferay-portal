@@ -1,16 +1,22 @@
-import autobind from 'autobind-decorator';
-import Calendar from './Calendar';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import DatePickerSelect from './DatePickerSelect';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
+import {noop, range} from 'lodash';
 import moment from 'moment';
+import {PropTypes} from 'prop-types';
 import React from 'react';
+import {sub} from '~/shared/util/lang';
+
+import Calendar from './Calendar';
+import DatePickerSelect from './DatePickerSelect';
 import TimeSelector from './TimeSelector';
 import {isAboveMaxRange, isDateOrRange, isRange, updateRange} from './util';
-import {noop, range} from 'lodash';
-import {PropTypes} from 'prop-types';
-import {sub} from 'shared/util/lang';
 
 export default class DatePicker extends React.Component {
 	static defaultProps = {
@@ -18,7 +24,7 @@ export default class DatePicker extends React.Component {
 		displayLabel: true,
 		minDate: moment().subtract(100, 'years'),
 		onSelect: noop,
-		showTimeSelector: false
+		showTimeSelector: false,
 	};
 
 	static propTypes = {
@@ -38,13 +44,13 @@ export default class DatePicker extends React.Component {
 		minDate: PropTypes.instanceOf(moment),
 		onSelect: PropTypes.func,
 		showTimeSelector: PropTypes.bool,
-		timeZoneId: PropTypes.string
+		timeZoneId: PropTypes.string,
 	};
 
 	state = {
 		currentMonth: moment(),
 		currentTime: moment().format('LT'),
-		maxRangeError: false
+		maxRangeError: false,
 	};
 
 	constructor(props) {
@@ -55,12 +61,13 @@ export default class DatePicker extends React.Component {
 		if (moment.isMoment(date)) {
 			this.state = {
 				...this.state,
-				currentMonth: date.clone().startOf('month')
+				currentMonth: date.clone().startOf('month'),
 			};
-		} else {
+		}
+		else {
 			this.state = {
 				...this.state,
-				maxRangeError: isAboveMaxRange(date, maxRange)
+				maxRangeError: isAboveMaxRange(date, maxRange),
 			};
 		}
 	}
@@ -70,7 +77,7 @@ export default class DatePicker extends React.Component {
 
 		if (moment.isMoment(date) && !date.isSame(prevProps.date)) {
 			this.setState({
-				currentMonth: this.props.date.clone().startOf('month')
+				currentMonth: this.props.date.clone().startOf('month'),
 			});
 		}
 	}
@@ -78,7 +85,7 @@ export default class DatePicker extends React.Component {
 	@autobind
 	handleCurrentMonth() {
 		this.setState({
-			currentMonth: moment().startOf('month')
+			currentMonth: moment().startOf('month'),
 		});
 	}
 
@@ -88,7 +95,7 @@ export default class DatePicker extends React.Component {
 		const {currentMonth} = this.state;
 
 		this.setState({
-			currentMonth: currentMonth.clone().month(value)
+			currentMonth: currentMonth.clone().month(value),
 		});
 	}
 
@@ -134,7 +141,7 @@ export default class DatePicker extends React.Component {
 		const {currentMonth} = this.state;
 
 		this.setState({
-			currentMonth: currentMonth.clone().year(value)
+			currentMonth: currentMonth.clone().year(value),
 		});
 	}
 
@@ -142,7 +149,7 @@ export default class DatePicker extends React.Component {
 	isNextDisabled() {
 		const {
 			props: {maxDate},
-			state: {currentMonth}
+			state: {currentMonth},
 		} = this;
 
 		return !!maxDate && maxDate.isSame(currentMonth, 'month');
@@ -152,7 +159,7 @@ export default class DatePicker extends React.Component {
 	isPrevDisabled() {
 		const {
 			props: {minDate},
-			state: {currentMonth}
+			state: {currentMonth},
 		} = this;
 
 		return !!minDate && !minDate.isBefore(currentMonth);
@@ -166,7 +173,7 @@ export default class DatePicker extends React.Component {
 
 	updateCurrentMonth(diff) {
 		this.setState({
-			currentMonth: this.state.currentMonth.clone().add(diff, 'months')
+			currentMonth: this.state.currentMonth.clone().add(diff, 'months'),
 		});
 	}
 
@@ -182,9 +189,9 @@ export default class DatePicker extends React.Component {
 				maxRange,
 				minDate,
 				showTimeSelector,
-				timeZoneId
+				timeZoneId,
 			},
-			state: {currentMonth, maxRangeError}
+			state: {currentMonth, maxRangeError},
 		} = this;
 
 		const currentYear = moment().year();
@@ -193,19 +200,19 @@ export default class DatePicker extends React.Component {
 		const startYear = minDate.year();
 
 		const classes = getCN('date-picker-root', {
-			disabled
+			disabled,
 		});
 
 		return (
 			<div aria-disabled={disabled} className={getCN(classes, className)}>
 				{header && (
-					<div className='picker-header picker-header--border'>
+					<div className="picker-header picker-header--border">
 						{header}
 					</div>
 				)}
 
 				{displayLabel && isRange(date) && (
-					<div className='picker-header'>
+					<div className="picker-header">
 						<label>
 							{date.start && !date.end
 								? Liferay.Language.get('end-date')
@@ -214,13 +221,13 @@ export default class DatePicker extends React.Component {
 					</div>
 				)}
 
-				<div className='controls'>
-					<div className='month-toggle-wrapper'>
+				<div className="controls">
+					<div className="month-toggle-wrapper">
 						<DatePickerSelect
 							onChange={this.handleMonthSelect}
-							options={moment.months().map(month => ({
+							options={moment.months().map((month) => ({
 								label: month,
-								value: month
+								value: month,
 							}))}
 							selected={currentMonth.format('MMMM')}
 						/>
@@ -231,9 +238,9 @@ export default class DatePicker extends React.Component {
 								endYear || currentYear + 5,
 								Math.min(startYear - 1, currentYear - 1),
 								-1
-							).map(year => ({
+							).map((year) => ({
 								label: year,
-								value: year
+								value: year,
 							}))}
 							selected={currentMonth.format('YYYY')}
 						/>
@@ -241,49 +248,49 @@ export default class DatePicker extends React.Component {
 
 					<ClayButton
 						aria-label={Liferay.Language.get('previous-month')}
-						className='button-root'
-						data-testid='previous-month'
+						className="button-root"
+						data-testid="previous-month"
 						disabled={this.isPrevDisabled()}
-						displayType='secondary'
+						displayType="secondary"
 						monospaced
 						onClick={this.handlePrevMonth}
-						size='sm'
+						size="sm"
 					>
 						<ClayIcon
-							className='icon-root'
-							symbol='angle-left-small'
+							className="icon-root"
+							symbol="angle-left-small"
 						/>
 					</ClayButton>
 
 					<ClayButton
-						className='button-root current-day-btn'
+						className="button-root current-day-btn"
 						disabled={this.isCurrentDisabled()}
-						displayType='secondary'
+						displayType="secondary"
 						monospaced
 						onClick={this.handleCurrentMonth}
-						size='sm'
+						size="sm"
 					>
-						{'•'}
+						•
 					</ClayButton>
 
 					<ClayButton
 						aria-label={Liferay.Language.get('next-month')}
-						className='button-root'
-						data-testid='next-month'
+						className="button-root"
+						data-testid="next-month"
 						disabled={this.isNextDisabled()}
-						displayType='secondary'
+						displayType="secondary"
 						monospaced
 						onClick={this.handleNextMonth}
-						size='sm'
+						size="sm"
 					>
 						<ClayIcon
-							className='icon-root'
-							symbol='angle-right-small'
+							className="icon-root"
+							symbol="angle-right-small"
 						/>
 					</ClayButton>
 				</div>
 
-				<div className='picker-body'>
+				<div className="picker-body">
 					<Calendar
 						currentMonth={currentMonth}
 						date={date}
@@ -294,7 +301,7 @@ export default class DatePicker extends React.Component {
 				</div>
 
 				{!isRange(date) && showTimeSelector && (
-					<div className='picker-footer'>
+					<div className="picker-footer">
 						<TimeSelector
 							onChange={this.handleTimeChange}
 							timeZoneId={timeZoneId}
@@ -304,8 +311,8 @@ export default class DatePicker extends React.Component {
 				)}
 
 				{maxRangeError && (
-					<div className='range-warning'>
-						<ClayIcon className='icon-root' symbol='warning' />
+					<div className="range-warning">
+						<ClayIcon className="icon-root" symbol="warning" />
 
 						{sub(
 							Liferay.Language.get(

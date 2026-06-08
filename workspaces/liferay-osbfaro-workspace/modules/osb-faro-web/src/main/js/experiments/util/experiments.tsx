@@ -1,4 +1,12 @@
-import {CHART_COLORS} from 'shared/util/charts';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {round} from 'lodash';
+import {CHART_COLORS} from '~/shared/util/charts';
+import {toRounded, toThousands, toThousandsBase} from '~/shared/util/numbers';
+
 import {CONTROL_COLOR} from './constants';
 import {
 	FormatYAxisFn,
@@ -14,23 +22,21 @@ import {
 	MergedVariantsFn,
 	MetricName,
 	Variant,
-	VariantMetric
+	VariantMetric,
 } from './types';
-import {round} from 'lodash';
-import {toRounded, toThousands, toThousandsBase} from 'shared/util/numbers';
 
 const METRICS_NAMES = new Map([
 	['BOUNCE_RATE', Liferay.Language.get('bounce-rate')],
 	['CLICK_RATE', Liferay.Language.get('click-through-rate')],
 	['MAX_SCROLL_DEPTH', Liferay.Language.get('max-scroll-depth')],
-	['TIME_ON_PAGE', Liferay.Language.get('view-duration')]
+	['TIME_ON_PAGE', Liferay.Language.get('view-duration')],
 ]);
 
 const METRICS_UNITS = new Map([
 	['BOUNCE_RATE', '%'],
 	['CLICK_RATE', '%'],
 	['MAX_SCROLL_DEPTH', '%'],
-	['TIME_ON_PAGE', 's']
+	['TIME_ON_PAGE', 's'],
 ]);
 
 const STATUS_COLORS = new Map([
@@ -41,7 +47,7 @@ const STATUS_COLORS = new Map([
 	['PAUSED', 'secondary'],
 	['RUNNING', 'info'],
 	['SCHEDULED', 'warning'],
-	['TERMINATED', 'danger']
+	['TERMINATED', 'danger'],
 ]);
 
 const STATUS_NAMES = new Map([
@@ -52,13 +58,13 @@ const STATUS_NAMES = new Map([
 	['PAUSED', Liferay.Language.get('paused')],
 	['RUNNING', Liferay.Language.get('running')],
 	['SCHEDULED', Liferay.Language.get('scheduled')],
-	['TERMINATED', Liferay.Language.get('terminated')]
+	['TERMINATED', Liferay.Language.get('terminated')],
 ]);
 
 const getExperimentLink = ({
 	action,
 	id,
-	pageURL
+	pageURL,
 }: {
 	action?: string;
 	id: string;
@@ -73,51 +79,66 @@ const getExperimentLink = ({
 	return experimentLink;
 };
 
-export const formatYAxis: FormatYAxisFn = metricUnit => value => {
-	if (value % 1 === 0) {
-		return `${value}${metricUnit}`;
-	}
+export const formatYAxis: FormatYAxisFn = function formatYAxis(metricUnit) {
+	return (value) => {
+		if (value % 1 === 0) {
+			return `${value}${metricUnit}`;
+		}
 
-	return `${value.toFixed(1)}${metricUnit}`;
+		return `${value.toFixed(1)}${metricUnit}`;
+	};
 };
 
-export const getFormattedMedian: GetFormattedMedianFn = (median, metric) => {
-	const precision = metric === 'CLICK_RATE' ? 3 : 2;
+export const getFormattedMedian: GetFormattedMedianFn =
+	function getFormattedMedian(median, metric) {
+		const precision = metric === 'CLICK_RATE' ? 3 : 2;
 
-	return toRounded(median, precision);
+		return toRounded(median, precision);
+	};
+
+export const getFormattedProbabilityToWin =
+	function getFormattedProbabilityToWin(value: number): string | number {
+		if (value < 0.1) {
+			return '< 0.1';
+		}
+		else if (value > 99.9) {
+			return '> 99.9';
+		}
+
+		return toRounded(value);
+	};
+
+export const getMetricName: GetMetricNameFn = function getMetricName(metric) {
+	return METRICS_NAMES.get(metric) ?? '';
 };
 
-export const getFormattedMedianLabel = (metric: MetricName) =>
-	metric === 'CLICK_RATE'
+export const getFormattedMedianLabel = function getFormattedMedianLabel(
+	metric: MetricName
+) {
+	return metric === 'CLICK_RATE'
 		? `${Liferay.Language.get('median')} ${getMetricName(metric)}`
 		: `${getMetricName(metric)} ${Liferay.Language.get('median')}`;
-
-export const getFormattedProbabilityToWin = (
-	value: number
-): string | number => {
-	if (value < 0.1) {
-		return '< 0.1';
-	} else if (value > 99.9) {
-		return '> 99.9';
-	}
-
-	return toRounded(value);
 };
 
-export const getMetricName: GetMetricNameFn = metric =>
-	METRICS_NAMES.get(metric) ?? '';
+export const getMetricUnit: GetMetricUnitFn = function getMetricUnit(metric) {
+	return METRICS_UNITS.get(metric) ?? '';
+};
 
-export const getMetricUnit: GetMetricUnitFn = metric =>
-	METRICS_UNITS.get(metric) ?? '';
+export const getStatusColor: GetStatusColorFn = function getStatusColor(
+	status
+) {
+	return STATUS_COLORS.get(status) ?? '';
+};
 
-export const getStatusColor: GetStatusColorFn = status =>
-	STATUS_COLORS.get(status) ?? '';
+export const getStatusName: GetStatusNameFn = function getStatusName(status) {
+	return (STATUS_NAMES.get(status) ?? '').toUpperCase();
+};
 
-export const getStatusName: GetStatusNameFn = status =>
-	(STATUS_NAMES.get(status) ?? '').toUpperCase();
-
-export const mergedVariants: MergedVariantsFn = (variants, variantMetrics) =>
-	variants.map(variant => {
+export const mergedVariants: MergedVariantsFn = function mergedVariants(
+	variants,
+	variantMetrics
+) {
+	return variants.map((variant) => {
 		const metric = variantMetrics.find(
 			({dxpVariantId}) => variant.dxpVariantId === dxpVariantId
 		);
@@ -127,9 +148,10 @@ export const mergedVariants: MergedVariantsFn = (variants, variantMetrics) =>
 			confidenceInterval: metric?.confidenceInterval ?? [],
 			improvement: metric?.improvement ?? 0,
 			median: metric?.median ?? 0,
-			probabilityToWin: metric?.probabilityToWin ?? 0
+			probabilityToWin: metric?.probabilityToWin ?? 0,
 		};
 	});
+};
 
 interface IGetActionsOptions {
 	id: string;
@@ -138,19 +160,19 @@ interface IGetActionsOptions {
 	publishable?: boolean;
 }
 
-export const getActions = (
+export const getActions = function getActions(
 	status: string,
 	{
 		id,
 		onDelete,
 		pageURL,
-		publishable
+		publishable,
 	}: IGetActionsOptions = {} as IGetActionsOptions
-) => {
+) {
 	const deleteButton = {
 		displayType: 'secondary',
 		label: Liferay.Language.get('delete'),
-		onClick: onDelete
+		onClick: onDelete,
 	};
 
 	switch (status) {
@@ -165,8 +187,8 @@ export const getActions = (
 					redirectURL: getExperimentLink({
 						action: 'reviewAndRun',
 						id,
-						pageURL
-					})
+						pageURL,
+					}),
 				},
 				{
 					displayType: 'secondary',
@@ -174,9 +196,9 @@ export const getActions = (
 					redirectURL: getExperimentLink({
 						action: 'delete',
 						id,
-						pageURL
-					})
-				}
+						pageURL,
+					}),
+				},
 			];
 		}
 		case 'FINISHED_NO_WINNER':
@@ -188,8 +210,8 @@ export const getActions = (
 					redirectURL: getExperimentLink({
 						action: 'publish',
 						id,
-						pageURL
-					})
+						pageURL,
+					}),
 				},
 				{
 					displayType: 'secondary',
@@ -197,9 +219,9 @@ export const getActions = (
 					redirectURL: getExperimentLink({
 						action: 'delete',
 						id,
-						pageURL
-					})
-				}
+						pageURL,
+					}),
+				},
 			];
 		}
 		case 'TERMINATED': {
@@ -211,8 +233,8 @@ export const getActions = (
 						redirectURL: getExperimentLink({
 							action: 'publish',
 							id,
-							pageURL
-						})
+							pageURL,
+						}),
 					},
 					{
 						displayType: 'secondary',
@@ -220,9 +242,9 @@ export const getActions = (
 						redirectURL: getExperimentLink({
 							action: 'delete',
 							id,
-							pageURL
-						})
-					}
+							pageURL,
+						}),
+					},
 				];
 			}
 
@@ -236,9 +258,9 @@ export const getActions = (
 					redirectURL: getExperimentLink({
 						action: 'terminate',
 						id,
-						pageURL
-					})
-				}
+						pageURL,
+					}),
+				},
 			];
 		}
 		default: {
@@ -247,15 +269,15 @@ export const getActions = (
 	}
 };
 
-export const getBestVariant = ({
+export const getBestVariant = function getBestVariant({
 	dxpVariants,
 	goal,
-	metrics: {variantMetrics}
+	metrics: {variantMetrics},
 }: {
 	dxpVariants: Variant[];
 	goal?: {metric: MetricName};
 	metrics: {variantMetrics: VariantMetric[]};
-}): MergedVariant | null => {
+}): MergedVariant | null {
 	if (
 		!dxpVariants ||
 		variantMetrics.every(({median}) => median === variantMetrics[0].median)
@@ -269,24 +291,24 @@ export const getBestVariant = ({
 		);
 	}
 
-	return mergedVariants(dxpVariants, variantMetrics).reduce((prev, current) =>
-		prev.median > current.median ? prev : current
+	return mergedVariants(dxpVariants, variantMetrics).reduce(
+		(prev, current) => (prev.median > current.median ? prev : current)
 	);
 };
 
-export const getVariantLabels: GetVariantLabels = ({
+export const getVariantLabels: GetVariantLabels = function getVariantLabels({
 	bestVariant,
 	dxpVariantId,
 	publishedDXPVariantId,
 	status,
-	winnerDXPVariantId
-}) => {
+	winnerDXPVariantId,
+}) {
 	const labels = [];
 
 	if (status === 'RUNNING' && bestVariant?.dxpVariantId === dxpVariantId) {
 		labels.push({
 			status: 'success',
-			value: Liferay.Language.get('current-best')
+			value: Liferay.Language.get('current-best'),
 		});
 	}
 
@@ -296,38 +318,43 @@ export const getVariantLabels: GetVariantLabels = ({
 	) {
 		labels.push({
 			status: 'success',
-			value: Liferay.Language.get('winner')
+			value: Liferay.Language.get('winner'),
 		});
 	}
 
 	if (publishedDXPVariantId === dxpVariantId) {
 		labels.push({
 			status: 'info',
-			value: Liferay.Language.get('published')
+			value: Liferay.Language.get('published'),
 		});
 	}
 
 	return labels;
 };
 
-export const getTicks: GetTicksFn = maxValue => {
-	const arr = [];
+export const getTicks: GetTicksFn = function getTicks(maxValue) {
+	const array = [];
 	let interval = 1;
 	const step = Math.round(maxValue / 8);
 
 	while (interval <= maxValue) {
-		arr.push(interval);
+		array.push(interval);
 
 		interval = interval + step;
 	}
 
-	return [...arr];
+	return [...array];
 };
 
-export const getShortIntervals: GetShortIntervals = intervals =>
-	getTicks(intervals.length).map(tick => intervals[tick - 1]);
+export const getShortIntervals: GetShortIntervals = function getShortIntervals(
+	intervals
+) {
+	return getTicks(intervals.length).map((tick) => intervals[tick - 1]);
+};
 
-export const toThousandsABTesting = (number: number) => {
+export const toThousandsABTesting = function toThousandsABTesting(
+	number: number
+) {
 	if (number > 1e4) {
 		return toThousandsBase(number, (factor: number) =>
 			Math.trunc(round(number * factor, 2))
@@ -337,23 +364,23 @@ export const toThousandsABTesting = (number: number) => {
 	return toThousands(number);
 };
 
-export const getLegendData = (dxpVariants: Variant[]) => {
+export const getLegendData = function getLegendData(dxpVariants: Variant[]) {
 	const COLORS = [...CHART_COLORS];
 
 	return dxpVariants.map(({control, dxpVariantId, dxpVariantName}) => ({
 		color: control ? CONTROL_COLOR : COLORS.shift(),
 		id: dxpVariantId,
-		name: dxpVariantName
+		name: dxpVariantName,
 	}));
 };
 
-export const getMedianGraphData = ({
+export const getMedianGraphData = function getMedianGraphData({
 	dxpVariants,
-	metricUnit
+	metricUnit,
 }: {
 	dxpVariants: MergedVariant[];
 	metricUnit: string;
-}) => {
+}) {
 	const COLORS = [...CHART_COLORS];
 
 	const type = metricUnit === '%' ? 'percentage' : 'number';
@@ -367,15 +394,15 @@ export const getMedianGraphData = ({
 		intervals: [
 			{
 				end: confidenceInterval[1],
-				start: confidenceInterval[0]
-			}
+				start: confidenceInterval[0],
+			},
 		],
 		progress: [
 			{
 				color: control ? CONTROL_COLOR : COLORS.shift(),
-				value: median
-			}
-		]
+				value: median,
+			},
+		],
 	}));
 
 	const maxValue = Math.max(
@@ -392,8 +419,8 @@ export const getMedianGraphData = ({
 			minValue: 0,
 			precision: 2,
 			show: true,
-			type
+			type,
 		},
-		items
+		items,
 	};
 };

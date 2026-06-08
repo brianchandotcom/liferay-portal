@@ -1,6 +1,12 @@
-import FilterInfo from './FilterInfo';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from '~/event-analysis/utils/types';
+
+import FilterInfo from './FilterInfo';
 
 interface IInfoCardPopoverProps {
 	dataType?: DataTypes;
@@ -13,9 +19,9 @@ const InfoCardPopover: React.FC<IInfoCardPopoverProps> = ({
 	dataType,
 	description,
 	name,
-	onEditClick
+	onEditClick,
 }) => (
-	<div className='info-card-popover-root'>
+	<div className="info-card-popover-root">
 		<FilterInfo
 			dataType={dataType}
 			description={description}

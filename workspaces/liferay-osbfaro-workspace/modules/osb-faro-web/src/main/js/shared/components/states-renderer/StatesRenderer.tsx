@@ -1,10 +1,15 @@
-import Loading, {ILoadingProps} from 'shared/components/Loading';
-import NoResultsDisplay, {
-	INoResultsDisplayProps
-} from 'shared/components/NoResultsDisplay';
-import React, {createContext, FC, useContext} from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {ApolloError} from '@apollo/client';
-import {Sizes} from 'shared/util/constants';
+import React, {FC, createContext, useContext} from 'react';
+import Loading, {ILoadingProps} from '~/shared/components/Loading';
+import NoResultsDisplay, {
+	INoResultsDisplayProps,
+} from '~/shared/components/NoResultsDisplay';
+import {Sizes} from '~/shared/util/constants';
 
 export interface IStatesRendererContextProps
 	extends React.HTMLAttributes<HTMLElement> {
@@ -39,7 +44,7 @@ interface ISuccessStateProps
 const StatesRendererContext = createContext<IStatesRendererContextProps>({
 	empty: false,
 	error: false,
-	loading: false
+	loading: false,
 });
 
 const EmptyState: FC<IEmptyStateProps> = ({
@@ -69,8 +74,8 @@ const EmptyState: FC<IEmptyStateProps> = ({
 						border: false,
 						size: Sizes.XXXLarge,
 						symbol: 'ac_satellite',
-						...icon
-					}
+						...icon,
+					},
 				})}
 				{...otherProps}
 			/>
@@ -81,7 +86,7 @@ const EmptyState: FC<IEmptyStateProps> = ({
 const ErrorState: FC<IErrorStateProps> = ({
 	apolloError,
 	children,
-	show = true
+	show = true,
 }) => {
 	const {error} = useContext(StatesRendererContext);
 

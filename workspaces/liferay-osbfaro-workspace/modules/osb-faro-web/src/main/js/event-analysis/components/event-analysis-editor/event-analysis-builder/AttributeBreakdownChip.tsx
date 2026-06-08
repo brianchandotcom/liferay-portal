@@ -1,9 +1,15 @@
-import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
-import AttributeChip, {DragTypes} from './AttributeChip';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {Attribute, Breakdown} from 'event-analysis/utils/types';
+import {Attribute, Breakdown} from '~/event-analysis/utils/types';
+import {getBreakdownDisplay} from '~/event-analysis/utils/utils';
+
 import {DeleteBreakdown, EditBreakdown} from '../context/attributes';
-import {getBreakdownDisplay} from 'event-analysis/utils/utils';
+import AttributeChip, {DragTypes} from './AttributeChip';
+import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
 
 const AttributeBreakdownChip: React.FC<{
 	attribute: Attribute;
@@ -24,7 +30,7 @@ const AttributeBreakdownChip: React.FC<{
 	onCloseClick,
 	onEditSubmit,
 	onMove,
-	uneditableIds
+	uneditableIds,
 }) => {
 	const [label, value] = getBreakdownDisplay(
 		attribute,
@@ -37,7 +43,7 @@ const AttributeBreakdownChip: React.FC<{
 		...attribute,
 		dataType,
 		description,
-		displayName
+		displayName,
 	};
 
 	return (

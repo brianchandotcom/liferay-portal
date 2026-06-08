@@ -28,7 +28,9 @@
 
 		.channels-menu-icon {
 			opacity: 1;
-			transition: opacity 0.2s ease, visibility 0.2s ease;
+			transition:
+				opacity 0.2s ease,
+				visibility 0.2s ease;
 			transition-delay: 0.2s;
 			visibility: visible;
 		}
@@ -38,14 +40,18 @@
 	.section-title,
 	.user-name {
 		opacity: 1;
-		transition: opacity 0.2s ease, visibility 0.2s ease;
+		transition:
+			opacity 0.2s ease,
+			visibility 0.2s ease;
 		visibility: visible;
 	}
 
 	.channels-menu-label,
 	.channels-menu-caret {
 		opacity: 1;
-		transition: opacity 0.2s ease, visibility 0.2s ease;
+		transition:
+			opacity 0.2s ease,
+			visibility 0.2s ease;
 		transition-delay: 0.1s;
 		visibility: visible;
 	}
@@ -61,7 +67,9 @@
 		height: 40px;
 		padding: 0 24px;
 		position: relative;
-		transition: border-color 0.15s ease-out, background-color 0.15s ease-out,
+		transition:
+			border-color 0.15s ease-out,
+			background-color 0.15s ease-out,
 			color 0.15s ease-out;
 		width: 100%;
 
@@ -193,8 +201,10 @@
 			font-size: $fontSizeSmall;
 			font-weight: $fontWeightSemiBold;
 			margin-right: 16px;
-			transition: border-color 0.15s ease-out,
-				background-color 0.15s ease-out, color 0.15s ease-out;
+			transition:
+				border-color 0.15s ease-out,
+				background-color 0.15s ease-out,
+				color 0.15s ease-out;
 		}
 	}
 }

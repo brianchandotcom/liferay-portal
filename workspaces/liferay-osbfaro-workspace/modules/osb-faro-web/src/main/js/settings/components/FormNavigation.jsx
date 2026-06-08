@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import getCN from 'classnames';
-import Loading, {Align} from 'shared/components/Loading';
-import React from 'react';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import Loading, {Align} from '~/shared/components/Loading';
 
 class FormNavigation extends React.Component {
 	static defaultProps = {
 		enableNext: false,
-		submitMessage: Liferay.Language.get('next')
+		submitMessage: Liferay.Language.get('next'),
 	};
 
 	static propTypes = {
@@ -18,7 +23,7 @@ class FormNavigation extends React.Component {
 		onNextStep: PropTypes.func,
 		onPreviousStep: PropTypes.func,
 		submitMessage: PropTypes.string,
-		submitting: PropTypes.bool
+		submitting: PropTypes.bool,
 	};
 
 	render() {
@@ -29,16 +34,16 @@ class FormNavigation extends React.Component {
 			onNextStep,
 			onPreviousStep,
 			submitMessage,
-			submitting
+			submitting,
 		} = this.props;
 
 		return (
 			<div className={getCN('form-navigation-root', className)}>
 				{onPreviousStep && (
 					<ClayButton
-						className='button-root'
-						displayType='secondary'
-						key='previousStep'
+						className="button-root"
+						displayType="secondary"
+						key="previousStep"
 						onClick={onPreviousStep}
 					>
 						{Liferay.Language.get('previous')}
@@ -47,17 +52,17 @@ class FormNavigation extends React.Component {
 
 				<ClayLink
 					button
-					className='button-root cancel'
-					displayType='secondary'
+					className="button-root cancel"
+					displayType="secondary"
 					href={cancelHref}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayLink>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={!enableNext}
-					displayType='primary'
+					displayType="primary"
 					onClick={onNextStep}
 					type={onNextStep ? 'button' : 'submit'}
 				>

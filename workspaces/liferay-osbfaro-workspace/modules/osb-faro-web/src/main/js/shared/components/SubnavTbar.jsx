@@ -1,23 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import React from 'react';
 import {PropTypes} from 'prop-types';
+import React from 'react';
 
 const DISPLAYS = ['primary', ''];
 
 class TbarItem extends React.Component {
 	static defaultProps = {
-		expand: false
+		expand: false,
 	};
 
 	static propTypes = {
-		expand: PropTypes.bool
+		expand: PropTypes.bool,
 	};
 
 	render() {
 		const {children, className, expand} = this.props;
 
 		const classes = getCN('tbar-item', className, {
-			'tbar-item-expand': expand
+			'tbar-item-expand': expand,
 		});
 
 		return (
@@ -31,6 +36,7 @@ class TbarItem extends React.Component {
 class TbarSection extends React.Component {
 	render() {
 		const {children, className} = this.props;
+
 		return (
 			<div className={getCN('tbar-section', 'text-truncate', className)}>
 				{children}
@@ -41,12 +47,12 @@ class TbarSection extends React.Component {
 
 class SubnavTbar extends React.Component {
 	static defaultProps = {
-		display: ''
+		display: '',
 	};
 
 	static propTypes = {
 		className: PropTypes.string,
-		display: PropTypes.oneOf(DISPLAYS)
+		display: PropTypes.oneOf(DISPLAYS),
 	};
 
 	render() {
@@ -59,14 +65,14 @@ class SubnavTbar extends React.Component {
 			'subnav-tbar',
 			'tbar',
 			{
-				'subnav-tbar-primary': display === 'primary'
+				'subnav-tbar-primary': display === 'primary',
 			}
 		);
 
 		return (
 			<nav className={classes}>
-				<div className='container-fluid'>
-					<div className='tbar-nav'>{children}</div>
+				<div className="container-fluid">
+					<div className="tbar-nav">{children}</div>
 				</div>
 			</nav>
 		);

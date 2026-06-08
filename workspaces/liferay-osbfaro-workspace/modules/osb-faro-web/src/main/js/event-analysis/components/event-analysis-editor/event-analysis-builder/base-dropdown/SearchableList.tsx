@@ -1,8 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayDropdown from '@clayui/drop-down';
-import ListItem from './ListItem';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import {Attribute, Breakdown, Event, Filter} from 'event-analysis/utils/types';
+import {
+	Attribute,
+	Breakdown,
+	Event,
+	Filter,
+} from '~/event-analysis/utils/types';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+
+import ListItem from './ListItem';
 
 interface ISearchableListProps {
 	activeId?: string;
@@ -33,7 +44,7 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 	query,
 	showInfoCard,
 	showOptionsCondition = () => false,
-	uneditableIds
+	uneditableIds,
 }) => {
 	const filteredItems = items.filter(({displayName, name}) =>
 		(displayName || name)
@@ -47,29 +58,27 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 	return (
 		<>
 			<ClayDropdown.Search
-				formProps={{onSubmit: e => e.preventDefault()}}
+				formProps={{onSubmit: (event) => event.preventDefault()}}
 				onChange={onQueryChange}
 				placeholder={Liferay.Language.get('search')}
 				value={query}
 			/>
-
 			{noResults && <NoResultsDisplay spacer />}
-
 			{!noResults && (
-				<ClayDropdown.ItemList className='base-dropdown-list'>
-					{filteredItems.map(item => {
+				<ClayDropdown.ItemList className="base-dropdown-list">
+					{filteredItems.map((item) => {
 						const active = activeId === item.id;
 
 						const disabled =
 							disabledIds &&
 							disabledIds.some(
-								id => id === item.id && id !== activeId
+								(id) => id === item.id && id !== activeId
 							);
 
 						const editable =
 							!(
 								uneditableIds &&
-								uneditableIds.some(id => id === item.id)
+								uneditableIds.some((id) => id === item.id)
 							) && !active;
 
 						return (

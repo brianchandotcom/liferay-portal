@@ -1,46 +1,54 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import Nav from 'shared/components/Nav';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import RowActions from 'shared/components/RowActions';
-import URLConstants from 'shared/util/url-constants';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
+import {ConnectedProps, connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import Card from '~/shared/components/Card';
+import Nav from '~/shared/components/Nav';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import RowActions from '~/shared/components/RowActions';
+import {
+	CreatedByCell,
+	NameCell,
+} from '~/shared/components/table/cell-components';
+import {
+	useSelectionContext,
+	withSelectionProvider,
+} from '~/shared/context/selection';
+import {compose} from '~/shared/hoc';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useQueryRangeSelectors} from '~/shared/hooks/useQueryRangeSelectors';
+import {Alert} from '~/shared/types';
+import {Sizes} from '~/shared/util/constants';
+import {getPluralMessage} from '~/shared/util/lang';
+import {mapListResultsToProps} from '~/shared/util/mappers';
 import {
 	CREATED_BY_USER_NAME,
+	NAME,
 	createOrderIOMap,
 	getGraphQLVariablesFromPagination,
-	NAME
-} from 'shared/util/pagination';
-import {CreatedByCell} from 'shared/components/table/cell-components';
+} from '~/shared/util/pagination';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
+
 import {
 	DeleteEventAnalysisData,
 	DeleteEventAnalysisMutation,
 	DeleteEventAnalysisVariables,
 	EventAnalysisListData,
 	EventAnalysisListQuery,
-	EventAnalysisListVariables
+	EventAnalysisListVariables,
 } from '../queries/EventAnalysisQuery';
-import {getPluralMessage} from 'shared/util/lang';
-import {mapListResultsToProps} from 'shared/util/mappers';
-import {NameCell} from 'shared/components/table/cell-components';
-import {Routes, toRoute} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {useMutation, useQuery} from '@apollo/client';
-import {useParams} from 'react-router-dom';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
-import {
-	useSelectionContext,
-	withSelectionProvider
-} from 'shared/context/selection';
 
 const connector = connect(null, {addAlert, close, open});
 
@@ -54,12 +62,12 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 	addAlert,
 	close,
 	onItemsChange,
-	open
+	open,
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {channelId = '', groupId = ''} = useParams<{
@@ -72,7 +80,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 		delta,
 		orderIOMap,
 		page,
-		query
+		query,
 	});
 
 	const {keywords, size, sort} = {
@@ -80,8 +88,8 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 		size: paginationVariables.size,
 		sort: paginationVariables.sort ?? {
 			column: NAME,
-			type: 'ASCENDING'
-		}
+			type: 'ASCENDING',
+		},
 	};
 
 	const response = useQuery<
@@ -94,8 +102,8 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 			keywords,
 			page: page - 1,
 			size,
-			sort
-		}
+			sort,
+		},
 	});
 
 	const [deleteEventAnalysis] = useMutation<
@@ -108,7 +116,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 
 		const message = (
 			<div>
-				<div className='h4 text-secondary'>
+				<div className="h4 text-secondary">
 					{getPluralMessage(
 						Liferay.Language.get(
 							'are-you-sure-you-want-to-delete-this-analysis'
@@ -137,19 +145,19 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 		const onSubmit = () => {
 			deleteEventAnalysis({
 				variables: {
-					eventAnalysisIds
-				}
+					eventAnalysisIds,
+				},
 			})
 				.then(() => {
 					addAlert({
 						alertType: Alert.Types.Success,
 						message: Liferay.Language.get(
 							'the-analysis-has-been-deleted'
-						)
+						),
 					});
 
 					selectionDispatch?.({
-						type: 'clear-all'
+						type: 'clear-all',
 					});
 
 					if (refetch) {
@@ -162,7 +170,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 					addAlert({
 						alertType: Alert.Types.Error,
 						message: Liferay.Language.get('error'),
-						timeout: false
+						timeout: false,
 					});
 				});
 		};
@@ -175,7 +183,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 			submitButtonDisplay: 'warning',
 			submitMessage: Liferay.Language.get('delete'),
 			title: Liferay.Language.get('deleting-analysis'),
-			titleIcon: 'warning-full'
+			titleIcon: 'warning-full',
 		});
 	};
 
@@ -188,14 +196,14 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 					<ClayButton
 						aria-label={Liferay.Language.get('delete')}
 						borderless
-						className='button-root'
-						displayType='secondary'
+						className="button-root"
+						displayType="secondary"
 						onClick={() =>
 							handleDeleteEventAnalysis(eventAnalysisIds)
 						}
 						outline
 					>
-						<ClayIcon className='icon-root' symbol='trash' />
+						<ClayIcon className="icon-root" symbol="trash" />
 					</ClayButton>
 				</Nav>
 			);
@@ -210,8 +218,8 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 						{
 							iconSymbol: 'trash',
 							label: Liferay.Language.get('delete'),
-							onClick: () => handleDeleteEventAnalysis([id])
-						}
+							onClick: () => handleDeleteEventAnalysis([id]),
+						},
 					]}
 				/>
 			);
@@ -219,11 +227,11 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 	};
 
 	return (
-		<Card className='event-analysis-list-root' pageDisplay>
+		<Card className="event-analysis-list-root" pageDisplay>
 			<CrossPageSelect
 				{...mapListResultsToProps(response, (result: any) => ({
 					items: result.eventAnalyses.eventAnalyses,
-					total: result.eventAnalyses.total
+					total: result.eventAnalyses.total,
 				}))}
 				columns={[
 					{
@@ -234,17 +242,17 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 								toRoute(Routes.EVENT_ANALYSIS_EDIT, {
 									channelId,
 									groupId,
-									id
-								})
+									id,
+								}),
 						},
 						className: 'table-cell-expand',
-						label: Liferay.Language.get('name')
+						label: Liferay.Language.get('name'),
 					},
 					{
 						accessor: CREATED_BY_USER_NAME,
 						cellRenderer: CreatedByCell,
-						label: Liferay.Language.get('created-by')
-					}
+						label: Liferay.Language.get('created-by'),
+					},
 				]}
 				delta={delta}
 				entityLabel={Liferay.Language.get('event-analysis')}
@@ -258,12 +266,12 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 								)}
 
 								<ClayLink
-									className='d-block'
+									className="d-block"
 									href={
 										URLConstants.EventAnalysisDocumentationLink
 									}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-more'
@@ -274,7 +282,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_satellite'
+							symbol: 'ac_satellite',
 						}}
 						title={Liferay.Language.get(
 							'there-are-no-analyses-found'
@@ -284,12 +292,12 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 				orderByOptions={[
 					{
 						label: Liferay.Language.get('name'),
-						value: NAME
+						value: NAME,
 					},
 					{
 						label: Liferay.Language.get('created-by'),
-						value: CREATED_BY_USER_NAME
-					}
+						value: CREATED_BY_USER_NAME,
+					},
 				]}
 				orderIOMap={orderIOMap}
 				page={page}
@@ -297,7 +305,7 @@ const EventAnalysisListCard: React.FC<EventAnalysisListCardProps> = ({
 				rangeSelectors={rangeSelectors}
 				renderNav={renderNav}
 				renderRowActions={renderRowActions}
-				rowIdentifier='id'
+				rowIdentifier="id"
 				showCheckbox
 				showFilterAndOrder
 			/>

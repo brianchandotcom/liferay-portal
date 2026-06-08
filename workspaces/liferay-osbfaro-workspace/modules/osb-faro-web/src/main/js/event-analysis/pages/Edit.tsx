@@ -1,29 +1,37 @@
-import BaseEventAnalysisPage from '../components/BaseEventAnalysisPage';
-import ErrorPage from 'shared/pages/ErrorPage';
-import Loading from 'shared/components/Loading';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
+import {uniqueId} from 'lodash';
 import React, {useMemo} from 'react';
-import {Attribute, Breakdown, Filter} from 'event-analysis/utils/types';
-import {AttributesProvider} from '../components/event-analysis-editor/context/attributes';
-import {AttributesState} from '../components/event-analysis-editor/context/attributes';
-import {deletePropertyFromObject} from 'shared/util/object';
+import {useParams} from 'react-router-dom';
+import {Attribute, Breakdown, Filter} from '~/event-analysis/utils/types';
+import Loading from '~/shared/components/Loading';
+import ErrorPage from '~/shared/pages/ErrorPage';
+import {deletePropertyFromObject} from '~/shared/util/object';
+import {Routes, toRoute} from '~/shared/util/router';
+import {normalizeRangeSelectors} from '~/shared/util/util';
+
+import BaseEventAnalysisPage from '../components/BaseEventAnalysisPage';
+import {
+	AttributesProvider,
+	AttributesState,
+} from '../components/event-analysis-editor/context/attributes';
 import {
 	EventAnalysisData,
 	EventAnalysisQuery,
-	EventAnalysisVariables
+	EventAnalysisVariables,
 } from '../queries/EventAnalysisQuery';
-import {normalizeRangeSelectors} from 'shared/util/util';
-import {Routes, toRoute} from 'shared/util/router';
-import {uniqueId} from 'lodash';
-import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/client';
 
-function normalizeItems<T extends {id: string; __typename?: string}>(
+function normalizeItems<T extends {__typename?: string; id: string}>(
 	data: T[]
 ): {[key: string]: T} {
 	return data.reduce(
 		(acc, item) => ({
 			...acc,
-			[item.id]: deletePropertyFromObject('__typename', item)
+			[item.id]: deletePropertyFromObject('__typename', item),
 		}),
 		{}
 	);
@@ -33,9 +41,9 @@ function getItemsWithUniqueId<T>(
 	items: T[],
 	key: string
 ): Array<T & {id: string}> {
-	return items.map(item => ({
+	return items.map((item) => ({
 		...item,
-		id: uniqueId(key)
+		id: uniqueId(key),
 	}));
 }
 
@@ -51,7 +59,7 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const {
 		channelId,
 		groupId,
-		id: eventAnalysisId = ''
+		id: eventAnalysisId = '',
 	} = useParams<{
 		channelId: string;
 		groupId: string;
@@ -63,8 +71,8 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	>(EventAnalysisQuery, {
 		fetchPolicy: 'network-only',
 		variables: {
-			eventAnalysisId
-		}
+			eventAnalysisId,
+		},
 	});
 
 	const initialAttributesState = useMemo(() => {
@@ -73,8 +81,8 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				eventAnalysis: {
 					eventAnalysisBreakdowns,
 					eventAnalysisFilters,
-					referencedObjects: {eventAttributeDefinitions}
-				}
+					referencedObjects: {eventAttributeDefinitions},
+				},
 			} = data;
 
 			const breakdowns: BreakdownWithId[] =
@@ -94,18 +102,20 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				breakdownOrder: breakdowns.map(({id}) => id),
 				breakdowns: normalizeItems<BreakdownWithId>(breakdowns),
 				filterOrder: filters.map(({id}) => id),
-				filters: normalizeItems<FilterWithId>(filters)
+				filters: normalizeItems<FilterWithId>(filters),
 			};
 
 			return attributesState;
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		data?.eventAnalysis?.eventAnalysisBreakdowns,
-		data?.eventAnalysis?.eventAnalysisFilters
+		data?.eventAnalysis?.eventAnalysisFilters,
 	]);
 
 	if (loading) {
-		return <Loading key='LOADING' />;
+		return <Loading key="LOADING" />;
 	}
 
 	if (error) {
@@ -113,7 +123,7 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			<ErrorPage
 				href={toRoute(Routes.EVENT_ANALYSIS, {
 					channelId,
-					groupId
+					groupId,
 				})}
 				linkLabel={Liferay.Language.get('go-to-event-analysis')}
 				message={Liferay.Language.get(
@@ -131,8 +141,8 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			rangeEnd,
 			rangeKey,
 			rangeStart,
-			referencedObjects: {eventDefinition}
-		}
+			referencedObjects: {eventDefinition},
+		},
 	} = data!;
 
 	return (
@@ -144,7 +154,7 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				rangeSelectors={normalizeRangeSelectors({
 					rangeEnd,
 					rangeKey,
-					rangeStart
+					rangeStart,
 				})}
 			/>
 		</AttributesProvider>

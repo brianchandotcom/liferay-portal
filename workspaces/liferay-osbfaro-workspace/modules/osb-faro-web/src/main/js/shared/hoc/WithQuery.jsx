@@ -1,5 +1,10 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
 
 /**
  * HOC for fetching data
@@ -9,13 +14,13 @@ import {autoCancel, hasRequest} from 'shared/util/request-decorator';
  * @returns {Function} The WrappedComponent with data props.
  */
 export default (dataSourceFn, mapRequestProps, mapResultToProps) =>
-	WrappedComponent => {
+	(WrappedComponent) => {
 		@hasRequest
 		class RequestContainer extends React.Component {
 			state = {
 				data: null,
 				error: false,
-				loading: true
+				loading: true,
 			};
 
 			componentDidMount() {
@@ -28,20 +33,20 @@ export default (dataSourceFn, mapRequestProps, mapResultToProps) =>
 
 				return dataSourceFn({
 					...mapRequestProps(this.props),
-					...otherParams
+					...otherParams,
 				})
-					.then(response => {
+					.then((response) => {
 						this.setState({
 							data: response,
 							error: false,
-							loading: false
+							loading: false,
 						});
 					})
-					.catch(err => {
-						if (!err.IS_CANCELLATION_ERROR) {
+					.catch((error) => {
+						if (!error.IS_CANCELLATION_ERROR) {
 							this.setState({
 								error: true,
-								loading: false
+								loading: false,
 							});
 						}
 					});
@@ -54,7 +59,7 @@ export default (dataSourceFn, mapRequestProps, mapResultToProps) =>
 					data,
 					error,
 					loading,
-					refetch: this.handleFetchResults
+					refetch: this.handleFetchResults,
 				};
 
 				const propsToComponent = mapResultToProps
@@ -62,8 +67,10 @@ export default (dataSourceFn, mapRequestProps, mapResultToProps) =>
 					: resultProps;
 
 				return (
+
 					/* eslint-disable react/jsx-handler-names */
 					<WrappedComponent {...this.props} {...propsToComponent} />
+
 					/* eslint-disable react/jsx-handler-names */
 				);
 			}

@@ -1,46 +1,51 @@
-import * as fieldMappingsAPI from 'shared/api/field-mappings';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import React from 'react';
-import SelectInput from 'shared/components/SelectInput';
-import Sticker from 'shared/components/Sticker';
-import TextTruncate from 'shared/components/TextTruncate';
-import {FieldContexts, FieldTypes} from 'shared/util/constants';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import * as fieldMappingsAPI from '~/shared/api/field-mappings';
+import SelectInput from '~/shared/components/SelectInput';
+import Sticker from '~/shared/components/Sticker';
+import TextTruncate from '~/shared/components/TextTruncate';
+import {FieldContexts, FieldTypes} from '~/shared/util/constants';
 
 const ITEM_DISPLAY_LANG_MAP = {
 	[FieldTypes.Date]: Liferay.Language.get('field-avatar-date'),
 	[FieldTypes.Number]: Liferay.Language.get('field-avatar-number'),
 	[FieldTypes.Boolean]: Liferay.Language.get('field-avatar-boolean'),
-	[FieldTypes.String]: Liferay.Language.get('field-avatar-string')
+	[FieldTypes.String]: Liferay.Language.get('field-avatar-string'),
 };
 
 const STICKER_DISPLAY_MAP = {
 	[FieldTypes.Boolean]: 'boolean',
 	[FieldTypes.Date]: 'date',
 	[FieldTypes.Number]: 'number',
-	[FieldTypes.String]: 'string'
+	[FieldTypes.String]: 'string',
 };
 
 const Item = ({name, rawType}) => (
-	<div className='field-display-root'>
-		<Sticker circle display={STICKER_DISPLAY_MAP[rawType]} size='sm'>
+	<div className="field-display-root">
+		<Sticker circle display={STICKER_DISPLAY_MAP[rawType]} size="sm">
 			{ITEM_DISPLAY_LANG_MAP[rawType]}
 		</Sticker>
 
-		<div className='field-details'>
-			<TextTruncate className='name' title={name} />
+		<div className="field-details">
+			<TextTruncate className="name" title={name} />
 		</div>
 	</div>
 );
 
 class SelectFieldInput extends React.Component {
 	static defaultProps = {
-		context: FieldContexts.Demographics
+		context: FieldContexts.Demographics,
 	};
 
 	static propTypes = {
 		context: PropTypes.string,
-		groupId: PropTypes.string.isRequired
+		groupId: PropTypes.string.isRequired,
 	};
 
 	_selectInputRef = React.createRef();
@@ -62,7 +67,7 @@ class SelectFieldInput extends React.Component {
 				delta: 10,
 				groupId,
 				orderByType: '',
-				query
+				query,
 			})
 			.then(({items}) => items);
 	}

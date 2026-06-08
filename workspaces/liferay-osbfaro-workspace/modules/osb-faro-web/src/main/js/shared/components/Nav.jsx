@@ -1,12 +1,18 @@
-import * as NavBar from './NavBar';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import {addContext, isIn} from 'shared/util/clay';
-import {Link} from 'react-router-dom';
-import {PropTypes} from 'prop-types';
 import {Stack} from 'immutable';
+import {PropTypes} from 'prop-types';
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {addContext, isIn} from '~/shared/util/clay';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
+import * as NavBar from './NavBar';
 export const CONTEXT = 'nav';
 const DISPLAYS = ['pills', 'tabs', 'underline', 'stacked'];
 
@@ -23,7 +29,7 @@ class Text extends React.Component {
 class Item extends React.Component {
 	static defaultProps = {
 		active: false,
-		disabled: false
+		disabled: false,
 	};
 
 	static propTypes = {
@@ -31,7 +37,7 @@ class Item extends React.Component {
 		disabled: PropTypes.bool,
 		href: PropTypes.string,
 		id: PropTypes.string,
-		onClick: PropTypes.func
+		onClick: PropTypes.func,
 	};
 
 	@autobind
@@ -54,10 +60,10 @@ class Item extends React.Component {
 				<Link
 					className={getCN('nav-link', className, {
 						active,
-						disabled
+						disabled,
 					})}
 					onClick={this.handleItemClick}
-					role='tab'
+					role="tab"
 					to={href}
 				>
 					{children}
@@ -70,9 +76,9 @@ class Item extends React.Component {
 				{...omitDefinedProps(otherProps, Item.propTypes)}
 				className={getCN('nav-item', className, {
 					active,
-					disabled
+					disabled,
 				})}
-				role='presentation'
+				role="presentation"
 			>
 				{content}
 			</li>
@@ -82,15 +88,15 @@ class Item extends React.Component {
 
 class Nav extends React.Component {
 	static contextTypes = {
-		clay: PropTypes.instanceOf(Stack)
+		clay: PropTypes.instanceOf(Stack),
 	};
 
 	static childContextTypes = {
-		clay: PropTypes.instanceOf(Stack)
+		clay: PropTypes.instanceOf(Stack),
 	};
 
 	static propTypes = {
-		display: PropTypes.oneOf(DISPLAYS)
+		display: PropTypes.oneOf(DISPLAYS),
 	};
 
 	getChildContext() {
@@ -103,13 +109,13 @@ class Nav extends React.Component {
 		const navBar = isIn(this, NavBar.CONTEXT);
 
 		const classes = getCN('nav-root', className, {
-			nav: !navBar,
+			'nav': !navBar,
 			'navbar-nav': navBar,
-			[`nav-${display}`]: display
+			[`nav-${display}`]: display,
 		});
 
 		return (
-			<ul className={classes} role='tablist'>
+			<ul className={classes} role="tablist">
 				{children}
 			</ul>
 		);

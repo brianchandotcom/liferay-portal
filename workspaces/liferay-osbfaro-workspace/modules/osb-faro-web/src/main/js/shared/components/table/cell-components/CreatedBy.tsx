@@ -1,6 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {formatDateToTimeZone} from 'shared/util/date';
-import {sub} from 'shared/util/lang';
+import {formatDateToTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
 
 interface ICreatedByProps {
 	className?: string;
@@ -14,14 +19,14 @@ interface ICreatedByProps {
 const CreatedByCell: React.FC<ICreatedByProps> = ({
 	className,
 	data: {dateModified, userName},
-	timeZoneId
+	timeZoneId,
 }) => (
 	<td className={className}>
 		<b>{userName}</b>
-		<div className='text-secondary'>
+		<div className="text-secondary">
 			<em>
 				{sub(Liferay.Language.get('last-edited-x'), [
-					formatDateToTimeZone(dateModified, 'M/D/YY', timeZoneId)
+					formatDateToTimeZone(dateModified, 'M/D/YY', timeZoneId),
 				])}
 			</em>
 		</div>

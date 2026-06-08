@@ -1,5 +1,11 @@
-import Circle from 'shared/components/Circle';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import Circle from '~/shared/components/Circle';
+
 import TooltipTemplate from './TooltipTemplate';
 import {Alignments, Column, Weights} from './types';
 
@@ -31,7 +37,7 @@ const Columns: React.FC<IColumnsProps> = ({columns}) => (
 					label,
 					truncated,
 					weight,
-					width
+					width,
 				},
 				index
 			) => {
@@ -62,7 +68,7 @@ const ChartTooltip: React.FC<IChartTooltipProps> = ({
 	className,
 	description,
 	header,
-	rows
+	rows,
 }) => (
 	<TooltipTemplate className={className}>
 		{!!header && (
@@ -78,9 +84,9 @@ const ChartTooltip: React.FC<IChartTooltipProps> = ({
 		{!!rows && (
 			<TooltipTemplate.Body>
 				{description ? (
-					<TooltipTemplate.Row key='body-rows-description'>
+					<TooltipTemplate.Row key="body-rows-description">
 						<TooltipTemplate.Column
-							className='my-2 text-secondary'
+							className="my-2 text-secondary"
 							colSpan={header ? header[0].columns.length : 1}
 						>
 							{description}

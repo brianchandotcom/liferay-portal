@@ -1,6 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
 import React from 'react';
-import {sub} from 'shared/util/lang';
+import {sub} from '~/shared/util/lang';
 
 interface ISyncedStripeProps {
 	channelsSyncedCount: number;
@@ -45,14 +50,14 @@ export function getTitle(
 
 const SyncedStripe: React.FC<ISyncedStripeProps> = ({
 	channelsSyncedCount,
-	sitesSyncedCount
+	sitesSyncedCount,
 }) => (
 	<div
 		className={getCN('sites-synced-stripe-root', {
-			empty: !sitesSyncedCount && !channelsSyncedCount
+			empty: !sitesSyncedCount && !channelsSyncedCount,
 		})}
 	>
-		<div className='title d-flex align-items-center'>
+		<div className="align-items-center d-flex title">
 			{getTitle(sitesSyncedCount, channelsSyncedCount)}
 		</div>
 
@@ -62,11 +67,11 @@ const SyncedStripe: React.FC<ISyncedStripeProps> = ({
 					'manage-sites-synced-to-this-property-by-going-to-x-in-your-dxp-instance'
 				),
 				[
-					<b key='INSTANCE_SETTINGS'>
+					<b key="INSTANCE_SETTINGS">
 						{Liferay.Language.get(
 							'instance-settings-analytics-cloud'
 						)}
-					</b>
+					</b>,
 				],
 				false
 			)}

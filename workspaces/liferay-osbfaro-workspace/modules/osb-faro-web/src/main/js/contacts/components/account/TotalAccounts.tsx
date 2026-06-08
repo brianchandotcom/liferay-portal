@@ -1,16 +1,22 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLayout from '@clayui/layout';
-import MetricCard from 'shared/components/MetricCard';
 import React from 'react';
+import {useParams} from 'react-router';
+import * as API from '~/shared/api';
+import MetricCard from '~/shared/components/MetricCard';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {sub} from '~/shared/util/lang';
+import {toThousands} from '~/shared/util/numbers';
+
 import {
 	AccountMetricType,
 	IAccountMetric,
-	Metric
+	Metric,
 } from '../../pages/account/utils/types';
-import {sub} from 'shared/util/lang';
-import {toThousands} from 'shared/util/numbers';
-import {useParams} from 'react-router';
-import {useRequest} from 'shared/hooks/useRequest';
 
 const renderAccountValue = (metric?: Metric) =>
 	sub(
@@ -28,14 +34,14 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 		dataSourceFn: API.accounts.fetchMetrics,
 		variables: {
 			channelId,
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const metrics = data as IAccountMetric[] | undefined;
 
 	const getMetric = (metricType: AccountMetricType) =>
-		metrics?.find(metric => metric.metricType === metricType);
+		metrics?.find((metric) => metric.metricType === metricType);
 
 	const renderTrendLabel = (percentageNode: React.ReactNode) =>
 		sub(

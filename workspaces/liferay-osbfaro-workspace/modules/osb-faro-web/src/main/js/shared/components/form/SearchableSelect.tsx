@@ -1,12 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import PropTypes from 'prop-types';
-import React from 'react';
-import SearchableSelect from '../SearchableSelect';
-import Select from '../Select';
 import {FieldProps} from 'formik';
 import {noop} from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
+import SearchableSelect from '../SearchableSelect';
+import Select from '../Select';
 
 interface IFormSearchableSelectProps
 	extends FieldProps,
@@ -19,7 +25,7 @@ interface IFormSearchableSelectProps
 
 class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 	static defaultProps = {
-		onSearchChange: noop
+		onSearchChange: noop,
 	};
 
 	static propTypes = {
@@ -27,16 +33,16 @@ class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 			name: PropTypes.string,
 			onBlur: PropTypes.func,
 			onChange: PropTypes.func,
-			value: PropTypes.any
+			value: PropTypes.any,
 		}),
 		form: PropTypes.shape({
 			errors: PropTypes.object,
-			touched: PropTypes.object
+			touched: PropTypes.object,
 		}),
 		initialValue: PropTypes.any,
 		label: PropTypes.node,
 		onSearchChange: PropTypes.func,
-		onSelect: PropTypes.func
+		onSelect: PropTypes.func,
 	};
 
 	@autobind
@@ -44,7 +50,7 @@ class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 		const {
 			field: {name},
 			form: {setFieldValue},
-			onSelect
+			onSelect,
 		} = this.props;
 
 		setFieldValue(name, value);
@@ -65,7 +71,7 @@ class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 
 		const classes = getCN(className, {
 			'has-error': error && touched,
-			'has-success': !error && touched
+			'has-success': !error && touched,
 		});
 
 		return (

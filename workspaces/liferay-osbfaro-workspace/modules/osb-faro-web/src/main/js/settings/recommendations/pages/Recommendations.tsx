@@ -1,7 +1,13 @@
-import BasePage from 'settings/components/base-page/BasePage';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import BasePage from '~/settings/components/base-page/BasePage';
+import {Router} from '~/shared/types';
+
 import RecommendationList from '../hocs/RecommendationList';
-import {Router} from 'shared/types';
 
 interface IRecommendationsProps {
 	history: {
@@ -12,7 +18,7 @@ interface IRecommendationsProps {
 
 const Recommendations: React.FC<IRecommendationsProps> = ({
 	history,
-	router
+	router,
 }) => {
 	const {groupId} = router.params;
 

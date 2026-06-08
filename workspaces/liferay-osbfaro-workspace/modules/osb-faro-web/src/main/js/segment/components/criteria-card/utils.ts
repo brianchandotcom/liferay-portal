@@ -1,16 +1,21 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import moment from 'moment';
-import {formatDateToTimeZone} from 'shared/util/date';
-import {formatTime} from 'shared/util/time';
 import {
 	GEOLOCATION_OPTIONS,
 	INPUT_DATE_FORMAT,
 	INPUT_DISPLAY_DATE_TIME_FORMAT,
-	isKnown,
-	isUnknown,
 	PropertyTypes,
 	RelationalOperators,
-	SUPPORTED_OPERATORS_MAP
-} from 'segment/segment-editor/dynamic/utils/constants';
+	SUPPORTED_OPERATORS_MAP,
+	isKnown,
+	isUnknown,
+} from '~/segment/segment-editor/dynamic/utils/constants';
+import {formatDateToTimeZone} from '~/shared/util/date';
+import {formatTime} from '~/shared/util/time';
 
 export function getOperatorLabel(
 	operatorKey: string,
@@ -83,7 +88,8 @@ export function maybeFormatToKnownType(
 
 	if (operatorName === RelationalOperators.EQ && valueNull) {
 		return isUnknown;
-	} else if (operatorName === RelationalOperators.NE && valueNull) {
+	}
+	else if (operatorName === RelationalOperators.NE && valueNull) {
 		return isKnown;
 	}
 

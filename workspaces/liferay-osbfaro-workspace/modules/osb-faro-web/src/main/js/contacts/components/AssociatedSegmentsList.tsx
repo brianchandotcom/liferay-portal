@@ -1,13 +1,18 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import React from 'react';
-import SearchableEntityTable from 'shared/components/SearchableEntityTable';
-import {DATE_CREATED, NAME} from 'shared/util/pagination';
-import {getPluralMessage} from 'shared/util/lang';
 import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
-import {segmentsListColumns} from 'shared/util/table-columns';
-import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
+import React from 'react';
+import Card from '~/shared/components/Card';
+import SearchableEntityTable from '~/shared/components/SearchableEntityTable';
+import {useLDPEnabled} from '~/shared/hooks/useLDPEnabled';
+import {getPluralMessage} from '~/shared/util/lang';
+import {DATE_CREATED, NAME} from '~/shared/util/pagination';
+import {OrderParams} from '~/shared/util/records';
+import {segmentsListColumns} from '~/shared/util/table-columns';
 
 interface IAssociatedSegmentsListProps {
 	channelId: string;
@@ -36,7 +41,7 @@ const AssociatedSegmentsList: React.FC<IAssociatedSegmentsListProps> = ({
 	page,
 	query,
 	timeZoneId,
-	total
+	total,
 }) => {
 	const LDPEnabled = useLDPEnabled({groupId});
 
@@ -45,35 +50,35 @@ const AssociatedSegmentsList: React.FC<IAssociatedSegmentsListProps> = ({
 			className={getCN('associated-segments-list-root', className)}
 			pageDisplay
 		>
-			<Card.Header className='d-flex align-items-start justify-content-between'>
+			<Card.Header className="align-items-start d-flex justify-content-between">
 				<div>
 					<Card.Title>
 						{Liferay.Language.get('associated-segments')}
 					</Card.Title>
 
-					<span className='secondary-info'>
+					<span className="secondary-info">
 						{Liferay.Language.get(
 							'list-all-the-segments-that-the-customer-is-currently-associated-with-in-the-last-30-days'
 						)}
 					</span>
 
-					<div className='secondary-info'>
+					<div className="secondary-info">
 						{getPluralMessage(
 							Liferay.Language.get('x-segment'),
 							Liferay.Language.get('x-segments'),
 							total,
 							false,
 							[
-								<b key='SEGMENT_TOTAL'>
+								<b key="SEGMENT_TOTAL">
 									{total.toLocaleString()}
-								</b>
+								</b>,
 							]
 						)}
 					</div>
 				</div>
 
-				<div className='text-right'>
-					<span className='text-secondary text-uppercase'>
+				<div className="text-right">
+					<span className="text-secondary text-uppercase">
 						<small>
 							<strong>
 								{Liferay.Language.get('last-30-days')}
@@ -88,7 +93,7 @@ const AssociatedSegmentsList: React.FC<IAssociatedSegmentsListProps> = ({
 					segmentsListColumns.getName({channelId, groupId}),
 					segmentsListColumns.getSegmentType(LDPEnabled),
 					segmentsListColumns.individualAddedDate,
-					segmentsListColumns.getDateCreated(timeZoneId)
+					segmentsListColumns.getDateCreated(timeZoneId),
 				].filter(Boolean)}
 				dataSourceFn={dataSourceFn}
 				dataSourceParams={{channelId, groupId, id}}
@@ -99,17 +104,17 @@ const AssociatedSegmentsList: React.FC<IAssociatedSegmentsListProps> = ({
 				orderByOptions={[
 					{
 						label: Liferay.Language.get('name'),
-						value: NAME
+						value: NAME,
 					},
 					{
 						label: Liferay.Language.get('date-created'),
-						value: DATE_CREATED
-					}
+						value: DATE_CREATED,
+					},
 				]}
 				orderIOMap={orderIOMap}
 				page={page}
 				query={query}
-				rowIdentifier='id'
+				rowIdentifier="id"
 			/>
 		</Card>
 	);

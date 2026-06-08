@@ -1,6 +1,12 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import React from 'react';
+
 import {Conjunctions, SUPPORTED_CONJUNCTION_OPTIONS} from '../utils/constants';
 
 interface IConjunctionProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -34,18 +40,18 @@ class Conjunction extends React.Component<IConjunctionProps> {
 		);
 
 		return (
-			<div className='conjunction-container'>
+			<div className="conjunction-container">
 				<ClayButton
 					className={classnames}
 					disabled={disabled}
-					displayType='secondary'
+					displayType="secondary"
 					onClick={onClick}
-					size='sm'
+					size="sm"
 				>
 					{this.getConjunctionLabel(conjunctionName, sequential)}
 				</ClayButton>
 
-				<div className='separator' />
+				<div className="separator" />
 			</div>
 		);
 	}

@@ -1,19 +1,24 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Constants, {Sizes} from 'shared/util/constants';
-import debounce from 'shared/util/debounce-decorator';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import PaginationBar from 'shared/components/PaginationBar';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Toolbar from 'shared/components/toolbar';
-import {ACTION_TYPES, SelectionContext} from 'shared/context/selection';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
-import {hasChanges} from 'shared/util/react';
-import {paginationConfig, paginationDefaults} from 'shared/util/pagination';
-import {setUriFilterValues, setUriQueryValues} from 'shared/util/router';
-import {withHistory} from 'shared/hoc';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import PaginationBar from '~/shared/components/PaginationBar';
+import Toolbar from '~/shared/components/toolbar';
+import {ACTION_TYPES, SelectionContext} from '~/shared/context/selection';
+import {withHistory} from '~/shared/hoc';
+import Constants, {Sizes} from '~/shared/util/constants';
+import debounce from '~/shared/util/debounce-decorator';
+import {paginationConfig, paginationDefaults} from '~/shared/util/pagination';
+import {hasChanges} from '~/shared/util/react';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
+import {setUriFilterValues, setUriQueryValues} from '~/shared/util/router';
 
 const {cur: defaultPage} = Constants.pagination;
 
@@ -36,18 +41,18 @@ const ResultsContent = React.memo(function ResultsContent({
 	resultsRenderer,
 	selectedItemsIOMap,
 	showCheckbox,
-	total
+	total,
 }) {
 	if (error) {
 		return (
-			<div className='error-info flex-grow-1'>
+			<div className="error-info flex-grow-1">
 				<div>
 					{Liferay.Language.get('an-unexpected-error-occurred')}
 				</div>
 
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onRetry}
 				>
 					{Liferay.Language.get('reload')}
@@ -66,15 +71,15 @@ const ResultsContent = React.memo(function ResultsContent({
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_no_results_found'
+						symbol: 'ac_no_results_found',
 					}}
 					spacer
 					title={Liferay.Language.get('there-are-no-results-found')}
 				>
 					{enableClearSearch && (
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={onClearAllFilters}
 						>
 							{Liferay.Language.get('clear-search')}
@@ -85,7 +90,9 @@ const ResultsContent = React.memo(function ResultsContent({
 		}
 
 		if (noResultsRenderer) {
-			const activeFilters = filterBy.some(values => values.some(Boolean));
+			const activeFilters = filterBy.some((values) =>
+				values.some(Boolean)
+			);
 
 			return noResultsRenderer(query, activeFilters);
 		}
@@ -96,7 +103,7 @@ const ResultsContent = React.memo(function ResultsContent({
 		loading,
 		onSelectItemsChange: showCheckbox ? onItemsChange : null,
 		selectedItemsIOMap,
-		total
+		total,
 	});
 });
 
@@ -117,7 +124,7 @@ export default class BaseResults extends React.Component {
 		showCheckbox: false,
 		showFilterAndOrder: true,
 		showPagination: true,
-		showSearch: true
+		showSearch: true,
 	};
 
 	static propTypes = {
@@ -149,7 +156,7 @@ export default class BaseResults extends React.Component {
 		showCheckbox: PropTypes.bool,
 		showFilterAndOrder: PropTypes.bool,
 		showPagination: PropTypes.bool,
-		showSearch: PropTypes.bool
+		showSearch: PropTypes.bool,
 	};
 
 	state = {
@@ -158,7 +165,7 @@ export default class BaseResults extends React.Component {
 		items: [],
 		loading: true,
 		searchValue: '',
-		total: 0
+		total: 0,
 	};
 
 	constructor(props) {
@@ -168,7 +175,7 @@ export default class BaseResults extends React.Component {
 
 		this.state = {
 			...this.state,
-			searchValue: this.getSearchValue(maxLength, query)
+			searchValue: this.getSearchValue(maxLength, query),
 		};
 	}
 
@@ -182,11 +189,12 @@ export default class BaseResults extends React.Component {
 
 			this.setState(
 				{
-					searchValue: this.getSearchValue(maxLength, query)
+					searchValue: this.getSearchValue(maxLength, query),
 				},
 				this.handleFetchResults
 			);
-		} else if (
+		}
+		else if (
 			hasChanges(
 				prevProps,
 				this.props,
@@ -210,13 +218,13 @@ export default class BaseResults extends React.Component {
 		const {
 			context: {selectedItems: selectedItemsIOMap},
 			props: {checkDisabled},
-			state: {items}
+			state: {items},
 		} = this;
 
 		return (
 			!selectedItemsIOMap.isEmpty() &&
 			items.every(
-				item => selectedItemsIOMap.has(item.id) || checkDisabled(item)
+				(item) => selectedItemsIOMap.has(item.id) || checkDisabled(item)
 			)
 		);
 	}
@@ -225,12 +233,12 @@ export default class BaseResults extends React.Component {
 	clearChecked() {
 		const {
 			context: {selectionDispatch},
-			state: {items}
+			state: {items},
 		} = this;
 
 		selectionDispatch({
 			payload: {items},
-			type: ACTION_TYPES.remove
+			type: ACTION_TYPES.remove,
 		});
 	}
 
@@ -247,9 +255,9 @@ export default class BaseResults extends React.Component {
 				filterBy,
 				orderIOMap,
 				page,
-				showCheckbox
+				showCheckbox,
 			},
-			state: {searchValue: query}
+			state: {searchValue: query},
 		} = this;
 
 		return dataSourceFn({
@@ -258,25 +266,25 @@ export default class BaseResults extends React.Component {
 			filterBy,
 			orderIOMap,
 			page,
-			query
+			query,
 		})
 			.then(({disableSearch, items, total = 0}) => {
 				this.setState({
 					disableSearch,
 					items,
 					loading: false,
-					total
+					total,
 				});
 
 				!crossPageSelect &&
 					showCheckbox &&
 					selectionDispatch({type: ACTION_TYPES.clearAll});
 			})
-			.catch(err => {
-				if (!err.IS_CANCELLATION_ERROR) {
+			.catch((error) => {
+				if (!error.IS_CANCELLATION_ERROR) {
 					this.setState({
 						error: true,
-						loading: false
+						loading: false,
 					});
 				}
 			});
@@ -297,12 +305,12 @@ export default class BaseResults extends React.Component {
 		const {
 			context: {selectionDispatch},
 			props: {checkDisabled},
-			state: {items}
+			state: {items},
 		} = this;
 
 		selectionDispatch({
-			payload: {items: items.filter(item => !checkDisabled(item))},
-			type: checked ? ACTION_TYPES.add : ACTION_TYPES.remove
+			payload: {items: items.filter((item) => !checkDisabled(item))},
+			type: checked ? ACTION_TYPES.add : ACTION_TYPES.remove,
 		});
 	}
 
@@ -310,7 +318,7 @@ export default class BaseResults extends React.Component {
 	handleFetchResults() {
 		this.setState({
 			error: false,
-			loading: true
+			loading: true,
 		});
 
 		this.fetchResults();
@@ -330,7 +338,7 @@ export default class BaseResults extends React.Component {
 			history,
 			onFilterByChange,
 			onQueryChange,
-			onSearchValueChange
+			onSearchValueChange,
 		} = this.props;
 
 		const emptyFilterBy = filterBy.map(() => Set([]));
@@ -342,7 +350,8 @@ export default class BaseResults extends React.Component {
 		if (onQueryChange || onFilterByChange) {
 			onQueryChange && onQueryChange('');
 			onFilterByChange && onFilterByChange(emptyFilterBy);
-		} else {
+		}
+		else {
 			history.push(
 				setUriFilterValues(
 					emptyFilterBy,
@@ -361,7 +370,7 @@ export default class BaseResults extends React.Component {
 		}
 
 		this.setState({
-			searchValue: value
+			searchValue: value,
 		});
 	}
 
@@ -401,9 +410,9 @@ export default class BaseResults extends React.Component {
 				showCheckbox,
 				showFilterAndOrder,
 				showPagination,
-				showSearch
+				showSearch,
 			},
-			state: {disableSearch, error, items, loading, searchValue, total}
+			state: {disableSearch, error, items, loading, searchValue, total},
 		} = this;
 
 		const allChecked = this.allChecked();
@@ -418,8 +427,8 @@ export default class BaseResults extends React.Component {
 				<Toolbar
 					alwaysShowSearch={crossPageSelect}
 					autoFocus={autoFocusSearch}
-					disabled={error}
 					disableSearch={disableSearch}
+					disabled={error}
 					filterBy={filterBy}
 					filterByOptions={filterByOptions}
 					loading={loading}
@@ -470,7 +479,7 @@ export default class BaseResults extends React.Component {
 				{showPagination && !!total && !!items.length && (
 					<PaginationBar
 						href={window.location.href}
-						key='PAGINATION_BAR'
+						key="PAGINATION_BAR"
 						onDeltaChange={onDeltaChange}
 						onPageChange={onPageChange}
 						page={parseInt(page)}

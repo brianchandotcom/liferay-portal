@@ -1,7 +1,12 @@
-import React from 'react';
-import {connect} from 'react-redux';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {isFSA} from 'flux-standard-action';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
 
 const DEFAULT_INTERVAL = 3000;
 
@@ -9,9 +14,9 @@ const defaultParams = {
 	options: {
 		intervalLength: DEFAULT_INTERVAL,
 		propName: 'data',
-		requestProps: []
+		requestProps: [],
 	},
-	stopConditionFn: () => true
+	stopConditionFn: () => true,
 };
 
 /**
@@ -33,21 +38,21 @@ export default (
 		stopConditionFn = defaultParams.stopConditionFn,
 		options
 	) =>
-	WrappedComponent => {
+	(WrappedComponent) => {
 		const {intervalLength, propName, requestProps} = {
 			...defaultParams.options,
-			...options
+			...options,
 		};
 
 		return connect()(
 			class extends React.Component {
 				static propTypes = {
-					dispatch: PropTypes.func
+					dispatch: PropTypes.func,
 				};
 
 				state = {
 					data: null,
-					pollingError: null
+					pollingError: null,
 				};
 
 				_isMounted = false;
@@ -71,16 +76,16 @@ export default (
 							...requestProps.reduce(
 								(acc, propName) => ({
 									...acc,
-									[propName]: this.props[propName]
+									[propName]: this.props[propName],
 								}),
 								{}
-							)
+							),
 						})
 					)
-						.then(data => {
+						.then((data) => {
 							if (this._isMounted) {
 								this.setState({
-									data
+									data,
 								});
 
 								if (!stopConditionFn(data, this.props)) {
@@ -91,10 +96,13 @@ export default (
 								}
 							}
 						})
-						.catch(err => {
-							if (!err.IS_CANCELLATION_ERROR && this._isMounted) {
+						.catch((error) => {
+							if (
+								!error.IS_CANCELLATION_ERROR &&
+								this._isMounted
+							) {
 								this.setState({
-									pollingError: err
+									pollingError: error,
 								});
 							}
 						});
@@ -105,7 +113,8 @@ export default (
 						return this.props
 							.dispatch(result)
 							.then(({payload}) => payload);
-					} else {
+					}
+					else {
 						return result;
 					}
 				}

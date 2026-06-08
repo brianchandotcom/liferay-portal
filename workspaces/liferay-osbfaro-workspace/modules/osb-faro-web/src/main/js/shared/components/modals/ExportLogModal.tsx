@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import DateRangeInput, {DateRange} from 'shared/components/DateRangeInput';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
 import moment from 'moment';
 import React, {useState} from 'react';
-import {downloadDataAsFile} from 'shared/util/util';
+import DateRangeInput, {DateRange} from '~/shared/components/DateRangeInput';
+import Loading, {Align} from '~/shared/components/Loading';
+import Modal from '~/shared/components/modal';
+import {downloadDataAsFile} from '~/shared/util/util';
 
 interface IExportLogModalProps {
 	description: string;
@@ -13,7 +18,7 @@ interface IExportLogModalProps {
 	onClose: () => void;
 	onSubmit: ({
 		fromDate,
-		toDate
+		toDate,
 	}: {
 		fromDate: string;
 		toDate: string;
@@ -27,11 +32,11 @@ const ExportLogModal: React.FC<IExportLogModalProps> = ({
 	groupId,
 	onClose,
 	onSubmit,
-	title
+	title,
 }) => {
 	const [dateRange, setDateRange] = useState<DateRange>({
 		end: '',
-		start: ''
+		start: '',
 	});
 
 	const [loading, setLoading] = useState<boolean>(false);
@@ -42,28 +47,28 @@ const ExportLogModal: React.FC<IExportLogModalProps> = ({
 	const {end: toDate, start: fromDate} = dateRange;
 
 	return (
-		<Modal className='export-log-modal-root'>
+		<Modal className="export-log-modal-root">
 			<Modal.Header onClose={onClose} title={title} />
 
 			<Modal.Body>
-				<p className='text-secondary'>{description}</p>
+				<p className="text-secondary">{description}</p>
 
-				<div className='h4'>
+				<div className="h4">
 					{Liferay.Language.get('request-date-range')}
 				</div>
 
-				<div className='d-flex'>
+				<div className="d-flex">
 					<DateRangeInput
-						className='w-100'
+						className="w-100"
 						groupId={groupId}
 						onChange={setDateRange}
 						value={dateRange}
 					/>
 
 					<ClayButton
-						className='button-root ml-2'
+						className="button-root ml-2"
 						disabled={!isValid()}
-						displayType='primary'
+						displayType="primary"
 						onClick={() => {
 							setLoading(true);
 
@@ -72,7 +77,7 @@ const ExportLogModal: React.FC<IExportLogModalProps> = ({
 									downloadDataAsFile({
 										data,
 										name: fileName,
-										type: 'text/csv'
+										type: 'text/csv',
 									});
 
 									setLoading(false);

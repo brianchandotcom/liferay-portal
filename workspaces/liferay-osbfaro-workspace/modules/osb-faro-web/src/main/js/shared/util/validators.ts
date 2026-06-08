@@ -1,7 +1,12 @@
-import {formatStringToLowercase} from 'shared/util/util';
-import {formatTime, getMillisecondsFromTime} from 'shared/util/time';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {isArray, isNil, isObject, isString} from 'lodash';
-import {sub} from 'shared/util/lang';
+import {sub} from '~/shared/util/lang';
+import {formatTime, getMillisecondsFromTime} from '~/shared/util/time';
+import {formatStringToLowercase} from '~/shared/util/util';
 
 /**
  * Wraps a validator result with a Promise.
@@ -37,7 +42,7 @@ export function validateInputMessage(messageValue: string) {
 
 export function validateDateRangeRequired({
 	end,
-	start
+	start,
 }: {
 	end: string;
 	start: string;
@@ -51,19 +56,21 @@ export function validateDateRangeRequired({
 	return toPromise(error);
 }
 
-export const validateGreaterThanZero = (value: string) => {
+export const validateGreaterThanZero = function validateGreaterThanZero(
+	value: string
+) {
 	let error = '';
 
 	if (Number(value) <= 0) {
 		error = sub(Liferay.Language.get('must-be-greater-than-x'), [
-			'0'
+			'0',
 		]) as string;
 	}
 
 	return toPromise(error);
 };
 
-export const validateIsInteger = (value: string) => {
+export const validateIsInteger = function validateIsInteger(value: string) {
 	let error = '';
 
 	if (!Number.isInteger(Number(value))) {
@@ -105,7 +112,7 @@ export function validateMinDuration(minDuration: string) {
 
 		if (valueInMilliseconds < minDurationInMilliseconds) {
 			error = sub(Liferay.Language.get('must-be-greater-than-x'), [
-				formatTime(minDurationInMilliseconds - 1000)
+				formatTime(minDurationInMilliseconds - 1000),
 			]) as string;
 		}
 
@@ -133,7 +140,7 @@ export function validateMinValue(minValue: number) {
 
 		if (Number(value) < minValue) {
 			error = sub(Liferay.Language.get('must-be-greater-than-x'), [
-				minValue - 1
+				minValue - 1,
 			]) as string;
 		}
 
@@ -180,9 +187,10 @@ export const validateSalesforceDomain = validatePattern(
 	Liferay.Language.get('please-enter-a-valid-salesforce-url')
 );
 
-export const composeValidators =
-	(...validators: Array<(value: any) => Promise<string> | string>) =>
-	async (value: any) => {
+export const composeValidators = function composeValidators(
+	...validators: Array<(value: any) => Promise<string> | string>
+) {
+	return async (value: any) => {
 		for (const validator of validators) {
 			const error = await validator(value);
 
@@ -193,6 +201,7 @@ export const composeValidators =
 
 		return '';
 	};
+};
 
 export const validateExternalReferenceCode = composeValidators(
 	validateRequired,

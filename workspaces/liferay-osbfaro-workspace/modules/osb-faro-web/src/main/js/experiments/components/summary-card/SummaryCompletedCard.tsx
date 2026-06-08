@@ -1,21 +1,30 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {formatDateToTimeZone} from 'shared/util/date';
 import {
 	getMetricName,
 	mergedVariants,
-	toThousandsABTesting
-} from 'experiments/util/experiments';
-import {IExperiment} from './types';
-import {MetricName} from 'experiments/util/types';
-import {sub} from 'shared/util/lang';
+	toThousandsABTesting,
+} from '~/experiments/util/experiments';
+import {MetricName} from '~/experiments/util/types';
+import {formatDateToTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {toRounded} from '~/shared/util/numbers';
+
 import {SummaryAlert} from './SummaryAlert';
 import {SummaryBaseCard} from './SummaryBaseCard';
 import {SummaryParagraph} from './SummaryParagraph';
 import {SummarySection} from './SummarySection';
 import {SummaryTitle} from './SummaryTitle';
-import {toRounded} from 'shared/util/numbers';
+import {IExperiment} from './types';
 
-export const SummaryCompletedCard: React.FC<{
+export const SummaryCompletedCard = function SummaryCompletedCard({
+	experiment,
+	timeZoneId,
+}: {
 	experiment: IExperiment & {
 		description?: string;
 		finishedDate?: string;
@@ -29,7 +38,7 @@ export const SummaryCompletedCard: React.FC<{
 		type?: string;
 	};
 	timeZoneId: string;
-}> = ({experiment, timeZoneId}) => {
+}) {
 	const {
 		description,
 		dxpVariants,
@@ -40,7 +49,7 @@ export const SummaryCompletedCard: React.FC<{
 		sessions,
 		startedDate,
 		status,
-		type
+		type,
 	} = experiment;
 
 	const publishedVariant = mergedVariants(dxpVariants, variantMetrics).find(
@@ -51,14 +60,14 @@ export const SummaryCompletedCard: React.FC<{
 		<SummaryBaseCard status={status.toLowerCase()}>
 			<SummaryBaseCard.Header
 				Description={() => (
-					<div className='date'>
+					<div className="date">
 						<div>
 							{sub(Liferay.Language.get('started-x'), [
 								formatDateToTimeZone(
 									startedDate,
 									'll',
 									timeZoneId
-								)
+								),
 							])}
 						</div>
 
@@ -69,7 +78,7 @@ export const SummaryCompletedCard: React.FC<{
 										finishedDate,
 										'll',
 										timeZoneId
-									)
+									),
 								])}
 							</div>
 						)}
@@ -78,12 +87,12 @@ export const SummaryCompletedCard: React.FC<{
 				title={Liferay.Language.get('test-complete')}
 			/>
 
-			<SummaryAlert symbol='check-circle'>
+			<SummaryAlert symbol="check-circle">
 				<SummaryTitle
-					className='font-weight-bold mb-1'
+					className="font-weight-bold mb-1"
 					label={
 						sub(Liferay.Language.get('x-has-been-published'), [
-							publishedVariant?.dxpVariantName
+							publishedVariant?.dxpVariantName,
 						]) as string
 					}
 				/>
@@ -96,13 +105,13 @@ export const SummaryCompletedCard: React.FC<{
 			</SummaryAlert>
 
 			<SummaryBaseCard.Body>
-				<div className='w-100 mt-4'>
+				<div className="mt-4 w-100">
 					<SummaryParagraph
 						description={description}
 						title={Liferay.Language.get('summary')}
 					/>
 
-					<div className='analytics-summary-card-sections'>
+					<div className="analytics-summary-card-sections">
 						<SummarySection
 							title={Liferay.Language.get('test-completion')}
 						>
@@ -149,7 +158,7 @@ export const SummaryCompletedCard: React.FC<{
 											publishedVariant.improvement,
 											2
 										)}%`}
-										status='up'
+										status="up"
 									/>
 								)}
 						</SummarySection>

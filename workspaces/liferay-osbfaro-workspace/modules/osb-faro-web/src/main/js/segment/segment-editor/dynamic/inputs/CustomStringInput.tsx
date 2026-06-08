@@ -1,21 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Option, Picker} from '@clayui/core';
 import autobind from 'autobind-decorator';
-import AutocompleteInput from 'shared/components/AutocompleteInput';
-import Form from 'shared/components/form';
 import getCN from 'classnames';
-import Input from 'shared/components/Input';
+import {Map} from 'immutable';
 import React from 'react';
-import {getPropertyValue} from '../utils/custom-inputs';
-import {ISegmentEditorCustomInputBase} from '../utils/types';
+import AutocompleteInput from '~/shared/components/AutocompleteInput';
+import Input from '~/shared/components/Input';
+import Form from '~/shared/components/form';
+
 import {
-	isKnown,
-	isUnknown,
 	PropertyTypes,
 	RelationalOperators,
-	SUPPORTED_OPERATORS_MAP
+	SUPPORTED_OPERATORS_MAP,
+	isKnown,
+	isUnknown,
 } from '../utils/constants';
+import {getPropertyValue} from '../utils/custom-inputs';
+import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {isOfKnownType, isValid} from '../utils/utils';
-import {Map} from 'immutable';
-import {Option, Picker} from '@clayui/core';
 
 const TEXT_OPERATORS = SUPPORTED_OPERATORS_MAP[PropertyTypes.Text];
 
@@ -28,7 +34,7 @@ export interface ICustomStringInputProps extends ISegmentEditorCustomInputBase {
 
 export default class CustomStringInput extends React.Component<ICustomStringInputProps> {
 	static defaultProps = {
-		autocomplete: true
+		autocomplete: true,
 	};
 
 	getSelectedOperatorKey() {
@@ -46,7 +52,8 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 
 		if (operatorName === RelationalOperators.EQ && valueNull) {
 			operatorKey = isUnknown;
-		} else if (operatorName === RelationalOperators.NE && valueNull) {
+		}
+		else if (operatorName === RelationalOperators.NE && valueNull) {
 			operatorKey = isKnown;
 		}
 
@@ -60,7 +67,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 		onChange({
 			touched: true,
 			valid: isValid(getPropertyValue(valueIMap, 'value', 0)),
-			value: valueIMap
+			value: valueIMap,
 		});
 	}
 
@@ -80,7 +87,8 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 				['criterionGroup', 'items', 0, 'value'],
 				null
 			);
-		} else if (getPropertyValue(valueIMap, 'value', 0) === null) {
+		}
+		else if (getPropertyValue(valueIMap, 'value', 0) === null) {
 			newVal = newVal.setIn(['criterionGroup', 'items', 0, 'value'], '');
 		}
 
@@ -88,7 +96,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 			valid: isValid(
 				newVal.getIn(['criterionGroup', 'items', 0, 'value'])
 			),
-			value: newVal
+			value: newVal,
 		});
 	}
 
@@ -101,7 +109,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 			value: valueIMap.setIn(
 				['criterionGroup', 'items', 0, 'value'],
 				value
-			)
+			),
 		});
 	}
 
@@ -114,7 +122,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 			property: {entityName, options = []},
 			touched,
 			valid,
-			value: valueIMap
+			value: valueIMap,
 		} = this.props;
 
 		const value = getPropertyValue(valueIMap, 'value', 0);
@@ -126,20 +134,20 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 
 		const sharedInputProps = {
 			className: getCN(className, {
-				'has-error': showError
+				'has-error': showError,
 			}),
 			onBlur: this.handleBlur,
-			value
+			value,
 		};
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
@@ -148,8 +156,8 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 							items={
 								TEXT_OPERATORS.map(({key, label}) => ({
 									key,
-									label
-								})) as {label: string; key: string}[]
+									label,
+								})) as {key: string; label: string}[]
 							}
 							onSelectionChange={this.handleOperatorChange}
 							selectedKey={selectedOperatorKey}
@@ -162,7 +170,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 
 					{!knownType && (
 						<Form.GroupItem>
-							{options.length === 0 ? (
+							{!options.length ? (
 								autocomplete ? (
 									<AutocompleteInput
 										{...sharedInputProps}
@@ -172,7 +180,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 								) : (
 									<Input
 										{...sharedInputProps}
-										autoComplete='nope'
+										autoComplete="nope"
 										onChange={(
 											event: React.ChangeEvent<HTMLInputElement>
 										) => {
@@ -187,7 +195,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 									items={
 										options.map(({label, value}) => ({
 											label,
-											value
+											value,
 										})) as {label: string; value: string}[]
 									}
 									onBlur={this.handleBlur}

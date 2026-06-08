@@ -1,24 +1,18 @@
 /**
- * A list of external scripts to be appended to the page. Each script
- * can also specify the attributes it needs. For example, the zendesk
- * widget requires that its script tag has a certain id attribute.
- *
- * Also, note that webpack will actually evaluate the boolean expressions
- * below at build time and remove any cases that can never be reached
- * (dead-code elim). This means we don't have to worry about the development
- * scripts being present in our production bundle. To keep this working, make
- * sure that we only do comparisons to string or number literals.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Pendo} from 'shared/util/pendo';
+import {Pendo} from '~/shared/util/pendo';
 
 const pendo = new Pendo();
 
 const scripts = [
+
 	/* Pendo */
 	{
-		innerHTML: pendo.script
-	}
+		innerHTML: pendo.script,
+	},
 ];
 
 /**

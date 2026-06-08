@@ -1,15 +1,20 @@
-import ClayLabel from '@clayui/label';
-import InputWithEditToggle from 'shared/components/InputWithEditToggle';
-import React, {useCallback, useRef} from 'react';
-import {DataSource} from 'shared/util/records';
-import {sequence} from 'shared/util/promise';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Text} from '@clayui/core';
+import ClayLabel from '@clayui/label';
+import React, {useCallback, useRef} from 'react';
+import InputWithEditToggle from '~/shared/components/InputWithEditToggle';
+import {validateUniqueName} from '~/shared/util/data-sources';
+import {sequence} from '~/shared/util/promise';
+import {DataSource} from '~/shared/util/records';
 import {
 	toPromise,
 	validateMaxLength,
-	validateRequired
-} from 'shared/util/validators';
-import {validateUniqueName} from 'shared/util/data-sources';
+	validateRequired,
+} from '~/shared/util/validators';
 
 interface IDataSourceEditableTitleProps {
 	dataSource: DataSource;
@@ -28,13 +33,14 @@ const DataSourceEditableTitle = ({
 	editable,
 	groupId,
 	label,
-	onUpdateName
+	onUpdateName,
 }: IDataSourceEditableTitleProps) => {
-	const cachedNameValues = useRef(new Map());
+	const cachedNameValuesRef = useRef(new Map());
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const handleUpdateName = useCallback(onUpdateName, [
 		groupId,
-		dataSource.id
+		dataSource.id,
 	]);
 
 	const handleValidate = useCallback(
@@ -42,12 +48,13 @@ const DataSourceEditableTitle = ({
 			let error = null;
 
 			if (value !== dataSource.name) {
-				if (cachedNameValues.current.has(value)) {
-					error = cachedNameValues.current.get(value);
-				} else {
+				if (cachedNameValuesRef.current.has(value)) {
+					error = cachedNameValuesRef.current.get(value);
+				}
+				else {
 					error = validateUniqueName({groupId, value});
 
-					cachedNameValues.current.set(value, error);
+					cachedNameValuesRef.current.set(value, error);
 				}
 			}
 
@@ -57,9 +64,9 @@ const DataSourceEditableTitle = ({
 	);
 
 	return (
-		<div className='mb-5'>
+		<div className="mb-5">
 			<ClayLabel
-				className='mb-2'
+				className="mb-2"
 				displayType={
 					displayType as
 						| 'secondary'
@@ -77,20 +84,20 @@ const DataSourceEditableTitle = ({
 			<InputWithEditToggle
 				editable={!!editable}
 				inputWidth={30}
-				name='dataSourceName'
-				onSubmit={name => toPromise(handleUpdateName(name))}
+				name="dataSourceName"
+				onSubmit={(name) => toPromise(handleUpdateName(name))}
 				required
 				validate={sequence([
 					validateRequired,
 					validateMaxLength(75),
-					handleValidate
+					handleValidate,
 				])}
 				value={dataSource.name || ''}
 			/>
 
 			{description && (
-				<div className='mt-1'>
-					<Text color='secondary' size={2}>
+				<div className="mt-1">
+					<Text color="secondary" size={2}>
 						{description}
 					</Text>
 				</div>

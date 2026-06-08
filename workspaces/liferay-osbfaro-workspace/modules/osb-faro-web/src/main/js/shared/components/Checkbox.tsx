@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
 import React, {useEffect, useRef} from 'react';
 
@@ -30,7 +35,7 @@ const Checkbox: React.FC<ICheckboxProps> = ({
 	}, [indeterminate]);
 
 	const classes = getCN('custom-control', 'custom-checkbox', className, {
-		['custom-control-inline']: displayInline
+		['custom-control-inline']: displayInline,
 	});
 
 	const handleEventPropagation = (event: React.MouseEvent) => {
@@ -38,6 +43,7 @@ const Checkbox: React.FC<ICheckboxProps> = ({
 	};
 
 	return (
+
 		// We are disabling the following rules as we don't actually want
 		// this elment to be explicitly interactable. It only serves to
 		// stop the propagation of the event to prevent the row from being
@@ -45,23 +51,24 @@ const Checkbox: React.FC<ICheckboxProps> = ({
 
 		/* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 		<div className={classes} onClick={handleEventPropagation}>
+
 			{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
 			<label>
 				<input
 					{...otherProps}
 					checked={checked}
-					className='custom-control-input'
+					className="custom-control-input"
 					disabled={disabled}
 					name={name}
 					onChange={onChange}
 					ref={_checkboxRef}
-					type='checkbox'
+					type="checkbox"
 					value={String(!!checked)}
 				/>
 
-				<span className='custom-control-label'>
+				<span className="custom-control-label">
 					{label && (
-						<span className='custom-control-label-text'>
+						<span className="custom-control-label-text">
 							{label}
 						</span>
 					)}

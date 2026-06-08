@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import * as d3 from 'd3';
+import React from 'react';
+import Trend from '~/shared/components/Trend';
 import ChartTooltip, {
 	Alignments,
-	Weights
-} from 'shared/components/chart-tooltip';
-import React from 'react';
-import Trend from 'shared/components/Trend';
-import {Colors} from 'shared/util/charts';
-import {getDate as getDateUtil} from 'shared/util/date';
+	Weights,
+} from '~/shared/components/chart-tooltip';
+import {Colors} from '~/shared/util/charts';
+import {getDate as getDateUtil} from '~/shared/util/date';
 
-export const Tooltip = ({dataPoint}: {dataPoint: any[]}) => {
+export const Tooltip = function Tooltip({dataPoint}: {dataPoint: any[]}) {
 	const control = dataPoint[0];
 	const variant = dataPoint[1];
 
@@ -29,7 +34,7 @@ export const Tooltip = ({dataPoint}: {dataPoint: any[]}) => {
 			);
 		}
 
-		return <span>{'-'}</span>;
+		return <span>-</span>;
 	};
 
 	const header = [
@@ -42,32 +47,32 @@ export const Tooltip = ({dataPoint}: {dataPoint: any[]}) => {
 						getDateUtil(control.payload.key)
 					)}`,
 					weight: Weights.Semibold,
-					width: 140
+					width: 140,
 				},
 				{
 					align: Alignments.Right,
 					label: Liferay.Language.get('high'),
 					weight: Weights.Semibold,
-					width: 60
+					width: 60,
 				},
 				{
 					align: Alignments.Right,
 					label: Liferay.Language.get('low'),
 					weight: Weights.Semibold,
-					width: 60
+					width: 60,
 				},
 				{
 					align: Alignments.Right,
 					label: Liferay.Language.get('median'),
 					weight: Weights.Semibold,
-					width: 60
+					width: 60,
 				},
 				{
 					label: '',
-					width: 60
-				}
-			]
-		}
+					width: 60,
+				},
+			],
+		},
 	];
 
 	const rows = [
@@ -76,59 +81,59 @@ export const Tooltip = ({dataPoint}: {dataPoint: any[]}) => {
 				{
 					color: control.color,
 					label: control.name,
-					weight: Weights.Semibold
+					weight: Weights.Semibold,
 				},
 				{
 					align: Alignments.Right,
-					label: control.payload.tooltip.control.high
+					label: control.payload.tooltip.control.high,
 				},
 				{
 					align: Alignments.Right,
-					label: control.payload.tooltip.control.low
+					label: control.payload.tooltip.control.low,
 				},
 				{
 					align: Alignments.Right,
-					label: control.payload.tooltip.control.median
+					label: control.payload.tooltip.control.median,
 				},
 				{
 					align: Alignments.Right,
 					label: improvementLabel(
 						control.payload.tooltip.control.improvement
-					)
-				}
-			]
+					),
+				},
+			],
 		},
 		{
 			columns: [
 				{
 					color: variant.color,
 					label: variant.name,
-					weight: Weights.Semibold
+					weight: Weights.Semibold,
 				},
 				{
 					align: Alignments.Right,
-					label: variant.payload.tooltip.variant.high
+					label: variant.payload.tooltip.variant.high,
 				},
 				{
 					align: Alignments.Right,
-					label: variant.payload.tooltip.variant.low
+					label: variant.payload.tooltip.variant.low,
 				},
 				{
 					align: Alignments.Right,
-					label: variant.payload.tooltip.variant.median
+					label: variant.payload.tooltip.variant.median,
 				},
 				{
 					align: Alignments.Right,
 					label: improvementLabel(
 						variant.payload.tooltip.variant.improvement
-					)
-				}
-			]
-		}
+					),
+				},
+			],
+		},
 	];
 
 	return (
-		<div className='bb-tooltip-container position-static'>
+		<div className="bb-tooltip-container position-static">
 			<ChartTooltip header={header} rows={rows as any} />
 		</div>
 	);

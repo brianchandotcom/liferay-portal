@@ -1,6 +1,12 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
-import Item from '../components/Item';
 import React from 'react';
+
+import Item from '../components/Item';
 import Row from '../components/Row';
 
 const SIZES = ['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
@@ -12,7 +18,7 @@ const IconKit = () => (
 				<Item key={index}>
 					<ClayIcon
 						className={`icon-root icon-size-${size}`}
-						symbol='ac_star'
+						symbol="ac_star"
 					/>
 				</Item>
 			))}
@@ -23,7 +29,7 @@ const IconKit = () => (
 				<Item key={index}>
 					<ClayIcon
 						className={`icon-root icon-size-${size}`}
-						symbol='ac_star'
+						symbol="ac_star"
 					/>
 				</Item>
 			))}

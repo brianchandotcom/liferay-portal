@@ -1,18 +1,29 @@
-import AddChannelModal from './modals/AddChannelModal';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
+import {List} from 'immutable';
+import {PropTypes} from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import {onEnter} from '~/shared/util/key-constants';
+
+import {close, modalTypes} from '../actions/modals';
+import AddChannelModal from './modals/AddChannelModal';
 import BatchActionModal from './modals/BatchActionModal';
+import CSVPreviewModal from './modals/CSVPreviewModal';
 import ConfirmationModal from './modals/ConfirmationModal';
 import ConnectDXPModal from './modals/ConnectDXPModal';
 import ContactSalesModal from './modals/ContactSalesModal';
 import CreateMappingModal from './modals/CreateMappingModal';
-import CSVPreviewModal from './modals/CSVPreviewModal';
 import DeleteChannelModal from './modals/DeleteChannelModal';
 import DeleteConfirmationModal from './modals/DeleteConfirmationModal';
 import EditAttributeEventModal from './modals/EditAttributeEventModal';
 import EditEmailReportsModal from './modals/EditEmailReportsModal';
 import ExportLogModal from './modals/ExportLogModal';
 import FieldPreviewModal from './modals/FieldPreviewModal';
-import HelpWidgetModal from './modals/help-widget-modal';
 import IndividualAttributesModal from './modals/IndividualAttributesModal';
 import InputModal from './modals/InputModal';
 import InterestTopicModal from './modals/InterestTopicsModal';
@@ -22,8 +33,6 @@ import ManuallyRetrainModelModal from './modals/ManuallyRetrainModelModal';
 import MatchingPagesModal from './modals/MatchingPagesModal';
 import NewRequestModal from './modals/NewRequestModal';
 import NewRuleModal from './modals/NewRuleModal';
-import OnboardingModal from './modals/onboarding-modal';
-import React from 'react';
 import SearchableEntitiesTableModal from './modals/SearchableEntitiesTableModal';
 import SearchableTableModal from './modals/SearchableTableModal';
 import SearchableTableModalGraphql from './modals/SearchableTableModalGraphql';
@@ -32,12 +41,9 @@ import SelectItemsModal from './modals/SelectItemsModal';
 import TestModal from './modals/TestModal';
 import TimeZoneSelectionModal from './modals/TimeZoneSelectionModal';
 import UnableDeletePropertyModal from './modals/UnableDeletePropertyModal';
+import HelpWidgetModal from './modals/help-widget-modal';
+import OnboardingModal from './modals/onboarding-modal';
 import UnassignedSegmentsModal from './modals/unassigned-segments-modal';
-import {close, modalTypes} from '../actions/modals';
-import {connect} from 'react-redux';
-import {List} from 'immutable';
-import {onEnter} from 'shared/util/key-constants';
-import {PropTypes} from 'prop-types';
 
 const BODY_CLASSNAME = 'modal-open';
 
@@ -74,13 +80,14 @@ const COMPONENT_MAP = {
 	[modalTypes.SELECT_CHANNELS_MODAL]: SelectChannelsModal,
 	[modalTypes.TEST]: TestModal,
 	[modalTypes.TIME_ZONE_SELECTION_MODAL]: TimeZoneSelectionModal,
-	[modalTypes.UNABLE_DELETE_PROPERTY_MODAL]: UnableDeletePropertyModal
+	[modalTypes.UNABLE_DELETE_PROPERTY_MODAL]: UnableDeletePropertyModal,
 };
 
 function toggleBodyModalOpen(open = true) {
 	if (open) {
 		document.body.classList.add(BODY_CLASSNAME);
-	} else {
+	}
+	else {
 		document.body.classList.remove(BODY_CLASSNAME);
 	}
 }
@@ -88,7 +95,7 @@ function toggleBodyModalOpen(open = true) {
 export class ModalRenderer extends React.Component {
 	static propTypes = {
 		close: PropTypes.func.isRequired,
-		modalsIList: PropTypes.instanceOf(List).isRequired
+		modalsIList: PropTypes.instanceOf(List).isRequired,
 	};
 
 	componentDidUpdate() {
@@ -143,8 +150,8 @@ export class ModalRenderer extends React.Component {
 								key={i}
 								onClick={this.handleClickOutside}
 								onKeyPress={this.handleKeyPress}
-								role='button'
-								tabIndex='0'
+								role="button"
+								tabIndex="0"
 							>
 								<ModalComponent
 									{...modalIMap.get('props').toObject()}
@@ -155,7 +162,7 @@ export class ModalRenderer extends React.Component {
 					.toJS()}
 
 				{!!this.getCurrentModal() && (
-					<div className='modal-backdrop fade show' />
+					<div className="fade modal-backdrop show" />
 				)}
 			</div>
 		);
@@ -163,8 +170,8 @@ export class ModalRenderer extends React.Component {
 }
 
 export default connect(
-	state => ({
-		modalsIList: state.get('modals', new List())
+	(state) => ({
+		modalsIList: state.get('modals', new List()),
 	}),
 	{close}
 )(ModalRenderer);

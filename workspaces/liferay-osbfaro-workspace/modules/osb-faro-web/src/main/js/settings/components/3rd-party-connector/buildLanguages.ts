@@ -1,5 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {sub} from '~/shared/util/lang';
+
 import {Languages} from './types';
-import {sub} from 'shared/util/lang';
 
 export function buildLanguages(displayName: string): Languages {
 	return {
@@ -10,7 +16,7 @@ export function buildLanguages(displayName: string): Languages {
 			[displayName]
 		) as string,
 		connectTitle: sub(Liferay.Language.get('connect-x'), [
-			displayName
+			displayName,
 		]) as string,
 		endpointHelper: sub(
 			Liferay.Language.get(
@@ -25,6 +31,6 @@ export function buildLanguages(displayName: string): Languages {
 		tokenLabel: sub(
 			Liferay.Language.get('copy-this-token-to-your-x-instance'),
 			[displayName]
-		) as string
+		) as string,
 	};
 }

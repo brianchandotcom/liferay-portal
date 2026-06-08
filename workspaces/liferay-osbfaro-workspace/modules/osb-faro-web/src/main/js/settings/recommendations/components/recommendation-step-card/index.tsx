@@ -1,50 +1,55 @@
-import BasicSettings from './BasicSettings';
-import Card from 'shared/components/Card';
-import Form from 'shared/components/form';
-import FormNavigation from 'settings/components/FormNavigation';
-import Interactions from './Interactions';
-import Items from './Items';
-import NavigationWarning from 'shared/components/NavigationWarning';
-import ProgressTimeline from 'shared/components/ProgressTimeline';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useMutation} from '@apollo/client';
 import React, {useState} from 'react';
-import Summary from './Summary';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
+import {ConnectedProps, connect} from 'react-redux';
 import {compose} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
-import {Filter, Job, JobParameter} from '../../utils/utils';
+import FormNavigation from '~/settings/components/FormNavigation';
+import {addAlert} from '~/shared/actions/alerts';
+import Card from '~/shared/components/Card';
+import NavigationWarning from '~/shared/components/NavigationWarning';
+import ProgressTimeline from '~/shared/components/ProgressTimeline';
+import Form from '~/shared/components/form';
+import {withHistory} from '~/shared/hoc';
+import {Alert, Router} from '~/shared/types';
 import {
 	JobRunDataPeriods,
 	JobRunFrequencies,
-	JobTypes
-} from 'shared/util/constants';
+	JobTypes,
+} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import {Routes, toRoute} from '~/shared/util/router';
+
 import {
 	RECOMMENDATION_MUTATION,
-	RECOMMENDATION_UPDATE_MUTATION
+	RECOMMENDATION_UPDATE_MUTATION,
 } from '../../queries/RecommendationMutation';
-import {Router} from 'shared/types';
-import {Routes, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
-import {useMutation} from '@apollo/client';
-import {withHistory} from 'shared/hoc';
+import {Filter, Job, JobParameter} from '../../utils/utils';
+import BasicSettings from './BasicSettings';
+import Interactions from './Interactions';
+import Items from './Items';
+import Summary from './Summary';
 
 const STEPS: {component: React.ComponentType<any>; title: string}[] = [
 	{
 		component: BasicSettings,
-		title: Liferay.Language.get('basic-settings')
+		title: Liferay.Language.get('basic-settings'),
 	},
 	{
 		component: Interactions,
-		title: Liferay.Language.get('interactions')
+		title: Liferay.Language.get('interactions'),
 	},
 	{
 		component: Items,
-		title: Liferay.Language.get('items')
+		title: Liferay.Language.get('items'),
 	},
 	{
 		component: Summary,
-		title: Liferay.Language.get('summary')
-	}
+		title: Liferay.Language.get('summary'),
+	},
 ];
 
 const connector = connect(null, {addAlert});
@@ -67,10 +72,10 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 	history,
 	job,
 	jobType,
-	router
+	router,
 }) => {
 	const {
-		params: {groupId}
+		params: {groupId},
 	} = router;
 
 	const [currentStep, setCurrentStep] = useState(0);
@@ -95,7 +100,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 			runDataPeriod,
 			runFrequency,
 			runNow,
-			type
+			type,
 		}: {
 			includePreviousPeriod: string | boolean;
 			itemFilters: Filter[];
@@ -110,22 +115,22 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 		let parameters = [
 			{
 				name: 'includePreviousPeriod',
-				value: includePreviousPeriod
-			}
+				value: includePreviousPeriod,
+			},
 		];
 
 		if (itemFilters.length) {
 			parameters = [
 				{
 					name: 'includePreviousPeriod',
-					value: includePreviousPeriod
+					value: includePreviousPeriod,
 				},
 				...itemFilters.map(
 					({name, value}: {name: string; value: string}) => ({
 						name,
-						value
+						value,
 					})
-				)
+				),
 			];
 		}
 
@@ -138,8 +143,8 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 							parameters,
 							runDataPeriod,
 							runFrequency,
-							runNow
-						}
+							runNow,
+						},
 					})
 			: () =>
 					createRecommendationJob({
@@ -149,8 +154,8 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 							runDataPeriod,
 							runFrequency,
 							runNow,
-							type
-						}
+							type,
+						},
 					});
 
 		const key = job ? 'updateJob' : 'createJob';
@@ -159,8 +164,8 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 			.then(
 				({
 					data: {
-						[key]: {name}
-					}
+						[key]: {name},
+					},
 				}) => {
 					addAlert({
 						alertType: Alert.Types.Success,
@@ -169,12 +174,12 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 								'x-recommendation-model-has-been-saved'
 							),
 							[name]
-						) as string
+						) as string,
 					});
 
 					history.push(
 						toRoute(Routes.SETTINGS_RECOMMENDATIONS, {
-							groupId
+							groupId,
 						})
 					);
 				}
@@ -184,7 +189,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 					alertType: Alert.Types.Error,
 					message: Liferay.Language.get(
 						'there-was-an-error-processing-your-request.-please-try-again'
-					)
+					),
 				});
 
 				setSubmitting(false);
@@ -222,7 +227,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 				runDataPeriod,
 				runFrequency,
 				runNow: true,
-				type
+				type,
 			};
 		}
 
@@ -234,7 +239,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 			runDataPeriod: JobRunDataPeriods.Last30Days,
 			runFrequency: JobRunFrequencies.Every7Days,
 			runNow: true,
-			type: jobType
+			type: jobType,
 		};
 	};
 
@@ -255,7 +260,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 	const lastStep = currentStep === STEPS.length - 1;
 
 	return (
-		<Card className='recommendation-step-card-root'>
+		<Card className="recommendation-step-card-root">
 			<Form
 				initialValues={getInitialValues() as any}
 				onSubmit={handleSubmit}
@@ -267,7 +272,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 					initialValues,
 					isSubmitting,
 					setFieldValue,
-					values
+					values,
 				}) => (
 					<Form.Form>
 						<NavigationWarning when={dirty && !isSubmitting} />

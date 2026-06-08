@@ -1,22 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
+import React from 'react';
+import {useParams} from 'react-router-dom';
 import EventAttributeDefinitionsQuery, {
 	EventAttributeDefinitionsData,
-	EventAttributeDefinitionsVariables
-} from 'event-analysis/queries/EventAttributeDefinitionsQuery';
-import ListComponent from 'shared/hoc/ListComponent';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React from 'react';
-import {Attribute, AttributeTypes} from 'event-analysis/utils/types';
-import {attributeListColumns} from 'shared/util/table-columns';
+	EventAttributeDefinitionsVariables,
+} from '~/event-analysis/queries/EventAttributeDefinitionsQuery';
+import {Attribute, AttributeTypes} from '~/event-analysis/utils/types';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import ListComponent from '~/shared/hoc/ListComponent';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {Sort} from '~/shared/types';
+import {mapListResultsToProps} from '~/shared/util/mappers';
 import {
+	NAME,
 	createOrderIOMap,
 	getSortFromOrderIOMap,
-	NAME
-} from 'shared/util/pagination';
-import {mapListResultsToProps} from 'shared/util/mappers';
-import {Sort} from 'shared/types';
-import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/client';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+} from '~/shared/util/pagination';
+import {attributeListColumns} from '~/shared/util/table-columns';
 
 interface EventAttributeDefinitionsResult {
 	eventAttributeDefinitions: {
@@ -27,7 +32,7 @@ interface EventAttributeDefinitionsResult {
 
 const AttributeList: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {channelId = '', groupId = ''} = useParams<{
@@ -44,20 +49,20 @@ const AttributeList: React.FC = () => {
 			page: page - 1,
 			size: delta,
 			sort: getSortFromOrderIOMap(orderIOMap) as Sort,
-			type: AttributeTypes.Local
-		}
+			type: AttributeTypes.Local,
+		},
 	});
 
 	return (
 		<ListComponent
-			{...mapListResultsToProps(response, result => {
+			{...mapListResultsToProps(response, (result) => {
 				const typedResult =
 					result as unknown as EventAttributeDefinitionsResult;
 
 				return {
 					items: typedResult.eventAttributeDefinitions
 						.eventAttributeDefinitions,
-					total: typedResult.eventAttributeDefinitions.total
+					total: typedResult.eventAttributeDefinitions.total,
 				};
 			})}
 			columns={[
@@ -65,7 +70,7 @@ const AttributeList: React.FC = () => {
 				attributeListColumns.displayName,
 				attributeListColumns.description,
 				attributeListColumns.sampleValue,
-				attributeListColumns.dataType
+				attributeListColumns.dataType,
 			]}
 			delta={delta}
 			entityLabel={Liferay.Language.get('attributes').toLowerCase()}
@@ -77,7 +82,7 @@ const AttributeList: React.FC = () => {
 			orderIOMap={orderIOMap}
 			page={page}
 			query={query}
-			rowIdentifier='id'
+			rowIdentifier="id"
 			showFilterAndOrder={false}
 		/>
 	);

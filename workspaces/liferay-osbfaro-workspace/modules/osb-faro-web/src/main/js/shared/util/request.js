@@ -1,14 +1,13 @@
-import ValidationError from 'shared/util/ValidationError';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {forEach, get, keys, mapValues} from 'lodash';
-import {reloadPage} from 'shared/util/router';
+import ValidationError from '~/shared/util/ValidationError';
+import {reloadPage} from '~/shared/util/router';
 
 export const UNAUTHORIZED_ACCESS = 'Unauthorized Access';
-
-export function addParams(url, params) {
-	const separator = url.includes('?') ? '&' : '?';
-
-	return `${url}${separator}${serializeQueryString(params)}`;
-}
 
 export function getFormData(data) {
 	const formData = new FormData();
@@ -30,7 +29,8 @@ export function parseFromJSON(value) {
 
 	try {
 		result = JSON.parse(value);
-	} catch (err) {}
+	}
+	catch (error) {}
 
 	return result;
 }
@@ -40,8 +40,8 @@ export function parseFromJSON(value) {
  * @param {Object} error - The error object.
  * @returns {object|null} - The parsed error or null if not one of the response error codes.
  */
-export function getServiceError(err) {
-	const parsedError = parseFromJSON(err.message);
+export function getServiceError(error) {
+	const parsedError = parseFromJSON(error.message);
 
 	return get(parsedError, 'status') ? parsedError : null;
 }
@@ -49,14 +49,20 @@ export function getServiceError(err) {
 export function serializeQueryString(params) {
 	return keys(params)
 		.map(
-			key =>
+			(key) =>
 				`${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
 		)
 		.join('&');
 }
 
+export function addParams(url, params) {
+	const separator = url.includes('?') ? '&' : '?';
+
+	return `${url}${separator}${serializeQueryString(params)}`;
+}
+
 export function stringifyValues(data) {
-	return mapValues(data, value =>
+	return mapValues(data, (value) =>
 		value instanceof Object && !(value instanceof File)
 			? JSON.stringify(value)
 			: value
@@ -68,22 +74,23 @@ export function stringifyValues(data) {
  */
 function getAuthData(data) {
 	return Object.entries({
-		...stringifyValues(data)
+		...stringifyValues(data),
 	})
 		.filter(([, value]) => value !== undefined)
-		.reduce((obj, [key, value]) => {
-			obj[key] = value;
-			return obj;
+		.reduce((object, [key, value]) => {
+			object[key] = value;
+
+			return object;
 		}, {});
 }
 
-export default request => {
+const Request = function Request(request) {
 	const {
 		baseURL = '/o/faro',
 		contentType = 'json',
 		data,
 		method,
-		path
+		path,
 	} = request;
 
 	let requestURL = `${baseURL}/${path}`;
@@ -95,17 +102,19 @@ export default request => {
 	if (authData) {
 		if (method === 'GET') {
 			requestURL = `${requestURL}?${new URLSearchParams(authData)}`;
-		} else {
+		}
+		else {
 			config.body = getFormData(authData);
 		}
 	}
 
-	return fetch(requestURL, config).then(async response => {
+	return fetch(requestURL, config).then(async (response) => {
 		const status = response.status;
 
 		if (status === 204) {
 			return {};
-		} else if (status === 400 || status === 500) {
+		}
+		else if (status === 400 || status === 500) {
 			const {field, localizedMessage, messageKey} = await response.json();
 
 			if (field) {
@@ -119,16 +128,23 @@ export default request => {
 			throw new Error(
 				localizedMessage ? localizedMessage : 'Request Error'
 			);
-		} else if (status === 401) {
+		}
+		else if (status === 401) {
 			reloadPage();
-		} else if (status === 403) {
+		}
+		else if (status === 403) {
 			throw new Error(UNAUTHORIZED_ACCESS);
-		} else if (status >= 300) {
+		}
+		else if (status >= 300) {
 			throw new Error('Request error');
-		} else if (contentType === 'json') {
+		}
+		else if (contentType === 'json') {
 			return response.json();
-		} else {
+		}
+		else {
 			return response.text();
 		}
 	});
 };
+
+export default Request;

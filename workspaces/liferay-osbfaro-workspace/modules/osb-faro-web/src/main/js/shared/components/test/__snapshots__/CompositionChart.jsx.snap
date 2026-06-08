@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompositionLegend renders 1`] = `
+<div>
+  <ul
+    class="composition-legend-root legend-template"
+  >
+    <li
+      class="bb-legend-item three-columns"
+    >
+      <div
+        class="align-items-baseline d-flex legend-template-column"
+      >
+        <span
+          class="circle"
+          style="background-color: blue;"
+        />
+        <span
+          class="text-truncate"
+          data-tooltip="false"
+          title=""
+        >
+          foo
+        </span>
+      </div>
+      <div
+        class="justify-content-end legend-template-column"
+        data-testid="active-count"
+      >
+        25
+      </div>
+      <div
+        class="justify-content-end legend-template-column"
+      >
+        <b
+          data-testid="active-porcentage"
+        >
+          25%
+        </b>
+      </div>
+    </li>
+    <li
+      class="bb-legend-item three-columns"
+    >
+      <div
+        class="align-items-baseline d-flex legend-template-column"
+      >
+        <span
+          class="circle"
+          style="background-color: pink;"
+        />
+        <span
+          class="text-truncate"
+          data-tooltip="false"
+          title=""
+        >
+          bar
+        </span>
+      </div>
+      <div
+        class="justify-content-end legend-template-column"
+        data-testid="active-count"
+      >
+        75
+      </div>
+      <div
+        class="justify-content-end legend-template-column"
+      >
+        <b
+          data-testid="active-porcentage"
+        >
+          75%
+        </b>
+      </div>
+    </li>
+  </ul>
+</div>
+`;

@@ -1,5 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
 import React, {useEffect} from 'react';
+
 import {ReportContainer} from './download-report/DownloadPDFReport';
 import {useDownloadReportContext} from './download-report/DownloadReportContext';
 
@@ -12,12 +18,12 @@ const Body: React.FC<ICardBodyProps> = ({
 	alignCenter = false,
 	children,
 	className,
-	noPadding
+	noPadding,
 }) => (
 	<div
 		className={getCN('card-body', className, {
 			'align-center': alignCenter,
-			'no-padding': noPadding
+			'no-padding': noPadding,
 		})}
 	>
 		{alignCenter ? <div>{children}</div> : children}
@@ -26,17 +32,17 @@ const Body: React.FC<ICardBodyProps> = ({
 
 const Footer: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	children,
-	className
+	className,
 }) => <div className={getCN('card-footer', className)}>{children}</div>;
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	children,
-	className
+	className,
 }) => <div className={getCN('card-header', className)}>{children}</div>;
 
 const Title: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	children,
-	className
+	className,
 }) => <div className={getCN('card-title', className)}>{children}</div>;
 
 interface ICardProps extends React.HTMLAttributes<HTMLElement> {
@@ -59,7 +65,7 @@ const Card: React.FC<ICardProps> & {
 	minHeight,
 	pageDisplay = false,
 	reportContainer,
-	testId
+	testId,
 }) => {
 	const {clearReportContainers, setReportContainer} =
 		useDownloadReportContext();
@@ -70,11 +76,13 @@ const Card: React.FC<ICardProps> & {
 		}
 
 		return clearReportContainers;
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [reportContainer]);
 
 	const classes = getCN('card', 'card-root', className, {
 		horizontal,
-		'page-display': pageDisplay
+		'page-display': pageDisplay,
 	});
 
 	return (

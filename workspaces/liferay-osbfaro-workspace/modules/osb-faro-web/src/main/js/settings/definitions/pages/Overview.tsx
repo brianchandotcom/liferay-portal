@@ -1,26 +1,25 @@
-import BasePage from 'settings/components/base-page/BasePage';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import React from 'react';
-import {ACCOUNTS, Routes, toRoute} from 'shared/util/router';
-import {DEVELOPER_MODE, ENABLE_BLOCKLIST_KEYWORDS} from 'shared/util/constants';
+import BasePage from '~/settings/components/base-page/BasePage';
+import Card from '~/shared/components/Card';
+import {
+	DEVELOPER_MODE,
+	ENABLE_BLOCKLIST_KEYWORDS,
+} from '~/shared/util/constants';
+import {ACCOUNTS, Routes, toRoute} from '~/shared/util/router';
 
 interface IOverviewProps {
 	groupId: string;
 }
 
-type ListItem = {
-	header: string;
-	items: {
-		description: string;
-		route: string;
-		routeParams?: object;
-		title: string;
-	}[];
-};
-
 // TODO: LRAC-4511 Remove developer only mode and add devItems back into items
+
 const items = (devMode: boolean = false): (ListItem | null)[] => [
 	{
 		header: Liferay.Language.get('people'),
@@ -30,7 +29,7 @@ const items = (devMode: boolean = false): (ListItem | null)[] => [
 					'view-and-manage-the-data-model-of-your-individuals.-this-data-is-mapped-from-your-dxp,-salesforce,-or-csv-datasources'
 				),
 				route: Routes.SETTINGS_DEFINITIONS_INDIVIDUAL_ATTRIBUTES,
-				title: Liferay.Language.get('individuals')
+				title: Liferay.Language.get('individuals'),
 			},
 			...(devMode
 				? [
@@ -40,11 +39,11 @@ const items = (devMode: boolean = false): (ListItem | null)[] => [
 							),
 							route: Routes.CONTACTS_LIST_ENTITY,
 							routeParams: {type: ACCOUNTS},
-							title: Liferay.Language.get('accounts')
-						}
-				  ]
-				: [])
-		]
+							title: Liferay.Language.get('accounts'),
+						},
+					]
+				: []),
+		],
 	},
 	{
 		header: Liferay.Language.get('behaviors'),
@@ -56,32 +55,32 @@ const items = (devMode: boolean = false): (ListItem | null)[] => [
 								'view-and-manage-the-tracked-behaviors-in-analytics-cloud.-you-will-also-find-instructions-for-tagging-non-liferay-assets-to-track-them-in-analytics-cloud'
 							),
 							route: Routes.SETTINGS_DEFINITIONS_BEHAVIORS,
-							title: Liferay.Language.get('behaviors')
-						}
-				  ]
+							title: Liferay.Language.get('behaviors'),
+						},
+					]
 				: []),
 			{
 				description: Liferay.Language.get(
 					'view-and-manage-your-default-events-custom-events-and-event-attributes'
 				),
 				route: Routes.SETTINGS_DEFINITIONS_EVENTS_DEFAULT,
-				title: Liferay.Language.get('events')
+				title: Liferay.Language.get('events'),
 			},
 			{
 				description: Liferay.Language.get(
 					'view-and-manage-the-data-model-of-your-event-attributes.-event-attributes-provide-additional-context-to-your-events'
 				),
 				route: Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL,
-				title: Liferay.Language.get('event-attributes')
+				title: Liferay.Language.get('event-attributes'),
 			},
 			{
 				description: Liferay.Language.get(
 					'define-the-search-query-parameters-specific-to-your-properties'
 				),
 				route: Routes.SETTINGS_DEFINITIONS_SEARCH,
-				title: Liferay.Language.get('search')
-			}
-		]
+				title: Liferay.Language.get('search'),
+			},
+		],
 	},
 
 	ENABLE_BLOCKLIST_KEYWORDS
@@ -93,73 +92,87 @@ const items = (devMode: boolean = false): (ListItem | null)[] => [
 							'view-and-manage-the-blocked-keywords-for-interest-analysis.-blocked-keywords-will-affect-content-recommendations-feature-available-in-liferay-dxp'
 						),
 						route: Routes.SETTINGS_DEFINITIONS_INTEREST_TOPICS,
-						title: Liferay.Language.get('interests')
-					}
-				]
-		  }
-		: null
+						title: Liferay.Language.get('interests'),
+					},
+				],
+			}
+		: null,
 ];
 
-export const Overview: React.FC<IOverviewProps> = ({groupId}) => (
-	<BasePage
-		className='definitions-overview-root'
-		pageDescription={Liferay.Language.get(
-			'select-the-entity-to-view-its-data-model'
-		)}
-		pageTitle={Liferay.Language.get('definitions')}
-	>
-		<div className='row'>
-			<div className='col-xl-8'>
-				<Card>
-					<ClayList>
-						{items(DEVELOPER_MODE)
-							.filter((item): item is ListItem => Boolean(item))
-							.map(({header, items}) => (
-								<React.Fragment key={header}>
-									{header && (
-										<ClayList.Header>
-											{header}
-										</ClayList.Header>
-									)}
+type ListItem = {
+	header: string;
+	items: {
+		description: string;
+		route: string;
+		routeParams?: object;
+		title: string;
+	}[];
+};
 
-									{items
-										.filter(Boolean)
-										.map(
-											({
-												description,
-												route,
-												routeParams = {},
-												title
-											}) => (
-												<ClayList.Item key={title}>
-													<ClayList.ItemTitle>
-														<ClayLink
-															decoration='none'
-															href={toRoute(
-																route,
-																{
-																	groupId,
-																	...routeParams
-																}
-															)}
-														>
-															{title}
-														</ClayLink>
-													</ClayList.ItemTitle>
-
-													<ClayList.ItemText>
-														{description}
-													</ClayList.ItemText>
-												</ClayList.Item>
-											)
+export const Overview = function Overview({groupId}: IOverviewProps) {
+	return (
+		<BasePage
+			className="definitions-overview-root"
+			pageDescription={Liferay.Language.get(
+				'select-the-entity-to-view-its-data-model'
+			)}
+			pageTitle={Liferay.Language.get('definitions')}
+		>
+			<div className="row">
+				<div className="col-xl-8">
+					<Card>
+						<ClayList>
+							{items(DEVELOPER_MODE)
+								.filter((item): item is ListItem =>
+									Boolean(item)
+								)
+								.map(({header, items}) => (
+									<React.Fragment key={header}>
+										{header && (
+											<ClayList.Header>
+												{header}
+											</ClayList.Header>
 										)}
-								</React.Fragment>
-							))}
-					</ClayList>
-				</Card>
+
+										{items
+											.filter(Boolean)
+											.map(
+												({
+													description,
+													route,
+													routeParams = {},
+													title,
+												}) => (
+													<ClayList.Item key={title}>
+														<ClayList.ItemTitle>
+															<ClayLink
+																decoration="none"
+																href={toRoute(
+																	route,
+																	{
+																		groupId,
+																		...routeParams,
+																	}
+																)}
+															>
+																{title}
+															</ClayLink>
+														</ClayList.ItemTitle>
+
+														<ClayList.ItemText>
+															{description}
+														</ClayList.ItemText>
+													</ClayList.Item>
+												)
+											)}
+									</React.Fragment>
+								))}
+						</ClayList>
+					</Card>
+				</div>
 			</div>
-		</div>
-	</BasePage>
-);
+		</BasePage>
+	);
+};
 
 export default Overview;

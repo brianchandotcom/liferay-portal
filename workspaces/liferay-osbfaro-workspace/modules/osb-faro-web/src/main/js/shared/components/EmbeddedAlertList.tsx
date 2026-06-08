@@ -1,6 +1,11 @@
-import Alert, {ALERT_CONFIG_MAP, AlertTypes} from 'shared/components/Alert';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
 import React from 'react';
+import Alert, {ALERT_CONFIG_MAP, AlertTypes} from '~/shared/components/Alert';
 
 export interface IEmbeddedAlertListProps
 	extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,7 +24,7 @@ export interface IEmbeddedAlertListProps
 
 const EmbeddedAlertList: React.FC<IEmbeddedAlertListProps> = ({
 	alerts = [],
-	className
+	className,
 }) => (
 	<div className={getCN('embedded-alert-list-root', className)}>
 		{alerts.map(

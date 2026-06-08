@@ -1,11 +1,17 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import React from 'react';
-import Row from '../components/Row';
-import {addAlert, updateAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {connect} from 'react-redux';
+import autobind from 'autobind-decorator';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import {addAlert, updateAlert} from '~/shared/actions/alerts';
+import {Alert} from '~/shared/types';
+
+import Row from '../components/Row';
 
 const TIMEOUT = 2000;
 
@@ -13,14 +19,14 @@ const TIMEOUT = 2000;
 export default class AlertFeedKit extends React.Component {
 	static propTypes = {
 		addAlert: PropTypes.func.isRequired,
-		updateAlert: PropTypes.func.isRequired
+		updateAlert: PropTypes.func.isRequired,
 	};
 
 	@autobind
 	handleInfo() {
 		this.props.addAlert({
 			alertType: Alert.Types.Default,
-			message: 'You are using the offline Mode.'
+			message: 'You are using the offline Mode.',
 		});
 	}
 
@@ -28,7 +34,7 @@ export default class AlertFeedKit extends React.Component {
 	handleError() {
 		this.props.addAlert({
 			alertType: Alert.Types.Error,
-			message: 'Upload Failed! Check your internet connection.'
+			message: 'Upload Failed! Check your internet connection.',
 		});
 	}
 
@@ -36,7 +42,7 @@ export default class AlertFeedKit extends React.Component {
 	handlePending() {
 		const pendingAlert = this.props.addAlert({
 			alertType: Alert.Types.Pending,
-			message: 'Updating your profile picture...'
+			message: 'Updating your profile picture...',
 		});
 
 		const completedAlert = () => {
@@ -44,7 +50,7 @@ export default class AlertFeedKit extends React.Component {
 				alertType: Alert.Types.Success,
 				id: pendingAlert.payload.id,
 				message: 'Your profile picture has been updated',
-				timeout: TIMEOUT
+				timeout: TIMEOUT,
 			});
 		};
 
@@ -55,7 +61,7 @@ export default class AlertFeedKit extends React.Component {
 	handleSuccess() {
 		this.props.addAlert({
 			alertType: Alert.Types.Success,
-			message: 'Congratulations! You are now logged in.'
+			message: 'Congratulations! You are now logged in.',
 		});
 	}
 
@@ -65,7 +71,7 @@ export default class AlertFeedKit extends React.Component {
 			alertType: Alert.Types.Warning,
 			message: `This is a warning. This alert will not go away unless you
 			 dismiss it manually.`,
-			timeout: false
+			timeout: false,
 		});
 	}
 
@@ -78,51 +84,51 @@ export default class AlertFeedKit extends React.Component {
 			>
 				<Row>
 					<ClayButton
-						className='button-root'
-						displayType='primary'
+						className="button-root"
+						displayType="primary"
 						onClick={this.handleInfo}
 					>
-						{'Create Info'}
+						Create Info
 					</ClayButton>
 				</Row>
 
 				<Row>
 					<ClayButton
-						className='button-root'
-						displayType='primary'
+						className="button-root"
+						displayType="primary"
 						onClick={this.handleError}
 					>
-						{'Create Error'}
+						Create Error
 					</ClayButton>
 				</Row>
 
 				<Row>
 					<ClayButton
-						className='button-root'
-						displayType='primary'
+						className="button-root"
+						displayType="primary"
 						onClick={this.handlePending}
 					>
-						{'Create Pending'}
+						Create Pending
 					</ClayButton>
 				</Row>
 
 				<Row>
 					<ClayButton
-						className='button-root'
-						displayType='primary'
+						className="button-root"
+						displayType="primary"
 						onClick={this.handleSuccess}
 					>
-						{'Create Success'}
+						Create Success
 					</ClayButton>
 				</Row>
 
 				<Row>
 					<ClayButton
-						className='button-root'
-						displayType='primary'
+						className="button-root"
+						displayType="primary"
 						onClick={this.handleWarning}
 					>
-						{'Create Warning'}
+						Create Warning
 					</ClayButton>
 				</Row>
 			</div>

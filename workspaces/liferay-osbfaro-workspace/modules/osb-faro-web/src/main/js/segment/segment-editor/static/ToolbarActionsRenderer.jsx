@@ -1,10 +1,15 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Nav from 'shared/components/Nav';
-import React from 'react';
-import {noop} from 'lodash';
+import autobind from 'autobind-decorator';
 import {OrderedMap} from 'immutable';
+import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import Nav from '~/shared/components/Nav';
 
 export default class ToolbarActionsRenderer extends React.Component {
 	static defaultProps = {
@@ -13,7 +18,7 @@ export default class ToolbarActionsRenderer extends React.Component {
 		onSelectedClick: noop,
 		onUndoChanges: noop,
 		selectedItemsIOMap: new OrderedMap(),
-		showAdded: false
+		showAdded: false,
 	};
 
 	static propTypes = {
@@ -22,7 +27,7 @@ export default class ToolbarActionsRenderer extends React.Component {
 		onSelectedClick: PropTypes.func,
 		onUndoChanges: PropTypes.func,
 		selectedItemsIOMap: PropTypes.instanceOf(OrderedMap),
-		showAdded: PropTypes.bool
+		showAdded: PropTypes.bool,
 	};
 
 	@autobind
@@ -31,7 +36,8 @@ export default class ToolbarActionsRenderer extends React.Component {
 
 		if (selectedItemsIOMap.isEmpty()) {
 			onClick();
-		} else {
+		}
+		else {
 			onSelectedClick(selectedItemsIOMap);
 		}
 	}
@@ -55,7 +61,7 @@ export default class ToolbarActionsRenderer extends React.Component {
 					{itemsSelected ? (
 						<>
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								displayType={buttonDisplay}
 								onClick={this.handleUndoClick}
 							>
@@ -64,7 +70,7 @@ export default class ToolbarActionsRenderer extends React.Component {
 
 							{!showAdded && (
 								<ClayButton
-									className='button-root'
+									className="button-root"
 									displayType={buttonDisplay}
 									onClick={this.handleOnClick}
 								>
@@ -74,7 +80,7 @@ export default class ToolbarActionsRenderer extends React.Component {
 						</>
 					) : (
 						<ClayButton
-							className='button-root'
+							className="button-root"
 							displayType={buttonDisplay}
 							onClick={this.handleOnClick}
 						>

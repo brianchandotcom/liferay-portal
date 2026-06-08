@@ -1,12 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {gql} from '@apollo/client';
 import {
 	Attribute,
 	Breakdown,
 	CalculationTypes,
 	Event,
-	Filter
-} from 'event-analysis/utils/types';
-import {gql} from '@apollo/client';
-import {RawRangeSelectors, Sort} from 'shared/types';
+	Filter,
+} from '~/event-analysis/utils/types';
+import {RawRangeSelectors, Sort} from '~/shared/types';
 
 interface EventAnalysis extends RawRangeSelectors {
 	compareToPrevious: boolean;
@@ -16,8 +21,8 @@ interface EventAnalysis extends RawRangeSelectors {
 	eventDefinitionId: number;
 	name: string;
 	referencedObjects: {
-		eventDefinition: Event;
 		eventAttributeDefinitions: Attribute[];
+		eventDefinition: Event;
 	};
 }
 
@@ -26,13 +31,13 @@ export interface EventAnalysisData {
 }
 
 export interface EventAnalysisListData {
-	total: number;
 	eventAnalyses: {
 		id: number;
 		modifiedDate: number;
 		name: string;
 		userName: string;
 	}[];
+	total: number;
 }
 
 export interface EventAnalysisMutationData {
@@ -60,6 +65,7 @@ export interface EventAnalysisMutationVariables {
 	compareToPrevious: boolean;
 	eventAnalysisBreakdowns?: Breakdown[];
 	eventAnalysisFilters?: Filter[];
+	eventAnalysisId?: string | null;
 	eventDefinitionId: string;
 	name: string;
 	rangeEnd: string | null;
@@ -67,7 +73,6 @@ export interface EventAnalysisMutationVariables {
 	rangeStart: string | null;
 	userId: string;
 	userName: string;
-	eventAnalysisId?: string | null;
 }
 
 export interface DeleteEventAnalysisVariables {

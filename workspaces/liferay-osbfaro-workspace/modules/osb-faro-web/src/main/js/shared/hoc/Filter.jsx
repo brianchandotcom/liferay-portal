@@ -1,18 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import BasePage from 'shared/components/base-page';
-import Filter from 'shared/components/filter';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {compose} from 'redux';
-import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {withEmpty, withError} from 'cerebro-shared/hocs/utils';
+import {withEmpty, withError} from '~/cerebro-shared/hocs/utils';
+import BasePage from '~/shared/components/base-page';
+import Filter from '~/shared/components/filter';
+import {RangeKeyTimeRanges} from '~/shared/util/constants';
 
 /**
  * HOC
  * @description Filter
  * @param {object} withFilter
  */
-const withFilterComponent = withFilter => {
+const withFilterComponent = (withFilter) => {
 	const FilterWithData = compose(
 		withFilter(),
 		withEmpty(),
@@ -27,7 +32,7 @@ const withFilterComponent = withFilter => {
 		static contextType = BasePage.Context;
 
 		static propTypes = {
-			onChange: PropTypes.func
+			onChange: PropTypes.func,
 		};
 
 		/**
@@ -47,7 +52,7 @@ const withFilterComponent = withFilter => {
 		render() {
 			const {
 				context: {router},
-				props: {className}
+				props: {className},
 			} = this;
 
 			return (

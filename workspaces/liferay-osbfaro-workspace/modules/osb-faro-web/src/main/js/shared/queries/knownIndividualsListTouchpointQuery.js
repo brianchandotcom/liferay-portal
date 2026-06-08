@@ -1,5 +1,46 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {gql} from '@apollo/client';
-import {INDIVIDUALS_FRAGMENT} from 'shared/queries/fragments';
+import {INDIVIDUALS_FRAGMENT} from '~/shared/queries/fragments';
+
+const KnownIndividualsListTouchpointQuery =
+	function KnownIndividualsListTouchpointQuery(queryName, metricName) {
+		return gql`
+            query KnownIndividualsListTouchpointQuery(
+                $channelId: String
+                $devices: String
+                $keywords: String
+                $location: String
+                $rangeEnd: String
+                $rangeKey: Int
+                $rangeStart: String
+                $size: Int!
+                $start: Int!
+                $title: String
+                $touchpoint: String
+            ) {
+                ${queryName}(
+                    channelId: $channelId
+                    canonicalUrl: $touchpoint
+                    deviceType: $devices
+                    country: $location
+                    rangeEnd: $rangeEnd
+                    rangeKey: $rangeKey
+                    rangeStart: $rangeStart
+                    title: $title
+                ) {
+                    ${metricName} {
+                        ...individualsFragment
+                    }
+                }
+            }
+
+            ${INDIVIDUALS_FRAGMENT}
+        `;
+	};
 
 /**
  * Known Individuals List Asset Query
@@ -8,35 +49,4 @@ import {INDIVIDUALS_FRAGMENT} from 'shared/queries/fragments';
  * @param {string} metricName
  * @returns GraphQL query
  */
-export default (queryName, metricName) => gql`
-		query KnownIndividualsListTouchpointQuery(
-			$channelId: String
-			$devices: String
-			$keywords: String
-			$location: String
-			$rangeEnd: String
-			$rangeKey: Int
-			$rangeStart: String
-			$size: Int!
-			$start: Int!
-			$title: String
-			$touchpoint: String
-		) {
-			${queryName}(
-				channelId: $channelId
-				canonicalUrl: $touchpoint
-				deviceType: $devices
-				country: $location
-				rangeEnd: $rangeEnd
-				rangeKey: $rangeKey
-				rangeStart: $rangeStart
-				title: $title
-			) {
-				${metricName} {
-					...individualsFragment
-				}
-			}
-		}
-
-		${INDIVIDUALS_FRAGMENT}
-	`;
+export default KnownIndividualsListTouchpointQuery;

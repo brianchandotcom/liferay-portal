@@ -1,35 +1,40 @@
-import autobind from 'autobind-decorator';
-import ClayButton from '@clayui/button';
-import React from 'react';
-import RowActions from 'shared/components/RowActions';
-import Sticker from 'shared/components/Sticker';
-import Table from 'shared/components/table';
-import {DateCell, NameCell} from 'shared/components/table/cell-components';
-import {mockIndividual} from 'test/data';
-import {Routes} from 'shared/util/router';
-import {times} from 'lodash';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-const INDIVIDUALS = times(5, i =>
+import ClayButton from '@clayui/button';
+import autobind from 'autobind-decorator';
+import {times} from 'lodash';
+import React from 'react';
+import RowActions from '~/shared/components/RowActions';
+import Sticker from '~/shared/components/Sticker';
+import Table from '~/shared/components/table';
+import {DateCell, NameCell} from '~/shared/components/table/cell-components';
+import {Routes} from '~/shared/util/router';
+import {mockIndividual} from '~/test/data';
+
+const INDIVIDUALS = times(5, (i) =>
 	mockIndividual(i, {
 		age: Math.round(Math.random() * 100),
 		country: 'USA',
-		jobTitle: 'Developer'
+		jobTitle: 'Developer',
 	})
 );
 
-const INDIVIDUALS_EUROPE_ARCHITECT = times(5, i =>
+const INDIVIDUALS_EUROPE_ARCHITECT = times(5, (i) =>
 	mockIndividual(i, {
 		age: Math.round(Math.random() * 100),
 		country: 'Europe',
-		jobTitle: 'Architect'
+		jobTitle: 'Architect',
 	})
 );
 
-const INDIVIDUALS_EUROPE_WRITER = times(5, i =>
+const INDIVIDUALS_EUROPE_WRITER = times(5, (i) =>
 	mockIndividual(i, {
 		age: Math.round(Math.random() * 100),
 		country: 'Europe',
-		jobTitle: 'Writer'
+		jobTitle: 'Writer',
 	})
 );
 
@@ -39,40 +44,40 @@ const GROUPS = [
 			{
 				individuals: INDIVIDUALS,
 				total: 5,
-				value: 'Developer'
-			}
+				value: 'Developer',
+			},
 		],
 		total: 5,
 		totalSalary: 250000,
-		value: 'USA'
+		value: 'USA',
 	},
 	{
 		jobTitles: [
 			{
 				individuals: INDIVIDUALS_EUROPE_ARCHITECT,
 				total: 5,
-				value: 'Architect'
+				value: 'Architect',
 			},
 			{
 				individuals: INDIVIDUALS_EUROPE_WRITER,
 				total: 5,
-				value: 'Writer'
-			}
+				value: 'Writer',
+			},
 		],
 		total: 10,
 		totalSalary: 500000,
-		value: 'Europe'
-	}
+		value: 'Europe',
+	},
 ];
 
-const NameCellRenderIcon = () => <Sticker display='success' symbol='check' />;
+const NameCellRenderIcon = () => <Sticker display="success" symbol="check" />;
 
 const RowActionsCell = () => (
 	<RowActions
 		actions={[{label: 'edit'}, {label: 'delete'}]}
 		quickActions={[
 			{iconSymbol: 'pencil', label: 'edit'},
-			{iconSymbol: 'trash', label: 'delete'}
+			{iconSymbol: 'trash', label: 'delete'},
 		]}
 	/>
 );
@@ -87,7 +92,7 @@ class CustomRenderer extends React.Component {
 					this.props.className ? ` ${this.props.className}` : ''
 				}`}
 			>
-				<div className='h4 table-title'>{name}</div>
+				<div className="h4 table-title">{name}</div>
 
 				{properties.jobTitle}
 			</td>
@@ -109,11 +114,11 @@ class CustomButtonCell extends React.Component {
 				}
 			>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={this.handleClick}
 				>
-					{'Save as Segment'}
+					Save as Segment
 				</ClayButton>
 			</td>
 		);
@@ -128,7 +133,7 @@ class TableKit extends React.Component {
 					this.props.className ? ` ${this.props.className}` : ''
 				}
 			>
-				<h3>{'Table'}</h3>
+				<h3>Table</h3>
 
 				<Table
 					columns={[
@@ -136,33 +141,33 @@ class TableKit extends React.Component {
 							accessor: 'name',
 							className: 'table-cell-expand',
 							label: 'Name',
-							title: true
+							title: true,
 						},
 						{
 							accessor: 'properties.salary',
-							label: 'Salary'
+							label: 'Salary',
 						},
 						{
 							accessor: 'properties.jobTitle',
-							label: 'Job Title'
+							label: 'Job Title',
 						},
 						{
 							accessor: 'properties.country',
-							label: 'Country'
+							label: 'Country',
 						},
 						{
 							accessor: 'properties.age',
-							label: 'Age'
-						}
+							label: 'Age',
+						},
 					]}
 					defaultSort={{
-						field: 'name'
+						field: 'name',
 					}}
 					items={INDIVIDUALS}
-					rowIdentifier='id'
+					rowIdentifier="id"
 				/>
 
-				<h3>{'Table Bordered'}</h3>
+				<h3>Table Bordered</h3>
 
 				<Table
 					bordered
@@ -171,33 +176,33 @@ class TableKit extends React.Component {
 							accessor: 'name',
 							className: 'table-cell-expand',
 							label: 'Name',
-							title: true
+							title: true,
 						},
 						{
 							accessor: 'properties.salary',
-							label: 'Salary'
+							label: 'Salary',
 						},
 						{
 							accessor: 'properties.jobTitle',
-							label: 'Job Title'
+							label: 'Job Title',
 						},
 						{
 							accessor: 'properties.country',
-							label: 'Country'
+							label: 'Country',
 						},
 						{
 							accessor: 'properties.age',
-							label: 'Age'
-						}
+							label: 'Age',
+						},
 					]}
 					defaultSort={{
-						field: 'name'
+						field: 'name',
 					}}
 					items={INDIVIDUALS}
-					rowIdentifier='id'
+					rowIdentifier="id"
 				/>
 
-				<h3>{'Custom Cell Renderer'}</h3>
+				<h3>Custom Cell Renderer</h3>
 
 				<Table
 					columns={[
@@ -205,35 +210,35 @@ class TableKit extends React.Component {
 							accessor: 'name',
 							cellRenderer: CustomRenderer,
 							label: 'Name',
-							title: true
+							title: true,
 						},
 						{
 							accessor: 'properties.salary',
-							label: 'Salary'
+							label: 'Salary',
 						},
 						{
 							accessor: 'properties.country',
-							label: 'Country'
+							label: 'Country',
 						},
 						{
 							accessor: 'properties.age',
-							label: 'Age'
+							label: 'Age',
 						},
 						{
 							cellRenderer: CustomButtonCell,
-							sortable: false
-						}
+							sortable: false,
+						},
 					]}
 					defaultSort={{
-						field: 'name'
+						field: 'name',
 					}}
 					items={INDIVIDUALS}
-					rowIdentifier='id'
+					rowIdentifier="id"
 				/>
 
-				<h3>{'Nested Tables'}</h3>
+				<h3>Nested Tables</h3>
 
-				<h5>{'With default sorts and salary sort disabled'}</h5>
+				<h5>With default sorts and salary sort disabled</h5>
 
 				<Table
 					columns={[
@@ -241,23 +246,23 @@ class TableKit extends React.Component {
 							accessor: 'value',
 							className: 'table-cell-expand',
 							label: 'Region',
-							title: true
+							title: true,
 						},
 						{
 							accessor: 'total',
 							className: 'table-cell-expand',
-							label: 'Individual Count'
+							label: 'Individual Count',
 						},
 						{
 							accessor: 'totalSalary',
 							className: 'table-cell-expand',
 							label: 'Salary',
-							sortable: false
-						}
+							sortable: false,
+						},
 					]}
 					defaultSort={{
 						field: 'value',
-						sortOrder: 'desc'
+						sortOrder: 'desc',
 					}}
 					headingNowrap
 					items={GROUPS}
@@ -269,19 +274,19 @@ class TableKit extends React.Component {
 									accessor: 'value',
 									className: 'table-cell-expand',
 									label: 'Job Title',
-									title: true
+									title: true,
 								},
 								{
 									accessor: 'total',
 									className: 'table-cell-expand',
-									label: 'Individual Count'
-								}
+									label: 'Individual Count',
+								},
 							],
 							defaultSort: {
 								field: 'total',
-								sortOrder: 'desc'
+								sortOrder: 'desc',
 							},
-							rowIdentifier: 'value'
+							rowIdentifier: 'value',
 						},
 						{
 							accessor: 'individuals',
@@ -290,37 +295,37 @@ class TableKit extends React.Component {
 									accessor: 'name',
 									className: 'table-cell-expand',
 									label: 'Name',
-									title: true
+									title: true,
 								},
 								{
 									accessor: 'properties.jobTitle',
-									label: 'Job Title'
+									label: 'Job Title',
 								},
 								{
 									accessor: 'properties.salary',
 									label: 'Salary',
-									sortable: false
+									sortable: false,
 								},
 								{
 									accessor: 'properties.country',
-									label: 'Country'
+									label: 'Country',
 								},
 								{
 									accessor: 'properties.age',
-									label: 'Age'
-								}
+									label: 'Age',
+								},
 							],
 							defaultSort: {
 								field: 'name',
-								sortOrder: 'desc'
+								sortOrder: 'desc',
 							},
-							rowIdentifier: 'id'
-						}
+							rowIdentifier: 'id',
+						},
 					]}
-					rowIdentifier='value'
+					rowIdentifier="value"
 				/>
 
-				<h3>{'Table with Quick Actions'}</h3>
+				<h3>Table with Quick Actions</h3>
 
 				<Table
 					columns={[
@@ -329,28 +334,28 @@ class TableKit extends React.Component {
 							cellRenderer: NameCell,
 							className: 'table-cell-expand',
 							label: 'NameCell',
-							title: true
+							title: true,
 						},
 						{
 							accessor: 'properties.jobTitle',
-							label: 'Job Title'
+							label: 'Job Title',
 						},
 						{
 							accessor: 'properties.salary',
 							label: 'Salary',
-							sortable: false
-						}
+							sortable: false,
+						},
 					]}
 					defaultSort={{
-						field: 'name'
+						field: 'name',
 					}}
 					items={INDIVIDUALS}
 					renderRowActions={RowActionsCell}
-					rowIdentifier='id'
+					rowIdentifier="id"
 				/>
 
-				<h3>{'Cell components'}</h3>
-				<h5>{'Reusable Custom Cell Renderers'}</h5>
+				<h3>Cell components</h3>
+				<h5>Reusable Custom Cell Renderers</h5>
 
 				<Table
 					columns={[
@@ -358,47 +363,47 @@ class TableKit extends React.Component {
 							accessor: 'name',
 							cellRenderer: NameCell,
 							label: 'NameCell',
-							title: true
+							title: true,
 						},
 						{
 							accessor: 'name',
 							cellRenderer: NameCell,
 							cellRendererProps: {
-								route: Routes.CONTACTS_INDIVIDUAL
+								route: Routes.CONTACTS_INDIVIDUAL,
 							},
 							label: 'NameCellLink',
-							title: true
+							title: true,
 						},
 						{
 							accessor: 'name',
 							cellRenderer: NameCell,
 							cellRendererProps: {
-								renderSecondaryInfo: data =>
-									data.properties.jobTitle
+								renderSecondaryInfo: (data) =>
+									data.properties.jobTitle,
 							},
 							label: 'NameCellWithSecondaryInfo',
-							title: true
+							title: true,
 						},
 						{
 							accessor: 'name',
 							cellRenderer: NameCell,
 							cellRendererProps: {
-								renderIcon: NameCellRenderIcon
+								renderIcon: NameCellRenderIcon,
 							},
 							label: 'NameCellWithSticker',
-							title: true
+							title: true,
 						},
 						{
 							accessor: 'dateCreated',
 							cellRenderer: DateCell,
-							label: 'DateCell'
-						}
+							label: 'DateCell',
+						},
 					]}
 					defaultSort={{
-						field: 'name'
+						field: 'name',
 					}}
 					items={INDIVIDUALS}
-					rowIdentifier='id'
+					rowIdentifier="id"
 				/>
 			</div>
 		);

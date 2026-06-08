@@ -1,19 +1,23 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
 import React from 'react';
-import TimeZoneAlert from './TimeZoneAlert';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {connect, ConnectedProps} from 'react-redux';
+import {ConnectedProps, connect} from 'react-redux';
+import {addAlert} from '~/shared/actions/alerts';
+import * as API from '~/shared/api';
+import EmbeddedAlertList from '~/shared/components/EmbeddedAlertList';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {Alert} from '~/shared/types';
 import {
 	NotificationSubtypes,
-	NotificationTypes
-} from 'shared/util/records/Notification';
-import {Routes, toRoute} from 'shared/util/router';
-import {useRequest} from 'shared/hooks/useRequest';
+	NotificationTypes,
+} from '~/shared/util/records/Notification';
+import {Routes, toRoute} from '~/shared/util/router';
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import TimeZoneAlert from './TimeZoneAlert';
 
 interface INotificationAlertListProps extends PropsFromRedux {
 	data: {
@@ -43,7 +47,7 @@ const notificationStrategies = new Map<string, Function>([
 			modifiedTime,
 			notificationId,
 			onClose,
-			stripe
+			stripe,
 		}: NotificationStrategyParams) => ({
 			customComponent: () => (
 				<TimeZoneAlert
@@ -52,8 +56,8 @@ const notificationStrategies = new Map<string, Function>([
 					onClose={() => onClose(notificationId)}
 					stripe={stripe}
 				/>
-			)
-		})
+			),
+		}),
 	],
 	[
 		NotificationSubtypes.BlockedEventsLimit,
@@ -61,7 +65,7 @@ const notificationStrategies = new Map<string, Function>([
 			groupId,
 			notificationId,
 			onClose,
-			stripe
+			stripe,
 		}: NotificationStrategyParams) => ({
 			alertType: 'warning',
 			className: 'd-flex align-items-center',
@@ -76,7 +80,7 @@ const notificationStrategies = new Map<string, Function>([
 					</span>
 
 					<ClayLink
-						className='button-root py-0'
+						className="button-root py-0"
 						href={toRoute(
 							Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST,
 							{groupId}
@@ -89,21 +93,25 @@ const notificationStrategies = new Map<string, Function>([
 			),
 			onClose,
 			stripe,
-			title: Liferay.Language.get('limit-reached')
-		})
-	]
+			title: Liferay.Language.get('limit-reached'),
+		}),
+	],
 ]);
 
 const connector = connect(null, {addAlert});
 
-export const useNotificationsAPI = (groupId: string) => {
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export const useNotificationsAPI = function useNotificationsAPI(
+	groupId: string
+) {
 	const response = useRequest({
 		dataSourceFn: ({groupId, type}) =>
 			API.notifications.fetchNotifications({groupId, type}),
 		variables: {
 			groupId,
-			type: NotificationTypes.Alert
-		}
+			type: NotificationTypes.Alert,
+		},
 	});
 
 	return response;
@@ -116,9 +124,11 @@ const NotificationAlertList: React.FC<INotificationAlertListProps> = ({
 	loading,
 	refetch,
 	stripe = false,
-	subtypes = [NotificationSubtypes.TimeZoneChanged]
+	subtypes = [NotificationSubtypes.TimeZoneChanged],
 }) => {
-	if (loading || !data?.length) return null;
+	if (loading || !data?.length) {
+		return null;
+	}
 
 	const removeNotification = (notificationId: string) => {
 		API.notifications
@@ -131,7 +141,7 @@ const NotificationAlertList: React.FC<INotificationAlertListProps> = ({
 						message: Liferay.Language.get(
 							'there-was-an-error-processing-your-request.-please-try-again'
 						),
-						timeout: false
+						timeout: false,
 					});
 			});
 	};
@@ -142,7 +152,7 @@ const NotificationAlertList: React.FC<INotificationAlertListProps> = ({
 	const transformData = ({
 		id,
 		modifiedTime,
-		subtype
+		subtype,
 	}: {
 		id: string;
 		modifiedTime: string;
@@ -156,7 +166,7 @@ const NotificationAlertList: React.FC<INotificationAlertListProps> = ({
 				modifiedTime: Number(modifiedTime),
 				notificationId: id,
 				onClose: removeNotification,
-				stripe
+				stripe,
 			});
 		}
 	};
@@ -164,7 +174,7 @@ const NotificationAlertList: React.FC<INotificationAlertListProps> = ({
 	return (
 		<EmbeddedAlertList
 			alerts={data.filter(filterSubtypes).map(transformData)}
-			className='notification-alert-list-root'
+			className="notification-alert-list-root"
 		/>
 	);
 };

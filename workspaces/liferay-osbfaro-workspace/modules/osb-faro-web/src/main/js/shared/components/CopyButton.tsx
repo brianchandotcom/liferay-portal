@@ -1,8 +1,12 @@
-import ClayButton from '@clayui/button';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton, {ButtonProps} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import Clipboard from 'clipboard';
 import React, {useEffect, useState} from 'react';
-import {ButtonProps} from '@clayui/button';
 
 interface ICopyButtonProps {
 	buttonText?: string;
@@ -25,7 +29,7 @@ const CopyButton: React.FC<ICopyButtonProps> = ({
 	useEffect(() => {
 		const _clipboard = new Clipboard('[data-clipboard-text]');
 
-		_clipboard.on('success', event => {
+		_clipboard.on('success', (event) => {
 			setTitle(Liferay.Language.get('copied'));
 
 			event.clearSelection();
@@ -37,14 +41,14 @@ const CopyButton: React.FC<ICopyButtonProps> = ({
 	return (
 		<ClayButton
 			aria-label={Liferay.Language.get('click-to-copy')}
-			className='button-root'
+			className="button-root"
 			data-clipboard-text={text}
 			displayType={displayType}
 			onClick={onClick}
 			title={title}
 			{...otherProps}
 		>
-			{buttonText || <ClayIcon className='icon-root' symbol='copy' />}
+			{buttonText || <ClayIcon className="icon-root" symbol="copy" />}
 		</ClayButton>
 	);
 };

@@ -1,12 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import moment from 'moment';
-import {buildOrderByFields} from 'shared/util/pagination';
-import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
-import {DEFAULT_RANGE_SELECTORS} from 'shared/hooks/useQueryRangeSelectors';
-import {INDIVIDUALS} from 'shared/util/router';
-import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {RangeSelectors} from 'shared/types';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
+import {DEFAULT_RANGE_SELECTORS} from '~/shared/hooks/useQueryRangeSelectors';
+import {RangeSelectors} from '~/shared/types';
+import {RangeKeyTimeRanges} from '~/shared/util/constants';
+import {DEFAULT_DATE_FORMAT} from '~/shared/util/date';
+import {buildOrderByFields} from '~/shared/util/pagination';
+import {INDIVIDUALS} from '~/shared/util/router';
 
 export function formatDate(date: string | Date) {
 	return moment(date).format(DEFAULT_DATE_FORMAT);
@@ -21,7 +26,7 @@ export enum CSVType {
 	Journal = 'journal',
 	Membership = 'membership',
 	Page = 'page',
-	SearchTerms = 'search-terms'
+	SearchTerms = 'search-terms',
 }
 
 export function useDownloadCSV({
@@ -29,7 +34,7 @@ export function useDownloadCSV({
 	assetType,
 	individualId,
 	segmentId,
-	type
+	type,
 }: {
 	assetId?: string;
 	assetType?: string;
@@ -54,7 +59,8 @@ export function useDownloadCSV({
 			url += '&rangeKey=CUSTOM';
 			url += `&fromDate=${formatDate(rangeSelectors.rangeStart ?? '')}`;
 			url += `&toDate=${formatDate(rangeSelectors.rangeEnd ?? '')}`;
-		} else {
+		}
+		else {
 			url += `&rangeKey=${rangeSelectors.rangeKey}`;
 		}
 
@@ -72,10 +78,10 @@ export function useDownloadCSV({
 									INDIVIDUALS
 								)
 							)
-					  )
+						)
 					: null,
 			query,
-			segmentId
+			segmentId,
 		};
 
 		Object.entries(optionalParams).forEach(([key, value]) => {
@@ -88,7 +94,7 @@ export function useDownloadCSV({
 	};
 }
 
-export const useMutationObserver = () => {
+export const useMutationObserver = function useMutationObserver() {
 	const [loadingCount, setLoadingCount] = useState(0);
 
 	useEffect(() => {
@@ -104,7 +110,7 @@ export const useMutationObserver = () => {
 			attributes: true,
 			characterData: true,
 			childList: true,
-			subtree: true
+			subtree: true,
 		});
 
 		return () => observer.disconnect();

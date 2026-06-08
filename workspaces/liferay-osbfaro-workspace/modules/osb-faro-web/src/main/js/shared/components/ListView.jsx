@@ -1,22 +1,28 @@
-import autobind from 'autobind-decorator';
-import Checkbox from './Checkbox';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import ListGroup from './list-group';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import RadioGroup from './RadioGroup';
-import React from 'react';
+import {Set} from 'immutable';
 import {isNil, noop} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {Set} from 'immutable';
+import React from 'react';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
 import {toggle, toggleSingleton} from '../util/set';
+import Checkbox from './Checkbox';
+import RadioGroup from './RadioGroup';
+import ListGroup from './list-group';
 
 class QuickAction extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		onClick: PropTypes.func,
-		symbol: PropTypes.string.isRequired
+		symbol: PropTypes.string.isRequired,
 	};
 
 	@autobind
@@ -35,10 +41,10 @@ class QuickAction extends React.Component {
 			<ClayButton
 				{...omitDefinedProps(otherProps, QuickAction.propTypes)}
 				className={getCN('button-root quick-action-item', className)}
-				displayType='unstyled'
+				displayType="unstyled"
 				onClick={this.handleClick}
 			>
-				<ClayIcon className='icon-root' symbol={symbol} />
+				<ClayIcon className="icon-root" symbol={symbol} />
 			</ClayButton>
 		);
 	}
@@ -46,7 +52,7 @@ class QuickAction extends React.Component {
 
 class Item extends React.Component {
 	static defaultProps = {
-		disabled: false
+		disabled: false,
 	};
 
 	static propTypes = {
@@ -56,7 +62,8 @@ class Item extends React.Component {
 		onClick: PropTypes.func,
 		quickActions: PropTypes.arrayOf(PropTypes.object),
 		selected: PropTypes.bool,
-		selectMultiple: PropTypes.bool
+
+		selectMultiple: PropTypes.bool,
 	};
 
 	@autobind
@@ -76,7 +83,7 @@ class Item extends React.Component {
 			itemRenderer: ItemInternalComponent,
 			quickActions,
 			selectMultiple,
-			selected
+			selected,
 		} = this.props;
 
 		return (
@@ -98,7 +105,7 @@ class Item extends React.Component {
 							<RadioGroup.Option
 								checked={selected}
 								disabled={disabled}
-								name='list'
+								name="list"
 								onClick={this.handleClick}
 							/>
 						)}
@@ -109,8 +116,8 @@ class Item extends React.Component {
 
 				{quickActions && !!quickActions.length && (
 					<ListGroup.ItemField>
-						<div className='quick-action-menu'>
-							{quickActions.map(action => (
+						<div className="quick-action-menu">
+							{quickActions.map((action) => (
 								<QuickAction
 									{...action}
 									item={item}
@@ -131,7 +138,8 @@ class ListView extends React.Component {
 		onClick: noop,
 		quickActions: [],
 		selectedItemsISet: new Set(),
-		selectMultiple: true
+
+		selectMultiple: true,
 	};
 
 	static propTypes = {
@@ -142,7 +150,8 @@ class ListView extends React.Component {
 		onSelectItemsChange: PropTypes.func,
 		quickActions: PropTypes.arrayOf(PropTypes.object),
 		selectedItemsISet: PropTypes.instanceOf(Set),
-		selectMultiple: PropTypes.bool
+
+		selectMultiple: PropTypes.bool,
 	};
 
 	@autobind
@@ -152,7 +161,7 @@ class ListView extends React.Component {
 			onClick,
 			onSelectItemsChange,
 			selectMultiple,
-			selectedItemsISet
+			selectedItemsISet,
 		} = this.props;
 
 		if (onSelectItemsChange && !disabledItemsISet.has(item.id)) {
@@ -184,7 +193,7 @@ class ListView extends React.Component {
 				{children}
 
 				{items &&
-					items.map(item => (
+					items.map((item) => (
 						<Item
 							disabled={disabledItemsISet.has(item.id)}
 							item={item}
@@ -192,12 +201,12 @@ class ListView extends React.Component {
 							key={item.id}
 							onClick={this.handleItemClick}
 							quickActions={quickActions}
+							selectMultiple={selectMultiple}
 							selected={
 								onSelectItemsChange
 									? selectedItemsISet.has(item.id)
 									: null
 							}
-							selectMultiple={selectMultiple}
 						/>
 					))}
 			</ListGroup>

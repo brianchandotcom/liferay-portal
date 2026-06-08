@@ -1,6 +1,12 @@
-import {actionTypes} from '../actions/modals';
-import {createReducer} from 'redux-toolbox';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {List, Map} from 'immutable';
+import {createReducer} from 'redux-toolbox';
+
+import {actionTypes} from '../actions/modals';
 
 export default createReducer(new List(), {
 	[actionTypes.CLOSE_ALL_MODALS](state) {
@@ -18,8 +24,8 @@ export default createReducer(new List(), {
 			new Map({
 				closeOnBlur,
 				props: new Map(props),
-				type
+				type,
 			})
 		);
-	}
+	},
 });

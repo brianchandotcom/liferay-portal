@@ -1,9 +1,39 @@
-import AccountInput from '../inputs/AccountInput';
-import autobind from 'autobind-decorator';
-import BehaviorInput from '../inputs/BehaviorInput';
-import BooleanInput from '../inputs/BooleanInput';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import autobind from 'autobind-decorator';
+import getCN from 'classnames';
+import {Map} from 'immutable';
+import {get} from 'lodash';
+import React from 'react';
+import {
+	ConnectDragPreview,
+	ConnectDragSource,
+	ConnectDropTarget,
+	DragSource as dragSource,
+	DropTarget as dropTarget,
+	DropTargetMonitor,
+} from 'react-dnd';
+import {ConnectedProps, connect} from 'react-redux';
+import {compose} from 'redux';
+import RowActions from '~/shared/components/RowActions';
+import Form from '~/shared/components/form';
+import {RootState} from '~/shared/store';
+import {SegmentTypes} from '~/shared/util/constants';
+import {Property} from '~/shared/util/records';
+
+import {
+	AddProperty,
+	withReferencedObjectsConsumer,
+} from '../context/referencedObjects';
+import AccountInput from '../inputs/AccountInput';
+import BehaviorInput from '../inputs/BehaviorInput';
+import BooleanInput from '../inputs/BooleanInput';
 import CustomBooleanInput from '../inputs/CustomBooleanInput';
 import CustomDateInput from '../inputs/CustomDateInput';
 import CustomDateTimeInput from '../inputs/CustomDateTimeInput';
@@ -12,59 +42,33 @@ import DateInput from '../inputs/DateInput';
 import DateTimeInput from '../inputs/DateTimeInput';
 import DurationInput from '../inputs/DurationInput';
 import EventInput from '../inputs/EventInput';
-import Form from 'shared/components/form';
 import GeolocationInput from '../inputs/GeolocationInput';
-import getCN from 'classnames';
 import IndividualSelectInput from '../inputs/IndividualSelectInput';
 import InterestBooleanInput from '../inputs/InterestBooleanInput';
 import NumberInput from '../inputs/NumberInput';
 import OrganizationSelectInput from '../inputs/OrganizationSelectInput';
 import OrganizationTextInput from '../inputs/OrganizationTextInput';
-import React from 'react';
-import RowActions from 'shared/components/RowActions';
 import SessionInput from '../inputs/SessionInput';
 import StringInput from '../inputs/StringInput';
 import TagInput from '../inputs/TagInput';
 import VocabularyInput from '../inputs/VocabularyInput';
 import {
-	AddProperty,
-	withReferencedObjectsConsumer
-} from '../context/referencedObjects';
-import {compose} from 'redux';
-import {
 	Conjunctions,
+	PropertyTypes,
+	RelationalOperators,
 	isKnown,
 	isUnknown,
-	PropertyTypes,
-	RelationalOperators
 } from '../utils/constants';
-import {connect, ConnectedProps} from 'react-redux';
-import {
-	ConnectDragPreview,
-	ConnectDragSource,
-	ConnectDropTarget,
-	DragSource as dragSource,
-	DropTarget as dropTarget,
-	DropTargetMonitor
-} from 'react-dnd';
+import {DragTypes} from '../utils/drag-types';
+import {Criterion, CriterionGroup, OnMove, Operator} from '../utils/types';
 import {
 	createNewGroup,
 	findPropertyByCriterion,
 	generateRowId,
 	getSupportedOperatorsFromType,
 	isOfKnownType,
-	isValid
+	isValid,
 } from '../utils/utils';
-import {Criterion, CriterionGroup, OnMove, Operator} from '../utils/types';
-import {DragTypes} from '../utils/drag-types';
-import {get} from 'lodash';
-import {Map} from 'immutable';
-import {Option, Picker} from '@clayui/core';
-import {Property} from 'shared/util/records';
-import {RootState} from 'shared/store';
-import {SegmentTypes} from 'shared/util/constants';
-
-const acceptedDragTypes = [DragTypes.CriteriaRow, DragTypes.Property];
 
 /**
  * Prevents rows from dropping onto itself and adding properties to not matching
@@ -75,7 +79,7 @@ const canDrop = (
 	{
 		criteriaGroupId: destGroupId,
 		disabled,
-		index: destIndex
+		index: destIndex,
 	}: {
 		criteriaGroupId: string;
 		disabled?: boolean;
@@ -94,87 +98,6 @@ const canDrop = (
 };
 
 /**
- * Implements the behavior of what will occur when an item is dropped.
- * Items dropped on top of rows will create a new grouping.
- * This method must be called `drop`.
- */
-const drop = (
-	{
-		addProperty,
-		criteriaGroupId: destGroupId,
-		criterion,
-		index: destIndex,
-		onChange,
-		onMove,
-		sequential
-	}: {
-		addProperty: AddProperty;
-		criteriaGroupId: string;
-		criterion: Criterion;
-		index: number;
-		onChange: (newGroup: CriterionGroup) => void;
-		onMove: OnMove;
-		sequential?: boolean;
-	},
-	monitor: DropTargetMonitor
-): void => {
-	const {
-		criteriaGroupId: startGroupId,
-		criterion: droppedCriterion,
-		index: startIndex,
-		property
-	} = monitor.getItem();
-
-	const {
-		defaultValue,
-		operatorName,
-		propertyName,
-		rowId,
-		touched,
-		type,
-		valid,
-		value
-	} = droppedCriterion;
-
-	if (property) {
-		addProperty(property);
-	}
-
-	const droppedCriterionValue = isValid(value) ? value : defaultValue;
-
-	const operators = getSupportedOperatorsFromType(type);
-
-	const newCriterion = {
-		operatorName: operatorName ? operatorName : operators[0].name,
-		propertyName,
-		rowId: rowId || generateRowId(),
-		touched,
-		valid,
-		value: droppedCriterionValue
-	} as Criterion;
-
-	const itemType = monitor.getItemType();
-
-	const newGroup = createNewGroup(
-		[criterion, newCriterion],
-		sequential ? Conjunctions.Or : Conjunctions.And
-	);
-
-	if (itemType === DragTypes.Property) {
-		onChange(newGroup);
-	} else if (itemType === DragTypes.CriteriaRow) {
-		onMove(
-			startGroupId,
-			startIndex,
-			destGroupId,
-			destIndex,
-			newGroup,
-			true
-		);
-	}
-};
-
-/**
  * Passes the required values to the drop target.
  * This method must be called `beginDrag`.
  * @param {Object} props Component's current props
@@ -183,7 +106,7 @@ const drop = (
 function beginDrag({
 	criteriaGroupId,
 	criterion,
-	index
+	index,
 }: {
 	criteriaGroupId: string;
 	criterion: Criterion;
@@ -198,8 +121,8 @@ const connector = connect((store: RootState, {groupId}: {groupId: string}) => ({
 		groupId,
 		'data',
 		'timeZone',
-		'timeZoneId'
-	])
+		'timeZoneId',
+	]),
 }));
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -216,8 +139,8 @@ interface ICriteriaRowProps extends PropsFromRedux {
 	disabled?: boolean;
 	dragging?: boolean;
 	groupId: string;
-	id?: string;
 	hover?: boolean;
+	id?: string;
 	index: number;
 	onAdd: (index: number, criterion: Criterion) => void;
 	onChange: (criterion: Criterion | Criterion[]) => void;
@@ -240,7 +163,7 @@ class CriteriaRow extends React.Component<
 	ICriteriaRowState
 > {
 	static defaultProps = {
-		criterion: {}
+		criterion: {},
 	};
 
 	constructor(props: ICriteriaRowProps) {
@@ -254,7 +177,7 @@ class CriteriaRow extends React.Component<
 
 		this.state = {
 			selectedProperty,
-			supportedOperators
+			supportedOperators,
 		};
 	}
 
@@ -272,7 +195,7 @@ class CriteriaRow extends React.Component<
 					selectedProperty,
 					supportedOperators: getSupportedOperatorsFromType(
 						String(selectedProperty.type)
-					)
+					),
 				});
 			}
 		}
@@ -281,9 +204,9 @@ class CriteriaRow extends React.Component<
 	getSelectedOperator() {
 		const {
 			props: {
-				criterion: {operatorName, value}
+				criterion: {operatorName, value},
 			},
-			state: {supportedOperators}
+			state: {supportedOperators},
 		} = this;
 
 		let operatorKey: Criterion['operatorName'] | 'is-known' | 'is-unknown' =
@@ -293,7 +216,8 @@ class CriteriaRow extends React.Component<
 
 		if (operatorName === RelationalOperators.EQ && valueNull) {
 			operatorKey = isUnknown;
-		} else if (operatorName === RelationalOperators.NE && valueNull) {
+		}
+		else if (operatorName === RelationalOperators.NE && valueNull) {
 			operatorKey = isKnown;
 		}
 
@@ -305,14 +229,14 @@ class CriteriaRow extends React.Component<
 			selectedOperator || {
 				key: operatorKey,
 				label: operatorKey,
-				name: operatorName
+				name: operatorName,
 			}
 		);
 	}
 
 	getSelectedProperty() {
 		const {
-			props: {criterion, referencedProperties}
+			props: {criterion, referencedProperties},
 		} = this;
 
 		return findPropertyByCriterion(criterion, referencedProperties);
@@ -321,7 +245,8 @@ class CriteriaRow extends React.Component<
 	getValue(value: any, key: string) {
 		if (isOfKnownType(key)) {
 			return null;
-		} else if (value === null) {
+		}
+		else if (value === null) {
 			return '';
 		}
 
@@ -350,7 +275,7 @@ class CriteriaRow extends React.Component<
 	handleOperatorChange(value: string) {
 		const {
 			props: {criterion, onChange},
-			state: {supportedOperators}
+			state: {supportedOperators},
 		} = this;
 
 		const newVal = this.getValue(criterion.value, value);
@@ -366,7 +291,7 @@ class CriteriaRow extends React.Component<
 			operatorName: supportedOperators.find(({key}) => key === value)
 				?.name,
 			value: newVal,
-			...params
+			...params,
 		} as unknown as Criterion);
 	}
 
@@ -386,14 +311,15 @@ class CriteriaRow extends React.Component<
 			const items = value.map((item, i) => ({
 				...criterion,
 				...item,
-				rowId: i === 0 ? criterion.rowId : generateRowId()
+				rowId: i === 0 ? criterion.rowId : generateRowId(),
 			}));
 
 			onChange(items);
-		} else {
+		}
+		else {
 			onChange({
 				...criterion,
-				...value
+				...value,
 			});
 		}
 	}
@@ -407,15 +333,15 @@ class CriteriaRow extends React.Component<
 		const singleOption = supportedOperators.length === 1;
 
 		return (
-			<Form.GroupItem className='operator' label={singleOption} shrink>
+			<Form.GroupItem className="operator" label={singleOption} shrink>
 				{singleOption ? (
 					supportedOperators[0].label
 				) : (
 					<Picker
-						className='criterion-input operator-input'
+						className="criterion-input operator-input"
 						items={supportedOperators.map(({key, label}) => ({
 							label,
-							value: key
+							value: key,
 						}))}
 						onSelectionChange={
 							this.handleOperatorChange as (
@@ -436,7 +362,7 @@ class CriteriaRow extends React.Component<
 	renderValueInput() {
 		const {
 			props: {channelId, criterion, groupId, id, segmentType, timeZoneId},
-			state: {selectedProperty}
+			state: {selectedProperty},
 		} = this;
 
 		const {label, options, type} = selectedProperty ?? ({} as Property);
@@ -466,7 +392,7 @@ class CriteriaRow extends React.Component<
 			[PropertyTypes.SessionNumber]: SessionInput,
 			[PropertyTypes.SessionText]: SessionInput,
 			[PropertyTypes.Text]: StringInput,
-			[PropertyTypes.Tag]: TagInput
+			[PropertyTypes.Tag]: TagInput,
 		};
 
 		const InputComponent: React.ElementType =
@@ -502,14 +428,14 @@ class CriteriaRow extends React.Component<
 				connectDropTarget,
 				dragging,
 				hover,
-				stepNumber
+				stepNumber,
 			},
-			state: {selectedProperty}
+			state: {selectedProperty},
 		} = this;
 
 		const classes = getCN('criterion-row-root', {
 			'dnd-drag': dragging,
-			'dnd-hover': hover && canDrop
+			'dnd-hover': hover && canDrop,
 		});
 
 		return connectDropTarget(
@@ -523,19 +449,19 @@ class CriteriaRow extends React.Component<
 						)}`}
 					/>
 
-					<div className='edit-container'>
+					<div className="edit-container">
 						{connectDragSource(
-							<div className='drag-icon'>
-								<ClayIcon className='icon-root' symbol='drag' />
+							<div className="drag-icon">
+								<ClayIcon className="icon-root" symbol="drag" />
 							</div>
 						)}
 
 						{stepNumber !== undefined && (
 							<ClaySticker
-								className='mr-4'
-								displayType='secondary'
-								shape='circle'
-								size='sm'
+								className="mr-4"
+								displayType="secondary"
+								shape="circle"
+								size="sm"
 							>
 								{stepNumber}
 							</ClaySticker>
@@ -544,26 +470,26 @@ class CriteriaRow extends React.Component<
 						{selectedProperty ? (
 							this.renderValueInput()
 						) : (
-							<div className='non-existent-property-message'>
+							<div className="non-existent-property-message">
 								{Liferay.Language.get(
 									'attribute-no-longer-exists'
 								)}
 							</div>
 						)}
 
-						<div className='actions'>
+						<div className="actions">
 							<RowActions
 								actions={[
 									{
 										label: Liferay.Language.get(
 											'duplicate'
 										),
-										onClick: this.handleDuplicate
+										onClick: this.handleDuplicate,
 									},
 									{
 										label: Liferay.Language.get('delete'),
-										onClick: this.handleDelete
-									}
+										onClick: this.handleDelete,
+									},
 								]}
 							/>
 						</div>
@@ -574,15 +500,99 @@ class CriteriaRow extends React.Component<
 	}
 }
 
+const acceptedDragTypes = [DragTypes.CriteriaRow, DragTypes.Property];
+
+/**
+ * Implements the behavior of what will occur when an item is dropped.
+ * Items dropped on top of rows will create a new grouping.
+ * This method must be called `drop`.
+ */
+const drop = (
+	{
+		addProperty,
+		criteriaGroupId: destGroupId,
+		criterion,
+		index: destIndex,
+		onChange,
+		onMove,
+		sequential,
+	}: {
+		addProperty: AddProperty;
+		criteriaGroupId: string;
+		criterion: Criterion;
+		index: number;
+		onChange: (newGroup: CriterionGroup) => void;
+		onMove: OnMove;
+		sequential?: boolean;
+	},
+	monitor: DropTargetMonitor
+): void => {
+	const {
+		criteriaGroupId: startGroupId,
+		criterion: droppedCriterion,
+		index: startIndex,
+		property,
+	} = monitor.getItem();
+
+	const {
+		defaultValue,
+		operatorName,
+		propertyName,
+		rowId,
+		touched,
+		type,
+		valid,
+		value,
+	} = droppedCriterion;
+
+	if (property) {
+		addProperty(property);
+	}
+
+	const droppedCriterionValue = isValid(value) ? value : defaultValue;
+
+	const operators = getSupportedOperatorsFromType(type);
+
+	const newCriterion = {
+		operatorName: operatorName ? operatorName : operators[0].name,
+		propertyName,
+		rowId: rowId || generateRowId(),
+		touched,
+		valid,
+		value: droppedCriterionValue,
+	} as Criterion;
+
+	const itemType = monitor.getItemType();
+
+	const newGroup = createNewGroup(
+		[criterion, newCriterion],
+		sequential ? Conjunctions.Or : Conjunctions.And
+	);
+
+	if (itemType === DragTypes.Property) {
+		onChange(newGroup);
+	}
+	else if (itemType === DragTypes.CriteriaRow) {
+		onMove(
+			startGroupId,
+			startIndex,
+			destGroupId,
+			destIndex,
+			newGroup,
+			true
+		);
+	}
+};
+
 const CriteriaRowWithDrag = dragSource(
 	DragTypes.CriteriaRow,
 	{
-		beginDrag
+		beginDrag,
 	},
 	(connect, monitor) => ({
 		connectDragPreview: connect.dragPreview(),
 		connectDragSource: connect.dragSource(),
-		dragging: monitor.isDragging()
+		dragging: monitor.isDragging(),
 	})
 )(CriteriaRow);
 
@@ -593,12 +603,12 @@ export default compose<any>(
 		acceptedDragTypes,
 		{
 			canDrop,
-			drop
+			drop,
 		},
 		(connect, monitor) => ({
 			canDrop: monitor.canDrop(),
 			connectDropTarget: connect.dropTarget(),
-			hover: monitor.isOver()
+			hover: monitor.isOver(),
 		})
 	)
 )(CriteriaRowWithDrag);

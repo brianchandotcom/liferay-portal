@@ -1,27 +1,32 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import EmbeddedAlertList, {
-	IEmbeddedAlertListProps
-} from 'shared/components/EmbeddedAlertList';
-import NoResultsDisplay, {
-	INoResultsDisplayProps
-} from 'shared/components/NoResultsDisplay';
-import React from 'react';
-import SearchableEntityTable from 'shared/components/SearchableEntityTable';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import URLConstants from 'shared/util/url-constants';
-import {FetchSegmentsParams} from 'segment/pages/List';
-import {FilterOptionType} from 'shared/types';
 import {get} from 'lodash';
-import {NAME} from 'shared/util/pagination';
-import {Routes, toRoute} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {useChannelContext} from 'shared/context/channel';
-import {useDataSources} from 'shared/context/dataSources';
+import React from 'react';
 import {useParams} from 'react-router-dom';
-import {User} from 'shared/util/records';
+import {FetchSegmentsParams} from '~/segment/pages/List';
+import Card from '~/shared/components/Card';
+import EmbeddedAlertList, {
+	IEmbeddedAlertListProps,
+} from '~/shared/components/EmbeddedAlertList';
+import NoResultsDisplay, {
+	INoResultsDisplayProps,
+} from '~/shared/components/NoResultsDisplay';
+import SearchableEntityTable from '~/shared/components/SearchableEntityTable';
+import BasePage from '~/shared/components/base-page';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {useChannelContext} from '~/shared/context/channel';
+import {useDataSources} from '~/shared/context/dataSources';
+import {FilterOptionType} from '~/shared/types';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {Sizes} from '~/shared/util/constants';
+import {NAME} from '~/shared/util/pagination';
+import {User} from '~/shared/util/records';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 interface IBaseListPageProps {
 	alerts?: IEmbeddedAlertListProps[];
@@ -70,8 +75,8 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 	orderByOptions = [
 		{
 			label: Liferay.Language.get('name'),
-			value: NAME
-		}
+			value: NAME,
+		},
 	],
 	orderIOMap,
 	page,
@@ -95,11 +100,11 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 	const ConnectDataSourceButton = () => (
 		<ClayLink
 			button
-			className='button-root'
-			displayType='primary'
+			className="button-root"
+			displayType="primary"
 			href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
 				channelId,
-				groupId
+				groupId,
 			})}
 		>
 			{Liferay.Language.get('connect-data-source')}
@@ -116,12 +121,13 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_no_results_found'
+						symbol: 'ac_no_results_found',
 					}}
 					title={Liferay.Language.get('there-are-no-results-found')}
 				/>
 			);
-		} else {
+		}
+		else {
 			return (
 				<NoResultsDisplay
 					description={get(noResultsConfig, 'description')}
@@ -140,8 +146,8 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
-					})
+						label: selectedChannel && selectedChannel.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -175,12 +181,12 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 											)}
 
 											<ClayLink
-												className='d-block mb-3'
+												className="d-block mb-3"
 												href={
 													URLConstants.DataSourceConnection
 												}
-												key='DOCUMENTATION'
-												target='_blank'
+												key="DOCUMENTATION"
+												target="_blank"
 											>
 												{Liferay.Language.get(
 													'access-our-documentation-to-learn-more'

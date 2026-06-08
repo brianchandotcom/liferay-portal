@@ -1,27 +1,10 @@
-import moment from 'moment';
-import {conformsTo, isNil} from 'lodash';
-
 /**
- * Represents a time between two dates.
- * @typedef Range
- * @property {Moment} start - The start of the range.
- * @property {Moment} end - The end of the range.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export function isAboveMaxRange(date, maxRange) {
-	return (
-		isRange(date) &&
-		date.start &&
-		date.end &&
-		maxRange &&
-		moment
-			.duration({
-				from: date.start,
-				to: date.end
-			})
-			.asDays() > maxRange
-	);
-}
+import {conformsTo, isNil} from 'lodash';
+import moment from 'moment';
 
 /**
  * A validation function that determines if a value is a valid
@@ -31,16 +14,6 @@ export function isAboveMaxRange(date, maxRange) {
  */
 function isMomentOrNil(value) {
 	return isNil(value) || moment.isMoment(value);
-}
-
-/**
- * A validation function that determines if the value is a valid
- * moment or range.
- * @param {Object} value - The value to test.
- * @returns {boolean}
- */
-export function isDateOrRange(value) {
-	return isNil(value) || moment.isMoment(value) || isRange(value);
 }
 
 /**
@@ -67,8 +40,40 @@ export function isInRange(dateOrRange, date) {
 export function isRange(value) {
 	return conformsTo(value, {
 		end: isMomentOrNil,
-		start: isMomentOrNil
+		start: isMomentOrNil,
 	});
+}
+
+/**
+ * Represents a time between two dates.
+ * @typedef Range
+ * @property {Moment} start - The start of the range.
+ * @property {Moment} end - The end of the range.
+ */
+
+export function isAboveMaxRange(date, maxRange) {
+	return (
+		isRange(date) &&
+		date.start &&
+		date.end &&
+		maxRange &&
+		moment
+			.duration({
+				from: date.start,
+				to: date.end,
+			})
+			.asDays() > maxRange
+	);
+}
+
+/**
+ * A validation function that determines if the value is a valid
+ * moment or range.
+ * @param {Object} value - The value to test.
+ * @returns {boolean}
+ */
+export function isDateOrRange(value) {
+	return isNil(value) || moment.isMoment(value) || isRange(value);
 }
 
 /**
@@ -86,7 +91,7 @@ export function updateRange(range, date) {
 	if (!range.start) {
 		return {
 			...range,
-			start: date
+			start: date,
 		};
 	}
 
@@ -94,12 +99,13 @@ export function updateRange(range, date) {
 		if (date.isSameOrAfter(range.start)) {
 			return {
 				...range,
-				end: date
+				end: date,
 			};
-		} else {
+		}
+		else {
 			return {
 				end: range.start,
-				start: date
+				start: date,
 			};
 		}
 	}
@@ -110,6 +116,6 @@ export function updateRange(range, date) {
 
 	return {
 		end: null,
-		start: date
+		start: date,
 	};
 }

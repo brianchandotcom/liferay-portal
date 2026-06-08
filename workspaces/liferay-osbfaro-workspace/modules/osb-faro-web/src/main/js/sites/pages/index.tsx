@@ -1,25 +1,31 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
-import BundleRouter from 'route-middleware/BundleRouter';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
-import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import URLConstants from 'shared/util/url-constants';
-import {CSVType} from 'shared/components/download-report/utils';
-import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
+import React, {Suspense, lazy} from 'react';
 import {Switch, useParams} from 'react-router-dom';
-import {useChannelContext} from 'shared/context/channel';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSources} from 'shared/context/dataSources';
+import BundleRouter from '~/route-middleware/BundleRouter';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import BasePage from '~/shared/components/base-page';
+import DownloadCSVReport from '~/shared/components/download-report/DownloadCSVReport';
+import DownloadPDFReport from '~/shared/components/download-report/DownloadPDFReport';
+import {CSVType} from '~/shared/components/download-report/utils';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {useChannelContext} from '~/shared/context/channel';
+import {useDataSources} from '~/shared/context/dataSources';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {Routes, getMatchedRoute, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 const InterestDetails = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "SitesDashboardInterestDetails" */ './InterestDetails'
 		)
 );
@@ -33,12 +39,14 @@ const Overview = lazy(
 const SearchTermsPage = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "SitesDashboardSearchTerms" */ './SearchTermsPage'
 		)
 );
 const Touchpoints = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "SitesDashboardTouchpoints" */ './Touchpoints'
 		)
 );
@@ -47,23 +55,23 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.SITES
+		route: Routes.SITES,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('pages'),
-		route: Routes.SITES_TOUCHPOINTS
+		route: Routes.SITES_TOUCHPOINTS,
 	},
 	{
 		exact: false,
 		label: Liferay.Language.get('interests'),
-		route: Routes.SITES_INTERESTS
+		route: Routes.SITES_INTERESTS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('search-terms'),
-		route: Routes.SITES_SEARCH_TERMS
-	}
+		route: Routes.SITES_SEARCH_TERMS,
+	},
 ];
 
 type RouterParams = {
@@ -80,7 +88,7 @@ interface IDashboardProps extends React.HTMLAttributes<HTMLDivElement> {
 	router: Router;
 }
 
-export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
+export const Dashboard = function Dashboard({router}: IDashboardProps) {
 	const {channelId, groupId = ''} = useParams<{
 		channelId: string;
 		groupId: string;
@@ -99,7 +107,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 
 	return (
 		<BasePage
-			className='sites-dashboard-root'
+			className="sites-dashboard-root"
 			documentTitle={Liferay.Language.get('sites')}
 		>
 			<BasePage.Header
@@ -107,8 +115,8 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannelName
-					})
+						label: selectedChannelName,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -129,7 +137,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 
 			{matchedRoute !== Routes.SITES_INTERESTS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						{matchedRoute === Routes.SITES && (
 							<DownloadPDFReport
 								disabled={!!dataSourceStates.empty}
@@ -160,7 +168,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 			<BasePage.Context.Provider
 				value={{
 					filters: {},
-					router
+					router,
 				}}
 			>
 				<BasePage.Body>
@@ -172,18 +180,18 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 										{authorized
 											? Liferay.Language.get(
 													'connect-a-data-source-with-sites-data'
-											  )
+												)
 											: Liferay.Language.get(
 													'please-contact-your-workspace-administrator-to-add-data-sources'
-											  )}
+												)}
 
 										<ClayLink
-											className='d-block mb-3'
+											className="d-block mb-3"
 											href={
 												URLConstants.DataSourceConnection
 											}
-											key='DOCUMENTATION'
-											target='_blank'
+											key="DOCUMENTATION"
+											target="_blank"
 										>
 											{Liferay.Language.get(
 												'access-our-documentation-to-learn-more'
@@ -193,12 +201,12 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 										{authorized && (
 											<ClayLink
 												button
-												className='button-root'
-												displayType='primary'
+												className="button-root"
+												displayType="primary"
 												href={toRoute(
 													Routes.SETTINGS_DATA_SOURCE_LIST,
 													{
-														groupId
+														groupId,
 													}
 												)}
 											>
@@ -240,7 +248,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 
 									<BundleRouter
 										componentProps={{
-											channelName: selectedChannelName
+											channelName: selectedChannelName,
 										}}
 										data={Overview}
 										destructured={false}

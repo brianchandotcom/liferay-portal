@@ -1,24 +1,30 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import React, {useState} from 'react';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
+import {MediansChart} from '~/experiments/components/variant-card/MediansChart';
+import {PerDayChart} from '~/experiments/components/variant-card/per-day-chart/PerDayChart';
+import Card from '~/shared/components/Card';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {Sizes} from '~/shared/util/constants';
+
 import {IExperiment} from '../summary-card/types';
-import {MediansChart} from 'experiments/components/variant-card/MediansChart';
-import {PerDayChart} from 'experiments/components/variant-card/per-day-chart/PerDayChart';
-import {Sizes} from 'shared/util/constants';
 import {VariantTable} from './VariantTable';
 
 enum VariantView {
 	Medians = 'medians',
-	PerDay = 'per-day'
+	PerDay = 'per-day',
 }
 
-export const VariantCard = ({
-	experiment
+export const VariantCard = function VariantCard({
+	experiment,
 }: {
 	experiment: IExperiment & {metricsHistogram?: unknown[]};
-}) => {
+}) {
 	const [variantView, setVariantView] = useState<VariantView>(
 		VariantView.Medians
 	);
@@ -27,7 +33,7 @@ export const VariantCard = ({
 		variantView === VariantView.Medians ? MediansChart : PerDayChart;
 
 	return (
-		<Card className='analytics-variant-card'>
+		<Card className="analytics-variant-card">
 			<Card.Header>
 				<Card.Title>
 					{Liferay.Language.get('variant-report')}
@@ -62,19 +68,19 @@ export const VariantCard = ({
 			</Card.Header>
 
 			<Card.Body>
-				<div className='analytics-variant-card-charts'>
+				<div className="analytics-variant-card-charts">
 					<StatesRenderer
 						empty={!experiment.metricsHistogram?.length}
 					>
 						<StatesRenderer.Empty
-							className='my-6'
+							className="my-6"
 							description={Liferay.Language.get(
 								'metrics-will-show-once-there-are-visitors-to-your-variants'
 							)}
 							icon={{
 								border: false,
 								size: Sizes.XLarge,
-								symbol: 'ac_chart'
+								symbol: 'ac_chart',
 							}}
 							title={Liferay.Language.get(
 								'we-are-currently-collecting-data'

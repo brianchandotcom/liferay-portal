@@ -1,7 +1,12 @@
-import sendRequest from 'shared/util/request';
-import {buildOrderByFields} from 'shared/util/pagination';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {pickBy} from 'lodash';
-import {TimeIntervals} from 'shared/util/constants';
+import {TimeIntervals} from '~/shared/util/constants';
+import {buildOrderByFields} from '~/shared/util/pagination';
+import sendRequest from '~/shared/util/request';
 
 export const DEFAULT_ACTIVITY_MAX = 30;
 
@@ -15,7 +20,7 @@ export function fetchHistory({
 	interval = DEFAULT_ACTIVITY_INTERVAL,
 	max = DEFAULT_ACTIVITY_MAX,
 	rangeEnd = null,
-	rangeStart = null
+	rangeStart = null,
 }) {
 	return sendRequest({
 		data: {
@@ -26,11 +31,11 @@ export function fetchHistory({
 			...pickBy({
 				max,
 				rangeEnd,
-				rangeStart
-			})
+				rangeStart,
+			}),
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/activity/history`
+		path: `contacts/${groupId}/activity/history`,
 	});
 }
 
@@ -44,7 +49,7 @@ export function fetchGroup({
 	groupId,
 	orderIOMap,
 	query,
-	startDate
+	startDate,
 }) {
 	const orderParams = orderIOMap.first();
 
@@ -60,10 +65,10 @@ export function fetchGroup({
 			endDate,
 			orderByFields,
 			query,
-			startDate
+			startDate,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/activity_group`
+		path: `contacts/${groupId}/activity_group`,
 	});
 }
 
@@ -85,10 +90,10 @@ export function searchAssets({
 			applicationId,
 			channelId,
 			eventId,
-			orderByFields
+			orderByFields,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/activity/asset`
+		path: `contacts/${groupId}/activity/asset`,
 	});
 }
 
@@ -96,9 +101,9 @@ export function searchCount({action, groupId, ...otherParams}) {
 	return sendRequest({
 		data: {
 			...otherParams,
-			action
+			action,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/activity/count`
+		path: `contacts/${groupId}/activity/count`,
 	});
 }

@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MetricBar renders 1`] = `
+<div>
+  <div
+    class="metric-bar-root"
+  >
+    <div
+      class="bar bar-default"
+      style="width: 0%;"
+    />
+  </div>
+</div>
+`;
+
+exports[`MetricBar renders full MetricBar 1`] = `
+<div>
+  <div
+    class="metric-bar-root"
+  >
+    <div
+      class="bar bar-default"
+      style="width: 100%;"
+    />
+  </div>
+</div>
+`;
+
+exports[`MetricBar renders small MetricBar 1`] = `
+<div>
+  <div
+    class="metric-bar-root"
+  >
+    <div
+      class="bar bar-sm"
+      style="width: 0%;"
+    />
+  </div>
+</div>
+`;

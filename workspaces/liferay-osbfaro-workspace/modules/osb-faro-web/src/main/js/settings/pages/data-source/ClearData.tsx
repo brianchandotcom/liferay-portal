@@ -1,24 +1,29 @@
-import * as API from 'shared/api';
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'settings/components/base-page/BasePage';
-import DeleteDataSource from 'settings/components/DeleteDataSource';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
+import {truncate} from 'lodash';
 import React from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
+import {connect} from 'react-redux';
+import DeleteDataSource from '~/settings/components/DeleteDataSource';
+import BasePage from '~/settings/components/base-page/BasePage';
+import {addAlert} from '~/shared/actions/alerts';
+import * as API from '~/shared/api';
 import {
 	compose,
 	withAdminPermission,
 	withDataSource,
 	withHistory,
 	withRequest,
-	withSheet
-} from 'shared/hoc';
-import {connect} from 'react-redux';
-import {DataSource} from 'shared/util/records';
-import {Routes, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
-import {truncate} from 'lodash';
+	withSheet,
+} from '~/shared/hoc';
+import {Alert} from '~/shared/types';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {sub} from '~/shared/util/lang';
+import {DataSource} from '~/shared/util/records';
+import {Routes, toRoute} from '~/shared/util/router';
 
 const WrappedDeleteDataSource = compose<any>(
 	withSheet(),
@@ -26,7 +31,7 @@ const WrappedDeleteDataSource = compose<any>(
 		API.dataSource.fetchDeletePreview,
 		(data: any) => ({entitiesCount: data}),
 		{
-			page: false
+			page: false,
 		}
 	)
 )(DeleteDataSource);
@@ -44,99 +49,106 @@ interface IClearDataProps extends React.HTMLAttributes<HTMLElement> {
 	id: string;
 }
 
-export const ClearData: React.FC<IClearDataProps> = ({
+export const ClearData = function ClearData({
 	addAlert,
 	className,
 	dataSource,
 	entitiesCount,
 	groupId,
 	history,
-	id
-}) => (
-	<BasePage
-		breadcrumbItems={[
-			breadcrumbs.getDataSources({groupId}),
-			breadcrumbs.getDataSourceName({
-				groupId,
-				href: toRoute(Routes.SETTINGS_DATA_SOURCE, {
+	id,
+}: IClearDataProps) {
+	return (
+		<BasePage
+			breadcrumbItems={[
+				breadcrumbs.getDataSources({groupId}),
+				breadcrumbs.getDataSourceName({
 					groupId,
-					id
+					href: toRoute(Routes.SETTINGS_DATA_SOURCE, {
+						groupId,
+						id,
+					}),
+					id,
+					label: dataSource.name ?? '',
 				}),
-				id,
-				label: dataSource.name ?? ''
-			}),
-			{
-				active: true,
-				label: Liferay.Language.get('clear-data')
-			}
-		]}
-		className={getCN('data-source-clear-data-root', className)}
-		documentTitle={
-			sub(Liferay.Language.get('confirm-clearing-of-all-data-from-x'), [
-				dataSource.name
-			]) as string
-		}
-		pageDescription={Liferay.Language.get(
-			'the-following-data-will-be-impacted-and-can-yield-unexpected-results.-this-action-will-not-remove-the-data-source'
-		)}
-		pageTitle={sub(
-			Liferay.Language.get('confirm-clearing-of-all-data-from-x'),
-			[dataSource.name]
-		)}
-	>
-		<div className='page-container'>
-			<WrappedDeleteDataSource
-				actionRequestFn={() =>
-					API.dataSource
-						.clearData({
-							groupId,
-							id
-						})
-						.then(() => {
-							addAlert({
-								alertType: Alert.Types.Default,
-								message: sub(
-									Liferay.Language.get(
-										'data-from-x-is-currently-being-removed-from-analytics-cloud'
-									),
-									[truncate(dataSource.name, {length: 50})]
-								) as string
-							});
-
-							history.push(
-								toRoute(Routes.SETTINGS_DATA_SOURCE, {
-									groupId,
-									id
-								})
-							);
-						})
-						.catch(() => {
-							addAlert({
-								alertType: Alert.Types.Error,
-								message: Liferay.Language.get('error'),
-								timeout: false
-							});
-						})
-				}
-				dataSource={dataSource}
-				deleteMessage={Liferay.Language.get(
-					'to-complete-copy-the-following-sentence-to-confirm-your-action-and-click-clear-data-once-you-delete-this-data-you-cannot-undo-this-operation'
-				)}
-				deletePhrase={Liferay.Language.get('clear-x-data')}
-				entitiesCount={entitiesCount}
-				groupId={groupId}
-				id={id}
-				pageActionConfirmationText={sub(
-					Liferay.Language.get(
-						'are-you-sure-you-want-to-clear-data-from-x'
-					),
+				{
+					active: true,
+					label: Liferay.Language.get('clear-data'),
+				},
+			]}
+			className={getCN('data-source-clear-data-root', className)}
+			documentTitle={
+				sub(
+					Liferay.Language.get('confirm-clearing-of-all-data-from-x'),
 					[dataSource.name]
-				)}
-				pageActionText={Liferay.Language.get('clear-data')}
-			/>
-		</div>
-	</BasePage>
-);
+				) as string
+			}
+			pageDescription={Liferay.Language.get(
+				'the-following-data-will-be-impacted-and-can-yield-unexpected-results.-this-action-will-not-remove-the-data-source'
+			)}
+			pageTitle={sub(
+				Liferay.Language.get('confirm-clearing-of-all-data-from-x'),
+				[dataSource.name]
+			)}
+		>
+			<div className="page-container">
+				<WrappedDeleteDataSource
+					actionRequestFn={() =>
+						API.dataSource
+							.clearData({
+								groupId,
+								id,
+							})
+							.then(() => {
+								addAlert({
+									alertType: Alert.Types.Default,
+									message: sub(
+										Liferay.Language.get(
+											'data-from-x-is-currently-being-removed-from-analytics-cloud'
+										),
+										[
+											truncate(dataSource.name, {
+												length: 50,
+											}),
+										]
+									) as string,
+								});
+
+								history.push(
+									toRoute(Routes.SETTINGS_DATA_SOURCE, {
+										groupId,
+										id,
+									})
+								);
+							})
+							.catch(() => {
+								addAlert({
+									alertType: Alert.Types.Error,
+									message: Liferay.Language.get('error'),
+									timeout: false,
+								});
+							})
+					}
+					dataSource={dataSource}
+					deleteMessage={Liferay.Language.get(
+						'to-complete-copy-the-following-sentence-to-confirm-your-action-and-click-clear-data-once-you-delete-this-data-you-cannot-undo-this-operation'
+					)}
+					deletePhrase={Liferay.Language.get('clear-x-data')}
+					entitiesCount={entitiesCount}
+					groupId={groupId}
+					id={id}
+					pageActionConfirmationText={sub(
+						Liferay.Language.get(
+							'are-you-sure-you-want-to-clear-data-from-x'
+						),
+						[dataSource.name]
+					)}
+					pageActionText={Liferay.Language.get('clear-data')}
+				/>
+			</div>
+		</BasePage>
+	);
+};
 
 export default compose(
 	withHistory,

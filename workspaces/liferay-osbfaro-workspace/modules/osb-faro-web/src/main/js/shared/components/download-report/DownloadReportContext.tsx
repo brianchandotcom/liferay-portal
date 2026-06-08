@@ -1,4 +1,10 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {createContext, useContext, useReducer} from 'react';
+
 import {ReportContainer} from './DownloadPDFReport';
 
 export const Context = createContext<{
@@ -8,17 +14,17 @@ export const Context = createContext<{
 }>({
 	clearReportContainers: () => {},
 	reportContainers: [],
-	setReportContainer: () => {}
+	setReportContainer: () => {},
 });
 
 enum ActionTypes {
 	ClearReportContainers = 'CLEAR_CONTEXT',
-	SetReportContainer = 'SET_REPORT_CONTAINER'
+	SetReportContainer = 'SET_REPORT_CONTAINER',
 }
 
 type DownloadReportAction = {
-	type: ActionTypes;
 	payload?: ReportContainer;
+	type: ActionTypes;
 };
 
 const downloadReportReducer = (
@@ -31,13 +37,13 @@ const downloadReportReducer = (
 				...state,
 				reportContainers: [
 					...state.reportContainers,
-					action.payload as ReportContainer
-				]
+					action.payload as ReportContainer,
+				],
 			};
 		case ActionTypes.ClearReportContainers:
 			return {
 				...state,
-				reportContainers: []
+				reportContainers: [],
 			};
 		default: {
 			throw new Error(
@@ -47,25 +53,25 @@ const downloadReportReducer = (
 	}
 };
 
-export const DownloadReportProvider = ({
-	children
+export const DownloadReportProvider = function DownloadReportProvider({
+	children,
 }: {
 	children: React.ReactNode;
-}) => {
+}) {
 	const [{reportContainers}, dispatch] = useReducer(downloadReportReducer, {
-		reportContainers: []
+		reportContainers: [],
 	});
 
 	const setReportContainer = (reportContainer: ReportContainer) => {
 		dispatch({
 			payload: reportContainer,
-			type: ActionTypes.SetReportContainer
+			type: ActionTypes.SetReportContainer,
 		});
 	};
 
 	const clearReportContainers = () => {
 		dispatch({
-			type: ActionTypes.ClearReportContainers
+			type: ActionTypes.ClearReportContainers,
 		});
 	};
 
@@ -74,7 +80,7 @@ export const DownloadReportProvider = ({
 			value={{
 				clearReportContainers,
 				reportContainers,
-				setReportContainer
+				setReportContainer,
 			}}
 		>
 			{children}
@@ -84,4 +90,6 @@ export const DownloadReportProvider = ({
 
 Context.displayName = 'DownloadReportContext';
 
-export const useDownloadReportContext = () => useContext(Context);
+export const useDownloadReportContext = function useDownloadReportContext() {
+	return useContext(Context);
+};

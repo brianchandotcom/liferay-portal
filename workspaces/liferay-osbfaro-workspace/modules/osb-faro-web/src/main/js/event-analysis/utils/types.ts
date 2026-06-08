@@ -1,22 +1,27 @@
-import {OrderByDirections} from 'shared/util/constants';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {OrderByDirections} from '~/shared/util/constants';
 
 export enum AttributeOwnerTypes {
 	Account = 'ACCOUNT',
 	Event = 'EVENT',
 	Individual = 'INDIVIDUAL',
-	Session = 'SESSION'
+	Session = 'SESSION',
 }
 
 export enum AttributeTypes {
 	All = 'ALL',
 	Global = 'GLOBAL',
-	Local = 'LOCAL'
+	Local = 'LOCAL',
 }
 
 export enum CalculationTypes {
 	Average = 'AVERAGE',
 	Total = 'TOTAL',
-	Unique = 'UNIQUE'
+	Unique = 'UNIQUE',
 }
 
 export enum DataTypes {
@@ -24,19 +29,19 @@ export enum DataTypes {
 	Date = 'DATE',
 	Duration = 'DURATION',
 	Number = 'NUMBER',
-	String = 'STRING'
+	String = 'STRING',
 }
 
 export enum DateGroupings {
 	Day = 'DAY',
 	Month = 'MONTH',
-	Year = 'YEAR'
+	Year = 'YEAR',
 }
 
 export enum EventTypes {
 	All = 'ALL',
 	Custom = 'CUSTOM',
-	Default = 'DEFAULT'
+	Default = 'DEFAULT',
 }
 
 export enum Operators {
@@ -46,7 +51,7 @@ export enum Operators {
 	EQ = 'eq',
 	GT = 'gt',
 	LT = 'lt',
-	NE = 'ne'
+	NE = 'ne',
 }
 
 export type Attribute = {
@@ -68,9 +73,9 @@ export type Attributes = {[key: string]: Attribute};
 export type BlockedCustomEvent = {
 	hidden: boolean;
 	id: string;
-	name: string;
 	lastSeenDate: string;
 	lastSeenURL: string;
+	name: string;
 };
 
 export type Breakdown = {
@@ -147,9 +152,9 @@ export type BreakdownData = {
 };
 
 export type ParsedBreakdownItem = {
+	breakdown0: BreakdownDataItem & {rowSpan: number};
 	events: BreakdownDataItem[];
 	index: string;
-	breakdown0: BreakdownDataItem & {rowSpan: number};
 	[key: string]:
 		| (BreakdownDataItem & {rowSpan: number})
 		| BreakdownDataItem[]

@@ -1,6 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {matchPath, Route, RouteProps} from 'react-router-dom';
-import {useQueryParams} from 'shared/hooks/useQueryParams';
+import {Route, RouteProps, matchPath} from 'react-router-dom';
+import {useQueryParams} from '~/shared/hooks/useQueryParams';
 
 interface BundleRouterProps extends RouteProps {
 	componentProps?: Record<string, unknown>;
@@ -42,9 +47,9 @@ const BundleRouter = ({
 						router={{
 							params: {
 								...params,
-								touchpoint: matchedPath?.params.touchpoint
+								touchpoint: matchedPath?.params.touchpoint,
 							},
-							query
+							query,
 						}}
 						{...componentProps}
 					/>

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TypeTrend renders 1`] = `
+<div>
+  <div
+    class="type-trend-root"
+  />
+</div>
+`;

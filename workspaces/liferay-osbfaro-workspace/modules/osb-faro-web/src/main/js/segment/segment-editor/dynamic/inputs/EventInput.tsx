@@ -1,30 +1,36 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import Alert from '@clayui/alert';
-import AttributeConjunctionInput from './components/attribute-conjunction-input';
-import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
+import {Map, fromJS} from 'immutable';
+import {isBoolean, isNil} from 'lodash';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {Attribute, DataTypes} from '~/event-analysis/utils/types';
+import Form from '~/shared/components/form';
+import {SafeResults} from '~/shared/hoc/util';
+import {OrderByDirections, SegmentTypes} from '~/shared/util/constants';
+import {NAME} from '~/shared/util/pagination';
+import {CustomValue} from '~/shared/util/records';
+
 import EventPropertiesQuery, {
 	EventPropertiesData,
-	EventPropertiesVariables
+	EventPropertiesVariables,
 } from '../queries/EventPropertiesQuery';
-import Form from 'shared/components/form';
-import OccurenceConjunctionInput from './components/OccurenceConjunctionInput';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import RealTimePeriodInput, {
-	DEFAULT_OPTIONS
-} from './components/RealTimePeriodInput';
-import {Attribute, DataTypes} from 'event-analysis/utils/types';
-import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
-import {CustomValue} from 'shared/util/records';
-import {fromJS, Map} from 'immutable';
 import {FunctionalOperators, RelationalOperators} from '../utils/constants';
 import {
 	getFilterCriterionIMap,
-	getIndexFromPropertyName
+	getIndexFromPropertyName,
 } from '../utils/custom-inputs';
-import {isBoolean, isNil} from 'lodash';
-import {NAME} from 'shared/util/pagination';
-import {OrderByDirections, SegmentTypes} from 'shared/util/constants';
-import {SafeResults} from 'shared/hoc/util';
-import {useQuery} from '@apollo/client';
+import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
+import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
+import OccurenceConjunctionInput from './components/OccurenceConjunctionInput';
+import RealTimePeriodInput, {
+	DEFAULT_OPTIONS,
+} from './components/RealTimePeriodInput';
+import AttributeConjunctionInput from './components/attribute-conjunction-input';
 
 type Touched = {
 	attribute: boolean;
@@ -41,9 +47,9 @@ type Valid = {
 };
 
 interface IEventInputProps extends ISegmentEditorCustomInputBase {
+	segmentType: SegmentTypes;
 	touched: Touched;
 	valid: Valid;
-	segmentType: SegmentTypes;
 }
 
 const EventInput: React.FC<IEventInputProps> = ({
@@ -54,7 +60,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 	segmentType,
 	touched,
 	valid,
-	value: valueIMap
+	value: valueIMap,
 }) => {
 	const [selectedCustomAttribute, setSelectedCustomAttribute] =
 		useState<Attribute | null>(null);
@@ -112,15 +118,16 @@ const EventInput: React.FC<IEventInputProps> = ({
 					operatorName: RelationalOperators.GE,
 					touched: true,
 					valid: true,
-					value: newDayValue
+					value: newDayValue,
 				});
-			} else {
+			}
+			else {
 				dayCriterion = fromJS({
 					operatorName: RelationalOperators.GE,
 					propertyName: 'day',
 					touched: true,
 					valid: true,
-					value: newDayValue
+					value: newDayValue,
 				});
 			}
 
@@ -132,7 +139,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 			onChange({
 				touched: {...touched, dateFilter: true},
 				valid: {...valid, dateFilter: true},
-				value: updatedValue
+				value: updatedValue,
 			});
 		},
 		[onChange, valueIMap, touched, valid]
@@ -152,14 +159,14 @@ const EventInput: React.FC<IEventInputProps> = ({
 	}, [
 		segmentType,
 		getRealTimePeriodFromCriterion,
-		handleRealTimePeriodChange
+		handleRealTimePeriodChange,
 	]);
 
 	const getConjunctionDateFilterIMap = (value: CustomValue) => {
 		const conjunctionCriterion = value.getIn([
 			'criterionGroup',
 			'items',
-			2
+			2,
 		]);
 
 		if (conjunctionCriterion) {
@@ -172,7 +179,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 			attribute,
 			criterion,
 			touched: conjunctionTouched,
-			valid: conjunctionValid
+			valid: conjunctionValid,
 		}: {
 			attribute?: Attribute;
 			criterion: Criterion;
@@ -185,7 +192,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 				value: valueIMap.mergeIn(
 					['criterionGroup', 'items', 1],
 					fromJS(criterion)
-				)
+				),
 			});
 
 			if (attribute) {
@@ -201,7 +208,8 @@ const EventInput: React.FC<IEventInputProps> = ({
 
 			if (isNil(criterion)) {
 				value = valueIMap.deleteIn(['criterionGroup', 'items', 2]);
-			} else {
+			}
+			else {
 				value = valueIMap.mergeIn(
 					['criterionGroup', 'items', 2],
 					fromJS(criterion)
@@ -211,13 +219,13 @@ const EventInput: React.FC<IEventInputProps> = ({
 			onChange({
 				touched: {
 					...touched,
-					dateFilter: criterion && criterion.touched
+					dateFilter: criterion && criterion.touched,
 				},
 				valid: {
 					...valid,
-					dateFilter: isNil(criterion) || criterion.valid
+					dateFilter: isNil(criterion) || criterion.valid,
 				},
-				value
+				value,
 			});
 		},
 		[onChange, valueIMap, touched, valid]
@@ -227,7 +235,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 		({
 			criterion,
 			touched: occurenceCountTouched,
-			valid: occurenceCountValid
+			valid: occurenceCountValid,
 		}: {
 			criterion?: Criterion;
 			touched?: boolean;
@@ -239,7 +247,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 				value?: CustomValue;
 			} = {
 				touched,
-				valid
+				valid,
 			};
 
 			if (criterion?.operatorName) {
@@ -248,29 +256,33 @@ const EventInput: React.FC<IEventInputProps> = ({
 					value: valueIMap.mergeIn(
 						['operator'],
 						criterion.operatorName
-					) as CustomValue
+					) as CustomValue,
 				};
-			} else if (!isNil(criterion?.value)) {
+			}
+			else if (!isNil(criterion?.value)) {
 				params = {
 					...params,
 					value: valueIMap.mergeIn(
 						['value'],
 						criterion.value
-					) as CustomValue
+					) as CustomValue,
 				};
 			}
 
 			if (isBoolean(occurenceCountTouched)) {
 				params = {
 					...params,
-					touched: {...touched, occurenceCount: occurenceCountTouched}
+					touched: {
+						...touched,
+						occurenceCount: occurenceCountTouched,
+					},
 				};
 			}
 
 			if (isBoolean(occurenceCountValid)) {
 				params = {
 					...params,
-					valid: {...valid, occurenceCount: occurenceCountValid}
+					valid: {...valid, occurenceCount: occurenceCountValid},
 				};
 			}
 
@@ -290,11 +302,11 @@ const EventInput: React.FC<IEventInputProps> = ({
 
 	if (
 		options!.length &&
-		options!.some(option => option.label === 'hidden' && option.value)
+		options!.some((option) => option.label === 'hidden' && option.value)
 	) {
 		return (
-			<div className='criteria-statement'>
-				<b className='non-existent-property-message'>
+			<div className="criteria-statement">
+				<b className="non-existent-property-message">
 					{Liferay.Language.get('custom-event-no-longer-exists')}
 				</b>
 			</div>
@@ -311,9 +323,9 @@ const EventInput: React.FC<IEventInputProps> = ({
 				size: 25,
 				sort: {
 					column: NAME,
-					type: OrderByDirections.Ascending
-				}
-			}
+					type: OrderByDirections.Ascending,
+				},
+			},
 		}
 	);
 
@@ -324,20 +336,20 @@ const EventInput: React.FC<IEventInputProps> = ({
 	const initialPeriod = getRealTimePeriodFromCriterion();
 
 	return (
-		<div className='criteria-statement'>
+		<div className="criteria-statement">
 			<SafeResults {...result} page={false} pageDisplay={false}>
 				{(data: any) => {
 					const rawAttributes =
 						data?.eventProperties?.eventProperties || [];
 					const attributes = rawAttributes.map((attr: Attribute) => ({
-						...attr
+						...attr,
 					}));
 
 					return (
 						<>
 							<Form.Group autoFit>
 								<Form.GroupItem
-									className='font-weight-semibold text-secondary'
+									className="font-weight-semibold text-secondary"
 									label
 									shrink
 								>
@@ -347,7 +359,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 								<OperatorDropdown />
 
 								<Form.GroupItem
-									className='entity-name'
+									className="entity-name"
 									label
 									shrink
 								>
@@ -357,7 +369,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 								</Form.GroupItem>
 
 								<Form.GroupItem
-									className='display-value'
+									className="display-value"
 									label
 									shrink
 								>
@@ -408,7 +420,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 							{!!attributes.length && (
 								<Form.Group autoFit>
 									<Form.GroupItem
-										className='conjunction'
+										className="conjunction"
 										label
 										shrink
 									>
@@ -429,11 +441,12 @@ const EventInput: React.FC<IEventInputProps> = ({
 										touched={{
 											attribute: touched.attribute,
 											attributeValue:
-												touched.attributeValue
+												touched.attributeValue,
 										}}
 										valid={{
 											attribute: valid.attribute,
-											attributeValue: valid.attributeValue
+											attributeValue:
+												valid.attributeValue,
 										}}
 									/>
 								</Form.Group>
@@ -441,9 +454,9 @@ const EventInput: React.FC<IEventInputProps> = ({
 
 							{isRealTime && isSelectedAttributeDateType && (
 								<Alert
-									className='mt-2'
-									displayType='info'
-									variant='feedback'
+									className="mt-2"
+									displayType="info"
+									variant="feedback"
 								>
 									{Liferay.Language.get(
 										'event-date-attributes-may-create-time-conflicts-and-reduce-matching-users.-review-your-criteria-to-ensure-the-segment-behaves-as-expected'

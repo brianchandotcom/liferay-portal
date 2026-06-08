@@ -1,43 +1,48 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
-import React, {useState} from 'react';
-import Table from 'shared/components/table';
-import {
-	ActionType,
-	useUnassignedSegmentsContext
-} from 'shared/context/unassignedSegments';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {Option, Picker} from '@clayui/core';
 import {partition} from 'lodash';
-import {Segment} from 'shared/util/records';
-import {sequence} from 'shared/util/promise';
-import {useChannelContext} from 'shared/context/channel';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+import React, {useState} from 'react';
+import * as API from '~/shared/api';
+import Loading, {Align} from '~/shared/components/Loading';
+import Modal from '~/shared/components/modal';
+import Table from '~/shared/components/table';
+import {useChannelContext} from '~/shared/context/channel';
+import {
+	ActionType,
+	useUnassignedSegmentsContext,
+} from '~/shared/context/unassignedSegments';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
+import {sequence} from '~/shared/util/promise';
+import {Segment} from '~/shared/util/records';
 
 const DELETE_OPTION = {
 	label: Liferay.Language.get('delete'),
-	value: 'DELETE'
+	value: 'DELETE',
 };
 
 const UNASSIGNED_OPTION = {
 	label: Liferay.Language.get('unassigned'),
-	value: ''
+	value: '',
 };
 
 const channelMappingsToArray = (
-	obj: IChannelMappings
+	object: IChannelMappings
 ): Array<{channelId: string; id: string}> => {
-	const arr = [];
+	const array = [];
 
-	for (const id in obj) {
-		if ({}.hasOwnProperty.call(obj, id)) {
-			arr.push({channelId: obj[id], id});
+	for (const id in object) {
+		if ({}.hasOwnProperty.call(object, id)) {
+			array.push({channelId: object[id], id});
 		}
 	}
 
-	return arr;
+	return array;
 };
 
 interface IChannelMappings {
@@ -51,7 +56,7 @@ interface IAssignSegmentsProps {
 
 const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 	const {onOrderIOMapChange, orderIOMap} = useStatefulPagination(undefined, {
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {channels} = useChannelContext();
@@ -63,7 +68,7 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 		unassignedSegments.reduce(
 			(p: IChannelMappings, {id}: Segment): IChannelMappings => ({
 				...p,
-				[id]: ''
+				[id]: '',
 			}),
 			{}
 		)
@@ -76,8 +81,8 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 		DELETE_OPTION,
 		...channels.map(({id, name}) => ({
 			label: name,
-			value: id
-		}))
+			value: id,
+		})),
 	];
 
 	const updateSegment = (segmentId: string, value: string) => {
@@ -86,7 +91,7 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 
 	const ChannelSelect = ({
 		data: {id},
-		options
+		options,
 	}: {
 		data: {id: string};
 		options: {label: string; value: string}[];
@@ -95,7 +100,7 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 			<Picker
 				data-testid={`select-${id}`}
 				items={options}
-				onSelectionChange={selectedValue =>
+				onSelectionChange={(selectedValue) =>
 					updateSegment(id, selectedValue as string)
 				}
 				required
@@ -125,20 +130,21 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 				API.individualSegment.updateChannel({
 					channelId,
 					groupId,
-					id
+					id,
 				});
 		});
 
 		try {
 			await sequence(segmentsFn)();
-		} finally {
+		}
+		finally {
 			const segmentIdsToKeep = toKeep.map(({id}) => id);
 
 			unassignedSegmentsDispatch?.({
 				payload: unassignedSegments.filter(({id}: Segment) =>
 					segmentIdsToKeep.includes(id)
 				),
-				type: ActionType.setSegments
+				type: ActionType.setSegments,
 			});
 
 			setIsSubmitting(false);
@@ -161,26 +167,26 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 	};
 
 	return (
-		<div className='assign-segments'>
-			<Modal.Body className='d-flex flex-column align-items-center'>
+		<div className="assign-segments">
+			<Modal.Body className="align-items-center d-flex flex-column">
 				<h2>{Liferay.Language.get('assign-existing-segments')}</h2>
 
-				<span className='subtitle'>
+				<span className="subtitle">
 					{Liferay.Language.get(
 						'your-existing-segments-will-be-hidden-until-they-have-been-assigned.-a-segment-can-only-belong-to-a-single-property'
 					)}
 				</span>
 
-				<div className='assign-segments-table-wrapper'>
+				<div className="assign-segments-table-wrapper">
 					<Table
 						columns={[
 							{
 								accessor: 'name',
-								label: Liferay.Language.get('segment-name')
+								label: Liferay.Language.get('segment-name'),
 							},
 							{
 								accessor: 'userName',
-								label: Liferay.Language.get('created-by')
+								label: Liferay.Language.get('created-by'),
 							},
 							{
 								accessor: 'selectChannel',
@@ -188,33 +194,33 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 									[key: string]: any;
 								}) => React.ReactNode,
 								cellRendererProps: {
-									options: selectOptions
+									options: selectOptions,
 								},
-								sortable: false
-							}
+								sortable: false,
+							},
 						]}
 						internalSort
 						items={unassignedSegments}
 						onOrderIOMapChange={onOrderIOMapChange}
 						orderIOMap={orderIOMap}
-						rowIdentifier='id'
+						rowIdentifier="id"
 					/>
 				</div>
 			</Modal.Body>
 
-			<Modal.Footer className='d-flex justify-content-end'>
+			<Modal.Footer className="d-flex justify-content-end">
 				<ClayButton
 					disabled={isSubmitting}
-					displayType='secondary'
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('skip-for-now')}
 				</ClayButton>
 
 				<ClayButton
-					data-testid='submit-button'
+					data-testid="submit-button"
 					disabled={isSubmitting || !isValid()}
-					displayType='primary'
+					displayType="primary"
 					onClick={handleSubmit}
 				>
 					{isSubmitting && <Loading align={Align.Left} />}

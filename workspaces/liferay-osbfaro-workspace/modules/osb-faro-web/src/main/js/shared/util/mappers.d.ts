@@ -1,6 +1,6 @@
 /**
- * Ambient declarations for shared/util/mappers.js (legacy untyped helper).
- * Keep in sync with mappers.js until that file is migrated to TypeScript.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {ApolloError} from '@apollo/client';

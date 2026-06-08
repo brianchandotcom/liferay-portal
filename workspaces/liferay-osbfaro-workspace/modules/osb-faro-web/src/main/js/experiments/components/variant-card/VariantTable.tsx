@@ -1,23 +1,29 @@
-import columns from './variant-columns';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import Table, {Column} from 'shared/components/table';
-import {createOrderIOMap} from 'shared/util/pagination';
 import {
 	getBestVariant,
 	getMetricUnit,
-	mergedVariants
-} from 'experiments/util/experiments';
-import {IExperiment} from '../summary-card/types';
-import {MetricName} from 'experiments/util/types';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+	mergedVariants,
+} from '~/experiments/util/experiments';
+import {MetricName} from '~/experiments/util/types';
+import Table, {Column} from '~/shared/components/table';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {createOrderIOMap} from '~/shared/util/pagination';
 
-export const VariantTable = ({
-	experiment
+import {IExperiment} from '../summary-card/types';
+import columns from './variant-columns';
+
+export const VariantTable = function VariantTable({
+	experiment,
 }: {
 	experiment: IExperiment & {type?: string};
-}) => {
+}) {
 	const {onOrderIOMapChange, orderIOMap} = useStatefulPagination(undefined, {
-		initialOrderIOMap: createOrderIOMap('dxpVariantName')
+		initialOrderIOMap: createOrderIOMap('dxpVariantName'),
 	});
 
 	const {
@@ -27,7 +33,7 @@ export const VariantTable = ({
 		publishedDXPVariantId,
 		status,
 		type,
-		winnerDXPVariantId
+		winnerDXPVariantId,
 	} = experiment;
 
 	const variantMetrics = metrics?.variantMetrics ?? [];
@@ -37,11 +43,11 @@ export const VariantTable = ({
 	const bestVariant = getBestVariant({
 		dxpVariants: experiment.dxpVariants,
 		goal: goal as {metric: MetricName} | undefined,
-		metrics: {variantMetrics}
+		metrics: {variantMetrics},
 	});
 
 	return (
-		<div className='analytics-variant-card-table'>
+		<div className="analytics-variant-card-table">
 			<Table
 				columns={
 					columns({
@@ -51,7 +57,7 @@ export const VariantTable = ({
 						publishedDXPVariantId,
 						status,
 						type,
-						winnerDXPVariantId
+						winnerDXPVariantId,
 					}) as Column[]
 				}
 				headingNowrap={false}
@@ -59,7 +65,7 @@ export const VariantTable = ({
 				items={variants}
 				onOrderIOMapChange={onOrderIOMapChange}
 				orderIOMap={orderIOMap}
-				rowIdentifier='dxpVariantId'
+				rowIdentifier="dxpVariantId"
 			/>
 		</div>
 	);

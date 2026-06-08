@@ -1,30 +1,35 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {graphql} from '@apollo/client/react/hoc';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import getInterestsQuery from 'contacts/queries/InterestsQuery';
 import React from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {compositionListColumns} from 'shared/util/table-columns';
-import {CompositionTypes} from 'shared/util/constants';
 import {
 	getMapResultToProps,
-	mapCardPropsToOptions
-} from 'contacts/hoc/mappers/interests-query';
-import {graphql} from '@apollo/client/react/hoc';
-import {PAGES, Routes, setUriQueryValue, toRoute} from 'shared/util/router';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {withTableData} from 'shared/hoc';
+	mapCardPropsToOptions,
+} from '~/contacts/hoc/mappers/interests-query';
+import getInterestsQuery from '~/contacts/queries/InterestsQuery';
+import Card from '~/shared/components/Card';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {withTableData} from '~/shared/hoc';
+import {CompositionTypes} from '~/shared/util/constants';
+import {PAGES, Routes, setUriQueryValue, toRoute} from '~/shared/util/router';
+import {compositionListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
 
 const withData = () =>
 	graphql(getInterestsQuery(CompositionTypes.SegmentInterests), {
 		options: mapCardPropsToOptions,
-		props: getMapResultToProps(CompositionTypes.SegmentInterests)
+		props: getMapResultToProps(CompositionTypes.SegmentInterests),
 	});
 
 const TableWithData = withTableData(withData, {
 	emptyDescription: (
 		<>
-			<span className='mr-1'>
+			<span className="mr-1">
 				{Liferay.Language.get(
 					'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 				)}
@@ -32,8 +37,8 @@ const TableWithData = withTableData(withData, {
 
 			<ClayLink
 				href={URLConstants.SegmentsTopInterestsDocumentationLink}
-				key='DOCUMENTATION'
-				target='_blank'
+				key="DOCUMENTATION"
+				target="_blank"
 			>
 				{Liferay.Language.get('learn-more-about-interests')}
 			</ClayLink>
@@ -52,29 +57,29 @@ const TableWithData = withTableData(withData, {
 						groupId,
 						id,
 						interestId: name,
-						tabId: PAGES
+						tabId: PAGES,
 					}),
 					'active',
 					true
 				),
-			sortable: false
+			sortable: false,
 		}),
 		compositionListColumns.getRelativeMetricBar({
 			label: Liferay.Language.get('segment-members'),
 			maxCount,
-			totalCount
+			totalCount,
 		}),
 		compositionListColumns.getPercentOf({
 			metricName: Liferay.Language.get('active-members'),
-			totalCount
-		})
+			totalCount,
+		}),
 	],
-	rowIdentifier: 'name'
+	rowIdentifier: 'name',
 });
 
 const InterestsCard = ({channelId, groupId, id}) => (
 	<Card
-		className='interests-card-root'
+		className="interests-card-root"
 		minHeight={536}
 		reportContainer={ReportContainer.TopInterestsCard}
 	>
@@ -91,21 +96,21 @@ const InterestsCard = ({channelId, groupId, id}) => (
 
 		<Card.Footer>
 			<ClayLink
-				className='button-root'
-				decoration='none'
-				displayType='secondary'
+				className="button-root"
+				decoration="none"
+				displayType="secondary"
 				href={toRoute(Routes.CONTACTS_SEGMENT_INTERESTS, {
 					channelId,
 					groupId,
-					id
+					id,
 				})}
 				small
 			>
 				{Liferay.Language.get('view-all-interests')}
 
 				<ClayIcon
-					className='icon-root ml-2'
-					symbol='angle-right-small'
+					className="icon-root ml-2"
+					symbol="angle-right-small"
 				/>
 			</ClayLink>
 		</Card.Footer>

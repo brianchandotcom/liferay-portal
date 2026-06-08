@@ -1,15 +1,21 @@
-import Form from 'shared/components/form';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
+import {Map, OrderedMap} from 'immutable';
 import React, {useContext, useEffect} from 'react';
-import SelectEntityFromModal from '../components/SelectEntityFromModal';
-import {Columns} from 'shared/types';
+import {getFormattedTitle} from '~/shared/components/NoResultsDisplay';
+import Form from '~/shared/components/form';
+import {Columns} from '~/shared/types';
+import {OrderParams} from '~/shared/util/records';
+
 import {
 	EntityType,
-	ReferencedObjectsContext
+	ReferencedObjectsContext,
 } from '../../context/referencedObjects';
-import {getFormattedTitle} from 'shared/components/NoResultsDisplay';
-import {Map, OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
+import SelectEntityFromModal from '../components/SelectEntityFromModal';
 
 interface ISelectEntityInputProps {
 	columns: Columns;
@@ -23,7 +29,7 @@ interface ISelectEntityInputProps {
 	onItemsChange: (items: OrderedMap<string, any>) => void;
 	onValidChange: ({
 		touched,
-		valid
+		valid,
 	}: {
 		touched: boolean;
 		valid: boolean;
@@ -71,14 +77,15 @@ const SelectEntityInput: React.FC<ISelectEntityInputProps> = ({
 		if (items.size === 1) {
 			addEntity?.({
 				entityType,
-				payload: Map(entity)
+				payload: Map(entity),
 			});
 
 			onItemsChange(items);
-		} else {
+		}
+		else {
 			addEntities?.({
 				entityType,
-				payload: items.map(Map).valueSeq().toArray()
+				payload: items.map(Map).valueSeq().toArray(),
 			});
 
 			onItemsChange(items);
@@ -94,12 +101,12 @@ const SelectEntityInput: React.FC<ISelectEntityInputProps> = ({
 			)}
 		>
 			<Form.Group autoFit>
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{property.entityName}
 				</Form.GroupItem>
 
 				{property.entityName !== displayValue && (
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						<b>{displayValue}</b>
 					</Form.GroupItem>
 				)}
@@ -117,29 +124,29 @@ const SelectEntityInput: React.FC<ISelectEntityInputProps> = ({
 					}
 					noResultsProps={{
 						spacer: true,
-						title: getFormattedTitle(entityLabel)
+						title: getFormattedTitle(entityLabel),
 					}}
 					onSubmit={handleEntitySelect}
-					renderEntity={entity => {
+					renderEntity={(entity) => {
 						if (entity && entity?.name) {
 							const {dataSourceName, name} = entity;
 
 							return (
 								<div
-									className='asset-display-root'
+									className="asset-display-root"
 									title={dataSourceName}
 								>
-									<div className='asset-name text-truncate'>
+									<div className="asset-name text-truncate">
 										{name}
 									</div>
 
 									{!!dataSourceName && (
 										<div
 											data-tooltip
-											data-tooltip-align='top'
+											data-tooltip-align="top"
 											title={dataSourceName}
 										>
-											<div className='asset-url text-secondary text-truncate'>
+											<div className="asset-url text-secondary text-truncate">
 												{dataSourceName}
 											</div>
 										</div>

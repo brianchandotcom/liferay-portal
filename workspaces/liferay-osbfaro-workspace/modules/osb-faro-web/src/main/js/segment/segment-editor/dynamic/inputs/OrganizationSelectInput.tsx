@@ -1,14 +1,20 @@
-import CustomSelectEntityInput from './components/CustomSelectEntityInput';
-import OrganizationsQuery from '../queries/OrganizationsQuery';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
+import {organizationsListColumns} from '~/shared/util/table-columns';
+
 import {EntityType} from '../context/referencedObjects';
 import {
 	getMapResultToProps,
-	mapPropsToOptions
+	mapPropsToOptions,
 } from '../mappers/dxp-entity-bag-mapper';
+import OrganizationsQuery from '../queries/OrganizationsQuery';
 import {ISegmentEditorCustomInputBase} from '../utils/types';
-import {organizationsListColumns} from 'shared/util/table-columns';
+import CustomSelectEntityInput from './components/CustomSelectEntityInput';
 
 interface IOrganizationSelectProps extends ISegmentEditorCustomInputBase {
 	touched: boolean;
@@ -21,21 +27,21 @@ const OrganizationSelectInput: React.FC<IOrganizationSelectProps> = ({
 	...otherProps
 }) => (
 	<CustomSelectEntityInput
-		className='organization-select-input-root'
+		className="organization-select-input-root"
 		columns={organizationsListColumns}
 		entityLabel={Liferay.Language.get('organizations')}
 		entityType={EntityType.Organizations}
 		graphqlProps={{
 			graphqlQuery: OrganizationsQuery,
 			mapPropsToOptions,
-			mapResultToProps: getMapResultToProps('organizations')
+			mapResultToProps: getMapResultToProps('organizations'),
 		}}
 		initialOrderIOMap={createOrderIOMap(NAME)}
 		orderByOptions={[
 			{
 				label: Liferay.Language.get('name'),
-				value: NAME
-			}
+				value: NAME,
+			},
 		]}
 		property={property}
 		valid={valid}

@@ -1,11 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import Popover from 'shared/components/Popover';
+import {PropTypes} from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {isEllipisActive} from 'shared/util/util';
 import {Link} from 'react-router-dom';
-import {PropTypes} from 'prop-types';
+import Popover from '~/shared/components/Popover';
+import {isEllipisActive} from '~/shared/util/util';
 
 /**
  * Table Data
@@ -15,18 +20,18 @@ class TableData extends React.Component {
 	static defaultProps = {
 		emptyMessage: '',
 		firstColumn: true,
-		url: ''
+		url: '',
 	};
 
 	static propTypes = {
 		emptyMessage: PropTypes.string,
 		firstColumn: PropTypes.bool,
 		title: PropTypes.string,
-		url: PropTypes.string
+		url: PropTypes.string,
 	};
 
 	state = {
-		showPopover: false
+		showPopover: false,
 	};
 
 	constructor(props) {
@@ -42,7 +47,7 @@ class TableData extends React.Component {
 	@autobind
 	handleMouseOver(event) {
 		this.setState({
-			showPopover: isEllipisActive(event)
+			showPopover: isEllipisActive(event),
 		});
 	}
 
@@ -52,19 +57,20 @@ class TableData extends React.Component {
 	@autobind
 	handleMouseOut() {
 		this.setState({
-			showPopover: false
+			showPopover: false,
 		});
 	}
 
 	renderEmptyMessage() {
 		const {emptyMessage} = this.props;
-		return <span className='mb-1 text-secondary'>{emptyMessage}</span>;
+
+		return <span className="mb-1 text-secondary">{emptyMessage}</span>;
 	}
 
 	renderTitle(title) {
 		return (
 			<span
-				className='mb-1 text-truncate'
+				className="mb-1 text-truncate"
 				onBlur={this.handleMouseOut}
 				onFocus={this.handleMouseOver}
 				onMouseOut={this.handleMouseOut}
@@ -108,10 +114,10 @@ class TableData extends React.Component {
 				{url
 					? this.renderUrl({title, url})
 					: title
-					? this.renderTitle(title)
-					: emptyMessage
-					? this.renderEmptyMessage()
-					: null}
+						? this.renderTitle(title)
+						: emptyMessage
+							? this.renderEmptyMessage()
+							: null}
 
 				{ReactDOM.createPortal(
 					<Popover

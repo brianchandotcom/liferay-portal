@@ -1,12 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import DownloadPDFReport from './DownloadPDFReport';
-import Loading, {Align} from '../Loading';
 import React from 'react';
-import {CSVType, useMutationObserver} from './utils';
+import {useDataSources} from '~/shared/context/dataSources';
+
+import Loading, {Align} from '../Loading';
+import DownloadPDFReport from './DownloadPDFReport';
 import {DownloadStaticCSVReport} from './DownloadStaticCSVReport';
-import {useDataSources} from 'shared/context/dataSources';
+import {CSVType, useMutationObserver} from './utils';
 
 const reportType = {
 	CSV: {
@@ -18,15 +24,15 @@ const reportType = {
 			/>
 		),
 		label: Liferay.Language.get('csv-file'),
-		value: 'csv'
+		value: 'csv',
 	},
 	PDF: {
 		Component: (props: any) => (
 			<DownloadPDFReport showDateRange={false} {...props} />
 		),
 		label: Liferay.Language.get('pdf-file'),
-		value: 'pdf'
-	}
+		value: 'pdf',
+	},
 };
 
 interface IDownloadReportDropdownProps {
@@ -44,7 +50,7 @@ const DownloadReportDropdown: React.FC<IDownloadReportDropdownProps> = ({
 	onClick,
 	segmentId,
 	subtitle,
-	title
+	title,
 }) => {
 	const {loadingCount} = useMutationObserver();
 	const dataSourceStates = useDataSources();
@@ -57,20 +63,20 @@ const DownloadReportDropdown: React.FC<IDownloadReportDropdownProps> = ({
 				trigger={
 					<ClayButton
 						borderless
-						displayType='secondary'
+						displayType="secondary"
 						onClick={onClick}
-						size='sm'
+						size="sm"
 					>
-						<ClayIcon className='mr-2' symbol='download' />
+						<ClayIcon className="mr-2" symbol="download" />
 
 						{Liferay.Language.get('download-reports')}
 
-						<ClayIcon className='ml-2' symbol='caret-bottom' />
+						<ClayIcon className="ml-2" symbol="caret-bottom" />
 					</ClayButton>
 				}
 			>
 				<ClayDropdown.ItemList>
-					{Object.values(reportType).map(dropdownItem => (
+					{Object.values(reportType).map((dropdownItem) => (
 						<dropdownItem.Component
 							disabled={
 								dataSourceStates.empty ||

@@ -1,13 +1,18 @@
-import Card from 'shared/components/Card';
-import React from 'react';
-import {DETAILS_LABEL_MAP} from 'shared/util/lang';
-import {getSafeDisplayValue} from 'shared/util/util';
-import {PropTypes} from 'prop-types';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-const TermList = ({children}) => <dl className='term-list'>{children}</dl>;
+import {PropTypes} from 'prop-types';
+import React from 'react';
+import Card from '~/shared/components/Card';
+import {DETAILS_LABEL_MAP} from '~/shared/util/lang';
+import {getSafeDisplayValue} from '~/shared/util/util';
+
+const TermList = ({children}) => <dl className="term-list">{children}</dl>;
 
 const Term = ({name, value}) => (
-	<div className='term'>
+	<div className="term">
 		<dt>{DETAILS_LABEL_MAP[name]}</dt>
 
 		<dd>{getSafeDisplayValue(value)}</dd>
@@ -25,10 +30,10 @@ export default class InfoCard extends React.Component {
 					PropTypes.string,
 					PropTypes.array,
 					PropTypes.number,
-					PropTypes.func
-				])
+					PropTypes.func,
+				]),
 			})
-		).isRequired
+		).isRequired,
 	};
 
 	render() {
@@ -36,8 +41,8 @@ export default class InfoCard extends React.Component {
 
 		const imageStyles = image
 			? {
-					backgroundImage: `url(${image})`
-			  }
+					backgroundImage: `url(${image})`,
+				}
 			: undefined;
 
 		return (
@@ -52,7 +57,7 @@ export default class InfoCard extends React.Component {
 
 				<Card.Body>
 					{!!image && (
-						<div className='image-container' style={imageStyles} />
+						<div className="image-container" style={imageStyles} />
 					)}
 
 					<TermList>

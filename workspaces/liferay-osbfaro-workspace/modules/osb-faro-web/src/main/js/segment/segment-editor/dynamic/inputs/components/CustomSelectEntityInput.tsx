@@ -1,10 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {OrderedMap} from 'immutable';
 import React from 'react';
-import SelectEntityInput from './SelectEntityInput';
-import {Columns} from 'shared/types';
+import {Columns} from '~/shared/types';
+
 import {EntityType} from '../../context/referencedObjects';
 import {getPropertyValue, setPropertyValue} from '../../utils/custom-inputs';
 import {ISegmentEditorCustomInputBase} from '../../utils/types';
-import {OrderedMap} from 'immutable';
+import SelectEntityInput from './SelectEntityInput';
 
 interface ICustomSelectEntityInputProps extends ISegmentEditorCustomInputBase {
 	columns: Columns;
@@ -26,16 +32,17 @@ const CustomSelectEntityInput: React.FC<ICustomSelectEntityInputProps> = ({
 		if (items.size === 1) {
 			onChange({
 				valid: true,
-				value: setPropertyValue(value, 'value', 0, entity.id)
+				value: setPropertyValue(value, 'value', 0, entity.id),
 			});
-		} else {
+		}
+		else {
 			onChange(
 				items
 					.valueSeq()
 					.toArray()
 					.map(({id}) => ({
 						valid: true,
-						value: setPropertyValue(value, 'value', 0, id)
+						value: setPropertyValue(value, 'value', 0, id),
 					}))
 			);
 		}

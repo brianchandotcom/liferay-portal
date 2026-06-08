@@ -1,14 +1,20 @@
-import * as API from 'shared/api';
-import DeleteConfirmationModal from './DeleteConfirmationModal';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {DataSource} from 'shared/util/records';
-import {SafeResults} from 'shared/hoc/util';
-import {sub} from 'shared/util/lang';
-import {useRequest} from 'shared/hooks/useRequest';
+import * as API from '~/shared/api';
+import {SafeResults} from '~/shared/hoc/util';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {sub} from '~/shared/util/lang';
+import {DataSource} from '~/shared/util/records';
+
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 interface IDeleteChannelModalProps extends React.HTMLAttributes<HTMLElement> {
-	channelName: string;
 	channelIds: Array<string>;
+	channelName: string;
 	groupId: string;
 	onClose: () => void;
 	onSubmit: () => void;
@@ -39,14 +45,14 @@ const DeleteChannelModal: React.FC<IDeleteChannelModalProps> = ({
 	className,
 	groupId,
 	onClose,
-	onSubmit
+	onSubmit,
 }) => {
 	const {data, error, loading, refetch} = useRequest({
 		dataSourceFn: API.dataSource.fetchChannels,
 		variables: {
 			channelIds,
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	return (
@@ -73,7 +79,7 @@ const DeleteChannelModal: React.FC<IDeleteChannelModalProps> = ({
 			>
 				{({items, total}: {items: DataSource[]; total: number}) => (
 					<>
-						<div className='text-secondary'>
+						<div className="text-secondary">
 							<p>
 								<strong>
 									{sub(

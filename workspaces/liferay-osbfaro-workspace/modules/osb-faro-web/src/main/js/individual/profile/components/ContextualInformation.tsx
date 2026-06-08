@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Map} from 'immutable';
 import React from 'react';
 import {
 	DataDrivenConfig,
-	GeneralInfoSection
-} from 'shared/components/GeneralInfoSection';
-import {Map} from 'immutable';
-import {SectionHeader} from 'shared/components/SectionHeader';
+	GeneralInfoSection,
+} from '~/shared/components/GeneralInfoSection';
+import {SectionHeader} from '~/shared/components/SectionHeader';
 
 const contextualInfoConfig: DataDrivenConfig = [
 	{
@@ -16,9 +21,9 @@ const contextualInfoConfig: DataDrivenConfig = [
 			{className: 'col-6', key: 'screenWidth'},
 			{className: 'col-6', key: 'browserName'},
 			{className: 'col-6', key: 'devicePixelRatio'},
-			{className: 'col-12', icon: 'tabs', key: 'userAgent'}
+			{className: 'col-12', icon: 'tabs', key: 'userAgent'},
 		],
-		title: Liferay.Language.get('last-session-device')
+		title: Liferay.Language.get('last-session-device'),
 	},
 	{
 		columnClass: 'col-3',
@@ -26,9 +31,9 @@ const contextualInfoConfig: DataDrivenConfig = [
 			{className: 'col-12', icon: 'globe-pin', key: 'country'},
 			{className: 'col-12', key: 'city'},
 			{className: 'col-12', key: 'languageId'},
-			{className: 'col-12', key: 'timezoneOffset'}
+			{className: 'col-12', key: 'timezoneOffset'},
 		],
-		title: Liferay.Language.get('last-session-location')
+		title: Liferay.Language.get('last-session-location'),
 	},
 	{
 		columnClass: 'col-3',
@@ -36,10 +41,10 @@ const contextualInfoConfig: DataDrivenConfig = [
 			{className: 'col-12', icon: 'lock', key: 'email'},
 			{className: 'col-12', key: 'uuid'},
 			{className: 'col-12', key: 'userId'},
-			{className: 'col-12', key: 'contactId'}
+			{className: 'col-12', key: 'contactId'},
 		],
-		title: Liferay.Language.get('individual-unique-identifiers')
-	}
+		title: Liferay.Language.get('individual-unique-identifiers'),
+	},
 ];
 
 function formatTimeZoneOffset(timeZoneOffset?: string, region?: string) {
@@ -73,7 +78,7 @@ const CONTEXTUAL_INFO_LABEL_MAP: Record<string, string> = {
 	timezoneOffset: Liferay.Language.get('time-zone'),
 	userAgent: Liferay.Language.get('user-agent'),
 	userId: 'userId',
-	uuid: 'UUID'
+	uuid: 'UUID',
 };
 
 const ContextualInformation: React.FC<IContextualInfoProps> = ({
@@ -84,13 +89,21 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 	loading = false,
 	showEmptyState = false,
 	userId,
-	uuid
+	uuid,
 }) => {
 	const getValue = (key: string): string | undefined => {
-		if (key === 'contactId') return contactId;
-		if (key === 'email') return email;
-		if (key === 'userId') return userId;
-		if (key === 'uuid') return uuid;
+		if (key === 'contactId') {
+			return contactId;
+		}
+		if (key === 'email') {
+			return email;
+		}
+		if (key === 'userId') {
+			return userId;
+		}
+		if (key === 'uuid') {
+			return uuid;
+		}
 
 		if (key === 'timezoneOffset') {
 			const region = contextData?.get('region');
@@ -99,6 +112,7 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 			if (timeZoneOffset || region) {
 				return formatTimeZoneOffset(timeZoneOffset, region);
 			}
+
 			return undefined;
 		}
 
@@ -108,7 +122,7 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 	return (
 		<>
 			<SectionHeader
-				icon='sites'
+				icon="sites"
 				title={Liferay.Language.get('contextual-information')}
 			/>
 

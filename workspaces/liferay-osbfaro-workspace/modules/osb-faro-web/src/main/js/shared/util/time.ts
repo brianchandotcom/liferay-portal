@@ -1,22 +1,27 @@
-import {Interval} from 'shared/types';
-import {RangeKeyTimeRanges, TimeIntervals} from 'shared/util/constants';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Interval} from '~/shared/types';
+import {RangeKeyTimeRanges, TimeIntervals} from '~/shared/util/constants';
 
 export const INTERVAL_KEY_MAP: {[s: string]: Interval} = {
 	[TimeIntervals.Day]: 'D',
 	[TimeIntervals.Month]: 'M',
-	[TimeIntervals.Week]: 'W'
+	[TimeIntervals.Week]: 'W',
 };
 
 export const UNIT_LABELS: string[] = [
 	Liferay.Language.get('seconds'),
 	Liferay.Language.get('minutes'),
-	Liferay.Language.get('hours')
+	Liferay.Language.get('hours'),
 ];
 
 export enum TimeUnits {
 	Hours = 2,
 	Minutes = 1,
-	Seconds = 0
+	Seconds = 0,
 }
 
 export function formatDuration(milliseconds: number, unit: number): number {
@@ -87,7 +92,7 @@ export function getUnitLabel(unit: number): string {
 export function isHourlyRangeKey(rangeKey: RangeKeyTimeRanges): boolean {
 	return [
 		RangeKeyTimeRanges.Last24Hours,
-		RangeKeyTimeRanges.Yesterday
+		RangeKeyTimeRanges.Yesterday,
 	].includes(rangeKey);
 }
 
@@ -98,7 +103,7 @@ export function isMonthlyRangeKey(rangeKey: RangeKeyTimeRanges): boolean {
 		RangeKeyTimeRanges.Last30Days,
 		RangeKeyTimeRanges.Last90Days,
 		RangeKeyTimeRanges.Last180Days,
-		RangeKeyTimeRanges.LastYear
+		RangeKeyTimeRanges.LastYear,
 	].includes(rangeKey);
 }
 
@@ -110,8 +115,8 @@ export function formatTime(milliseconds: number): string {
 	const timeArray = [
 		TimeUnits.Hours,
 		TimeUnits.Minutes,
-		TimeUnits.Seconds
-	].map(unit => {
+		TimeUnits.Seconds,
+	].map((unit) => {
 		const remainingTime =
 			unit === TimeUnits.Hours
 				? milliseconds
@@ -121,7 +126,8 @@ export function formatTime(milliseconds: number): string {
 
 		if (unit === TimeUnits.Seconds) {
 			formattedTime = Math.round(formattedTime);
-		} else {
+		}
+		else {
 			formattedTime = Math.trunc(formattedTime);
 		}
 

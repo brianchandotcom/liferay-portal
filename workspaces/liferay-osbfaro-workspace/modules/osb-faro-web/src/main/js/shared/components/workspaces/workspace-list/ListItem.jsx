@@ -1,18 +1,23 @@
-import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import React from 'react';
-import TextTruncate from 'shared/components/TextTruncate';
-import URLConstants from 'shared/util/url-constants';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
-import {ProjectStates} from 'shared/util/constants';
 import {PropTypes} from 'prop-types';
-import {Routes, toRoute} from 'shared/util/router';
-import {withHistory} from 'shared/hoc';
+import React from 'react';
+import * as API from '~/shared/api';
+import Loading from '~/shared/components/Loading';
+import TextTruncate from '~/shared/components/TextTruncate';
+import {withHistory} from '~/shared/hoc';
+import {ProjectStates} from '~/shared/util/constants';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 @withHistory
 @hasRequest
@@ -30,12 +35,12 @@ export default class WorkspaceListItem extends React.Component {
 		name: PropTypes.string,
 		planInfo: PropTypes.string,
 		projectState: PropTypes.oneOf(Object.values(ProjectStates)),
-		requested: PropTypes.bool
+		requested: PropTypes.bool,
 	};
 
 	state = {
 		loading: false,
-		requested: false
+		requested: false,
 	};
 
 	constructor(props) {
@@ -44,7 +49,7 @@ export default class WorkspaceListItem extends React.Component {
 		this.state = {
 			...this.state,
 			projectState: this.props.projectState,
-			requested: this.props.requested
+			requested: this.props.requested,
 		};
 	}
 
@@ -59,7 +64,7 @@ export default class WorkspaceListItem extends React.Component {
 			.then(() => {
 				this.setState(
 					{
-						loading: false
+						loading: false,
 					},
 					() => {
 						history.push(
@@ -68,10 +73,10 @@ export default class WorkspaceListItem extends React.Component {
 					}
 				);
 			})
-			.catch(err => {
-				if (!err.IS_CANCELLATION_ERROR) {
+			.catch((error) => {
+				if (!error.IS_CANCELLATION_ERROR) {
 					this.setState({
-						loading: false
+						loading: false,
 					});
 				}
 			});
@@ -83,7 +88,7 @@ export default class WorkspaceListItem extends React.Component {
 		const {groupId} = this.props;
 
 		this.setState({
-			loading: true
+			loading: true,
 		});
 
 		return API.projects
@@ -91,13 +96,13 @@ export default class WorkspaceListItem extends React.Component {
 			.then(({state}) => {
 				this.setState({
 					loading: false,
-					projectState: state
+					projectState: state,
 				});
 			})
-			.catch(err => {
-				if (!err.IS_CANCELLATION_ERROR) {
+			.catch((error) => {
+				if (!error.IS_CANCELLATION_ERROR) {
 					this.setState({
-						loading: false
+						loading: false,
 					});
 				}
 			});
@@ -112,12 +117,12 @@ export default class WorkspaceListItem extends React.Component {
 			.sendRequestAccess(groupId)
 			.then(() => {
 				this.setState({
-					requested: true
+					requested: true,
 				});
 			})
 			.catch(() => {
 				this.setState({
-					requested: false
+					requested: false,
 				});
 			});
 	}
@@ -125,7 +130,7 @@ export default class WorkspaceListItem extends React.Component {
 	renderAction() {
 		const {
 			props: {hasLimitReached, isJoinableProjects},
-			state: {projectState}
+			state: {projectState},
 		} = this;
 
 		const available = projectState !== ProjectStates.Unavailable;
@@ -133,13 +138,14 @@ export default class WorkspaceListItem extends React.Component {
 
 		if (isJoinableProjects) {
 			return this.renderProjectJoin();
-		} else if (deactivated) {
+		}
+		else if (deactivated) {
 			return (
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={this.handleActivate}
-					size='sm'
+					size="sm"
 				>
 					{Liferay.Language.get('activate')}
 				</ClayButton>
@@ -150,10 +156,10 @@ export default class WorkspaceListItem extends React.Component {
 			return (
 				<ClayLink
 					button
-					className='button-root btn btn-secondary ml-3'
+					className="btn btn-secondary button-root ml-3"
 					href={URLConstants.ContactSales}
 					small
-					target='_blank'
+					target="_blank"
 				>
 					{Liferay.Language.get('contact-sales')}
 				</ClayLink>
@@ -162,7 +168,7 @@ export default class WorkspaceListItem extends React.Component {
 
 		return (
 			<ClayIcon
-				className='icon-root'
+				className="icon-root"
 				symbol={available ? 'angle-right-small' : 'reload'}
 			/>
 		);
@@ -173,12 +179,12 @@ export default class WorkspaceListItem extends React.Component {
 		const {configured, corpProjectName, name} = this.props;
 
 		return (
-			<div className='autofit-col autofit-col-expand'>
-				<div className='col-content-wrapper'>
-					<div className='text-truncate'>
-						<div className='workspace-name'>
+			<div className="autofit-col autofit-col-expand">
+				<div className="col-content-wrapper">
+					<div className="text-truncate">
+						<div className="workspace-name">
 							{!configured && (
-								<div className='info-wrapper configuration-required'>
+								<div className="configuration-required info-wrapper">
 									{Liferay.Language.get(
 										'finish-setting-up-workspace'
 									)}
@@ -189,7 +195,7 @@ export default class WorkspaceListItem extends React.Component {
 						</div>
 
 						{corpProjectName && (
-							<div className='info-wrapper corporation-project-name'>
+							<div className="corporation-project-name info-wrapper">
 								{corpProjectName}
 							</div>
 						)}
@@ -206,7 +212,7 @@ export default class WorkspaceListItem extends React.Component {
 	renderMessage() {
 		const {
 			props: {accountName, hasLimitReached, isJoinableProjects, planInfo},
-			state: {projectState}
+			state: {projectState},
 		} = this;
 
 		const available = projectState !== ProjectStates.Unavailable;
@@ -214,14 +220,15 @@ export default class WorkspaceListItem extends React.Component {
 
 		if (isJoinableProjects) {
 			return (
-				<div className='workspace-info'>
+				<div className="workspace-info">
 					{Liferay.Language.get('requires-access')}
 				</div>
 			);
-		} else if (deactivated) {
+		}
+		else if (deactivated) {
 			return (
-				<div className='workspace-info'>
-					<div className='text-danger'>
+				<div className="workspace-info">
+					<div className="text-danger">
 						{Liferay.Language.get(
 							'workspace-has-been-deactivated.-please-click-activate-to-reactivate'
 						)}
@@ -232,7 +239,7 @@ export default class WorkspaceListItem extends React.Component {
 
 		if (hasLimitReached) {
 			return (
-				<div className='workspace-info text-secondary'>
+				<div className="text-secondary workspace-info">
 					{Liferay.Language.get(
 						'access-to-liferay-data-platform-has-been-restricted-because-your-workspace-has-reached-the-known-individuals-or-page-view-limit'
 					)}
@@ -241,9 +248,9 @@ export default class WorkspaceListItem extends React.Component {
 		}
 
 		return (
-			<div className='workspace-info'>
+			<div className="workspace-info">
 				{!available ? (
-					<div className='text-danger'>
+					<div className="text-danger">
 						{Liferay.Language.get(
 							'workspace-unavailable-;-click-to-reload'
 						)}
@@ -261,23 +268,24 @@ export default class WorkspaceListItem extends React.Component {
 
 		if (requested) {
 			return (
-				<div className='icon-request-workspace'>
-					<span className='pr-2'>
+				<div className="icon-request-workspace">
+					<span className="pr-2">
 						{Liferay.Language.get('access-requested')}
 					</span>
 					<ClayIcon
-						className='icon-root icon-size-md'
-						symbol='envelope_close'
+						className="icon-root icon-size-md"
+						symbol="envelope_close"
 					/>
 				</div>
 			);
-		} else {
+		}
+		else {
 			return (
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={this.handleSendRequestAccess}
-					size='sm'
+					size="sm"
 				>
 					{Liferay.Language.get('request-access')}
 				</ClayButton>
@@ -293,9 +301,9 @@ export default class WorkspaceListItem extends React.Component {
 				hasLimitReached,
 				href,
 				isJoinableProjects,
-				name
+				name,
 			},
-			state: {loading, projectState}
+			state: {loading, projectState},
 		} = this;
 
 		const available = projectState !== ProjectStates.Unavailable;
@@ -307,7 +315,7 @@ export default class WorkspaceListItem extends React.Component {
 			'list-group-item-flex',
 			className,
 			{
-				disabled
+				disabled,
 			}
 		);
 
@@ -315,7 +323,7 @@ export default class WorkspaceListItem extends React.Component {
 			'border-button': !isJoinableProjects,
 			'request-workspace': isJoinableProjects,
 			'workspace-limit-reached': hasLimitReached,
-			'workspace-unavailable': !available || deactivated
+			'workspace-unavailable': !available || deactivated,
 		});
 
 		const buttonAction = () => {
@@ -341,7 +349,7 @@ export default class WorkspaceListItem extends React.Component {
 						button
 						className={contentClasses}
 						disabled={disabled || loading}
-						displayType='unstyled'
+						displayType="unstyled"
 						{...buttonAction()}
 					>
 						{this.renderContent()}

@@ -1,7 +1,13 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayDropdown, {Align} from '@clayui/drop-down';
 import getCN from 'classnames';
-import Header from './Header';
 import React, {useEffect, useState} from 'react';
+
+import Header from './Header';
 import SearchableList from './SearchableList';
 
 interface IBaseDropdownProps {
@@ -11,8 +17,8 @@ interface IBaseDropdownProps {
 		setActive: (v: boolean) => void;
 	}) => React.ReactNode;
 	className?: string;
-	trigger: React.ReactElement;
 	onActiveChange?: (active: boolean) => void;
+	trigger: React.ReactElement;
 }
 
 const BaseDropdown: React.FC<IBaseDropdownProps> = ({
@@ -20,7 +26,7 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 	children,
 	className,
 	onActiveChange,
-	trigger
+	trigger,
 }) => {
 	const [active, setActive] = useState(false);
 
@@ -28,6 +34,8 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 		if (onActiveChange) {
 			onActiveChange(active);
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [active]);
 
 	return (
@@ -35,7 +43,7 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 			active={active}
 			alignmentPosition={alignmentPosition}
 			menuElementAttrs={{
-				className: getCN('base-dropdown-menu-root', className)
+				className: getCN('base-dropdown-menu-root', className),
 			}}
 			onActiveChange={setActive}
 			trigger={trigger}
@@ -47,5 +55,5 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 
 export default Object.assign(BaseDropdown, {
 	Header,
-	SearchableList
+	SearchableList,
 });

@@ -1,15 +1,20 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import autobind from 'autobind-decorator';
+import {PropTypes} from 'prop-types';
 import React from 'react';
+import {Label} from '~/shared/components/filter/Label';
 import {
 	filterLangMap,
 	hasCategoryFilters,
-	isClearFilterVisible
-} from 'shared/util/filter';
-import {getDeviceLabel} from 'shared/util/lang';
-import {Label} from 'shared/components/filter/Label';
-import {PropTypes} from 'prop-types';
+	isClearFilterVisible,
+} from '~/shared/util/filter';
+import {getDeviceLabel} from '~/shared/util/lang';
 
 const CLASSNAME = 'analytics-applied-filters';
 
@@ -19,12 +24,12 @@ const CLASSNAME = 'analytics-applied-filters';
  */
 class AppliedFilters extends React.Component {
 	static defaultProps = {
-		filters: {}
+		filters: {},
 	};
 
 	static propTypes = {
 		filters: PropTypes.object.isRequired,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
 	};
 
 	/**
@@ -44,8 +49,8 @@ class AppliedFilters extends React.Component {
 			this.updateFilters({
 				...filters,
 				[category]: filters[category].filter(
-					currentLabel => currentLabel !== label
-				)
+					(currentLabel) => currentLabel !== label
+				),
 			});
 		}
 	}
@@ -78,8 +83,8 @@ class AppliedFilters extends React.Component {
 		const subItems = filters[category];
 
 		return (
-			<div className='ml-3' key={`${category}_item`}>
-				<small className='font-weight-semibold mr-2 text-secondary text-uppercase'>
+			<div className="ml-3" key={`${category}_item`}>
+				<small className="font-weight-semibold mr-2 text-secondary text-uppercase">
 					{filterLangMap[category]}
 				</small>
 				{subItems.map((label, index) => (
@@ -106,19 +111,19 @@ class AppliedFilters extends React.Component {
 		return (
 			<div className={`${CLASSNAME} d-inline-flex align-items-center`}>
 				{items.map(
-					category =>
+					(category) =>
 						hasCategoryFilters(filters, category) &&
 						this.renderCategory(category)
 				)}
 
 				{isClearFilterVisible(filters) && (
 					<ClayButton
-						className='ml-4'
-						displayType='secondary'
+						className="ml-4"
+						displayType="secondary"
 						onClick={this.handleRemoveAllFilters}
-						size='sm'
+						size="sm"
 					>
-						<ClayIcon className='mr-2' symbol='trash' />
+						<ClayIcon className="mr-2" symbol="trash" />
 
 						{Liferay.Language.get('clear-filter')}
 					</ClayButton>

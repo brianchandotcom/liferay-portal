@@ -1,7 +1,12 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
-import {CHART_COLORS} from 'shared/util/charts';
+import {CHART_COLORS} from '~/shared/util/charts';
 
 type TItems = {
 	change: number;
@@ -32,27 +37,27 @@ export default class ChangeLegend extends React.Component<IChangeLegendProps> {
 
 					return (
 						<div className={`legend-item ${id}`} key={id}>
-							<div className='legend-header'>
+							<div className="legend-header">
 								<span
-									className='legend-color'
+									className="legend-color"
 									style={{backgroundColor: CHART_COLORS[i]}}
 								/>
 
-								<span className='title'>{title}</span>
+								<span className="title">{title}</span>
 							</div>
 
-							<div className='secondary-info'>
+							<div className="secondary-info">
 								{secondaryInfo}
 
 								<span
 									className={getCN('change', {
 										decrease,
-										increase: change > 0
+										increase: change > 0,
 									})}
 								>
 									{!!change && !isNaN(change) && (
 										<ClayIcon
-											className='icon-root'
+											className="icon-root"
 											symbol={
 												decrease
 													? 'caret-bottom'

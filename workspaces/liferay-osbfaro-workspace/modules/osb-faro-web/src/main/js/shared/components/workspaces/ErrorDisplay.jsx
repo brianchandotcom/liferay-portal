@@ -1,45 +1,51 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import React from 'react';
-import StepList from './StepList';
-import WorkspacesBasePage from './BasePage';
-import {Link} from 'react-router-dom';
-import {ProjectStates} from 'shared/util/constants';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {ProjectStates} from '~/shared/util/constants';
+
+import WorkspacesBasePage from './BasePage';
+import StepList from './StepList';
 
 export const NO_ACCOUNT = 'noAccount';
 export const NO_SUBSCRIPTION = 'noSubscription';
 
 const DETAILS_MAP = {
 	[ProjectStates.Deactivated]: [
-		Liferay.Language.get('this-workspace-is-currently-inactive')
+		Liferay.Language.get('this-workspace-is-currently-inactive'),
 	],
 	[ProjectStates.Maintenance]: [
 		Liferay.Language.get(
 			'analytics-cloud-is-undergoing-scheduled-maintenance.-we-expect-to-be-back-online-in-a-couple-of-hours.-thank-you-for-your-patience'
-		)
+		),
 	],
 	[NO_ACCOUNT]: [
 		Liferay.Language.get(
 			'you-must-have-an-analytics-cloud-subscription-or-a-dxp-subscription-to-access-analytics-cloud'
-		)
+		),
 	],
 	[NO_SUBSCRIPTION]: [
 		Liferay.Language.get(
 			'you-must-be-a-current-dxp-subscriber-to-get-the-basic-tier-of-analytics-cloud'
-		)
+		),
 	],
 	[ProjectStates.Unavailable]: [
 		Liferay.Language.get(
 			'analytics-cloud-is-temporarily-unavailable.-we-apologize-for-any-inconvenience,-we-plan-to-be-back-up-shortly'
-		)
-	]
+		),
+	],
 };
 
 const STEP_LIST_MAP = {
 	[ProjectStates.Deactivated]: {
 		secondaryInfo: Liferay.Language.get(
 			'please-go-to-the-workspace-list-to-reactivate'
-		)
+		),
 	},
 	[NO_ACCOUNT]: {
 		hideBullets: true,
@@ -49,8 +55,8 @@ const STEP_LIST_MAP = {
 		steps: [
 			Liferay.Language.get(
 				'check-customer-portal-to-see-your-active-liferay-subscriptions'
-			)
-		]
+			),
+		],
 	},
 	[NO_SUBSCRIPTION]: {
 		hideBullets: false,
@@ -65,12 +71,14 @@ const STEP_LIST_MAP = {
 			Liferay.Language.get(
 				'check-customer-portal-to-see-your-active-liferay-subscriptions'
 			),
+
 			// TODO: this would ideally not be a static link
-			<Link key='LEARN_MORE' to='https://www.liferay.com/products/dxp'>
+
+			<Link key="LEARN_MORE" to="https://www.liferay.com/products/dxp">
 				{Liferay.Language.get('learn-more-about-liferay-dxp')}
-			</Link>
-		]
-	}
+			</Link>,
+		],
+	},
 };
 
 const TITLE_MAP = {
@@ -80,16 +88,16 @@ const TITLE_MAP = {
 	[NO_SUBSCRIPTION]: Liferay.Language.get('dxp-subscription-not-found'),
 	[ProjectStates.Unavailable]: Liferay.Language.get(
 		'service-temporarily-unavailable'
-	)
+	),
 };
 
 export default class WorkspacesErrorDisplay extends React.Component {
 	static defaultProps = {
-		errorType: NO_SUBSCRIPTION
+		errorType: NO_SUBSCRIPTION,
 	};
 
 	static propTypes = {
-		errorType: PropTypes.string
+		errorType: PropTypes.string,
 	};
 
 	render() {

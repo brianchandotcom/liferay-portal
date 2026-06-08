@@ -1,11 +1,17 @@
-import {actionTypes} from '../actions/distributions';
-import {createReducer} from 'redux-toolbox';
-import {handleError, handleLoading} from '../util/redux';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Map} from 'immutable';
+import {createReducer} from 'redux-toolbox';
+
+import {actionTypes} from '../actions/distributions';
+import {handleError, handleLoading} from '../util/redux';
 
 const actionHandlers = {
 	[actionTypes.FETCH_DISTRIBUTION_REQUEST]: handleLoading,
-	[actionTypes.FETCH_DISTRIBUTION_FAILURE]: handleError
+	[actionTypes.FETCH_DISTRIBUTION_FAILURE]: handleError,
 };
 
 export default createReducer(new Map(), actionHandlers);

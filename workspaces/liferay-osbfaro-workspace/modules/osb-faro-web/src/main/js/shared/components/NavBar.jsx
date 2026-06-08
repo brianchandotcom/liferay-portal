@@ -1,17 +1,22 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import {addContext} from 'shared/util/clay';
-import {Link} from 'react-router-dom';
-import {PropTypes} from 'prop-types';
 import {Stack} from 'immutable';
+import {PropTypes} from 'prop-types';
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {addContext} from '~/shared/util/clay';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 export const CONTEXT = 'navbar';
 const DISPLAYS = ['dark', 'light', 'primary'];
 const JUSTIFY_CONTENTS = ['start', 'end', 'center', 'around', 'between'];
 
 class Brand extends React.Component {
 	static propTypes = {
-		href: PropTypes.string
+		href: PropTypes.string,
 	};
 
 	render() {
@@ -29,7 +34,8 @@ class Brand extends React.Component {
 					{children}
 				</Link>
 			);
-		} else {
+		}
+		else {
 			return (
 				<div
 					{...omitDefinedProps(otherProps, Brand.propTypes)}
@@ -46,14 +52,14 @@ class Brand extends React.Component {
 
 class NavBar extends React.Component {
 	static childContextTypes = {
-		clay: PropTypes.instanceOf(Stack)
+		clay: PropTypes.instanceOf(Stack),
 	};
 
 	static defaultProps = {
 		expand: false,
 		managementBar: false,
 		pageNav: false,
-		underline: false
+		underline: false,
 	};
 
 	static propTypes = {
@@ -62,7 +68,7 @@ class NavBar extends React.Component {
 		justifyContent: PropTypes.oneOf(JUSTIFY_CONTENTS),
 		managementBar: PropTypes.bool,
 		pageNav: PropTypes.bool,
-		underline: PropTypes.bool
+		underline: PropTypes.bool,
 	};
 
 	getChildContext() {
@@ -78,7 +84,7 @@ class NavBar extends React.Component {
 			justifyContent,
 			managementBar,
 			pageNav,
-			underline
+			underline,
 		} = this.props;
 
 		const classes = getCN('navbar', 'navbar-root', className, {
@@ -90,11 +96,11 @@ class NavBar extends React.Component {
 			'navbar-expand': expand,
 			'navbar-light': !managementBar && display === 'light',
 			'navbar-underline': underline,
-			'page-nav': pageNav
+			'page-nav': pageNav,
 		});
 
 		const containerClasses = getCN('container-fluid', {
-			[`justify-content-${justifyContent}`]: justifyContent
+			[`justify-content-${justifyContent}`]: justifyContent,
 		});
 
 		return (

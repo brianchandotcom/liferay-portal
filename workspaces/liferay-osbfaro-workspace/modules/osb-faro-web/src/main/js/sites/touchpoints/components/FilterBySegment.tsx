@@ -1,35 +1,40 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
-import Loading, {Align} from 'shared/components/Loading';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useMemo, useState} from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {
-	createOrderIOMap,
-	getDefaultSortOrder,
-	NAME
-} from 'shared/util/pagination';
-import {
-	getSafeDecodedURIComponent,
-	getSafeRangeSelectors,
-	getSafeTouchpoint
-} from 'shared/util/util';
-import {RangeSelectors} from 'shared/types';
-import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
+import {useParams} from 'react-router-dom';
+import * as API from '~/shared/api';
+import Loading, {Align} from '~/shared/components/Loading';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useRequest} from '~/shared/hooks/useRequest';
 import {
 	SegmentPageViewsQuery,
 	SegmentPageViewsQueryData,
-	SegmentPageViewsQueryVariables
-} from 'shared/queries/SegmentPageViewsQuery';
-import {sub} from 'shared/util/lang';
-import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/client';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useRequest} from 'shared/hooks/useRequest';
+	SegmentPageViewsQueryVariables,
+} from '~/shared/queries/SegmentPageViewsQuery';
+import {RangeSelectors} from '~/shared/types';
+import {sub} from '~/shared/util/lang';
+import {
+	NAME,
+	createOrderIOMap,
+	getDefaultSortOrder,
+} from '~/shared/util/pagination';
+import {Routes, SEGMENTS, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
+import {
+	getSafeDecodedURIComponent,
+	getSafeRangeSelectors,
+	getSafeTouchpoint,
+} from '~/shared/util/util';
 
 type Item = {
 	children: Item[];
@@ -43,122 +48,12 @@ interface IFilterBySegment {
 	rangeSelectors: RangeSelectors;
 }
 
-const filterBySegment: React.FC<IFilterBySegment> = ({
-	onFilterChange,
-	rangeSelectors
-}) => {
-	const {channelId, groupId, title, touchpoint} = useParams();
-	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME, getDefaultSortOrder(NAME))
-	});
-	const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-
-	const {data, loading} = useRequest({
-		dataSourceFn: API.individualSegment.search,
-		variables: {
-			channelId,
-			delta,
-			groupId,
-			orderIOMap,
-			page,
-			query
-		}
-	});
-
-	const {data: segmentData, loading: segmentLoading} = useQuery<
-		SegmentPageViewsQueryData,
-		SegmentPageViewsQueryVariables
-	>(SegmentPageViewsQuery, {
-		fetchPolicy: 'network-only',
-		skip: !data?.items.length,
-		variables: {
-			canonicalUrl: getSafeTouchpoint(touchpoint as string) ?? '',
-			channelId: channelId as string,
-			segmentIds: data?.items.map(({id}: any) => id),
-			title: getSafeDecodedURIComponent(title as string),
-			...getSafeRangeSelectors(rangeSelectors)
-		}
-	});
-
-	const items = useMemo(
-		() =>
-			data?.items.map((item: any) => {
-				const selectedSegmentData = segmentData?.segmentPageViews.find(
-					({segmentId}) => segmentId === item.id
-				);
-
-				return {
-					...item,
-					disabled: !selectedSegmentData?.views
-				};
-			}) ?? [],
-		[data, segmentData]
-	);
-
-	return (
-		<div className='d-flex justify-content-between w-100 analytics-segment-filter-root'>
-			<div className='align-items-center d-flex'>
-				<Dropdown
-					channelId={channelId}
-					groupId={groupId}
-					items={items}
-					loading={loading || segmentLoading}
-					onFilterChange={(item: Item | null) => {
-						setSelectedItem(item);
-
-						onFilterChange(item);
-					}}
-				/>
-
-				{selectedItem && (
-					<ClayLabel
-						className='ml-2'
-						closeButtonProps={{
-							'aria-label': Liferay.Language.get('close'),
-							id: 'closeId',
-							title: Liferay.Language.get('close')
-						}}
-						large
-						onClick={() => {
-							setSelectedItem(null);
-							onFilterChange(null);
-						}}
-					>
-						{selectedItem.name}
-					</ClayLabel>
-				)}
-			</div>
-
-			{selectedItem && (
-				<div className='d-flex'>
-					<ClayButton
-						borderless
-						data-tooltip
-						data-tooltip-align='top'
-						displayType='secondary'
-						onClick={() => {
-							setSelectedItem(null);
-							onFilterChange(null);
-						}}
-						size='sm'
-						title={Liferay.Language.get('remove-filter')}
-					>
-						<ClayIcon symbol='times-circle' />
-					</ClayButton>
-
-					<div className='divider' />
-				</div>
-			)}
-		</div>
-	);
-};
-
 const Dropdown = ({
 	channelId,
 	groupId,
 	items,
 	loading,
-	onFilterChange
+	onFilterChange,
 }: any) => {
 	const [value, setValue] = useState('');
 
@@ -179,14 +74,14 @@ const Dropdown = ({
 				<ClayButton
 					borderless
 					disabled={loading}
-					displayType='secondary'
-					size='sm'
+					displayType="secondary"
+					size="sm"
 				>
 					{loading && <Loading align={Align.Left} />}
 
 					{Liferay.Language.get('filter')}
 
-					<ClayIcon className='ml-2' symbol='caret-bottom' />
+					<ClayIcon className="ml-2" symbol="caret-bottom" />
 				</ClayButton>
 			}
 		>
@@ -201,9 +96,9 @@ const Dropdown = ({
 						children: filteredItems,
 						id: 1,
 						name: sub(Liferay.Language.get('filter-by-x'), [
-							Liferay.Language.get('segment')
-						])
-					}
+							Liferay.Language.get('segment'),
+						]),
+					},
 				]}
 			>
 				{(item: any) => (
@@ -232,10 +127,10 @@ const Dropdown = ({
 					<NoResultsDisplay
 						description={
 							<div
-								className='d-flex flex-column justify-content-center'
+								className="d-flex flex-column justify-content-center"
 								style={{minHeight: 240}}
 							>
-								<div className='h4 no-results-title'>
+								<div className="h4 no-results-title">
 									{Liferay.Language.get(
 										'there-are-no-results-found'
 									)}
@@ -256,10 +151,10 @@ const Dropdown = ({
 					<NoResultsDisplay
 						description={
 							<div
-								className='d-flex flex-column justify-content-center'
+								className="d-flex flex-column justify-content-center"
 								style={{minHeight: 240}}
 							>
-								<div className='h4 no-results-title'>
+								<div className="h4 no-results-title">
 									{Liferay.Language.get(
 										'there-are-no-segments'
 									)}
@@ -270,12 +165,12 @@ const Dropdown = ({
 								)}
 
 								<ClayLink
-									className='d-block mb-3'
+									className="d-block mb-3"
 									href={
 										URLConstants.SegmentsDocumentationLink
 									}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-segments'
@@ -300,7 +195,7 @@ const Dropdown = ({
 					href={toRoute(Routes.CONTACTS_LIST_SEGMENT, {
 						channelId,
 						groupId,
-						type: SEGMENTS
+						type: SEGMENTS,
 					})}
 					small
 				>
@@ -308,6 +203,118 @@ const Dropdown = ({
 				</ClayLink>
 			</ClayDropDown.Section>
 		</ClayDropDown>
+	);
+};
+
+const filterBySegment: React.FC<IFilterBySegment> = ({
+	onFilterChange,
+	rangeSelectors,
+}) => {
+	const {channelId, groupId, title, touchpoint} = useParams();
+
+	const {delta, orderIOMap, page, query} = useQueryPagination({
+		initialOrderIOMap: createOrderIOMap(NAME, getDefaultSortOrder(NAME)),
+	});
+
+	const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+
+	const {data, loading} = useRequest({
+		dataSourceFn: API.individualSegment.search,
+		variables: {
+			channelId,
+			delta,
+			groupId,
+			orderIOMap,
+			page,
+			query,
+		},
+	});
+
+	const {data: segmentData, loading: segmentLoading} = useQuery<
+		SegmentPageViewsQueryData,
+		SegmentPageViewsQueryVariables
+	>(SegmentPageViewsQuery, {
+		fetchPolicy: 'network-only',
+		skip: !data?.items.length,
+		variables: {
+			canonicalUrl: getSafeTouchpoint(touchpoint as string) ?? '',
+			channelId: channelId as string,
+			segmentIds: data?.items.map(({id}: any) => id),
+			title: getSafeDecodedURIComponent(title as string),
+			...getSafeRangeSelectors(rangeSelectors),
+		},
+	});
+
+	const items = useMemo(
+		() =>
+			data?.items.map((item: any) => {
+				const selectedSegmentData = segmentData?.segmentPageViews.find(
+					({segmentId}) => segmentId === item.id
+				);
+
+				return {
+					...item,
+					disabled: !selectedSegmentData?.views,
+				};
+			}) ?? [],
+		[data, segmentData]
+	);
+
+	return (
+		<div className="analytics-segment-filter-root d-flex justify-content-between w-100">
+			<div className="align-items-center d-flex">
+				<Dropdown
+					channelId={channelId}
+					groupId={groupId}
+					items={items}
+					loading={loading || segmentLoading}
+					onFilterChange={(item: Item | null) => {
+						setSelectedItem(item);
+
+						onFilterChange(item);
+					}}
+				/>
+
+				{selectedItem && (
+					<ClayLabel
+						className="ml-2"
+						closeButtonProps={{
+							'aria-label': Liferay.Language.get('close'),
+							'id': 'closeId',
+							'title': Liferay.Language.get('close'),
+						}}
+						large
+						onClick={() => {
+							setSelectedItem(null);
+							onFilterChange(null);
+						}}
+					>
+						{selectedItem.name}
+					</ClayLabel>
+				)}
+			</div>
+
+			{selectedItem && (
+				<div className="d-flex">
+					<ClayButton
+						borderless
+						data-tooltip
+						data-tooltip-align="top"
+						displayType="secondary"
+						onClick={() => {
+							setSelectedItem(null);
+							onFilterChange(null);
+						}}
+						size="sm"
+						title={Liferay.Language.get('remove-filter')}
+					>
+						<ClayIcon symbol="times-circle" />
+					</ClayButton>
+
+					<div className="divider" />
+				</div>
+			)}
+		</div>
 	);
 };
 

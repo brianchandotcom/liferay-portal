@@ -1,14 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {CustomValue} from 'shared/util/records';
-import {getPropertyValue} from 'segment/segment-editor/dynamic/utils/custom-inputs';
+import {INTEREST_BOOLEAN_OPTIONS} from '~/segment/segment-editor/dynamic/utils/constants';
+import {getPropertyValue} from '~/segment/segment-editor/dynamic/utils/custom-inputs';
+import {CustomValue} from '~/shared/util/records';
+
 import {IDisplayComponentProps} from '../types';
-import {INTEREST_BOOLEAN_OPTIONS} from 'segment/segment-editor/dynamic/utils/constants';
 import {maybeFormatValue} from '../utils';
 
 const InterestDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const valueIMap = criterion.value as CustomValue;
 

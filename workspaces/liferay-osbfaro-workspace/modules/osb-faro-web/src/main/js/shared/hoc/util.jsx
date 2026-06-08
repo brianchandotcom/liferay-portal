@@ -1,97 +1,116 @@
-import ErrorDisplay from 'shared/components/ErrorDisplay';
-import ErrorPage from 'shared/pages/ErrorPage';
-import Loading from 'shared/components/Loading';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {get, omit} from 'lodash';
 import React from 'react';
 import {compose} from 'redux';
-import {get, omit} from 'lodash';
-import {sub} from 'shared/util/lang';
-import {toRoute} from 'shared/util/router';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import Loading from '~/shared/components/Loading';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import ErrorPage from '~/shared/pages/ErrorPage';
+import {sub} from '~/shared/util/lang';
+import {toRoute} from '~/shared/util/router';
+
 /**
  * HOC for ErrorDisplay.
  * @param {Object} - Options object to pass as props to ErrorDisplay
  * @returns {Function} Returns the ErrorDisplay or Wrapped Component.
  */
-export const withError =
-	(options = {}) =>
-	Component =>
-	({error, errorProps = {}, pageDisplay = true, refetch, ...otherProps}) => {
-		const otherOptions = omit(options, 'page');
+export const withError = function withError(options = {}) {
+	return (Component) =>
+		({
+			error,
+			errorProps = {},
+			pageDisplay = true,
+			refetch,
+			...otherProps
+		}) => {
+			const otherOptions = omit(options, 'page');
 
-		if (error) {
-			return get(options, 'page', pageDisplay) ? (
-				<ErrorPage {...errorProps} {...otherOptions} />
-			) : (
-				<ErrorDisplay
-					onReload={refetch}
-					spacer
-					{...errorProps}
-					{...otherOptions}
-				/>
-			);
-		}
+			if (error) {
+				return get(options, 'page', pageDisplay) ? (
+					<ErrorPage {...errorProps} {...otherOptions} />
+				) : (
+					<ErrorDisplay
+						onReload={refetch}
+						spacer
+						{...errorProps}
+						{...otherOptions}
+					/>
+				);
+			}
 
-		return <Component refetch={refetch} {...otherProps} />;
-	};
+			return <Component refetch={refetch} {...otherProps} />;
+		};
+};
 
 /**
  * HOC for NoResultsDisplay.
  * @param {Object} - Options object to pass as props to NoResultsDisplay.
  * @returns {Function} Returns the NoResultsDisplay or WrappedComponent.
  */
-export const withEmpty =
-	(options = {}) =>
-	Component =>
-	({
-		data,
-		error,
-		loading,
-		noResultsRenderer,
-		noResultsRendererProps,
-		total,
-		...props
-	}) => {
-		if (((data && data.total === 0) || total === 0) && !loading && !error) {
-			if (noResultsRenderer) {
-				const NoResults = noResultsRenderer;
+export const withEmpty = function withEmpty(options = {}) {
+	return (Component) =>
+		({
+			data,
+			error,
+			loading,
+			noResultsRenderer,
+			noResultsRendererProps,
+			total,
+			...props
+		}) => {
+			if (
+				((data && data.total === 0) || total === 0) &&
+				!loading &&
+				!error
+			) {
+				if (noResultsRenderer) {
+					const NoResults = noResultsRenderer;
 
-				return <NoResults />;
+					return <NoResults />;
+				}
+
+				return (
+					<NoResultsDisplay
+						{...options}
+						{...noResultsRendererProps}
+					/>
+				);
 			}
 
 			return (
-				<NoResultsDisplay {...options} {...noResultsRendererProps} />
+				<Component
+					data={data}
+					error={error}
+					loading={loading}
+					total={total}
+					{...props}
+				/>
 			);
-		}
-
-		return (
-			<Component
-				data={data}
-				error={error}
-				loading={loading}
-				total={total}
-				{...props}
-			/>
-		);
-	};
+		};
+};
 
 /**
  * HOC for Loading display.
  * @param {Object} - Options object to pass as props to Loading component.
  * @returns {Function} Returns the Loading or WrappedComponent.
  */
-export const withLoading =
-	(options = {}) =>
-	Component =>
-	({loading, ...otherProps}) => {
-		if (loading) return <Loading {...options} />;
+export const withLoading = function withLoading(options = {}) {
+	return (Component) =>
+		({loading, ...otherProps}) => {
+			if (loading) {
+				return <Loading {...options} />;
+			}
 
-		return <Component {...otherProps} />;
-	};
+			return <Component {...otherProps} />;
+		};
+};
 
-export const withNull =
-	(key, errorProps = {}) =>
-	Component =>
-	props => {
+export const withNull = function withNull(key, errorProps = {}) {
+	return (Component) => (props) => {
 		const {entityType = Liferay.Language.get('page'), linkRoute} =
 			errorProps;
 
@@ -101,7 +120,7 @@ export const withNull =
 					{...props}
 					href={toRoute(linkRoute, props.router.params)}
 					linkLabel={sub(Liferay.Language.get('go-to-x'), [
-						entityType
+						entityType,
 					])}
 					message={sub(
 						Liferay.Language.get(
@@ -110,7 +129,7 @@ export const withNull =
 						[entityType.toLowerCase()]
 					)}
 					subtitle={sub(Liferay.Language.get('x-not-found'), [
-						entityType
+						entityType,
 					])}
 					title={Liferay.Language.get('404')}
 				/>
@@ -119,6 +138,7 @@ export const withNull =
 
 		return <Component {...props} />;
 	};
+};
 
 /**
  * HOC for displaying results.

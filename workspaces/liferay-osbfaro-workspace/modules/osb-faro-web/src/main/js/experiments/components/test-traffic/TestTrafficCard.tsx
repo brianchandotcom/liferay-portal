@@ -1,9 +1,15 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
+import Card from '~/shared/components/Card';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {getAxisFormatter} from '~/shared/util/charts';
+import {Sizes} from '~/shared/util/constants';
+
 import {ComposedChart} from '../ComposedChart';
-import {getAxisFormatter} from 'shared/util/charts';
-import {Sizes} from 'shared/util/constants';
 import {Tooltip} from './Tooltip';
 
 interface IExperimentWithHistogram {
@@ -25,7 +31,7 @@ const formatData = (experiment: IExperimentWithHistogram) => {
 			data_control_traffic_split: control.trafficSplit,
 			data_variant: variant.sessionsHistogram[index].value,
 			data_variant_traffic_split: variant.trafficSplit,
-			key: session.key
+			key: session.key,
 		});
 	});
 
@@ -34,13 +40,13 @@ const formatData = (experiment: IExperimentWithHistogram) => {
 		data: chartData,
 		format: getAxisFormatter('number'),
 		intervals: control.sessionsHistogram.map(({key}) => key),
-		variantLabel: variant.dxpVariantName
+		variantLabel: variant.dxpVariantName,
 	};
 };
 
 const TestTraffic = ({experiment}: {experiment: IExperimentWithHistogram}) => (
-	<Card className='analytics-session-card' minHeight={405}>
-		<Card.Header className='align-items-center d-flex justify-content-between'>
+	<Card className="analytics-session-card" minHeight={405}>
+		<Card.Header className="align-items-center d-flex justify-content-between">
 			<Card.Title>{Liferay.Language.get('test-traffic')}</Card.Title>
 		</Card.Header>
 
@@ -53,7 +59,7 @@ const TestTraffic = ({experiment}: {experiment: IExperimentWithHistogram}) => (
 					icon={{
 						border: false,
 						size: Sizes.XLarge,
-						symbol: 'ac_chart'
+						symbol: 'ac_chart',
 					}}
 					title={Liferay.Language.get(
 						'we-are-currently-collecting-data'
@@ -62,8 +68,8 @@ const TestTraffic = ({experiment}: {experiment: IExperimentWithHistogram}) => (
 
 				{!!experiment.dxpVariants.length && (
 					<ComposedChart
-						data={formatData(experiment)}
 						Tooltip={Tooltip}
+						data={formatData(experiment)}
 					/>
 				)}
 			</StatesRenderer>

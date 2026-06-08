@@ -1,8 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+
+const RouteNotFound = function RouteNotFound() {
+	return <Redirect to={{state: {notFoundError: true}}} />;
+};
 
 /**
  * Component for triggering a redirect to the same page
  * with some extra state for App to decide whether to render a 404 or children.
  */
-export default () => <Redirect to={{state: {notFoundError: true}}} />;
+export default RouteNotFound;

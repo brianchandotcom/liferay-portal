@@ -1,11 +1,18 @@
-import {ITimeZone} from 'shared/util/records/TimeZone';
-import {useParams} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-export const useTimeZone = (initialGroupId?: string): ITimeZone => {
+import {useSelector} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {ITimeZone} from '~/shared/util/records/TimeZone';
+
+export const useTimeZone = function useTimeZone(
+	initialGroupId?: string
+): ITimeZone {
 	const {groupId} = useParams();
 
-	const value = useSelector<any, any>(state =>
+	const value = useSelector<any, any>((state) =>
 		state.getIn(['projects', initialGroupId || groupId, 'data', 'timeZone'])
 	);
 

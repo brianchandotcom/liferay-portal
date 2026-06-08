@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export enum Colors {
 	Main = 'main',
 	MainLighten4 = 'mainLighten4',
@@ -28,7 +33,7 @@ export enum Colors {
 	WarningLighten60 = 'warningLighten60',
 	Info = 'info',
 	InfoLighten28 = 'infoLighten28',
-	InfoLighten53 = 'infoLighten53'
+	InfoLighten53 = 'infoLighten53',
 }
 
 export type Size = 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';

@@ -1,7 +1,13 @@
-import DndTable from 'shared/components/dnd-table';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {useState} from 'react';
+import DndTable from '~/shared/components/dnd-table';
+import {individualsListColumns} from '~/shared/util/table-columns';
+
 import Row from '../components/Row';
-import {individualsListColumns} from 'shared/util/table-columns';
 
 const DndTableKit = () => {
 	const [items, setItems] = useState([
@@ -13,8 +19,8 @@ const DndTableKit = () => {
 			properties: {
 				email: 'Abram.Bauch@hotmail.com',
 				jobTitle: 'Investor Metrics Representative',
-				worksFor: 'Lesch, Walsh and Stracke'
-			}
+				worksFor: 'Lesch, Walsh and Stracke',
+			},
 		},
 		{
 			activitiesCount: 0,
@@ -24,8 +30,8 @@ const DndTableKit = () => {
 			properties: {
 				email: 'Abram.Farrell@gmail.com',
 				jobTitle: 'Direct Marketing Producer',
-				worksFor: 'Jenkins, Erdman and Medhurst'
-			}
+				worksFor: 'Jenkins, Erdman and Medhurst',
+			},
 		},
 		{
 			activitiesCount: 0,
@@ -35,8 +41,8 @@ const DndTableKit = () => {
 			properties: {
 				email: 'Adelina.Kohler@hotmail.com',
 				jobTitle: 'Corporate Tactics Representative',
-				worksFor: 'Rice Group'
-			}
+				worksFor: 'Rice Group',
+			},
 		},
 		{
 			accountName: 'Kertzmann, Kilback and Watsica',
@@ -48,8 +54,8 @@ const DndTableKit = () => {
 			properties: {
 				email: 'Adrienne.Johnston@hotmail.com',
 				jobTitle: 'District Research Officer',
-				worksFor: 'Kertzmann, Kilback and Watsica'
-			}
+				worksFor: 'Kertzmann, Kilback and Watsica',
+			},
 		},
 		{
 			activitiesCount: 1,
@@ -60,9 +66,9 @@ const DndTableKit = () => {
 			properties: {
 				email: 'Alana.Nicolas@hotmail.com',
 				jobTitle: 'Corporate Security Executive',
-				worksFor: 'Schowalter-Wisozk'
-			}
-		}
+				worksFor: 'Schowalter-Wisozk',
+			},
+		},
 	]);
 
 	return (
@@ -75,9 +81,9 @@ const DndTableKit = () => {
 						individualsListColumns.activitiesCount,
 						{
 							accessor: 'properties.worksFor',
-							label: 'Works For'
+							label: 'Works For',
 						},
-						individualsListColumns.getLastActivityDate('UTC')
+						individualsListColumns.getLastActivityDate('UTC'),
 					]}
 					items={items}
 					onItemsChange={setItems}

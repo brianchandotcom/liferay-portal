@@ -1,10 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import {EntityTypes} from '../util/constants';
 import {isString} from 'lodash';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
+import {EntityTypes} from '../util/constants';
 
 const DISPLAYS = [
 	'primary',
@@ -19,7 +25,7 @@ const DISPLAYS = [
 	'boolean',
 	'number',
 	'date',
-	'string'
+	'string',
 ];
 
 const ID_DISPLAYS = [
@@ -27,14 +33,14 @@ const ID_DISPLAYS = [
 	'chartLimeGreen',
 	'chartOrange',
 	'chartRed',
-	'chartSeaGreen'
+	'chartSeaGreen',
 ];
 
 const SIZES = ['xs', 'sm', 'lg', 'xl', 'xxl'];
 
 class Sticker extends React.Component {
 	static defaultProps = {
-		circle: false
+		circle: false,
 	};
 
 	static propTypes = {
@@ -42,7 +48,7 @@ class Sticker extends React.Component {
 		className: PropTypes.string,
 		display: PropTypes.string,
 		size: PropTypes.oneOf(SIZES),
-		symbol: PropTypes.string
+		symbol: PropTypes.string,
 	};
 
 	render() {
@@ -65,7 +71,7 @@ class Sticker extends React.Component {
 				'sticker-circle': circle,
 				'sticker-rounded': !circle,
 				[`sticker-${display}`]: display,
-				[`sticker-${size}`]: size
+				[`sticker-${size}`]: size,
 			}
 		);
 
@@ -74,7 +80,7 @@ class Sticker extends React.Component {
 				{...omitDefinedProps(otherProps, Sticker.propTypes)}
 				className={classes}
 			>
-				{symbol && <ClayIcon className='icon-root' symbol={symbol} />}
+				{symbol && <ClayIcon className="icon-root" symbol={symbol} />}
 
 				{children}
 			</div>

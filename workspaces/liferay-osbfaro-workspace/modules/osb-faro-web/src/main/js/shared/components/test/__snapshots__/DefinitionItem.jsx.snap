@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DefinitionItem renders 1`] = `
+<div>
+  <div
+    class="definition-item-root"
+  >
+    <div
+      class="align-items-center d-flex"
+    >
+      -
+    </div>
+  </div>
+</div>
+`;

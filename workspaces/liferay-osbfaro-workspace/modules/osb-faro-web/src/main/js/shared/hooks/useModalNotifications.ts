@@ -1,11 +1,16 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useEffect} from 'react';
+import {modalTypes} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import {Modal} from '~/shared/types';
 import Notification, {
 	NotificationSubtypes,
-	NotificationTypes
-} from 'shared/util/records/Notification';
-import {Modal} from 'shared/types';
-import {modalTypes} from 'shared/actions/modals';
-import {useEffect} from 'react';
+	NotificationTypes,
+} from '~/shared/util/records/Notification';
 
 interface IModalNotificationRenderProps {
 	close: Modal.close;
@@ -23,7 +28,7 @@ const renderTimeZoneAdminModal = (
 		{
 			groupId,
 			notificationId,
-			onClose: close
+			onClose: close,
 		},
 		{closeOnBlur: false}
 	);
@@ -35,8 +40,8 @@ const modalNotificationStrategies = new Map<string, Function>([
 			renderTimeZoneAdminModal(
 				modalTypes.TIME_ZONE_SELECTION_MODAL,
 				params
-			)
-	]
+			),
+	],
 ]);
 
 export function useModalNotifications(
@@ -61,7 +66,7 @@ export function useModalNotifications(
 				close: () => onClose(notificationList),
 				groupId,
 				notificationId: notificationToRender.id,
-				open
+				open,
 			});
 		}
 	};
@@ -70,8 +75,10 @@ export function useModalNotifications(
 		API.notifications
 			.fetchNotifications({
 				groupId,
-				type: NotificationTypes.Modal
+				type: NotificationTypes.Modal,
 			})
 			.then(handleRender);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 }

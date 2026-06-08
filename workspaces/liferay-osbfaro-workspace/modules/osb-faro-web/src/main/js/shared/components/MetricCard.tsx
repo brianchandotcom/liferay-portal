@@ -1,13 +1,18 @@
-import Card from 'shared/components/Card';
-import classNames from 'classnames';
-import ClayIcon from '@clayui/icon';
-import Loading from 'shared/components/Loading';
-import React, {ReactNode} from 'react';
-import {getIcon, getStatsColor} from 'shared/util/metrics';
-import {isNil} from 'lodash';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Text} from '@clayui/core';
-import {toRounded} from 'shared/util/numbers';
-import {TrendClassification} from 'segment/types';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
+import {isNil} from 'lodash';
+import React, {ReactNode} from 'react';
+import {TrendClassification} from '~/segment/types';
+import Card from '~/shared/components/Card';
+import Loading from '~/shared/components/Loading';
+import {getIcon, getStatsColor} from '~/shared/util/metrics';
+import {toRounded} from '~/shared/util/numbers';
 
 interface IMetricCardTrend {
 	percentage: number;
@@ -35,7 +40,7 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 	title,
 	trend,
 	trendClassName,
-	value
+	value,
 }) => {
 	if (loading) {
 		return (
@@ -58,20 +63,20 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 			minHeight={minHeight}
 		>
 			<Card.Title>
-				<div className='text-uppercase text-weight-semi-bold'>
+				<div className="text-uppercase text-weight-semi-bold">
 					<Text>{title}</Text>
 				</div>
 			</Card.Title>
 
-			<Card.Body className='justify-content-between d-flex' noPadding>
-				<div className='mt-2'>
-					<Text color='secondary' size={3}>
+			<Card.Body className="d-flex justify-content-between" noPadding>
+				<div className="mt-2">
+					<Text color="secondary" size={3}>
 						{description}
 					</Text>
 				</div>
 
 				<div>
-					<div className='mt-2 text-lowercase text-weight-semi-bold'>
+					<div className="mt-2 text-lowercase text-weight-semi-bold">
 						<Text size={7}>{value}</Text>
 					</div>
 
@@ -91,8 +96,8 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 
 						{renderTrendLabel(
 							<span
-								className='mr-1'
-								key='percentage'
+								className="mr-1"
+								key="percentage"
 								style={{color: percentageColor}}
 							>
 								{`${toRounded(

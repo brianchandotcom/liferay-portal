@@ -1,33 +1,39 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import ClayLink from '@clayui/link';
-import ErrorDisplay from 'shared/components/ErrorDisplay';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import PagePathQuery from 'shared/queries/PagePathQuery';
 import React, {useRef} from 'react';
-import Sankey from './Sankey';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import URLConstants from 'shared/util/url-constants';
-import {EmptySankey} from './EmptySankey';
+import {useParams} from 'react-router-dom';
+import {v4 as uuidv4} from 'uuid';
+import Card from '~/shared/components/Card';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {useResize} from '~/shared/hooks/useResize';
+import PagePathQuery from '~/shared/queries/PagePathQuery';
+import {RangeSelectors} from '~/shared/types';
+import URLConstants from '~/shared/util/url-constants';
 import {
 	getSafeDecodedURIComponent,
 	getSafeRangeSelectors,
-	getSafeTouchpoint
-} from 'shared/util/util';
-import {RangeSelectors} from 'shared/types';
-import {SANKEY_WIDTH, SECONDARY_NODE_COLOR} from './utils';
+	getSafeTouchpoint,
+} from '~/shared/util/util';
+
+import {EmptySankey} from './EmptySankey';
+import Sankey from './Sankey';
 import {TitleKey, Type} from './types';
-import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/client';
-import {useResize} from 'shared/hooks/useResize';
-import {v4 as uuidv4} from 'uuid';
+import {SANKEY_WIDTH, SECONDARY_NODE_COLOR} from './utils';
 
 type pagePathNode = {
-	external: boolean;
-	views: number;
 	canonicalUrl: string;
-	title: TitleKey;
+	external: boolean;
 	followingPagePathNodes: pagePathNode[];
 	previousPagePathNodes: pagePathNode[];
+	title: TitleKey;
+	views: number;
 };
 
 function getTitle(key: TitleKey, type: Type) {
@@ -37,7 +43,7 @@ function getTitle(key: TitleKey, type: Type) {
 		[TitleKey.Others]:
 			type === Type.Previous
 				? Liferay.Language.get('other-referrals')
-				: Liferay.Language.get('other-pages')
+				: Liferay.Language.get('other-pages'),
 	};
 
 	return langs[key] || key;
@@ -62,7 +68,7 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 				name: getTitle(title, type),
 				type,
 				url: canonicalUrl,
-				views
+				views,
 			}));
 
 	const mainNode = {
@@ -70,7 +76,7 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 		main: true,
 		name: pagePath.title,
 		url: pagePath.canonicalUrl,
-		views: pagePath.views
+		views: pagePath.views,
 	};
 
 	const previousNodes = formatNodes(
@@ -86,14 +92,14 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 	const links = [...previousNodes, ...followingNodes].map((link, index) => ({
 		source: link.type === Type.Previous ? index + 1 : 0,
 		target: link.type === Type.Previous ? 0 : index + 1,
-		value: link.views
+		value: link.views,
 	}));
 
 	const nodes = [mainNode, ...previousNodes, ...followingNodes];
 
 	return {
 		links,
-		nodes
+		nodes,
 	};
 }
 
@@ -104,7 +110,7 @@ interface IPagePathCardProps {
 
 const PagePathCard: React.FC<IPagePathCardProps> = ({
 	rangeSelectors,
-	selectedSegment
+	selectedSegment,
 }) => {
 	const cardRef = useRef(null);
 	const {channelId, title, touchpoint} = useParams<{
@@ -118,10 +124,10 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 			channelId,
 			title: getSafeDecodedURIComponent(title ?? ''),
 			...(selectedSegment?.id && {
-				segmentId: selectedSegment.id
+				segmentId: selectedSegment.id,
 			}),
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 
 	const formattedData = data ? formatData(data) : {links: [], nodes: []};
@@ -139,7 +145,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 			</Card.Header>
 
 			<div ref={cardRef}>
-				<Card.Body className='d-flex align-items-center justify-content-center'>
+				<Card.Body className="align-items-center d-flex justify-content-center">
 					<StatesRenderer
 						empty={emptyState}
 						error={!!error}
@@ -170,7 +176,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 								/>
 
 								<NoResultsDisplay
-									className='mt-4'
+									className="mt-4"
 									description={
 										<>
 											{Liferay.Language.get(
@@ -178,12 +184,12 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 											)}
 
 											<ClayLink
-												className='d-block mb-3'
+												className="d-block mb-3"
 												href={
 													URLConstants.SitesDashboardPagesPath
 												}
-												key='DOCUMENTATION'
-												target='_blank'
+												key="DOCUMENTATION"
+												target="_blank"
 											>
 												{Liferay.Language.get(
 													'learn-more-about-path'

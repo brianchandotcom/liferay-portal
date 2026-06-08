@@ -1,11 +1,17 @@
-import ErrorPage from '../pages/ErrorPage';
-import React from 'react';
-import withCurrentUser from './WithCurrentUser';
-import {compose} from 'redux';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {PropTypes} from 'prop-types';
-import {Routes, toRoute} from '../util/router';
+import React from 'react';
+import {compose} from 'redux';
+import {UserRoleNames} from '~/shared/util/constants';
+
+import ErrorPage from '../pages/ErrorPage';
 import {User} from '../util/records';
-import {UserRoleNames} from 'shared/util/constants';
+import {Routes, toRoute} from '../util/router';
+import withCurrentUser from './WithCurrentUser';
 
 /**
  * Creates an HOC that renders a component only if the current user's role
@@ -14,13 +20,13 @@ import {UserRoleNames} from 'shared/util/constants';
  * @param {Array.<string>} roles - The roles to check for.
  * @returns {Function} - The resulting HOC.
  */
-const withPermission = roles =>
+const withPermission = (roles) =>
 	compose(
 		withCurrentUser,
-		WrappedComponent =>
+		(WrappedComponent) =>
 			class WithPermission extends React.Component {
 				static propTypes = {
-					currentUser: PropTypes.instanceOf(User).isRequired
+					currentUser: PropTypes.instanceOf(User).isRequired,
 				};
 
 				render() {
@@ -36,7 +42,8 @@ const withPermission = roles =>
 								currentUser={currentUser}
 							/>
 						);
-					} else {
+					}
+					else {
 						return (
 							<ErrorPage
 								className={className}
@@ -47,7 +54,7 @@ const withPermission = roles =>
 								subtitle={Liferay.Language.get(
 									'invalid-permission'
 								)}
-								title='403'
+								title="403"
 							/>
 						);
 					}
@@ -64,7 +71,7 @@ const withPermission = roles =>
  */
 export const withAdminPermission = withPermission([
 	UserRoleNames.Administrator,
-	UserRoleNames.Owner
+	UserRoleNames.Owner,
 ]);
 
 export default withPermission;

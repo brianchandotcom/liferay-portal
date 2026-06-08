@@ -1,12 +1,18 @@
-import FieldValueFilter from './FieldValueFilter';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+
+import FieldValueFilter from './FieldValueFilter';
 
 const IndustryFilter = () => (
 	<FieldValueFilter
-		className='mr-2'
+		className="mr-2"
 		entityLabel={Liferay.Language.get('industries')}
-		fieldMappingFieldName='industry'
-		filterKey='industryFilter'
+		fieldMappingFieldName="industry"
+		filterKey="industryFilter"
 	/>
 );
 

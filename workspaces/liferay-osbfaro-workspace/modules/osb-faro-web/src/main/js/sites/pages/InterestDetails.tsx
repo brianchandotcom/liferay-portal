@@ -1,12 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import InterestDetails from 'shared/components/InterestDetails';
-import React from 'react';
 import {pickBy} from 'lodash';
-import {Router} from 'shared/types';
-import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
+import React from 'react';
 import {useParams} from 'react-router-dom';
-import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
+import InterestDetails from '~/shared/components/InterestDetails';
+import {useQueryRangeSelectors} from '~/shared/hooks/useQueryRangeSelectors';
+import {Router} from '~/shared/types';
+import {Routes, setUriQueryValues, toRoute} from '~/shared/util/router';
 
 interface IInterestDetailsProps extends React.HTMLAttributes<HTMLDivElement> {
 	router: Router;
@@ -17,26 +22,26 @@ const InterestDetailsPage: React.FC<IInterestDetailsProps> = ({router}) => {
 	const rangeSelectors = useQueryRangeSelectors();
 
 	return (
-		<div className='sites-dashboard-interest-details-root'>
-			<div className='row'>
-				<div className='col-xl-12'>
-					<div className='back-button-root mb-2'>
+		<div className="sites-dashboard-interest-details-root">
+			<div className="row">
+				<div className="col-xl-12">
+					<div className="back-button-root mb-2">
 						<ClayLink
 							borderless
 							button
-							displayType='secondary'
+							displayType="secondary"
 							href={setUriQueryValues(
 								pickBy({...rangeSelectors}),
 
 								toRoute(Routes.SITES_INTERESTS, {
 									channelId,
-									groupId
+									groupId,
 								})
 							)}
 						>
 							<ClayIcon
-								className='icon-root mr-2'
-								symbol='angle-left-small'
+								className="icon-root mr-2"
+								symbol="angle-left-small"
 							/>
 
 							{Liferay.Language.get('back-to-interests')}
@@ -44,7 +49,7 @@ const InterestDetailsPage: React.FC<IInterestDetailsProps> = ({router}) => {
 					</div>
 
 					<InterestDetails
-						className='sites-interest-details-root'
+						className="sites-interest-details-root"
 						router={router}
 					/>
 				</div>

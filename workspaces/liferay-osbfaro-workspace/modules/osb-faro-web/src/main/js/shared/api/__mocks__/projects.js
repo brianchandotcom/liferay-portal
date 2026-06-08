@@ -1,6 +1,11 @@
-import * as data from 'test/data';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {range} from 'lodash';
-import {TimeZone} from 'shared/util/records';
+import {TimeZone} from '~/shared/util/records';
+import * as data from '~/test/data';
 
 export const create = jest.fn(() => Promise.resolve(data.mockProject()));
 
@@ -11,20 +16,20 @@ export const fetchAvailableTimeZones = jest.fn(() =>
 		new TimeZone({
 			country: 'UTC',
 			displayTimeZone: '(UTC) UTC',
-			timezoneValue: 'UTC'
+			timezoneValue: 'UTC',
 		}),
 
 		new TimeZone({
 			country: 'Brazil',
 			displayTimeZone: 'UTC -03:00 Brasilia Time (America/Recife)',
-			timezoneValue: 'America/Recife'
+			timezoneValue: 'America/Recife',
 		}),
 
 		new TimeZone({
 			country: 'Chile',
 			displayTimeZone: 'UTC -03:00 Chile Time (America/Santiago)',
-			timezoneValue: 'America/Santiago'
-		})
+			timezoneValue: 'America/Santiago',
+		}),
 	])
 );
 
@@ -33,7 +38,7 @@ export const fetchProjectViaCorpProjectUuid = jest.fn(() =>
 );
 
 export const fetchMany = jest.fn(() =>
-	Promise.resolve(range(3).map(i => data.mockProject(i)))
+	Promise.resolve(range(3).map((i) => data.mockProject(i)))
 );
 
 export const search = jest.fn(() =>

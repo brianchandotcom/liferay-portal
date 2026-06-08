@@ -1,36 +1,42 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import Avatar from './Avatar';
 import getCN from 'classnames';
-import ListGroup from './list-group';
-import ListView from './ListView';
-import Loading from 'shared/components/Loading';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
+import {Set} from 'immutable';
+import {PropTypes} from 'prop-types';
 import React from 'react';
+import {Link} from 'react-router-dom';
+import Loading from '~/shared/components/Loading';
+import {LIFERAY_SITE_TYPE} from '~/shared/util/data-sources';
+import {getDataSourceLangKey} from '~/shared/util/lang';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+import {Routes, getRouteName, toRoute} from '~/shared/util/router';
+
+import {EntityTypes} from '../util/constants';
+import {sub} from '../util/lang';
+import Avatar from './Avatar';
+import ListView from './ListView';
 import Sticker from './Sticker';
 import TextTruncate from './TextTruncate';
-import {EntityTypes} from '../util/constants';
-import {getDataSourceLangKey} from 'shared/util/lang';
-import {getRouteName, Routes, toRoute} from 'shared/util/router';
-import {LIFERAY_SITE_TYPE} from 'shared/util/data-sources';
-import {Link} from 'react-router-dom';
-import {PropTypes} from 'prop-types';
-import {Set} from 'immutable';
-import {sub} from '../util/lang';
+import ListGroup from './list-group';
 
 class EntityListItem extends React.Component {
 	static propTypes = {
-		item: PropTypes.object.isRequired
+		item: PropTypes.object.isRequired,
 	};
 
 	state = {
-		checked: false
+		checked: false,
 	};
 
 	getEntityUrl() {
 		const {
 			channelId,
 			groupId,
-			item: {id, type, url}
+			item: {id, type, url},
 		} = this.props;
 
 		switch (type) {
@@ -39,14 +45,14 @@ class EntityListItem extends React.Component {
 			case EntityTypes.DataSource:
 				return toRoute(Routes.SETTINGS_DATA_SOURCE, {
 					groupId,
-					id
+					id,
 				});
 			default:
 				return toRoute(Routes.CONTACTS_ENTITY, {
 					channelId,
 					groupId,
 					id,
-					type: getRouteName(type)
+					type: getRouteName(type),
 				});
 		}
 	}
@@ -59,7 +65,8 @@ class EntityListItem extends React.Component {
 				return sub(Liferay.Language.get('x-at-x'), [
 					properties.jobTitle ||
 						Liferay.Language.get('not-available'),
-					properties.worksFor || Liferay.Language.get('not-available')
+					properties.worksFor ||
+						Liferay.Language.get('not-available'),
 				]);
 			case EntityTypes.DataSource:
 				return getDataSourceLangKey(providerType);
@@ -84,8 +91,8 @@ class EntityListItem extends React.Component {
 				<ListGroup.ItemField>
 					{type === EntityTypes.IndividualsSegment ? (
 						<Sticker
-							display='primary'
-							symbol='individual_dynamic_segment'
+							display="primary"
+							symbol="individual_dynamic_segment"
 						/>
 					) : (
 						<Avatar
@@ -95,11 +102,11 @@ class EntityListItem extends React.Component {
 					)}
 				</ListGroup.ItemField>
 
-				<ListGroup.ItemField className='justify-content-center' expand>
+				<ListGroup.ItemField className="justify-content-center" expand>
 					<TextTruncate title={name}>
 						<strong>
 							<Link
-								className='list-group-link'
+								className="list-group-link"
 								onClick={this.handleLinkClick}
 								to={this.getEntityUrl()}
 							>
@@ -108,7 +115,7 @@ class EntityListItem extends React.Component {
 						</strong>
 					</TextTruncate>
 
-					<div className='secondary-info'>{this.getMessage()}</div>
+					<div className="secondary-info">{this.getMessage()}</div>
 				</ListGroup.ItemField>
 			</>
 		);
@@ -120,9 +127,10 @@ class EntityList extends React.Component {
 		disabledItemsISet: new Set(),
 		loading: false,
 		selectedItemsISet: new Set(),
+
 		selectMultiple: true,
 		showBorder: true,
-		showHeader: true
+		showHeader: true,
 	};
 
 	static propTypes = {
@@ -138,10 +146,11 @@ class EntityList extends React.Component {
 		noItemsHeader: PropTypes.string,
 		onSelectItemsChange: PropTypes.func,
 		selectedItemsISet: PropTypes.instanceOf(Set),
+
 		selectMultiple: PropTypes.bool,
 		showBorder: PropTypes.bool,
 		showHeader: PropTypes.bool,
-		total: PropTypes.number
+		total: PropTypes.number,
 	};
 
 	@autobind
@@ -177,7 +186,7 @@ class EntityList extends React.Component {
 		const noItems = total === 0;
 
 		const classes = getCN('entity-list-root', className, {
-			'no-items': noItems
+			'no-items': noItems,
 		});
 
 		return (
@@ -189,14 +198,14 @@ class EntityList extends React.Component {
 					items={items}
 					noBorder={!showBorder}
 					onSelectItemsChange={onSelectItemsChange}
-					selectedItemsISet={selectedItemsISet}
 					selectMultiple={selectMultiple}
+					selectedItemsISet={selectedItemsISet}
 				/>
 
 				{loading && <Loading overlay />}
 
 				{!loading && noItems && (
-					<div className='status-overlay'>{noItemsContent}</div>
+					<div className="status-overlay">{noItemsContent}</div>
 				)}
 			</div>
 		);

@@ -1,11 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import React, {useContext} from 'react';
+import {useParams} from 'react-router-dom';
+import Loading from '~/shared/components/Loading';
+import BaseCard from '~/shared/components/base-card';
+import {ChannelContext} from '~/shared/context/channel';
+import {Interval, RangeSelectors} from '~/shared/types';
+
 import ActivityStreamCard from './components/ActivityStreamCard';
 import ActivityStreamCardHeader from './components/ActivityStreamCardHeader';
-import BaseCard from 'shared/components/base-card';
-import Loading from 'shared/components/Loading';
-import React, {useContext} from 'react';
-import {ChannelContext} from 'shared/context/channel';
-import {Interval, RangeSelectors} from 'shared/types';
-import {useParams} from 'react-router-dom';
 
 const Activities = () => {
 	const {selectedChannel} = useContext(ChannelContext);
@@ -25,11 +31,11 @@ const Activities = () => {
 	return (
 		<>
 			<BaseCard
-				className='account-activity-stream-card'
+				Header={ActivityStreamCardHeader}
+				className="account-activity-stream-card"
 				description={Liferay.Language.get(
 					'chronological-timeline-of-the-accounts-activities-within-the-selected-timeframe-with-details-on-events-and-session-context'
 				)}
-				Header={ActivityStreamCardHeader}
 				headerProps={{showRangeKey: true}}
 				label={Liferay.Language.get('activity-stream').toUpperCase()}
 				legacyDropdownRangeKey={false}
@@ -38,7 +44,7 @@ const Activities = () => {
 			>
 				{({
 					interval,
-					rangeSelectors
+					rangeSelectors,
 				}: {
 					interval: Interval;
 					rangeSelectors: RangeSelectors;

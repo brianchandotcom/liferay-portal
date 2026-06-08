@@ -1,21 +1,26 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import Modal from 'shared/components/modal';
 import React from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {sub} from 'shared/util/lang';
+import Modal from '~/shared/components/modal';
+import {sub} from '~/shared/util/lang';
+import URLConstants from '~/shared/util/url-constants';
 
 const UnableDeletePropertyModal: React.FC<{
 	onClose: () => void;
 }> = ({onClose}) => (
-	<Modal type='danger'>
+	<Modal type="danger">
 		<Modal.Header
 			onClose={onClose}
 			title={Liferay.Language.get('unable-to-delete-property')}
 		/>
 
 		<Modal.Body inlineScroller>
-			<p className='text-secondary'>
+			<p className="text-secondary">
 				{sub(
 					Liferay.Language.get(
 						'ensure-no-sites-and-channels-are-assigned-to-it-before-deleting-a-property'
@@ -23,13 +28,13 @@ const UnableDeletePropertyModal: React.FC<{
 					[
 						<ClayLink
 							href={URLConstants.DeletePropertyDocumentation}
-							key='URL'
-							target='_blank'
+							key="URL"
+							target="_blank"
 						>
 							{Liferay.Language.get(
 								'access-our-documentation-to-learn-more'
 							)}
-						</ClayLink>
+						</ClayLink>,
 					],
 					false
 				)}
@@ -38,8 +43,8 @@ const UnableDeletePropertyModal: React.FC<{
 
 		<Modal.Footer>
 			<ClayButton
-				className='button-root'
-				displayType='danger'
+				className="button-root"
+				displayType="danger"
 				onClick={onClose}
 			>
 				{Liferay.Language.get('done')}

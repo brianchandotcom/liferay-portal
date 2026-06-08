@@ -1,21 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import BaseSelect from './BaseSelect';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
+import BaseSelect from './BaseSelect';
 
 class SelectInput extends React.Component {
 	static defaultProps = {
-		placeholder: ''
+		placeholder: '',
 	};
 
 	static propTypes = {
 		placeholder: PropTypes.string,
-		selectedItem: PropTypes.any
+		selectedItem: PropTypes.any,
 	};
 
 	state = {
-		query: ''
+		query: '',
 	};
 
 	_baseSelectRef = React.createRef();
@@ -27,14 +33,14 @@ class SelectInput extends React.Component {
 	@autobind
 	handleInputValueChange(query) {
 		this.setState({
-			query
+			query,
 		});
 	}
 
 	render() {
 		const {
 			props: {placeholder, selectedItem, ...otherProps},
-			state: {query}
+			state: {query},
 		} = this;
 
 		return (

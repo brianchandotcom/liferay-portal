@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 enum URLConstants {
 	AccountActivitiesDocumentationLink = 'https://learn.liferay.com/w/liferay-data-platform/index',
 	APIOverviewDocumentationLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/workspace-data/managing-api-access',
@@ -71,7 +76,7 @@ enum URLConstants {
 	VisitorBehaviorBlogsLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/blogs-analytics#visitor-behavior',
 	VisitorBehaviorDocumentsAndMediaLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/documents-and-media-analytics#visitor-behavior',
 	VisitorBehaviorFormsLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/forms-analytics#visitor-behavior',
-	VisitorBehaviorWebContentLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/web-content-analytics#visitor-behavior'
+	VisitorBehaviorWebContentLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/web-content-analytics#visitor-behavior',
 }
 
 export const ApisPath = '/api/reports';

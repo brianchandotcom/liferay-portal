@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import WizardPage, {Step} from 'settings/components/base-page/WizardPage';
-import {Alert} from 'shared/types';
-import {AssignIndividualsDataToPropertiesStep} from 'settings/components/salesforce/steps/AssignIndividualsDataToChannelsStep';
-import {ConnectLiferayDXPStep} from 'settings/components/liferay/steps/ConnectLiferayDXPStep';
-import {ReviewSyncedDataStep} from 'settings/components/liferay/steps/ReviewSyncedDataStep';
-import {updateLiferay} from 'shared/api/data-source';
+import WizardPage, {Step} from '~/settings/components/base-page/WizardPage';
+import {ConnectLiferayDXPStep} from '~/settings/components/liferay/steps/ConnectLiferayDXPStep';
+import {ReviewSyncedDataStep} from '~/settings/components/liferay/steps/ReviewSyncedDataStep';
+import {AssignIndividualsDataToPropertiesStep} from '~/settings/components/salesforce/steps/AssignIndividualsDataToChannelsStep';
+import {updateLiferay} from '~/shared/api/data-source';
+import {Alert} from '~/shared/types';
 
 const steps: Step[] = [
 	{
@@ -12,20 +17,20 @@ const steps: Step[] = [
 		description: Liferay.Language.get(
 			'connect-your-dxp-instance-to-analytics-cloud-to-start-tracking-users-visits-and-interactions-within-your-sites'
 		),
-		title: Liferay.Language.get('connect-your-dxp-analytics')
+		title: Liferay.Language.get('connect-your-dxp-analytics'),
 	},
 	{
 		content: (props: any) => <ReviewSyncedDataStep {...props} />,
 		description: Liferay.Language.get(
 			'while-your-data-continues-syncing-in-the-background,-you-may-proceed-with-the-setup-process.-to-monitor-the-sync-status-at-any-time,-go-to-settings-in-data-sources'
 		),
-		title: Liferay.Language.get('review-synced-data')
+		title: Liferay.Language.get('review-synced-data'),
 	},
 	{
 		content: (props: any) => (
 			<AssignIndividualsDataToPropertiesStep
 				{...props}
-				onSubmit={dataSource => {
+				onSubmit={(dataSource) => {
 					if (
 						dataSource?.sitesSelected ||
 						dataSource?.contactsSelected
@@ -34,14 +39,15 @@ const steps: Step[] = [
 							alertType: Alert.Types.Success,
 							message: Liferay.Language.get(
 								'the-data-source-setup-is-now-complete,-and-you-will-begin-to-see-data-as-activities-occur-on-your-sites'
-							)
+							),
 						});
-					} else {
+					}
+					else {
 						props.addAlert({
 							alertType: Alert.Types.Success,
 							message: Liferay.Language.get(
 								'the-data-source-setup-has-finished'
-							)
+							),
 						});
 					}
 				}}
@@ -55,8 +61,8 @@ const steps: Step[] = [
 		description: Liferay.Language.get(
 			'properties-allow-you-to-aggregate-data-on-your-users,-sites-and-dxp-commerce-channels.-individuals-data-will-be-available-in-any-property-they-are-assigned-to'
 		),
-		title: Liferay.Language.get('assign-individuals-data-to-properties')
-	}
+		title: Liferay.Language.get('assign-individuals-data-to-properties'),
+	},
 ];
 
 const ConnectSalesforce = () => <WizardPage steps={steps} />;

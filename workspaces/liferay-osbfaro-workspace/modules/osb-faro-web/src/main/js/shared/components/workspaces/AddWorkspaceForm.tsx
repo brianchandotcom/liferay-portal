@@ -1,37 +1,43 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayLink from '@clayui/link';
-import Constants, {FaroEnv} from 'shared/util/constants';
+import getCN from 'classnames';
+import React, {useContext, useRef, useState} from 'react';
+import {ConnectedProps, connect} from 'react-redux';
+import {close, open} from '~/shared/actions/modals';
+import Loading, {Align} from '~/shared/components/Loading';
+import NavigationWarning from '~/shared/components/NavigationWarning';
+import Sheet from '~/shared/components/Sheet';
 import Form, {
 	validateMaxLength,
 	validateMinLength,
 	validatePattern,
-	validateRequired
-} from 'shared/components/form';
-import getCN from 'classnames';
-import Loading, {Align} from 'shared/components/Loading';
-import NavigationWarning from 'shared/components/NavigationWarning';
-import React, {useContext, useRef, useState} from 'react';
-import Sheet from 'shared/components/Sheet';
-import TimeZonePicker from '../form/TimeZonePicker';
-import URLConstants from 'shared/util/url-constants';
-import {BasePageContext} from './BasePage';
-import {close, open} from 'shared/actions/modals';
-import {connect, ConnectedProps} from 'react-redux';
-import {Modal} from 'shared/types';
-import {Project, TimeZone} from 'shared/util/records';
-import {sequence} from 'shared/util/promise';
-import {sub} from 'shared/util/lang';
-import {Text} from '@clayui/core';
+	validateRequired,
+} from '~/shared/components/form';
+import {Modal} from '~/shared/types';
+import Constants, {FaroEnv} from '~/shared/util/constants';
 import {
 	validateEmail,
 	validateEmailArr,
 	validateEmailDomain,
-	validateEmailDomainArr
-} from 'shared/util/email-validators';
+	validateEmailDomainArr,
+} from '~/shared/util/email-validators';
+import {sub} from '~/shared/util/lang';
+import {sequence} from '~/shared/util/promise';
+import {Project, TimeZone} from '~/shared/util/records';
+import URLConstants from '~/shared/util/url-constants';
+
+import TimeZonePicker from '../form/TimeZonePicker';
+import {BasePageContext} from './BasePage';
 
 const {
 	faroURL,
-	projectLocations: {AS1, EU2, EU3, SA, STG, US}
+	projectLocations: {AS1, EU2, EU3, SA, STG, US},
 } = Constants;
 
 const DEFAULT_TIME_ZONE = 'UTC';
@@ -42,8 +48,8 @@ const getProjectLocations = (): {label: string; value: string}[] => {
 			return [
 				{
 					label: Liferay.Language.get('location-staging'),
-					value: STG
-				}
+					value: STG,
+				},
 			];
 		default:
 			return [
@@ -51,7 +57,7 @@ const getProjectLocations = (): {label: string; value: string}[] => {
 				{label: Liferay.Language.get('location-eu'), value: EU2},
 				{label: Liferay.Language.get('location-eu2'), value: EU3},
 				{label: Liferay.Language.get('location-sa'), value: SA},
-				{label: Liferay.Language.get('location-us'), value: US}
+				{label: Liferay.Language.get('location-us'), value: US},
 			];
 	}
 };
@@ -87,7 +93,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 	emailAddressDomains,
 	onSubmit,
 	open,
-	project
+	project,
 }) => {
 	const {currentUser} = useContext(BasePageContext);
 
@@ -102,7 +108,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 		{
 			resetForm,
 			setFieldError,
-			setSubmitting
+			setSubmitting,
 		}: {
 			resetForm: (args: {values: Record<string, any>}) => void;
 			setFieldError: (field: string, message: string) => void;
@@ -118,7 +124,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 			onSubmit({
 				...values,
 				ownerEmailAddress:
-					project?.ownerEmailAddress || currentUser.emailAddress
+					project?.ownerEmailAddress || currentUser.emailAddress,
 			})
 				.then(() => {
 					setSubmitting(false);
@@ -141,14 +147,14 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 			open(Modal.modalTypes.CONFIRMATION_MODAL, {
 				message: (
 					<div>
-						<p className='text-secondary'>
+						<p className="text-secondary">
 							{Liferay.Language.get(
 								'you-can-only-set-your-friendly-workspace-url-once.-are-you-sure-you-would-like-to-save-it-as-the-following-url'
 							)}
 						</p>
 
 						<p>
-							<span className='text-secondary'>
+							<span className="text-secondary">
 								{`${faroURL}/workspace-name/`}
 							</span>
 
@@ -163,9 +169,10 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 					? Liferay.Language.get('save')
 					: Liferay.Language.get('create-workspace'),
 				title: Liferay.Language.get('setting-friendly-workspace-url'),
-				titleIcon: 'info-circle'
+				titleIcon: 'info-circle',
 			});
-		} else {
+		}
+		else {
 			submitFn();
 		}
 	};
@@ -191,7 +198,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 							getDefaultServerLocation(),
 						timeZoneId:
 							project?.getIn(['timeZone', 'timeZoneId']) ||
-							DEFAULT_TIME_ZONE
+							DEFAULT_TIME_ZONE,
 					}}
 					innerRef={formRef as any}
 					onSubmit={handleSubmit}
@@ -204,7 +211,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 						isValid,
 						resetForm,
 						setFieldTouched,
-						setFieldValue
+						setFieldValue,
 					}) => (
 						<Form.Form onSubmit={handleSubmit}>
 							<NavigationWarning when={!!project && dirty} />
@@ -214,35 +221,35 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 									{Liferay.Language.get('general')}
 								</Sheet.Subtitle>
 
-								<Sheet.Section className='input-name'>
+								<Sheet.Section className="input-name">
 									<Form.Input
 										disabled={disabled}
 										label={Liferay.Language.get(
 											'workspace-name'
 										)}
-										name='name'
+										name="name"
 										required
 										validate={sequence([
 											validateRequired,
-											validateMaxLength(255)
+											validateMaxLength(255),
 										])}
 									/>
 								</Sheet.Section>
 
-								<Sheet.Section className='input-workspace-owner-email'>
+								<Sheet.Section className="input-workspace-owner-email">
 									<Form.Input
 										disabled
 										label={Liferay.Language.get(
 											'workspace-owner-email'
 										)}
-										name='ownerEmailAddress'
+										name="ownerEmailAddress"
 										required
 									/>
 								</Sheet.Section>
 
-								<Sheet.Section className='input-server'>
+								<Sheet.Section className="input-server">
 									<Form.Select
-										data-testid='server-location-input'
+										data-testid="server-location-input"
 										disabled={
 											disabled ||
 											editing ||
@@ -251,7 +258,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 										label={Liferay.Language.get(
 											'data-center-location'
 										)}
-										name='serverLocation'
+										name="serverLocation"
 										required
 										secondaryInfo={Liferay.Language.get(
 											'select-a-server-to-store-your-data.-this-could-have-implications-to-your-organizations-policy-on-user-data-storage'
@@ -275,7 +282,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 										{Liferay.Language.get('timezone')}
 									</Form.Label>
 
-									<Text as='p' size={3}>
+									<Text as="p" size={3}>
 										{Liferay.Language.get(
 											'time-zone-used-for-all-data-reporting-in-this-workspace.-it-is-automatically-set-based-on-your-time-zone-and-cannot-be-changed'
 										)}
@@ -283,14 +290,14 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 
 									<TimeZonePicker
 										disabled
-										fieldName='timeZoneId'
+										fieldName="timeZoneId"
 										initialTimeZone={
 											project
 												? new TimeZone(
 														project.getIn([
-															'timeZone'
+															'timeZone',
 														])
-												  )
+													)
 												: new TimeZone()
 										}
 										setFieldTouched={setFieldTouched}
@@ -300,7 +307,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 
 								<Sheet.Section>
 									<div>
-										<Text size={3} weight='semi-bold'>
+										<Text size={3} weight="semi-bold">
 											{Liferay.Language.get(
 												'set-a-friendly-workspace-url'
 											)}
@@ -313,17 +320,17 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 										)}
 									</Text>
 
-									<div className='mb-1'>
-										<Text color='secondary' size={3}>
+									<div className="mb-1">
+										<Text color="secondary" size={3}>
 											{sub(
 												Liferay.Language.get('e.g.-x'),
 												[
-													<React.Fragment key='WORKSPACE_URL'>
+													<React.Fragment key="WORKSPACE_URL">
 														<span>{faroURL}</span>
 														<strong>
-															{'/workspace-name'}
+															/workspace-name
 														</strong>
-													</React.Fragment>
+													</React.Fragment>,
 												],
 												false
 											)}
@@ -331,15 +338,15 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 									</div>
 
 									<Form.Input
-										data-testid='friendly-url-input'
+										data-testid="friendly-url-input"
 										disabled={
 											disabled ||
 											(project && project.friendlyURL)
 										}
-										name='friendlyURL'
+										name="friendlyURL"
 										text={{
 											content: '/',
-											position: 'prepend'
+											position: 'prepend',
 										}}
 										validate={sequence([
 											validateMinLength(2),
@@ -352,14 +359,14 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 													),
 													["a-z, 0-9, '.', '_', '-'"]
 												) as string
-											)
+											),
 										])}
 									/>
 								</Sheet.Section>
 
 								<Sheet.Section>
 									<div>
-										<Text size={3} weight='semi-bold'>
+										<Text size={3} weight="semi-bold">
 											{Liferay.Language.get(
 												'allowed-email-domains'
 											)}
@@ -372,21 +379,17 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 										)}
 									</Text>
 
-									<div className='mb-1'>
-										<Text color='secondary' size={3}>
+									<div className="mb-1">
+										<Text color="secondary" size={3}>
 											{sub(
 												Liferay.Language.get('e.g.-x'),
 												[
-													<React.Fragment key='EMAIL_DOMAIN'>
-														<span>
-															{'user.name@'}
-														</span>
+													<React.Fragment key="EMAIL_DOMAIN">
+														<span>user.name@</span>
 														<strong>
-															{
-																'company-domain.com'
-															}
+															company-domain.com
 														</strong>
-													</React.Fragment>
+													</React.Fragment>,
 												],
 												false
 											)}
@@ -398,11 +401,11 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 										errorMessage={Liferay.Language.get(
 											'please-enter-the-domain-in-this-format-domain-com'
 										)}
-										name='emailAddressDomains'
+										name="emailAddressDomains"
 										onChangeInputList={setInputListValue}
 										text={{
 											content: '@',
-											position: 'prepend'
+											position: 'prepend',
 										}}
 										validate={(items: string[]) =>
 											validateEmailDomainArr(
@@ -426,13 +429,13 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 										label={Liferay.Language.get(
 											'add-incident-report-contacts'
 										)}
-										name='incidentReportEmailAddresses'
+										name="incidentReportEmailAddresses"
 										onChangeInputList={
 											setEmailAddressesInputValues
 										}
 										popover={{
 											content: (
-												<div className='add-workspace-popover-content'>
+												<div className="add-workspace-popover-content">
 													{Liferay.Language.get(
 														'this-person-will-be-contacted-in-the-event-of'
 													)}
@@ -460,7 +463,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 											),
 											title: Liferay.Language.get(
 												'incident-report-contact'
-											)
+											),
 										}}
 										required
 										secondaryInfo={Liferay.Language.get(
@@ -468,11 +471,11 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 										)}
 										validate={sequence([
 											validateRequired,
-											items =>
+											(items) =>
 												validateEmailArr(
 													items,
 													emailAddressesInputValues
-												)
+												),
 										])}
 										validationFn={validateEmail}
 									/>
@@ -482,12 +485,12 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 							<Sheet.Footer divider={false}>
 								{!editing ? (
 									<>
-										<div className='terms'>
+										<div className="terms">
 											<Form.Checkbox
 												label={Liferay.Language.get(
 													'i-agree'
 												)}
-												name='termsAcceptance'
+												name="termsAcceptance"
 												validate={validateRequired}
 											/>
 
@@ -511,12 +514,12 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 															href={
 																URLConstants.PrivacyPolicy
 															}
-															key='privacy-policy'
+															key="privacy-policy"
 														>
 															{Liferay.Language.get(
 																'privacy-policy'
 															)}
-														</ClayLink>
+														</ClayLink>,
 													],
 													false
 												)}
@@ -525,14 +528,14 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 
 										<ClayButton
 											block
-											className='button-root'
+											className="button-root"
 											disabled={
 												disabled ||
 												isSubmitting ||
 												!isValid
 											}
-											displayType='primary'
-											type='submit'
+											displayType="primary"
+											type="submit"
 										>
 											{isSubmitting && (
 												<Loading align={Align.Left} />
@@ -546,14 +549,14 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 								) : (
 									<>
 										<ClayButton
-											className='button-root mr-3'
+											className="button-root mr-3"
 											disabled={
 												disabled ||
 												isSubmitting ||
 												!isValid
 											}
-											displayType='primary'
-											type='submit'
+											displayType="primary"
+											type="submit"
 										>
 											{isSubmitting && (
 												<Loading align={Align.Left} />
@@ -563,12 +566,12 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 										</ClayButton>
 
 										<ClayButton
-											className='button-root'
+											className="button-root"
 											disabled={disabled || !dirty}
-											displayType='secondary'
+											displayType="secondary"
 											onClick={() =>
 												resetForm({
-													values: initialValues
+													values: initialValues,
 												})
 											}
 										>

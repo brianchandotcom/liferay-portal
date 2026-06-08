@@ -1,9 +1,15 @@
-import autobind from 'autobind-decorator';
-import Form from 'shared/components/form';
-import React from 'react';
-import {BOOLEAN_OPTIONS} from '../utils/constants';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Option, Picker} from '@clayui/core';
-import {Property} from 'shared/util/records';
+import autobind from 'autobind-decorator';
+import React from 'react';
+import Form from '~/shared/components/form';
+import {Property} from '~/shared/util/records';
+
+import {BOOLEAN_OPTIONS} from '../utils/constants';
 
 interface IBooleanInputProps {
 	displayValue: string;
@@ -24,17 +30,17 @@ export default class BooleanInput extends React.Component<IBooleanInputProps> {
 			displayValue,
 			operatorRenderer: OperatorDropdown,
 			property: {entityName},
-			value
+			value,
 		} = this.props;
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
@@ -42,7 +48,7 @@ export default class BooleanInput extends React.Component<IBooleanInputProps> {
 
 					<Form.GroupItem shrink>
 						<Picker
-							className='criterion-input'
+							className="criterion-input"
 							items={BOOLEAN_OPTIONS}
 							onSelectionChange={this.handleChange}
 							selectedKey={value}

@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {RemoteData} from './records';
 
 /**
@@ -8,12 +13,12 @@ import {RemoteData} from './records';
  * @param {boolean} options.loading - If the entity is still loading.
  * @returns {Function}
  */
-export const setState =
-	({error, loading}) =>
-	(state, action) =>
+export const setState = function setState({error, loading}) {
+	return (state, action) =>
 		state.update(action.payload.id, (item = new RemoteData()) =>
 			item.merge({error, loading})
 		);
+};
 
 /**
  * A reducer that handles the "loading" case.

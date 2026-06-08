@@ -1,25 +1,30 @@
-import * as API from 'shared/api';
-import Card from 'shared/components/Card';
-import classNames from 'classnames';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Text} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
-import ClaySticker from '@clayui/sticker';
 import MultiStepNav from '@clayui/multi-step-nav';
+import ClaySticker from '@clayui/sticker';
+import classNames from 'classnames';
 import React from 'react';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
-import {
-	IAccountLifecycleStageStatus,
-	IAccountLifecycleStatus
-} from 'shared/api/lifecycle';
+import {useParams} from 'react-router-dom';
 import {
 	LifecycleStages,
-	lifecycleStagesLabelMap
-} from 'contacts/pages/account/utils/constants';
-import {sub} from 'shared/util/lang';
-import {Text} from '@clayui/core';
-import {useParams} from 'react-router-dom';
-import {useRequest} from 'shared/hooks/useRequest';
+	lifecycleStagesLabelMap,
+} from '~/contacts/pages/account/utils/constants';
+import * as API from '~/shared/api';
+import {
+	IAccountLifecycleStageStatus,
+	IAccountLifecycleStatus,
+} from '~/shared/api/lifecycle';
+import Card from '~/shared/components/Card';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {CUSTOM_DATE_FORMAT, formatUTCDate} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
 
 interface LifecycleStatusProps {
 	className?: string;
@@ -39,7 +44,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 
 	const {data: lifecyclesData, loading: lifecyclesLoading} = useRequest({
 		dataSourceFn: API.lifecycle.fetchAccountLifecycles,
-		variables: {groupId}
+		variables: {groupId},
 	});
 
 	const accountLifecycle = lifecyclesData?.[0];
@@ -50,8 +55,8 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 		variables: {
 			accountId,
 			accountLifecycleId: accountLifecycle?.id ?? '',
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const isLoading =
@@ -63,10 +68,10 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 		.sort((a, b) => a.displayOrder - b.displayOrder);
 
 	const progressionStages = stages.filter(
-		stage => stage.stageType !== LifecycleStages.AT_RISK
+		(stage) => stage.stageType !== LifecycleStages.AT_RISK
 	);
 	const atRiskStage = stages.find(
-		stage => stage.stageType === LifecycleStages.AT_RISK
+		(stage) => stage.stageType === LifecycleStages.AT_RISK
 	);
 
 	const activeIndex = progressionStages.reduce(
@@ -77,16 +82,16 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 		activeIndex >= 0 ? progressionStages[activeIndex] : undefined;
 	const isAtRisk = Boolean(atRiskStage?.startDate && !atRiskStage.endDate);
 
-	const isEmpty = !isLoading && stages.length === 0;
+	const isEmpty = !isLoading && !stages.length;
 
 	return (
 		<Card className={classNames(className, 'p-3')} minHeight={260}>
 			<Card.Title>
-				<Text weight='semi-bold'>
+				<Text weight="semi-bold">
 					{Liferay.Language.get('lifecycle-status').toUpperCase()}
 				</Text>
 				<p>
-					<Text color='secondary' size={3} weight='normal'>
+					<Text color="secondary" size={3} weight="normal">
 						{Liferay.Language.get(
 							'shows-the-current-stage-progression-for-this-account'
 						)}
@@ -96,14 +101,14 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 			<Card.Body
 				alignCenter={isLoading || isEmpty}
 				className={classNames({
-					'justify-content-around p-0': !isLoading && !isEmpty
+					'justify-content-around p-0': !isLoading && !isEmpty,
 				})}
 			>
 				<StatesRenderer empty={isEmpty} loading={isLoading}>
 					<StatesRenderer.Loading />
 					<StatesRenderer.Empty>
 						<ClayEmptyState
-							className='mt-n5 text-center'
+							className="mt-n5 text-center"
 							description={Liferay.Language.get(
 								'lifecycle-data-will-appear-here-when-synced'
 							)}
@@ -114,8 +119,8 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 						/>
 					</StatesRenderer.Empty>
 					<StatesRenderer.Success>
-						<div className='align-items-end d-none d-sm-flex flex-row lifecycle-status-multistep'>
-							<MultiStepNav center className='flex-fill pb-0'>
+						<div className="align-items-end d-none d-sm-flex flex-row lifecycle-status-multistep">
+							<MultiStepNav center className="flex-fill pb-0">
 								{progressionStages.map((stage, i) => (
 									<MultiStepNav.Item
 										active={i === activeIndex}
@@ -140,7 +145,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 													? formatUTCDate(
 															stage.startDate,
 															CUSTOM_DATE_FORMAT
-													  )
+														)
 													: undefined
 											}
 										/>
@@ -148,7 +153,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 								))}
 							</MultiStepNav>
 							{atRiskStage && (
-								<MultiStepNav center className='ml-3 pb-0'>
+								<MultiStepNav center className="ml-3 pb-0">
 									<MultiStepNav.Item>
 										<MultiStepNav.Title>
 											{getStageLabel(atRiskStage)}
@@ -158,10 +163,10 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 											className={classNames(
 												'rounded-circle',
 												{
-													'bg-red': isAtRisk
+													'bg-red': isAtRisk,
 												}
 											)}
-											displayType='secondary'
+											displayType="secondary"
 										>
 											<ClayIcon
 												className={
@@ -169,7 +174,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 														? 'text-white'
 														: 'text-secondary'
 												}
-												symbol='exclamation-circle'
+												symbol="exclamation-circle"
 											/>
 										</ClaySticker>
 									</MultiStepNav.Item>
@@ -177,18 +182,18 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 							)}
 						</div>
 						{(activeStage || atRiskStage) && (
-							<div className='d-sm-none lifecycle-status-summary'>
+							<div className="d-sm-none lifecycle-status-summary">
 								{activeStage && (
 									<>
-										<div className='align-items-baseline d-flex justify-content-between'>
+										<div className="align-items-baseline d-flex justify-content-between">
 											<Text
-												color='primary'
+												color="primary"
 												size={3}
-												weight='semi-bold'
+												weight="semi-bold"
 											>
 												{getStageLabel(activeStage)}
 											</Text>
-											<Text color='secondary' size={3}>
+											<Text color="secondary" size={3}>
 												{sub(
 													Liferay.Language.get(
 														'step-x-of-x'
@@ -197,13 +202,13 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 														String(activeIndex + 1),
 														String(
 															progressionStages.length
-														)
+														),
 													]
 												)}
 											</Text>
 										</div>
 										{activeStage.startDate && (
-											<Text color='secondary' size={3}>
+											<Text color="secondary" size={3}>
 												{formatUTCDate(
 													activeStage.startDate,
 													CUSTOM_DATE_FORMAT
@@ -220,13 +225,13 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 										)}
 									>
 										<Text
-											color='secondary'
+											color="secondary"
 											size={3}
-											weight='semi-bold'
+											weight="semi-bold"
 										>
 											{Liferay.Language.get('at-risk')}
 										</Text>
-										<Text color='secondary' size={3}>
+										<Text color="secondary" size={3}>
 											{isAtRisk
 												? Liferay.Language.get('yes')
 												: Liferay.Language.get('no')}

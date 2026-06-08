@@ -1,13 +1,19 @@
-import BaseSelect from 'shared/components/BaseSelect';
-import Item from '../components/Item';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import BaseSelect from '~/shared/components/BaseSelect';
+
+import Item from '../components/Item';
 import Row from '../components/Row';
 
 const ITEMS = ['bar', 'baz', 'foo'];
 
 const DATA_SOURCE_FN = () => Promise.resolve(ITEMS);
-const ITEM_RENDERER = item => item;
-const HANDLE_SELECT = item => alert(item);
+const ITEM_RENDERER = (item) => item;
+const HANDLE_SELECT = (item) => alert(item);
 
 export default class BaseSelectKit extends React.Component {
 	render() {
@@ -23,16 +29,16 @@ export default class BaseSelectKit extends React.Component {
 							dataSourceFn={DATA_SOURCE_FN}
 							itemRenderer={ITEM_RENDERER}
 							onSelect={HANDLE_SELECT}
-							placeholder='Search'
+							placeholder="Search"
 						/>
 					</Item>
 
 					<Item>
 						<BaseSelect
 							dataSourceFn={DATA_SOURCE_FN}
-							inputValue='foo'
+							inputValue="foo"
 							itemRenderer={ITEM_RENDERER}
-							menuTitle='Menu Title'
+							menuTitle="Menu Title"
 							onSelect={HANDLE_SELECT}
 						/>
 					</Item>

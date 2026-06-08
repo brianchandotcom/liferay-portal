@@ -1,13 +1,20 @@
-import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
-import AutocompleteInput from 'shared/components/AutocompleteInput';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
-import Form from 'shared/components/form';
+import {Option, Picker} from '@clayui/core';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
+import {Map, fromJS} from 'immutable';
+import {isNull} from 'lodash';
 import React from 'react';
-import {CustomValue} from 'shared/util/records';
-import {fromJS, Map} from 'immutable';
+import * as API from '~/shared/api';
+import AutocompleteInput from '~/shared/components/AutocompleteInput';
+import Form from '~/shared/components/form';
+import {CustomValue} from '~/shared/util/records';
+
 import {GEOLOCATION_OPTIONS} from '../utils/constants';
 import {
 	getFilterCriterionIMap,
@@ -15,12 +22,11 @@ import {
 	getOperator,
 	getPropertyValue,
 	removeItemsByIndex,
-	setPropertyValue
+	setPropertyValue,
 } from '../utils/custom-inputs';
 import {ISegmentEditorCustomInputBase} from '../utils/types';
-import {isNull} from 'lodash';
 import {isValid} from '../utils/utils';
-import {Option, Picker} from '@clayui/core';
+import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
 
 /**
  * Location Types
@@ -28,6 +34,19 @@ import {Option, Picker} from '@clayui/core';
 const CITY = 'city';
 const COUNTRY = 'country';
 const REGION = 'region';
+
+/**
+ * Get the index of the entry in the criteria list with the matching location type.
+ * @param {Map} valueIMap - The Immutable Map representing the custom input value.
+ * @param {string} locationType - The location type.
+ * @returns {number} - The index of the matching entry or -1 if not found.
+ */
+export function getLocationTypeIndex(
+	valueIMap: CustomValue,
+	locationType: string
+): number {
+	return getIndexFromPropertyName(valueIMap, `context/${locationType}`);
+}
 
 /**
  * Create a new templated criterion entry for Geolocation.
@@ -49,21 +68,8 @@ export function createLocationTypeEntry(
 	return Map({
 		operatorName: selectedOperator,
 		propertyName: `context/${locationType}`,
-		value
+		value,
 	});
-}
-
-/**
- * Get the index of the entry in the criteria list with the matching location type.
- * @param {Map} valueIMap - The Immutable Map representing the custom input value.
- * @param {string} locationType - The location type.
- * @returns {number} - The index of the matching entry or -1 if not found.
- */
-export function getLocationTypeIndex(
-	valueIMap: CustomValue,
-	locationType: string
-): number {
-	return getIndexFromPropertyName(valueIMap, `context/${locationType}`);
 }
 
 /**
@@ -99,11 +105,11 @@ export function setLocationTypeValue(
 
 	return locationTypeIndex > -1
 		? setPropertyValue(valueIMap, 'value', locationTypeIndex, newValue)
-		: (valueIMap.updateIn(['criterionGroup', 'items'], iList =>
+		: (valueIMap.updateIn(['criterionGroup', 'items'], (iList) =>
 				iList.push(
 					createLocationTypeEntry(locationType, newValue, valueIMap)
 				)
-		  ) as CustomValue);
+			) as CustomValue);
 }
 
 /**
@@ -117,7 +123,7 @@ export function updateLocationOperators(
 	newOperator: string
 ): CustomValue {
 	const locationPropertyNames = [COUNTRY, REGION, CITY].map(
-		name => `context/${name}`
+		(name) => `context/${name}`
 	);
 
 	return valueIMap.updateIn(['criterionGroup', 'items'], (iList: any) =>
@@ -135,18 +141,18 @@ export function updateLocationOperators(
 
 function fetchCountries({
 	channelId,
-	groupId
+	groupId,
 }: {
 	channelId?: string;
 	groupId?: string;
 }): (query?: string) => Promise<string[]> {
-	return query =>
+	return (query) =>
 		API.session
 			.fetchFieldValues({
 				channelId,
 				fieldName: `context/${COUNTRY}`,
 				groupId: groupId!,
-				query
+				query,
 			})
 			.then(({items}) => items);
 }
@@ -154,7 +160,7 @@ function fetchCountries({
 function fetchRegions({
 	channelId,
 	groupId,
-	valueIMap
+	valueIMap,
 }: {
 	channelId?: string;
 	groupId?: string;
@@ -168,14 +174,14 @@ function fetchRegions({
 		filter = [...filter, `context/${COUNTRY} eq '${countryInputValue}'`];
 	}
 
-	return query =>
+	return (query) =>
 		API.session
 			.fetchFieldValues({
 				channelId,
 				fieldName: `context/${REGION}`,
 				filter: filter.join(' and '),
 				groupId: groupId!,
-				query
+				query,
 			})
 			.then(({items}) => items);
 }
@@ -183,7 +189,7 @@ function fetchRegions({
 function fetchCities({
 	channelId,
 	groupId,
-	valueIMap
+	valueIMap,
 }: {
 	channelId?: string;
 	groupId?: string;
@@ -202,14 +208,14 @@ function fetchCities({
 		filter = [...filter, `context/${REGION} eq '${regionInputValue}'`];
 	}
 
-	return query =>
+	return (query) =>
 		API.session
 			.fetchFieldValues({
 				channelId,
 				fieldName: `context/${CITY}`,
 				filter: filter.join(' and '),
 				groupId: groupId!,
-				query
+				query,
 			})
 			.then(({items}) => items);
 }
@@ -219,8 +225,8 @@ interface IButtonInputTriggerProps {
 	dataSourceFn: (query?: string) => Promise<string[]>;
 	editing: boolean;
 	label: string;
-	onChange: (value: string) => void;
 	onBlur: () => void;
+	onChange: (value: string) => void;
 	onClick: () => void;
 	placeholder: string;
 	value: string;
@@ -237,8 +243,8 @@ const ButtonInputTrigger: React.FC<IButtonInputTriggerProps> = ({
 		<AutocompleteInput value={value} {...otherProps} />
 	) : (
 		<ClayButton
-			className='button-root'
-			displayType='secondary'
+			className="button-root"
+			displayType="secondary"
 			onClick={onClick}
 		>
 			{label}
@@ -261,7 +267,7 @@ export default class GeolocationInput extends React.Component<
 
 		this.state = {
 			editCity: !!getLocationTypeValue(value, CITY),
-			editRegion: !!getLocationTypeValue(value, REGION)
+			editRegion: !!getLocationTypeValue(value, REGION),
 		};
 	}
 
@@ -293,7 +299,7 @@ export default class GeolocationInput extends React.Component<
 				: value.mergeIn(
 						['criterionGroup', 'items', 1],
 						fromJS(criterion)
-				  )
+					),
 		});
 	}
 
@@ -305,8 +311,8 @@ export default class GeolocationInput extends React.Component<
 			touched: {...touched, country: true},
 			valid: {
 				...valid,
-				country: isValid(getLocationTypeValue(value, COUNTRY))
-			}
+				country: isValid(getLocationTypeValue(value, COUNTRY)),
+			},
 		});
 	}
 
@@ -320,7 +326,7 @@ export default class GeolocationInput extends React.Component<
 			const criterionIndex = getLocationTypeIndex(value, locationType);
 
 			onChange({
-				value: removeItemsByIndex(value, [criterionIndex])
+				value: removeItemsByIndex(value, [criterionIndex]),
 			});
 		}
 	}
@@ -330,16 +336,16 @@ export default class GeolocationInput extends React.Component<
 		const {onChange, valid, value} = this.props;
 
 		let params: {
-			value: Map<any, any>;
 			valid?: {country: boolean; dateFilter: boolean};
+			value: Map<any, any>;
 		} = {
-			value: setLocationTypeValue(value, locationType, inputValue)
+			value: setLocationTypeValue(value, locationType, inputValue),
 		};
 
 		if (locationType === COUNTRY) {
 			params = {
 				...params,
-				valid: {...valid, country: isValid(inputValue)}
+				valid: {...valid, country: isValid(inputValue)},
 			};
 		}
 
@@ -362,9 +368,9 @@ export default class GeolocationInput extends React.Component<
 				property: {entityName},
 				touched,
 				valid,
-				value
+				value,
 			},
-			state: {editCity, editRegion}
+			state: {editCity, editRegion},
 		} = this;
 
 		const cityInputValue = getLocationTypeValue(value, CITY);
@@ -373,19 +379,19 @@ export default class GeolocationInput extends React.Component<
 		const conjunctionCriterion = this.getConjunctionDateFilterIMap(value);
 
 		return (
-			<div className='criteria-statement geolocation-input'>
+			<div className="criteria-statement geolocation-input">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
 					<Form.GroupItem shrink>
 						<Picker
-							className='operator-input'
+							className="operator-input"
 							items={GEOLOCATION_OPTIONS}
 							onSelectionChange={this.handleOperatorChange}
 							selectedKey={getOperator(
@@ -402,11 +408,11 @@ export default class GeolocationInput extends React.Component<
 					<Form.GroupItem shrink>
 						<AutocompleteInput
 							className={getCN({
-								'has-error': !valid && touched
+								'has-error': !valid && touched,
 							})}
 							dataSourceFn={fetchCountries({channelId, groupId})}
 							onBlur={this.handleCountryBlur}
-							onChange={value =>
+							onChange={(value) =>
 								this.handleLocationTypeChange(value, COUNTRY)
 							}
 							placeholder={Liferay.Language.get('country')}
@@ -416,16 +422,16 @@ export default class GeolocationInput extends React.Component<
 
 					<Form.GroupItem shrink>
 						<ButtonInputTrigger
-							className='region'
+							className="region"
 							dataSourceFn={fetchRegions({
 								channelId,
 								groupId,
-								valueIMap: value
+								valueIMap: value,
 							})}
 							editing={editRegion || !!regionInputValue.length}
 							label={Liferay.Language.get('add-region')}
 							onBlur={() => this.handleLocationOnBlur(REGION)}
-							onChange={value =>
+							onChange={(value) =>
 								this.handleLocationTypeChange(value, REGION)
 							}
 							onClick={() => this.setState({editRegion: true})}
@@ -436,16 +442,16 @@ export default class GeolocationInput extends React.Component<
 
 					<Form.GroupItem shrink>
 						<ButtonInputTrigger
-							className='city'
+							className="city"
 							dataSourceFn={fetchCities({
 								channelId,
 								groupId,
-								valueIMap: value
+								valueIMap: value,
 							})}
 							editing={editCity || !!cityInputValue.length}
 							label={Liferay.Language.get('add-city')}
 							onBlur={() => this.handleLocationOnBlur(CITY)}
-							onChange={value =>
+							onChange={(value) =>
 								this.handleLocationTypeChange(value, CITY)
 							}
 							onClick={() => this.setState({editCity: true})}

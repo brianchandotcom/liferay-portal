@@ -1,7 +1,12 @@
-import * as API from 'shared/api';
-import BaseDetails from 'contacts/pages/BaseDetails';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {Individual} from 'shared/util/records';
+import BaseDetails from '~/contacts/pages/BaseDetails';
+import * as API from '~/shared/api';
+import {Individual} from '~/shared/util/records';
 
 interface IFieldMapping {
 	name: string;
@@ -27,9 +32,9 @@ const fetchIndividualDetails = ({groupId, id}: {groupId: string; id: string}) =>
 						...fieldMapping,
 						sourceName: `[${Liferay.Language.get(
 							'custom-field'
-						)}] ${fieldMapping.sourceName}`
+						)}] ${fieldMapping.sourceName}`,
 					},
-					...others
+					...others,
 				];
 			});
 

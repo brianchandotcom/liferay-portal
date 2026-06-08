@@ -1,21 +1,27 @@
-import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
 import {
 	ASSET_TYPE_OPTIONS,
 	EVENT_TYPE_OPTIONS,
+	OCCURRENCE_OPTIONS,
 	getAssetTypeFromValue,
 	getConjunctionCriterionFromValue,
 	getEventTypeFromValue,
-	OCCURRENCE_OPTIONS
-} from 'segment/segment-editor/dynamic/inputs/shared/remote-filter-input-helpers';
-import {CustomValue} from 'shared/util/records';
-import {getIndexFromPropertyName} from 'segment/segment-editor/dynamic/utils/custom-inputs';
-import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
+} from '~/segment/segment-editor/dynamic/inputs/shared/remote-filter-input-helpers';
+import {getIndexFromPropertyName} from '~/segment/segment-editor/dynamic/utils/custom-inputs';
+import {CustomValue} from '~/shared/util/records';
+
 import {IDisplayComponentProps} from '../types';
+import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
+import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
 
 const TagDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
-	property
+	property,
 }) => {
 	const {operatorName, value} = criterion;
 	const {entityName, label, type} = property;
@@ -53,8 +59,8 @@ const TagDisplay: React.FC<IDisplayComponentProps> = ({
 					'criterionGroup',
 					'items',
 					tagNameIndex,
-					'value'
-			  ]) as string) ?? label
+					'value',
+				]) as string) ?? label
 			: label;
 
 	const conjunctionCriterion = getConjunctionCriterionFromValue(valueIMap);

@@ -1,38 +1,43 @@
-import * as API from 'shared/api';
-import BasePage from 'settings/components/base-page/BasePage';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import Nav from 'shared/components/Nav';
-import NoResultsDisplay, {
-	getFormattedTitle
-} from 'shared/components/NoResultsDisplay';
+import {partition} from 'lodash';
 import React from 'react';
-import URLConstants from 'shared/util/url-constants';
+import {ConnectedProps, connect} from 'react-redux';
+import BasePage from '~/settings/components/base-page/BasePage';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import Nav from '~/shared/components/Nav';
+import NoResultsDisplay, {
+	getFormattedTitle,
+} from '~/shared/components/NoResultsDisplay';
 import {
 	ActionTypes,
 	useSelectionContext,
-	withSelectionProvider
-} from 'shared/context/selection';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
-import {CREATE_DATE, createOrderIOMap, KEYWORD} from 'shared/util/pagination';
-import {formatDateToTimeZone} from 'shared/util/date';
-import {getDefinitions} from 'shared/util/breadcrumbs';
-import {partition} from 'lodash';
-import {Routes, toRoute} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
-import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useRequest} from 'shared/hooks/useRequest';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
+	withSelectionProvider,
+} from '~/shared/context/selection';
+import {compose} from '~/shared/hoc';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {Alert} from '~/shared/types';
+import {getDefinitions} from '~/shared/util/breadcrumbs';
+import {Sizes} from '~/shared/util/constants';
+import {formatDateToTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {CREATE_DATE, KEYWORD, createOrderIOMap} from '~/shared/util/pagination';
+import {UNAUTHORIZED_ACCESS} from '~/shared/util/request';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 const INITIAL_PAGE = 1;
 
@@ -48,14 +53,14 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 	addAlert,
 	close,
 	groupId,
-	open
+	open,
 }) => {
 	const currentUser = useCurrentUser();
 	const {timeZoneId} = useTimeZone();
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(KEYWORD)
+		initialOrderIOMap: createOrderIOMap(KEYWORD),
 	});
 
 	const {data, error, loading, refetch} = useRequest({
@@ -65,21 +70,21 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 			groupId,
 			orderIOMap,
 			page,
-			query
-		}
+			query,
+		},
 	});
 
 	const handleInsertModal = () => {
 		open(modalTypes.INSERT_BLOCKED_KEYWORDS, {
 			onClose: close,
-			onSubmit: handleAddKeywords
+			onSubmit: handleAddKeywords,
 		});
 	};
 
 	const handleAddKeywords = (keywords: string[]) => {
 		API.blockedKeywords
 			.insertMany({groupId, keywords})
-			.then(response => {
+			.then((response) => {
 				const [duplicate, nonDuplicate] = partition(
 					response.items,
 					({duplicate}) => duplicate
@@ -92,7 +97,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 							.map(({keyword}) => keyword)
 							.join(', ')} ${Liferay.Language.get(
 							'already-belong-to-the-blocklist'
-						)}`
+						)}`,
 					});
 				}
 
@@ -101,22 +106,22 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 						nonDuplicate.length > 1
 							? Liferay.Language.get(
 									'x-keywords-added-to-the-blocklist'
-							  )
+								)
 							: Liferay.Language.get(
 									'x-keyword-added-to-the-blocklist'
-							  );
+								);
 
 					addAlert({
 						alertType: Alert.Types.Success,
 						message: sub(
 							nonDuplicatedMessage,
 							[
-								<b key='nonDuplicateCount'>
+								<b key="nonDuplicateCount">
 									{nonDuplicate.length}
-								</b>
+								</b>,
 							],
 							false
-						)
+						),
 					});
 				}
 
@@ -127,7 +132,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 			.catch(() => {
 				addAlert({
 					alertType: Alert.Types.Error,
-					message: Liferay.Language.get('error')
+					message: Liferay.Language.get('error'),
 				});
 			});
 	};
@@ -138,7 +143,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 				Liferay.Language.get(
 					'are-you-sure-you-want-to-delete-x-keywords'
 				),
-				[<b key='confirmDeleteCount'>{ids.length}</b>],
+				[<b key="confirmDeleteCount">{ids.length}</b>],
 				false
 			),
 			modalVariant: 'modal-warning',
@@ -147,45 +152,45 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 				API.blockedKeywords
 					.delete({
 						groupId,
-						ids
+						ids,
 					})
 					.then(() => {
 						const deletedMessage =
 							ids.length > 1
 								? Liferay.Language.get(
 										'x-keywords-have-been-deleted'
-								  )
+									)
 								: Liferay.Language.get(
 										'x-keyword-have-been-deleted'
-								  );
+									);
 
 						addAlert({
 							alertType: Alert.Types.Success,
 							message: sub(
 								deletedMessage,
-								[<b key='deleteCount'>{ids.length}</b>],
+								[<b key="deleteCount">{ids.length}</b>],
 								false
-							)
+							),
 						});
 
 						selectionDispatch?.({type: ActionTypes.ClearAll});
 
 						refetch();
 					})
-					.catch(err =>
+					.catch((err) =>
 						addAlert({
 							alertType: Alert.Types.Error,
 							message:
 								err.message === UNAUTHORIZED_ACCESS
 									? Liferay.Language.get(
 											'unauthorized-access'
-									  )
+										)
 									: Liferay.Language.get('error'),
-							timeout: false
+							timeout: false,
 						})
 					),
 			title: Liferay.Language.get('delete-keyword'),
-			titleIcon: 'warning-full'
+			titleIcon: 'warning-full',
 		});
 	};
 
@@ -195,8 +200,8 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 				<Nav>
 					<Nav.Item>
 						<ClayButton
-							className='button-root nav-btn'
-							displayType='primary'
+							className="button-root nav-btn"
+							displayType="primary"
 							onClick={handleInsertModal}
 						>
 							{Liferay.Language.get('add-keyword')}
@@ -204,20 +209,21 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 					</Nav.Item>
 				</Nav>
 			);
-		} else {
+		}
+		else {
 			return (
 				<Nav>
 					<ClayButton
 						aria-label={Liferay.Language.get('delete')}
 						borderless
-						className='button-root nav-btn'
-						displayType='secondary'
+						className="button-root nav-btn"
+						displayType="secondary"
 						onClick={handleDeleteKeyword(
 							selectedItems.keySeq().toArray()
 						)}
 						outline
 					>
-						<ClayIcon className='icon-root' symbol='trash' />
+						<ClayIcon className="icon-root" symbol="trash" />
 					</ClayButton>
 				</Nav>
 			);
@@ -232,10 +238,10 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 				{Liferay.Language.get('add-a-keyword-to-be-blocked')}
 
 				<ClayLink
-					className='d-block mb-3'
+					className="d-block mb-3"
 					href={URLConstants.InterestTopicsDocumentation}
-					key='DOCUMENTATION'
-					target='_blank'
+					key="DOCUMENTATION"
+					target="_blank"
 				>
 					{Liferay.Language.get('learn-more-about-interest-topics')}
 				</ClayLink>
@@ -255,10 +261,10 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 			<NoResultsDisplay title={Liferay.Language.get('page-not-found')}>
 				<ClayLink
 					button
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					href={toRoute(Routes.SETTINGS_DEFINITIONS_INTEREST_TOPICS, {
-						groupId
+						groupId,
 					})}
 				>
 					{Liferay.Language.get('back-to-interest-topics')}
@@ -270,7 +276,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 				icon={{
 					border: false,
 					size: Sizes.XXXLarge,
-					symbol: 'ac_satellite'
+					symbol: 'ac_satellite',
 				}}
 				primary
 				title={Liferay.Language.get('no-keywords-found')}
@@ -280,7 +286,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 
 	const renderInlineRowActions = ({
 		data: {id},
-		itemsSelected
+		itemsSelected,
 	}: {
 		data: {id: string};
 		itemsSelected: boolean;
@@ -288,13 +294,13 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 		<ClayButton
 			aria-label={Liferay.Language.get('delete')}
 			borderless
-			className='button-root'
+			className="button-root"
 			disabled={itemsSelected}
-			displayType='secondary'
+			displayType="secondary"
 			onClick={handleDeleteKeyword([id])}
-			size='sm'
+			size="sm"
 		>
-			<ClayIcon className='icon-root' symbol='trash' />
+			<ClayIcon className="icon-root" symbol="trash" />
 		</ClayButton>
 	);
 
@@ -310,7 +316,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 				)}
 			</p>
 
-			<div className='h4'>
+			<div className="h4">
 				{Liferay.Language.get('keywords-blocklist')}
 			</div>
 			<p>
@@ -327,10 +333,10 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 				getDefinitions({groupId}),
 				{
 					active: true,
-					label: Liferay.Language.get('interest-topics')
-				}
+					label: Liferay.Language.get('interest-topics'),
+				},
 			]}
-			key='interestTopicsPage'
+			key="interestTopicsPage"
 			pageDescription={renderPageDescription()}
 			pageTitle={Liferay.Language.get('interest-topics')}
 		>
@@ -341,14 +347,14 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 							accessor: KEYWORD,
 							className: 'table-cell-expand',
 							label: Liferay.Language.get('keyword'),
-							title: true
+							title: true,
 						},
 						{
 							accessor: CREATE_DATE,
 							dataFormatter: (date: string) =>
 								formatDateToTimeZone(date, 'll', timeZoneId),
-							label: Liferay.Language.get('added')
-						}
+							label: Liferay.Language.get('added'),
+						},
 					]}
 					delta={delta}
 					entityLabel={Liferay.Language.get('keywords')}
@@ -364,7 +370,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 						currentUser.isAdmin() ? renderInlineRowActions : null
 					}
 					renderNav={currentUser.isAdmin() ? renderNav : null}
-					rowIdentifier='id'
+					rowIdentifier="id"
 					showCheckbox={currentUser.isAdmin()}
 					total={data?.total}
 				/>

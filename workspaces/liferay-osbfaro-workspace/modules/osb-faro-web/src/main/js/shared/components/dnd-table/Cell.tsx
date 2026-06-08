@@ -1,7 +1,12 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayTable from '@clayui/table';
-import React from 'react';
 import {get, isNil} from 'lodash';
-import {IDataColumn} from 'shared/types';
+import React from 'react';
+import {IDataColumn} from '~/shared/types';
 
 interface ICellProps extends IDataColumn {
 	data: any;
@@ -13,7 +18,7 @@ const Cell: React.FC<ICellProps> = ({
 	cellRendererProps,
 	className,
 	data,
-	dataFormatter = val => val
+	dataFormatter = (val) => val,
 }) => {
 	if (CellRenderer) {
 		return (

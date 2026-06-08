@@ -1,8 +1,13 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import PopoverBase from 'shared/components/PopoverBase';
-import React from 'react';
-import {getAlignPosition} from 'shared/util/util';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import PopoverBase from '~/shared/components/PopoverBase';
+import {getAlignPosition} from '~/shared/util/util';
 
 const CLASSNAME = 'analytics-popover';
 
@@ -17,12 +22,12 @@ class Popover extends React.Component {
 		content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		isDescription: PropTypes.bool,
 		title: PropTypes.string,
-		visible: PropTypes.bool
+		visible: PropTypes.bool,
 	};
 
 	state = {
 		position: null,
-		width: 240
+		width: 240,
 	};
 
 	constructor(props) {
@@ -46,7 +51,7 @@ class Popover extends React.Component {
 				position: getAlignPosition(
 					this._popoverBaseRef.current._elementRef.current,
 					alignElement
-				)
+				),
 			});
 		}
 	}
@@ -60,7 +65,7 @@ class Popover extends React.Component {
 		const width = _elementRef.current.offsetHeight;
 
 		this.setState({
-			width
+			width,
 		});
 	}
 
@@ -75,7 +80,7 @@ class Popover extends React.Component {
 			CLASSNAME,
 			{
 				'no-content': withoutContent,
-				'popover-large': width > 600
+				'popover-large': width > 600,
 			},
 			className
 		);
@@ -89,7 +94,7 @@ class Popover extends React.Component {
 			>
 				{isDescription && withoutContent ? (
 					<PopoverBase.Body>
-						<span className='text-secondary'>{title}</span>
+						<span className="text-secondary">{title}</span>
 					</PopoverBase.Body>
 				) : (
 					<PopoverBase.Header>{title}</PopoverBase.Header>
@@ -97,7 +102,7 @@ class Popover extends React.Component {
 
 				{content && content !== title && (
 					<PopoverBase.Body>
-						<span className='text-secondary'>{content}</span>
+						<span className="text-secondary">{content}</span>
 					</PopoverBase.Body>
 				)}
 			</PopoverBase>

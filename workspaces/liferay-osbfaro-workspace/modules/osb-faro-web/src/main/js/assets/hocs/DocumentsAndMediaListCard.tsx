@@ -1,28 +1,33 @@
-import Card from 'shared/components/Card';
-import ClayLink from '@clayui/link';
-import DocumentsAndMediaListQuery from 'shared/queries/DocumentsAndMediaListQuery';
-import ListComponent from 'shared/hoc/ListComponent';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {
-	createOrderIOMap,
-	DOWNLOADS_METRIC,
-	getGraphQLVariablesFromPagination
-} from 'shared/util/pagination';
-import {getSafeRangeSelectors} from 'shared/util/util';
-import {mapListResultsToProps} from 'shared/util/mappers';
-import {metricsListColumns} from 'shared/util/table-columns';
-import {Routes} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {useParams} from 'react-router-dom';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {useQuery} from '@apollo/client';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
+import ClayLink from '@clayui/link';
+import React from 'react';
+import {useParams} from 'react-router-dom';
+import Card from '~/shared/components/Card';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import ListComponent from '~/shared/hoc/ListComponent';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useQueryRangeSelectors} from '~/shared/hooks/useQueryRangeSelectors';
+import DocumentsAndMediaListQuery from '~/shared/queries/DocumentsAndMediaListQuery';
+import {Sizes} from '~/shared/util/constants';
+import {mapListResultsToProps} from '~/shared/util/mappers';
+import {
+	DOWNLOADS_METRIC,
+	createOrderIOMap,
+	getGraphQLVariablesFromPagination,
+} from '~/shared/util/pagination';
+import {Routes} from '~/shared/util/router';
+import {metricsListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
+import {getSafeRangeSelectors} from '~/shared/util/util';
 
 const DocumentsAndMediaListCard: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(DOWNLOADS_METRIC)
+		initialOrderIOMap: createOrderIOMap(DOWNLOADS_METRIC),
 	});
 
 	const {channelId, groupId} = useParams();
@@ -35,18 +40,18 @@ const DocumentsAndMediaListCard: React.FC = () => {
 				delta,
 				orderIOMap,
 				page,
-				query
+				query,
 			}),
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 
 	return (
-		<Card className='documents-and-media-root' pageDisplay>
+		<Card className="documents-and-media-root" pageDisplay>
 			<ListComponent
-				{...mapListResultsToProps(response, result => ({
+				{...mapListResultsToProps(response, (result) => ({
 					items: result.documents.assetMetrics,
-					total: result.documents.total
+					total: result.documents.total,
 				}))}
 				columns={[
 					metricsListColumns.getTitleId({
@@ -56,12 +61,12 @@ const DocumentsAndMediaListCard: React.FC = () => {
 							'document-name'
 						)} | ${Liferay.Language.get('id').toUpperCase()}`,
 						rangeSelectors,
-						route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW
+						route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW,
 					}),
 					metricsListColumns.downloadsMetric,
 					metricsListColumns.impressionMadeMetric,
 					metricsListColumns.commentsMetric,
-					metricsListColumns.ratingsMetric
+					metricsListColumns.ratingsMetric,
 				]}
 				delta={delta}
 				entityLabel={Liferay.Language.get('documents-and-media')}
@@ -70,7 +75,7 @@ const DocumentsAndMediaListCard: React.FC = () => {
 					<NoResultsDisplay
 						description={
 							<>
-								<span className='mr-1'>
+								<span className="mr-1">
 									{Liferay.Language.get(
 										'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 									)}
@@ -80,8 +85,8 @@ const DocumentsAndMediaListCard: React.FC = () => {
 									href={
 										URLConstants.AssetsDocumentsAndMediaListDocumentation
 									}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-documents-and-media'
@@ -92,7 +97,7 @@ const DocumentsAndMediaListCard: React.FC = () => {
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_satellite'
+							symbol: 'ac_satellite',
 						}}
 						title={Liferay.Language.get(
 							'there-are-no-visitors-data-found'

@@ -1,15 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 export default class ItemText extends React.Component {
 	static defaultProps = {
-		subtext: false
+		subtext: false,
 	};
 
 	static propTypes = {
-		subtext: PropTypes.bool
+		subtext: PropTypes.bool,
 	};
 
 	render() {
@@ -17,7 +22,7 @@ export default class ItemText extends React.Component {
 
 		const classes = getCN(className, {
 			'list-group-subtext': subtext,
-			'list-group-text': !subtext
+			'list-group-text': !subtext,
 		});
 
 		return (

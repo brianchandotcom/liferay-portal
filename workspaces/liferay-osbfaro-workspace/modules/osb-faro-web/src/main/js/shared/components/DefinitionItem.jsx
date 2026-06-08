@@ -1,15 +1,20 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import Form from 'shared/components/form';
-import Loading, {Align} from 'shared/components/Loading';
-import React from 'react';
-import TextTruncate from 'shared/components/TextTruncate';
+import autobind from 'autobind-decorator';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import Loading, {Align} from '~/shared/components/Loading';
+import TextTruncate from '~/shared/components/TextTruncate';
+import Form from '~/shared/components/form';
 
 export default class DefinitionItem extends React.Component {
 	static defaultProps = {
-		name: 'name'
+		name: 'name',
 	};
 
 	static propTypes = {
@@ -19,11 +24,11 @@ export default class DefinitionItem extends React.Component {
 		name: PropTypes.string,
 		onSubmit: PropTypes.func,
 		validate: PropTypes.func,
-		value: PropTypes.string
+		value: PropTypes.string,
 	};
 
 	state = {
-		editing: false
+		editing: false,
 	};
 
 	constructor(props) {
@@ -45,8 +50,8 @@ export default class DefinitionItem extends React.Component {
 
 					this.setState({editing: false});
 				})
-				.catch(err => {
-					if (!err.IS_CANCELLATION_ERROR) {
+				.catch((error) => {
+					if (!error.IS_CANCELLATION_ERROR) {
 						setSubmitting(false);
 					}
 				});
@@ -56,14 +61,14 @@ export default class DefinitionItem extends React.Component {
 	@autobind
 	handleEditToggle() {
 		this.setState({
-			editing: !this.state.editing
+			editing: !this.state.editing,
 		});
 	}
 
 	render() {
 		const {
 			props: {editable, inputWidth, label, name, validate, value},
-			state: {editing}
+			state: {editing},
 		} = this;
 
 		return (
@@ -72,18 +77,18 @@ export default class DefinitionItem extends React.Component {
 					this.props.className ? ` ${this.props.className}` : ''
 				}`}
 			>
-				{label && <div className='h6'>{label}</div>}
+				{label && <div className="h6">{label}</div>}
 
 				{editing ? (
 					<Form
 						initialValues={{[name]: value}}
 						innerRef={this._formRef}
-						key='EDITING'
+						key="EDITING"
 						onSubmit={this.handleSubmit}
 					>
 						{({handleSubmit, isSubmitting, isValid}) => (
 							<Form.Form
-								className='definition-item-editor'
+								className="definition-item-editor"
 								onSubmit={handleSubmit}
 							>
 								<Form.Group autoFit>
@@ -97,14 +102,14 @@ export default class DefinitionItem extends React.Component {
 										aria-label={Liferay.Language.get(
 											'cancel'
 										)}
-										className='button-root'
-										displayType='secondary'
+										className="button-root"
+										displayType="secondary"
 										onClick={this.handleEditToggle}
-										size='sm'
+										size="sm"
 									>
 										<ClayIcon
-											className='icon-root'
-											symbol='times'
+											className="icon-root"
+											symbol="times"
 										/>
 									</ClayButton>
 
@@ -112,19 +117,19 @@ export default class DefinitionItem extends React.Component {
 										aria-label={Liferay.Language.get(
 											'submit'
 										)}
-										className='button-root'
+										className="button-root"
 										disabled={!isValid}
-										displayType='primary'
-										size='sm'
-										type='submit'
+										displayType="primary"
+										size="sm"
+										type="submit"
 									>
 										{isSubmitting && (
 											<Loading align={Align.Left} />
 										)}
 
 										<ClayIcon
-											className='icon-root'
-											symbol='check'
+											className="icon-root"
+											symbol="check"
 										/>
 									</ClayButton>
 								</Form.Group>
@@ -133,22 +138,22 @@ export default class DefinitionItem extends React.Component {
 					</Form>
 				) : (
 					<div
-						className='d-flex align-items-center'
-						key='NOT_EDITING'
+						className="align-items-center d-flex"
+						key="NOT_EDITING"
 					>
 						{value ? <TextTruncate title={value} /> : '-'}
 
 						{editable && (
 							<ClayButton
 								aria-label={Liferay.Language.get('edit')}
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 								onClick={this.handleEditToggle}
-								size='sm'
+								size="sm"
 							>
 								<ClayIcon
-									className='icon-root'
-									symbol='pencil'
+									className="icon-root"
+									symbol="pencil"
 								/>
 							</ClayButton>
 						)}

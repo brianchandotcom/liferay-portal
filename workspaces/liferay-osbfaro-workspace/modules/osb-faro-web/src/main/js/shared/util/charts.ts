@@ -1,17 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import * as d3 from 'd3';
-import moment from 'moment';
-import {BAR_COLORS} from 'shared/util/recharts';
-import {getIntervalHandle} from './intervals';
-import {Interval, RangeSelectors} from 'shared/types';
-import {INTERVAL_KEY_MAP, isMonthlyRangeKey} from 'shared/util/time';
-import {isNumber} from 'lodash';
 import {Map} from 'immutable';
-import {RangeKeyTimeRanges} from 'shared/util/constants';
+import {isNumber} from 'lodash';
+import moment from 'moment';
+import {Interval, RangeSelectors} from '~/shared/types';
+import {RangeKeyTimeRanges} from '~/shared/util/constants';
 import {
 	toDuration as toDurationRaw,
 	toRounded,
-	toThousands
-} from 'shared/util/numbers';
+	toThousands,
+} from '~/shared/util/numbers';
+import {BAR_COLORS} from '~/shared/util/recharts';
+import {INTERVAL_KEY_MAP, isMonthlyRangeKey} from '~/shared/util/time';
+
+import {getIntervalHandle} from './intervals';
 
 const toDuration = toDurationRaw as (
 	time: number | string,
@@ -31,7 +37,7 @@ export enum MetricValueType {
 	Number = 'number',
 	Percentage = 'percentage',
 	Time = 'time',
-	Ratings = 'ratings'
+	Ratings = 'ratings',
 }
 
 export const CHART_COLORS = [
@@ -43,7 +49,7 @@ export const CHART_COLORS = [
 	'#9CE269',
 	'#B077FF',
 	'#FFD76E',
-	'#5FC8FF'
+	'#5FC8FF',
 ];
 
 export const CHART_COLOR_NAMES = {
@@ -62,7 +68,7 @@ export const CHART_COLOR_NAMES = {
 	stark: '#4B9BFF',
 	starkD2: '#187FFF',
 	starkL2: '#7EB7FF',
-	starkL4: '#B1D4FF'
+	starkL4: '#B1D4FF',
 };
 
 export const Colors = {
@@ -84,20 +90,22 @@ export const Colors = {
 		'#9CE268',
 		'#B077FF',
 		'#FFD76E',
-		'#5FC8FF'
+		'#5FC8FF',
 	],
 	positive: '#287D3C',
 	primary: '#4B9BFF',
 	secondary: '#CCCCCC',
-	warning: '#B95000'
+	warning: '#B95000',
 };
 
-export const dateRangeFormatter = (
+export const dateRangeFormatter = function dateRangeFormatter(
 	dateStart: Date,
 	dateEnd: Date,
 	withYear: boolean = false
-): string => {
+): string {
+
 	// TODO: Add timezone param
+
 	const dayFormat = d3.utcFormat('%-d');
 	const dayMonthFormat = d3.utcFormat('%b %-d');
 	const dayMonthYearFormat = d3.utcFormat('%Y %b %-d');
@@ -118,28 +126,32 @@ export const dateRangeFormatter = (
  * @param {date} date
  * @param {string} rangeKey
  */
-export const formatTooltipDate = (
+export const formatTooltipDate = function formatTooltipDate(
 	date: number | string | Date,
 	rangeKey: RangeKeyTimeRanges
-) => {
+) {
 	if (
 		rangeKey === RangeKeyTimeRanges.Last24Hours ||
 		rangeKey === RangeKeyTimeRanges.Yesterday
 	) {
+
 		// display hours for Last 24 hours and yesterday
+
 		return moment.utc(date).format('MMM D, h A');
 	}
 
 	return moment.utc(date).format('YYYY MMM D');
 };
 
-export const formatXAxisDate = (
+export const formatXAxisDate = function formatXAxisDate(
 	dateKey: number | string,
 	rangeKey: string,
 	interval: Interval,
 	dateKeysIMap: Map<number, [number, number | null]>
-) => {
+) {
+
 	// display date and month
+
 	let formatter = d3.utcFormat('%b %-d');
 	const monthFormat = d3.utcFormat('%b');
 
@@ -156,9 +168,11 @@ export const formatXAxisDate = (
 		case RangeKeyTimeRanges.Last180Days:
 		case RangeKeyTimeRanges.LastYear:
 			if (interval === INTERVAL_KEY_MAP.week) {
+
 				// display date range
 
 				// TODO: Add timezone param
+
 				return dateRangeFormatter(
 					new Date(dateStart),
 					new Date(dateEnd ?? dateStart),
@@ -166,13 +180,17 @@ export const formatXAxisDate = (
 				);
 			}
 			if (interval === INTERVAL_KEY_MAP.month) {
+
 				// display month
+
 				return monthFormat(new Date(dateStart));
 			}
 			break;
 		case RangeKeyTimeRanges.Last24Hours:
 		case RangeKeyTimeRanges.Yesterday:
+
 			// display hours
+
 			formatter = d3.utcFormat('%-I %p');
 			break;
 		default:
@@ -183,35 +201,10 @@ export const formatXAxisDate = (
 };
 
 /**
- * Return the formatted numbers to display on charts.
- * Per design requets these numbers shouldn't have decimal
- * precision.
- * @param {string} type
- */
-export const getAxisFormatter = (type: string): ((value: number) => string) => {
-	if (type === 'percentage') {
-		return (value: number) => `${toRounded(value * 100)}%`;
-	} else if (type === 'time') {
-		return (value: number) => {
-			const displayMilliseconds =
-				value < 2e3 && value !== 1000 ? 'S[ms]' : '';
-
-			const format = `DD[days] hh[h] mm[m] ss[s] ${displayMilliseconds}`;
-
-			return toDuration(value, format);
-		};
-	} else if (type == 'ratings') {
-		return (value: number) => `${(value * 10).toFixed(2)}`;
-	}
-
-	return getMetricFormatter(type);
-};
-
-/**
  * Return the chart axis measures from a max value
  * @param {number} value
  */
-export const getAxisMeasures = (value: number) => {
+export const getAxisMeasures = function getAxisMeasures(value: number) {
 	const numChars = Math.floor(value).toString().length;
 	const decOrder = Math.pow(10, numChars - 1);
 	let maxValue = decOrder * Math.floor(value / decOrder) + decOrder;
@@ -231,6 +224,7 @@ export const getAxisMeasures = (value: number) => {
 	const intervalValue = maxValue / intervalCount;
 
 	// avoid extra intervals
+
 	for (let i = 0; i < intervalCount; i++) {
 		let tempMaxValue = intervalValue * (i + 1);
 		if (tempMaxValue % 1 !== 0) {
@@ -253,8 +247,9 @@ export const getAxisMeasures = (value: number) => {
 	return {
 		intervalCount,
 		intervals,
+
 		intervalValue,
-		maxValue
+		maxValue,
 	};
 };
 
@@ -262,26 +257,31 @@ export const getAxisMeasures = (value: number) => {
  * Return the chart max value from a data
  * @param {Array} data
  */
-export const getAxisMeasuresFromData = (data: number[][]) =>
-	getAxisMeasures(
+export const getAxisMeasuresFromData = function getAxisMeasuresFromData(
+	data: number[][]
+) {
+	return getAxisMeasures(
 		Math.max(
 			...data
 				.reduce<number[]>((prev, next) => prev.concat(next), [])
 				.filter((value: unknown) => typeof value === 'number')
 		)
 	);
+};
 
-export const getBarColor = (
+export const getBarColor = function getBarColor(
 	currentBarIndex: number,
 	hoverIndex: number,
 	selectedPoint?: number,
 	color: keyof typeof BAR_COLORS = 'blue'
-): string => {
+): string {
 	if (selectedPoint === currentBarIndex) {
 		return BAR_COLORS[color].selected;
-	} else if (currentBarIndex === hoverIndex) {
+	}
+	else if (currentBarIndex === hoverIndex) {
 		return BAR_COLORS[color].hover;
-	} else if (isNumber(selectedPoint)) {
+	}
+	else if (isNumber(selectedPoint)) {
 		return BAR_COLORS[color].notSelected;
 	}
 
@@ -292,13 +292,13 @@ export const getBarColor = (
  * Return the formatted array to display on charts.
  * @param {string} type
  */
-export const getDataFormatter = (type: string) => {
+export const getDataFormatter = function getDataFormatter(type: string) {
 	if (type === 'time') {
-		return (arr: number[]) =>
-			arr.map((value: number) => Math.round(value / 1e3) * 1e3);
+		return (array: number[]) =>
+			array.map((value: number) => Math.round(value / 1e3) * 1e3);
 	}
 
-	return (arr: number[]) => arr;
+	return (array: number[]) => array;
 };
 
 /**
@@ -306,11 +306,11 @@ export const getDataFormatter = (type: string) => {
  * @param {array} dates
  * @param {string} rangeKey
  */
-export const getDateTitle = (
+export const getDateTitle = function getDateTitle(
 	dates: [number, number | null] | undefined,
 	rangeKey: RangeKeyTimeRanges,
 	interval: Interval
-): string => {
+): string {
 	if (!dates) {
 		return '';
 	}
@@ -323,7 +323,8 @@ export const getDateTitle = (
 			new Date(endDate ?? startDate),
 			true
 		);
-	} else if (interval === INTERVAL_KEY_MAP.month) {
+	}
+	else if (interval === INTERVAL_KEY_MAP.month) {
 		return moment.utc(startDate).format('YYYY MMM');
 	}
 
@@ -335,16 +336,16 @@ export const getDateTitle = (
  * @param {string} rangeKey
  * @param {array} arr
  */
-export const getIntervals = (
+export const getIntervals = function getIntervals(
 	rangeKey: RangeSelectors['rangeKey'],
-	arr: Array<number | null>,
+	array: Array<number | null>,
 	timeInterval: Interval,
 	dateKeysIMap: any
-): Array<number | null> => {
-	if (arr.length) {
-		const firstDate = moment(arr[0]);
+): Array<number | null> {
+	if (array.length) {
+		const firstDate = moment(array[0]);
 		const [lastPeriodStart, lastPeriodEnd] = dateKeysIMap.get(
-			arr[arr.length - 1]
+			array[array.length - 1]
 		);
 		const lastDate = lastPeriodEnd
 			? moment(lastPeriodEnd)
@@ -353,7 +354,7 @@ export const getIntervals = (
 
 		const validTimeInterval = [
 			RangeKeyTimeRanges.Last24Hours,
-			RangeKeyTimeRanges.Yesterday
+			RangeKeyTimeRanges.Yesterday,
 		].includes(rangeKey)
 			? INTERVAL_KEY_MAP.day
 			: timeInterval;
@@ -365,11 +366,11 @@ export const getIntervals = (
 		);
 
 		return intervalHandle
-			? intervalHandle(arr.filter((v): v is number => v !== null))
-			: arr;
+			? intervalHandle(array.filter((v): v is number => v !== null))
+			: array;
 	}
 
-	return arr;
+	return array;
 };
 
 /**
@@ -385,10 +386,10 @@ type LocationDataItem = {
 	value: string;
 };
 
-export const getLocationsData = (
+export const getLocationsData = function getLocationsData(
 	metrics: LocationMetric[],
 	location = 'Any'
-) => {
+) {
 	let total = 0;
 
 	metrics.forEach(({value}: LocationMetric) => {
@@ -401,7 +402,7 @@ export const getLocationsData = (
 			id: valueKey,
 			name: valueKey,
 			total: value,
-			value: `${toRounded((value / total) * 100)}`
+			value: `${toRounded((value / total) * 100)}`,
 		})
 	);
 
@@ -409,7 +410,8 @@ export const getLocationsData = (
 
 	if (location === 'Any') {
 		othersLabel = Liferay.Language.get('other-countries');
-	} else {
+	}
+	else {
 		othersLabel = Liferay.Language.get('other-regions');
 	}
 
@@ -417,7 +419,7 @@ export const getLocationsData = (
 		(value: LocationMetric, index: number) => index >= 5
 	);
 
-	if (others.length > 0) {
+	if (others.length) {
 		let totalOthers = 0;
 		others.forEach(({value}: LocationMetric) => {
 			totalOthers += value;
@@ -429,7 +431,7 @@ export const getLocationsData = (
 			id: 'others',
 			name: othersLabel,
 			total: totalOthers,
-			value: `${toRounded((totalOthers / total) * 100)}`
+			value: `${toRounded((totalOthers / total) * 100)}`,
 		});
 	}
 
@@ -440,18 +442,51 @@ export const getLocationsData = (
  * Return the metric formatter
  * @param {string} type
  */
-export const getMetricFormatter = (
+export const getMetricFormatter = function getMetricFormatter(
 	type: string
-): ((value: number) => string) => {
+): (value: number) => string {
 	if (type === 'number') {
 		return (value: number) => `${toThousands(value)}`;
-	} else if (type === 'percentage') {
+	}
+	else if (type === 'percentage') {
 		return (value: number) => `${toRounded(value * 100)}%`;
-	} else if (type === 'time') {
+	}
+	else if (type === 'time') {
 		return (value: number) => toDuration(value);
-	} else if (type == 'ratings') {
+	}
+	else if (type == 'ratings') {
 		return (value: number) => `${(value * 10).toFixed(2)}/10`;
-	} else {
+	}
+	else {
 		return (value: number) => String(value);
 	}
+};
+
+/**
+ * Return the formatted numbers to display on charts.
+ * Per design requets these numbers shouldn't have decimal
+ * precision.
+ * @param {string} type
+ */
+export const getAxisFormatter = function getAxisFormatter(
+	type: string
+): (value: number) => string {
+	if (type === 'percentage') {
+		return (value: number) => `${toRounded(value * 100)}%`;
+	}
+	else if (type === 'time') {
+		return (value: number) => {
+			const displayMilliseconds =
+				value < 2e3 && value !== 1000 ? 'S[ms]' : '';
+
+			const format = `DD[days] hh[h] mm[m] ss[s] ${displayMilliseconds}`;
+
+			return toDuration(value, format);
+		};
+	}
+	else if (type == 'ratings') {
+		return (value: number) => `${(value * 10).toFixed(2)}`;
+	}
+
+	return getMetricFormatter(type);
 };

@@ -1,16 +1,21 @@
-import * as API from 'shared/api';
-import Form, {validateRequired} from 'shared/components/form';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {useState} from 'react';
-import {TimeZone} from 'shared/util/records';
-import {useRequest} from 'shared/hooks/useRequest';
+import * as API from '~/shared/api';
+import Form, {validateRequired} from '~/shared/components/form';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {TimeZone} from '~/shared/util/records';
 
 interface ITimeZonePicker {
 	disabled?: boolean;
 	fieldName: string;
 	initialTimeZone?: TimeZone;
+	onCountryChange?: Function;
 	setFieldTouched: Function;
 	setFieldValue: Function;
-	onCountryChange?: Function;
 }
 
 const TimeZonePicker: React.FC<ITimeZonePicker> = ({
@@ -19,11 +24,11 @@ const TimeZonePicker: React.FC<ITimeZonePicker> = ({
 	initialTimeZone,
 	onCountryChange,
 	setFieldTouched,
-	setFieldValue
+	setFieldValue,
 }) => {
 	const {data: timezonesAvailable, loading} = useRequest({
 		dataSourceFn: API.projects.fetchAvailableTimeZones,
-		variables: {}
+		variables: {},
 	});
 
 	const [selectedCountry, setSelectedCountry] = useState<string>(
@@ -38,7 +43,7 @@ const TimeZonePicker: React.FC<ITimeZonePicker> = ({
 							.map((timeZone: TimeZone) => timeZone.country)
 							.sort()
 					)
-			  )
+				)
 			: [];
 
 	const getTimeZones = (): Array<TimeZone> =>
@@ -46,7 +51,7 @@ const TimeZonePicker: React.FC<ITimeZonePicker> = ({
 			? timezonesAvailable.filter(
 					({country}: TimeZone) =>
 						!selectedCountry || country === selectedCountry
-			  )
+				)
 			: [];
 
 	const handleSelectCountry = (
@@ -64,18 +69,18 @@ const TimeZonePicker: React.FC<ITimeZonePicker> = ({
 	};
 
 	return (
-		<Form.Group autoFit className='time-zone-picker-root'>
-			<Form.GroupItem className='col-3'>
+		<Form.Group autoFit className="time-zone-picker-root">
+			<Form.GroupItem className="col-3">
 				<select
-					className='form-control select-root'
+					className="form-control select-root"
 					disabled={disabled || loading}
 					onBlur={handleSelectCountry}
 					onChange={handleSelectCountry}
 					value={selectedCountry}
 				>
-					<option value=''>{Liferay.Language.get('country')}</option>
+					<option value="">{Liferay.Language.get('country')}</option>
 
-					{getCountries().map(country => (
+					{getCountries().map((country) => (
 						<Form.Select.Item key={country} value={country}>
 							{country}
 						</Form.Select.Item>
@@ -83,7 +88,7 @@ const TimeZonePicker: React.FC<ITimeZonePicker> = ({
 				</select>
 			</Form.GroupItem>
 
-			<Form.GroupItem className='col-9'>
+			<Form.GroupItem className="col-9">
 				<Form.Select
 					disabled={disabled || loading || !selectedCountry}
 					name={fieldName}

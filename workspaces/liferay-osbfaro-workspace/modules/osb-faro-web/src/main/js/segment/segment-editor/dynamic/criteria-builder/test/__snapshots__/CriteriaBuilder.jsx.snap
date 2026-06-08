@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CriteriaBuilder renders 1`] = `
+<div>
+  <div
+    class="criteria-builder-root"
+  >
+    <div />
+  </div>
+</div>
+`;

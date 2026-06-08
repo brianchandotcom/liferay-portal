@@ -1,27 +1,33 @@
-import * as API from 'shared/api';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ContextualInformation from '../components/ContextualInformation';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import ProfileCardCDP from '../hoc/ProfileCardCDP';
 import React from 'react';
-import URLConstants from 'shared/util/url-constants';
 import {connect} from 'react-redux';
-import {Routes, toRoute} from 'shared/util/router';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSources} from 'shared/context/dataSources';
-import {useRequest} from 'shared/hooks/useRequest';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import {useDataSources} from '~/shared/context/dataSources';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
+
+import ContextualInformation from '../components/ContextualInformation';
+import ProfileCardCDP from '../hoc/ProfileCardCDP';
 
 const OverviewCDPEmptyState = ({
 	authorized,
 	dataSourceData,
 	groupId,
 	hasConnectedDataSources,
-	pageDisplay = true
+	pageDisplay = true,
 }) => {
 	const noSitesSelected = !dataSourceData?.items?.some(
-		dataSource => dataSource.sitesSelected
+		(dataSource) => dataSource.sitesSelected
 	);
 
 	if (noSitesSelected) {
@@ -34,26 +40,26 @@ const OverviewCDPEmptyState = ({
 								{authorized
 									? Liferay.Language.get(
 											'connect-a-data-source-containing-site-data'
-									  )
+										)
 									: Liferay.Language.get(
 											'contact-an-administrator-to-connect-a-data-source-containing-site-data'
-									  )}
+										)}
 
 								<ClayLink
-									className='d-block mb-3'
-									decoration='underline'
+									className="d-block mb-3"
+									decoration="underline"
 									href={URLConstants.DataSourceConnection}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-data-sources'
 									)}
 
-									<span className='inline-item inline-item-after'>
+									<span className="inline-item inline-item-after">
 										<ClayIcon
 											fontSize={8}
-											symbol='shortcut'
+											symbol="shortcut"
 										/>
 									</span>
 								</ClayLink>
@@ -65,12 +71,12 @@ const OverviewCDPEmptyState = ({
 						{authorized && !hasConnectedDataSources && (
 							<ClayLink
 								button
-								className='button-root mt-1'
-								displayType='primary'
+								className="button-root mt-1"
+								displayType="primary"
 								href={toRoute(
 									Routes.SETTINGS_DATA_SOURCE_LIST,
 									{
-										groupId
+										groupId,
 									}
 								)}
 							>
@@ -97,18 +103,18 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta: 500,
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const sitesSelected = dataSourceData?.items?.some(
-		dataSource => dataSource.sitesSelected
+		(dataSource) => dataSource.sitesSelected
 	);
 
 	const showEmptyState = !dataSourceLoading && !sitesSelected;
 
 	return (
-		<div className='overview-column-main'>
+		<div className="overview-column-main">
 			<ContextualInformation
 				contactId={individual.get('id')}
 				contextData={individual.get('context')}
@@ -152,6 +158,6 @@ export default connect((store, {groupId}) => ({
 		groupId,
 		'data',
 		'timeZone',
-		'timeZoneId'
-	])
+		'timeZoneId',
+	]),
 }))(Overview);

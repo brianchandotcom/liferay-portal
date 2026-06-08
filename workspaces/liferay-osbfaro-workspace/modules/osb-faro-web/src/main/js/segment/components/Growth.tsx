@@ -1,18 +1,13 @@
-// @ts-nocheck - Fix it at this LRAC-13388
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-import * as API from 'shared/api';
-import Card from 'shared/components/Card';
-import ChartTooltip, {
-	Alignments,
-	Weights
-} from 'shared/components/chart-tooltip';
 import ClayLink from '@clayui/link';
-import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
 import getCN from 'classnames';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
+import {OrderedMap} from 'immutable';
+import {get, isNil} from 'lodash';
 import React, {useRef, useState} from 'react';
-import SearchableEntityTable from 'shared/components/SearchableEntityTable';
-import URLConstants from 'shared/util/url-constants';
 import {
 	Area,
 	AreaChart,
@@ -23,36 +18,47 @@ import {
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import ComposedChartWithEmptyState from '~/shared/components/ComposedChartWithEmptyState';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import SearchableEntityTable from '~/shared/components/SearchableEntityTable';
+import ChartTooltip, {
+	Alignments,
+	Weights,
+} from '~/shared/components/chart-tooltip';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {getNetChange} from '~/shared/util/change';
+import {
+	CHART_COLOR_NAMES,
+	formatXAxisDate,
+	getIntervals,
+} from '~/shared/util/charts';
+import {OrderByDirections, RangeKeyTimeRanges} from '~/shared/util/constants';
+import {formatUTCDateFromUnix} from '~/shared/util/date';
+import {createDateKeysIMap} from '~/shared/util/intervals';
+import {sub} from '~/shared/util/lang';
+import {DATE_CHANGED, NAME} from '~/shared/util/pagination';
 import {
 	AXIS,
 	getAxisTickText,
 	getYAxisLabel,
-	getYAxisWidth
-} from 'shared/util/recharts';
+	getYAxisWidth,
+} from '~/shared/util/recharts';
+import {OrderParams} from '~/shared/util/records';
+import {INDIVIDUALS} from '~/shared/util/router';
 import {
 	changesListColumns,
-	individualsListColumns
-} from 'shared/util/table-columns';
-import {CHART_COLOR_NAMES} from 'shared/util/charts';
-import {createDateKeysIMap} from 'shared/util/intervals';
-import {DATE_CHANGED, NAME} from 'shared/util/pagination';
-import {formatUTCDateFromUnix} from 'shared/util/date';
-import {formatXAxisDate, getIntervals} from 'shared/util/charts';
-import {get, isNil} from 'lodash';
-import {getNetChange} from 'shared/util/change';
-import {INDIVIDUALS} from 'shared/util/router';
-import {OrderByDirections, RangeKeyTimeRanges} from 'shared/util/constants';
-import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
-import {sub} from 'shared/util/lang';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+	individualsListColumns,
+} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
 
 const {
 	greyjoy: CHART_BLACK,
 	mormont: CHART_ORANGE,
-	stark: CHART_BLUE
+	stark: CHART_BLUE,
 } = CHART_COLOR_NAMES;
 
 const INTERVAL = 'D';
@@ -87,7 +93,7 @@ const getAllMembers = (data: Data) => {
 		individualSegmentId: id,
 		orderIOMap,
 		page,
-		query
+		query,
 	});
 };
 
@@ -101,7 +107,7 @@ const getMemberChanges = (data: Data) => {
 		id,
 		orderIOMap,
 		query,
-		startDate: modifiedDate
+		startDate: modifiedDate,
 	});
 };
 
@@ -111,8 +117,8 @@ interface ISegmentGrowthChartProps {
 	hasSelectedPoint: boolean;
 	height?: number;
 	individualCounts?: {anonymousCount: number; knownCount: number};
-	selectedPoint?: number;
 	onSelectedPointChange?: (selectedPoint: number) => void;
+	selectedPoint?: number;
 }
 
 interface ITooltipProps {
@@ -120,17 +126,19 @@ interface ITooltipProps {
 	payload: CHANGES_AGGREGATION_SHAPE[];
 }
 
-export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
+export const SegmentGrowthChart = function SegmentGrowthChart({
 	data,
 	hasSelectedPoint,
 	height = 360,
+
 	individualCounts = {
 		anonymousCount: 0,
-		knownCount: 0
+		knownCount: 0,
 	},
+
 	onSelectedPointChange,
-	selectedPoint
-}) => {
+	selectedPoint,
+}: ISegmentGrowthChartProps) {
 	const [legendHoverItem, setLegendHoverItem] = useState(null);
 	const [mouseOutside, setMouseOutside] = useState(false);
 
@@ -146,22 +154,22 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 				knownCount,
 				modifiedDate,
 				removed,
-				value
+				value,
 			} = get(payload, [0, 'payload'], data[selectedPoint]);
 
 			const change = [
 				{
 					label: Liferay.Language.get('added'),
-					value: added
+					value: added,
 				},
 				{
 					label: Liferay.Language.get('removed'),
-					value: removed
-				}
+					value: removed,
+				},
 			];
 
 			const index = data.findIndex(
-				item => item.modifiedDate === modifiedDate
+				(item) => item.modifiedDate === modifiedDate
 			);
 
 			const netChange = getNetChange(
@@ -171,7 +179,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 
 			return (
 				<div
-					className='bb-tooltip-container'
+					className="bb-tooltip-container"
 					style={{position: 'static'}}
 				>
 					<ChartTooltip
@@ -182,63 +190,63 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 									[formatUTCDateFromUnix(modifiedDate, 'll')],
 									false
 								) as string,
-								weight: Weights.Semibold
+								weight: Weights.Semibold,
 							},
 							{
 								className: 'pb-0',
 								label: () => (
-									<span className='text-secondary'>
+									<span className="text-secondary">
 										{sub(
 											Liferay.Language.get(
 												'x-total-members'
 											),
 											[
-												<b className='mr-1' key='VALUE'>
+												<b className="mr-1" key="VALUE">
 													{value.toLocaleString()}
-												</b>
+												</b>,
 											],
 											false
 										)}
 									</span>
-								)
+								),
 							},
 							{
 								className: 'pb-0',
 								label: () => (
-									<span className='text-secondary'>
+									<span className="text-secondary">
 										{sub(
 											Liferay.Language.get(
 												'x-anonymous-members'
 											),
 											[
-												<b className='mr-1' key='VALUE'>
+												<b className="mr-1" key="VALUE">
 													{anonymousCount.toLocaleString()}
-												</b>
+												</b>,
 											],
 											false
 										)}
 									</span>
-								)
+								),
 							},
 							{
 								label: () => (
-									<span className='text-secondary'>
+									<span className="text-secondary">
 										{sub(
 											Liferay.Language.get(
 												'x-known-members'
 											),
 											[
-												<b className='mr-1' key='VALUE'>
+												<b className="mr-1" key="VALUE">
 													{knownCount.toLocaleString()}
-												</b>
+												</b>,
 											],
 											false
 										)}
 									</span>
-								)
-							}
-						].map(column => ({
-							columns: [column]
+								),
+							},
+						].map((column) => ({
+							columns: [column],
 						}))}
 						rows={(isNil(netChange)
 							? change
@@ -248,9 +256,9 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 										label: Liferay.Language.get(
 											'net-change'
 										),
-										value: `${netChange[0]}(${netChange[1]}%)`
-									}
-							  ]
+										value: `${netChange[0]}(${netChange[1]}%)`,
+									},
+								]
 						).map(({label, value}, i, array) => {
 							const className =
 								i < array.length - 1 ? 'pb-0' : null;
@@ -260,15 +268,15 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 									{
 										className,
 										label,
-										weight: Weights.Normal
+										weight: Weights.Normal,
 									},
 									{
 										align: Alignments.Right,
 										className,
 										label: value,
-										weight: Weights.Semibold
-									}
-								]
+										weight: Weights.Semibold,
+									},
+								],
 							};
 						})}
 					/>
@@ -288,7 +296,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 	const commonAreaChartStyles: ICommonAreaChartStyles = {
 		isAnimationActive: true,
 		legendType: 'circle',
-		stackId: 'count'
+		stackId: 'count',
 	};
 
 	const showFixedTooltip = hasSelectedPoint && mouseOutside;
@@ -304,7 +312,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 
 	const yAxisWidth = getYAxisWidth(data, 'value');
 
-	const handleClick = data => {
+	const handleClick = (data) => {
 		if (data?.activeTooltipIndex === undefined) {
 			return;
 		}
@@ -316,7 +324,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 		<ComposedChartWithEmptyState
 			emptyDescription={
 				<>
-					<span className='mr-1'>
+					<span className="mr-1">
 						{Liferay.Language.get(
 							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 						)}
@@ -324,8 +332,8 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 
 					<ClayLink
 						href={URLConstants.SegmentsOverviewTabDocumentationLink}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{Liferay.Language.get(
 							'learn-more-about-segment-membership'
@@ -347,17 +355,17 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 				>
 					<CartesianGrid
 						stroke={AXIS.gridStroke}
-						strokeDasharray='3 3'
+						strokeDasharray="3 3"
 						vertical={false}
 					/>
 
 					<XAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						dataKey='modifiedDate'
+						dataKey="modifiedDate"
 						domain={['dataMin', 'dataMax']}
-						interval='preserveStart'
+						interval="preserveStart"
 						padding={{left: 20, right: 20}}
-						tick={getAxisTickText('x', value =>
+						tick={getAxisTickText('x', (value) =>
 							formatXAxisDate(
 								value,
 								RangeKeyTimeRanges.Last30Days,
@@ -368,17 +376,17 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						tickLine={false}
 						tickMargin={12}
 						ticks={intervals}
-						type='number'
+						type="number"
 					/>
 
 					<XAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						dataKey='modifiedDate'
-						orientation='top'
+						dataKey="modifiedDate"
+						orientation="top"
 						stroke={AXIS.gridStroke}
 						tick={false}
 						tickLine={false}
-						xAxisId='top'
+						xAxisId="top"
 					/>
 
 					<YAxis
@@ -394,28 +402,28 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						tick={getAxisTickText('y')}
 						tickCount={6}
 						tickLine={false}
-						type='number'
+						type="number"
 						width={yAxisWidth}
 					/>
 
 					<YAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						orientation='right'
+						orientation="right"
 						stroke={AXIS.gridStroke}
 						tick={false}
 						tickLine={false}
-						type='number'
+						type="number"
 						width={1}
-						yAxisId='right'
+						yAxisId="right"
 					/>
 
 					<Legend
-						align='right'
+						align="right"
 						formatter={(value, {count}) => (
-							<span className='legend-text-color'>
+							<span className="legend-text-color">
 								{`${value}:`}
 
-								<b className='ml-1'>{count}</b>
+								<b className="ml-1">{count}</b>
 							</span>
 						)}
 						iconSize={8}
@@ -429,29 +437,31 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 								count: knownCount,
 								dataKey: 'knownCount',
 								type: 'circle',
-								value: Liferay.Language.get('known-members')
+								value: Liferay.Language.get('known-members'),
 							},
 							{
 								color: CHART_ORANGE,
 								count: anonymousCount,
 								dataKey: 'anonymousCount',
 								type: 'circle',
-								value: Liferay.Language.get('anonymous-members')
+								value: Liferay.Language.get(
+									'anonymous-members'
+								),
 							},
 							{
 								color: CHART_BLACK,
 								count: anonymousCount + knownCount,
 								dataKey: 'individualCount',
 								type: 'circle',
-								value: Liferay.Language.get('total-members')
-							}
+								value: Liferay.Language.get('total-members'),
+							},
 						]}
-						verticalAlign='bottom'
+						verticalAlign="bottom"
 						wrapperStyle={{
 							color: AXIS.textColor,
 							fontSize: '14px',
 							lineHeight: '21px',
-							paddingBottom: '22px'
+							paddingBottom: '22px',
 						}}
 					/>
 
@@ -462,8 +472,8 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						wrapperStyle={
 							showFixedTooltip
 								? {
-										visibility: 'visible'
-								  }
+										visibility: 'visible',
+									}
 								: null
 						}
 					/>
@@ -484,7 +494,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						}
 						isFront
 						r={4}
-						stroke='none'
+						stroke="none"
 						x={
 							hasSelectedPoint
 								? data[selectedPoint].modifiedDate
@@ -502,7 +512,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						fillOpacity={legendHoverItem === 'knownCount' ? 0.1 : 1}
 						isFront
 						r={4}
-						stroke='none'
+						stroke="none"
 						x={
 							hasSelectedPoint
 								? data[selectedPoint].modifiedDate
@@ -511,7 +521,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						y={
 							hasSelectedPoint
 								? data[selectedPoint].knownCount +
-								  data[selectedPoint].anonymousCount
+									data[selectedPoint].anonymousCount
 								: null
 						}
 					/>
@@ -519,7 +529,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 					<Area
 						{...commonAreaChartStyles}
 						activeDot={{r: 4, stroke: CHART_BLUE}}
-						dataKey='knownCount'
+						dataKey="knownCount"
 						fill={CHART_BLUE}
 						fillOpacity={
 							legendHoverItem === 'anonymousCount' ? 0.1 : 0.2
@@ -535,7 +545,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 					<Area
 						{...commonAreaChartStyles}
 						activeDot={{r: 4, stroke: CHART_ORANGE}}
-						dataKey='anonymousCount'
+						dataKey="anonymousCount"
 						fill={CHART_ORANGE}
 						fillOpacity={
 							legendHoverItem === 'knownCount' ? 0.1 : 0.2
@@ -553,11 +563,13 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 	);
 };
 
-export const SelectedPointInfo: React.FC = () => (
-	<div className='selected-point-info'>
-		<div className='h4'>{Liferay.Language.get('known-members')}</div>
-	</div>
-);
+export const SelectedPointInfo: React.FC = function SelectedPointInfo() {
+	return (
+		<div className="selected-point-info">
+			<div className="h4">{Liferay.Language.get('known-members')}</div>
+		</div>
+	);
+};
 
 interface ISegmentGrowthWithList {
 	channelId: string;
@@ -580,11 +592,11 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 	id,
 	individualCounts,
 	selectedPoint,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const [showMembershipList, setShowMembershipList] = useState(true);
 
-	const fetchMembers = params => {
+	const fetchMembers = (params) => {
 		const fetchMembersFn = hasSelectedPoint
 			? getMemberChanges
 			: getAllMembers;
@@ -598,14 +610,14 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 				changesListColumns.getIndividualName({channelId, groupId}),
 				changesListColumns.individualEmail,
 				changesListColumns.getDateFirst(timeZoneId),
-				changesListColumns.getOperation(timeZoneId)
+				changesListColumns.getOperation(timeZoneId),
 			];
 		}
 
 		return [
 			individualsListColumns.getName({channelId, groupId}),
 			individualsListColumns.email,
-			individualsListColumns.getDateCreated(timeZoneId)
+			individualsListColumns.getDateCreated(timeZoneId),
 		];
 	};
 
@@ -617,16 +629,16 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 			? OrderedMap({
 					[DATE_CHANGED]: new OrderParams({
 						field: DATE_CHANGED,
-						sortOrder: OrderByDirections.Descending
-					})
-			  })
+						sortOrder: OrderByDirections.Descending,
+					}),
+				})
 			: OrderedMap({
 					[NAME]: new OrderParams({
 						field: NAME,
-						sortOrder: OrderByDirections.Ascending
-					})
-			  }),
-		initialPage: 0
+						sortOrder: OrderByDirections.Ascending,
+					}),
+				}),
+		initialPage: 0,
 	});
 
 	const dateKeysIMap = createDateKeysIMap(INTERVAL, data, 'modifiedDate');
@@ -643,7 +655,7 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 			className={getCN('segment-growth-root', className)}
 			noPadding
 		>
-			<div className='segment-growth-chart-container'>
+			<div className="segment-growth-chart-container">
 				<SegmentGrowthChart
 					alwaysShowSelectedTooltip
 					data={data}
@@ -665,13 +677,15 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 							channelId,
 							groupId,
 							id,
-							modifiedDate
+							modifiedDate,
 						}}
 						entityType={INDIVIDUALS}
 						noResultsRenderer={() => {
+
 							// Check if intervals exists after fetch members
 							// to show/hide membership list based on intervals of chart
 							// to avoid render two empty states
+
 							setShowMembershipList(
 								!!individualCounts.knownCount ||
 									!!intervals.length
@@ -681,7 +695,7 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 								<NoResultsDisplay
 									description={
 										<>
-											<span className='mr-1'>
+											<span className="mr-1">
 												{Liferay.Language.get(
 													'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 												)}
@@ -691,8 +705,8 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 												href={
 													URLConstants.SegmentsMembershipDocumentationLink
 												}
-												key='DOCUMENTATION'
-												target='_blank'
+												key="DOCUMENTATION"
+												target="_blank"
 											>
 												{Liferay.Language.get(
 													'learn-more-about-individuals'
@@ -707,7 +721,7 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 								/>
 							);
 						}}
-						rowIdentifier='id'
+						rowIdentifier="id"
 					/>
 				</>
 			)}

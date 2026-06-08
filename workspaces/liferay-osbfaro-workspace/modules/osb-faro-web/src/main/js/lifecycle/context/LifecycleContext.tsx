@@ -1,16 +1,22 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {
-	createContext,
 	ReactNode,
+	createContext,
 	useCallback,
 	useContext,
 	useMemo,
-	useState
+	useState,
 } from 'react';
+import {LifecycleStages} from '~/contacts/pages/account/utils/constants';
+
 import {
+	ILifecycleFilterValues,
 	buildQueryString,
-	ILifecycleFilterValues
 } from '../utils/buildQueryString';
-import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 
 interface ILifecycleFilters extends ILifecycleFilterValues {
 	filterString: string;
@@ -19,8 +25,8 @@ interface ILifecycleFilters extends ILifecycleFilterValues {
 interface ILifecycleContext {
 	filters: ILifecycleFilters;
 	lifecycleId: string;
-	updateFilters: (newFilters: Partial<ILifecycleFilterValues>) => void;
 	resetFilters: () => void;
+	updateFilters: (newFilters: Partial<ILifecycleFilterValues>) => void;
 }
 
 const LifecycleContext = createContext<ILifecycleContext>({
@@ -28,20 +34,21 @@ const LifecycleContext = createContext<ILifecycleContext>({
 		countryFilter: '',
 		filterString: '',
 		industryFilter: '',
-		lifecycleStageFilter: LifecycleStages.AT_RISK
+		lifecycleStageFilter: LifecycleStages.AT_RISK,
 	},
 	lifecycleId: '',
 	resetFilters: () => {},
-	updateFilters: () => {}
+	updateFilters: () => {},
 });
 
-export const useLifecycle = (): ILifecycleContext =>
-	useContext(LifecycleContext);
+export const useLifecycle = function useLifecycle(): ILifecycleContext {
+	return useContext(LifecycleContext);
+};
 
 const initialValues: ILifecycleFilterValues = {
 	countryFilter: '',
 	industryFilter: '',
-	lifecycleStageFilter: LifecycleStages.AT_RISK
+	lifecycleStageFilter: LifecycleStages.AT_RISK,
 };
 
 interface ILifecycleContextProviderProps {
@@ -49,24 +56,24 @@ interface ILifecycleContextProviderProps {
 	lifecycleId: string;
 }
 
-export const LifecycleContextProvider = ({
+export const LifecycleContextProvider = function LifecycleContextProvider({
 	children,
-	lifecycleId
-}: ILifecycleContextProviderProps) => {
+	lifecycleId,
+}: ILifecycleContextProviderProps) {
 	const [filterValues, setFilterValues] =
 		useState<ILifecycleFilterValues>(initialValues);
 
 	const filters = useMemo<ILifecycleFilters>(
 		() => ({
 			...filterValues,
-			filterString: buildQueryString(filterValues)
+			filterString: buildQueryString(filterValues),
 		}),
 		[filterValues]
 	);
 
 	const updateFilters = useCallback(
 		(newValues: Partial<ILifecycleFilterValues>) =>
-			setFilterValues(prev => ({...prev, ...newValues})),
+			setFilterValues((prev) => ({...prev, ...newValues})),
 		[]
 	);
 

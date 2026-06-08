@@ -1,12 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Modal, {Size} from 'shared/components/modal';
-import React from 'react';
-import SearchableEntityTable from 'shared/components/SearchableEntityTable';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
-import {noop} from 'lodash';
 import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+import {noop} from 'lodash';
+import React from 'react';
+import SearchableEntityTable from '~/shared/components/SearchableEntityTable';
+import Modal, {Size} from '~/shared/components/modal';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
+import {OrderParams} from '~/shared/util/records';
 
 interface ISearchableEntitiesTableModalProps {
 	className: string;
@@ -37,17 +42,17 @@ const SearchableEntitiesTableModal: React.FC<
 		onQueryChange,
 		orderIOMap,
 		page,
-		query
+		query,
 	} = useStatefulPagination(undefined, {
 		initialDelta,
-		initialOrderIOMap
+		initialOrderIOMap,
 	});
 
 	return (
 		<Modal className={className} size={size}>
 			<Modal.Header onClose={onClose} title={title} />
 
-			<Modal.Body className='p-0'>
+			<Modal.Body className="p-0">
 				<SearchableEntityTable
 					{...otherProps}
 					autoFocusSearch
@@ -64,8 +69,8 @@ const SearchableEntitiesTableModal: React.FC<
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='primary'
+					className="button-root"
+					displayType="primary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('done')}

@@ -1,12 +1,16 @@
-export {compose} from 'redux';
-
-export {default as withPolling} from './WithPolling';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
 export {default as checkProjectState} from './CheckProjectState';
+
 export {default as checkSegmentLink} from './CheckSegmentLink';
+
 export {default as checkValidChannel} from './CheckValidChannel';
 export {default as optional} from './Optional';
 export {default as redirectIf} from './RedirectIf';
+export {default as withStatefulPagination} from './StatefulPagination';
 export {default as withAction} from './WithAction';
 export {default as withBaseResults} from './WithBaseResults';
 export {default as withCurrentUser} from './WithCurrentUser';
@@ -21,6 +25,7 @@ export {default as withLDPEnabled} from './WithLDPEnabled';
 export {default as withOnboarding} from './WithOnboarding';
 export {default as withPaginationBar} from './WithPaginationBar';
 export {default as withPermission, withAdminPermission} from './WithPermission';
+export {default as withPolling} from './WithPolling';
 export {default as withProject} from './WithProject';
 export {default as withQuery} from './WithQuery';
 export {default as withQueryPagination} from './WithQueryPagination';
@@ -32,8 +37,8 @@ export {default as withSegment} from './WithSegment';
 export {default as withSelectedPoint} from './WithSelectedPoint';
 export {default as withSheet} from './WithSheet';
 export {default as withSidebar} from './WithSidebar';
-export {default as withStatefulPagination} from './StatefulPagination';
 export {default as withTableData} from './WithTableData';
 export {default as withToolbar} from './WithToolbar';
 export {default as withUnassignedSegments} from './WithUnassignedSegments';
 export {withEmpty, withError, withLoading, withNull} from './util';
+export {compose} from 'redux';

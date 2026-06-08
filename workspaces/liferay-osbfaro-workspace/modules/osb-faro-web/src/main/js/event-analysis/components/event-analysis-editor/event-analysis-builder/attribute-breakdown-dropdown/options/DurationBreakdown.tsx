@@ -1,13 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import React from 'react';
+import {IBreakdownProps, Operators} from '~/event-analysis/utils/types';
+import {createDurationBreakdown} from '~/event-analysis/utils/utils';
 import Form, {
 	validateMinDuration,
-	validateRequired
-} from 'shared/components/form';
-import React from 'react';
-import {createDurationBreakdown} from 'event-analysis/utils/utils';
-import {formatTime, getMillisecondsFromTime} from 'shared/util/time';
-import {IBreakdownProps, Operators} from 'event-analysis/utils/types';
-import {sequence} from 'shared/util/promise';
+	validateRequired,
+} from '~/shared/components/form';
+import {sequence} from '~/shared/util/promise';
+import {formatTime, getMillisecondsFromTime} from '~/shared/util/time';
 
 const DEFAULT_DURATION_BIN = 60000;
 const DURATION_MASK = [/\d/, /\d/, ':', /[0-6]/, /\d/, ':', /[0-6]/, /\d/];
@@ -18,21 +23,21 @@ const DurationBreakdown: React.FC<IBreakdownProps> = ({
 	breakdown,
 	description,
 	displayName,
-	onSubmit
+	onSubmit,
 }) => {
 	const getInitialValues = () => {
 		if (breakdown) {
 			const {binSize} = breakdown;
 
 			return {
-				binSize: formatTime(binSize ?? 0)
+				binSize: formatTime(binSize ?? 0),
 			};
 		}
 
 		return {
 			binSize: formatTime(DEFAULT_DURATION_BIN),
 			operator: Operators.GT,
-			value: ''
+			value: '',
 		};
 	};
 
@@ -50,14 +55,14 @@ const DurationBreakdown: React.FC<IBreakdownProps> = ({
 							binSize.replace(/_/g, '0') as string
 						),
 						description,
-						displayName
+						displayName,
 					})
 				);
 			}}
 		>
 			{({handleSubmit, isValid}) => (
 				<Form.Form onSubmit={handleSubmit}>
-					<div className='options-body'>
+					<div className="options-body">
 						<Form.Group autoFit>
 							<Form.GroupItem>
 								<Form.Input
@@ -65,25 +70,25 @@ const DurationBreakdown: React.FC<IBreakdownProps> = ({
 										'group-duration-by'
 									)}
 									mask={DURATION_MASK}
-									name='binSize'
-									placeholder='HH:MM:SS'
-									type='string'
+									name="binSize"
+									placeholder="HH:MM:SS"
+									type="string"
 									validate={sequence([
 										validateRequired,
-										validateMinDuration('00:00:01')
+										validateMinDuration('00:00:01'),
 									])}
 								/>
 							</Form.GroupItem>
 						</Form.Group>
 					</div>
 
-					<div className='options-footer'>
+					<div className="options-footer">
 						<ClayButton
 							block
-							className='button-root'
+							className="button-root"
 							disabled={!isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{Liferay.Language.get('apply')}
 						</ClayButton>

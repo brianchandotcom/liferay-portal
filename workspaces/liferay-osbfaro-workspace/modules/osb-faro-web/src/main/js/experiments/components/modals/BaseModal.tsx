@@ -1,8 +1,14 @@
-import Alert, {AlertTypes} from 'shared/components/Alert';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import Loading, {Align} from 'shared/components/Loading';
 import React, {useState} from 'react';
+import Alert, {AlertTypes} from '~/shared/components/Alert';
+import Loading, {Align} from '~/shared/components/Loading';
+
 import type {Observer, Size, Status} from '@clayui/modal/lib/types';
 
 interface IBaseModalProps extends React.HTMLAttributes<HTMLElement> {
@@ -10,9 +16,9 @@ interface IBaseModalProps extends React.HTMLAttributes<HTMLElement> {
 	children: React.ReactNode;
 	disabled?: boolean;
 	observer: Observer;
+	onCancel?: () => void;
 	onClose: () => void;
 	onSubmit: () => Promise<void | any> | void;
-	onCancel?: () => void;
 	onSuccess?: () => void;
 	size?: Size;
 	status?: Status;
@@ -32,14 +38,14 @@ const BaseModal: React.FC<IBaseModalProps> = ({
 	size,
 	status,
 	submitMessage,
-	title
+	title,
 }) => {
 	const [submitting, setSubmitting] = useState(false);
 	const [submitError, setSubmitError] = useState(null);
 
 	let buttonSubmitProps: any = {
 		className: `button-root d-flex align-items-center btn-${status}`,
-		disabled: disabled || submitting
+		disabled: disabled || submitting,
 	};
 
 	if (!disabled) {
@@ -58,19 +64,20 @@ const BaseModal: React.FC<IBaseModalProps> = ({
 							onSuccess && onSuccess();
 							onClose();
 						})
-						.catch(error => {
+						.catch((error) => {
 							console.error(error); // eslint-disable-line no-console
 							setSubmitError(error);
 
 							setSubmitting(false);
 						});
-				} else {
+				}
+				else {
 					setSubmitting(false);
 
 					onSuccess && onSuccess();
 					onClose();
 				}
-			}
+			},
 		};
 	}
 
@@ -90,7 +97,7 @@ const BaseModal: React.FC<IBaseModalProps> = ({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							displayType='secondary'
+							displayType="secondary"
 							onClick={onCancel || onClose}
 						>
 							{cancelMessage}

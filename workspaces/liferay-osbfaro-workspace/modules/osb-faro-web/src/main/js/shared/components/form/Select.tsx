@@ -1,9 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
+import {FieldProps} from 'formik';
+import React from 'react';
+
+import Select from '../Select';
 import HelpBlock from './HelpBlock';
 import Label from './Label';
-import React from 'react';
-import Select from '../Select';
-import {FieldProps} from 'formik';
 
 interface IFormSelectProps
 	extends FieldProps,
@@ -41,7 +47,7 @@ const FormSelect: React.FC<IFormSelectProps> = ({
 	const classes = getCN(className, {
 		'form-inline-group': inline,
 		'has-error': touched && error,
-		'has-success': touched && !error && !disabled
+		'has-success': touched && !error && !disabled,
 	});
 
 	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -61,7 +67,7 @@ const FormSelect: React.FC<IFormSelectProps> = ({
 			)}
 
 			{secondaryInfo && (
-				<Label className='font-weight-normal' htmlFor={name}>
+				<Label className="font-weight-normal" htmlFor={name}>
 					<p>{secondaryInfo}</p>
 				</Label>
 			)}

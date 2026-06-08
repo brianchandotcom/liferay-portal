@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {fromJS} from 'immutable';
 
 export function loadState() {
@@ -6,9 +11,10 @@ export function loadState() {
 			maintenanceSeen: JSON.parse(
 				atob(localStorage.getItem('maintenanceSeen'))
 			),
-			sidebar: JSON.parse(atob(localStorage.getItem('sidebar')))
+			sidebar: JSON.parse(atob(localStorage.getItem('sidebar'))),
 		});
-	} catch (err) {
+	}
+	catch (error) {
 		return undefined;
 	}
 }
@@ -24,5 +30,6 @@ export function saveState(state) {
 			'sidebar',
 			btoa(JSON.stringify(state.get('sidebar')))
 		);
-	} catch (err) {}
+	}
+	catch (error) {}
 }

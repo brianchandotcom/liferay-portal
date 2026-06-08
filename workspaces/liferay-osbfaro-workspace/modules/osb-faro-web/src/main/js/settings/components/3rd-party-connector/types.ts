@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {ComponentType} from 'react';
 
 export enum Entity {
@@ -5,7 +10,7 @@ export enum Entity {
 	Events = 'events',
 	Individuals = 'individuals',
 	Sites = 'sites',
-	Users = 'users'
+	Users = 'users',
 }
 
 export interface ConnectorEntityCellProps {
@@ -62,5 +67,5 @@ export interface ConnectorConfig {
 export enum ConnectorStatus {
 	Active = 'ACTIVE',
 	Disconnected = 'DISCONNECTED',
-	Inactive = 'INACTIVE'
+	Inactive = 'INACTIVE',
 }

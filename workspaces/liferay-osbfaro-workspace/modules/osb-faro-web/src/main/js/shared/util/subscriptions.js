@@ -1,7 +1,12 @@
-import Constants, {SubscriptionStatuses} from 'shared/util/constants';
-import {fromJS, List, Map} from 'immutable';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {List, Map, fromJS} from 'immutable';
 import {isNil} from 'lodash';
-import {Metric, Plan} from 'shared/util/records';
+import Constants, {SubscriptionStatuses} from '~/shared/util/constants';
+import {Metric, Plan} from '~/shared/util/records';
 
 export const INDIVIDUALS = 'individuals';
 
@@ -29,9 +34,11 @@ export const SubscriptionNames = {
 	LiferaySaasCspUpTo100Users: 'Liferay SaaS - CSP - Up to 100 Users',
 	LiferaySaasCspUpTo100UsersExtraUser:
 		'Liferay SaaS - CSP - Up to 100 Users - Extra User',
+
 	LiferaySaasCspUpTo10kUsers: 'Liferay SaaS - CSP - Up to 10K Users',
 	LiferaySaasCspUpTo10kUsersExtraUser:
 		'Liferay SaaS - CSP - Up to 10K Users - Extra User',
+
 	LiferaySaasCspUpTo1kUsers: 'Liferay SaaS - CSP - Up to 1K Users',
 	LiferaySaasCspUpTo1kUsersExtraUser:
 		'Liferay SaaS - CSP - Up to 1K Users - Extra User',
@@ -41,6 +48,7 @@ export const SubscriptionNames = {
 	LiferaySaasCspUpTo500Users: 'Liferay SaaS - CSP - Up to 500 Users',
 	LiferaySaasCspUpTo500UsersExtraUser:
 		'Liferay SaaS - CSP - Up to 500 Users - Extra User',
+
 	LiferaySaasCspUpTo5kUsers: 'Liferay SaaS - CSP - Up to 5K Users',
 	LiferaySaasCspUpTo5kUsersExtraUser:
 		'Liferay SaaS - CSP - Up to 5K Users - Extra User',
@@ -57,21 +65,24 @@ export const SubscriptionNames = {
 	LxcCspCustomUserTierExtraUser: 'LXC - CSP - Custom User Tier - Extra User',
 	LxcCspUpTo100Users: 'LXC - CSP - Up to 100 Users',
 	LxcCspUpTo100UsersExtraUser: 'LXC - CSP - Up to 100 Users - Extra User',
+
 	LxcCspUpTo10kUsers: 'LXC - CSP - Up to 10K Users',
 	LxcCspUpTo10kUsersExtraUser: 'LXC - CSP - Up to 10K Users - Extra User',
+
 	LxcCspUpTo1kUsers: 'LXC - CSP - Up to 1K Users',
 	LxcCspUpTo1kUsersExtraUser: 'LXC - CSP - Up to 1K Users - Extra User',
 	LxcCspUpTo20kUsers: 'LXC - CSP - Up to 20K Users',
 	LxcCspUpTo20kUsersExtraUser: 'LXC - CSP - Up to 20K Users - Extra User',
 	LxcCspUpTo500Users: 'LXC - CSP - Up to 500 Users',
 	LxcCspUpTo500UsersExtraUser: 'LXC - CSP - Up to 500 Users - Extra User',
+
 	LxcCspUpTo5kUsers: 'LXC - CSP - Up to 5K Users',
 	LxcCspUpTo5kUsersExtraUser: 'LXC - CSP - Up to 5K Users - Extra User',
 	LxcEnterprisePlan: 'LXC - Enterprise Plan',
 	LxcProPlan: 'LXC - Pro Plan',
 	LxcSubscriptionEngageSite: 'LXC Subscription - Engage Site',
 	LxcSubscriptionSupportSite: 'LXC Subscription - Support Site',
-	LxcSubscriptionTransactSite: 'LXC Subscription - Transact Site'
+	LxcSubscriptionTransactSite: 'LXC Subscription - Transact Site',
 };
 
 export const PLAN_TYPES = {
@@ -143,29 +154,33 @@ export const PLAN_TYPES = {
 	[SubscriptionNames.LxcSubscriptionSupportSite]:
 		'lxcSubscriptionSupportSite',
 	[SubscriptionNames.LxcSubscriptionTransactSite]:
-		'lxcSubscriptionTransactSite'
+		'lxcSubscriptionTransactSite',
 };
 
 function formatSubscriptions(allPlans) {
 	const ADD_ONS = {
 		[INDIVIDUALS]: {},
 		['lxcCspUpTo100UsersExtraUser']: {},
+
 		['lxcCspUpTo10kUsersExtraUser']: {},
+
 		['lxcCspUpTo1kUsers']: {},
 		['lxcCspUpTo1kUsersExtraUser']: {},
 		['lxcCspUpTo20kUsers']: {},
 		['lxcCspUpTo20kUsersExtraUser']: {},
 		['lxcCspUpTo500UsersExtraUser']: {},
+
 		['lxcCspUpTo5kUsersExtraUser']: {},
 		['lxcSubscriptionEngageSite']: {},
 		['lxcSubscriptionSupportSite']: {},
 		['lxcSubscriptionTransactSite']: {},
-		[PAGEVIEWS]: {}
+
+		[PAGEVIEWS]: {},
 	};
 
 	const PLANS = {};
 
-	const hasKeyProperty = key =>
+	const hasKeyProperty = (key) =>
 		Object.prototype.hasOwnProperty.call(allPlans, key);
 
 	for (const key in allPlans) {
@@ -174,7 +189,7 @@ function formatSubscriptions(allPlans) {
 				baseSubscriptionPlan,
 				individualsLimit,
 				name,
-				pageViewsLimit
+				pageViewsLimit,
 			} = allPlans[key];
 
 			const planType = PLAN_TYPES[key];
@@ -183,16 +198,17 @@ function formatSubscriptions(allPlans) {
 				baseSubscriptionPlan,
 				limits: {
 					[INDIVIDUALS]: individualsLimit,
-					[PAGEVIEWS]: pageViewsLimit
+					[PAGEVIEWS]: pageViewsLimit,
 				},
-				name
+				name,
 			};
 
 			const parentPlanType = PLAN_TYPES[baseSubscriptionPlan];
 
 			if (baseSubscriptionPlan) {
 				ADD_ONS[planType][parentPlanType] = formattedPlan;
-			} else {
+			}
+			else {
 				PLANS[planType] = formattedPlan;
 			}
 		}
@@ -208,12 +224,12 @@ export {ADD_ONS, PLANS};
 export const STATUS_DISPLAY_MAP = {
 	[SubscriptionStatuses.Ok]: 'primary',
 	[SubscriptionStatuses.Approaching]: 'warning',
-	[SubscriptionStatuses.Over]: 'danger'
+	[SubscriptionStatuses.Over]: 'danger',
 };
 
 export const DEFAULT_ADDONS = {
 	[INDIVIDUALS]: ADD_ONS[INDIVIDUALS].business,
-	[PAGEVIEWS]: ADD_ONS[PAGEVIEWS].business
+	[PAGEVIEWS]: ADD_ONS[PAGEVIEWS].business,
 };
 
 export function getPlanAddOns(currentPlan) {
@@ -233,7 +249,7 @@ export function getPlanAddOns(currentPlan) {
 
 			return {
 				...acc,
-				[name]: totalLimit ? totalLimit.toLocaleString() : '-'
+				[name]: totalLimit ? totalLimit.toLocaleString() : '-',
 			};
 		}, {});
 }
@@ -399,8 +415,9 @@ export function formatPlanData(subscriptionIMap) {
 					.get('addOns', new List())
 					.reduce((acc, addOn) => {
 						acc[PLAN_TYPES[addOn.get('name')]] = addOn;
+
 						return acc;
-					}, {})
+					}, {}),
 			},
 			endDate: subscriptionIMap.get('endDate'),
 			metrics: {
@@ -413,7 +430,7 @@ export function formatPlanData(subscriptionIMap) {
 					status: subscriptionIMap.get(
 						'individualsStatus',
 						SubscriptionStatuses.Ok
-					)
+					),
 				}),
 				pageViews: new Metric({
 					count: subscriptionIMap.get(
@@ -424,16 +441,16 @@ export function formatPlanData(subscriptionIMap) {
 					status: subscriptionIMap.get(
 						'pageViewsStatus',
 						SubscriptionStatuses.Ok
-					)
+					),
 				}),
 				syncedIndividualsCount: subscriptionIMap.get(
 					'syncedIndividualsCount'
-				)
+				),
 			},
 			name: subscriptionIMap.get('name'),
 			startDate: basicPlan
 				? subscriptionIMap.get('startDate')
-				: subscriptionIMap.get('lastAnniversaryDate')
+				: subscriptionIMap.get('lastAnniversaryDate'),
 		})
 	);
 }

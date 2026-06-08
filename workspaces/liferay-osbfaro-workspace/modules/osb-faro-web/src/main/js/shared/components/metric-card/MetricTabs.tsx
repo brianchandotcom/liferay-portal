@@ -1,10 +1,16 @@
-import CardTabs from 'shared/components/CardTabs';
-import MetricStateRenderer from './MetricStateRenderer';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {buildTabs, getMetricCardTabsData} from './util';
+import CardTabs from '~/shared/components/CardTabs';
+
 import {ICommonMetricProps, useActions, useData} from './MetricBaseCard';
-import {Metric} from './metrics';
+import MetricStateRenderer from './MetricStateRenderer';
 import {useMetricQuery} from './hooks';
+import {Metric} from './metrics';
+import {buildTabs, getMetricCardTabsData} from './util';
 
 interface IMetricTabsViewProps {
 	activeItemIndex: number;
@@ -21,11 +27,11 @@ const MetricTabsView: React.FC<IMetricTabsViewProps> = React.memo(
 		return (
 			<CardTabs
 				activeTabId={activeItemIndex}
-				className='analytics-metrics-tabs'
+				className="analytics-metrics-tabs"
 				tabs={buildTabs({
 					activeItemIndex,
 					items,
-					onActiveItemIndexChange: changeActiveItemIndex
+					onActiveItemIndexChange: changeActiveItemIndex,
 				})}
 			/>
 		);
@@ -36,7 +42,7 @@ const MetricTabsRenderer: React.FC<ICommonMetricProps> = ({
 	experienceId,
 	filters,
 	interval,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const {activeItemIndex, metrics, queries, variables} = useData();
 	const {changeActiveItemIndex} = useActions();
@@ -45,9 +51,10 @@ const MetricTabsRenderer: React.FC<ICommonMetricProps> = ({
 		experienceId,
 		filters,
 		interval,
+
 		Query: queries.TabsQuery,
 		rangeSelectors,
-		variables
+		variables,
 	});
 
 	return (

@@ -1,8 +1,13 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {useEffect, useState} from 'react';
 import {matchPath} from 'react-router-dom';
-import {Routes, toRoute} from 'shared/util/router';
-import {WrapSafeResults} from 'shared/hoc/util';
+import * as API from '~/shared/api';
+import {WrapSafeResults} from '~/shared/hoc/util';
+import {Routes, toRoute} from '~/shared/util/router';
 
 type History = {
 	replace: (path: string) => void;
@@ -34,7 +39,7 @@ const checkSegmentLink =
 				location.pathname,
 				{
 					exact: true,
-					path: Routes.CONTACTS_SEGMENT
+					path: Routes.CONTACTS_SEGMENT,
 				}
 			);
 
@@ -50,15 +55,17 @@ const checkSegmentLink =
 							toRoute(Routes.CONTACTS_SEGMENT, {
 								channelId,
 								groupId,
-								id
+								id,
 							})
 						);
 					})
-					.catch(err => {
+					.catch((err) => {
 						setLoading(false);
 						setError(err);
 					});
 			}
+
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 
 		return (

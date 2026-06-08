@@ -1,26 +1,32 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import Input from './Input';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import {addContext} from 'shared/util/clay';
+import autobind from 'autobind-decorator';
+import {Stack} from 'immutable';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {Stack} from 'immutable';
+import React from 'react';
+import {addContext} from '~/shared/util/clay';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
+import Input from './Input';
 
 export const CONTEXT = 'search-input';
 
 export default class SearchInput extends React.Component {
 	static childContextTypes = {
-		clay: PropTypes.instanceOf(Stack)
+		clay: PropTypes.instanceOf(Stack),
 	};
 
 	static defaultProps = {
 		disabled: false,
 		onSubmit: noop,
 		placeholder: Liferay.Language.get('search'),
-		value: ''
+		value: '',
 	};
 
 	static propTypes = {
@@ -28,7 +34,7 @@ export default class SearchInput extends React.Component {
 		onChange: PropTypes.func,
 		onSubmit: PropTypes.func,
 		placeholder: PropTypes.string,
-		value: PropTypes.string
+		value: PropTypes.string,
 	};
 
 	constructor(props) {
@@ -91,7 +97,7 @@ export default class SearchInput extends React.Component {
 					<Input
 						{...omitDefinedProps(otherProps, SearchInput.propTypes)}
 						disabled={disabled}
-						inset='after'
+						inset="after"
 						onChange={this.handleChange}
 						onKeyDown={this.handleKeyDown}
 						placeholder={placeholder}
@@ -99,16 +105,16 @@ export default class SearchInput extends React.Component {
 						value={value}
 					/>
 
-					<Input.Inset position='after'>
+					<Input.Inset position="after">
 						<ClayButton
 							aria-label={
 								value
 									? Liferay.Language.get('clear')
 									: Liferay.Language.get('search')
 							}
-							className='button-root'
+							className="button-root"
 							disabled={disabled}
-							displayType='unstyled'
+							displayType="unstyled"
 							onClick={
 								value
 									? this.handleClearSearch
@@ -117,13 +123,13 @@ export default class SearchInput extends React.Component {
 						>
 							{value ? (
 								<ClayIcon
-									className='icon-root'
-									symbol='times'
+									className="icon-root"
+									symbol="times"
 								/>
 							) : (
 								<ClayIcon
-									className='icon-root'
-									symbol='search'
+									className="icon-root"
+									symbol="search"
 								/>
 							)}
 						</ClayButton>

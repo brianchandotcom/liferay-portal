@@ -1,12 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
 import {ConnectDragSource, DragSource as dragSource} from 'react-dnd';
-import {Criterion} from '../utils/types';
-import {DragTypes} from '../utils/drag-types';
-import {generateRowId} from '../utils/utils';
-import {Property} from 'shared/util/records';
+import {Property} from '~/shared/util/records';
+
 import {PropertyTypes} from '../utils/constants';
+import {DragTypes} from '../utils/drag-types';
+import {Criterion} from '../utils/types';
+import {generateRowId} from '../utils/utils';
 
 const TYPE_ICON_MAP = {
 	[PropertyTypes.Behavior]: 'web-content',
@@ -31,7 +37,7 @@ const TYPE_ICON_MAP = {
 	[PropertyTypes.Vocabulary]: 'text',
 	[PropertyTypes.Interest]: 'check',
 	[PropertyTypes.Tag]: 'text',
-	[PropertyTypes.Text]: 'text'
+	[PropertyTypes.Text]: 'text',
 };
 
 /**
@@ -44,7 +50,7 @@ const beginDrag = ({
 	defaultValue,
 	name,
 	property,
-	type
+	type,
 }: {
 	defaultValue: any;
 	name: string;
@@ -60,24 +66,28 @@ const beginDrag = ({
 	if (type === PropertyTypes.Behavior) {
 		touched = {asset: false, dateFilter: false, occurenceCount: false};
 		valid = {asset: false, dateFilter: true, occurenceCount: true};
-	} else if (type === PropertyTypes.Event) {
+	}
+	else if (type === PropertyTypes.Event) {
 		touched = {
 			attributeValue: false,
-			occurenceCount: false
+			occurenceCount: false,
 		};
 		valid = {
 			attributeValue: false,
-			occurenceCount: true
+			occurenceCount: true,
 		};
-	} else if (type === PropertyTypes.SessionGeolocation) {
+	}
+	else if (type === PropertyTypes.SessionGeolocation) {
 		touched = {country: false, dateFilter: false};
 		valid = {country: false, dateFilter: true};
-	} else if (
+	}
+	else if (
 		[PropertyTypes.SessionNumber, PropertyTypes.SessionText].includes(type)
 	) {
 		touched = {customInput: false, dateFilter: false};
 		valid = {customInput: false, dateFilter: true};
-	} else if (
+	}
+	else if (
 		[
 			PropertyTypes.AccountNumber,
 			PropertyTypes.AccountText,
@@ -87,7 +97,7 @@ const beginDrag = ({
 			PropertyTypes.OrganizationSelectText,
 			PropertyTypes.OrganizationText,
 			PropertyTypes.SelectText,
-			PropertyTypes.Text
+			PropertyTypes.Text,
 		].includes(type)
 	) {
 		valid = false;
@@ -100,9 +110,9 @@ const beginDrag = ({
 			rowId: generateRowId(),
 			touched,
 			type,
-			valid
+			valid,
 		},
-		property
+		property,
 	};
 };
 
@@ -131,14 +141,14 @@ export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemPro
 
 		return connectDragSource(
 			<li className={classes} data-testid={`criteria-item-${label}`}>
-				<span className='inline-item'>
-					<ClayIcon className='icon-root' symbol='drag' />
+				<span className="inline-item">
+					<ClayIcon className="icon-root" symbol="drag" />
 				</span>
 
-				<span className='criteria-sidebar-item-type sticker'>
-					<span className='inline-item'>
+				<span className="criteria-sidebar-item-type sticker">
+					<span className="inline-item">
 						<ClayIcon
-							className='icon-root'
+							className="icon-root"
 							symbol={
 								TYPE_ICON_MAP[
 									type as keyof typeof TYPE_ICON_MAP
@@ -157,10 +167,10 @@ export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemPro
 export default dragSource(
 	DragTypes.Property,
 	{
-		beginDrag
+		beginDrag,
 	},
 	(connect, monitor) => ({
 		connectDragSource: connect.dragSource(),
-		dragging: monitor.isDragging()
+		dragging: monitor.isDragging(),
 	})
 )(CriteriaSidebarItem);

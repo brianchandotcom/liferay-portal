@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
 import {
 	DataDrivenConfig,
-	GeneralInfoSection
-} from 'shared/components/GeneralInfoSection';
-import {formatUTCDate} from 'shared/util/date';
-import {SectionHeader} from 'shared/components/SectionHeader';
+	GeneralInfoSection,
+} from '~/shared/components/GeneralInfoSection';
+import {SectionHeader} from '~/shared/components/SectionHeader';
+import {formatUTCDate} from '~/shared/util/date';
 
 interface IIndividualAttributesProps {
 	children?: React.ReactNode;
@@ -30,7 +35,7 @@ const INFO_LANGUAGE_MAP: Record<string, string> = {
 	suffix: Liferay.Language.get('suffix'),
 	timezoneOffset: Liferay.Language.get('time-zone'),
 	userId: 'User ID',
-	uuid: 'UUID'
+	uuid: 'UUID',
 };
 
 const contextualInfoConfig: DataDrivenConfig = [
@@ -40,7 +45,7 @@ const contextualInfoConfig: DataDrivenConfig = [
 			{
 				className: 'col-12 col-md-4 col-sm-6',
 				icon: 'web-content',
-				key: 'screenName'
+				key: 'screenName',
 			},
 			{className: 'col-12 col-md-4 col-sm-6', key: 'prefix'},
 			{className: 'col-12 col-md-4 col-sm-6', key: 'userId'},
@@ -52,10 +57,10 @@ const contextualInfoConfig: DataDrivenConfig = [
 			{className: 'col-12 col-md-4 col-sm-6', key: 'languageId'},
 			{className: 'col-12 col-md-4 col-sm-6', key: 'familyName'},
 			{className: 'col-12 col-md-4 col-sm-6', key: 'birthDate'},
-			{className: 'col-12 col-md-4 col-sm-6', key: 'suffix'}
+			{className: 'col-12 col-md-4 col-sm-6', key: 'suffix'},
 		],
-		title: Liferay.Language.get('personal-information')
-	}
+		title: Liferay.Language.get('personal-information'),
+	},
 ];
 
 const IndividualAttributesCDP: React.FC<IIndividualAttributesProps> = ({
@@ -63,7 +68,7 @@ const IndividualAttributesCDP: React.FC<IIndividualAttributesProps> = ({
 	contactId,
 	loading = false,
 	propertiesData,
-	showEmptyState
+	showEmptyState,
 }) => {
 	const getValue = (key: string): string | undefined => {
 		if (key === 'birthDate') {
@@ -74,7 +79,9 @@ const IndividualAttributesCDP: React.FC<IIndividualAttributesProps> = ({
 				: undefined;
 		}
 
-		if (key === 'contactId') return contactId;
+		if (key === 'contactId') {
+			return contactId;
+		}
 
 		return propertiesData?.get(key) || undefined;
 	};
@@ -82,7 +89,7 @@ const IndividualAttributesCDP: React.FC<IIndividualAttributesProps> = ({
 	return (
 		<>
 			<SectionHeader
-				icon='user'
+				icon="user"
 				title={Liferay.Language.get('individual-attributes')}
 			/>
 

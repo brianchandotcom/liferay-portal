@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {getPercentage} from 'shared/util/util';
-import {getVariables, safeResultToProps} from 'shared/util/mappers';
-import {sub} from 'shared/util/lang';
+import {sub} from '~/shared/util/lang';
+import {getVariables, safeResultToProps} from '~/shared/util/mappers';
+import {getPercentage} from '~/shared/util/util';
 
 /**
  * Get Label Value
  * @param {number} value
  * @returns {string} label
  */
-const getLabelHeader = value =>
+const getLabelHeader = (value) =>
 	sub(Liferay.Language.get('x-form-steps'), [value]);
 
 /**
@@ -17,7 +22,7 @@ const getLabelHeader = value =>
  * @param {number} value
  * @returns {string} label
  */
-const getLabelFields = value => {
+const getLabelFields = (value) => {
 	if (value === 1) {
 		return sub(Liferay.Language.get('x-field'), [value]);
 	}
@@ -32,7 +37,7 @@ const getLabelFields = value => {
  * @param {number} index
  * @returns {string} color
  */
-const getColor = index => (index % 2 === 0 ? '#B1D4FF' : '#95C5FF');
+const getColor = (index) => (index % 2 === 0 ? '#B1D4FF' : '#95C5FF');
 
 const mapResultToProps = safeResultToProps(({form}) => {
 	const {formPageMetrics} = form;
@@ -40,7 +45,7 @@ const mapResultToProps = safeResultToProps(({form}) => {
 	const header = [
 		{
 			icon: 'document',
-			label: getLabelHeader(formPageMetrics.length)
+			label: getLabelHeader(formPageMetrics.length),
 		},
 		{
 			icon: 'custom-field',
@@ -48,8 +53,8 @@ const mapResultToProps = safeResultToProps(({form}) => {
 				formPageMetrics
 					.map(({formFieldMetrics}) => formFieldMetrics.length)
 					.reduce((total, num) => total + num, 0)
-			)
-		}
+			),
+		},
 	];
 
 	const items = formPageMetrics.map(
@@ -58,7 +63,7 @@ const mapResultToProps = safeResultToProps(({form}) => {
 				formFieldMetrics,
 				pageAbandonmentsMetric,
 				pageName,
-				pageViewsMetric
+				pageViewsMetric,
 			},
 			index
 		) => ({
@@ -70,12 +75,12 @@ const mapResultToProps = safeResultToProps(({form}) => {
 							{sub(Liferay.Language.get('step-x'), [index + 1])}{' '}
 							{pageName && <strong>{` ${pageName}`}</strong>}
 						</>
-					)
+					),
 				},
 				{
 					icon: 'custom-field',
-					label: getLabelFields(formFieldMetrics.length)
-				}
+					label: getLabelFields(formFieldMetrics.length),
+				},
 			],
 			expanded: index === 0 ? true : false,
 			items: formFieldMetrics.map(
@@ -83,8 +88,8 @@ const mapResultToProps = safeResultToProps(({form}) => {
 					columns: [
 						{
 							icon: 'custom-field',
-							label: fieldName
-						}
+							label: fieldName,
+						},
 					],
 					progress: [
 						{
@@ -92,9 +97,9 @@ const mapResultToProps = safeResultToProps(({form}) => {
 							value: `${getPercentage(
 								fieldAbandonmentsMetric.value,
 								pageViewsMetric.value
-							)}%`
-						}
-					]
+							)}%`,
+						},
+					],
 				})
 			),
 			progress: [
@@ -103,16 +108,16 @@ const mapResultToProps = safeResultToProps(({form}) => {
 					value: `${getPercentage(
 						pageAbandonmentsMetric.value,
 						pageViewsMetric.value
-					)}%`
-				}
+					)}%`,
+				},
 			],
-			showControls: formPageMetrics.length === 1 ? false : true
+			showControls: formPageMetrics.length === 1 ? false : true,
 		})
 	);
 
 	return {
 		header,
-		items
+		items,
 	};
 });
 
@@ -125,7 +130,7 @@ const mapPropsToOptions = ({
 	filters,
 	interval,
 	rangeSelectors,
-	router: {params}
+	router: {params},
 }) => getVariables({filters, interval, params, rangeSelectors});
 
 export {mapPropsToOptions, mapResultToProps};

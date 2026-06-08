@@ -1,8 +1,14 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {getFill} from './utils';
 import {Layer} from 'recharts';
 
-export const Link: React.FC<any> = props => {
+import {getFill} from './utils';
+
+export const Link = function Link(props: any) {
 	const {
 		hovered,
 		index,
@@ -15,7 +21,7 @@ export const Link: React.FC<any> = props => {
 		sourceY,
 		targetControlX,
 		targetX,
-		targetY
+		targetY,
 	} = props;
 
 	let fill = null;
@@ -29,11 +35,12 @@ export const Link: React.FC<any> = props => {
 			payload: {
 				color: payload.target.color,
 				id: payload.target.id,
-				main: false
+				main: false,
 			},
-			selectedNode
+			selectedNode,
 		});
-	} else {
+	}
+	else {
 		id = payload.source.id;
 		fill = getFill({
 			hovered,
@@ -41,9 +48,9 @@ export const Link: React.FC<any> = props => {
 			payload: {
 				color: payload.source.color,
 				id: payload.source.id,
-				main: false
+				main: false,
 			},
-			selectedNode
+			selectedNode,
 		});
 	}
 
@@ -71,7 +78,7 @@ export const Link: React.FC<any> = props => {
 				onBlur={() => {}}
 				onMouseEnter={() => onNodeChange(id)}
 				onMouseLeave={() => onNodeChange(null)}
-				strokeWidth='0'
+				strokeWidth="0"
 			/>
 		</Layer>
 	);

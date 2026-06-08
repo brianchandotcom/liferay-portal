@@ -1,9 +1,15 @@
-import {CALL_API} from '../middleware/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {createActionTypes} from 'redux-toolbox';
+
+import {CALL_API} from '../middleware/api';
 import {getCardSchema} from '../middleware/schema';
 
 export const actionTypes = {
-	...createActionTypes('fetch', 'card')
+	...createActionTypes('fetch', 'card'),
 };
 
 export function fetchCard({
@@ -11,7 +17,7 @@ export function fetchCard({
 	contactsCardTemplateSettings = {},
 	contactsEntityId,
 	contactsEntityType,
-	groupId
+	groupId,
 }) {
 	return {
 		meta: {
@@ -20,7 +26,7 @@ export function fetchCard({
 					contactsCardTemplateId,
 					contactsCardTemplateSettings,
 					contactsEntityId,
-					contactsEntityType
+					contactsEntityType,
 				},
 				method: 'GET',
 				path: `contacts/${groupId}/contacts_card`,
@@ -28,12 +34,12 @@ export function fetchCard({
 				types: [
 					actionTypes.FETCH_CARD_REQUEST,
 					actionTypes.FETCH_CARD_SUCCESS,
-					actionTypes.FETCH_CARD_FAILURE
-				]
+					actionTypes.FETCH_CARD_FAILURE,
+				],
 			},
 			contactsEntityId,
-			type: contactsEntityType
+			type: contactsEntityType,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

@@ -1,18 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import getCN from 'classnames';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
-import ModalInfoBar from 'shared/components/ModalInfoBar';
-import NoResultsDisplay, {
-	getFormattedTitle
-} from 'shared/components/NoResultsDisplay';
-import React, {useEffect, useState} from 'react';
-import Toolbar from 'shared/components/toolbar';
 import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
-import {sub} from 'shared/util/lang';
-import {useRequest} from 'shared/hooks/useRequest';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+import React, {useEffect, useState} from 'react';
+import Loading, {Align} from '~/shared/components/Loading';
+import ModalInfoBar from '~/shared/components/ModalInfoBar';
+import NoResultsDisplay, {
+	getFormattedTitle,
+} from '~/shared/components/NoResultsDisplay';
+import Modal from '~/shared/components/modal';
+import Toolbar from '~/shared/components/toolbar';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {sub} from '~/shared/util/lang';
+import {OrderParams} from '~/shared/util/records';
 
 interface ISearchableModalProps {
 	children: React.ReactNode;
@@ -60,7 +65,7 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 		useStatefulPagination(undefined, {
 			initialDelta,
 			initialOrderIOMap,
-			initialPage: 1
+			initialPage: 1,
 		});
 
 	const {data, loading} = useRequest({
@@ -69,22 +74,27 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 			delta,
 			orderIOMap,
 			page,
-			query
-		}
+			query,
+		},
 	});
 
 	useEffect(() => {
 		if (page !== 1) {
 			onPageChange(1);
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderIOMap, query]);
 
 	useEffect(() => {
 		if (page === 1 && data) {
 			onChange(data?.items);
-		} else if (data) {
+		}
+		else if (data) {
 			onChange([...items, ...data?.items]);
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
 	const renderChildren = () => {
@@ -93,10 +103,10 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 				<div>
 					{children}
 
-					<div className='load-more-container'>
+					<div className="load-more-container">
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={() => onPageChange(page + 1)}
 						>
 							{loading && <Loading align={Align.Left} />}
@@ -106,9 +116,11 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 					</div>
 				</div>
 			);
-		} else if (loading) {
+		}
+		else if (loading) {
 			return <Loading />;
-		} else if (!data?.total) {
+		}
+		else if (!data?.total) {
 			return (
 				<NoResultsDisplay
 					icon={noResultsIcon ? {symbol: noResultsIcon} : undefined}
@@ -116,20 +128,21 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 					title={getFormattedTitle(noResultsName, noResultsTitle)}
 				/>
 			);
-		} else {
+		}
+		else {
 			return <div>{children}</div>;
 		}
 	};
 
 	const contentClasses = getCN('scroll-container', {
-		'fit-content': fitContent
+		'fit-content': fitContent,
 	});
 
 	return (
 		<Modal
 			{...otherProps}
 			className={getCN('searchable-modal-root', className)}
-			size='lg'
+			size="lg"
 		>
 			<Modal.Header onClose={onClose} title={title} />
 

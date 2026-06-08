@@ -1,18 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import getCN from 'classnames';
+import {Field, Formik} from 'formik';
+import React from 'react';
+
 import AutocompleteInput from './AutocompleteInput';
 import Checkbox from './Checkbox';
 import DateInput from './DateInput';
 import DateRangeInput from './DateRangeInput';
-import getCN from 'classnames';
 import Input from './Input';
 import InputList from './InputList';
 import Label from './Label';
 import PasswordInput from './PasswordInput';
 import RadioGroup from './RadioGroup';
-import React from 'react';
 import SearchableSelect from './SearchableSelect';
 import Select from './Select';
 import ToggleSwitch from './ToggleSwitch';
-import {Field, Formik} from 'formik';
 
 interface IFormGroupProps extends React.HTMLAttributes<HTMLDivElement> {
 	autoFit?: boolean;
@@ -21,10 +27,10 @@ interface IFormGroupProps extends React.HTMLAttributes<HTMLDivElement> {
 const FormGroup: React.FC<IFormGroupProps> = ({
 	autoFit = false,
 	children,
-	className
+	className,
 }) => {
 	const classes = getCN('form-group', className, {
-		'form-group-autofit': autoFit
+		'form-group-autofit': autoFit,
 	});
 
 	return <div className={classes}>{children}</div>;
@@ -41,12 +47,12 @@ const FormGroupItem: React.FC<IFormGroupItemProps> = ({
 	className,
 	label = false,
 	labelSpacer = false,
-	shrink = false
+	shrink = false,
 }) => {
 	const classes = getCN('form-group-item', className, {
 		'form-group-item-label': label,
 		'form-group-item-label-spacer': labelSpacer,
-		'form-group-item-shrink': shrink
+		'form-group-item-shrink': shrink,
 	});
 
 	return <div className={classes}>{children}</div>;
@@ -56,8 +62,10 @@ const FormGroupItem: React.FC<IFormGroupItemProps> = ({
  * Wrap a form component with the Formik Field component.
  * @param {Component} FormComponent
  */
-export const withField = (FormComponent: React.ComponentType<any>) =>
-	React.forwardRef<
+export const withField = function withField(
+	FormComponent: React.ComponentType<any>
+) {
+	return React.forwardRef<
 		typeof FormComponent,
 		React.ComponentProps<typeof FormComponent>
 	>(({name, ...otherParams}, ref) => {
@@ -72,6 +80,7 @@ export const withField = (FormComponent: React.ComponentType<any>) =>
 			/>
 		);
 	});
+};
 
 export default Object.assign(Formik, {
 	AutocompleteInput: withField(AutocompleteInput),
@@ -93,11 +102,11 @@ export default Object.assign(Formik, {
 	PasswordInput,
 	RadioGroup: Object.assign(withField(RadioGroup), {
 		Option: RadioGroup.Option,
-		Subsection: RadioGroup.Subsection
+		Subsection: RadioGroup.Subsection,
 	}),
 	SearchableSelect: withField(SearchableSelect),
 	Select: Object.assign(withField(Select), {Item: Select.Item}),
-	ToggleSwitch: withField(ToggleSwitch)
+	ToggleSwitch: withField(ToggleSwitch),
 });
 
-export * from 'shared/util/validators';
+export * from '~/shared/util/validators';

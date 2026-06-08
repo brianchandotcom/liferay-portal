@@ -1,9 +1,14 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {useContext, useReducer} from 'react';
-import {Channel} from 'shared/components/channels-menu';
+import {Channel} from '~/shared/components/channels-menu';
 
 export enum ActionType {
 	setChannels = 'setChannels',
-	setSelectedChannel = 'setSelectedChannel'
+	setSelectedChannel = 'setSelectedChannel',
 }
 
 type Action = {
@@ -27,21 +32,24 @@ export const ChannelContext = React.createContext<{
 	selectedChannel: Channel | null;
 }>({
 	channels: [],
-	selectedChannel: null
+	selectedChannel: null,
 });
 
-export const channelReducer = (state: State, {payload, type}: Action) => {
+export const channelReducer = function channelReducer(
+	state: State,
+	{payload, type}: Action
+) {
 	switch (type) {
 		case ActionType.setChannels: {
 			return {
 				...state,
-				channels: payload
+				channels: payload,
 			};
 		}
 		case ActionType.setSelectedChannel: {
 			return {
 				...state,
-				selectedChannel: payload
+				selectedChannel: payload,
 			};
 		}
 		default:
@@ -49,15 +57,15 @@ export const channelReducer = (state: State, {payload, type}: Action) => {
 	}
 };
 
-export const ChannelProvider = ({
+export const ChannelProvider = function ChannelProvider({
 	children,
-	selectedChannel: channelProp = null
-}: ChannelProviderProps) => {
+	selectedChannel: channelProp = null,
+}: ChannelProviderProps) {
 	const [{channels, selectedChannel}, channelDispatch] = useReducer(
 		channelReducer,
 		{
 			channels: [],
-			selectedChannel: channelProp || null
+			selectedChannel: channelProp || null,
 		}
 	);
 
@@ -72,4 +80,6 @@ export const ChannelProvider = ({
 
 export default ChannelProvider;
 
-export const useChannelContext = () => useContext(ChannelContext);
+export const useChannelContext = function useChannelContext() {
+	return useContext(ChannelContext);
+};

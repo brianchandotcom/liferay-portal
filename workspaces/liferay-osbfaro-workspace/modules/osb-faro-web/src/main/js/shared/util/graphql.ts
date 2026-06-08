@@ -1,6 +1,12 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {pickBy} from 'lodash';
+import {RangeSelectors} from '~/shared/types';
+
 import {RangeKeyTimeRanges} from './constants';
-import {RangeSelectors} from 'shared/types';
 
 export type GQLQuery = {
 	definitions: {
@@ -17,14 +23,14 @@ export type GQLQuery = {
 /**
  * Returns an object of variable keys used in the graphQL query.
  */
-export const getVariableDefinitions = (
+export const getVariableDefinitions = function getVariableDefinitions(
 	gqlQuery: GQLQuery
-): Record<string, boolean> =>
-	gqlQuery.definitions.reduce<Record<string, boolean>>(
+): Record<string, boolean> {
+	return gqlQuery.definitions.reduce<Record<string, boolean>>(
 		(acc, {variableDefinitions}) => {
 			variableDefinitions.forEach(({variable}) => {
 				const {
-					name: {value}
+					name: {value},
 				} = variable;
 
 				acc[value] = true;
@@ -34,13 +40,19 @@ export const getVariableDefinitions = (
 		},
 		{}
 	);
+};
 
-export const removeUnusedVariables = (
+export const removeUnusedVariables = function removeUnusedVariables(
 	variables: Record<string, unknown>,
 	validVariables: Record<string, boolean>
-) => pickBy(variables, (_, key) => validVariables[key]);
+) {
+	return pickBy(variables, (_, key) => validVariables[key]);
+};
 
-export const fetchPolicyDefinition = (rangeSelectors: RangeSelectors) =>
-	rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours
+export const fetchPolicyDefinition = function fetchPolicyDefinition(
+	rangeSelectors: RangeSelectors
+) {
+	return rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours
 		? 'network-only'
 		: 'cache-first';
+};

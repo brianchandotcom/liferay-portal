@@ -1,20 +1,26 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Option, Picker} from '@clayui/core';
 import autobind from 'autobind-decorator';
-import Form from 'shared/components/form';
 import getCN from 'classnames';
-import Input from 'shared/components/Input';
+import {Map} from 'immutable';
 import React from 'react';
-import {getPropertyValue} from '../utils/custom-inputs';
-import {ISegmentEditorCustomInputBase} from '../utils/types';
+import Input from '~/shared/components/Input';
+import Form from '~/shared/components/form';
+
 import {
-	isKnown,
-	isUnknown,
 	PropertyTypes,
 	RelationalOperators,
-	SUPPORTED_OPERATORS_MAP
+	SUPPORTED_OPERATORS_MAP,
+	isKnown,
+	isUnknown,
 } from '../utils/constants';
+import {getPropertyValue} from '../utils/custom-inputs';
+import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {isOfKnownType, isValid} from '../utils/utils';
-import {Map} from 'immutable';
-import {Option, Picker} from '@clayui/core';
 
 const NUMBER_OPERATORS = SUPPORTED_OPERATORS_MAP[PropertyTypes.Number];
 
@@ -39,7 +45,8 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 
 		if (operatorName === RelationalOperators.EQ && valueNull) {
 			operatorKey = isUnknown;
-		} else if (operatorName === RelationalOperators.NE && valueNull) {
+		}
+		else if (operatorName === RelationalOperators.NE && valueNull) {
 			operatorKey = isKnown;
 		}
 
@@ -53,7 +60,7 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 		onChange({
 			touched: true,
 			valid: isValid(getPropertyValue(value, 'value', 0)),
-			value
+			value,
 		});
 	}
 
@@ -73,7 +80,8 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 				['criterionGroup', 'items', 0, 'value'],
 				null
 			);
-		} else if (getPropertyValue(valueIMap, 'value', 0) === null) {
+		}
+		else if (getPropertyValue(valueIMap, 'value', 0) === null) {
 			newVal = newVal.setIn(['criterionGroup', 'items', 0, 'value'], '');
 		}
 
@@ -81,7 +89,7 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 			valid: isValid(
 				newVal.getIn(['criterionGroup', 'items', 0, 'value'])
 			),
-			value: newVal
+			value: newVal,
 		});
 	}
 
@@ -104,7 +112,7 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 			value: valueIMap.setIn(
 				['criterionGroup', 'items', 0, 'value'],
 				numberVal
-			)
+			),
 		});
 	}
 
@@ -115,20 +123,20 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 			property: {entityName},
 			touched,
 			valid,
-			value
+			value,
 		} = this.props;
 
 		const selectedOperatorKey = this.getSelectedOperatorKey();
 		const knownType = isOfKnownType(selectedOperatorKey ?? '');
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
@@ -136,7 +144,7 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 						<Picker
 							items={NUMBER_OPERATORS.map(({key, label}) => ({
 								label,
-								value: key
+								value: key,
 							}))}
 							onSelectionChange={this.handleOperatorChange}
 							selectedKey={selectedOperatorKey}
@@ -150,12 +158,12 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 					{!knownType && (
 						<Form.GroupItem
 							className={getCN(className, {
-								'has-error': !valid && touched
+								'has-error': !valid && touched,
 							})}
 							shrink
 						>
 							<Input
-								data-testid='number-input'
+								data-testid="number-input"
 								onBlur={this.handleBlur}
 								onChange={this.handleValueChange}
 								type={knownType ? 'text' : 'number'}

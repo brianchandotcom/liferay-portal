@@ -1,11 +1,16 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
-import {columns, FrontendDataSet} from 'shared/components/FrontendDataSet';
-import {Routes} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
 import {useParams} from 'react-router-dom';
-import {useRequest} from 'shared/hooks/useRequest';
+import * as API from '~/shared/api';
+import {FrontendDataSet, columns} from '~/shared/components/FrontendDataSet';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {sub} from '~/shared/util/lang';
+import {Routes} from '~/shared/util/router';
 
 const FDS_ID = 'account-details-attributes-dataset';
 
@@ -27,7 +32,7 @@ interface IAccountDetailsModalProps {
 const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 	accountId,
 	accountName,
-	onClose
+	onClose,
 }) => {
 	const {channelId, groupId} = useParams<{
 		channelId: string;
@@ -37,36 +42,36 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 
 	const {data} = useRequest({
 		dataSourceFn: API.accounts.fetchDetails,
-		variables: {accountId, channelId, groupId}
+		variables: {accountId, channelId, groupId},
 	});
 
 	const items: IAccountDetailsField[] = data?.items ?? [];
 
 	return (
-		<ClayModal observer={observer} size='lg'>
+		<ClayModal observer={observer} size="lg">
 			<ClayModal.Header>
 				{sub(Liferay.Language.get('xs-attributes'), [
-					accountName ?? ''
+					accountName ?? '',
 				])}
 			</ClayModal.Header>
 
-			<ClayModal.Body className='px-0'>
+			<ClayModal.Body className="px-0">
 				<FrontendDataSet
 					customDataRenderers={{
 						attributeNameAndValueRenderer: ({
 							itemData,
-							value
+							value,
 						}: {
 							itemData: {value?: string};
 							value: string;
 						}) =>
 							columns.attributeNameAndValue({
 								attributeName: value,
-								value: itemData.value ?? ''
+								value: itemData.value ?? '',
 							}),
 						dataSourceRenderer: ({
 							itemData,
-							value
+							value,
 						}: {
 							itemData: {dataSourceId?: string};
 							value: string;
@@ -75,16 +80,16 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 								channelId,
 								groupId,
 								itemData: {
-									id: itemData.dataSourceId ?? ''
+									id: itemData.dataSourceId ?? '',
 								},
 								route: Routes.SETTINGS_DATA_SOURCE,
-								value
+								value,
 							}),
 						lastModifiedRenderer: ({value}: {value: string}) =>
 							columns.dateRenderer({
 								itemData: {},
-								value
-							})
+								value,
+							}),
 					}}
 					id={FDS_ID}
 					items={items}
@@ -106,13 +111,13 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 										fieldName: 'name',
 										label: `${Liferay.Language.get(
 											'attribute-name'
-										)} | ${Liferay.Language.get('value')}`
+										)} | ${Liferay.Language.get('value')}`,
 									},
 									{
 										fieldName: 'sourceName',
 										label: Liferay.Language.get(
 											'source-name'
-										)
+										),
 									},
 									{
 										contentRenderer: 'dataSourceRenderer',
@@ -120,19 +125,19 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 										label: Liferay.Language.get(
 											'data-source'
 										),
-										sortable: true
+										sortable: true,
 									},
 									{
 										contentRenderer: 'lastModifiedRenderer',
 										fieldName: 'modifiedDate',
 										label: Liferay.Language.get(
 											'last-modified'
-										)
-									}
-								]
+										),
+									},
+								],
 							},
-							thumbnail: 'table'
-						}
+							thumbnail: 'table',
+						},
 					]}
 				/>
 			</ClayModal.Body>

@@ -1,33 +1,38 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
-import Loading from 'shared/components/Loading';
 import React from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {ClayButtonWithIcon} from '@clayui/button';
-import {connect, ConnectedProps} from 'react-redux';
+import {ConnectedProps, connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
 import {
-	convertMillisecondsToDays,
-	convertMillisecondsToHours
-} from 'shared/util/date';
-import {fetchMembershipMetrics} from 'shared/api/individual-segment';
-import {getIcon, getStatsColor, getTrendSign} from 'shared/util/metrics';
-import {getPercentage} from 'shared/util/util';
-import {
-	Metric,
 	METRICS_TEXT,
 	METRICS_TITLES,
-	TrendClassification
-} from 'segment/types';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {sub} from 'shared/util/lang';
-import {toRounded, toThousands} from 'shared/util/numbers';
-import {useParams} from 'react-router-dom';
-import {useRequest} from 'shared/hooks/useRequest';
+	Metric,
+	TrendClassification,
+} from '~/segment/types';
+import {addAlert} from '~/shared/actions/alerts';
+import {fetchMembershipMetrics} from '~/shared/api/individual-segment';
+import Card from '~/shared/components/Card';
+import Loading from '~/shared/components/Loading';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {Alert} from '~/shared/types';
+import {
+	convertMillisecondsToDays,
+	convertMillisecondsToHours,
+} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {getIcon, getStatsColor, getTrendSign} from '~/shared/util/metrics';
+import {toRounded, toThousands} from '~/shared/util/numbers';
+import {getPercentage} from '~/shared/util/util';
 
 const connector = connect(null, {
-	addAlert
+	addAlert,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -40,14 +45,14 @@ interface ICardSectionProps {
 	trendComparison?: number;
 }
 
-export const CardSection: React.FC<ICardSectionProps> = ({
+export const CardSection = function CardSection({
 	data,
 	description,
 	loading,
 	title,
 	totalComparisonValue,
-	trendComparison
-}) => {
+	trendComparison,
+}: ICardSectionProps) {
 	const isAverageSegmentMetric =
 		title === METRICS_TITLES.averageSegmentMembershipDurationMetric;
 
@@ -78,7 +83,8 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 			days >= 1 || rawValue === 0
 				? (daysLanguageKey as string)
 				: (hoursLanguageKey as string);
-	} else {
+	}
+	else {
 		displayValue = sub(
 			rawValue === 1
 				? Liferay.Language.get('x-member').toLowerCase()
@@ -95,24 +101,24 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 		((data?.previousValue ?? 0) * (trendComparison ?? 0)) / 100;
 
 	return (
-		<Card.Body className='card-section my-2 py-2 type-trend-root'>
+		<Card.Body className="card-section my-2 py-2 type-trend-root">
 			{loading && <Loading />}
 
 			{!loading && (
 				<>
-					<div className='align-items-center d-flex justify-content-between'>
-						<div className='align-items-center d-flex'>
+					<div className="align-items-center d-flex justify-content-between">
+						<div className="align-items-center d-flex">
 							<Card.Title>{title}</Card.Title>
 
 							<ClayPopover
-								alignPosition='top'
+								alignPosition="top"
 								closeOnClickOutside
 								header={title}
 								trigger={
 									<ClayButtonWithIcon
-										displayType='unstyled'
-										size='xs'
-										symbol='question-circle-full'
+										displayType="unstyled"
+										size="xs"
+										symbol="question-circle-full"
 									/>
 								}
 							>
@@ -120,7 +126,7 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 							</ClayPopover>
 						</div>
 
-						<span className='font-weight-semibold text-secondary text-uppercase'>
+						<span className="font-weight-semibold text-secondary text-uppercase">
 							{title ===
 								METRICS_TITLES.averageSegmentMembershipDurationMetric ||
 							title === METRICS_TITLES.totalMembersMetric
@@ -129,22 +135,22 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 						</span>
 					</div>
 
-					<h2 className='my-3 text-secondary'>{displayValue}</h2>
+					<h2 className="my-3 text-secondary">{displayValue}</h2>
 
-					<div className='d-flex flex-row'>
+					<div className="d-flex flex-row">
 						{!isAverageSegmentMetric && (
 							<>
-								<span className='mr-1 text-secondary'>
+								<span className="mr-1 text-secondary">
 									<span>
 										{sub(
 											title ===
 												METRICS_TITLES.totalMembersMetric
 												? Liferay.Language.get(
 														'x-percent-of-all-individuals'
-												  )
+													)
 												: Liferay.Language.get(
 														'x-percent-of-all-members'
-												  ),
+													),
 											[
 												toRounded(
 													getPercentage(
@@ -152,26 +158,24 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 														totalComparisonValue
 													),
 													2
-												)
+												),
 											]
 										)}
 									</span>
 								</span>
 
-								<span className='mx-3 text-secondary'>
-									{'|'}
-								</span>
+								<span className="mx-3 text-secondary">|</span>
 							</>
 						)}
 
 						<>
 							{isAverageSegmentMetric && (
-								<span className='mr-1 text-3 text-secondary'>
+								<span className="mr-1 text-3 text-secondary">
 									<span
 										style={{
 											color: getStatsColor(
 												data?.trend?.trendClassification
-											)
+											),
 										}}
 									>
 										{getTrendSign(previousValueComparison)}
@@ -183,46 +187,46 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 										),
 										[
 											<span
-												className='mr-1'
-												key='previousDays'
+												className="mr-1"
+												key="previousDays"
 												style={{
 													color: getStatsColor(
 														data?.trend
 															?.trendClassification
-													)
+													),
 												}}
 											>
 												{sub(
 													previousDurationDays === 1
 														? Liferay.Language.get(
 																'x-day'
-														  ).toLowerCase()
+															).toLowerCase()
 														: Liferay.Language.get(
 																'x-days'
-														  ).toLowerCase(),
+															).toLowerCase(),
 													[previousDurationDays]
 												)}
 											</span>,
-											30
+											30,
 										],
 										false
 									)}
 								</span>
 							)}
 
-							<span className='text-3'>
+							<span className="text-3">
 								{!isAverageSegmentMetric && (
 									<>
 										{!!data?.trend?.trendClassification &&
 											data?.trend?.trendClassification !==
 												TrendClassification.Neutral && (
 												<span
-													className='ml-1'
+													className="ml-1"
 													style={{
 														color: getStatsColor(
 															data?.trend
 																?.trendClassification
-														)
+														),
 													}}
 												>
 													<ClayIcon
@@ -237,27 +241,27 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 												</span>
 											)}
 
-										<span className='text-secondary'>
+										<span className="text-secondary">
 											{sub(
 												title ===
 													METRICS_TITLES.totalMembersMetric
 													? Liferay.Language.get(
 															'x-vs-last-x-days'
-													  )
+														)
 													: Liferay.Language.get(
 															'x-vs-last-x-day-avg'
-													  ),
+														),
 												[
 													<span
-														className='mr-1'
-														key='percentage'
+														className="mr-1"
+														key="percentage"
 														style={{
 															color:
 																getStatsColor(
 																	data?.trend
 																		?.trendClassification
 																) ||
-																TrendClassification.Neutral
+																TrendClassification.Neutral,
 														}}
 													>
 														{`${toRounded(
@@ -267,7 +271,7 @@ export const CardSection: React.FC<ICardSectionProps> = ({
 															2
 														)}%`}
 													</span>,
-													30
+													30,
 												],
 												false
 											)}
@@ -287,7 +291,7 @@ const MembershipMetrics: React.FC<PropsFromRedux> = ({addAlert}) => {
 
 	const {data, error, loading} = useRequest({
 		dataSourceFn: fetchMembershipMetrics,
-		variables: {groupId, individualSegmentId: id}
+		variables: {groupId, individualSegmentId: id},
 	});
 
 	if (error) {
@@ -295,12 +299,12 @@ const MembershipMetrics: React.FC<PropsFromRedux> = ({addAlert}) => {
 			alertType: Alert.Types.Error,
 			message: Liferay.Language.get(
 				'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-			)
+			),
 		});
 	}
 
 	return (
-		<div className='membership-metrics-root'>
+		<div className="membership-metrics-root">
 			<Card
 				minHeight={100}
 				reportContainer={
@@ -324,7 +328,7 @@ const MembershipMetrics: React.FC<PropsFromRedux> = ({addAlert}) => {
 			</Card>
 
 			<Card
-				className='d-flex flex-row justify-content-between'
+				className="d-flex flex-row justify-content-between"
 				minHeight={100}
 				reportContainer={ReportContainer.MembershipMetricsCard}
 			>

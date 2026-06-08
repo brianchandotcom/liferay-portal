@@ -1,14 +1,18 @@
-import BundleRouter from 'route-middleware/BundleRouter';
-import checkProjectState from 'shared/hoc/CheckProjectState';
-import Loading from 'shared/components/Loading';
-import React, {Fragment, lazy, Suspense} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import {compose} from 'shared/hoc';
-import {ENABLE_CSVFILE} from 'shared/util/constants';
-import {Routes} from 'shared/util/router';
-import {Switch, useParams} from 'react-router-dom';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import React, {Fragment, Suspense, lazy} from 'react';
 import {useStore} from 'react-redux';
-import {withOnboarding} from 'shared/hoc';
+import {Switch, useParams} from 'react-router-dom';
+import BundleRouter from '~/route-middleware/BundleRouter';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import {compose, withOnboarding} from '~/shared/hoc';
+import checkProjectState from '~/shared/hoc/CheckProjectState';
+import {ENABLE_CSVFILE} from '~/shared/util/constants';
+import {Routes} from '~/shared/util/router';
 
 // APIS
 
@@ -19,6 +23,7 @@ const Apis = lazy(() => import(/* webpackChunkName: "Apis" */ '../apis/pages'));
 const ConfigureCSV = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "ConfigureCSV" */ './data-source/ConfigureCSV'
 		)
 );
@@ -43,6 +48,7 @@ const DataSourceEdit = lazy(
 const DataSourceOnboarding = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DataSourceEdit" */ './data-source/Onboarding'
 		)
 );
@@ -52,6 +58,7 @@ const DataSourceList = lazy(
 const DeleteDataSource = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DeleteDataSource" */ './data-source/Delete'
 		) as any
 );
@@ -67,6 +74,7 @@ const Definitions = lazy(
 const ChannelList = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "ChannelList" */ '../channels/pages/ChannelList'
 		)
 );
@@ -80,6 +88,7 @@ const ChannelView = lazy(
 const RecommendationList = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "RecommendationList" */ '../recommendations/pages/Recommendations'
 		)
 );
@@ -87,6 +96,7 @@ const RecommendationList = lazy(
 const RecommendationCreateItemSimilarity = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "RecommendationCreateItemSimilarity" */ '../recommendations/pages/CreateItemSimilarity'
 		)
 );
@@ -94,6 +104,7 @@ const RecommendationCreateItemSimilarity = lazy(
 const RecommendationEdit = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "RecommendationEdit" */ '../recommendations/pages/Edit'
 		)
 );
@@ -101,6 +112,7 @@ const RecommendationEdit = lazy(
 const RecommendationView = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "RecommendationView" */ '../recommendations/pages/View'
 		)
 );
@@ -114,6 +126,7 @@ const UsageOverview = lazy(
 const UsageOverviewSaaS = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "UsageOverviewSaaS" */ './UsageOverviewSaaS'
 		)
 );
@@ -124,7 +137,7 @@ const WorkspaceSettings = lazy(
 	() => import(/* webpackChunkName: "WorkspaceSettings" */ './Workspace')
 );
 
-export const Settings = () => {
+export const Settings = function Settings() {
 	const {groupId} = useParams();
 	const store = useStore();
 
@@ -231,7 +244,7 @@ export const Settings = () => {
 				<BundleRouter data={Apis} path={Routes.SETTINGS_APIS} />
 
 				{recommendationsEnabled && (
-					<Fragment key='RECOMMENDATIONS'>
+					<Fragment key="RECOMMENDATIONS">
 						<BundleRouter
 							data={RecommendationList}
 							destructured={false}

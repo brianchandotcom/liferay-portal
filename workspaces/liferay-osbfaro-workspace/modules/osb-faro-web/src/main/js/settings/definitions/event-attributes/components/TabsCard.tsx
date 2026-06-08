@@ -1,12 +1,17 @@
-import BundleRouter from 'route-middleware/BundleRouter';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense, useState} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
+import React, {Suspense, lazy, useState} from 'react';
 import {Switch} from 'react-router';
+import BundleRouter from '~/route-middleware/BundleRouter';
+import Card from '~/shared/components/Card';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import {Routes, getMatchedRoute, toRoute} from '~/shared/util/router';
 
 const AttributeList = lazy(
 	() => import(/* webpackChunkName: "AttributeList" */ './AttributeList')
@@ -15,6 +20,7 @@ const AttributeList = lazy(
 const GlobalAttributeList = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "GlobalAttributeList" */ './GlobalAttributeList'
 		)
 );
@@ -23,13 +29,13 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('global-attributes'),
-		route: Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL
+		route: Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('attributes'),
-		route: Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_LOCAL
-	}
+		route: Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_LOCAL,
+	},
 ];
 
 interface ITabsCardProps {
@@ -40,14 +46,14 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 
 	const initialItem =
-		NAV_ITEMS.find(item => item.route === matchedRoute) ?? NAV_ITEMS[0];
+		NAV_ITEMS.find((item) => item.route === matchedRoute) ?? NAV_ITEMS[0];
 
 	const [activeLabel, setActiveLabel] = useState(initialItem.label);
 
 	return (
-		<Card key='cardContainer' pageDisplay>
+		<Card key="cardContainer" pageDisplay>
 			<ClayNavigationBar
-				className='page-subnav mx-4 my-3'
+				className="mx-4 my-3 page-subnav"
 				triggerLabel={activeLabel}
 			>
 				{NAV_ITEMS.map(({label, route}) => (

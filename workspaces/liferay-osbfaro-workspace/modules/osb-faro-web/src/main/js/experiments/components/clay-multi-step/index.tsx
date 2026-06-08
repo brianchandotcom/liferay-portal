@@ -1,5 +1,11 @@
-import Item from './Item';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {Children, cloneElement} from 'react';
+
+import Item from './Item';
 import {getStatus} from './utils';
 
 type IndicatorLabel = 'bottom' | 'top';
@@ -21,7 +27,9 @@ const ClayMultiStep: React.FC<ClayMultiStepIProps> & {
 	showIndicatorLabel = true,
 	...otherProps
 }) => {
-	const filteredChildren = React.Children.toArray(children).filter(c => !!c);
+	const filteredChildren = React.Children.toArray(children).filter(
+		(c) => !!c
+	);
 
 	return (
 		<ol
@@ -29,7 +37,9 @@ const ClayMultiStep: React.FC<ClayMultiStepIProps> & {
 			className={`multi-step-nav multi-step-indicator-label-${indicatorLabel}`}
 		>
 			{Children.map(filteredChildren, (child: any, index) => {
-				if (!child) return null;
+				if (!child) {
+					return null;
+				}
 
 				const stepNumber = initial + index;
 				const childProps = {
@@ -37,7 +47,7 @@ const ClayMultiStep: React.FC<ClayMultiStepIProps> & {
 					showIndicatorLabel,
 					status: getStatus(stepNumber, current),
 					stepNumber: `${stepNumber + 1}`,
-					...child.props
+					...child.props,
 				};
 
 				return cloneElement(child, childProps);

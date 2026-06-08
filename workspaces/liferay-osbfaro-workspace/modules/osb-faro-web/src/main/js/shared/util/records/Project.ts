@@ -1,5 +1,11 @@
-import TimeZone from './TimeZone';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {List, Map, Record} from 'immutable';
+
+import TimeZone from './TimeZone';
 
 interface IProject {
 	accountKey: string;
@@ -37,7 +43,7 @@ export default class Project
 		state: null,
 		stateStartDate: null,
 		timeZone: new TimeZone(),
-		userId: null
+		userId: null,
 	})
 	implements IProject
 {

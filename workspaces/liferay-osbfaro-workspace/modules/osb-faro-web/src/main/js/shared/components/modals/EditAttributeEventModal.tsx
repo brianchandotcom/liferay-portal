@@ -1,42 +1,46 @@
-import ClayButton from '@clayui/button';
-import client from 'shared/apollo/client';
-import Form, {
-	toPromise,
-	validateMaxLength,
-	validateRequired
-} from 'shared/components/form';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
-import React from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {Attribute, DataTypes, Event} from 'event-analysis/utils/types';
-import {connect, ConnectedProps} from 'react-redux';
-import {DATA_TYPE_LABELS_MAP} from 'event-analysis/utils/utils';
-import {debounce, get} from 'lodash/fp';
-import {DocumentNode, useMutation, useQuery} from '@apollo/client';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
+import {DocumentNode, useMutation, useQuery} from '@apollo/client';
+import ClayButton from '@clayui/button';
+import {debounce, get} from 'lodash/fp';
+import React from 'react';
+import {ConnectedProps, connect} from 'react-redux';
 import {
 	EventAttributeDefinitionData,
 	EventAttributeDefinitionVariables,
-	UpdateEventAttributeDefinitionVariables
-} from 'event-analysis/queries/EventAttributeDefinitionQuery';
+	UpdateEventAttributeDefinitionVariables,
+} from '~/event-analysis/queries/EventAttributeDefinitionQuery';
 import {
 	EventDefinitionData,
 	EventDefinitionVariables,
-	UpdateEventDefinitionVariables
-} from 'event-analysis/queries/EventDefinitionQuery';
-import {Modal as ModalType} from 'shared/types/Modal';
-import {SafeResults} from 'shared/hoc/util';
-import {sequence} from 'shared/util/promise';
-import {sub} from 'shared/util/lang';
+	UpdateEventDefinitionVariables,
+} from '~/event-analysis/queries/EventDefinitionQuery';
+import {Attribute, DataTypes, Event} from '~/event-analysis/utils/types';
+import {DATA_TYPE_LABELS_MAP} from '~/event-analysis/utils/utils';
+import {addAlert} from '~/shared/actions/alerts';
+import client from '~/shared/apollo/client';
+import Loading, {Align} from '~/shared/components/Loading';
+import Form, {
+	toPromise,
+	validateMaxLength,
+	validateRequired,
+} from '~/shared/components/form';
+import Modal from '~/shared/components/modal';
+import {SafeResults} from '~/shared/hoc/util';
+import {Alert} from '~/shared/types';
+import {Modal as ModalType} from '~/shared/types/Modal';
+import {sub} from '~/shared/util/lang';
+import {sequence} from '~/shared/util/promise';
 
 const DATA_TYPE_OPTIONS = [
 	DataTypes.Boolean,
 	DataTypes.Date,
 	DataTypes.Duration,
 	DataTypes.Number,
-	DataTypes.String
+	DataTypes.String,
 ];
 
 const connector = connect(null, {addAlert});
@@ -57,7 +61,7 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 	mutation,
 	onClose,
 	query,
-	showTypecast
+	showTypecast,
 }) => {
 	const [update] = useMutation<
 		EventDefinitionData | EventAttributeDefinitionData,
@@ -68,56 +72,57 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 		EventDefinitionVariables | EventAttributeDefinitionVariables
 	>(query, {
 		fetchPolicy: 'no-cache',
-		variables: {id}
+		variables: {id},
 	});
 
 	const dataMapper = get(
 		showTypecast ? 'eventAttributeDefinition' : 'eventDefinition'
 	);
 
-	const debouncedValidateDisplayName = debounce(250)(
-		(value: string): Promise<string> => {
-			let error = '';
+	const debouncedValidateDisplayName = debounce(250)((
+		value: string
+	): Promise<string> => {
+		let error = '';
 
-			if (value && value !== dataMapper(result.data).displayName) {
-				return client
-					.query({
-						fetchPolicy: 'no-cache',
-						query,
-						variables: {displayName: value.trim()}
-					})
-					.then(({data}) => {
-						if (dataMapper(data)) {
-							error = sub(
-								Liferay.Language.get(
-									'an-x-already-exists-with-that-display-name.-please-enter-a-different-display-name'
-								),
-								[
-									showTypecast
-										? Liferay.Language.get(
-												'attribute[noun]'
-										  ).toLowerCase()
-										: Liferay.Language.get(
-												'event'
-										  ).toLowerCase()
-								]
-							) as string;
-						}
+		if (value && value !== dataMapper(result.data).displayName) {
+			return client
+				.query({
+					fetchPolicy: 'no-cache',
+					query,
+					variables: {displayName: value.trim()},
+				})
+				.then(({data}) => {
+					if (dataMapper(data)) {
+						error = sub(
+							Liferay.Language.get(
+								'an-x-already-exists-with-that-display-name.-please-enter-a-different-display-name'
+							),
+							[
+								showTypecast
+									? Liferay.Language.get(
+											'attribute[noun]'
+										).toLowerCase()
+									: Liferay.Language.get(
+											'event'
+										).toLowerCase(),
+							]
+						) as string;
+					}
 
-						return error;
-					})
-					.catch(() => {
-						error = Liferay.Language.get(
-							'there-was-an-error-processing-your-request.-please-try-again'
-						);
+					return error;
+				})
+				.catch(() => {
+					error = Liferay.Language.get(
+						'there-was-an-error-processing-your-request.-please-try-again'
+					);
 
-						return error;
-					});
-			} else {
-				return toPromise(error);
-			}
+					return error;
+				});
 		}
-	);
+		else {
+			return toPromise(error);
+		}
+	});
 
 	const validateDisplayName = (value: any): Promise<any> =>
 		Promise.resolve(debouncedValidateDisplayName(value));
@@ -150,20 +155,20 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 												dataType,
 												description: description || '',
 												displayName:
-													displayName || name || ''
-										  }
+													displayName || name || '',
+											}
 										: {
 												description: description || '',
 												displayName:
-													displayName || name || ''
-										  }
+													displayName || name || '',
+											}
 								}
 								onSubmit={(variables, {setSubmitting}) => {
 									update({
 										variables: {
 											id,
-											...variables
-										}
+											...variables,
+										},
 									})
 										.then(({data}) => {
 											const {displayName, name} = get(
@@ -178,7 +183,7 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 														'x-has-been-updated'
 													),
 													[displayName || name]
-												) as string
+												) as string,
 											});
 
 											setSubmitting(false);
@@ -190,7 +195,7 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 												alertType: Alert.Types.Error,
 												message: Liferay.Language.get(
 													'there-was-an-error-processing-your-request.-please-try-again'
-												)
+												),
 											});
 
 											setSubmitting(false);
@@ -206,15 +211,15 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 														label={Liferay.Language.get(
 															'display-name'
 														)}
-														name='displayName'
+														name="displayName"
 														required
-														type='text'
+														type="text"
 														validate={sequence([
 															validateRequired,
 															validateMaxLength(
 																255
 															),
-															validateDisplayName
+															validateDisplayName,
 														])}
 													/>
 												</Form.GroupItem>
@@ -226,12 +231,12 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 														label={Liferay.Language.get(
 															'description'
 														)}
-														name='description'
-														type='textarea'
+														name="description"
+														type="textarea"
 														validate={sequence([
 															validateMaxLength(
 																255
-															)
+															),
 														])}
 													/>
 												</Form.GroupItem>
@@ -244,10 +249,10 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 															label={Liferay.Language.get(
 																'default-data-typecast'
 															)}
-															name='dataType'
+															name="dataType"
 														>
 															{DATA_TYPE_OPTIONS.map(
-																value => (
+																(value) => (
 																	<Form.Select.Item
 																		key={
 																			value
@@ -267,13 +272,13 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 														</Form.Select>
 													</Form.GroupItem>
 
-													<Form.GroupItem className='text-secondary'>
+													<Form.GroupItem className="text-secondary">
 														{Liferay.Language.get(
 															'data-typecast-determines-how-attributes-can-be-analyzed'
 														)}
 													</Form.GroupItem>
 
-													<Form.GroupItem className='text-secondary'>
+													<Form.GroupItem className="text-secondary">
 														{Liferay.Language.get(
 															'e.g.-typecasting-to-number-will-support-greater-than-or-less-than-conditions'
 														)}
@@ -284,18 +289,18 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 
 										<Modal.Footer>
 											<ClayButton
-												className='button-root'
-												displayType='secondary'
+												className="button-root"
+												displayType="secondary"
 												onClick={() => onClose(false)}
 											>
 												{Liferay.Language.get('cancel')}
 											</ClayButton>
 
 											<ClayButton
-												className='button-root'
+												className="button-root"
 												disabled={!isValid}
-												displayType='primary'
-												type='submit'
+												displayType="primary"
+												type="submit"
 											>
 												{isSubmitting && (
 													<Loading

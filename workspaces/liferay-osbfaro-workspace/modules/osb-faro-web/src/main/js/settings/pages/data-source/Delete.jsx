@@ -1,35 +1,40 @@
-import * as API from 'shared/api';
-import * as breadcrumbs from 'shared/util/breadcrumbs';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import BasePage from 'settings/components/base-page/BasePage';
-import DeleteDataSource from 'settings/components/DeleteDataSource';
 import getCN from 'classnames';
+import {truncate} from 'lodash';
+import {PropTypes} from 'prop-types';
 import React from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
+import {connect} from 'react-redux';
+import DeleteDataSource from '~/settings/components/DeleteDataSource';
+import BasePage from '~/settings/components/base-page/BasePage';
+import {addAlert} from '~/shared/actions/alerts';
+import {deleteDataSource} from '~/shared/actions/data-sources';
+import * as API from '~/shared/api';
 import {
 	compose,
 	withAdminPermission,
 	withDataSource,
 	withHistory,
 	withRequest,
-	withSheet
-} from 'shared/hoc';
-import {connect} from 'react-redux';
-import {DataSource} from 'shared/util/records';
-import {deleteDataSource} from 'shared/actions/data-sources';
-import {PropTypes} from 'prop-types';
-import {Routes, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
-import {truncate} from 'lodash';
+	withSheet,
+} from '~/shared/hoc';
+import {Alert} from '~/shared/types';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {sub} from '~/shared/util/lang';
+import {DataSource} from '~/shared/util/records';
+import {Routes, toRoute} from '~/shared/util/router';
 
 const WrappedDeleteDataSource = compose(
 	withSheet(),
 	withRequest(
 		API.dataSource.fetchDeletePreview,
-		data => ({entitiesCount: data}),
+		(data) => ({entitiesCount: data}),
 		{
-			page: false
+			page: false,
 		}
 	)
 )(DeleteDataSource);
@@ -42,7 +47,7 @@ export class Delete extends React.Component {
 		entitiesCount: PropTypes.object,
 		groupId: PropTypes.string.isRequired,
 		history: PropTypes.object.isRequired,
-		id: PropTypes.string.isRequired
+		id: PropTypes.string.isRequired,
 	};
 
 	@autobind
@@ -53,12 +58,12 @@ export class Delete extends React.Component {
 			deleteDataSource,
 			groupId,
 			history,
-			id
+			id,
 		} = this.props;
 
 		return deleteDataSource({
 			groupId,
-			id
+			id,
 		})
 			.then(() => {
 				addAlert({
@@ -68,12 +73,12 @@ export class Delete extends React.Component {
 							'x-is-currently-being-removed-from-analytics-cloud'
 						),
 						[truncate(name, {length: 50})]
-					)
+					),
 				});
 
 				history.push(
 					toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-						groupId
+						groupId,
 					})
 				);
 			})
@@ -81,7 +86,7 @@ export class Delete extends React.Component {
 				addAlert({
 					alertType: Alert.Types.Error,
 					message: Liferay.Language.get('error'),
-					timeout: false
+					timeout: false,
 				});
 			});
 	}
@@ -97,15 +102,15 @@ export class Delete extends React.Component {
 						groupId,
 						href: toRoute(Routes.SETTINGS_DATA_SOURCE, {
 							groupId,
-							id
+							id,
 						}),
 						id,
-						label: dataSource.name
+						label: dataSource.name,
 					}),
 					{
 						active: true,
-						label: Liferay.Language.get('delete-data-source')
-					}
+						label: Liferay.Language.get('delete-data-source'),
+					},
 				]}
 				className={getCN('data-source-delete-root', className)}
 				documentTitle={sub(
@@ -117,10 +122,10 @@ export class Delete extends React.Component {
 					'removing-this-data-source-will-impact-the-following-data-and-can-yield-unexpected-results'
 				)}
 				pageTitle={sub(Liferay.Language.get('confirm-removal-of-x'), [
-					dataSource.name
+					dataSource.name,
 				])}
 			>
-				<div className='page-container'>
+				<div className="page-container">
 					<WrappedDeleteDataSource
 						actionRequestFn={this.deleteDataSource}
 						dataSource={dataSource}

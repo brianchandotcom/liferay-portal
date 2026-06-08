@@ -1,17 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import HeaderRow from './HeaderRow';
-import Loading from 'shared/components/Loading';
-import React from 'react';
-import Row from './Row';
-import {get, isArray, noop, orderBy} from 'lodash';
 import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
+import {get, isArray, noop, orderBy} from 'lodash';
+import React from 'react';
+import Loading from '~/shared/components/Loading';
+import {OrderParams} from '~/shared/util/records';
+
+import HeaderRow from './HeaderRow';
+import Row from './Row';
+
 import type {Column} from './Row';
 
-export const getRowIdentifierValue = (
+export const getRowIdentifierValue = function getRowIdentifierValue(
 	item: {[key: string]: any},
 	rowIdentifier: string | string[]
-) => {
+) {
 	if (isArray(rowIdentifier)) {
 		return rowIdentifier.reduce((acc, rowIdentifierKey) => {
 			acc = acc.concat(get(item, rowIdentifierKey, rowIdentifierKey));
@@ -34,12 +41,12 @@ interface ITableProps {
 	internalSort?: boolean;
 	items: {[key: string]: any}[];
 	loading?: boolean;
-	orderIOMap?: OrderedMap<string, OrderParams>;
 	onOrderIOMapChange?: (orderIOMap: OrderedMap<string, OrderParams>) => void;
 	onRowClick?: (item: {[key: string]: any}) => void;
 	onRowDelete?: (item: {[key: string]: any}) => void;
 	onRowSave?: (item: {[key: string]: any}) => void;
 	onSelectItemsChange?: (item: {[key: string]: any}) => void;
+	orderIOMap?: OrderedMap<string, OrderParams>;
 	renderInlineRowActions?: (params: {
 		data: {[key: string]: any};
 		editing: boolean;
@@ -83,7 +90,7 @@ const Table: React.FC<ITableProps> = ({
 	rowIdentifier = 'id',
 	selectedItemsIOMap = OrderedMap(),
 	showCheckbox = false,
-	striped = true
+	striped = true,
 }) => {
 	const handleSortOrderChange = (orderParams: OrderParams) => {
 		if (onOrderIOMapChange) {
@@ -91,7 +98,8 @@ const Table: React.FC<ITableProps> = ({
 				onOrderIOMapChange(
 					orderIOMap.set(orderParams.field, orderParams)
 				);
-			} else {
+			}
+			else {
 				onOrderIOMapChange(
 					OrderedMap({[orderParams.field]: orderParams})
 				);
@@ -116,7 +124,7 @@ const Table: React.FC<ITableProps> = ({
 
 		return orderBy(
 			items,
-			item => {
+			(item) => {
 				const fieldValue = item[field];
 
 				if (typeof fieldValue === 'string') {
@@ -151,13 +159,13 @@ const Table: React.FC<ITableProps> = ({
 		{
 			'show-quick-actions-on-hover': renderRowActions,
 			'table-bordered': bordered,
-			'table-striped': striped
+			'table-striped': striped,
 		}
 	);
 
 	return (
 		<div className={rootClassName}>
-			<div className='table-responsive'>
+			<div className="table-responsive">
 				<table className={classes}>
 					<HeaderRow
 						columns={columns}
@@ -197,7 +205,7 @@ const Table: React.FC<ITableProps> = ({
 													: getRowIdentifierValue(
 															item,
 															rowIdentifier
-													  )
+														)
 											}
 											onClick={
 												disabled
@@ -215,7 +223,7 @@ const Table: React.FC<ITableProps> = ({
 												onSelectItemsChange
 													? selectedItemsIOMap.has(
 															item?.id
-													  )
+														)
 													: undefined
 											}
 											showCheckbox={showCheckbox}

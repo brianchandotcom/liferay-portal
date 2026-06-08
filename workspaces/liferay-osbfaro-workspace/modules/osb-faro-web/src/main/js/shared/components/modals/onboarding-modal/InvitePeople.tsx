@@ -1,18 +1,23 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import InfoPopover from 'shared/components/InfoPopover';
-import Input from 'shared/components/Input';
-import InputList, {Display} from 'shared/components/InputList';
-import Label from 'shared/components/form/Label';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
-import React, {useState} from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {connect, ConnectedProps} from 'react-redux';
 import {Text} from '@clayui/core';
-import {UserRoleNames} from 'shared/util/constants';
-import {validateEmail} from 'shared/util/email-validators';
+import React, {useState} from 'react';
+import {ConnectedProps, connect} from 'react-redux';
+import {addAlert} from '~/shared/actions/alerts';
+import * as API from '~/shared/api';
+import InfoPopover from '~/shared/components/InfoPopover';
+import Input from '~/shared/components/Input';
+import InputList, {Display} from '~/shared/components/InputList';
+import Loading, {Align} from '~/shared/components/Loading';
+import Label from '~/shared/components/form/Label';
+import Modal from '~/shared/components/modal';
+import {Alert} from '~/shared/types';
+import {UserRoleNames} from '~/shared/util/constants';
+import {validateEmail} from '~/shared/util/email-validators';
 
 const connector = connect(null, {addAlert});
 
@@ -30,7 +35,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 	dxpConnected,
 	groupId,
 	onClose,
-	onNext
+	onNext,
 }) => {
 	const [emails, setEmails] = useState([]);
 	const [inputValue, setInputValue] = useState('');
@@ -48,7 +53,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 				.inviteMany({
 					emailAddresses: emails,
 					groupId,
-					roleName: UserRoleNames.Member
+					roleName: UserRoleNames.Member,
 				})
 				.then(() => {
 					setLoading(false);
@@ -60,7 +65,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 						message: Liferay.Language.get(
 							'unable-to-send-request.-please-try-again-later'
 						),
-						timeout: false
+						timeout: false,
 					});
 
 					setLoading(false);
@@ -73,22 +78,23 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 			<Modal.Header onClose={onClose} />
 
 			<Modal.Body>
-				{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
-				<div className='analytics-invite-user-icon icon' />
 
-				<div className='text-center mb-4'>
-					<Text size={10} weight='bold'>
+				{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
+				<div className="analytics-invite-user-icon icon" />
+
+				<div className="mb-4 text-center">
+					<Text size={10} weight="bold">
 						{sent
 							? Liferay.Language.get('your-invite-was-sent')
 							: Liferay.Language.get(
 									'invite-people-to-workspace'
-							  )}
+								)}
 					</Text>
 				</div>
 
 				{sent ? (
-					<div className='text-center'>
-						<Text color='secondary' size={6}>
+					<div className="text-center">
+						<Text color="secondary" size={6}>
 							{Liferay.Language.get(
 								'you-can-see-the-new-members-invitation-status-and-role-permissions-under-user-management-in-settings'
 							)}
@@ -96,14 +102,14 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 					</div>
 				) : (
 					<div>
-						<div className='mb-2'>
+						<div className="mb-2">
 							<Label>
-								<Text size={6} weight='bold'>
+								<Text size={6} weight="bold">
 									{Liferay.Language.get('add-other-members')}
 								</Text>
 
 								<InfoPopover
-									className='ml-2'
+									className="ml-2"
 									content={Liferay.Language.get(
 										'each-users-role-can-be-set-under-user-management-in-settings'
 									)}
@@ -119,7 +125,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 								<InputList
 									errorAttr={{
 										className: 'has-warning',
-										icon: {display: Display.Warning}
+										icon: {display: Display.Warning},
 									}}
 									errorMessage={Liferay.Language.get(
 										'please-enter-a-valid-email-address'
@@ -139,8 +145,8 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 							</Input.GroupItem>
 						</Input.Group>
 
-						<div className='mt-1'>
-							<Text color='secondary' size={3}>
+						<div className="mt-1">
+							<Text color="secondary" size={3}>
 								{Liferay.Language.get(
 									'enter-email-addresses-separated-by-spaces-or-commas'
 								)}
@@ -152,21 +158,21 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={sent}
-					displayType='secondary'
+					displayType="secondary"
 					onClick={dxpConnected ? () => onNext() : onClose}
 				>
 					{Liferay.Language.get('skip')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root ml-2'
+					className="button-root ml-2"
 					disabled={
 						(!inputValue && !emails.length) ||
 						(!!inputValue && !validateEmail(inputValue))
 					}
-					displayType='primary'
+					displayType="primary"
 					onClick={
 						sent
 							? dxpConnected

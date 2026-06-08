@@ -1,15 +1,24 @@
-import {getFilters} from 'shared/util/filter';
-import {getSafeDecodedURIComponent} from 'shared/util/util';
-import {getSafeRangeSelectors, getSafeTouchpoint} from 'shared/util/util';
-import {isNil, reduce} from 'lodash';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-export const formatItem = item =>
-	reduce(
+import {isNil, reduce} from 'lodash';
+import {getFilters} from '~/shared/util/filter';
+import {
+	getSafeDecodedURIComponent,
+	getSafeRangeSelectors,
+	getSafeTouchpoint,
+} from '~/shared/util/util';
+
+export const formatItem = function formatItem(item) {
+	return reduce(
 		item,
 		(acc, val, key) => {
 			if (val && !isNil(val.value)) {
 				acc[key] = val.value;
-			} else {
+			}
+			else {
 				acc[key] = val;
 			}
 
@@ -17,6 +26,7 @@ export const formatItem = item =>
 		},
 		{}
 	);
+};
 
 /**
  * mapListResultsToProps
@@ -26,10 +36,10 @@ export const formatItem = item =>
  * @param {boolean} response.loading
  * @param {function} response.refetch
  */
-export const mapListResultsToProps = (
+export const mapListResultsToProps = function mapListResultsToProps(
 	{data, error, loading, refetch},
-	mapperFn = val => val
-) => {
+	mapperFn = (val) => val
+) {
 	if (data) {
 		const {items, total} = mapperFn(data);
 
@@ -41,7 +51,7 @@ export const mapListResultsToProps = (
 			items: formattedItems,
 			loading,
 			refetch,
-			total
+			total,
 		};
 	}
 
@@ -51,7 +61,7 @@ export const mapListResultsToProps = (
 		items: [],
 		loading,
 		refetch,
-		total: 0
+		total: 0,
 	};
 };
 
@@ -77,9 +87,10 @@ export function safeResultToProps(mapper) {
 			result = Object.assign(mapper(data, context, ownProps), {
 				error: null,
 				loading: false,
-				refetch
+				refetch,
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			result.error = error;
 			console.error(error); // eslint-disable-line no-console
 		}
@@ -102,54 +113,54 @@ export function getVariables({
 	filters,
 	interval,
 	params,
-	rangeSelectors = {}
+	rangeSelectors = {},
 }) {
 	const {
 		assetId: assetIdFromParams,
 		channelId,
 		title = '',
-		touchpoint = ''
+		touchpoint = '',
 	} = params;
 	const assetId = assetIdFromProps || assetIdFromParams;
 
 	let variables = {
 		title: getSafeDecodedURIComponent(title),
 		touchpoint: getSafeTouchpoint(touchpoint),
-		...getSafeRangeSelectors(rangeSelectors)
+		...getSafeRangeSelectors(rangeSelectors),
 	};
 
 	if (assetId) {
 		variables = {
 			...variables,
-			assetId: getSafeDecodedURIComponent(assetId)
+			assetId: getSafeDecodedURIComponent(assetId),
 		};
 	}
 
 	if (filters) {
 		variables = {
 			...variables,
-			...getFilters(filters)
+			...getFilters(filters),
 		};
 	}
 
 	if (interval) {
 		variables = {
 			...variables,
-			interval
+			interval,
 		};
 	}
 
 	if (channelId) {
 		variables = {
 			...variables,
-			channelId
+			channelId,
 		};
 	}
 
 	if (experienceId) {
 		variables = {
 			...variables,
-			experienceId
+			experienceId,
 		};
 	}
 

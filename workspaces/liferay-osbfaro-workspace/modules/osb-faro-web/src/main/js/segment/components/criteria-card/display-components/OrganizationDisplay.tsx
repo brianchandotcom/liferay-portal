@@ -1,23 +1,29 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import ReferencedEntityDisplay from './ReferencedEntityDisplay';
-import {EntityType} from 'segment/segment-editor/dynamic/context/referencedObjects';
+import {EntityType} from '~/segment/segment-editor/dynamic/context/referencedObjects';
+import {PropertyTypes} from '~/segment/segment-editor/dynamic/utils/constants';
 import {
 	getOperator,
-	getPropertyValue
-} from 'segment/segment-editor/dynamic/utils/custom-inputs';
+	getPropertyValue,
+} from '~/segment/segment-editor/dynamic/utils/custom-inputs';
+import {isOfKnownType} from '~/segment/segment-editor/dynamic/utils/utils';
+
+import {ICustomDisplayComponentProps} from '../types';
 import {
 	getOperatorLabel,
 	maybeFormatToKnownType,
-	maybeFormatValue
+	maybeFormatValue,
 } from '../utils';
-import {ICustomDisplayComponentProps} from '../types';
-import {isOfKnownType} from 'segment/segment-editor/dynamic/utils/utils';
-import {PropertyTypes} from 'segment/segment-editor/dynamic/utils/constants';
+import ReferencedEntityDisplay from './ReferencedEntityDisplay';
 
 const OrganizationDisplay: React.FC<ICustomDisplayComponentProps> = ({
 	criterion,
 	property,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const value = getPropertyValue(criterion.value, 'value', 0);
 
@@ -44,7 +50,8 @@ const OrganizationDisplay: React.FC<ICustomDisplayComponentProps> = ({
 					type={EntityType.Organizations}
 				/>
 			);
-		} else {
+		}
+		else {
 			return (
 				<b>{maybeFormatValue(value, propertyDataType, timeZoneId)}</b>
 			);

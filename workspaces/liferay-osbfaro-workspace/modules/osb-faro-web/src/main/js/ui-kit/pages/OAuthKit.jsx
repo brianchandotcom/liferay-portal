@@ -1,21 +1,26 @@
-import Alert from 'shared/components/Alert';
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Form, {validateRequired} from 'shared/components/form';
-import Loading, {Align} from 'shared/components/Loading';
-import React from 'react';
-import {DataSourceTypes} from 'shared/util/constants';
-import {getTempCredentials} from 'shared/util/oauth';
+import autobind from 'autobind-decorator';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import Alert from '~/shared/components/Alert';
+import Loading, {Align} from '~/shared/components/Loading';
+import Form, {validateRequired} from '~/shared/components/form';
+import {DataSourceTypes} from '~/shared/util/constants';
+import {getTempCredentials} from '~/shared/util/oauth';
 
 export default class OAuthKit extends React.Component {
 	static propTypes = {
-		groupId: PropTypes.string.isRequired
+		groupId: PropTypes.string.isRequired,
 	};
 
 	state = {
 		error: null,
-		tempCredentials: null
+		tempCredentials: null,
 	};
 
 	constructor(props) {
@@ -40,22 +45,22 @@ export default class OAuthKit extends React.Component {
 			consumerKey,
 			consumerSecret,
 			groupId: this.props.groupId,
-			type: DataSourceTypes.Liferay
+			type: DataSourceTypes.Liferay,
 		})
-			.then(tempCredentials => {
+			.then((tempCredentials) => {
 				setSubmitting(false);
 
 				this.setState({
 					error: null,
-					tempCredentials
+					tempCredentials,
 				});
 			})
-			.catch(error => {
+			.catch((error) => {
 				setSubmitting(false);
 
 				this.setState({
 					error,
-					tempCredentials: null
+					tempCredentials: null,
 				});
 			});
 	}
@@ -73,7 +78,7 @@ export default class OAuthKit extends React.Component {
 					initialValues={{
 						baseUrl: '',
 						consumerKey: '',
-						consumerSecret: ''
+						consumerSecret: '',
 					}}
 					innerRef={this._formRef}
 					onSubmit={this.handleSubmit}
@@ -82,34 +87,34 @@ export default class OAuthKit extends React.Component {
 						<Form.Form onSubmit={handleSubmit}>
 							<Form.Group>
 								<Form.Input
-									label='Url'
-									name='baseUrl'
+									label="Url"
+									name="baseUrl"
 									validate={validateRequired}
 								/>
 							</Form.Group>
 
 							<Form.Group>
 								<Form.Input
-									label='Client Secret'
-									name='consumerSecret'
+									label="Client Secret"
+									name="consumerSecret"
 									validate={validateRequired}
 								/>
 							</Form.Group>
 
 							<Form.Group>
 								<Form.Input
-									label='Client Key'
-									name='consumerKey'
+									label="Client Key"
+									name="consumerKey"
 									validate={validateRequired}
 								/>
 							</Form.Group>
 
 							<Form.Group>
 								<ClayButton
-									className='button-root'
+									className="button-root"
 									disabled={!isValid}
-									displayType='primary'
-									type='submit'
+									displayType="primary"
+									type="submit"
 								>
 									{isSubmitting && (
 										<Loading align={Align.Left} />
@@ -125,14 +130,14 @@ export default class OAuthKit extends React.Component {
 				{error ? (
 					<Alert
 						title={`Authorization failed: ${error.type}`}
-						type='danger'
+						type="danger"
 					/>
 				) : (
 					<Alert
 						title={`Received credentials: ${JSON.stringify(
 							tempCredentials
 						)}`}
-						type='success'
+						type="success"
 					/>
 				)}
 			</div>

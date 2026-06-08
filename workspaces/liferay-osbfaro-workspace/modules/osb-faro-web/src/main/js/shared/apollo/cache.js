@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {InMemoryCache} from '@apollo/client';
 
 /*
@@ -27,7 +32,7 @@ import {InMemoryCache} from '@apollo/client';
  * <add backend ticket id here once filed>.
  */
 
-const isPlainObject = value =>
+const isPlainObject = (value) =>
 	value !== null && typeof value === 'object' && !Array.isArray(value);
 
 const deepMergeMetric = (existing, incoming) => {
@@ -55,13 +60,13 @@ const metricRootMerge = {
 	journal: metricRootField,
 	objectEntry: metricRootField,
 	page: metricRootField,
-	site: metricRootField
+	site: metricRootField,
 };
 
 export default new InMemoryCache({
 	typePolicies: {
 		Query: {
-			fields: metricRootMerge
-		}
-	}
+			fields: metricRootMerge,
+		},
+	},
 });

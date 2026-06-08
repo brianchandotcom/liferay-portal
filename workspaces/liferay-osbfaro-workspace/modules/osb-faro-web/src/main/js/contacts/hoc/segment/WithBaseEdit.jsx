@@ -1,27 +1,32 @@
-import * as API from 'shared/api';
-import * as breadcrumbs from 'shared/util/breadcrumbs';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import BasePage from 'shared/components/base-page';
 import getCN from 'classnames';
-import Label from 'shared/components/Label';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {ChannelContext} from 'shared/context/channel';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {connect} from 'react-redux';
 import {PropTypes} from 'prop-types';
-import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
-import {Segment} from 'shared/util/records';
-import {SegmentTypes} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
+import React from 'react';
+import {connect} from 'react-redux';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import Label from '~/shared/components/Label';
+import BasePage from '~/shared/components/base-page';
+import {ChannelContext} from '~/shared/context/channel';
+import {Alert} from '~/shared/types';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {SegmentTypes} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+import {Segment} from '~/shared/util/records';
+import {Routes, SEGMENTS, toRoute} from '~/shared/util/router';
 
 const MessageKeys = {
 	ExternalReferenceCodeIsAlreadyUsed:
 		'external-reference-code-is-already-used',
 	NameCannotBeBlank: 'name-cannot-be-blank',
-	NameIsAlreadyUsed: 'name-is-already-used'
+	NameIsAlreadyUsed: 'name-is-already-used',
 };
 
 const ERRORS = {
@@ -29,21 +34,21 @@ const ERRORS = {
 		alertType: Alert.Types.Warning,
 		message: Liferay.Language.get(
 			'this-segment-erc-is-currently-in-use.-please-try-a-different-one'
-		)
+		),
 	},
 	[MessageKeys.NameCannotBeBlank]: {
 		alertType: Alert.Types.Error,
-		message: Liferay.Language.get('name-cannot-be-blank')
+		message: Liferay.Language.get('name-cannot-be-blank'),
 	},
 
 	[MessageKeys.NameIsAlreadyUsed]: {
 		alertType: Alert.Types.Warning,
 		message: Liferay.Language.get(
 			'this-segment-name-is-currently-in-use.-please-try-a-different-one'
-		)
-	}
+		),
+	},
 };
-export default WrappedComponent => {
+export default (WrappedComponent) => {
 	class BaseEdit extends React.Component {
 		static contextType = ChannelContext;
 
@@ -55,11 +60,11 @@ export default WrappedComponent => {
 			history: PropTypes.object.isRequired,
 			id: PropTypes.string,
 			open: PropTypes.func.isRequired,
-			segment: PropTypes.instanceOf(Segment)
+			segment: PropTypes.instanceOf(Segment),
 		};
 
 		state = {
-			onDelete: false
+			onDelete: false,
 		};
 
 		componentDidMount() {
@@ -74,7 +79,7 @@ export default WrappedComponent => {
 			open(modalTypes.CONFIRMATION_MODAL, {
 				message: (
 					<div>
-						<div className='h4 text-secondary'>
+						<div className="h4 text-secondary">
 							{Liferay.Language.get(
 								'are-you-sure-you-want-to-delete-this-segment'
 							)}
@@ -95,21 +100,21 @@ export default WrappedComponent => {
 					return API.individualSegment
 						.delete({
 							groupId,
-							ids: [id]
+							ids: [id],
 						})
 						.then(() => {
 							addAlert({
 								alertType: Alert.Types.Success,
 								message: Liferay.Language.get(
 									'the-segment-has-been-deleted'
-								)
+								),
 							});
 
 							history.push(
 								toRoute(Routes.CONTACTS_LIST_ENTITY, {
 									channelId,
 									groupId,
-									type: SEGMENTS
+									type: SEGMENTS,
 								})
 							);
 						})
@@ -117,7 +122,7 @@ export default WrappedComponent => {
 							addAlert({
 								alertType: Alert.Types.Error,
 								message: Liferay.Language.get('error'),
-								timeout: false
+								timeout: false,
 							});
 
 							this.setState({onDelete: false});
@@ -126,7 +131,7 @@ export default WrappedComponent => {
 				submitButtonDisplay: 'warning',
 				submitMessage: Liferay.Language.get('delete'),
 				title: Liferay.Language.get('warning'),
-				titleIcon: 'warning-full'
+				titleIcon: 'warning-full',
 			});
 		}
 
@@ -153,13 +158,13 @@ export default WrappedComponent => {
 					),
 					title: id
 						? Liferay.Language.get('updating')
-						: Liferay.Language.get('creating')
+						: Liferay.Language.get('creating'),
 				},
 				{closeOnBlur: false}
 			);
 
 			submitFn(form)
-				.then(segment => {
+				.then((segment) => {
 					if (
 						(Array.isArray(segment) && segment.length) ||
 						(segment && !Array.isArray(segment))
@@ -169,7 +174,7 @@ export default WrappedComponent => {
 								channelId,
 								groupId,
 								id: segment.id || segment[0].id,
-								type: SEGMENTS
+								type: SEGMENTS,
 							})
 						);
 
@@ -177,7 +182,7 @@ export default WrappedComponent => {
 							alertType: Alert.Types.Success,
 							message: Liferay.Language.get(
 								'changes-to-segment-saved'
-							)
+							),
 						});
 					}
 
@@ -185,12 +190,12 @@ export default WrappedComponent => {
 
 					return segment;
 				})
-				.catch(error => {
+				.catch((error) => {
 					const {alertType, message} = ERRORS[error.message];
 
 					addAlert({
 						alertType,
-						message
+						message,
 					});
 
 					setSubmitting(false);
@@ -222,31 +227,31 @@ export default WrappedComponent => {
 							href: toRoute(Routes.CONTACTS_SEGMENT, {
 								channelId,
 								groupId,
-								id
+								id,
 							}),
-							label: segment.name
+							label: segment.name,
 						}),
 						{
 							active: true,
-							label: Liferay.Language.get('edit')
-						}
-				  ]
+							label: Liferay.Language.get('edit'),
+						},
+					]
 				: [
 						{
 							active: true,
-							label: Liferay.Language.get('create-segment')
-						}
-				  ];
+							label: Liferay.Language.get('create-segment'),
+						},
+					];
 
 			const SEGMENT_TYPES_LABEL_MAP = {
 				[SegmentTypes.Batch]: Liferay.Language.get('batch'),
-				[SegmentTypes.RealTime]: Liferay.Language.get('real-time')
+				[SegmentTypes.RealTime]: Liferay.Language.get('real-time'),
 			};
 
 			return (
 				<BasePage
 					className={getCN('segment-edit-root', className, {
-						editing
+						editing,
 					})}
 					documentTitle={`${this.getPageTitle()} - ${Liferay.Language.get(
 						'segment'
@@ -257,10 +262,10 @@ export default WrappedComponent => {
 							breadcrumbs.getHome({
 								channelId,
 								groupId,
-								label: selectedChannel && selectedChannel.name
+								label: selectedChannel && selectedChannel.name,
 							}),
 							breadcrumbs.getSegments({channelId, groupId}),
-							...breadcrumbItems
+							...breadcrumbItems,
 						]}
 						groupId={groupId}
 					>
@@ -268,9 +273,9 @@ export default WrappedComponent => {
 							<BasePage.Header.TitleSection
 								title={this.getPageTitle()}
 							>
-								<Label display='secondary' size='lg' uppercase>
+								<Label display="secondary" size="lg" uppercase>
 									{sub(Liferay.Language.get('x-segment'), [
-										SEGMENT_TYPES_LABEL_MAP[type]
+										SEGMENT_TYPES_LABEL_MAP[type],
 									])}
 								</Label>
 							</BasePage.Header.TitleSection>
@@ -288,9 +293,9 @@ export default WrappedComponent => {
 															'delete-segment'
 														),
 														onClick:
-															this.deleteSegment
-													}
-											  ]
+															this.deleteSegment,
+													},
+												]
 											: []
 									}
 								/>
@@ -321,6 +326,6 @@ export default WrappedComponent => {
 	return connect(null, {
 		addAlert,
 		close,
-		open
+		open,
 	})(BaseEdit);
 };

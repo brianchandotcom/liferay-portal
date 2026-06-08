@@ -1,14 +1,19 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import FaroConstants from 'shared/util/constants';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import React from 'react';
 import {isFunction, times} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {setUriQueryValue} from 'shared/util/router';
+import React from 'react';
+import FaroConstants from '~/shared/util/constants';
+import {setUriQueryValue} from '~/shared/util/router';
 
 const DEFAULT_PAGE = FaroConstants.pagination.cur;
 
@@ -17,7 +22,7 @@ const PAGE_BUFFER = 2;
 class PaginationEllipsisItem extends React.Component {
 	static propTypes = {
 		onChange: PropTypes.func,
-		page: PropTypes.number
+		page: PropTypes.number,
 	};
 
 	@autobind
@@ -42,7 +47,7 @@ class PaginationEllipsis extends React.Component {
 	static propTypes = {
 		href: PropTypes.string,
 		items: PropTypes.array,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
 	};
 
 	render() {
@@ -56,14 +61,14 @@ class PaginationEllipsis extends React.Component {
 				trigger={
 					<ClayButton
 						aria-label={Liferay.Language.get('see-more')}
-						className='page-link'
-						displayType='unstyled'
+						className="page-link"
+						displayType="unstyled"
 					>
-						{'...'}
+						...
 					</ClayButton>
 				}
 			>
-				{items.map(item => (
+				{items.map((item) => (
 					<PaginationEllipsisItem
 						href={
 							onChange
@@ -85,7 +90,7 @@ class PaginationEllipsis extends React.Component {
 class PaginationItem extends React.Component {
 	static defaultProps = {
 		active: false,
-		disabled: false
+		disabled: false,
 	};
 
 	static propTypes = {
@@ -94,7 +99,7 @@ class PaginationItem extends React.Component {
 		href: PropTypes.string,
 		onChange: PropTypes.func,
 		page: PropTypes.oneOfType([PropTypes.number, PropTypes.element])
-			.isRequired
+			.isRequired,
 	};
 
 	@autobind
@@ -117,7 +122,7 @@ class PaginationItem extends React.Component {
 			<li className={classes}>
 				{page >= 0 ? (
 					<Button
-						className='button-root btn btn-unstyled page-link'
+						className="btn btn-unstyled button-root page-link"
 						disabled={disabled}
 						href={onChange ? '' : href}
 						onClick={this.handleChange}
@@ -134,20 +139,20 @@ class PaginationItem extends React.Component {
 
 class Pagination extends React.Component {
 	static defaultProps = {
-		page: DEFAULT_PAGE
+		page: DEFAULT_PAGE,
 	};
 
 	static propTypes = {
 		href: PropTypes.string,
 		onChange: PropTypes.func,
 		page: PropTypes.number,
-		total: PropTypes.number
+		total: PropTypes.number,
 	};
 
 	getPages() {
 		const {href, onChange, page, total} = this.props;
 
-		const pages = times(total, i => i + 1);
+		const pages = times(total, (i) => i + 1);
 
 		const frontBuffer = page - PAGE_BUFFER;
 
@@ -164,7 +169,7 @@ class Pagination extends React.Component {
 					<PaginationEllipsis
 						href={href}
 						items={removedItems}
-						key='paginationEllipsis1'
+						key="paginationEllipsis1"
 						onChange={onChange}
 					/>
 				);
@@ -186,7 +191,7 @@ class Pagination extends React.Component {
 					<PaginationEllipsis
 						href={href}
 						items={removedItems}
-						key='paginationEllipsis2'
+						key="paginationEllipsis2"
 						onChange={onChange}
 					/>
 				);
@@ -207,7 +212,7 @@ class Pagination extends React.Component {
 					onChange={onChange}
 					page={page - 1}
 				>
-					<ClayIcon className='icon-root' symbol='angle-left-small' />
+					<ClayIcon className="icon-root" symbol="angle-left-small" />
 				</PaginationItem>
 
 				{this.getPages().map((item, index) => (
@@ -229,8 +234,8 @@ class Pagination extends React.Component {
 					page={page + 1}
 				>
 					<ClayIcon
-						className='icon-root'
-						symbol='angle-right-small'
+						className="icon-root"
+						symbol="angle-right-small"
 					/>
 				</PaginationItem>
 			</ul>

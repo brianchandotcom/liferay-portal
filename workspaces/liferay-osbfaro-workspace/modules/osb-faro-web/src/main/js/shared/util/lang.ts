@@ -1,11 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {
 	AcquisitionTypes,
 	AssetTypes,
 	CompositionTypes,
 	DataSourceTypes,
 	EntityTypes,
-	UserRoleNames
-} from 'shared/util/constants';
+	UserRoleNames,
+} from '~/shared/util/constants';
 
 const SPLIT_REGEX = /({\d+})/g;
 
@@ -24,12 +29,14 @@ const SPLIT_REGEX = /({\d+})/g;
  * the array before it is returned. Use `false` if subbing in JSX.
  * @return {(string|Array)}
  */
-export const sub = (
+export const sub = function sub(
 	langKey: string,
 	args: any[],
 	join: boolean = true
-): string | any[] => {
-	const keyArray = langKey.split(SPLIT_REGEX).filter(val => val.length !== 0);
+): string | any[] {
+	const keyArray = langKey
+		.split(SPLIT_REGEX)
+		.filter((val) => val.length !== 0);
 
 	for (let i = 0; i < args.length; i++) {
 		const arg = args[i];
@@ -48,13 +55,13 @@ export const sub = (
 	return join ? (keyArray.join('') as string) : (keyArray as any[]);
 };
 
-export const getPluralMessage = (
+export const getPluralMessage = function getPluralMessage(
 	singular: string,
 	plural: string,
 	count: number = 0,
 	toString?: boolean,
 	subArray?: any[]
-) => {
+) {
 	const message = count === 1 ? singular : plural;
 
 	return sub(message, subArray || [count.toLocaleString()], toString);
@@ -63,7 +70,7 @@ export const getPluralMessage = (
 export const ACQUISITION_LABEL_MAP = {
 	[AcquisitionTypes.Channel]: Liferay.Language.get('channel'),
 	[AcquisitionTypes.Referrer]: Liferay.Language.get('referrer'),
-	[AcquisitionTypes.SourceMedium]: Liferay.Language.get('source-medium')
+	[AcquisitionTypes.SourceMedium]: Liferay.Language.get('source-medium'),
 };
 
 export const ASSET_TYPE_LANG_MAP = {
@@ -71,7 +78,7 @@ export const ASSET_TYPE_LANG_MAP = {
 	[AssetTypes.Document]: Liferay.Language.get('document'),
 	[AssetTypes.Form]: Liferay.Language.get('form'),
 	[AssetTypes.WebContent]: Liferay.Language.get('web-content'),
-	[AssetTypes.WebPage]: Liferay.Language.get('page')
+	[AssetTypes.WebPage]: Liferay.Language.get('page'),
 };
 
 export const COMPOSITION_LABEL_MAP = {
@@ -79,7 +86,7 @@ export const COMPOSITION_LABEL_MAP = {
 	[CompositionTypes.Acquisitions]: Liferay.Language.get('acquisitions'),
 	[CompositionTypes.SegmentInterests]: Liferay.Language.get('interests'),
 	[CompositionTypes.SiteInterests]: Liferay.Language.get('interests'),
-	[CompositionTypes.SearchTerms]: Liferay.Language.get('search-terms')
+	[CompositionTypes.SearchTerms]: Liferay.Language.get('search-terms'),
 };
 
 export const DETAILS_LABEL_MAP = {
@@ -97,7 +104,7 @@ export const DETAILS_LABEL_MAP = {
 	phone: Liferay.Language.get('phone-number'),
 	shippingAddress: Liferay.Language.get('shipping-address'),
 	website: Liferay.Language.get('website'),
-	yearStarted: Liferay.Language.get('year-started')
+	yearStarted: Liferay.Language.get('year-started'),
 };
 
 const ENTITY_LANG_MAP = {
@@ -106,21 +113,27 @@ const ENTITY_LANG_MAP = {
 	[EntityTypes.DataSource]: Liferay.Language.get('data-source'),
 	[EntityTypes.Individual]: Liferay.Language.get('individuals'),
 	[EntityTypes.IndividualsSegment]: Liferay.Language.get('segments'),
-	[EntityTypes.Page]: Liferay.Language.get('pages')
+	[EntityTypes.Page]: Liferay.Language.get('pages'),
 };
 
 const DATA_SOURCE_LANG_MAP: Record<string, string> = {
 	[DataSourceTypes.Csv]: Liferay.Language.get('csv'),
-	[DataSourceTypes.Liferay]: Liferay.Language.get('liferay-dxp')
+	[DataSourceTypes.Liferay]: Liferay.Language.get('liferay-dxp'),
 };
 
-export const getDataSourceLangKey = (type: string): string =>
-	DATA_SOURCE_LANG_MAP[type];
+export const getDataSourceLangKey = function getDataSourceLangKey(
+	type: string
+): string {
+	return DATA_SOURCE_LANG_MAP[type];
+};
 
-export const getTypeLangKey = (type: string): string =>
-	(ENTITY_LANG_MAP as Record<string, string>)[type];
+export const getTypeLangKey = function getTypeLangKey(type: string): string {
+	return (ENTITY_LANG_MAP as Record<string, string>)[type];
+};
 
-export const getDisplayRole = (roleName: UserRoleNames): string => {
+export const getDisplayRole = function getDisplayRole(
+	roleName: UserRoleNames
+): string {
 	switch (roleName) {
 		case UserRoleNames.Administrator:
 			return Liferay.Language.get('administrator');
@@ -138,7 +151,7 @@ const LABELS_MAP: Record<string, string> = {
 	mobile: Liferay.Language.get('other-mobile'),
 	smartphone: Liferay.Language.get('phone'),
 	tablet: Liferay.Language.get('tablet'),
-	tv: Liferay.Language.get('tv')
+	tv: Liferay.Language.get('tv'),
 };
 
 /**
@@ -146,8 +159,12 @@ const LABELS_MAP: Record<string, string> = {
  * @param {string} deviceType
  */
 
-export const getDeviceLabel = (deviceType: string): string =>
-	LABELS_MAP[deviceType.toLowerCase()] || deviceType;
+export const getDeviceLabel = function getDeviceLabel(
+	deviceType: string
+): string {
+	return LABELS_MAP[deviceType.toLowerCase()] || deviceType;
+};
 
-export const isJapaneseLang = (value: string): boolean =>
-	/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(value);
+export const isJapaneseLang = function isJapaneseLang(value: string): boolean {
+	return /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(value);
+};

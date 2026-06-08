@@ -1,17 +1,10 @@
-import Checkbox from 'shared/components/Checkbox';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
-import MetricStateRenderer from './MetricStateRenderer';
-import MetricTooltip from './MetricTooltip';
 import React, {useMemo, useState} from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {
-	ANIMATION_DURATION,
-	AXIS,
-	getAxisTickText,
-	getTextWidth,
-	getYAxisLabel
-} from 'shared/util/recharts';
 import {
 	Bar,
 	CartesianGrid,
@@ -22,20 +15,33 @@ import {
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
+import Checkbox from '~/shared/components/Checkbox';
+import ComposedChartWithEmptyState from '~/shared/components/ComposedChartWithEmptyState';
+import {useRetentionPeriod} from '~/shared/hooks/useRetentionPeriod';
+import {Interval, RangeSelectors} from '~/shared/types';
+import {formatXAxisDate} from '~/shared/util/charts';
+import {
+	ANIMATION_DURATION,
+	AXIS,
+	getAxisTickText,
+	getTextWidth,
+	getYAxisLabel,
+} from '~/shared/util/recharts';
+import URLConstants from '~/shared/util/url-constants';
+
+import {ICommonMetricProps, useActions, useData} from './MetricBaseCard';
+import MetricStateRenderer from './MetricStateRenderer';
+import MetricTooltip from './MetricTooltip';
+import {useMetricQuery} from './hooks';
 import {
 	CHART_DATA_PREVIOUS,
+	METRIC_TOOLTIP_LABEL_MAP,
 	getActiveItem,
 	getMetricData,
 	getMetricName,
-	METRIC_TOOLTIP_LABEL_MAP
 } from './util';
-import {formatXAxisDate} from 'shared/util/charts';
-import {ICommonMetricProps, useActions, useData} from './MetricBaseCard';
-import {Interval, RangeSelectors} from 'shared/types';
-import {useMetricQuery} from './hooks';
-import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
 
 export {CHART_DATA_PREVIOUS, METRIC_TOOLTIP_LABEL_MAP};
 
@@ -53,18 +59,20 @@ interface IMetricChartProps extends Partial<ICommonMetricProps> {
 	chartHeight?: number;
 	compareToPrevious: boolean;
 	data: any;
+
 	// @deprecated. It is used only on CustomAsset
+
 	onCompareToPreviousChange?: (compareToPrevious: boolean) => void;
 }
 
-export const MetricChart: React.FC<IMetricChartProps> = ({
+export const MetricChart = function MetricChart({
 	chartHeight: height = 350,
 	compareToPrevious,
 	data,
 	interval,
 	onCompareToPreviousChange,
-	rangeSelectors
-}) => {
+	rangeSelectors,
+}: IMetricChartProps) {
 	const {changeCompareToPrevious} = useActions();
 
 	const [hoveredLegendItem, setHoveredLegendItem] = useState<string | null>(
@@ -79,7 +87,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 		dateKeysIMap,
 		format,
 		intervals,
-		timeline
+		timeline,
 	} = useMemo(
 		() => getActiveItem(data, compareToPrevious),
 		[compareToPrevious, data]
@@ -101,6 +109,8 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 						);
 
 						if (yAxisWidth < textWidth) {
+
+							// eslint-disable-next-line react-hooks/exhaustive-deps
 							yAxisWidth = textWidth;
 						}
 
@@ -113,7 +123,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 							rangeSelectors!.rangeKey,
 							interval as Interval,
 							dateKeysIMap
-						)
+						),
 					}
 				)
 			),
@@ -140,14 +150,14 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 				<ComposedChart data={combinedData}>
 					<CartesianGrid
 						stroke={AXIS.gridStroke}
-						strokeDasharray='3 3'
+						strokeDasharray="3 3"
 						vertical={false}
 					/>
 
 					<XAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						dataKey='date'
-						interval='preserveStart'
+						dataKey="date"
+						interval="preserveStart"
 						stroke={AXIS.gridStroke}
 						tick={getAxisTickText('x', (int: number | string) =>
 							formatXAxisDate(
@@ -164,12 +174,12 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 
 					<XAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						dataKey='date'
-						orientation='top'
+						dataKey="date"
+						orientation="top"
 						stroke={AXIS.gridStroke}
 						tick={false}
 						tickLine={false}
-						xAxisId='top'
+						xAxisId="top"
 					/>
 
 					<YAxis
@@ -187,12 +197,12 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 
 					<YAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						orientation='right'
+						orientation="right"
 						stroke={AXIS.gridStroke}
 						tick={false}
 						tickLine={false}
 						width={12}
-						yAxisId='right'
+						yAxisId="right"
 					/>
 
 					<Tooltip
@@ -212,7 +222,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 					/>
 
 					<Legend
-						align='right'
+						align="right"
 						formatter={(label: string, {dataKey}: any) => {
 							if (
 								compositeContent &&
@@ -227,9 +237,9 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 									const {value} = compositeContent[dataName];
 
 									return (
-										<span className='legend-text-color'>
+										<span className="legend-text-color">
 											{label}
-											<b className='ml-1'>{value}</b>
+											<b className="ml-1">{value}</b>
 										</span>
 									);
 								}
@@ -242,12 +252,12 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 							setHoveredLegendItem(dataKey)
 						}
 						onMouseLeave={() => setHoveredLegendItem(null)}
-						verticalAlign='bottom'
+						verticalAlign="bottom"
 						wrapperStyle={{
 							bottom: 'auto',
 							color: AXIS.textColor,
 							fontSize: '14px',
-							lineHeight: '21px'
+							lineHeight: '21px',
 						}}
 					/>
 
@@ -263,13 +273,13 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 									: 0.2
 							}
 							key={item.id}
-							legendType='circle'
+							legendType="circle"
 							name={item.name}
 							onMouseEnter={(_e: unknown, index: number) =>
 								setHoverIndex(index)
 							}
 							onMouseLeave={() => setHoverIndex(-1)}
-							stackId='a'
+							stackId="a"
 						>
 							{item.data.map((_entry: unknown, index: number) => (
 								<Cell
@@ -288,7 +298,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 							dot={false}
 							fill={item.color}
 							key={item.id}
-							legendType='plainline'
+							legendType="plainline"
 							name={item.name}
 							stroke={item.color}
 							strokeDasharray={
@@ -303,13 +313,13 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 									: 0.2
 							}
 							strokeWidth={2}
-							type='linear'
+							type="linear"
 						/>
 					))}
 				</ComposedChart>
 			</ResponsiveContainer>
 
-			<div className='analytics-metrics-chart-sub-content-wrapper'>
+			<div className="analytics-metrics-chart-sub-content-wrapper">
 				<Checkbox
 					checked={compareToPrevious}
 					label={Liferay.Language.get('compare-to-previous')}
@@ -343,7 +353,7 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 	data,
 	emptyDescription = (
 		<>
-			<span className='mr-1'>
+			<span className="mr-1">
 				{Liferay.Language.get(
 					'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 				)}
@@ -351,8 +361,8 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 
 			<ClayLink
 				href={URLConstants.SitesDashboardSitesActivities}
-				key='DOCUMENTATION'
-				target='_blank'
+				key="DOCUMENTATION"
+				target="_blank"
 			>
 				{Liferay.Language.get('learn-more-about-site-activity')}
 			</ClayLink>
@@ -361,7 +371,7 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 	emptyTitle = Liferay.Language.get('there-is-no-data-for-site-activity'),
 	interval,
 	metricName,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const {chartDataMapFn, compareToPrevious, metrics, queries} = useData();
 
@@ -380,8 +390,10 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 				result: data[queries.name],
 				title,
 				tooltipTitle,
-				type
+				type,
 			}),
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[data, interval, metricName, rangeSelectors]
 	);
 
@@ -391,7 +403,7 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 	);
 
 	return (
-		<div className='analytics-metrics-chart'>
+		<div className="analytics-metrics-chart">
 			<ComposedChartWithEmptyState
 				emptyDescription={emptyDescription}
 				emptyTitle={emptyTitle}
@@ -414,7 +426,7 @@ const MetricChartRenderer: React.FC<ICommonMetricProps> = ({
 	experienceId,
 	filters,
 	interval,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const {activeItemIndex, metrics, queries, variables} = useData();
 
@@ -424,9 +436,10 @@ const MetricChartRenderer: React.FC<ICommonMetricProps> = ({
 		experienceId,
 		filters,
 		interval,
+
 		Query: queries.MetricQuery(metricName),
 		rangeSelectors,
-		variables
+		variables,
 	});
 
 	return (

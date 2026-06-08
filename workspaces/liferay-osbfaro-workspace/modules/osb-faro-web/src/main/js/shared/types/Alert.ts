@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export namespace Alert {
 	export enum Types {
 		Alert = 'ALERT',
@@ -5,13 +10,13 @@ export namespace Alert {
 		Error = 'ERROR',
 		Pending = 'PENDING',
 		Success = 'SUCCESS',
-		Warning = 'WARNING'
+		Warning = 'WARNING',
 	}
 
 	export type AddAlert = ({
 		alertType,
 		message,
-		timeout
+		timeout,
 	}: {
 		alertType: Types;
 		message: string;

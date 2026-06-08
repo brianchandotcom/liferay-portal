@@ -1,16 +1,21 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import DistributionCard from 'contacts/components/distribution-card';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {connect, ConnectedProps} from 'react-redux';
-import {fetchIndividualsDistribution} from 'shared/actions/distributions';
-import {Routes, toRoute} from 'shared/util/router';
-import {toPromise} from 'shared/util/validators';
+import {ConnectedProps, connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
+import DistributionCard from '~/contacts/components/distribution-card';
+import {fetchIndividualsDistribution} from '~/shared/actions/distributions';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
+import {toPromise} from '~/shared/util/validators';
 
 const connector = connect(null, {
-	fetchDistribution: fetchIndividualsDistribution
+	fetchDistribution: fetchIndividualsDistribution,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -33,8 +38,8 @@ const IndividualsDistributionCard: React.FC<
 	return (
 		<DistributionCard
 			channelId={channelId}
-			distributionKey='individualsDashboard'
-			fetchDistribution={name => toPromise(fetchDistribution(name))}
+			distributionKey="individualsDashboard"
+			fetchDistribution={(name) => toPromise(fetchDistribution(name))}
 			groupId={groupId}
 			id={id ?? groupId}
 			noResultsRenderer={() => (
@@ -46,12 +51,12 @@ const IndividualsDistributionCard: React.FC<
 							)}
 
 							<ClayLink
-								className='d-block'
+								className="d-block"
 								href={
 									URLConstants.IndividualsDashboardBreakdownDocumentation
 								}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'learn-more-about-distribution'
@@ -64,7 +69,7 @@ const IndividualsDistributionCard: React.FC<
 			)}
 			viewAllLink={toRoute(Routes.CONTACTS_INDIVIDUALS_DISTRIBUTION, {
 				channelId,
-				groupId
+				groupId,
 			})}
 			{...otherProps}
 		/>

@@ -1,37 +1,42 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import Constants from 'shared/util/constants';
+import {FormikHelpers} from 'formik';
+import React, {useRef, useState} from 'react';
+import {ConnectedProps, connect, useStore} from 'react-redux';
+import {addAlert} from '~/shared/actions/alerts';
+import {updateProject} from '~/shared/actions/projects';
+import * as API from '~/shared/api';
+import Loading, {Align} from '~/shared/components/Loading';
 import Form, {
 	validateMaxLength,
 	validateMinLength,
-	validatePattern
-} from 'shared/components/form';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
-import React, {useRef, useState} from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {compose, withHistory} from 'shared/hoc';
-import {connect, ConnectedProps, useStore} from 'react-redux';
-import {FormikHelpers} from 'formik';
-import {Routes, toRoute} from 'shared/util/router';
-import {sequence} from 'shared/util/promise';
-import {sub} from 'shared/util/lang';
-import {Text} from '@clayui/core';
-import {updateProject} from 'shared/actions/projects';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useRequest} from 'shared/hooks/useRequest';
+	validatePattern,
+} from '~/shared/components/form';
+import Modal from '~/shared/components/modal';
+import {compose, withHistory} from '~/shared/hoc';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {Alert} from '~/shared/types';
+import Constants from '~/shared/util/constants';
 import {
 	validateEmailDomain,
-	validateEmailDomainArr
-} from 'shared/util/email-validators';
+	validateEmailDomainArr,
+} from '~/shared/util/email-validators';
+import {sub} from '~/shared/util/lang';
+import {sequence} from '~/shared/util/promise';
+import {Routes, toRoute} from '~/shared/util/router';
 
 const {faroURL} = Constants;
 
 const connector = connect(null, {
 	addAlert,
-	updateProject
+	updateProject,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -56,7 +61,7 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 	history,
 	onClose,
 	onNext,
-	updateProject
+	updateProject,
 }) => {
 	const store = useStore();
 	const project = store.getState().getIn(['projects', groupId, 'data']);
@@ -77,7 +82,7 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 		{
 			resetForm,
 			setFieldError,
-			setSubmitting
+			setSubmitting,
 		}: FormikHelpers<ConfigureWorkspaceFormValues>
 	): void => {
 		const {initialValues} = formRef.current;
@@ -91,7 +96,7 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 				incidentReportEmailAddresses:
 					project.incidentReportEmailAddresses,
 				name: project.name,
-				timeZoneId: project.timeZoneId
+				timeZoneId: project.timeZoneId,
 			} as any) as unknown as Promise<void>
 		)
 			.then(() => {
@@ -104,14 +109,14 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 				if (values.friendlyURL !== groupId) {
 					history.replace(
 						toRoute(Routes.SETTINGS_WORKSPACE, {
-							groupId: values.friendlyURL || project.groupId
+							groupId: values.friendlyURL || project.groupId,
 						})
 					);
 				}
 
 				addAlert({
 					alertType: Alert.Types.Success,
-					message: Liferay.Language.get('workspace-settings-saved')
+					message: Liferay.Language.get('workspace-settings-saved'),
 				});
 
 				onNext?.();
@@ -121,11 +126,12 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 
 				if (field) {
 					setFieldError(field, message);
-				} else {
+				}
+				else {
 					addAlert({
 						alertType: Alert.Types.Error,
 						message: Liferay.Language.get('unknown-error'),
-						timeout: false
+						timeout: false,
 					});
 				}
 			});
@@ -137,15 +143,15 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 				enableReinitialize
 				initialValues={{
 					emailAddressDomains: initialEmailAddressDomains || [],
-					friendlyURL: project?.friendlyURL?.replace('/', '') || ''
+					friendlyURL: project?.friendlyURL?.replace('/', '') || '',
 				}}
 				innerRef={formRef as any}
 				onSubmit={handleSubmit}
 			>
 				{({dirty, errors, handleSubmit, isSubmitting, isValid}) => (
 					<Form.Form
-						onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-							e.preventDefault();
+						onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+							event.preventDefault();
 
 							if (!dirty || !isValid) {
 								onNext?.();
@@ -153,22 +159,22 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 								return;
 							}
 
-							handleSubmit(e);
+							handleSubmit(event);
 						}}
 					>
 						<Modal.Header onClose={onClose} />
 
 						<Modal.Body>
-							<div className='text-center'>
+							<div className="text-center">
 								<ClayIcon
-									className='icon-root'
+									className="icon-root"
 									style={{fontSize: '10rem'}}
-									symbol='analytics_onboarding_welcome'
+									symbol="analytics_onboarding_welcome"
 								/>
 							</div>
 
-							<div className='text-center mb-4'>
-								<Text size={10} weight='bold'>
+							<div className="mb-4 text-center">
+								<Text size={10} weight="bold">
 									{Liferay.Language.get(
 										'configure-your-workspace-access'
 									)}
@@ -177,30 +183,30 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 
 							<Form.Group>
 								<div>
-									<Text size={6} weight='semi-bold'>
+									<Text size={6} weight="semi-bold">
 										{Liferay.Language.get(
 											'set-a-friendly-workspace-url'
 										)}
 									</Text>
 								</div>
 
-								<Text color='secondary' size={3}>
+								<Text color="secondary" size={3}>
 									{Liferay.Language.get(
 										'define-a-friendly-url-that-others-can-use-to-access-and-share-this-workspace.-this-value-cannot-be-changed-after-it-is-set'
 									)}
 								</Text>
 
-								<div className='mb-1'>
-									<Text color='secondary' size={3}>
+								<div className="mb-1">
+									<Text color="secondary" size={3}>
 										{sub(
 											Liferay.Language.get('e.g.-x'),
 											[
-												<React.Fragment key='WORKSPACE_URL'>
+												<React.Fragment key="WORKSPACE_URL">
 													<span>{faroURL}</span>
 													<strong>
-														{'/workspace-name'}
+														/workspace-name
 													</strong>
-												</React.Fragment>
+												</React.Fragment>,
 											],
 											false
 										)}
@@ -208,15 +214,15 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 								</div>
 
 								<Form.Input
-									data-testid='friendly-url-input'
+									data-testid="friendly-url-input"
 									disabled={
 										disabled ||
 										(project && project.friendlyURL)
 									}
-									name='friendlyURL'
+									name="friendlyURL"
 									text={{
 										content: '/',
-										position: 'prepend'
+										position: 'prepend',
 									}}
 									validate={sequence([
 										validateMinLength(2),
@@ -229,37 +235,37 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 												),
 												["a-z, 0-9, '.', '_', '-'"]
 											) as string
-										)
+										),
 									])}
 								/>
 							</Form.Group>
 
-							<Form.Group className='mb-0'>
+							<Form.Group className="mb-0">
 								<div>
-									<Text size={6} weight='semi-bold'>
+									<Text size={6} weight="semi-bold">
 										{Liferay.Language.get(
 											'allowed-email-domains'
 										)}
 									</Text>
 								</div>
 
-								<Text color='secondary' size={3}>
+								<Text color="secondary" size={3}>
 									{Liferay.Language.get(
 										'define-which-email-domains-can-request-access-to-this-workspace'
 									)}
 								</Text>
 
-								<div className='mb-1'>
-									<Text color='secondary' size={3}>
+								<div className="mb-1">
+									<Text color="secondary" size={3}>
 										{sub(
 											Liferay.Language.get('e.g.-x'),
 											[
-												<React.Fragment key='EMAIL_DOMAIN'>
-													<span>{'user.name@'}</span>
+												<React.Fragment key="EMAIL_DOMAIN">
+													<span>user.name@</span>
 													<strong>
-														{'company-domain.com'}
+														company-domain.com
 													</strong>
-												</React.Fragment>
+												</React.Fragment>,
 											],
 											false
 										)}
@@ -271,11 +277,11 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 									errorMessage={Liferay.Language.get(
 										'please-enter-the-domain-in-this-format-domain-com'
 									)}
-									name='emailAddressDomains'
+									name="emailAddressDomains"
 									onChangeInputList={setEmailAddressDomains}
 									text={{
 										content: '@',
-										position: 'prepend'
+										position: 'prepend',
 									}}
 									validate={(items: string[]) =>
 										validateEmailDomainArr(
@@ -290,14 +296,14 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 
 						<Modal.Footer>
 							<ClayButton
-								className='button-root ml-2'
+								className="button-root ml-2"
 								disabled={
 									isSubmitting ||
 									!!errors.emailAddressDomains ||
 									!!errors.friendlyURL
 								}
-								displayType='primary'
-								type='submit'
+								displayType="primary"
+								type="submit"
 							>
 								{isSubmitting && <Loading align={Align.Left} />}
 
@@ -311,12 +317,12 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 	);
 };
 
-const ConfigureWorkspace: React.FC<IConfigureWorkspaceProps> = props => {
+const ConfigureWorkspace: React.FC<IConfigureWorkspaceProps> = (props) => {
 	const {data, loading} = useRequest({
 		dataSourceFn: API.projects.fetchEmailAddressDomains,
 		variables: {
-			groupId: props.groupId
-		}
+			groupId: props.groupId,
+		},
 	});
 
 	if (loading) {

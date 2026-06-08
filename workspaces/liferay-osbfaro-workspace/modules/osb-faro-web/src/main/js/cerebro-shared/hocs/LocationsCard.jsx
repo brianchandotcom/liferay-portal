@@ -1,12 +1,17 @@
-import BaseCard from 'shared/components/base-card';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
+import {PropTypes} from 'prop-types';
 import React from 'react';
 import {compose} from 'redux';
-import {GeomapCard} from 'shared/components/geo-map/GeomapCard';
-import {HOC_CARD_PROPTYPES} from 'shared/util/proptypes';
-import {PropTypes} from 'prop-types';
-import {withEmpty, withError, withLoading} from 'shared/hoc/util';
+import Card from '~/shared/components/Card';
+import BaseCard from '~/shared/components/base-card';
+import {GeomapCard} from '~/shared/components/geo-map/GeomapCard';
+import {withEmpty, withError, withLoading} from '~/shared/hoc/util';
+import {HOC_CARD_PROPTYPES} from '~/shared/util/proptypes';
 
 /**
  * HOC
@@ -25,7 +30,7 @@ const withLocationsCard = (
 		withEmpty({
 			description: (
 				<>
-					<span className='mr-1'>
+					<span className="mr-1">
 						{Liferay.Language.get(
 							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 						)}
@@ -33,14 +38,14 @@ const withLocationsCard = (
 
 					<ClayLink
 						href={documentationUrl}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{documentationTitle}
 					</ClayLink>
 				</>
 			),
-			title
+			title,
 		})
 	)(GeomapCard);
 
@@ -48,18 +53,18 @@ const withLocationsCard = (
 
 	const defaultProps = {
 		className: 'analytics-locations-card',
-		metricLabel: Liferay.Language.get('views')
+		metricLabel: Liferay.Language.get('views'),
 	};
 
 	const propTypes = {
-		metricLabel: PropTypes.string
+		metricLabel: PropTypes.string,
 	};
 
 	const LocationsCard = ({
 		className,
 		label,
 		legacyDropdownRangeKey,
-		metricLabel
+		metricLabel,
 	}) => (
 		<BaseCard
 			className={className}

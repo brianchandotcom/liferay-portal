@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MaskedInput renders input 1`] = `
+<div>
+  <input
+    class="input-root form-control"
+    type="text"
+    value=""
+  />
+</div>
+`;
+
+exports[`MaskedInput renders with mask showing 1`] = `
+<div>
+  <input
+    class="input-root form-control"
+    type="text"
+    value=""
+  />
+</div>
+`;
+
+exports[`MaskedInput succeeds with a specific mask 1`] = `
+<div>
+  <input
+    class="input-root form-control"
+    type="text"
+    value="123"
+  />
+</div>
+`;

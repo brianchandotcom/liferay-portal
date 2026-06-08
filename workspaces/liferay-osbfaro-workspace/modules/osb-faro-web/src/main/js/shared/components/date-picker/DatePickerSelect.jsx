@@ -1,6 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
+import React, {Component} from 'react';
 
 export default class DatePickerSelect extends Component {
 	static propTypes = {
@@ -10,13 +15,13 @@ export default class DatePickerSelect extends Component {
 			PropTypes.shape({
 				label: PropTypes.oneOfType([
 					PropTypes.number,
-					PropTypes.string
+					PropTypes.string,
 				]),
 				value: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-					.isRequired
+					.isRequired,
 			})
 		).isRequired,
-		selected: PropTypes.string
+		selected: PropTypes.string,
 	};
 
 	render() {

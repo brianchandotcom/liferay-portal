@@ -1,27 +1,32 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import React from 'react';
-import Sheet from 'shared/components/Sheet';
-import WorkspacesBasePage from 'shared/components/workspaces/BasePage';
-import {Routes} from 'shared/util/router';
+import Sheet from '~/shared/components/Sheet';
+import WorkspacesBasePage from '~/shared/components/workspaces/BasePage';
+import {Routes} from '~/shared/util/router';
 
 const WorkspaceNotFound: React.FC<React.HTMLAttributes<HTMLElement>> = ({
-	className
+	className,
 }) => (
 	<WorkspacesBasePage
 		className={getCN('workspace-not-found-root text-center', className)}
 	>
 		<Sheet>
 			<Sheet.Header>
-				<Sheet.Section className='title'>
+				<Sheet.Section className="title">
 					<ClayIcon
-						className='icon-root text-danger'
-						symbol='exclamation-circle'
+						className="icon-root text-danger"
+						symbol="exclamation-circle"
 					/>{' '}
 					{Liferay.Language.get('workspace-error')}
 				</Sheet.Section>
-				<Sheet.Section className='description'>
+				<Sheet.Section className="description">
 					{`${Liferay.Language.get(
 						'either-this-workspace-doesnt-exist-or-you-dont-have-access-to-it'
 					)} ${Liferay.Language.get(
@@ -31,8 +36,8 @@ const WorkspaceNotFound: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 				<Sheet.Section>
 					<ClayLink
 						button
-						className='button-root'
-						displayType='secondary'
+						className="button-root"
+						displayType="secondary"
 						href={Routes.WORKSPACES}
 					>
 						{Liferay.Language.get('go-back-to-your-workspaces')}

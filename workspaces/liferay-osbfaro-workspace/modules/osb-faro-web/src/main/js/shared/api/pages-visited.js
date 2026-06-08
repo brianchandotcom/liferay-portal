@@ -1,21 +1,26 @@
-import Constants, {TimeIntervals} from 'shared/util/constants';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import moment from 'moment';
-import sendRequest from 'shared/util/request';
+import Constants, {TimeIntervals} from '~/shared/util/constants';
 import {
+	TITLE,
 	buildOrderByFields,
 	createOrderIOMap,
-	TITLE
-} from 'shared/util/pagination';
-import {PAGES} from 'shared/util/router';
+} from '~/shared/util/pagination';
+import sendRequest from '~/shared/util/request';
+import {PAGES} from '~/shared/util/router';
 
 const {
-	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA}
+	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA},
 } = Constants;
 
 export const INTERVALS_MAP = {
 	[TimeIntervals.Day]: 1,
 	[TimeIntervals.Month]: 30,
-	[TimeIntervals.Week]: 7
+	[TimeIntervals.Week]: 7,
 };
 
 export function search(params) {
@@ -31,7 +36,7 @@ export function search(params) {
 		intervalInitDate,
 		orderIOMap = createOrderIOMap(TITLE),
 		page = DEFAULT_PAGE,
-		query = ''
+		query = '',
 	} = params;
 
 	const orderParams = orderIOMap.first();
@@ -52,9 +57,9 @@ export function search(params) {
 			interestName,
 			orderByFields,
 			query,
-			startDate: intervalInitDate
+			startDate: intervalInitDate,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/pages_visited`
+		path: `contacts/${groupId}/pages_visited`,
 	});
 }

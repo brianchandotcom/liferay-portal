@@ -1,10 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import React from 'react';
+import {Attribute, Filter} from '~/event-analysis/utils/types';
+import {getFilterDisplay} from '~/event-analysis/utils/utils';
+import {getSafeDecodedURIComponent} from '~/shared/util/util';
+
+import {DeleteFilter} from '../context/attributes';
 import AttributeChip, {DragTypes} from './AttributeChip';
 import AttributeFilterDropdown from './attribute-filter-dropdown';
-import React from 'react';
-import {Attribute, Filter} from 'event-analysis/utils/types';
-import {DeleteFilter} from '../context/attributes';
-import {getFilterDisplay} from 'event-analysis/utils/utils';
-import {getSafeDecodedURIComponent} from 'shared/util/util';
 
 const AttributeFilterChip: React.FC<{
 	attribute: Attribute;
@@ -21,7 +27,7 @@ const AttributeFilterChip: React.FC<{
 	index,
 	onCloseClick,
 	onMove,
-	uneditableIds
+	uneditableIds,
 }) => {
 	const [label, value] = getFilterDisplay(attribute, filter);
 
@@ -31,7 +37,7 @@ const AttributeFilterChip: React.FC<{
 		...attribute,
 		dataType,
 		description,
-		displayName
+		displayName,
 	};
 
 	return (
@@ -44,8 +50,8 @@ const AttributeFilterChip: React.FC<{
 					dataType={dataType}
 					description={description}
 					displayName={displayName}
-					draggable={false}
 					dragType={DragTypes.AttributeFilterChip}
+					draggable={false}
 					id={filter.id ?? ''}
 					index={index}
 					label={label}

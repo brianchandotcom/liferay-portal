@@ -1,18 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import Modal from 'shared/components/modal';
+import {OrderedMap} from 'immutable';
 import React, {useEffect} from 'react';
+import Modal from '~/shared/components/modal';
+import {Column} from '~/shared/components/table';
 import {
 	ActionTypes,
 	useSelectionContext,
-	withSelectionProvider
-} from 'shared/context/selection';
-import {Column} from 'shared/components/table';
-import {FilterByType} from 'shared/types';
-import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
-import {useRequest} from 'shared/hooks/useRequest';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+	withSelectionProvider,
+} from '~/shared/context/selection';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {FilterByType} from '~/shared/types';
+import {OrderParams} from '~/shared/util/records';
 
 interface ISearchableTableModalProps {
 	checkDisabled: (item?: object) => boolean;
@@ -60,7 +65,7 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 	orderByOptions,
 	requireSelection = true,
 	submitMessage = Liferay.Language.get('submit'),
-	title = Liferay.Language.get('select-items')
+	title = Liferay.Language.get('select-items'),
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
@@ -74,13 +79,13 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 		onQueryChange,
 		orderIOMap,
 		page,
-		query
+		query,
 	} = useStatefulPagination(undefined, {
 		initialDelta,
 		initialFilterBy,
 		initialOrderIOMap,
 		initialPage,
-		initialQuery
+		initialQuery,
 	});
 
 	useEffect(() => {
@@ -88,9 +93,11 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 			selectionDispatch?.({type: ActionTypes.ClearAll});
 			selectionDispatch?.({
 				payload: {items: initialSelectedItems},
-				type: ActionTypes.Add
+				type: ActionTypes.Add,
 			});
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const {data, error, loading, refetch} = useRequest({
@@ -101,16 +108,16 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 			filterBy,
 			orderIOMap,
 			page,
-			query
-		}
+			query,
+		},
 	});
 
 	return (
-		<Modal className={className} size='lg'>
+		<Modal className={className} size="lg">
 			<Modal.Header onClose={onClose} title={title} />
 
-			<Modal.Body className='p-0'>
-				<div className='text-secondary'>{instruction}</div>
+			<Modal.Body className="p-0">
+				<div className="text-secondary">{instruction}</div>
 
 				<CrossPageSelect
 					autoFocusSearch
@@ -133,7 +140,7 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 					page={page}
 					pageDisplay={false}
 					query={query}
-					rowIdentifier='id'
+					rowIdentifier="id"
 					selectedItems={selectedItems.map(({id}) => id)}
 					selectedItemsIOMap={selectedItems}
 					showCheckbox
@@ -143,17 +150,17 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={requireSelection && !selectedItems.size}
-					displayType='primary'
+					displayType="primary"
 					onClick={() => onSubmit(selectedItems, refetch)}
 				>
 					{submitMessage}

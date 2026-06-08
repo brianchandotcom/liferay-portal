@@ -1,14 +1,20 @@
-import BaseCard from 'shared/components/base-card';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {DocumentNode} from '@apollo/client';
+import React, {createContext, useContext, useReducer} from 'react';
+import Card from '~/shared/components/Card';
+import BaseCard from '~/shared/components/base-card';
+import {ICommonVariables, Interval, RangeSelectors} from '~/shared/types';
+import {RawFilters} from '~/shared/util/filter';
+
+import {ReportContainer} from '../download-report/DownloadPDFReport';
 import MetricChart from './MetricChart';
 import MetricTabs from './MetricTabs';
-import React, {createContext, useContext, useReducer} from 'react';
-import {DocumentNode} from '@apollo/client';
-import {getMetricsChartData} from './util';
-import {ICommonVariables, Interval, RangeSelectors} from 'shared/types';
 import {Metric} from './metrics';
-import {RawFilters} from 'shared/util/filter';
-import {ReportContainer} from '../download-report/DownloadPDFReport';
+import {getMetricsChartData} from './util';
 
 const initialState = {
 	activeItemIndex: 0,
@@ -18,23 +24,24 @@ const initialState = {
 	queries: {
 		MetricQuery: null,
 		name: '',
-		TabsQuery: null
+
+		TabsQuery: null,
 	},
-	variables: () => ({})
+	variables: () => ({}),
 };
 
 const MetricContext = createContext(initialState as any);
 
 const MetricContextActions = createContext({
 	changeActiveItemIndex: () => {},
-	changeCompareToPrevious: () => {}
+	changeCompareToPrevious: () => {},
 } as any);
 
 export interface ICommonMetricProps {
 	emptyDescription?: React.ReactNode;
 	emptyTitle?: string;
-	filters: RawFilters;
 	experienceId?: string;
+	filters: RawFilters;
 	interval: Interval;
 	rangeSelectors: RangeSelectors;
 }
@@ -55,8 +62,8 @@ interface IMetricBaseCardProps<TChartData>
 	metrics: Metric[];
 	queries: {
 		MetricQuery: (metricName: string) => DocumentNode;
-		name: string;
 		TabsQuery: DocumentNode;
+		name: string;
 	};
 	variables: (commonVariables: ICommonVariables) => any;
 }
@@ -72,7 +79,7 @@ function MetricBaseCard<TChartData>({
 	queries,
 	reportContainer,
 	showIntervals = false,
-	variables
+	variables,
 }: IMetricBaseCardProps<TChartData>): React.ReactElement {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -80,15 +87,15 @@ function MetricBaseCard<TChartData>({
 		changeActiveItemIndex: (activeItemIndex: number) => {
 			dispatch({
 				payload: activeItemIndex,
-				type: Actions.UpdateActiveItemIndex
+				type: Actions.UpdateActiveItemIndex,
 			});
 		},
 		changeCompareToPrevious: (compareToPrevious: boolean) => {
 			dispatch({
 				payload: compareToPrevious,
-				type: Actions.UpdateCompareToPrevious
+				type: Actions.UpdateCompareToPrevious,
 			});
-		}
+		},
 	};
 
 	return (
@@ -98,12 +105,12 @@ function MetricBaseCard<TChartData>({
 				chartDataMapFn,
 				metrics,
 				queries,
-				variables
+				variables,
 			}}
 		>
 			<MetricContextActions.Provider value={actions}>
 				<BaseCard
-					className='analytics-metrics-card'
+					className="analytics-metrics-card"
 					id={id}
 					label={label}
 					legacyDropdownRangeKey={legacyDropdownRangeKey}
@@ -118,11 +125,11 @@ function MetricBaseCard<TChartData>({
 							experienceId,
 							filters,
 							interval,
-							rangeSelectors
+							rangeSelectors,
 						};
 
 						return (
-							<Card.Body className='analytics-metrics'>
+							<Card.Body className="analytics-metrics">
 								<MetricTabs {...sharedProps} />
 
 								<MetricChart {...sharedProps} />
@@ -142,8 +149,8 @@ type TMetricState = {
 	metrics: Metric[];
 	queries: {
 		MetricQuery: ((metricName: string) => DocumentNode) | null;
-		name: string;
 		TabsQuery: DocumentNode | null;
+		name: string;
 	};
 	variables: (commonVariables: ICommonVariables) => any;
 };
@@ -153,7 +160,10 @@ type TMetricAction = {
 	type: Actions;
 };
 
-export const reducer = (state: TMetricState, action: TMetricAction) => {
+export const reducer = function reducer(
+	state: TMetricState,
+	action: TMetricAction
+) {
 	const handlerFn = actionHandlers[action.type];
 
 	if (handlerFn) {
@@ -165,7 +175,7 @@ export const reducer = (state: TMetricState, action: TMetricAction) => {
 
 enum Actions {
 	UpdateActiveItemIndex = 'UPDATE_ACTIVE_ITEM_INDEX',
-	UpdateCompareToPrevious = 'UPDATE_COMPARE_TO_PREVIOUS'
+	UpdateCompareToPrevious = 'UPDATE_COMPARE_TO_PREVIOUS',
 }
 
 const actionHandlers: Record<
@@ -174,15 +184,19 @@ const actionHandlers: Record<
 > = {
 	[Actions.UpdateActiveItemIndex]: (state, {payload}) => ({
 		...state,
-		activeItemIndex: payload
+		activeItemIndex: payload,
 	}),
 	[Actions.UpdateCompareToPrevious]: (state, {payload}) => ({
 		...state,
-		compareToPrevious: payload
-	})
+		compareToPrevious: payload,
+	}),
 };
 
-export const useData = () => useContext(MetricContext);
-export const useActions = () => useContext(MetricContextActions);
+export const useData = function useData() {
+	return useContext(MetricContext);
+};
+export const useActions = function useActions() {
+	return useContext(MetricContextActions);
+};
 
 export default MetricBaseCard;

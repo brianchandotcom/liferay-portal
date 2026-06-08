@@ -1,17 +1,17 @@
 /**
- * Map Segment Growth API response for use in a Component.
- * @param {Array} growth - The Segment Growth history data.
- * @returns {Object} - The remapped Segment Growth history.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 export function mapGrowthHistory(growth) {
 	return {
-		data: growth.map(item => ({
+		data: growth.map((item) => ({
 			added: item.addedIndividualsCount,
 			anonymousCount: item.anonymousIndividualsCount,
 			knownCount: item.knownIndividualsCount,
 			modifiedDate: item.intervalInitDate,
 			removed: item.removedIndividualsCount,
-			value: item.individualsCount
-		}))
+			value: item.individualsCount,
+		})),
 	};
 }

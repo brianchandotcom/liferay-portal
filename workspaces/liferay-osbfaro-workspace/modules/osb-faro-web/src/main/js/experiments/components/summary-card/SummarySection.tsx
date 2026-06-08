@@ -1,24 +1,29 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
-import {sub} from 'shared/util/lang';
+import {sub} from '~/shared/util/lang';
 
 interface SummarySectionIProps extends React.HTMLAttributes<HTMLElement> {
 	title: string;
 }
 
 export const SummarySection: React.FC<SummarySectionIProps> & {
-	Variant: typeof Variant;
 	Description: typeof Description;
 	Heading: typeof Heading;
-	ProgressBar: typeof ProgressBar;
 	MetricType: typeof MetricType;
-} = ({children, className, title, ...otherProps}) => {
+	ProgressBar: typeof ProgressBar;
+	Variant: typeof Variant;
+} = function SummarySection({children, className, title, ...otherProps}) {
 	const classes = getCN('analytics-summary-section', className);
 
 	return (
 		<div className={classes} {...otherProps}>
-			<div className='analytics-summary-section-title'>{title}</div>
+			<div className="analytics-summary-section-title">{title}</div>
 
 			{children}
 		</div>
@@ -26,17 +31,17 @@ export const SummarySection: React.FC<SummarySectionIProps> & {
 };
 
 const Description = ({value}: {value: React.ReactNode}) => (
-	<div className='analytics-summary-section-description'>{value}</div>
+	<div className="analytics-summary-section-description">{value}</div>
 );
 
 const Heading = ({value}: {value: React.ReactNode}) => (
-	<h2 className='analytics-summary-section-heading'>{value}</h2>
+	<h2 className="analytics-summary-section-heading">{value}</h2>
 );
 
 const MetricType = ({value}: {value: React.ReactNode}) => (
-	<div className='analytics-summary-section-metric-type'>
-		<span className='analytics-summary-section-metric-type-icon'>
-			<ClayIcon className='icon-root' symbol='web-content' />
+	<div className="analytics-summary-section-metric-type">
+		<span className="analytics-summary-section-metric-type-icon">
+			<ClayIcon className="icon-root" symbol="web-content" />
 		</span>
 
 		{value}
@@ -46,11 +51,11 @@ const MetricType = ({value}: {value: React.ReactNode}) => (
 const ProgressBar = ({value}: {value: number}) => (
 	<div
 		className={getCN('analytics-summary-section-progress', {
-			complete: value === 100
+			complete: value === 100,
 		})}
 	>
 		<div
-			className='analytics-summary-section-progress-bar'
+			className="analytics-summary-section-progress-bar"
 			style={{width: `${value}%`}}
 		/>
 	</div>
@@ -58,7 +63,7 @@ const ProgressBar = ({value}: {value: number}) => (
 
 const Variant = ({
 	lift,
-	status
+	status,
 }: {
 	lift: number | string;
 	status: 'up' | 'down';
@@ -66,14 +71,14 @@ const Variant = ({
 	const symbol = status === 'up' ? 'caret-top' : 'caret-bottom';
 
 	return (
-		<div className='analytics-summary-section-variant'>
+		<div className="analytics-summary-section-variant">
 			<span
 				className={getCN('analytics-summary-section-variant-status', {
 					[`analytics-summary-section-variant-status-${status}`]:
-						status
+						status,
 				})}
 			>
-				<ClayIcon className='icon-root' symbol={symbol} />
+				<ClayIcon className="icon-root" symbol={symbol} />
 
 				{sub(Liferay.Language.get('x-lift'), [lift])}
 			</span>

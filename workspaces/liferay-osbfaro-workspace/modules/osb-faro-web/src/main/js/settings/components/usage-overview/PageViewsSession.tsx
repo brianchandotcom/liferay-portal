@@ -1,18 +1,26 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import moment from 'moment';
 import React from 'react';
-import {Colors} from 'shared/util/charts';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {Colors} from '~/shared/util/charts';
+import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {STATUS_DISPLAY_MAP} from '~/shared/util/subscriptions';
+
 import {CurrentUsage} from './CurrentUsage';
-import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from 'shared/util/date';
-import {STATUS_DISPLAY_MAP} from 'shared/util/subscriptions';
-import {sub} from 'shared/util/lang';
 import {UsageMetric} from './UsageMetric';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 interface IPageViewsSessionProps {
 	currentPlan: any;
 }
 
-export const PageViewsSession = ({currentPlan}: IPageViewsSessionProps) => {
+export const PageViewsSession = function PageViewsSession({
+	currentPlan,
+}: IPageViewsSessionProps) {
 	const {timeZoneId} = useTimeZone();
 	const {count, limit, status} = currentPlan.metrics.get('pageViews');
 	const available = limit - count;
@@ -29,7 +37,7 @@ export const PageViewsSession = ({currentPlan}: IPageViewsSessionProps) => {
 							moment(currentPlan.startDate),
 							CUSTOM_DATE_FORMAT,
 							timeZoneId
-						)
+						),
 					]
 				) as string
 			}
@@ -45,8 +53,8 @@ export const PageViewsSession = ({currentPlan}: IPageViewsSessionProps) => {
 							]
 						],
 						label: Liferay.Language.get('page-views'),
-						value: count
-					}
+						value: count,
+					},
 				}}
 				legendText={sub(
 					Liferay.Language.get('x-page-views-are-available'),

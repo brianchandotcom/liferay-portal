@@ -1,8 +1,13 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export namespace Modal {
 	export enum actionTypes {
 		CLOSE_ALL_MODALS = 'CLOSE_ALL_MODALS',
 		CLOSE_MODAL = 'CLOSE_MODAL',
-		OPEN_MODAL = 'OPEN_MODAL'
+		OPEN_MODAL = 'OPEN_MODAL',
 	}
 
 	export enum modalTypes {
@@ -39,7 +44,7 @@ export namespace Modal {
 		TEST = 'TEST',
 		TIME_ZONE_SELECTION_MODAL = 'TIME_ZONE_SELECTION_MODAL',
 		UNABLE_DELETE_PROPERTY_MODAL = 'UNABLE_DELETE_PROPERTY_MODAL',
-		UNASSIGNED_SEGMENTS_MODAL = 'UNASSIGNED_SEGMENTS_MODAL'
+		UNASSIGNED_SEGMENTS_MODAL = 'UNASSIGNED_SEGMENTS_MODAL',
 	}
 
 	export type close = () => {type: actionTypes};

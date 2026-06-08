@@ -1,42 +1,47 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import React from 'react';
-import SearchableEntityTable from 'shared/components/SearchableEntityTable';
-import {createOrderIOMap} from 'shared/util/pagination';
-import {mockIndividual} from 'test/data';
 import {noop, times} from 'lodash';
+import React from 'react';
+import SearchableEntityTable from '~/shared/components/SearchableEntityTable';
+import {createOrderIOMap} from '~/shared/util/pagination';
+import {mockIndividual} from '~/test/data';
 
 const COLUMNS = [
 	{
 		accessor: 'name',
 		className: 'table-cell-expand',
 		label: 'Name',
-		title: true
+		title: true,
 	},
 	{
 		accessor: 'properties.salary',
-		label: 'Salary'
+		label: 'Salary',
 	},
 	{
 		accessor: 'properties.jobTitle',
-		label: 'Job Title'
+		label: 'Job Title',
 	},
 	{
 		accessor: 'properties.country',
-		label: 'Country'
+		label: 'Country',
 	},
 	{
 		accessor: 'properties.age',
-		label: 'Age'
-	}
+		label: 'Age',
+	},
 ];
 
 const TOTAL = 5;
 
-const INDIVIDUALS = times(TOTAL, i =>
+const INDIVIDUALS = times(TOTAL, (i) =>
 	mockIndividual(i, {
 		age: Math.round(Math.random() * 100),
 		country: 'USA',
-		jobTitle: 'Developer'
+		jobTitle: 'Developer',
 	})
 );
 
@@ -49,26 +54,26 @@ class SearchableEntityTableKit extends React.Component {
 	render() {
 		return (
 			<div>
-				<h3>{'SearchableEntityTable'}</h3>
+				<h3>SearchableEntityTable</h3>
 
 				<SearchableEntityTable
 					checkDisabled={noop}
 					columns={COLUMNS}
 					dataSourceFn={this.fetchData}
-					groupId='23'
+					groupId="23"
 					orderIOMap={createOrderIOMap('name')}
-					rowIdentifier='id'
+					rowIdentifier="id"
 				/>
 
-				<h3>{'SearchableEntityTable w/ Checkboxes'}</h3>
+				<h3>SearchableEntityTable w/ Checkboxes</h3>
 
 				<SearchableEntityTable
 					checkDisabled={noop}
 					columns={COLUMNS}
 					dataSourceFn={this.fetchData}
-					groupId='23'
+					groupId="23"
 					orderIOMap={createOrderIOMap('name')}
-					rowIdentifier='id'
+					rowIdentifier="id"
 					showCheckbox
 				/>
 			</div>

@@ -1,9 +1,14 @@
-import Alert, {AlertTypes} from 'shared/components/Alert';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {applyTimeZone} from 'shared/util/date';
-import {sub} from 'shared/util/lang';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
+import Alert, {AlertTypes} from '~/shared/components/Alert';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {applyTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
 
 const TIME_ZONE_COUNTRY_REGEX = /\([^)]+.*/;
 
@@ -16,14 +21,14 @@ interface ITimeZoneAlertProps extends React.HTMLAttributes<HTMLElement> {
 const TimeZoneAlert: React.FC<ITimeZoneAlertProps> = ({
 	modifiedTime,
 	onClose,
-	stripe
+	stripe,
 }) => {
 	const {displayTimeZone, timeZoneId} = useTimeZone();
 	const currentUser = useCurrentUser();
 
 	return (
 		<Alert
-			iconSymbol='exclamation-full'
+			iconSymbol="exclamation-full"
 			onClose={onClose}
 			stripe={stripe}
 			title={Liferay.Language.get('info')}
@@ -39,7 +44,7 @@ const TimeZoneAlert: React.FC<ITimeZoneAlertProps> = ({
 						modifiedTime,
 						timeZoneId,
 						currentUser.languageId
-					).fromNow()
+					).fromNow(),
 				]
 			)}
 		</Alert>

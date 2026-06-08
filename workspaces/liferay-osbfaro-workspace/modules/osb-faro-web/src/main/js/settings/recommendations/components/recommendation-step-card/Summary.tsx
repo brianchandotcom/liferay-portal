@@ -1,32 +1,37 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import Constants from 'shared/util/constants';
-import Form from 'shared/components/form';
 import getCN from 'classnames';
-import InfoPopover from 'shared/components/InfoPopover';
+import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
+import InfoPopover from '~/shared/components/InfoPopover';
+import Form from '~/shared/components/form';
+import Constants, {
+	JobRunDataPeriods,
+	JobRunFrequencies,
+	JobRunStatuses,
+	JobTypes,
+} from '~/shared/util/constants';
+
 import RecommendationActivitiesQuery from '../../queries/RecommendationActivitiesQuery';
 import RecommendationPageAssetsQuery from '../../queries/RecommendationPageAssetsQuery';
 import {
 	Filter,
-	getPropertiesFromItems,
 	JOB_RUN_DATA_PERIODS_LABEL_MAP,
 	JOB_RUN_DATA_PERIODS_RANGE_KEY_MAP,
 	JOB_RUN_FREQUENCIES_LABEL_MAP,
 	JOB_TYPES_LABEL_MAP,
-	JobProperty
+	JobProperty,
+	getPropertiesFromItems,
 } from '../../utils/utils';
-import {get} from 'lodash';
-import {
-	JobRunDataPeriods,
-	JobRunFrequencies,
-	JobRunStatuses,
-	JobTypes
-} from 'shared/util/constants';
-import {useQuery} from '@apollo/client';
 
 const {
-	pagination: {orderDescending}
+	pagination: {orderDescending},
 } = Constants;
 
 interface ISummaryProps {
@@ -58,7 +63,7 @@ const Summary: React.FC<ISummaryProps> = ({
 	runFrequency,
 	setFieldValue,
 	setStep,
-	type
+	type,
 }) => {
 	const [disabled, setDisabled] = useState(false);
 
@@ -70,10 +75,10 @@ const Summary: React.FC<ISummaryProps> = ({
 			size: 0,
 			sort: {
 				column: 'title',
-				type: orderDescending.toUpperCase()
+				type: orderDescending.toUpperCase(),
 			},
-			start: 0
-		}
+			start: 0,
+		},
 	});
 
 	const {data: activitiesData} = useQuery(RecommendationActivitiesQuery, {
@@ -83,8 +88,8 @@ const Summary: React.FC<ISummaryProps> = ({
 			eventId: 'pageUnloaded',
 			rangeKey: JOB_RUN_DATA_PERIODS_RANGE_KEY_MAP[runDataPeriod],
 			size: 0,
-			start: 0
-		}
+			start: 0,
+		},
 	});
 
 	const {data: activitiesDataWithPrevious} = useQuery(
@@ -98,8 +103,8 @@ const Summary: React.FC<ISummaryProps> = ({
 					Number(JOB_RUN_DATA_PERIODS_RANGE_KEY_MAP[runDataPeriod]) *
 					2,
 				size: 0,
-				start: 0
-			}
+				start: 0,
+			},
 		}
 	);
 
@@ -130,19 +135,22 @@ const Summary: React.FC<ISummaryProps> = ({
 			setDisabled(true);
 
 			setFieldValue('runNow', false);
-		} else {
+		}
+		else {
 			setDisabled(false);
 
 			setFieldValue('runNow', true);
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activitiesDataWithPrevious, activitiesData]);
 
 	const render2StepsBackButton = (
 		children: React.ReactNode
 	): React.ReactNode => (
 		<ClayButton
-			className='button-root'
-			displayType='unstyled'
+			className="button-root"
+			displayType="unstyled"
 			onClick={
 				notEnoughActivitiesWithPrevious
 					? () => setStep(currentStep - 2)
@@ -154,59 +162,59 @@ const Summary: React.FC<ISummaryProps> = ({
 	);
 
 	return (
-		<div className='summary-root'>
-			<div className='title'>{Liferay.Language.get('summary')}</div>
+		<div className="summary-root">
+			<div className="title">{Liferay.Language.get('summary')}</div>
 
-			<table className='summary-table table table-autofit table-nowrap table-row-no-bordered'>
+			<table className="summary-table table table-autofit table-nowrap table-row-no-bordered">
 				<tbody>
 					<tr>
-						<td className='summary-name table-cell-expand'>
+						<td className="summary-name table-cell-expand">
 							{Liferay.Language.get('name')}
 						</td>
 
-						<td className='summary-value'>{name}</td>
+						<td className="summary-value">{name}</td>
 					</tr>
 
 					<tr>
-						<td className='summary-name table-cell-expand'>
+						<td className="summary-name table-cell-expand">
 							{Liferay.Language.get('model-type')}
 						</td>
 
-						<td className='summary-value'>
+						<td className="summary-value">
 							{JOB_TYPES_LABEL_MAP[type]}
 						</td>
 					</tr>
 
 					<tr>
-						<td className='summary-name table-cell-expand'>
+						<td className="summary-name table-cell-expand">
 							{Liferay.Language.get('training-frequency')}
 						</td>
 
-						<td className='summary-value'>
+						<td className="summary-value">
 							{JOB_RUN_FREQUENCIES_LABEL_MAP[runFrequency]}
 						</td>
 					</tr>
 
 					<tr>
-						<td className='summary-name table-cell-expand'>
+						<td className="summary-name table-cell-expand">
 							{Liferay.Language.get('training-period')}
 						</td>
 
-						<td className='summary-value'>
+						<td className="summary-value">
 							{JOB_RUN_DATA_PERIODS_LABEL_MAP[runDataPeriod]}
 						</td>
 					</tr>
 
 					<tr
 						className={getCN({
-							'insufficient-events': notEnoughActivities
+							'insufficient-events': notEnoughActivities,
 						})}
 					>
-						<td className='summary-name table-cell-expand'>
+						<td className="summary-name table-cell-expand">
 							{notEnoughActivities && (
 								<ClayIcon
-									className='icon-root'
-									symbol='warning-full'
+									className="icon-root"
+									symbol="warning-full"
 								/>
 							)}
 
@@ -217,7 +225,7 @@ const Summary: React.FC<ISummaryProps> = ({
 							)}
 						</td>
 
-						<td className='summary-value'>
+						<td className="summary-value">
 							{render2StepsBackButton(
 								activitiesTotal.toLocaleString()
 							)}
@@ -228,14 +236,14 @@ const Summary: React.FC<ISummaryProps> = ({
 						<tr
 							className={getCN({
 								'insufficient-events':
-									notEnoughActivitiesWithPrevious
+									notEnoughActivitiesWithPrevious,
 							})}
 						>
-							<td className='summary-name table-cell-expand including-previous-period'>
+							<td className="including-previous-period summary-name table-cell-expand">
 								{notEnoughActivitiesWithPrevious && (
 									<ClayIcon
-										className='icon-root'
-										symbol='warning-full'
+										className="icon-root"
+										symbol="warning-full"
 									/>
 								)}
 
@@ -248,7 +256,7 @@ const Summary: React.FC<ISummaryProps> = ({
 								)}
 							</td>
 
-							<td className='summary-value'>
+							<td className="summary-value">
 								{render2StepsBackButton(
 									activitiesWithPreviousTotal.toLocaleString()
 								)}
@@ -257,13 +265,13 @@ const Summary: React.FC<ISummaryProps> = ({
 					)}
 
 					<tr>
-						<td className='summary-name table-cell-expand'>
+						<td className="summary-name table-cell-expand">
 							{`${Liferay.Language.get(
 								'items'
 							)} (${Liferay.Language.get('as-of-today')})`}
 						</td>
 
-						<td className='summary-value'>
+						<td className="summary-value">
 							{get(
 								pageAssetsData,
 								['pageAssets', 'total'],
@@ -277,17 +285,17 @@ const Summary: React.FC<ISummaryProps> = ({
 			<Form.Group>
 				<Form.GroupItem>
 					<Form.Checkbox
-						data-testid='auto-start-training-checkbox'
+						data-testid="auto-start-training-checkbox"
 						disabled={disabled}
 						displayInline
 						label={Liferay.Language.get(
 							'automatically-start-training'
 						)}
-						name='runNow'
+						name="runNow"
 					/>
 
 					<InfoPopover
-						className='auto-start-training-help-icon'
+						className="auto-start-training-help-icon"
 						content={Liferay.Language.get(
 							'start-training-at-a-later-date-by-deselecting-this-option'
 						)}

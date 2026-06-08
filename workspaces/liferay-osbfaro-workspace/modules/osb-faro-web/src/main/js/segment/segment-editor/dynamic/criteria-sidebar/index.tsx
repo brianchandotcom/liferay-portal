@@ -1,18 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Option, Picker} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
-import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
-import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
-import Loading from 'shared/components/Loading';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
+import {PaginationBar} from '@clayui/pagination-bar';
+import {List} from 'immutable';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
+import Loading from '~/shared/components/Loading';
+import {SegmentTypes} from '~/shared/util/constants';
+import {Property, PropertyGroup, PropertySubgroup} from '~/shared/util/records';
+
+import {ReferencedObjectsContext} from '../context/referencedObjects';
 import {extractRemoteCriterionEntries} from '../criterion-types/extract';
 import {getRemoteCriterionTypeByPropertyKey} from '../criterion-types/registry';
-import {List} from 'immutable';
-import {Option, Picker} from '@clayui/core';
-import {PaginationBar} from '@clayui/pagination-bar';
-import {Property, PropertyGroup, PropertySubgroup} from 'shared/util/records';
-import {ReferencedObjectsContext} from '../context/referencedObjects';
-import {SegmentTypes} from 'shared/util/constants';
 import {translateQueryToCriteria} from '../utils/odata';
+import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
+import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
 
 const REMOTE_PAGE_SIZE = 12;
 
@@ -24,21 +30,21 @@ const PROPERTY_KEY_TO_GROUP: Record<string, string> = {
 	session: 'attributes',
 	tag: 'asset-categorization',
 	vocabulary: 'asset-categorization',
-	web: 'behavioral'
+	web: 'behavioral',
 };
 
 const GROUP_ORDER = [
 	'behavioral',
 	'attributes',
 	'asset-categorization',
-	'page-topics'
+	'page-topics',
 ];
 
 const GROUP_LABELS: Record<string, string> = {
 	'asset-categorization': Liferay.Language.get('asset-categorization'),
-	attributes: Liferay.Language.get('attributes'),
-	behavioral: Liferay.Language.get('behavioral'),
-	'page-topics': Liferay.Language.get('page-topics')
+	'attributes': Liferay.Language.get('attributes'),
+	'behavioral': Liferay.Language.get('behavioral'),
+	'page-topics': Liferay.Language.get('page-topics'),
 };
 
 interface IPickerGroup {
@@ -59,7 +65,7 @@ export default function CriteriaSidebar({
 	criteriaString,
 	groupId,
 	propertyGroupsIList,
-	type
+	type,
 }: ICriteriaSidebarProps) {
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedPropertyKey, setSelectedPropertyKey] = useState<
@@ -92,10 +98,12 @@ export default function CriteriaSidebar({
 		).forEach(({criterionType, id, name}) => {
 			addProperty(criterionType.createProperty({id, name}));
 		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		setRemoteQuery(q =>
+		setRemoteQuery((q) =>
 			q.keywords === remoteKeywords
 				? q
 				: {keywords: remoteKeywords, page: 1}
@@ -105,7 +113,7 @@ export default function CriteriaSidebar({
 	useEffect(() => {
 		setRemoteItems(List());
 		setRemoteTotalCount(0);
-		setRemoteQuery(q => (q.page === 1 ? q : {...q, page: 1}));
+		setRemoteQuery((q) => (q.page === 1 ? q : {...q, page: 1}));
 	}, [selectedPropertyKey]);
 
 	useEffect(() => {
@@ -121,9 +129,9 @@ export default function CriteriaSidebar({
 				groupId,
 				keywords: remoteQuery.keywords,
 				page: remoteQuery.page,
-				pageSize: REMOTE_PAGE_SIZE
+				pageSize: REMOTE_PAGE_SIZE,
 			})
-			.then(result => {
+			.then((result) => {
 				const properties: List<Property> = List(
 					(result.items ?? []).map(
 						selectedRemoteCriterionType.createProperty
@@ -135,17 +143,19 @@ export default function CriteriaSidebar({
 
 				if (addProperty) {
 					properties.forEach(
-						property => property && addProperty(property)
+						(property) => property && addProperty(property)
 					);
 				}
 			})
 			.finally(() => setRemoteLoading(false));
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [channelId, groupId, type, selectedRemoteCriterionType, remoteQuery]);
 
 	const effectivePropertyGroupsIList = useMemo(
 		() =>
 			propertyGroupsIList
-				.map(group => {
+				.map((group) => {
 					if (
 						!group ||
 						!getRemoteCriterionTypeByPropertyKey(group.propertyKey)
@@ -178,26 +188,26 @@ export default function CriteriaSidebar({
 		}, {});
 
 	const pickerItems: IPickerGroup[] = GROUP_ORDER.filter(
-		groupKey => groupedBySection[groupKey]?.length > 0
-	).map(groupKey => ({
+		(groupKey) => groupedBySection[groupKey]?.length > 0
+	).map((groupKey) => ({
 		items: groupedBySection[groupKey].map(({label, propertyKey}) => ({
 			label,
-			value: propertyKey
+			value: propertyKey,
 		})),
-		label: GROUP_LABELS[groupKey] ?? groupKey
+		label: GROUP_LABELS[groupKey] ?? groupKey,
 	}));
 
 	return (
-		<div className='criteria-sidebar-root'>
-			<div className='sidebar-title'>
+		<div className="criteria-sidebar-root">
+			<div className="sidebar-title">
 				{Liferay.Language.get('segment-criteria')}
 			</div>
 
 			{type !== SegmentTypes.RealTime && (
-				<div className='sidebar-header'>
+				<div className="sidebar-header">
 					<Picker
 						items={pickerItems}
-						onSelectionChange={key => {
+						onSelectionChange={(key) => {
 							setSelectedPropertyKey(key as string);
 						}}
 						selectedKey={selectedPropertyKey ?? undefined}
@@ -218,14 +228,14 @@ export default function CriteriaSidebar({
 				</div>
 			)}
 
-			<div className='sidebar-search'>
+			<div className="sidebar-search">
 				<CriteriaSidebarSearchBar
 					onChange={setSearchValue}
 					searchValue={searchValue}
 				/>
 			</div>
 
-			<div className='sidebar-collapse'>
+			<div className="sidebar-collapse">
 				{isRemoteSection && remoteLoading ? (
 					<Loading overlay />
 				) : (
@@ -238,11 +248,11 @@ export default function CriteriaSidebar({
 			</div>
 
 			{isRemoteSection && remoteTotalCount > 0 && (
-				<PaginationBar className='justify-content-center sidebar-pagination'>
+				<PaginationBar className="justify-content-center sidebar-pagination">
 					<ClayPaginationWithBasicItems
 						active={remoteQuery.page}
-						onActiveChange={page =>
-							setRemoteQuery(q => ({...q, page}))
+						onActiveChange={(page) =>
+							setRemoteQuery((q) => ({...q, page}))
 						}
 						totalPages={Math.ceil(
 							remoteTotalCount / REMOTE_PAGE_SIZE

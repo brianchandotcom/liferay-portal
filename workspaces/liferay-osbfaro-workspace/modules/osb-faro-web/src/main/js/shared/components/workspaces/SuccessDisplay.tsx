@@ -1,15 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
 import React from 'react';
-import Sheet from 'shared/components/Sheet';
-import URLConstants from 'shared/util/url-constants';
-import WorkspacesBasePage from 'shared/components/workspaces/BasePage';
-import {sub} from 'shared/util/lang';
+import Sheet from '~/shared/components/Sheet';
+import WorkspacesBasePage from '~/shared/components/workspaces/BasePage';
+import {sub} from '~/shared/util/lang';
+import URLConstants from '~/shared/util/url-constants';
 
 const SuccessDisplay = ({friendlyURL}: {friendlyURL: string}) => {
 	const link = (
 		<ClayLink
 			href={`https://analytics.liferay.com/workspace${friendlyURL}`}
-			key='link'
+			key="link"
 		>
 			{`analytics.liferay.com/workspace${friendlyURL}`}
 		</ClayLink>
@@ -18,8 +23,8 @@ const SuccessDisplay = ({friendlyURL}: {friendlyURL: string}) => {
 	return (
 		<WorkspacesBasePage title={Liferay.Language.get('new-workspace')}>
 			<Sheet>
-				<Sheet.Header className='mb-4'>
-					<h3 className='title'>
+				<Sheet.Header className="mb-4">
+					<h3 className="title">
 						{Liferay.Language.get(
 							'your-workspace-is-being-created'
 						)}
@@ -54,10 +59,10 @@ const SuccessDisplay = ({friendlyURL}: {friendlyURL: string}) => {
 				<Sheet.Footer divider={false}>
 					<ClayLink
 						button
-						className='button-root'
-						displayType='primary'
+						className="button-root"
+						displayType="primary"
 						href={URLConstants.DocumentationAdminLink}
-						target='_blank'
+						target="_blank"
 					>
 						{Liferay.Language.get('check-out-docs')}
 					</ClayLink>

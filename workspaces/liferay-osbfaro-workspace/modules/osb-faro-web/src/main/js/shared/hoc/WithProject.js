@@ -1,16 +1,21 @@
-import withAction from './WithAction';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {
 	fetchProject,
-	fetchProjectViaCorpProjectUuid
+	fetchProjectViaCorpProjectUuid,
 } from '../actions/projects';
+import withAction from './WithAction';
 
 /**
  * HOC for wrapping a component with the current Project.
  * @param {boolean} bypassErrorPage - Determine whether to bypass the error page if an error occurs but data still exists.
  * @returns {Function} - The new component
  */
-export const withProject = (bypassErrorPage = false) =>
-	withAction(
+export const withProject = function withProject(bypassErrorPage = false) {
+	return withAction(
 		({corpProjectUuid, groupId}) => {
 			if (corpProjectUuid) {
 				return fetchProjectViaCorpProjectUuid({corpProjectUuid});
@@ -24,7 +29,7 @@ export const withProject = (bypassErrorPage = false) =>
 					state
 						.get('projects')
 						.find(
-							project =>
+							(project) =>
 								String(project.getIn(['data', 'groupId'])) ===
 								groupId
 						) || state.getIn(['projects', groupId])
@@ -35,5 +40,6 @@ export const withProject = (bypassErrorPage = false) =>
 		},
 		{bypassErrorPage, propName: 'project'}
 	);
+};
 
 export default withProject();

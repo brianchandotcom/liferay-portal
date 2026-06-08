@@ -1,14 +1,19 @@
-import * as API from 'shared/api';
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
-import BundleRouter from 'route-middleware/BundleRouter';
-import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense, useContext} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import {ChannelContext} from 'shared/context/channel';
-import {Routes} from 'shared/util/router';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import React, {Suspense, lazy, useContext} from 'react';
 import {Switch, useParams} from 'react-router-dom';
-import {useRequest} from 'shared/hooks/useRequest';
+import BundleRouter from '~/route-middleware/BundleRouter';
+import * as API from '~/shared/api';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import BasePage from '~/shared/components/base-page';
+import {ChannelContext} from '~/shared/context/channel';
+import {useRequest} from '~/shared/hooks/useRequest';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {Routes} from '~/shared/util/router';
 
 const Activities = lazy(
 	() => import(/* webpackChunkName: "AccountActivities" */ './Activities')
@@ -21,13 +26,13 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('activities'),
-		route: Routes.CONTACTS_ACCOUNT
+		route: Routes.CONTACTS_ACCOUNT,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('profile'),
-		route: Routes.CONTACTS_ACCOUNT_PROFILE
-	}
+		route: Routes.CONTACTS_ACCOUNT_PROFILE,
+	},
 ];
 
 const AccountProfileRoutes = () => {
@@ -37,7 +42,7 @@ const AccountProfileRoutes = () => {
 
 	const {data, loading} = useRequest({
 		dataSourceFn: API.accounts.fetch,
-		variables: {accountId: id!, channelId: channelId!, groupId: groupId!}
+		variables: {accountId: id!, channelId: channelId!, groupId: groupId!},
 	});
 
 	const accountName: string =
@@ -55,13 +60,13 @@ const AccountProfileRoutes = () => {
 					breadcrumbs.getHome({
 						channelId: channelId!,
 						groupId: groupId!,
-						label: selectedChannel?.name
+						label: selectedChannel?.name,
 					}),
 					breadcrumbs.getAccounts({
 						channelId: channelId!,
-						groupId: groupId!
+						groupId: groupId!,
 					}),
-					breadcrumbs.getEntityName({label: accountName})
+					breadcrumbs.getEntityName({label: accountName}),
 				]}
 				groupId={groupId!}
 			>

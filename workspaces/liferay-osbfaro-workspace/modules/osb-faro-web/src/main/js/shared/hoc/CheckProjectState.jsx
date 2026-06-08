@@ -1,12 +1,18 @@
-import ActivatingDisplay from 'shared/components/workspaces/ActivatingDisplay';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import SuccessDisplay from 'shared/components/workspaces/SuccessDisplay';
-import withAction from './WithAction';
-import WorkspaceNotFound from 'shared/pages/WorkspaceNotFound';
-import WorkspacesErrorDisplay from 'shared/components/workspaces/ErrorDisplay';
 import {compose} from 'redux';
+import ActivatingDisplay from '~/shared/components/workspaces/ActivatingDisplay';
+import WorkspacesErrorDisplay from '~/shared/components/workspaces/ErrorDisplay';
+import SuccessDisplay from '~/shared/components/workspaces/SuccessDisplay';
+import WorkspaceNotFound from '~/shared/pages/WorkspaceNotFound';
+import {ProjectStates} from '~/shared/util/constants';
+
 import {fetchProject} from '../actions/projects';
-import {ProjectStates} from 'shared/util/constants';
+import withAction from './WithAction';
 
 /**
  * HOC for conditionally rendering SettingUpWorkspace.
@@ -19,10 +25,10 @@ export default compose(
 		(state, {groupId}) => state.getIn(['projects', groupId]),
 		{
 			propName: 'project',
-			renderErrorPage: props => <WorkspaceNotFound {...props} />
+			renderErrorPage: (props) => <WorkspaceNotFound {...props} />,
 		}
 	),
-	WrappedComponent =>
+	(WrappedComponent) =>
 		({className, groupId, project, ...otherProps}) => {
 			switch (project.state) {
 				case ProjectStates.Ready:

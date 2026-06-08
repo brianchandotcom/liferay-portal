@@ -1,12 +1,15 @@
-import autobind from 'autobind-decorator';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ErrorDisplay from 'shared/components/ErrorDisplay';
-import Loading from 'shared/components/Loading';
+import autobind from 'autobind-decorator';
+import {List, Map} from 'immutable';
+import {noop, pickBy} from 'lodash';
 import React from 'react';
-import {ANIMATION_DURATION, AXIS, getTextWidth} from 'shared/util/recharts';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
+import {ConnectedProps, connect} from 'react-redux';
 import {
 	Bar,
 	CartesianGrid,
@@ -14,16 +17,18 @@ import {
 	ComposedChart,
 	ResponsiveContainer,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
-import {connect, ConnectedProps} from 'react-redux';
-import {DistributionTab} from 'shared/util/records';
-import {FieldTypes} from 'shared/util/constants';
-import {getBarColor} from 'shared/util/charts';
-import {hasChanges} from 'shared/util/react';
-import {List, Map} from 'immutable';
-import {noop, pickBy} from 'lodash';
-import {RootState} from 'shared/store';
+import Card from '~/shared/components/Card';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import Loading from '~/shared/components/Loading';
+import {RootState} from '~/shared/store';
+import {getBarColor} from '~/shared/util/charts';
+import {FieldTypes} from '~/shared/util/constants';
+import {hasChanges} from '~/shared/util/react';
+import {ANIMATION_DURATION, AXIS, getTextWidth} from '~/shared/util/recharts';
+import {DistributionTab} from '~/shared/util/records';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
 
 const BAR_WIDTH = 30;
 const CHART_DATA_ID = 'count';
@@ -42,7 +47,7 @@ const connector = connect(
 			individualFieldDistributionIList: distributionIMap
 				.getIn(['data', 'items'], List())
 				.slice(0, 11),
-			loading: distributionIMap.get('loading', true)
+			loading: distributionIMap.get('loading', true),
 		};
 	}
 );
@@ -69,7 +74,7 @@ class DistributionChart extends React.Component<
 	{hoverIndex: number}
 > {
 	state = {
-		hoverIndex: -1
+		hoverIndex: -1,
 	};
 
 	componentDidMount() {
@@ -89,7 +94,7 @@ class DistributionChart extends React.Component<
 		return fieldDistributions.map(({count, values}) => ({
 			count,
 			graphValue: histogram ? (values[0] + values[1]) / 2 : values[0],
-			values
+			values,
 		}));
 	}
 
@@ -98,10 +103,10 @@ class DistributionChart extends React.Component<
 		histogram: boolean
 	): number[] {
 		const ticks: Array<number | false | 0> = [
-			...fieldDistributions.map(item => item.values[0]),
+			...fieldDistributions.map((item) => item.values[0]),
 			histogram &&
 				fieldDistributions.length &&
-				fieldDistributions[fieldDistributions.length - 1].values[1]
+				fieldDistributions[fieldDistributions.length - 1].values[1],
 		];
 
 		return ticks.filter((t): t is number => typeof t === 'number');
@@ -115,7 +120,7 @@ class DistributionChart extends React.Component<
 			fetchDistribution,
 			groupId,
 			id,
-			selectedTab: {context, numberOfBins, propertyId}
+			selectedTab: {context, numberOfBins, propertyId},
 		} = this.props;
 
 		return fetchDistribution(
@@ -127,7 +132,7 @@ class DistributionChart extends React.Component<
 				groupId,
 				id,
 				individualSegmentId: id,
-				numberOfBins
+				numberOfBins,
 			})
 		).catch(noop);
 	}
@@ -140,9 +145,9 @@ class DistributionChart extends React.Component<
 				loading,
 				noResultsRenderer,
 				selectedTab: {propertyType},
-				viewAllLink
+				viewAllLink,
 			},
-			state: {hoverIndex}
+			state: {hoverIndex},
 		} = this;
 
 		const individualFieldDistribution =
@@ -165,8 +170,8 @@ class DistributionChart extends React.Component<
 		const yAxisDomain: [number | string, number | string] = histogram
 			? [
 					yAxisTicks[0] as number,
-					yAxisTicks[yAxisTicks.length - 1] as number
-			  ]
+					yAxisTicks[yAxisTicks.length - 1] as number,
+				]
 			: [0, 'auto'];
 
 		const yAxisWidth = yAxisTicks.reduce<number>((acc, item) => {
@@ -201,21 +206,21 @@ class DistributionChart extends React.Component<
 								>
 									<ComposedChart
 										data={formattedChartData}
-										layout='vertical'
+										layout="vertical"
 									>
 										<CartesianGrid
 											horizontal={false}
 											stroke={AXIS.gridStroke}
-											strokeDasharray='3 3'
+											strokeDasharray="3 3"
 										/>
 
 										<YAxis
 											axisLine={{
-												stroke: AXIS.borderStroke
+												stroke: AXIS.borderStroke,
 											}}
-											dataKey='graphValue'
+											dataKey="graphValue"
 											domain={yAxisDomain}
-											tickFormatter={val => val}
+											tickFormatter={(val) => val}
 											ticks={yAxisTicks}
 											type={
 												histogram
@@ -227,36 +232,36 @@ class DistributionChart extends React.Component<
 
 										<YAxis
 											axisLine={{
-												stroke: AXIS.borderStroke
+												stroke: AXIS.borderStroke,
 											}}
-											dataKey='graphValue'
+											dataKey="graphValue"
 											domain={yAxisDomain}
-											orientation='right'
+											orientation="right"
 											tick={false}
 											tickLine={false}
-											yAxisId='right'
+											yAxisId="right"
 										/>
 
 										<XAxis
 											axisLine={{
-												stroke: AXIS.borderStroke
+												stroke: AXIS.borderStroke,
 											}}
 											dataKey={CHART_DATA_ID}
-											interval='preserveStart'
-											orientation='top'
-											scale='linear'
+											interval="preserveStart"
+											orientation="top"
+											scale="linear"
 											tickLine={false}
-											type='number'
+											type="number"
 										/>
 
 										<XAxis
 											axisLine={{
-												stroke: AXIS.borderStroke
+												stroke: AXIS.borderStroke,
 											}}
 											dataKey={CHART_DATA_ID}
 											tick={false}
 											tickLine={false}
-											xAxisId='bottom'
+											xAxisId="bottom"
 										/>
 
 										<Bar
@@ -264,14 +269,14 @@ class DistributionChart extends React.Component<
 												ANIMATION_DURATION.bar
 											}
 											dataKey={CHART_DATA_ID}
-											onMouseEnter={(e, index) =>
+											onMouseEnter={(event, index) =>
 												this.setState({
-													hoverIndex: index
+													hoverIndex: index,
 												})
 											}
 											onMouseLeave={() =>
 												this.setState({
-													hoverIndex: -1
+													hoverIndex: -1,
 												})
 											}
 										>
@@ -296,21 +301,20 @@ class DistributionChart extends React.Component<
 						</>
 					)}
 				</Card.Body>
-
 				<Card.Footer>
 					<ClayLink
 						borderless
 						button
-						className='button-root'
-						displayType='secondary'
+						className="button-root"
+						displayType="secondary"
 						href={viewAllLink}
 						small
 					>
 						{Liferay.Language.get('explore-breakdown')}
 
 						<ClayIcon
-							className='icon-root ml-2'
-							symbol='angle-right-small'
+							className="icon-root ml-2"
+							symbol="angle-right-small"
 						/>
 					</ClayLink>
 				</Card.Footer>

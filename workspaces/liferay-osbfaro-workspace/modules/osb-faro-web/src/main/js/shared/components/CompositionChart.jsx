@@ -1,19 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import getCN from 'classnames';
 import * as d3Selection from 'd3-selection';
 import * as d3Shape from 'd3-shape';
-import getCN from 'classnames';
-import React from 'react';
-import TextTruncate from './TextTruncate';
-import {CHART_COLORS} from 'shared/util/charts';
 import {get, isNull} from 'lodash';
-import {getFinitePercent} from 'shared/util/numbers';
-import {getSafeDisplayValue} from 'shared/util/util';
 import {PropTypes} from 'prop-types';
-import {toThousands} from 'shared/util/numbers';
+import React from 'react';
+import {CHART_COLORS} from '~/shared/util/charts';
+import {getFinitePercent, toThousands} from '~/shared/util/numbers';
+import {getSafeDisplayValue} from '~/shared/util/util';
+
+import TextTruncate from './TextTruncate';
 
 /**
  * Combine d3 utilities into one namespace
  */
-const d3 = Object.assign({}, d3Shape, d3Selection);
+const d3 = {...d3Shape, ...d3Selection};
 
 /**
  * Render pie data in array order instead of sorting by value
@@ -27,7 +32,7 @@ const UNFILLED_COLOR = '#F5F5F7';
 const DATA_SHAPE = PropTypes.shape({
 	color: PropTypes.string,
 	label: PropTypes.string,
-	value: PropTypes.number
+	value: PropTypes.number,
 }).isRequired;
 
 export class CompositionLegend extends React.Component {
@@ -35,7 +40,7 @@ export class CompositionLegend extends React.Component {
 		const {items, total} = this.props;
 
 		return (
-			<ul className='legend-template composition-legend-root'>
+			<ul className="composition-legend-root legend-template">
 				{items.map(({color, label, value}) => {
 					const floatPercent = parseFloat(value / total);
 
@@ -46,12 +51,12 @@ export class CompositionLegend extends React.Component {
 
 					return (
 						<li
-							className='bb-legend-item three-columns'
+							className="bb-legend-item three-columns"
 							key={label}
 						>
-							<div className='legend-template-column d-flex align-items-baseline'>
+							<div className="align-items-baseline d-flex legend-template-column">
 								<span
-									className='circle'
+									className="circle"
 									style={{backgroundColor: color}}
 								/>
 
@@ -59,14 +64,14 @@ export class CompositionLegend extends React.Component {
 							</div>
 
 							<div
-								className='legend-template-column justify-content-end'
-								data-testid='active-count'
+								className="justify-content-end legend-template-column"
+								data-testid="active-count"
 							>
 								{getSafeDisplayValue(toThousands(value))}
 							</div>
 
-							<div className='legend-template-column justify-content-end'>
-								<b data-testid='active-porcentage'>
+							<div className="justify-content-end legend-template-column">
+								<b data-testid="active-porcentage">
 									{isNull(displayValue)
 										? '-'
 										: `${displayValue}%`}
@@ -86,7 +91,7 @@ export default class CompositionChart extends React.Component {
 		arcWidth: 13,
 		height: DEFAULT_CHART_SIZE,
 		total: 0,
-		width: DEFAULT_CHART_SIZE
+		width: DEFAULT_CHART_SIZE,
 	};
 
 	static propTypes = {
@@ -96,7 +101,7 @@ export default class CompositionChart extends React.Component {
 		innerData: DATA_SHAPE,
 		outerData: DATA_SHAPE,
 		total: PropTypes.number,
-		width: PropTypes.number
+		width: PropTypes.number,
 	};
 
 	constructor() {
@@ -178,21 +183,21 @@ export default class CompositionChart extends React.Component {
 		return (
 			<div
 				className={getCN('composition-chart-root', {
-					[className]: className
+					[className]: className,
 				})}
 			>
-				<div className='chart-root' ref={this._containerRef} />
+				<div className="chart-root" ref={this._containerRef} />
 
 				<CompositionLegend
 					items={[
 						{
 							...outerData,
-							color: get(outerData, 'color', CHART_COLORS[3])
+							color: get(outerData, 'color', CHART_COLORS[3]),
 						},
 						{
 							...innerData,
-							color: get(innerData, 'color', CHART_COLORS[0])
-						}
+							color: get(innerData, 'color', CHART_COLORS[0]),
+						},
 					]}
 					total={total}
 				/>

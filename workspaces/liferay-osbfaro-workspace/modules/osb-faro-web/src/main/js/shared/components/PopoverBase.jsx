@@ -1,28 +1,33 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 /**
  * Header
  * @param {object} param0
  * @memberof PopoverBase component
  */
-const Header = ({children}) => <div className='popover-header'>{children}</div>;
+const Header = ({children}) => <div className="popover-header">{children}</div>;
 
 /**
  * Body
  * @param {object} param0
  * @memberof PopoverBase component
  */
-const Body = ({children}) => <div className='popover-body'>{children}</div>;
+const Body = ({children}) => <div className="popover-body">{children}</div>;
 
 /**
  * Footer
  * @param {object} param0
  * @memberof PopoverBase component
  */
-const Footer = ({children}) => <div className='popover-footer'>{children}</div>;
+const Footer = ({children}) => <div className="popover-footer">{children}</div>;
 
 /**
  * Popover Base
@@ -31,10 +36,11 @@ const Footer = ({children}) => <div className='popover-footer'>{children}</div>;
 class PopoverBase extends React.Component {
 	static defaultProps = {
 		placement: 'none',
-		visible: false
+		visible: false,
 	};
 
 	static propTypes = {
+
 		/**
 		 * @type {string}
 		 * @default undefined
@@ -45,7 +51,7 @@ class PopoverBase extends React.Component {
 		 * @type {boolean}
 		 * @default false
 		 */
-		visible: PropTypes.bool
+		visible: PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -62,7 +68,7 @@ class PopoverBase extends React.Component {
 			this.props;
 		const classes = getCN('popover', className, {
 			[`clay-popover-${placement}`]: placement,
-			['hide']: !visible
+			['hide']: !visible,
 		});
 
 		return (
@@ -71,7 +77,7 @@ class PopoverBase extends React.Component {
 				className={classes}
 				ref={this._elementRef}
 			>
-				{placement !== 'none' && <div className='arrow' />}
+				{placement !== 'none' && <div className="arrow" />}
 				{children}
 			</div>
 		);

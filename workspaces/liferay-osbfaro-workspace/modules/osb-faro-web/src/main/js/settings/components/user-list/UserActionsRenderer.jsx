@@ -1,11 +1,16 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import React from 'react';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {User} from 'shared/util/records';
+import React from 'react';
+import {User} from '~/shared/util/records';
 
 export default class UserActionsRenderer extends React.Component {
 	static defaultProps = {
@@ -16,13 +21,13 @@ export default class UserActionsRenderer extends React.Component {
 		onRowEdit: noop,
 		onRowSave: noop,
 		onUserDelete: noop,
-		onUserSave: noop
+		onUserSave: noop,
 	};
 
 	static propTypes = {
 		currentUserId: PropTypes.oneOfType([
 			PropTypes.number,
-			PropTypes.string
+			PropTypes.string,
 		]),
 		data: PropTypes.instanceOf(User).isRequired,
 		editing: PropTypes.bool,
@@ -32,7 +37,7 @@ export default class UserActionsRenderer extends React.Component {
 		onRowEdit: PropTypes.func,
 		onRowSave: PropTypes.func,
 		onUserDelete: PropTypes.func,
-		onUserSave: PropTypes.func
+		onUserSave: PropTypes.func,
 	};
 
 	@autobind
@@ -44,7 +49,7 @@ export default class UserActionsRenderer extends React.Component {
 	handleDelete() {
 		const {
 			data: {id},
-			onUserDelete
+			onUserDelete,
 		} = this.props;
 
 		onUserDelete([id]);
@@ -56,7 +61,7 @@ export default class UserActionsRenderer extends React.Component {
 			data: {id},
 			edits,
 			onRowSave,
-			onUserSave
+			onUserSave,
 		} = this.props;
 
 		onRowSave();
@@ -71,11 +76,11 @@ export default class UserActionsRenderer extends React.Component {
 			data,
 			editing,
 			itemsSelected,
-			onRowCancel
+			onRowCancel,
 		} = this.props;
 
 		const classes = getCN(className, {
-			hidden: itemsSelected
+			hidden: itemsSelected,
 		});
 
 		return (
@@ -85,21 +90,21 @@ export default class UserActionsRenderer extends React.Component {
 					(editing ? (
 						<>
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								disabled={itemsSelected}
-								displayType='primary'
+								displayType="primary"
 								onClick={this.handleSave}
-								size='sm'
+								size="sm"
 							>
 								{Liferay.Language.get('save')}
 							</ClayButton>
 
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								disabled={itemsSelected}
-								displayType='secondary'
+								displayType="secondary"
 								onClick={onRowCancel}
-								size='sm'
+								size="sm"
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
@@ -107,11 +112,11 @@ export default class UserActionsRenderer extends React.Component {
 					) : (
 						<>
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								disabled={itemsSelected}
-								displayType='secondary'
+								displayType="secondary"
 								onClick={this.handleEdit}
-								size='sm'
+								size="sm"
 							>
 								{Liferay.Language.get('edit')}
 							</ClayButton>
@@ -119,15 +124,15 @@ export default class UserActionsRenderer extends React.Component {
 							<ClayButton
 								aria-label={Liferay.Language.get('delete')}
 								borderless
-								className='button-root'
+								className="button-root"
 								disabled={itemsSelected}
-								displayType='secondary'
+								displayType="secondary"
 								onClick={this.handleDelete}
-								size='sm'
+								size="sm"
 							>
 								<ClayIcon
-									className='icon-root'
-									symbol='trash'
+									className="icon-root"
+									symbol="trash"
 								/>
 							</ClayButton>
 						</>

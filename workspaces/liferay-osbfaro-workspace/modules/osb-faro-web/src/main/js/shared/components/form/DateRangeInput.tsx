@@ -1,10 +1,16 @@
-import DateRangeInput from '../DateRangeInput';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import HelpBlock from './HelpBlock';
-import Label from './Label';
-import React from 'react';
 import {FieldProps} from 'formik';
 import {isNumber} from 'lodash';
+import React from 'react';
+
+import DateRangeInput from '../DateRangeInput';
+import HelpBlock from './HelpBlock';
+import Label from './Label';
 
 interface IFormDateRangeInputProps
 	extends FieldProps,
@@ -31,7 +37,7 @@ const FormDateRangeInput: React.FC<IFormDateRangeInputProps> = ({
 	popover,
 	required = false,
 	usePortal = true,
-	width
+	width,
 }) => {
 	const {name, value} = field;
 
@@ -47,7 +53,7 @@ const FormDateRangeInput: React.FC<IFormDateRangeInputProps> = ({
 	const classes = getCN('form-date-input-root', className, {
 		'form-inline-group': inline,
 		'has-error': error && touched,
-		'has-success': !error && touched
+		'has-success': !error && touched,
 	});
 
 	const style = isNumber(width)

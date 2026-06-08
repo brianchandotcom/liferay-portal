@@ -1,32 +1,38 @@
-import BaseCard from 'shared/components/base-card';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {graphql} from '@apollo/client/react/hoc';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import React from 'react';
-import SearchTermsQuery from 'shared/queries/SearchTermsQuery';
-import URLConstants from 'shared/util/url-constants';
-import {compositionListColumns} from 'shared/util/table-columns';
-import {CompositionTypes} from 'shared/util/constants';
+import {useParams} from 'react-router-dom';
+import Card from '~/shared/components/Card';
+import BaseCard from '~/shared/components/base-card';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {withTableData} from '~/shared/hoc';
+import SearchTermsQuery from '~/shared/queries/SearchTermsQuery';
+import {CompositionTypes} from '~/shared/util/constants';
+import {Routes, setUriQueryValues, toRoute} from '~/shared/util/router';
+import {compositionListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
+
 import {
 	getMapResultToProps,
-	mapCardPropsToOptions
+	mapCardPropsToOptions,
 } from './mappers/composition-query';
-import {graphql} from '@apollo/client/react/hoc';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
-import {useParams} from 'react-router-dom';
-import {withTableData} from 'shared/hoc';
 
 const withData = () =>
 	graphql(SearchTermsQuery, {
 		options: mapCardPropsToOptions,
-		props: getMapResultToProps(CompositionTypes.SearchTerms)
+		props: getMapResultToProps(CompositionTypes.SearchTerms),
 	});
 
 const TableWithData = withTableData(withData, {
 	emptyDescription: (
 		<>
-			<span className='mr-1'>
+			<span className="mr-1">
 				{Liferay.Language.get(
 					'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 				)}
@@ -34,8 +40,8 @@ const TableWithData = withTableData(withData, {
 
 			<a
 				href={URLConstants.SitesDashboardSearchTermsAndInterests}
-				key='DOCUMENTATION'
-				target='_blank'
+				key="DOCUMENTATION"
+				target="_blank"
 			>
 				{Liferay.Language.get('learn-more-about-search-terms')}
 			</a>
@@ -51,22 +57,22 @@ const TableWithData = withTableData(withData, {
 			)} | ${Liferay.Language.get('searches')}`,
 			maxCount,
 			showName: true,
-			totalCount
+			totalCount,
 		}),
 		compositionListColumns.getPercentOf({
 			metricName: Liferay.Language.get('searches'),
-			totalCount
-		})
+			totalCount,
+		}),
 	],
-	rowIdentifier: 'name'
+	rowIdentifier: 'name',
 });
 
-const SearchTermsCard = props => {
+const SearchTermsCard = (props) => {
 	const {channelId, groupId, id} = useParams();
 
 	return (
 		<BaseCard
-			className='search-terms-card-root'
+			className="search-terms-card-root"
 			label={Liferay.Language.get('search-terms')}
 			legacyDropdownRangeKey={false}
 			reportContainer={ReportContainer.SearchTermsCard}
@@ -85,13 +91,13 @@ const SearchTermsCard = props => {
 						<ClayLink
 							borderless
 							button
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							href={setUriQueryValues(
 								rangeSelectors,
 								toRoute(Routes.SITES_SEARCH_TERMS, {
 									channelId,
-									groupId
+									groupId,
 								})
 							)}
 							small
@@ -99,8 +105,8 @@ const SearchTermsCard = props => {
 							{Liferay.Language.get('all-search-terms')}
 
 							<ClayIcon
-								className='icon-root ml-2'
-								symbol='angle-right-small'
+								className="icon-root ml-2"
+								symbol="angle-right-small"
 							/>
 						</ClayLink>
 					</Card.Footer>

@@ -1,22 +1,28 @@
-import ActiveIndividualsChart from '../components/ActiveIndividualsChart';
-import BaseCard from 'shared/components/base-card';
-import Card from 'shared/components/Card';
-import IndividualSiteMetricsQuery from 'shared/queries/IndividualSiteMetricsQuery';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {OperationOption, graphql} from '@apollo/client/react/hoc';
 import React from 'react';
+import {useParams} from 'react-router-dom';
 import {compose} from 'redux';
-import {graphql, OperationOption} from '@apollo/client/react/hoc';
+import Card from '~/shared/components/Card';
+import BaseCard from '~/shared/components/base-card';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {withError} from '~/shared/hoc';
+import IndividualSiteMetricsQuery from '~/shared/queries/IndividualSiteMetricsQuery';
+
+import ActiveIndividualsChart from '../components/ActiveIndividualsChart';
 import {
 	mapPropsToOptions,
-	mapResultToProps
+	mapResultToProps,
 } from '../hocs/mappers/site-metrics-query';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {useParams} from 'react-router-dom';
-import {withError} from 'shared/hoc';
 
 const ChartWithData = compose<any>(
 	graphql(IndividualSiteMetricsQuery, {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	} as OperationOption<object, object>),
 	withError({page: false})
 )(ActiveIndividualsChart);
@@ -33,7 +39,7 @@ const ActiveIndividualsCard = () => {
 			showInterval
 		>
 			{({interval, rangeSelectors}) => (
-				<Card.Body className='justify-content-center'>
+				<Card.Body className="justify-content-center">
 					<ChartWithData
 						active
 						channelId={channelId}

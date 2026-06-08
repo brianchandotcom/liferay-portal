@@ -1,9 +1,16 @@
-import React from 'react';
-import {sub} from 'shared/util/lang';
-import {toLocale} from 'shared/util/numbers';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-export const Tooltip: React.FC<any> = ({payload}) => {
-	if (!payload.length) return null;
+import React from 'react';
+import {sub} from '~/shared/util/lang';
+import {toLocale} from '~/shared/util/numbers';
+
+export const Tooltip = function Tooltip({payload}: any) {
+	if (!payload.length) {
+		return null;
+	}
 
 	const data = payload[0].payload?.payload;
 
@@ -13,12 +20,13 @@ export const Tooltip: React.FC<any> = ({payload}) => {
 	if (!data?.main) {
 		if (data?.type === 'previous' || data?.target?.main) {
 			description = sub(Liferay.Language.get('page-views-x'), [
-				Liferay.Language.get('referral')
+				Liferay.Language.get('referral'),
 			]);
 			name = data?.source?.name ?? payload[0].name;
-		} else {
+		}
+		else {
 			description = sub(Liferay.Language.get('page-views-x'), [
-				Liferay.Language.get('exit-pages')
+				Liferay.Language.get('exit-pages'),
 			]);
 			name = data?.target?.name ?? payload[0].name;
 		}
@@ -26,14 +34,14 @@ export const Tooltip: React.FC<any> = ({payload}) => {
 
 	return (
 		<div
-			className='clay-popover-top fade popover position-relative show'
+			className="clay-popover-top fade popover position-relative show"
 			style={{minWidth: 240}}
 		>
-			<div className='popover-header'>{description}</div>
-			<div className='popover-body'>
-				<div className='d-flex justify-content-between'>
+			<div className="popover-header">{description}</div>
+			<div className="popover-body">
+				<div className="d-flex justify-content-between">
 					<div
-						className='mr-2'
+						className="mr-2"
 						style={{maxWidth: 'calc(100% - 50px)'}}
 					>
 						{name}

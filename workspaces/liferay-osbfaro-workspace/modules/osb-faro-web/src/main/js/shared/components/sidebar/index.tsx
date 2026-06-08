@@ -1,15 +1,21 @@
-import * as API from 'shared/api';
-import ChannelsMenu, {Channel} from '../channels-menu';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
-import SidebarItem from './SidebarItem';
-import UserDropdown, {Menus} from 'shared/components/user-dropdown';
-import {ACCOUNTS, Routes, SEGMENTS, toRoute} from 'shared/util/router';
-import {DEVELOPER_MODE, LANGUAGES} from 'shared/util/constants';
 import {Link, matchPath} from 'react-router-dom';
-import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
-import {User} from 'shared/util/records';
+import * as API from '~/shared/api';
+import UserDropdown, {Menus} from '~/shared/components/user-dropdown';
+import {useLDPEnabled} from '~/shared/hooks/useLDPEnabled';
+import {DEVELOPER_MODE, LANGUAGES} from '~/shared/util/constants';
+import {User} from '~/shared/util/records';
+import {ACCOUNTS, Routes, SEGMENTS, toRoute} from '~/shared/util/router';
+
+import ChannelsMenu, {Channel} from '../channels-menu';
+import SidebarItem from './SidebarItem';
 
 interface ISidebarProps {
 	activePathname: string;
@@ -30,7 +36,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 	collapsed = false,
 	currentUser = new User(),
 	groupId,
-	onToggle
+	onToggle,
 }) => {
 	const LDPEnabled = useLDPEnabled({groupId});
 
@@ -41,13 +47,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					icon: 'polls',
 					label: Liferay.Language.get('lifecycles'),
 					route: Routes.LIFECYCLE,
-					url: toRoute(Routes.LIFECYCLE, {channelId, groupId})
+					url: toRoute(Routes.LIFECYCLE, {channelId, groupId}),
 				},
 				{
 					icon: 'ac_page',
 					label: Liferay.Language.get('sites'),
 					route: Routes.SITES,
-					url: toRoute(Routes.SITES, {channelId, groupId})
+					url: toRoute(Routes.SITES, {channelId, groupId}),
 				},
 				{
 					icon: 'ac_assets',
@@ -55,8 +61,8 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					route: Routes.ASSETS,
 					url: toRoute(Routes.ASSETS, {
 						channelId,
-						groupId
-					})
+						groupId,
+					}),
 				},
 				{
 					icon: 'ac_event_analysis',
@@ -64,11 +70,11 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					route: Routes.EVENT_ANALYSIS,
 					url: toRoute(Routes.EVENT_ANALYSIS, {
 						channelId,
-						groupId
-					})
-				}
+						groupId,
+					}),
+				},
 			].filter(Boolean) as [],
-			label: Liferay.Language.get('touchpoints')
+			label: Liferay.Language.get('touchpoints'),
 		},
 		{
 			items: [
@@ -79,8 +85,8 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					url: toRoute(Routes.CONTACTS_LIST_ENTITY, {
 						channelId,
 						groupId,
-						type: SEGMENTS
-					})
+						type: SEGMENTS,
+					}),
 				},
 				LDPEnabled && {
 					icon: 'ac_account',
@@ -89,8 +95,8 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					url: toRoute(Routes.CONTACTS_LIST_ENTITY, {
 						channelId,
 						groupId,
-						type: ACCOUNTS
-					})
+						type: ACCOUNTS,
+					}),
 				},
 				{
 					icon: 'ac_individual',
@@ -98,24 +104,26 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					route: Routes.CONTACTS_INDIVIDUALS,
 					url: toRoute(Routes.CONTACTS_INDIVIDUALS, {
 						channelId,
-						groupId
-					})
-				}
+						groupId,
+					}),
+				},
 			].filter(Boolean) as [],
-			label: Liferay.Language.get('people')
+			label: Liferay.Language.get('people'),
 		},
 		{
+
 			// LRAC-13187 - TODO Remove Feature flag after definition of the features that will be announced to commerce and AC connection.
+
 			hide: !DEVELOPER_MODE,
 			items: [
 				{
 					icon: 'ac_commerce',
 					label: Liferay.Language.get('commerce'),
 					route: Routes.COMMERCE,
-					url: toRoute(Routes.COMMERCE, {channelId, groupId})
-				}
+					url: toRoute(Routes.COMMERCE, {channelId, groupId}),
+				},
 			],
-			label: Liferay.Language.get('commerce')
+			label: Liferay.Language.get('commerce'),
 		},
 		{
 			items: [
@@ -123,11 +131,11 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					icon: 'ac_test',
 					label: Liferay.Language.get('tests'),
 					route: Routes.TESTS,
-					url: toRoute(Routes.TESTS, {channelId, groupId})
-				}
+					url: toRoute(Routes.TESTS, {channelId, groupId}),
+				},
 			],
-			label: Liferay.Language.get('optimize')
-		}
+			label: Liferay.Language.get('optimize'),
+		},
 	];
 
 	const getUserMenus = (): Menus => {
@@ -140,20 +148,20 @@ const Sidebar: React.FC<ISidebarProps> = ({
 						{
 							childMenuId: 'language',
 							divider: true,
-							label: Liferay.Language.get('language')
+							label: Liferay.Language.get('language'),
 						},
 						{
 							label: Liferay.Language.get('switch-workspaces'),
-							url: Routes.BASE
+							url: Routes.BASE,
 						},
 						{
 							externalLink: true,
 							label: Liferay.Language.get('sign-out'),
-							url: Routes.LOGOUT
-						}
+							url: Routes.LOGOUT,
+						},
 					],
-					subheaderLabel: emailAddress
-				}
+					subheaderLabel: emailAddress,
+				},
 			],
 			language: [
 				{
@@ -168,29 +176,29 @@ const Sidebar: React.FC<ISidebarProps> = ({
 								: () => {
 										API.user
 											.updateLanguage({
-												languageId: id
+												languageId: id,
 											})
 											.then(() =>
 												window.location.reload()
 											);
-								  }
+									},
 						};
-					})
-				}
-			]
+					}),
+				},
+			],
 		};
 	};
 
 	return (
 		<div className={getCN('sidebar-root', className, {collapsed})}>
-			<div className='sidebar-header'>
+			<div className="sidebar-header">
 				<Link
-					className='sidebar-header-logo'
+					className="sidebar-header-logo"
 					to={toRoute(Routes.SITES, {channelId, groupId})}
 				>
 					<ClayIcon
-						className='icon-root icon-size-md logo'
-						symbol='ac_logo'
+						className="icon-root icon-size-md logo"
+						symbol="ac_logo"
 					/>
 				</Link>
 
@@ -201,14 +209,14 @@ const Sidebar: React.FC<ISidebarProps> = ({
 				/>
 			</div>
 
-			<div className='sidebar-body'>
+			<div className="sidebar-body">
 				{sidebarSections.map(
 					({hide = false, items, label}, sectionIndex) =>
 						!hide && (
-							<div className='section' key={sectionIndex}>
-								<div className='h5 section-title'>{label}</div>
+							<div className="section" key={sectionIndex}>
+								<div className="h5 section-title">{label}</div>
 
-								<ul className='nav-list'>
+								<ul className="nav-list">
 									{items.map(
 										(
 											{icon, label, route, url},
@@ -219,7 +227,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 													!!matchPath(
 														activePathname,
 														{
-															path: route
+															path: route,
 														}
 													)
 												}
@@ -236,14 +244,14 @@ const Sidebar: React.FC<ISidebarProps> = ({
 				)}
 			</div>
 
-			<div className='sidebar-footer'>
-				<div className='divider' />
+			<div className="sidebar-footer">
+				<div className="divider" />
 
-				<ul className='nav-list'>
+				<ul className="nav-list">
 					<UserDropdown
-						className='user-dropdown-root'
-						containerElement='li'
-						initialActiveMenu='base'
+						className="user-dropdown-root"
+						containerElement="li"
+						initialActiveMenu="base"
 						menus={getUserMenus()}
 						userName={currentUser.name}
 					/>
@@ -251,13 +259,13 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					<SidebarItem
 						active={
 							!!matchPath(activePathname, {
-								path: Routes.SETTINGS
+								path: Routes.SETTINGS,
 							})
 						}
 						href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-							groupId
+							groupId,
 						})}
-						icon='cog'
+						icon="cog"
 						label={Liferay.Language.get('settings')}
 					/>
 
@@ -265,15 +273,15 @@ const Sidebar: React.FC<ISidebarProps> = ({
 						<SidebarItem
 							active={
 								!!matchPath(activePathname, {
-									path: Routes.UI_KIT
+									path: Routes.UI_KIT,
 								})
 							}
 							href={toRoute(Routes.UI_KIT, {
 								channelId,
-								groupId
+								groupId,
 							})}
-							icon='code'
-							label='UI Kit'
+							icon="code"
+							label="UI Kit"
 						/>
 					)}
 

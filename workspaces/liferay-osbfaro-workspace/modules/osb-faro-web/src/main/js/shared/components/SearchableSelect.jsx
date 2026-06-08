@@ -1,26 +1,32 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import NoResultsDisplay, {
-	getFormattedTitle
-} from 'shared/components/NoResultsDisplay';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import SearchInput from './SearchInput';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import Loading from '~/shared/components/Loading';
+import NoResultsDisplay, {
+	getFormattedTitle,
+} from '~/shared/components/NoResultsDisplay';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
+import SearchInput from './SearchInput';
 
 class Item extends React.Component {
 	static defaultProps = {
-		onSelect: noop
+		onSelect: noop,
 	};
 
 	static propTypes = {
 		item: PropTypes.object.isRequired,
-		onSelect: PropTypes.func
+		onSelect: PropTypes.func,
 	};
 
 	@autobind
@@ -53,7 +59,7 @@ class SearchableSelect extends React.Component {
 		inputValue: '',
 		onSearchChange: noop,
 		onSelect: noop,
-		showSearch: true
+		showSearch: true,
 	};
 
 	static propTypes = {
@@ -69,9 +75,9 @@ class SearchableSelect extends React.Component {
 		readOnly: PropTypes.bool,
 		selectedItem: PropTypes.shape({
 			name: PropTypes.string,
-			value: PropTypes.any
+			value: PropTypes.any,
 		}),
-		showSearch: PropTypes.bool
+		showSearch: PropTypes.bool,
 	};
 
 	@autobind
@@ -94,9 +100,11 @@ class SearchableSelect extends React.Component {
 
 		if (loading) {
 			return <Loading />;
-		} else if (!items.length) {
+		}
+		else if (!items.length) {
 			return <NoResultsDisplay title={getFormattedTitle()} />;
-		} else {
+		}
+		else {
 			return items.map((item, i) => {
 				if (item.subheader) {
 					return (
@@ -104,7 +112,8 @@ class SearchableSelect extends React.Component {
 							{item.name}
 						</ClayDropDown.Section>
 					);
-				} else {
+				}
+				else {
 					return (
 						<Item
 							active={
@@ -132,7 +141,7 @@ class SearchableSelect extends React.Component {
 			inputValue,
 			onSearchChange,
 			selectedItem,
-			showSearch
+			showSearch,
 		} = this.props;
 
 		return (
@@ -141,16 +150,16 @@ class SearchableSelect extends React.Component {
 				closeOnClick
 				trigger={
 					<ClayButton
-						className='button-root d-flex align-items-center justify-content-between w-100'
+						className="align-items-center button-root d-flex justify-content-between w-100"
 						disabled={disabled}
-						displayType='unstyled'
+						displayType="unstyled"
 					>
 						{(selectedItem && selectedItem.name) ||
 							buttonPlaceholder}
 
 						<ClayIcon
-							className='icon-root ml-2'
-							symbol='caret-bottom'
+							className="icon-root ml-2"
+							symbol="caret-bottom"
 						/>
 					</ClayButton>
 				}
@@ -165,16 +174,16 @@ class SearchableSelect extends React.Component {
 					</ClayDropDown.Section>
 				)}
 
-				<ClayDropDown.Section className='items-wrapper'>
+				<ClayDropDown.Section className="items-wrapper">
 					{this.renderDropdownItems()}
 				</ClayDropDown.Section>
 
 				{footerOnClick && (
-					<ClayDropDown.Section className='footer-action'>
+					<ClayDropDown.Section className="footer-action">
 						<ClayButton
 							block
-							className='button-root'
-							displayType='primary'
+							className="button-root"
+							displayType="primary"
 							onClick={footerOnClick}
 						>
 							{footerButtonMessage}

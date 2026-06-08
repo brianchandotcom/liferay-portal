@@ -1,7 +1,14 @@
-import MetricBaseCard, {
-	IGenericMetricBaseCardProps
-} from 'shared/components/metric-card/MetricBaseCard';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import MetricBaseCard, {
+	IGenericMetricBaseCardProps,
+} from '~/shared/components/metric-card/MetricBaseCard';
+import {useAssetVariables} from '~/shared/components/metric-card/hooks';
 import {
 	AvgTimeOnPageMetric,
 	BounceRateMetric,
@@ -9,17 +16,15 @@ import {
 	ExitRateMetric,
 	Metric,
 	ViewsMetric,
-	VisitorsMetric
-} from 'shared/components/metric-card/metrics';
-import {ICommonVariables} from 'shared/types';
+	VisitorsMetric,
+} from '~/shared/components/metric-card/metrics';
 import {
 	PageMetricQuery,
-	PageMetricTabsQuery
-} from 'shared/components/metric-card/queries';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {useAssetVariables} from 'shared/components/metric-card/hooks';
+	PageMetricTabsQuery,
+} from '~/shared/components/metric-card/queries';
+import {ICommonVariables} from '~/shared/types';
 
-const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
+const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = (props) => {
 	const variables = (commonVariables: ICommonVariables) =>
 		useAssetVariables(commonVariables);
 
@@ -29,7 +34,7 @@ const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 		BounceRateMetric,
 		AvgTimeOnPageMetric,
 		EntrancesMetric,
-		ExitRateMetric
+		ExitRateMetric,
 	];
 
 	return (
@@ -39,7 +44,8 @@ const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 			queries={{
 				MetricQuery: PageMetricQuery,
 				name: 'page',
-				TabsQuery: PageMetricTabsQuery
+
+				TabsQuery: PageMetricTabsQuery,
 			}}
 			reportContainer={ReportContainer.VisitorsBehaviorCard}
 			variables={variables}

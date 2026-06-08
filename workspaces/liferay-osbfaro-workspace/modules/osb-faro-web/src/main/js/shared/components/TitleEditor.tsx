@@ -1,10 +1,15 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
 import React, {createRef} from 'react';
-import {ENTER} from 'shared/util/key-constants';
-import {withField} from 'shared/components/form';
+import {withField} from '~/shared/components/form';
+import {ENTER} from '~/shared/util/key-constants';
 
 interface ITitleEditorProps {
 	editable?: boolean;
@@ -20,11 +25,11 @@ export class TitleEditor extends React.Component<
 	{editing: boolean}
 > {
 	static defaultProps = {
-		editable: true
+		editable: true,
 	};
 
 	state = {
-		editing: false
+		editing: false,
 	};
 
 	private _titleInput = createRef<HTMLInputElement>();
@@ -70,7 +75,7 @@ export class TitleEditor extends React.Component<
 	editing() {
 		this.setState(
 			{
-				editing: !this.state.editing
+				editing: !this.state.editing,
 			},
 			() => this._titleInput.current?.select()
 		);
@@ -79,18 +84,18 @@ export class TitleEditor extends React.Component<
 	render() {
 		const {
 			props: {editable, inputName, onChange, placeholder, value = ''},
-			state: {editing}
+			state: {editing},
 		} = this;
 
 		const rootClasses = getCN('title-editor-root', {editing});
 
 		const inputClasses = getCN('title-input', {
-			hide: !editing
+			hide: !editing,
 		});
 
 		const displayClasses = getCN('title-display', {
-			hide: editing,
-			'placeholder-display': !value
+			'hide': editing,
+			'placeholder-display': !value,
 		});
 
 		return (
@@ -104,16 +109,16 @@ export class TitleEditor extends React.Component<
 					placeholder={placeholder}
 					ref={this._titleInput}
 					required
-					type='text'
+					type="text"
 					value={value}
 				/>
 
 				<div className={displayClasses}>
 					<span
-						className='title-value'
+						className="title-value"
 						onClick={this.handleEdit}
 						onKeyDown={this.handleKeyDownEdit}
-						role='button'
+						role="button"
 						tabIndex={0}
 					>
 						{value || placeholder}
@@ -123,13 +128,13 @@ export class TitleEditor extends React.Component<
 						<ClayButton
 							aria-label={Liferay.Language.get('edit')}
 							borderless
-							className='button-root'
-							displayType='unstyled'
+							className="button-root"
+							displayType="unstyled"
 							onClick={this.handleEdit}
 							outline
-							size='sm'
+							size="sm"
 						>
-							<ClayIcon className='icon-root' symbol='pencil' />
+							<ClayIcon className="icon-root" symbol="pencil" />
 						</ClayButton>
 					)}
 				</div>
@@ -142,7 +147,7 @@ export default withField(
 	({field: {name, ...otherFields}, ...otherProps}: any) => {
 		const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 			const {
-				form: {setFieldValue}
+				form: {setFieldValue},
 			} = otherProps;
 
 			setFieldValue(name, event.target.value);

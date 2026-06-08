@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select renders 1`] = `
+<div>
+  <select
+    class="form-control select-root"
+  />
+</div>
+`;
+
+exports[`Select renders with blank option 1`] = `
+<div>
+  <select
+    class="form-control select-root"
+  >
+    <option />
+  </select>
+</div>
+`;

@@ -1,26 +1,31 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Form from 'shared/components/form';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
 import React, {useRef, useState} from 'react';
-import TimeZonePicker from 'shared/components/form/TimeZonePicker';
-import {connect, ConnectedProps} from 'react-redux';
+import {ConnectedProps, connect} from 'react-redux';
+import * as API from '~/shared/api';
+import Loading, {Align} from '~/shared/components/Loading';
+import Form from '~/shared/components/form';
+import TimeZonePicker from '~/shared/components/form/TimeZonePicker';
+import Modal from '~/shared/components/modal';
+import {RootState} from '~/shared/store';
+import {Modal as ModalType} from '~/shared/types';
 import {
 	formatDateToTimeZone,
 	formatUTCDate,
-	getDateNow
-} from 'shared/util/date';
-import {Modal as ModalType} from 'shared/types';
-import {RootState} from 'shared/store';
-import {TimeZone} from 'shared/util/records';
+	getDateNow,
+} from '~/shared/util/date';
+import {TimeZone} from '~/shared/util/records';
 
 const FORMAT_LT = 'LT';
 
 const connector = connect((store: RootState, {groupId}: {groupId: string}) => ({
 	timeZone: new TimeZone(
 		store.getIn(['projects', groupId, 'data', 'timeZone'])
-	)
+	),
 }));
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -35,7 +40,7 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 	groupId,
 	notificationId,
 	onClose,
-	timeZone
+	timeZone,
 }) => {
 	const _formRef = useRef<any>(null);
 	const [currentTime, setCurrentTime] = useState(
@@ -60,7 +65,7 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 
 			<Form
 				initialValues={{
-					timeZoneId: timeZone.timeZoneId
+					timeZoneId: timeZone.timeZoneId,
 				}}
 				innerRef={_formRef as any}
 				onSubmit={onSubmit}
@@ -71,7 +76,7 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 					isValid,
 					setFieldTouched,
 					setFieldValue,
-					values: {timeZoneId = 'UTC'}
+					values: {timeZoneId = 'UTC'},
 				}) => {
 					setCurrentTime(
 						formatDateToTimeZone(
@@ -84,16 +89,16 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 					return (
 						<Form.Form onSubmit={handleSubmit}>
 							<Modal.Body>
-								<div className='mb-4'>
+								<div className="mb-4">
 									{Liferay.Language.get(
 										'your-workspace-now-supports-custom-timezones.-setting-timezones-will-only-impact-future-data.-expect-spiked-or-flat-data-for-1-2-days-following-a-change'
 									)}
 								</div>
 
-								<div className='picker-root-container'>
-									<div className='time-zone-spaced-select'>
+								<div className="picker-root-container">
+									<div className="time-zone-spaced-select">
 										<TimeZonePicker
-											fieldName='timeZoneId'
+											fieldName="timeZoneId"
 											initialTimeZone={timeZone}
 											onCountryChange={() => {
 												setCurrentTime(
@@ -108,12 +113,12 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 										/>
 									</div>
 
-									<span className='current-time-display'>
+									<span className="current-time-display">
 										{Liferay.Language.get(
 											'current-time-colon'
 										)}
 									</span>
-									<span className='current-time-value ml-4'>
+									<span className="current-time-value ml-4">
 										{currentTime}
 									</span>
 								</div>
@@ -121,18 +126,18 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 
 							<Modal.Footer>
 								<ClayButton
-									className='button-root'
-									displayType='secondary'
+									className="button-root"
+									displayType="secondary"
 									onClick={handleClose}
 								>
 									{Liferay.Language.get('do-this-later')}
 								</ClayButton>
 
 								<ClayButton
-									className='button-root'
+									className="button-root"
 									disabled={!isValid}
-									displayType='primary'
-									type='submit'
+									displayType="primary"
+									type="submit"
 								>
 									{isSubmitting && (
 										<Loading align={Align.Left} />

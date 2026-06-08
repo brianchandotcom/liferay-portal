@@ -1,3 +1,10 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Map, fromJS} from 'immutable';
+import {keys} from 'lodash';
 import {
 	Account,
 	DataSource,
@@ -8,10 +15,8 @@ import {
 	RemoteData,
 	SearchResults,
 	Segment,
-	User
-} from 'shared/util/records';
-import {fromJS, Map} from 'immutable';
-import {keys} from 'lodash';
+	User,
+} from '~/shared/util/records';
 
 const ENTITY_RECORD_MAP = {
 	accounts: Account,
@@ -21,18 +26,18 @@ const ENTITY_RECORD_MAP = {
 	layouts: EntityLayout,
 	projects: Project,
 	segments: Segment,
-	users: User
+	users: User,
 };
 
 function getRequestState(Record, data) {
 	return new RemoteData({
 		data: new Record(fromJS(data)),
 		error: false,
-		loading: false
+		loading: false,
 	});
 }
 
-export default (state = new Map(), action) => {
+const Normalizer = function Normalizer(state = new Map(), action) {
 	const {meta, payload} = action;
 
 	let retVal = state;
@@ -60,7 +65,7 @@ export default (state = new Map(), action) => {
 										data: entity.data,
 										fieldMappingFieldName:
 											meta.fieldMappingFieldName,
-										loading: false
+										loading: false,
 									})
 								)
 							);
@@ -96,3 +101,5 @@ export default (state = new Map(), action) => {
 
 	return retVal;
 };
+
+export default Normalizer;

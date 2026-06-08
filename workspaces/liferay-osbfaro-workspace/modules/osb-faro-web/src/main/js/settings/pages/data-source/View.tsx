@@ -1,20 +1,26 @@
-import ConnectorOverview from 'settings/components/3rd-party-connector/ConnectorOverview';
-import CSV from './CSV';
-import LiferayOverview from 'settings/components/liferay/LiferayOverview';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import PropTypes from 'prop-types';
 import React, {ComponentType} from 'react';
-import SalesforceOverview from 'settings/components/salesforce/SalesforceOverview';
-import {compose, withDataSource} from 'shared/hoc';
-import {DataSource} from 'shared/util/records';
-import {DataSourceTypes} from 'shared/util/constants';
-import {getConnectorConfig} from 'settings/components/3rd-party-connector/registry';
 import {withRouter} from 'react-router-dom';
+import ConnectorOverview from '~/settings/components/3rd-party-connector/ConnectorOverview';
+import {getConnectorConfig} from '~/settings/components/3rd-party-connector/registry';
+import LiferayOverview from '~/settings/components/liferay/LiferayOverview';
+import SalesforceOverview from '~/settings/components/salesforce/SalesforceOverview';
+import {compose, withDataSource} from '~/shared/hoc';
+import {DataSourceTypes} from '~/shared/util/constants';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+import {DataSource} from '~/shared/util/records';
+
+import CSV from './CSV';
 
 const PAGE_MAP: {[type: string]: ComponentType<any>} = {
 	[DataSourceTypes.Csv]: CSV as ComponentType<any>,
 	[DataSourceTypes.Liferay]: LiferayOverview as ComponentType<any>,
-	[DataSourceTypes.Salesforce]: SalesforceOverview as ComponentType<any>
+	[DataSourceTypes.Salesforce]: SalesforceOverview as ComponentType<any>,
 };
 
 interface IViewProps {
@@ -24,7 +30,7 @@ interface IViewProps {
 
 export class View extends React.Component<IViewProps> {
 	static propTypes = {
-		dataSource: PropTypes.instanceOf(DataSource).isRequired
+		dataSource: PropTypes.instanceOf(DataSource).isRequired,
 	};
 
 	render() {

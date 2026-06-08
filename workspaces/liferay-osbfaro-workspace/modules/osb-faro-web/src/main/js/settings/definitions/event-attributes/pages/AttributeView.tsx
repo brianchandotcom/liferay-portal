@@ -1,25 +1,30 @@
-import BasePage from 'settings/components/base-page/BasePage';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import ClayLink from '@clayui/link';
+import React from 'react';
+import {connect} from 'react-redux';
 import EVENT_ATTRIBUTE_DEFINITION_QUERY, {
 	EVENT_ATTRIBUTE_DEFINITION_WITH_RECENT_VALUES_QUERY,
 	EventAttributeDefinitionData,
 	EventAttributeDefinitionVariables,
-	UPDATE_EVENT_ATTRIBUTE_DEFINITION
-} from 'event-analysis/queries/EventAttributeDefinitionQuery';
-import Label from 'shared/components/Label';
-import React from 'react';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import Table from 'shared/components/table';
-import URLConstants from 'shared/util/url-constants';
-import {Attribute} from 'event-analysis/utils/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {connect} from 'react-redux';
-import {DateCell} from 'shared/components/table/cell-components';
-import {getDefinitions, getEventAttributes} from 'shared/util/breadcrumbs';
-import {getSafeDisplayValue} from 'shared/util/util';
-import {HasModal, Modal} from 'shared/types';
-import {SafeResults} from 'shared/hoc/util';
-import {useQuery} from '@apollo/client';
+	UPDATE_EVENT_ATTRIBUTE_DEFINITION,
+} from '~/event-analysis/queries/EventAttributeDefinitionQuery';
+import {Attribute} from '~/event-analysis/utils/types';
+import BasePage from '~/settings/components/base-page/BasePage';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import Label from '~/shared/components/Label';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import Table from '~/shared/components/table';
+import {DateCell} from '~/shared/components/table/cell-components';
+import {SafeResults} from '~/shared/hoc/util';
+import {HasModal, Modal} from '~/shared/types';
+import {getDefinitions, getEventAttributes} from '~/shared/util/breadcrumbs';
+import URLConstants from '~/shared/util/url-constants';
+import {getSafeDisplayValue} from '~/shared/util/util';
 
 interface IAttributeViewProps
 	extends React.HTMLAttributes<HTMLElement>,
@@ -34,13 +39,13 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 	attributeId,
 	close,
 	groupId,
-	open
+	open,
 }) => {
 	const result = useQuery<
 		EventAttributeDefinitionData,
 		EventAttributeDefinitionVariables
 	>(EVENT_ATTRIBUTE_DEFINITION_WITH_RECENT_VALUES_QUERY, {
-		variables: {id: attributeId}
+		variables: {id: attributeId},
 	});
 
 	const viewAttributePageActions = [
@@ -52,9 +57,9 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 					mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 					onClose: close,
 					query: EVENT_ATTRIBUTE_DEFINITION_QUERY,
-					showTypecast: true
-				})
-		}
+					showTypecast: true,
+				}),
+		},
 	];
 
 	return (
@@ -65,8 +70,8 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 					description,
 					displayName,
 					name,
-					recentValues
-				}
+					recentValues,
+				},
 			}: {
 				eventAttributeDefinition: Attribute;
 			}) => (
@@ -74,7 +79,7 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 					breadcrumbItems={[
 						getDefinitions({groupId}),
 						getEventAttributes({groupId}),
-						{active: true, label: name}
+						{active: true, label: name},
 					]}
 					pageActions={viewAttributePageActions}
 					pageDescription={
@@ -82,12 +87,12 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 							{description ? (
 								<div>{description}</div>
 							) : (
-								<div className='no-description'>
+								<div className="no-description">
 									{Liferay.Language.get('no-description')}
 								</div>
 							)}
 
-							<Label display='primary' uppercase>
+							<Label display="primary" uppercase>
 								{dataType}
 							</Label>
 						</>
@@ -97,7 +102,7 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 				>
 					<StatesRenderer empty={!recentValues?.length}>
 						<StatesRenderer.Empty
-							className='bg-white rounded'
+							className="bg-white rounded"
 							description={
 								<>
 									{Liferay.Language.get(
@@ -105,12 +110,12 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 									)}
 
 									<ClayLink
-										className='d-block mb-3'
+										className="d-block mb-3"
 										href={
 											URLConstants.EventAttributesDocumentation
 										}
-										key='DOCUMENTATION'
-										target='_blank'
+										key="DOCUMENTATION"
+										target="_blank"
 									>
 										{Liferay.Language.get(
 											'learn-more-about-event-tracking'
@@ -129,31 +134,31 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 										accessor: 'value',
 										className:
 											'table-cell-expand-small text-truncate',
-										dataFormatter: value =>
+										dataFormatter: (value) =>
 											getSafeDisplayValue(value),
 										label: Liferay.Language.get(
 											'sample-raw-data'
 										),
-										sortable: false
+										sortable: false,
 									},
 									{
 										accessor: 'lastSeenDate',
 										cellRenderer: ({data}) => (
 											<DateCell
-												className='table-column-text-end'
+												className="table-column-text-end"
 												data={data}
-												datePath='lastSeenDate'
+												datePath="lastSeenDate"
 											/>
 										),
 										className: 'table-column-text-end',
 										label: Liferay.Language.get(
 											'last-seen'
 										),
-										sortable: false
-									}
+										sortable: false,
+									},
 								]}
 								items={recentValues ?? []}
-								rowIdentifier='value'
+								rowIdentifier="value"
 							/>
 						</StatesRenderer.Success>
 					</StatesRenderer>

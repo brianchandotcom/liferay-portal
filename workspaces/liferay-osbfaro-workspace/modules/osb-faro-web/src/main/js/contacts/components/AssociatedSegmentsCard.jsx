@@ -1,18 +1,23 @@
-import autobind from 'autobind-decorator';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import debounce from 'shared/util/debounce-decorator';
-import EntityList from 'shared/components/EntityList';
-import ErrorDisplay from 'shared/components/ErrorDisplay';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React from 'react';
-import SearchInput from 'shared/components/SearchInput';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
-import {hasChanges} from 'shared/util/react';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import Card from '~/shared/components/Card';
+import EntityList from '~/shared/components/EntityList';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import Loading from '~/shared/components/Loading';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import SearchInput from '~/shared/components/SearchInput';
+import debounce from '~/shared/util/debounce-decorator';
+import {hasChanges} from '~/shared/util/react';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
 
 @hasRequest
 export default class AssociatedSegmentsCard extends React.Component {
@@ -22,14 +27,14 @@ export default class AssociatedSegmentsCard extends React.Component {
 		groupId: PropTypes.string.isRequired,
 		id: PropTypes.string.isRequired,
 		noResultsRenderer: PropTypes.func.isRequired,
-		pageUrl: PropTypes.string.isRequired
+		pageUrl: PropTypes.string.isRequired,
 	};
 
 	state = {
 		error: false,
 		items: [],
 		loading: true,
-		searchValue: ''
+		searchValue: '',
 	};
 
 	componentDidMount() {
@@ -51,11 +56,11 @@ export default class AssociatedSegmentsCard extends React.Component {
 	handleFetchSegments() {
 		const {
 			props: {channelId, dataSourceFn, groupId, id},
-			state: {searchValue}
+			state: {searchValue},
 		} = this;
 
 		this.setState({
-			loading: true
+			loading: true,
 		});
 
 		return dataSourceFn({channelId, groupId, id, searchValue})
@@ -63,14 +68,14 @@ export default class AssociatedSegmentsCard extends React.Component {
 				this.setState({
 					error: false,
 					items,
-					loading: false
+					loading: false,
 				});
 			})
-			.catch(err => {
-				if (!err.IS_CANCELLATION_ERROR) {
+			.catch((error) => {
+				if (!error.IS_CANCELLATION_ERROR) {
 					this.setState({
 						error: true,
-						loading: false
+						loading: false,
 					});
 				}
 			});
@@ -79,27 +84,29 @@ export default class AssociatedSegmentsCard extends React.Component {
 	@autobind
 	handleSearch(value) {
 		this.setState({
-			searchValue: value
+			searchValue: value,
 		});
 	}
 
 	renderList() {
 		const {
 			props: {channelId, groupId, noResultsRenderer},
-			state: {error, items, loading, searchValue}
+			state: {error, items, loading, searchValue},
 		} = this;
 
 		if (error) {
 			return (
 				<ErrorDisplay
-					key='ERROR_DISPLAY'
+					key="ERROR_DISPLAY"
 					onReload={this.handleFetchSegments}
 					spacer
 				/>
 			);
-		} else if (loading) {
+		}
+		else if (loading) {
 			return <Loading overlay />;
-		} else if (!items.length) {
+		}
+		else if (!items.length) {
 			if (searchValue) {
 				return (
 					<NoResultsDisplay
@@ -124,7 +131,7 @@ export default class AssociatedSegmentsCard extends React.Component {
 	render() {
 		const {
 			props: {className, pageUrl},
-			state: {searchValue}
+			state: {searchValue},
 		} = this;
 
 		return (
@@ -151,16 +158,16 @@ export default class AssociatedSegmentsCard extends React.Component {
 					<ClayLink
 						borderless
 						button
-						className='button-root'
-						displayType='secondary'
+						className="button-root"
+						displayType="secondary"
 						href={pageUrl}
 						small
 					>
 						{Liferay.Language.get('view-all-segments')}
 
 						<ClayIcon
-							className='icon-root ml-2'
-							symbol='angle-right-small'
+							className="icon-root ml-2"
+							symbol="angle-right-small"
 						/>
 					</ClayLink>
 				</Card.Footer>

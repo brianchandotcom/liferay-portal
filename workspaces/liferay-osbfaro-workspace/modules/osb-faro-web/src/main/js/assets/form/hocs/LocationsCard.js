@@ -1,12 +1,17 @@
-import getLocationsMapper, {
-	getLocationsMapperCountries
-} from 'cerebro-shared/hocs/mappers/locations';
-import URLConstants from 'shared/util/url-constants';
-import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {gql} from '@apollo/client';
 import {graphql} from '@apollo/client/react/hoc';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {withLocationsCard} from 'cerebro-shared/hocs/LocationsCard';
+import {withLocationsCard} from '~/cerebro-shared/hocs/LocationsCard';
+import getLocationsMapper, {
+	getLocationsMapperCountries,
+} from '~/cerebro-shared/hocs/mappers/locations';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {GEOLOCATION_FRAGMENT} from '~/shared/queries/fragments';
+import URLConstants from '~/shared/util/url-constants';
 
 const GEOLOCATION_QUERY = gql`
 	query FormsMetrics(
@@ -47,7 +52,7 @@ const GEOLOCATION_QUERY = gql`
 const withFormsLocations = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapper(result => result.form.submissionsMetric)
+		getLocationsMapper((result) => result.form.submissionsMetric)
 	);
 
 /**
@@ -57,7 +62,7 @@ const withFormsLocations = () =>
 const withFormsLocationsCountries = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapperCountries(result => result.form.submissionsMetric)
+		getLocationsMapperCountries((result) => result.form.submissionsMetric)
 	);
 
 export default withLocationsCard(
@@ -71,6 +76,6 @@ export default withLocationsCard(
 		reportContainer: ReportContainer.SubmissionsByLocationCard,
 		title: Liferay.Language.get(
 			'there-are-no-submissions-on-the-selected-period'
-		)
+		),
 	}
 );

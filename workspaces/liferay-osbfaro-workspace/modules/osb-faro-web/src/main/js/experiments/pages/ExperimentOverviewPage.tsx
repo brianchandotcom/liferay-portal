@@ -1,31 +1,36 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import ClayLink from '@clayui/link';
-import DeleteExperimentModal from 'experiments/components/modals/DeleteExperimentModal';
-import ErrorPage from 'shared/pages/ErrorPage';
+import {useModal} from '@clayui/modal';
 import React, {useState} from 'react';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import TestTrafficCard from 'experiments/components/test-traffic/TestTrafficCard';
-import TextTruncate from 'shared/components/TextTruncate';
+import {useParams} from 'react-router-dom';
+import {SessionsCard} from '~/experiments/components/SessionsCard';
+import DeleteExperimentModal from '~/experiments/components/modals/DeleteExperimentModal';
+import {SummaryCard} from '~/experiments/components/summary-card/SummaryCard';
+import {Status} from '~/experiments/components/summary-card/types';
+import TestTrafficCard from '~/experiments/components/test-traffic/TestTrafficCard';
+import {VariantCard} from '~/experiments/components/variant-card/VariantCard';
 import {
 	EXPERIMENT_DRAFT_QUERY,
 	EXPERIMENT_QUERY,
-	EXPERIMENT_STATUS_QUERY
-} from 'experiments/queries/ExperimentQuery';
-import {getActions} from 'experiments/util/experiments';
-import {getSafeDecodedURIComponent} from 'shared/util/util';
-import {Routes} from 'shared/util/router';
-import {SessionsCard} from 'experiments/components/SessionsCard';
-import {Status} from 'experiments/components/summary-card/types';
-import {SummaryCard} from 'experiments/components/summary-card/SummaryCard';
-import {useChannelContext} from 'shared/context/channel';
-import {useModal} from '@clayui/modal';
-import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/client';
-import {VariantCard} from 'experiments/components/variant-card/VariantCard';
+	EXPERIMENT_STATUS_QUERY,
+} from '~/experiments/queries/ExperimentQuery';
+import {getActions} from '~/experiments/util/experiments';
+import TextTruncate from '~/shared/components/TextTruncate';
+import BasePage from '~/shared/components/base-page';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {useChannelContext} from '~/shared/context/channel';
+import ErrorPage from '~/shared/pages/ErrorPage';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {Routes} from '~/shared/util/router';
+import {getSafeDecodedURIComponent} from '~/shared/util/util';
 
 const ExperimentActions = ({
-	experiment
+	experiment,
 }: {
 	experiment: {
 		id: string;
@@ -37,7 +42,7 @@ const ExperimentActions = ({
 	const {id, pageURL, publishable, status} = experiment;
 	const [visibleDeleteModal, setVisibleDeleteModal] = useState(false);
 	const {observer, onClose} = useModal({
-		onClose: () => setVisibleDeleteModal(false)
+		onClose: () => setVisibleDeleteModal(false),
 	});
 
 	return (
@@ -47,7 +52,7 @@ const ExperimentActions = ({
 					id,
 					onDelete: () => setVisibleDeleteModal(true),
 					pageURL,
-					publishable
+					publishable,
 				})}
 			/>
 
@@ -62,38 +67,11 @@ const ExperimentActions = ({
 	);
 };
 
-const ExperimentOverviewPage = () => {
-	const {channelId, id} = useParams<{channelId: string; id: string}>();
-
-	const {data, error, loading} = useQuery(EXPERIMENT_STATUS_QUERY, {
-		fetchPolicy: 'no-cache',
-		variables: {channelId, experimentId: id}
-	});
-
-	return (
-		<StatesRenderer error={!!error} loading={loading}>
-			<StatesRenderer.Loading />
-
-			<StatesRenderer.Error apolloError={error}>
-				<ErrorPage />
-			</StatesRenderer.Error>
-
-			{!!data && (
-				<StatesRenderer.Success>
-					<ExperimentOverviewContent
-						status={data.experiment.status}
-					/>
-				</StatesRenderer.Success>
-			)}
-		</StatesRenderer>
-	);
-};
-
 const ExperimentOverviewContent = ({status}: {status: string}) => {
 	const {
 		channelId = '',
 		groupId = '',
-		id = ''
+		id = '',
 	} = useParams<{
 		channelId: string;
 		groupId: string;
@@ -109,7 +87,7 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 
 	const {data, error, loading} = useQuery(Query, {
 		fetchPolicy: 'network-only',
-		variables: {channelId, experimentId: id}
+		variables: {channelId, experimentId: id},
 	});
 
 	return (
@@ -127,12 +105,12 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 									channelId,
 									groupId,
 									label:
-										selectedChannel && selectedChannel.name
+										selectedChannel && selectedChannel.name,
 								}),
 								breadcrumbs.getTests({channelId, groupId}),
 								breadcrumbs.getEntityName({
-									label: data.experiment.name
-								})
+									label: data.experiment.name,
+								}),
 							]}
 							groupId={groupId}
 						>
@@ -147,7 +125,7 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 											href={getSafeDecodedURIComponent(
 												data.experiment.pageURL
 											)}
-											target='_blank'
+											target="_blank"
 										>
 											{getSafeDecodedURIComponent(
 												data.experiment.pageURL
@@ -165,22 +143,22 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 									{
 										exact: true,
 										label: Liferay.Language.get('report'),
-										route: Routes.TESTS_OVERVIEW
-									}
+										route: Routes.TESTS_OVERVIEW,
+									},
 								]}
 								routeParams={{
 									channelId,
 									groupId,
 									id,
 									title: data.experiment.name,
-									touchpoint: data.experiment.pageURL
+									touchpoint: data.experiment.pageURL,
 								}}
 							/>
 						</BasePage.Header>
 
 						<BasePage.Body>
-							<div className='row'>
-								<div className='col-sm-12'>
+							<div className="row">
+								<div className="col-sm-12">
 									<SummaryCard experiment={data.experiment} />
 								</div>
 							</div>
@@ -188,8 +166,8 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 							{data.experiment.status !== 'DRAFT' && (
 								<>
 									{data.experiment.type === 'MAB' && (
-										<div className='row'>
-											<div className='col-sm-12'>
+										<div className="row">
+											<div className="col-sm-12">
 												<TestTrafficCard
 													experiment={data.experiment}
 												/>
@@ -197,8 +175,8 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 										</div>
 									)}
 
-									<div className='row'>
-										<div className='col-sm-12'>
+									<div className="row">
+										<div className="col-sm-12">
 											<VariantCard
 												experiment={data.experiment}
 											/>
@@ -206,8 +184,8 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 									</div>
 
 									{data.experiment.type === 'AB' && (
-										<div className='row'>
-											<div className='col-sm-12'>
+										<div className="row">
+											<div className="col-sm-12">
 												<SessionsCard
 													experiment={data.experiment}
 												/>
@@ -218,6 +196,33 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 							)}
 						</BasePage.Body>
 					</BasePage>
+				</StatesRenderer.Success>
+			)}
+		</StatesRenderer>
+	);
+};
+
+const ExperimentOverviewPage = () => {
+	const {channelId, id} = useParams<{channelId: string; id: string}>();
+
+	const {data, error, loading} = useQuery(EXPERIMENT_STATUS_QUERY, {
+		fetchPolicy: 'no-cache',
+		variables: {channelId, experimentId: id},
+	});
+
+	return (
+		<StatesRenderer error={!!error} loading={loading}>
+			<StatesRenderer.Loading />
+
+			<StatesRenderer.Error apolloError={error}>
+				<ErrorPage />
+			</StatesRenderer.Error>
+
+			{!!data && (
+				<StatesRenderer.Success>
+					<ExperimentOverviewContent
+						status={data.experiment.status}
+					/>
 				</StatesRenderer.Success>
 			)}
 		</StatesRenderer>

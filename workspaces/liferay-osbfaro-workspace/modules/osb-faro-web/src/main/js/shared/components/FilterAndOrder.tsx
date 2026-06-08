@@ -1,13 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
+import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import React from 'react';
-import {ClayCheckbox, ClayRadio} from '@clayui/form';
-import {FilterByType, FilterInputType, FilterOptionType} from 'shared/types';
-import {get, noop, uniqueId} from 'lodash';
 import {Map, Set} from 'immutable';
-import {sub} from 'shared/util/lang';
+import {get, noop, uniqueId} from 'lodash';
+import React from 'react';
+import {FilterByType, FilterInputType, FilterOptionType} from '~/shared/types';
+import {sub} from '~/shared/util/lang';
 
 interface IItemProps {
 	active: boolean;
@@ -53,7 +58,7 @@ const FlatList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 	className,
 	filterBy = Map(),
 	filterByOptions = [],
-	onChange
+	onChange,
 }) => (
 	<>
 		{filterByOptions.map(({key, label, type = 'checkbox', values}, i) => (
@@ -86,7 +91,7 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 	className,
 	filterBy = Map(),
 	filterByOptions = [],
-	onChange
+	onChange,
 }) => (
 	<ClayDropDown.Group header={Liferay.Language.get('filter-by')}>
 		{filterByOptions.map(({key, label, values}) =>
@@ -95,11 +100,11 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 					alignmentPosition={Align.RightCenter}
 					key={key}
 					trigger={
-						<ClayDropDown.Item className='d-flex justify-content-between align-items-center w-100'>
-							<span className='text-truncate'>{label}</span>
+						<ClayDropDown.Item className="align-items-center d-flex justify-content-between w-100">
+							<span className="text-truncate">{label}</span>
 
-							<span className='caret-root'>
-								<ClayIcon symbol='caret-right' />
+							<span className="caret-root">
+								<ClayIcon symbol="caret-right" />
 							</span>
 						</ClayDropDown.Item>
 					}
@@ -112,7 +117,7 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 							key={value}
 							label={itemLabel}
 							onChange={onChange}
-							type='checkbox'
+							type="checkbox"
 							value={value}
 						/>
 					))}
@@ -124,7 +129,7 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 					key={key}
 					label={get(values, ['0', 'label'])}
 					onChange={onChange}
-					type='checkbox'
+					type="checkbox"
 					value={get(values, ['0', 'value'])}
 				/>
 			)
@@ -144,16 +149,17 @@ const FilterOptionsList: React.FC<FilterOptionsListPropsType> = ({
 	...otherProps
 }) => (flat ? <FlatList {...otherProps} /> : <NestedList {...otherProps} />);
 
-export const getFilterAndOrderLabel = ({
+export const getFilterAndOrderLabel = function getFilterAndOrderLabel({
 	filterByOptions = [],
-	orderByOptions = []
+	orderByOptions = [],
 }: {
 	filterByOptions?: FilterOptionType[];
 	orderByOptions?: {label: string; value: string}[];
-}) => {
+}) {
 	if (filterByOptions.length && orderByOptions.length) {
 		return Liferay.Language.get('filter-and-order');
-	} else if (filterByOptions.length) {
+	}
+	else if (filterByOptions.length) {
 		return Liferay.Language.get('filter');
 	}
 
@@ -167,8 +173,8 @@ interface IFilterAndOrderProps extends React.HTMLAttributes<HTMLElement> {
 	flat: boolean;
 	onFilterByChange?: (filterBy: FilterByType) => void;
 	onOrderFieldChange?: (field: string) => void;
-	orderField: string;
 	orderByOptions?: {label: string; value: string}[];
+	orderField: string;
 	trigger?: React.ReactElement<any, string>;
 }
 
@@ -181,7 +187,7 @@ const FilterAndOrder: React.FC<IFilterAndOrderProps> = ({
 	onFilterByChange = noop,
 	onOrderFieldChange = noop,
 	orderByOptions = [],
-	orderField = ''
+	orderField = '',
 }) => (
 	<>
 		{!!filterByOptions.length && (
@@ -190,21 +196,21 @@ const FilterAndOrder: React.FC<IFilterAndOrderProps> = ({
 				trigger={
 					<ClayButton
 						borderless
-						data-testid='filter-button'
+						data-testid="filter-button"
 						disabled={disabled}
-						displayType='secondary'
-						size='sm'
+						displayType="secondary"
+						size="sm"
 					>
-						<span className='caret-root'>
-							<ClayIcon symbol='filter' />
+						<span className="caret-root">
+							<ClayIcon symbol="filter" />
 						</span>
 
-						<span className='mx-2'>
+						<span className="mx-2">
 							{Liferay.Language.get('filter')}
 						</span>
 
-						<span className='caret-root'>
-							<ClayIcon symbol='caret-bottom' />
+						<span className="caret-root">
+							<ClayIcon symbol="caret-bottom" />
 						</span>
 					</ClayButton>
 				}
@@ -245,21 +251,21 @@ const FilterAndOrder: React.FC<IFilterAndOrderProps> = ({
 				trigger={
 					<ClayButton
 						borderless
-						data-testid='order-button'
+						data-testid="order-button"
 						disabled={disabled}
-						displayType='secondary'
-						size='sm'
+						displayType="secondary"
+						size="sm"
 					>
-						<span className='caret-root'>
-							<ClayIcon symbol='order-list-down' />
+						<span className="caret-root">
+							<ClayIcon symbol="order-list-down" />
 						</span>
 
-						<span className='mx-2'>
+						<span className="mx-2">
 							{Liferay.Language.get('order')}
 						</span>
 
-						<span className='caret-root'>
-							<ClayIcon symbol='caret-bottom' />
+						<span className="caret-root">
+							<ClayIcon symbol="caret-bottom" />
 						</span>
 					</ClayButton>
 				}
@@ -271,12 +277,12 @@ const FilterAndOrder: React.FC<IFilterAndOrderProps> = ({
 						{orderByOptions.map(({label, value}) => (
 							<Item
 								active={value === orderField}
-								field='orderBy'
+								field="orderBy"
 								key={value}
 								label={label}
 								name={uniqueId('filterAndOrder')}
 								onChange={onOrderFieldChange as any}
-								type='radio'
+								type="radio"
 								value={value}
 							/>
 						))}

@@ -1,8 +1,14 @@
-import Popover from 'shared/components/Popover';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
+import Popover from '~/shared/components/Popover';
+import {sub} from '~/shared/util/lang';
+
 import {CohortHeatMapType} from './index';
-import {sub} from 'shared/util/lang';
 
 const Item: React.FC<CohortHeatMapType> = ({
 	colorHex,
@@ -10,10 +16,11 @@ const Item: React.FC<CohortHeatMapType> = ({
 	dateLabelFn,
 	periodLabel,
 	retention,
-	value
+	value,
 }) => {
+
 	// eslint-disable-next-line no-undef
-	const _ref = useRef<HTMLTableDataCellElement>(null);
+	const _refRef = useRef<HTMLTableDataCellElement>(null);
 
 	const [visible, setVisible] = useState(false);
 
@@ -21,12 +28,12 @@ const Item: React.FC<CohortHeatMapType> = ({
 	const handleMouseOver = () => setVisible(true);
 
 	const content = (
-		<span className='cohort-item-popover d-flex justify-content-between'>
-			<span className='period'>{periodLabel}</span>
+		<span className="cohort-item-popover d-flex justify-content-between">
+			<span className="period">{periodLabel}</span>
 
-			<span className='visitors'>
+			<span className="visitors">
 				{sub(Liferay.Language.get('x-visitors'), [
-					value.toLocaleString()
+					value.toLocaleString(),
 				])}
 			</span>
 		</span>
@@ -34,22 +41,22 @@ const Item: React.FC<CohortHeatMapType> = ({
 
 	return (
 		<td
-			className='cohort-item-root table-column-text-center'
+			className="cohort-item-root table-column-text-center"
 			onBlur={handleMouseOver}
 			onFocus={handleMouseOut}
 			onMouseOut={handleMouseOut}
 			onMouseOver={handleMouseOver}
-			ref={_ref}
+			ref={_refRef}
 			style={{background: colorHex || undefined}}
 		>
-			<span className='retention'>{`${retention.toFixed(2)}%`}</span>
+			<span className="retention">{`${retention.toFixed(2)}%`}</span>
 
 			{ReactDOM.createPortal(
 				<Popover
-					alignElement={_ref.current!}
+					alignElement={_refRef.current!}
 					content={content}
 					title={sub(Liferay.Language.get('x-cohort'), [
-						dateLabelFn(date, true)
+						dateLabelFn(date, true),
 					])}
 					visible={visible}
 				/>,

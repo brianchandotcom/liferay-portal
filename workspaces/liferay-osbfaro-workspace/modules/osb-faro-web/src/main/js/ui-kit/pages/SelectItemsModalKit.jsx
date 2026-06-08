@@ -1,19 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import SelectItemsModal from 'shared/components/modals/SelectItemsModal';
+import SelectItemsModal from '~/shared/components/modals/SelectItemsModal';
 
 const ITEMS = [
 	{
 		id: 1,
-		name: 'Portland'
+		name: 'Portland',
 	},
 	{
 		id: 2,
-		name: 'San Diego'
+		name: 'San Diego',
 	},
 	{
 		id: 3,
-		name: 'Seattle'
-	}
+		name: 'Seattle',
+	},
 ];
 
 class SelectItemsModalKit extends React.Component {

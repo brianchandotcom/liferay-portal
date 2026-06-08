@@ -1,23 +1,29 @@
-import Card from 'shared/components/Card';
-import IndividualMetricsQuery from 'shared/queries/IndividualMetricsQuery';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {OperationOption, graphql} from '@apollo/client/react/hoc';
 import React from 'react';
-import TypeTrend from '../components/TypeTrend';
+import {useParams} from 'react-router-dom';
 import {compose} from 'redux';
-import {graphql, OperationOption} from '@apollo/client/react/hoc';
-import {INTERVAL_KEY_MAP} from 'shared/util/time';
+import Card from '~/shared/components/Card';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {withError, withLoading} from '~/shared/hoc';
+import IndividualMetricsQuery from '~/shared/queries/IndividualMetricsQuery';
+import {RangeKeyTimeRanges} from '~/shared/util/constants';
+import {INTERVAL_KEY_MAP} from '~/shared/util/time';
+
+import TypeTrend from '../components/TypeTrend';
 import {
 	mapPropsToOptions,
-	mapResultToProps
+	mapResultToProps,
 } from '../hocs/mappers/individual-metrics-query';
-import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {useParams} from 'react-router-dom';
-import {withError, withLoading} from 'shared/hoc';
 
 const TypeTrendWithData = compose<any>(
 	graphql(IndividualMetricsQuery, {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	} as OperationOption<object, object>),
 	withLoading(),
 	withError({page: false})
@@ -28,7 +34,7 @@ const TypeTrendCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	return (
 		<Card
-			className='type-trend-card-root text-secondary'
+			className="text-secondary type-trend-card-root"
 			reportContainer={ReportContainer.CurrentTotalsCard}
 		>
 			<Card.Body>

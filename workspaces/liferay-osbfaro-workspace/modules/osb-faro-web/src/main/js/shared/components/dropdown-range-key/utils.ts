@@ -1,14 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {utcFormat} from 'd3';
 import moment, {Moment} from 'moment';
 import momentTimezone from 'moment-timezone';
-import {getDate} from 'shared/util/date';
-import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {TIME_RANGE_LABELS} from 'shared/util/constants';
-import {utcFormat} from 'd3';
+import {RangeKeyTimeRanges, TIME_RANGE_LABELS} from '~/shared/util/constants';
+import {getDate} from '~/shared/util/date';
 
 type TimeRange = {
 	description: string;
-	value: RangeKeyTimeRanges;
 	label: string;
+	value: RangeKeyTimeRanges;
 };
 
 export function formatDateWithTimezone(
@@ -51,7 +55,7 @@ export function formatTimeRange(timeRange: RawTimeRange[]) {
 				label: TIME_RANGE_LABELS[
 					rangeKey as keyof typeof TIME_RANGE_LABELS
 				],
-				value: `${rangeKey}` as RangeKeyTimeRanges
+				value: `${rangeKey}` as RangeKeyTimeRanges,
 			};
 		})
 		.sort(
@@ -65,7 +69,7 @@ const filterItemsByRetention = (
 	retentionPeriod: number
 ): Array<TimeRange> =>
 	timeRange.filter(
-		item =>
+		(item) =>
 			!(
 				retentionPeriod === 7 &&
 				item.value === RangeKeyTimeRanges.LastYear
@@ -84,7 +88,7 @@ const filterLegacyItems = (
 				RangeKeyTimeRanges.Last7Days,
 				RangeKeyTimeRanges.Last28Days,
 				RangeKeyTimeRanges.Last30Days,
-				RangeKeyTimeRanges.Last90Days
+				RangeKeyTimeRanges.Last90Days,
 			].includes(value)
 		),
 		retentionPeriod
@@ -97,9 +101,9 @@ const filterMoreItems = (
 ): Array<TimeRange> =>
 	filterItemsByRetention(
 		timeRange.filter(
-			item =>
+			(item) =>
 				!rangeKeys
-					.filter(value => !rangeKeys.includes(value))
+					.filter((value) => !rangeKeys.includes(value))
 					.includes(item.value)
 		),
 		retentionPeriod
@@ -127,19 +131,19 @@ type GetFilteredItems = (props: {
 	timeRange: Array<TimeRange>;
 }) => Array<TimeRange>;
 
-export const getFilteredItems: GetFilteredItems = ({
+export const getFilteredItems: GetFilteredItems = function getFilteredItems({
 	legacy,
 	rangeKey,
 	rangeKeys = [
 		RangeKeyTimeRanges.Last24Hours,
 		RangeKeyTimeRanges.Last7Days,
 		RangeKeyTimeRanges.Last30Days,
-		RangeKeyTimeRanges.Last90Days
+		RangeKeyTimeRanges.Last90Days,
 	],
 	retentionPeriod,
 	seeMore,
-	timeRange
-}) => {
+	timeRange,
+}) {
 	if (legacy) {
 		return filterLegacyItems(timeRange, retentionPeriod);
 	}
@@ -162,16 +166,16 @@ export function getSelectedItem({
 	rangeEnd,
 	rangeKey,
 	rangeStart,
-	timeRange
+	timeRange,
 }: IGetSelectedItemProps) {
 	if (rangeKey === 'CUSTOM') {
 		return {
 			label: `${moment(rangeStart).format('ll')} - ${moment(
 				rangeEnd
 			).format('ll')}`,
-			value: 'CUSTOM'
+			value: 'CUSTOM',
 		};
 	}
 
-	return timeRange.find(item => item.value === rangeKey) || timeRange[0];
+	return timeRange.find((item) => item.value === rangeKey) || timeRange[0];
 }

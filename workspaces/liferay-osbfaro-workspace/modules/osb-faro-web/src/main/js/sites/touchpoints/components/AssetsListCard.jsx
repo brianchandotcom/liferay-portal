@@ -1,11 +1,16 @@
-import BasePage from 'shared/components/base-page';
-import React from 'react';
-import Table from 'shared/components/table';
-import TextTruncate from 'shared/components/TextTruncate';
-import {Link} from 'react-router-dom';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {pickBy} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {toAssetOverviewRoute} from 'shared/util/router';
+import React from 'react';
+import {Link} from 'react-router-dom';
+import TextTruncate from '~/shared/components/TextTruncate';
+import BasePage from '~/shared/components/base-page';
+import Table from '~/shared/components/table';
+import {toAssetOverviewRoute} from '~/shared/util/router';
 
 const CLASSNAME = 'analytics-assets-list';
 
@@ -14,7 +19,7 @@ const ITEMS_SHAPE = PropTypes.shape({
 	assetType: PropTypes.string,
 	interactions: PropTypes.number,
 	title: PropTypes.string,
-	type: PropTypes.string
+	type: PropTypes.string,
 });
 
 /**
@@ -25,12 +30,12 @@ class AssetsListCard extends React.Component {
 	static contextType = BasePage.Context;
 
 	static defaultProps = {
-		items: []
+		items: [],
 	};
 
 	static propTypes = {
 		items: PropTypes.arrayOf(ITEMS_SHAPE),
-		rangeSelectors: PropTypes.object
+		rangeSelectors: PropTypes.object,
 	};
 
 	constructor(props) {
@@ -49,9 +54,9 @@ class AssetsListCard extends React.Component {
 	getUrl(assetId, assetType, title) {
 		const {
 			context: {
-				router: {params, query}
+				router: {params, query},
 			},
-			props: {rangeSelectors}
+			props: {rangeSelectors},
 		} = this;
 
 		return toAssetOverviewRoute(
@@ -60,13 +65,13 @@ class AssetsListCard extends React.Component {
 				...params,
 				assetId,
 				title,
-				...(assetType === 'custom' ? {id: assetId} : false)
+				...(assetType === 'custom' ? {id: assetId} : false),
 			},
 			pickBy({
 				...query,
 				rangeEnd: rangeSelectors.rangeEnd,
 				rangeKey: rangeSelectors.rangeKey,
-				rangeStart: rangeSelectors.rangeStart
+				rangeStart: rangeSelectors.rangeStart,
 			})
 		);
 	}
@@ -79,9 +84,9 @@ class AssetsListCard extends React.Component {
 		const url = this.getUrl(assetId, assetType, title);
 
 		return (
-			<td className='table-cell-expand'>
+			<td className="table-cell-expand">
 				<Link
-					className='font-weight-semibold text-truncate-inline text-dark'
+					className="font-weight-semibold text-dark text-truncate-inline"
 					to={url}
 				>
 					<TextTruncate title={title} />
@@ -96,8 +101,8 @@ class AssetsListCard extends React.Component {
 	 */
 	renderTypeColumn({type}) {
 		return (
-			<td className='table-cell-expand'>
-				<div className='font-weight-semibold text-secondary text-truncate-inline'>
+			<td className="table-cell-expand">
+				<div className="font-weight-semibold text-secondary text-truncate-inline">
 					<TextTruncate title={type} />
 				</div>
 			</td>
@@ -117,20 +122,20 @@ class AssetsListCard extends React.Component {
 				className: 'table-cell-expand',
 				label: Liferay.Language.get('asset-name'),
 				sortable: false,
-				title: true
+				title: true,
 			},
 			{
 				accessor: 'type',
 				cellRenderer: ({data}) => this.renderTypeColumn(data),
 				label: Liferay.Language.get('asset-type'),
-				sortable: false
-			}
+				sortable: false,
+			},
 		];
 
 		return (
 			<div className={CLASSNAME} ref={this._elementRef}>
 				<Table
-					className='table-hover'
+					className="table-hover"
 					columns={tableColumns}
 					items={items}
 					rowIdentifier={['assetId', 'title']}

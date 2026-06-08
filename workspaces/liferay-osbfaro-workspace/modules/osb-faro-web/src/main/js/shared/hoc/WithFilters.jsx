@@ -1,6 +1,11 @@
-import React from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Map, Set} from 'immutable';
 import {omit, pick} from 'lodash';
+import React from 'react';
 
 /**
  * HOC for picking out filter url params and packaging together
@@ -13,10 +18,10 @@ import {omit, pick} from 'lodash';
 export default (
 		{destructured = true, filterFields = []} = {
 			destructured: true,
-			filterFields: []
+			filterFields: [],
 		}
 	) =>
-	WrappedComponent =>
+	(WrappedComponent) =>
 		class WithFilters extends React.Component {
 			getFilterByFromProps() {
 				const filterProps = destructured

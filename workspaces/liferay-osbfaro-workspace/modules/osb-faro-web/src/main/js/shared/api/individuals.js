@@ -1,29 +1,34 @@
-import Constants from 'shared/util/constants';
-import sendRequest from 'shared/util/request';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {escapeSingleQuotes} from '~/segment/segment-editor/dynamic/utils/odata';
+import Constants from '~/shared/util/constants';
 import {
+	NAME,
 	buildOrderByFields,
 	createOrderIOMap,
-	NAME
-} from 'shared/util/pagination';
-import {escapeSingleQuotes} from 'segment/segment-editor/dynamic/utils/odata';
-import {INDIVIDUALS} from 'shared/util/router';
+} from '~/shared/util/pagination';
+import sendRequest from '~/shared/util/request';
+import {INDIVIDUALS} from '~/shared/util/router';
 
 const {
-	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA}
+	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA},
 } = Constants;
 
 export function fetch({channelId, groupId, individualId}) {
 	return sendRequest({
 		data: {channelId},
 		method: 'GET',
-		path: `contacts/${groupId}/individual/${individualId}`
+		path: `contacts/${groupId}/individual/${individualId}`,
 	});
 }
 
 export function fetchDetails({groupId, individualId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/individual/${individualId}/details`
+		path: `contacts/${groupId}/individual/${individualId}/details`,
 	});
 }
 
@@ -31,7 +36,7 @@ export function fetchEnrichedProfilesCount({channelId, groupId}) {
 	return sendRequest({
 		data: {channelId},
 		method: 'GET',
-		path: `contacts/${groupId}/individual/enriched_profiles_count`
+		path: `contacts/${groupId}/individual/enriched_profiles_count`,
 	});
 }
 
@@ -41,7 +46,7 @@ export function fetchMembership({
 	individualSegmentId,
 	orderIOMap,
 	page,
-	query
+	query,
 }) {
 	const orderParams = orderIOMap.first();
 
@@ -53,10 +58,10 @@ export function fetchMembership({
 			delta,
 			individualSegmentId,
 			orderByFields,
-			query
+			query,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/individual`
+		path: `contacts/${groupId}/individual`,
 	});
 }
 
@@ -64,17 +69,17 @@ export function fetchFieldValues({
 	channelId,
 	fieldMappingFieldName,
 	groupId,
-	query = ''
+	query = '',
 }) {
 	return sendRequest({
 		data: {
 			channelId,
 			delta: 20,
 			fieldMappingFieldName,
-			query: escapeSingleQuotes(query)
+			query: escapeSingleQuotes(query),
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/individual/field_values`
+		path: `contacts/${groupId}/individual/field_values`,
 	});
 }
 
@@ -112,9 +117,9 @@ export function search(params) {
 			query,
 			rangeEnd,
 			rangeKey,
-			rangeStart
+			rangeStart,
 		},
 		method: 'POST',
-		path: `contacts/${groupId}/individual/search`
+		path: `contacts/${groupId}/individual/search`,
 	});
 }

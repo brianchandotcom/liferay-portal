@@ -1,11 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-import Form from 'shared/components/form';
-import getCN from 'classnames';
-import Label from 'shared/components/form/Label';
-import Loading, {Align} from 'shared/components/Loading';
-import React, {useRef, useState} from 'react';
 import {Text} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
+import getCN from 'classnames';
+import React, {useRef, useState} from 'react';
+import Loading, {Align} from '~/shared/components/Loading';
+import Form from '~/shared/components/form';
+import Label from '~/shared/components/form/Label';
 
 interface IInputWithEditToggleProps {
 	className?: string;
@@ -28,7 +33,7 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 	onSubmit,
 	required = false,
 	validate,
-	value
+	value,
 }) => {
 	const [editing, setEditing] = useState(false);
 
@@ -46,8 +51,8 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 
 					setEditing(false);
 				})
-				.catch(err => {
-					if (!err.IS_CANCELLATION_ERROR) {
+				.catch((error) => {
+					if (!error.IS_CANCELLATION_ERROR) {
 						setSubmitting(false);
 					}
 				});
@@ -63,22 +68,22 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 			)}
 		>
 			{!editing && (
-				<div className='d-inline-flex'>
-					<Text size={8} weight='bold'>
+				<div className="d-inline-flex">
+					<Text size={8} weight="bold">
 						{value}
 					</Text>
 
 					<ClayButton
 						aria-label={Liferay.Language.get('edit')}
 						borderless
-						className='button-root'
-						data-testid='edit'
+						className="button-root"
+						data-testid="edit"
 						disabled={!editable}
-						displayType='secondary'
+						displayType="secondary"
 						onClick={() => setEditing(true)}
-						size='sm'
+						size="sm"
 					>
-						<ClayIcon className='icon-root' symbol='pencil' />
+						<ClayIcon className="icon-root" symbol="pencil" />
 					</ClayButton>
 				</div>
 			)}
@@ -91,14 +96,14 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 				>
 					{({handleSubmit, isSubmitting, isValid, resetForm}) => (
 						<Form.Form
-							className='input-with-edit-toggle-editor'
+							className="input-with-edit-toggle-editor"
 							onSubmit={handleSubmit}
 						>
 							{label && (
 								<Label required={required}>{label}</Label>
 							)}
 
-							<Form.Group autoFit className='align-items-center'>
+							<Form.Group autoFit className="align-items-center">
 								<Form.Input
 									contentAfter={
 										<>
@@ -106,18 +111,18 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 												aria-label={Liferay.Language.get(
 													'cancel'
 												)}
-												className='button-root'
-												displayType='secondary'
+												className="button-root"
+												displayType="secondary"
 												onClick={() => {
 													setEditing(false);
 
 													resetForm();
 												}}
-												size='sm'
+												size="sm"
 											>
 												<ClayIcon
-													className='icon-root'
-													symbol='times'
+													className="icon-root"
+													symbol="times"
 												/>
 											</ClayButton>
 
@@ -125,11 +130,11 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 												aria-label={Liferay.Language.get(
 													'submit'
 												)}
-												className='button-root'
+												className="button-root"
 												disabled={!isValid}
-												displayType='primary'
-												size='sm'
-												type='submit'
+												displayType="primary"
+												size="sm"
+												type="submit"
 											>
 												{isSubmitting && (
 													<Loading
@@ -138,8 +143,8 @@ const InputWithEditToggle: React.FC<IInputWithEditToggleProps> = ({
 												)}
 
 												<ClayIcon
-													className='icon-root'
-													symbol='check'
+													className="icon-root"
+													symbol="check"
 												/>
 											</ClayButton>
 										</>

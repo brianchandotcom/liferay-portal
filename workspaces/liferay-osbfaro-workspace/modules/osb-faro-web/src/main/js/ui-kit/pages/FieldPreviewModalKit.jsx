@@ -1,5 +1,10 @@
-import FieldPreviewModal from 'shared/components/modals/FieldPreviewModal';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import FieldPreviewModal from '~/shared/components/modals/FieldPreviewModal';
 
 class FieldPreviewModalKit extends React.Component {
 	dataSourceFn() {
@@ -7,8 +12,8 @@ class FieldPreviewModalKit extends React.Component {
 			emailAddress: [
 				'test@liferay.com',
 				'test2@liferay.com',
-				'test3@liferay.com'
-			]
+				'test3@liferay.com',
+			],
 		});
 	}
 
@@ -21,8 +26,8 @@ class FieldPreviewModalKit extends React.Component {
 			>
 				<FieldPreviewModal
 					dataSourceFn={this.dataSourceFn}
-					fieldName='emailAddress'
-					sourceName='test'
+					fieldName="emailAddress"
+					sourceName="test"
 				/>
 			</div>
 		);

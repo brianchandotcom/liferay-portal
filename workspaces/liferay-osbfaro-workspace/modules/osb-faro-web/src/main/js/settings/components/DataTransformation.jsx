@@ -1,27 +1,33 @@
-import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
-import Checkbox from 'shared/components/Checkbox';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import DataTransformationList from './data-transformation-list';
-import FormNavigation from './FormNavigation';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import NavigationWarning from 'shared/components/NavigationWarning';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {Fragment} from 'react';
-import Sheet from 'shared/components/Sheet';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
-import {compose} from 'redux';
-import {connect} from 'react-redux';
-import {fromJS, List, Map} from 'immutable';
-import {hasChanges} from 'shared/util/react';
+import {List, Map, fromJS} from 'immutable';
 import {mapValues, noop, values} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {Routes, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
+import React, {Fragment} from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {addAlert} from '~/shared/actions/alerts';
+import * as API from '~/shared/api';
+import Checkbox from '~/shared/components/Checkbox';
+import Loading from '~/shared/components/Loading';
+import NavigationWarning from '~/shared/components/NavigationWarning';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import Sheet from '~/shared/components/Sheet';
+import {Alert} from '~/shared/types';
+import {sub} from '~/shared/util/lang';
+import {hasChanges} from '~/shared/util/react';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
+import {Routes, toRoute} from '~/shared/util/router';
+
+import FormNavigation from './FormNavigation';
+import DataTransformationList from './data-transformation-list';
 
 /**
  * Return number of unmapped fields, where unmapped is considered
@@ -33,9 +39,9 @@ import {sub} from 'shared/util/lang';
 function getUnmappedCount(fieldsIList, duplicateTargetFieldsIMap) {
 	return (
 		fieldsIList.filter(
-			fieldIMap => !fieldIMap.getIn(['suggestion', 'name'])
+			(fieldIMap) => !fieldIMap.getIn(['suggestion', 'name'])
 		).size +
-		fieldsIList.filter(fieldIMap =>
+		fieldsIList.filter((fieldIMap) =>
 			duplicateTargetFieldsIMap.get(
 				fieldIMap.getIn(['suggestion', 'name'])
 			)
@@ -65,7 +71,8 @@ function getDuplicateTargetFields(fieldsIList) {
 
 		if (fieldsSeen.has(name)) {
 			duplicateFieldsIMap = duplicateFieldsIMap.set(name, suggestionIMap);
-		} else {
+		}
+		else {
 			fieldsSeen.add(name);
 		}
 	}
@@ -81,7 +88,7 @@ function getDuplicateTargetFields(fieldsIList) {
 export function processFieldMappings(fieldsIList) {
 	return fieldsIList.toJS().map(({source, suggestion}) => ({
 		dataSourceFieldName: source.name,
-		name: suggestion.name
+		name: suggestion.name,
 	}));
 }
 
@@ -94,7 +101,7 @@ export class DataTransformation extends React.Component {
 		),
 		sourceTitle: Liferay.Language.get('source-data'),
 		submitMessage: Liferay.Language.get('done'),
-		title: Liferay.Language.get('map-contact-data')
+		title: Liferay.Language.get('map-contact-data'),
 	};
 
 	static propTypes = {
@@ -102,14 +109,14 @@ export class DataTransformation extends React.Component {
 		cancelHref: PropTypes.string,
 		fileVersionId: PropTypes.oneOfType([
 			PropTypes.string,
-			PropTypes.number
+			PropTypes.number,
 		]),
 		groupId: PropTypes.string.isRequired,
 		id: PropTypes.string,
 		initialValue: PropTypes.shape({
 			fieldMappings: PropTypes.object,
 			mappingSuggestions: PropTypes.object,
-			sourceFields: PropTypes.object
+			sourceFields: PropTypes.object,
 		}),
 		name: PropTypes.string,
 		navigationWarning: PropTypes.bool,
@@ -120,7 +127,7 @@ export class DataTransformation extends React.Component {
 		sourceTitle: PropTypes.string,
 		submitMessage: PropTypes.string,
 		submitting: PropTypes.bool,
-		title: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+		title: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 	};
 
 	state = {
@@ -133,7 +140,7 @@ export class DataTransformation extends React.Component {
 		loading: false,
 		mappingSuggestions: {},
 		sourceFields: {},
-		valid: false
+		valid: false,
 	};
 
 	_staticFieldsIList = new List();
@@ -145,7 +152,8 @@ export class DataTransformation extends React.Component {
 
 		if (initialValue) {
 			this.processExistingFields(initialValue);
-		} else {
+		}
+		else {
 			this.fetchMappings();
 		}
 	}
@@ -161,7 +169,7 @@ export class DataTransformation extends React.Component {
 				valid: !getUnmappedCount(
 					this.state.fieldsIList,
 					duplicateTargetFieldsIMap
-				)
+				),
 			});
 		}
 	}
@@ -171,12 +179,12 @@ export class DataTransformation extends React.Component {
 		const {addAlert, groupId} = this.props;
 
 		this.setState({
-			loading: true
+			loading: true,
 		});
 
 		return API.dataSource
 			.fetchMappings({...this.getIdObject(), groupId})
-			.then(mappings => {
+			.then((mappings) => {
 				const mappingSuggestions = {};
 				const sourceFields = {};
 
@@ -191,16 +199,16 @@ export class DataTransformation extends React.Component {
 					fieldsIList: this._staticFieldsIList,
 					loading: false,
 					mappingSuggestions,
-					sourceFields
+					sourceFields,
 				});
 			})
-			.catch(err => {
-				if (!err.IS_CANCELLATION_ERROR) {
+			.catch((error) => {
+				if (!error.IS_CANCELLATION_ERROR) {
 					addAlert({
 						alertType: Alert.Types.Error,
 						message: Liferay.Language.get(
 							'an-unexpected-error-occurred'
-						)
+						),
 					});
 
 					this.setState({error: true, loading: false});
@@ -218,12 +226,12 @@ export class DataTransformation extends React.Component {
 				cur: 1,
 				delta: 10,
 				groupId,
-				query
+				query,
 			})
-			.then(response =>
+			.then((response) =>
 				response.items.map(({name, values}) => ({
 					name,
-					value: values[0]
+					value: values[0],
 				}))
 			);
 	}
@@ -233,7 +241,8 @@ export class DataTransformation extends React.Component {
 
 		if (fileVersionId) {
 			return {fileVersionId};
-		} else {
+		}
+		else {
 			return {id};
 		}
 	}
@@ -245,15 +254,15 @@ export class DataTransformation extends React.Component {
 		this.setState({
 			fieldsIList: fieldsIList.push(
 				new Map({source: new Map(), suggestion: new Map()})
-			)
+			),
 		});
 	}
 
 	handleFetchSuggestions() {
 		this.fetchSuggestions()
-			.then(searchedSuggestions => {
+			.then((searchedSuggestions) => {
 				this.setState({
-					initialSearchedSuggestions: searchedSuggestions
+					initialSearchedSuggestions: searchedSuggestions,
 				});
 			})
 			.catch(noop);
@@ -267,7 +276,7 @@ export class DataTransformation extends React.Component {
 	@autobind
 	handleHideMappedFieldsClick(event) {
 		this.setState({
-			hideMappedFields: event.target.checked
+			hideMappedFields: event.target.checked,
 		});
 	}
 
@@ -275,14 +284,16 @@ export class DataTransformation extends React.Component {
 	handlePreviousStep() {
 		const {
 			props: {onPrevious},
-			state: {mappingSuggestions, sourceFields}
+			state: {mappingSuggestions, sourceFields},
 		} = this;
 
 		onPrevious({
+
 			// TODO: what does this value need to be? probably needed for liferay and salesforce
+
 			fieldMappings: this._formRef.current.getValues(),
 			mappingSuggestions,
-			sourceFields
+			sourceFields,
 		});
 	}
 
@@ -299,16 +310,16 @@ export class DataTransformation extends React.Component {
 			values(
 				mapValues(fieldMappings, (value, key) => ({
 					...value,
-					sourceName: key
+					sourceName: key,
 				}))
 			).map(({name, sourceName, value}) => ({
 				source: {
-					name: sourceName
+					name: sourceName,
 				},
 				suggestion: {
 					name,
-					value
-				}
+					value,
+				},
 			}))
 		);
 
@@ -317,7 +328,7 @@ export class DataTransformation extends React.Component {
 		this.setState({
 			fieldsIList,
 			mappingSuggestions,
-			sourceFields
+			sourceFields,
 		});
 	}
 
@@ -339,12 +350,12 @@ export class DataTransformation extends React.Component {
 				return new Map({
 					source: new Map({
 						name,
-						value: values[0]
+						value: values[0],
 					}),
 					suggestion: new Map({
 						name: suggestion && suggestion.name,
-						value: suggestion && suggestion.values[0]
-					})
+						value: suggestion && suggestion.values[0],
+					}),
 				});
 			})
 		);
@@ -360,7 +371,7 @@ export class DataTransformation extends React.Component {
 				navigationWarning,
 				sourceFieldPlaceholder,
 				sourceTitle,
-				submitting
+				submitting,
 			},
 			state: {
 				duplicateTargetFieldsIMap,
@@ -370,8 +381,8 @@ export class DataTransformation extends React.Component {
 				initialSearchedSuggestions,
 				loading,
 				mappingSuggestions,
-				sourceFields
-			}
+				sourceFields,
+			},
 		} = this;
 
 		const unmappedFields = getUnmappedCount(
@@ -385,15 +396,17 @@ export class DataTransformation extends React.Component {
 
 		if (loading) {
 			return <Loading />;
-		} else if (error) {
+		}
+		else if (error) {
 			return (
 				<NoResultsDisplay
 					title={Liferay.Language.get('an-unexpected-error-occurred')}
 				/>
 			);
-		} else {
+		}
+		else {
 			return (
-				<Fragment key='DATA_TRANSFORMATION'>
+				<Fragment key="DATA_TRANSFORMATION">
 					{navigationWarning && (
 						<NavigationWarning
 							when={
@@ -406,24 +419,24 @@ export class DataTransformation extends React.Component {
 						/>
 					)}
 
-					<Sheet.Body className='summary-section'>
-						<p className='summary'>
+					<Sheet.Body className="summary-section">
+						<p className="summary">
 							<ClayIcon
-								className='icon-root'
-								symbol='faro_connection_success_ovals'
+								className="icon-root"
+								symbol="faro_connection_success_ovals"
 							/>
 
 							{sub(Liferay.Language.get('x-fields-mapped'), [
-								mappedFields
+								mappedFields,
 							])}
 
 							<ClayIcon
-								className='icon-root'
-								symbol='faro_connection_error_ovals'
+								className="icon-root"
+								symbol="faro_connection_error_ovals"
 							/>
 
 							{sub(Liferay.Language.get('x-fields-not-mapped'), [
-								unmappedFields
+								unmappedFields,
 							])}
 						</p>
 
@@ -461,7 +474,7 @@ export class DataTransformation extends React.Component {
 							/>
 						)}
 
-						<div className='add-custom-field'>
+						<div className="add-custom-field">
 							<div>
 								{Liferay.Language.get(
 									'add-a-custom-field-mapping'
@@ -469,8 +482,8 @@ export class DataTransformation extends React.Component {
 							</div>
 
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 								onClick={this.handleAddField}
 							>
 								{Liferay.Language.get('add-field')}
@@ -491,25 +504,25 @@ export class DataTransformation extends React.Component {
 				onPrevious,
 				submitMessage,
 				submitting,
-				title
+				title,
 			},
-			state: {loading, valid}
+			state: {loading, valid},
 		} = this;
 
 		return (
 			<div className={getCN('data-transformation-root', className)}>
 				<Sheet.Header>
-					<h3 className='title'>{title}</h3>
+					<h3 className="title">{title}</h3>
 
 					{!loading && (
-						<p className='text-secondary'>
+						<p className="text-secondary">
 							{[
 								Liferay.Language.get(
 									'all-fields-have-been-mapped-automatically-to-the-best-possible-match'
 								),
 								Liferay.Language.get(
 									'please-confirm-the-data-mapping-below-and-make-any-changes-if-necessary.-you-may-only-map-one-source-data-field-to-a-single-analytics-cloud-field'
-								)
+								),
 							].join(' ')}
 						</p>
 					)}

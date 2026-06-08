@@ -1,8 +1,14 @@
-import NameCell from './Name';
-import React from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {get} from 'lodash';
-import {isBlank} from 'shared/util/util';
-import {Routes, toRoute} from 'shared/util/router';
+import React from 'react';
+import {Routes, toRoute} from '~/shared/util/router';
+import {isBlank} from '~/shared/util/util';
+
+import NameCell from './Name';
 
 interface IIndividualLinksProps {
 	channelId?: string;
@@ -26,7 +32,7 @@ const IndividualLinkCell: React.FC<IIndividualLinksProps> = ({
 	className,
 	data,
 	disabled,
-	groupId
+	groupId,
 }) => {
 	const id = data.individualId || data.ownerId || data.id;
 
@@ -48,7 +54,7 @@ const IndividualLinkCell: React.FC<IIndividualLinksProps> = ({
 				toRoute(Routes.CONTACTS_INDIVIDUAL, {
 					channelId,
 					groupId,
-					id
+					id,
 				})
 			}
 		/>

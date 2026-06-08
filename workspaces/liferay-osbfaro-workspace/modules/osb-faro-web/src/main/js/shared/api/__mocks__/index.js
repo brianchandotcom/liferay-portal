@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import * as accounts from './accounts';
 import * as activities from './activities';
 import * as apiTokens from './api-tokens';
@@ -11,8 +16,8 @@ import * as dataSource from './data-source';
 import * as definitions from './definitions';
 import * as distributions from './distributions';
 import * as fieldMappings from './field-mappings';
-import * as individuals from './individuals';
 import * as individualSegment from './individual-segment';
+import * as individuals from './individuals';
 import * as interests from './interests';
 import * as issue from './issue';
 import * as notifications from './notifications';
@@ -47,5 +52,5 @@ export {
 	projects,
 	tags,
 	user,
-	vocabularies
+	vocabularies,
 };

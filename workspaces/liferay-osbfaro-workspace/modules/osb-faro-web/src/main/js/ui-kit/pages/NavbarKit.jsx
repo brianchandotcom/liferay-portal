@@ -1,8 +1,14 @@
-import Nav from 'shared/components/Nav';
-import NavBar from 'shared/components/NavBar';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import Nav from '~/shared/components/Nav';
+import NavBar from '~/shared/components/NavBar';
+import SearchInput from '~/shared/components/SearchInput';
+
 import Row from '../components/Row';
-import SearchInput from 'shared/components/SearchInput';
 
 class NavBarKit extends React.Component {
 	render() {
@@ -14,37 +20,37 @@ class NavBarKit extends React.Component {
 			>
 				<Row>
 					<NavBar>
-						<NavBar.Brand>{'Brand'}</NavBar.Brand>
+						<NavBar.Brand>Brand</NavBar.Brand>
 					</NavBar>
 				</Row>
 
 				<Row>
-					<NavBar display='light'>
-						<NavBar.Brand>{'display: light'}</NavBar.Brand>
+					<NavBar display="light">
+						<NavBar.Brand>display: light</NavBar.Brand>
 					</NavBar>
 				</Row>
 
 				<Row>
-					<NavBar display='dark'>
-						<NavBar.Brand>{'display: dark'}</NavBar.Brand>
+					<NavBar display="dark">
+						<NavBar.Brand>display: dark</NavBar.Brand>
 					</NavBar>
 				</Row>
 
 				<Row>
-					<NavBar display='dark'>
-						<NavBar.Brand>{'Nav:'}</NavBar.Brand>
+					<NavBar display="dark">
+						<NavBar.Brand>Nav:</NavBar.Brand>
 
 						<Nav>
-							<Nav.Item active href='#' key='Home'>
-								{'Home'}
+							<Nav.Item active href="#" key="Home">
+								Home
 							</Nav.Item>
 
-							<Nav.Item active={false} href='#' key='Secondary'>
-								{'Secondary'}
+							<Nav.Item active={false} href="#" key="Secondary">
+								Secondary
 							</Nav.Item>
 
-							<Nav.Item active={false} href='#' key='Child'>
-								{'Child'}
+							<Nav.Item active={false} href="#" key="Child">
+								Child
 							</Nav.Item>
 						</Nav>
 					</NavBar>
@@ -52,7 +58,7 @@ class NavBarKit extends React.Component {
 
 				<Row>
 					<NavBar>
-						<NavBar.Brand>{'Search:'}</NavBar.Brand>
+						<NavBar.Brand>Search:</NavBar.Brand>
 
 						<SearchInput />
 					</NavBar>

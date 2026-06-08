@@ -1,8 +1,13 @@
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import SearchableSelect from 'shared/components/SearchableSelect';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Map} from 'immutable';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import SearchableSelect from '~/shared/components/SearchableSelect';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 export default class FieldDropDown extends React.Component {
 	static propTypes = {
@@ -15,7 +20,7 @@ export default class FieldDropDown extends React.Component {
 		readOnly: PropTypes.bool,
 		searchInputValue: PropTypes.string,
 		searchItems: PropTypes.array,
-		title: PropTypes.oneOfType([PropTypes.array, PropTypes.string])
+		title: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
 	};
 
 	render() {
@@ -37,7 +42,7 @@ export default class FieldDropDown extends React.Component {
 
 		return (
 			<div className={className}>
-				{title && <label className='text-truncate'>{title}</label>}
+				{title && <label className="text-truncate">{title}</label>}
 
 				<SearchableSelect
 					{...omitDefinedProps(otherProps, FieldDropDown.propTypes)}
@@ -53,7 +58,7 @@ export default class FieldDropDown extends React.Component {
 					selectedItem={data}
 				/>
 
-				<div className='example-value text-truncate'>
+				<div className="example-value text-truncate">
 					{data && data.value}
 				</div>
 			</div>

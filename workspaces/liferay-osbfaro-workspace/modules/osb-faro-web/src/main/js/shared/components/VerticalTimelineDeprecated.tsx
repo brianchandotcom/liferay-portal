@@ -1,25 +1,31 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import NoResultsDisplay from './NoResultsDisplay';
+import {get} from 'lodash';
 import React, {FC, useState} from 'react';
+import {Link} from 'react-router-dom';
+import Loading from '~/shared/components/Loading';
+import {Sizes} from '~/shared/util/constants';
+import {formatDateToTimeZone} from '~/shared/util/date';
+import {Routes, toRoute} from '~/shared/util/router';
+
+import NoResultsDisplay from './NoResultsDisplay';
 import Sticker from './Sticker';
 import TextTruncate from './TextTruncate';
-import {formatDateToTimeZone} from 'shared/util/date';
-import {get} from 'lodash';
-import {Link} from 'react-router-dom';
-import {Routes, toRoute} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
 
 type TITLE_ELEMENT_ATTRIBUTES = {
+	_owner: string;
+	_store: {};
 	key: string;
 	props: {
 		children: string;
 	};
-	type: string;
 	ref: string;
-	_owner: string;
-	_store: {};
+	type: string;
 };
 
 type ITEM_SHAPE = {
@@ -48,7 +54,7 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 	groupId,
 	initialExpanded = true,
 	item: {header, individual, nestedItems, subtitle, symbol, time, title, url},
-	timeZoneId
+	timeZoneId,
 }) => {
 	const [expanded, setExpanded] = useState(initialExpanded);
 
@@ -61,11 +67,11 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 	};
 
 	const classes = getCN('timeline-item', className, {
-		header
+		header,
 	});
 
 	const bodyClasses = getCN('timeline-panel-body-content', {
-		selectable: expandable
+		selectable: expandable,
 	});
 
 	const bodyAttributes = expandable
@@ -73,8 +79,8 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 				onClick: toggleExpand,
 				onKeyPress: toggleExpand,
 				role: 'button',
-				tabIndex: 0
-		  }
+				tabIndex: 0,
+			}
 		: {};
 
 	const individualName = get(individual, 'name');
@@ -82,38 +88,38 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 
 	return (
 		<li className={classes}>
-			<div className='timeline-panel'>
-				<div className='timeline-panel-body'>
+			<div className="timeline-panel">
+				<div className="timeline-panel-body">
 					{!header && (
-						<div className='timeline-increment'>
-							<Sticker circle display='point' size='lg' />
+						<div className="timeline-increment">
+							<Sticker circle display="point" size="lg" />
 						</div>
 					)}
 
 					{!!time && (
-						<div className='timeline-item-label'>
+						<div className="timeline-item-label">
 							{formatDateToTimeZone(time, 'h:mma', timeZoneId)}
 						</div>
 					)}
 
 					<div className={bodyClasses} {...bodyAttributes}>
 						{symbol && (
-							<div className='sticker-container'>
-								<Sticker display='light' symbol={symbol} />
+							<div className="sticker-container">
+								<Sticker display="light" symbol={symbol} />
 							</div>
 						)}
 
-						<div className='timeline-panel-body-content-text'>
+						<div className="timeline-panel-body-content-text">
 							<div>
 								{!!individualName && (
 									<Link
-										className='entity-link'
+										className="entity-link"
 										to={toRoute(
 											Routes.CONTACTS_INDIVIDUAL,
 											{
 												channelId,
 												groupId,
-												id: individualId
+												id: individualId,
 											}
 										)}
 									>
@@ -121,33 +127,33 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 									</Link>
 								)}
 
-								<span className='text-truncate'>
+								<span className="text-truncate">
 									{url ? (
-										<Link className='title' to={url}>
+										<Link className="title" to={url}>
 											{title}
 										</Link>
 									) : (
-										<span className='title'>{title}</span>
+										<span className="title">{title}</span>
 									)}
 								</span>
 							</div>
 
 							{subtitle && (
 								<TextTruncate
-									className='subtitle'
+									className="subtitle"
 									title={subtitle}
 								/>
 							)}
 						</div>
 
 						{expandable && (
-							<div className='timeline-panel-body-content-details'>
-								<span className='item-count'>
+							<div className="timeline-panel-body-content-details">
+								<span className="item-count">
 									{nestedItems.length}
 								</span>
 
 								<ClayIcon
-									className='icon-root'
+									className="icon-root"
 									symbol={
 										expanded ? 'caret-bottom' : 'caret-top'
 									}
@@ -192,16 +198,17 @@ const VerticalTimeline: FC<IVerticalTimelineProps> = ({
 	items = [],
 	loading = false,
 	nested = false,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const {count, label, title} = headerLabels || {};
 	const classes = getCN('timeline', 'timeline-center', {
-		'timeline-nested': nested
+		'timeline-nested': nested,
 	});
 
 	if (loading) {
 		return <Loading />;
-	} else if (!items.length && !nested) {
+	}
+	else if (!items.length && !nested) {
 		return (
 			<NoResultsDisplay
 				description={Liferay.Language.get(
@@ -210,22 +217,23 @@ const VerticalTimeline: FC<IVerticalTimelineProps> = ({
 				icon={{
 					border: false,
 					size: Sizes.XXXLarge,
-					symbol: 'ac_no_results_found'
+					symbol: 'ac_no_results_found',
 				}}
 				spacer
 				title={Liferay.Language.get('there-are-no-results-found')}
 			/>
 		);
-	} else {
+	}
+	else {
 		return (
-			<div className='vertical-timeline-root-deprecated'>
+			<div className="vertical-timeline-root-deprecated">
 				{title && (
-					<div className='timeline-header'>
-						<div className='header-label'>{label}</div>
+					<div className="timeline-header">
+						<div className="header-label">{label}</div>
 
-						<div className='header-title'>{title}</div>
+						<div className="header-title">{title}</div>
 
-						<div className='header-count'>{count}</div>
+						<div className="header-count">{count}</div>
 					</div>
 				)}
 

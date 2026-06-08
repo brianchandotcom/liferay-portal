@@ -1,19 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import '@testing-library/jest-dom';
+
 import 'jest-extended/all';
-import lang from './lang';
 import {TextDecoder, TextEncoder} from 'util';
+
+import lang from './lang';
 
 // Temporarily silence console.error/warn in tests until the underlying
 // deprecations (Apollo Client v3, react-dom/test-utils, graphql HOC/<Query />,
 // cache merge policies) are addressed. See MIGRATION_PLAN.md, Phase 12.
 // The `./pedantic` module remains available to re-enable the strict behavior
 // (throw on any console.error/warn) once tests are clean.
+
 console.error = jest.fn(); // eslint-disable-line no-console
 console.warn = jest.fn(); // eslint-disable-line no-console
 
-jest.mock('shared/util/svg');
-jest.mock('shared/api');
-jest.mock('shared/components/DocumentTitle');
+jest.mock('~/shared/util/svg');
+jest.mock('~/shared/api');
+jest.mock('~/shared/components/DocumentTitle');
 jest.mock('react-dom');
 
 document.body.className = 'dxp';
@@ -21,30 +29,31 @@ document.body.className = 'dxp';
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
 	disconnect: jest.fn(),
 	observe: jest.fn(),
-	unobserve: jest.fn()
+	unobserve: jest.fn(),
 }));
 
 global.analytics = {
 	group: () => {},
 	identify: () => {},
-	track: () => {}
+	track: () => {},
 };
 
 global.AUI = () => ({
-	use: (module, callback) => callback()
+	use: (module, callback) => callback(),
 });
 
 global.Liferay = {
 	FeatureFlags: {},
 	Language: {
-		get: lang
-	}
+		get: lang,
+	},
 };
 
 global.localStorage = (() => {
 	let store = {};
 
 	return {
+
 		/**
 		 * Clear
 		 */
@@ -75,12 +84,12 @@ global.localStorage = (() => {
 		 */
 		setItem(key, value) {
 			store[key] = value.toString();
-		}
+		},
 	};
 })();
 
 global.pendo = {
-	initialize: () => {}
+	initialize: () => {},
 };
 
 global.TextDecoder = TextDecoder;
@@ -91,4 +100,5 @@ global.TextEncoder = TextEncoder;
 // }
 
 require('jest-extended/all');
+
 require('jest-canvas-mock');

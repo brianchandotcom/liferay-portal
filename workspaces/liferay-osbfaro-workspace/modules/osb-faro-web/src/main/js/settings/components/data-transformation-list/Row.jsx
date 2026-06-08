@@ -1,21 +1,27 @@
-import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import debounce from 'shared/util/debounce-decorator';
-import FieldDropDown from './FieldDropDown';
-import Form from 'shared/components/form';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import React from 'react';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'redux';
-import {connect} from 'react-redux';
-import {hasChanges} from 'shared/util/react';
-import {map, uniqBy} from 'lodash';
 import {Map} from 'immutable';
+import {map, uniqBy} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {sub} from 'shared/util/lang';
+import React from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import Form from '~/shared/components/form';
+import debounce from '~/shared/util/debounce-decorator';
+import {sub} from '~/shared/util/lang';
+import {hasChanges} from '~/shared/util/react';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
+
+import FieldDropDown from './FieldDropDown';
 
 const FIELD_PREVIEW_COUNT = 10;
 
@@ -23,7 +29,7 @@ const FIELD_PREVIEW_COUNT = 10;
 export class DataTransformationListRow extends React.Component {
 	static defaultProps = {
 		isDuplicateTargetField: false,
-		mappingSuggestions: {}
+		mappingSuggestions: {},
 	};
 
 	static propTypes = {
@@ -32,7 +38,7 @@ export class DataTransformationListRow extends React.Component {
 		fieldIMap: PropTypes.instanceOf(Map).isRequired,
 		fileVersionId: PropTypes.oneOfType([
 			PropTypes.string,
-			PropTypes.number
+			PropTypes.number,
 		]),
 		groupId: PropTypes.string.isRequired,
 		id: PropTypes.string,
@@ -46,7 +52,7 @@ export class DataTransformationListRow extends React.Component {
 		readOnly: PropTypes.bool,
 		sourceFieldPlaceholder: PropTypes.string,
 		sourceFields: PropTypes.object,
-		sourceName: PropTypes.string
+		sourceName: PropTypes.string,
 	};
 
 	constructor(props) {
@@ -59,14 +65,14 @@ export class DataTransformationListRow extends React.Component {
 			searchedSuggestions: [],
 			showHelpIcon: true,
 			sourceQuery: '',
-			suggestionQuery: ''
+			suggestionQuery: '',
 		};
 
 		if (initialSearchedSuggestions) {
 			initialState = {
 				...initialState,
 				loading: false,
-				searchedSuggestions: initialSearchedSuggestions
+				searchedSuggestions: initialSearchedSuggestions,
 			};
 		}
 
@@ -76,7 +82,7 @@ export class DataTransformationListRow extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		if (hasChanges(prevState, this.state, 'suggestionQuery')) {
 			this.setState({
-				loading: true
+				loading: true,
 			});
 
 			this.handleFetchSuggestions();
@@ -85,7 +91,7 @@ export class DataTransformationListRow extends React.Component {
 		if (hasChanges(prevProps, this.props, 'initialSearchedSuggestions')) {
 			this.setState({
 				loading: false,
-				searchedSuggestions: this.props.initialSearchedSuggestions
+				searchedSuggestions: this.props.initialSearchedSuggestions,
 			});
 		}
 	}
@@ -99,20 +105,20 @@ export class DataTransformationListRow extends React.Component {
 	handleFetchSuggestions() {
 		const {
 			props: {dataSourceFn},
-			state: {suggestionQuery}
+			state: {suggestionQuery},
 		} = this;
 
 		dataSourceFn(suggestionQuery)
-			.then(searchedSuggestions => {
+			.then((searchedSuggestions) => {
 				this.setState({
 					loading: false,
-					searchedSuggestions
+					searchedSuggestions,
 				});
 			})
-			.catch(err => {
-				if (!err.IS_CANCELLATION_ERROR) {
+			.catch((error) => {
+				if (!error.IS_CANCELLATION_ERROR) {
 					this.setState({
-						loading: false
+						loading: false,
 					});
 				}
 			});
@@ -133,18 +139,18 @@ export class DataTransformationListRow extends React.Component {
 								count: FIELD_PREVIEW_COUNT,
 								fieldName,
 								fileVersionId,
-								groupId
-						  }
+								groupId,
+							}
 						: {
 								count: FIELD_PREVIEW_COUNT,
 								fieldName,
 								groupId,
-								id
-						  }
+								id,
+							}
 				),
 			fieldName,
 			onClose: close,
-			sourceName
+			sourceName,
 		});
 	}
 
@@ -152,12 +158,12 @@ export class DataTransformationListRow extends React.Component {
 	handleMappingSelect(item) {
 		const {
 			props: {index, onChange},
-			state: {showHelpIcon}
+			state: {showHelpIcon},
 		} = this;
 
 		if (showHelpIcon) {
 			this.setState({
-				showHelpIcon: false
+				showHelpIcon: false,
 			});
 		}
 
@@ -187,63 +193,63 @@ export class DataTransformationListRow extends React.Component {
 	@autobind
 	handleSourceSearch(value) {
 		this.setState({
-			sourceQuery: value
+			sourceQuery: value,
 		});
 	}
 
 	@autobind
 	handleMappingSearch(value) {
 		this.setState({
-			suggestionQuery: value
+			suggestionQuery: value,
 		});
 	}
 
 	getMappingSuggestions() {
 		const {
 			props: {fieldIMap, mappingSuggestions},
-			state: {searchedSuggestions, suggestionQuery}
+			state: {searchedSuggestions, suggestionQuery},
 		} = this;
 
 		const sourceName = fieldIMap.getIn(['source', 'name']);
 
 		let suggestions = mappingSuggestions[sourceName]
 			? mappingSuggestions[sourceName].filter(
-					suggestion =>
+					(suggestion) =>
 						suggestion &&
 						suggestion.name
 							.toLowerCase()
 							.match(suggestionQuery.toLowerCase())
-			  )
+				)
 			: [];
 
-		let arr = [];
+		let array = [];
 
 		suggestions = suggestions.map(({name, values}) => ({
 			name,
-			value: values
+			value: values,
 		}));
 
-		if (suggestions.length > 0) {
-			arr = arr.concat([
+		if (suggestions.length) {
+			array = array.concat([
 				{name: Liferay.Language.get('suggestions'), subheader: true},
-				...suggestions
+				...suggestions,
 			]);
 		}
 
 		if (
-			searchedSuggestions.length > 0 &&
-			uniqBy([...arr, ...searchedSuggestions]).length > 0
+			!!searchedSuggestions.length &&
+			!!uniqBy([...array, ...searchedSuggestions]).length
 		) {
-			arr = arr.concat([
+			array = array.concat([
 				{
 					name: Liferay.Language.get('analytics-cloud-fields'),
-					subheader: true
+					subheader: true,
 				},
-				...searchedSuggestions
+				...searchedSuggestions,
 			]);
 		}
 
-		return uniqBy(arr, 'name');
+		return uniqBy(array, 'name');
 	}
 
 	getTooltipTitle() {
@@ -259,22 +265,25 @@ export class DataTransformationListRow extends React.Component {
 			return Liferay.Language.get(
 				'only-one-field-per-source-can-be-mapped-to-the-same-analytics-cloud-field'
 			);
-		} else if (unmatched) {
+		}
+		else if (unmatched) {
 			return Liferay.Language.get(
 				'no-fields-matched.-please-select-a-field-from-the-dropdown-or-create-a-new-one'
 			);
-		} else if (!sourceName && !suggestionName) {
+		}
+		else if (!sourceName && !suggestionName) {
 			return Liferay.Language.get(
 				'choose-the-fields-that-you-want-to-match'
 			);
-		} else {
+		}
+		else {
 			return sub(
 				Liferay.Language.get(
 					'best-match-selected.-there-are-x-other-possible-matches'
 				),
 				[
 					mappingSuggestions[sourceName] &&
-						mappingSuggestions[sourceName].length - 1
+						mappingSuggestions[sourceName].length - 1,
 				]
 			);
 		}
@@ -287,11 +296,11 @@ export class DataTransformationListRow extends React.Component {
 		open(modalTypes.CREATE_MAPPING_MODAL, {
 			groupId,
 			onClose: close,
-			onSubmit: item => {
+			onSubmit: (item) => {
 				this.handleMappingSelect(item);
 
 				close();
-			}
+			},
 		});
 	}
 
@@ -305,9 +314,9 @@ export class DataTransformationListRow extends React.Component {
 				readOnly,
 				sourceFieldPlaceholder,
 				sourceFields,
-				sourceName
+				sourceName,
 			},
-			state: {loading, showHelpIcon, sourceQuery, suggestionQuery}
+			state: {loading, showHelpIcon, sourceQuery, suggestionQuery},
 		} = this;
 
 		const sourceIMap = fieldIMap.get('source', new Map());
@@ -324,7 +333,7 @@ export class DataTransformationListRow extends React.Component {
 		const error = unmatched || isDuplicateTargetField;
 
 		const classes = getCN('data-transformation-item-root', {
-			error
+			error,
 		});
 
 		return (
@@ -343,8 +352,8 @@ export class DataTransformationListRow extends React.Component {
 						searchInputValue={sourceQuery}
 						searchItems={map(sourceFields, (value, key) => ({
 							name: key,
-							value
-						})).filter(item =>
+							value,
+						})).filter((item) =>
 							item.name
 								.toLowerCase()
 								.match(sourceQuery.toLowerCase())
@@ -352,23 +361,23 @@ export class DataTransformationListRow extends React.Component {
 					/>
 				</Form.GroupItem>
 
-				<Form.GroupItem className='add-on' shrink>
+				<Form.GroupItem className="add-on" shrink>
 					{error ? (
 						<ClayIcon
-							className='icon-root'
-							symbol='faro_connection_error_ovals'
+							className="icon-root"
+							symbol="faro_connection_error_ovals"
 						/>
 					) : (
 						<ClayIcon
-							className='icon-root'
-							symbol='faro_connection_success_ovals'
+							className="icon-root"
+							symbol="faro_connection_success_ovals"
 						/>
 					)}
 				</Form.GroupItem>
 
 				<Form.GroupItem>
 					<FieldDropDown
-						className='suggestion'
+						className="suggestion"
 						dataIMap={suggestionValIMap}
 						disabled={!sourceIMap.get('name')}
 						footerButtonMessage={Liferay.Language.get('new-field')}
@@ -388,14 +397,14 @@ export class DataTransformationListRow extends React.Component {
 
 				{!readOnly && (
 					<>
-						<Form.GroupItem className='add-on' shrink>
+						<Form.GroupItem className="add-on" shrink>
 							{(showHelpIcon || error) && (
 								<span
 									data-tooltip
 									title={this.getTooltipTitle()}
 								>
 									<ClayIcon
-										className='icon-root help'
+										className="help icon-root"
 										symbol={
 											error
 												? 'exclamation-full'
@@ -406,20 +415,20 @@ export class DataTransformationListRow extends React.Component {
 							)}
 						</Form.GroupItem>
 
-						<Form.GroupItem className='add-on' shrink>
+						<Form.GroupItem className="add-on" shrink>
 							<ClayButton
 								aria-label={Liferay.Language.get(
 									'remove-field'
 								)}
-								className='button-root'
+								className="button-root"
 								data-tooltip
-								displayType='unstyled'
+								displayType="unstyled"
 								onClick={this.handleRemove}
 								title={Liferay.Language.get('remove-field')}
 							>
 								<ClayIcon
-									className='icon-root'
-									symbol='times-circle'
+									className="icon-root"
+									symbol="times-circle"
 								/>
 							</ClayButton>
 						</Form.GroupItem>
@@ -435,7 +444,7 @@ export default compose(
 		null,
 		{
 			close,
-			open
+			open,
 		},
 		null
 	)

@@ -55,23 +55,7 @@ const config = {
 				},
 				resolve: {
 					alias: {
-						assets: resolveModule('assets'),
-						'cerebro-shared': resolveModule('cerebro-shared'),
-						commerce: resolveModule('commerce'),
-						contacts: resolveModule('contacts'),
-						'custom-types': resolveModule('custom-types'),
-						'event-analysis': resolveModule('event-analysis'),
-						experiments: resolveModule('experiments'),
-						individual: resolveModule('individual'),
-						lifecycle: resolveModule('lifecycle'),
-						'route-middleware': resolveModule('route-middleware'),
-						segment: resolveModule('segment'),
-						settings: resolveModule('settings'),
-						shared: resolveModule('shared'),
-						sites: resolveModule('sites'),
-						test: resolveModule('test'),
-						touchpoints: resolveModule('touchpoints'),
-						'ui-kit': resolveModule('ui-kit')
+						'~': resolveModule()
 					},
 					extensions: ['.js', '.jsx', '.ts', '.tsx']
 				},

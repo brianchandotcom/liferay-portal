@@ -1,8 +1,14 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import DurationInput from 'shared/components/DurationInput';
-import Form from 'shared/components/form';
 import getCN from 'classnames';
 import React from 'react';
+import DurationInput from '~/shared/components/DurationInput';
+import Form from '~/shared/components/form';
+
 import {ISegmentEditorInputBase} from '../utils/types';
 import {isValid} from '../utils/utils';
 
@@ -34,19 +40,19 @@ export default class SegmentDurationInput extends React.Component<ISegmentDurati
 			property: {entityName},
 			touched,
 			valid,
-			value
+			value,
 		} = this.props;
 
 		const showError = !valid && touched;
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 

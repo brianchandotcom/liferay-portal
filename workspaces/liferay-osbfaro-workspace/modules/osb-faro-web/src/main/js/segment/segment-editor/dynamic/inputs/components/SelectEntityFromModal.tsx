@@ -1,14 +1,19 @@
-import Form from 'shared/components/form';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import Input from 'shared/components/Input';
-import React from 'react';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {Columns} from 'shared/types';
-import {connect, ConnectedProps} from 'react-redux';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
-import {detailsListColumns} from 'shared/util/table-columns';
 import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
+import React from 'react';
+import {ConnectedProps, connect} from 'react-redux';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import Input from '~/shared/components/Input';
+import Form from '~/shared/components/form';
+import {Columns} from '~/shared/types';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
+import {OrderParams} from '~/shared/util/records';
+import {detailsListColumns} from '~/shared/util/table-columns';
 
 const connector = connect(null, {close, open});
 
@@ -62,8 +67,8 @@ const SelectEntityFromModal: React.FC<ISelectEntityFromModalProps> = ({
 				{
 					...detailsListColumns.getDataSourceName(groupId),
 					className: 'table-cell-expand',
-					sortable: false
-				}
+					sortable: false,
+				},
 			],
 			dataSourceParams: {groupId},
 			initialDelta,
@@ -77,33 +82,33 @@ const SelectEntityFromModal: React.FC<ISelectEntityFromModalProps> = ({
 			},
 			submitMessage,
 			title,
-			...otherProps
+			...otherProps,
 		});
 	};
 
 	return (
 		<Form.GroupItem>
-			<Input.Group className='select-entity-group'>
+			<Input.Group className="select-entity-group">
 				<Input.GroupItem
 					className={getCN({
-						'has-error': error
+						'has-error': error,
 					})}
 				>
-					<Input.Group className='select-input-root'>
+					<Input.Group className="select-input-root">
 						<Input.GroupItem>
 							<Input />
 						</Input.GroupItem>
 
-						<div className='selected-item-container'>
+						<div className="selected-item-container">
 							{renderEntity(entity)}
 						</div>
 					</Input.Group>
 				</Input.GroupItem>
 
 				<Input.Button
-					displayType='secondary'
+					displayType="secondary"
 					onClick={handleModal}
-					position='append'
+					position="append"
 				>
 					{Liferay.Language.get('select')}
 				</Input.Button>

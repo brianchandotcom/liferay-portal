@@ -1,32 +1,36 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {graphql} from '@apollo/client/react/hoc';
 import ClayLink from '@clayui/link';
-import getInterestsQuery from 'contacts/queries/InterestsQuery';
 import React from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {compositionListColumns} from 'shared/util/table-columns';
-import {CompositionTypes} from 'shared/util/constants';
-import {COUNT, createOrderIOMap} from 'shared/util/pagination';
+import {useParams} from 'react-router-dom';
 import {
 	getMapResultToProps,
-	mapPropsToOptions
-} from 'contacts/hoc/mappers/interests-query';
-import {graphql} from '@apollo/client/react/hoc';
-import {PAGES, Routes, setUriQueryValue, toRoute} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {useParams} from 'react-router-dom';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {withBaseResults} from 'shared/hoc';
+	mapPropsToOptions,
+} from '~/contacts/hoc/mappers/interests-query';
+import getInterestsQuery from '~/contacts/queries/InterestsQuery';
+import Card from '~/shared/components/Card';
+import {withBaseResults} from '~/shared/hoc';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {CompositionTypes, Sizes} from '~/shared/util/constants';
+import {COUNT, createOrderIOMap} from '~/shared/util/pagination';
+import {PAGES, Routes, setUriQueryValue, toRoute} from '~/shared/util/router';
+import {compositionListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
 
 const withData = () =>
 	graphql(getInterestsQuery(CompositionTypes.SegmentInterests), {
 		options: mapPropsToOptions,
-		props: getMapResultToProps(CompositionTypes.SegmentInterests)
+		props: getMapResultToProps(CompositionTypes.SegmentInterests),
 	});
 
 const TableWithData = withBaseResults(withData, {
 	emptyDescription: (
 		<>
-			<span className='mr-1'>
+			<span className="mr-1">
 				{Liferay.Language.get(
 					'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 				)}
@@ -34,8 +38,8 @@ const TableWithData = withBaseResults(withData, {
 
 			<ClayLink
 				href={URLConstants.SegmentsInterestsDocumentationLink}
-				key='DOCUMENTATION'
-				target='_blank'
+				key="DOCUMENTATION"
+				target="_blank"
 			>
 				{Liferay.Language.get('learn-more-about-interests')}
 			</ClayLink>
@@ -44,15 +48,15 @@ const TableWithData = withBaseResults(withData, {
 	emptyIcon: {
 		border: false,
 		size: Sizes.XXXLarge,
-		symbol: 'ac_satellite'
+		symbol: 'ac_satellite',
 	},
 	emptyTitle: Liferay.Language.get('there-are-no-interests-found'),
 	getColumns: ({
 		maxCount,
 		router: {
-			params: {channelId, groupId, id}
+			params: {channelId, groupId, id},
 		},
-		totalCount
+		totalCount,
 	}) => [
 		compositionListColumns.getName({
 			label: Liferay.Language.get('topic'),
@@ -64,37 +68,37 @@ const TableWithData = withBaseResults(withData, {
 						groupId,
 						id,
 						interestId: name,
-						tabId: PAGES
+						tabId: PAGES,
 					}),
 					'active',
 					true
 				),
-			sortable: true
+			sortable: true,
 		}),
 		compositionListColumns.getRelativeMetricBar({
 			label: Liferay.Language.get('segment-members'),
 			maxCount,
 			sortable: true,
-			totalCount
+			totalCount,
 		}),
 		compositionListColumns.getPercentOf({
 			metricName: Liferay.Language.get('active-members'),
-			totalCount
-		})
+			totalCount,
+		}),
 	],
 	rowIdentifier: 'name',
-	showDropdownRangeKey: false
+	showDropdownRangeKey: false,
 });
 
-const Interests = props => {
+const Interests = (props) => {
 	const {channelId, id} = useParams();
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(COUNT)
+		initialOrderIOMap: createOrderIOMap(COUNT),
 	});
 
 	return (
 		<Card pageDisplay>
-			<Card.Header className='align-items-center d-flex justify-content-between'>
+			<Card.Header className="align-items-center d-flex justify-content-between">
 				<Card.Title>
 					{Liferay.Language.get('interest-topics')}
 				</Card.Title>

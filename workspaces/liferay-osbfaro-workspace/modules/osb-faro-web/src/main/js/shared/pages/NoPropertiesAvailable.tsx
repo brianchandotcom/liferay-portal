@@ -1,17 +1,22 @@
-import * as API from 'shared/api';
-import BasePage from 'shared/components/base-page';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Constants, {Sizes} from 'shared/util/constants';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
-import {User} from 'shared/util/records';
-import {withRequest} from 'shared/hoc';
+import {compose} from 'redux';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import BasePage from '~/shared/components/base-page';
+import {withRequest} from '~/shared/hoc';
+import Constants, {Sizes} from '~/shared/util/constants';
+import {User} from '~/shared/util/records';
 
 const {
-	pagination: {cur: defaultPage}
+	pagination: {cur: defaultPage},
 } = Constants;
 
 interface INoPropertiesAvailableProps
@@ -28,17 +33,17 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 	currentUser,
 	dataSources,
 	groupId,
-	open
+	open,
 }) => {
 	const admin = currentUser.isAdmin();
 
 	const description = admin
 		? Liferay.Language.get(
 				'to-get-your-workspace-set-up-you-will-need-to-create-a-property-and-sync-your-dxp-sites'
-		  )
+			)
 		: Liferay.Language.get(
 				'you-have-not-been-added-to-any-properties.-please-contact-your-analytics-cloud-administrator'
-		  );
+			);
 
 	const title = admin
 		? Liferay.Language.get('first-connect-your-dxp-sites')
@@ -46,7 +51,7 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 
 	return (
 		<BasePage
-			className='no-properties-available-root'
+			className="no-properties-available-root"
 			documentTitle={Liferay.Language.get('no-properties-available')}
 		>
 			<BasePage.Header breadcrumbs={[]} groupId={groupId}>
@@ -64,17 +69,17 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 									? description
 									: Liferay.Language.get(
 											'first-complete-the-onboarding-to-get-your-workspace-set-up'
-									  )}
+										)}
 							</p>
 
 							{admin && (
 								<ClayButton
-									className='button-root'
-									displayType='primary'
+									className="button-root"
+									displayType="primary"
 									onClick={() =>
 										open(modalTypes.ONBOARDING_MODAL, {
 											groupId,
-											onClose: close
+											onClose: close,
 										})
 									}
 								>
@@ -87,7 +92,7 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 					spacer
 					title={
@@ -108,10 +113,10 @@ export default compose<any>(
 				delta: 1,
 				groupId,
 				page: defaultPage,
-				query: ''
+				query: '',
 			}),
 		({total}: {total: number}) => ({
-			dataSources: !!total
+			dataSources: !!total,
 		})
 	),
 	connect(null, {close, open})

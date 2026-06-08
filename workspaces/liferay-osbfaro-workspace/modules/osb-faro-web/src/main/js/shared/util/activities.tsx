@@ -1,6 +1,8 @@
-import moment from 'moment';
-import React from 'react';
-import {DEFAULT_ACTIVITY_MAX} from 'shared/api/activities';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {
 	flattenDepth,
 	flow,
@@ -8,13 +10,17 @@ import {
 	map,
 	mapValues,
 	orderBy,
-	toPairs
+	toPairs,
 } from 'lodash/fp';
+import moment from 'moment';
+import React from 'react';
+import {DEFAULT_ACTIVITY_MAX} from '~/shared/api/activities';
+import {UserSession, UserSessionEvent} from '~/shared/queries/UserSessionQuery';
+import {RangeSelectors} from '~/shared/types';
+import {TimeIntervals} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+
 import {getSafeDecodedURIComponent} from './util';
-import {RangeSelectors} from 'shared/types';
-import {sub} from 'shared/util/lang';
-import {TimeIntervals} from 'shared/util/constants';
-import {UserSession, UserSessionEvent} from 'shared/queries/UserSessionQuery';
 
 export const CHART_ACTIVITY_ID = 'activities';
 export const CHART_ID = 'individualActivity';
@@ -22,7 +28,7 @@ export const CHART_ID = 'individualActivity';
 export const INTERVAL_MAP = {
 	D: TimeIntervals.Day,
 	M: TimeIntervals.Month,
-	W: TimeIntervals.Week
+	W: TimeIntervals.Week,
 };
 
 type SessionEvent = {
@@ -70,32 +76,36 @@ export type VerticalTimelineSession = {
  * @param {number} changeMetrics.activityCount - The activity count.
  * @return {Array} Activity metrics formatted for use in ChangeLegend.
  */
-export const buildLegendItems = ({
+export const buildLegendItems = function buildLegendItems({
 	activityChange,
-	activityCount
+	activityCount,
 }: {
 	activityChange: number;
 	activityCount: number;
-}): {change: number; id: string; secondaryInfo: string; title: string}[] => [
-	{
-		change: activityChange,
-		id: CHART_ACTIVITY_ID,
-		secondaryInfo: sub(Liferay.Language.get('x-day-change'), [
-			DEFAULT_ACTIVITY_MAX
-		]) as string,
-		title: sub(Liferay.Language.get('total-activity-count-x'), [
-			activityCount.toLocaleString()
-		]) as string
-	}
-];
+}): {change: number; id: string; secondaryInfo: string; title: string}[] {
+	return [
+		{
+			change: activityChange,
+			id: CHART_ACTIVITY_ID,
+			secondaryInfo: sub(Liferay.Language.get('x-day-change'), [
+				DEFAULT_ACTIVITY_MAX,
+			]) as string,
+			title: sub(Liferay.Language.get('total-activity-count-x'), [
+				activityCount.toLocaleString(),
+			]) as string,
+		},
+	];
+};
 
 /**
  * Formats UserSessions events and maps its attributes to the required to be used in VerticalTimeline component.
  * @param {Array} events Array of UserSessions events.
  * @returns {Array.<Object>} Array of objects for a vertical timeline.
  */
-export const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
-	events.map(
+export const formatEvents = function formatEvents(
+	events: UserSessionEvent[]
+): Array<SessionEvent> {
+	return events.map(
 		({
 			applicationId,
 			assetTitle,
@@ -104,7 +114,7 @@ export const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
 			eventDate,
 			eventId,
 			name,
-			properties
+			properties,
 		}) => ({
 			attributes: {
 				applicationId,
@@ -114,10 +124,10 @@ export const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
 					properties: Object.fromEntries(
 						properties.map(({name: propName, value}) => [
 							propName,
-							value
+							value,
 						])
-					)
-				})
+					),
+				}),
 			},
 			description: assetTitle,
 			subtitle:
@@ -125,18 +135,19 @@ export const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
 					? getSafeDecodedURIComponent(canonicalUrl)
 					: undefined,
 			time: moment(createDate),
-			title: name
+			title: name,
 		})
 	);
+};
 
 /**
  * Formats datetime to today or the current date.
  * @param {Date|string|number} datetime - Any value accepeted by Moment.
  * @returns {Moment} Date label to be displayed.
  */
-export const formatGroupingTime = (
+export const formatGroupingTime = function formatGroupingTime(
 	datetime: Date | string | number
-): string => {
+): string {
 	const time = moment(datetime);
 
 	return time.isSame(moment(), 'day')
@@ -149,10 +160,10 @@ export const formatGroupingTime = (
  * @param {Array} sessions
  * @returns {Array.<Object>} An array of session objects.
  */
-export const formatSessions = (
+export const formatSessions = function formatSessions(
 	sessions: UserSession[]
-): (VerticalTimelineHeader | VerticalTimelineSession)[] =>
-	flow(
+): (VerticalTimelineHeader | VerticalTimelineSession)[] {
+	return flow(
 		groupBy(({createDate}: UserSession) =>
 			moment.utc(createDate).startOf('day').format()
 		),
@@ -170,7 +181,7 @@ export const formatSessions = (
 					screenHeight,
 					screenWidth,
 					timezoneOffset,
-					userAgent
+					userAgent,
 				}) => ({
 					applicationId:
 						(events as unknown as UserSessionEvent[])[0]
@@ -183,7 +194,7 @@ export const formatSessions = (
 						screenHeight,
 						screenWidth,
 						timezoneOffset,
-						userAgent
+						userAgent,
 					},
 					browserName,
 					device: deviceType,
@@ -192,7 +203,7 @@ export const formatSessions = (
 						events as unknown as UserSessionEvent[]
 					),
 					time: createDate,
-					userAgent
+					userAgent,
 				})
 			)
 		),
@@ -208,30 +219,34 @@ export const formatSessions = (
 						currentValue: {nestedItems: unknown[]}
 					) => previousValue + currentValue.nestedItems.length,
 					0
-				)
+				),
 			},
-			items
+			items,
 		]),
 		flattenDepth(3)
 	)(sessions);
+};
 
 /**
  * Helper function get the correct pluralization of count label.
  * @param {Number} totalEvents
  * @returns {Array} Label to be displayed.
  */
-export const getActivityLabel = (totalEvents: number): React.ReactNode[] =>
-	sub(
+export const getActivityLabel = function getActivityLabel(
+	totalEvents: number
+): React.ReactNode[] {
+	return sub(
 		totalEvents === 1
 			? Liferay.Language.get('event-x')
 			: Liferay.Language.get('events-x'),
-		[<b key='ACTIVITIES'>{totalEvents}</b>],
+		[<b key="ACTIVITIES">{totalEvents}</b>],
 		false
 	) as React.ReactNode[];
+};
 
-export const getSafeRangeKey = (
+export const getSafeRangeKey = function getSafeRangeKey(
 	rangeKey: RangeSelectors['rangeKey']
-): RangeSelectors['rangeKey'] | null => {
+): RangeSelectors['rangeKey'] | null {
 	if (rangeKey === 'CUSTOM') {
 		return null;
 	}

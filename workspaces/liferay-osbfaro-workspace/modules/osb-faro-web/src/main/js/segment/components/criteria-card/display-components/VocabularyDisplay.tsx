@@ -1,21 +1,27 @@
-import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
 import {
 	ASSET_TYPE_OPTIONS,
 	EVENT_TYPE_OPTIONS,
+	OCCURRENCE_OPTIONS,
 	getAssetTypeFromValue,
 	getConjunctionCriterionFromValue,
 	getEventTypeFromValue,
-	OCCURRENCE_OPTIONS
-} from 'segment/segment-editor/dynamic/inputs/shared/remote-filter-input-helpers';
-import {CustomValue} from 'shared/util/records';
-import {getIndexFromPropertyName} from 'segment/segment-editor/dynamic/utils/custom-inputs';
-import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
+} from '~/segment/segment-editor/dynamic/inputs/shared/remote-filter-input-helpers';
+import {getIndexFromPropertyName} from '~/segment/segment-editor/dynamic/utils/custom-inputs';
+import {CustomValue} from '~/shared/util/records';
+
 import {IDisplayComponentProps} from '../types';
+import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
+import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
 
 const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
-	property
+	property,
 }) => {
 	const {operatorName, value} = criterion;
 	const {entityName, label, type} = property;
@@ -46,7 +52,9 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 	const conjunctionCriterion = getConjunctionCriterionFromValue(valueIMap);
 
 	const categoryNames: string[] = (() => {
-		if (!valueIMap) return [];
+		if (!valueIMap) {
+			return [];
+		}
 
 		const catIndex = getIndexFromPropertyName(valueIMap, 'categories');
 
@@ -57,7 +65,7 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 						'criterionGroup',
 						'items',
 						catIndex,
-						'value'
+						'value',
 					]) as any
 				)
 					?.toJS?.()
@@ -67,7 +75,9 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 
 		const items = valueIMap.getIn(['criterionGroup', 'items']) as any;
 
-		if (!items) return [];
+		if (!items) {
+			return [];
+		}
 
 		const orGroup = items.find(
 			(item: any) => item.get?.('conjunctionName') === 'or'
@@ -79,14 +89,17 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 			orGroup.get?.('items')?.forEach((andGroup: any) => {
 				const andItems = andGroup.get?.('items');
 
-				if (!andItems) return;
+				if (!andItems) {
+					return;
+				}
 
 				const nameItem = andItems.find(
 					(i: any) => i.get?.('propertyName') === 'categories/name'
 				);
 
-				if (nameItem)
+				if (nameItem) {
 					names.push((nameItem.get?.('value') as string) ?? '');
+				}
 			});
 
 			return names;
@@ -111,8 +124,8 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 					'criterionGroup',
 					'items',
 					vocNameIndex,
-					'value'
-			  ]) as string) ?? label
+					'value',
+				]) as string) ?? label
 			: label;
 
 	return (
@@ -131,7 +144,7 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 
 			<b>{vocabularyName}</b>
 
-			{categoryNames.length > 0 && (
+			{!!categoryNames.length && (
 				<>
 					<span>
 						{Liferay.Language.get(

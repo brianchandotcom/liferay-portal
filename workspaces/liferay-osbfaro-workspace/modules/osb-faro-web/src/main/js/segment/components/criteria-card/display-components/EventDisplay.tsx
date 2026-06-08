@@ -1,17 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Map} from 'immutable';
+import React from 'react';
+import {getFilterCriterionIMap} from '~/segment/segment-editor/dynamic/utils/custom-inputs';
+import {SegmentTypes} from '~/shared/util/constants';
+import {CustomValue} from '~/shared/util/records';
+
+import {IDisplayComponentProps} from '../types';
+import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
 import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
 import OccurenceConjunctionDisplay from './OccurenceConjunctionDisplay';
-import React from 'react';
-import {CustomValue} from 'shared/util/records';
-import {getFilterCriterionIMap} from 'segment/segment-editor/dynamic/utils/custom-inputs';
-import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
-import {IDisplayComponentProps} from '../types';
-import {Map} from 'immutable';
-import {SegmentTypes} from 'shared/util/constants';
 
 const EventDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	segmentType
+	segmentType,
 }) => {
 	const {operatorName, value} = criterion;
 
@@ -34,10 +40,10 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 
 	if (
 		options?.length &&
-		options.some(option => option.label === 'hidden' && option.value)
+		options.some((option) => option.label === 'hidden' && option.value)
 	) {
 		return (
-			<b className='undefined-property'>
+			<b className="undefined-property">
 				{Liferay.Language.get('custom-event-no-longer-exists')}
 			</b>
 		);
@@ -45,7 +51,7 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 
 	return (
 		<>
-			<span className='sentence-start'>
+			<span className="sentence-start">
 				{Liferay.Language.get('individual')}
 			</span>
 

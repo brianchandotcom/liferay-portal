@@ -1,20 +1,25 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Loading, {Align} from 'shared/components/Loading';
 import React, {useEffect, useState} from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {connect, ConnectedProps} from 'react-redux';
-import {sub} from 'shared/util/lang';
+import {ConnectedProps, connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import Loading, {Align} from '~/shared/components/Loading';
+import {Alert} from '~/shared/types';
+import {sub} from '~/shared/util/lang';
 
 export enum Frequency {
 	Daily = 'daily',
 	Monthly = 'monthly',
-	Weekly = 'weekly'
+	Weekly = 'weekly',
 }
 
 export type Report = {
@@ -32,7 +37,7 @@ interface IEmailReportsProps
 const connector = connect(null, {
 	addAlert,
 	close,
-	open
+	open,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -43,7 +48,7 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 	className,
 	close,
 	open,
-	sitesSynced = false
+	sitesSynced = false,
 }) => {
 	const {groupId} = useParams();
 	const [report, setReport] = useState<Report | null>(null);
@@ -55,12 +60,12 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 				setReport(
 					reports?.[channelId] ?? {
 						enabled: false,
-						frequency: Frequency.Monthly
+						frequency: Frequency.Monthly,
 					}
 				)
 			)
-			.catch(e => {
-				console.error(e); // eslint-disable-line no-console
+			.catch((event) => {
+				console.error(event); // eslint-disable-line no-console
 			});
 	}, [channelId, groupId]);
 
@@ -74,18 +79,18 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 					alertType: Alert.Types.Success,
 					message: Liferay.Language.get(
 						'changes-to-email-reports-saved'
-					)
+					),
 				});
 
 				setReport(report);
 			})
-			.catch(e => {
-				console.error(e); // eslint-disable-line no-console
+			.catch((event) => {
+				console.error(event); // eslint-disable-line no-console
 
 				addAlert({
 					alertType: Alert.Types.Error,
 					message: Liferay.Language.get('error'),
-					timeout: false
+					timeout: false,
 				});
 			});
 	};
@@ -96,12 +101,12 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 				Liferay.Language.get('email-reports-x'),
 				[
 					!report ? (
-						<Loading align={Align.Left} key='LOADING' />
+						<Loading align={Align.Left} key="LOADING" />
 					) : report.enabled ? (
 						Liferay.Language.get('enabled')
 					) : (
 						Liferay.Language.get('disabled')
-					)
+					),
 				],
 				false
 			)}
@@ -110,9 +115,9 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 				<ClayButton
 					aria-label={Liferay.Language.get('configure-email-reports')}
 					borderless
-					className='button-root'
+					className="button-root"
 					disabled={!sitesSynced}
-					displayType='unstyled'
+					displayType="unstyled"
 					onClick={() => {
 						if (!sitesSynced) {
 							return;
@@ -121,18 +126,18 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 						open(modalTypes.EDIT_EMAIL_REPORTS, {
 							onCancel: close,
 							onSave: handleSaveReport,
-							report
+							report,
 						});
 					}}
-					size='sm'
+					size="sm"
 				>
 					<span
-						className='ml-2 p-2'
+						className="ml-2 p-2"
 						data-tooltip
-						data-tooltip-align='top'
+						data-tooltip-align="top"
 						title={Liferay.Language.get('configure-email-reports')}
 					>
-						<ClayIcon className='icon-root' symbol='cog' />
+						<ClayIcon className="icon-root" symbol="cog" />
 					</span>
 				</ClayButton>
 			)}

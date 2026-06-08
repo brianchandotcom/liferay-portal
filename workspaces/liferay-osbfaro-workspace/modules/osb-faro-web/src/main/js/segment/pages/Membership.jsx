@@ -1,21 +1,26 @@
-import * as API from 'shared/api';
-import Card from 'shared/components/Card';
-import React from 'react';
-import SegmentGrowthWithList from 'segment/components/Growth';
-import {connect} from 'react-redux';
-import {mapGrowthHistory} from 'shared/hoc/mappers/segment';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {PropTypes} from 'prop-types';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {Segment} from 'shared/util/records';
-import {SegmentTypes} from 'shared/util/constants';
-import {withRequest} from 'shared/hoc';
+import React from 'react';
+import {connect} from 'react-redux';
+import SegmentGrowthWithList from '~/segment/components/Growth';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {withRequest} from '~/shared/hoc';
+import {mapGrowthHistory} from '~/shared/hoc/mappers/segment';
+import {SegmentTypes} from '~/shared/util/constants';
+import {Segment} from '~/shared/util/records';
 
 export const MembershipChart = withRequest(
 	API.individualSegment.fetchMembershipChangesAggregations,
 	mapGrowthHistory,
 	{
 		alignCenter: true,
-		page: false
+		page: false,
 	}
 )(
 	class extends React.Component {
@@ -26,10 +31,10 @@ export const MembershipChart = withRequest(
 			id: PropTypes.string.isRequired,
 			individualCounts: PropTypes.shape({
 				anonymousCount: PropTypes.number,
-				knownCount: PropTypes.number
+				knownCount: PropTypes.number,
 			}),
 			segmentType: PropTypes.oneOf(Object.values(SegmentTypes)),
-			timeZoneId: PropTypes.string
+			timeZoneId: PropTypes.string,
 		};
 
 		render() {
@@ -40,7 +45,7 @@ export const MembershipChart = withRequest(
 				id,
 				individualCounts,
 				segmentType,
-				timeZoneId
+				timeZoneId,
 			} = this.props;
 
 			return (
@@ -66,14 +71,14 @@ export const MembershipChart = withRequest(
 		groupId,
 		'data',
 		'timeZone',
-		'timeZoneId'
-	])
+		'timeZoneId',
+	]),
 }))
 export default class Membership extends React.Component {
 	static propTypes = {
 		groupId: PropTypes.string.isRequired,
 		segment: PropTypes.instanceOf(Segment).isRequired,
-		timeZoneId: PropTypes.string
+		timeZoneId: PropTypes.string,
 	};
 
 	render() {
@@ -84,21 +89,21 @@ export default class Membership extends React.Component {
 				anonymousIndividualCount,
 				id,
 				knownIndividualCount,
-				segmentType
+				segmentType,
 			},
-			timeZoneId
+			timeZoneId,
 		} = this.props;
 
 		return (
 			<Card
-				className='segment-membership-root'
+				className="segment-membership-root"
 				reportContainer={ReportContainer.SegmentMembershipCard}
 			>
-				<Card.Header className='align-items-center d-flex justify-content-between'>
+				<Card.Header className="align-items-center d-flex justify-content-between">
 					<Card.Title>
 						{Liferay.Language.get('segment-membership-trend')}
 					</Card.Title>
-					<span className='text-secondary text-uppercase'>
+					<span className="text-secondary text-uppercase">
 						<strong>{Liferay.Language.get('last-30-days')}</strong>
 					</span>
 				</Card.Header>
@@ -110,7 +115,7 @@ export default class Membership extends React.Component {
 					id={id}
 					individualCounts={{
 						anonymousCount: anonymousIndividualCount,
-						knownCount: knownIndividualCount
+						knownCount: knownIndividualCount,
 					}}
 					segmentType={segmentType}
 					timeZoneId={timeZoneId}

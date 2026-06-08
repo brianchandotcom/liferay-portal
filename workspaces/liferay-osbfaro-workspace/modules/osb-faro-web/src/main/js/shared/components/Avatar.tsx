@@ -1,8 +1,14 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import React from 'react';
-import Sticker, {getDisplayForId, getSymbol} from './Sticker';
-import {EntityTypes} from '../util/constants';
 import {get} from 'lodash';
+import React from 'react';
+
+import {EntityTypes} from '../util/constants';
+import Sticker, {getDisplayForId, getSymbol} from './Sticker';
 
 const getInitials = (first: string, last: string): string => {
 	let retVal = first ? first.substring(0, 1) : '';
@@ -40,8 +46,8 @@ const Avatar: React.FC<IAvatarProps> = ({
 				!image
 					? undefined
 					: {
-							backgroundImage: `url(${image})`
-					  }
+							backgroundImage: `url(${image})`,
+						}
 			}
 			symbol={type !== EntityTypes.Individual ? getSymbol(type) : null}
 			{...otherProps}

@@ -1,17 +1,22 @@
-import AcquisitionsCard from 'sites/components/AcquisitionsCard';
-import CohortAnalysisCard from 'sites/hocs/CohortAnalysisCard';
-import DevicesCard from 'sites/hocs/DevicesCard';
-import InterestsCard from 'sites/hocs/InterestsCard';
-import LocationsCard from 'sites/hocs/LocationsCard';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {FC} from 'react';
-import SearchTermsCard from 'sites/hocs/SearchTermsCard';
-import SiteMetricsCard from 'sites/components/SiteMetricCard';
-import TopPagesCard from 'sites/components/TopPagesCard';
-import VisitorsByTimeCard from 'sites/hocs/VisitorsByTimeCard';
-import {CompositionTypes} from 'shared/util/constants';
-import {Routes, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
 import {useParams} from 'react-router-dom';
+import {CompositionTypes} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import {Routes, toRoute} from '~/shared/util/router';
+import AcquisitionsCard from '~/sites/components/AcquisitionsCard';
+import SiteMetricsCard from '~/sites/components/SiteMetricCard';
+import TopPagesCard from '~/sites/components/TopPagesCard';
+import CohortAnalysisCard from '~/sites/hocs/CohortAnalysisCard';
+import DevicesCard from '~/sites/hocs/DevicesCard';
+import InterestsCard from '~/sites/hocs/InterestsCard';
+import LocationsCard from '~/sites/hocs/LocationsCard';
+import SearchTermsCard from '~/sites/hocs/SearchTermsCard';
+import VisitorsByTimeCard from '~/sites/hocs/VisitorsByTimeCard';
 
 interface IOverviewProps extends React.HTMLAttributes<HTMLDivElement> {
 	channelName: string;
@@ -21,13 +26,13 @@ const Overview: FC<IOverviewProps> = ({channelName}) => {
 	const {channelId, groupId} = useParams();
 
 	return (
-		<div className='sites-dashboard-overview-root overview-root'>
-			<div className='row'>
-				<div className='col-xl-12'>
+		<div className="overview-root sites-dashboard-overview-root">
+			<div className="row">
+				<div className="col-xl-12">
 					<SiteMetricsCard
 						label={
 							sub(Liferay.Language.get('x-activities'), [
-								channelName
+								channelName,
 							]) as string
 						}
 						showIntervals
@@ -35,25 +40,25 @@ const Overview: FC<IOverviewProps> = ({channelName}) => {
 				</div>
 			</div>
 
-			<div className='row'>
-				<div className='col-xl-6'>
+			<div className="row">
+				<div className="col-xl-6">
 					<TopPagesCard
-						className='top-pages-card-root table-tabs-root'
+						className="table-tabs-root top-pages-card-root"
 						footer={{
 							href: toRoute(Routes.SITES_TOUCHPOINTS, {
 								channelId,
-								groupId
+								groupId,
 							}),
-							label: Liferay.Language.get('view-pages')
+							label: Liferay.Language.get('view-pages'),
 						}}
 						label={Liferay.Language.get('top-pages')}
 						legacyDropdownRangeKey={false}
 					/>
 				</div>
 
-				<div className='col-xl-6'>
+				<div className="col-xl-6">
 					<AcquisitionsCard
-						className='acquisitions-card-root table-tabs-root'
+						className="acquisitions-card-root table-tabs-root"
 						compositionBagName={CompositionTypes.Acquisitions}
 						label={Liferay.Language.get('acquisitions')}
 						legacyDropdownRangeKey={false}
@@ -61,25 +66,25 @@ const Overview: FC<IOverviewProps> = ({channelName}) => {
 				</div>
 			</div>
 
-			<div className='row'>
-				<div className='col-xl-4'>
+			<div className="row">
+				<div className="col-xl-4">
 					<VisitorsByTimeCard
-						className='visitors-by-time-card'
+						className="visitors-by-time-card"
 						label={Liferay.Language.get('visitors-by-day-and-time')}
 					/>
 				</div>
 
-				<div className='col-xl-4'>
+				<div className="col-xl-4">
 					<SearchTermsCard />
 				</div>
 
-				<div className='col-xl-4'>
+				<div className="col-xl-4">
 					<InterestsCard />
 				</div>
 			</div>
 
-			<div className='row'>
-				<div className='col-xl-6'>
+			<div className="row">
+				<div className="col-xl-6">
 					<LocationsCard
 						label={Liferay.Language.get('sessions-by-location')}
 						legacyDropdownRangeKey={false}
@@ -87,7 +92,7 @@ const Overview: FC<IOverviewProps> = ({channelName}) => {
 					/>
 				</div>
 
-				<div className='col-xl-6'>
+				<div className="col-xl-6">
 					<DevicesCard
 						label={Liferay.Language.get('session-technology')}
 						legacyDropdownRangeKey={false}
@@ -96,8 +101,8 @@ const Overview: FC<IOverviewProps> = ({channelName}) => {
 				</div>
 			</div>
 
-			<div className='row'>
-				<div className='col-xl-12'>
+			<div className="row">
+				<div className="col-xl-12">
 					<CohortAnalysisCard />
 				</div>
 			</div>

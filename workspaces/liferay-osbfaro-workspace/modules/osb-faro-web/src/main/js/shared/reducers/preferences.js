@@ -1,8 +1,14 @@
-import {actionTypes} from '../actions/preferences';
-import {createReducer} from 'redux-toolbox';
-import {DistributionTab} from 'shared/util/records';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Map} from 'immutable';
-import {PreferencesScopes} from 'shared/util/constants';
+import {createReducer} from 'redux-toolbox';
+import {PreferencesScopes} from '~/shared/util/constants';
+import {DistributionTab} from '~/shared/util/records';
+
+import {actionTypes} from '../actions/preferences';
 
 /* Distribution Tabs */
 const handleDistributionTabFailure = (
@@ -11,7 +17,7 @@ const handleDistributionTabFailure = (
 ) =>
 	state.mergeIn([scope, 'distributionCardTabs', id], {
 		error: true,
-		loading: false
+		loading: false,
 	});
 const handleDistributionTabRequest = (
 	state,
@@ -19,21 +25,21 @@ const handleDistributionTabRequest = (
 ) =>
 	state.mergeIn([scope, 'distributionCardTabs', id], {
 		error: false,
-		loading: true
+		loading: true,
 	});
 const handleDistributionTabSuccess = (
 	state,
 	{
 		meta: {id, scope = PreferencesScopes.User},
-		payload: {distributionCardTabPreferencesMap, order}
+		payload: {distributionCardTabPreferencesMap, order},
 	}
 ) =>
 	state.mergeIn([scope, 'distributionCardTabs', id], {
 		data: order.map(
-			id => new DistributionTab(distributionCardTabPreferencesMap[id])
+			(id) => new DistributionTab(distributionCardTabPreferencesMap[id])
 		),
 		error: false,
-		loading: false
+		loading: false,
 	});
 
 /* Default Channel Id */
@@ -44,7 +50,7 @@ const handleDefaultChannelIdSuccess = (
 	state.mergeIn([scope, 'defaultChannelId'], {
 		data: payload.defaultChannelId,
 		error: false,
-		loading: false
+		loading: false,
 	});
 const handleDefaultChannelIdRequest = (
 	state,
@@ -63,7 +69,7 @@ const handleUpgradeModalSeenSuccess = (
 	state.mergeIn([scope, 'upgradeModalSeen'], {
 		data: payload,
 		error: false,
-		loading: false
+		loading: false,
 	});
 const handleUpgradeModalSeenRequest = (
 	state,
@@ -110,7 +116,7 @@ const actionHandlers = {
 	[actionTypes.UPDATE_UPGRADE_MODAL_SEEN_REQUEST]:
 		handleUpgradeModalSeenRequest,
 	[actionTypes.UPDATE_UPGRADE_MODAL_SEEN_FAILURE]:
-		handleUpgradeModalSeenFailure
+		handleUpgradeModalSeenFailure,
 };
 
 export default createReducer(new Map(), actionHandlers);

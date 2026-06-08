@@ -1,20 +1,25 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import React from 'react';
 
 export enum Align {
 	Left = 'left',
-	Right = 'right'
+	Right = 'right',
 }
 
 const inlineClassName = {
 	[Align.Left]: 'mr-2',
-	[Align.Right]: 'ml-2'
+	[Align.Right]: 'ml-2',
 };
 
 export interface ILoadingProps extends React.HTMLAttributes<HTMLElement> {
-	center?: boolean;
 	align?: Align;
+	center?: boolean;
 	overlay?: boolean;
 	spacer?: boolean;
 }
@@ -24,7 +29,7 @@ const Loading: React.FC<ILoadingProps> = ({
 	center = true,
 	className,
 	overlay = false,
-	spacer = false
+	spacer = false,
 }) => {
 	if (align) {
 		return (
@@ -44,7 +49,7 @@ const Loading: React.FC<ILoadingProps> = ({
 			<div className={getCN(className, 'loading-root', {overlay})}>
 				<ClayLoadingIndicator
 					className={getCN('loading-root', {
-						center
+						center,
 					})}
 				/>
 			</div>
@@ -55,7 +60,7 @@ const Loading: React.FC<ILoadingProps> = ({
 		return (
 			<ClayLoadingIndicator
 				className={getCN(className, 'loading-root', {
-					spacer
+					spacer,
 				})}
 			/>
 		);
@@ -64,7 +69,7 @@ const Loading: React.FC<ILoadingProps> = ({
 	return (
 		<ClayLoadingIndicator
 			className={getCN(className, 'loading-root', {
-				center
+				center,
 			})}
 		/>
 	);

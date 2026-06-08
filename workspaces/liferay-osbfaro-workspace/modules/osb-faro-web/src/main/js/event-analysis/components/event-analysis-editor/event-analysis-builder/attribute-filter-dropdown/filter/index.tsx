@@ -1,31 +1,37 @@
-import BooleanFilter from './BooleanFilter';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import DateFilter from './DateFilter';
-import DurationFilter from './DurationFilter';
-import FilterInfo from '../../FilterInfo';
-import NumberFilter from './NumberFilter';
 import React from 'react';
-import StringFilter from './StringFilter';
-import {
-	AddFilter,
-	EditFilter,
-	withAttributesConsumer
-} from '../../../context/attributes';
 import {
 	Attribute,
 	AttributeOwnerTypes,
 	DataTypes,
 	Filter,
-	Filters
-} from 'event-analysis/utils/types';
+	Filters,
+} from '~/event-analysis/utils/types';
+
+import {
+	AddFilter,
+	EditFilter,
+	withAttributesConsumer,
+} from '../../../context/attributes';
+import FilterInfo from '../../FilterInfo';
+import BooleanFilter from './BooleanFilter';
+import DateFilter from './DateFilter';
+import DurationFilter from './DurationFilter';
+import NumberFilter from './NumberFilter';
+import StringFilter from './StringFilter';
 
 const FILTERS_MAP = {
 	[DataTypes.Boolean]: BooleanFilter,
 	[DataTypes.Date]: DateFilter,
 	[DataTypes.Duration]: DurationFilter,
 	[DataTypes.Number]: NumberFilter,
-	[DataTypes.String]: StringFilter
+	[DataTypes.String]: StringFilter,
 };
 
 interface IFilterOptionsProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -51,14 +57,14 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 	filters,
 	onActiveChange,
 	onAttributeChange,
-	onEditClick
+	onEditClick,
 }) => {
 	const {
 		dataType,
 		description,
 		displayName,
 		id: attributeId,
-		name
+		name,
 	} = attribute;
 
 	const FilterBody = FILTERS_MAP[dataType];
@@ -70,12 +76,13 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 			editFilter({
 				attribute,
 				filter: newFilter,
-				id: filterId
+				id: filterId,
 			});
-		} else {
+		}
+		else {
 			addFilter({
 				attribute,
-				filter: newFilter
+				filter: newFilter,
 			});
 		}
 
@@ -85,17 +92,17 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 	};
 
 	return (
-		<div className='attribute-options'>
-			<div className='options-header'>
+		<div className="attribute-options">
+			<div className="options-header">
 				<ClayButton
-					className='button-root back-to-attributes-button'
-					displayType='unstyled'
+					className="back-to-attributes-button button-root"
+					displayType="unstyled"
 					onClick={() => onAttributeChange(undefined)}
-					size='sm'
+					size="sm"
 				>
 					<ClayIcon
-						className='icon-root mr-2'
-						symbol='angle-left-small'
+						className="icon-root mr-2"
+						symbol="angle-left-small"
 					/>
 
 					{Liferay.Language.get('back-to-attributes')}

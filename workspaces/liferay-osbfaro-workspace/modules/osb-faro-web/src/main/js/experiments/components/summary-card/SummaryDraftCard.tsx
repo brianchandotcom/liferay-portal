@@ -1,17 +1,25 @@
-import Card from 'shared/components/Card';
-import ClayMultiStep from '../clay-multi-step';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
 import React from 'react';
-import {getMetricName} from 'experiments/util/experiments';
-import {IExperiment} from './types';
-import {MetricName} from 'experiments/util/types';
-import {sub} from 'shared/util/lang';
+import {getMetricName} from '~/experiments/util/experiments';
+import {MetricName} from '~/experiments/util/types';
+import Card from '~/shared/components/Card';
+import {sub} from '~/shared/util/lang';
+
+import ClayMultiStep from '../clay-multi-step';
 import {SummaryBaseCard} from './SummaryBaseCard';
 import {SummaryTitle} from './SummaryTitle';
+import {IExperiment} from './types';
 
-export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
-	experiment: {dxpExperienceName, dxpSegmentName, dxpVariants, goal, status}
-}) => {
+export const SummaryDraftCard = function SummaryDraftCard({
+	experiment: {dxpExperienceName, dxpSegmentName, dxpVariants, goal, status},
+}: {
+	experiment: IExperiment;
+}) {
 	const currentStep = dxpVariants ? 3 : goal ? 2 : 1;
 
 	const totalVariants = dxpVariants?.filter(
@@ -25,7 +33,7 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 					{dxpExperienceName ? (
 						<>
 							<div>
-								<span className='text-secondary mr-1'>
+								<span className="mr-1 text-secondary">
 									{`${Liferay.Language.get('experience')}:`}
 								</span>
 
@@ -33,7 +41,7 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 							</div>
 
 							<div>
-								<span className='text-secondary mr-1'>
+								<span className="mr-1 text-secondary">
 									{`${Liferay.Language.get('segment')}:`}
 								</span>
 								{dxpSegmentName}
@@ -46,7 +54,7 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 					)}
 				</span>
 			),
-			title: Liferay.Language.get('test-target')
+			title: Liferay.Language.get('test-target'),
 		},
 		{
 			Description: ({className}: {className?: string}) => (
@@ -62,7 +70,7 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 					)}
 				</span>
 			),
-			title: Liferay.Language.get('test-metric')
+			title: Liferay.Language.get('test-metric'),
 		},
 		{
 			Description: ({className}: {className?: string}) => (
@@ -73,11 +81,11 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 									? Liferay.Language.get('x-variants')
 									: Liferay.Language.get('x-variant'),
 								[totalVariants]
-						  )
+							)
 						: Liferay.Language.get('no-variants-created')}
 				</span>
 			),
-			title: Liferay.Language.get('variants')
+			title: Liferay.Language.get('variants'),
 		},
 		{
 			Description: ({className}: {className?: string}) => (
@@ -87,8 +95,8 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 					)}
 				</span>
 			),
-			title: Liferay.Language.get('review-&-run')
-		}
+			title: Liferay.Language.get('review-&-run'),
+		},
 	];
 
 	return (
@@ -101,9 +109,9 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 			/>
 
 			<SummaryBaseCard.Body>
-				<div className='w-100 mt-4'>
+				<div className="mt-4 w-100">
 					<SummaryTitle
-						className='mb-4'
+						className="mb-4"
 						label={Liferay.Language.get('test-target')}
 					/>
 
@@ -119,14 +127,14 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 											'analytics-summary-card-step-content',
 											{
 												[`analytics-summary-card-step-content-${status}`]:
-													status
+													status,
 											}
 										)}
 									>
 										<Card.Body>
-											<div className='h4'>{title}</div>
+											<div className="h4">{title}</div>
 
-											<Description className='analytics-summary-card-step-content-description' />
+											<Description className="analytics-summary-card-step-content-description" />
 										</Card.Body>
 									</Card>
 								)}

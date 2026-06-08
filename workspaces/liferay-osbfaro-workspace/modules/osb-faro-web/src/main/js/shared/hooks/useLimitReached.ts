@@ -1,23 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export enum FeatureName {
 	Batch = 'batch',
 	RealTime = 'real time',
-	EventAnalysis = 'event analysis'
+	EventAnalysis = 'event analysis',
 }
 
-export const useLimitReached = ({
+export const useLimitReached = function useLimitReached({
 	data = [],
-	featureName
+	featureName,
 }: {
 	data?: Array<{
-		type?: string;
-		name?: string;
 		currentUsage: number;
 		limit: number;
+		name?: string;
+		type?: string;
 	}>;
 	featureName: FeatureName;
-}) => {
+}) {
 	const usage = data?.find(
-		item =>
+		(item) =>
 			(item['type'] || item['name'] || '').toLowerCase() ===
 			featureName.toLowerCase()
 	);

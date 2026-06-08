@@ -1,18 +1,23 @@
-import * as API from 'shared/api';
-import BasePage from 'settings/components/base-page/BasePage';
-import BundleRouter from 'route-middleware/BundleRouter';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayBadge from '@clayui/badge';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense, useState} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
+import React, {Suspense, lazy, useState} from 'react';
 import {Switch, useParams} from 'react-router-dom';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {UserStatuses} from 'shared/util/constants';
+import BundleRouter from '~/route-middleware/BundleRouter';
+import BasePage from '~/settings/components/base-page/BasePage';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {UserStatuses} from '~/shared/util/constants';
+import {Routes, getMatchedRoute, toRoute} from '~/shared/util/router';
 
 const UserList = lazy(
 	() => import(/* webpackChunkName: "UserManagement" */ './UserList')
@@ -21,7 +26,7 @@ const UserRequest = lazy(
 	() => import(/* webpackChunkName: "UserRequest" */ './UserRequest')
 );
 
-export const User = ({className}: {className?: string}) => {
+export const User = function User({className}: {className?: string}) {
 	const {groupId = ''} = useParams<{groupId: string}>();
 	const currentUser = useCurrentUser();
 	const [userRequest, setUserRequest] = useState<number>(0);
@@ -32,7 +37,7 @@ export const User = ({className}: {className?: string}) => {
 	API.user
 		.fetchCount({
 			groupId,
-			statuses: [UserStatuses.Requested]
+			statuses: [UserStatuses.Requested],
 		})
 		.then(setUserRequest);
 
@@ -40,7 +45,7 @@ export const User = ({className}: {className?: string}) => {
 		{
 			exact: true,
 			label: Liferay.Language.get('manage-users'),
-			route: Routes.SETTINGS_USERS
+			route: Routes.SETTINGS_USERS,
 		},
 		{
 			exact: true,
@@ -48,18 +53,18 @@ export const User = ({className}: {className?: string}) => {
 				<>
 					{Liferay.Language.get('requests')}
 					{userRequest > 0 && (
-						<ClayBadge className='ml-2' label={userRequest} />
+						<ClayBadge className="ml-2" label={userRequest} />
 					)}
 				</>
 			),
-			route: Routes.SETTINGS_USERS_REQUESTS
-		}
+			route: Routes.SETTINGS_USERS_REQUESTS,
+		},
 	];
 
 	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 
 	const initialItem =
-		NAV_ITEMS.find(item => item.route === matchedRoute) ?? NAV_ITEMS[0];
+		NAV_ITEMS.find((item) => item.route === matchedRoute) ?? NAV_ITEMS[0];
 
 	const [activeTriggerLabel, setActiveTriggerLabel] = useState<string>(
 		initialItem.route === Routes.SETTINGS_USERS
@@ -70,16 +75,16 @@ export const User = ({className}: {className?: string}) => {
 	return (
 		<BasePage
 			className={getCN('user-list-page-root', className)}
-			key='userListPage'
+			key="userListPage"
 			pageDescription={Liferay.Language.get(
 				'invite-new-users-to-analytics-cloud-and-or-configure-existing-users'
 			)}
 			pageTitle={Liferay.Language.get('user-management')}
 		>
-			<Card key='cardContainer' pageDisplay>
+			<Card key="cardContainer" pageDisplay>
 				{currentUser.isAdmin() && (
 					<ClayNavigationBar
-						className='page-subnav mx-4 my-3'
+						className="mx-4 my-3 page-subnav"
 						triggerLabel={activeTriggerLabel}
 					>
 						{NAV_ITEMS.map(({label, route}) => (
@@ -94,10 +99,10 @@ export const User = ({className}: {className?: string}) => {
 											route === Routes.SETTINGS_USERS
 												? Liferay.Language.get(
 														'manage-users'
-												  )
+													)
 												: Liferay.Language.get(
 														'requests'
-												  )
+													)
 										);
 									}}
 								>

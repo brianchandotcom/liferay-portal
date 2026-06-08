@@ -1,5 +1,10 @@
-import InputWithEditToggle from 'shared/components/InputWithEditToggle';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import InputWithEditToggle from '~/shared/components/InputWithEditToggle';
 
 class InputWithEditToggleKit extends React.Component {
 	render() {
@@ -7,8 +12,8 @@ class InputWithEditToggleKit extends React.Component {
 			<div>
 				<InputWithEditToggle
 					onSubmit={this.handleSubmit}
-					placeholder='Put some text in here'
-					value='foo'
+					placeholder="Put some text in here"
+					value="foo"
 				/>
 			</div>
 		);

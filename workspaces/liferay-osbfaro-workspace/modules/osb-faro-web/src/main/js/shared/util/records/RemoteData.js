@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Record} from 'immutable';
 
 /**
@@ -19,7 +24,7 @@ export function remoteDataFromList(remoteDatas) {
 export default class RemoteData extends (new Record({
 	data: null,
 	error: false,
-	loading: true
+	loading: true,
 })) {
 	constructor(params = {}) {
 		super(params);

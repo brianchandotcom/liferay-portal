@@ -10,7 +10,7 @@
 		number: $fieldLightBlue,
 		point: $chartLimeGreen,
 		secondary: $mainLighten74,
-		string: $fieldDarkBlue
+		string: $fieldDarkBlue,
 	);
 
 	@each $name, $color in $displays {

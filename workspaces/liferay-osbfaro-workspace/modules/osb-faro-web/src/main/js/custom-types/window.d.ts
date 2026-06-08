@@ -1,3 +1,9 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {compose} from 'redux';
 import {
 	ActivityActions,
 	Applications,
@@ -17,14 +23,14 @@ import {
 	SubscriptionStatuses,
 	TimeIntervals,
 	UserRoleNames,
-	UserStatuses
-} from 'shared/util/constants';
-import {compose} from 'redux';
+	UserStatuses,
+} from '~/shared/util/constants';
 
 export {};
 
 declare global {
 	interface Window {
+		__REDUX_DEVTOOLS_EXTENSION_COMPOSE__: compose;
 		faroConstants: {
 			activityActions: {[key: string]: ActivityActions};
 			applications: {[key: string]: Applications};
@@ -70,6 +76,5 @@ declare global {
 			};
 		};
 		jQuery: object;
-		__REDUX_DEVTOOLS_EXTENSION_COMPOSE__: compose;
 	}
 }

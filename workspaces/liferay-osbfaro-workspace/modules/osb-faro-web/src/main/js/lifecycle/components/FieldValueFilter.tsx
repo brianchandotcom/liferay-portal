@@ -1,13 +1,19 @@
-import * as API from 'shared/api';
-import classNames from 'classnames';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Loading, {Align} from 'shared/components/Loading';
-import React from 'react';
 import {Icon, Option, Picker} from '@clayui/core';
-import {sub} from 'shared/util/lang';
-import {useLifecycle} from '../context/LifecycleContext';
+import classNames from 'classnames';
+import React from 'react';
 import {useParams} from 'react-router-dom';
-import {useRequest} from 'shared/hooks/useRequest';
+import * as API from '~/shared/api';
+import Loading, {Align} from '~/shared/components/Loading';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {sub} from '~/shared/util/lang';
+
+import {useLifecycle} from '../context/LifecycleContext';
 
 interface ITriggerButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -23,11 +29,11 @@ const TriggerButton = React.forwardRef<HTMLButtonElement, ITriggerButtonProps>(
 			{...rest}
 			className={classNames(buttonClassName, 'rounded-lg')}
 			disabled={loading}
-			displayType='secondary'
+			displayType="secondary"
 			ref={ref}
-			size='sm'
+			size="sm"
 		>
-			<Icon className='inline-item inline-item-before' symbol='filter' />
+			<Icon className="inline-item inline-item-before" symbol="filter" />
 
 			{label || sub(Liferay.Language.get('all-x'), [entityLabel])}
 
@@ -35,8 +41,8 @@ const TriggerButton = React.forwardRef<HTMLButtonElement, ITriggerButtonProps>(
 				<Loading align={Align.Right} />
 			) : (
 				<Icon
-					className='inline-item inline-item-after'
-					symbol='caret-bottom'
+					className="inline-item inline-item-after"
+					symbol="caret-bottom"
 				/>
 			)}
 		</ClayButton>
@@ -56,7 +62,7 @@ const FieldValueFilter = ({
 	className,
 	entityLabel,
 	fieldMappingFieldName,
-	filterKey
+	filterKey,
 }: IProps) => {
 	const {filters, updateFilters} = useLifecycle();
 
@@ -68,28 +74,28 @@ const FieldValueFilter = ({
 			channelId,
 			fieldMappingFieldName,
 			groupId,
-			query: ''
-		}
+			query: '',
+		},
 	});
 
 	return (
 		<Picker
 			as={TriggerButton}
 			buttonClassName={className}
-			className='ml-3'
+			className="ml-3"
 			entityLabel={entityLabel}
 			label={filters[filterKey]}
 			loading={loading}
-			onSelectionChange={item => {
+			onSelectionChange={(item) => {
 				const value = String(item);
 
 				updateFilters({
-					[filterKey]: value === ALL_VALUES_KEY ? '' : value
+					[filterKey]: value === ALL_VALUES_KEY ? '' : value,
 				});
 			}}
 			searchable
 			selectedKey={filters[filterKey] || ALL_VALUES_KEY}
-			triggerIcon='caret-bottom'
+			triggerIcon="caret-bottom"
 		>
 			<Option key={ALL_VALUES_KEY}>
 				{sub(Liferay.Language.get('all-x'), [entityLabel])}

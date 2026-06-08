@@ -1,17 +1,22 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Modal from 'shared/components/modal';
+import {List, fromJS} from 'immutable';
 import React, {useEffect, useState} from 'react';
-import Table, {Column} from 'shared/components/table';
+import Modal from '~/shared/components/modal';
+import Table, {Column} from '~/shared/components/table';
 import {
 	ACTION_TYPES,
 	useSelectionContext,
-	withSelectionProvider
-} from 'shared/context/selection';
-import {fromJS, List} from 'immutable';
-import {sub} from 'shared/util/lang';
+	withSelectionProvider,
+} from '~/shared/context/selection';
+import {sub} from '~/shared/util/lang';
 
 interface IBatchActionModalProps extends React.HTMLAttributes<HTMLDivElement> {
 	actionOptions: {
@@ -40,7 +45,7 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 	items = [],
 	onClose,
 	onSave,
-	title = ''
+	title = '',
 }) => {
 	const [itemsIList, setItemsIList] = useState<List<any>>(fromJS(items));
 	const [selectedKey, setSelectedKey] = useState(optionsLabel);
@@ -51,11 +56,13 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 	useEffect(() => {
 		items.length &&
 			selectionDispatch?.({payload: {items}, type: ACTION_TYPES.add});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const handleEdits = (newVal: string) => {
 		setItemsIList(
-			itemsIList.map(itemIMap =>
+			itemsIList.map((itemIMap) =>
 				selectedItemsIOMap.has(itemIMap.get('id'))
 					? itemIMap.set(editableAttr, newVal)
 					: itemIMap
@@ -71,7 +78,7 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 	const handleSave = () => {
 		onSave({
 			edits: {[editableAttr]: selectedKey},
-			ids: selectedItemsIOMap.keySeq().toArray()
+			ids: selectedItemsIOMap.keySeq().toArray(),
 		}).then(onClose);
 	};
 
@@ -82,10 +89,10 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 				'scroll-container',
 				'batch-action-modal-root',
 				{
-					'fit-content': fitContent
+					'fit-content': fitContent,
 				}
 			)}
-			size='lg'
+			size="lg"
 		>
 			<Modal.Header onClose={onClose} title={title} />
 
@@ -95,21 +102,21 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 						closeOnClick
 						trigger={
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 							>
 								<span>{selectedKey}</span>
 
 								<ClayIcon
-									className='icon-root ml-2'
-									symbol='caret-bottom'
+									className="icon-root ml-2"
+									symbol="caret-bottom"
 								/>
 							</ClayButton>
 						}
 					>
-						{options.map(option => (
+						{options.map((option) => (
 							<ClayDropDown.Item
-								className='set-max-zindex'
+								className="set-max-zindex"
 								key={option.value}
 								onClick={() => handleEdits(option.value)}
 							>
@@ -118,13 +125,13 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 						))}
 					</ClayDropDown>
 
-					<p className='text-secondary'>
+					<p className="text-secondary">
 						{sub(
 							actionCountString,
 							[
-								<b key='selectedCount'>
+								<b key="selectedCount">
 									{selectedItemsIOMap.size}
-								</b>
+								</b>,
 							],
 							false
 						)}
@@ -135,7 +142,7 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 					columns={columns}
 					items={itemsIList.toJS()}
 					onSelectItemsChange={handleItemsChange}
-					rowIdentifier='id'
+					rowIdentifier="id"
 					selectedItemsIOMap={selectedItemsIOMap}
 					showCheckbox
 				/>
@@ -143,20 +150,20 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={
 						selectedKey === optionsLabel ||
 						selectedItemsIOMap.isEmpty()
 					}
-					displayType='primary'
+					displayType="primary"
 					onClick={handleSave}
 				>
 					{Liferay.Language.get('save')}

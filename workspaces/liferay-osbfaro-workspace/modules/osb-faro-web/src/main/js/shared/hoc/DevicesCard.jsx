@@ -1,14 +1,19 @@
-import BaseCard from 'shared/components/base-card';
-import Card from 'shared/components/Card';
-import CardTabs from 'shared/components/CardTabs';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import OperatingSystem from 'shared/components/OperatingSystem';
-import React, {useCallback, useState} from 'react';
-import WebBrowser from 'shared/components/WebBrowser';
-import {compose} from 'redux';
-import {HOC_CARD_PROPTYPES} from 'shared/util/proptypes';
 import {PropTypes} from 'prop-types';
-import {withEmpty, withError, withLoading} from 'shared/hoc';
+import React, {useCallback, useState} from 'react';
+import {compose} from 'redux';
+import Card from '~/shared/components/Card';
+import CardTabs from '~/shared/components/CardTabs';
+import OperatingSystem from '~/shared/components/OperatingSystem';
+import WebBrowser from '~/shared/components/WebBrowser';
+import BaseCard from '~/shared/components/base-card';
+import {withEmpty, withError, withLoading} from '~/shared/hoc';
+import {HOC_CARD_PROPTYPES} from '~/shared/util/proptypes';
 
 const OPERATING_SYSTEM = Liferay.Language.get('devices');
 const WEB_BROWSER = Liferay.Language.get('browsers');
@@ -17,7 +22,7 @@ const defaultProps = {
 	browsers: [],
 	devices: [],
 	items: [],
-	metricLabel: Liferay.Language.get('views')
+	metricLabel: Liferay.Language.get('views'),
 };
 
 const propTypes = {
@@ -29,13 +34,13 @@ const propTypes = {
 			id: PropTypes.string,
 			label: PropTypes.string,
 			percentageOfTotal: PropTypes.number,
-			type: PropTypes.string
+			type: PropTypes.string,
 		})
 	),
 	items: PropTypes.array,
 	metricLabel: PropTypes.string,
 	onChange: PropTypes.func,
-	total: PropTypes.number
+	total: PropTypes.number,
 };
 
 const Tabs = ({
@@ -45,26 +50,29 @@ const Tabs = ({
 	items,
 	metricLabel,
 	onChange,
-	total
+	total,
 }) => {
+
 	/**
 	 * Change Active Tab
 	 * @param {object} activeTab
 	 */
 	const changeActiveTab = useCallback(
-		newVal => onChange && onChange(newVal),
+		(newVal) => onChange && onChange(newVal),
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 
 	return (
-		<div className='w-100'>
+		<div className="w-100">
 			<CardTabs
 				activeTabId={activeTab}
 				onChange={changeActiveTab}
 				tabs={items.map(({label, ...otherParams}) => ({
 					tabId: label,
 					title: label,
-					...otherParams
+					...otherParams,
 				}))}
 			/>
 
@@ -100,7 +108,7 @@ const withDevicesCard = (
 		withEmpty({
 			description: (
 				<>
-					<span className='mr-1'>
+					<span className="mr-1">
 						{Liferay.Language.get(
 							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 						)}
@@ -108,14 +116,14 @@ const withDevicesCard = (
 
 					<ClayLink
 						href={documentationUrl}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{documentationTitle}
 					</ClayLink>
 				</>
 			),
-			title
+			title,
 		})
 	)(Tabs);
 
@@ -123,23 +131,23 @@ const withDevicesCard = (
 
 	const defaultProps = {
 		className: 'analytics-devices-card',
-		metricLabel: Liferay.Language.get('views')
+		metricLabel: Liferay.Language.get('views'),
 	};
 
 	const propTypes = {
-		metricLabel: PropTypes.string
+		metricLabel: PropTypes.string,
 	};
 
 	const DevicesCard = ({
 		className,
 		label,
 		legacyDropdownRangeKey,
-		metricLabel
+		metricLabel,
 	}) => {
 		const [activeTab, setActiveTab] = useState(OPERATING_SYSTEM);
 
 		const handleActiveTabChange = useCallback(
-			newVal => setActiveTab(newVal),
+			(newVal) => setActiveTab(newVal),
 			[]
 		);
 
@@ -156,7 +164,7 @@ const withDevicesCard = (
 					filters,
 					interval,
 					rangeSelectors,
-					router
+					router,
 				}) => (
 					<Card.Body>
 						<TabsWithDevices
@@ -166,11 +174,11 @@ const withDevicesCard = (
 							interval={interval}
 							items={[
 								{
-									label: OPERATING_SYSTEM
+									label: OPERATING_SYSTEM,
 								},
 								{
-									label: WEB_BROWSER
-								}
+									label: WEB_BROWSER,
+								},
 							]}
 							metricLabel={metricLabel}
 							onChange={handleActiveTabChange}

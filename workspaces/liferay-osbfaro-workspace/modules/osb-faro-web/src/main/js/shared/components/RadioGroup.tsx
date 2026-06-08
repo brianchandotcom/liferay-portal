@@ -1,7 +1,13 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import Radio from './Radio';
-import React from 'react';
 import {noop} from 'lodash';
+import React from 'react';
+
+import Radio from './Radio';
 
 const isReactNodeArray = (
 	value: React.ReactNode | React.ReactNode[]
@@ -10,7 +16,7 @@ const isReactNodeArray = (
 
 const Subsection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 	children,
-	className
+	className,
 }) => (
 	<div className={getCN('radio-group-subsection-root', className)}>
 		{children}
@@ -49,7 +55,7 @@ const RadioGroup: React.FC<IRadioGroupProps> = ({
 	disabled = false,
 	inline = false,
 	name,
-	onChange = noop
+	onChange = noop,
 }) => (
 	<div className={getCN('radio-group-root', className, {disabled})}>
 		{React.Children.map(
@@ -61,9 +67,9 @@ const RadioGroup: React.FC<IRadioGroupProps> = ({
 					displayInline:
 						inline &&
 						isReactNodeArray(children) &&
-						children.length > 0,
+						!!children.length,
 					name,
-					onChange
+					onChange,
 				})
 		)}
 	</div>
@@ -71,5 +77,5 @@ const RadioGroup: React.FC<IRadioGroupProps> = ({
 
 export default Object.assign(RadioGroup, {
 	Option,
-	Subsection
+	Subsection,
 });

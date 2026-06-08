@@ -1,25 +1,29 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {DocumentNode, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Input from './Input';
-import Loading from 'shared/components/Loading';
-import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
-import {ARROW_DOWN, ARROW_UP, ENTER} from '../util/key-constants';
-import {DocumentNode, useQuery} from '@apollo/client';
-
 import {identity, noop} from 'lodash';
-import {useDebounce} from 'shared/hooks/useDebounce';
+import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
+import Loading from '~/shared/components/Loading';
+import {useDebounce} from '~/shared/hooks/useDebounce';
+import {useRequest} from '~/shared/hooks/useRequest';
 
-import {useRequest} from 'shared/hooks/useRequest';
+import {ARROW_DOWN, ARROW_UP, ENTER} from '../util/key-constants';
+import Input from './Input';
 
 const DEBOUNCE_DELAY = 250;
 const SELECT_KEYS = [ARROW_DOWN, ARROW_UP, ENTER];
 
 type GraphqlQuery = {
 	mapResultsToProps: (data: any) => TMappedData;
-	variables: object;
 	query: DocumentNode;
+	variables: object;
 };
 
 type TMappedData = {
@@ -35,41 +39,42 @@ interface IItemProps extends React.HTMLAttributes<HTMLLIElement> {
 	onSelect: (item: any) => void;
 }
 
-export const Item: React.FC<IItemProps> = ({
+export const Item = function Item({
 	active,
 	className,
 	disabled,
 	item,
 	itemRenderer,
-	onSelect
-}) => (
-	<li className={className}>
-		<ClayButton
-			className={getCN('button-root dropdown-item text-truncate', {
-				active
-			})}
-			disabled={disabled}
-			displayType='unstyled'
-			onClick={() => onSelect(item)}
-		>
-			{itemRenderer(item)}
-		</ClayButton>
-	</li>
-);
+	onSelect,
+}: IItemProps) {
+	return (
+		<li className={className}>
+			<ClayButton
+				className={getCN('button-root dropdown-item text-truncate', {
+					active,
+				})}
+				disabled={disabled}
+				displayType="unstyled"
+				onClick={() => onSelect(item)}
+			>
+				{itemRenderer(item)}
+			</ClayButton>
+		</li>
+	);
+};
 
 interface IBaseSelectProps extends React.HTMLAttributes<HTMLInputElement> {
-	placeholder?: string;
 	alwaysFetchOnFocus?: boolean;
 	className?: string;
 	containerClass?: string;
 	dataSourceFn?: (value: string | number) => Promise<any>;
 	disabled?: boolean;
 	emptyInputOnInactive?: boolean;
-	inputName?: string;
 	focusOnInit?: boolean;
 	forwardedRef?: React.Ref<any>;
 	graphqlQuery?: GraphqlQuery;
 	id?: string;
+	inputName?: string;
 	inputSize?: string;
 	inputValue?: string | React.ReactText;
 	inset?: boolean;
@@ -78,6 +83,7 @@ interface IBaseSelectProps extends React.HTMLAttributes<HTMLInputElement> {
 	onFocus?: () => void;
 	onInputValueChange?: (value: string | number) => void;
 	onSelect?: (item: any) => void;
+	placeholder?: string;
 	selectedItem?: any;
 }
 
@@ -103,14 +109,14 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 	onInputValueChange = noop,
 	onSelect = noop,
 	placeholder = '',
-	selectedItem
+	selectedItem,
 }) => {
 	useImperativeHandle(forwardedRef, () => ({
 		focus: () => {
 			handleFocus();
 
 			_inputRef.current.focus();
-		}
+		},
 	}));
 
 	const [active, setActive] = useState<boolean>(false);
@@ -122,10 +128,11 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 
 	if (graphqlQuery) {
 		const {
-			mapResultsToProps = value => value,
+			mapResultsToProps = (value) => value,
 			query,
-			variables
+			variables,
 		} = graphqlQuery;
+
 		const debouncedInputValue = useDebounce(inputValue, DEBOUNCE_DELAY);
 
 		response = useQuery(query, {
@@ -133,26 +140,27 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 			skip: !active,
 			variables: {
 				...variables,
-				keywords: debouncedInputValue
-			}
+				keywords: debouncedInputValue,
+			},
 		});
 
 		response = {
 			...response,
-			...mapResultsToProps(response.data)
+			...mapResultsToProps(response.data),
 		};
-	} else {
+	}
+	else {
 		response = useRequest({
 			dataSourceFn: ({value}) => dataSourceFn?.(value),
 			debounceDelay: DEBOUNCE_DELAY,
 			initialState: {
 				data: [],
 				error: false,
-				loading: false
+				loading: false,
 			},
 			resetStateIfSkipingRequest: true,
 			skipRequest: !active,
-			variables: {value: inputValue}
+			variables: {value: inputValue},
 		});
 	}
 
@@ -162,6 +170,8 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 		if (focusOnInit) {
 			_inputRef.current.focus();
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -244,10 +254,10 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 					>
 						<Input.GroupItem>
 							<Input
-								autoComplete='off'
+								autoComplete="off"
 								disabled={disabled}
 								id={id}
-								inset='after'
+								inset="after"
 								name={inputName}
 								onBlur={handleBlur}
 								onChange={(
@@ -267,20 +277,20 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 								}
 							/>
 
-							<Input.Inset position='after'>
+							<Input.Inset position="after">
 								{loading ? (
 									<Loading />
 								) : (
 									<ClayIcon
-										className='icon-root'
-										symbol='caret-bottom'
+										className="icon-root"
+										symbol="caret-bottom"
 									/>
 								)}
 							</Input.Inset>
 						</Input.GroupItem>
 
 						{!active && selectedItem && itemRenderer && (
-							<div className='selected-item-container'>
+							<div className="selected-item-container">
 								{itemRenderer(selectedItem)}
 							</div>
 						)}

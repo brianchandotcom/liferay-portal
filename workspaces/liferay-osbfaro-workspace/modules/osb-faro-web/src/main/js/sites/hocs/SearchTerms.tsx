@@ -1,40 +1,46 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {OperationOption, graphql} from '@apollo/client/react/hoc';
 import ClayLink from '@clayui/link';
+import {pickBy} from 'lodash';
+import React from 'react';
+import {useParams} from 'react-router-dom';
+import {compose} from 'redux';
+import Card from '~/shared/components/Card';
+import {DropdownRangeKey} from '~/shared/components/dropdown-range-key/DropdownRangeKey';
+import {useChannelContext} from '~/shared/context/channel';
+import {withHistory, withPaginationBar, withTableData} from '~/shared/hoc';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useQueryRangeSelectors} from '~/shared/hooks/useQueryRangeSelectors';
+import SearchTermsQuery from '~/shared/queries/SearchTermsQuery';
 import Constants, {
 	CompositionTypes,
 	RangeKeyTimeRanges,
-	Sizes
-} from 'shared/util/constants';
-import React from 'react';
-import SearchTermsQuery from 'shared/queries/SearchTermsQuery';
-import URLConstants from 'shared/util/url-constants';
-import {compose} from 'redux';
-import {compositionListColumns} from 'shared/util/table-columns';
-import {COUNT, createOrderIOMap} from 'shared/util/pagination';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
+	Sizes,
+} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import {COUNT, createOrderIOMap} from '~/shared/util/pagination';
+import {setUriQueryValues} from '~/shared/util/router';
+import {compositionListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
+
 import {
 	getMapResultToProps,
-	mapPropsToOptions
+	mapPropsToOptions,
 } from './mappers/composition-query';
-import {graphql, OperationOption} from '@apollo/client/react/hoc';
-import {pickBy} from 'lodash';
-import {setUriQueryValues} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
-import {useChannelContext} from 'shared/context/channel';
-import {useParams} from 'react-router-dom';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
-import {withHistory, withPaginationBar, withTableData} from 'shared/hoc';
 
 const {
-	pagination: {cur: defaultPage, delta: defaultDelta}
+	pagination: {cur: defaultPage, delta: defaultDelta},
 } = Constants;
 
 const withData = () =>
 	compose(
 		graphql(SearchTermsQuery, {
 			options: mapPropsToOptions,
-			props: getMapResultToProps(CompositionTypes.SearchTerms)
+			props: getMapResultToProps(CompositionTypes.SearchTerms),
 		} as OperationOption<object, object>),
 		withPaginationBar({defaultDelta})
 	);
@@ -42,7 +48,7 @@ const withData = () =>
 const TableWithData = withTableData(withData, {
 	emptyDescription: (
 		<>
-			<span className='mr-1'>
+			<span className="mr-1">
 				{Liferay.Language.get(
 					'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 				)}
@@ -50,8 +56,8 @@ const TableWithData = withTableData(withData, {
 
 			<ClayLink
 				href={URLConstants.SitesDashboardSearchTermsAndInterests}
-				key='DOCUMENTATION'
-				target='_blank'
+				key="DOCUMENTATION"
+				target="_blank"
 			>
 				{Liferay.Language.get('learn-more-about-search-terms')}
 			</ClayLink>
@@ -60,12 +66,12 @@ const TableWithData = withTableData(withData, {
 	emptyIcon: {
 		border: false,
 		size: Sizes.XXXLarge,
-		symbol: 'ac_satellite'
+		symbol: 'ac_satellite',
 	},
 	emptyTitle: Liferay.Language.get('there-are-no-search-terms-found'),
 	getColumns: ({
 		maxCount,
-		totalCount
+		totalCount,
 	}: {
 		maxCount: number;
 		totalCount: number;
@@ -74,19 +80,19 @@ const TableWithData = withTableData(withData, {
 			label: Liferay.Language.get('search-query'),
 			maxWidth: null,
 
-			sortable: false
+			sortable: false,
 		}),
 		compositionListColumns.getRelativeMetricBar({
 			label: Liferay.Language.get('searches'),
 			maxCount,
-			totalCount
+			totalCount,
 		}),
 		compositionListColumns.getPercentOf({
 			metricName: Liferay.Language.get('searches'),
-			totalCount
-		})
+			totalCount,
+		}),
 	],
-	rowIdentifier: 'name'
+	rowIdentifier: 'name',
 });
 
 const SearchTerms = ({history}: {history: {push: (path: string) => void}}) => {
@@ -96,7 +102,7 @@ const SearchTerms = ({history}: {history: {push: (path: string) => void}}) => {
 		groupId: string;
 	}>();
 	const {delta, orderIOMap, page} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(COUNT)
+		initialOrderIOMap: createOrderIOMap(COUNT),
 	});
 
 	const rangeSelectors = useQueryRangeSelectors();
@@ -108,7 +114,7 @@ const SearchTerms = ({history}: {history: {push: (path: string) => void}}) => {
 	const handleRangeKeyValueChange = ({
 		rangeEnd,
 		rangeKey,
-		rangeStart
+		rangeStart,
 	}: {
 		rangeEnd?: string | null;
 		rangeKey: number | string | null;
@@ -120,7 +126,7 @@ const SearchTerms = ({history}: {history: {push: (path: string) => void}}) => {
 					page: defaultPage,
 					rangeEnd,
 					rangeKey,
-					rangeStart
+					rangeStart,
 				})
 			)
 		);
@@ -128,11 +134,11 @@ const SearchTerms = ({history}: {history: {push: (path: string) => void}}) => {
 
 	return (
 		<Card pageDisplay>
-			<Card.Header className='align-items-center d-flex justify-content-between'>
+			<Card.Header className="align-items-center d-flex justify-content-between">
 				{selectedChannel && (
 					<Card.Title>
 						{sub(Liferay.Language.get('search-terms-on-x'), [
-							selectedChannel.name
+							selectedChannel.name,
 						])}
 					</Card.Title>
 				)}

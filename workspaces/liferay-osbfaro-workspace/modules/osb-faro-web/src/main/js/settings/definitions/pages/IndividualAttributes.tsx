@@ -1,31 +1,36 @@
-import * as API from 'shared/api';
-import BasePage from 'settings/components/base-page/BasePage';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React from 'react';
-import SearchableEntityTable from 'shared/components/SearchableEntityTable';
-import URLConstants from 'shared/util/url-constants';
-import withStatefulPagination from 'shared/hoc/StatefulPagination';
-import {applyTimeZone} from 'shared/util/date';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
-import {createOrderIOMap} from 'shared/util/pagination';
-import {getDefinitions} from 'shared/util/breadcrumbs';
 import {omit} from 'lodash';
-import {Routes, toRoute} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {User} from 'shared/util/records';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
+import React from 'react';
+import {ConnectedProps, connect} from 'react-redux';
+import BasePage from '~/settings/components/base-page/BasePage';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import SearchableEntityTable from '~/shared/components/SearchableEntityTable';
+import {compose} from '~/shared/hoc';
+import withStatefulPagination from '~/shared/hoc/StatefulPagination';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {getDefinitions} from '~/shared/util/breadcrumbs';
+import {Sizes} from '~/shared/util/constants';
+import {applyTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {createOrderIOMap} from '~/shared/util/pagination';
+import {User} from '~/shared/util/records';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 const SearchableEntityTableHOC = withStatefulPagination(
 	SearchableEntityTable,
 	{
-		initialOrderIOMap: createOrderIOMap('fieldName')
+		initialOrderIOMap: createOrderIOMap('fieldName'),
 	},
 	(props: {[key: string]: any}) => omit(props, 'onSearchValueChange')
 );
@@ -44,7 +49,7 @@ interface IIndividualAttributesProps
 const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 	close,
 	groupId,
-	open
+	open,
 }) => {
 	const currentUser = useCurrentUser();
 	const {timeZoneId} = useTimeZone();
@@ -55,22 +60,22 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 			open(modalTypes.INDIVIDUAL_ATTRIBUTES_MODAL, {
 				dataSources,
 				fieldName,
-				onClose: close
+				onClose: close,
 			});
 		};
 
 	const authorized = currentUser.isAdmin();
 
 	const FieldNameCell = ({
-		data: {dataSources, fieldName}
+		data: {dataSources, fieldName},
 	}: {
 		data: {dataSources: any; fieldName: any};
 	}) => (
-		<td className='table-cell-expand'>
-			<div className='content-container'>
+		<td className="table-cell-expand">
+			<div className="content-container">
 				<ClayButton
-					className='button-root'
-					displayType='unstyled'
+					className="button-root"
+					displayType="unstyled"
 					onClick={openModal({dataSources, fieldName})}
 				>
 					{fieldName}
@@ -85,10 +90,10 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 				getDefinitions({groupId}),
 				{
 					active: true,
-					label: Liferay.Language.get('individual-attributes')
-				}
+					label: Liferay.Language.get('individual-attributes'),
+				},
 			]}
-			className='individual-attributes-root'
+			className="individual-attributes-root"
 			pageDescription={Liferay.Language.get(
 				'this-is-the-data-model-of-an-individual.-analytics-cloud-will-take-and-store-the-newest-data-from-all-your-sources'
 			)}
@@ -101,7 +106,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 							accessor: 'fieldName',
 							cellRenderer: FieldNameCell,
 							className: 'table-cell-expand',
-							label: Liferay.Language.get('attribute[noun]')
+							label: Liferay.Language.get('attribute[noun]'),
 						},
 						{
 							accessor: 'dataSources',
@@ -109,10 +114,10 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 							dataFormatter: (dataSources: any[]) =>
 								dataSources.length > 1
 									? sub(Liferay.Language.get('x-sources'), [
-											dataSources.length
-									  ])
+											dataSources.length,
+										])
 									: dataSources[0]?.dataSourceName,
-							label: Liferay.Language.get('sources')
+							label: Liferay.Language.get('sources'),
 						},
 						{
 							accessor: 'dateModified',
@@ -123,8 +128,8 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 									timeZoneId
 								).fromNow(),
 							label: Liferay.Language.get('last-synced'),
-							sortable: false
-						}
+							sortable: false,
+						},
 					]}
 					dataSourceFn={API.definitions.searchIndividualAttributes}
 					dataSourceParams={{groupId}}
@@ -138,10 +143,10 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 									)}
 
 									<ClayLink
-										className='d-block mb-3'
+										className="d-block mb-3"
 										href={URLConstants.DataSourceConnection}
-										key='DOCUMENTATION'
-										target='_blank'
+										key="DOCUMENTATION"
+										target="_blank"
 									>
 										{Liferay.Language.get(
 											'access-our-documentation-to-learn-more'
@@ -151,12 +156,12 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 									{authorized && (
 										<ClayLink
 											button
-											className='button-root'
-											displayType='primary'
+											className="button-root"
+											displayType="primary"
 											href={toRoute(
 												Routes.SETTINGS_DATA_SOURCE_LIST,
 												{
-													groupId
+													groupId,
 												}
 											)}
 										>
@@ -170,7 +175,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 							icon={{
 								border: false,
 								size: Sizes.XXXLarge,
-								symbol: 'ac_satellite'
+								symbol: 'ac_satellite',
 							}}
 							spacer
 							title={Liferay.Language.get(
@@ -178,7 +183,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 							)}
 						/>
 					)}
-					rowIdentifier='fieldName'
+					rowIdentifier="fieldName"
 					showFilterAndOrder={false}
 					showPagination={false}
 				/>

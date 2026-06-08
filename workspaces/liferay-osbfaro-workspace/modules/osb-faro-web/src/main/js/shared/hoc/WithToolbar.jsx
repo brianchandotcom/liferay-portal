@@ -1,21 +1,26 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import FaroConstants, {RangeKeyTimeRanges} from 'shared/util/constants';
+import {get, pickBy} from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Toolbar from 'shared/components/toolbar';
+import {DropdownRangeKey} from '~/shared/components/dropdown-range-key/DropdownRangeKey';
+import Toolbar from '~/shared/components/toolbar';
+import FaroConstants, {RangeKeyTimeRanges} from '~/shared/util/constants';
+import {paginationDefaults} from '~/shared/util/pagination';
+import {hasChanges} from '~/shared/util/react';
+import {removeUriQueryParam, setUriQueryValues} from '~/shared/util/router';
+
 import withHistory from './WithHistory';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
-import {get} from 'lodash';
-import {hasChanges} from 'shared/util/react';
-import {paginationDefaults} from 'shared/util/pagination';
-import {pickBy} from 'lodash';
-import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
 
 const {
-	pagination: {cur: DEFAULT_CUR}
+	pagination: {cur: DEFAULT_CUR},
 } = FaroConstants;
 
-export default configs => WrappedComponent => {
+export default (configs) => (WrappedComponent) => {
 	class WithToolbarBar extends React.Component {
 		static defaultProps = {
 			disableSearch: false,
@@ -23,9 +28,9 @@ export default configs => WrappedComponent => {
 			rangeSelectors: {
 				rangeEnd: '',
 				rangeKey: RangeKeyTimeRanges.Last30Days,
-				rangeStart: ''
+				rangeStart: '',
 			},
-			showCheckbox: false
+			showCheckbox: false,
 		};
 
 		static propTypes = {
@@ -46,21 +51,21 @@ export default configs => WrappedComponent => {
 			selectEntirePageIndeterminate: PropTypes.bool,
 			showCheckbox: PropTypes.bool,
 			showFilterAndOrder: PropTypes.bool,
-			total: PropTypes.number
+			total: PropTypes.number,
 		};
 
 		constructor(props) {
 			super(props);
 
 			this.state = {
-				searchValue: props.query
+				searchValue: props.query,
 			};
 		}
 
 		componentDidUpdate(prevProps) {
 			const {
 				props: {query},
-				state: {searchValue}
+				state: {searchValue},
 			} = this;
 
 			if (
@@ -85,7 +90,7 @@ export default configs => WrappedComponent => {
 								page: DEFAULT_CUR,
 								rangeEnd,
 								rangeKey,
-								rangeStart
+								rangeStart,
 							}),
 							removeUriQueryParam(
 								window.location.href,
@@ -93,7 +98,7 @@ export default configs => WrappedComponent => {
 								'rangeStart'
 							)
 						)
-				  );
+					);
 		}
 
 		@autobind
@@ -105,7 +110,7 @@ export default configs => WrappedComponent => {
 			}
 
 			this.setState({
-				searchValue: value
+				searchValue: value,
 			});
 		}
 
@@ -133,7 +138,7 @@ export default configs => WrappedComponent => {
 					total,
 					...otherProps
 				},
-				state: {searchValue}
+				state: {searchValue},
 			} = this;
 
 			return (

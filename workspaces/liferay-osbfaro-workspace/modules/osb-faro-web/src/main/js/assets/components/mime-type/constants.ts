@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export enum ClassName {
 	BasicWebContent = 'basic-web-content',
 	Blog = 'blog',
@@ -13,7 +18,7 @@ export enum ClassName {
 	DocumentVector = 'document-vector',
 	FileIconColor0 = 'file-icon-color-0',
 	Folder = 'folder',
-	KnowledgeBase = 'knowledge-base'
+	KnowledgeBase = 'knowledge-base',
 }
 
 export const STRUCTURES_MAP: Record<
@@ -22,91 +27,92 @@ export const STRUCTURES_MAP: Record<
 > = {
 	blog: {
 		className: ClassName.Blog,
-		icon: 'blogs'
+		icon: 'blogs',
 	},
+
 	CMSBasicDocument: {
 		className: ClassName.DocumentDefault,
-		icon: 'document-text'
+		icon: 'document-text',
 	},
 	CMSBasicWebContent: {
 		className: ClassName.BasicWebContent,
-		icon: 'forms'
+		icon: 'forms',
 	},
 	CMSBlog: {
 		className: ClassName.Blog,
-		icon: 'blogs'
+		icon: 'blogs',
 	},
 	CMSCustomStructure: {
 		className: ClassName.CustomStructure,
-		icon: 'web-content'
+		icon: 'web-content',
 	},
 
 	CMSDocumentCode: {
 		className: ClassName.DocumentCode,
-		icon: 'code'
+		icon: 'code',
 	},
 	CMSDocumentCompressed: {
 		className: ClassName.DocumentCompressed,
-		icon: 'document-compressed'
+		icon: 'document-compressed',
 	},
 	CMSDocumentDefault: {
 		className: ClassName.DocumentDefault,
-		icon: 'document-default'
+		icon: 'document-default',
 	},
 	CMSDocumentImage: {
 		className: ClassName.DocumentImage,
-		icon: 'document-image'
+		icon: 'document-image',
 	},
 	CMSDocumentMultimedia: {
 		className: ClassName.DocumentMultimedia,
-		icon: 'document-multimedia'
+		icon: 'document-multimedia',
 	},
 	CMSDocumentPresentation: {
 		className: ClassName.DocumentPresentation,
-		icon: 'document-presentation'
+		icon: 'document-presentation',
 	},
 	CMSDocumentTable: {
 		className: ClassName.DocumentTable,
-		icon: 'document-table'
+		icon: 'document-table',
 	},
 	CMSDocumentText: {
 		className: ClassName.DocumentText,
-		icon: 'document-text'
+		icon: 'document-text',
 	},
 	CMSDocumentVector: {
 		className: ClassName.DocumentVector,
-		icon: 'document-vector'
+		icon: 'document-vector',
 	},
 
 	CMSExternalVideo: {
 		className: ClassName.DocumentImage,
-		icon: 'document-multimedia'
+		icon: 'document-multimedia',
 	},
 
 	CMSFolder: {
 		className: ClassName.Folder,
-		icon: 'folder'
+		icon: 'folder',
 	},
 	CMSKnowledgeBase: {
 		className: ClassName.KnowledgeBase,
-		icon: 'wiki'
+		icon: 'wiki',
 	},
 	Default: {
 		className: ClassName.FileIconColor0,
-		icon: 'document-default'
+		icon: 'document-default',
 	},
 	document: {
 		className: ClassName.DocumentDefault,
-		icon: 'document-text'
+		icon: 'document-text',
 	},
 	form: {
 		className: ClassName.DocumentText,
-		icon: 'forms'
+		icon: 'forms',
 	},
 	webContent: {
 		className: ClassName.BasicWebContent,
-		icon: 'forms'
-	}
+		icon: 'forms',
+	},
 };
 
 export const FILE_MIME_MAP: Record<
@@ -114,10 +120,10 @@ export const FILE_MIME_MAP: Record<
 	{className: ClassName; icon: string}
 > = {
 	'application/pdf': STRUCTURES_MAP['CMSDocumentVector'],
-	audio: STRUCTURES_MAP['CMSDocumentMultimedia'],
-	default: STRUCTURES_MAP['CMSDocumentDefault'],
-	image: STRUCTURES_MAP['CMSDocumentImage'],
-	video: STRUCTURES_MAP['CMSDocumentMultimedia'],
+	'audio': STRUCTURES_MAP['CMSDocumentMultimedia'],
+	'default': STRUCTURES_MAP['CMSDocumentDefault'],
+	'image': STRUCTURES_MAP['CMSDocumentImage'],
+	'video': STRUCTURES_MAP['CMSDocumentMultimedia'],
 	...Object.fromEntries(
 		[
 			'application/javascript',
@@ -133,8 +139,8 @@ export const FILE_MIME_MAP: Record<
 			'text/x-pascal',
 			'text/x-script.perl',
 			'text/x-script.perl-module',
-			'text/xml'
-		].map(mime => [mime, STRUCTURES_MAP['CMSDocumentCode']])
+			'text/xml',
+		].map((mime) => [mime, STRUCTURES_MAP['CMSDocumentCode']])
 	),
 	...Object.fromEntries(
 		[
@@ -143,8 +149,8 @@ export const FILE_MIME_MAP: Record<
 			'application/x-compressed',
 			'application/x-rar-compressed',
 			'application/x-zip-compressed',
-			'application/zip'
-		].map(mime => [mime, STRUCTURES_MAP['CMSDocumentCompressed']])
+			'application/zip',
+		].map((mime) => [mime, STRUCTURES_MAP['CMSDocumentCompressed']])
 	),
 	'application/vnd+liferay.video.external.shortcut+html':
 		STRUCTURES_MAP['CMSDocumentMultimedia'],
@@ -156,8 +162,8 @@ export const FILE_MIME_MAP: Record<
 			'application/vnd.ms-powerpoint',
 			'application/vnd.oasis.opendocument.presentation',
 			'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-			'application/x-mspowerpoint'
-		].map(mime => [mime, STRUCTURES_MAP['CMSDocumentPresentation']])
+			'application/x-mspowerpoint',
+		].map((mime) => [mime, STRUCTURES_MAP['CMSDocumentPresentation']])
 	),
 	...Object.fromEntries(
 		[
@@ -167,15 +173,15 @@ export const FILE_MIME_MAP: Record<
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 			'application/vnd.sun.xml.calc',
 			'application/x-excel',
-			'application/x-msexcel'
-		].map(mime => [mime, STRUCTURES_MAP['CMSDocumentTable']])
+			'application/x-msexcel',
+		].map((mime) => [mime, STRUCTURES_MAP['CMSDocumentTable']])
 	),
 	...Object.fromEntries(
 		[
 			'application/msword',
 			'application/vnd.oasis.opendocument.text',
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-			'text/plain'
-		].map(mime => [mime, STRUCTURES_MAP['CMSDocumentText']])
-	)
+			'text/plain',
+		].map((mime) => [mime, STRUCTURES_MAP['CMSDocumentText']])
+	),
 };

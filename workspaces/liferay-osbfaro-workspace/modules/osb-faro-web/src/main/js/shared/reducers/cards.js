@@ -1,6 +1,12 @@
-import {actionTypes} from '../actions/cards';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Map, fromJS} from 'immutable';
 import {createReducer} from 'redux-toolbox';
-import {fromJS, Map} from 'immutable';
+
+import {actionTypes} from '../actions/cards';
 import {actionTypes as layoutActionTypes} from '../actions/layouts';
 
 const actionHandlers = {
@@ -8,8 +14,8 @@ const actionHandlers = {
 		const {
 			meta: {contactsEntityId},
 			payload: {
-				result: {contactsCardData, contactsCardTemplate}
-			}
+				result: {contactsCardData, contactsCardTemplate},
+			},
 		} = action;
 
 		return state.mergeIn(
@@ -21,7 +27,7 @@ const actionHandlers = {
 		state.mergeIn(
 			[meta.contactsEntityId],
 			fromJS(payload.result.contactsCardData)
-		)
+		),
 };
 
 export default createReducer(new Map(), actionHandlers);

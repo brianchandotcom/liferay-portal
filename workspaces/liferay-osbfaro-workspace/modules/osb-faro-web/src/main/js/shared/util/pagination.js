@@ -1,15 +1,20 @@
-import FaroConstants, {OrderByDirections} from 'shared/util/constants';
-import PropTypes from 'prop-types';
-import {ACCOUNTS, INDIVIDUALS, SEGMENTS, USERS} from 'shared/util/router';
-import {get} from 'lodash';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Map, OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
+import {get} from 'lodash';
+import PropTypes from 'prop-types';
+import FaroConstants, {OrderByDirections} from '~/shared/util/constants';
+import {OrderParams} from '~/shared/util/records';
+import {ACCOUNTS, INDIVIDUALS, SEGMENTS, USERS} from '~/shared/util/router';
 
 const {
 	cur: defaultCur,
 	delta: defaultDelta,
 	orderAscending,
-	orderDescending
+	orderDescending,
 } = FaroConstants.pagination;
 
 export const ABANDONMENTS_METRIC = 'abandonmentsMetric';
@@ -100,14 +105,14 @@ const INVERTED_SORT_FIELDS = [
 	TOTAL_ACTIVITIES,
 	UNIQUE_VISITS_COUNT,
 	VIEWS_METRIC,
-	VISITORS_METRIC
+	VISITORS_METRIC,
 ];
 
 export const paginationDefaults = {
 	delta: defaultDelta,
 	filterBy: new Map(),
 	page: defaultCur,
-	query: ''
+	query: '',
 };
 
 export const paginationConfig = {
@@ -115,7 +120,7 @@ export const paginationConfig = {
 	filterBy: PropTypes.instanceOf(Map),
 	orderIOMap: PropTypes.instanceOf(OrderedMap),
 	page: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	query: PropTypes.string
+	query: PropTypes.string,
 };
 
 export const ACCESSOR_TO_FIELD_MAP = {
@@ -126,11 +131,14 @@ export const ACCESSOR_TO_FIELD_MAP = {
 	['properties.location']: LOCATION,
 	['properties.totalActivities']: TOTAL_ACTIVITIES,
 	userName: USER_NAME,
-	viewCount: UNIQUE_VISITS_COUNT
+	viewCount: UNIQUE_VISITS_COUNT,
 };
 
-export const getFieldNameFromAccessor = (accessor = '') =>
-	get(ACCESSOR_TO_FIELD_MAP, [accessor], accessor);
+export const getFieldNameFromAccessor = function getFieldNameFromAccessor(
+	accessor = ''
+) {
+	return get(ACCESSOR_TO_FIELD_MAP, [accessor], accessor);
+};
 
 const SYSTEM_FIELDS = [
 	ACTIVITIES_COUNT,
@@ -142,32 +150,37 @@ const SYSTEM_FIELDS = [
 	INDIVIDUAL_EMAIL,
 	LAST_ACTIVITY_DATE,
 	OPERATION,
-	USER_NAME
+	USER_NAME,
 ];
 
 export function buildOrderByFields({field, sortOrder}, entityType) {
 	if (entityType === INDIVIDUALS && field === NAME) {
-		return [GIVEN_NAME, FAMILY_NAME].map(columnAccessor =>
+		return [GIVEN_NAME, FAMILY_NAME].map((columnAccessor) =>
 			createOrderByField(columnAccessor, sortOrder)
 		);
-	} else if (entityType === SEGMENTS && field === NAME) {
+	}
+	else if (entityType === SEGMENTS && field === NAME) {
 		return [createOrderByField(NAME, sortOrder, true)];
-	} else if (entityType === ACCOUNTS && field === NAME) {
+	}
+	else if (entityType === ACCOUNTS && field === NAME) {
 		return [createOrderByField(ACCOUNT_NAME, sortOrder)];
-	} else if (entityType === USERS && field === NAME) {
-		return [FIRST_NAME, LAST_NAME].map(columnAccessor =>
+	}
+	else if (entityType === USERS && field === NAME) {
+		return [FIRST_NAME, LAST_NAME].map((columnAccessor) =>
 			createOrderByField(columnAccessor, sortOrder)
 		);
-	} else if (entityType === INTERESTS && field === NAME) {
+	}
+	else if (entityType === INTERESTS && field === NAME) {
 		return [createOrderByField(field, sortOrder, true)];
-	} else {
+	}
+	else {
 		return [createOrderByField(field, sortOrder)];
 	}
 }
 
 const ORDER_BY_DIRECTIONS_MAP = {
 	[OrderByDirections.Ascending]: orderAscending,
-	[OrderByDirections.Descending]: orderDescending
+	[OrderByDirections.Descending]: orderDescending,
 };
 
 export function createOrderByField(field, sortOrder, system) {
@@ -176,52 +189,60 @@ export function createOrderByField(field, sortOrder, system) {
 	return {
 		fieldName: field,
 		orderBy,
-		system: system || SYSTEM_FIELDS.includes(field)
+		system: system || SYSTEM_FIELDS.includes(field),
 	};
 }
 
-export const getDefaultSortOrder = fieldName =>
-	INVERTED_SORT_FIELDS.includes(fieldName)
+export const getDefaultSortOrder = function getDefaultSortOrder(fieldName) {
+	return INVERTED_SORT_FIELDS.includes(fieldName)
 		? OrderByDirections.Descending
 		: OrderByDirections.Ascending;
+};
 
-export const invertSortOrder = currentSortOrder => {
+export const invertSortOrder = function invertSortOrder(currentSortOrder) {
 	if (currentSortOrder) {
 		return currentSortOrder === OrderByDirections.Ascending
 			? OrderByDirections.Descending
 			: OrderByDirections.Ascending;
-	} else {
+	}
+	else {
 		return OrderByDirections.Ascending;
 	}
 };
 
-export const createOrderIOMap = (field, sortOrder) =>
-	OrderedMap({
+export const createOrderIOMap = function createOrderIOMap(field, sortOrder) {
+	return OrderedMap({
 		[field]: new OrderParams({
 			field,
-			sortOrder: sortOrder || getDefaultSortOrder(field)
-		})
+			sortOrder: sortOrder || getDefaultSortOrder(field),
+		}),
 	});
+};
 
-export const getSortFromOrderIOMap = orderIOMap => {
+export const getSortFromOrderIOMap = function getSortFromOrderIOMap(
+	orderIOMap
+) {
 	if (orderIOMap) {
 		const {field, sortOrder} = orderIOMap.first();
 
 		return {
 			column: field,
-			type: sortOrder
+			type: sortOrder,
 		};
 	}
 };
 
-export const getGraphQLVariablesFromPagination = ({
-	delta,
-	orderIOMap,
-	page,
-	query
-}) => ({
-	keywords: query,
-	size: delta,
-	sort: getSortFromOrderIOMap(orderIOMap),
-	start: (page - 1) * delta
-});
+export const getGraphQLVariablesFromPagination =
+	function getGraphQLVariablesFromPagination({
+		delta,
+		orderIOMap,
+		page,
+		query,
+	}) {
+		return {
+			keywords: query,
+			size: delta,
+			sort: getSortFromOrderIOMap(orderIOMap),
+			start: (page - 1) * delta,
+		};
+	};

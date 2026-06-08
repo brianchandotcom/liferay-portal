@@ -1,13 +1,19 @@
-import CohortChart, {CohortHeatMapType} from 'shared/components/cohort-chart';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {get} from 'lodash';
 import React from 'react';
+import CohortChart, {CohortHeatMapType} from '~/shared/components/cohort-chart';
+
 import {
+	IntervalType,
+	VisitorsType,
 	formatDate,
 	getColorHex,
 	getPeriodLabel,
-	IntervalType,
-	VisitorsType
 } from './utils';
-import {get} from 'lodash';
 
 type RawHeatMapType = {
 	colDimension: string;
@@ -53,7 +59,7 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 						formatDate(date, interval, abbreviated),
 					periodLabel: getPeriodLabel(period, interval),
 					retention,
-					value
+					value,
 				};
 
 				const row = get(acc, rowDimension, [] as CohortHeatMapType[]);
@@ -71,7 +77,7 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 	}
 
 	getDateLabels(formattedData: CohortHeatMapType[][]) {
-		return formattedData.map(row => {
+		return formattedData.map((row) => {
 			const {date, dateLabelFn} = row[0];
 
 			return dateLabelFn(date, false);

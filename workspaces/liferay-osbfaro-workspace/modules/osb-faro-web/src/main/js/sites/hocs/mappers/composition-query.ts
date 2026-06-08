@@ -1,12 +1,17 @@
-import {CompositionTypes} from 'shared/util/constants';
-import {getSafeRangeSelectors} from 'shared/util/util';
-import {RangeSelectors} from 'shared/types';
-import {safeResultToProps} from 'shared/util/mappers';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {RangeSelectors} from '~/shared/types';
+import {CompositionTypes} from '~/shared/util/constants';
+import {safeResultToProps} from '~/shared/util/mappers';
+import {getSafeRangeSelectors} from '~/shared/util/util';
 
 const getMapResultToProps = (compositionBagName: CompositionTypes) =>
 	safeResultToProps(
 		({
-			[compositionBagName]: {compositions, maxCount, total, totalCount}
+			[compositionBagName]: {compositions, maxCount, total, totalCount},
 		}: {
 			[key: string]: {
 				compositions: Array<any>;
@@ -19,7 +24,7 @@ const getMapResultToProps = (compositionBagName: CompositionTypes) =>
 			items: compositions,
 			maxCount,
 			total,
-			totalCount
+			totalCount,
 		})
 	);
 
@@ -36,21 +41,21 @@ const mapPropsToOptions = ({
 	delta,
 	id,
 	page,
-	rangeSelectors
+	rangeSelectors,
 }: IMapPropsArgs) => ({
 	variables: {
 		channelId,
 		id,
 		size: delta,
 		start: (page - 1) * delta,
-		...getSafeRangeSelectors(rangeSelectors)
-	}
+		...getSafeRangeSelectors(rangeSelectors),
+	},
 });
 
 const mapCardPropsToOptions = ({
 	activeTabId,
 	channelId,
-	rangeSelectors
+	rangeSelectors,
 }: {
 	activeTabId: string;
 	channelId: string;
@@ -61,8 +66,8 @@ const mapCardPropsToOptions = ({
 		channelId,
 		size: 5,
 		start: 0,
-		...getSafeRangeSelectors(rangeSelectors)
-	}
+		...getSafeRangeSelectors(rangeSelectors),
+	},
 });
 
 export {getMapResultToProps, mapCardPropsToOptions, mapPropsToOptions};

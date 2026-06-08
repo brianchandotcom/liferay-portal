@@ -1,9 +1,15 @@
-import HeaderCell from './HeaderCell';
-import React from 'react';
-import {Column} from './Row';
-import {getFieldNameFromAccessor} from 'shared/util/pagination';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
+import React from 'react';
+import {getFieldNameFromAccessor} from '~/shared/util/pagination';
+import {OrderParams} from '~/shared/util/records';
+
+import HeaderCell from './HeaderCell';
+import {Column} from './Row';
 
 interface IHeaderRowProps {
 	className?: string;
@@ -22,7 +28,7 @@ const HeaderRow: React.FC<IHeaderRowProps> = ({
 	onSortOrderChange,
 	orderIOMap = OrderedMap<string, OrderParams>(),
 	showCheckbox,
-	showInlineRowActions
+	showInlineRowActions,
 }) => (
 	<thead>
 		<tr className={className}>
@@ -34,7 +40,7 @@ const HeaderRow: React.FC<IHeaderRowProps> = ({
 					className,
 					headProps = {},
 					label,
-					sortable
+					sortable,
 				} = column;
 
 				const field = getFieldNameFromAccessor(accessor);
@@ -48,8 +54,8 @@ const HeaderRow: React.FC<IHeaderRowProps> = ({
 						headerLink={headerLink}
 						key={`${label}-${i}`}
 						onSortOrderChange={onSortOrderChange}
-						sortable={sortable}
 						sortOrder={sortOrder}
+						sortable={sortable}
 						{...headProps}
 					>
 						{label}

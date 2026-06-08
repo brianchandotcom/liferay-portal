@@ -1,18 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import HelpBlock from 'shared/components/form/HelpBlock';
-import Label from 'shared/components/form/Label';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {withField} from '~/shared/components/form';
+import HelpBlock from '~/shared/components/form/HelpBlock';
+import Label from '~/shared/components/form/Label';
+import {FieldContexts} from '~/shared/util/constants';
+
 import SelectFieldInput from '../SelectFieldInput';
-import {FieldContexts} from 'shared/util/constants';
-import {withField} from 'shared/components/form';
 
 export class FormSelectFieldInput extends React.Component {
 	static defaultProps = {
 		context: FieldContexts.Demographics,
 		required: false,
-		showHelpBlock: true
+		showHelpBlock: true,
 	};
 
 	static propTypes = {
@@ -21,21 +27,21 @@ export class FormSelectFieldInput extends React.Component {
 			name: PropTypes.string,
 			onBlur: PropTypes.func,
 			onChange: PropTypes.func,
-			value: PropTypes.any
+			value: PropTypes.any,
 		}),
 		form: PropTypes.shape({
 			errors: PropTypes.object,
-			touched: PropTypes.object
+			touched: PropTypes.object,
 		}),
 		groupId: PropTypes.string.isRequired,
 		label: PropTypes.string,
 		onSelect: PropTypes.func,
 		popover: PropTypes.shape({
 			content: PropTypes.node,
-			title: PropTypes.node
+			title: PropTypes.node,
 		}),
 		required: PropTypes.bool,
-		showHelpBlock: PropTypes.bool
+		showHelpBlock: PropTypes.bool,
 	};
 
 	@autobind
@@ -43,7 +49,7 @@ export class FormSelectFieldInput extends React.Component {
 		const {
 			field: {name},
 			form: {setFieldValue},
-			onSelect
+			onSelect,
 		} = this.props;
 
 		setFieldValue(name, value);
@@ -64,14 +70,14 @@ export class FormSelectFieldInput extends React.Component {
 			label,
 			popover,
 			required,
-			showHelpBlock
+			showHelpBlock,
 		} = this.props;
 
 		const error = form.errors[name];
 		const touched = form.touched[name];
 
 		const classes = getCN(className, {
-			'has-error': error && touched
+			'has-error': error && touched,
 		});
 
 		return (

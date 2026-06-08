@@ -1,16 +1,21 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import BaseResults from 'shared/components/BaseResults';
-import React from 'react';
-import VerticalTimeline from 'shared/components/VerticalTimelineDeprecated';
 import {PropTypes} from 'prop-types';
-import {withStatefulPagination} from 'shared/hoc';
+import React from 'react';
+import BaseResults from '~/shared/components/BaseResults';
+import VerticalTimeline from '~/shared/components/VerticalTimelineDeprecated';
+import {withStatefulPagination} from '~/shared/hoc';
 
 export default class SearchableVerticalTimeline extends React.Component {
 	static defaultProps = {
 		initialExpanded: true,
 		items: [],
 		loading: false,
-		nested: false
+		nested: false,
 	};
 
 	static propTypes = {
@@ -21,7 +26,7 @@ export default class SearchableVerticalTimeline extends React.Component {
 		items: PropTypes.arrayOf(PropTypes.object),
 		loading: PropTypes.bool,
 		nested: PropTypes.bool,
-		timeZoneId: PropTypes.string
+		timeZoneId: PropTypes.string,
 	};
 
 	@autobind

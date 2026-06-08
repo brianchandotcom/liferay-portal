@@ -1,9 +1,15 @@
-import BlogsListCard from '../hocs/BlogsListCard';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
 
+import BlogsListCard from '../hocs/BlogsListCard';
+
 const BlogsListPage: React.FC = () => (
-	<div className='row'>
-		<div className='col-sm-12'>
+	<div className="row">
+		<div className="col-sm-12">
 			<BlogsListCard />
 		</div>
 	</div>

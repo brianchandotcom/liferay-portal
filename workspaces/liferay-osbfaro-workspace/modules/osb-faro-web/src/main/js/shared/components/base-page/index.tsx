@@ -1,10 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import getCN from 'classnames';
+import React from 'react';
+import DocumentTitle from '~/shared/components/DocumentTitle';
+import MaintenanceAlert from '~/shared/components/MaintenanceAlert';
+
 import Body from './Body';
 import Context from './Context';
-import DocumentTitle from 'shared/components/DocumentTitle';
-import getCN from 'classnames';
 import Header from './Header';
-import MaintenanceAlert from 'shared/components/MaintenanceAlert';
-import React from 'react';
 import Row from './Row';
 import SubHeader from './SubHeader';
 
@@ -19,15 +25,15 @@ export const BasePage: React.FC<IBasePageProps> & {
 	Header: typeof Header;
 	Row: typeof Row;
 	SubHeader: typeof SubHeader;
-} = ({children, className, documentTitle}) => (
-	<div className={getCN('index-root', className)}>
-		<DocumentTitle title={documentTitle} />
-
-		<MaintenanceAlert stripe />
-
-		{children}
-	</div>
-);
+} = function BasePage({children, className, documentTitle}) {
+	return (
+		<div className={getCN('index-root', className)}>
+			<DocumentTitle title={documentTitle} />
+			<MaintenanceAlert stripe />
+			{children}
+		</div>
+	);
+};
 
 BasePage.Body = Body;
 BasePage.Context = Context;

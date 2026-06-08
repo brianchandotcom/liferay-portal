@@ -1,6 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import React from 'react';
 import {PropTypes} from 'prop-types';
+import React from 'react';
 
 class Body extends React.Component {
 	render() {
@@ -12,11 +17,11 @@ class Body extends React.Component {
 
 class Footer extends React.Component {
 	static defaultProps = {
-		divider: true
+		divider: true,
 	};
 
 	static propTypes = {
-		divider: PropTypes.bool
+		divider: PropTypes.bool,
 	};
 
 	render() {
@@ -25,7 +30,7 @@ class Footer extends React.Component {
 		return (
 			<div
 				className={getCN('sheet-footer', className, {
-					divider
+					divider,
 				})}
 			>
 				{children}
@@ -36,11 +41,11 @@ class Footer extends React.Component {
 
 class Header extends React.Component {
 	static defaultProps = {
-		border: true
+		border: true,
 	};
 
 	static propTypes = {
-		border: PropTypes.bool
+		border: PropTypes.bool,
 	};
 
 	render() {
@@ -49,7 +54,7 @@ class Header extends React.Component {
 		return (
 			<div
 				className={getCN('sheet-header', className, {
-					divider
+					divider,
 				})}
 			>
 				{children}
@@ -60,11 +65,11 @@ class Header extends React.Component {
 
 class Section extends React.Component {
 	static defaultProps = {
-		lastChildMargin: false
+		lastChildMargin: false,
 	};
 
 	static propTypes = {
-		lastChildMargin: PropTypes.bool
+		lastChildMargin: PropTypes.bool,
 	};
 
 	render() {
@@ -73,7 +78,7 @@ class Section extends React.Component {
 		return (
 			<div
 				className={getCN('sheet-section', className, {
-					['has-last-child-margin']: lastChildMargin
+					['has-last-child-margin']: lastChildMargin,
 				})}
 			>
 				{children}
@@ -123,12 +128,12 @@ class Title extends React.Component {
 class Sheet extends React.Component {
 	static defaultProps = {
 		large: false,
-		pageDisplay: false
+		pageDisplay: false,
 	};
 
 	static propTypes = {
 		large: PropTypes.bool,
-		pageDisplay: PropTypes.bool
+		pageDisplay: PropTypes.bool,
 	};
 
 	render() {
@@ -136,7 +141,7 @@ class Sheet extends React.Component {
 
 		const classes = getCN('sheet', className, {
 			'page-display': pageDisplay,
-			'sheet-lg': large
+			'sheet-lg': large,
 		});
 
 		return <div className={classes}>{children}</div>;

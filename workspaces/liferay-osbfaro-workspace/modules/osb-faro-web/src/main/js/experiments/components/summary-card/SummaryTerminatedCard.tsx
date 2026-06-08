@@ -1,22 +1,31 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {formatDateToTimeZone} from 'shared/util/date';
 import {
 	getBestVariant,
 	getMetricName,
 	mergedVariants,
-	toThousandsABTesting
-} from 'experiments/util/experiments';
-import {IExperiment} from './types';
-import {MetricName} from 'experiments/util/types';
-import {sub} from 'shared/util/lang';
+	toThousandsABTesting,
+} from '~/experiments/util/experiments';
+import {MetricName} from '~/experiments/util/types';
+import {formatDateToTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {toRounded} from '~/shared/util/numbers';
+
 import {SummaryAlert} from './SummaryAlert';
 import {SummaryBaseCard} from './SummaryBaseCard';
 import {SummaryParagraph} from './SummaryParagraph';
 import {SummarySection} from './SummarySection';
 import {SummaryTitle} from './SummaryTitle';
-import {toRounded} from 'shared/util/numbers';
+import {IExperiment} from './types';
 
-export const SummaryTerminatedCard: React.FC<{
+export const SummaryTerminatedCard = function SummaryTerminatedCard({
+	experiment,
+	timeZoneId,
+}: {
 	experiment: IExperiment & {
 		description?: string;
 		finishedDate?: string;
@@ -30,7 +39,7 @@ export const SummaryTerminatedCard: React.FC<{
 		startedDate?: string;
 	};
 	timeZoneId: string;
-}> = ({experiment, timeZoneId}) => {
+}) {
 	const {
 		description,
 		dxpVariants,
@@ -40,7 +49,7 @@ export const SummaryTerminatedCard: React.FC<{
 		sessions,
 		startedDate,
 		status,
-		winnerDXPVariantId
+		winnerDXPVariantId,
 	} = experiment;
 
 	const variants = mergedVariants(dxpVariants, variantMetrics);
@@ -48,7 +57,7 @@ export const SummaryTerminatedCard: React.FC<{
 	const bestVariant = getBestVariant({
 		dxpVariants: experiment.dxpVariants,
 		goal: goal as {metric: MetricName} | undefined,
-		metrics: experiment.metrics
+		metrics: experiment.metrics,
 	});
 
 	const secondPlaceVariant = variants.find(
@@ -71,14 +80,14 @@ export const SummaryTerminatedCard: React.FC<{
 		<SummaryBaseCard status={status.toLowerCase()}>
 			<SummaryBaseCard.Header
 				Description={() => (
-					<div className='date'>
+					<div className="date">
 						<div>
 							{sub(Liferay.Language.get('started-x'), [
 								formatDateToTimeZone(
 									startedDate,
 									'll',
 									timeZoneId
-								)
+								),
 							])}
 						</div>
 
@@ -89,7 +98,7 @@ export const SummaryTerminatedCard: React.FC<{
 										finishedDate,
 										'll',
 										timeZoneId
-									)
+									),
 								])}
 							</div>
 						)}
@@ -100,9 +109,9 @@ export const SummaryTerminatedCard: React.FC<{
 
 			{winnerDXPVariantId ? (
 				winnerVariant?.dxpVariantId !== 'DEFAULT' ? (
-					<SummaryAlert symbol='exclamation-circle'>
+					<SummaryAlert symbol="exclamation-circle">
 						<SummaryTitle
-							className='font-weight-bold mb-1'
+							className="font-weight-bold mb-1"
 							label={
 								sub(
 									Liferay.Language.get(
@@ -114,7 +123,7 @@ export const SummaryTerminatedCard: React.FC<{
 										Math.abs(
 											winnerVariantMetrics?.improvement ??
 												0
-										).toFixed(2)
+										).toFixed(2),
 									]
 								) as string
 							}
@@ -127,9 +136,9 @@ export const SummaryTerminatedCard: React.FC<{
 						</strong>
 					</SummaryAlert>
 				) : (
-					<SummaryAlert symbol='exclamation-circle'>
+					<SummaryAlert symbol="exclamation-circle">
 						<SummaryTitle
-							className='font-weight-bold mb-1'
+							className="font-weight-bold mb-1"
 							label={
 								sub(
 									Liferay.Language.get(
@@ -141,7 +150,7 @@ export const SummaryTerminatedCard: React.FC<{
 										Math.abs(
 											secondPlaceVariantMetrics?.improvement ??
 												0
-										).toFixed(2)
+										).toFixed(2),
 									]
 								) as string
 							}
@@ -155,9 +164,9 @@ export const SummaryTerminatedCard: React.FC<{
 					</SummaryAlert>
 				)
 			) : (
-				<SummaryAlert symbol='exclamation-circle'>
+				<SummaryAlert symbol="exclamation-circle">
 					<SummaryTitle
-						className='font-weight-bold mb-1'
+						className="font-weight-bold mb-1"
 						label={Liferay.Language.get('there-is-no-clear-winner')}
 					/>
 
@@ -170,13 +179,13 @@ export const SummaryTerminatedCard: React.FC<{
 			)}
 
 			<SummaryBaseCard.Body>
-				<div className='w-100 mt-4'>
+				<div className="mt-4 w-100">
 					<SummaryParagraph
 						description={description}
 						title={Liferay.Language.get('summary')}
 					/>
 
-					<div className='analytics-summary-card-sections'>
+					<div className="analytics-summary-card-sections">
 						<SummarySection
 							title={Liferay.Language.get('test-completion')}
 						>
@@ -234,7 +243,7 @@ export const SummaryTerminatedCard: React.FC<{
 												bestVariant.improvement,
 												2
 											)}%`}
-											status='up'
+											status="up"
 										/>
 									)}
 							</SummarySection>

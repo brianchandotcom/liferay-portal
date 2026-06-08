@@ -1,10 +1,16 @@
-import * as API from 'shared/api';
-import {CALL_API} from '../middleware/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {createActionTypes} from 'redux-toolbox';
+import * as API from '~/shared/api';
+
+import {CALL_API} from '../middleware/api';
 import {user} from '../middleware/schema';
 
 export const actionTypes = {
-	...createActionTypes('fetch', 'current_user')
+	...createActionTypes('fetch', 'current_user'),
 };
 
 export function fetchCurrentUser(groupId) {
@@ -17,10 +23,10 @@ export function fetchCurrentUser(groupId) {
 				types: [
 					actionTypes.FETCH_CURRENT_USER_REQUEST,
 					actionTypes.FETCH_CURRENT_USER_SUCCESS,
-					actionTypes.FETCH_CURRENT_USER_FAILURE
-				]
-			}
+					actionTypes.FETCH_CURRENT_USER_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

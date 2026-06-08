@@ -1,14 +1,19 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Text} from '@clayui/core';
 import getCN from 'classnames';
 import React from 'react';
+import Card from '~/shared/components/Card';
 import {
-	getPlanAddOns,
-	getPropLabel,
 	INDIVIDUALS,
 	PAGEVIEWS,
-	PLANS
-} from 'shared/util/subscriptions';
-import {Text} from '@clayui/core';
+	PLANS,
+	getPlanAddOns,
+	getPropLabel,
+} from '~/shared/util/subscriptions';
 
 interface IItemRendererProps {
 	name: React.ReactNode;
@@ -16,12 +21,12 @@ interface IItemRendererProps {
 }
 
 const ItemRenderer = ({name, value}: IItemRendererProps) => (
-	<div className='d-flex justify-content-between mb-1'>
-		<Text color='secondary' size={3} weight='semi-bold'>
+	<div className="d-flex justify-content-between mb-1">
+		<Text color="secondary" size={3} weight="semi-bold">
 			{name}
 		</Text>
 
-		<Text color='secondary' size={3}>
+		<Text color="secondary" size={3}>
 			{value}
 		</Text>
 	</div>
@@ -32,10 +37,10 @@ interface ISubscriptionDetailsProps {
 	planType: string;
 }
 
-export const SubscriptionDetails = ({
+export const SubscriptionDetails = function SubscriptionDetails({
 	currentPlan,
-	planType
-}: ISubscriptionDetailsProps) => {
+	planType,
+}: ISubscriptionDetailsProps) {
 	const addOns = getPlanAddOns(currentPlan);
 
 	const LDPEnabled = planType?.includes('Data Platform');
@@ -43,10 +48,10 @@ export const SubscriptionDetails = ({
 	const showAddOns = !!Object.keys(addOns).length && !LDPEnabled;
 
 	return (
-		<Card testId='subscription-details'>
-			<Card.Header className='py-2'>
+		<Card testId="subscription-details">
+			<Card.Header className="py-2">
 				<Card.Title>
-					<Text color='secondary' size={3}>
+					<Text color="secondary" size={3}>
 						{Liferay.Language.get(
 							'subscription-details'
 						).toUpperCase()}
@@ -54,11 +59,11 @@ export const SubscriptionDetails = ({
 				</Card.Title>
 			</Card.Header>
 
-			<hr className='m-0' />
+			<hr className="m-0" />
 
 			<Card.Body className={getCN({'pb-0': showAddOns})}>
-				<div className='mb-2'>
-					<Text size={3} weight='semi-bold'>
+				<div className="mb-2">
+					<Text size={3} weight="semi-bold">
 						{getPropLabel(currentPlan.name)}
 					</Text>
 				</div>
@@ -85,9 +90,9 @@ export const SubscriptionDetails = ({
 
 			{showAddOns && (
 				<>
-					<Card.Header className='pb-2'>
+					<Card.Header className="pb-2">
 						<Card.Title>
-							<Text color='secondary' size={3}>
+							<Text color="secondary" size={3}>
 								{Liferay.Language.get(
 									'purchased-add-ons'
 								).toUpperCase()}
@@ -96,10 +101,10 @@ export const SubscriptionDetails = ({
 					</Card.Header>
 
 					<Card.Body>
-						<hr className='mt-0' />
+						<hr className="mt-0" />
 
-						<div className='mb-2'>
-							<Text color='secondary' size={3}>
+						<div className="mb-2">
+							<Text color="secondary" size={3}>
 								{Liferay.Language.get(
 									'tailor-limits-to-business-needs.-incrementally-increase-individual-or-page-view-limits-as-needed-without-committing-to-a-new-plan'
 								)}

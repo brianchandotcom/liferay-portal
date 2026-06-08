@@ -1,5 +1,10 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import TextTruncate from 'shared/components/TextTruncate';
+import TextTruncate from '~/shared/components/TextTruncate';
 
 class TextTruncateKit extends React.Component {
 	render() {
@@ -10,20 +15,20 @@ class TextTruncateKit extends React.Component {
 				}
 			>
 				<div style={{width: '150px'}}>
-					<TextTruncate title='Visible text and tooltip will be the same.' />
+					<TextTruncate title="Visible text and tooltip will be the same." />
 				</div>
 
 				<div style={{width: '150px'}}>
-					<TextTruncate title='This has specific tooltip content.'>
-						{'Here is the long visible text'}
+					<TextTruncate title="This has specific tooltip content.">
+						Here is the long visible text
 					</TextTruncate>
 				</div>
 
 				<div style={{width: '300px'}}>
-					<TextTruncate title='No tooltip will show for untruncated text.' />
+					<TextTruncate title="No tooltip will show for untruncated text." />
 				</div>
 
-				<TextTruncate title='Tooltip will update when the window is resized. Tooltip will update when the window is resized.' />
+				<TextTruncate title="Tooltip will update when the window is resized. Tooltip will update when the window is resized." />
 			</div>
 		);
 	}

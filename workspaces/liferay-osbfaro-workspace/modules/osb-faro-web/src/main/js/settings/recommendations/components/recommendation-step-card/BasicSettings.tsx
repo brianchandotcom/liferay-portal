@@ -1,15 +1,21 @@
-import client from 'shared/apollo/client';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {FormikErrors} from 'formik';
+import React, {useEffect} from 'react';
+import client from '~/shared/apollo/client';
 import Form, {
 	toPromise,
 	validateMaxLength,
-	validateRequired
-} from 'shared/components/form';
-import React, {useEffect} from 'react';
-import {FormikErrors} from 'formik';
-import {JOB_RUN_FREQUENCIES_LIST} from '../../utils/utils';
-import {JobStatuses} from 'shared/util/constants';
+	validateRequired,
+} from '~/shared/components/form';
+import {JobStatuses} from '~/shared/util/constants';
+import {sequence} from '~/shared/util/promise';
+
 import {RECOMMENDATION_BY_NAME_QUERY} from '../../queries/RecommendationQuery';
-import {sequence} from 'shared/util/promise';
+import {JOB_RUN_FREQUENCIES_LIST} from '../../utils/utils';
 
 interface IBasicSettingsProps {
 	currentStep?: number;
@@ -27,10 +33,12 @@ const BasicSettings: React.FC<IBasicSettingsProps> = ({
 	errors,
 	initialValues,
 	name,
-	onSetDisabled
+	onSetDisabled,
 }) => {
 	useEffect(() => {
 		onSetDisabled(!name || !!errors.name);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [name, errors]);
 
 	const validateRecommendationName = (value: string): Promise<string> => {
@@ -40,7 +48,7 @@ const BasicSettings: React.FC<IBasicSettingsProps> = ({
 			return client
 				.query({
 					query: RECOMMENDATION_BY_NAME_QUERY,
-					variables: {name}
+					variables: {name},
 				})
 				.then(({data: {jobByName}}) => {
 					if (jobByName) {
@@ -51,22 +59,23 @@ const BasicSettings: React.FC<IBasicSettingsProps> = ({
 
 					return error;
 				});
-		} else {
+		}
+		else {
 			return toPromise(error);
 		}
 	};
 
 	return (
-		<div className='basic-settings-root'>
+		<div className="basic-settings-root">
 			<Form.Group>
 				<Form.Input
 					label={Liferay.Language.get('model-name')}
-					name='name'
+					name="name"
 					required
 					validate={sequence([
 						validateRequired,
 						validateMaxLength(255),
-						validateRecommendationName
+						validateRecommendationName,
 					])}
 				/>
 			</Form.Group>
@@ -74,7 +83,7 @@ const BasicSettings: React.FC<IBasicSettingsProps> = ({
 			<Form.Group>
 				<Form.Select
 					label={Liferay.Language.get('training-frequency')}
-					name='runFrequency'
+					name="runFrequency"
 				>
 					{JOB_RUN_FREQUENCIES_LIST.map(({name, value}) => (
 						<Form.Select.Item key={value} value={value}>

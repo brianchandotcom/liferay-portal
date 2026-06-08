@@ -1,22 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {find, get} from 'lodash';
+import React, {useMemo} from 'react';
 import ChartTooltip, {
 	Alignments,
-	Weights
-} from 'shared/components/chart-tooltip';
-import React, {useMemo} from 'react';
+	Weights,
+} from '~/shared/components/chart-tooltip';
+import {Interval, RangeSelectors} from '~/shared/types';
+import {getDateTitle} from '~/shared/util/charts';
+import {RangeKeyTimeRanges} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+
+import {useData} from './MetricBaseCard';
 import {
 	CHART_DATA_ID_1,
 	CHART_DATA_ID_2,
 	CHART_DATA_PREVIOUS,
+	METRIC_TOOLTIP_LABEL_MAP,
 	getActiveItem,
 	getPreviousValueFromCompositeData,
-	METRIC_TOOLTIP_LABEL_MAP
 } from './util';
-import {find, get} from 'lodash';
-import {getDateTitle} from 'shared/util/charts';
-import {Interval, RangeSelectors} from 'shared/types';
-import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
-import {useData} from './MetricBaseCard';
 
 type TTooltipPayloadItem = {
 	dataKey?: string;
@@ -28,7 +34,7 @@ const useMetricTooltipRows = ({
 	data,
 	interval,
 	payload,
-	rangeSelectors
+	rangeSelectors,
 }: {
 	data: any;
 	interval: Interval;
@@ -54,7 +60,7 @@ const useMetricTooltipRows = ({
 			content: {name, title},
 			dateKeysIMap,
 			format,
-			prevDateKeysIMap
+			prevDateKeysIMap,
 		} = activeItem;
 
 		const showCurrentPeriod =
@@ -86,7 +92,7 @@ const useMetricTooltipRows = ({
 					compositeData,
 					get(dataOneItemData, 'dataName'),
 					dateKey
-			  )
+				)
 			: get(dataPreviousPoint, 'value');
 		const dataTwoPreviousValue = getPreviousValueFromCompositeData(
 			compositeData,
@@ -117,15 +123,15 @@ const useMetricTooltipRows = ({
 					compareToPrevious && {
 						align: Alignments.Right,
 						label: previousPeriodTitle,
-						width: 55
+						width: 55,
 					},
 					showCurrentPeriod && {
 						align: Alignments.Right,
 						label: currentPeriodTitle,
-						width: 55
-					}
-				].filter(Boolean)
-			}
+						width: 55,
+					},
+				].filter(Boolean),
+			},
 		];
 
 		const rows = [
@@ -134,26 +140,26 @@ const useMetricTooltipRows = ({
 					{label: getDataRowName(dataOneItemData)},
 					compareToPrevious && {
 						align: Alignments.Right,
-						label: format(dataOnePreviousValue)
+						label: format(dataOnePreviousValue),
 					},
 					showCurrentPeriod && {
 						align: Alignments.Right,
-						label: format(dataOneValue)
-					}
-				].filter(Boolean)
+						label: format(dataOneValue),
+					},
+				].filter(Boolean),
 			},
 			compositeData && {
 				columns: [
 					{label: getDataRowName(dataTwoItemData)},
 					compareToPrevious && {
 						align: Alignments.Right,
-						label: format(dataTwoPreviousValue)
+						label: format(dataTwoPreviousValue),
 					},
 					showCurrentPeriod && {
 						align: Alignments.Right,
-						label: format(dataTwoValue)
-					}
-				].filter(Boolean)
+						label: format(dataTwoValue),
+					},
+				].filter(Boolean),
 			},
 			compositeData && {
 				columns: [
@@ -162,14 +168,14 @@ const useMetricTooltipRows = ({
 						align: Alignments.Right,
 						label: format(
 							dataOnePreviousValue + dataTwoPreviousValue
-						)
+						),
 					},
 					showCurrentPeriod && {
 						align: Alignments.Right,
-						label: format(dataOneValue + dataTwoValue)
-					}
-				].filter(Boolean)
-			}
+						label: format(dataOneValue + dataTwoValue),
+					},
+				].filter(Boolean),
+			},
 		].filter(Boolean);
 
 		return {header, rows};
@@ -193,13 +199,13 @@ const MetricTooltip: React.FC<IMetricTooltipProps> = ({
 	interval,
 	payload,
 	rangeSelectors,
-	retentionPeriod
+	retentionPeriod,
 }) => {
 	const tooltipRows = useMetricTooltipRows({
 		data,
 		interval,
 		payload,
-		rangeSelectors
+		rangeSelectors,
 	});
 
 	if (!active || !tooltipRows) {
@@ -218,12 +224,12 @@ const MetricTooltip: React.FC<IMetricTooltipProps> = ({
 					'there-is-no-data-available-for-dates-prior-to-x-months-due-to-your-workspaces-data-retention-period'
 				),
 				[retentionPeriod]
-		  ) as string)
+			) as string)
 		: '';
 
 	return (
 		<div
-			className='bb-tooltip-container'
+			className="bb-tooltip-container"
 			style={{maxWidth: 400, position: 'static'}}
 		>
 			<ChartTooltip

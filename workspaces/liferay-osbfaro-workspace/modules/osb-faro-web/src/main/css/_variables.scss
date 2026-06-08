@@ -2,13 +2,13 @@
  * Chart
  */
 
-$chartBlue: #4B9BFF;
-$chartBlueLighten30: #97C5FF;
-$chartLimeGreen: #9CE269;
-$chartOrange: #FFB46E;
-$chartPurple: #AF78FF;
-$chartRed: #FF5F5F;
-$chartSeaGreen: #50D2A0;
+$chartBlue: #4b9bff;
+$chartBlueLighten30: #97c5ff;
+$chartLimeGreen: #9ce269;
+$chartOrange: #ffb46e;
+$chartPurple: #af78ff;
+$chartRed: #ff5f5f;
+$chartSeaGreen: #50d2a0;
 
 /**
  * Criteria sidebar
@@ -20,18 +20,18 @@ $propertyGroupsColors: (
 	'event': $chartSeaGreen,
 	'individual': $chartBlue,
 	'interest': $chartRed,
-	'organization': #5FC8FF,
+	'organization': #5fc8ff,
 	'session': $chartPurple,
-	'web': $chartSeaGreen
+	'web': $chartSeaGreen,
 );
 
 /**
  * Field types
  */
-$fieldLightBlue: #54B7FF;
-$fieldDarkBlue: #849AE8;
-$fieldPurple: #AD7AFF;
-$fieldGreen: #96DC7A;
+$fieldLightBlue: #54b7ff;
+$fieldDarkBlue: #849ae8;
+$fieldPurple: #ad7aff;
+$fieldGreen: #96dc7a;
 
 /**
  * Layout
@@ -65,41 +65,41 @@ $liferayDataSourceCardSideMinWidth: 280px;
  * Lexicon
  */
 $main: #272833;
-$mainLighten4: #30313F;
-$mainLighten8: #393A4A;
-$mainLighten28: #6B6C7E;
-$mainLighten52: #A7A9BC;
-$mainLighten65: #CDCED9;
-$mainLighten74: #E7E7ED;
+$mainLighten4: #30313f;
+$mainLighten8: #393a4a;
+$mainLighten28: #6b6c7e;
+$mainLighten52: #a7a9bc;
+$mainLighten65: #cdced9;
+$mainLighten74: #e7e7ed;
 $secondary: $mainLighten28;
-$secondaryHover: #F7F8F9;
+$secondaryHover: #f7f8f9;
 
-$primary: #0B5FFF;
-$primaryDarken5: #0053F0;
-$primaryDarken10: #004AD7;
-$primaryLighten23: #80ACFF;
-$primaryLighten33: #B3CDFF;
-$primaryLighten45: #F0F5FF;
+$primary: #0b5fff;
+$primaryDarken5: #0053f0;
+$primaryDarken10: #004ad7;
+$primaryLighten23: #80acff;
+$primaryLighten33: #b3cdff;
+$primaryLighten45: #f0f5ff;
 
-$white: #FFF;
+$white: #fff;
 $black: #000;
-$lightBackground: #F1F2F5;
+$lightBackground: #f1f2f5;
 
-$error: #DA1414;
-$errorLighten28: #F48989;
-$errorLighten50: #FEEFEF;
+$error: #da1414;
+$errorLighten28: #f48989;
+$errorLighten50: #feefef;
 
-$success: #287D3C;
-$successLighten25: #5ACA75;
-$successLighten63: #EDF9F0;
+$success: #287d3c;
+$successLighten25: #5aca75;
+$successLighten63: #edf9f0;
 
-$warning: #B95000;
-$warningLighten25: #FF8F39;
-$warningLighten60: #FFF4EC;
+$warning: #b95000;
+$warningLighten25: #ff8f39;
+$warningLighten60: #fff4ec;
 
-$info: #2E5AAC;
-$infoLighten28: #89A7E0;
-$infoLighten53: #EEF2FA;
+$info: #2e5aac;
+$infoLighten28: #89a7e0;
+$infoLighten53: #eef2fa;
 
 $colors: (
 	main: $main,
@@ -131,7 +131,7 @@ $colors: (
 	warningLighten60: $warningLighten60,
 	info: $info,
 	infoLighten28: $infoLighten28,
-	infoLighten53: $infoLighten53
+	infoLighten53: $infoLighten53,
 );
 
 /**
@@ -185,9 +185,19 @@ $font-size-lg-6x: 3rem; //48px
 /**
  * Font family
  */
-$font-family: 'Source Sans Pro', 'Source Sans', -apple-system,
-	BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
-	'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+$font-family:
+	'Source Sans Pro',
+	'Source Sans',
+	-apple-system,
+	BlinkMacSystemFont,
+	'Segoe UI',
+	Roboto,
+	'Helvetica Neue',
+	Arial,
+	sans-serif,
+	'Apple Color Emoji',
+	'Segoe UI Emoji',
+	'Segoe UI Symbol';
 
 $data-card-max-height: 450px;
 $data-card-width: 350px;
@@ -213,7 +223,9 @@ $header-title-font-weight: bold;
  */
 $sankey-font-weight: $fontWeightSemiBold;
 $sankey-title-font-size: $font-size-md;
-$sankey-transition: fill 0.2s ease-in-out, stroke 0.2s ease-in-out;
+$sankey-transition:
+	fill 0.2s ease-in-out,
+	stroke 0.2s ease-in-out;
 $sankey-views-font-size: 12px;
 
 /**

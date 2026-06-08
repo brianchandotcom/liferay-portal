@@ -1,24 +1,29 @@
-import ClayLink from '@clayui/link';
-import FaroConstants from 'shared/util/constants';
-import Label from '@clayui/label';
-import Loading from 'shared/components/Loading';
-import React, {useEffect, useState} from 'react';
-import {
-	FrontendDataSet as BaseFrontendDataSet,
-	EConfigInURLBehavior
-} from '@liferay/frontend-data-set-web';
-import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Text} from '@clayui/core';
-import {toRoute} from 'shared/util/router';
+import Label from '@clayui/label';
+import ClayLink from '@clayui/link';
+import {
+	EConfigInURLBehavior,
+	FrontendDataSet as BaseFrontendDataSet,
+} from '@liferay/frontend-data-set-web';
+import React, {useEffect, useState} from 'react';
+import Loading from '~/shared/components/Loading';
+import FaroConstants from '~/shared/util/constants';
+import {CUSTOM_DATE_FORMAT, formatUTCDate} from '~/shared/util/date';
+import {toRoute} from '~/shared/util/router';
 
 export * from '@liferay/frontend-data-set-web';
 
 const {cur, delta, deltaValues} = FaroConstants.pagination;
 
 export const pagination = {
-	deltas: deltaValues.map(delta => ({label: delta})),
+	deltas: deltaValues.map((delta) => ({label: delta})),
 	initialDelta: delta,
-	initialPageNumber: cur
+	initialPageNumber: cur,
 };
 
 type FDSCellProps<TValue = unknown, TItemData = Record<string, unknown>> = {
@@ -29,27 +34,27 @@ type FDSCellProps<TValue = unknown, TItemData = Record<string, unknown>> = {
 export const columns = {
 	attributeNameAndValue: ({
 		attributeName,
-		value
+		value,
 	}: {
 		attributeName?: string;
 		value: string | number;
 	}) => (
 		<div>
-			<p className='mb-0 text-secondary'>{attributeName}</p>
-			<Text size={3} weight='semi-bold'>
+			<p className="mb-0 text-secondary">{attributeName}</p>
+			<Text size={3} weight="semi-bold">
 				{value}
 			</Text>
 		</div>
 	),
 	cmsLabelRenderer: ({
 		displayType,
-		label
+		label,
 	}: {
 		displayType: 'danger' | 'info' | 'secondary' | 'success' | 'warning';
 		label: React.ReactNode;
 	}) => (
 		<Label
-			className='fds-label font-weight-semi-bold rounded'
+			className="fds-label font-weight-semi-bold rounded"
 			displayType={displayType}
 		>
 			{label}
@@ -63,7 +68,7 @@ export const columns = {
 		groupId,
 		itemData,
 		route,
-		value
+		value,
 	}: {
 		channelId: string;
 		groupId: string;
@@ -75,17 +80,17 @@ export const columns = {
 
 		return (
 			<ClayLink
-				className='font-weight-semi-bold text-dark'
+				className="font-weight-semi-bold text-dark"
 				href={toRoute(route, {
 					channelId,
 					groupId,
-					id: itemData.id
+					id: itemData.id,
 				})}
 			>
 				{itemTitle}
 			</ClayLink>
 		);
-	}
+	},
 };
 
 export function useSnapshots(fdsName: string, enabled = true) {
@@ -108,8 +113,8 @@ export function useSnapshots(fdsName: string, enabled = true) {
 			`/o/data-set-admin/snapshots?filter=fdsName eq '${fdsName}'`,
 			{headers: {'Content-Type': 'application/json'}, method: 'GET'}
 		)
-			.then(res => res.json())
-			.then(data => {
+			.then((res) => res.json())
+			.then((data) => {
 				const formattedSnapshots = data.items.map(
 					(item: {
 						externalReferenceCode: any;
@@ -118,7 +123,7 @@ export function useSnapshots(fdsName: string, enabled = true) {
 					}) => ({
 						configuration: item.viewConfig,
 						erc: item.externalReferenceCode,
-						label: item.label
+						label: item.label,
 					})
 				);
 
@@ -128,7 +133,8 @@ export function useSnapshots(fdsName: string, enabled = true) {
 						: []
 				);
 			})
-			.catch(error => {
+			.catch((error) => {
+
 				// eslint-disable-next-line no-console
 				console.error('Failed to fetch snapshots:', error);
 

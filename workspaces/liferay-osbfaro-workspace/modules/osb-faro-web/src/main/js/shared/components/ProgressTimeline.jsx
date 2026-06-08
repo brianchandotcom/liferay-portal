@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
+import {PropTypes} from 'prop-types';
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {PropTypes} from 'prop-types';
 
 class ProgressTimeline extends React.Component {
 	static propTypes = {
 		activeIndex: PropTypes.number,
 		className: PropTypes.string,
-		items: PropTypes.array
+		items: PropTypes.array,
 	};
 
 	wrapWithLink(content, href, i) {
@@ -34,19 +39,19 @@ class ProgressTimeline extends React.Component {
 						<div
 							className={getCN('step', {
 								active,
-								'previous-step': previousStep
+								'previous-step': previousStep,
 							})}
 							key={i}
 						>
-							<div className='title'>{title}</div>
+							<div className="title">{title}</div>
 
-							<div className='circle'>
+							<div className="circle">
 								{!previousStep && step}
 
 								{previousStep && (
 									<ClayIcon
-										className='icon-root'
-										symbol='check'
+										className="icon-root"
+										symbol="check"
 									/>
 								)}
 							</div>
@@ -60,7 +65,7 @@ class ProgressTimeline extends React.Component {
 								className={getCN('bar', {filled: previousStep})}
 								key={`bar-${i}`}
 							/>
-						)
+						),
 					];
 				})}
 			</div>

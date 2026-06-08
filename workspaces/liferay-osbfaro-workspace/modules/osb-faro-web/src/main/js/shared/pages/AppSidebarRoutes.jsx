@@ -1,290 +1,345 @@
-import BundleRouter from '../../route-middleware/BundleRouter';
-import DataSourcesProvider from 'shared/context/dataSources';
-import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import {ChannelContext} from 'shared/context/channel';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import React, {Suspense, lazy} from 'react';
 import {connect} from 'react-redux';
-import {DEVELOPER_MODE} from 'shared/util/constants';
-import {DownloadReportProvider} from 'shared/components/download-report/DownloadReportContext';
-import {ENABLE_ASSET_OBJECT_ENTRY} from 'shared/util/constants';
-import {Routes} from 'shared/util/router';
 import {Switch, withRouter} from 'react-router-dom';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import {DownloadReportProvider} from '~/shared/components/download-report/DownloadReportContext';
+import {ChannelContext} from '~/shared/context/channel';
+import DataSourcesProvider from '~/shared/context/dataSources';
 import {
 	withLDPEnabled,
 	withOnboarding,
-	withUnassignedSegments
-} from 'shared/hoc';
-import {withSidebar} from 'shared/hoc';
+	withSidebar,
+	withUnassignedSegments,
+} from '~/shared/hoc';
+import {
+	DEVELOPER_MODE,
+	ENABLE_ASSET_OBJECT_ENTRY,
+} from '~/shared/util/constants';
+import {Routes} from '~/shared/util/router';
 
-const UIKit = lazy(() =>
-	import(/* webpackChunkName: "UIKit" */ '../../ui-kit/pages/index')
+import BundleRouter from '../../route-middleware/BundleRouter';
+
+const UIKit = lazy(
+	() => import(/* webpackChunkName: "UIKit" */ '../../ui-kit/pages/index')
 );
 
 /* No Properties Available */
-const NoPropertiesAvailable = lazy(() =>
-	import(
-		/* webpackChunkName: "NoPropertiesAvailable" */ './NoPropertiesAvailable'
-	)
+const NoPropertiesAvailable = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "NoPropertiesAvailable" */ './NoPropertiesAvailable'
+		)
 );
 
 /* Segments */
-const SegmentsList = lazy(() =>
-	import(/* webpackChunkName: "SegmentsList" */ '../../segment/pages/List')
+const SegmentsList = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "SegmentsList" */ '../../segment/pages/List'
+		)
 );
-const SegmentProfileRoutes = lazy(() =>
-	import(
-		/* webpackChunkName: "SegmentProfileRoutes" */ '../../segment/pages/ProfileRoutes'
-	)
+const SegmentProfileRoutes = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "SegmentProfileRoutes" */ '../../segment/pages/ProfileRoutes'
+		)
 );
-const SegmentEdit = lazy(() =>
-	import(/* webpackChunkName: "SegmentEdit" */ '../../segment/pages/Edit')
+const SegmentEdit = lazy(
+	() =>
+		import(/* webpackChunkName: "SegmentEdit" */ '../../segment/pages/Edit')
 );
 
 /* Accounts */
 
-const AccountsList = lazy(() =>
-	import(
-		/* webpackChunkName: "AccountsList" */ '../../contacts/pages/account/List'
-	)
+const AccountsList = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "AccountsList" */ '../../contacts/pages/account/List'
+		)
 );
-const AccountProfileRoutes = lazy(() =>
-	import(
-		/* webpackChunkName: "AccountProfileRoutes" */ '../../contacts/pages/account/ProfileRoutes'
-	)
+const AccountProfileRoutes = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "AccountProfileRoutes" */ '../../contacts/pages/account/ProfileRoutes'
+		)
 );
 
 /* Event Analysis */
 
-const EventAnalysisCreate = lazy(() =>
-	import(
-		/* webpackChunkName: "EventAnalysisCreate" */ '../../event-analysis/pages/Create'
-	)
+const EventAnalysisCreate = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "EventAnalysisCreate" */ '../../event-analysis/pages/Create'
+		)
 );
 
-const EventAnalysisEdit = lazy(() =>
-	import(
-		/* webpackChunkName: "EventAnalysisEdit" */ '../../event-analysis/pages/Edit'
-	)
+const EventAnalysisEdit = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "EventAnalysisEdit" */ '../../event-analysis/pages/Edit'
+		)
 );
 
-const EventAnalysisList = lazy(() =>
-	import(
-		/* webpackChunkName: "EventAnalysisList" */ '../../event-analysis/pages/List'
-	)
+const EventAnalysisList = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "EventAnalysisList" */ '../../event-analysis/pages/List'
+		)
 );
 
 /* Individuals */
 
-const IndividualProfileRoutes = lazy(() =>
-	import(
-		/* webpackChunkName: "IndividualProfileRoutes" */ '../../individual/profile/pages/ProfileRoutes'
-	)
+const IndividualProfileRoutes = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "IndividualProfileRoutes" */ '../../individual/profile/pages/ProfileRoutes'
+		)
 );
 
-const IndividualProfileRoutesCDP = lazy(() =>
-	import(
-		/* webpackChunkName: "IndividualProfileRoutesCDP" */ '../../individual/profile/pages/ProfileRoutesCDP'
-	)
+const IndividualProfileRoutesCDP = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "IndividualProfileRoutesCDP" */ '../../individual/profile/pages/ProfileRoutesCDP'
+		)
 );
 
-const IndividualsDashboard = lazy(() =>
-	import(
-		/* webpackChunkName: "IndividualsDashboard" */ '../../individual/dashboard/pages'
-	)
+const IndividualsDashboard = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "IndividualsDashboard" */ '../../individual/dashboard/pages'
+		)
 );
 
-const IndividualsDashboardCDP = lazy(() =>
-	import(
-		/* webpackChunkName: "IndividualsDashboardCDP" */ '../../individual/dashboard/pages/IndividualsDashboardCDP'
-	)
+const IndividualsDashboardCDP = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "IndividualsDashboardCDP" */ '../../individual/dashboard/pages/IndividualsDashboardCDP'
+		)
 );
 
 /* Lifecycle */
-const LifecycleDashboard = lazy(() =>
-	import(
-		/* webpackChunkname: "LifecycleDashboard" */ '../../lifecycle/pages/BaseLifecycle'
-	)
+const LifecycleDashboard = lazy(
+	() =>
+		import(
+
+			/* webpackChunkname: "LifecycleDashboard" */ '../../lifecycle/pages/BaseLifecycle'
+		)
 );
 
 /* Sites */
 
-const SitesDashboard = lazy(() =>
-	import(/* webpackChunkName: "SitesDashboard" */ '../../sites/pages')
+const SitesDashboard = lazy(
+	() => import(/* webpackChunkName: "SitesDashboard" */ '../../sites/pages')
 );
 
 /* Experiments */
 
-const ExperimentsList = lazy(() =>
-	import(
-		/* webpackChunkName: "ExperimentsList" */ '../../experiments/pages/ExperimentsListPage'
-	)
+const ExperimentsList = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "ExperimentsList" */ '../../experiments/pages/ExperimentsListPage'
+		)
 );
 
-const ExperimentOverview = lazy(() =>
-	import(
-		/* webpackChunkName: "ExperimentsList" */ '../../experiments/pages/ExperimentOverviewPage'
-	)
+const ExperimentOverview = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "ExperimentsList" */ '../../experiments/pages/ExperimentOverviewPage'
+		)
 );
 
-const TouchpointRoutes = lazy(() =>
-	import(
-		/* webpackChunkName: "TouchpointRoutes" */ 'sites/touchpoints/pages/TouchpointRoutes'
-	)
+const TouchpointRoutes = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "TouchpointRoutes" */ '~/sites/touchpoints/pages/TouchpointRoutes'
+		)
 );
 
 /* Assets */
 
-const NewAssetsList = lazy(() =>
-	import(/* webpackChunkName: "NewAssetsList" */ 'assets/pages/List')
+const NewAssetsList = lazy(
+	() => import(/* webpackChunkName: "NewAssetsList" */ '~/assets/pages/List')
 );
 
-const AssetsList = lazy(() =>
-	import(/* webpackChunkName: "AssetsList" */ 'assets/pages')
+const AssetsList = lazy(
+	() => import(/* webpackChunkName: "AssetsList" */ '~/assets/pages')
 );
 
-const Blog = lazy(() =>
-	import(/* webpackChunkName: "Blog" */ 'assets/blog/pages')
+const Blog = lazy(
+	() => import(/* webpackChunkName: "Blog" */ '~/assets/blog/pages')
 );
 
-const CustomAssetsDashboard = lazy(() =>
-	import(
-		/* webpackChunkName: "CustomAssetsDashboard" */ 'assets/custom-asset/pages/Dashboard'
-	)
+const CustomAssetsDashboard = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "CustomAssetsDashboard" */ '~/assets/custom-asset/pages/Dashboard'
+		)
 );
 
-const DocumentAndMedia = lazy(() =>
-	import(
-		/* webpackChunkName: "DocumentAndMedia" */ 'assets/document-and-media/pages'
-	)
+const DocumentAndMedia = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "DocumentAndMedia" */ '~/assets/document-and-media/pages'
+		)
 );
 
-const Form = lazy(() =>
-	import(/* webpackChunkName: "Form" */ 'assets/form/pages')
+const Form = lazy(
+	() => import(/* webpackChunkName: "Form" */ '~/assets/form/pages')
 );
 
-const WebContent = lazy(() =>
-	import(/* webpackChunkName: "WebContent" */ 'assets/web-content/pages')
+const WebContent = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "WebContent" */ '~/assets/web-content/pages'
+		)
 );
 
-const ObjectEntry = lazy(() =>
-	import(/* webpackChunkName: "ObjectEntry" */ 'assets/object-entry/pages')
+const ObjectEntry = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "ObjectEntry" */ '~/assets/object-entry/pages'
+		)
 );
 
 /* Commmerce */
 
-const CommerceDashboard = lazy(() =>
-	import(/* webpackChunkName: "CommerceDashboard" */ 'commerce/pages')
+const CommerceDashboard = lazy(
+	() => import(/* webpackChunkName: "CommerceDashboard" */ '~/commerce/pages')
 );
 
 const ROUTES = [
 	{
 		data: SegmentsList,
-		path: Routes.CONTACTS_LIST_SEGMENT
+		path: Routes.CONTACTS_LIST_SEGMENT,
 	},
 	{
 		data: SegmentEdit,
-		path: Routes.CONTACTS_SEGMENT_EDIT
+		path: Routes.CONTACTS_SEGMENT_EDIT,
 	},
 	{
 		data: SegmentEdit,
-		path: Routes.CONTACTS_SEGMENT_CREATE
+		path: Routes.CONTACTS_SEGMENT_CREATE,
 	},
 	{
 		data: SegmentProfileRoutes,
 		exact: false,
-		path: Routes.CONTACTS_SEGMENT
+		path: Routes.CONTACTS_SEGMENT,
 	},
 	{
 		data: Blog,
 		destructured: false,
-		path: Routes.ASSETS_BLOGS_ROUTES
+		path: Routes.ASSETS_BLOGS_ROUTES,
 	},
 	{
 		data: CustomAssetsDashboard,
 		destructured: false,
-		path: Routes.ASSETS_CUSTOM_DASHBOARD
+		path: Routes.ASSETS_CUSTOM_DASHBOARD,
 	},
 	{
 		data: DocumentAndMedia,
 		destructured: false,
 		exact: false,
-		path: Routes.ASSETS_DOCUMENTS_AND_MEDIA_ROUTES
+		path: Routes.ASSETS_DOCUMENTS_AND_MEDIA_ROUTES,
 	},
 	{
 		data: Form,
 		destructured: false,
 		exact: false,
-		path: Routes.ASSETS_FORMS_ROUTES
+		path: Routes.ASSETS_FORMS_ROUTES,
 	},
 	{
 		data: WebContent,
 		destructured: false,
 		exact: false,
-		path: Routes.ASSETS_WEB_CONTENT_ROUTES
+		path: Routes.ASSETS_WEB_CONTENT_ROUTES,
 	},
 	{
 		data: ObjectEntry,
 		destructured: false,
 		exact: false,
-		path: Routes.ASSETS_OBJECT_ENTRY_ROUTES
+		path: Routes.ASSETS_OBJECT_ENTRY_ROUTES,
 	},
 	{
 		data: TouchpointRoutes,
 		destructured: false,
 		exact: false,
-		path: Routes.SITES_TOUCHPOINTS_ROUTES
+		path: Routes.SITES_TOUCHPOINTS_ROUTES,
 	},
 	{
 		data: EventAnalysisList,
 		destructured: false,
 		exact: true,
-		path: Routes.EVENT_ANALYSIS
+		path: Routes.EVENT_ANALYSIS,
 	},
 	{
 		data: EventAnalysisCreate,
 		destructured: false,
 		exact: true,
-		path: Routes.EVENT_ANALYSIS_CREATE
+		path: Routes.EVENT_ANALYSIS_CREATE,
 	},
 	{
 		data: EventAnalysisEdit,
 		destructured: false,
 		exact: true,
-		path: Routes.EVENT_ANALYSIS_EDIT
+		path: Routes.EVENT_ANALYSIS_EDIT,
 	},
 	{
 		data: ExperimentsList,
 		destructured: false,
-		path: Routes.TESTS
+		path: Routes.TESTS,
 	},
 	{
 		data: ExperimentOverview,
 		destructured: false,
-		path: Routes.TESTS_OVERVIEW
+		path: Routes.TESTS_OVERVIEW,
 	},
 	{
 		data: ENABLE_ASSET_OBJECT_ENTRY ? NewAssetsList : AssetsList,
 		destructured: false,
 		exact: false,
-		path: Routes.ASSETS
+		path: Routes.ASSETS,
 	},
 	{
 		data: SitesDashboard,
 		destructured: false,
 		exact: false,
-		path: Routes.SITES
+		path: Routes.SITES,
 	},
 	{
 		data: SitesDashboard,
 		destructured: false,
-		path: Routes.CHANNEL
+		path: Routes.CHANNEL,
 	},
 	DEVELOPER_MODE && {
 		data: CommerceDashboard,
 		destructured: false,
-		path: Routes.COMMERCE
-	}
+		path: Routes.COMMERCE,
+	},
 ].filter(Boolean);
 
 @withRouter
@@ -293,7 +348,7 @@ const ROUTES = [
 @withUnassignedSegments
 @withLDPEnabled
 @connect((store, {groupId}) => ({
-	project: store.getIn(['projects', groupId, 'data'])
+	project: store.getIn(['projects', groupId, 'data']),
 }))
 export default class AppSidebarRoutes extends React.PureComponent {
 	static contextType = ChannelContext;

@@ -1,18 +1,24 @@
-import sendRequest from 'shared/util/request';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-export const create = ({
+import sendRequest from '~/shared/util/request';
+
+export const create = function create({
 	currentUrl,
 	description,
 	groupId,
-	title
+	title,
 }: {
 	currentUrl: string;
 	description: string;
 	groupId: string;
 	title: string;
-}): Promise<any> =>
-	sendRequest({
+}): Promise<any> {
+	return sendRequest({
 		data: {currentUrl, description, title},
 		method: 'POST',
-		path: `main/${groupId}/issue`
+		path: `main/${groupId}/issue`,
 	});
+};

@@ -1,13 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {get} from 'lodash';
 import moment from 'moment';
 import React, {useRef, useState} from 'react';
-import {
-	ANIMATION_DURATION,
-	AXIS,
-	ChartTooltipRow,
-	getAxisTickText,
-	getYAxisWidth,
-	RechartsTooltip
-} from 'shared/util/recharts';
 import {
 	Bar,
 	CartesianGrid,
@@ -18,29 +16,36 @@ import {
 	Tooltip,
 	TooltipProps,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
-import {CHART_COLOR_NAMES} from 'shared/util/charts';
-import {createDateKeysIMap} from 'shared/util/intervals';
+import {Interval, RangeSelectors} from '~/shared/types';
 import {
+	CHART_COLOR_NAMES,
 	formatXAxisDate,
 	getBarColor,
 	getDateTitle,
-	getIntervals
-} from 'shared/util/charts';
-import {get} from 'lodash';
-import {Interval, RangeSelectors} from 'shared/types';
+	getIntervals,
+} from '~/shared/util/charts';
+import {createDateKeysIMap} from '~/shared/util/intervals';
+import {
+	ANIMATION_DURATION,
+	AXIS,
+	ChartTooltipRow,
+	RechartsTooltip,
+	getAxisTickText,
+	getYAxisWidth,
+} from '~/shared/util/recharts';
 
 const {stark: CHART_BLUE} = CHART_COLOR_NAMES;
 
 interface IChartProps<T> extends React.HTMLAttributes<HTMLElement> {
+	LDPEnabled?: boolean;
 	alwaysShowSelectedTooltip: boolean;
 	hasSelectedPoint?: boolean;
 	height?: number;
 	hideGrid?: boolean;
 	history: Array<T>;
 	interval: Interval;
-	LDPEnabled?: boolean;
 	onAfterInit?: () => void;
 	onPointSelect: (index: number | null) => void;
 	rangeSelectors: RangeSelectors;
@@ -68,7 +73,7 @@ const ActivitiesChart: React.FC<
 	onPointSelect,
 	rangeSelectors,
 	selectedPoint,
-	tooltipRenderRows
+	tooltipRenderRows,
 }) => {
 	const _tooltipRef = useRef<any>();
 
@@ -105,26 +110,26 @@ const ActivitiesChart: React.FC<
 				: [
 						{
 							label: Liferay.Language.get('events'),
-							value: totalEvents.toLocaleString()
+							value: totalEvents.toLocaleString(),
 						},
 						{
 							label: Liferay.Language.get('sessions'),
-							value: totalSessions.toLocaleString()
-						}
-				  ];
+							value: totalSessions.toLocaleString(),
+						},
+					];
 
 			if (moment.utc(intervalInitDate).isSame(moment(), 'day')) {
 				rows.push({
 					className: 'text-info text-uppercase mt-4',
 					label: Liferay.Language.get(
 						'data-for-todays-events-may-vary-or-be-incomplete'
-					)
+					),
 				});
 			}
 
 			return (
 				<RechartsTooltip
-					dateTitle=''
+					dateTitle=""
 					rows={rows}
 					title={getDateTitle(
 						dateKeysIMap.get(intervalInitDate),
@@ -153,7 +158,7 @@ const ActivitiesChart: React.FC<
 		<ResponsiveContainer height={height}>
 			<ComposedChart
 				data={history}
-				onClick={pointData => {
+				onClick={(pointData) => {
 					if (alwaysShowSelectedTooltip && pointData) {
 						const tooltip = _tooltipRef.current;
 
@@ -163,7 +168,7 @@ const ActivitiesChart: React.FC<
 									key: 'x',
 									tooltipDimension: tooltip.state.boxWidth,
 									viewBoxDimension:
-										tooltip.props.viewBox.width
+										tooltip.props.viewBox.width,
 								})
 							);
 						}
@@ -179,18 +184,18 @@ const ActivitiesChart: React.FC<
 				{!hideGrid && (
 					<CartesianGrid
 						stroke={AXIS.gridStroke}
-						strokeDasharray='3 3'
+						strokeDasharray="3 3"
 						vertical={false}
 					/>
 				)}
 
 				<XAxis
 					axisLine={{stroke: AXIS.borderStroke}}
-					dataKey='intervalInitDate'
+					dataKey="intervalInitDate"
 					domain={['dataMin', 'dataMax']}
-					interval='preserveStart'
+					interval="preserveStart"
 					padding={{left: 20, right: 20}}
-					tick={getAxisTickText('x', value =>
+					tick={getAxisTickText('x', (value) =>
 						formatXAxisDate(
 							value,
 							rangeSelectors.rangeKey,
@@ -201,17 +206,17 @@ const ActivitiesChart: React.FC<
 					tickLine={false}
 					tickMargin={12}
 					ticks={intervals.filter((v): v is number => v !== null)}
-					type='number'
+					type="number"
 				/>
 
 				<XAxis
 					axisLine={{stroke: AXIS.borderStroke}}
-					dataKey='intervalInitDate'
-					orientation='top'
+					dataKey="intervalInitDate"
+					orientation="top"
 					stroke={AXIS.gridStroke}
 					tick={false}
 					tickLine={false}
-					xAxisId='top'
+					xAxisId="top"
 				/>
 
 				<YAxis
@@ -223,8 +228,8 @@ const ActivitiesChart: React.FC<
 									dy: -20,
 									position: 'top',
 									style: {fill: AXIS.textColor},
-									value: Liferay.Language.get('events')
-							  }
+									value: Liferay.Language.get('events'),
+								}
 							: undefined
 					}
 					name={Liferay.Language.get('events')}
@@ -232,19 +237,19 @@ const ActivitiesChart: React.FC<
 					tick={getAxisTickText('y')}
 					tickCount={6}
 					tickLine={false}
-					type='number'
+					type="number"
 					width={yAxisWidth}
 				/>
 
 				<YAxis
 					axisLine={{stroke: AXIS.borderStroke}}
-					orientation='right'
+					orientation="right"
 					stroke={AXIS.gridStroke}
 					tick={false}
 					tickLine={false}
-					type='number'
+					type="number"
 					width={1}
-					yAxisId='right'
+					yAxisId="right"
 				/>
 
 				{!hideGrid && (
@@ -278,9 +283,9 @@ const ActivitiesChart: React.FC<
 
 				<Bar
 					animationDuration={ANIMATION_DURATION.bar}
-					dataKey='totalEvents'
+					dataKey="totalEvents"
 					fill={CHART_BLUE}
-					onMouseEnter={(e, index) => setHoverIndex(index)}
+					onMouseEnter={(event, index) => setHoverIndex(index)}
 					onMouseLeave={() => setHoverIndex(-1)}
 				>
 					{history.map((entry, index) => (

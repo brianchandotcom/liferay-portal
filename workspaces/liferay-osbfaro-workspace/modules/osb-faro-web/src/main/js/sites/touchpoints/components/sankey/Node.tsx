@@ -1,22 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import {pickBy} from 'lodash';
 import React from 'react';
+import {Link, useParams} from 'react-router-dom';
+import {Layer, Rectangle} from 'recharts';
+import {sub} from '~/shared/util/lang';
+import {toThousands} from '~/shared/util/numbers';
+import {Routes} from '~/shared/util/router';
+import {getUrl} from '~/shared/util/urls';
+import {getSafeDecodedURIComponent} from '~/shared/util/util';
+
+import {TitleKey, Type} from './types';
 import {
 	EMPTY_NODE_COLOR,
-	getFill,
 	MAIN_NODE_HEIGHT,
 	MAIN_NODE_WIDTH,
-	URL_COLOR
+	URL_COLOR,
+	getFill,
 } from './utils';
-import {getSafeDecodedURIComponent} from 'shared/util/util';
-import {getUrl} from 'shared/util/urls';
-import {Layer, Rectangle} from 'recharts';
-import {Link, useParams} from 'react-router-dom';
-import {pickBy} from 'lodash';
-import {Routes} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
-import {TitleKey, Type} from './types';
-import {toThousands} from 'shared/util/numbers';
 
 function truncateText(text: string, limit: number) {
 	if (text.length > limit) {
@@ -57,11 +63,11 @@ function normalizeNumber(number: number) {
 
 const Title = ({title, x, y}: {title: string; x: number; y: number}) => (
 	<text
-		className='analytics-sankey-node-title'
-		data-testid='sankey-node-title'
-		fontSize='16'
+		className="analytics-sankey-node-title"
+		data-testid="sankey-node-title"
+		fontSize="16"
 		fontWeight={600}
-		textAnchor='start'
+		textAnchor="start"
 		x={x}
 		y={y}
 	>
@@ -69,7 +75,7 @@ const Title = ({title, x, y}: {title: string; x: number; y: number}) => (
 	</text>
 );
 
-export const Node = ({
+export const Node = function Node({
 	emptyState,
 	height: initialHeight,
 	hovered,
@@ -80,8 +86,8 @@ export const Node = ({
 	selectedNode,
 	width: initialWidth,
 	x: initialX,
-	y: initialY
-}: any) => {
+	y: initialY,
+}: any) {
 	const height = normalizeNumber(initialHeight);
 	const width = normalizeNumber(initialWidth);
 	const x = normalizeNumber(initialX);
@@ -121,9 +127,9 @@ export const Node = ({
 							hovered,
 							index: index - 1,
 							payload,
-							selectedNode
+							selectedNode,
 						})}
-						fillOpacity='1'
+						fillOpacity="1"
 						height={height}
 						radius={getRadius(payload) as number}
 						width={width}
@@ -132,7 +138,7 @@ export const Node = ({
 					/>
 
 					<text
-						textAnchor='middle'
+						textAnchor="middle"
 						x={x + width / 2}
 						y={y + height / 2 + 5}
 					>
@@ -146,18 +152,18 @@ export const Node = ({
 					<Title title={payload.name} x={x} y={y - 32} />
 				) : (
 					<Link
-						data-tooltip-align='right'
+						data-tooltip-align="right"
 						title={Liferay.Language.get('go-to-dashboard-page')}
 						to={getUrl(Routes.SITES_TOUCHPOINTS_OVERVIEW, {
 							params: {
 								channelId,
 								groupId,
 								title: encodeURIComponent(payload.name),
-								touchpoint: payload.url
+								touchpoint: payload.url,
 							},
 							query: {
-								...pickBy(rangeSelectors)
-							}
+								...pickBy(rangeSelectors),
+							},
 						})}
 					>
 						<Title title={payload.name} x={x} y={y - 32} />
@@ -170,30 +176,30 @@ export const Node = ({
 			{showURL(payload.url) && (
 				<>
 					<ClayIcon
-						className='icon-root text-secondary'
+						className="icon-root text-secondary"
 						height={16}
-						symbol='shortcut'
+						symbol="shortcut"
 						width={16}
 						x={x}
 						y={y - 22}
 					/>
 
 					<ClayLink
-						data-tooltip-align='right'
+						data-tooltip-align="right"
 						href={payload.url}
-						target='_blank'
+						target="_blank"
 						title={
 							sub(Liferay.Language.get('visit-x'), [
-								getSafeDecodedURIComponent(payload.url)
+								getSafeDecodedURIComponent(payload.url),
 							]) as string
 						}
 					>
 						<text
-							className='analytics-sankey-node-url'
+							className="analytics-sankey-node-url"
 							fill={URL_COLOR}
-							fontSize='12'
+							fontSize="12"
 							fontWeight={400}
-							textAnchor='start'
+							textAnchor="start"
 							x={x + 20}
 							y={y - 10}
 						>

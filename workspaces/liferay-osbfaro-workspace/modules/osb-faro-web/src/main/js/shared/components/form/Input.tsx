@@ -1,14 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import HelpBlock from 'shared/components/form/HelpBlock';
-import Input from '../Input';
-import Label from './Label';
-import MaskedInput from '../MaskedInput';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import PropTypes from 'prop-types';
-import React from 'react';
 import {FieldProps, FormikErrors, FormikTouched} from 'formik';
 import {isEmpty, isNumber, mapValues, pickBy} from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import HelpBlock from '~/shared/components/form/HelpBlock';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
+import Input from '../Input';
+import MaskedInput from '../MaskedInput';
+import Label from './Label';
 
 const APPEND_POSITIONS = ['append', 'prepend'];
 const INSET_POSITIONS = ['after', 'before'];
@@ -60,7 +66,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 		inset: {},
 		required: false,
 		showHelpBlock: true,
-		showSuccess: true
+		showSuccess: true,
 	};
 
 	static propTypes = {
@@ -70,16 +76,16 @@ export default class FormInput extends React.Component<IFormInputProps> {
 			name: PropTypes.string,
 			onBlur: PropTypes.func,
 			onChange: PropTypes.func,
-			value: PropTypes.any
+			value: PropTypes.any,
 		}),
 		form: PropTypes.shape({
 			errors: PropTypes.object,
-			touched: PropTypes.object
+			touched: PropTypes.object,
 		}),
 		inline: PropTypes.bool,
 		inset: PropTypes.shape({
 			content: PropTypes.node,
-			position: PropTypes.oneOf(INSET_POSITIONS)
+			position: PropTypes.oneOf(INSET_POSITIONS),
 		}),
 		label: PropTypes.node,
 		mask: PropTypes.oneOfType([
@@ -88,22 +94,22 @@ export default class FormInput extends React.Component<IFormInputProps> {
 			PropTypes.bool,
 			PropTypes.shape({
 				mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-				pipe: PropTypes.func
-			})
+				pipe: PropTypes.func,
+			}),
 		]),
 		onChange: PropTypes.func,
 		popover: PropTypes.shape({
 			content: PropTypes.node,
-			title: PropTypes.node
+			title: PropTypes.node,
 		}),
 		required: PropTypes.bool,
 		showHelpBlock: PropTypes.bool,
 		showSuccess: PropTypes.bool,
 		text: PropTypes.shape({
 			content: PropTypes.node,
-			position: PropTypes.oneOf(APPEND_POSITIONS)
+			position: PropTypes.oneOf(APPEND_POSITIONS),
 		}),
-		width: PropTypes.number
+		width: PropTypes.number,
 	};
 
 	@autobind
@@ -111,7 +117,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 		const {
 			field: {name},
 			form: {setFieldValue},
-			onChange
+			onChange,
 		} = this.props;
 
 		const {value} = event.target;
@@ -152,29 +158,31 @@ export default class FormInput extends React.Component<IFormInputProps> {
 			if (text.position === 'prepend') {
 				return (
 					<Input.Group>
-						<Input.GroupItem position='prepend' shrink>
+						<Input.GroupItem position="prepend" shrink>
 							<Input.Text>{text.content}</Input.Text>
 						</Input.GroupItem>
 
-						<Input.GroupItem position='append'>
+						<Input.GroupItem position="append">
 							{inputComponent}
 						</Input.GroupItem>
 					</Input.Group>
 				);
-			} else {
+			}
+			else {
 				return (
 					<Input.Group>
-						<Input.GroupItem position='prepend'>
+						<Input.GroupItem position="prepend">
 							{inputComponent}
 						</Input.GroupItem>
 
-						<Input.GroupItem position='append' shrink>
+						<Input.GroupItem position="append" shrink>
 							<Input.Text>{text.content}</Input.Text>
 						</Input.GroupItem>
 					</Input.Group>
 				);
 			}
-		} else if (!isEmpty(inset)) {
+		}
+		else if (!isEmpty(inset)) {
 			return (
 				<Input.Group>
 					<Input.GroupItem>
@@ -186,9 +194,10 @@ export default class FormInput extends React.Component<IFormInputProps> {
 					</Input.GroupItem>
 				</Input.Group>
 			);
-		} else if (contentAfter) {
+		}
+		else if (contentAfter) {
 			return (
-				<Input.Group className='content-after'>
+				<Input.Group className="content-after">
 					<Input.GroupItem
 						position={contentAfterEnableMagnet && 'prepend'}
 					>
@@ -203,7 +212,8 @@ export default class FormInput extends React.Component<IFormInputProps> {
 					</Input.GroupItem>
 				</Input.Group>
 			);
-		} else {
+		}
+		else {
 			return inputComponent;
 		}
 	}
@@ -234,7 +244,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 		const classes = getCN(className, {
 			'form-inline-group': inline,
 			'has-error': touched && error,
-			'has-success': showSuccess && touched && !error
+			'has-success': showSuccess && touched && !error,
 		});
 
 		const style = isNumber(width)
@@ -243,7 +253,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 
 		const optionalProps = {
 			inset: {value: inset.position},
-			mask: {value: mask}
+			mask: {value: mask},
 		};
 
 		return (
@@ -255,7 +265,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 				)}
 
 				{secondaryInfo && (
-					<Label className='font-weight-normal' htmlFor={name}>
+					<Label className="font-weight-normal" htmlFor={name}>
 						<p>{secondaryInfo}</p>
 					</Label>
 				)}
@@ -265,7 +275,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 					...omitDefinedProps(otherProps, FormInput.propTypes),
 					...getOptionalProps(optionalProps),
 					id: name,
-					onChange: this.handleChange
+					onChange: this.handleChange,
 				})}
 
 				{showHelpBlock && <HelpBlock name={name} />}

@@ -1,9 +1,6 @@
 /**
- * Module augmentation for react-router-dom v5 + React 18 compatibility:
- *
- * Adds explicit `children` prop to components. React 18 removed implicit
- * children from React.FC/React.Component, so these declarations are required
- * for compatibility.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {ReactNode} from 'react';
@@ -13,7 +10,7 @@ declare module 'react-router-dom' {
 		Params extends Record<string, string | undefined> = Record<
 			string,
 			string | undefined
-		>
+		>,
 	>(): Params;
 
 	interface BrowserRouterProps {

@@ -1,18 +1,12 @@
-// @ts-nocheck - Fix it at this LRAC-13388
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
 import ClayLink from '@clayui/link';
-import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
-import Loading from 'shared/components/Loading';
+import {Map} from 'immutable';
+import {get} from 'lodash';
 import React, {useState} from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {
-	ANIMATION_DURATION,
-	AXIS,
-	getAxisTickText,
-	getYAxisLabel,
-	getYAxisWidth,
-	RechartsTooltip
-} from 'shared/util/recharts';
 import {
 	Bar,
 	CartesianGrid,
@@ -22,20 +16,28 @@ import {
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
-import {CHART_COLOR_NAMES} from 'shared/util/charts';
+import ComposedChartWithEmptyState from '~/shared/components/ComposedChartWithEmptyState';
+import Loading from '~/shared/components/Loading';
+import {Interval, RangeSelectors} from '~/shared/types';
 import {
+	CHART_COLOR_NAMES,
 	formatXAxisDate,
 	getBarColor,
 	getDateTitle,
-	getIntervals
-} from 'shared/util/charts';
-import {get} from 'lodash';
-import {Interval} from 'shared/types';
-import {Map} from 'immutable';
-import {RangeSelectors} from 'shared/types';
-import {toThousands} from 'shared/util/numbers';
+	getIntervals,
+} from '~/shared/util/charts';
+import {toThousands} from '~/shared/util/numbers';
+import {
+	ANIMATION_DURATION,
+	AXIS,
+	RechartsTooltip,
+	getAxisTickText,
+	getYAxisLabel,
+	getYAxisWidth,
+} from '~/shared/util/recharts';
+import URLConstants from '~/shared/util/url-constants';
 
 const {mormont: CHART_ORANGE, stark: CHART_BLUE} = CHART_COLOR_NAMES;
 
@@ -59,7 +61,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 	height = 360,
 	interval,
 	loading,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const [hoverIndex, setHoverIndex] = useState(-1);
 	const [legendHoverItem, setLegendHoverItem] = useState(null);
@@ -70,7 +72,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 				anonymousVisitors,
 				intervalInitDate,
 				knownVisitors,
-				visitors
+				visitors,
 			} = get(payload, [0, 'payload'], {});
 
 			return (
@@ -83,16 +85,16 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 					rows={[
 						{
 							label: Liferay.Language.get('anonymous'),
-							value: toThousands(anonymousVisitors)
+							value: toThousands(anonymousVisitors),
 						},
 						{
 							label: Liferay.Language.get('known'),
-							value: toThousands(knownVisitors)
+							value: toThousands(knownVisitors),
 						},
 						{
 							label: Liferay.Language.get('total'),
-							value: toThousands(visitors)
-						}
+							value: toThousands(visitors),
+						},
 					]}
 					title={Liferay.Language.get('active-individuals')}
 				/>
@@ -112,14 +114,14 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 	);
 
 	if (loading) {
-		return <Loading key='LOADING' />;
+		return <Loading key="LOADING" />;
 	}
 
 	return (
 		<ComposedChartWithEmptyState
 			emptyDescription={
 				<>
-					<span className='mr-1'>
+					<span className="mr-1">
 						{Liferay.Language.get(
 							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 						)}
@@ -129,8 +131,8 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 						href={
 							URLConstants.IndividualDashboardActiveIndividualsDocumentation
 						}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{Liferay.Language.get(
 							'learn-more-about-active-individuals'
@@ -147,16 +149,16 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 				<ComposedChart data={data}>
 					<CartesianGrid
 						stroke={AXIS.gridStroke}
-						strokeDasharray='3 3'
+						strokeDasharray="3 3"
 						vertical={false}
 					/>
 
 					<XAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						dataKey='intervalInitDate'
-						interval='preserveStart'
+						dataKey="intervalInitDate"
+						interval="preserveStart"
 						stroke={AXIS.gridStroke}
-						tick={getAxisTickText('x', value =>
+						tick={getAxisTickText('x', (value) =>
 							formatXAxisDate(
 								value,
 								rangeSelectors.rangeKey,
@@ -171,12 +173,12 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 
 					<XAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						dataKey='intervalInitDate'
-						orientation='top'
+						dataKey="intervalInitDate"
+						orientation="top"
 						stroke={AXIS.gridStroke}
 						tick={false}
 						tickLine={false}
-						xAxisId='top'
+						xAxisId="top"
 					/>
 
 					<YAxis
@@ -195,32 +197,32 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 
 					<YAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						orientation='right'
+						orientation="right"
 						stroke={AXIS.gridStroke}
 						tick={false}
 						tickLine={false}
-						type='number'
+						type="number"
 						width={12}
-						yAxisId='right'
+						yAxisId="right"
 					/>
 
 					<Legend
-						align='right'
-						formatter={dataKey => (
-							<span className='legend-text-color'>{dataKey}</span>
+						align="right"
+						formatter={(dataKey) => (
+							<span className="legend-text-color">{dataKey}</span>
 						)}
 						iconSize={8}
 						onMouseEnter={({dataKey}) =>
 							setLegendHoverItem(dataKey)
 						}
 						onMouseLeave={() => setLegendHoverItem(null)}
-						verticalAlign='bottom'
+						verticalAlign="bottom"
 						wrapperStyle={{
 							bottom: 0,
 							color: AXIS.textColor,
 							fontSize: '14px',
 							lineHeight: '21px',
-							right: 0
+							right: 0,
 						}}
 					/>
 
@@ -231,16 +233,16 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 
 					<Bar
 						animationDuration={ANIMATION_DURATION.bar}
-						dataKey='knownVisitors'
+						dataKey="knownVisitors"
 						fill={CHART_BLUE}
 						fillOpacity={
 							legendHoverItem === 'anonymousVisitors' ? 0.2 : 1
 						}
-						legendType='circle'
+						legendType="circle"
 						name={Liferay.Language.get('known-visitors')}
-						onMouseEnter={(e, index) => setHoverIndex(index)}
+						onMouseEnter={(event, index) => setHoverIndex(index)}
 						onMouseLeave={() => setHoverIndex(-1)}
-						stackId='count'
+						stackId="count"
 					>
 						{data.map((entry, index) => (
 							<Cell
@@ -257,16 +259,16 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 
 					<Bar
 						animationDuration={ANIMATION_DURATION.bar}
-						dataKey='anonymousVisitors'
+						dataKey="anonymousVisitors"
 						fill={CHART_ORANGE}
 						fillOpacity={
 							legendHoverItem === 'knownVisitors' ? 0.2 : 1
 						}
-						legendType='circle'
+						legendType="circle"
 						name={Liferay.Language.get('anonymous-visitors')}
-						onMouseEnter={(e, index) => setHoverIndex(index)}
+						onMouseEnter={(event, index) => setHoverIndex(index)}
 						onMouseLeave={() => setHoverIndex(-1)}
-						stackId='count'
+						stackId="count"
 					>
 						{data.map((entry, index) => (
 							<Cell

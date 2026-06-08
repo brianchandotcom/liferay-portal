@@ -1,11 +1,19 @@
-import * as API from 'shared/api';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import Form from '@clayui/form';
-import Loading, {Align} from 'shared/components/Loading';
 import React, {useState} from 'react';
-import Select from 'shared/components/Select';
-import {EXPIRATION_DATE_LABELS, ExpirationPeriod} from 'shared/util/constants';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import Loading, {Align} from '~/shared/components/Loading';
+import Select from '~/shared/components/Select';
+import {
+	EXPIRATION_DATE_LABELS,
+	ExpirationPeriod,
+} from '~/shared/util/constants';
 
 interface IGenerateTokenCardProps {
 	groupId: string;
@@ -17,27 +25,27 @@ interface IGenerateTokenCardProps {
 const expirationDates = [
 	{
 		key: ExpirationPeriod.In30Days,
-		label: EXPIRATION_DATE_LABELS[ExpirationPeriod.In30Days]
+		label: EXPIRATION_DATE_LABELS[ExpirationPeriod.In30Days],
 	},
 	{
 		key: ExpirationPeriod.In6Months,
-		label: EXPIRATION_DATE_LABELS[ExpirationPeriod.In6Months]
+		label: EXPIRATION_DATE_LABELS[ExpirationPeriod.In6Months],
 	},
 	{
 		key: ExpirationPeriod.In1Year,
-		label: EXPIRATION_DATE_LABELS[ExpirationPeriod.In1Year]
+		label: EXPIRATION_DATE_LABELS[ExpirationPeriod.In1Year],
 	},
 	{
 		key: ExpirationPeriod.Indefinite,
-		label: EXPIRATION_DATE_LABELS[ExpirationPeriod.Indefinite]
-	}
+		label: EXPIRATION_DATE_LABELS[ExpirationPeriod.Indefinite],
+	},
 ];
 
 const GenerateTokenCard: React.FC<IGenerateTokenCardProps> = ({
 	groupId,
 	onError,
 	onSuccess,
-	token
+	token,
 }) => {
 	const [loading, setLoading] = useState(false);
 	const [expiresIn, setExpiresIn] = useState(expirationDates[0].key);
@@ -45,17 +53,17 @@ const GenerateTokenCard: React.FC<IGenerateTokenCardProps> = ({
 	return (
 		<Card>
 			<Card.Body>
-				<div className='h4'>
+				<div className="h4">
 					{Liferay.Language.get('create-new-access-token')}
 				</div>
-				<div className='col-md-5 mt-2 pl-0'>
+				<div className="col-md-5 mt-2 pl-0">
 					<Form.Group>
-						<label htmlFor='picker' id='picker-label'>
+						<label htmlFor="picker" id="picker-label">
 							{Liferay.Language.get('expiration-date')}
 						</label>
 						<Select
 							onChange={({
-								target: {value}
+								target: {value},
 							}: React.ChangeEvent<HTMLSelectElement>) => {
 								setExpiresIn(value as ExpirationPeriod);
 							}}
@@ -71,8 +79,8 @@ const GenerateTokenCard: React.FC<IGenerateTokenCardProps> = ({
 				</div>
 
 				<ClayButton
-					className='button-root col-md-3'
-					data-testid='generate-token-button'
+					className="button-root col-md-3"
+					data-testid="generate-token-button"
 					disabled={loading}
 					onClick={() => {
 						setLoading(true);
@@ -80,7 +88,7 @@ const GenerateTokenCard: React.FC<IGenerateTokenCardProps> = ({
 						if (token) {
 							API.apiTokens.revoke({
 								groupId,
-								token
+								token,
 							});
 						}
 

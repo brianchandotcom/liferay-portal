@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RelativeMetricBar renders 1`] = `
+<div>
+  <td
+    class="relative-metric-bar-root table-cell-expand"
+  >
+    <div
+      class="metric-bar-root"
+    >
+      <div
+        class="bar bar-lg"
+        style="width: 50%;"
+      />
+      <div
+        class="align-items-center d-flex info-wrapper justify-content-between"
+      >
+        <span
+          class="text-truncate title"
+          data-tooltip="false"
+          title=""
+        />
+        <span
+          class="count"
+        >
+          6
+        </span>
+      </div>
+    </div>
+  </td>
+</div>
+`;

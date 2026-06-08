@@ -1,20 +1,26 @@
-import MetricValue from './MetricValue';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {get, last} from 'lodash';
 import React, {Fragment} from 'react';
-import Trend from 'shared/components/Trend';
+import Trend from '~/shared/components/Trend';
+import {Interval, RangeSelectors} from '~/shared/types';
 import {
 	CHART_COLOR_NAMES,
 	getAxisFormatter,
 	getDataFormatter,
 	getIntervals,
-	getMetricFormatter
-} from 'shared/util/charts';
-import {get, last} from 'lodash';
-import {getIcon, getStatsColor} from 'shared/util/metrics';
-import {Interval, RangeSelectors} from 'shared/types';
-import {INTERVAL_KEY_MAP} from 'shared/util/time';
+	getMetricFormatter,
+} from '~/shared/util/charts';
+import {toUnix} from '~/shared/util/date';
+import {getIcon, getStatsColor} from '~/shared/util/metrics';
+import {toRounded} from '~/shared/util/numbers';
+import {INTERVAL_KEY_MAP} from '~/shared/util/time';
+
+import MetricValue from './MetricValue';
 import {Metric, MetricType} from './metrics';
-import {toRounded} from 'shared/util/numbers';
-import {toUnix} from 'shared/util/date';
 
 export const CHART_DATA_ID_1 = 'data_1';
 export const CHART_DATA_ID_2 = 'data_2';
@@ -23,7 +29,7 @@ export const CHART_DATA_PREVIOUS = 'data_previous';
 const PREVIOUS_PERIOD_VISITORS_COLOR = '#393A4A';
 
 export const METRIC_TOOLTIP_LABEL_MAP: Record<string, string> = {
-	bounceRateMetric: Liferay.Language.get('avg-bounce')
+	bounceRateMetric: Liferay.Language.get('avg-bounce'),
 };
 
 const {
@@ -31,13 +37,13 @@ const {
 	martellL2: CHART_GREEN_L2,
 	mormont: CHART_ORANGE,
 	stark: CHART_BLUE,
-	starkL2: CHART_BLUE_L2
+	starkL2: CHART_BLUE_L2,
 } = CHART_COLOR_NAMES;
 
 export const Icons = {
 	negative: 'caret-bottom-l',
 	neutral: undefined,
-	positive: 'caret-top-l'
+	positive: 'caret-top-l',
 };
 
 type THistogramItem = {
@@ -95,16 +101,16 @@ type TTab = {
 	title: string;
 };
 
-export const buildTabs = ({
+export const buildTabs = function buildTabs({
 	activeItemIndex,
 	items,
-	onActiveItemIndexChange
+	onActiveItemIndexChange,
 }: {
 	activeItemIndex: number;
 	items: TTabItem[];
 	onActiveItemIndexChange: (index: number) => void;
-}): TTab[] =>
-	items.map(({content}, index) => {
+}): TTab[] {
+	return items.map(({content}, index) => {
 		const {details, title, type, value} = content;
 		const {color, icon, label} = details;
 
@@ -116,7 +122,7 @@ export const buildTabs = ({
 			},
 			secondaryInfo: (
 				<span>
-					<span className='primary-content'>
+					<span className="primary-content">
 						<MetricValue type={type} value={value} />
 					</span>
 
@@ -124,19 +130,27 @@ export const buildTabs = ({
 				</span>
 			),
 			tabId: index,
-			title
+			title,
 		};
 	});
+};
 
-export const getMetricName = (activeItemIndex: number, metrics: Metric[]) =>
-	metrics.map(({name}) => name)[activeItemIndex];
+export const getMetricName = function getMetricName(
+	activeItemIndex: number,
+	metrics: Metric[]
+) {
+	return metrics.map(({name}) => name)[activeItemIndex];
+};
 
-export const getActiveItem = (retVal: any, compareToPrevious: boolean) => {
+export const getActiveItem = function getActiveItem(
+	retVal: any,
+	compareToPrevious: boolean
+) {
 	if (!retVal) {
 		return {
 			chartData: [],
 			intervals: [],
-			timeline: []
+			timeline: [],
 		};
 	}
 
@@ -148,13 +162,13 @@ export const getActiveItem = (retVal: any, compareToPrevious: boolean) => {
 			...retVal,
 			chartData: chartData.map((dataSet: TChartDataSet) => ({
 				...dataSet,
-				data: dataSet.data.slice(1)
+				data: dataSet.data.slice(1),
 			})),
 			intervals: retVal.intervals.slice(1),
 			timeline: {
 				data: (timeline as TChartDataSet).data.slice(1),
-				id: (timeline as TChartDataSet).id
-			}
+				id: (timeline as TChartDataSet).id,
+			},
 		};
 
 		if (retVal.compositeData) {
@@ -169,10 +183,11 @@ export const getActiveItem = (retVal: any, compareToPrevious: boolean) => {
 						return acc;
 					},
 					{}
-				)
+				),
 			};
 		}
-	} else if (compareToPrevious && retVal.asymmetricComparison) {
+	}
+	else if (compareToPrevious && retVal.asymmetricComparison) {
 		retVal = {
 			...retVal,
 			chartData: chartData.map((dataSet: TChartDataSet) => ({
@@ -180,58 +195,63 @@ export const getActiveItem = (retVal: any, compareToPrevious: boolean) => {
 				data:
 					dataSet.id !== CHART_DATA_PREVIOUS
 						? [null, ...dataSet.data.slice(1)]
-						: dataSet.data
+						: dataSet.data,
 			})),
-			timeline
+			timeline,
 		};
-	} else {
+	}
+	else {
 		retVal = {
 			...retVal,
 			chartData,
-			timeline
+			timeline,
 		};
 	}
 
 	return retVal;
 };
 
-export const getPreviousValueFromCompositeData = (
-	compositeData: Record<string, any> | undefined,
-	dataName: string | undefined,
-	dateKey: number
-) => {
-	const data = get(compositeData, dataName as string);
+export const getPreviousValueFromCompositeData =
+	function getPreviousValueFromCompositeData(
+		compositeData: Record<string, any> | undefined,
+		dataName: string | undefined,
+		dateKey: number
+	) {
+		const data = get(compositeData, dataName as string);
 
-	if (data) {
-		return data.find((val: {key: string}) => toUnix(val.key) === dateKey)
-			?.previousValue;
-	}
+		if (data) {
+			return data.find(
+				(val: {key: string}) => toUnix(val.key) === dateKey
+			)?.previousValue;
+		}
+	};
+
+export const getRegexType = function getRegexType(type: MetricType): RegExp {
+	return type === MetricType.Ratings ? /([/][0-9]+)/g : /([a-zA-Z%])+/g;
 };
 
-export const getRegexType = (type: MetricType): RegExp =>
-	type === MetricType.Ratings ? /([/][0-9]+)/g : /([a-zA-Z%])+/g;
-
-export const formatValue = (
+export const formatValue = function formatValue(
 	value: string,
 	regex: RegExp
-): React.ReactElement[] =>
-	value.split(' ').map((item, i) => {
+): React.ReactElement[] {
+	return value.split(' ').map((item, i) => {
 		const [head, unit] = item.split(regex);
 
 		return (
 			<Fragment key={i}>
 				{head}
 
-				<span className='metric-value-letter'>{unit}</span>
+				<span className="metric-value-letter">{unit}</span>
 			</Fragment>
 		);
 	});
+};
 
-export const getMetricCardTabsData = (
+export const getMetricCardTabsData = function getMetricCardTabsData(
 	result: TMetricsResult,
 	metrics: Metric[]
-): TTabItem[] =>
-	metrics.map(({name, title, type}) => {
+): TTabItem[] {
+	return metrics.map(({name, title, type}) => {
 		const metricFormatter = getMetricFormatter(type);
 		const {percentage, trendClassification} = result[name].trend;
 
@@ -240,17 +260,18 @@ export const getMetricCardTabsData = (
 				details: {
 					color: getStatsColor(trendClassification),
 					icon: getIcon(percentage),
-					label: `${toRounded(Math.abs(percentage))}%`
+					label: `${toRounded(Math.abs(percentage))}%`,
 				},
 				name,
 				title,
 				type,
-				value: metricFormatter(result[name].value)
-			}
+				value: metricFormatter(result[name].value),
+			},
 		};
 	});
+};
 
-export const convertHistogramKeysToDate = ({
+export const convertHistogramKeysToDate = function convertHistogramKeysToDate({
 	key,
 	previousValueKey,
 	valueKey,
@@ -260,19 +281,21 @@ export const convertHistogramKeysToDate = ({
 	previousValueKey: string;
 	valueKey: string;
 	[k: string]: any;
-}) => ({
-	key: toUnix(key),
-	previousValueKey: previousValueKey.split('/').map(toUnix),
-	valueKey: valueKey.split('/').map(toUnix),
-	...otherParams
-});
+}) {
+	return {
+		key: toUnix(key),
+		previousValueKey: previousValueKey.split('/').map(toUnix),
+		valueKey: valueKey.split('/').map(toUnix),
+		...otherParams,
+	};
+};
 
-export const getMetricsChartData = ({
+export const getMetricsChartData = function getMetricsChartData({
 	histogram,
 	name,
 	title,
 	tooltipTitle,
-	type
+	type,
 }: {
 	histogram: Array<{
 		key: string;
@@ -283,7 +306,7 @@ export const getMetricsChartData = ({
 	title: string;
 	tooltipTitle?: string;
 	type: MetricType;
-}): TChartDataSet[] => {
+}): TChartDataSet[] {
 	const formatter = getDataFormatter(type);
 
 	return [
@@ -292,18 +315,18 @@ export const getMetricsChartData = ({
 			data: formatter(histogram.map(({value}) => value)),
 			id: CHART_DATA_ID_1,
 			name: tooltipTitle || METRIC_TOOLTIP_LABEL_MAP[name] || title,
-			tooltipTitle
+			tooltipTitle,
 		},
 		{
 			color: CHART_BLUE_L2,
 			data: formatter(histogram.map(({previousValue}) => previousValue)),
 			id: CHART_DATA_PREVIOUS,
-			name: Liferay.Language.get('previous-period')
+			name: Liferay.Language.get('previous-period'),
 		},
 		{
 			data: histogram.map(({key}) => key),
-			id: 'x'
-		}
+			id: 'x',
+		},
 	];
 };
 
@@ -320,12 +343,12 @@ const buildCompositeData = (
 				details: {
 					color: getStatsColor(trendClassification),
 					icon: getIcon(percentage),
-					label: `${toRounded(Math.abs(percentage))}%`
+					label: `${toRounded(Math.abs(percentage))}%`,
 				},
 				name,
 				title,
 				type,
-				value: metricFormatter(result[name].value)
+				value: metricFormatter(result[name].value),
 			};
 
 			return acc;
@@ -345,7 +368,7 @@ const buildCompositeData = (
 	return {compositeContent, compositeData};
 };
 
-export const getMetricData = ({
+export const getMetricData = function getMetricData({
 	chartDataMapFn = getMetricsChartData,
 	compositeMetrics,
 	interval = INTERVAL_KEY_MAP.day,
@@ -354,7 +377,7 @@ export const getMetricData = ({
 	result,
 	title,
 	tooltipTitle,
-	type
+	type,
 }: {
 	chartDataMapFn?: (...args: any[]) => any;
 	compositeMetrics?: Metric[];
@@ -365,7 +388,7 @@ export const getMetricData = ({
 	title: string;
 	tooltipTitle?: string;
 	type: MetricType;
-}) => {
+}) {
 	const metricFormatter = getMetricFormatter(type);
 
 	const histogram = result[name].histogram.metrics.map(
@@ -389,12 +412,12 @@ export const getMetricData = ({
 			details: {
 				color: getStatsColor(trendClassification),
 				icon: getIcon(percentage),
-				label: `${toRounded(Math.abs(percentage))}%`
+				label: `${toRounded(Math.abs(percentage))}%`,
 			},
 			name,
 			title,
 			type,
-			value: metricFormatter(result[name].value)
+			value: metricFormatter(result[name].value),
 		},
 		data: chartDataMapFn({
 			...compositeMeta,
@@ -402,7 +425,7 @@ export const getMetricData = ({
 			name,
 			title,
 			tooltipTitle,
-			type
+			type,
 		}),
 		dateKeysIMap,
 		format: getAxisFormatter(type),
@@ -414,18 +437,18 @@ export const getMetricData = ({
 		),
 		prevDateKeysIMap: new Map(
 			histogram.map(({key, previousValueKey}) => [key, previousValueKey])
-		)
+		),
 	};
 };
 
-export const getMetricsData = (
+export const getMetricsData = function getMetricsData(
 	result: TMetricsResult,
 	metrics: Metric[],
 	rangeSelectors: Partial<RangeSelectors> = {},
 	chartDataMapFn: (...args: any[]) => any = getMetricsChartData,
 	interval: string = INTERVAL_KEY_MAP.day
-) =>
-	metrics.map(({compositeMetrics, name, title, tooltipTitle, type}) =>
+) {
+	return metrics.map(({compositeMetrics, name, title, tooltipTitle, type}) =>
 		getMetricData({
 			chartDataMapFn,
 			compositeMetrics,
@@ -435,17 +458,18 @@ export const getMetricsData = (
 			result,
 			title,
 			tooltipTitle,
-			type
+			type,
 		})
 	);
+};
 
-export const getSiteMetricsChartData = ({
+export const getSiteMetricsChartData = function getSiteMetricsChartData({
 	compositeData,
 	histogram,
 	name,
 	title,
 	tooltipTitle,
-	type
+	type,
 }: {
 	compositeData: Record<string, Array<{value: number}>>;
 	histogram: Array<{
@@ -457,23 +481,23 @@ export const getSiteMetricsChartData = ({
 	title: string;
 	tooltipTitle?: string;
 	type: MetricType;
-}): TChartDataSet[] => {
+}): TChartDataSet[] {
 	if (name !== 'visitorsMetric') {
 		return getMetricsChartData({
 			histogram,
 			name,
 			title,
 			tooltipTitle,
-			type
-		}).map(data =>
+			type,
+		}).map((data) =>
 			[CHART_DATA_ID_1, CHART_DATA_PREVIOUS].includes(data.id)
 				? {
 						...data,
 						color:
 							data.id === CHART_DATA_PREVIOUS
 								? CHART_GREEN_L2
-								: CHART_GREEN
-				  }
+								: CHART_GREEN,
+					}
 				: data
 		);
 	}
@@ -490,7 +514,7 @@ export const getSiteMetricsChartData = ({
 			id: CHART_DATA_ID_1,
 			name: Liferay.Language.get('known-visitors'),
 			tooltipTitle: Liferay.Language.get('known'),
-			type: 'bar'
+			type: 'bar',
 		},
 		{
 			color: CHART_ORANGE,
@@ -501,18 +525,18 @@ export const getSiteMetricsChartData = ({
 			id: CHART_DATA_ID_2,
 			name: Liferay.Language.get('anonymous-visitors'),
 			tooltipTitle: Liferay.Language.get('anonymous'),
-			type: 'bar'
+			type: 'bar',
 		},
 		{
 			color: PREVIOUS_PERIOD_VISITORS_COLOR,
 			data: formatter(histogram.map(({previousValue}) => previousValue)),
 			id: CHART_DATA_PREVIOUS,
 			name: Liferay.Language.get('previous-period'),
-			type: 'line'
+			type: 'line',
 		},
 		{
 			data: histogram.map(({key}) => key),
-			id: 'x'
-		}
+			id: 'x',
+		},
 	];
 };

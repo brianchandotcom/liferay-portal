@@ -1,19 +1,24 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Label from 'shared/components/Label';
-import React from 'react';
-import SubnavTbar from 'shared/components/SubnavTbar';
+import autobind from 'autobind-decorator';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {sub} from 'shared/util/lang';
+import React from 'react';
+import Label from '~/shared/components/Label';
+import SubnavTbar from '~/shared/components/SubnavTbar';
+import {sub} from '~/shared/util/lang';
 
 class StagedSubnav extends React.Component {
 	static defaultProps = {
 		onToggle: noop,
 		showStaged: false,
 		stagedMessage: sub(Liferay.Language.get('showing-only-selected-x'), [
-			Liferay.Language.get('items').toLowerCase()
-		])
+			Liferay.Language.get('items').toLowerCase(),
+		]),
 	};
 
 	static propTypes = {
@@ -24,7 +29,7 @@ class StagedSubnav extends React.Component {
 		showStaged: PropTypes.bool,
 		stagedMessage: PropTypes.string,
 		viewCurrentLinkText: PropTypes.string.isRequired,
-		viewStagedLinkText: PropTypes.string.isRequired
+		viewStagedLinkText: PropTypes.string.isRequired,
 	};
 
 	@autobind
@@ -43,7 +48,7 @@ class StagedSubnav extends React.Component {
 			showStaged,
 			stagedMessage,
 			viewCurrentLinkText,
-			viewStagedLinkText
+			viewStagedLinkText,
 		} = this.props;
 
 		return (
@@ -52,7 +57,7 @@ class StagedSubnav extends React.Component {
 					{showStaged ? (
 						<span>{stagedMessage}</span>
 					) : (
-						<Label display='success' size='lg' uppercase>
+						<Label display="success" size="lg" uppercase>
 							{selectedCountMessage}
 						</Label>
 					)}
@@ -61,8 +66,8 @@ class StagedSubnav extends React.Component {
 				<SubnavTbar.Item expand>
 					<ClayButton
 						borderless
-						className='button-root btn-link'
-						displayType='unstyled'
+						className="btn-link button-root"
+						displayType="unstyled"
 						onClick={onToggle}
 					>
 						{showStaged ? viewCurrentLinkText : viewStagedLinkText}
@@ -73,8 +78,8 @@ class StagedSubnav extends React.Component {
 					<SubnavTbar.Item>
 						<ClayButton
 							borderless
-							className='button-root'
-							displayType='unstyled'
+							className="button-root"
+							displayType="unstyled"
 							onClick={this.handleUndoChanges}
 						>
 							{Liferay.Language.get('undo-all')}

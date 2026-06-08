@@ -1,29 +1,35 @@
-import * as API from 'shared/api';
-import ActivitiesChart from '../ActivitiesChartDeprecated';
-import autobind from 'autobind-decorator';
-import Card from 'shared/components/Card';
-import ChangeLegend from 'contacts/components/ChangeLegend';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ErrorDisplay from 'shared/components/ErrorDisplay';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import React from 'react';
-import {Account} from 'shared/util/records';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
-import {buildLegendItems} from 'shared/util/activitiesDeprecated';
-import {DEFAULT_ACTIVITY_MAX} from 'shared/api/activities';
-import {EntityTypes, TimeIntervals} from 'shared/util/constants';
-import {getSafeChange} from 'shared/util/change';
 import {PropTypes} from 'prop-types';
-import {Routes, toRoute} from 'shared/util/router';
+import React from 'react';
+import ChangeLegend from '~/contacts/components/ChangeLegend';
+import * as API from '~/shared/api';
+import {DEFAULT_ACTIVITY_MAX} from '~/shared/api/activities';
+import Card from '~/shared/components/Card';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import Loading from '~/shared/components/Loading';
+import {buildLegendItems} from '~/shared/util/activitiesDeprecated';
+import {getSafeChange} from '~/shared/util/change';
+import {EntityTypes, TimeIntervals} from '~/shared/util/constants';
+import {Account} from '~/shared/util/records';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
+import {Routes, toRoute} from '~/shared/util/router';
+
+import ActivitiesChart from '../ActivitiesChartDeprecated';
 
 @hasRequest
 export default class ActivitiesCard extends React.Component {
 	static propTypes = {
 		account: PropTypes.instanceOf(Account).isRequired,
 		channelId: PropTypes.string,
-		groupId: PropTypes.string.isRequired
+		groupId: PropTypes.string.isRequired,
 	};
 
 	state = {
@@ -32,7 +38,7 @@ export default class ActivitiesCard extends React.Component {
 		error: false,
 		history: [],
 		hoverIndex: -1,
-		loading: true
+		loading: true,
 	};
 
 	componentDidMount() {
@@ -45,7 +51,7 @@ export default class ActivitiesCard extends React.Component {
 		const {
 			account: {id},
 			channelId,
-			groupId
+			groupId,
 		} = this.props;
 
 		return API.activities.fetchHistory({
@@ -54,7 +60,7 @@ export default class ActivitiesCard extends React.Component {
 			contactsEntityType: EntityTypes.Account,
 			groupId,
 			interval: TimeIntervals.Day,
-			max: DEFAULT_ACTIVITY_MAX
+			max: DEFAULT_ACTIVITY_MAX,
 		});
 	}
 
@@ -63,7 +69,7 @@ export default class ActivitiesCard extends React.Component {
 		const {
 			account: {id},
 			channelId,
-			groupId
+			groupId,
 		} = this.props;
 
 		this.setState({error: false, loading: true});
@@ -75,24 +81,24 @@ export default class ActivitiesCard extends React.Component {
 				contactsEntityType: EntityTypes.Account,
 				groupId,
 				interval: TimeIntervals.Day,
-				max: DEFAULT_ACTIVITY_MAX
+				max: DEFAULT_ACTIVITY_MAX,
 			})
 			.then(
 				({
 					activityAggregations: activityHistory,
 					change: activityChange,
-					count: activityCount
+					count: activityCount,
 				}) => {
 					this.setState({
 						activityChange: getSafeChange(activityChange),
 						activityCount,
 						history: activityHistory,
-						loading: false
+						loading: false,
 					});
 				}
 			)
-			.catch(err => {
-				if (!err.IS_CANCELLATION_ERROR) {
+			.catch((error) => {
+				if (!error.IS_CANCELLATION_ERROR) {
 					this.setState({error: true, loading: false});
 				}
 			});
@@ -100,26 +106,28 @@ export default class ActivitiesCard extends React.Component {
 
 	renderChart() {
 		const {
-			state: {activityChange, activityCount, error, history, loading}
+			state: {activityChange, activityCount, error, history, loading},
 		} = this;
 
 		if (loading) {
-			return <Loading key='LOADING' />;
-		} else if (error) {
+			return <Loading key="LOADING" />;
+		}
+		else if (error) {
 			return (
 				<ErrorDisplay
-					key='ERROR_DISPLAY'
+					key="ERROR_DISPLAY"
 					onReload={this.handleFetchHistory}
 					spacer
 				/>
 			);
-		} else {
+		}
+		else {
 			return (
 				<>
 					<ChangeLegend
 						items={buildLegendItems({
 							activityChange,
-							activityCount
+							activityCount,
 						})}
 					/>
 
@@ -138,7 +146,7 @@ export default class ActivitiesCard extends React.Component {
 			account: {id},
 			channelId,
 			className,
-			groupId
+			groupId,
 		} = this.props;
 
 		return (
@@ -155,20 +163,20 @@ export default class ActivitiesCard extends React.Component {
 					<ClayLink
 						borderless
 						button
-						className='button-root'
-						displayType='secondary'
+						className="button-root"
+						displayType="secondary"
 						href={toRoute(Routes.CONTACTS_ACCOUNT_ACTIVITIES, {
 							channelId,
 							groupId,
-							id
+							id,
 						})}
 						small
 					>
 						{Liferay.Language.get('view-all-activities')}
 
 						<ClayIcon
-							className='icon-root ml-2'
-							symbol='angle-right-small'
+							className="icon-root ml-2"
+							symbol="angle-right-small"
 						/>
 					</ClayLink>
 				</Card.Footer>

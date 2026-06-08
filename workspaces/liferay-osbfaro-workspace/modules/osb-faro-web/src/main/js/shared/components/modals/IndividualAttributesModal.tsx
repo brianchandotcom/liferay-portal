@@ -1,6 +1,11 @@
-import Modal from 'shared/components/modal';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import Table from 'shared/components/table';
+import Modal from '~/shared/components/modal';
+import Table from '~/shared/components/table';
 
 interface IIndividualAttributesModalInterface
 	extends React.HTMLAttributes<HTMLElement> {
@@ -19,23 +24,23 @@ const IndividualAttributesModal: React.FC<
 		<Modal.Header onClose={onClose} title={fieldName} />
 
 		<Modal.Body>
-			<div className='h5'>{Liferay.Language.get('data-sources')}</div>
+			<div className="h5">{Liferay.Language.get('data-sources')}</div>
 
 			<Table
 				columns={[
 					{
 						accessor: 'dataSourceName',
 						label: Liferay.Language.get('source'),
-						sortable: false
+						sortable: false,
 					},
 					{
 						accessor: 'dataSourceFieldName',
 						label: Liferay.Language.get('attribute[noun]'),
-						sortable: false
-					}
+						sortable: false,
+					},
 				]}
 				items={dataSources}
-				rowIdentifier='dataSourceName'
+				rowIdentifier="dataSourceName"
 			/>
 		</Modal.Body>
 	</Modal>

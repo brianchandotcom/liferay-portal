@@ -1,33 +1,36 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import ErrorDisplay from 'shared/components/ErrorDisplay';
-import Loading from 'shared/components/Loading';
-import Nav from 'shared/components/Nav';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React from 'react';
-import RowActions from 'shared/components/RowActions';
-import Table from 'shared/components/table';
-import {ActionTypes} from 'shared/context/selection';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose, withPaginationBar, withToolbar} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
-import {get} from 'lodash';
-import {getPluralMessage} from 'shared/util/lang';
-import {IPaginationUnsorted} from 'shared/types';
 import {OrderedMap} from 'immutable';
-import {RootState} from 'shared/store';
-import {SelectionProvider} from 'shared/context/selection';
-import {Sizes} from 'shared/util/constants';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
-import {useRequest} from 'shared/hooks/useRequest';
-import {usersListColumns} from 'shared/util/table-columns';
-import {withEmpty} from 'cerebro-shared/hocs/utils';
+import {get} from 'lodash';
+import React from 'react';
+import {ConnectedProps, connect} from 'react-redux';
+import {withEmpty} from '~/cerebro-shared/hocs/utils';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import Loading from '~/shared/components/Loading';
+import Nav from '~/shared/components/Nav';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import RowActions from '~/shared/components/RowActions';
+import Table from '~/shared/components/table';
+import {ActionTypes, SelectionProvider} from '~/shared/context/selection';
+import {compose, withPaginationBar, withToolbar} from '~/shared/hoc';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {RootState} from '~/shared/store';
+import {Alert, IPaginationUnsorted} from '~/shared/types';
+import {Sizes} from '~/shared/util/constants';
+import {getPluralMessage} from '~/shared/util/lang';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
+import {User} from '~/shared/util/records';
+import {usersListColumns} from '~/shared/util/table-columns';
 
 const ListComponent = compose<any>(
 	withToolbar(),
@@ -44,24 +47,22 @@ const UserListNav: React.FC<{
 		<Nav.Item>
 			{selectedItems.size ? (
 				<ClayButton
-					className='button-root nav-btn'
-					displayType='secondary'
+					className="button-root nav-btn"
+					displayType="secondary"
 					onClick={() => onRemoveUser(selectedItems)}
 				>
-					{
-						<>
-							<ClayIcon
-								className='icon-root mr-2 remove-users'
-								symbol='times'
-							/>
-							{Liferay.Language.get('remove')}
-						</>
-					}
+					<>
+						<ClayIcon
+							className="icon-root mr-2 remove-users"
+							symbol="times"
+						/>
+						{Liferay.Language.get('remove')}
+					</>
 				</ClayButton>
 			) : (
 				<ClayButton
-					className='button-root nav-btn px-3'
-					displayType='primary'
+					className="button-root nav-btn px-3"
+					displayType="primary"
 					onClick={onAddUser}
 				>
 					{Liferay.Language.get('add-user')}
@@ -77,8 +78,8 @@ const connector = connect(
 			groupId,
 			'data',
 			'timeZone',
-			'timeZoneId'
-		])
+			'timeZoneId',
+		]),
 	}),
 	{addAlert, close, open}
 );
@@ -104,7 +105,7 @@ const UserList: React.FC<IUserListProps> = ({
 	...otherProps
 }) => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data, error, loading, refetch} = useRequest({
@@ -115,8 +116,8 @@ const UserList: React.FC<IUserListProps> = ({
 			groupId,
 			orderIOMap,
 			page,
-			query
-		}
+			query,
+		},
 	});
 
 	const getEmailOrCount = (users: User[]): number => {
@@ -135,7 +136,7 @@ const UserList: React.FC<IUserListProps> = ({
 			open(modalTypes.CONFIRMATION_MODAL, {
 				closeAfterSubmit: false,
 				message: (
-					<div className='text-secondary'>
+					<div className="text-secondary">
 						{
 							getPluralMessage(
 								Liferay.Language.get(
@@ -158,7 +159,7 @@ const UserList: React.FC<IUserListProps> = ({
 						.deleteUsers({
 							channelId: id,
 							groupId,
-							userIds
+							userIds,
 						})
 						.then(() => {
 							if (clearAll) {
@@ -179,7 +180,7 @@ const UserList: React.FC<IUserListProps> = ({
 									userIds.length,
 									true,
 									[getEmailOrCount(users), propertyName]
-								) as string
+								) as string,
 							});
 
 							close();
@@ -198,7 +199,7 @@ const UserList: React.FC<IUserListProps> = ({
 									true,
 									[getEmailOrCount(users), propertyName]
 								) as string,
-								timeout: false
+								timeout: false,
 							});
 						});
 				},
@@ -206,7 +207,7 @@ const UserList: React.FC<IUserListProps> = ({
 				submitButtonDisplay: 'warning',
 				submitMessage: Liferay.Language.get('remove'),
 				title: Liferay.Language.get('remove-user'),
-				titleIcon: 'warning-full'
+				titleIcon: 'warning-full',
 			});
 		};
 
@@ -214,13 +215,13 @@ const UserList: React.FC<IUserListProps> = ({
 		open(modalTypes.SEARCHABLE_TABLE_MODAL, {
 			columns: [
 				usersListColumns.nameEmailAddress,
-				usersListColumns.getLastLoginDate(timeZoneId)
+				usersListColumns.getLastLoginDate(timeZoneId),
 			],
 			dataSourceFn: ({
 				delta,
 				orderIOMap,
 				page,
-				query
+				query,
 			}: {
 				[key: string]: any;
 			}) =>
@@ -231,7 +232,7 @@ const UserList: React.FC<IUserListProps> = ({
 					groupId,
 					orderIOMap,
 					page,
-					query
+					query,
 				}),
 			entityLabel: Liferay.Language.get('users'),
 			initialOrderIOMap: createOrderIOMap(NAME),
@@ -261,7 +262,7 @@ const UserList: React.FC<IUserListProps> = ({
 					.addUsers({
 						channelId: id,
 						groupId,
-						userIds
+						userIds,
 					})
 					.then(() => {
 						refetch();
@@ -278,7 +279,7 @@ const UserList: React.FC<IUserListProps> = ({
 								userIds.length,
 								true,
 								[getEmailOrCount(users), propertyName]
-							) as string
+							) as string,
 						});
 
 						close();
@@ -297,12 +298,12 @@ const UserList: React.FC<IUserListProps> = ({
 								true,
 								[getEmailOrCount(users), propertyName]
 							) as string,
-							timeout: false
+							timeout: false,
 						});
 					});
 			},
 			requireSelection: true,
-			title: propertyName
+			title: propertyName,
 		});
 	};
 
@@ -310,7 +311,7 @@ const UserList: React.FC<IUserListProps> = ({
 		open(modalTypes.CONFIRMATION_MODAL, {
 			closeAfterSubmit: false,
 			message: (
-				<div className='text-secondary'>
+				<div className="text-secondary">
 					{Liferay.Language.get(
 						'property-permissions-have-changed-without-any-users-selected.-do-you-want-to-close-the-modal-without-adding-users'
 					)}
@@ -326,7 +327,7 @@ const UserList: React.FC<IUserListProps> = ({
 			submitButtonDisplay: 'warning',
 			submitMessage: Liferay.Language.get('close'),
 			title: Liferay.Language.get('no-users-in-property'),
-			titleIcon: 'warning-full'
+			titleIcon: 'warning-full',
 		});
 	};
 
@@ -341,7 +342,7 @@ const UserList: React.FC<IUserListProps> = ({
 			noResultsRenderer: (
 				<NoResultsDisplay
 					description={
-						<span className='text-secondary'>
+						<span className="text-secondary">
 							{Liferay.Language.get(
 								'add-users-to-give-them-access-to-this-property'
 							)}
@@ -350,7 +351,7 @@ const UserList: React.FC<IUserListProps> = ({
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 					primary
 					spacer
@@ -360,14 +361,16 @@ const UserList: React.FC<IUserListProps> = ({
 			orderIOMap,
 			pageDisplay: true,
 			rowIdentifier: 'id',
-			total: get(data, 'total')
+			total: get(data, 'total'),
 		};
 
 		if (loading) {
 			return <Loading />;
-		} else if (error) {
+		}
+		else if (error) {
 			return <ErrorDisplay onReload={refetch} spacer />;
-		} else if (authorized) {
+		}
+		else if (authorized) {
 			return (
 				<SelectionProvider>
 					<CrossPageSelect
@@ -375,11 +378,11 @@ const UserList: React.FC<IUserListProps> = ({
 						renderRowActions={({data}: {data: User}) => {
 							const rowAction = {
 								'data-testid': 'delete-user',
-								label: Liferay.Language.get('delete'),
-								onClick: () =>
+								'label': Liferay.Language.get('delete'),
+								'onClick': () =>
 									getRemoveUserModalFn()(
 										OrderedMap({[data.userId]: data})
-									)
+									),
 							};
 
 							return authorized ? (
@@ -388,8 +391,8 @@ const UserList: React.FC<IUserListProps> = ({
 									quickActions={[
 										{
 											iconSymbol: 'times',
-											...rowAction
-										}
+											...rowAction,
+										},
 									]}
 								/>
 							) : null;
@@ -421,8 +424,11 @@ const UserList: React.FC<IUserListProps> = ({
 					</CrossPageSelect>
 				</SelectionProvider>
 			);
-		} else {
+		}
+		else {
+
 			// TODO: Can we just use shoCheckbox isntead of this?
+
 			return <ListComponent {...sharedProps} />;
 		}
 	};

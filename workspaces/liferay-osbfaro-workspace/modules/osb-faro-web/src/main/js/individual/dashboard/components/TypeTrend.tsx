@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import InfoPopover from 'shared/components/InfoPopover';
-import React from 'react';
-import {formatChange} from 'shared/util/change';
 import {isFinite} from 'lodash';
-import {sub} from 'shared/util/lang';
+import React from 'react';
+import InfoPopover from '~/shared/components/InfoPopover';
+import {formatChange} from '~/shared/util/change';
+import {sub} from '~/shared/util/lang';
 
 interface ITrendItemProps {
 	change: number;
@@ -15,41 +20,41 @@ interface ITrendItemProps {
 	total: number;
 }
 
-export const TrendItem: React.FC<ITrendItemProps> = ({
+export const TrendItem = function TrendItem({
 	change,
 	info,
 	title,
-	total
-}) => {
+	total,
+}: ITrendItemProps) {
 	const finiteChange = isFinite(change);
 
 	return (
-		<div className='trend-item-root' key={title}>
-			<div className='trend-item-title d-flex justify-content-between'>
-				<div className='card-title'>{title}</div>
+		<div className="trend-item-root" key={title}>
+			<div className="d-flex justify-content-between trend-item-title">
+				<div className="card-title">{title}</div>
 
 				{info && <InfoPopover {...info} />}
 			</div>
 
-			<div className='d-flex align-items-center flex-grow-1 justify-content-center'>
-				<div className='total'>{total.toLocaleString()}</div>
+			<div className="align-items-center d-flex flex-grow-1 justify-content-center">
+				<div className="total">{total.toLocaleString()}</div>
 			</div>
 
 			{!!total && (
-				<div className='change description'>
+				<div className="change description">
 					{sub(
 						Liferay.Language.get('x-vs-previous-30-days'),
 						[
 							<span
 								className={getCN({
 									decrease: change < 0 && finiteChange,
-									increase: change > 0 && finiteChange
+									increase: change > 0 && finiteChange,
 								})}
-								key='CHANGE'
+								key="CHANGE"
 							>
 								{finiteChange && !!change && (
 									<ClayIcon
-										className='icon-root'
+										className="icon-root"
 										symbol={
 											change > 0
 												? 'caret-top'
@@ -63,7 +68,7 @@ export const TrendItem: React.FC<ITrendItemProps> = ({
 										? `${formatChange(change)}%`
 										: '--'}
 								</b>
-							</span>
+							</span>,
 						],
 						false
 					)}
@@ -74,7 +79,7 @@ export const TrendItem: React.FC<ITrendItemProps> = ({
 };
 
 const TypeTrend: React.FC<{items: ITrendItemProps[]}> = ({items}) => (
-	<div className='type-trend-root'>
+	<div className="type-trend-root">
 		{items.map((item, i) => (
 			<TrendItem {...item} key={i} />
 		))}
@@ -82,7 +87,7 @@ const TypeTrend: React.FC<{items: ITrendItemProps[]}> = ({items}) => (
 );
 
 TypeTrend.defaultProps = {
-	items: []
+	items: [],
 };
 
 export default TypeTrend;

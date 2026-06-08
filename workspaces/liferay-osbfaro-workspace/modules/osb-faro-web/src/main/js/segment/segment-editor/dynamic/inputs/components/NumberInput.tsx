@@ -1,11 +1,17 @@
-import BetweenNumberInput, {BetweenNumber} from './BetweenNumberInput';
-import Form from 'shared/components/form';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import Input from 'shared/components/Input';
+import {noop} from 'lodash';
 import React from 'react';
+import Input from '~/shared/components/Input';
+import Form from '~/shared/components/form';
+
 import {FunctionalOperators, RelationalOperators} from '../../utils/constants';
 import {isValid} from '../../utils/utils';
-import {noop} from 'lodash';
+import BetweenNumberInput, {BetweenNumber} from './BetweenNumberInput';
 
 interface INumberInputProps {
 	className?: string;
@@ -43,14 +49,14 @@ const NumberInput: React.FC<INumberInputProps> = ({
 	return (
 		<Form.GroupItem
 			className={getCN({
-				'has-error': !valid && touched
+				'has-error': !valid && touched,
 			})}
 			shrink
 		>
 			<Input
 				{...otherProps}
 				className={getCN('number-input', className)}
-				data-testid='number-input'
+				data-testid="number-input"
 				onBlur={() => {
 					onChange({touched: true, valid, value});
 
@@ -68,11 +74,11 @@ const NumberInput: React.FC<INumberInputProps> = ({
 					onChange({
 						touched: true,
 						valid: isValid(value),
-						value: numberVal
+						value: numberVal,
 					});
 				}}
 				placeholder={Liferay.Language.get('number')}
-				type='number'
+				type="number"
 				value={value}
 			/>
 		</Form.GroupItem>

@@ -1,8 +1,13 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React, {FC} from 'react';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 enum Displays {
 	Primary = 'primary',
@@ -12,11 +17,11 @@ enum Displays {
 	Warning = 'warning',
 	Danger = 'danger',
 	Light = 'light',
-	Dark = 'dark'
+	Dark = 'dark',
 }
 
 enum Sizes {
-	Large = 'lg'
+	Large = 'lg',
 }
 
 const Label: FC<{
@@ -27,7 +32,7 @@ const Label: FC<{
 	onRemove?: (index?: number) => void;
 	size?: string;
 	uppercase?: boolean;
-}> & {Displays: typeof Displays; Sizes: typeof Sizes} = props => {
+}> & {Displays: typeof Displays; Sizes: typeof Sizes} = (props) => {
 	const {
 		children,
 		className,
@@ -47,22 +52,22 @@ const Label: FC<{
 		[`label-${display}`]: display,
 		[`label-${size}`]: size,
 		'label-dismissible': onRemove,
-		['label-uppercase']: uppercase
+		['label-uppercase']: uppercase,
 	});
 
 	return (
 		<div {...omitDefinedProps(otherProps, props)} className={classes}>
-			<span className='label-item'>{children}</span>
+			<span className="label-item">{children}</span>
 
 			{onRemove && (
-				<span className='label-item label-item-after'>
+				<span className="label-item label-item-after">
 					<ClayButton
 						aria-label={Liferay.Language.get('close')}
-						className='button-root close'
-						displayType='secondary'
+						className="button-root close"
+						displayType="secondary"
 						onClick={handleRemove}
 					>
-						<ClayIcon className='icon-root' symbol='times' />
+						<ClayIcon className="icon-root" symbol="times" />
 					</ClayButton>
 				</span>
 			)}

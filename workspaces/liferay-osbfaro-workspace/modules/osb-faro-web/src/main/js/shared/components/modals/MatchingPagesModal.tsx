@@ -1,25 +1,29 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {graphql} from '@apollo/client/react/hoc';
 import ClayButton from '@clayui/button';
-import MetadataTag from 'settings/recommendations/components/MetadataTag';
-import Modal from 'shared/components/modal';
+import {OrderedMap} from 'immutable';
+import {isArray, isString, omit} from 'lodash';
 import React from 'react';
-import RecommendationPageAssetsQuery from 'settings/recommendations/queries/RecommendationPageAssetsQuery';
-import {
-	createOrderIOMap,
-	getSortFromOrderIOMap,
-	TITLE
-} from 'shared/util/pagination';
+import MetadataTag from '~/settings/recommendations/components/MetadataTag';
+import RecommendationPageAssetsQuery from '~/settings/recommendations/queries/RecommendationPageAssetsQuery';
 import {
 	EXCLUDE,
 	Filter,
-	getFilterValueBreakdown
-} from 'settings/recommendations/utils/utils';
-import {getMapResultToProps} from 'shared/hoc/mappers/metrics';
-import {graphql} from '@apollo/client/react/hoc';
-import {isArray, isString} from 'lodash';
-import {omit} from 'lodash';
-import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
-import {withBaseResults, withStatefulPagination} from 'shared/hoc';
+	getFilterValueBreakdown,
+} from '~/settings/recommendations/utils/utils';
+import Modal from '~/shared/components/modal';
+import {withBaseResults, withStatefulPagination} from '~/shared/hoc';
+import {getMapResultToProps} from '~/shared/hoc/mappers/metrics';
+import {
+	TITLE,
+	createOrderIOMap,
+	getSortFromOrderIOMap,
+} from '~/shared/util/pagination';
+import {OrderParams} from '~/shared/util/records';
 
 const withData = () =>
 	graphql(RecommendationPageAssetsQuery, {
@@ -29,7 +33,7 @@ const withData = () =>
 			orderIOMap,
 			page,
 			query,
-			useNegateValue
+			useNegateValue,
 		}: {
 			delta: number;
 			itemFilters: Filter[];
@@ -43,17 +47,17 @@ const withData = () =>
 				keywords: query,
 				propertyFilters: itemFilters.map(({name, value}) => ({
 					filter: value,
-					negate: useNegateValue ? name === EXCLUDE : false
+					negate: useNegateValue ? name === EXCLUDE : false,
 				})),
 				size: delta,
 				sort: getSortFromOrderIOMap(orderIOMap),
-				start: (page - 1) * delta
-			}
+				start: (page - 1) * delta,
+			},
 		}),
 		props: getMapResultToProps(({pageAssets: {pageAssets, total}}) => ({
 			items: pageAssets,
-			total
-		}))
+			total,
+		})),
 	});
 
 const TableWithData = withStatefulPagination(
@@ -66,7 +70,7 @@ const TableWithData = withStatefulPagination(
 			{
 				accessor: 'title',
 				className: 'table-cell-expand text-truncate',
-				label: Liferay.Language.get('page-name')
+				label: Liferay.Language.get('page-name'),
 			},
 			{
 				accessor: secondColumnHeader || 'url',
@@ -74,21 +78,22 @@ const TableWithData = withStatefulPagination(
 				dataFormatter: (val: unknown) => {
 					if (isString(val)) {
 						return val;
-					} else if (isArray(val)) {
+					}
+					else if (isArray(val)) {
 						return val
 							.map(({value}: {value: string}) => value)
 							.join(', ');
 					}
 				},
 				label: secondColumnHeader || 'url',
-				sortable: false
-			}
+				sortable: false,
+			},
 		],
-		showDropdownRangeKey: false
+		showDropdownRangeKey: false,
 	}),
 	{
 		initialDelta: 10,
-		initialOrderIOMap: createOrderIOMap(TITLE)
+		initialOrderIOMap: createOrderIOMap(TITLE),
 	},
 	(props: {[key: string]: any}) => omit(props, 'onSearchValueChange'),
 	false
@@ -103,7 +108,7 @@ interface IMatchingPagesModalProps {
 const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 	itemFilters,
 	onClose,
-	useNegateValue = false
+	useNegateValue = false,
 }) => {
 	const {name, value} = itemFilters[0];
 
@@ -112,7 +117,7 @@ const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 	const customFilter = itemFilters.length === 1 && metadataTag;
 
 	return (
-		<Modal className='matching-pages-modal-root' size='xl'>
+		<Modal className="matching-pages-modal-root" size="xl">
 			<Modal.Header
 				onClose={onClose}
 				title={Liferay.Language.get('matching-pages')}
@@ -121,7 +126,7 @@ const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 			<Modal.Body>
 				{!!customFilter && !useNegateValue && (
 					<div>
-						<span className='include-exclude'>
+						<span className="include-exclude">
 							{`${
 								name === EXCLUDE
 									? Liferay.Language.get('exclude')
@@ -131,7 +136,7 @@ const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 
 						<MetadataTag value={metadataTag} />
 
-						<span className='rule'>
+						<span className="rule">
 							{exactMatchSign ? `"${rule}"` : rule}
 						</span>
 					</div>
@@ -146,8 +151,8 @@ const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='primary'
+					className="button-root"
+					displayType="primary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('done')}

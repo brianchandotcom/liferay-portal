@@ -1,23 +1,28 @@
-import BaseCard from 'shared/components/base-card';
-import Card from 'shared/components/Card';
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-import getMetricsMapper from 'cerebro-shared/hocs/mappers/metrics';
-import React, {useCallback, useState} from 'react';
-import {ASSET_METRICS} from 'shared/util/constants';
-import {compose} from 'redux';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {DocumentNode} from '@apollo/client';
 import {graphql} from '@apollo/client/react/hoc';
-import {MetricChart} from 'shared/components/metric-card/MetricChart';
-import {RangeSelectors, Router} from 'shared/types';
-import {withEmpty, withError} from 'cerebro-shared/hocs/utils';
-import {withLoading} from 'shared/hoc';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import React, {useCallback, useState} from 'react';
+import {compose} from 'redux';
+import getMetricsMapper from '~/cerebro-shared/hocs/mappers/metrics';
+import {withEmpty, withError} from '~/cerebro-shared/hocs/utils';
+import Card from '~/shared/components/Card';
+import BaseCard from '~/shared/components/base-card';
+import {MetricChart} from '~/shared/components/metric-card/MetricChart';
+import {withLoading} from '~/shared/hoc';
+import {RangeSelectors, Router} from '~/shared/types';
+import {ASSET_METRICS} from '~/shared/util/constants';
 
 const CHARTS = {
 	line: {
 		component: MetricChart,
-		mapper: getMetricsMapper
-	}
+		mapper: getMetricsMapper,
+	},
 };
 
 interface IAssetComponent extends IChartProps {
@@ -45,7 +50,7 @@ const Chart: React.FC<IChartProps> = ({
 	onRemoveAsset,
 	panel: {chartType},
 	rangeSelectors,
-	showPrevious
+	showPrevious,
 }) => {
 	const ChartComponent = (CHARTS as any)[chartType].component;
 
@@ -59,16 +64,16 @@ const Chart: React.FC<IChartProps> = ({
 				rangeSelectors={rangeSelectors}
 			/>
 
-			<div className='d-flex justify-content-end'>
+			<div className="d-flex justify-content-end">
 				<ClayButton
 					aria-label={Liferay.Language.get('delete')}
 					borderless
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={() => onRemoveAsset(id)}
-					size='sm'
+					size="sm"
 				>
-					<ClayIcon className='icon-root' symbol='trash' />
+					<ClayIcon className="icon-root" symbol="trash" />
 				</ClayButton>
 			</div>
 		</>
@@ -113,7 +118,7 @@ const AssetCard: React.FC<IAssetCardProps> = ({
 	label,
 	legacyDropdownRangeKey,
 	onRemoveAsset,
-	panel
+	panel,
 }) => {
 	const AssetComponent = compose(
 		graphql(itemQuery, getMapper(panel)),

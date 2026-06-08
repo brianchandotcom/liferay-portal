@@ -1,30 +1,35 @@
-import PaginationBar from 'shared/components/PaginationBar';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import PropTypes from 'prop-types';
 import React from 'react';
-import {paginationDefaults} from 'shared/util/pagination';
+import PaginationBar from '~/shared/components/PaginationBar';
+import {paginationDefaults} from '~/shared/util/pagination';
 
 const defaultOptions = {defaultDelta: paginationDefaults.delta};
 
 export default (options = {}) =>
-	WrappedComponent => {
+	(WrappedComponent) => {
 		const {defaultDelta} = {...defaultOptions, ...options};
 
 		class WithPaginationBar extends React.Component {
 			static defaultProps = {
 				delta: defaultDelta,
-				page: paginationDefaults.page
+				page: paginationDefaults.page,
 			};
 
 			static propTypes = {
 				delta: PropTypes.oneOfType([
 					PropTypes.string,
-					PropTypes.number
+					PropTypes.number,
 				]),
 				onDeltaChange: PropTypes.func,
 				onPageChange: PropTypes.func,
 				page: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 				showDeltaDropdown: PropTypes.bool,
-				total: PropTypes.number
+				total: PropTypes.number,
 			};
 
 			render() {
@@ -34,7 +39,7 @@ export default (options = {}) =>
 					onPageChange,
 					page,
 					showDeltaDropdown,
-					total
+					total,
 				} = this.props;
 
 				return (
@@ -44,7 +49,7 @@ export default (options = {}) =>
 						{!!total && (
 							<PaginationBar
 								href={window.location.href}
-								key='PAGINATION_BAR'
+								key="PAGINATION_BAR"
 								onDeltaChange={onDeltaChange}
 								onPageChange={onPageChange}
 								page={page}

@@ -1,26 +1,32 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import FilterAndOrder from 'shared/components/FilterAndOrder';
-import React from 'react';
-import Row from '../components/Row';
 import {Map} from 'immutable';
+import React from 'react';
+import FilterAndOrder from '~/shared/components/FilterAndOrder';
+
+import Row from '../components/Row';
 
 class FilterAndOrderKit extends React.Component {
 	state = {
 		filterBy: new Map(),
-		orderBy: 1
+		orderBy: 1,
 	};
 
 	@autobind
 	handleOrderByChange(orderBy) {
 		this.setState({
-			orderBy
+			orderBy,
 		});
 	}
 
 	@autobind
 	handleFilterByChange(filterBy) {
 		this.setState({
-			filterBy
+			filterBy,
 		});
 	}
 
@@ -39,7 +45,7 @@ class FilterAndOrderKit extends React.Component {
 						{
 							key: 'state',
 							label: 'Disabled Segments',
-							values: [{label: 'Disabled', value: 'DISABLED'}]
+							values: [{label: 'Disabled', value: 'DISABLED'}],
 						},
 						{
 							key: 'industry',
@@ -47,8 +53,8 @@ class FilterAndOrderKit extends React.Component {
 							values: [
 								{label: 'Finance', value: 'finance'},
 								{label: 'Healthcare', value: 'healthcare'},
-								{label: 'Tech', value: 'tech'}
-							]
+								{label: 'Tech', value: 'tech'},
+							],
 						},
 						{
 							key: 'region',
@@ -56,12 +62,12 @@ class FilterAndOrderKit extends React.Component {
 							values: [
 								{
 									label: 'North America',
-									value: 'North America'
+									value: 'North America',
 								},
 								{label: 'Europe', value: 'Europe'},
-								{label: 'Asia', value: 'Asia'}
-							]
-						}
+								{label: 'Asia', value: 'Asia'},
+							],
+						},
 					]}
 					onFilterByChange={this.handleFilterByChange}
 					onOrderByChange={this.handleOrderByChange}
@@ -69,16 +75,16 @@ class FilterAndOrderKit extends React.Component {
 					orderByOptions={[
 						{
 							label: 'First Seen',
-							value: 0
+							value: 0,
 						},
 						{
 							label: 'Date Created',
-							value: 1
+							value: 1,
 						},
 						{
 							label: 'Industry',
-							value: 2
-						}
+							value: 2,
+						},
 					]}
 				/>
 			</Row>

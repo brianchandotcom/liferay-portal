@@ -1,12 +1,17 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayBadge from '@clayui/badge';
 import ClayIcon from '@clayui/icon';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
+import {PropTypes} from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TextTruncate from 'shared/components/TextTruncate';
-import {getDeviceLabel} from 'shared/util/lang';
-import {PropTypes} from 'prop-types';
+import TextTruncate from '~/shared/components/TextTruncate';
+import {getDeviceLabel} from '~/shared/util/lang';
 
 const CLASSNAME = 'analytics-dropdown-menu';
 const DEBOUNCE = 500;
@@ -19,7 +24,7 @@ export class InputItem extends React.Component {
 		onMouseOutSubitem: PropTypes.func,
 		onMouseOverSubitem: PropTypes.func,
 		onSelectItemsChange: PropTypes.func,
-		parentName: PropTypes.string
+		parentName: PropTypes.string,
 	};
 
 	/**
@@ -27,13 +32,13 @@ export class InputItem extends React.Component {
 	 * @param {number} index
 	 */
 	@autobind
-	handleItemInputChange(e) {
+	handleItemInputChange(event) {
 		const {item, onSelectItemsChange} = this.props;
 
-		const {checked} = e.currentTarget;
+		const {checked} = event.currentTarget;
 
 		onSelectItemsChange({
-			dropdownItem: {...item, checked}
+			dropdownItem: {...item, checked},
 		});
 	}
 
@@ -54,12 +59,12 @@ export class InputItem extends React.Component {
 	render() {
 		const {
 			item: {checked, inputType, label, name, value},
-			parentName
+			parentName,
 		} = this.props;
 
 		return (
 			<li
-				className='dropdown-item dropdown-item-custom'
+				className="dropdown-item dropdown-item-custom"
 				onBlur={this.handleMouseOutSubitem}
 				onFocus={this.handleMouseOverSubitem}
 				onMouseOut={this.handleMouseOutSubitem}
@@ -69,16 +74,16 @@ export class InputItem extends React.Component {
 					<label>
 						<input
 							checked={checked}
-							className='custom-control-input'
+							className="custom-control-input"
 							name={parentName || name}
 							onChange={this.handleItemInputChange}
 							type={inputType}
 							value={value}
 						/>
 
-						<span className='custom-control-label'>
+						<span className="custom-control-label">
 							<TextTruncate
-								className='custom-control-label-text'
+								className="custom-control-label-text"
 								title={getDeviceLabel(label) || label}
 							/>
 						</span>
@@ -98,7 +103,7 @@ export class OptionItem extends React.Component {
 		onMouseOutSubitem: PropTypes.func,
 		onMouseOverSubitem: PropTypes.func,
 		onSelectItemsChange: PropTypes.func,
-		parentName: PropTypes.string
+		parentName: PropTypes.string,
 	};
 
 	static getDerivedStateFromProps(props) {
@@ -112,7 +117,7 @@ export class OptionItem extends React.Component {
 	}
 
 	state = {
-		hover: false
+		hover: false,
 	};
 
 	@autobind
@@ -135,7 +140,7 @@ export class OptionItem extends React.Component {
 			item: {hasHover, hasSearch, items, label, name, value},
 			onChildOver,
 			onSelectItemsChange,
-			parentName
+			parentName,
 		} = this.props;
 
 		const {hover} = this.state;
@@ -151,18 +156,18 @@ export class OptionItem extends React.Component {
 					className={`dropdown-item ${
 						hasHover == true ? 'active' : ''
 					}`}
-					href='javascript:;'
+					href="javascript:;"
 				>
 					<TextTruncate title={label} />
 
 					{value && (
-						<div className='dropdown-item-indicator'>
-							<ClayBadge displayType='secondary' label={value} />
+						<div className="dropdown-item-indicator">
+							<ClayBadge displayType="secondary" label={value} />
 
 							{items && !!items.length && (
 								<ClayIcon
-									className='icon-root ml-1'
-									symbol='angle-right-small'
+									className="icon-root ml-1"
+									symbol="angle-right-small"
 								/>
 							)}
 						</div>
@@ -179,7 +184,7 @@ export class OptionItem extends React.Component {
 							onChildOver={onChildOver}
 							onSelectItemsChange={onSelectItemsChange}
 							parentNode={dropdownChildrenParentNode}
-							ref='nestedItem'
+							ref="nestedItem"
 							show={hover}
 						/>,
 						document.querySelector('body.dxp')
@@ -197,7 +202,7 @@ class DropdownMenu extends React.Component {
 	static defaultProps = {
 		items: [],
 		itemsIconAlignment: 'right',
-		show: false
+		show: false,
 	};
 
 	static propTypes = {
@@ -209,21 +214,21 @@ class DropdownMenu extends React.Component {
 				hasSearch: PropTypes.bool,
 				label: PropTypes.string,
 				name: PropTypes.string,
-				value: PropTypes.any
+				value: PropTypes.any,
 			})
 		),
 		itemsIconAlignment: PropTypes.oneOf(['left', 'right']),
 		onChildOver: PropTypes.func,
 		onSelectItemsChange: PropTypes.func,
 		parentNode: PropTypes.any,
-		show: PropTypes.bool
+		show: PropTypes.bool,
 	};
 
 	state = {
 		hasChildOpened: false,
 		isMouseOver: false,
 		keywords: '',
-		show: false
+		show: false,
 	};
 
 	/**
@@ -261,9 +266,10 @@ class DropdownMenu extends React.Component {
 			!parentNode.classList.contains('dropdown-visible')
 		) {
 			this.setState({
-				show: false
+				show: false,
 			});
-		} else if (!isTopLevel && show && parentNode) {
+		}
+		else if (!isTopLevel && show && parentNode) {
 			this._elementRef.current.style.top = `${
 				parentNode.getBoundingClientRect().top + scrollY
 			}px`;
@@ -282,7 +288,9 @@ class DropdownMenu extends React.Component {
 		const {onChildOver} = this.props;
 
 		timeout = setTimeout(() => {
-			if (this.state.hasChildOpened) return;
+			if (this.state.hasChildOpened) {
+				return;
+			}
 
 			onChildOver &&
 				onChildOver({closeAllChildren: true, isVisible: true});
@@ -298,7 +306,7 @@ class DropdownMenu extends React.Component {
 		const {onChildOver} = this.props;
 
 		this.setState({
-			hasChildOpened: event.isVisible
+			hasChildOpened: event.isVisible,
 		});
 
 		if (event.closeAllChildren && !this.state.isMouseOver) {
@@ -326,7 +334,7 @@ class DropdownMenu extends React.Component {
 
 		this.setState({
 			hasChildOpened: true,
-			isMouseOver: true
+			isMouseOver: true,
 		});
 
 		this.updateChildrenState(index);
@@ -340,7 +348,7 @@ class DropdownMenu extends React.Component {
 	handleMouseOutSubitem(index) {
 		this.setState({
 			hasChildOpened: false,
-			isMouseOver: false
+			isMouseOver: false,
 		});
 
 		clearTimeout(timeout);
@@ -349,8 +357,9 @@ class DropdownMenu extends React.Component {
 			if (
 				this.state.hasChildOpened ||
 				!this.refs[`item${index}`].refs.nestedItem
-			)
+			) {
 				return;
+			}
 
 			this.removeHasHover();
 			this.refs[`item${index}`].refs.nestedItem.state.show = false;
@@ -376,7 +385,7 @@ class DropdownMenu extends React.Component {
 	@autobind
 	handleSearchInput(event) {
 		this.setState({
-			keywords: event.target.value
+			keywords: event.target.value,
 		});
 	}
 
@@ -396,7 +405,7 @@ class DropdownMenu extends React.Component {
 	 * Remove Has Hover
 	 */
 	removeHasHover() {
-		this.getItems().forEach(item => {
+		this.getItems().forEach((item) => {
 			item.hasHover = false;
 		});
 
@@ -411,7 +420,8 @@ class DropdownMenu extends React.Component {
 		this.getItems().map((item, itemIndex) => {
 			if (itemIndex == index) {
 				item.hasHover = true;
-			} else {
+			}
+			else {
 				item.hasHover = false;
 			}
 
@@ -426,7 +436,7 @@ class DropdownMenu extends React.Component {
 	getItems() {
 		const {
 			props: {items},
-			state: {keywords}
+			state: {keywords},
 		} = this;
 
 		return keywords
@@ -435,7 +445,7 @@ class DropdownMenu extends React.Component {
 						label
 							.toLowerCase()
 							.search(this.state.keywords.toLowerCase()) != -1
-			  )
+				)
 			: items;
 	}
 
@@ -456,12 +466,13 @@ class DropdownMenu extends React.Component {
 			onMouseOverSubitem: this.handleMouseOverSubitem,
 			onSelectItemsChange,
 			parentName,
-			ref: `item${index}`
+			ref: `item${index}`,
 		};
 
 		if (item.inputType) {
 			return <InputItem key={index} {...sharedProps} />;
-		} else {
+		}
+		else {
 			return (
 				<OptionItem
 					{...sharedProps}
@@ -486,27 +497,27 @@ class DropdownMenu extends React.Component {
 				onMouseOut={this.handleMouseOutSubitem}
 				onMouseOver={this.handleMouseOverSubitem}
 			>
-				<div className='input-group-item'>
+				<div className="input-group-item">
 					<input
 						aria-label={Liferay.Language.get('search')}
-						className='form-control input-group-inset input-group-inset-after'
+						className="form-control input-group-inset input-group-inset-after"
 						onChange={this.handleSearchInput}
 						placeholder={Liferay.Language.get('search')}
-						type='text'
+						type="text"
 					/>
 
-					<div className='input-group-inset-item input-group-inset-item-after'>
+					<div className="input-group-inset-item input-group-inset-item-after">
 						<button
-							className='btn btn-unstyled d-md-none'
-							type='button'
+							className="btn btn-unstyled d-md-none"
+							type="button"
 						>
-							<ClayIcon className='icon-root' symbol='times' />
+							<ClayIcon className="icon-root" symbol="times" />
 						</button>
 						<button
-							className='btn btn-unstyled d-none d-md-inline-block'
-							type='button'
+							className="btn btn-unstyled d-md-inline-block d-none"
+							type="button"
 						>
-							<ClayIcon className='icon-root' symbol='search' />
+							<ClayIcon className="icon-root" symbol="search" />
 						</button>
 					</div>
 				</div>
@@ -524,7 +535,7 @@ class DropdownMenu extends React.Component {
 		const classes = getCN(CLASSNAME, className, 'dropdown-menu', {
 			'dropdown-menu-indicator-end': itemsIconAlignment == 'right',
 			'dropdown-menu-indicator-start': itemsIconAlignment == 'left',
-			'dropdown-visible': show
+			'dropdown-visible': show,
 		});
 
 		const items = this.getItems();
@@ -537,7 +548,7 @@ class DropdownMenu extends React.Component {
 			>
 				{hasSearch && this.renderSearch()}
 
-				<ul className='list-unstyled'>
+				<ul className="list-unstyled">
 					{items.map((item, index) =>
 						this.renderItems(name, item, index)
 					)}

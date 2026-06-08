@@ -1,5 +1,11 @@
-import {EntityTypes} from '../constants';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {List, Map, Record} from 'immutable';
+
+import {EntityTypes} from '../constants';
 
 interface IIndividual {
 	accountName: string | null;
@@ -31,7 +37,7 @@ export default class Individual
 		lastSessionCountry: null,
 		name: '',
 		properties: Map(),
-		type: EntityTypes.Individual
+		type: EntityTypes.Individual,
 	})
 	implements IIndividual
 {

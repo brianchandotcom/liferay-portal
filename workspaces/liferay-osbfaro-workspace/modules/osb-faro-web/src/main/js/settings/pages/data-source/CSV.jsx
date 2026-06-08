@@ -1,34 +1,39 @@
-import * as API from 'shared/api';
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import autobind from 'autobind-decorator';
-import BasePage from 'settings/components/base-page/BasePage';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import DataTransformationList from 'settings/components/data-transformation-list';
-import DefinitionItem from 'shared/components/DefinitionItem';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import React from 'react';
-import Sheet from 'shared/components/Sheet';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'redux';
-import {connect} from 'react-redux';
-import {DataSource, User} from 'shared/util/records';
-import {FieldContexts} from 'shared/util/constants';
-import {hasChanges} from 'shared/util/react';
 import {List, Map} from 'immutable';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {Routes, toRoute} from 'shared/util/router';
-import {sequence} from 'shared/util/promise';
+import React from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import BasePage from '~/settings/components/base-page/BasePage';
+import DataTransformationList from '~/settings/components/data-transformation-list';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import DefinitionItem from '~/shared/components/DefinitionItem';
+import Loading from '~/shared/components/Loading';
+import Sheet from '~/shared/components/Sheet';
 import {
 	toPromise,
 	validateMaxLength,
-	validateRequired
-} from 'shared/components/form';
-import {validateUniqueName} from 'shared/util/data-sources';
-import {withCurrentUser} from 'shared/hoc';
+	validateRequired,
+} from '~/shared/components/form';
+import {withCurrentUser} from '~/shared/hoc';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {FieldContexts} from '~/shared/util/constants';
+import {validateUniqueName} from '~/shared/util/data-sources';
+import {sequence} from '~/shared/util/promise';
+import {hasChanges} from '~/shared/util/react';
+import {DataSource, User} from '~/shared/util/records';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
+import {Routes, toRoute} from '~/shared/util/router';
 
 @hasRequest
 export class CSV extends React.Component {
@@ -38,7 +43,7 @@ export class CSV extends React.Component {
 		dataSource: PropTypes.instanceOf(DataSource).isRequired,
 		groupId: PropTypes.string.isRequired,
 		id: PropTypes.string,
-		open: PropTypes.func.isRequired
+		open: PropTypes.func.isRequired,
 	};
 
 	state = {
@@ -47,7 +52,7 @@ export class CSV extends React.Component {
 		loading: true,
 		mappingSuggestions: {},
 		name: '',
-		sourceFields: {}
+		sourceFields: {},
 	};
 
 	constructor(props) {
@@ -60,7 +65,7 @@ export class CSV extends React.Component {
 		this.state = {
 			...this.state,
 			fileName: dataSource.fileName,
-			name: dataSource.name
+			name: dataSource.name,
 		};
 	}
 
@@ -74,7 +79,7 @@ export class CSV extends React.Component {
 
 			this.setState({
 				fileName,
-				name
+				name,
 			});
 		}
 	}
@@ -84,16 +89,16 @@ export class CSV extends React.Component {
 		const {groupId, id} = this.props;
 
 		this.setState({
-			loading: true
+			loading: true,
 		});
 
 		return API.dataSource
 			.fetchMappingsLite({
 				context: FieldContexts.Demographics,
 				groupId,
-				id
+				id,
 			})
-			.then(mappings => {
+			.then((mappings) => {
 				const mappingSuggestions = {};
 				const sourceFields = {};
 
@@ -106,7 +111,7 @@ export class CSV extends React.Component {
 					fieldsIList: this.processMappings(mappings),
 					loading: false,
 					mappingSuggestions,
-					sourceFields
+					sourceFields,
 				});
 			})
 			.catch(noop);
@@ -120,7 +125,8 @@ export class CSV extends React.Component {
 
 		if (this._cachedNameValues.has(value)) {
 			error = this._cachedNameValues.get(value);
-		} else {
+		}
+		else {
 			error = validateUniqueName({groupId, value});
 
 			this._cachedNameValues.set(value, error);
@@ -143,12 +149,12 @@ export class CSV extends React.Component {
 				return new Map({
 					source: new Map({
 						name,
-						value: values[0]
+						value: values[0],
 					}),
 					suggestion: new Map({
 						name: suggestion && suggestion.name,
-						value: suggestion && suggestion.values[0]
-					})
+						value: suggestion && suggestion.values[0],
+					}),
 				});
 			})
 		);
@@ -158,14 +164,14 @@ export class CSV extends React.Component {
 	handleCSVPreviewModal() {
 		const {
 			props: {close, groupId, id, open},
-			state: {name}
+			state: {name},
 		} = this;
 
 		open(modalTypes.CSV_PREVIEW_MODAL, {
 			groupId,
 			id,
 			name,
-			onClose: close
+			onClose: close,
 		});
 	}
 
@@ -177,11 +183,11 @@ export class CSV extends React.Component {
 			.updateCSV({
 				groupId,
 				id,
-				name
+				name,
 			})
 			.then(() => {
 				this.setState({
-					name
+					name,
 				});
 			});
 	}
@@ -195,8 +201,8 @@ export class CSV extends React.Component {
 				loading,
 				mappingSuggestions,
 				name,
-				sourceFields
-			}
+				sourceFields,
+			},
 		} = this;
 
 		const authorized = currentUser.isAdmin();
@@ -206,40 +212,40 @@ export class CSV extends React.Component {
 				breadcrumbItems={[
 					breadcrumbs.getDataSources({groupId}),
 					breadcrumbs.getEntityName({
-						label: name
-					})
+						label: name,
+					}),
 				]}
 				className={getCN('csv-data-source-root', className)}
 				documentTitle={name || Liferay.Language.get('csv-file')}
 				groupId={groupId}
 			>
 				<Sheet>
-					<Sheet.Header className='header-content'>
-						<div className='page-title-group'>
-							<h3 className='w-50'>
+					<Sheet.Header className="header-content">
+						<div className="page-title-group">
+							<h3 className="w-50">
 								<DefinitionItem
 									editable={authorized}
 									onSubmit={this.handleUpdateName}
 									validate={sequence([
 										validateRequired,
 										validateMaxLength(255),
-										this.handleValidate
+										this.handleValidate,
 									])}
 									value={name}
 								/>
 							</h3>
 
 							{authorized && (
-								<div className='button-row'>
+								<div className="button-row">
 									<ClayLink
 										button
-										className='button-root'
-										displayType='primary'
+										className="button-root"
+										displayType="primary"
 										href={toRoute(
 											Routes.SETTINGS_DATA_SOURCE_EDIT,
 											{
 												groupId,
-												id
+												id,
 											}
 										)}
 									>
@@ -248,13 +254,13 @@ export class CSV extends React.Component {
 
 									<ClayLink
 										button
-										className='button-root'
-										displayType='primary'
+										className="button-root"
+										displayType="primary"
 										href={toRoute(
 											Routes.SETTINGS_DATA_SOURCE_DELETE,
 											{
 												groupId,
-												id
+												id,
 											}
 										)}
 									>
@@ -266,14 +272,14 @@ export class CSV extends React.Component {
 							)}
 						</div>
 
-						<div className='file-info'>
+						<div className="file-info">
 							<DefinitionItem value={fileName} />
 
 							<ClayButton
-								className='button-root toggle-preview'
-								display='secondary'
+								className="button-root toggle-preview"
+								display="secondary"
 								onClick={this.handleCSVPreviewModal}
-								size='sm'
+								size="sm"
 							>
 								{Liferay.Language.get('view-file-preview')}
 							</ClayButton>
@@ -281,7 +287,7 @@ export class CSV extends React.Component {
 					</Sheet.Header>
 
 					<Sheet.Body>
-						<h3 className='mappings-header'>
+						<h3 className="mappings-header">
 							{Liferay.Language.get('current-mappings')}
 						</h3>
 					</Sheet.Body>

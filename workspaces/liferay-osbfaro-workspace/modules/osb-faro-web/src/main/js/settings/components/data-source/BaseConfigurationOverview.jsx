@@ -1,16 +1,21 @@
-import BaseConfigurationItem, {
-	getStatusMessage
-} from 'settings/components/data-source/BaseConfigurationItem';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import Sheet from 'shared/components/Sheet';
-import {
-	DataSourceProgressStatuses,
-	DataSourceStatuses
-} from 'shared/util/constants';
 import {get} from 'lodash';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import BaseConfigurationItem, {
+	getStatusMessage,
+} from '~/settings/components/data-source/BaseConfigurationItem';
+import Sheet from '~/shared/components/Sheet';
+import {
+	DataSourceProgressStatuses,
+	DataSourceStatuses,
+} from '~/shared/util/constants';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 const ConfigurationItem = ({
 	buttonParams,
@@ -20,7 +25,7 @@ const ConfigurationItem = ({
 	href,
 	progress,
 	status,
-	title
+	title,
 }) => {
 	const current = get(progress, 'processedOperations', 0);
 	const total = get(progress, 'totalOperations', 0);
@@ -31,7 +36,7 @@ const ConfigurationItem = ({
 
 	const inProgress = [
 		DataSourceProgressStatuses.InProgress,
-		DataSourceProgressStatuses.Started
+		DataSourceProgressStatuses.Started,
 	].includes(get(progress, 'status'));
 
 	return (
@@ -39,7 +44,7 @@ const ConfigurationItem = ({
 			buttonParams={{
 				disabled,
 				href,
-				...buttonParams
+				...buttonParams,
 			}}
 			completion={current / total}
 			description={description}
@@ -48,7 +53,7 @@ const ConfigurationItem = ({
 				configured,
 				current,
 				dateRecorded: get(progress, 'dateRecorded'),
-				total
+				total,
 			})}
 			title={title}
 		/>
@@ -57,11 +62,11 @@ const ConfigurationItem = ({
 
 export default class BaseConfigurationOverview extends React.Component {
 	static defaultProps = {
-		configurationItems: []
+		configurationItems: [],
 	};
 
 	static propTypes = {
-		configurationItems: PropTypes.array
+		configurationItems: PropTypes.array,
 	};
 
 	render() {

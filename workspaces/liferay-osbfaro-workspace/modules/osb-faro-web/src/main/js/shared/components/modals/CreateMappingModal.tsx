@@ -1,34 +1,39 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import getCN from 'classnames';
+import {noop, trim} from 'lodash';
+import React, {useRef} from 'react';
+import * as API from '~/shared/api';
 import Form, {
 	toPromise,
 	validatePattern,
-	validateRequired
-} from 'shared/components/form';
-import getCN from 'classnames';
-import Modal from 'shared/components/modal';
-import React, {useRef} from 'react';
-import {FieldContexts} from 'shared/util/constants';
-import {noop, trim} from 'lodash';
-import {sequence} from 'shared/util/promise';
+	validateRequired,
+} from '~/shared/components/form';
+import Modal from '~/shared/components/modal';
+import {FieldContexts} from '~/shared/util/constants';
+import {sequence} from '~/shared/util/promise';
 
 const TYPES = [
 	{
 		name: Liferay.Language.get('text'),
-		value: 'Text'
+		value: 'Text',
 	},
 	{
 		name: Liferay.Language.get('number'),
-		value: 'Number'
+		value: 'Number',
 	},
 	{
 		name: Liferay.Language.get('boolean'),
-		value: 'Boolean'
+		value: 'Boolean',
 	},
 	{
 		name: Liferay.Language.get('date'),
-		value: 'Date'
-	}
+		value: 'Date',
+	},
 ];
 
 interface ICreateMappingModalProps
@@ -42,9 +47,9 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 	className,
 	groupId,
 	onClose,
-	onSubmit = noop
+	onSubmit = noop,
 }) => {
-	const _cachedNameValues = useRef(new Map());
+	const _cachedNameValuesRef = useRef(new Map());
 
 	type CreateMappingFormValues = {
 		name: string;
@@ -56,7 +61,7 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 			.create({
 				groupId,
 				name: trim(formValues.name),
-				type: formValues.type.value
+				type: formValues.type.value,
 			})
 			.then(onSubmit)
 			.catch(noop);
@@ -65,9 +70,10 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 	const validateUniqueName = (value: string) => {
 		let error = null;
 
-		if (_cachedNameValues.current.has(value)) {
-			error = _cachedNameValues.current.get(value);
-		} else {
+		if (_cachedNameValuesRef.current.has(value)) {
+			error = _cachedNameValuesRef.current.get(value);
+		}
+		else {
 			error = API.fieldMappings
 				.search({
 					context: FieldContexts.Demographics,
@@ -75,9 +81,9 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 					delta: 1,
 					fieldName: value,
 					groupId,
-					orderByType: ''
+					orderByType: '',
 				})
-				.then(result => {
+				.then((result) => {
 					let retVal = '';
 					if (result.total) {
 						retVal = Liferay.Language.get(
@@ -85,7 +91,7 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 						);
 					}
 
-					_cachedNameValues.current.set(value, retVal);
+					_cachedNameValuesRef.current.set(value, retVal);
 
 					return retVal;
 				})
@@ -98,7 +104,7 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 	return (
 		<Modal
 			className={getCN('create-mapping-modal-root', className)}
-			size='lg'
+			size="lg"
 		>
 			<Modal.Header
 				onClose={onClose}
@@ -114,7 +120,7 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 						<Form.Group autoFit>
 							<Form.Input
 								label={Liferay.Language.get('new-field-name')}
-								name='name'
+								name="name"
 								placeholder={Liferay.Language.get(
 									'enter-new-field-name'
 								)}
@@ -126,7 +132,7 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 											'field-name-must-start-with-a-letter-or-underscore-followed-by-at-most-127-letters-numbers-or-underscores'
 										)
 									),
-									validateUniqueName
+									validateUniqueName,
 								])}
 							/>
 
@@ -141,7 +147,7 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 									)}
 									caretDouble
 									items={TYPES}
-									name='type'
+									name="type"
 									showSearch={false}
 									validate={validateRequired}
 								/>
@@ -150,18 +156,18 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 
 						<Modal.Footer>
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 								onClick={onClose}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								disabled={!isValid}
-								displayType='primary'
-								type='submit'
+								displayType="primary"
+								type="submit"
 							>
 								{Liferay.Language.get('create')}
 							</ClayButton>

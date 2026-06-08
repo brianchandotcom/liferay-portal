@@ -1,16 +1,21 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import Distribution from 'contacts/components/Distribution';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import URLConstants from 'shared/util/url-constants';
 import {connect} from 'react-redux';
-import {fetchDistribution} from 'shared/actions/distributions';
-import {Sizes} from 'shared/util/constants';
+import Distribution from '~/contacts/components/Distribution';
+import {fetchDistribution} from '~/shared/actions/distributions';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import {Sizes} from '~/shared/util/constants';
+import URLConstants from '~/shared/util/url-constants';
 
 const SegmentDistribution = ({segment, ...otherProps}) => (
-	<div className='segment-distribution-root container-fluid'>
-		<div className='row'>
-			<div className='col-xl-12'>
+	<div className="container-fluid segment-distribution-root">
+		<div className="row">
+			<div className="col-xl-12">
 				<Distribution
 					distributionsKey={segment.id}
 					knownIndividualCount={segment.knownIndividualCount}
@@ -23,12 +28,12 @@ const SegmentDistribution = ({segment, ...otherProps}) => (
 									)}
 
 									<ClayLink
-										className='d-block'
+										className="d-block"
 										href={
 											URLConstants.SegmentsDistributionDocumentationLink
 										}
-										key='DOCUMENTATION'
-										target='_blank'
+										key="DOCUMENTATION"
+										target="_blank"
 									>
 										{Liferay.Language.get(
 											'learn-more-about-distribution'
@@ -39,7 +44,7 @@ const SegmentDistribution = ({segment, ...otherProps}) => (
 							icon={{
 								border: false,
 								size: Sizes.XXXLarge,
-								symbol: 'ac_satellite'
+								symbol: 'ac_satellite',
 							}}
 							title={Liferay.Language.get(
 								'there-are-no-results-found'

@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -20,36 +25,36 @@ interface ISelectDataSourceProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 	className,
-	sections = []
+	sections = [],
 }) => (
 	<div className={getCN('select-data-source-root', className)}>
 		{sections.map(({dataSources, title}) => (
 			<section key={title}>
-				<div className='h4 text-uppercase section-title'>{title}</div>
+				<div className="h4 section-title text-uppercase">{title}</div>
 
-				<div className='section-items'>
+				<div className="section-items">
 					{dataSources.map(
 						({iconName, iconSize, name, onClick, subtitle, url}) =>
 							url ? (
 								<ClayLink
 									button
-									className='button-root data-source-item'
-									displayType='unstyled'
+									className="button-root data-source-item"
+									displayType="unstyled"
 									href={url}
 									key={name}
 								>
-									<div className='image'>
+									<div className="image">
 										<ClayIcon
-											className='icon-root icon-size-xxxl'
+											className="icon-root icon-size-xxxl"
 											symbol={iconName}
 										/>
 									</div>
 
-									<div className='details'>
-										<div className='title'>
+									<div className="details">
+										<div className="title">
 											<div
 												className={getCN('h4', {
-													'm-0': !subtitle
+													'm-0': !subtitle,
 												})}
 											>
 												{name}
@@ -57,7 +62,7 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 										</div>
 
 										{subtitle && (
-											<div className='subtitle'>
+											<div className="subtitle">
 												{subtitle}
 											</div>
 										)}
@@ -65,23 +70,23 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 								</ClayLink>
 							) : (
 								<ClayButton
-									className='button-root data-source-item'
-									displayType='unstyled'
+									className="button-root data-source-item"
+									displayType="unstyled"
 									key={name}
 									onClick={onClick}
 								>
-									<div className='image'>
+									<div className="image">
 										<ClayIcon
 											className={`icon-root icon-size-${iconSize}`}
 											symbol={iconName}
 										/>
 									</div>
 
-									<div className='details'>
-										<div className='title'>
+									<div className="details">
+										<div className="title">
 											<div
 												className={getCN('h4', {
-													'm-0': !subtitle
+													'm-0': !subtitle,
 												})}
 											>
 												{name}
@@ -89,7 +94,7 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 										</div>
 
 										{subtitle && (
-											<div className='subtitle'>
+											<div className="subtitle">
 												{subtitle}
 											</div>
 										)}

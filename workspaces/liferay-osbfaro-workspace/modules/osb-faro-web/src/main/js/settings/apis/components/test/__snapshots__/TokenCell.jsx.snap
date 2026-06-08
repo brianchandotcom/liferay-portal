@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TokenCell renders 1`] = `
+<div>
+  <td
+    class=""
+    data-testid="row-token-4ABC"
+  >
+    <span
+      class="mr-1 text-secondary"
+    >
+      Token Ending In
+    </span>
+    <strong
+      class="font-weight-bold"
+    >
+      4ABC
+    </strong>
+  </td>
+</div>
+`;

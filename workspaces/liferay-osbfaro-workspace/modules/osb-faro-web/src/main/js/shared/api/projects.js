@@ -1,10 +1,16 @@
-import sendRequest from 'shared/util/request';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-export const activate = ({groupId}) =>
-	sendRequest({
+import sendRequest from '~/shared/util/request';
+
+export const activate = function activate({groupId}) {
+	return sendRequest({
 		method: 'POST',
-		path: `main/project/${groupId}/activate`
+		path: `main/project/${groupId}/activate`,
 	});
+};
 
 export function create({
 	corpProjectUuid,
@@ -13,7 +19,7 @@ export function create({
 	incidentReportEmailAddresses,
 	name,
 	serverLocation,
-	timeZoneId
+	timeZoneId,
 }) {
 	return sendRequest({
 		data: {
@@ -23,10 +29,10 @@ export function create({
 			incidentReportEmailAddresses,
 			name,
 			serverLocation,
-			timeZoneId
+			timeZoneId,
 		},
 		method: 'POST',
-		path: 'main/project'
+		path: 'main/project',
 	});
 }
 
@@ -35,17 +41,17 @@ export function configure({
 	friendlyURL,
 	groupId,
 	incidentReportEmailAddresses,
-	name
+	name,
 }) {
 	return sendRequest({
 		data: {
 			emailAddressDomains,
 			friendlyURL,
 			incidentReportEmailAddresses,
-			name
+			name,
 		},
 		method: 'PUT',
-		path: `main/project/${groupId}/configure`
+		path: `main/project/${groupId}/configure`,
 	});
 }
 
@@ -55,7 +61,7 @@ export function createTrial({
 	incidentReportEmailAddresses,
 	name,
 	serverLocation,
-	timeZoneId
+	timeZoneId,
 }) {
 	return sendRequest({
 		data: {
@@ -64,52 +70,52 @@ export function createTrial({
 			incidentReportEmailAddresses,
 			name,
 			serverLocation,
-			timeZoneId
+			timeZoneId,
 		},
 		method: 'POST',
-		path: 'main/project/trial'
+		path: 'main/project/trial',
 	});
 }
 
 export function fetchMany() {
 	return sendRequest({
 		method: 'GET',
-		path: 'main/project'
+		path: 'main/project',
 	});
 }
 
 export function fetch({groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `main/project/${groupId}`
+		path: `main/project/${groupId}`,
 	});
 }
 
 export function fetchEmailAddressDomains({groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `main/project/${groupId}/email_address_domains`
+		path: `main/project/${groupId}/email_address_domains`,
 	});
 }
 
 export function fetchFeatureUsages({groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `main/project/${groupId}/feature-usages`
+		path: `main/project/${groupId}/feature-usages`,
 	});
 }
 
 export function fetchProjectViaCorpProjectUuid({corpProjectUuid}) {
 	return sendRequest({
 		method: 'GET',
-		path: `main/project/corpProjectUuid/${corpProjectUuid}`
+		path: `main/project/corpProjectUuid/${corpProjectUuid}`,
 	});
 }
 
 export function fetchAvailableTimeZones() {
 	return sendRequest({
 		method: 'GET',
-		path: 'main/project/time_zones'
+		path: 'main/project/time_zones',
 	});
 }
 
@@ -119,7 +125,7 @@ export function update({
 	groupId,
 	incidentReportEmailAddresses,
 	name,
-	timeZoneId
+	timeZoneId,
 }) {
 	return sendRequest({
 		data: {
@@ -127,24 +133,24 @@ export function update({
 			friendlyURL: friendlyURL && `/${friendlyURL}`,
 			incidentReportEmailAddresses,
 			name,
-			timeZoneId
+			timeZoneId,
 		},
 		method: 'PUT',
-		path: `main/project/${groupId}`
+		path: `main/project/${groupId}`,
 	});
 }
 
 export function fetchJoinableProjects() {
 	return sendRequest({
 		method: 'GET',
-		path: 'main/project/joinable'
+		path: 'main/project/joinable',
 	});
 }
 
 export function sendRequestAccess(groupId) {
 	return sendRequest({
 		method: 'POST',
-		path: `main/${groupId}/user/join_request`
+		path: `main/${groupId}/user/join_request`,
 	});
 }
 
@@ -152,6 +158,6 @@ export function patchTimeZone(groupId, timeZoneId) {
 	return sendRequest({
 		data: {timeZoneId},
 		method: 'PATCH',
-		path: `main/project/${groupId}`
+		path: `main/project/${groupId}`,
 	});
 }

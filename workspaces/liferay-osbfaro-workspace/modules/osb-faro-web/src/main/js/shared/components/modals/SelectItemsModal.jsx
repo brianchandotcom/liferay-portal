@@ -1,23 +1,30 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import EntityList from 'shared/components/EntityList';
-import ListGroup from 'shared/components/list-group';
-import ListView from 'shared/components/ListView';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import SearchableModal from './SearchableModal';
+import autobind from 'autobind-decorator';
+import {Set} from 'immutable';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {Set} from 'immutable';
+import React from 'react';
+import EntityList from '~/shared/components/EntityList';
+import ListView from '~/shared/components/ListView';
+import Loading, {Align} from '~/shared/components/Loading';
+import ListGroup from '~/shared/components/list-group';
+import Modal from '~/shared/components/modal';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
+import SearchableModal from './SearchableModal';
 
 export class ItemComponent extends React.Component {
 	render() {
 		const {
 			className,
-			item: {name}
+			item: {name},
 		} = this.props;
+
 		return (
 			<ListGroup.ItemField className={className} expand>
 				{name}
@@ -33,9 +40,10 @@ export default class SelectItemsModal extends React.Component {
 		onSubmit: noop,
 		requireSelection: true,
 		selectedItems: [],
+
 		selectMultiple: true,
 		submitMessage: Liferay.Language.get('select'),
-		title: Liferay.Language.get('select-fields')
+		title: Liferay.Language.get('select-fields'),
 	};
 
 	static propTypes = {
@@ -48,16 +56,17 @@ export default class SelectItemsModal extends React.Component {
 		onSubmit: PropTypes.func,
 		requireSelection: PropTypes.bool,
 		selectedItems: PropTypes.array,
+
 		selectMultiple: PropTypes.bool,
 		submitMessage: PropTypes.string,
-		title: PropTypes.string
+		title: PropTypes.string,
 	};
 
 	state = {
 		disabledItemsISet: new Set(),
 		items: [],
 		selectedItemsISet: new Set(),
-		submitting: false
+		submitting: false,
 	};
 
 	constructor(props) {
@@ -68,7 +77,7 @@ export default class SelectItemsModal extends React.Component {
 		if (selectedItems && selectedItems.length) {
 			this.state = {
 				...this.state,
-				selectedItemsISet: new Set(selectedItems.map(({id}) => id))
+				selectedItemsISet: new Set(selectedItems.map(({id}) => id)),
 			};
 		}
 	}
@@ -83,7 +92,7 @@ export default class SelectItemsModal extends React.Component {
 
 					this.setState = {
 						disabledItemsISet: new Set(ids),
-						selectedItemsISet: new Set(ids)
+						selectedItemsISet: new Set(ids),
 					};
 				})
 				.catch(noop);
@@ -101,25 +110,25 @@ export default class SelectItemsModal extends React.Component {
 	@autobind
 	handleChange(items) {
 		const selectedItems = this.getSelectedItems().filter(
-			selectedItem => !items.find(item => item.id === selectedItem.id)
+			(selectedItem) => !items.find((item) => item.id === selectedItem.id)
 		);
 
 		this.setState({
-			items: [...selectedItems, ...items]
+			items: [...selectedItems, ...items],
 		});
 	}
 
 	@autobind
 	handleSelectItemsChange(newVal) {
 		this.setState({
-			selectedItemsISet: newVal
+			selectedItemsISet: newVal,
 		});
 	}
 
 	@autobind
 	handleSelectTreeItemsChange(newVal) {
 		this.setState({
-			selectedItemsISet: new Set(newVal)
+			selectedItemsISet: new Set(newVal),
 		});
 	}
 
@@ -128,7 +137,7 @@ export default class SelectItemsModal extends React.Component {
 		const {onClose, onSubmit} = this.props;
 
 		this.setState({
-			submitting: true
+			submitting: true,
 		});
 
 		const submitResult = onSubmit(this.getSelectedItems());
@@ -137,19 +146,20 @@ export default class SelectItemsModal extends React.Component {
 			submitResult
 				.then(() => {
 					this.setState({
-						submitting: false
+						submitting: false,
 					});
 
 					onClose();
 				})
-				.catch(err => {
-					if (!err.IS_CANCELLATION_ERROR) {
+				.catch((error) => {
+					if (!error.IS_CANCELLATION_ERROR) {
 						this.setState({
-							submitting: false
+							submitting: false,
 						});
 					}
 				});
-		} else {
+		}
+		else {
 			onClose();
 		}
 	}
@@ -168,7 +178,7 @@ export default class SelectItemsModal extends React.Component {
 				title,
 				...otherProps
 			},
-			state: {disabledItemsISet, items, selectedItemsISet, submitting}
+			state: {disabledItemsISet, items, selectedItemsISet, submitting},
 		} = this;
 
 		return (
@@ -179,20 +189,20 @@ export default class SelectItemsModal extends React.Component {
 				footer={
 					<Modal.Footer>
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={onClose}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
 						<ClayButton
-							className='button-root'
+							className="button-root"
 							disabled={
 								requireSelection &&
 								!this.getSelectedItems().length
 							}
-							displayType='primary'
+							displayType="primary"
 							onClick={this.handleSubmit}
 						>
 							{submitting && <Loading align={Align.Left} />}
@@ -212,8 +222,8 @@ export default class SelectItemsModal extends React.Component {
 						groupId={groupId}
 						items={items}
 						onSelectItemsChange={this.handleSelectItemsChange}
-						selectedItemsISet={selectedItemsISet}
 						selectMultiple={selectMultiple}
+						selectedItemsISet={selectedItemsISet}
 					/>
 				) : (
 					<ListView
@@ -221,8 +231,8 @@ export default class SelectItemsModal extends React.Component {
 						itemRenderer={ItemComponent}
 						items={items}
 						onSelectItemsChange={this.handleSelectItemsChange}
-						selectedItemsISet={selectedItemsISet}
 						selectMultiple={selectMultiple}
+						selectedItemsISet={selectedItemsISet}
 					/>
 				)}
 			</SearchableModal>

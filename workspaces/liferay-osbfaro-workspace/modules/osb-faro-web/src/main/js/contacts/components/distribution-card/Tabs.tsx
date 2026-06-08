@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import React, {createRef} from 'react';
-import ScrollableSection from 'shared/components/ScrollableSection';
-import {DistributionTab} from 'shared/util/records';
 import {List} from 'immutable';
+import React, {createRef} from 'react';
+import ScrollableSection from '~/shared/components/ScrollableSection';
+import {DistributionTab} from '~/shared/util/records';
 
 interface ITabItemProps {
 	active: boolean;
@@ -30,14 +35,14 @@ const TabItem: React.FC<ITabItemProps> = ({
 	id,
 	onDelete,
 	onSelect,
-	title
+	title,
 }) => (
 	<li className={getCN('tab-item d-flex align-items-baseline', {active})}>
 		{!active && (
 			<ClayButton
-				className='button-root tab-title'
+				className="button-root tab-title"
 				disabled={disabled}
-				displayType='unstyled'
+				displayType="unstyled"
 				onClick={() => onSelect(id)}
 			>
 				{title}
@@ -45,19 +50,19 @@ const TabItem: React.FC<ITabItemProps> = ({
 		)}
 
 		{active && (
-			<div className='tab-title active'>
+			<div className="active tab-title">
 				{title}
 
 				<ClayButton
 					aria-label={Liferay.Language.get('close')}
-					className='button-root remove-tab'
-					displayType='unstyled'
+					className="button-root remove-tab"
+					displayType="unstyled"
 					onClick={() => onDelete(id)}
-					size='sm'
+					size="sm"
 				>
 					<ClayIcon
-						className='icon-root icon-size-sm'
-						symbol='times'
+						className="icon-root icon-size-sm"
+						symbol="times"
 					/>
 				</ClayButton>
 			</div>
@@ -76,7 +81,7 @@ interface ITabsProps {
 
 export default class Tabs extends React.Component<ITabsProps> {
 	static defaultProps = {
-		itemsIList: List()
+		itemsIList: List(),
 	};
 
 	private _scrollableSectionRef = createRef<ScrollableSection>();
@@ -93,7 +98,8 @@ export default class Tabs extends React.Component<ITabsProps> {
 
 			if (count > prevCount) {
 				scrollToEnd();
-			} else if (count < prevCount) {
+			}
+			else if (count < prevCount) {
 				scrollToBeg();
 			}
 		}
@@ -106,13 +112,13 @@ export default class Tabs extends React.Component<ITabsProps> {
 			onDelete,
 			onSelect,
 			selectedTabIndex,
-			showAddProperty
+			showAddProperty,
 		} = this.props;
 
 		return (
-			<div className='tabs-root d-flex align-items-center justify-content-between'>
+			<div className="align-items-center d-flex justify-content-between tabs-root">
 				<ScrollableSection ref={this._scrollableSectionRef}>
-					<ul className='d-flex'>
+					<ul className="d-flex">
 						{itemsIList.toArray().map(({id, title}, i) => (
 							<TabItem
 								active={
@@ -133,14 +139,14 @@ export default class Tabs extends React.Component<ITabsProps> {
 					aria-label={Liferay.Language.get('add')}
 					borderless
 					className={getCN('button-root add-tab', {
-						active: showAddProperty
+						active: showAddProperty,
 					})}
-					displayType='secondary'
+					displayType="secondary"
 					monospaced
 					onClick={onAdd}
-					size='sm'
+					size="sm"
 				>
-					<ClayIcon symbol='plus' />
+					<ClayIcon symbol="plus" />
 				</ClayButton>
 			</div>
 		);

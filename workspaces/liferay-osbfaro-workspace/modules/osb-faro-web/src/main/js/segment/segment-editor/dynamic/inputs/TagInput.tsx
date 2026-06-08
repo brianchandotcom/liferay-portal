@@ -1,28 +1,34 @@
-import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
-import Form from 'shared/components/form';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Icon, Option, Picker} from '@clayui/core';
 import getCN from 'classnames';
-import Input from 'shared/components/Input';
 import React, {useEffect, useState} from 'react';
+import Input from '~/shared/components/Input';
+import Form from '~/shared/components/form';
+import {CustomValue} from '~/shared/util/records';
+
 import {
 	ASSET_TYPE_COMPATIBLE_EVENTS_MAP,
-	RelationalOperators
+	RelationalOperators,
 } from '../utils/constants';
+import {getIndexFromPropertyName} from '../utils/custom-inputs';
+import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
+import {isValid} from '../utils/utils';
+import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
 import {
 	ASSET_TYPE_OPTIONS,
-	buildRemoteFilterValue,
 	DEFAULT_CONJUNCTION_CRITERION,
 	EVENT_TYPE_OPTIONS,
+	OCCURRENCE_OPTIONS,
+	buildRemoteFilterValue,
 	getAssetTypeFromValue,
 	getConjunctionCriterionFromValue,
 	getEventTypeFromValue,
 	isValidOccurrenceCount,
-	OCCURRENCE_OPTIONS
 } from './shared/remote-filter-input-helpers';
-import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
-import {CustomValue} from 'shared/util/records';
-import {getIndexFromPropertyName} from '../utils/custom-inputs';
-import {Icon, Option, Picker} from '@clayui/core';
-import {isValid} from '../utils/utils';
 
 export {
 	ASSET_TYPE_OPTIONS,
@@ -30,13 +36,13 @@ export {
 	getAssetTypeFromValue,
 	getConjunctionCriterionFromValue,
 	getEventTypeFromValue,
-	OCCURRENCE_OPTIONS
+	OCCURRENCE_OPTIONS,
 };
 
 const TAG_CONFIG = {
 	idProperty: 'tags/id',
 	nameProperty: 'tags/name',
-	supportsCategories: false
+	supportsCategories: false,
 };
 
 export function buildValue(
@@ -56,7 +62,7 @@ export function buildValue(
 			entityName: tagName,
 			eventType,
 			occurrenceCount,
-			occurrenceOperator
+			occurrenceOperator,
 		},
 		TAG_CONFIG
 	);
@@ -67,7 +73,7 @@ export default function TagInput({
 	onChange,
 	operatorRenderer: OperatorDropdown,
 	property,
-	value
+	value,
 }: ISegmentEditorCustomInputBase) {
 	const rawOperator = value?.get('operator');
 
@@ -102,9 +108,11 @@ export default function TagInput({
 					conjunctionCriterion,
 					property.name,
 					displayValue ?? ''
-				)
+				),
 			});
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const isOccurrenceValid = (
@@ -130,26 +138,26 @@ export default function TagInput({
 				newCriterion,
 				property.name,
 				displayValue ?? ''
-			)
+			),
 		});
 	};
 
 	return (
-		<div className='criteria-statement'>
+		<div className="criteria-statement">
 			<Form.Group autoFit>
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('individual')}
 				</Form.GroupItem>
 
 				<OperatorDropdown />
 
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('triggered').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem shrink>
 					<Picker
-						className='criterion-input'
+						className="criterion-input"
 						items={EVENT_TYPE_OPTIONS.filter(({value}) =>
 							(
 								ASSET_TYPE_COMPATIBLE_EVENTS_MAP[
@@ -174,7 +182,7 @@ export default function TagInput({
 									conjunctionCriterion,
 									property.name,
 									displayValue ?? ''
-								)
+								),
 							});
 						}}
 						searchable
@@ -186,23 +194,23 @@ export default function TagInput({
 					</Picker>
 				</Form.GroupItem>
 
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('on-the-tag').toLowerCase()}
 				</Form.GroupItem>
 
-				<Form.GroupItem className='display-value' label shrink>
+				<Form.GroupItem className="display-value" label shrink>
 					<b>{displayValue}</b>
 				</Form.GroupItem>
 			</Form.Group>
 
 			<Form.Group autoFit>
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('for').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem shrink>
 					<Picker
-						className='criterion-input'
+						className="criterion-input"
 						items={ASSET_TYPE_OPTIONS}
 						onSelectionChange={(newAssetType: React.Key) => {
 							setAssetType(newAssetType);
@@ -236,7 +244,7 @@ export default function TagInput({
 									conjunctionCriterion,
 									property.name,
 									displayValue ?? ''
-								)
+								),
 							});
 						}}
 						selectedKey={assetType}
@@ -247,13 +255,13 @@ export default function TagInput({
 					</Picker>
 				</Form.GroupItem>
 
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('asset-type').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem shrink>
 					<Picker
-						className='operator-input'
+						className="operator-input"
 						items={OCCURRENCE_OPTIONS}
 						onSelectionChange={(newOperator: React.Key) => {
 							setOccurrenceOperator(newOperator);
@@ -274,7 +282,7 @@ export default function TagInput({
 									conjunctionCriterion,
 									property.name,
 									displayValue ?? ''
-								)
+								),
 							});
 						}}
 						selectedKey={occurrenceOperator}
@@ -287,15 +295,15 @@ export default function TagInput({
 
 				<Form.GroupItem
 					className={getCN({
-						'has-error': !occurrenceValid && occurrenceTouched
+						'has-error': !occurrenceValid && occurrenceTouched,
 					})}
 					shrink
 				>
 					<Input
-						className='number-input'
-						min='0'
+						className="number-input"
+						min="0"
 						onBlur={({
-							target: {value: inputVal}
+							target: {value: inputVal},
 						}: React.FocusEvent<HTMLInputElement>) => {
 							const valid = isValidOccurrenceCount(inputVal);
 
@@ -313,11 +321,11 @@ export default function TagInput({
 									conjunctionCriterion,
 									property.name,
 									displayValue ?? ''
-								)
+								),
 							});
 						}}
 						onChange={({
-							target: {value: inputVal}
+							target: {value: inputVal},
 						}: React.ChangeEvent<HTMLInputElement>) => {
 							let numberVal: string | number = '';
 
@@ -342,19 +350,19 @@ export default function TagInput({
 									conjunctionCriterion,
 									property.name,
 									displayValue ?? ''
-								)
+								),
 							});
 						}}
-						type='number'
+						type="number"
 						value={occurrenceCount}
 					/>
 
 					{occurrenceTouched && occurrenceCount === '' && (
-						<div className='form-feedback-group'>
-							<div className='form-feedback-item'>
+						<div className="form-feedback-group">
+							<div className="form-feedback-item">
 								<Icon
-									className='mr-1'
-									symbol='exclamation-full'
+									className="mr-1"
+									symbol="exclamation-full"
 								/>
 								{Liferay.Language.get('required')}
 							</div>
@@ -362,7 +370,7 @@ export default function TagInput({
 					)}
 				</Form.GroupItem>
 
-				<Form.GroupItem className='unit' label shrink>
+				<Form.GroupItem className="unit" label shrink>
 					{Liferay.Language.get('times')}
 				</Form.GroupItem>
 

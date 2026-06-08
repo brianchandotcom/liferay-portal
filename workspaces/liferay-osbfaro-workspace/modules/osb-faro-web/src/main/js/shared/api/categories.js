@@ -1,4 +1,9 @@
-import sendRequest from 'shared/util/request';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import sendRequest from '~/shared/util/request';
 
 export function search({
 	channelId,
@@ -6,12 +11,12 @@ export function search({
 	keywords = '',
 	page = 1,
 	pageSize = 20,
-	vocabularyId = ''
+	vocabularyId = '',
 }) {
 	return sendRequest({
 		data: {channelId, keywords, page, pageSize, vocabularyId},
 		method: 'GET',
-		path: `contacts/${groupId}/asset-summary-categories`
+		path: `contacts/${groupId}/asset-summary-categories`,
 	});
 }
 
@@ -19,7 +24,7 @@ export function fetchAccountTopCategories({
 	accountId,
 	channelId,
 	groupId,
-	selectedMetric
+	selectedMetric,
 }) {
 	return sendRequest({
 		data: {
@@ -27,9 +32,9 @@ export function fetchAccountTopCategories({
 			channelId,
 			pageSize: 5,
 			selectedMetric,
-			sort: `${selectedMetric},desc`
+			sort: `${selectedMetric},desc`,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/asset-summary-categories`
+		path: `contacts/${groupId}/asset-summary-categories`,
 	});
 }

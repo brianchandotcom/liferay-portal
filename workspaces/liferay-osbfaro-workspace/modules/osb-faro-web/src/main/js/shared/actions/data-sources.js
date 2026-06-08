@@ -1,6 +1,12 @@
-import * as API from 'shared/api';
-import {CALL_API} from '../middleware/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {createActionTypes} from 'redux-toolbox';
+import * as API from '~/shared/api';
+
+import {CALL_API} from '../middleware/api';
 import {dataSource} from '../middleware/schema';
 
 export const actionTypes = {
@@ -10,7 +16,7 @@ export const actionTypes = {
 	...createActionTypes('fetch', 'data_source'),
 	...createActionTypes('update', 'csv_data_source'),
 	...createActionTypes('update', 'liferay_data_source'),
-	...createActionTypes('update', 'salesforce_data_source')
+	...createActionTypes('update', 'salesforce_data_source'),
 };
 
 export function createLiferayDataSource(data) {
@@ -23,14 +29,14 @@ export function createLiferayDataSource(data) {
 				types: [
 					actionTypes.CREATE_LIFERAY_DATA_SOURCE_REQUEST,
 					actionTypes.CREATE_LIFERAY_DATA_SOURCE_SUCCESS,
-					actionTypes.CREATE_LIFERAY_DATA_SOURCE_FAILURE
-				]
-			}
+					actionTypes.CREATE_LIFERAY_DATA_SOURCE_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: data.id
+			id: data.id,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -44,14 +50,14 @@ export function createSalesforceDataSource(data) {
 				types: [
 					actionTypes.CREATE_SALESFORCE_DATA_SOURCE_REQUEST,
 					actionTypes.CREATE_SALESFORCE_DATA_SOURCE_SUCCESS,
-					actionTypes.CREATE_SALESFORCE_DATA_SOURCE_FAILURE
-				]
-			}
+					actionTypes.CREATE_SALESFORCE_DATA_SOURCE_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: data.id
+			id: data.id,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -64,15 +70,15 @@ export function deleteDataSource({groupId, id}) {
 				types: [
 					actionTypes.DELETE_DATA_SOURCE_REQUEST,
 					actionTypes.DELETE_DATA_SOURCE_SUCCESS,
-					actionTypes.DELETE_DATA_SOURCE_FAILURE
-				]
+					actionTypes.DELETE_DATA_SOURCE_FAILURE,
+				],
 			},
-			id
+			id,
 		},
 		payload: {
-			id
+			id,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -86,14 +92,14 @@ export function fetchDataSource({groupId, id}) {
 				types: [
 					actionTypes.FETCH_DATA_SOURCE_REQUEST,
 					actionTypes.FETCH_DATA_SOURCE_SUCCESS,
-					actionTypes.FETCH_DATA_SOURCE_FAILURE
-				]
-			}
+					actionTypes.FETCH_DATA_SOURCE_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id
+			id,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -107,14 +113,14 @@ export function updateCSVDataSource(data) {
 				types: [
 					actionTypes.UPDATE_CSV_DATA_SOURCE_REQUEST,
 					actionTypes.UPDATE_CSV_DATA_SOURCE_SUCCESS,
-					actionTypes.UPDATE_CSV_DATA_SOURCE_FAILURE
-				]
-			}
+					actionTypes.UPDATE_CSV_DATA_SOURCE_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: data.id
+			id: data.id,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -128,14 +134,14 @@ export function updateLiferayDataSource(data) {
 				types: [
 					actionTypes.UPDATE_LIFERAY_DATA_SOURCE_REQUEST,
 					actionTypes.UPDATE_LIFERAY_DATA_SOURCE_SUCCESS,
-					actionTypes.UPDATE_LIFERAY_DATA_SOURCE_FAILURE
-				]
-			}
+					actionTypes.UPDATE_LIFERAY_DATA_SOURCE_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: data.id
+			id: data.id,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -149,13 +155,13 @@ export function updateSalesforceDataSource(data) {
 				types: [
 					actionTypes.UPDATE_SALESFORCE_DATA_SOURCE_REQUEST,
 					actionTypes.UPDATE_SALESFORCE_DATA_SOURCE_SUCCESS,
-					actionTypes.UPDATE_SALESFORCE_DATA_SOURCE_FAILURE
-				]
-			}
+					actionTypes.UPDATE_SALESFORCE_DATA_SOURCE_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: data.id
+			id: data.id,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

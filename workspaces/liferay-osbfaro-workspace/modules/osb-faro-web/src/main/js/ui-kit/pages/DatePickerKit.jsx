@@ -1,26 +1,32 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import DatePicker from 'shared/components/date-picker';
 import moment from 'moment';
 import React from 'react';
+import DatePicker from '~/shared/components/date-picker';
+
 import Row from '../components/Row';
 
 class DatePickerKit extends React.Component {
 	state = {
 		date: moment(),
-		range: {end: null, start: null}
+		range: {end: null, start: null},
 	};
 
 	@autobind
 	handleSelect(date) {
 		this.setState({
-			date
+			date,
 		});
 	}
 
 	@autobind
 	handleSelectRange(range) {
 		this.setState({
-			range
+			range,
 		});
 	}
 

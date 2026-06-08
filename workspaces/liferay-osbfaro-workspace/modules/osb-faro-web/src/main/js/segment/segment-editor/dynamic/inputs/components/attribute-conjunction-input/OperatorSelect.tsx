@@ -1,13 +1,19 @@
-import Form from 'shared/components/form';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Option, Picker} from '@clayui/core';
 import React from 'react';
-import {Criterion} from '../../../utils/types';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from '~/event-analysis/utils/types';
+import Form from '~/shared/components/form';
+
 import {
 	FunctionalOperators,
-	RelationalOperators
+	RelationalOperators,
 } from '../../../utils/constants';
+import {Criterion} from '../../../utils/types';
 import {getDefaultAttributeValue, getOperatorOptions} from './utils';
-import {Option, Picker} from '@clayui/core';
 
 interface IOperatorSelectProps {
 	dataType: DataTypes;
@@ -18,11 +24,11 @@ interface IOperatorSelectProps {
 const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 	dataType,
 	onChange,
-	operatorName
+	operatorName,
 }) => {
 	if (dataType === DataTypes.Boolean) {
 		return (
-			<Form.GroupItem className='conjunction ml-1 mr-1' label shrink>
+			<Form.GroupItem className="conjunction ml-1 mr-1" label shrink>
 				{Liferay.Language.get('is')}
 			</Form.GroupItem>
 		);
@@ -31,17 +37,17 @@ const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 	return (
 		<Form.GroupItem shrink>
 			<Picker
-				className='operator-input'
+				className="operator-input"
 				items={
 					getOperatorOptions(dataType) as {
 						label: string;
 						value: string;
 					}[]
 				}
-				onSelectionChange={newOperatorName => {
+				onSelectionChange={(newOperatorName) => {
 					let criterion: Criterion = {
 						operatorName:
-							newOperatorName as unknown as Criterion['operatorName']
+							newOperatorName as unknown as Criterion['operatorName'],
 					};
 
 					if (
@@ -57,7 +63,7 @@ const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 								newOperatorName as
 									| FunctionalOperators
 									| RelationalOperators
-							)
+							),
 						};
 					}
 

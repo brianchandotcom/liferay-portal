@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export type ColorType = 'danger' | 'secondary' | 'success';
 
 export type Metric = {
@@ -10,7 +15,7 @@ export enum MetricNames {
 	AverageSegmentMembershipDurationMetric = 'averageSegmentMembershipDurationMetric',
 	EntryRateMetric = 'entryRateMetric',
 	ExitRateMetric = 'exitRate',
-	TotalMembersMetric = 'totalMembersMetric'
+	TotalMembersMetric = 'totalMembersMetric',
 }
 
 export const METRICS_TEXT: Record<MetricNames, string> = {
@@ -25,7 +30,7 @@ export const METRICS_TEXT: Record<MetricNames, string> = {
 	),
 	[MetricNames.TotalMembersMetric]: Liferay.Language.get(
 		'this-is-the-total-number-of-individuals-included-in-this-segment,-whether-known-or-anonymous'
-	)
+	),
 };
 
 export const METRICS_TITLES: Record<MetricNames, string> = {
@@ -34,7 +39,7 @@ export const METRICS_TITLES: Record<MetricNames, string> = {
 	),
 	[MetricNames.EntryRateMetric]: Liferay.Language.get('entry-rate'),
 	[MetricNames.ExitRateMetric]: Liferay.Language.get('exit-rate'),
-	[MetricNames.TotalMembersMetric]: Liferay.Language.get('total-members')
+	[MetricNames.TotalMembersMetric]: Liferay.Language.get('total-members'),
 };
 
 export type TotalMembersMetric = Metric & {
@@ -49,5 +54,5 @@ export type Trend = {
 export enum TrendClassification {
 	Negative = 'NEGATIVE',
 	Neutral = 'NEUTRAL',
-	Positive = 'POSITIVE'
+	Positive = 'POSITIVE',
 }

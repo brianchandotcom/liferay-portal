@@ -1,87 +1,96 @@
-import * as API from 'shared/api';
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
-import BundleRouter from 'route-middleware/BundleRouter';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
-import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
-import ErrorPage from 'shared/pages/ErrorPage';
 import getCN from 'classnames';
-import Label from 'shared/components/Label';
-import Loading from 'shared/components/Loading';
 import React, {
-	lazy,
 	Suspense,
+	lazy,
 	useContext,
 	useEffect,
 	useMemo,
-	useState
+	useState,
 } from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import {AlertTypes} from 'shared/components/Alert';
-import {ChannelContext} from 'shared/context/channel';
-import {CSVType} from 'shared/components/download-report/utils';
-import {DownloadReportDropdown} from 'shared/components/download-report/DownloadReportDropdown';
-import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
-import {formatUTCDate} from 'shared/util/date';
-import {getMatchedRoute, Routes, SEGMENTS, toRoute} from 'shared/util/router';
-import {Segment} from 'shared/util/records';
-import {SegmentStates, SegmentTypes} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
 import {Switch, useParams} from 'react-router-dom';
-import {Text} from '@clayui/core';
-import {useRequest} from 'shared/hooks/useRequest';
+import BundleRouter from '~/route-middleware/BundleRouter';
+import * as API from '~/shared/api';
+import {AlertTypes} from '~/shared/components/Alert';
+import EmbeddedAlertList from '~/shared/components/EmbeddedAlertList';
+import Label from '~/shared/components/Label';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import BasePage from '~/shared/components/base-page';
+import DownloadPDFReport from '~/shared/components/download-report/DownloadPDFReport';
+import {DownloadReportDropdown} from '~/shared/components/download-report/DownloadReportDropdown';
+import {DownloadStaticCSVReport} from '~/shared/components/download-report/DownloadStaticCSVReport';
+import {CSVType} from '~/shared/components/download-report/utils';
+import {ChannelContext} from '~/shared/context/channel';
+import {useRequest} from '~/shared/hooks/useRequest';
+import ErrorPage from '~/shared/pages/ErrorPage';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {SegmentStates, SegmentTypes} from '~/shared/util/constants';
+import {formatUTCDate} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {Segment} from '~/shared/util/records';
+import {Routes, SEGMENTS, getMatchedRoute, toRoute} from '~/shared/util/router';
 
-const Overview = lazy(() =>
-	import(/* webpackChunkName: "SegmentOverview" */ './Overview')
+const Overview = lazy(
+	() => import(/* webpackChunkName: "SegmentOverview" */ './Overview')
 );
-const OverviewRealTime = lazy(() =>
-	import(/* webpackChunkName: "SegmentOverview" */ './OverviewRealTime')
+const OverviewRealTime = lazy(
+	() => import(/* webpackChunkName: "SegmentOverview" */ './OverviewRealTime')
 );
-const Membership = lazy(() =>
-	import(/* webpackChunkName: "SegmentMembership" */ './Membership')
+const Membership = lazy(
+	() => import(/* webpackChunkName: "SegmentMembership" */ './Membership')
 );
-const Interests = lazy(() =>
-	import(/* webpackChunkName: "SegmentInterests" */ './Interests')
+const Interests = lazy(
+	() => import(/* webpackChunkName: "SegmentInterests" */ './Interests')
 );
-const InterestDetails = lazy(() =>
-	import(/* webpackChunkName: "SegmentInterestDetails" */ './InterestDetails')
+const InterestDetails = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "SegmentInterestDetails" */ './InterestDetails'
+		)
 );
-const Distribution = lazy(() =>
-	import(/* webpackChunkName: "SegmentDistribution" */ './Distribution')
+const Distribution = lazy(
+	() => import(/* webpackChunkName: "SegmentDistribution" */ './Distribution')
 );
 
 const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.CONTACTS_SEGMENT
+		route: Routes.CONTACTS_SEGMENT,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('membership'),
-		route: Routes.CONTACTS_SEGMENT_MEMBERSHIP
+		route: Routes.CONTACTS_SEGMENT_MEMBERSHIP,
 	},
 	{
 		exact: false,
 		label: Liferay.Language.get('interests'),
-		route: Routes.CONTACTS_SEGMENT_INTERESTS
+		route: Routes.CONTACTS_SEGMENT_INTERESTS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('distribution'),
-		route: Routes.CONTACTS_SEGMENT_DISTRIBUTION
-	}
+		route: Routes.CONTACTS_SEGMENT_DISTRIBUTION,
+	},
 ];
 
 const SEGMENTS_LANGUAGE_MAP = {
 	[SegmentTypes.Batch]: Liferay.Language.get('batch-segment'),
-	[SegmentTypes.RealTime]: Liferay.Language.get('real-time-segment')
+	[SegmentTypes.RealTime]: Liferay.Language.get('real-time-segment'),
 };
 
-export const SegmentProfileRoutes = () => {
+export const SegmentProfileRoutes = function SegmentProfileRoutes() {
 	const {selectedChannel} = useContext(ChannelContext);
 
 	const {channelId, groupId, id} = useParams();
@@ -91,8 +100,8 @@ export const SegmentProfileRoutes = () => {
 		variables: {
 			groupId,
 			includeReferencedObjects: true,
-			segmentId: id
-		}
+			segmentId: id,
+		},
 	});
 
 	const segment = useMemo(() => new Segment(data), [data]);
@@ -100,7 +109,7 @@ export const SegmentProfileRoutes = () => {
 	const [segmentDetails, setSegmentDetails] = useState({
 		dateModified: segment.dateModified,
 		name: segment.name,
-		segmentType: segment.segmentType
+		segmentType: segment.segmentType,
 	});
 
 	useEffect(() => {
@@ -108,9 +117,11 @@ export const SegmentProfileRoutes = () => {
 			setSegmentDetails({
 				dateModified: segment.dateModified,
 				name: segment.name,
-				segmentType: segment.segmentType
+				segmentType: segment.segmentType,
 			});
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, loading]);
 
 	if (loading && !segmentDetails.name) {
@@ -125,7 +136,7 @@ export const SegmentProfileRoutes = () => {
 				href={toRoute(Routes.CONTACTS_LIST_ENTITY, {
 					channelId,
 					groupId,
-					type: SEGMENTS
+					type: SEGMENTS,
 				})}
 				linkLabel={Liferay.Language.get('go-to-segments')}
 				message={Liferay.Language.get(
@@ -146,18 +157,19 @@ export const SegmentProfileRoutes = () => {
 					message: Liferay.Language.get(
 						'segment-data-is-processing-please-check-back-later'
 					),
-					stripe: true
-				}
+					stripe: true,
+				},
 			];
-		} else if (checkDisabled()) {
+		}
+		else if (checkDisabled()) {
 			return [
 				{
 					alertType: AlertTypes.Danger,
 					message: Liferay.Language.get(
 						'this-segment-is-disabled-because-some-criteria-has-been-affected-by-removal-of-a-data-source.-to-continue-using-this-segment-please-update-the-criteria'
 					),
-					stripe: true
-				}
+					stripe: true,
+				},
 			];
 		}
 	};
@@ -166,7 +178,7 @@ export const SegmentProfileRoutes = () => {
 	const lastUpdateMessage = sub(Liferay.Language.get('last-update-x'), [
 		formatUTCDate(segmentDetails.dateModified, 'MMM DD, YYYY hh:mm a')
 			.replace('am', 'a.m.')
-			.replace('pm', 'p.m.')
+			.replace('pm', 'p.m.'),
 	]);
 
 	return (
@@ -185,22 +197,22 @@ export const SegmentProfileRoutes = () => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
+						label: selectedChannel && selectedChannel.name,
 					}),
 					breadcrumbs.getSegments({channelId, groupId}),
-					breadcrumbs.getEntityName({label: segmentDetails.name})
+					breadcrumbs.getEntityName({label: segmentDetails.name}),
 				]}
 				groupId={groupId}
 			>
 				<BasePage.Row>
 					<BasePage.Header.TitleSection
-						className='mb-3'
+						className="mb-3"
 						subtitle={`${Liferay.Language.get('erc')}: ${
 							segment.externalReferenceCode
 						}`}
 						title={title}
 					>
-						<Label display='secondary' size='lg' uppercase>
+						<Label display="secondary" size="lg" uppercase>
 							{SEGMENTS_LANGUAGE_MAP[segmentDetails.segmentType]}
 						</Label>
 					</BasePage.Header.TitleSection>
@@ -218,13 +230,13 @@ export const SegmentProfileRoutes = () => {
 												channelId,
 												groupId,
 												id,
-												type: SEGMENTS
+												type: SEGMENTS,
 											}
 										),
 										label: Liferay.Language.get(
 											'edit-segment'
-										)
-									}
+										),
+									},
 								]}
 							/>
 						</BasePage.Header.Section>
@@ -242,7 +254,7 @@ export const SegmentProfileRoutes = () => {
 			{isBatch &&
 				getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_SEGMENT && (
 					<BasePage.SubHeader>
-						<div className='d-flex justify-content-end w-100'>
+						<div className="d-flex justify-content-end w-100">
 							<DownloadPDFReport
 								disabled={false}
 								showDateRange={false}
@@ -257,7 +269,7 @@ export const SegmentProfileRoutes = () => {
 				getMatchedRoute(NAV_ITEMS) ===
 					Routes.CONTACTS_SEGMENT_MEMBERSHIP && (
 					<BasePage.SubHeader>
-						<div className='d-flex justify-content-end w-100'>
+						<div className="d-flex justify-content-end w-100">
 							<DownloadStaticCSVReport
 								disabled={checkDisabled()}
 								segmentId={segment.id}
@@ -272,15 +284,15 @@ export const SegmentProfileRoutes = () => {
 
 			{!isBatch && (
 				<BasePage.SubHeader>
-					<div className='align-items-center d-flex justify-content-end w-100'>
-						<Text color='secondary' size={3}>
+					<div className="align-items-center d-flex justify-content-end w-100">
+						<Text color="secondary" size={3}>
 							{lastUpdateMessage}
 						</Text>
 
-						<span className='mr-2 ml-3'>{'|'}</span>
+						<span className="ml-3 mr-2">|</span>
 
 						<DownloadReportDropdown
-							className='button-root'
+							className="button-root"
 							label={Liferay.Language.get('real-time-segment')}
 							segmentId={segment.id}
 							subtitle={lastUpdateMessage}
@@ -290,17 +302,17 @@ export const SegmentProfileRoutes = () => {
 						<ClayButton
 							borderless
 							button
-							className='button-root'
+							className="button-root"
 							disabled={loading}
-							displayType='secondary'
+							displayType="secondary"
 							key={Liferay.Language.get('refresh-data')}
 							onClick={refetch}
-							size='sm'
+							size="sm"
 						>
 							{loading ? (
-								<Loading align='false' className='mr-2 mt-n1' />
+								<Loading align="false" className="mr-2 mt-n1" />
 							) : (
-								<ClayIcon className='mr-2' symbol='reload' />
+								<ClayIcon className="mr-2" symbol="reload" />
 							)}
 							{Liferay.Language.get('refresh-data')}
 						</ClayButton>
@@ -308,16 +320,16 @@ export const SegmentProfileRoutes = () => {
 						<ClayLink
 							borderless
 							button
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							href={toRoute(Routes.CONTACTS_SEGMENT_EDIT, {
 								channelId,
 								groupId,
-								id
+								id,
 							})}
 							small
 						>
-							<ClayIcon className='mr-2' symbol='pencil' />
+							<ClayIcon className="mr-2" symbol="pencil" />
 							{Liferay.Language.get('edit-segment')}
 						</ClayLink>
 					</div>

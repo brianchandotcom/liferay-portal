@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export const MAIN_NODE_COLOR = '#50D2A0';
 
 export const MAIN_NODE_HEIGHT = 80;
@@ -20,7 +25,7 @@ export const CHART_COLORS = [
 	'#FF73C3',
 	'#FFD76E',
 	'#9CE269',
-	'#5FC8FF'
+	'#5FC8FF',
 ];
 
 export const URL_COLOR = '#6B6C7E';

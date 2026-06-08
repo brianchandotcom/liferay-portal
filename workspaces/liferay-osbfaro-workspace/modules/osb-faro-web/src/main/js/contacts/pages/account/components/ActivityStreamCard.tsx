@@ -1,47 +1,53 @@
-import AccountEventMetricQuery, {
-	AccountEventMetricsData,
-	AccountEventMetricsVariables
-} from 'shared/queries/AccountEventMetricQuery';
-import AccountEventsTrendQuery, {
-	AccountEventsTrendData,
-	AccountEventsTrendVariables
-} from 'shared/queries/AccountEventsTrendQuery';
-import AccountUserSessionQuery, {
-	AccountUserSessionData,
-	AccountUserSessionVariables
-} from 'shared/queries/AccountUserSessionQuery';
-import ActivitiesChart from 'contacts/components/ActivitiesChart';
-import ActivityStreamTimeline from './ActivityStreamTimeline';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import {isNil} from 'lodash';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import SearchInput from 'shared/components/SearchInput';
-import URLConstants from 'shared/util/url-constants';
+import ActivitiesChart from '~/contacts/components/ActivitiesChart';
+import {TrendClassification} from '~/segment/types';
+import Card from '~/shared/components/Card';
+import SearchInput from '~/shared/components/SearchInput';
+import {WrapSafeResults} from '~/shared/hoc/util';
+import {useSelectedPoint} from '~/shared/hooks/useSelectedPoint';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import AccountEventMetricQuery, {
+	AccountEventMetricsData,
+	AccountEventMetricsVariables,
+} from '~/shared/queries/AccountEventMetricQuery';
+import AccountEventsTrendQuery, {
+	AccountEventsTrendData,
+	AccountEventsTrendVariables,
+} from '~/shared/queries/AccountEventsTrendQuery';
+import AccountUserSessionQuery, {
+	AccountUserSessionData,
+	AccountUserSessionVariables,
+} from '~/shared/queries/AccountUserSessionQuery';
+import {Interval, RangeSelectors, SafeRangeSelectors} from '~/shared/types';
+import {RangeKeyTimeRanges, SessionEntityTypes} from '~/shared/util/constants';
 import {
 	DEFAULT_DATE_FORMAT,
 	formatUTCDate,
 	getDateRangeLabel,
 	getDateRangeLabelFromDate,
-	getEndDate
-} from 'shared/util/date';
-import {fetchPolicyDefinition} from 'shared/util/graphql';
-import {getIcon, getStatsColor} from 'shared/util/metrics';
-import {getSafeRangeSelectors} from 'shared/util/util';
-import {Interval, RangeSelectors, SafeRangeSelectors} from 'shared/types';
-import {isNil} from 'lodash';
-import {mapListResultsToProps} from 'shared/util/mappers';
-import {RangeKeyTimeRanges, SessionEntityTypes} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
-import {Text} from '@clayui/core';
-import {toRounded} from 'shared/util/numbers';
-import {TrendClassification} from 'segment/types';
-import {useQuery} from '@apollo/client';
-import {useSelectedPoint} from 'shared/hooks/useSelectedPoint';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
-import {WrapSafeResults} from 'shared/hoc/util';
+	getEndDate,
+} from '~/shared/util/date';
+import {fetchPolicyDefinition} from '~/shared/util/graphql';
+import {sub} from '~/shared/util/lang';
+import {mapListResultsToProps} from '~/shared/util/mappers';
+import {getIcon, getStatsColor} from '~/shared/util/metrics';
+import {toRounded} from '~/shared/util/numbers';
+import URLConstants from '~/shared/util/url-constants';
+import {getSafeRangeSelectors} from '~/shared/util/util';
+
+import ActivityStreamTimeline from './ActivityStreamTimeline';
 
 const formatTimestamp = (timestamp: number): string => {
 	const date = new Date(timestamp);
@@ -63,7 +69,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 	accountId,
 	channelId,
 	interval,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const {hasSelectedPoint, onPointSelect, selectedPoint} = useSelectedPoint();
 
@@ -75,6 +81,8 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 
 	useEffect(() => {
 		resetPage();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [rangeSelectors.rangeKey]);
 
 	const safeRangeSelectors = getSafeRangeSelectors(rangeSelectors);
@@ -91,8 +99,8 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 			entityType: SessionEntityTypes.Individual,
 			interval,
 			keywords,
-			...safeRangeSelectors
-		}
+			...safeRangeSelectors,
+		},
 	});
 
 	const {
@@ -100,7 +108,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		items: activityHistory,
 		loading,
 		refetch,
-		total: totalSessions
+		total: totalSessions,
 	} = mapListResultsToProps(metricResponse, ({eventMetric}) => ({
 		items: eventMetric.totalEventsMetric.histogram.metrics?.map(
 			({key, value}, index: number) => ({
@@ -109,10 +117,10 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 				totalSessions:
 					eventMetric?.totalSessionsMetric?.histogram?.metrics?.[
 						index
-					].value
+					].value,
 			})
 		),
-		total: eventMetric.totalSessionsMetric?.value
+		total: eventMetric.totalSessionsMetric?.value,
 	}));
 
 	const trendResponse = useQuery<
@@ -126,8 +134,8 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 			entityId: '',
 			entityType: SessionEntityTypes.Individual,
 			keywords,
-			...safeRangeSelectors
-		}
+			...safeRangeSelectors,
+		},
 	});
 
 	const getDateRange = (): SafeRangeSelectors => {
@@ -156,14 +164,14 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 				rangeKey: rangeSelectors.rangeKey,
 				rangeStart: `${formattedRangeStart}T${formatTimestamp(
 					intervalInitDate
-				)}`
+				)}`,
 			});
 		}
 
 		return getSafeRangeSelectors({
 			rangeEnd: formattedRangeEnd,
 			rangeKey: rangeSelectors.rangeKey,
-			rangeStart: formattedRangeStart
+			rangeStart: formattedRangeStart,
 		});
 	};
 
@@ -180,8 +188,8 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 			keywords,
 			page: page - 1,
 			size: delta,
-			...getDateRange()
-		}
+			...getDateRange(),
+		},
 	});
 
 	const sessionsData = sessionsResponse.data?.eventsByUserSessions;
@@ -231,28 +239,28 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 
 	return (
 		<WrapSafeResults
-			className='flex-grow-1 loading-root'
+			className="flex-grow-1 loading-root"
 			error={error}
 			errorProps={{
 				className: 'flex-grow-1',
-				onReload: refetch
+				onReload: refetch,
 			}}
 			loading={loading}
 			page={false}
 			pageDisplay={false}
 		>
 			<Card.Body>
-				<div className='account-activity-stream'>
-					<div className='trend-summary mb-4'>
-						<div className='font-weight-semi-bold'>
+				<div className="account-activity-stream">
+					<div className="mb-4 trend-summary">
+						<div className="font-weight-semi-bold">
 							<Text size={7}>
 								{sub(Liferay.Language.get('x-activities'), [
-									trendValue
+									trendValue,
 								])}
 							</Text>
 						</div>
 
-						<div className='text-secondary'>
+						<div className="text-secondary">
 							{!isNil(trendClassification) &&
 								trendClassification !==
 									TrendClassification.Neutral && (
@@ -260,7 +268,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 										style={{
 											color: getStatsColor(
 												trendClassification
-											)
+											),
 										}}
 										symbol={getIcon(trendPercentage) ?? ''}
 									/>
@@ -270,26 +278,26 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 								Liferay.Language.get('x-vs-previous-period'),
 								[
 									<span
-										className='mr-1'
-										key='percentage'
+										className="mr-1"
+										key="percentage"
 										style={{
 											color: getStatsColor(
 												trendClassification || ''
-											)
+											),
 										}}
 									>
 										{`${toRounded(
 											Math.abs(trendPercentage),
 											2
 										)}%`}
-									</span>
+									</span>,
 								],
 								false
 							)}
 						</div>
 					</div>
 
-					<div className='position-relative'>
+					<div className="position-relative">
 						<ActivitiesChart
 							alwaysShowSelectedTooltip
 							hideGrid={isChartEmpty}
@@ -300,29 +308,31 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 							selectedPoint={selectedPoint}
 							tooltipRenderRows={({
 								totalEvents,
-								totalSessions
+								totalSessions,
 							}) => [
 								{
 									label: Liferay.Language.get('events'),
-									value: totalEvents.toLocaleString()
+									value: totalEvents.toLocaleString(),
 								},
 								{
 									label: Liferay.Language.get('sessions'),
-									value: (totalSessions ?? 0).toLocaleString()
-								}
+									value: (
+										totalSessions ?? 0
+									).toLocaleString(),
+								},
 							]}
 						/>
 
 						{isChartEmpty && (
 							<div
-								className='position-absolute d-flex flex-column align-items-center justify-content-center text-center px-3'
+								className="align-items-center d-flex flex-column justify-content-center position-absolute px-3 text-center"
 								style={{
 									inset: 0,
-									pointerEvents: 'none'
+									pointerEvents: 'none',
 								}}
 							>
 								<div
-									className='font-weight-semi-bold mb-2'
+									className="font-weight-semi-bold mb-2"
 									style={{pointerEvents: 'auto'}}
 								>
 									{Liferay.Language.get(
@@ -331,7 +341,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 								</div>
 
 								<div
-									className='text-secondary mb-2'
+									className="mb-2 text-secondary"
 									style={{pointerEvents: 'auto'}}
 								>
 									{Liferay.Language.get(
@@ -340,12 +350,12 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 								</div>
 
 								<ClayLink
-									decoration='underline'
+									decoration="underline"
 									href={
 										URLConstants.AccountActivitiesDocumentationLink
 									}
 									style={{pointerEvents: 'auto'}}
-									target='_blank'
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-account-activities'
@@ -355,9 +365,9 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 						)}
 					</div>
 
-					<div className='chart-footer mt-3'>
-						<div className='d-flex align-items-baseline'>
-							<Text color='secondary' size={3} weight='semi-bold'>
+					<div className="chart-footer mt-3">
+						<div className="align-items-baseline d-flex">
+							<Text color="secondary" size={3} weight="semi-bold">
 								{sub(
 									Liferay.Language.get('account-s-events-x'),
 									[dateRangeLabel]
@@ -366,10 +376,10 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 
 							{selected && (
 								<ClayButton
-									className='ml-2 p-0'
-									displayType='link'
+									className="ml-2 p-0"
+									displayType="link"
 									onClick={() => handleChangeSelection(null)}
-									size='sm'
+									size="sm"
 								>
 									{Liferay.Language.get(
 										'clear-date-selection'
@@ -381,7 +391,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 				</div>
 			</Card.Body>
 
-			<Card.Body className='pt-0'>
+			<Card.Body className="pt-0">
 				<SearchInput
 					onChange={setSearchValue}
 					onSubmit={handleQuerySubmit}

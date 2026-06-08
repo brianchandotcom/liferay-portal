@@ -1,18 +1,23 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import DocumentTitle from 'shared/components/DocumentTitle';
 import getCN from 'classnames';
 import React, {createContext} from 'react';
-import UserDropdown from 'shared/components/user-dropdown';
-import withCurrentUser from 'shared/hoc/WithCurrentUser';
-import {Align} from '@clayui/drop-down';
-import {LANGUAGES} from 'shared/util/constants';
-import {Routes} from 'shared/util/router';
-import {User} from 'shared/util/records';
+import * as API from '~/shared/api';
+import DocumentTitle from '~/shared/components/DocumentTitle';
+import UserDropdown from '~/shared/components/user-dropdown';
+import withCurrentUser from '~/shared/hoc/WithCurrentUser';
+import {LANGUAGES} from '~/shared/util/constants';
+import {User} from '~/shared/util/records';
+import {Routes} from '~/shared/util/router';
 
 export const BasePageContext = createContext<{currentUser: User}>({
-	currentUser: new User()
+	currentUser: new User(),
 });
 
 interface IWorkspacesBasePageProps {
@@ -28,7 +33,7 @@ interface IWorkspacesBasePageProps {
 export class WorkspacesBasePage extends React.Component<IWorkspacesBasePageProps> {
 	static defaultProps = {
 		backLabel: Liferay.Language.get('back'),
-		details: ''
+		details: '',
 	};
 
 	getUserMenuItems() {
@@ -42,21 +47,21 @@ export class WorkspacesBasePage extends React.Component<IWorkspacesBasePageProps
 						{
 							childMenuId: 'language',
 							divider: true,
-							label: Liferay.Language.get('language')
+							label: Liferay.Language.get('language'),
 						},
 						{
 							externalLink: true,
 							label: Liferay.Language.get('account'),
-							url: 'https://login.liferay.com/enduser/settings'
+							url: 'https://login.liferay.com/enduser/settings',
 						},
 						{
 							externalLink: true,
 							label: Liferay.Language.get('sign-out'),
-							url: Routes.LOGOUT
-						}
+							url: Routes.LOGOUT,
+						},
 					],
-					subheaderLabel: emailAddress
-				}
+					subheaderLabel: emailAddress,
+				},
 			],
 			language: [
 				{
@@ -71,16 +76,16 @@ export class WorkspacesBasePage extends React.Component<IWorkspacesBasePageProps
 								: () => {
 										API.user
 											.updateLanguage({
-												languageId: id
+												languageId: id,
 											})
 											.then(() =>
 												window.location.reload()
 											);
-								  }
+									},
 						};
-					})
-				}
-			]
+					}),
+				},
+			],
 		};
 	}
 
@@ -95,39 +100,39 @@ export class WorkspacesBasePage extends React.Component<IWorkspacesBasePageProps
 				<div className={getCN('workspaces-base-page-root', className)}>
 					<DocumentTitle title={title} />
 
-					<div className='header-container'>
+					<div className="header-container">
 						<ClayLink
-							href='https://liferay-portal.com'
-							target='_blank'
+							href="https://liferay-portal.com"
+							target="_blank"
 						>
 							<ClayIcon
-								className='icon-root liferay-logo'
-								symbol='liferay_logo'
+								className="icon-root liferay-logo"
+								symbol="liferay_logo"
 							/>
 						</ClayLink>
 
 						<UserDropdown
 							alignmentPosition={Align.BottomRight}
-							initialActiveMenu='base'
+							initialActiveMenu="base"
 							menus={this.getUserMenuItems()}
 							showCaret
 							userName={currentUser.name}
 						/>
 					</div>
 
-					<div className='content'>
-						<div className='content-container'>
+					<div className="content">
+						<div className="content-container">
 							{backURL && (
-								<div className='back-container'>
+								<div className="back-container">
 									<ClayLink
 										button
-										className='button-root'
-										displayType='unstyled'
+										className="button-root"
+										displayType="unstyled"
 										href={backURL}
 									>
 										<ClayIcon
-											className='icon-root'
-											symbol='angle-left-small'
+											className="icon-root"
+											symbol="angle-left-small"
 										/>
 
 										{backLabel}
@@ -135,23 +140,23 @@ export class WorkspacesBasePage extends React.Component<IWorkspacesBasePageProps
 								</div>
 							)}
 
-							<div className='title-container'>
-								<div className='logo-container'>
+							<div className="title-container">
+								<div className="logo-container">
 									<ClayIcon
-										className='icon-root logo-icon'
-										symbol='ac_logo'
+										className="icon-root logo-icon"
+										symbol="ac_logo"
 									/>
 
-									<span className='logo-text'>
+									<span className="logo-text">
 										{Liferay.Language.get(
 											'analytics-cloud'
 										)}
 									</span>
 								</div>
 
-								<h1 className='title'>{title}</h1>
+								<h1 className="title">{title}</h1>
 
-								<div className='details-container'>
+								<div className="details-container">
 									{details}
 								</div>
 							</div>

@@ -1,12 +1,18 @@
-import BaseCard from 'shared/components/base-card';
-import ProfileCardWithDataCDP from '../components/ProfileCardWithDataCDP';
-import React from 'react';
-import {Individual} from 'shared/util/records';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {pickBy} from 'lodash';
-import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
-import {SectionHeader} from 'shared/components/SectionHeader';
+import React from 'react';
 import {useHistory} from 'react-router-dom';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+import {SectionHeader} from '~/shared/components/SectionHeader';
+import BaseCard from '~/shared/components/base-card';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {Individual} from '~/shared/util/records';
+import {removeUriQueryParam, setUriQueryValues} from '~/shared/util/router';
+
+import ProfileCardWithDataCDP from '../components/ProfileCardWithDataCDP';
 
 const DEFAULT_SESSIONS_DELTA = 50;
 
@@ -34,15 +40,15 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({
 		onQueryChange,
 		page,
 		query,
-		resetPage
+		resetPage,
 	} = useStatefulPagination(undefined, {
-		initialDelta: DEFAULT_SESSIONS_DELTA
+		initialDelta: DEFAULT_SESSIONS_DELTA,
 	});
 
 	return (
 		<>
 			<SectionHeader
-				icon='analytics'
+				icon="analytics"
 				title={Liferay.Language.get('interaction-history')}
 			/>
 
@@ -50,13 +56,13 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({
 				emptyState
 			) : (
 				<BaseCard
-					className='individual-profile-card-root page-display'
+					className="individual-profile-card-root page-display"
 					description={Liferay.Language.get(
 						'displays-a-chronological-timeline-of-events-within-the-selected-timeframe-including-session-context'
 					)}
 					headerProps={{
 						showRangeKey: true,
-						tabId
+						tabId,
 					}}
 					label={Liferay.Language.get('individual-events')}
 					legacyDropdownRangeKey={false}
@@ -66,7 +72,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({
 						interval,
 						onChangeInterval,
 						onRangeSelectorsChange,
-						rangeSelectors
+						rangeSelectors,
 					}) => (
 						<ProfileCardWithDataCDP
 							{...props}
@@ -75,7 +81,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({
 							onChangeInterval={onChangeInterval}
 							onDeltaChange={onDeltaChange}
 							onPageChange={onPageChange}
-							onQueryChange={query => {
+							onQueryChange={(query) => {
 								history.push(
 									setUriQueryValues(
 										pickBy({query}),
@@ -88,7 +94,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({
 
 								onQueryChange(query);
 							}}
-							onRangeSelectorsChange={rangeSelectors => {
+							onRangeSelectorsChange={(rangeSelectors) => {
 								history.push(
 									setUriQueryValues(
 										pickBy(rangeSelectors),

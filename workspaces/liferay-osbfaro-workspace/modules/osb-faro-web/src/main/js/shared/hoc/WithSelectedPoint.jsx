@@ -1,22 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import React from 'react';
 import {isNull} from 'lodash';
+import React from 'react';
 
 /**
  * HOC for tracking a selecting point.
  * @param {function} WrappedComponent
  * @returns {function} - The WrappedComponent.
  */
-export default WrappedComponent => {
+export default (WrappedComponent) => {
 	class WithSelectedPoint extends React.Component {
 		state = {
-			selectedPoint: null
+			selectedPoint: null,
 		};
 
 		@autobind
 		handlePointSelect({index}) {
 			this.setState({
-				selectedPoint: index
+				selectedPoint: index,
 			});
 		}
 

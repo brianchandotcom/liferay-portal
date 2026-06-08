@@ -1,25 +1,29 @@
-import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import Form, {validateInputMessage} from 'shared/components/form';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import React from 'react';
-import Sheet from 'shared/components/Sheet';
-import TextTruncate from 'shared/components/TextTruncate';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {connect} from 'react-redux';
-import {DataSource} from 'shared/util/records';
-import {EntityTypes} from 'shared/util/constants';
-import {getRouteName} from 'shared/util/router';
-import {getTypeLangKey, sub} from 'shared/util/lang';
-import {
-	individualsListColumns,
-	segmentsListColumns
-} from 'shared/util/table-columns';
 import {noop} from 'lodash/fp';
 import {PropTypes} from 'prop-types';
-import {Routes, toRoute} from 'shared/util/router';
+import React from 'react';
+import {connect} from 'react-redux';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import Sheet from '~/shared/components/Sheet';
+import TextTruncate from '~/shared/components/TextTruncate';
+import Form, {validateInputMessage} from '~/shared/components/form';
+import {EntityTypes} from '~/shared/util/constants';
+import {getTypeLangKey, sub} from '~/shared/util/lang';
+import {DataSource} from '~/shared/util/records';
+import {Routes, getRouteName, toRoute} from '~/shared/util/router';
+import {
+	individualsListColumns,
+	segmentsListColumns,
+} from '~/shared/util/table-columns';
 
 /**
  * Get the API for the specific entityType.
@@ -51,7 +55,7 @@ function getDataSourceFn(entityType) {
 			groupId,
 			orderIOMap,
 			page,
-			query
+			query,
 		});
 }
 
@@ -69,14 +73,14 @@ function getEntityColumns(entityType, timeZoneId) {
 				individualsListColumns.jobTitle,
 				individualsListColumns.activitiesCount,
 				individualsListColumns.getLastActivityDate(timeZoneId),
-				individualsListColumns.willBeRemoved
+				individualsListColumns.willBeRemoved,
 			];
 		case EntityTypes.IndividualsSegment:
 		default:
 			return [
 				segmentsListColumns.name,
 				segmentsListColumns.activitiesCount,
-				segmentsListColumns.getOwnerName(timeZoneId)
+				segmentsListColumns.getOwnerName(timeZoneId),
 			];
 	}
 }
@@ -96,7 +100,7 @@ function getEntityTitle(entityType, dataSourceName) {
 		case EntityTypes.Individual:
 			return sub(
 				Liferay.Language.get('x-s-individuals'),
-				[<TruncatedName key='NAME' />],
+				[<TruncatedName key="NAME" />],
 				false
 			);
 		case EntityTypes.IndividualsSegment:
@@ -107,14 +111,14 @@ function getEntityTitle(entityType, dataSourceName) {
 
 class DataSourceItem extends React.Component {
 	static defaultProps = {
-		onClick: noop
+		onClick: noop,
 	};
 
 	static propTypes = {
 		entityType: PropTypes.number.isRequired,
 		onClick: PropTypes.func,
 		secondaryInfo: PropTypes.string.isRequired,
-		title: PropTypes.string.isRequired
+		title: PropTypes.string.isRequired,
 	};
 
 	@autobind
@@ -134,14 +138,14 @@ class DataSourceItem extends React.Component {
 				}`}
 			>
 				<ClayButton
-					className='button-root title'
-					displayType='unstyled'
+					className="button-root title"
+					displayType="unstyled"
 					onClick={this.handleClick}
 				>
 					<h5>{title}</h5>
 				</ClayButton>
 
-				<div className='secondary-info'>{secondaryInfo}</div>
+				<div className="secondary-info">{secondaryInfo}</div>
 			</div>
 		);
 	}
@@ -160,11 +164,11 @@ export class DeleteDataSource extends React.Component {
 		open: PropTypes.func.isRequired,
 		pageActionConfirmationText: PropTypes.string.isRequired,
 		pageActionText: PropTypes.string.isRequired,
-		timeZoneId: PropTypes.string
+		timeZoneId: PropTypes.string,
 	};
 
 	state = {
-		valid: false
+		valid: false,
 	};
 
 	@autobind
@@ -174,13 +178,13 @@ export class DeleteDataSource extends React.Component {
 			close,
 			open,
 			pageActionConfirmationText,
-			pageActionText
+			pageActionText,
 		} = this.props;
 
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
 				<div>
-					<div className='h4 text-secondary'>
+					<div className="h4 text-secondary">
 						{pageActionConfirmationText}
 					</div>
 
@@ -197,7 +201,7 @@ export class DeleteDataSource extends React.Component {
 			submitButtonDisplay: 'warning',
 			submitMessage: pageActionText,
 			title: pageActionText,
-			titleIcon: 'warning'
+			titleIcon: 'warning',
 		});
 
 		setSubmitting(false);
@@ -211,7 +215,7 @@ export class DeleteDataSource extends React.Component {
 			groupId,
 			id,
 			open,
-			timeZoneId
+			timeZoneId,
 		} = this.props;
 
 		open(modalTypes.SEARCHABLE_ENTITIES_TABLE_MODAL, {
@@ -222,7 +226,7 @@ export class DeleteDataSource extends React.Component {
 			entityType: getRouteName(entityType),
 			onClose: close,
 			rowIdentifier: 'id',
-			title: getEntityTitle(entityType, name)
+			title: getEntityTitle(entityType, name),
 		});
 	}
 
@@ -238,8 +242,8 @@ export class DeleteDataSource extends React.Component {
 				title: sub(Liferay.Language.get('x-segments'), [
 					entitiesCount[
 						EntityTypes.IndividualsSegment
-					].toLocaleString()
-				])
+					].toLocaleString(),
+				]),
 			},
 			{
 				entityType: EntityTypes.Individual,
@@ -250,9 +254,9 @@ export class DeleteDataSource extends React.Component {
 					[Liferay.Language.get('individual')]
 				),
 				title: sub(Liferay.Language.get('x-individuals'), [
-					entitiesCount[EntityTypes.Individual].toLocaleString()
-				])
-			}
+					entitiesCount[EntityTypes.Individual].toLocaleString(),
+				]),
+			},
 		];
 
 		return items.map((params, i) => (
@@ -273,8 +277,8 @@ export class DeleteDataSource extends React.Component {
 				deletePhrase,
 				groupId,
 				id,
-				pageActionText
-			}
+				pageActionText,
+			},
 		} = this;
 
 		return (
@@ -286,23 +290,23 @@ export class DeleteDataSource extends React.Component {
 					onSubmit={this.handleDeleteDataSource}
 				>
 					{({handleSubmit, isSubmitting, isValid}) => (
-						<Form.Form data-testid='form' onSubmit={handleSubmit}>
+						<Form.Form data-testid="form" onSubmit={handleSubmit}>
 							<Sheet.Body>
 								<div>{deleteMessage}</div>
 
-								<div className='copy-container'>
-									<div className='h4'>
+								<div className="copy-container">
+									<div className="h4">
 										{sub(
 											Liferay.Language.get(
 												'copy-the-following-x'
 											),
 											[
 												<span
-													className='copy-text'
-													key='COPY_TEXT'
+													className="copy-text"
+													key="COPY_TEXT"
 												>
 													{sub(deletePhrase, [name])}
-												</span>
+												</span>,
 											],
 											false
 										)}
@@ -310,8 +314,8 @@ export class DeleteDataSource extends React.Component {
 								</div>
 
 								<Form.Input
-									data-testid='confirmation-input'
-									name='delete'
+									data-testid="confirmation-input"
+									name="delete"
 									validate={validateInputMessage(
 										sub(deletePhrase, [name])
 									)}
@@ -320,21 +324,21 @@ export class DeleteDataSource extends React.Component {
 
 							<Sheet.Footer divider={false}>
 								<ClayButton
-									className='button-root delete-button'
+									className="button-root delete-button"
 									disabled={!isValid || isSubmitting}
-									displayType='warning'
-									type='submit'
+									displayType="warning"
+									type="submit"
 								>
 									{pageActionText}
 								</ClayButton>
 
 								<ClayLink
 									button
-									className='button-root'
-									displayType='secondary'
+									className="button-root"
+									displayType="secondary"
 									href={toRoute(Routes.SETTINGS_DATA_SOURCE, {
 										groupId,
-										id
+										id,
 									})}
 								>
 									{Liferay.Language.get('cancel')}
@@ -355,11 +359,11 @@ export default connect(
 			groupId,
 			'data',
 			'timeZone',
-			'timeZoneId'
-		])
+			'timeZoneId',
+		]),
 	}),
 	{
 		close,
-		open
+		open,
 	}
 )(DeleteDataSource);

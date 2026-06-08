@@ -1,21 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useLazyQuery, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import Constants from 'shared/util/constants';
-import Loading from 'shared/components/Loading';
-import React, {useEffect} from 'react';
-import RecommendationPageAssetsQuery from '../../queries/RecommendationPageAssetsQuery';
-import RuleItem from '../RuleItem';
-import Table from 'shared/components/table';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {connect} from 'react-redux';
 import {FieldArray} from 'formik';
-import {Filter, getPropertiesFromItems} from '../../utils/utils';
 import {get} from 'lodash';
-import {Modal} from 'shared/types';
-import {useLazyQuery, useQuery} from '@apollo/client';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import Loading from '~/shared/components/Loading';
+import Table from '~/shared/components/table';
+import {Modal} from '~/shared/types';
+import Constants from '~/shared/util/constants';
+
+import RecommendationPageAssetsQuery from '../../queries/RecommendationPageAssetsQuery';
+import {Filter, getPropertiesFromItems} from '../../utils/utils';
+import RuleItem from '../RuleItem';
 
 const {
-	pagination: {orderDescending}
+	pagination: {orderDescending},
 } = Constants;
 
 const CountCell = (params: {[key: string]: any}) => {
@@ -23,7 +29,7 @@ const CountCell = (params: {[key: string]: any}) => {
 		className,
 		close,
 		data: {name, value},
-		open
+		open,
 	} = params as {
 		className: string;
 		close: Modal.close;
@@ -35,16 +41,16 @@ const CountCell = (params: {[key: string]: any}) => {
 			propertyFilters: [
 				{
 					filter: value,
-					negate: false
-				}
+					negate: false,
+				},
 			],
 			size: 0,
 			sort: {
 				column: 'title',
-				type: orderDescending.toUpperCase()
+				type: orderDescending.toUpperCase(),
 			},
-			start: 0
-		}
+			start: 0,
+		},
 	});
 
 	if (loading) {
@@ -58,12 +64,12 @@ const CountCell = (params: {[key: string]: any}) => {
 	return (
 		<td className={className}>
 			<ClayButton
-				className='button-root matching-pages-modal-button'
-				displayType='unstyled'
+				className="button-root matching-pages-modal-button"
+				displayType="unstyled"
 				onClick={() => {
 					open(modalTypes.MATCHING_PAGES_MODAL, {
 						itemFilters: [{name, value}],
-						onClose: close
+						onClose: close,
 					});
 				}}
 			>
@@ -76,7 +82,7 @@ const CountCell = (params: {[key: string]: any}) => {
 const RuleCell = (params: {[key: string]: any}) => {
 	const {
 		className,
-		data: {name, value}
+		data: {name, value},
 	} = params as {className: string; data: Filter};
 
 	return (
@@ -104,11 +110,13 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 				size: 0,
 				sort: {
 					column: 'title',
-					type: orderDescending.toUpperCase()
+					type: orderDescending.toUpperCase(),
 				},
-				start: 0
-			}
+				start: 0,
+			},
 		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [itemFilters]);
 
 	const renderTotalPages = (): React.ReactNode => {
@@ -123,13 +131,13 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 		return (
 			<div>
 				<ClayButton
-					className='button-root matching-pages-modal-button'
-					displayType='unstyled'
+					className="button-root matching-pages-modal-button"
+					displayType="unstyled"
 					onClick={() => {
 						open(modalTypes.MATCHING_PAGES_MODAL, {
 							itemFilters,
 							onClose: close,
-							useNegateValue: true
+							useNegateValue: true,
 						});
 					}}
 				>
@@ -140,22 +148,23 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 	};
 
 	return (
-		<div className='items-root'>
-			<div className='title'>{Liferay.Language.get('add-items')}</div>
+		<div className="items-root">
+			<div className="title">{Liferay.Language.get('add-items')}</div>
 
-			<div className='secondary-info'>
+			<div className="secondary-info">
 				{Liferay.Language.get(
 					'create-rules-to-match-your-urls-and-page-metadata.-if-you-dont-define-rules,-the-recommendation-model-will-use-all-urls-from-this-workspace-to-train-the-recommendations-model'
 				)}
 			</div>
 
-			<FieldArray name='itemFilters'>
-				{arrayHelpers => (
+			<FieldArray name="itemFilters">
+				{(arrayHelpers) => (
 					<>
 						<ClayButton
-							className='button-root new-rule-button'
-							displayType='secondary'
+							className="button-root new-rule-button"
+							displayType="secondary"
 							onClick={() => {
+
 								// Maybe add a toast alert to inform the user that this already exists therefore it was not added
 
 								open(modalTypes.NEW_RULE_MODAL, {
@@ -164,14 +173,14 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 									onSubmit: (filter: Filter) => {
 										if (
 											!itemFilters.find(
-												item => item.id === filter.id
+												(item) => item.id === filter.id
 											)
 										) {
 											arrayHelpers.push(filter);
 										}
 
 										close();
-									}
+									},
 								});
 							}}
 						>
@@ -188,7 +197,7 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 											className:
 												'rule-cell table-cell-expand',
 											label: Liferay.Language.get('rule'),
-											sortable: false
+											sortable: false,
 										},
 										{
 											accessor: 'value',
@@ -199,8 +208,8 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 											label: Liferay.Language.get(
 												'matching-items'
 											),
-											sortable: false
-										}
+											sortable: false,
+										},
 									]}
 									items={itemFilters}
 									renderInlineRowActions={({data, items}) => (
@@ -210,8 +219,8 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 													'remove'
 												)}
 												borderless
-												className='button-root'
-												displayType='secondary'
+												className="button-root"
+												displayType="secondary"
 												onClick={() => {
 													arrayHelpers.remove(
 														items.findIndex(
@@ -228,8 +237,8 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 												outline
 											>
 												<ClayIcon
-													className='icon-root'
-													symbol='times'
+													className="icon-root"
+													symbol="times"
 												/>
 											</ClayButton>
 										</span>
@@ -237,7 +246,7 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 									rowIdentifier={['name', 'value']}
 								/>
 
-								<div className='total-included-pages d-flex justify-content-between'>
+								<div className="d-flex justify-content-between total-included-pages">
 									<div>
 										{Liferay.Language.get(
 											'total-included-pages'

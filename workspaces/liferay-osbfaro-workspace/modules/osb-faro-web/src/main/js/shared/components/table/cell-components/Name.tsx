@@ -1,8 +1,13 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import React from 'react';
-import TextTruncate from 'shared/components/TextTruncate';
-import {Link} from 'react-router-dom';
 import {noop} from 'lodash';
+import React from 'react';
+import {Link} from 'react-router-dom';
+import TextTruncate from '~/shared/components/TextTruncate';
 
 interface INameProps {
 	className?: string;
@@ -29,11 +34,11 @@ const Name: React.FC<INameProps> = ({
 	renderIcon,
 	renderSecondaryInfo,
 	routeFn = noop,
-	tooltip = false
+	tooltip = false,
 }) => {
 	const getSecondaryInfo = () =>
 		!!renderSecondaryInfo && (
-			<div className='secondary-info text-truncate'>
+			<div className="secondary-info text-truncate">
 				{renderSecondaryInfo(data) || '-'}
 			</div>
 		);
@@ -51,19 +56,19 @@ const Name: React.FC<INameProps> = ({
 	return (
 		<td className={getCN('name-cell-root', className)}>
 			<div
-				className='content-container'
+				className="content-container"
 				style={maxWidth ? {maxWidth: `${maxWidth}px`} : undefined}
 			>
 				{!!renderIcon && (
-					<div className='icon-container'>{renderIcon(data)}</div>
+					<div className="icon-container">{renderIcon(data)}</div>
 				)}
 
-				<div className='text-truncate'>
-					<div className='table-title text-truncate'>
+				<div className="text-truncate">
+					<div className="table-title text-truncate">
 						{disabled || !url ? (
 							titleContent
 						) : (
-							<Link className='text-truncate' to={url}>
+							<Link className="text-truncate" to={url}>
 								{titleContent}
 							</Link>
 						)}

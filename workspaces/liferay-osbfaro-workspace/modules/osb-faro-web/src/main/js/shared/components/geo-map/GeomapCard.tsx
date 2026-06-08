@@ -1,11 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import getCN from 'classnames';
 import * as d3 from 'd3';
+import React, {useEffect, useRef, useState} from 'react';
+import {createRoot} from 'react-dom/client';
+import {Colors} from '~/shared/util/charts';
+import {toThousands} from '~/shared/util/numbers';
+
 import GeomapChart from './GeomapChart';
 import GeoMapLangKey from './geo-map-lang-key';
-import getCN from 'classnames';
-import React, {useEffect, useRef, useState} from 'react';
-import {Colors} from 'shared/util/charts';
-import {createRoot} from 'react-dom/client';
-import {toThousands} from 'shared/util/numbers';
 
 const OTHERS = 'others';
 const TOTAL_COUNTRIES_LIST = 5;
@@ -65,7 +71,7 @@ const List = ({countries, features, onSelectCountry}: IListProps) => {
 	};
 
 	return (
-		<table className='analytics-geomap-table'>
+		<table className="analytics-geomap-table">
 			<tbody>
 				{countries
 					.filter(
@@ -77,7 +83,7 @@ const List = ({countries, features, onSelectCountry}: IListProps) => {
 							getCN(classes, {
 								['lighten-item']:
 									hoverList !== null && hoverList !== index,
-								['text-l-secondary']: value.id === OTHERS
+								['text-l-secondary']: value.id === OTHERS,
 							});
 
 						return (
@@ -106,7 +112,7 @@ const List = ({countries, features, onSelectCountry}: IListProps) => {
 								<td className={classNames('text-right')}>
 									{toThousands(value.total)}
 
-									<span className='percentage font-weight-semibold'>{`${value.value}%`}</span>
+									<span className="font-weight-semibold percentage">{`${value.value}%`}</span>
 								</td>
 							</tr>
 						);
@@ -132,10 +138,10 @@ const mergeData = (countries: ICountry[]) => {
 				properties: {
 					...feature.properties,
 					total: country?.total ?? 0,
-					value: country?.value ?? 0
-				}
+					value: country?.value ?? 0,
+				},
 			};
-		})
+		}),
 	};
 };
 
@@ -146,14 +152,14 @@ interface ITooltipProps {
 
 const Tooltip = ({metricLabel, payload}: ITooltipProps) => (
 	<>
-		<div className='arrow' />
+		<div className="arrow" />
 
-		<div className='popover-header'>
+		<div className="popover-header">
 			{geoMapLangKey[payload.properties.name]}
 		</div>
 
-		<div className='d-flex justify-content-between popover-body'>
-			<div className='mr-4'>
+		<div className="d-flex justify-content-between popover-body">
+			<div className="mr-4">
 				{payload.properties.total} <span>{metricLabel}</span>
 			</div>
 
@@ -169,7 +175,10 @@ interface IGeomapCardProps {
 	metricLabel: string;
 }
 
-export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
+export const GeomapCard = function GeomapCard({
+	data,
+	metricLabel,
+}: IGeomapCardProps) {
 	const mergedData = mergeData(data.countries);
 	const [selectedCountry, setSelectedCountry] = useState<
 		IFeature | boolean | null
@@ -253,10 +262,14 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 			const {height, width} = tooltipNode.getBoundingClientRect();
 
 			const tooltipProps = {
+
 				// @ts-ignore
+
 				left: d3.event.layerX - (width / 2 + 5),
+
 				// @ts-ignore
-				top: d3.event.layerY - (height + 20)
+
+				top: d3.event.layerY - (height + 20),
 			};
 
 			tooltip
@@ -288,24 +301,28 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 		return () => {
 			tooltipRoot.unmount();
 		};
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		chartRef.current.mapLayer!.selectAll('path').style('fill', fillFn);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedCountry]);
 
 	return (
-		<div className='analytics-geomap'>
+		<div className="analytics-geomap">
 			<div style={{height: 232, width: 350}}>
 				<GeomapChart
 					color={{
 						empty: Colors.mapEmpty,
 						range: {
 							max: Colors.mapMax,
-							min: Colors.mapMin
+							min: Colors.mapMin,
 						},
 						selected: Colors.mapSelected,
-						value: 'total'
+						value: 'total',
 					}}
 					data={{...mergedData, type: 'geo-map'}}
 					ref={chartRef}

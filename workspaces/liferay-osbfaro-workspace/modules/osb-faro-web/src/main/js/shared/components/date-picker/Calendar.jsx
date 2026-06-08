@@ -1,12 +1,18 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import moment from 'moment';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
 import {chunk, noop, range} from 'lodash';
-import {isDateOrRange, isInRange, isRange} from './util';
+import moment from 'moment';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+
+import {isDateOrRange, isInRange, isRange} from './util';
 
 const FIVE_ROWS = 35;
 const SIX_ROWS = 42;
@@ -102,7 +108,7 @@ class Day extends React.Component {
 		isSelectingEndDate: false,
 		onSelect: noop,
 		outsideMonth: false,
-		selected: false
+		selected: false,
 	};
 
 	static propTypes = {
@@ -111,7 +117,7 @@ class Day extends React.Component {
 		onSelect: PropTypes.func,
 		onSetHoveredDate: PropTypes.func,
 		outsideMonth: PropTypes.bool,
-		selected: PropTypes.bool
+		selected: PropTypes.bool,
 	};
 
 	@autobind
@@ -136,13 +142,13 @@ class Day extends React.Component {
 
 		const classes = getCN('button-root day-root', className, {
 			'outside-month': outsideMonth,
-			selected
+			selected,
 		});
 
 		return (
 			<ClayButton
 				className={classes}
-				displayType='unstyled'
+				displayType="unstyled"
 				onClick={this.handleClick}
 				onFocus={this.handleMouseOver}
 				onMouseOver={this.handleMouseOver}
@@ -156,7 +162,7 @@ class Day extends React.Component {
 
 export default class Calendar extends React.Component {
 	static defaultProps = {
-		onSelect: noop
+		onSelect: noop,
 	};
 
 	static propTypes = {
@@ -171,11 +177,11 @@ export default class Calendar extends React.Component {
 		},
 		maxDate: PropTypes.instanceOf(moment),
 		minDate: PropTypes.instanceOf(moment),
-		onSelect: PropTypes.func
+		onSelect: PropTypes.func,
 	};
 
 	state = {
-		hoveredDate: null
+		hoveredDate: null,
 	};
 
 	getDateGrid() {
@@ -188,31 +194,33 @@ export default class Calendar extends React.Component {
 
 		const cells = firstDay + daysInMonth > 35 ? SIX_ROWS : FIVE_ROWS;
 
-		const dates = range(1, cells + 1).map(i => {
+		const dates = range(1, cells + 1).map((i) => {
 			if (i < firstDay + 1) {
 				return {
 					date: month.clone().subtract(firstDay + 1 - i, 'days'),
-					outsideMonth: true
+					outsideMonth: true,
 				};
-			} else if (i - firstDay > daysInMonth) {
+			}
+			else if (i - firstDay > daysInMonth) {
 				return {
 					date: month
 						.clone()
 						.add(1, 'months')
 						.add(i - firstDay - daysInMonth - 1, 'days'),
-					outsideMonth: true
+					outsideMonth: true,
 				};
-			} else {
+			}
+			else {
 				return {
 					date: month.clone().add(i - firstDay - 1, 'days'),
-					outsideMonth: false
+					outsideMonth: false,
 				};
 			}
 		});
 
 		return chunk(dates, 7).map((row, i) => ({
 			key: `${currentMonth.format()}_${i}`,
-			row
+			row,
 		}));
 	}
 
@@ -228,7 +236,7 @@ export default class Calendar extends React.Component {
 	highlightEnd(date) {
 		const {
 			props: {date: dateOrRange},
-			state: {hoveredDate}
+			state: {hoveredDate},
 		} = this;
 
 		const rangeComplete = dateOrRange.end && dateOrRange.start;
@@ -240,9 +248,11 @@ export default class Calendar extends React.Component {
 
 		if (rangeComplete) {
 			return isEnd(dateOrRange, date);
-		} else if (hoverDateBeforeStartDate) {
+		}
+		else if (hoverDateBeforeStartDate) {
 			return isStart(dateOrRange, date);
-		} else {
+		}
+		else {
 			return date.isSame(hoveredDate);
 		}
 	}
@@ -250,7 +260,7 @@ export default class Calendar extends React.Component {
 	highlightStart(date) {
 		const {
 			props: {date: dateOrRange},
-			state: {hoveredDate}
+			state: {hoveredDate},
 		} = this;
 
 		const rangeComplete = dateOrRange.end && dateOrRange.start;
@@ -262,7 +272,8 @@ export default class Calendar extends React.Component {
 
 		if (rangeComplete || !hoverDateBeforeStartDate) {
 			return isStart(dateOrRange, date);
-		} else {
+		}
+		else {
 			return date.isSame(hoveredDate);
 		}
 	}
@@ -270,7 +281,7 @@ export default class Calendar extends React.Component {
 	render() {
 		const {
 			props: {className, date: dateOrRange, maxDate, minDate, onSelect},
-			state: {hoveredDate}
+			state: {hoveredDate},
 		} = this;
 
 		const range = isRange(dateOrRange);
@@ -280,7 +291,7 @@ export default class Calendar extends React.Component {
 			<table className={getCN('calendar-root', {className})}>
 				<thead>
 					<tr>
-						{moment.weekdaysShort().map(day => (
+						{moment.weekdaysShort().map((day) => (
 							<th key={day}>{day}</th>
 						))}
 					</tr>
@@ -294,7 +305,7 @@ export default class Calendar extends React.Component {
 									className={getCN({
 										'end-range':
 											range && this.highlightEnd(date),
-										hover:
+										'hover':
 											range &&
 											!rangeComplete &&
 											isInHoverRange(
@@ -306,11 +317,11 @@ export default class Calendar extends React.Component {
 											range &&
 											isInRange(dateOrRange, date),
 										'start-range':
-											range && this.highlightStart(date)
+											range && this.highlightStart(date),
 									})}
 									key={date.format()}
 								>
-									<div className='day-container'>
+									<div className="day-container">
 										<Day
 											date={date}
 											disabled={

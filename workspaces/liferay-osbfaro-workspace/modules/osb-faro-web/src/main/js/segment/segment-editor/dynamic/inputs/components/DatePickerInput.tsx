@@ -1,7 +1,12 @@
-import DateInput from 'shared/components/DateInput';
-import DateRangeInput, {DateRange} from 'shared/components/DateRangeInput';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
 import React from 'react';
+import DateInput from '~/shared/components/DateInput';
+import DateRangeInput, {DateRange} from '~/shared/components/DateRangeInput';
 
 interface IDatePickerInputProps {
 	isRange?: boolean;
@@ -18,10 +23,10 @@ const DatePickerInput: React.FC<IDatePickerInputProps> = ({
 	onChange,
 	touched,
 	valid,
-	value
+	value,
 }) => {
 	const classNames = getCN({
-		'has-error': !valid && touched
+		'has-error': !valid && touched,
 	});
 
 	return (

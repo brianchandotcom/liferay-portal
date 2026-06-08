@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Record} from 'immutable';
 
 export enum NotificationTypes {
 	Alert = 'ALERT',
-	Modal = 'MODAL'
+	Modal = 'MODAL',
 }
 
 export enum NotificationSubtypes {
 	BlockedEventsLimit = 'BLOCKED_EVENTS_LIMIT',
 	TimeZoneAdmin = 'TIME_ZONE_ADMIN',
-	TimeZoneChanged = 'TIME_ZONE_CHANGED'
+	TimeZoneChanged = 'TIME_ZONE_CHANGED',
 }
 
 interface INotification {
@@ -21,7 +26,7 @@ export default class Notification
 	extends Record({
 		id: '',
 		subtype: null,
-		type: null
+		type: null,
 	})
 	implements INotification
 {

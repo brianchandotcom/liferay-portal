@@ -1,23 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import ClayLink from '@clayui/link';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useEffect, useRef, useState} from 'react';
-import TextTruncate from 'shared/components/TextTruncate';
-import URLConstants from 'shared/util/url-constants';
-import {Alert} from 'shared/types';
-import {Card} from 'shared/components/revamping/Card';
-import {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
-import {DataSourceStatuses, Sizes} from 'shared/util/constants';
-import {fetchChannelDatasources} from 'shared/api/data-source';
-import {Link, useParams} from 'react-router-dom';
-import {modalTypes} from 'shared/actions/modals';
-import {Routes, toRoute} from 'shared/util/router';
 import {Text} from '@clayui/core';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useRequest} from 'shared/hooks/useRequest';
+import {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
+import ClayLink from '@clayui/link';
+import React, {useEffect, useRef, useState} from 'react';
+import {Link, useParams} from 'react-router-dom';
+import {modalTypes} from '~/shared/actions/modals';
+import {fetchChannelDatasources} from '~/shared/api/data-source';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import TextTruncate from '~/shared/components/TextTruncate';
+import {Card} from '~/shared/components/revamping/Card';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {Alert} from '~/shared/types';
+import {DataSourceStatuses, Sizes} from '~/shared/util/constants';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 interface IChannel {
 	channelId: string;
@@ -35,6 +40,73 @@ interface IAssignedPropertiesTableProps {
 	updateDataSourceFn: (params: {[key: string]: any}) => Promise<any>;
 }
 
+const ToggleRenderer = ({
+	addAlert,
+	close,
+	data,
+	disabled,
+	onChange,
+	open,
+}: {
+	addAlert: (alert: {alertType: string; message: string}) => void;
+	close: (...args: any[]) => void;
+	data: IChannel;
+	disabled: boolean;
+	onChange: (channel: IChannel) => void;
+	open: (...args: any[]) => void;
+}) => {
+	const [state, setState] = useState(data.enabled);
+
+	const handleChange = (newState: boolean) => {
+		setState(newState);
+
+		onChange({
+			channelId: data.channelId,
+			enabled: newState,
+		});
+	};
+
+	return (
+		<td className="text-center">
+			<ClayToggle
+				defaultChecked={state}
+				disabled={disabled}
+				onToggle={() => {
+					if (state) {
+						open(modalTypes.CONFIRMATION_MODAL, {
+							cancelMessage: Liferay.Language.get('cancel'),
+							message: Liferay.Language.get(
+								'this-action-will-stop-syncing-new-data-from-your-liferay-dxp-instance-to-this-property.-data-that-was-already-synced-will-remain-available.-are-you-sure-you-want-to-continue'
+							),
+							modalVariant: 'modal-warning',
+							onClose: close,
+							onSubmit: () => {
+								handleChange(!state);
+
+								addAlert({
+									alertType: Alert.Types.Success,
+									message: Liferay.Language.get(
+										'properties-settings-have-been-saved'
+									),
+								});
+							},
+							submitButtonDisplay: 'warning',
+							submitMessage: Liferay.Language.get('stop-syncing'),
+							title: Liferay.Language.get('stop-syncing-data'),
+							titleIcon: 'warning-full',
+						});
+					}
+					else {
+						handleChange(!state);
+					}
+				}}
+				sizing="sm"
+				toggled={state}
+			/>
+		</td>
+	);
+};
+
 const AssignedPropertiesTable = ({
 	addAlert,
 	close,
@@ -43,7 +115,7 @@ const AssignedPropertiesTable = ({
 	handleUpdateDataSource,
 	loading: initialLoading = false,
 	open,
-	updateDataSourceFn
+	updateDataSourceFn,
 }: IAssignedPropertiesTableProps) => {
 	const [loading, setLoading] = useState(initialLoading);
 	const {groupId} = useParams();
@@ -51,7 +123,7 @@ const AssignedPropertiesTable = ({
 	const currentUser = useCurrentUser();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const enableAllChannels = dataSource.provider.getIn(
@@ -61,7 +133,7 @@ const AssignedPropertiesTable = ({
 
 	const channelDatasources = useRequest({
 		dataSourceFn: fetchChannelDatasources,
-		variables: {delta, groupId, id: dataSource.id, orderIOMap, page, query}
+		variables: {delta, groupId, id: dataSource.id, orderIOMap, page, query},
 	});
 
 	const channelsConfigurationRef = useRef<{
@@ -69,7 +141,7 @@ const AssignedPropertiesTable = ({
 		enableAllChannels: boolean;
 	}>({
 		channels: [],
-		enableAllChannels: false
+		enableAllChannels: false,
 	});
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
@@ -88,23 +160,25 @@ const AssignedPropertiesTable = ({
 						index === selectedChannelIndex
 							? {...channel, enabled: !channel.enabled}
 							: channel
-				)
+				),
 			};
 
 			try {
 				await updateDataSourceFn({
 					channelsConfiguration: updatedChannelsConfiguration,
 					groupId,
-					id: dataSource.id
+					id: dataSource.id,
 				} as any);
-			} catch (error) {
+			}
+			catch (error) {
 				addAlert({
 					alertType: Alert.Types.Error,
 					message: Liferay.Language.get(
 						'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-					)
+					),
 				});
-			} finally {
+			}
+			finally {
 				channelsConfigurationRef.current = updatedChannelsConfiguration;
 			}
 		}
@@ -118,15 +192,15 @@ const AssignedPropertiesTable = ({
 					.toJS(),
 				enableAllChannels: dataSource.provider.get(
 					'channelsConfiguration'
-				).enableAllChannels
+				).enableAllChannels,
 			};
 		}
 	}, [dataSource]);
 
 	return (
 		<>
-			<div className='p-4'>
-				<Text as='p' color='secondary' size={4}>
+			<div className="p-4">
+				<Text as="p" color="secondary" size={4}>
 					{Liferay.Language.get(
 						'properties-allow-you-to-aggregate-data-on-your-users-and-dxp-sites-and-channels.-the-data-source-data-will-be-available-in-any-property-they-are-assigned-to'
 					)}
@@ -136,7 +210,7 @@ const AssignedPropertiesTable = ({
 					title={Liferay.Language.get('data-availability')}
 				/>
 
-				<Text as='p' color='secondary' size={4}>
+				<Text as="p" color="secondary" size={4}>
 					{Liferay.Language.get(
 						'choose-the-properties-that-will-have-access-to-this-data-source'
 					)}
@@ -145,15 +219,15 @@ const AssignedPropertiesTable = ({
 				<ClayRadioGroup
 					defaultValue={enableAllChannels ? 'all' : 'custom'}
 					inline
-					onChange={async value => {
+					onChange={async (value) => {
 						await updateDataSourceFn({
 							channelsConfiguration: {
 								channels:
 									channelsConfigurationRef.current.channels,
-								enableAllChannels: value === 'all'
+								enableAllChannels: value === 'all',
 							},
 							groupId,
-							id: dataSource.id
+							id: dataSource.id,
 						} as any);
 
 						await handleUpdateDataSource();
@@ -164,19 +238,19 @@ const AssignedPropertiesTable = ({
 						label={Liferay.Language.get(
 							'make-individual-data-from-this-data-source-available-in-all-properties,-including-those-not-yet-created'
 						)}
-						value='all'
+						value="all"
 					/>
 
 					<ClayRadio
 						disabled={!currentUser.isAdmin() || !dataSourceActive}
 						label={Liferay.Language.get('select-properties')}
-						value='custom'
+						value="custom"
 					/>
 				</ClayRadioGroup>
 			</div>
 
 			{enableAllChannels ? (
-				<div className='d-flex justify-content-center text-center my-6'>
+				<div className="d-flex justify-content-center my-6 text-center">
 					<NoResultsDisplay
 						description={Liferay.Language.get(
 							'all-properties-from-this-workspace-have-access-to-this-data-source'
@@ -184,7 +258,7 @@ const AssignedPropertiesTable = ({
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_no_sites'
+							symbol: 'ac_no_sites',
 						}}
 						title={Liferay.Language.get('all-aboard')}
 					/>
@@ -196,7 +270,7 @@ const AssignedPropertiesTable = ({
 							accessor: 'name',
 							cellRenderer: ({
 								data,
-								hrefFormatter
+								hrefFormatter,
 							}: {
 								data: {channelId: string; name: string};
 								hrefFormatter: (data: {
@@ -204,10 +278,10 @@ const AssignedPropertiesTable = ({
 								}) => string;
 							}) => (
 								<td
-									className='table-cell-expand'
+									className="table-cell-expand"
 									key={data.channelId}
 								>
-									<div className='table-title text-truncate'>
+									<div className="table-title text-truncate">
 										<Link to={hrefFormatter(data)}>
 											<TextTruncate title={data.name} />
 										</Link>
@@ -216,17 +290,17 @@ const AssignedPropertiesTable = ({
 							),
 							cellRendererProps: {
 								hrefFormatter: ({
-									channelId
+									channelId,
 								}: {
 									channelId: string;
 								}) =>
 									toRoute(Routes.SETTINGS_CHANNELS_VIEW, {
 										groupId,
-										id: channelId
-									})
+										id: channelId,
+									}),
 							},
 							className: 'table-cell-expand',
-							label: Liferay.Language.get('property-name')
+							label: Liferay.Language.get('property-name'),
 						},
 						...customColumns,
 						{
@@ -247,8 +321,8 @@ const AssignedPropertiesTable = ({
 								/>
 							),
 							label: '',
-							sortable: false
-						}
+							sortable: false,
+						},
 					]}
 					delta={delta}
 					entityLabel={Liferay.Language.get('properties')}
@@ -257,7 +331,7 @@ const AssignedPropertiesTable = ({
 					loading={loading}
 					noResultsRenderer={
 						<NoResultsDisplay
-							className='py-6'
+							className="py-6"
 							description={
 								<>
 									{Liferay.Language.get(
@@ -265,10 +339,10 @@ const AssignedPropertiesTable = ({
 									)}
 
 									<ClayLink
-										className='d-block mb-3'
+										className="d-block mb-3"
 										href={URLConstants.CreateProperty}
-										key='DOCUMENTATION'
-										target='_blank'
+										key="DOCUMENTATION"
+										target="_blank"
 									>
 										{Liferay.Language.get(
 											'access-our-documentation-to-learn-more'
@@ -279,7 +353,7 @@ const AssignedPropertiesTable = ({
 							icon={{
 								border: false,
 								size: Sizes.XXXLarge,
-								symbol: 'ac_satellite'
+								symbol: 'ac_satellite',
 							}}
 							title={Liferay.Language.get(
 								'there-are-no-properties-found'
@@ -289,11 +363,11 @@ const AssignedPropertiesTable = ({
 					orderByOptions={[
 						{
 							label: Liferay.Language.get('property-name'),
-							value: NAME
-						}
+							value: NAME,
+						},
 					]}
-					ordered
 					orderIOMap={orderIOMap}
+					ordered
 					page={page}
 					query={query}
 					renderNav={() => {
@@ -321,13 +395,14 @@ const AssignedPropertiesTable = ({
 																channelId: string
 															) => ({
 																channelId,
-																enabled: true
+																enabled: true,
 															})
 														),
-														enableAllChannels: false
+														enableAllChannels:
+															false,
 													},
 													groupId,
-													id: dataSource.id
+													id: dataSource.id,
 												} as any);
 
 												await handleUpdateDataSource();
@@ -335,7 +410,7 @@ const AssignedPropertiesTable = ({
 												channelDatasources.refetch?.();
 
 												setLoading(false);
-											}
+											},
 										})
 									}
 								>
@@ -346,78 +421,12 @@ const AssignedPropertiesTable = ({
 
 						return null;
 					}}
-					rowIdentifier='channelId'
+					rowIdentifier="channelId"
 					showCheckbox={false}
 					total={channelDatasources.data?.total}
 				/>
 			)}
 		</>
-	);
-};
-
-const ToggleRenderer = ({
-	addAlert,
-	close,
-	data,
-	disabled,
-	onChange,
-	open
-}: {
-	addAlert: (alert: {alertType: string; message: string}) => void;
-	close: (...args: any[]) => void;
-	data: IChannel;
-	disabled: boolean;
-	onChange: (channel: IChannel) => void;
-	open: (...args: any[]) => void;
-}) => {
-	const [state, setState] = useState(data.enabled);
-
-	const handleChange = (newState: boolean) => {
-		setState(newState);
-
-		onChange({
-			channelId: data.channelId,
-			enabled: newState
-		});
-	};
-
-	return (
-		<td className='text-center'>
-			<ClayToggle
-				defaultChecked={state}
-				disabled={disabled}
-				onToggle={() => {
-					if (state) {
-						open(modalTypes.CONFIRMATION_MODAL, {
-							cancelMessage: Liferay.Language.get('cancel'),
-							message: Liferay.Language.get(
-								'this-action-will-stop-syncing-new-data-from-your-liferay-dxp-instance-to-this-property.-data-that-was-already-synced-will-remain-available.-are-you-sure-you-want-to-continue'
-							),
-							modalVariant: 'modal-warning',
-							onClose: close,
-							onSubmit: () => {
-								handleChange(!state);
-
-								addAlert({
-									alertType: Alert.Types.Success,
-									message: Liferay.Language.get(
-										'properties-settings-have-been-saved'
-									)
-								});
-							},
-							submitButtonDisplay: 'warning',
-							submitMessage: Liferay.Language.get('stop-syncing'),
-							title: Liferay.Language.get('stop-syncing-data'),
-							titleIcon: 'warning-full'
-						});
-					} else {
-						handleChange(!state);
-					}
-				}}
-				sizing='sm'
-				toggled={state}
-			/>
-		</td>
 	);
 };
 

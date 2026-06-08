@@ -1,17 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayForm from '@clayui/form';
 import React, {useEffect, useState} from 'react';
-import {Alert} from 'shared/types';
-import {ConnectorConfig} from './types';
-import {CopyInputValue} from '../CopyInputValue';
 import {
 	createConnector,
 	generateConnectorToken,
-	updateConnector
-} from 'shared/api/connector';
-import {CredentialTypes} from 'shared/util/constants';
-import {DataSource} from 'shared/util/records';
-import {Text} from '@clayui/core';
+	updateConnector,
+} from '~/shared/api/connector';
+import {Alert} from '~/shared/types';
+import {CredentialTypes} from '~/shared/util/constants';
+import {DataSource} from '~/shared/util/records';
+
+import {CopyInputValue} from '../CopyInputValue';
+import {ConnectorConfig} from './types';
 
 interface IConnectorAuthProps {
 	addAlert: Alert.AddAlert;
@@ -32,7 +38,7 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 	disabled = false,
 	groupId,
 	onCancel,
-	onSubmit
+	onSubmit,
 }) => {
 	const endpointURL = `${window.location.origin}${config.endpointPath}`;
 
@@ -44,25 +50,30 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 			try {
 				const data = await generateConnectorToken({
 					groupId,
-					type: config.slug
+					type: config.slug,
 				});
 
-				if (data?.token) setToken(data.token);
-			} catch (error) {
+				if (data?.token) {
+					setToken(data.token);
+				}
+			}
+			catch (error) {
 				addAlert({
 					alertType: Alert.Types.Error,
 					message: (error as Error).message,
-					timeout: false
+					timeout: false,
 				});
 			}
 		};
 
 		fetchConnectorTokenForGroup();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [config.slug, groupId]);
 
 	return (
 		<ClayForm
-			onSubmit={async event => {
+			onSubmit={async (event) => {
 				event.preventDefault();
 				setIsSubmitting(true);
 
@@ -74,54 +85,57 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 								channelsConfiguration: dataSource
 									.getIn([
 										'provider',
-										'channelsConfiguration'
+										'channelsConfiguration',
 									])
 									?.toJS(),
 								credentials: {
 									privateKey: token,
 									publicKey: '',
-									type: CredentialTypes.Token
+									type: CredentialTypes.Token,
 								},
 								groupId,
 								id: dataSource.id ?? '',
-								name: dataSource.name
+								name: dataSource.name,
 							}
 						);
 
 						onSubmit(updatedDataSource);
-					} else {
+					}
+					else {
 						const newDataSource = await createConnector(
 							config.slug,
 							{
 								credentials: {
 									privateKey: token,
 									publicKey: '',
-									type: CredentialTypes.Token
+									type: CredentialTypes.Token,
 								},
 								groupId,
-								name: config.displayName
+								name: config.displayName,
 							}
 						);
 
 						onSubmit(newDataSource);
 					}
-				} catch (error) {
+				}
+				catch (error) {
 					addAlert({
 						alertType: Alert.Types.Error,
 						message: Liferay.Language.get(
 							'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-						)
+						),
 					});
-				} finally {
+				}
+				finally {
 					setIsSubmitting(false);
 				}
 			}}
 		>
-			<label htmlFor='endpoint'>
-				<Text weight='semi-bold'>{config.languages.endpointLabel}</Text>
+			<label htmlFor="endpoint">
+				<Text weight="semi-bold">{config.languages.endpointLabel}</Text>
 			</label>
 
-			<Text as='p' color='secondary' size={3}>
+			<Text as="p" color="secondary" size={3}>
 				{config.languages.endpointHelper}
 			</Text>
 
@@ -131,8 +145,8 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 				value={endpointURL}
 			/>
 
-			<label htmlFor='token'>
-				<Text weight='semi-bold'>{config.languages.tokenLabel}</Text>
+			<label htmlFor="token">
+				<Text weight="semi-bold">{config.languages.tokenLabel}</Text>
 			</label>
 
 			<CopyInputValue
@@ -142,12 +156,12 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 			/>
 
 			{!disabled && (
-				<div className='mt-4'>
+				<div className="mt-4">
 					<ClayButton
 						{...buttonProps}
 						disabled={isSubmitting || !token}
 						loading={isSubmitting}
-						type='submit'
+						type="submit"
 					>
 						{Liferay.Language.get('continue')}
 					</ClayButton>
@@ -156,7 +170,7 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 						<ClayButton
 							block
 							borderless
-							displayType='secondary'
+							displayType="secondary"
 							onClick={onCancel}
 						>
 							{Liferay.Language.get('cancel')}

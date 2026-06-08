@@ -1,10 +1,16 @@
-import DateInput, {OverlayAlignment} from '../DateInput';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import HelpBlock from './HelpBlock';
-import Label from './Label';
-import React from 'react';
 import {FieldProps} from 'formik';
 import {isNumber} from 'lodash';
+import React from 'react';
+
+import DateInput, {OverlayAlignment} from '../DateInput';
+import HelpBlock from './HelpBlock';
+import Label from './Label';
 
 interface IFormDateInputProps
 	extends FieldProps,
@@ -33,7 +39,7 @@ const FormDateInput: React.FC<IFormDateInputProps> = ({
 	required = false,
 	showRetentionPeriod = true,
 	usePortal = true,
-	width
+	width,
 }) => {
 	const {name, value} = field;
 
@@ -49,7 +55,7 @@ const FormDateInput: React.FC<IFormDateInputProps> = ({
 	const classes = getCN('form-date-input-root', className, {
 		'form-inline-group': inline,
 		'has-error': error && touched,
-		'has-success': !error && touched
+		'has-success': !error && touched,
 	});
 
 	const style = isNumber(width)

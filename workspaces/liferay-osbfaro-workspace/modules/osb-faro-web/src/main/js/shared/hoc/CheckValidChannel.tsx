@@ -1,9 +1,13 @@
-import ErrorPage from 'shared/pages/ErrorPage';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {useEffect} from 'react';
-import {Channel} from 'shared/components/channels-menu';
-import {getDefaultChannel} from 'shared/components/channels-menu';
 import {matchPath} from 'react-router-dom';
-import {Routes, toRoute} from 'shared/util/router';
+import {Channel, getDefaultChannel} from '~/shared/components/channels-menu';
+import ErrorPage from '~/shared/pages/ErrorPage';
+import {Routes, toRoute} from '~/shared/util/router';
 
 type History = {
 	replace: (path: string) => void;
@@ -36,7 +40,7 @@ const checkValidChannel =
 		useEffect(() => {
 			const isHome = matchPath(location.pathname, {
 				exact: true,
-				path: Routes.WORKSPACE_WITH_ID
+				path: Routes.WORKSPACE_WITH_ID,
 			});
 
 			if (isHome) {
@@ -45,10 +49,12 @@ const checkValidChannel =
 				history.replace(
 					toRoute(Routes.SITES, {
 						...(channel && {channelId: channel.id}),
-						groupId
+						groupId,
 					})
 				);
 			}
+
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 
 		if (

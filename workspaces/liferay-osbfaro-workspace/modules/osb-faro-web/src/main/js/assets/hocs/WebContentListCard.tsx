@@ -1,28 +1,33 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import ClayLink from '@clayui/link';
-import ListComponent from 'shared/hoc/ListComponent';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import URLConstants from 'shared/util/url-constants';
-import WebContentListQuery from 'shared/queries/WebContentListQuery';
+import {useParams} from 'react-router-dom';
+import Card from '~/shared/components/Card';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import ListComponent from '~/shared/hoc/ListComponent';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useQueryRangeSelectors} from '~/shared/hooks/useQueryRangeSelectors';
+import WebContentListQuery from '~/shared/queries/WebContentListQuery';
+import {Sizes} from '~/shared/util/constants';
+import {mapListResultsToProps} from '~/shared/util/mappers';
 import {
+	VIEWS_METRIC,
 	createOrderIOMap,
 	getGraphQLVariablesFromPagination,
-	VIEWS_METRIC
-} from 'shared/util/pagination';
-import {getSafeRangeSelectors} from 'shared/util/util';
-import {mapListResultsToProps} from 'shared/util/mappers';
-import {metricsListColumns} from 'shared/util/table-columns';
-import {Routes} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/client';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
+} from '~/shared/util/pagination';
+import {Routes} from '~/shared/util/router';
+import {metricsListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
+import {getSafeRangeSelectors} from '~/shared/util/util';
 
 const WebContentListCard: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(VIEWS_METRIC)
+		initialOrderIOMap: createOrderIOMap(VIEWS_METRIC),
 	});
 
 	const {channelId, groupId} = useParams();
@@ -35,18 +40,18 @@ const WebContentListCard: React.FC = () => {
 				delta,
 				orderIOMap,
 				page,
-				query
+				query,
 			}),
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 
 	return (
-		<Card className='web-content-root' pageDisplay>
+		<Card className="web-content-root" pageDisplay>
 			<ListComponent
-				{...mapListResultsToProps(response, result => ({
+				{...mapListResultsToProps(response, (result) => ({
 					items: result.journals.assetMetrics,
-					total: result.journals.total
+					total: result.journals.total,
 				}))}
 				columns={[
 					metricsListColumns.getTitleId({
@@ -56,9 +61,9 @@ const WebContentListCard: React.FC = () => {
 							'title'
 						)} | ${Liferay.Language.get('id').toUpperCase()}`,
 						rangeSelectors,
-						route: Routes.ASSETS_WEB_CONTENT_OVERVIEW
+						route: Routes.ASSETS_WEB_CONTENT_OVERVIEW,
 					}),
-					metricsListColumns.viewsMetric
+					metricsListColumns.viewsMetric,
 				]}
 				delta={delta}
 				entityLabel={Liferay.Language.get('web-content')}
@@ -67,7 +72,7 @@ const WebContentListCard: React.FC = () => {
 					<NoResultsDisplay
 						description={
 							<>
-								<span className='mr-1'>
+								<span className="mr-1">
 									{Liferay.Language.get(
 										'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 									)}
@@ -77,8 +82,8 @@ const WebContentListCard: React.FC = () => {
 									href={
 										URLConstants.AssetsWebContentListDocumentation
 									}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-web-content'
@@ -89,7 +94,7 @@ const WebContentListCard: React.FC = () => {
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_satellite'
+							symbol: 'ac_satellite',
 						}}
 						title={Liferay.Language.get(
 							'there-are-no-visitors-data-found'

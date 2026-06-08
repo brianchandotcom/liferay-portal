@@ -1,31 +1,37 @@
-import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
-import Form from 'shared/components/form';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Icon, Option, Picker} from '@clayui/core';
 import getCN from 'classnames';
-import Input from 'shared/components/Input';
 import React, {useEffect, useState} from 'react';
-import SelectCategoryFromModal, {
-	CategoryItem
-} from './components/SelectCategoryFromModal';
+import Input from '~/shared/components/Input';
+import Form from '~/shared/components/form';
+import {CustomValue} from '~/shared/util/records';
+
 import {
 	ASSET_TYPE_COMPATIBLE_EVENTS_MAP,
-	RelationalOperators
+	RelationalOperators,
 } from '../utils/constants';
+import {getIndexFromPropertyName} from '../utils/custom-inputs';
+import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
+import {isValid} from '../utils/utils';
+import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
+import SelectCategoryFromModal, {
+	CategoryItem,
+} from './components/SelectCategoryFromModal';
 import {
 	ASSET_TYPE_OPTIONS,
-	buildRemoteFilterValue,
 	DEFAULT_CONJUNCTION_CRITERION,
 	EVENT_TYPE_OPTIONS,
+	OCCURRENCE_OPTIONS,
+	buildRemoteFilterValue,
 	getAssetTypeFromValue,
 	getConjunctionCriterionFromValue,
 	getEventTypeFromValue,
 	isValidOccurrenceCount,
-	OCCURRENCE_OPTIONS
 } from './shared/remote-filter-input-helpers';
-import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
-import {CustomValue} from 'shared/util/records';
-import {getIndexFromPropertyName} from '../utils/custom-inputs';
-import {Icon, Option, Picker} from '@clayui/core';
-import {isValid} from '../utils/utils';
 
 export {
 	ASSET_TYPE_OPTIONS,
@@ -33,13 +39,13 @@ export {
 	getAssetTypeFromValue,
 	getConjunctionCriterionFromValue,
 	getEventTypeFromValue,
-	OCCURRENCE_OPTIONS
+	OCCURRENCE_OPTIONS,
 };
 
 const VOCABULARY_CONFIG = {
 	idProperty: 'vocabularies/id',
 	nameProperty: 'vocabularies/name',
-	supportsCategories: true
+	supportsCategories: true,
 };
 
 export function buildValue(
@@ -61,7 +67,7 @@ export function buildValue(
 			entityName: vocabularyName,
 			eventType,
 			occurrenceCount,
-			occurrenceOperator
+			occurrenceOperator,
 		},
 		VOCABULARY_CONFIG
 	);
@@ -70,7 +76,9 @@ export function buildValue(
 export function getCategoriesFromValue(
 	value: CustomValue | undefined
 ): CategoryItem[] {
-	if (!value) return [];
+	if (!value) {
+		return [];
+	}
 
 	const catIndex = getIndexFromPropertyName(value, 'categories');
 
@@ -79,7 +87,7 @@ export function getCategoriesFromValue(
 			'criterionGroup',
 			'items',
 			catIndex,
-			'value'
+			'value',
 		]) as any;
 
 		return catValue
@@ -89,7 +97,9 @@ export function getCategoriesFromValue(
 
 	const items = value.getIn(['criterionGroup', 'items']) as any;
 
-	if (!items) return [];
+	if (!items) {
+		return [];
+	}
 
 	const orGroup = items.find(
 		(item: any) => item.get?.('conjunctionName') === 'or'
@@ -101,7 +111,9 @@ export function getCategoriesFromValue(
 		orGroup.get?.('items')?.forEach((andGroup: any) => {
 			const andItems = andGroup.get?.('items');
 
-			if (!andItems) return;
+			if (!andItems) {
+				return;
+			}
 
 			const idItem = andItems.find(
 				(i: any) => i.get?.('propertyName') === 'categories/id'
@@ -113,7 +125,7 @@ export function getCategoriesFromValue(
 			if (idItem && nameItem) {
 				categories.push({
 					id: (idItem.get?.('value') as string) ?? '',
-					name: (nameItem.get?.('value') as string) ?? ''
+					name: (nameItem.get?.('value') as string) ?? '',
 				});
 			}
 		});
@@ -132,8 +144,8 @@ export function getCategoriesFromValue(
 		return [
 			{
 				id: (catIdItem.get?.('value') as string) ?? '',
-				name: (catNameItem.get?.('value') as string) ?? ''
-			}
+				name: (catNameItem.get?.('value') as string) ?? '',
+			},
 		];
 	}
 
@@ -147,7 +159,7 @@ export default function VocabularyInput({
 	onChange,
 	operatorRenderer: OperatorDropdown,
 	property,
-	value
+	value,
 }: ISegmentEditorCustomInputBase) {
 	const rawOperator = value?.get('operator');
 
@@ -186,9 +198,11 @@ export default function VocabularyInput({
 					property.name,
 					displayValue ?? '',
 					categories
-				)
+				),
 			});
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const isOccurrenceValid = (
@@ -211,7 +225,7 @@ export default function VocabularyInput({
 				property.name,
 				displayValue ?? '',
 				newCategories
-			)
+			),
 		});
 	};
 
@@ -234,26 +248,26 @@ export default function VocabularyInput({
 				property.name,
 				displayValue ?? '',
 				categories
-			)
+			),
 		});
 	};
 
 	return (
-		<div className='criteria-statement'>
+		<div className="criteria-statement">
 			<Form.Group autoFit>
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('individual')}
 				</Form.GroupItem>
 
 				<OperatorDropdown />
 
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('triggered').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem shrink>
 					<Picker
-						className='criterion-input'
+						className="criterion-input"
 						items={EVENT_TYPE_OPTIONS.filter(({value}) =>
 							(
 								ASSET_TYPE_COMPATIBLE_EVENTS_MAP[
@@ -279,7 +293,7 @@ export default function VocabularyInput({
 									property.name,
 									displayValue ?? '',
 									categories
-								)
+								),
 							});
 						}}
 						searchable
@@ -291,17 +305,17 @@ export default function VocabularyInput({
 					</Picker>
 				</Form.GroupItem>
 
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('on-the-vocabulary').toLowerCase()}
 				</Form.GroupItem>
 
-				<Form.GroupItem className='display-value' label shrink>
+				<Form.GroupItem className="display-value" label shrink>
 					<b>{displayValue}</b>
 				</Form.GroupItem>
 			</Form.Group>
 
 			<Form.Group autoFit>
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('on-the-categories').toLowerCase()}
 				</Form.GroupItem>
 
@@ -315,13 +329,13 @@ export default function VocabularyInput({
 			</Form.Group>
 
 			<Form.Group autoFit>
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('for').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem shrink>
 					<Picker
-						className='criterion-input'
+						className="criterion-input"
 						items={ASSET_TYPE_OPTIONS}
 						onSelectionChange={(newAssetType: React.Key) => {
 							setAssetType(newAssetType);
@@ -356,7 +370,7 @@ export default function VocabularyInput({
 									property.name,
 									displayValue ?? '',
 									categories
-								)
+								),
 							});
 						}}
 						selectedKey={assetType}
@@ -367,13 +381,13 @@ export default function VocabularyInput({
 					</Picker>
 				</Form.GroupItem>
 
-				<Form.GroupItem className='entity-name' label shrink>
+				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('asset-type').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem shrink>
 					<Picker
-						className='operator-input'
+						className="operator-input"
 						items={OCCURRENCE_OPTIONS}
 						onSelectionChange={(newOperator: React.Key) => {
 							setOccurrenceOperator(newOperator);
@@ -395,7 +409,7 @@ export default function VocabularyInput({
 									property.name,
 									displayValue ?? '',
 									categories
-								)
+								),
 							});
 						}}
 						selectedKey={occurrenceOperator}
@@ -408,15 +422,15 @@ export default function VocabularyInput({
 
 				<Form.GroupItem
 					className={getCN({
-						'has-error': !occurrenceValid && occurrenceTouched
+						'has-error': !occurrenceValid && occurrenceTouched,
 					})}
 					shrink
 				>
 					<Input
-						className='number-input'
-						min='0'
+						className="number-input"
+						min="0"
 						onBlur={({
-							target: {value: inputVal}
+							target: {value: inputVal},
 						}: React.FocusEvent<HTMLInputElement>) => {
 							const valid = isValidOccurrenceCount(inputVal);
 
@@ -435,11 +449,11 @@ export default function VocabularyInput({
 									property.name,
 									displayValue ?? '',
 									categories
-								)
+								),
 							});
 						}}
 						onChange={({
-							target: {value: inputVal}
+							target: {value: inputVal},
 						}: React.ChangeEvent<HTMLInputElement>) => {
 							let numberVal: string | number = '';
 
@@ -465,19 +479,19 @@ export default function VocabularyInput({
 									property.name,
 									displayValue ?? '',
 									categories
-								)
+								),
 							});
 						}}
-						type='number'
+						type="number"
 						value={occurrenceCount}
 					/>
 
 					{occurrenceTouched && occurrenceCount === '' && (
-						<div className='form-feedback-group'>
-							<div className='form-feedback-item'>
+						<div className="form-feedback-group">
+							<div className="form-feedback-item">
 								<Icon
-									className='mr-1'
-									symbol='exclamation-full'
+									className="mr-1"
+									symbol="exclamation-full"
 								/>
 								{Liferay.Language.get('required')}
 							</div>
@@ -485,7 +499,7 @@ export default function VocabularyInput({
 					)}
 				</Form.GroupItem>
 
-				<Form.GroupItem className='unit' label shrink>
+				<Form.GroupItem className="unit" label shrink>
 					{Liferay.Language.get('times')}
 				</Form.GroupItem>
 

@@ -1,5 +1,10 @@
-import {getMetricsData} from 'shared/components/metric-card/util';
-import {getVariables, safeResultToProps} from 'shared/util/mappers';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {getMetricsData} from '~/shared/components/metric-card/util';
+import {getVariables, safeResultToProps} from '~/shared/util/mappers';
 
 /**
  * MAPPER
@@ -15,7 +20,7 @@ const getMetricsMapper = (getData, metrics, chartDataMapFn) => {
 				metrics,
 				rangeSelectors,
 				chartDataMapFn
-			)
+			),
 		})
 	);
 
@@ -29,24 +34,24 @@ const getMetricsMapper = (getData, metrics, chartDataMapFn) => {
 		filters,
 		interval,
 		rangeSelectors,
-		router: {params}
+		router: {params},
 	}) => {
 		const {variables} = getVariables({
 			assetId,
 			filters,
 			interval,
 			params,
-			rangeSelectors
+			rangeSelectors,
 		});
 
 		return {
-			variables
+			variables,
 		};
 	};
 
 	return {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	};
 };
 

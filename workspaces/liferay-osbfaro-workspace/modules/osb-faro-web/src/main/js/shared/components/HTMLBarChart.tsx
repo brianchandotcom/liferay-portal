@@ -1,13 +1,19 @@
-import ChartTooltip from 'shared/components/chart-tooltip';
-import Circle from 'shared/components/Circle';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
-import {getAxisMeasuresFromData} from 'shared/util/charts';
-import {getPercentage} from 'shared/util/util';
+import Circle from '~/shared/components/Circle';
+import ChartTooltip from '~/shared/components/chart-tooltip';
+import {getAxisMeasuresFromData} from '~/shared/util/charts';
+import {toRounded, toThousands} from '~/shared/util/numbers';
+import {getPercentage} from '~/shared/util/util';
+
 import {Column as TooltipColumn} from './chart-tooltip/types';
-import {toRounded, toThousands} from 'shared/util/numbers';
 
 const CLASSNAME = 'analytics-bar-chart-html';
 
@@ -65,13 +71,13 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 	disableScroll = false,
 	formatSpacement = true,
 	grid = {
-		formatter: value => value,
+		formatter: (value) => value,
 		precision: 1,
 		show: false,
-		type: 'number'
+		type: 'number',
 	},
 	header,
-	items: initialItems
+	items: initialItems,
 }) => {
 	const [items, setItems] = useState<Item[]>(initialItems);
 	const [showArrowDownIcon, setShowArrowDownIcon] = useState(false);
@@ -84,10 +90,10 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 		header: [],
 		position: {
 			left: '0px',
-			top: '0px'
+			top: '0px',
 		},
 		rows: [],
-		show: false
+		show: false,
 	});
 
 	const _groupItemsRef = useRef<HTMLDivElement>(null);
@@ -106,7 +112,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 	}, [initialItems]);
 
 	const {intervals: gridIntervals} = getAxisMeasuresFromData([
-		['data1', grid.minValue, grid.maxValue] as unknown as number[]
+		['data1', grid.minValue, grid.maxValue] as unknown as number[],
 	]);
 
 	const alignTooltip = (
@@ -119,7 +125,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 
 		return {
 			left: pageX - width / 2,
-			top: pageY - height - arrowPopoverSize - tooltipDistance
+			top: pageY - height - arrowPopoverSize - tooltipDistance,
 		};
 	};
 
@@ -166,16 +172,17 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 
 	const handleClickToggleList = ({
 		currentTarget: {
-			dataset: {index}
-		}
+			dataset: {index},
+		},
 	}: React.MouseEvent<HTMLButtonElement>): void => {
 		const newItems = items.map((item, currIndex) => {
 			if (currIndex === Number(index)) {
 				return {
 					...item,
-					expanded: !item.expanded
+					expanded: !item.expanded,
 				};
 			}
+
 			return item;
 		});
 
@@ -184,7 +191,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 
 	const handleMouseEnterItem = ({
 		header,
-		rows
+		rows,
 	}: {
 		header: any[];
 		rows: any[];
@@ -193,19 +200,21 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 			...tooltip,
 			header,
 			rows,
-			show: true
+			show: true,
 		});
 	};
 
 	const handleMouseLeaveItem = () => {
 		setTooltip({
 			...tooltip,
-			show: false
+			show: false,
 		});
 	};
 
 	const handleMouseMoveItem = (event: React.MouseEvent<HTMLLIElement>) => {
-		if (!tooltip.show || !_tooltipRef.current) return;
+		if (!tooltip.show || !_tooltipRef.current) {
+			return;
+		}
 
 		const {clientHeight, clientWidth} = _tooltipRef.current;
 		const {left, top} = alignTooltip(event, clientWidth, clientHeight);
@@ -214,8 +223,8 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 			...tooltip,
 			position: {
 				left: `${left}px`,
-				top: `${top}px`
-			}
+				top: `${top}px`,
+			},
 		});
 	};
 
@@ -241,7 +250,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 		clientHeight,
 		offsetHeight,
 		scrollHeight,
-		scrollTop
+		scrollTop,
 	}: {
 		clientHeight: number;
 		offsetHeight: number;
@@ -274,7 +283,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 		intervals,
 		items,
 		progress,
-		showControls
+		showControls,
 	}: {
 		columns: Column[];
 		expanded?: boolean;
@@ -293,7 +302,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 								key={index}
 								style={{
 									backgroundColor: color,
-									width: getProgressWidth(value)
+									width: getProgressWidth(value),
 								}}
 							/>
 						))}
@@ -324,7 +333,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 						<div className={`${CLASSNAME}-column`} key={index}>
 							{icon && renderIcon({color, icon})}
 
-							<div className='text-truncate w-100'>
+							<div className="text-truncate w-100">
 								{typeof label === 'function' ? (
 									(label as Function)()
 								) : (
@@ -343,7 +352,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 					onClick={handleClickToggleList}
 				>
 					<ClayIcon
-						className='icon icon-root'
+						className="icon icon-root"
 						symbol={expanded ? 'hr' : 'plus'}
 					/>
 				</button>
@@ -355,7 +364,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 		if (color) {
 			return (
 				<Circle color={color} size={32}>
-					<ClayIcon className='icon-root' symbol={icon} />
+					<ClayIcon className="icon-root" symbol={icon} />
 				</Circle>
 			);
 		}
@@ -377,7 +386,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 							items,
 							progress,
 							showControls,
-							tooltip
+							tooltip,
 						},
 						index
 					) => (
@@ -391,8 +400,8 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 										onMouseEnter: () =>
 											handleMouseEnterItem(tooltip),
 										onMouseLeave: handleMouseLeaveItem,
-										onMouseMove: handleMouseMoveItem
-								  }
+										onMouseMove: handleMouseMoveItem,
+									}
 								: {})}
 						>
 							{renderHeader({
@@ -402,7 +411,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 								intervals,
 								items,
 								progress,
-								showControls
+								showControls,
 							})}
 
 							{hasItems(items) && expanded && renderItems(items)}
@@ -415,7 +424,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 	const renderTooltip = ({
 		header,
 		position,
-		rows
+		rows,
 	}: {
 		header: any[];
 		position: {left: string; top: string};
@@ -439,7 +448,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 		<div
 			className={getCN(CLASSNAME, {
 				'disable-scroll': disableScroll,
-				'format-spacement': formatSpacement
+				'format-spacement': formatSpacement,
 			})}
 		>
 			{grid.show && (
@@ -464,8 +473,8 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 
 			{showArrowDownIcon && (
 				<ClayIcon
-					className='icon icon-root text-l-secondary '
-					symbol='angle-down'
+					className="icon icon-root text-l-secondary"
+					symbol="angle-down"
 				/>
 			)}
 

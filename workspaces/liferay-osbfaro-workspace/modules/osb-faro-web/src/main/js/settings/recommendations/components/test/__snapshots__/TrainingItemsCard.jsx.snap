@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TrainingItemsCard renders 1`] = `
+<div>
+  <div
+    class="card card-root training-items-card-root"
+  >
+    <div
+      class="card-header"
+    >
+      <div
+        class="card-title"
+      >
+        Training Items
+      </div>
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="align-items-baseline d-flex training-item-root"
+      >
+        <button
+          aria-label="Watch"
+          class="button-root btn btn-outline-borderless btn-outline-secondary"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-view icon-root"
+            role="presentation"
+          >
+            <use
+              href="#view"
+            />
+          </svg>
+        </button>
+        <div
+          class="align-items-baseline d-flex rule-item-root"
+        >
+          <b>
+            Include:
+          </b>
+          <div
+            class="label label-root metadata-tag-root label-lg"
+          >
+            <span
+              class="label-item"
+            >
+              url
+            </span>
+          </div>
+          <span
+            class="rule-value"
+          >
+            .*custom-assets
+          </span>
+        </div>
+      </div>
+      <div
+        class="align-items-center d-flex total-training-urls"
+      >
+        <button
+          aria-label="Watch"
+          class="button-root btn btn-outline-borderless btn-outline-secondary"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-view icon-root"
+            role="presentation"
+          >
+            <use
+              href="#view"
+            />
+          </svg>
+        </button>
+        Total Training URLs: 
+        0
+      </div>
+    </div>
+  </div>
+</div>
+`;

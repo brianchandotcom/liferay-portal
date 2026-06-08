@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
 
 const HUBSPOT_ENDPOINT = '//js.hsforms.net/forms/v2.js';
@@ -7,13 +12,13 @@ const mockJQuery: () => void = () => {
 	(window as any).jQuery =
 		(window as any).jQuery ||
 		((node: any) => {
-			if (typeof node == 'string') {
+			if (typeof node === 'string') {
 				return document.querySelector(node);
 			}
 
 			return {
 				change: () => {},
-				trigger: () => {}
+				trigger: () => {},
 			};
 		});
 };
@@ -29,10 +34,12 @@ const loadScript: () => HTMLElement = () => {
 	return script;
 };
 
-const createForm: (props: React.HTMLAttributes<HTMLElement>) => void = props =>
+const createForm: (props: React.HTMLAttributes<HTMLElement>) => void = (
+	props
+) =>
 	(window as any).hbspt.forms.create({
 		...props,
-		target: `#${HUBSPOT_ID}`
+		target: `#${HUBSPOT_ID}`,
 	});
 
 interface IHubspotFormProps extends React.HTMLAttributes<HTMLElement> {
@@ -45,14 +52,15 @@ interface IHubspotFormProps extends React.HTMLAttributes<HTMLElement> {
 	submitButtonClass?: string;
 }
 
-const HubspotForm: React.FC<IHubspotFormProps> = props => {
+const HubspotForm: React.FC<IHubspotFormProps> = (props) => {
 	if (!(window as any).hbspt) {
 		const script = loadScript();
 
 		script.onload = () => {
 			createForm(props);
 		};
-	} else {
+	}
+	else {
 		createForm(props);
 	}
 

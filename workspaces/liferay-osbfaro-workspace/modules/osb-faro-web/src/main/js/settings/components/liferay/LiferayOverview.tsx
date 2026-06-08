@@ -1,43 +1,49 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'settings/components/base-page/BasePage';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import React, {useEffect, useState} from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {AssignedPropertiesTable} from '../AssignedPropertiesTable';
-import {Card} from 'shared/components/revamping/Card';
-import {ClayInput} from '@clayui/form';
-import {close, open} from 'shared/actions/modals';
+import {ConnectedProps, connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
 import {compose} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
-import {CopyInputValue} from '../CopyInputValue';
-import {DataSource} from 'shared/util/records';
-import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
-import {DataSourceStatuses} from 'shared/util/constants';
+import BasePage from '~/settings/components/base-page/BasePage';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, open} from '~/shared/actions/modals';
 import {
 	fetch,
 	fetchChannelsMetric,
 	fetchToken,
-	updateLiferay
-} from 'shared/api/data-source';
-import {getDataSourceDisplayObject} from 'shared/util/data-sources';
-import {ReviewSyncedDataFragment} from './ReviewSyncedDataFragment';
-import {Text} from '@clayui/core';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+	updateLiferay,
+} from '~/shared/api/data-source';
+import {Card} from '~/shared/components/revamping/Card';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {Alert} from '~/shared/types';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {DataSourceStatuses} from '~/shared/util/constants';
+import {getDataSourceDisplayObject} from '~/shared/util/data-sources';
+import {DataSource} from '~/shared/util/records';
+import URLConstants from '~/shared/util/url-constants';
+
+import {AssignedPropertiesTable} from '../AssignedPropertiesTable';
+import {CopyInputValue} from '../CopyInputValue';
+import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
 import {useDisconnectDataSource} from '../data-source/utils';
-import {useParams} from 'react-router-dom';
-import {useRequest} from 'shared/hooks/useRequest';
+import {ReviewSyncedDataFragment} from './ReviewSyncedDataFragment';
 
 const TIMEOUT_INTERVAL = 5000;
 
 const connector = connect(null, {
 	addAlert,
 	close,
-	open
+	open,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -50,7 +56,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 	addAlert,
 	close,
 	dataSource: initialDataSource,
-	open
+	open,
 }) => {
 	const [dataSource, setDataSource] = useState(initialDataSource);
 	const [, setLoading] = useState(false);
@@ -67,7 +73,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 
 	const [alert, setAlert] = useState<Alert>({
 		displayType: 'success',
-		message: ''
+		message: '',
 	});
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
@@ -80,7 +86,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 		onSubmit: async () => {
 			await handleUpdateDataSource();
 		},
-		open
+		open,
 	});
 
 	const handleUpdateDataSource = async () => {
@@ -89,18 +95,20 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 
 			const newDataSource = await fetch({
 				groupId,
-				id
+				id,
 			});
 
 			setDataSource(new DataSource(newDataSource));
-		} catch (error) {
+		}
+		catch (error) {
 			addAlert({
 				alertType: Alert.Types.Error,
 				message: Liferay.Language.get(
 					'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-				)
+				),
 			});
-		} finally {
+		}
+		finally {
 			setLoading(false);
 		}
 	};
@@ -110,7 +118,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 			displayType: 'success',
 			message: Liferay.Language.get(
 				'you-have-successfully-authenticated-your-token-with-liferay-analytics-cloud.-you-can-now-select-the-data-to-sync'
-			)
+			),
 		};
 
 		if (!dataSourceActive) {
@@ -119,7 +127,8 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 			alert.message = Liferay.Language.get(
 				'the-data-source-is-disconnected.-data-is-no-longer-being-synced-from-dxp,-but-you-can-reconnect-to-resume-syncing'
 			);
-		} else if (dataSource?.sitesSelected || dataSource?.contactsSelected) {
+		}
+		else if (dataSource?.sitesSelected || dataSource?.contactsSelected) {
 			alert.message = Liferay.Language.get(
 				'all-data-coming-from-this-data-source-is-up-to-date.-there-are-no-errors-to-report'
 			);
@@ -141,7 +150,8 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 				() => getNextToken(nextToken),
 				TIMEOUT_INTERVAL
 			);
-		} else {
+		}
+		else {
 			handleUpdateDataSource();
 		}
 
@@ -150,6 +160,8 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 
 	useEffect(() => {
 		if (!dataSourceActive) {
+
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 			_tokenRequest = getNextToken().then(setToken);
 		}
 
@@ -160,7 +172,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 
 	const {data: channelsMetric} = useRequest({
 		dataSourceFn: fetchChannelsMetric,
-		variables: {groupId, id}
+		variables: {groupId, id},
 	});
 
 	return (
@@ -169,8 +181,8 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 				breadcrumbs.getDataSources({groupId}),
 				breadcrumbs.getDataSourceName({
 					active: true,
-					label: dataSource.name || ''
-				})
+					label: dataSource.name || '',
+				}),
 			]}
 			documentTitle={Liferay.Language.get('configure-data-source')}
 		>
@@ -188,7 +200,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 			/>
 
 			<Card title={Liferay.Language.get('authentication')}>
-				<div className='mb-4'>
+				<div className="mb-4">
 					<Card.SubHeader
 						title={Liferay.Language.get('connection-status')}
 					/>
@@ -201,18 +213,18 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 
 					{!dataSourceActive && (
 						<>
-							<div className='mb-4'>
-								<Text color='secondary' size={4}>
+							<div className="mb-4">
+								<Text color="secondary" size={4}>
 									{Liferay.Language.get(
 										'to-reestablish-the-connection-between-the-liferay-dxp-instance-and-liferay-analytics-cloud,-copy-the-token-below-and-go-to-dxp-instance-settings-analytics-cloud-to-continue-the-data-source-configuration'
 									)}
 								</Text>
 
 								<ClayLink
-									className='ml-1'
+									className="ml-1"
 									href={URLConstants.HelpConnectDxp}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-data-sources'
@@ -220,15 +232,15 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 								</ClayLink>
 							</div>
 
-							<label htmlFor='token'>
-								<Text weight='semi-bold'>
+							<label htmlFor="token">
+								<Text weight="semi-bold">
 									{Liferay.Language.get(
 										'analytics-cloud-token'
 									)}
 								</Text>
 
 								<div>
-									<Text color='secondary' weight='normal'>
+									<Text color="secondary" weight="normal">
 										{Liferay.Language.get(
 											'copy-this-token-to-the-dxp-instance-you-would-like-to-connect'
 										)}
@@ -245,32 +257,32 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 					)}
 				</div>
 
-				<div className='mb-4'>
+				<div className="mb-4">
 					<Card.SubHeader
 						title={Liferay.Language.get('data-source-details')}
 					/>
 
-					<ClayInput.Group className='d-flex mt-3'>
-						<ClayInput.GroupItem className='mr-3' shrink>
-							<label htmlFor='dataSourceType'>
+					<ClayInput.Group className="d-flex mt-3">
+						<ClayInput.GroupItem className="mr-3" shrink>
+							<label htmlFor="dataSourceType">
 								{Liferay.Language.get('data-source-type')}
 							</label>
 
 							<ClayInput
 								readOnly
-								type='text'
+								type="text"
 								value={Liferay.Language.get('liferay-portal')}
 							/>
 						</ClayInput.GroupItem>
 
-						<ClayInput.GroupItem className='ml-0' shrink>
-							<label htmlFor='dataSourceId'>
+						<ClayInput.GroupItem className="ml-0" shrink>
+							<label htmlFor="dataSourceId">
 								{Liferay.Language.get('data-source-id')}
 							</label>
 
 							<ClayInput
 								readOnly
-								type='text'
+								type="text"
 								value={dataSource.id}
 							/>
 						</ClayInput.GroupItem>
@@ -282,12 +294,12 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 						aria-label={Liferay.Language.get(
 							'disconnect-data-source'
 						)}
-						displayType='danger'
+						displayType="danger"
 						onClick={handleDisconnect}
 						outline
-						size='sm'
+						size="sm"
 					>
-						<ClayIcon className='mr-2' symbol='logout' />
+						<ClayIcon className="mr-2" symbol="logout" />
 
 						{Liferay.Language.get('disconnect-data-source')}
 					</ClayButton>
@@ -316,20 +328,20 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 							label: Liferay.Language.get(
 								'dxp-commerce-channels'
 							),
-							sortable: false
+							sortable: false,
 						},
 						{
 							accessor: 'groupsCount',
 							className: 'text-right',
 							label: Liferay.Language.get('sites'),
-							sortable: false
+							sortable: false,
 						},
 						{
 							accessor: 'individualDataSourcesCount',
 							className: 'text-right',
 							label: Liferay.Language.get('individuals'),
-							sortable: false
-						}
+							sortable: false,
+						},
 					]}
 					dataSource={dataSource}
 					handleUpdateDataSource={handleUpdateDataSource}

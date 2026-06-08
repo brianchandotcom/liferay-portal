@@ -1,23 +1,29 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Text} from '@clayui/core';
 import moment from 'moment';
 import React from 'react';
-import {Colors} from 'shared/util/charts';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {Colors} from '~/shared/util/charts';
+import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {toThousands} from '~/shared/util/numbers';
+import {STATUS_DISPLAY_MAP} from '~/shared/util/subscriptions';
+
 import {CurrentUsage} from './CurrentUsage';
-import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from 'shared/util/date';
-import {STATUS_DISPLAY_MAP} from 'shared/util/subscriptions';
-import {sub} from 'shared/util/lang';
-import {Text} from '@clayui/core';
-import {toThousands} from 'shared/util/numbers';
 import {UsageMetric} from './UsageMetric';
 import {UsageMetricBarChart} from './UsageMetricBarChart';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 interface IKnownIndividualsSessionProps {
 	currentPlan: any;
 }
 
-export const KnownIndividualsSession = ({
-	currentPlan
-}: IKnownIndividualsSessionProps) => {
+export const KnownIndividualsSession = function KnownIndividualsSession({
+	currentPlan,
+}: IKnownIndividualsSessionProps) {
 	const {timeZoneId} = useTimeZone();
 	const {count, limit, status} = currentPlan.metrics.get('individuals');
 	const syncedIndividualsCount =
@@ -25,7 +31,7 @@ export const KnownIndividualsSession = ({
 	const available = limit - count;
 
 	return (
-		<div className='mt-4 mb-5'>
+		<div className="mb-5 mt-4">
 			<UsageMetric
 				description={
 					sub(
@@ -37,7 +43,7 @@ export const KnownIndividualsSession = ({
 								moment(currentPlan.startDate),
 								CUSTOM_DATE_FORMAT,
 								timeZoneId
-							)
+							),
 						]
 					) as string
 				}
@@ -53,17 +59,17 @@ export const KnownIndividualsSession = ({
 								]
 							],
 							label: Liferay.Language.get('known-individuals'),
-							value: count
-						}
+							value: count,
+						},
 					}}
 					legendText={sub(
 						available === 1
 							? Liferay.Language.get(
 									'1-known-individual-is-available'
-							  )
+								)
 							: Liferay.Language.get(
 									'x-known-individuals-are-available'
-							  ),
+								),
 						[(available > 0 ? available : 0).toLocaleString()]
 					)}
 					limit={limit}
@@ -77,9 +83,9 @@ export const KnownIndividualsSession = ({
 					}
 				/>
 
-				<div className='mt-4'>
-					<div className='mb-1'>
-						<Text color='secondary' size={3}>
+				<div className="mt-4">
+					<div className="mb-1">
+						<Text color="secondary" size={3}>
 							{Liferay.Language.get(
 								'individuals-breakdown'
 							).toUpperCase()}
@@ -96,7 +102,7 @@ export const KnownIndividualsSession = ({
 									),
 									[toThousands(syncedIndividualsCount)]
 								) as string,
-								value: syncedIndividualsCount
+								value: syncedIndividualsCount,
 							},
 							itemB: {
 								color: Colors.primary,
@@ -104,8 +110,8 @@ export const KnownIndividualsSession = ({
 									Liferay.Language.get('known-individuals-x'),
 									[toThousands(count)]
 								) as string,
-								value: count
-							}
+								value: count,
+							},
 						}}
 						total={syncedIndividualsCount + count}
 					/>

@@ -1,7 +1,20 @@
-import * as data from 'test/data';
-import middleware from 'shared/store/configure-middleware';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {render} from '@testing-library/react';
+import {List, fromJS} from 'immutable';
 import React from 'react';
-import reducers from 'shared/reducers';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import reducers from '~/shared/reducers';
+import middleware from '~/shared/store/configure-middleware';
+import {
+	LanguageIds,
+	ProjectStates,
+	UserRoleNames,
+} from '~/shared/util/constants';
 import {
 	Account,
 	DataSource,
@@ -10,13 +23,9 @@ import {
 	Project,
 	RemoteData,
 	Segment,
-	User
-} from 'shared/util/records';
-import {createStore} from 'redux';
-import {fromJS, List} from 'immutable';
-import {LanguageIds, ProjectStates, UserRoleNames} from 'shared/util/constants';
-import {Provider} from 'react-redux';
-import {render} from '@testing-library/react';
+	User,
+} from '~/shared/util/records';
+import * as data from '~/test/data';
 
 export function toRD(data) {
 	return new RemoteData({data, loading: false});
@@ -24,38 +33,39 @@ export function toRD(data) {
 
 export const mockStoreData = fromJS({
 	accounts: {
-		test: toRD(new Account(fromJS(data.mockAccount('test'))))
+		test: toRD(new Account(fromJS(data.mockAccount('test')))),
 	},
 	cards: {
 		test: {
 			card1: {},
-			card2: {}
-		}
+			card2: {},
+		},
 	},
+
 	cardTemplates: {
 		card1: data.mockCardTemplate('card1'),
-		card2: data.mockCardTemplate('card2')
+		card2: data.mockCardTemplate('card2'),
 	},
 	currentUser: new RemoteData({
 		data: '23',
-		loading: false
+		loading: false,
 	}),
 	dataSources: {
-		23: toRD(new DataSource(fromJS(data.mockLiferayDataSource(23)))),
-		24: toRD(new DataSource(fromJS(data.mockCSVDataSource(24)))),
+		'23': toRD(new DataSource(fromJS(data.mockLiferayDataSource(23)))),
+		'24': toRD(new DataSource(fromJS(data.mockCSVDataSource(24)))),
 		'25-25': toRD(
 			new DataSource(fromJS(data.mockLiferayDataSource(25, {id: null})))
 		),
-		26: toRD(new DataSource(fromJS(data.mockCSVDataSource(26)))),
+		'26': toRD(new DataSource(fromJS(data.mockCSVDataSource(26)))),
 		'26-26': toRD('26'),
 
-		27: toRD(new DataSource(fromJS(data.mockSalesforceDataSource(27))))
+		'27': toRD(new DataSource(fromJS(data.mockSalesforceDataSource(27)))),
 	},
 	distributions: {
-		individualsDashboard: toRD({items: [], total: 0})
+		individualsDashboard: toRD({items: [], total: 0}),
 	},
 	individuals: {
-		test: toRD(new Individual(fromJS(data.mockIndividual('test'))))
+		test: toRD(new Individual(fromJS(data.mockIndividual('test')))),
 	},
 	layouts: {
 		1: {
@@ -64,10 +74,10 @@ export const mockStoreData = fromJS({
 				contactsCardTemplatesList: [['card1']],
 				headerContactsCardTemplates: ['card2'],
 				id: 'layout1',
-				name: 'layoutTemplate'
+				name: 'layoutTemplate',
 			},
-			faroEntity: 'test'
-		}
+			faroEntity: 'test',
+		},
 	},
 	preferences: {
 		group: {
@@ -81,22 +91,22 @@ export const mockStoreData = fromJS({
 							numberOfBins: 0,
 							propertyId: '379649776998500415',
 							propertyType: 'Text',
-							title: 'Streets'
-						})
+							title: 'Streets',
+						}),
 					])
-				)
-			}
+				),
+			},
 		},
 		user: {
-			defaultChannelId: toRD('321320')
-		}
+			defaultChannelId: toRD('321320'),
+		},
 	},
 	projects: {
 		23: toRD(
 			new Project(
 				data.mockProject('23', {
 					recommendationsEnabled: true,
-					stateStartDate: 1531263666366
+					stateStartDate: 1531263666366,
 				})
 			)
 		),
@@ -129,17 +139,17 @@ export const mockStoreData = fromJS({
 			)
 		),
 		corpProjectUuid23: toRD(new Project(fromJS(data.mockProject('23')))),
-		corpProjectUuid26: toRD(new Project(fromJS(data.mockProject('26'))))
+		corpProjectUuid26: toRD(new Project(fromJS(data.mockProject('26')))),
 	},
 	segments: {
-		test: toRD(new Segment(data.mockSegment('test')))
+		test: toRD(new Segment(data.mockSegment('test'))),
 	},
 	users: {
 		23: toRD(
 			new User(
 				data.mockUser('23', {
 					groupId: '23',
-					languageId: LanguageIds.English
+					languageId: LanguageIds.English,
 				})
 			)
 		),
@@ -148,7 +158,7 @@ export const mockStoreData = fromJS({
 				data.mockUser('24', {
 					groupId: '23',
 					languageId: LanguageIds.English,
-					roleName: UserRoleNames.Member
+					roleName: UserRoleNames.Member,
 				})
 			)
 		),
@@ -156,11 +166,11 @@ export const mockStoreData = fromJS({
 			new User(
 				data.mockUser('26', {
 					groupId: '26',
-					languageId: LanguageIds.English
+					languageId: LanguageIds.English,
 				})
 			)
-		)
-	}
+		),
+	},
 });
 
 export const mockStoreDataLDP = mockStoreData.setIn(
@@ -175,10 +185,10 @@ export default function mockStore(
 	return createStore(reducer, initialState, middleware);
 }
 
-export function renderWithStore(Component, props, mapStore = s => s) {
+export function renderWithStore(Component, props, mapStore = (s) => s) {
 	return render(
 		<Provider store={mockStore(mapStore(mockStoreData))}>
-			<Component key='child' {...props} />
+			<Component key="child" {...props} />
 		</Provider>
 	);
 }

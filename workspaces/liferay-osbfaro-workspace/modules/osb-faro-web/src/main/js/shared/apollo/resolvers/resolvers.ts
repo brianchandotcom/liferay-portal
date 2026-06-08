@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import AssetAppearsOnResolver from './AssetAppearsOnResolver';
 import CommerceAverageOrderValueResolver from './CommerceAverageOrderValueResolver';
 import CommerceAverageRevenuePerAccountResolver from './CommerceAverageRevenuePerAccountResolver';
@@ -9,9 +14,9 @@ import DocumentsAndMediaMetricsResolver from './DocumentsAndMediaMetricsResolver
 import EventAnalysisListResolver from './EventAnalysisListResolver';
 import EventsByUserSessionsResolver from './EventsByUserSessionsResolver';
 import ExperimentResolver from './ExperimentResolver';
-import IndividualSiteMetricsResolver from './individualSiteMetricsResolver';
 import InterestsResolver from './InterestsResolver';
 import PagePathResolver from './PagePathResolver';
+import IndividualSiteMetricsResolver from './individualSiteMetricsResolver';
 
 /**
  * How it works?
@@ -41,5 +46,5 @@ export const resolvers = {
 	orderTotalCurrencyValues: CommerceTotalOrderValueResolver,
 	pagePath: PagePathResolver,
 	site: IndividualSiteMetricsResolver,
-	siteInterests: InterestsResolver
+	siteInterests: InterestsResolver,
 };

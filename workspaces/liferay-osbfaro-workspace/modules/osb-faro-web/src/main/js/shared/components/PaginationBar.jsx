@@ -1,15 +1,21 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import faroConstants from 'shared/util/constants';
+import autobind from 'autobind-decorator';
 import getCN from 'classnames';
+import {PropTypes} from 'prop-types';
+import React from 'react';
+import faroConstants from '~/shared/util/constants';
+import {setUriQueryValues} from '~/shared/util/router';
+
+import {getPluralMessage} from '../util/lang';
 import NavBar from './NavBar';
 import Pagination from './Pagination';
-import React from 'react';
-import {getPluralMessage} from '../util/lang';
-import {PropTypes} from 'prop-types';
-import {setUriQueryValues} from 'shared/util/router';
 
 const {cur: DEFAULT_CUR, deltaValues} = faroConstants.pagination;
 
@@ -22,7 +28,7 @@ const SIZES = ['sm', 'lg'];
 class DeltaItem extends React.Component {
 	static propTypes = {
 		delta: PropTypes.number.isRequired,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
 	};
 
 	@autobind
@@ -49,7 +55,7 @@ class PaginationBar extends React.Component {
 		selectedDelta: deltaValues[1],
 		showDeltaDropdown: true,
 		showResultsMessage: true,
-		totalItems: 0
+		totalItems: 0,
 	};
 
 	static propTypes = {
@@ -62,7 +68,7 @@ class PaginationBar extends React.Component {
 		showDeltaDropdown: PropTypes.bool,
 		showResultsMessage: PropTypes.bool,
 		size: PropTypes.oneOf(SIZES),
-		totalItems: PropTypes.number
+		totalItems: PropTypes.number,
 	};
 
 	state = {};
@@ -94,11 +100,11 @@ class PaginationBar extends React.Component {
 			showDeltaDropdown,
 			showResultsMessage,
 			size,
-			totalItems
+			totalItems,
 		} = this.props;
 
 		const classes = getCN('pagination-bar-root', className, {
-			[`pagination-${size}`]: size
+			[`pagination-${size}`]: size,
 		});
 
 		const page = Math.max(this.props.page, FIRST_PAGE) || FIRST_PAGE;
@@ -112,13 +118,13 @@ class PaginationBar extends React.Component {
 			<NavBar className={classes}>
 				{showDeltaDropdown && (
 					<ClayDropDown
-						className='dropdown-root pagination-items-per-page'
+						className="dropdown-root pagination-items-per-page"
 						closeOnClick
 						trigger={
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
-								size='sm'
+								className="button-root"
+								displayType="secondary"
+								size="sm"
 							>
 								{getPluralMessage(
 									Liferay.Language.get('x-item'),
@@ -127,13 +133,13 @@ class PaginationBar extends React.Component {
 								)}
 
 								<ClayIcon
-									className='ml-2'
-									symbol='caret-bottom'
+									className="ml-2"
+									symbol="caret-bottom"
 								/>
 							</ClayButton>
 						}
 					>
-						{deltas.map(item => (
+						{deltas.map((item) => (
 							<DeltaItem
 								delta={item}
 								href={
@@ -141,8 +147,8 @@ class PaginationBar extends React.Component {
 										? null
 										: setUriQueryValues({
 												delta: item,
-												page: DEFAULT_CUR
-										  })
+												page: DEFAULT_CUR,
+											})
 								}
 								key={item}
 								onChange={onDeltaChange}
@@ -155,8 +161,8 @@ class PaginationBar extends React.Component {
 
 				{showResultsMessage && (
 					<div
-						className='pagination-results'
-						key='PAGINATION_RESULTS'
+						className="pagination-results"
+						key="PAGINATION_RESULTS"
 					>
 						{getPluralMessage(
 							Liferay.Language.get('showing-x-to-x-of-x-entry'),
@@ -170,7 +176,7 @@ class PaginationBar extends React.Component {
 									totalItems
 								),
 								Math.min(start, totalItems).toLocaleString(),
-								totalItems.toLocaleString()
+								totalItems.toLocaleString(),
 							]
 						)}
 					</div>

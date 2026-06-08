@@ -1,8 +1,13 @@
-import React from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {isNil} from 'lodash';
+import React from 'react';
 
 const defaultOptions = {
-	idPropName: 'id'
+	idPropName: 'id',
 };
 
 /**
@@ -14,7 +19,7 @@ const defaultOptions = {
  * @returns {Function} - The newly wrapped component.
  */
 export default (hoc, options = {}) =>
-	WrappedComponent => {
+	(WrappedComponent) => {
 		const OptionalHOC = hoc(WrappedComponent);
 		const {idPropName} = {...defaultOptions, ...options};
 
@@ -24,7 +29,8 @@ export default (hoc, options = {}) =>
 
 				if (isNil(idProp)) {
 					return <WrappedComponent {...this.props} />;
-				} else {
+				}
+				else {
 					return <OptionalHOC {...this.props} />;
 				}
 			}

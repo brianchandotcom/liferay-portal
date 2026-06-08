@@ -1,11 +1,17 @@
-import BaseCard from 'shared/components/base-card';
-import ProfileCardWithData from '../components/ProfileCard';
-import React from 'react';
-import {Individual} from 'shared/util/records';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {pickBy} from 'lodash';
-import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
+import React from 'react';
 import {useHistory} from 'react-router-dom';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+import BaseCard from '~/shared/components/base-card';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {Individual} from '~/shared/util/records';
+import {removeUriQueryParam, setUriQueryValues} from '~/shared/util/router';
+
+import ProfileCardWithData from '../components/ProfileCard';
 
 const DEFAULT_SESSIONS_DELTA = 50;
 
@@ -26,18 +32,18 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 		onQueryChange,
 		page,
 		query,
-		resetPage
+		resetPage,
 	} = useStatefulPagination(undefined, {
-		initialDelta: DEFAULT_SESSIONS_DELTA
+		initialDelta: DEFAULT_SESSIONS_DELTA,
 	});
 
 	return (
 		<>
 			<BaseCard
-				className='individual-profile-card-root page-display'
+				className="individual-profile-card-root page-display"
 				headerProps={{
 					showRangeKey: false,
-					tabId
+					tabId,
 				}}
 				label={Liferay.Language.get('individual-events')}
 				legacyDropdownRangeKey={false}
@@ -47,7 +53,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 					interval,
 					onChangeInterval,
 					onRangeSelectorsChange,
-					rangeSelectors
+					rangeSelectors,
 				}) => (
 					<ProfileCardWithData
 						{...props}
@@ -56,7 +62,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 						onChangeInterval={onChangeInterval}
 						onDeltaChange={onDeltaChange}
 						onPageChange={onPageChange}
-						onQueryChange={query => {
+						onQueryChange={(query) => {
 							history.push(
 								setUriQueryValues(
 									pickBy({query}),
@@ -69,7 +75,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 
 							onQueryChange(query);
 						}}
-						onRangeSelectorsChange={rangeSelectors => {
+						onRangeSelectorsChange={(rangeSelectors) => {
 							history.push(
 								setUriQueryValues(
 									pickBy(rangeSelectors),

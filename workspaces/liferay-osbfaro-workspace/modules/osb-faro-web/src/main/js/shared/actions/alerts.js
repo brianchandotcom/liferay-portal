@@ -1,20 +1,32 @@
-import {Alert} from 'shared/types';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {isNumber, uniqueId} from 'lodash';
+import {Alert} from '~/shared/types';
 
 export const actionTypes = {
 	ADD_ALERT: 'ADD_ALERT',
 	REMOVE_ALERT: 'REMOVE_ALERT',
-	UPDATE_ALERT: 'UPDATE_ALERT'
+	UPDATE_ALERT: 'UPDATE_ALERT',
 };
 
 const DEFAULT_TIMEOUT = 4000;
+
+export function removeAlert(id) {
+	return {
+		payload: {id},
+		type: actionTypes.REMOVE_ALERT,
+	};
+}
 
 function removeAfterDelay(action, timeout) {
 	if (timeout && !isNumber(timeout)) {
 		timeout = DEFAULT_TIMEOUT;
 	}
 
-	return dispatch => {
+	return (dispatch) => {
 		dispatch(action);
 
 		return setTimeout(
@@ -28,15 +40,15 @@ export function addAlert({
 	alertType,
 	id = uniqueId(),
 	message,
-	timeout = true
+	timeout = true,
 }) {
 	const action = {
 		payload: {
 			alertType,
 			id,
-			message
+			message,
 		},
-		type: actionTypes.ADD_ALERT
+		type: actionTypes.ADD_ALERT,
 	};
 
 	let retVal = action;
@@ -53,9 +65,9 @@ export function updateAlert({alertType, id, message, timeout = true}) {
 		payload: {
 			alertType,
 			id,
-			message
+			message,
 		},
-		type: actionTypes.UPDATE_ALERT
+		type: actionTypes.UPDATE_ALERT,
 	};
 
 	let retVal = action;
@@ -65,11 +77,4 @@ export function updateAlert({alertType, id, message, timeout = true}) {
 	}
 
 	return retVal;
-}
-
-export function removeAlert(id) {
-	return {
-		payload: {id},
-		type: actionTypes.REMOVE_ALERT
-	};
 }

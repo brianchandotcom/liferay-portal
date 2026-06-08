@@ -1,5 +1,10 @@
-import * as data from 'test/data';
-import {EntityTypes} from 'shared/util/constants';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {EntityTypes} from '~/shared/util/constants';
+import * as data from '~/test/data';
 
 export const fetch = jest.fn(() => Promise.resolve(data.mockCSVDataSource()));
 
@@ -21,7 +26,7 @@ export const fetchDeletePreview = jest.fn(() =>
 		[EntityTypes.Asset]: 23,
 		[EntityTypes.Individual]: 1,
 		[EntityTypes.IndividualsSegment]: 12,
-		[EntityTypes.Page]: 1234
+		[EntityTypes.Page]: 1234,
 	})
 );
 
@@ -29,16 +34,16 @@ export const fetchFieldValues = jest.fn(() =>
 	Promise.resolve([
 		{
 			name: 'email',
-			values: ['test@liferay.com']
+			values: ['test@liferay.com'],
 		},
 		{
 			name: 'familyName',
-			values: ['Bloggs']
+			values: ['Bloggs'],
 		},
 		{
 			name: 'givenName',
-			values: ['Joe']
-		}
+			values: ['Joe'],
+		},
 	])
 );
 
@@ -58,12 +63,12 @@ export const fetchMappingsLite = jest.fn(() =>
 			mapping: {
 				id: 'mappingId',
 				name: 'MappingName',
-				values: ['mappingValue']
+				values: ['mappingValue'],
 			},
 			ownerType: 'individual',
 			type: 'Text',
-			values: ['value']
-		})
+			values: ['value'],
+		}),
 	])
 );
 
@@ -75,8 +80,8 @@ export const fetchUserGroups = jest.fn(() =>
 	Promise.resolve([
 		{
 			id: 0,
-			name: 'Test User Group'
-		}
+			name: 'Test User Group',
+		},
 	])
 );
 
@@ -91,7 +96,7 @@ export const fetchOrganizationsById = jest.fn(() => Promise.resolve([]));
 export const fetchOAuthUrl = jest.fn(() =>
 	Promise.resolve({
 		oAuthAuthorizationURL: 'https://foobar.biz',
-		oAuthTokenSecret: 'bizzybuzz'
+		oAuthTokenSecret: 'bizzybuzz',
 	})
 );
 

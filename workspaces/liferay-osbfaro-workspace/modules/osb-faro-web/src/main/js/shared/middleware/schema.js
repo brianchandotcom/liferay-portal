@@ -1,5 +1,10 @@
-import {EntityTypes} from 'shared/util/constants';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {schema} from 'normalizr';
+import {EntityTypes} from '~/shared/util/constants';
 
 function processStrategy(entity) {
 	return {data: entity};
@@ -18,15 +23,16 @@ export const individual = new schema.Entity(
 	{processStrategy}
 );
 export const interest = new schema.Entity('interests', {}, {processStrategy});
-export const project = groupId =>
-	new schema.Entity(
+export const project = function project(groupId) {
+	return new schema.Entity(
 		'projects',
 		{},
 		{
 			idAttribute: ({groupId: id}) => groupId || id,
-			processStrategy
+			processStrategy,
 		}
 	);
+};
 
 export const segment = new schema.Entity('segments', {}, {processStrategy});
 export const user = new schema.Entity('users', {}, {processStrategy});
@@ -43,8 +49,8 @@ export const layoutTemplate = new schema.Entity(
 	{
 		data: {
 			contactsCardTemplatesList: [cardTemplates],
-			headerContactsCardTemplates: cardTemplates
-		}
+			headerContactsCardTemplates: cardTemplates,
+		},
 	},
 	{processStrategy}
 );
@@ -52,20 +58,20 @@ export const layoutTemplate = new schema.Entity(
 const ENTITIES_SCHEMA_MAP = {
 	[EntityTypes.Account]: account,
 	[EntityTypes.Individual]: individual,
-	[EntityTypes.IndividualsSegment]: segment
+	[EntityTypes.IndividualsSegment]: segment,
 };
 
 export function getLayoutSchema(type) {
 	return {
 		contactsLayoutTemplate: layoutTemplate,
-		faroEntity: ENTITIES_SCHEMA_MAP[type]
+		faroEntity: ENTITIES_SCHEMA_MAP[type],
 	};
 }
 
 export function getCardSchema(type) {
 	return {
 		contactsCardTemplate: cardTemplate,
-		faroEntity: ENTITIES_SCHEMA_MAP[type]
+		faroEntity: ENTITIES_SCHEMA_MAP[type],
 	};
 }
 
@@ -82,7 +88,7 @@ export function getDistributionSchema(individualSegmentId) {
 		{},
 		{
 			idAttribute: () => individualSegmentId,
-			processStrategy
+			processStrategy,
 		}
 	);
 }

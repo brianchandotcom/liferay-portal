@@ -1,12 +1,17 @@
-import getLocationsMapper, {
-	getLocationsMapperCountries
-} from 'cerebro-shared/hocs/mappers/locations';
-import URLConstants from 'shared/util/url-constants';
-import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {gql} from '@apollo/client';
 import {graphql} from '@apollo/client/react/hoc';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {withLocationsCard} from 'cerebro-shared/hocs/LocationsCard';
+import {withLocationsCard} from '~/cerebro-shared/hocs/LocationsCard';
+import getLocationsMapper, {
+	getLocationsMapperCountries,
+} from '~/cerebro-shared/hocs/mappers/locations';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {GEOLOCATION_FRAGMENT} from '~/shared/queries/fragments';
+import URLConstants from '~/shared/util/url-constants';
 
 const GEOLOCATION_QUERY = gql`
 	query ObjectEntryLocationsMetric(
@@ -39,6 +44,7 @@ const GEOLOCATION_QUERY = gql`
 
 	${GEOLOCATION_FRAGMENT}
 `;
+
 /**
  * HOC
  * @description ObjectEntry Locations
@@ -46,7 +52,7 @@ const GEOLOCATION_QUERY = gql`
 const withObjectEntryLocations = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapper(result => result.objectEntry.viewsMetric)
+		getLocationsMapper((result) => result.objectEntry.viewsMetric)
 	);
 
 /**
@@ -56,7 +62,7 @@ const withObjectEntryLocations = () =>
 const withObjectEntryLocationsCountries = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapperCountries(result => result.objectEntry.viewsMetric)
+		getLocationsMapperCountries((result) => result.objectEntry.viewsMetric)
 	);
 
 export default withLocationsCard(
@@ -68,6 +74,8 @@ export default withLocationsCard(
 		),
 		documentationUrl: URLConstants.SitesDashboardBlogsViewsByLocation,
 		reportContainer: ReportContainer.ViewsByLocationCard,
-		title: Liferay.Language.get('there-are-no-views-on-the-selected-period')
+		title: Liferay.Language.get(
+			'there-are-no-views-on-the-selected-period'
+		),
 	}
 );

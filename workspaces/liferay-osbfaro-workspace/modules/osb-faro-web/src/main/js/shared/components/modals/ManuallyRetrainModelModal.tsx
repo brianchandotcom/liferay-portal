@@ -1,23 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import client from 'shared/apollo/client';
-import Form from 'shared/components/form';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
+import {get} from 'lodash';
 import React from 'react';
-import RecommendationActivitiesQuery from 'settings/recommendations/queries/RecommendationActivitiesQuery';
-import RecommendationJobRunsMonthlyStatisticsQuery from 'settings/recommendations/queries/RecommendationJobRunsMonthlyStatisticsQuery';
+import RecommendationActivitiesQuery from '~/settings/recommendations/queries/RecommendationActivitiesQuery';
+import RecommendationJobRunsMonthlyStatisticsQuery from '~/settings/recommendations/queries/RecommendationJobRunsMonthlyStatisticsQuery';
 import {
 	Filter,
-	getPropertiesFromItems,
-	Job,
 	JOB_RUN_DATA_PERIODS_LIST,
 	JOB_RUN_DATA_PERIODS_RANGE_KEY_MAP,
+	Job,
 	JobParameter,
-	JobProperty
-} from 'settings/recommendations/utils/utils';
-import {get} from 'lodash';
-import {JobRunDataPeriods} from 'shared/util/constants';
-import {useQuery} from '@apollo/client';
+	JobProperty,
+	getPropertiesFromItems,
+} from '~/settings/recommendations/utils/utils';
+import client from '~/shared/apollo/client';
+import Loading, {Align} from '~/shared/components/Loading';
+import Form from '~/shared/components/form';
+import Modal from '~/shared/components/modal';
+import {JobRunDataPeriods} from '~/shared/util/constants';
 
 const ACTIVITIES_THRESHOLD = 1000;
 
@@ -30,14 +35,14 @@ interface IManuallyRetrainModelModalProps {
 const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 	job,
 	onClose,
-	onSubmit
+	onSubmit,
 }) => {
 	const {data, loading} = useQuery(
 		RecommendationJobRunsMonthlyStatisticsQuery,
 		{
 			variables: {
-				jobId: get(job, 'id')
-			}
+				jobId: get(job, 'id'),
+			},
 		}
 	);
 
@@ -64,14 +69,14 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 					rangeKey:
 						JOB_RUN_DATA_PERIODS_RANGE_KEY_MAP[JobRunDataPeriod],
 					size: 0,
-					start: 0
-				}
+					start: 0,
+				},
 			})
 			.then(
 				({
 					data: {
-						activities: {total}
-					}
+						activities: {total},
+					},
 				}) => {
 					if (total < ACTIVITIES_THRESHOLD) {
 						error = Liferay.Language.get(
@@ -91,7 +96,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 	);
 
 	return (
-		<Modal className='manually-retrain-model-modal-root'>
+		<Modal className="manually-retrain-model-modal-root">
 			<Modal.Header
 				onClose={onClose}
 				title={Liferay.Language.get('manually-retrain-model')}
@@ -104,7 +109,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 				{({handleSubmit}) => (
 					<Form.Form>
 						<Modal.Body>
-							<div className='description'>
+							<div className="description">
 								{Liferay.Language.get(
 									'select-an-interaction-period-for-the-selected-items'
 								)}
@@ -116,7 +121,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 										label={Liferay.Language.get(
 											'select-interaction-period'
 										)}
-										name='runDataPeriod'
+										name="runDataPeriod"
 										validate={validateActivitiesCount}
 									>
 										{JOB_RUN_DATA_PERIODS_LIST.map(
@@ -133,17 +138,17 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 								</Form.GroupItem>
 							</Form.Group>
 
-							<div className='training-allowance'>
-								<div className='title'>
+							<div className="training-allowance">
+								<div className="title">
 									{Liferay.Language.get(
 										'monthly-training-allowance'
 									)}
 								</div>
 
-								<div className='d-flex'>
+								<div className="d-flex">
 									{`${Liferay.Language.get('scheduled')}:`}
 
-									<span className='count'>
+									<span className="count">
 										{loading ? (
 											<Loading align={Align.Right} />
 										) : (
@@ -151,7 +156,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 												data,
 												[
 													'jobRunsMonthlyStatistics',
-													'scheduledJobRuns'
+													'scheduledJobRuns',
 												],
 												0
 											)
@@ -159,10 +164,10 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 									</span>
 								</div>
 
-								<div className='d-flex'>
+								<div className="d-flex">
 									{`${Liferay.Language.get('remaining')}:`}
 
-									<span className='count'>
+									<span className="count">
 										{loading ? (
 											<Loading align={Align.Right} />
 										) : (
@@ -175,17 +180,17 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 
 						<Modal.Footer>
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 								onClick={() => onClose()}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								disabled={availableJobRuns <= 0}
-								displayType='primary'
+								displayType="primary"
 								onClick={() => handleSubmit()}
 							>
 								{Liferay.Language.get('retrain')}

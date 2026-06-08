@@ -1,21 +1,28 @@
-import {Colors} from 'shared/util/charts';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Colors} from '~/shared/util/charts';
 
 export const Icons = {
 	negative: 'caret-bottom-l',
 	neutral: undefined,
-	positive: 'caret-top-l'
+	positive: 'caret-top-l',
 };
 
 /**
  * Return the icon name
  * @param {number} number
  */
-export const getIcon = number => {
+export const getIcon = function getIcon(number) {
 	if (number > 0) {
 		return Icons.positive;
-	} else if (number < 0) {
+	}
+	else if (number < 0) {
 		return Icons.negative;
-	} else {
+	}
+	else {
 		return Icons.neutral;
 	}
 };
@@ -24,16 +31,19 @@ export const getIcon = number => {
  * Return the current color
  * @param {string} str
  */
-export const getStatsColor = str => {
+export const getStatsColor = function getStatsColor(str) {
 	if (str) {
 		if (str.toLowerCase() == 'positive') {
 			return Colors.positive;
-		} else if (str.toLowerCase() == 'negative') {
+		}
+		else if (str.toLowerCase() == 'negative') {
 			return Colors.negative;
-		} else {
+		}
+		else {
 			return Colors.neutral;
 		}
-	} else {
+	}
+	else {
 		return Colors.neutral;
 	}
 };
@@ -50,5 +60,6 @@ export function getTrendSign(number) {
 	if (number < 0) {
 		return '-';
 	}
+
 	return '';
 }

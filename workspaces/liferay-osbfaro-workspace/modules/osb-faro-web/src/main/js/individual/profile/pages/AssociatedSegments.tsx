@@ -1,20 +1,25 @@
-import * as API from 'shared/api';
-import AssociatedSegmentsList from 'contacts/components/AssociatedSegmentsList';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useState} from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {connect, ConnectedProps} from 'react-redux';
+import {ConnectedProps, connect} from 'react-redux';
+import AssociatedSegmentsList from '~/contacts/components/AssociatedSegmentsList';
+import * as API from '~/shared/api';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {RootState} from '~/shared/store';
+import {EntityTypes, Sizes} from '~/shared/util/constants';
 import {
+	NAME,
 	createOrderIOMap,
 	getDefaultSortOrder,
-	NAME
-} from 'shared/util/pagination';
-import {EntityTypes, Sizes} from 'shared/util/constants';
-import {RootState} from 'shared/store';
-import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+} from '~/shared/util/pagination';
+import {Routes, SEGMENTS, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 interface IFetchAssociatedSegmentsArgs {
 	[key: string]: unknown;
@@ -43,7 +48,7 @@ const fetchAssociatedSegments = ({
 		orderIOMap,
 		page,
 		query,
-		...otherParams
+		...otherParams,
 	});
 
 const connector = connect((store: RootState, {groupId}: {groupId: string}) => ({
@@ -52,8 +57,8 @@ const connector = connect((store: RootState, {groupId}: {groupId: string}) => ({
 		groupId,
 		'data',
 		'timeZone',
-		'timeZoneId'
-	])
+		'timeZoneId',
+	]),
 }));
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -69,10 +74,10 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 	channelId,
 	groupId,
 	id,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME, getDefaultSortOrder(NAME))
+		initialOrderIOMap: createOrderIOMap(NAME, getDefaultSortOrder(NAME)),
 	});
 
 	const [total, setTotal] = useState<number>(0);
@@ -82,7 +87,7 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 			channelId,
 			groupId,
 			id,
-			...dataSourceParams
+			...dataSourceParams,
 		} as unknown as IFetchAssociatedSegmentsArgs).then(
 			(response: {total: number}) => {
 				setTotal(response.total);
@@ -93,26 +98,26 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 
 	const renderNoResults = () => (
 		<NoResultsDisplay
-			className='m-5'
+			className="m-5"
 			description={
 				<>
 					{Liferay.Language.get(
 						'this-individual-does-not-belong-to-a-segment-create-one-to-get-started'
 					)}
 					<ClayLink
-						className='d-block'
+						className="d-block"
 						href={URLConstants.CreateSegments}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{Liferay.Language.get('learn-more-about-segments')}
 						<ClayIcon
 							aria-label={Liferay.Language.get(
 								'learn-more-about-data-sources'
 							)}
-							className='ml-1'
+							className="ml-1"
 							fontSize={8}
-							symbol='shortcut'
+							symbol="shortcut"
 						/>
 					</ClayLink>
 				</>
@@ -120,18 +125,18 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 			icon={{
 				border: false,
 				size: Sizes.XXXLarge,
-				symbol: 'ac_satellite'
+				symbol: 'ac_satellite',
 			}}
 			title={Liferay.Language.get('there-are-no-segments-found')}
 		>
 			<ClayLink
 				button
-				className='button-root'
-				displayType='primary'
+				className="button-root"
+				displayType="primary"
 				href={toRoute(Routes.CONTACTS_LIST_SEGMENT, {
 					channelId,
 					groupId,
-					type: SEGMENTS
+					type: SEGMENTS,
 				})}
 			>
 				{Liferay.Language.get('create-segment')}

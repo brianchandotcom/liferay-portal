@@ -1,10 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Form from 'shared/components/form';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from '../modal';
 import React from 'react';
-import {Frequency, Report} from 'settings/channels/components/EmailReports';
-import {Modal as ModalTypes} from 'shared/types';
+import {Frequency, Report} from '~/settings/channels/components/EmailReports';
+import Loading, {Align} from '~/shared/components/Loading';
+import Form from '~/shared/components/form';
+import {Modal as ModalTypes} from '~/shared/types';
+
+import Modal from '../modal';
 
 interface IEditEmailReportsModalProps
 	extends React.HTMLAttributes<HTMLElement> {
@@ -16,13 +22,13 @@ interface IEditEmailReportsModalProps
 const FREQUENCIES: {[key: string]: string} = {
 	[Frequency.Daily]: Liferay.Language.get('daily'),
 	[Frequency.Weekly]: Liferay.Language.get('weekly'),
-	[Frequency.Monthly]: Liferay.Language.get('monthly')
+	[Frequency.Monthly]: Liferay.Language.get('monthly'),
 };
 
 const EditEmailReportsModal: React.FC<IEditEmailReportsModalProps> = ({
 	onCancel,
 	onSave,
-	report
+	report,
 }) => (
 	<Modal>
 		<Modal.Header title={Liferay.Language.get('configure-email-reports')} />
@@ -30,7 +36,7 @@ const EditEmailReportsModal: React.FC<IEditEmailReportsModalProps> = ({
 		<Form<Report>
 			initialValues={{
 				enabled: report?.enabled ?? false,
-				frequency: report?.frequency ?? Frequency.Monthly
+				frequency: report?.frequency ?? Frequency.Monthly,
 			}}
 			onSubmit={onSave}
 		>
@@ -39,24 +45,24 @@ const EditEmailReportsModal: React.FC<IEditEmailReportsModalProps> = ({
 					<Modal.Body>
 						<Form.Group
 							autoFit
-							className='align-items-center d-flex'
+							className="align-items-center d-flex"
 						>
 							<div>
-								<div className='font-weight-semibold mb-2'>
+								<div className="font-weight-semibold mb-2">
 									{Liferay.Language.get(
 										'enable-email-reports'
 									)}
 								</div>
 
-								<div className='text-secondary'>
+								<div className="text-secondary">
 									{Liferay.Language.get(
 										'enable-email-reports-to-configure-how-frequently-you-would-like-to-receive-notifications-about-this-property-activities.-other-users-will-not-be-affected-by-this-action'
 									)}
 								</div>
 							</div>
 							<div>
-								<Form.GroupItem className='ml-3'>
-									<Form.ToggleSwitch name='enabled' />
+								<Form.GroupItem className="ml-3">
+									<Form.ToggleSwitch name="enabled" />
 								</Form.GroupItem>
 							</div>
 						</Form.Group>
@@ -65,34 +71,36 @@ const EditEmailReportsModal: React.FC<IEditEmailReportsModalProps> = ({
 								<Form.Select
 									disabled={!values.enabled}
 									label={Liferay.Language.get('frequency')}
-									name='frequency'
+									name="frequency"
 								>
-									{Object.keys(FREQUENCIES).map(frequency => (
-										<Form.Select.Item
-											key={frequency}
-											value={frequency}
-										>
-											{FREQUENCIES[frequency]}
-										</Form.Select.Item>
-									))}
+									{Object.keys(FREQUENCIES).map(
+										(frequency) => (
+											<Form.Select.Item
+												key={frequency}
+												value={frequency}
+											>
+												{FREQUENCIES[frequency]}
+											</Form.Select.Item>
+										)
+									)}
 								</Form.Select>
 							</Form.GroupItem>
 						</Form.Group>
 					</Modal.Body>
 					<Modal.Footer>
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={onCancel}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
 						<ClayButton
-							className='button-root'
+							className="button-root"
 							disabled={isSubmitting || !isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{isSubmitting && <Loading align={Align.Left} />}
 

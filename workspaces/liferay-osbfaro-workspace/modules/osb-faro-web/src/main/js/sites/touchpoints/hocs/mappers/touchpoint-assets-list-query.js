@@ -1,12 +1,17 @@
-import {getSafeTouchpoint} from 'shared/util/util';
-import {getVariables, safeResultToProps} from 'shared/util/mappers';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {getVariables, safeResultToProps} from '~/shared/util/mappers';
+import {getSafeTouchpoint} from '~/shared/util/util';
 
 const assetTypeLabels = {
 	blog: Liferay.Language.get('blogs'),
 	custom: Liferay.Language.get('custom'),
 	document: Liferay.Language.get('documents-and-media'),
 	form: Liferay.Language.get('forms'),
-	journal: Liferay.Language.get('web-content')
+	journal: Liferay.Language.get('web-content'),
 };
 
 const mapResultToProps = safeResultToProps(({assets}) => {
@@ -16,7 +21,7 @@ const mapResultToProps = safeResultToProps(({assets}) => {
 			assetType,
 			interactions: defaultMetric.value,
 			title: assetTitle || assetId,
-			type: assetTypeLabels[assetType]
+			type: assetTypeLabels[assetType],
 		})
 	);
 
@@ -32,7 +37,7 @@ const mapPropsToOptions = ({
 	filters,
 	rangeSelectors,
 	router: {params},
-	touchpoint
+	touchpoint,
 }) => {
 	const {variables} = getVariables({filters, params, rangeSelectors});
 
@@ -40,15 +45,15 @@ const mapPropsToOptions = ({
 		return {
 			variables: {
 				...variables,
-				touchpoint: getSafeTouchpoint(touchpoint)
-			}
+				touchpoint: getSafeTouchpoint(touchpoint),
+			},
 		};
 	}
 
 	return getVariables({
 		filters,
 		params,
-		rangeSelectors
+		rangeSelectors,
 	});
 };
 

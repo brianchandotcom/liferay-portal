@@ -1,24 +1,30 @@
-import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
-import OccurenceConjunctionDisplay from './OccurenceConjunctionDisplay';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Map} from 'immutable';
 import React from 'react';
-import ReferencedEntityDisplay from './ReferencedEntityDisplay';
-import {ASSET_TYPE_LANG_MAP} from 'shared/util/lang';
-import {CustomValue} from 'shared/util/records';
-import {EntityType} from 'segment/segment-editor/dynamic/context/referencedObjects';
+import {EntityType} from '~/segment/segment-editor/dynamic/context/referencedObjects';
 import {
 	getFilterCriterionIMap,
-	getPropertyValue
-} from 'segment/segment-editor/dynamic/utils/custom-inputs';
-import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
+	getPropertyValue,
+} from '~/segment/segment-editor/dynamic/utils/custom-inputs';
+import {parseActivityKey} from '~/segment/segment-editor/dynamic/utils/utils';
+import {SegmentTypes} from '~/shared/util/constants';
+import {ASSET_TYPE_LANG_MAP} from '~/shared/util/lang';
+import {CustomValue} from '~/shared/util/records';
+
 import {IDisplayComponentProps} from '../types';
-import {Map} from 'immutable';
-import {parseActivityKey} from 'segment/segment-editor/dynamic/utils/utils';
-import {SegmentTypes} from 'shared/util/constants';
+import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
+import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
+import OccurenceConjunctionDisplay from './OccurenceConjunctionDisplay';
+import ReferencedEntityDisplay from './ReferencedEntityDisplay';
 
 const BehaviorDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	segmentType
+	segmentType,
 }) => {
 	const {operatorName, value} = criterion;
 

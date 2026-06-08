@@ -1,9 +1,14 @@
-import AppliedFilters from 'shared/components/filter/AppliedFilters';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import DropdownMenu from 'shared/components/filter/DropdownMenu';
-import React, {useEffect, useRef, useState} from 'react';
 import remove from 'lodash/remove';
+import React, {useEffect, useRef, useState} from 'react';
+import AppliedFilters from '~/shared/components/filter/AppliedFilters';
+import DropdownMenu from '~/shared/components/filter/DropdownMenu';
 
 interface IFilterProps {
 	items?: Item[];
@@ -13,9 +18,9 @@ interface IFilterProps {
 type Item = {
 	category: string;
 	checked?: boolean;
-	items: Item[] | null;
 	hasSearch: boolean;
 	inputType: string;
+	items: Item[] | null;
 	label: string;
 	value: string;
 };
@@ -24,7 +29,7 @@ type SelectedItems = {[key: string]: string[]};
 
 const Filter: React.FC<IFilterProps> = ({
 	items: initialItems = [],
-	onChange
+	onChange,
 }) => {
 	const [selectedItems, setSelectedItems] = useState<SelectedItems>({});
 	const [showDropdown, setShowDropdown] = useState(false);
@@ -43,10 +48,12 @@ const Filter: React.FC<IFilterProps> = ({
 
 	useEffect(() => {
 		setItems(getCheckedItems(initialItems));
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialItems]);
 
 	const getCheckedItems = (parentItems: Item[]): Item[] =>
-		parentItems.map(item => {
+		parentItems.map((item) => {
 			const categoryItems = selectedItems[item.category];
 
 			let childItems = null;
@@ -59,7 +66,7 @@ const Filter: React.FC<IFilterProps> = ({
 				return {
 					...item,
 					checked: true,
-					items: childItems
+					items: childItems,
 				};
 			}
 
@@ -75,8 +82,9 @@ const Filter: React.FC<IFilterProps> = ({
 
 		if (checked) {
 			categoryItems.push(label);
-		} else {
-			remove(categoryItems, n => n === label);
+		}
+		else {
+			remove(categoryItems, (n) => n === label);
 		}
 
 		selectedItems[category] = categoryItems;
@@ -85,13 +93,14 @@ const Filter: React.FC<IFilterProps> = ({
 	};
 
 	const handleChangeDropdownItem = ({
-		dropdownItem
+		dropdownItem,
 	}: {
 		dropdownItem: Item;
 	}): void => {
 		if (dropdownItem.inputType == 'radio') {
 			updateRadioItems(dropdownItem);
-		} else if (dropdownItem.inputType == 'checkbox') {
+		}
+		else if (dropdownItem.inputType == 'checkbox') {
 			updateCheckboxItems(dropdownItem);
 		}
 	};
@@ -101,7 +110,9 @@ const Filter: React.FC<IFilterProps> = ({
 	};
 
 	const handleDocClick = ({target}: Event): void => {
-		if (!_elementRef.current) return;
+		if (!_elementRef.current) {
+			return;
+		}
 
 		const dropdown = _elementRef.current.querySelector(
 			'.analytics-dropdown'
@@ -113,9 +124,10 @@ const Filter: React.FC<IFilterProps> = ({
 
 		if (
 			(dropdown && dropdown.contains(target as Node)) ||
-			dropdownMenu.find(menu => menu.contains(target as Node))
-		)
+			dropdownMenu.find((menu) => menu.contains(target as Node))
+		) {
 			return;
+		}
 
 		setShowDropdown(false);
 	};
@@ -127,20 +139,20 @@ const Filter: React.FC<IFilterProps> = ({
 	};
 
 	return (
-		<div className='analytics-filter' ref={_elementRef}>
-			<div className='analytics-dropdown dropdown btn-group border-0'>
+		<div className="analytics-filter" ref={_elementRef}>
+			<div className="analytics-dropdown border-0 btn-group dropdown">
 				<ClayButton
-					aria-label='Dropdown Filter'
-					className='dropdown-toggle btn-outline-borderless'
-					displayType='secondary'
+					aria-label="Dropdown Filter"
+					className="btn-outline-borderless dropdown-toggle"
+					displayType="secondary"
 					onClick={handleClickToggleDropdown}
-					size='sm'
+					size="sm"
 				>
 					{Liferay.Language.get('filter')}
 
 					<ClayIcon
-						className='icon-root ml-2'
-						symbol='caret-bottom'
+						className="icon-root ml-2"
+						symbol="caret-bottom"
 					/>
 				</ClayButton>
 			</div>

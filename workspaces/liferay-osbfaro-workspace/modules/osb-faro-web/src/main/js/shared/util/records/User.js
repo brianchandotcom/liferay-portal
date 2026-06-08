@@ -1,6 +1,11 @@
-import {isArray} from 'lodash';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Record} from 'immutable';
-import {UserRoleNames, UserStatuses} from 'shared/util/constants';
+import {isArray} from 'lodash';
+import {UserRoleNames, UserStatuses} from '~/shared/util/constants';
 
 export default class User extends (new Record({
 	emailAddress: null,
@@ -11,7 +16,7 @@ export default class User extends (new Record({
 	roleName: null,
 	screenName: '',
 	status: UserStatuses.Approved,
-	userId: null
+	userId: null,
 })) {
 	constructor(params = {}) {
 		super(params);

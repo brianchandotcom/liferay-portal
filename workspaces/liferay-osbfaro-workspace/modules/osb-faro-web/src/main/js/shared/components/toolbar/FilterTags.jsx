@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import Label from 'shared/components/Label';
-import React from 'react';
-import SubnavTbar from 'shared/components/SubnavTbar';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import Label from '~/shared/components/Label';
+import SubnavTbar from '~/shared/components/SubnavTbar';
 
 class FilterTagItem extends React.Component {
 	static propTypes = {
 		field: PropTypes.string.isRequired,
 		onRemove: PropTypes.func.isRequired,
-		value: PropTypes.string.isRequired
+		value: PropTypes.string.isRequired,
 	};
 
 	@autobind
@@ -26,9 +31,9 @@ class FilterTagItem extends React.Component {
 				className={
 					this.props.className ? ` ${this.props.className}` : ''
 				}
-				display='info'
+				display="info"
 				onRemove={this.handleRemove}
-				size='lg'
+				size="lg"
 			>
 				{label}
 			</Label>
@@ -38,11 +43,11 @@ class FilterTagItem extends React.Component {
 
 export default class FilterTags extends React.Component {
 	static defaultProps = {
-		tags: []
+		tags: [],
 	};
 
 	static propTypes = {
-		tags: PropTypes.array
+		tags: PropTypes.array,
 	};
 
 	render() {

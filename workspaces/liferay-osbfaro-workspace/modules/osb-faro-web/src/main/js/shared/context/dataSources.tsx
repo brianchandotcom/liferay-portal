@@ -1,9 +1,14 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {createContext, useContext, useMemo} from 'react';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
-import {DataSourceStatuses, DataSourceTypes} from 'shared/util/constants';
-import {IStatesRendererContextProps} from 'shared/components/states-renderer/StatesRenderer';
-import {useRequest} from 'shared/hooks/useRequest';
+import * as API from '~/shared/api';
+import {IStatesRendererContextProps} from '~/shared/components/states-renderer/StatesRenderer';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {DataSourceStatuses, DataSourceTypes} from '~/shared/util/constants';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
 
 interface IDataSourceProps {
 	contactsSelected: boolean;
@@ -21,22 +26,22 @@ interface IDataSourcesContext extends IStatesRendererContextProps {
 
 const DataSourcesContext = createContext<IDataSourcesContext | null>(null);
 
-export const DataSourcesProvider = ({
+export const DataSourcesProvider = function DataSourcesProvider({
 	children,
 	groupId,
-	skip = false
+	skip = false,
 }: {
 	children: React.ReactNode;
 	groupId: string;
 	skip?: boolean;
-}) => {
+}) {
 	const variables = useMemo(
 		() => ({
 			delta: 1,
 			groupId,
 			orderIOMap: createOrderIOMap(NAME),
 			page: 1,
-			query: ''
+			query: '',
 		}),
 		[groupId]
 	);
@@ -45,11 +50,11 @@ export const DataSourcesProvider = ({
 		data = {items: []},
 		error,
 		loading,
-		refetch
+		refetch,
 	} = useRequest<any, {items: IDataSourceProps[]}>({
 		dataSourceFn: API.dataSource.search,
 		skipRequest: skip || !groupId || groupId === '0',
-		variables
+		variables,
 	});
 
 	const value = useMemo<IDataSourcesContext>(
@@ -58,7 +63,7 @@ export const DataSourcesProvider = ({
 			error,
 			items: data?.items ?? [],
 			loading,
-			refetch
+			refetch,
 		}),
 		[data, error, loading, refetch]
 	);
@@ -70,7 +75,7 @@ export const DataSourcesProvider = ({
 	);
 };
 
-export const useDataSources = () => {
+export const useDataSources = function useDataSources() {
 	const context = useContext(DataSourcesContext);
 
 	if (!context) {

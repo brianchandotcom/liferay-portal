@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Form, {
-	validateDateRangeRequired,
-	validateRequired
-} from 'shared/components/form';
 import React from 'react';
-import {DataTypes, IFilterProps, Operators} from 'event-analysis/utils/types';
+import {DataTypes, IFilterProps, Operators} from '~/event-analysis/utils/types';
 import {
 	DATE_OPERATOR_LONGHAND_LABELS_MAP,
-	DATE_OPTIONS
-} from 'event-analysis/utils/utils';
+	DATE_OPTIONS,
+} from '~/event-analysis/utils/utils';
+import Form, {
+	validateDateRangeRequired,
+	validateRequired,
+} from '~/shared/components/form';
 
 const DateFilter: React.FC<IFilterProps> = ({
 	attributeId,
@@ -16,13 +21,13 @@ const DateFilter: React.FC<IFilterProps> = ({
 	description,
 	displayName,
 	filter,
-	onSubmit
+	onSubmit,
 }) => {
 	const getInitialValues = () => {
 		if (filter) {
 			const {
 				operator,
-				values: [start, end]
+				values: [start, end],
 			} = filter;
 
 			return {
@@ -31,14 +36,14 @@ const DateFilter: React.FC<IFilterProps> = ({
 					operator === Operators.Between
 						? {end, start}
 						: {end: '', start: ''},
-				operator
+				operator,
 			};
 		}
 
 		return {
 			date: '',
 			dateRange: {end: '', start: ''},
-			operator: Operators.EQ
+			operator: Operators.EQ,
 		};
 	};
 
@@ -62,20 +67,20 @@ const DateFilter: React.FC<IFilterProps> = ({
 					description,
 					displayName,
 					operator,
-					values: dateValue
+					values: dateValue,
 				});
 			}}
 		>
 			{({handleSubmit, isValid, values: {operator}}) => (
 				<Form.Form onSubmit={handleSubmit}>
-					<div className='options-body'>
+					<div className="options-body">
 						<Form.Group autoFit>
 							<Form.GroupItem>
 								<Form.Select
 									label={Liferay.Language.get('condition')}
-									name='operator'
+									name="operator"
 								>
-									{DATE_OPTIONS.map(value => (
+									{DATE_OPTIONS.map((value) => (
 										<Form.Select.Item
 											key={value}
 											value={value}
@@ -95,8 +100,8 @@ const DateFilter: React.FC<IFilterProps> = ({
 							<Form.GroupItem>
 								{operator !== Operators.Between && (
 									<Form.DateInput
-										name='date'
-										overlayAlignment='rightCenter'
+										name="date"
+										overlayAlignment="rightCenter"
 										showRetentionPeriod={false}
 										usePortal={false}
 										validate={validateRequired}
@@ -105,8 +110,8 @@ const DateFilter: React.FC<IFilterProps> = ({
 
 								{operator === Operators.Between && (
 									<Form.DateRangeInput
-										name='dateRange'
-										overlayAlignment='rightCenter'
+										name="dateRange"
+										overlayAlignment="rightCenter"
 										usePortal={false}
 										validate={validateDateRangeRequired}
 									/>
@@ -115,13 +120,13 @@ const DateFilter: React.FC<IFilterProps> = ({
 						</Form.Group>
 					</div>
 
-					<div className='options-footer'>
+					<div className="options-footer">
 						<ClayButton
 							block
-							className='button-root'
+							className="button-root"
 							disabled={!isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{Liferay.Language.get('apply')}
 						</ClayButton>

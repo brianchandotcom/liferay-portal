@@ -1,10 +1,16 @@
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import Item from '../components/Item';
-import MaskedInput from 'shared/components/MaskedInput';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import MaskedInput from '~/shared/components/MaskedInput';
+
+import Item from '../components/Item';
 import Row from '../components/Row';
 
-const maskFn = rawValue => {
+const maskFn = (rawValue) => {
 	rawValue = rawValue.replace('NUMBER', '');
 	rawValue = rawValue.replace('STRING', '');
 
@@ -12,7 +18,8 @@ const maskFn = rawValue => {
 
 	if (isNumber) {
 		return 'NUMBER'.split('');
-	} else {
+	}
+	else {
 		return 'STRING'.split('');
 	}
 };
@@ -42,9 +49,9 @@ class MaskedInputKit extends React.Component {
 								/\d/,
 								/\d/,
 								/\d/,
-								/\d/
+								/\d/,
 							]}
-							placeholder='Phone Number...'
+							placeholder="Phone Number..."
 							showMask
 						/>
 					</Item>
@@ -61,9 +68,9 @@ class MaskedInputKit extends React.Component {
 								/\d/,
 								/\d/,
 								/\d/,
-								/\d/
+								/\d/,
 							]}
-							placeholder='Date...'
+							placeholder="Date..."
 							showMask
 						/>
 					</Item>
@@ -91,9 +98,9 @@ class MaskedInputKit extends React.Component {
 								/\d/,
 								/\d/,
 								/\d/,
-								/\d/
+								/\d/,
 							]}
-							placeholder='Credit Card...'
+							placeholder="Credit Card..."
 						/>
 					</Item>
 
@@ -106,7 +113,7 @@ class MaskedInputKit extends React.Component {
 					<Item>
 						<MaskedInput
 							mask={createNumberMask({prefix: ''})}
-							placeholder='Number...'
+							placeholder="Number..."
 						/>
 					</Item>
 				</Row>

@@ -1,17 +1,22 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import Input from 'shared/components/Input';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import {createTextMaskInputElement} from 'text-mask-core';
 import {isFunction} from 'lodash';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import {createTextMaskInputElement} from 'text-mask-core';
+import Input from '~/shared/components/Input';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 class MaskedInput extends React.Component {
 	static defaultProps = {
 		guide: true,
 		keepCharPositions: false,
 		placeholderChar: '_',
-		showMask: false
+		showMask: false,
 	};
 
 	static propTypes = {
@@ -23,14 +28,14 @@ class MaskedInput extends React.Component {
 			PropTypes.bool,
 			PropTypes.shape({
 				mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-				pipe: PropTypes.func
-			})
+				pipe: PropTypes.func,
+			}),
 		]).isRequired,
 		onChange: PropTypes.func,
 		pipe: PropTypes.func,
 		placeholderChar: PropTypes.string,
 		showMask: PropTypes.bool,
-		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	};
 
 	constructor(props) {
@@ -42,7 +47,7 @@ class MaskedInput extends React.Component {
 	componentDidMount() {
 		this.textMaskInputElement_ = createTextMaskInputElement({
 			inputElement: this._inputRef.current._elementRef.current,
-			...this.props
+			...this.props,
 		});
 	}
 

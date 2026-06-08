@@ -1,58 +1,63 @@
-import * as API from 'shared/api';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
+import {Map, Set} from 'immutable';
 import React, {useMemo} from 'react';
-import SearchableEntityTable from 'shared/components/SearchableEntityTable';
-import URLConstants from 'shared/util/url-constants';
-import {
-	ACCOUNT_NAME,
-	COUNTRY,
-	createOrderIOMap,
-	FIRST_ACTIVITY_DATE,
-	LAST_ACTIVITY_DATE,
-	NAME,
-	PROFILE_TYPE
-} from 'shared/util/pagination';
+import {useParams} from 'react-router-dom';
 import {
 	Conjunctions,
 	ProfileTypes,
-	RelationalOperators
-} from 'segment/segment-editor/dynamic/utils/constants';
-import {FilterByType, FilterOptionType, RangeSelectors} from 'shared/types';
-import {getSafeRangeSelectors} from 'shared/util/util';
-import {IndividualsListCDPColumns} from 'shared/util/table-columns';
-import {Map, Set} from 'immutable';
-import {Sizes} from 'shared/util/constants';
-import {useParams} from 'react-router-dom';
-import {useRequest} from 'shared/hooks/useRequest';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+	RelationalOperators,
+} from '~/segment/segment-editor/dynamic/utils/constants';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import SearchableEntityTable from '~/shared/components/SearchableEntityTable';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {FilterByType, FilterOptionType, RangeSelectors} from '~/shared/types';
+import {Sizes} from '~/shared/util/constants';
+import {
+	ACCOUNT_NAME,
+	COUNTRY,
+	FIRST_ACTIVITY_DATE,
+	LAST_ACTIVITY_DATE,
+	NAME,
+	PROFILE_TYPE,
+	createOrderIOMap,
+} from '~/shared/util/pagination';
+import {IndividualsListCDPColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
+import {getSafeRangeSelectors} from '~/shared/util/util';
 
 const ORDER_BY_OPTIONS = [
 	{
 		label: Liferay.Language.get('name'),
-		value: NAME
+		value: NAME,
 	},
 	{
 		label: Liferay.Language.get('account-name'),
-		value: ACCOUNT_NAME
+		value: ACCOUNT_NAME,
 	},
 	{
 		label: Liferay.Language.get('country'),
-		value: COUNTRY
+		value: COUNTRY,
 	},
 	{
 		label: Liferay.Language.get('first-seen'),
-		value: FIRST_ACTIVITY_DATE
+		value: FIRST_ACTIVITY_DATE,
 	},
 	{
 		label: Liferay.Language.get('last-active'),
-		value: LAST_ACTIVITY_DATE
+		value: LAST_ACTIVITY_DATE,
 	},
 	{
 		label: Liferay.Language.get('profile-type'),
-		value: PROFILE_TYPE
-	}
+		value: PROFILE_TYPE,
+	},
 ];
 
 const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
@@ -62,13 +67,13 @@ const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
 		values: [
 			{
 				label: Liferay.Language.get('known'),
-				value: ProfileTypes.KNOWN
+				value: ProfileTypes.KNOWN,
 			},
 			{
 				label: Liferay.Language.get('anonymous'),
-				value: ProfileTypes.ANONYMOUS
-			}
-		]
+				value: ProfileTypes.ANONYMOUS,
+			},
+		],
 	},
 	{
 		key: 'activityStatus',
@@ -76,24 +81,24 @@ const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
 		values: [
 			{
 				label: Liferay.Language.get('active'),
-				value: 'ACTIVE'
+				value: 'ACTIVE',
 			},
 			{
 				label: Liferay.Language.get('inactive'),
-				value: 'INACTIVE'
-			}
-		]
-	}
+				value: 'INACTIVE',
+			},
+		],
+	},
 ];
 
 function transformCountriesInQueryString(countries: string[]) {
-	if (!countries || countries.length === 0) {
+	if (!countries || !countries.length) {
 		return;
 	}
 
 	return countries
 		.map(
-			country =>
+			(country) =>
 				`(demographics/country/value ${RelationalOperators.EQ} '${country}')`
 		)
 		.join(Conjunctions.Or);
@@ -114,9 +119,9 @@ const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 
 	const paginationParams = useStatefulPagination(undefined, {
 		initialFilterBy: Map({
-			activityStatus: Set(['ACTIVE'])
+			activityStatus: Set(['ACTIVE']),
 		}) as FilterByType,
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data: countriesData, loading: countriesLoading} = useRequest({
@@ -124,8 +129,8 @@ const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 		variables: {
 			channelId,
 			fieldMappingFieldName: 'country',
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const FILTER_BY_OPTIONS: FilterOptionType[] = useMemo(() => {
@@ -138,14 +143,16 @@ const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 					label: Liferay.Language.get('country'),
 					values: countries.map((country: string) => ({
 						label: country,
-						value: country
-					}))
+						value: country,
+					})),
 				},
-				...DEFAULT_FILTER_BY_OPTIONS
+				...DEFAULT_FILTER_BY_OPTIONS,
 			];
 		}
 
 		return DEFAULT_FILTER_BY_OPTIONS;
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [countriesData, countriesLoading]);
 
 	const activityStatusValues =
@@ -160,7 +167,7 @@ const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 			paginationParams.filterBy.get('countries')?.toArray()
 		),
 		profileTypes:
-			paginationParams.filterBy.get('profileTypes')?.toArray() || []
+			paginationParams.filterBy.get('profileTypes')?.toArray() || [],
 	};
 
 	const renderNoResults = () => (
@@ -172,10 +179,10 @@ const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 					)}
 
 					<ClayLink
-						className='d-block mb-3'
+						className="d-block mb-3"
 						href={URLConstants.DataSourceConnection}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{Liferay.Language.get(
 							'access-our-documentation-to-learn-more'
@@ -186,7 +193,7 @@ const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 			icon={{
 				border: false,
 				size: Sizes.XXXLarge,
-				symbol: 'ac_satellite'
+				symbol: 'ac_satellite',
 			}}
 			spacer
 			title={Liferay.Language.get(
@@ -197,24 +204,24 @@ const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 
 	return (
 		<Card>
-			<Card.Title className='card-header'>
+			<Card.Title className="card-header">
 				{Liferay.Language.get('individual-profiles')}
 			</Card.Title>
-			<Card.Body className='no-padding'>
-				<div className='individuals-dashboard-known-individuals-root'>
+			<Card.Body className="no-padding">
+				<div className="individuals-dashboard-known-individuals-root">
 					<SearchableEntityTable
 						{...paginationParams}
 						columns={[
 							IndividualsListCDPColumns.getNameEmail({
 								channelId,
-								groupId
+								groupId,
 							}),
 							IndividualsListCDPColumns.accountNames,
 							IndividualsListCDPColumns.country,
 							IndividualsListCDPColumns.firstSeen,
 							IndividualsListCDPColumns.lastActive,
 							IndividualsListCDPColumns.profileType,
-							IndividualsListCDPColumns.activityStatus
+							IndividualsListCDPColumns.activityStatus,
 						]}
 						dataSourceFn={API.individuals.search}
 						dataSourceParams={{
@@ -227,13 +234,13 @@ const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 								: undefined,
 							rangeEnd,
 							rangeKey,
-							rangeStart
+							rangeStart,
 						}}
 						filterByOptions={FILTER_BY_OPTIONS}
-						key='individuals-list-table'
+						key="individuals-list-table"
 						noResultsRenderer={renderNoResults}
 						orderByOptions={ORDER_BY_OPTIONS}
-						rowIdentifier='id'
+						rowIdentifier="id"
 					/>
 				</div>
 			</Card.Body>

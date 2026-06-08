@@ -1,37 +1,42 @@
-import * as API from 'shared/api';
-import BasePage from 'shared/components/base-page';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import Loading from 'shared/components/Loading';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
+import {isNil} from 'lodash';
 import React from 'react';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import URLConstants from 'shared/util/url-constants';
+import {ConnectedProps, connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {ProfileTypes} from '~/segment/segment-editor/dynamic/utils/constants';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import Loading from '~/shared/components/Loading';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import BasePage from '~/shared/components/base-page';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {useDataSources} from '~/shared/context/dataSources';
+import {withSelectionProvider} from '~/shared/context/selection';
+import {compose} from '~/shared/hoc';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {Sizes} from '~/shared/util/constants';
 import {
 	ACTIVITIES_COUNT,
-	createOrderIOMap,
 	JOB_TITLE,
 	LAST_ACTIVITY_DATE,
-	NAME
-} from 'shared/util/pagination';
-import {addAlert} from 'shared/actions/alerts';
-import {close, open} from 'shared/actions/modals';
-import {compose} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
-import {individualsListColumns} from 'shared/util/table-columns';
-import {isNil} from 'lodash';
-import {ProfileTypes} from 'segment/segment-editor/dynamic/utils/constants';
-import {Routes, toRoute} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSources} from 'shared/context/dataSources';
-import {useParams} from 'react-router-dom';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
-import {useRequest} from 'shared/hooks/useRequest';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
-import {withSelectionProvider} from 'shared/context/selection';
+	NAME,
+	createOrderIOMap,
+} from '~/shared/util/pagination';
+import {User} from '~/shared/util/records';
+import {Routes, toRoute} from '~/shared/util/router';
+import {individualsListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
 
 const connector = connect(null, {addAlert, close, open});
 
@@ -47,15 +52,15 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 	const {channelId, groupId} = useParams();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
 		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta: 1,
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const dataSourceStates = useDataSources();
@@ -70,10 +75,10 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 		const createDataSourceButton = (
 			<ClayLink
 				button
-				className='button-root'
-				displayType='primary'
+				className="button-root"
+				displayType="primary"
 				href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-					groupId
+					groupId,
 				})}
 			>
 				{Liferay.Language.get('connect-data-source')}
@@ -83,20 +88,21 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 		if (dataSourceLoading || isNil(dataSourceData?.total)) {
 			return (
 				<NoResultsDisplay>
-					<Loading key='LOADING' />
+					<Loading key="LOADING" />
 				</NoResultsDisplay>
 			);
-		} else if (dataSourceData?.total === 0) {
+		}
+		else if (dataSourceData?.total === 0) {
 			return (
 				<NoResultsDisplay
 					description={
 						authorized
 							? Liferay.Language.get(
 									'connect-a-data-source-with-people-data'
-							  )
+								)
 							: Liferay.Language.get(
 									'please-contact-your-site-administrator-to-add-people-data-sources'
-							  )
+								)
 					}
 					primary
 					title={Liferay.Language.get('no-data-sources-connected')}
@@ -104,7 +110,8 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 					{authorized ? createDataSourceButton : undefined}
 				</NoResultsDisplay>
 			);
-		} else {
+		}
+		else {
 			return (
 				<NoResultsDisplay
 					description={
@@ -112,16 +119,16 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 							{authorized
 								? Liferay.Language.get(
 										'connect-a-data-source-with-people-data'
-								  )
+									)
 								: Liferay.Language.get(
 										'please-contact-your-site-administrator-to-add-people-data-sources'
-								  )}
+									)}
 
 							<ClayLink
-								className='d-block mb-3'
+								className="d-block mb-3"
 								href={URLConstants.DataSourceConnection}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
@@ -131,12 +138,12 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 							{authorized && (
 								<ClayLink
 									button
-									className='button-root'
-									displayType='primary'
+									className="button-root"
+									displayType="primary"
 									href={toRoute(
 										Routes.SETTINGS_DATA_SOURCE_LIST,
 										{
-											groupId
+											groupId,
 										}
 									)}
 								>
@@ -150,7 +157,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 					primary
 					title={Liferay.Language.get(
@@ -170,8 +177,8 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 			orderIOMap,
 			page,
 			profileTypes: [ProfileTypes.KNOWN],
-			query
-		}
+			query,
+		},
 	});
 
 	return (
@@ -183,16 +190,16 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 							{authorized
 								? Liferay.Language.get(
 										'connect-a-data-source-to-get-started'
-								  )
+									)
 								: Liferay.Language.get(
 										'please-contact-your-workspace-administrator-to-add-data-sources'
-								  )}
+									)}
 
 							<ClayLink
-								className='d-block mb-3'
+								className="d-block mb-3"
 								href={URLConstants.DataSourceConnection}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
@@ -202,12 +209,12 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 							{authorized && (
 								<ClayLink
 									button
-									className='button-root'
-									displayType='primary'
+									className="button-root"
+									displayType="primary"
 									href={toRoute(
 										Routes.SETTINGS_DATA_SOURCE_LIST,
 										{
-											groupId
+											groupId,
 										}
 									)}
 								>
@@ -223,19 +230,19 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 				/>
 
 				<StatesRenderer.Success>
-					<div className='individuals-dashboard-known-individuals-root'>
+					<div className="individuals-dashboard-known-individuals-root">
 						<Card pageDisplay>
 							<CrossPageSelect
 								columns={[
 									individualsListColumns.getNameEmail({
 										channelId,
-										groupId
+										groupId,
 									}),
 									individualsListColumns.jobTitle,
 									individualsListColumns.activitiesCount,
 									individualsListColumns.getLastActivityDate(
 										timeZoneId
-									)
+									),
 								]}
 								currentUser={currentUser}
 								delta={delta}
@@ -249,26 +256,26 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 								orderByOptions={[
 									{
 										label: Liferay.Language.get('name'),
-										value: NAME
+										value: NAME,
 									},
 									{
 										label: Liferay.Language.get(
 											'job-title'
 										),
-										value: JOB_TITLE
+										value: JOB_TITLE,
 									},
 									{
 										label: Liferay.Language.get(
 											'total-activities'
 										),
-										value: ACTIVITIES_COUNT
+										value: ACTIVITIES_COUNT,
 									},
 									{
 										label: Liferay.Language.get(
 											'last-activity'
 										),
-										value: LAST_ACTIVITY_DATE
-									}
+										value: LAST_ACTIVITY_DATE,
+									},
 								]}
 								orderIOMap={orderIOMap}
 								page={page}

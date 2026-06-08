@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import debounce from 'shared/util/debounce-decorator';
 import getCN from 'classnames';
-import React from 'react';
-import {PropTypes} from 'prop-types';
 import {truncate} from 'lodash';
+import {PropTypes} from 'prop-types';
+import React from 'react';
+import debounce from '~/shared/util/debounce-decorator';
 
 export default class TextTruncate extends React.Component {
 	static defaultProps = {
 		inline: false,
-		title: ''
+		title: '',
 	};
 
 	static propTypes = {
@@ -18,12 +23,12 @@ export default class TextTruncate extends React.Component {
 		title: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.number,
-			PropTypes.array
-		])
+			PropTypes.array,
+		]),
 	};
 
 	state = {
-		showTooltip: false
+		showTooltip: false,
 	};
 
 	constructor(props) {
@@ -47,7 +52,7 @@ export default class TextTruncate extends React.Component {
 	renderContent(className) {
 		const {
 			props: {children, maxCharLength, title},
-			state: {showTooltip}
+			state: {showTooltip},
 		} = this;
 
 		const maybeTruncatedTitle = maxCharLength
@@ -74,7 +79,7 @@ export default class TextTruncate extends React.Component {
 		const {offsetWidth, scrollWidth} = this._textRef.current;
 
 		this.setState({
-			showTooltip: scrollWidth > offsetWidth
+			showTooltip: scrollWidth > offsetWidth,
 		});
 	}
 

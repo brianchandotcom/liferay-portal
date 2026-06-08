@@ -1,15 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Form, {
-	validateIsInteger,
-	validateRequired
-} from 'shared/components/form';
 import React from 'react';
-import {DataTypes, IFilterProps, Operators} from 'event-analysis/utils/types';
+import {DataTypes, IFilterProps, Operators} from '~/event-analysis/utils/types';
 import {
 	NUMBER_OPERATOR_LONGHAND_LABELS_MAP,
-	NUMBER_OPTIONS
-} from 'event-analysis/utils/utils';
-import {sequence} from 'shared/util/promise';
+	NUMBER_OPTIONS,
+} from '~/event-analysis/utils/utils';
+import Form, {
+	validateIsInteger,
+	validateRequired,
+} from '~/shared/components/form';
+import {sequence} from '~/shared/util/promise';
 
 const NumberFilter: React.FC<IFilterProps> = ({
 	attributeId,
@@ -17,13 +22,13 @@ const NumberFilter: React.FC<IFilterProps> = ({
 	description,
 	displayName,
 	filter,
-	onSubmit
+	onSubmit,
 }) => {
 	const getInitialValues = () => {
 		if (filter) {
 			const {
 				operator,
-				values: [startValue = '', endValue = '']
+				values: [startValue = '', endValue = ''],
 			} = filter;
 
 			return {endValue, operator, startValue};
@@ -32,7 +37,7 @@ const NumberFilter: React.FC<IFilterProps> = ({
 		return {
 			endValue: '',
 			operator: Operators.GT,
-			startValue: ''
+			startValue: '',
 		};
 	};
 
@@ -54,20 +59,20 @@ const NumberFilter: React.FC<IFilterProps> = ({
 					description,
 					displayName,
 					operator,
-					values
+					values,
 				});
 			}}
 		>
 			{({handleSubmit, isValid, values: {operator}}) => (
 				<Form.Form onSubmit={handleSubmit}>
-					<div className='options-body'>
+					<div className="options-body">
 						<Form.Group autoFit>
 							<Form.GroupItem>
 								<Form.Select
 									label={Liferay.Language.get('condition')}
-									name='operator'
+									name="operator"
 								>
-									{NUMBER_OPTIONS.map(value => (
+									{NUMBER_OPTIONS.map((value) => (
 										<Form.Select.Item
 											key={value}
 											value={value}
@@ -86,9 +91,9 @@ const NumberFilter: React.FC<IFilterProps> = ({
 						<Form.Group autoFit>
 							<Form.GroupItem>
 								<Form.Input
-									name='startValue'
+									name="startValue"
 									required
-									type='number'
+									type="number"
 									validate={validateRequired}
 								/>
 							</Form.GroupItem>
@@ -96,12 +101,12 @@ const NumberFilter: React.FC<IFilterProps> = ({
 							{operator === Operators.Between && (
 								<Form.GroupItem>
 									<Form.Input
-										name='endValue'
+										name="endValue"
 										required
-										type='number'
+										type="number"
 										validate={sequence([
 											validateRequired,
-											validateIsInteger
+											validateIsInteger,
 										])}
 									/>
 								</Form.GroupItem>
@@ -109,13 +114,13 @@ const NumberFilter: React.FC<IFilterProps> = ({
 						</Form.Group>
 					</div>
 
-					<div className='options-footer'>
+					<div className="options-footer">
 						<ClayButton
 							block
-							className='button-root'
+							className="button-root"
 							disabled={!isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{Liferay.Language.get('apply')}
 						</ClayButton>

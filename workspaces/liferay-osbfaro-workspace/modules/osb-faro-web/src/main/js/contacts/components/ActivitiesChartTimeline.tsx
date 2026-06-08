@@ -1,30 +1,36 @@
-import * as API from 'shared/api';
-import ActivitiesChart from './ActivitiesChartDeprecated';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import getCN from 'classnames';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import SearchableVerticalTimeline from 'shared/components/SearchableVerticalTimelineDeprecated';
-import URLConstants from 'shared/util/url-constants';
-import {createOrderIOMap, START_TIME} from 'shared/util/pagination';
-import {EntityTypes} from 'shared/util/constants';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import SearchableVerticalTimeline from '~/shared/components/SearchableVerticalTimelineDeprecated';
+import {withSelectedPoint} from '~/shared/hoc';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {Interval, RangeSelectors} from '~/shared/types';
 import {
 	formatSessions,
-	getActivityLabel
-} from 'shared/util/activitiesDeprecated';
+	getActivityLabel,
+} from '~/shared/util/activitiesDeprecated';
+import {EntityTypes} from '~/shared/util/constants';
 import {
 	getDateRangeLabel,
 	getDateRangeLabelFromDate,
 	getEndDate,
 	getFirstDate,
-	getLastDate
-} from 'shared/util/date';
-import {Interval, RangeSelectors} from 'shared/types';
-import {sub} from 'shared/util/lang';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
-import {withSelectedPoint} from 'shared/hoc';
+	getLastDate,
+} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {START_TIME, createOrderIOMap} from '~/shared/util/pagination';
+import URLConstants from '~/shared/util/url-constants';
+
+import ActivitiesChart from './ActivitiesChartDeprecated';
 
 interface IGetActivitiesArgs {
 	channelId: string;
@@ -47,7 +53,7 @@ const getActivities = ({
 	groupId,
 	page,
 	query,
-	startDate
+	startDate,
 }: IGetActivitiesArgs) =>
 	API.activities
 		.fetchGroup({
@@ -60,11 +66,11 @@ const getActivities = ({
 			groupId,
 			orderIOMap: createOrderIOMap(START_TIME),
 			query,
-			startDate
+			startDate,
 		})
 		.then(({items, total}) => ({
 			items: formatSessions(items, groupId, channelId),
-			total
+			total,
 		}));
 
 interface IActivitiesChartTimelineProps {
@@ -101,7 +107,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 	onPointSelect,
 	rangeSelectors,
 	selectedPoint,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const {
 		delta,
@@ -110,7 +116,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 		onQueryChange,
 		page,
 		query,
-		resetPage
+		resetPage,
 	} = useStatefulPagination();
 
 	const getDateRange = (): {
@@ -120,7 +126,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 		if (!hasSelectedPoint || selectedPoint === undefined) {
 			return {
 				endDate: getLastDate(history, interval, 'intervalInitDate'),
-				startDate: getFirstDate(history, 'intervalInitDate')
+				startDate: getFirstDate(history, 'intervalInitDate'),
 			};
 		}
 
@@ -128,7 +134,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 
 		return {
 			endDate: getEndDate(intervalInitDate, interval),
-			startDate: intervalInitDate
+			startDate: intervalInitDate,
 		};
 	};
 
@@ -152,7 +158,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 			className={getCN('activities-chart-timeline-root', className)}
 			noPadding
 		>
-			<div className='activities-chart-container'>
+			<div className="activities-chart-container">
 				<ActivitiesChart
 					alwaysShowSelectedTooltip
 					hasSelectedPoint={hasSelectedPoint}
@@ -165,22 +171,22 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 			</div>
 
 			{!!history.length && (
-				<div className='selected-info'>
-					<div className='d-flex align-items-baseline'>
-						<div className='h4'>{sub(activitiesLabel, [date])}</div>
+				<div className="selected-info">
+					<div className="align-items-baseline d-flex">
+						<div className="h4">{sub(activitiesLabel, [date])}</div>
 
 						{hasSelectedPoint && (
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								onClick={handleClearSelection}
-								size='sm'
+								size="sm"
 							>
 								{Liferay.Language.get('clear-date-selection')}
 							</ClayButton>
 						)}
 					</div>
 
-					<div className='details'>
+					<div className="details">
 						{getActivityLabel(
 							hasSelectedPoint ? totalElements : count
 						)}
@@ -196,7 +202,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 						channelId,
 						contactsEntityId: id,
 						contactsEntityType: entityType,
-						groupId
+						groupId,
 					}}
 					delta={delta}
 					entityLabel={Liferay.Language.get('activities')}
@@ -204,7 +210,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 					headerLabels={{
 						count: Liferay.Language.get('activity-count'),
 						label: Liferay.Language.get('time'),
-						title: Liferay.Language.get('session')
+						title: Liferay.Language.get('session'),
 					}}
 					initialExpanded={false}
 					noResultsRenderer={() => (
@@ -216,12 +222,12 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 									)}
 
 									<ClayLink
-										className='d-block'
+										className="d-block"
 										href={
 											URLConstants.AccountActivitiesDocumentationLink
 										}
-										key='DOCUMENTATION'
-										target='_blank'
+										key="DOCUMENTATION"
+										target="_blank"
 									>
 										{Liferay.Language.get(
 											'learn-more-about-account-activities'

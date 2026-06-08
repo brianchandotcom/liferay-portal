@@ -1,17 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useLazyQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
+import React, {useEffect, useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import {WizardPageButtonGroup} from '~/settings/components/base-page/WizardPageButtonGroup';
+import {updateSearchParams} from '~/settings/components/base-page/utis';
+import {useInterval} from '~/shared/hooks/useInterval';
 import DataSourceQuery, {
 	DataSource,
-	DataSourceSyncData
-} from 'shared/queries/DataSourceQuery';
-import React, {useEffect, useState} from 'react';
-import {CREATE_DATE} from 'shared/util/pagination';
-import {DataSourceTypes, OrderByDirections} from 'shared/util/constants';
+	DataSourceSyncData,
+} from '~/shared/queries/DataSourceQuery';
+import {DataSourceTypes, OrderByDirections} from '~/shared/util/constants';
+import {CREATE_DATE} from '~/shared/util/pagination';
+
 import {ReviewSyncedDataFragment} from '../ReviewSyncedDataFragment';
-import {updateSearchParams} from 'settings/components/base-page/utis';
-import {useHistory} from 'react-router-dom';
-import {useInterval} from 'shared/hooks/useInterval';
-import {useLazyQuery} from '@apollo/client';
-import {WizardPageButtonGroup} from 'settings/components/base-page/WizardPageButtonGroup';
 
 const TIMEOUT_INTERVAL = 5000;
 
@@ -25,7 +31,7 @@ const ReviewSyncedDataStep = ({onNext, onPrev}: IReviewSyncedDataStepProps) => {
 	const [dataSource, setDataSource] = useState<DataSource>({
 		contactsSyncDetails: {selected: false},
 		id: '',
-		sitesSyncDetails: {selected: false}
+		sitesSyncDetails: {selected: false},
 	});
 	const [getDataSources, {data}] = useLazyQuery<DataSourceSyncData>(
 		DataSourceQuery,
@@ -35,10 +41,10 @@ const ReviewSyncedDataStep = ({onNext, onPrev}: IReviewSyncedDataStepProps) => {
 				size: 1,
 				sort: {
 					column: CREATE_DATE,
-					type: OrderByDirections.Descending
+					type: OrderByDirections.Descending,
 				},
-				type: DataSourceTypes.Liferay
-			}
+				type: DataSourceTypes.Liferay,
+			},
 		}
 	);
 
@@ -54,11 +60,13 @@ const ReviewSyncedDataStep = ({onNext, onPrev}: IReviewSyncedDataStepProps) => {
 
 	useEffect(() => {
 		getDataSources();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
 		<ClayForm
-			onSubmit={async event => {
+			onSubmit={async (event) => {
 				event.preventDefault();
 
 				updateSearchParams(history, 'dataSourceId', dataSource.id);

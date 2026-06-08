@@ -1,21 +1,27 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
-import BundleRouter from 'route-middleware/BundleRouter';
-import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
-import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import {CSVType} from 'shared/components/download-report/utils';
-import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
-import {getMatchedRoute, Routes} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import React, {Suspense, lazy} from 'react';
 import {Switch, useParams} from 'react-router-dom';
-import {useChannelContext} from 'shared/context/channel';
-import {useDataSources} from 'shared/context/dataSources';
+import BundleRouter from '~/route-middleware/BundleRouter';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import BasePage from '~/shared/components/base-page';
+import DownloadPDFReport from '~/shared/components/download-report/DownloadPDFReport';
+import {DownloadStaticCSVReport} from '~/shared/components/download-report/DownloadStaticCSVReport';
+import {CSVType} from '~/shared/components/download-report/utils';
+import {useChannelContext} from '~/shared/context/channel';
+import {useDataSources} from '~/shared/context/dataSources';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {sub} from '~/shared/util/lang';
+import {Routes, getMatchedRoute} from '~/shared/util/router';
 
 const Distribution = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardDistribution" */ './Distribution'
 		)
 );
@@ -23,6 +29,7 @@ const Distribution = lazy(
 const KnownIndividuals = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardKnownIndividuals" */ './KnownIndividuals'
 		)
 );
@@ -30,6 +37,7 @@ const KnownIndividuals = lazy(
 const InterestDetails = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardInterestDetails" */ './InterestDetails'
 		)
 );
@@ -37,6 +45,7 @@ const InterestDetails = lazy(
 const Interests = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardInterests" */ './Interests'
 		)
 );
@@ -44,6 +53,7 @@ const Interests = lazy(
 const Overview = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardOverview" */ './Overview'
 		)
 );
@@ -52,23 +62,23 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.CONTACTS_INDIVIDUALS
+		route: Routes.CONTACTS_INDIVIDUALS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('known-individuals'),
-		route: Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS
+		route: Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS,
 	},
 	{
 		exact: false,
 		label: Liferay.Language.get('interests'),
-		route: Routes.CONTACTS_INDIVIDUALS_INTERESTS
+		route: Routes.CONTACTS_INDIVIDUALS_INTERESTS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('distribution'),
-		route: Routes.CONTACTS_INDIVIDUALS_DISTRIBUTION
-	}
+		route: Routes.CONTACTS_INDIVIDUALS_DISTRIBUTION,
+	},
 ];
 
 const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
@@ -82,7 +92,7 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 
 	return (
 		<BasePage
-			className='individuals-dashboard-root'
+			className="individuals-dashboard-root"
 			documentTitle={Liferay.Language.get('individuals')}
 		>
 			<BasePage.Header
@@ -90,8 +100,8 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
-					})
+						label: selectedChannel && selectedChannel.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -107,7 +117,7 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 
 			{matchedRoute === Routes.CONTACTS_INDIVIDUALS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadPDFReport
 							dateRangeDescription={
 								sub(
@@ -129,7 +139,7 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 
 			{matchedRoute === Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadStaticCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Individual}

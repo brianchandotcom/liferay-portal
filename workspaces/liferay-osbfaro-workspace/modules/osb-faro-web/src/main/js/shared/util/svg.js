@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {keyBy} from 'lodash';
 
 function reqSVG(req) {
@@ -28,7 +33,7 @@ const svgs = keyBy(reqSVG(clayCssReq).concat(reqSVG(faroReq)), 'id');
  */
 const DEFAULT_SVG = {
 	id: 'question-circle',
-	viewBox: '0 0 512 512'
+	viewBox: '0 0 512 512',
 };
 
 /**

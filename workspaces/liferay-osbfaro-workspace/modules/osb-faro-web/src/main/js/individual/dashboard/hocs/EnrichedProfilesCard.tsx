@@ -1,25 +1,30 @@
-import * as API from 'shared/api';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import InfoPopover from 'shared/components/InfoPopover';
-import React from 'react';
-import {DataSource} from 'shared/util/records';
 import {isFinite} from 'lodash';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {sub} from 'shared/util/lang';
+import React from 'react';
 import {useParams} from 'react-router-dom';
-import {validContactsConfig} from 'shared/util/data-sources';
-import {withRequest} from 'shared/hoc';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import InfoPopover from '~/shared/components/InfoPopover';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {withRequest} from '~/shared/hoc';
+import {validContactsConfig} from '~/shared/util/data-sources';
+import {sub} from '~/shared/util/lang';
+import {DataSource} from '~/shared/util/records';
 
 const EnrichedProfilesBody = ({count}: {count: number}) => (
-	<Card.Body className='d-flex flex-column'>
-		<div className='total d-flex flex-grow-1 text-center justify-content-center align-items-center'>
+	<Card.Body className="d-flex flex-column">
+		<div className="align-items-center d-flex flex-grow-1 justify-content-center text-center total">
 			{sub(Liferay.Language.get('x-profiles'), [
-				isFinite(count) ? count.toLocaleString() : 0
+				isFinite(count) ? count.toLocaleString() : 0,
 			])}
 		</div>
 
-		<div className='description text-center'>
+		<div className="description text-center">
 			{Liferay.Language.get(
 				'enriched-with-attributes-or-behaviors-in-the-last-30-days'
 			)}
@@ -50,7 +55,7 @@ interface IEnrichedProfilesCardProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const EnrichedProfilesCard: React.FC<IEnrichedProfilesCardProps> = ({
-	dataSources
+	dataSources,
 }) => {
 	const {channelId = '', groupId = ''} = useParams<{
 		channelId: string;
@@ -63,13 +68,13 @@ const EnrichedProfilesCard: React.FC<IEnrichedProfilesCardProps> = ({
 		<Card
 			className={getCN('enriched-profiles-card-root', {
 				inverted: !contactsConfigured,
-				['text-secondary']: contactsConfigured
+				['text-secondary']: contactsConfigured,
 			})}
 			reportContainer={ReportContainer.EnrichedProfilesCard}
 		>
 			{contactsConfigured ? (
 				<>
-					<Card.Header className='d-flex justify-content-between'>
+					<Card.Header className="d-flex justify-content-between">
 						<Card.Title>
 							{Liferay.Language.get('enriched-profiles')}
 						</Card.Title>
@@ -84,7 +89,7 @@ const EnrichedProfilesCard: React.FC<IEnrichedProfilesCardProps> = ({
 				</>
 			) : (
 				<Card.Body>
-					<div className='d-flex justify-content-between'>
+					<div className="d-flex justify-content-between">
 						<Card.Title>
 							{Liferay.Language.get('know-your-audience-better')}
 						</Card.Title>

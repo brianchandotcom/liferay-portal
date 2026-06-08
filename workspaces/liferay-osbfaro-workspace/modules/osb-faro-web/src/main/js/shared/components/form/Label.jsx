@@ -1,18 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import InfoPopover from 'shared/components/InfoPopover';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import InfoPopover from '~/shared/components/InfoPopover';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 export default class Label extends React.Component {
 	static defaultProps = {
-		required: false
+		required: false,
 	};
 
 	static propTypes = {
 		className: PropTypes.string,
 		popover: PropTypes.object,
-		required: PropTypes.bool
+		required: PropTypes.bool,
 	};
 
 	render() {
@@ -27,11 +32,11 @@ export default class Label extends React.Component {
 					'label-root',
 					className,
 					{
-						required
+						required,
 					}
 				)}
 			>
-				<span className='content-container'>{children}</span>
+				<span className="content-container">{children}</span>
 
 				{popover && (
 					<InfoPopover

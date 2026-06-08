@@ -1,15 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, {useContext} from 'react';
-import {BOOLEAN_LABELS_MAP} from 'event-analysis/utils/utils';
-import {Criterion} from 'segment/segment-editor/dynamic/utils/types';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from '~/event-analysis/utils/types';
+import {BOOLEAN_LABELS_MAP} from '~/event-analysis/utils/utils';
 import {
 	EntityType,
-	ReferencedObjectsContext
-} from 'segment/segment-editor/dynamic/context/referencedObjects';
-import {formatTime} from 'shared/util/time';
-import {formatUTCDate} from 'shared/util/date';
-import {FunctionalOperators} from 'segment/segment-editor/dynamic/utils/constants';
-import {getOperatorOptions} from 'segment/segment-editor/dynamic/inputs/components/attribute-conjunction-input/utils';
+	ReferencedObjectsContext,
+} from '~/segment/segment-editor/dynamic/context/referencedObjects';
+import {getOperatorOptions} from '~/segment/segment-editor/dynamic/inputs/components/attribute-conjunction-input/utils';
+import {FunctionalOperators} from '~/segment/segment-editor/dynamic/utils/constants';
+import {Criterion} from '~/segment/segment-editor/dynamic/utils/types';
+import {formatUTCDate} from '~/shared/util/date';
+import {formatTime} from '~/shared/util/time';
 
 interface IAttributeConjunctionDisplayProps {
 	conjunctionCriterion: Criterion;
@@ -76,7 +81,7 @@ const AttributeConjunctionDisplay: React.FC<
 			<b>{displayValue}</b>
 		</>
 	) : (
-		<b className='undefined-entity'>
+		<b className="undefined-entity">
 			{Liferay.Language.get('undefined-attribute')}
 		</b>
 	);

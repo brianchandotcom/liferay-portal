@@ -1,26 +1,32 @@
-import BasePage from 'settings/components/base-page/BasePage';
-import DataSourceStatus from './DataSourceStatus';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getCN from 'classnames';
-import React from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert, Modal} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'redux';
-import {connect} from 'react-redux';
-import {DataSource, User} from 'shared/util/records';
-import {deleteDataSource} from 'shared/actions/data-sources';
-import {ENABLE_DELETE_DATA_SOURCE_BUTTON} from 'shared/util/constants';
-import {getDataSourceDisplayObject} from 'shared/util/data-sources';
-import {Routes, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
 import {truncate} from 'lodash';
-import {withHistory} from 'shared/hoc';
+import React from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import BasePage from '~/settings/components/base-page/BasePage';
+import {addAlert} from '~/shared/actions/alerts';
+import {deleteDataSource} from '~/shared/actions/data-sources';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import {withHistory} from '~/shared/hoc';
+import {Alert, Modal} from '~/shared/types';
+import {ENABLE_DELETE_DATA_SOURCE_BUTTON} from '~/shared/util/constants';
+import {getDataSourceDisplayObject} from '~/shared/util/data-sources';
+import {sub} from '~/shared/util/lang';
+import {DataSource, User} from '~/shared/util/records';
+import {Routes, toRoute} from '~/shared/util/router';
+
+import DataSourceStatus from './DataSourceStatus';
 
 const getPageDescription = (dataSource: DataSource) =>
 	dataSource
 		? [dataSource.name, dataSource.url]
-				.filter(item => item)
-				.map(item => truncate(item, {length: 50}))
+				.filter((item) => item)
+				.map((item) => truncate(item, {length: 50}))
 				.join(' - ')
 		: '';
 
@@ -28,15 +34,15 @@ interface IBaseDataSourcePageProps extends React.HTMLAttributes<HTMLElement> {
 	addAlert: Alert.AddAlert;
 	close: Modal.close;
 	currentUser: User;
-	documentTitle: string;
 	dataSource: DataSource;
 	deleteDataSource: ({
 		groupId,
-		id
+		id,
 	}: {
 		groupId: string;
 		id: string;
 	}) => Promise<void>;
+	documentTitle: string;
 	groupId: string;
 	history: {
 		push: (path: string) => void;
@@ -84,7 +90,7 @@ const BaseDataSourcePage: React.FC<IBaseDataSourcePageProps> = ({
 				</p>
 			),
 			deleteConfirmationText: sub(Liferay.Language.get('delete-x'), [
-				name
+				name,
 			]),
 			onClose: close,
 			onSubmit: () => {
@@ -97,14 +103,14 @@ const BaseDataSourcePage: React.FC<IBaseDataSourcePageProps> = ({
 									'x-is-currently-being-removed-from-analytics-cloud'
 								),
 								[truncate(name, {length: 50})]
-							) as string
+							) as string,
 						});
 
 						close();
 
 						history.push(
 							toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-								groupId
+								groupId,
 							})
 						);
 					})
@@ -112,11 +118,11 @@ const BaseDataSourcePage: React.FC<IBaseDataSourcePageProps> = ({
 						addAlert({
 							alertType: Alert.Types.Error,
 							message: Liferay.Language.get('error'),
-							timeout: false
+							timeout: false,
 						});
 					});
 			},
-			title: sub(Liferay.Language.get('delete-x'), [name])
+			title: sub(Liferay.Language.get('delete-x'), [name]),
 		});
 	};
 
@@ -138,18 +144,18 @@ const BaseDataSourcePage: React.FC<IBaseDataSourcePageProps> = ({
 								label: Liferay.Language.get(
 									'delete-data-source'
 								),
-								onClick: handleDeleteClick
-							}
-					  ]
+								onClick: handleDeleteClick,
+							},
+						]
 					: []
 			}
 			pageDescription={pageDescription || getPageDescription(dataSource)}
 			pageTitle={pageTitle}
 		>
-			<div className='page-container'>
-				<div className='content-main'>{passedChildren}</div>
+			<div className="page-container">
+				<div className="content-main">{passedChildren}</div>
 
-				<div className='content-side'>
+				<div className="content-side">
 					<DataSourceStatus
 						{...getDataSourceDisplayObject(dataSource)}
 					/>
@@ -163,7 +169,7 @@ const getOwnChildren = (
 	_store: any,
 	ownProps: {children: React.ReactNode}
 ) => ({
-	passedChildren: ownProps.children
+	passedChildren: ownProps.children,
 });
 
 export default compose<any>(

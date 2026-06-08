@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 const jsPDFMock = jest.fn().mockImplementation(() => {
 	const state = {
 		fontList: {helvetica: {}},
@@ -5,7 +10,7 @@ const jsPDFMock = jest.fn().mockImplementation(() => {
 		fontSize: 8,
 		fontStyle: 'normal',
 		pageCount: 1,
-		textColor: '#000000'
+		textColor: '#000000',
 	};
 
 	return {
@@ -19,7 +24,7 @@ const jsPDFMock = jest.fn().mockImplementation(() => {
 		}),
 		getFont: jest.fn(() => ({
 			fontName: state.fontName,
-			fontStyle: state.fontStyle
+			fontStyle: state.fontStyle,
 		})),
 		getFontList: jest.fn(() => state.fontList),
 		getFontSize: jest.fn(() => state.fontSize),
@@ -29,8 +34,8 @@ const jsPDFMock = jest.fn().mockImplementation(() => {
 		internal: {
 			pageSize: {
 				getHeight: jest.fn(() => 297),
-				getWidth: jest.fn(() => 210)
-			}
+				getWidth: jest.fn(() => 210),
+			},
 		},
 		line: jest.fn(),
 		output: jest.fn(() => 'data:application/pdf;base64,mock'),
@@ -42,23 +47,25 @@ const jsPDFMock = jest.fn().mockImplementation(() => {
 			state.fontName = (name || '').toLowerCase();
 			state.fontStyle = style || 'normal';
 		}),
-		setFontSize: jest.fn(size => {
+		setFontSize: jest.fn((size) => {
 			state.fontSize = size;
 		}),
 		setLineWidth: jest.fn(),
-		setTextColor: jest.fn(color => {
+		setTextColor: jest.fn((color) => {
 			const nameToHex = {
 				black: '#000000',
 				blue: '#0000ff',
 				green: '#008000',
 				red: '#ff0000',
-				white: '#ffffff'
+				white: '#ffffff',
 			};
 			state.textColor = nameToHex[color] || color;
 		}),
-		splitTextToSize: jest.fn(text => (Array.isArray(text) ? text : [text])),
+		splitTextToSize: jest.fn((text) =>
+			Array.isArray(text) ? text : [text]
+		),
 		text: jest.fn(),
-		textWithLink: jest.fn()
+		textWithLink: jest.fn(),
 	};
 });
 

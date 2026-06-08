@@ -1,20 +1,26 @@
-import * as API from 'shared/api';
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import EventAnalysisListCard from '../hocs/EventAnalysisListCard';
 import React from 'react';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import URLConstants from 'shared/util/url-constants';
-import {FeatureName, useLimitReached} from 'shared/hooks/useLimitReached';
-import {Routes, toRoute} from 'shared/util/router';
-import {useChannelContext} from 'shared/context/channel';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
-import {useRequest} from 'shared/hooks/useRequest';
+import * as API from '~/shared/api';
+import BasePage from '~/shared/components/base-page';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {useChannelContext} from '~/shared/context/channel';
+import {useDataSources} from '~/shared/context/dataSources';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {FeatureName, useLimitReached} from '~/shared/hooks/useLimitReached';
+import {useRequest} from '~/shared/hooks/useRequest';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
+
+import EventAnalysisListCard from '../hocs/EventAnalysisListCard';
 
 const List = () => {
 	const {selectedChannel} = useChannelContext();
@@ -30,15 +36,15 @@ const List = () => {
 		data: usageData,
 		error: usageError,
 		loading: usageLoading,
-		refetch
+		refetch,
 	} = useRequest({
 		dataSourceFn: API.projects.fetchFeatureUsages,
-		variables: {groupId}
+		variables: {groupId},
 	});
 
 	const hasLimitReached = useLimitReached({
 		data: usageData,
-		featureName: FeatureName.EventAnalysis
+		featureName: FeatureName.EventAnalysis,
 	});
 
 	const pageAction = [
@@ -48,8 +54,8 @@ const List = () => {
 				empty || error || usageLoading || usageError || hasLimitReached,
 			displayType: 'primary',
 			href: toRoute(Routes.EVENT_ANALYSIS_CREATE, {channelId, groupId}),
-			label: Liferay.Language.get('create-analysis')
-		}
+			label: Liferay.Language.get('create-analysis'),
+		},
 	];
 
 	const authorized = currentUser.isAdmin();
@@ -61,8 +67,8 @@ const List = () => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel?.name
-					})
+						label: selectedChannel?.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -77,17 +83,17 @@ const List = () => {
 						{hasLimitReached && (
 							<ClayButton
 								borderless
-								className='ml-2'
-								data-tooltip-align='right'
-								displayType='unstyled'
-								size='sm'
+								className="ml-2"
+								data-tooltip-align="right"
+								displayType="unstyled"
+								size="sm"
 								title={Liferay.Language.get(
 									'a-maximum-number-of-event-analyses-has-been-reached-delete-an-existing-analysis-to-create-a-new-one'
 								)}
 							>
 								<ClayIcon
-									className='text-secondary'
-									symbol='exclamation-full'
+									className="text-secondary"
+									symbol="exclamation-full"
 								/>
 							</ClayButton>
 						)}
@@ -105,16 +111,16 @@ const List = () => {
 								{authorized
 									? Liferay.Language.get(
 											'connect-a-data-source-to-get-started'
-									  )
+										)
 									: Liferay.Language.get(
 											'please-contact-your-workspace-administrator-to-add-data-sources'
-									  )}
+										)}
 
 								<ClayLink
-									className='d-block mb-3'
+									className="d-block mb-3"
 									href={URLConstants.DataSourceConnection}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-more'
@@ -124,12 +130,12 @@ const List = () => {
 								{authorized && (
 									<ClayLink
 										button
-										className='button-root'
-										displayType='primary'
+										className="button-root"
+										displayType="primary"
 										href={toRoute(
 											Routes.SETTINGS_DATA_SOURCE_LIST,
 											{
-												groupId
+												groupId,
 											}
 										)}
 									>

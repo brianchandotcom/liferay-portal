@@ -1,19 +1,25 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
+import {Align} from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import React, {useState} from 'react';
-import {Align} from '@clayui/drop-down';
-import {DropdownRangeKey} from '../dropdown-range-key/DropdownRangeKey';
 import {pickBy} from 'lodash';
-import {RangeSelectors} from 'shared/types';
-import {setUriQueryValues} from 'shared/util/router';
-import {Text} from '@clayui/core';
+import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
+import {RangeSelectors} from '~/shared/types';
+import {setUriQueryValues} from '~/shared/util/router';
+
+import {DropdownRangeKey} from '../dropdown-range-key/DropdownRangeKey';
 
 export enum ReportType {
 	CSV = 'CSV',
-	PDF = 'PDF'
+	PDF = 'PDF',
 }
 
 interface IDownloadReportModal {
@@ -29,11 +35,13 @@ interface IDownloadReportModal {
 	type?: ReportType;
 }
 
-export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
+export const DownloadReportModal = function DownloadReportModal({
 	children,
+
 	dateRangeDescription = Liferay.Language.get(
 		'only-select-a-date-range-if-you-want-to-modify-the-current-date-filter'
 	),
+
 	disabled = false,
 	infoMessage,
 	observer,
@@ -41,8 +49,8 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	onSubmit,
 	rangeSelectors: initialRangeSelectors,
 	showDateRange = true,
-	type
-}) => {
+	type,
+}: IDownloadReportModal) {
 	const history = useHistory();
 	const [openAlert, setOpenAlert] = useState(true);
 	const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -53,7 +61,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	return (
 		<ClayModal observer={observer}>
 			<ClayForm>
-				<div className='modal-content'>
+				<div className="modal-content">
 					<ClayModal.Header>
 						{Liferay.Language.get('download-reports')}
 					</ClayModal.Header>
@@ -62,7 +70,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 						<ClayAlert
 							onClose={() => setOpenAlert(false)}
 							title={Liferay.Language.get('info')}
-							variant='stripe'
+							variant="stripe"
 						>
 							{infoMessage}
 						</ClayAlert>
@@ -70,8 +78,8 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 
 					<ClayModal.Body>
 						{showDateRange && (
-							<ClayForm.Group className='mb-0'>
-								<label htmlFor='timeRange'>
+							<ClayForm.Group className="mb-0">
+								<label htmlFor="timeRange">
 									{Liferay.Language.get('date-range')}
 								</label>
 
@@ -95,15 +103,15 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 						last={
 							<ClayButton.Group spaced>
 								<ClayButton
-									data-testid='cancel'
-									displayType='secondary'
+									data-testid="cancel"
+									displayType="secondary"
 									onClick={onClose}
 								>
 									{Liferay.Language.get('cancel')}
 								</ClayButton>
 
 								<ClayButton
-									data-testid='submit'
+									data-testid="submit"
 									disabled={disabled || submitDisabled}
 									onClick={() => {
 										setSubmitDisabled(true);
@@ -112,6 +120,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 
 										if (type === ReportType.CSV) {
 											onSubmit(rangeSelectors);
+
 											return;
 										}
 
@@ -120,7 +129,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 												setUriQueryValues(
 													pickBy({
 														downloadReport: true,
-														...rangeSelectors
+														...rangeSelectors,
 													})
 												)
 											);
@@ -145,9 +154,10 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 												attributes: true,
 												characterData: true,
 												childList: true,
-												subtree: true
+												subtree: true,
 											});
-										} else {
+										}
+										else {
 											onSubmit();
 										}
 									}}

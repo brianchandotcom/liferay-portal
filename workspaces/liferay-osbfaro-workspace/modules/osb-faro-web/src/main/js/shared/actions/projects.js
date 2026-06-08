@@ -1,6 +1,12 @@
-import * as API from 'shared/api';
-import {CALL_API} from '../middleware/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {createActionTypes} from 'redux-toolbox';
+import * as API from '~/shared/api';
+
+import {CALL_API} from '../middleware/api';
 import {project, projects} from '../middleware/schema';
 
 export const actionTypes = {
@@ -9,7 +15,7 @@ export const actionTypes = {
 	...createActionTypes('fetch', 'project'),
 	...createActionTypes('fetch', 'projects'),
 	...createActionTypes('fetch', 'project_via_corp_project_uuid'),
-	...createActionTypes('update', 'project')
+	...createActionTypes('update', 'project'),
 };
 
 export function createProject(data) {
@@ -22,11 +28,11 @@ export function createProject(data) {
 				types: [
 					actionTypes.CREATE_PROJECT_REQUEST,
 					actionTypes.CREATE_PROJECT_SUCCESS,
-					actionTypes.CREATE_PROJECT_FAILURE
-				]
-			}
+					actionTypes.CREATE_PROJECT_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -40,11 +46,11 @@ export function configureProject(data) {
 				types: [
 					actionTypes.CONFIGURE_PROJECT_REQUEST,
 					actionTypes.CONFIGURE_PROJECT_SUCCESS,
-					actionTypes.CONFIGURE_PROJECT_FAILURE
-				]
-			}
+					actionTypes.CONFIGURE_PROJECT_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -58,11 +64,11 @@ export function createTrialProject(data) {
 				types: [
 					actionTypes.CREATE_PROJECT_REQUEST,
 					actionTypes.CREATE_PROJECT_SUCCESS,
-					actionTypes.CREATE_PROJECT_FAILURE
-				]
-			}
+					actionTypes.CREATE_PROJECT_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -76,14 +82,14 @@ export function fetchProject({groupId}) {
 				types: [
 					actionTypes.FETCH_PROJECT_REQUEST,
 					actionTypes.FETCH_PROJECT_SUCCESS,
-					actionTypes.FETCH_PROJECT_FAILURE
-				]
-			}
+					actionTypes.FETCH_PROJECT_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: groupId
+			id: groupId,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -96,11 +102,11 @@ export function fetchProjects() {
 				types: [
 					actionTypes.FETCH_PROJECTS_REQUEST,
 					actionTypes.FETCH_PROJECTS_SUCCESS,
-					actionTypes.FETCH_PROJECTS_FAILURE
-				]
-			}
+					actionTypes.FETCH_PROJECTS_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -114,48 +120,52 @@ export function fetchProjectViaCorpProjectUuid({corpProjectUuid}) {
 				types: [
 					actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_REQUEST,
 					actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_SUCCESS,
-					actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_FAILURE
-				]
-			}
+					actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: corpProjectUuid
+			id: corpProjectUuid,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
-export const updateProject = ({
+export const updateProject = function updateProject({
 	emailAddressDomains,
 	friendlyURL,
 	groupId,
 	incidentReportEmailAddresses,
 	name,
-	timeZoneId
-}) => ({
-	meta: {
-		[CALL_API]: {
-			data: {
-				emailAddressDomains,
-				friendlyURL,
-				groupId,
-				incidentReportEmailAddresses,
-				name,
-				timeZoneId
+	timeZoneId,
+}) {
+	return {
+		meta: {
+			[CALL_API]: {
+				data: {
+					emailAddressDomains,
+					friendlyURL,
+					groupId,
+					incidentReportEmailAddresses,
+					name,
+					timeZoneId,
+				},
+				requestFn: API.projects.update,
+				schema: project(groupId),
+				types: [
+					actionTypes.UPDATE_PROJECT_REQUEST,
+					actionTypes.UPDATE_PROJECT_SUCCESS,
+					actionTypes.UPDATE_PROJECT_FAILURE,
+				],
 			},
-			requestFn: API.projects.update,
-			schema: project(groupId),
-			types: [
-				actionTypes.UPDATE_PROJECT_REQUEST,
-				actionTypes.UPDATE_PROJECT_SUCCESS,
-				actionTypes.UPDATE_PROJECT_FAILURE
-			]
+			newId: friendlyURL,
+			prevId: groupId,
 		},
-		newId: friendlyURL,
-		prevId: groupId
-	},
-	payload: {
-		id: groupId
-	},
-	type: 'NO_OP'
-});
+
+		payload: {
+			id: groupId,
+		},
+
+		type: 'NO_OP',
+	};
+};

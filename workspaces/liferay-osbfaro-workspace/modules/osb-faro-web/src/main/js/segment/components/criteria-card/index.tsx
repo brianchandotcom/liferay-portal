@@ -1,13 +1,19 @@
-import CriteriaView from './CriteriaView';
-import Label from 'shared/components/Label';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import Panel from '@clayui/panel';
 import React, {useContext, useEffect, useMemo} from 'react';
-import {extractRemoteCriterionEntries} from 'segment/segment-editor/dynamic/criterion-types/extract';
-import {ReferencedObjectsContext} from 'segment/segment-editor/dynamic/context/referencedObjects';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {SegmentTypes} from 'shared/util/constants';
-import {translateQueryToCriteria} from 'segment/segment-editor/dynamic/utils/odata';
-import {useDownloadReportContext} from 'shared/components/download-report/DownloadReportContext';
+import {ReferencedObjectsContext} from '~/segment/segment-editor/dynamic/context/referencedObjects';
+import {extractRemoteCriterionEntries} from '~/segment/segment-editor/dynamic/criterion-types/extract';
+import {translateQueryToCriteria} from '~/segment/segment-editor/dynamic/utils/odata';
+import Label from '~/shared/components/Label';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {useDownloadReportContext} from '~/shared/components/download-report/DownloadReportContext';
+import {SegmentTypes} from '~/shared/util/constants';
+
+import CriteriaView from './CriteriaView';
 
 interface ICriteriaCardProps {
 	channelId?: string;
@@ -26,7 +32,7 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 	includeAnonymousUsers,
 	segmentType,
 	sequential,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const _criteriaViewRef = React.createRef<HTMLDivElement>();
 
@@ -44,6 +50,8 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 		setReportContainer(ReportContainer.SegmentCriteriaCard);
 
 		return clearReportContainers;
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -56,29 +64,31 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 				addProperty(criterionType.createProperty({id, name}));
 			}
 		);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [channelId, groupId, criteria]);
 
 	return (
 		<Panel
-			className='card-root'
+			className="card-root"
 			collapsable
 			defaultExpanded
 			displayTitle={
-				<Panel.Title className='card-title'>
+				<Panel.Title className="card-title">
 					{Liferay.Language.get('segment-criteria')}
 				</Panel.Title>
 			}
 			id={ReportContainer.SegmentCriteriaCard}
 		>
-			<Panel.Body className='criteria-card-root'>
+			<Panel.Body className="criteria-card-root">
 				{includeAnonymousUsers && (
-					<Label display='info' size='lg' uppercase>
+					<Label display="info" size="lg" uppercase>
 						{Liferay.Language.get('includes-anonymous-individuals')}
 					</Label>
 				)}
 
 				{segmentType === SegmentTypes.RealTime && sequential && (
-					<Label display='info' size='lg' uppercase>
+					<Label display="info" size="lg" uppercase>
 						{Liferay.Language.get('sequential-events')}
 					</Label>
 				)}

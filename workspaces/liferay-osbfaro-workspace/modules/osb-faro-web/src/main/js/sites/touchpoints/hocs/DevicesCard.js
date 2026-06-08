@@ -1,10 +1,15 @@
-import getDevicesMapper from 'cerebro-shared/hocs/mappers/devices';
-import URLConstants from 'shared/util/url-constants';
-import {BROWSER_FRAGMENT, DEVICE_FRAGMENT} from 'shared/queries/fragments';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {gql} from '@apollo/client';
 import {graphql} from '@apollo/client/react/hoc';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {withDevicesCard} from 'shared/hoc/DevicesCard';
+import getDevicesMapper from '~/cerebro-shared/hocs/mappers/devices';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {withDevicesCard} from '~/shared/hoc/DevicesCard';
+import {BROWSER_FRAGMENT, DEVICE_FRAGMENT} from '~/shared/queries/fragments';
+import URLConstants from '~/shared/util/url-constants';
 
 const TouchpointDevicesQuery = gql`
 	query TouchpointDevicesQuery(
@@ -50,7 +55,7 @@ const TouchpointDevicesQuery = gql`
 const withTouchpointDevices = () =>
 	graphql(
 		TouchpointDevicesQuery,
-		getDevicesMapper(result => result.page.viewsMetric)
+		getDevicesMapper((result) => result.page.viewsMetric)
 	);
 
 export default withDevicesCard(withTouchpointDevices, {
@@ -59,5 +64,5 @@ export default withDevicesCard(withTouchpointDevices, {
 	),
 	documentationUrl: URLConstants.SitesDashboardPagesViewsByTechnology,
 	reportContainer: ReportContainer.ViewsByTechnologyCard,
-	title: Liferay.Language.get('there-are-no-views-on-the-selected-period')
+	title: Liferay.Language.get('there-are-no-views-on-the-selected-period'),
 });

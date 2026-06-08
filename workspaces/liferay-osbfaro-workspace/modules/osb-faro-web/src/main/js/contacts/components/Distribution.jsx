@@ -1,26 +1,14 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import BasePage from 'shared/components/base-page';
-import Card from 'shared/components/Card';
-import CollapsibleOverlay from 'shared/components/CollapsibleOverlay';
-import ErrorDisplay from 'shared/components/ErrorDisplay';
-import Form from 'shared/components/form';
-import FormSelectFieldInput from 'contacts/components/form/SelectFieldInput';
-import Label from 'shared/components/form/Label';
-import Loading from 'shared/components/Loading';
+import {List, Map} from 'immutable';
+import {noop, omit, pickBy, truncate} from 'lodash';
+import {PropTypes} from 'prop-types';
 import React from 'react';
-import SearchableEntityTable from 'shared/components/SearchableEntityTable';
-import {
-	accountsListColumns,
-	individualsListColumns
-} from 'shared/util/table-columns';
-import {
-	ANIMATION_DURATION,
-	AXIS,
-	getTextWidth,
-	RechartsTooltip
-} from 'shared/util/recharts';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
+import {connect} from 'react-redux';
 import {
 	Bar,
 	CartesianGrid,
@@ -29,44 +17,65 @@ import {
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
-import {compose, withSelectedPoint, withStatefulPagination} from 'shared/hoc';
+import {createNumberMask} from 'text-mask-addons';
+import FormSelectFieldInput from '~/contacts/components/form/SelectFieldInput';
 import {
 	Conjunctions,
-	RelationalOperators
-} from 'segment/segment-editor/dynamic/utils/constants';
-import {connect} from 'react-redux';
-import {createNumberMask} from 'text-mask-addons';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
-import {FieldContexts, FieldTypes} from 'shared/util/constants';
-import {getBarColor} from 'shared/util/charts';
-import {getFinitePercent} from 'shared/util/numbers';
-import {hasChanges} from 'shared/util/react';
-import {List, Map} from 'immutable';
-import {noop, omit, pickBy, truncate} from 'lodash';
-import {paginationConfig, paginationDefaults} from 'shared/util/pagination';
-import {PropTypes} from 'prop-types';
-import {setUriQueryValues} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
+	RelationalOperators,
+} from '~/segment/segment-editor/dynamic/utils/constants';
+import * as API from '~/shared/api';
+import Card from '~/shared/components/Card';
+import CollapsibleOverlay from '~/shared/components/CollapsibleOverlay';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import Loading from '~/shared/components/Loading';
+import SearchableEntityTable from '~/shared/components/SearchableEntityTable';
+import BasePage from '~/shared/components/base-page';
+import Form from '~/shared/components/form';
+import Label from '~/shared/components/form/Label';
+import {compose, withSelectedPoint, withStatefulPagination} from '~/shared/hoc';
+import {getBarColor} from '~/shared/util/charts';
+import {FieldContexts, FieldTypes} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import {getFinitePercent} from '~/shared/util/numbers';
+import {
+	NAME,
+	createOrderIOMap,
+	paginationConfig,
+	paginationDefaults,
+} from '~/shared/util/pagination';
+import {hasChanges} from '~/shared/util/react';
+import {
+	ANIMATION_DURATION,
+	AXIS,
+	RechartsTooltip,
+	getTextWidth,
+} from '~/shared/util/recharts';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
+import {setUriQueryValues} from '~/shared/util/router';
+import {
+	accountsListColumns,
+	individualsListColumns,
+} from '~/shared/util/table-columns';
 
 const SearchableEntityTableHOC = withStatefulPagination(
 	SearchableEntityTable,
 	{
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	},
-	props => omit(props, 'onSearchValueChange')
+	(props) => omit(props, 'onSearchValueChange')
 );
 
 export const CONTEXT_OPTIONS = [
 	{
 		label: Liferay.Language.get('individuals'),
-		value: FieldContexts.Demographics
+		value: FieldContexts.Demographics,
 	},
 	{
 		label: Liferay.Language.get('accounts'),
-		value: FieldContexts.Organization
-	}
+		value: FieldContexts.Organization,
+	},
 ];
 
 const BAR_WIDTH = 60;
@@ -86,7 +95,7 @@ export function getContextLabel(context) {
 
 export const numberOfBinsMask = createNumberMask({
 	includeThousandsSeparator: false,
-	prefix: ''
+	prefix: '',
 });
 
 function formatTickVal(name, percent, showPercentage) {
@@ -97,7 +106,7 @@ function formatTickVal(name, percent, showPercentage) {
 	}
 
 	return `${truncate(name, {
-		length: MAX_Y_AXIS_CHAR_COUNT
+		length: MAX_Y_AXIS_CHAR_COUNT,
 	})} ${suffix}`;
 }
 
@@ -124,7 +133,7 @@ export class Distribution extends React.Component {
 		numberOfBins: DEFAULT_NUMBER_OF_BINS,
 		pageContainer: false,
 		selectedPoint: DEFAULT_SELECTED_POINT,
-		title: Liferay.Language.get('breakdown-of-known-members')
+		title: Liferay.Language.get('breakdown-of-known-members'),
 	};
 
 	static propTypes = {
@@ -149,7 +158,7 @@ export class Distribution extends React.Component {
 		pageContainer: PropTypes.bool,
 		selectedContext: PropTypes.string,
 		selectedPoint: PropTypes.number,
-		title: PropTypes.string
+		title: PropTypes.string,
 	};
 
 	state = {
@@ -157,7 +166,7 @@ export class Distribution extends React.Component {
 		histogram: false,
 		hoverIndex: -1,
 		selectedContext: FieldContexts.Demographics,
-		showIndividualsPreview: false
+		showIndividualsPreview: false,
 	};
 
 	_formRef = React.createRef();
@@ -188,8 +197,8 @@ export class Distribution extends React.Component {
 		const {
 			props: {fieldDistributionIList, selectedPoint},
 			state: {
-				fieldMappingSelected: {context, name}
-			}
+				fieldMappingSelected: {context, name},
+			},
 		} = this;
 
 		const getFilter = (operator, value) =>
@@ -199,7 +208,8 @@ export class Distribution extends React.Component {
 
 		if (fieldDistributionIList.size - 1 === selectedPoint) {
 			filter.push(getFilter(RelationalOperators.LE, max));
-		} else {
+		}
+		else {
 			filter.push(getFilter(RelationalOperators.LT, max));
 		}
 
@@ -209,7 +219,7 @@ export class Distribution extends React.Component {
 	@autobind
 	buildStringFilter(distributionValues) {
 		const {
-			fieldMappingSelected: {context, name}
+			fieldMappingSelected: {context, name},
 		} = this.state;
 
 		const filter = `${context}/${name}/value ${RelationalOperators.EQ} '${distributionValues[0]}'`;
@@ -224,7 +234,7 @@ export class Distribution extends React.Component {
 		filter,
 		orderIOMap,
 		page,
-		query
+		query,
 	}) {
 		const {groupId, id} = this.props;
 
@@ -237,7 +247,7 @@ export class Distribution extends React.Component {
 				individualSegmentId: id,
 				orderIOMap,
 				page,
-				query
+				query,
 			})
 		);
 	}
@@ -251,9 +261,9 @@ export class Distribution extends React.Component {
 				fieldMappingFieldName,
 				groupId,
 				id,
-				numberOfBins
+				numberOfBins,
 			},
-			state: {selectedContext}
+			state: {selectedContext},
 		} = this;
 
 		return fetchDistribution(
@@ -265,7 +275,7 @@ export class Distribution extends React.Component {
 				groupId,
 				id,
 				individualSegmentId: id,
-				numberOfBins
+				numberOfBins,
 			})
 		);
 	}
@@ -278,16 +288,16 @@ export class Distribution extends React.Component {
 			? () =>
 					API.fieldMappings.fetch({
 						fieldMappingFieldName,
-						groupId
+						groupId,
 					})
 			: () => API.fieldMappings.fetchDefault(groupId);
 
 		return fieldMappingFn()
-			.then(fieldMapping => {
+			.then((fieldMapping) => {
 				if (!fieldMappingFieldName) {
 					history.replace(
 						setUriQueryValues({
-							fieldMappingFieldName: fieldMapping.id
+							fieldMappingFieldName: fieldMapping.id,
 						})
 					);
 				}
@@ -296,7 +306,7 @@ export class Distribution extends React.Component {
 					{
 						fieldMappingSelected: fieldMapping,
 						histogram: fieldMapping.rawType === FieldTypes.Number,
-						selectedContext: fieldMapping.context
+						selectedContext: fieldMapping.context,
 					},
 					() => this.handleFetchDistributionData()
 				);
@@ -311,7 +321,7 @@ export class Distribution extends React.Component {
 		filter,
 		orderIOMap,
 		page,
-		query
+		query,
 	}) {
 		const {channelId, groupId, id} = this.props;
 
@@ -325,7 +335,7 @@ export class Distribution extends React.Component {
 				individualSegmentId: id,
 				orderIOMap,
 				page,
-				query
+				query,
 			})
 		);
 	}
@@ -341,7 +351,7 @@ export class Distribution extends React.Component {
 		return fieldDistributions.map(({count, values}) => ({
 			count,
 			graphValue: histogram ? (values[0] + values[1]) / 2 : values[0],
-			values
+			values,
 		}));
 	}
 
@@ -355,8 +365,8 @@ export class Distribution extends React.Component {
 		const {
 			props: {fieldDistributionIList, selectedPoint},
 			state: {
-				fieldMappingSelected: {rawType}
-			}
+				fieldMappingSelected: {rawType},
+			},
 		} = this;
 
 		const buildFn =
@@ -375,10 +385,10 @@ export class Distribution extends React.Component {
 		const {histogram} = this.state;
 
 		return [
-			...fieldDistributions.map(item => item.values[0]),
+			...fieldDistributions.map((item) => item.values[0]),
 			histogram &&
 				fieldDistributions.length &&
-				fieldDistributions[fieldDistributions.length - 1].values[1]
+				fieldDistributions[fieldDistributions.length - 1].values[1],
 		].filter(Boolean);
 	}
 
@@ -411,7 +421,7 @@ export class Distribution extends React.Component {
 
 		this.setState({
 			fieldMappingSelected: fieldMapping,
-			histogram
+			histogram,
 		});
 
 		if (fieldMappingFieldName !== id) {
@@ -432,7 +442,7 @@ export class Distribution extends React.Component {
 		const alreadySelected = selectedPoint === index;
 
 		this.setState({
-			showIndividualsPreview: alreadySelected ? false : true
+			showIndividualsPreview: alreadySelected ? false : true,
 		});
 
 		onPointSelect({index: alreadySelected ? null : index});
@@ -456,7 +466,7 @@ export class Distribution extends React.Component {
 		const {onPointSelect} = this.props;
 
 		this.setState({
-			showIndividualsPreview: false
+			showIndividualsPreview: false,
 		});
 
 		onPointSelect({index: null});
@@ -466,14 +476,14 @@ export class Distribution extends React.Component {
 	validateFieldMapping() {
 		const {
 			fieldMappingSelected: {context},
-			selectedContext
+			selectedContext,
 		} = this.state;
 
 		if (context !== selectedContext) {
 			this.focusSelectFieldInput();
 
 			return sub(Liferay.Language.get('invalid-breakdown-for-x'), [
-				getContextLabel(selectedContext)
+				getContextLabel(selectedContext),
 			]);
 		}
 
@@ -496,15 +506,15 @@ export class Distribution extends React.Component {
 				page,
 				pageContainer,
 				query,
-				selectedPoint
+				selectedPoint,
 			},
 			state: {
 				fieldMappingSelected,
 				histogram,
 				hoverIndex,
 				selectedContext,
-				showIndividualsPreview
-			}
+				showIndividualsPreview,
+			},
 		} = this;
 
 		const numberOfBins = this.getNumberOfBins();
@@ -540,7 +550,7 @@ export class Distribution extends React.Component {
 								)}
 							</Card.Title>
 
-							<span className='description-secondary'>
+							<span className="description-secondary">
 								{Liferay.Language.get(
 									'breakdown-known-members-by-the-top-100-results-or-the-number-of-bins-assigned-for-a-selected-attribute.-only-results-data-will-appear'
 								)}
@@ -552,21 +562,21 @@ export class Distribution extends React.Component {
 								enableReinitialize
 								initialValues={{
 									breakdown: fieldMappingSelected,
-									numberOfBins
+									numberOfBins,
 								}}
 								innerRef={this._formRef}
 							>
-								<Form.Form className='chart-options'>
+								<Form.Form className="chart-options">
 									<Label>
 										{Liferay.Language.get('breakdown-by')}
 									</Label>
 
-									<Form.Group autoFit className='mt-2'>
+									<Form.Group autoFit className="mt-2">
 										<Form.GroupItem shrink>
 											<FormSelectFieldInput
 												context={selectedContext}
 												groupId={groupId}
-												name='breakdown'
+												name="breakdown"
 												onSelect={
 													this.handleBreakdownSelect
 												}
@@ -583,7 +593,7 @@ export class Distribution extends React.Component {
 										{histogram && (
 											<>
 												<Form.GroupItem label shrink>
-													<Form.Label htmlFor='numberOfBins'>
+													<Form.Label htmlFor="numberOfBins">
 														{Liferay.Language.get(
 															'number-of-bins'
 														)}
@@ -591,19 +601,21 @@ export class Distribution extends React.Component {
 												</Form.GroupItem>
 
 												<Form.GroupItem
-													className='chart-options-bins-input'
+													className="chart-options-bins-input"
 													shrink
 												>
+
 													{/* eslint-disable */}
 													<Form.Input
 														mask={numberOfBinsMask}
-														name='numberOfBins'
+														name="numberOfBins"
 														onChange={
 															this
 																.handleNumberOfBinsChange
 														}
 														showSuccess={false}
 													/>
+
 													{/* eslint-enable */}
 												</Form.GroupItem>
 											</>
@@ -622,7 +634,7 @@ export class Distribution extends React.Component {
 							{loading && <Loading />}
 
 							{!error && !loading && (
-								<div className='chart-container'>
+								<div className="chart-container">
 									{!fieldDistributionsCount &&
 										noResultsRenderer &&
 										noResultsRenderer()}
@@ -637,26 +649,26 @@ export class Distribution extends React.Component {
 										>
 											<ComposedChart
 												data={formattedChartData}
-												layout='vertical'
+												layout="vertical"
 											>
 												<CartesianGrid
 													horizontal={false}
 													stroke={AXIS.gridStroke}
-													strokeDasharray='3 3'
+													strokeDasharray="3 3"
 												/>
 
 												<Tooltip
 													content={({
 														active,
-														payload
+														payload,
 													}) => {
 														if (active && payload) {
 															const {
 																name,
 																payload: {
 																	count,
-																	values
-																}
+																	values,
+																},
 															} = payload[0];
 
 															return (
@@ -664,8 +676,8 @@ export class Distribution extends React.Component {
 																	rows={[
 																		{
 																			label: name,
-																			value: count
-																		}
+																			value: count,
+																		},
 																	]}
 																	title={values.join(
 																		' - '
@@ -680,11 +692,11 @@ export class Distribution extends React.Component {
 
 												<YAxis
 													axisLine={{
-														stroke: AXIS.borderStroke
+														stroke: AXIS.borderStroke,
 													}}
-													dataKey='graphValue'
+													dataKey="graphValue"
 													domain={yAxisDomain}
-													tickFormatter={val =>
+													tickFormatter={(val) =>
 														formatTickVal(
 															val,
 															getFinitePercent(
@@ -693,7 +705,7 @@ export class Distribution extends React.Component {
 																		yAxisTicks.indexOf(
 																			val
 																		),
-																		CHART_DATA_ID
+																		CHART_DATA_ID,
 																	]
 																),
 																knownIndividualCount,
@@ -719,36 +731,36 @@ export class Distribution extends React.Component {
 
 												<YAxis
 													axisLine={{
-														stroke: AXIS.borderStroke
+														stroke: AXIS.borderStroke,
 													}}
-													dataKey='graphValue'
+													dataKey="graphValue"
 													domain={yAxisDomain}
-													orientation='right'
+													orientation="right"
 													tick={false}
 													tickLine={false}
-													yAxisId='right'
+													yAxisId="right"
 												/>
 
 												<XAxis
 													axisLine={{
-														stroke: AXIS.borderStroke
+														stroke: AXIS.borderStroke,
 													}}
 													dataKey={CHART_DATA_ID}
-													interval='preserveStart'
-													orientation='top'
-													scale='linear'
+													interval="preserveStart"
+													orientation="top"
+													scale="linear"
 													tickLine={false}
-													type='number'
+													type="number"
 												/>
 
 												<XAxis
 													axisLine={{
-														stroke: AXIS.borderStroke
+														stroke: AXIS.borderStroke,
 													}}
 													dataKey={CHART_DATA_ID}
 													tick={false}
 													tickLine={false}
-													xAxisId='bottom'
+													xAxisId="bottom"
 												/>
 
 												<Bar
@@ -756,19 +768,22 @@ export class Distribution extends React.Component {
 														ANIMATION_DURATION.bar
 													}
 													dataKey={CHART_DATA_ID}
-													onClick={(e, index) =>
+													onClick={(event, index) =>
 														this.handleChartSelect(
 															index
 														)
 													}
-													onMouseEnter={(e, index) =>
+													onMouseEnter={(
+														event,
+														index
+													) =>
 														this.setState({
-															hoverIndex: index
+															hoverIndex: index,
 														})
 													}
 													onMouseLeave={() =>
 														this.setState({
-															hoverIndex: -1
+															hoverIndex: -1,
 														})
 													}
 												>
@@ -782,7 +797,7 @@ export class Distribution extends React.Component {
 																)}
 																key={`cell-${index}`}
 																style={{
-																	cursor: 'pointer'
+																	cursor: 'pointer',
 																}}
 															/>
 														)
@@ -796,7 +811,6 @@ export class Distribution extends React.Component {
 						</Card.Body>
 					</Card>
 				</BasePage.Body>
-
 				{fieldMappingSelected && hasSelectedPoint && (
 					<CollapsibleOverlay
 						onClose={this.handleOverlayClose}
@@ -806,9 +820,9 @@ export class Distribution extends React.Component {
 								? Liferay.Language.get('individuals-matching-x')
 								: Liferay.Language.get('accounts-matching-x'),
 							[
-								<span className='distribution-name' key='NAME'>
+								<span className="distribution-name" key="NAME">
 									{`"${fieldMappingSelected.name}"`}
-								</span>
+								</span>,
 							],
 							false
 						)}
@@ -820,17 +834,17 @@ export class Distribution extends React.Component {
 								FieldContexts.Demographics
 									? individualsListColumns.getName({
 											channelId,
-											groupId
-									  })
+											groupId,
+										})
 									: accountsListColumns.getName({
 											channelId,
-											groupId
-									  }),
+											groupId,
+										}),
 								{
 									accessor: `properties.${fieldMappingSelected.name}`,
 									label: fieldMappingSelected.name,
-									sortable: false
-								}
+									sortable: false,
+								},
 							]}
 							dataSourceFn={
 								fieldMappingSelected.context ===
@@ -841,13 +855,13 @@ export class Distribution extends React.Component {
 							dataSourceParams={{
 								fieldMappingSelected,
 								filter: this.getFilter(),
-								selectedPoint
+								selectedPoint,
 							}}
 							delta={delta}
 							orderIOmap={orderIOMap}
 							page={page}
 							query={query}
-							rowIdentifier='id'
+							rowIdentifier="id"
 							showFilterAndOrder={false}
 						/>
 					</CollapsibleOverlay>
@@ -866,7 +880,7 @@ export default compose(
 				distributionsKey,
 				fieldMappingFieldName,
 				knownIndividualCount,
-				selectedContext
+				selectedContext,
 			}
 		) => {
 			const distributionIMap = state.getIn(
@@ -885,7 +899,7 @@ export default compose(
 					distributionIMap.get('loading', true) ||
 					knownIndividualCount === null,
 				selectedContext:
-					selectedContext || distributionIMap.get('context')
+					selectedContext || distributionIMap.get('context'),
 			};
 		}
 	)

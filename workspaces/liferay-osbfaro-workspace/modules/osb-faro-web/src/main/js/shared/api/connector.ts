@@ -1,6 +1,11 @@
-import sendRequest from 'shared/util/request';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {pickBy} from 'lodash';
-import {RESTParams} from 'shared/types';
+import {RESTParams} from '~/shared/types';
+import sendRequest from '~/shared/util/request';
 
 interface CreateConnectorParams {
 	credentials: {[key: string]: any};
@@ -23,7 +28,7 @@ export function createConnector(
 ) {
 	const data = pickBy(
 		{
-			credentials
+			credentials,
 		},
 		Boolean
 	);
@@ -31,10 +36,10 @@ export function createConnector(
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/${slug}`
+		path: `contacts/${groupId}/data_source/${slug}`,
 	});
 }
 
@@ -46,14 +51,14 @@ export function updateConnector(
 		groupId,
 		id,
 		name,
-		status
+		status,
 	}: UpdateConnectorParams
 ) {
 	const data = pickBy(
 		{
 			channelsConfiguration,
 			credentials,
-			status
+			status,
 		},
 		Boolean
 	);
@@ -61,10 +66,10 @@ export function updateConnector(
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'PATCH',
-		path: `contacts/${groupId}/data_source/${id}/${slug}`
+		path: `contacts/${groupId}/data_source/${id}/${slug}`,
 	});
 }
 
@@ -74,16 +79,16 @@ export function fetchConnectorEntityCount(
 ) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/data-source-metrics/${id}/${entity}_count`
+		path: `contacts/${groupId}/data-source-metrics/${id}/${entity}_count`,
 	});
 }
 
 export function generateConnectorToken({
 	groupId,
-	type
+	type,
 }: RESTParams & {type: string}) {
 	return sendRequest({
 		method: 'POST',
-		path: `main/${groupId}/oauth2/tokens/new?type=${type}`
+		path: `main/${groupId}/oauth2/tokens/new?type=${type}`,
 	});
 }

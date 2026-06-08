@@ -1,26 +1,30 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ApolloError, useQuery} from '@apollo/client';
+import ClayLink from '@clayui/link';
+import React, {useContext, useState} from 'react';
+import Card from '~/shared/components/Card';
+import CardTabs from '~/shared/components/CardTabs';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import BaseCard from '~/shared/components/base-card';
+import BasePage from '~/shared/components/base-page';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import Table from '~/shared/components/table';
+import {Column} from '~/shared/components/table/Row';
 import AcquisitionsQuery, {
 	AcquisitionsQueryData,
-	AcquisitionsQueryVariables
-} from 'shared/queries/AcquisitionsQuery';
-import BaseCard from 'shared/components/base-card';
-import BasePage from 'shared/components/base-page';
-import Card from 'shared/components/Card';
-import CardTabs from 'shared/components/CardTabs';
-import ClayLink from '@clayui/link';
-import ErrorDisplay from 'shared/components/ErrorDisplay';
-import React, {useContext, useState} from 'react';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import Table from 'shared/components/table';
-import URLConstants from 'shared/util/url-constants';
-import {ACQUISITION_LABEL_MAP} from 'shared/util/lang';
-import {AcquisitionTypes, CompositionTypes} from 'shared/util/constants';
-import {ApolloError, useQuery} from '@apollo/client';
-import {Column} from 'shared/components/table/Row';
-
-import {compositionListColumns} from 'shared/util/table-columns';
-import {getSafeRangeSelectors} from 'shared/util/util';
-import {RangeSelectors} from 'shared/types';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
+	AcquisitionsQueryVariables,
+} from '~/shared/queries/AcquisitionsQuery';
+import {RangeSelectors} from '~/shared/types';
+import {AcquisitionTypes, CompositionTypes} from '~/shared/util/constants';
+import {ACQUISITION_LABEL_MAP} from '~/shared/util/lang';
+import {compositionListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
+import {getSafeRangeSelectors} from '~/shared/util/util';
 
 const ROW_IDENTIFIER = 'name';
 
@@ -37,17 +41,17 @@ const getColumnsFn = (acquisitionType: AcquisitionTypes) => {
 			label,
 			maxWidth: 200,
 			sortable: true,
-			tooltip: true
+			tooltip: true,
 		}),
 		compositionListColumns.getRelativeMetricBar({
 			label: Liferay.Language.get('sessions'),
 			maxCount,
-			totalCount
+			totalCount,
 		}),
 		compositionListColumns.getPercentOf({
 			metricName: Liferay.Language.get('sessions'),
-			totalCount
-		})
+			totalCount,
+		}),
 	];
 };
 
@@ -56,20 +60,20 @@ const tabs = [
 		getColumns: getColumnsFn(Channel),
 		rowIdentifier: ROW_IDENTIFIER,
 		tabId: Channel,
-		title: Liferay.Language.get('channels')
+		title: Liferay.Language.get('channels'),
 	},
 	{
 		getColumns: getColumnsFn(SourceMedium),
 		rowIdentifier: ROW_IDENTIFIER,
 		tabId: SourceMedium,
-		title: Liferay.Language.get('source-medium')
+		title: Liferay.Language.get('source-medium'),
 	},
 	{
 		getColumns: getColumnsFn(Referrer),
 		rowIdentifier: ROW_IDENTIFIER,
 		tabId: Referrer,
-		title: Liferay.Language.get('referrers')
-	}
+		title: Liferay.Language.get('referrers'),
+	},
 ];
 
 interface IAcquisitionsCardProps extends React.HTMLAttributes<HTMLElement> {
@@ -82,7 +86,7 @@ const AcquisitionsCard: React.FC<IAcquisitionsCardProps> = ({
 	className,
 	compositionBagName,
 	label,
-	legacyDropdownRangeKey
+	legacyDropdownRangeKey,
 }) => (
 	<BaseCard
 		className={className}
@@ -105,13 +109,13 @@ interface IAcquisitionsCard extends Partial<IAcquisitionsCardProps> {
 
 const AcquisitionsCardWithData: React.FC<IAcquisitionsCard> = ({
 	compositionBagName,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const [activeTabId, setActiveTabId] = useState<string>(tabs[0].tabId);
 	const {
 		router: {
-			params: {channelId}
-		}
+			params: {channelId},
+		},
 	} = useContext(BasePage.Context);
 	const {data, error, loading} = useQuery<
 		AcquisitionsQueryData,
@@ -122,8 +126,8 @@ const AcquisitionsCardWithData: React.FC<IAcquisitionsCard> = ({
 			activeTabId,
 			channelId,
 			size: 5,
-			start: 0
-		}
+			start: 0,
+		},
 	});
 
 	const activeTab = tabs.find(({tabId}) => tabId === activeTabId) ?? tabs[0];
@@ -133,16 +137,16 @@ const AcquisitionsCardWithData: React.FC<IAcquisitionsCard> = ({
 		compositions = [],
 		maxCount = 0,
 		total = 0,
-		totalCount = 0
+		totalCount = 0,
 	} = (compositionBagName &&
 		(data as Record<string, any>)?.[compositionBagName]) ||
 	{};
 
 	return (
-		<Card.Body className='w-100 d-flex flex-column flex-grow-1' noPadding>
+		<Card.Body className="d-flex flex-column flex-grow-1 w-100" noPadding>
 			<CardTabs
 				activeTabId={activeTabId}
-				onChange={tabId => setActiveTabId(tabId)}
+				onChange={(tabId) => setActiveTabId(tabId)}
 				tabs={tabs.map(({tabId, title}) => ({tabId, title}))}
 			/>
 
@@ -152,13 +156,13 @@ const AcquisitionsCardWithData: React.FC<IAcquisitionsCard> = ({
 				loading={loading}
 			>
 				<Table
-					className='flex-grow-1 table-hover'
+					className="flex-grow-1 table-hover"
 					columns={
 						getColumns({
 							items: compositions,
 							maxCount,
 							total,
-							totalCount
+							totalCount,
 						} as any) as Column[]
 					}
 					items={compositions}
@@ -184,7 +188,7 @@ const AcquisitionsCardWithStatesRenderer: React.FC<
 		<StatesRenderer.Empty
 			description={
 				<>
-					<span className='mr-1'>
+					<span className="mr-1">
 						{Liferay.Language.get(
 							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 						)}
@@ -192,8 +196,8 @@ const AcquisitionsCardWithStatesRenderer: React.FC<
 
 					<ClayLink
 						href={URLConstants.SitesDashboardAcquisitions}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{Liferay.Language.get('learn-more-about-acquisitions')}
 					</ClayLink>

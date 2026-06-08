@@ -1,11 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {List} from 'immutable';
-import {Property} from 'shared/util/records';
+import {Property} from '~/shared/util/records';
+
 import {PropertyTypes} from '../constants';
 
 const createAccountProperty = ({
 	label,
 	name,
-	type
+	type,
 }: {
 	label: string;
 	name: string;
@@ -17,7 +23,7 @@ const createAccountProperty = ({
 		label,
 		name,
 		propertyKey: 'account',
-		type
+		type,
 	});
 
 const ACCOUNT_PROPERTIES = List(
@@ -25,63 +31,63 @@ const ACCOUNT_PROPERTIES = List(
 		{
 			label: Liferay.Language.get('account-name'),
 			name: 'accountName',
-			type: PropertyTypes.AccountText
+			type: PropertyTypes.AccountText,
 		},
 		{
 			label: Liferay.Language.get('account-type'),
 			name: 'accountType',
-			type: PropertyTypes.AccountText
+			type: PropertyTypes.AccountText,
 		},
 		{
 			label: Liferay.Language.get('annual-revenue'),
 			name: 'annualRevenue',
-			type: PropertyTypes.AccountNumber
+			type: PropertyTypes.AccountNumber,
 		},
 		{
 			label: Liferay.Language.get('country'),
 			name: 'country',
-			type: PropertyTypes.AccountText
+			type: PropertyTypes.AccountText,
 		},
 		{
 			label: Liferay.Language.get('created-date'),
 			name: 'createDate',
-			type: PropertyTypes.AccountDate
+			type: PropertyTypes.AccountDate,
 		},
 		{
 			label: Liferay.Language.get('currency-code'),
 			name: 'currencyCode',
-			type: PropertyTypes.AccountText
+			type: PropertyTypes.AccountText,
 		},
 		{
 			label: Liferay.Language.get('id'),
 			name: 'id',
-			type: PropertyTypes.AccountText
+			type: PropertyTypes.AccountText,
 		},
 		{
 			label: Liferay.Language.get('industry'),
 			name: 'industry',
-			type: PropertyTypes.AccountText
+			type: PropertyTypes.AccountText,
 		},
 		{
 			label: Liferay.Language.get('last-activity-date'),
 			name: 'lastActivityDate',
-			type: PropertyTypes.AccountDate
+			type: PropertyTypes.AccountDate,
 		},
 		{
 			label: Liferay.Language.get('number-of-employees'),
 			name: 'numberOfEmployees',
-			type: PropertyTypes.AccountNumber
+			type: PropertyTypes.AccountNumber,
 		},
 		{
 			label: Liferay.Language.get('state'),
 			name: 'state',
-			type: PropertyTypes.AccountText
+			type: PropertyTypes.AccountText,
 		},
 		{
 			label: Liferay.Language.get('customer-since'),
 			name: 'yearStarted',
-			type: PropertyTypes.AccountNumber
-		}
+			type: PropertyTypes.AccountNumber,
+		},
 	].map(createAccountProperty)
 );
 

@@ -1,10 +1,16 @@
-import autobind from 'autobind-decorator';
-import React from 'react';
-import Row from '../components/Row';
-import SearchableSelect from 'shared/components/SearchableSelect';
-import {times} from 'lodash';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-const items = times(30, i => ({name: `item${i}`, value: i}));
+import autobind from 'autobind-decorator';
+import {times} from 'lodash';
+import React from 'react';
+import SearchableSelect from '~/shared/components/SearchableSelect';
+
+import Row from '../components/Row';
+
+const items = times(30, (i) => ({name: `item${i}`, value: i}));
 
 function includes(source, target) {
 	return source.toLocaleUpperCase().includes(target.toLocaleUpperCase());
@@ -13,13 +19,13 @@ function includes(source, target) {
 class SearchableSelectKit extends React.Component {
 	state = {
 		inputValue: '',
-		selectedItem: undefined
+		selectedItem: undefined,
 	};
 
 	@autobind
 	handleInput(value) {
 		this.setState({
-			inputValue: value
+			inputValue: value,
 		});
 	}
 
@@ -27,7 +33,7 @@ class SearchableSelectKit extends React.Component {
 	handleSelect(item) {
 		this.setState({
 			inputValue: '',
-			selectedItem: item
+			selectedItem: item,
 		});
 	}
 
@@ -38,8 +44,8 @@ class SearchableSelectKit extends React.Component {
 			<div>
 				<Row>
 					<SearchableSelect
-						buttonPlaceholder='Select an Item'
-						inputPlaceholder='Search for...'
+						buttonPlaceholder="Select an Item"
+						inputPlaceholder="Search for..."
 						inputValue={inputValue}
 						items={items.filter(({name}) =>
 							includes(name, inputValue)
@@ -52,9 +58,9 @@ class SearchableSelectKit extends React.Component {
 
 				<Row>
 					<SearchableSelect
-						buttonPlaceholder='Select an Item'
+						buttonPlaceholder="Select an Item"
 						disabled
-						inputPlaceholder='Search for...'
+						inputPlaceholder="Search for..."
 						items={items}
 						selectedItem={selectedItem}
 					/>
@@ -62,8 +68,8 @@ class SearchableSelectKit extends React.Component {
 
 				<Row>
 					<SearchableSelect
-						buttonPlaceholder='Select an Item'
-						inputPlaceholder='Search for...'
+						buttonPlaceholder="Select an Item"
+						inputPlaceholder="Search for..."
 						items={items}
 						selectedItem={selectedItem}
 						showSearch={false}
@@ -72,14 +78,14 @@ class SearchableSelectKit extends React.Component {
 
 				<Row>
 					<SearchableSelect
-						buttonPlaceholder='Has sub-headers'
-						inputPlaceholder='Search for...'
+						buttonPlaceholder="Has sub-headers"
+						inputPlaceholder="Search for..."
 						items={[
 							{
 								name: 'Test Subheader',
-								subheader: true
+								subheader: true,
 							},
-							...items
+							...items,
 						]}
 						selectedItem={selectedItem}
 						showSearch={false}

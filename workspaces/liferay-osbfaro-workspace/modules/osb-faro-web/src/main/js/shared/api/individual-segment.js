@@ -1,14 +1,19 @@
-import Constants, {TimeIntervals} from 'shared/util/constants';
-import sendRequest from 'shared/util/request';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import Constants, {TimeIntervals} from '~/shared/util/constants';
 import {
+	NAME,
 	buildOrderByFields,
 	createOrderByField,
-	NAME
-} from 'shared/util/pagination';
-import {INDIVIDUALS, SEGMENTS} from 'shared/util/router';
+} from '~/shared/util/pagination';
+import sendRequest from '~/shared/util/request';
+import {INDIVIDUALS, SEGMENTS} from '~/shared/util/router';
 
 const {
-	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA, orderDefault}
+	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA, orderDefault},
 } = Constants;
 
 const DEFAULT_MAX = 30;
@@ -18,20 +23,20 @@ const DEFAULT_INTERVAL = TimeIntervals.Day;
 export function addIndividuals({groupId, individualIds, selectedSegmentId}) {
 	return sendRequest({
 		data: {
-			individualIds
+			individualIds,
 		},
 		method: 'PUT',
-		path: `contacts/${groupId}/individual_segment/${selectedSegmentId}/memberships`
+		path: `contacts/${groupId}/individual_segment/${selectedSegmentId}/memberships`,
 	});
 }
 
 function delete$({groupId, ids}) {
 	return sendRequest({
 		data: {
-			ids
+			ids,
 		},
 		method: 'DELETE',
-		path: `contacts/${groupId}/individual_segment`
+		path: `contacts/${groupId}/individual_segment`,
 	});
 }
 
@@ -41,17 +46,17 @@ export function fetch({groupId, includeReferencedObjects = false, segmentId}) {
 	return sendRequest({
 		data: {includeReferencedObjects},
 		method: 'GET',
-		path: `contacts/${groupId}/individual_segment/${segmentId}`
+		path: `contacts/${groupId}/individual_segment/${segmentId}`,
 	}).then(({filter, ...otherParams}) => ({
 		criteriaString: filter,
-		...otherParams
+		...otherParams,
 	}));
 }
 
 export function fetchMembershipMetrics({groupId, individualSegmentId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/individual_segment/${individualSegmentId}/real-time-membership-metric`
+		path: `contacts/${groupId}/individual_segment/${individualSegmentId}/real-time-membership-metric`,
 	});
 }
 
@@ -63,7 +68,7 @@ export function create({
 	includeAnonymousUsers = false,
 	name,
 	segmentType,
-	sequential = false
+	sequential = false,
 }) {
 	const data = {
 		channelId,
@@ -72,13 +77,13 @@ export function create({
 		includeAnonymousUsers,
 		name,
 		segmentType,
-		sequential
+		sequential,
 	};
 
 	return sendRequest({
 		data,
 		method: 'POST',
-		path: `contacts/${groupId}/individual_segment`
+		path: `contacts/${groupId}/individual_segment`,
 	});
 }
 
@@ -91,7 +96,7 @@ export function update({
 	includeAnonymousUsers = false,
 	name,
 	segmentType,
-	sequential = false
+	sequential = false,
 }) {
 	const data = {
 		channelId,
@@ -100,40 +105,40 @@ export function update({
 		includeAnonymousUsers,
 		name,
 		segmentType,
-		sequential
+		sequential,
 	};
 
 	return sendRequest({
 		data,
 		method: 'PUT',
-		path: `contacts/${groupId}/individual_segment/${id}`
+		path: `contacts/${groupId}/individual_segment/${id}`,
 	});
 }
 
 export function updateChannel({channelId, groupId, id}) {
 	return sendRequest({
 		method: 'PUT',
-		path: `contacts/${groupId}/individual_segment/${id}/channel/${channelId}`
+		path: `contacts/${groupId}/individual_segment/${id}/channel/${channelId}`,
 	});
 }
 
 export function addMemberships({groupId, id, individualIds}) {
 	return sendRequest({
 		data: {
-			individualIds
+			individualIds,
 		},
 		method: 'PUT',
-		path: `contacts/${groupId}/individual_segment/${id}/memberships`
+		path: `contacts/${groupId}/individual_segment/${id}/memberships`,
 	});
 }
 
 export function removeMemberships({groupId, id, individualIds}) {
 	return sendRequest({
 		data: {
-			individualIds
+			individualIds,
 		},
 		method: 'DELETE',
-		path: `contacts/${groupId}/individual_segment/${id}/memberships`
+		path: `contacts/${groupId}/individual_segment/${id}/memberships`,
 	});
 }
 
@@ -144,7 +149,7 @@ export function fetchMembershipChanges({
 	id,
 	orderIOMap,
 	query,
-	startDate
+	startDate,
 }) {
 	const orderParams = orderIOMap.first();
 
@@ -158,10 +163,10 @@ export function fetchMembershipChanges({
 			id,
 			orderByFields,
 			query,
-			startDate
+			startDate,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/individual_segment/${id}/memberships/changes`
+		path: `contacts/${groupId}/individual_segment/${id}/memberships/changes`,
 	});
 }
 
@@ -172,11 +177,11 @@ export function fetchRealTimeMembershipChanges({
 	groupId,
 	orderIOMap,
 	query,
-	segmentId
+	segmentId,
 }) {
 	const orderParams = orderIOMap.first();
 	const orderByFields = [
-		createOrderByField(orderParams.field, orderParams.sortOrder)
+		createOrderByField(orderParams.field, orderParams.sortOrder),
 	];
 
 	const {profileTypes, types} = filters;
@@ -185,7 +190,7 @@ export function fetchRealTimeMembershipChanges({
 		day: date,
 		delta,
 		orderByFields,
-		query
+		query,
 	};
 
 	if (profileTypes.length) {
@@ -199,7 +204,7 @@ export function fetchRealTimeMembershipChanges({
 	return sendRequest({
 		data,
 		method: 'GET',
-		path: `contacts/${groupId}/individual_segment/${segmentId}/real-time-memberships`
+		path: `contacts/${groupId}/individual_segment/${segmentId}/real-time-memberships`,
 	});
 }
 
@@ -208,16 +213,16 @@ export function fetchMembershipChangesAggregations({
 	groupId,
 	id,
 	interval = DEFAULT_INTERVAL,
-	max = DEFAULT_MAX
+	max = DEFAULT_MAX,
 }) {
 	return sendRequest({
 		data: {
 			channelId,
 			interval,
-			max
+			max,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/individual_segment/${id}/memberships/changes/aggregations`
+		path: `contacts/${groupId}/individual_segment/${id}/memberships/changes/aggregations`,
 	});
 }
 
@@ -236,7 +241,7 @@ export function search({
 	return sendRequest({
 		data: {cur: page, delta, orderByFields, query, ...otherParams},
 		method: 'GET',
-		path: `contacts/${groupId}/individual_segment`
+		path: `contacts/${groupId}/individual_segment`,
 	});
 }
 
@@ -247,8 +252,8 @@ export function searchUnassigned({
 		{
 			fieldName: NAME,
 			orderBy: orderDefault,
-			system: true
-		}
+			system: true,
+		},
 	],
 	page = DEFAULT_PAGE,
 	query = '',
@@ -257,14 +262,14 @@ export function searchUnassigned({
 	return sendRequest({
 		data: {cur: page, delta, orderByFields, query, ...otherParams},
 		method: 'GET',
-		path: `contacts/${groupId}/individual_segment/unassigned`
+		path: `contacts/${groupId}/individual_segment/unassigned`,
 	});
 }
 
 export function updateSegmentActivation({
 	groupId,
 	segmentActivation,
-	segmentId
+	segmentId,
 }) {
 	const {frequencyType, scheduleEndDate, scheduleStartDate, scheduleType} =
 		segmentActivation;
@@ -274,13 +279,13 @@ export function updateSegmentActivation({
 		scheduleType,
 		...(scheduleEndDate && {scheduleEndDate: Date.parse(scheduleEndDate)}),
 		...(scheduleStartDate && {
-			scheduleStartDate: Date.parse(scheduleStartDate)
-		})
+			scheduleStartDate: Date.parse(scheduleStartDate),
+		}),
 	};
 
 	return sendRequest({
 		data,
 		method: 'PUT',
-		path: `contacts/${groupId}/individual_segment/${segmentId}/activation`
+		path: `contacts/${groupId}/individual_segment/${segmentId}/activation`,
 	});
 }

@@ -1,52 +1,57 @@
-import ActivitiesChart from 'contacts/components/ActivitiesChart';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
+import {isNil} from 'lodash';
+import moment from 'moment';
+import React, {useState} from 'react';
+import {withEmpty} from '~/cerebro-shared/hocs/utils';
+import ActivitiesChart from '~/contacts/components/ActivitiesChart';
+import Card from '~/shared/components/Card';
+import IntervalSelector from '~/shared/components/IntervalSelector';
+import Loading from '~/shared/components/Loading';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import SearchInput from '~/shared/components/SearchInput';
+import VerticalTimeline from '~/shared/components/VerticalTimeline';
+import {DropdownRangeKey} from '~/shared/components/dropdown-range-key/DropdownRangeKey';
+import Toolbar from '~/shared/components/toolbar';
+import {compose, withPaginationBar} from '~/shared/hoc';
+import {WrapSafeResults, withError, withLoading} from '~/shared/hoc/util';
+import {useLDPEnabled} from '~/shared/hooks/useLDPEnabled';
+import {useSelectedPoint} from '~/shared/hooks/useSelectedPoint';
 import EventMetricQuery, {
 	EventMetricsData,
-	EventMetricsVariables
-} from 'shared/queries/EventMetricQuery';
-import IntervalSelector from 'shared/components/IntervalSelector';
-import Loading from 'shared/components/Loading';
-import moment from 'moment';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useState} from 'react';
-import SearchInput from 'shared/components/SearchInput';
-import Toolbar from 'shared/components/toolbar';
-import URLConstants from 'shared/util/url-constants';
+	EventMetricsVariables,
+} from '~/shared/queries/EventMetricQuery';
 import UserSessionQuery, {
 	UserSessionData,
-	UserSessionVariables
-} from 'shared/queries/UserSessionQuery';
-import VerticalTimeline from 'shared/components/VerticalTimeline';
-import {compose, withPaginationBar} from 'shared/hoc';
+	UserSessionVariables,
+} from '~/shared/queries/UserSessionQuery';
+import {Interval, RangeSelectors, SafeRangeSelectors} from '~/shared/types';
+import {formatSessions, getActivityLabel} from '~/shared/util/activities';
+import {
+	RangeKeyTimeRanges,
+	SessionEntityTypes,
+	Sizes,
+} from '~/shared/util/constants';
 import {
 	DEFAULT_DATE_FORMAT,
 	formatUTCDate,
 	getDateRangeLabel,
 	getDateRangeLabelFromDate,
-	getEndDate
-} from 'shared/util/date';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
-import {fetchPolicyDefinition} from 'shared/util/graphql';
-import {formatSessions, getActivityLabel} from 'shared/util/activities';
-import {getSafeRangeSelectors} from 'shared/util/util';
-import {Individual} from 'shared/util/records';
-import {Interval, RangeSelectors, SafeRangeSelectors} from 'shared/types';
-import {isHourlyRangeKey} from 'shared/util/time';
-import {isNil} from 'lodash';
-import {mapListResultsToProps} from 'shared/util/mappers';
-import {
-	RangeKeyTimeRanges,
-	SessionEntityTypes,
-	Sizes
-} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
-import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
-import {useQuery} from '@apollo/client';
-import {useSelectedPoint} from 'shared/hooks/useSelectedPoint';
-import {withEmpty} from 'cerebro-shared/hocs/utils';
-import {withError, withLoading, WrapSafeResults} from 'shared/hoc/util';
+	getEndDate,
+} from '~/shared/util/date';
+import {fetchPolicyDefinition} from '~/shared/util/graphql';
+import {sub} from '~/shared/util/lang';
+import {mapListResultsToProps} from '~/shared/util/mappers';
+import {Individual} from '~/shared/util/records';
+import {isHourlyRangeKey} from '~/shared/util/time';
+import URLConstants from '~/shared/util/url-constants';
+import {getSafeRangeSelectors} from '~/shared/util/util';
 
 const formatTimestamp = (timestamp: number) => {
 	const date = new Date(timestamp);
@@ -68,13 +73,13 @@ interface IProfileCardProps extends React.HTMLAttributes<HTMLElement> {
 	channelId: string;
 	delta: number;
 	entity: Individual;
-	interval: Interval;
 	groupId: string;
+	interval: Interval;
 	onChangeInterval: (interval: Interval) => void;
 	onDeltaChange: (delta: number) => void;
 	onPageChange: (page: number) => void;
-	onRangeSelectorsChange: (rangeSelectors: RangeSelectors) => void;
 	onQueryChange: (query: string) => void;
+	onRangeSelectorsChange: (rangeSelectors: RangeSelectors) => void;
 	page: number;
 	query: string;
 	rangeSelectors: RangeSelectors;
@@ -98,7 +103,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 	query,
 	rangeSelectors,
 	resetPage,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const {hasSelectedPoint, onPointSelect, selectedPoint} = useSelectedPoint();
 	const [searchValue, setSearchValue] = useState<string>('');
@@ -115,8 +120,8 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 				entityType: SessionEntityTypes.Individual,
 				interval,
 				keywords: query,
-				...getSafeRangeSelectors(rangeSelectors)
-			}
+				...getSafeRangeSelectors(rangeSelectors),
+			},
 		}
 	);
 
@@ -125,7 +130,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		items: activityHistory,
 		loading,
 		refetch,
-		total: activityTotal
+		total: activityTotal,
 	} = mapListResultsToProps(activityResponse, ({eventMetric}) => ({
 		items: eventMetric.totalEventsMetric.histogram.metrics?.map(
 			({key, value}, index: number) => ({
@@ -134,10 +139,10 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 				totalSessions:
 					eventMetric?.totalSessionsMetric?.histogram?.metrics?.[
 						index
-					].value
+					].value,
 			})
 		),
-		total: eventMetric.totalEventsMetric?.value
+		total: eventMetric.totalEventsMetric?.value,
 	}));
 
 	const getDateRange = (
@@ -169,14 +174,14 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 					rangeKey,
 					rangeStart: `${formattedRangeStart}T${formatTimestamp(
 						intervalInitDate
-					)}`
+					)}`,
 				});
 			}
 
 			return getSafeRangeSelectors({
 				rangeEnd: formattedRangeEnd,
 				rangeKey,
-				rangeStart: formattedRangeStart
+				rangeStart: formattedRangeStart,
 			});
 		}
 
@@ -194,8 +199,8 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 				entityType: SessionEntityTypes.Individual,
 				keywords: query,
 				page: page - 1,
-				size: delta
-			}
+				size: delta,
+			},
 		}
 	);
 
@@ -203,7 +208,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		sessionsResponse,
 		({eventsByUserSessions: {totalEvents, userSessions}}) => ({
 			items: formatSessions(userSessions),
-			total: totalEvents
+			total: totalEvents,
 		})
 	);
 
@@ -230,7 +235,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		if (sessionsMappedResults?.loading) {
 			return (
 				<NoResultsDisplay>
-					<Loading key='LOADING' />
+					<Loading key="LOADING" />
 				</NoResultsDisplay>
 			);
 		}
@@ -245,7 +250,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_no_results_found'
+							symbol: 'ac_no_results_found',
 						}}
 						spacer
 						title={Liferay.Language.get(
@@ -253,8 +258,8 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 						)}
 					>
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={() => {
 								onQueryChange('');
 								setSearchValue('');
@@ -270,7 +275,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 				<NoResultsDisplay
 					description={
 						<>
-							<span className='mr-1'>
+							<span className="mr-1">
 								{Liferay.Language.get(
 									'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 								)}
@@ -278,8 +283,8 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 
 							<ClayLink
 								href={URLConstants.IndividualProfilesDocument}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'learn-more-about-individuals'
@@ -296,21 +301,21 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 
 	return (
 		<WrapSafeResults
-			className='flex-grow-1 loading-root'
+			className="flex-grow-1 loading-root"
 			error={error}
 			errorProps={{
 				className: 'flex-grow-1',
-				onReload: refetch
+				onReload: refetch,
 			}}
 			loading={loading}
 			page={false}
 			pageDisplay={false}
 		>
 			<Card.Body>
-				<div className='align-items-center d-flex justify-content-end mt-3'>
+				<div className="align-items-center d-flex justify-content-end mt-3">
 					<SearchInput
 						autoFocus
-						className='search-input mr-3'
+						className="mr-3 search-input"
 						onChange={setSearchValue}
 						onSubmit={handleQuery}
 						placeholder={Liferay.Language.get('search')}
@@ -319,7 +324,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 
 					<IntervalSelector
 						activeInterval={interval}
-						className='mr-3'
+						className="mr-3"
 						disabled={isHourlyRangeKey(rangeSelectors.rangeKey)}
 						onChange={(interval: Interval) => {
 							onChangeInterval(interval);
@@ -330,7 +335,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 
 					<DropdownRangeKey
 						legacy={false}
-						onRangeSelectorChange={rangeSelectors => {
+						onRangeSelectorChange={(rangeSelectors) => {
 							onRangeSelectorsChange(rangeSelectors);
 
 							handleChangeSelection(null);
@@ -339,20 +344,20 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 					/>
 				</div>
 
-				<div className='individuals-activities-chart'>
+				<div className="individuals-activities-chart">
 					<ActivitiesChart
+						LDPEnabled={LDPEnabled}
 						alwaysShowSelectedTooltip
 						history={activityHistory}
 						interval={interval}
-						LDPEnabled={LDPEnabled}
 						onPointSelect={handleChangeSelection}
 						rangeSelectors={rangeSelectors}
 						selectedPoint={selectedPoint}
 					/>
 
-					<div className='selected-info'>
-						<div className='activities-date d-flex align-items-baseline'>
-							<div className='h4'>
+					<div className="selected-info">
+						<div className="activities-date align-items-baseline d-flex">
+							<div className="h4">
 								{activityHistory?.length
 									? sub(
 											Liferay.Language.get(
@@ -360,18 +365,18 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 											),
 
 											[date]
-									  )
+										)
 									: Liferay.Language.get(
 											'individuals-events'
-									  )}
+										)}
 							</div>
 
 							{selected && (
 								<ClayButton
-									className='button-root'
-									displayType='link'
+									className="button-root"
+									displayType="link"
 									onClick={() => handleChangeSelection(null)}
-									size='sm'
+									size="sm"
 								>
 									{Liferay.Language.get(
 										'clear-date-selection'
@@ -380,7 +385,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 							)}
 						</div>
 
-						<div className='details'>
+						<div className="details">
 							{getActivityLabel(
 								(selected ? totalEvents : activityTotal) ?? 0
 							)}

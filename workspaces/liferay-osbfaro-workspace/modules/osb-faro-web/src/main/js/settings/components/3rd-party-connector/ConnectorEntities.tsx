@@ -1,11 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
+import Label from '@clayui/label';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
-import Label from '@clayui/label';
 import React from 'react';
-import {ConnectorEntityDescriptor, ConnectorStatus} from './types';
+import {sub} from '~/shared/util/lang';
+
 import {getEntityDisplay} from './getEntityDisplay';
-import {sub} from 'shared/util/lang';
+import {ConnectorEntityDescriptor, ConnectorStatus} from './types';
 
 interface IConnectorEntitiesProps {
 	connectorStatus?: ConnectorStatus;
@@ -16,9 +22,9 @@ interface IConnectorEntitiesProps {
 const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
 	connectorStatus,
 	entities,
-	syncedCounts
+	syncedCounts,
 }) => (
-	<ClayList className='mb-0'>
+	<ClayList className="mb-0">
 		{entities.map(({entity}) => {
 			const {icon, label} = getEntityDisplay(entity);
 			const count = syncedCounts[entity];
@@ -30,9 +36,9 @@ const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
 			return (
 				<ClayList.Item flex key={entity}>
 					<ClayList.ItemField>
-						<ClaySticker displayType='unstyled'>
+						<ClaySticker displayType="unstyled">
 							<ClayIcon
-								className='text-secondary'
+								className="text-secondary"
 								symbol={icon}
 							/>
 						</ClaySticker>
@@ -44,13 +50,13 @@ const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
 						{typeof count === 'number' && count >= 0 && (
 							<ClayList.ItemText>
 								{sub(Liferay.Language.get('x-items-synced'), [
-									count
+									count,
 								])}
 							</ClayList.ItemText>
 						)}
 					</ClayList.ItemField>
 
-					<ClayList.ItemField className='justify-content-center'>
+					<ClayList.ItemField className="justify-content-center">
 						<Label
 							displayType={configured ? 'success' : 'secondary'}
 						>

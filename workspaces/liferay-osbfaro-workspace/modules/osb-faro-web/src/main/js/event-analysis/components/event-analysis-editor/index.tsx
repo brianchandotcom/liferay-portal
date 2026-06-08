@@ -1,13 +1,19 @@
-import BreakdownTable from './event-analysis-breakdown';
-import Card from 'shared/components/Card';
-import CardTabs, {CardTabSizes} from 'shared/components/CardTabs';
-import Checkbox from 'shared/components/Checkbox';
-import EventAnalysisBuilder from './event-analysis-builder';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import {CalculationTypes, Event} from 'event-analysis/utils/types';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
-import {RangeSelectors} from 'shared/types';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
+import {CalculationTypes, Event} from '~/event-analysis/utils/types';
+import Card from '~/shared/components/Card';
+import CardTabs, {CardTabSizes} from '~/shared/components/CardTabs';
+import Checkbox from '~/shared/components/Checkbox';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {DropdownRangeKey} from '~/shared/components/dropdown-range-key/DropdownRangeKey';
+import {RangeSelectors} from '~/shared/types';
+
+import BreakdownTable from './event-analysis-breakdown';
+import EventAnalysisBuilder from './event-analysis-builder';
 
 interface IEventAnalysisEditorProps extends React.HTMLAttributes<HTMLElement> {
 	channelId: string;
@@ -17,8 +23,8 @@ interface IEventAnalysisEditorProps extends React.HTMLAttributes<HTMLElement> {
 	onEventChange: (event: Event | null) => void;
 	onRangeSelectorsChange: (rangeSelectors: RangeSelectors) => void;
 	onTypeChange: (type: CalculationTypes) => void;
-	type: CalculationTypes;
 	rangeSelectors: RangeSelectors;
+	type: CalculationTypes;
 }
 
 const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
@@ -30,44 +36,44 @@ const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
 	onRangeSelectorsChange,
 	onTypeChange,
 	rangeSelectors,
-	type
+	type,
 }) => (
 	<Card
-		className='event-analysis-editor-root'
+		className="event-analysis-editor-root"
 		reportContainer={ReportContainer.EventAnalysisPage}
 	>
 		<EventAnalysisBuilder event={event} onEventChange={onEventChange} />
 
-		<div className='options-container d-flex flex-column-reverse flex-md-row justify-content-between'>
+		<div className="d-flex flex-column-reverse flex-md-row justify-content-between options-container">
 			<CardTabs
 				activeTabId={type}
-				className='type-selector'
+				className="type-selector"
 				size={CardTabSizes.Small}
 				tabs={[
 					{
 						onClick: () => onTypeChange(CalculationTypes.Total),
 						tabId: CalculationTypes.Total,
-						title: Liferay.Language.get('total')
+						title: Liferay.Language.get('total'),
 					},
 					{
 						onClick: () => onTypeChange(CalculationTypes.Unique),
 						tabId: CalculationTypes.Unique,
-						title: Liferay.Language.get('unique')
+						title: Liferay.Language.get('unique'),
 					},
 					{
 						onClick: () => onTypeChange(CalculationTypes.Average),
 						tabId: CalculationTypes.Average,
-						title: Liferay.Language.get('average')
-					}
+						title: Liferay.Language.get('average'),
+					},
 				]}
 			/>
 
-			<div className='d-flex align-items-center mb-3 mb-md-0'>
+			<div className="align-items-center d-flex mb-3 mb-md-0">
 				<Checkbox
 					checked={compareToPrevious}
-					className='compare-to-previous-checkbox mb-0 mr-4'
+					className="compare-to-previous-checkbox mb-0 mr-4"
 					label={Liferay.Language.get('compare-to-previous')}
-					onChange={event =>
+					onChange={(event) =>
 						onCompareToPreviousChange(event.currentTarget.checked)
 					}
 				/>

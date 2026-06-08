@@ -1,4 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import {CustomValue} from '~/shared/util/records';
+
 import {
 	ALL_APPLICATION_IDS,
 	ALL_EVENT_IDS,
@@ -8,15 +15,14 @@ import {
 	EVENT_ID_EVENT_TYPE_MAP,
 	EVENT_TYPE_EVENT_ID_MAP,
 	RelationalOperators,
-	TimeSpans
+	TimeSpans,
 } from '../../utils/constants';
 import {
 	createCustomValueMap,
 	getFilterCriterionIMap,
-	getIndexFromPropertyName
+	getIndexFromPropertyName,
 } from '../../utils/custom-inputs';
 import {Criterion} from '../../utils/types';
-import {CustomValue} from 'shared/util/records';
 import {isValid} from '../../utils/utils';
 
 export const EVENT_TYPE_OPTIONS = [
@@ -25,18 +31,18 @@ export const EVENT_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('download'), value: 'download'},
 	{label: Liferay.Language.get('impression'), value: 'impression'},
 	{label: Liferay.Language.get('submit'), value: 'submit'},
-	{label: Liferay.Language.get('comment'), value: 'comment'}
+	{label: Liferay.Language.get('comment'), value: 'comment'},
 ];
 
 export const OCCURRENCE_OPTIONS = [
 	{
 		label: Liferay.Language.get('at-least').toLowerCase(),
-		value: RelationalOperators.GE
+		value: RelationalOperators.GE,
 	},
 	{
 		label: Liferay.Language.get('at-most').toLowerCase(),
-		value: RelationalOperators.LE
-	}
+		value: RelationalOperators.LE,
+	},
 ];
 
 export const ASSET_TYPE_OPTIONS = [
@@ -45,9 +51,9 @@ export const ASSET_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('forms'), value: 'forms'},
 	{
 		label: Liferay.Language.get('documents-and-media'),
-		value: 'documents-and-media'
+		value: 'documents-and-media',
 	},
-	{label: Liferay.Language.get('web-content'), value: 'web-content'}
+	{label: Liferay.Language.get('web-content'), value: 'web-content'},
 ];
 
 export const DEFAULT_CONJUNCTION_CRITERION = {
@@ -55,15 +61,18 @@ export const DEFAULT_CONJUNCTION_CRITERION = {
 	propertyName: 'day',
 	touched: false,
 	valid: true,
-	value: TimeSpans.Last24Hours
+	value: TimeSpans.Last24Hours,
 } as Criterion & {touched: boolean; valid: boolean};
 
-export const isValidOccurrenceCount = (count: number | string): boolean =>
-	isValid(count) && Number(count) >= 0;
+export const isValidOccurrenceCount = function isValidOccurrenceCount(
+	count: number | string
+): boolean {
+	return isValid(count) && Number(count) >= 0;
+};
 
-export const getAssetTypeFromValue = (
+export const getAssetTypeFromValue = function getAssetTypeFromValue(
 	value: CustomValue | undefined
-): React.Key => {
+): React.Key {
 	if (!value) {
 		return 'any';
 	}
@@ -75,7 +84,7 @@ export const getAssetTypeFromValue = (
 			'criterionGroup',
 			'items',
 			appIdIndex,
-			'value'
+			'value',
 		]) as any;
 
 		const appIds = appIdValue?.toJS?.() ?? appIdValue;
@@ -88,9 +97,9 @@ export const getAssetTypeFromValue = (
 	return 'any';
 };
 
-export const getEventTypeFromValue = (
+export const getEventTypeFromValue = function getEventTypeFromValue(
 	value: CustomValue | undefined
-): React.Key => {
+): React.Key {
 	if (!value) {
 		return 'all';
 	}
@@ -102,7 +111,7 @@ export const getEventTypeFromValue = (
 			'criterionGroup',
 			'items',
 			eventIdIndex,
-			'value'
+			'value',
 		]) as any;
 
 		const eventIds = eventIdValue?.toJS?.() ?? eventIdValue;
@@ -115,26 +124,27 @@ export const getEventTypeFromValue = (
 	return 'all';
 };
 
-export const getConjunctionCriterionFromValue = (
-	value: CustomValue | undefined
-): Criterion & {touched: boolean; valid: boolean} => {
-	if (!value) {
-		return DEFAULT_CONJUNCTION_CRITERION;
-	}
+export const getConjunctionCriterionFromValue =
+	function getConjunctionCriterionFromValue(
+		value: CustomValue | undefined
+	): Criterion & {touched: boolean; valid: boolean} {
+		if (!value) {
+			return DEFAULT_CONJUNCTION_CRITERION;
+		}
 
-	const dayIndex = getIndexFromPropertyName(value, 'day');
+		const dayIndex = getIndexFromPropertyName(value, 'day');
 
-	if (dayIndex < 0) {
-		return DEFAULT_CONJUNCTION_CRITERION;
-	}
+		if (dayIndex < 0) {
+			return DEFAULT_CONJUNCTION_CRITERION;
+		}
 
-	return (
-		(getFilterCriterionIMap(value, dayIndex)?.toJS() as Criterion & {
-			touched: boolean;
-			valid: boolean;
-		}) ?? DEFAULT_CONJUNCTION_CRITERION
-	);
-};
+		return (
+			(getFilterCriterionIMap(value, dayIndex)?.toJS() as Criterion & {
+				touched: boolean;
+				valid: boolean;
+			}) ?? DEFAULT_CONJUNCTION_CRITERION
+		);
+	};
 
 export interface RemoteFilterInputConfig {
 	idProperty: string;
@@ -157,7 +167,7 @@ const resolveEventIds = (
 
 		const ids: string[] = [];
 
-		compatibleEvents.forEach(type => {
+		compatibleEvents.forEach((type) => {
 			if (type !== 'all') {
 				const eventIdForAsset =
 					EVENT_TYPE_EVENT_ID_MAP[type]?.[assetType as string];
@@ -176,7 +186,7 @@ const resolveEventIds = (
 			EVENT_TYPE_EVENT_ID_MAP[eventType as string] || {};
 
 		return Array.from(
-			new Set(Object.keys(eventMapForType).map(k => eventMapForType[k]))
+			new Set(Object.keys(eventMapForType).map((k) => eventMapForType[k]))
 		);
 	}
 
@@ -197,10 +207,10 @@ export interface BuildRemoteFilterValueArgs {
 	occurrenceOperator: React.Key;
 }
 
-export const buildRemoteFilterValue = (
+export const buildRemoteFilterValue = function buildRemoteFilterValue(
 	args: BuildRemoteFilterValueArgs,
 	config: RemoteFilterInputConfig
-): CustomValue => {
+): CustomValue {
 	const {
 		assetType,
 		categories,
@@ -209,7 +219,7 @@ export const buildRemoteFilterValue = (
 		entityName,
 		eventType,
 		occurrenceCount,
-		occurrenceOperator
+		occurrenceOperator,
 	} = args;
 
 	const isAnyAsset = assetType === 'any';
@@ -220,15 +230,15 @@ export const buildRemoteFilterValue = (
 			propertyName: config.idProperty,
 			touched: false,
 			valid: true,
-			value: entityId
+			value: entityId,
 		} as Criterion & {touched: boolean; valid: boolean},
 		{
 			operatorName: RelationalOperators.EQ as any,
 			propertyName: config.nameProperty,
 			touched: false,
 			valid: true,
-			value: entityName
-		} as Criterion & {touched: boolean; valid: boolean}
+			value: entityName,
+		} as Criterion & {touched: boolean; valid: boolean},
 	];
 
 	const applicationIds = isAnyAsset
@@ -240,7 +250,7 @@ export const buildRemoteFilterValue = (
 		propertyName: 'applicationId',
 		touched: false,
 		valid: true,
-		value: applicationIds
+		value: applicationIds,
 	} as Criterion & {touched: boolean; valid: boolean});
 
 	criterionItems.push({
@@ -248,16 +258,16 @@ export const buildRemoteFilterValue = (
 		propertyName: 'eventId',
 		touched: false,
 		valid: true,
-		value: resolveEventIds(eventType, assetType, isAnyAsset)
+		value: resolveEventIds(eventType, assetType, isAnyAsset),
 	} as Criterion & {touched: boolean; valid: boolean});
 
-	if (config.supportsCategories && categories && categories.length > 0) {
+	if (config.supportsCategories && categories && !!categories.length) {
 		criterionItems.push({
 			operatorName: RelationalOperators.In as any,
 			propertyName: 'categories',
 			touched: false,
 			valid: true,
-			value: categories
+			value: categories,
 		} as Criterion & {touched: boolean; valid: boolean});
 	}
 
@@ -266,6 +276,6 @@ export const buildRemoteFilterValue = (
 	return createCustomValueMap([
 		{key: 'operator', value: occurrenceOperator},
 		{key: 'value', value: occurrenceCount},
-		{key: 'criterionGroup', value: criterionItems}
+		{key: 'criterionGroup', value: criterionItems},
 	]);
 };

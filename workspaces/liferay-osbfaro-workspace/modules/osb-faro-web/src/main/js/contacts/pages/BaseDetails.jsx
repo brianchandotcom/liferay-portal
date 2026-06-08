@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import Card from 'shared/components/Card';
-import EntityDetailsList from 'contacts/components/EntityDetailsList';
-import ErrorDisplay from 'shared/components/ErrorDisplay';
-import Loading from 'shared/components/Loading';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
-import React from 'react';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
-import {connect} from 'react-redux';
-import {fromJS, Map} from 'immutable';
+import {Map, fromJS} from 'immutable';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import EntityDetailsList from '~/contacts/components/EntityDetailsList';
+import Card from '~/shared/components/Card';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import Loading from '~/shared/components/Loading';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
+import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
 
 @hasRequest
 export class BaseDetails extends React.Component {
@@ -17,13 +22,13 @@ export class BaseDetails extends React.Component {
 		groupId: PropTypes.string.isRequired,
 		id: PropTypes.string.isRequired,
 		timeZoneId: PropTypes.string.isRequired,
-		title: PropTypes.string
+		title: PropTypes.string,
 	};
 
 	state = {
 		detailsIMap: new Map(),
 		error: false,
-		loading: true
+		loading: true,
 	};
 
 	componentDidMount() {
@@ -38,14 +43,14 @@ export class BaseDetails extends React.Component {
 		this.setState({error: false, loading: true});
 
 		return dataSourceFn({groupId, id})
-			.then(details =>
+			.then((details) =>
 				this.setState({detailsIMap: fromJS(details), loading: false})
 			)
-			.catch(err => {
-				if (!err.IS_CANCELLATION_ERROR) {
+			.catch((error) => {
+				if (!error.IS_CANCELLATION_ERROR) {
 					this.setState({
 						error: true,
-						loading: false
+						loading: false,
 					});
 				}
 			});
@@ -54,26 +59,28 @@ export class BaseDetails extends React.Component {
 	render() {
 		const {
 			props: {groupId, timeZoneId, title, ...otherProps},
-			state: {detailsIMap, error, loading}
+			state: {detailsIMap, error, loading},
 		} = this;
 
 		if (loading) {
 			return (
-				<Card key='LOADING_DISPLAY' pageDisplay>
+				<Card key="LOADING_DISPLAY" pageDisplay>
 					<Loading />
 				</Card>
 			);
-		} else if (error) {
+		}
+		else if (error) {
 			return (
-				<Card key='ERROR_DISPLAY' pageDisplay>
+				<Card key="ERROR_DISPLAY" pageDisplay>
 					<ErrorDisplay
-						className='flex-grow-1'
+						className="flex-grow-1"
 						onReload={this.handleFetchDetails}
 						spacer
 					/>
 				</Card>
 			);
-		} else {
+		}
+		else {
 			return (
 				<EntityDetailsList
 					{...omitDefinedProps(otherProps, BaseDetails.propTypes)}
@@ -93,6 +100,6 @@ export default connect((store, {groupId}) => ({
 		groupId,
 		'data',
 		'timeZone',
-		'timeZoneId'
-	])
+		'timeZoneId',
+	]),
 }))(BaseDetails);

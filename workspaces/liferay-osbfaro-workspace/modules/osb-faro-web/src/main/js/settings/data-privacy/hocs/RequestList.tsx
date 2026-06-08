@@ -1,66 +1,71 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import Constants, {OrderByDirections, Sizes} from 'shared/util/constants';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import DataControlRequest from '../queries/DataControlRequestMutation';
 import getCN from 'classnames';
-import Label from 'shared/components/Label';
+import {OrderedMap, Set} from 'immutable';
+import {get} from 'lodash';
 import moment from 'moment';
-import Nav from 'shared/components/Nav';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import RequestListQuery from '../queries/RequestListQuery';
-import URLConstants from 'shared/util/url-constants';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {compose} from 'redux';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import Card from '~/shared/components/Card';
+import Label from '~/shared/components/Label';
+import Nav from '~/shared/components/Nav';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import {
+	useSelectionContext,
+	withSelectionProvider,
+} from '~/shared/context/selection';
+import {withHistory} from '~/shared/hoc';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {Alert, FilterByType, FilterInputType} from '~/shared/types';
+import Constants, {
+	GDPRRequestStatuses,
+	GDPRRequestTypes,
+	OrderByDirections,
+	RangeKeyTimeRanges,
+	Sizes,
+} from '~/shared/util/constants';
+import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from '~/shared/util/date';
+import {mapListResultsToProps} from '~/shared/util/mappers';
 import {
 	CREATE_DATE,
 	createOrderIOMap,
-	getGraphQLVariablesFromPagination
-} from 'shared/util/pagination';
-import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
-import {FilterByType, FilterInputType} from 'shared/types';
-import {formatDateToTimeZone} from 'shared/util/date';
-import {
-	GDPRRequestStatuses,
-	GDPRRequestTypes,
-	RangeKeyTimeRanges
-} from 'shared/util/constants';
-import {get} from 'lodash';
-import {getSafeDisplayValue} from 'shared/util/util';
-import {mapListResultsToProps} from 'shared/util/mappers';
-import {OrderedMap, Set} from 'immutable';
+	getGraphQLVariablesFromPagination,
+} from '~/shared/util/pagination';
+import {User} from '~/shared/util/records';
 import {
 	PERIOD,
 	Routes,
-	setUriQueryValues,
 	STATUSES,
+	TYPES,
+	setUriQueryValues,
 	toRoute,
-	TYPES
-} from 'shared/util/router';
-import {useMutation, useQuery} from '@apollo/client';
-import {useParams} from 'react-router-dom';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
-import {
-	useSelectionContext,
-	withSelectionProvider
-} from 'shared/context/selection';
-import {withHistory} from 'shared/hoc';
+} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
+import {getSafeDisplayValue} from '~/shared/util/util';
+
+import DataControlRequest from '../queries/DataControlRequestMutation';
+import RequestListQuery from '../queries/RequestListQuery';
 
 const {
-	pagination: {cur: defaultPage}
+	pagination: {cur: defaultPage},
 } = Constants;
 
 export const REQUEST_TYPE_LABEL_MAP = {
 	[GDPRRequestTypes.Access]: Liferay.Language.get('access'),
 	[GDPRRequestTypes.Delete]: Liferay.Language.get('delete'),
 	[GDPRRequestTypes.Suppress]: Liferay.Language.get('suppress'),
-	[GDPRRequestTypes.Unsuppress]: Liferay.Language.get('unsuppress')
+	[GDPRRequestTypes.Unsuppress]: Liferay.Language.get('unsuppress'),
 };
 
 export const REQUEST_STATUS_LABEL_MAP = {
@@ -68,7 +73,7 @@ export const REQUEST_STATUS_LABEL_MAP = {
 	[GDPRRequestStatuses.Error]: Liferay.Language.get('error'),
 	[GDPRRequestStatuses.Expired]: Liferay.Language.get('done'),
 	[GDPRRequestStatuses.Pending]: Liferay.Language.get('pending'),
-	[GDPRRequestStatuses.Running]: Liferay.Language.get('running')
+	[GDPRRequestStatuses.Running]: Liferay.Language.get('running'),
 };
 
 export const REQUEST_STATUS_DISPLAY_MAP = {
@@ -76,7 +81,7 @@ export const REQUEST_STATUS_DISPLAY_MAP = {
 	[GDPRRequestStatuses.Error]: 'danger',
 	[GDPRRequestStatuses.Expired]: 'success',
 	[GDPRRequestStatuses.Pending]: 'secondary',
-	[GDPRRequestStatuses.Running]: 'info'
+	[GDPRRequestStatuses.Running]: 'info',
 };
 
 export const FILTER_BY_OPTIONS = [
@@ -86,9 +91,9 @@ export const FILTER_BY_OPTIONS = [
 		values: [
 			{
 				label: REQUEST_STATUS_LABEL_MAP[GDPRRequestStatuses.Completed],
-				value: GDPRRequestStatuses.Completed
-			}
-		]
+				value: GDPRRequestStatuses.Completed,
+			},
+		],
 	},
 	{
 		key: TYPES,
@@ -96,17 +101,17 @@ export const FILTER_BY_OPTIONS = [
 		values: [
 			{
 				label: REQUEST_TYPE_LABEL_MAP[GDPRRequestTypes.Access],
-				value: GDPRRequestTypes.Access
+				value: GDPRRequestTypes.Access,
 			},
 			{
 				label: REQUEST_TYPE_LABEL_MAP[GDPRRequestTypes.Delete],
-				value: GDPRRequestTypes.Delete
+				value: GDPRRequestTypes.Delete,
 			},
 			{
 				label: REQUEST_TYPE_LABEL_MAP[GDPRRequestTypes.Suppress],
-				value: GDPRRequestTypes.Suppress
-			}
-		]
+				value: GDPRRequestTypes.Suppress,
+			},
+		],
 	},
 	{
 		key: PERIOD,
@@ -115,21 +120,23 @@ export const FILTER_BY_OPTIONS = [
 		values: [
 			{
 				label: Liferay.Language.get('last-seven-days'),
-				value: RangeKeyTimeRanges.Last7Days
+				value: RangeKeyTimeRanges.Last7Days,
 			},
 			{
 				label: Liferay.Language.get('last-30-days'),
-				value: RangeKeyTimeRanges.Last30Days
+				value: RangeKeyTimeRanges.Last30Days,
 			},
 			{
 				label: Liferay.Language.get('last-90-days'),
-				value: RangeKeyTimeRanges.Last90Days
-			}
-		]
-	}
+				value: RangeKeyTimeRanges.Last90Days,
+			},
+		],
+	},
 ];
 
-export const getTodaysDate = () => moment().utc();
+export const getTodaysDate = function getTodaysDate() {
+	return moment().utc();
+};
 
 const isDisabled = (item?: object): boolean => {
 	const {completeDate, status} = (item ?? {}) as {
@@ -143,22 +150,22 @@ const isDisabled = (item?: object): boolean => {
 /**
  * Function for searching and filtering requests.
  */
-export const searchSelectedFn = ({
+export const searchSelectedFn = function searchSelectedFn({
 	filterBy,
 	items,
-	query
+	query,
 }: {
 	filterBy: FilterByType;
 	items: OrderedMap<any, any>;
 	query: string;
-}): OrderedMap<any, any> => {
+}): OrderedMap<any, any> {
 	let result: OrderedMap<any, any>;
 
 	const statuses = filterBy.get(STATUSES, Set()).toArray();
 	const requestTypes = filterBy.get(TYPES, Set()).toArray();
 	const period = filterBy.get(PERIOD, Set()).toArray();
 
-	result = items.filter(item =>
+	result = items.filter((item) =>
 		Object.values(item).some((value: any) =>
 			String(getSafeDisplayValue(value, ''))
 				.toLowerCase()
@@ -213,11 +220,11 @@ const RequestList: React.FC<IRequestListProps> = ({
 	currentUser,
 	history,
 	open,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const {delta, filterBy, orderIOMap, page, query} = useQueryPagination({
 		filterFields: [STATUSES, TYPES, PERIOD],
-		initialOrderIOMap: createOrderIOMap(CREATE_DATE)
+		initialOrderIOMap: createOrderIOMap(CREATE_DATE),
 	});
 	const {groupId} = useParams();
 
@@ -226,7 +233,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 	const authorized = currentUser.isAdmin();
 
 	const formattedFilterBy = filterBy
-		?.filterNot(val => !!val && val.isEmpty())
+		?.filterNot((val) => !!val && val.isEmpty())
 		.map((val, key) =>
 			getFilterOptionType(key as string) === 'radio' && val
 				? parseInt(val.first() ?? '')
@@ -242,9 +249,9 @@ const RequestList: React.FC<IRequestListProps> = ({
 				delta,
 				orderIOMap,
 				page,
-				query
-			})
-		}
+				query,
+			}),
+		},
 	});
 
 	const {refetch} = response;
@@ -258,7 +265,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 			onSubmit: ({
 				emailAddresses,
 				fileName,
-				types
+				types,
 			}: {
 				emailAddresses?: string[];
 				fileName?: string;
@@ -271,15 +278,15 @@ const RequestList: React.FC<IRequestListProps> = ({
 						ownerId: String(currentUser.id),
 						types,
 						userId: String(currentUser.userId),
-						userName: currentUser.name
-					}
+						userName: currentUser.name,
+					},
 				})
 					.then(() => {
 						addAlert({
 							alertType: Alert.Types.Success,
 							message: Liferay.Language.get(
 								'requests-have-been-successfully-submitted'
-							)
+							),
 						});
 
 						history.push(
@@ -288,12 +295,12 @@ const RequestList: React.FC<IRequestListProps> = ({
 									field: CREATE_DATE,
 									keywords: '',
 									page: defaultPage,
-									sortOrder: OrderByDirections.Descending
+									sortOrder: OrderByDirections.Descending,
 								},
 								toRoute(
 									Routes.SETTINGS_DATA_PRIVACY_REQUEST_LOG,
 									{
-										groupId
+										groupId,
 									}
 								)
 							)
@@ -309,21 +316,21 @@ const RequestList: React.FC<IRequestListProps> = ({
 							message: Liferay.Language.get(
 								'there-was-an-error-processing-your-request.-please-try-again'
 							),
-							timeout: false
+							timeout: false,
 						})
 					);
-			}
+			},
 		});
 	};
 
 	return (
-		<Card className='request-list-root' pageDisplay>
+		<Card className="request-list-root" pageDisplay>
 			<CrossPageSelect
 				{...mapListResultsToProps(
 					response,
 					({dataControlTasks: {dataControlTasks, total}}) => ({
 						items: dataControlTasks,
-						total
+						total,
 					})
 				)}
 				checkDisabled={isDisabled}
@@ -331,22 +338,22 @@ const RequestList: React.FC<IRequestListProps> = ({
 					{
 						accessor: 'batchId',
 						label: Liferay.Language.get('request-id'),
-						title: true
+						title: true,
 					},
 					{
 						accessor: 'emailAddress',
 						cellRenderer: ({
-							data: {emailAddresses}
+							data: {emailAddresses},
 						}: {
 							data: {emailAddresses: string[]};
 						}) => <td>{emailAddresses.join(', ')}</td>,
-						label: Liferay.Language.get('email')
+						label: Liferay.Language.get('email'),
 					},
 					{
 						accessor: 'type',
 						dataFormatter: (type: GDPRRequestTypes) =>
 							REQUEST_TYPE_LABEL_MAP[type],
-						label: Liferay.Language.get('request-type')
+						label: Liferay.Language.get('request-type'),
 					},
 					{
 						accessor: CREATE_DATE,
@@ -356,28 +363,28 @@ const RequestList: React.FC<IRequestListProps> = ({
 								CUSTOM_DATE_FORMAT,
 								timeZoneId
 							),
-						label: Liferay.Language.get('requested-date')
+						label: Liferay.Language.get('requested-date'),
 					},
 					{
 						accessor: 'status',
 						cellRenderer: ({
-							data: {status}
+							data: {status},
 						}: {
 							data: {status: GDPRRequestStatuses};
 						}) => (
 							<td>
 								<Label
-									className='status'
+									className="status"
 									display={REQUEST_STATUS_DISPLAY_MAP[status]}
-									size='lg'
+									size="lg"
 									uppercase
 								>
 									{REQUEST_STATUS_LABEL_MAP[status]}
 								</Label>
 							</td>
 						),
-						label: Liferay.Language.get('request-status')
-					}
+						label: Liferay.Language.get('request-status'),
+					},
 				]}
 				delta={delta}
 				entityLabel={Liferay.Language.get('requests')}
@@ -394,10 +401,10 @@ const RequestList: React.FC<IRequestListProps> = ({
 								)}
 
 								<ClayLink
-									className='d-block mb-3'
+									className="d-block mb-3"
 									href={URLConstants.RequestLogDocumentation}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-more'
@@ -408,7 +415,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_satellite'
+							symbol: 'ac_satellite',
 						}}
 						title={Liferay.Language.get('no-requests-found')}
 					/>
@@ -420,7 +427,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 				query={query}
 				renderInlineRowActions={({
 					data: {id, status},
-					itemsSelected
+					itemsSelected,
 				}: {
 					data: {
 						completeDate: string;
@@ -438,7 +445,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 					const classnames = getCN(
 						'btn btn-secondary btn-sm button-root',
 						{
-							disabled: selectedItems.size
+							disabled: selectedItems.size,
 						}
 					);
 
@@ -448,10 +455,12 @@ const RequestList: React.FC<IRequestListProps> = ({
 						status === GDPRRequestStatuses.Completed && (
 							<ClayLink
 								className={classnames}
+
 								// @ts-ignore
+
 								externalLink
 								href={`/o/proxy/download/data-control-tasks/${id}?projectGroupId=${groupId}`}
-								role='button'
+								role="button"
 								tabIndex={0}
 							>
 								{Liferay.Language.get('download')}
@@ -464,8 +473,10 @@ const RequestList: React.FC<IRequestListProps> = ({
 						<Nav.Item>
 							{authorized && selectedItems.size ? (
 								<ClayLink
-									className='btn btn-primary button-root nav-btn'
+									className="btn btn-primary button-root nav-btn"
+
 									// @ts-ignore
+
 									externalLink
 									href={`/o/proxy/download/data-control-tasks?projectGroupId=${groupId}&ids=${selectedItems
 										.map(({id}) => id)
@@ -477,8 +488,8 @@ const RequestList: React.FC<IRequestListProps> = ({
 								<>
 									{authorized && (
 										<ClayButton
-											className='button-root nav-btn'
-											displayType='primary'
+											className="button-root nav-btn"
+											displayType="primary"
 											onClick={handleOpenNewRequestModal}
 										>
 											{Liferay.Language.get(

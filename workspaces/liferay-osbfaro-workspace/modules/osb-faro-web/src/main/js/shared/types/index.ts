@@ -1,8 +1,15 @@
-import React from 'react';
-import {Filters} from 'shared/util/filter';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Map, OrderedMap, Set} from 'immutable';
+import React from 'react';
+import {OrderByDirections, RangeKeyTimeRanges} from '~/shared/util/constants';
+import {Filters} from '~/shared/util/filter';
+import {OrderParams} from '~/shared/util/records';
+
 import {Modal} from './Modal';
-import {OrderByDirections, RangeKeyTimeRanges} from 'shared/util/constants';
 
 export {Alert} from './Alert';
 export {Modal} from './Modal';
@@ -36,8 +43,8 @@ export type DisplayType = 'primary' | 'secondary' | 'link' | 'unstyled';
 export type FilterByType = Map<string, Set<string>>;
 export type FilterInputType = 'radio' | 'checkbox';
 export type FilterOptionType = {
-	label: string;
 	key: string;
+	label: string;
 	type?: FilterInputType;
 	values: {label: string; value: string}[];
 };
@@ -52,8 +59,8 @@ export interface ICompositionBag {
 export interface IBasePageContext {
 	experienceId?: string | null;
 	filters: any;
-	router: any;
 	rangeSelectors?: RangeSelectors;
+	router: any;
 }
 
 export interface IPagination {
@@ -140,8 +147,6 @@ export interface HasModal {
 	close: Modal.close;
 	open: Modal.open;
 }
-
-import {OrderParams} from 'shared/util/records';
 
 export interface ICommonVariables extends SafeRangeSelectors, Filters {
 	interval: Interval;

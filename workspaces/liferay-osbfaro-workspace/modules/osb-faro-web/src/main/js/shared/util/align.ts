@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export const POSITIONS = {
 	BottomCenter: 4,
 	BottomLeft: 5,
@@ -6,7 +11,7 @@ export const POSITIONS = {
 	RightCenter: 2,
 	TopCenter: 0,
 	TopLeft: 7,
-	TopRight: 1
+	TopRight: 1,
 };
 
 export type Position = (typeof POSITIONS)[keyof typeof POSITIONS];
@@ -19,47 +24,6 @@ type Region = {
 	top: number;
 	width: number;
 };
-
-export function align(
-	element: HTMLElement,
-	alignElement: HTMLElement,
-	position: Position,
-	autoBestAlign = true
-): Position {
-	let bestRegion: Region;
-
-	if (autoBestAlign) {
-		const suggestion = suggestAlignBestRegion(
-			element,
-			alignElement,
-			position
-		);
-		position = suggestion.position;
-		bestRegion = suggestion.region;
-	} else {
-		bestRegion = getAlignRegion(element, alignElement, position);
-	}
-
-	const computedStyle = window.getComputedStyle(element, null);
-
-	if (computedStyle.getPropertyValue('position') !== 'fixed') {
-		bestRegion.top += window.scrollY;
-		bestRegion.left += window.scrollX;
-
-		let offsetParent: HTMLElement | null = element;
-		while (
-			(offsetParent = offsetParent.offsetParent as HTMLElement | null)
-		) {
-			bestRegion.top -= offsetParent.offsetTop;
-			bestRegion.left -= offsetParent.offsetLeft;
-		}
-	}
-
-	element.style.top = `${bestRegion.top}px`;
-	element.style.left = `${bestRegion.left}px`;
-
-	return position;
-}
 
 function getAlignRegion(
 	element: HTMLElement,
@@ -113,8 +77,80 @@ function getAlignRegion(
 		left,
 		right: left + r2.width,
 		top,
-		width: r2.width
+		width: r2.width,
 	};
+}
+
+function insideRegion(r1: Region, r2: Region): boolean {
+	return (
+		r2.top >= r1.top &&
+		r2.bottom <= r1.bottom &&
+		r2.right <= r1.right &&
+		r2.left >= r1.left
+	);
+}
+
+function intersectRect(
+	x0: number,
+	y0: number,
+	x1: number,
+	y1: number,
+	x2: number,
+	y2: number,
+	x3: number,
+	y3: number
+): boolean {
+	return !(x2 > x1 || x3 < x0 || y2 > y1 || y3 < y0);
+}
+
+function intersectRegion(r1: Region, r2: Region): boolean {
+	return intersectRect(
+		r1.top,
+		r1.left,
+		r1.bottom,
+		r1.right,
+		r2.top,
+		r2.left,
+		r2.bottom,
+		r2.right
+	);
+}
+
+function makeRegion(
+	bottom: number,
+	height: number,
+	left: number,
+	right: number,
+	top: number,
+	width: number
+): Region {
+	return {
+		bottom,
+		height,
+		left,
+		right,
+		top,
+		width,
+	};
+}
+
+function getViewportRegion() {
+	const height = document.documentElement.offsetHeight;
+	const width = document.documentElement.offsetWidth;
+
+	return makeRegion(height, height, 0, width, 0, width);
+}
+
+function intersection(r1: Region, r2: Region): Region | null {
+	if (!intersectRegion(r1, r2)) {
+		return null;
+	}
+	const bottom = Math.min(r1.bottom, r2.bottom);
+	const right = Math.min(r1.right, r2.right);
+	const left = Math.max(r1.left, r2.left);
+	const top = Math.max(r1.top, r2.top);
+
+	return makeRegion(bottom, bottom - top, left, right, top, right - left);
 }
 
 function suggestAlignBestRegion(
@@ -158,78 +194,48 @@ function suggestAlignBestRegion(
 
 	return {
 		position: bestPosition,
-		region: bestRegion
+		region: bestRegion,
 	};
 }
 
-function getViewportRegion() {
-	const height = document.documentElement.offsetHeight;
-	const width = document.documentElement.offsetWidth;
+export function align(
+	element: HTMLElement,
+	alignElement: HTMLElement,
+	position: Position,
+	autoBestAlign = true
+): Position {
+	let bestRegion: Region;
 
-	return makeRegion(height, height, 0, width, 0, width);
-}
-
-function insideRegion(r1: Region, r2: Region): boolean {
-	return (
-		r2.top >= r1.top &&
-		r2.bottom <= r1.bottom &&
-		r2.right <= r1.right &&
-		r2.left >= r1.left
-	);
-}
-
-function intersectRect(
-	x0: number,
-	y0: number,
-	x1: number,
-	y1: number,
-	x2: number,
-	y2: number,
-	x3: number,
-	y3: number
-): boolean {
-	return !(x2 > x1 || x3 < x0 || y2 > y1 || y3 < y0);
-}
-
-function intersectRegion(r1: Region, r2: Region): boolean {
-	return intersectRect(
-		r1.top,
-		r1.left,
-		r1.bottom,
-		r1.right,
-		r2.top,
-		r2.left,
-		r2.bottom,
-		r2.right
-	);
-}
-
-function intersection(r1: Region, r2: Region): Region | null {
-	if (!intersectRegion(r1, r2)) {
-		return null;
+	if (autoBestAlign) {
+		const suggestion = suggestAlignBestRegion(
+			element,
+			alignElement,
+			position
+		);
+		position = suggestion.position;
+		bestRegion = suggestion.region;
 	}
-	const bottom = Math.min(r1.bottom, r2.bottom);
-	const right = Math.min(r1.right, r2.right);
-	const left = Math.max(r1.left, r2.left);
-	const top = Math.max(r1.top, r2.top);
+	else {
+		bestRegion = getAlignRegion(element, alignElement, position);
+	}
 
-	return makeRegion(bottom, bottom - top, left, right, top, right - left);
-}
+	const computedStyle = window.getComputedStyle(element, null);
 
-function makeRegion(
-	bottom: number,
-	height: number,
-	left: number,
-	right: number,
-	top: number,
-	width: number
-): Region {
-	return {
-		bottom,
-		height,
-		left,
-		right,
-		top,
-		width
-	};
+	if (computedStyle.getPropertyValue('position') !== 'fixed') {
+		bestRegion.top += window.scrollY;
+		bestRegion.left += window.scrollX;
+
+		let offsetParent: HTMLElement | null = element;
+		while (
+			(offsetParent = offsetParent.offsetParent as HTMLElement | null)
+		) {
+			bestRegion.top -= offsetParent.offsetTop;
+			bestRegion.left -= offsetParent.offsetLeft;
+		}
+	}
+
+	element.style.top = `${bestRegion.top}px`;
+	element.style.left = `${bestRegion.left}px`;
+
+	return position;
 }

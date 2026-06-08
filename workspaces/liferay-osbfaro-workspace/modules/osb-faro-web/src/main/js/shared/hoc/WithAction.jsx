@@ -1,15 +1,21 @@
-import ErrorPage from '../pages/ErrorPage';
-import Loading from 'shared/components/Loading';
-import React from 'react';
-import {connect} from 'react-redux';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {isFunction, noop} from 'lodash';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import Loading from '~/shared/components/Loading';
+
+import ErrorPage from '../pages/ErrorPage';
 import {RemoteData} from '../util/records';
 
 const defaultOptions = {
 	errorPageProps: {},
 	propName: 'data',
-	renderErrorPage: props => <ErrorPage {...props} />
+	renderErrorPage: (props) => <ErrorPage {...props} />,
 };
 
 /**
@@ -27,10 +33,10 @@ const defaultOptions = {
  * @returns {Function} - The new component
  */
 export default (action, mapStateToRemoteData, options = {}) =>
-	WrappedComponent => {
+	(WrappedComponent) => {
 		const {bypassErrorPage, errorPageProps, propName, renderErrorPage} = {
 			...defaultOptions,
-			...options
+			...options,
 		};
 
 		return connect(
@@ -41,7 +47,7 @@ export default (action, mapStateToRemoteData, options = {}) =>
 				return remoteData.toObject();
 			},
 			{
-				action
+				action,
 			}
 		)(
 			class extends React.Component {
@@ -49,7 +55,7 @@ export default (action, mapStateToRemoteData, options = {}) =>
 					data: PropTypes.any,
 					error: PropTypes.bool.isRequired,
 					loading: PropTypes.bool.isRequired,
-					router: PropTypes.object
+					router: PropTypes.object,
 				};
 
 				componentDidMount() {
@@ -82,9 +88,11 @@ export default (action, mapStateToRemoteData, options = {}) =>
 							: errorPageProps;
 
 						return renderErrorPage({className, ...props});
-					} else if (!data && loading) {
+					}
+					else if (!data && loading) {
 						return <Loading className={className} />;
-					} else {
+					}
+					else {
 						const componentData = {[propName]: data};
 
 						return (

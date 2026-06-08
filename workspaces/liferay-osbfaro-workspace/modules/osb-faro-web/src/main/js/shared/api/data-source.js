@@ -1,27 +1,34 @@
-import sendRequest from 'shared/util/request';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {get, pickBy} from 'lodash';
 import {
+	NAME,
 	buildOrderByFields,
 	createOrderIOMap,
-	NAME
-} from 'shared/util/pagination';
-import {get, pickBy} from 'lodash';
+} from '~/shared/util/pagination';
+import sendRequest from '~/shared/util/request';
 
-export const clearData = ({groupId, id}) =>
-	sendRequest({
+export const clearData = function clearData({groupId, id}) {
+	return sendRequest({
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/${id}/clear`
+		path: `contacts/${groupId}/data_source/${id}/clear`,
 	});
+};
 
-export const disconnect = ({groupId, id}) =>
-	sendRequest({
+export const disconnect = function disconnect({groupId, id}) {
+	return sendRequest({
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/${id}/disconnect`
+		path: `contacts/${groupId}/data_source/${id}/disconnect`,
 	});
+};
 
 export function fetch({groupId, id}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${id}`
+		path: `contacts/${groupId}/data_source/${id}`,
 	});
 }
 
@@ -40,14 +47,14 @@ export function search({
 	return sendRequest({
 		data: {cur: page, delta, orderByFields, query, ...otherParams},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source`
+		path: `contacts/${groupId}/data_source`,
 	});
 }
 
 export function fetchChannels({
 	channelIds,
 	groupId,
-	orderIOMap = createOrderIOMap(NAME)
+	orderIOMap = createOrderIOMap(NAME),
 }) {
 	const orderParams = orderIOMap.first();
 
@@ -56,10 +63,10 @@ export function fetchChannels({
 	return sendRequest({
 		data: {
 			channelIds,
-			orderByFields
+			orderByFields,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/channels`
+		path: `contacts/${groupId}/data_source/channels`,
 	});
 }
 
@@ -67,14 +74,14 @@ export function fetchDataSourceId({groupId, token}) {
 	return sendRequest({
 		data: {token},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/data_source_id`
+		path: `contacts/${groupId}/data_source/data_source_id`,
 	});
 }
 
 export function fetchDeletePreview({groupId, id}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${id}/delete_preview`
+		path: `contacts/${groupId}/data_source/${id}/delete_preview`,
 	});
 }
 
@@ -83,12 +90,12 @@ export function fetchFieldValues({
 	fieldName,
 	fileVersionId,
 	groupId,
-	id
+	id,
 }) {
 	return sendRequest({
 		data: {count, fieldName, fileVersionId, id},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/field_values`
+		path: `contacts/${groupId}/data_source/field_values`,
 	});
 }
 
@@ -96,10 +103,10 @@ export function fetchMappings({fileVersionId, groupId, id}) {
 	return sendRequest({
 		data: {
 			fileVersionId,
-			id
+			id,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/mappings`
+		path: `contacts/${groupId}/data_source/mappings`,
 	});
 }
 
@@ -107,14 +114,14 @@ export function fetchMappingsLite({context, fileVersionId, groupId, id}) {
 	return sendRequest({
 		data: {context, fileVersionId},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${id}/mappings/lite`
+		path: `contacts/${groupId}/data_source/${id}/mappings/lite`,
 	});
 }
 
 export function fetchProgress({groupId, id}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${id}/progress`
+		path: `contacts/${groupId}/data_source/${id}/progress`,
 	});
 }
 
@@ -123,12 +130,12 @@ export function fetchOrganizations({cur, delta, groupId, id, name}) {
 		data: {
 			cur,
 			delta,
-			name
+			name,
 		},
 		method: 'GET',
 		path: `contacts/${groupId}/data_source/${
 			id ? `${id}/` : ''
-		}organizations`
+		}organizations`,
 	});
 }
 
@@ -136,7 +143,7 @@ export function fetchOrganizationsById({groupId, id, organizationIds}) {
 	return sendRequest({
 		data: {organizationIds},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/${id}/organizations_by_ids`
+		path: `contacts/${groupId}/data_source/${id}/organizations_by_ids`,
 	});
 }
 
@@ -145,10 +152,10 @@ export function fetchSites({cur, delta, groupId, id, name}) {
 		data: {
 			cur,
 			delta,
-			name
+			name,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${id ? `${id}/` : ''}groups`
+		path: `contacts/${groupId}/data_source/${id ? `${id}/` : ''}groups`,
 	});
 }
 
@@ -156,28 +163,29 @@ export function fetchSitesById({groupId, id, siteIds}) {
 	return sendRequest({
 		data: {groupIds: siteIds},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/${id}/groups_by_ids`
+		path: `contacts/${groupId}/data_source/${id}/groups_by_ids`,
 	});
 }
 
-export const fetchToken = (groupId, dataSourceId) =>
-	sendRequest({
+export const fetchToken = function fetchToken(groupId, dataSourceId) {
+	return sendRequest({
 		contentType: 'text/plain',
 		method: 'GET',
 		path: `contacts/${groupId}/data_source/${
 			dataSourceId ? `${dataSourceId}/` : ''
-		}token`
+		}token`,
 	});
+};
 
 export function fetchUserGroups({cur, delta, groupId, id, name}) {
 	return sendRequest({
 		data: {
 			cur,
 			delta,
-			name
+			name,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${id ? `${id}/` : ''}user_groups`
+		path: `contacts/${groupId}/data_source/${id ? `${id}/` : ''}user_groups`,
 	});
 }
 
@@ -185,7 +193,7 @@ export function fetchUserGroupsById({groupId, id, userGroupIds}) {
 	return sendRequest({
 		data: {userGroupIds},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/${id}/user_groups_by_ids`
+		path: `contacts/${groupId}/data_source/${id}/user_groups_by_ids`,
 	});
 }
 
@@ -193,7 +201,7 @@ export function fetchLiferaySyncCounts({contactsConfiguration, groupId, id}) {
 	return sendRequest({
 		data: {contactsConfiguration},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/${id}/liferay/sync_counts`
+		path: `contacts/${groupId}/data_source/${id}/liferay/sync_counts`,
 	});
 }
 
@@ -201,7 +209,7 @@ export function createCSV({fieldMappingMaps, fileVersionId, groupId, name}) {
 	const data = pickBy(
 		{
 			fieldMappingMaps,
-			fileVersionId
+			fileVersionId,
 		},
 		Boolean
 	);
@@ -209,10 +217,10 @@ export function createCSV({fieldMappingMaps, fileVersionId, groupId, name}) {
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/csv`
+		path: `contacts/${groupId}/data_source/csv`,
 	});
 }
 
@@ -222,14 +230,14 @@ export function createLiferay({
 	groupId,
 	name,
 	status,
-	url
+	url,
 }) {
 	const data = pickBy(
 		{
 			credentials,
 			fieldMappingMaps,
 			status,
-			url
+			url,
 		},
 		Boolean
 	);
@@ -237,10 +245,10 @@ export function createLiferay({
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/liferay`
+		path: `contacts/${groupId}/data_source/liferay`,
 	});
 }
 
@@ -252,7 +260,7 @@ export function createSalesforce({
 	groupId,
 	name,
 	status,
-	url
+	url,
 }) {
 	const data = pickBy(
 		{
@@ -261,7 +269,7 @@ export function createSalesforce({
 			credentials,
 			fieldMappingMaps,
 			status,
-			url
+			url,
 		},
 		Boolean
 	);
@@ -269,10 +277,10 @@ export function createSalesforce({
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/salesforce`
+		path: `contacts/${groupId}/data_source/salesforce`,
 	});
 }
 
@@ -280,7 +288,7 @@ export function updateCSV({fieldMappingMaps, groupId, id, name, status}) {
 	const data = pickBy(
 		{
 			fieldMappingMaps,
-			status
+			status,
 		},
 		Boolean
 	);
@@ -288,10 +296,10 @@ export function updateCSV({fieldMappingMaps, groupId, id, name, status}) {
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'PATCH',
-		path: `contacts/${groupId}/data_source/${id}/csv`
+		path: `contacts/${groupId}/data_source/${id}/csv`,
 	});
 }
 
@@ -305,7 +313,7 @@ export function updateLiferay({
 	id,
 	name,
 	status,
-	url
+	url,
 }) {
 	const data = pickBy(
 		{
@@ -321,7 +329,7 @@ export function updateLiferay({
 				: null,
 			fieldMappingMaps,
 			status,
-			url
+			url,
 		},
 		Boolean
 	);
@@ -329,10 +337,10 @@ export function updateLiferay({
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'PATCH',
-		path: `contacts/${groupId}/data_source/${id}/liferay`
+		path: `contacts/${groupId}/data_source/${id}/liferay`,
 	});
 }
 
@@ -346,7 +354,7 @@ export function updateSalesforce({
 	id,
 	name,
 	status,
-	url
+	url,
 }) {
 	const data = pickBy(
 		{
@@ -356,7 +364,7 @@ export function updateSalesforce({
 			credentials,
 			fieldMappingMaps,
 			status,
-			url
+			url,
 		},
 		Boolean
 	);
@@ -364,10 +372,10 @@ export function updateSalesforce({
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'PATCH',
-		path: `contacts/${groupId}/data_source/${id}/salesforce`
+		path: `contacts/${groupId}/data_source/${id}/salesforce`,
 	});
 }
 
@@ -377,7 +385,7 @@ export function fetchChannelDatasources({
 	id,
 	orderIOMap = createOrderIOMap(NAME),
 	page,
-	query = ''
+	query = '',
 }) {
 	const orderParams = orderIOMap.first();
 	const orderByFields = buildOrderByFields(orderParams);
@@ -387,17 +395,17 @@ export function fetchChannelDatasources({
 			cur: page,
 			delta,
 			name: query,
-			orderByFields
+			orderByFields,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${id}/channel-data-sources`
+		path: `contacts/${groupId}/data_source/${id}/channel-data-sources`,
 	});
 }
 
 export function fetchCompanies({groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/companies`
+		path: `contacts/${groupId}/data_source/companies`,
 	});
 }
 
@@ -407,31 +415,31 @@ export function fetchOAuthUrl({
 	consumerKey,
 	consumerSecret,
 	groupId,
-	type
+	type,
 }) {
 	return sendRequest({
 		data: {
 			baseURL: baseUrl,
 			oAuthCallbackURL: callbackUrl,
 			oAuthConsumerKey: consumerKey,
-			oAuthConsumerSecret: consumerSecret
+			oAuthConsumerSecret: consumerSecret,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${type.toLowerCase()}/oauth_request_token_credentials`
+		path: `contacts/${groupId}/data_source/${type.toLowerCase()}/oauth_request_token_credentials`,
 	});
 }
 
 function delete$({groupId, id}) {
 	return sendRequest({
 		method: 'DELETE',
-		path: `contacts/${groupId}/data_source/${id}`
+		path: `contacts/${groupId}/data_source/${id}`,
 	});
 }
 
 export function fetchChannelsMetric({groupId, id}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/data_source/${id}/metrics`
+		path: `contacts/${groupId}/data_source/${id}/metrics`,
 	});
 }
 

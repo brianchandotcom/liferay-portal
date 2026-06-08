@@ -1,45 +1,54 @@
-import * as API from 'shared/api';
-import BasePage from 'settings/components/base-page/BasePage';
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
-import Label from 'shared/components/Label';
-import ListComponent from 'shared/hoc/ListComponent';
-import NoResultsDisplay, {
-	getFormattedTitle
-} from 'shared/components/NoResultsDisplay';
-import React, {useEffect, useState} from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {AlertTypes} from 'shared/components/Alert';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import {
-	CREATE_DATE,
-	createOrderIOMap,
-	NAME,
-	PROVIDER_TYPE
-} from 'shared/util/pagination';
-import {DataSource} from 'shared/util/records';
-import {DataSourceStates, DataSourceTypes, Sizes} from 'shared/util/constants';
-import {formatDateToTimeZone} from 'shared/util/date';
 import {fromJS} from 'immutable';
 import {get} from 'lodash';
+import React, {useEffect, useState} from 'react';
+import {Link, useHistory, useParams} from 'react-router-dom';
+import {getConnectorStatusDisplay} from '~/settings/components/3rd-party-connector/getConnectorStatusDisplay';
 import {
 	getConnectorConfig,
-	listAvailableConnectors
-} from 'settings/components/3rd-party-connector/registry';
-import {getConnectorStatusDisplay} from 'settings/components/3rd-party-connector/getConnectorStatusDisplay';
-import {getDataSourceDisplayObject} from 'shared/util/data-sources';
-import {isLDPPlan} from 'shared/util/subscriptions';
-import {Link, useHistory, useParams} from 'react-router-dom';
-import {Routes, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useRequest} from 'shared/hooks/useRequest';
-import {useSubscriptionName} from 'shared/hooks/useSubscriptionName';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
+	listAvailableConnectors,
+} from '~/settings/components/3rd-party-connector/registry';
+import BasePage from '~/settings/components/base-page/BasePage';
+import * as API from '~/shared/api';
+import {AlertTypes} from '~/shared/components/Alert';
+import Card from '~/shared/components/Card';
+import EmbeddedAlertList from '~/shared/components/EmbeddedAlertList';
+import Label from '~/shared/components/Label';
+import NoResultsDisplay, {
+	getFormattedTitle,
+} from '~/shared/components/NoResultsDisplay';
+import ListComponent from '~/shared/hoc/ListComponent';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {useSubscriptionName} from '~/shared/hooks/useSubscriptionName';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {
+	DataSourceStates,
+	DataSourceTypes,
+	Sizes,
+} from '~/shared/util/constants';
+import {getDataSourceDisplayObject} from '~/shared/util/data-sources';
+import {formatDateToTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {
+	CREATE_DATE,
+	NAME,
+	PROVIDER_TYPE,
+	createOrderIOMap,
+} from '~/shared/util/pagination';
+import {DataSource} from '~/shared/util/records';
+import {Routes, toRoute} from '~/shared/util/router';
+import {isLDPPlan} from '~/shared/util/subscriptions';
+import URLConstants from '~/shared/util/url-constants';
 
 interface StandaloneDataSourceDescriptor {
 	label: string;
@@ -50,13 +59,13 @@ interface StandaloneDataSourceDescriptor {
 const STANDALONE_DATA_SOURCES: StandaloneDataSourceDescriptor[] = [
 	{
 		label: Liferay.Language.get('liferay-dxp'),
-		type: DataSourceTypes.Liferay
+		type: DataSourceTypes.Liferay,
 	},
 	{
 		label: Liferay.Language.get('salesforce'),
 		requiresLDP: true,
-		type: DataSourceTypes.Salesforce
-	}
+		type: DataSourceTypes.Salesforce,
+	},
 ];
 
 interface ICellProps {
@@ -68,26 +77,7 @@ interface IDataSourceNameProps {
 	hrefFormatter: (params: {[key: string]: any}) => string;
 }
 
-export const DataSourceName: React.FC<IDataSourceNameProps> = ({
-	data,
-	hrefFormatter
-}) => (
-	<td className='table-cell-expand'>
-		<div className='table-title'>
-			{disableRow(
-				data as {[key: string]: any; state: DataSourceStates}
-			) ? (
-				<span className='text-truncate'>{data.name}</span>
-			) : (
-				<Link className='text-truncate' to={hrefFormatter(data)}>
-					{data.name}
-				</Link>
-			)}
-		</div>
-	</td>
-);
-
-export const StatusRenderer: React.FC<ICellProps> = ({data}) => {
+export const StatusRenderer = function StatusRenderer({data}: ICellProps) {
 	const dataSource = new DataSource(fromJS(data));
 
 	const {display, label} = getConnectorConfig(data.providerType)
@@ -106,8 +96,34 @@ export const StatusRenderer: React.FC<ICellProps> = ({data}) => {
 const dateFormatter = (date: string, timeZoneId: string): string =>
 	formatDateToTimeZone(date, 'll', timeZoneId);
 
-export const disableRow = ({state}: {state: DataSourceStates}): boolean =>
-	state === DataSourceStates.InProgressDeleting;
+export const disableRow = function disableRow({
+	state,
+}: {
+	state: DataSourceStates;
+}): boolean {
+	return state === DataSourceStates.InProgressDeleting;
+};
+
+export const DataSourceName = function DataSourceName({
+	data,
+	hrefFormatter,
+}: IDataSourceNameProps) {
+	return (
+		<td className="table-cell-expand">
+			<div className="table-title">
+				{disableRow(
+					data as {[key: string]: any; state: DataSourceStates}
+				) ? (
+					<span className="text-truncate">{data.name}</span>
+				) : (
+					<Link className="text-truncate" to={hrefFormatter(data)}>
+						{data.name}
+					</Link>
+				)}
+			</div>
+		</td>
+	);
+};
 
 const getAlertMessage = (
 	dataSource: {[key: string]: any},
@@ -127,32 +143,35 @@ const getAlertMessage = (
 				'your-authorization-token-for-x-has-expired.-please-x-your-account-credentials'
 			),
 			[
-				<b key='NAME'>{name}</b>,
+				<b key="NAME">{name}</b>,
 				<Link
-					key='REAUTHORIZE'
+					key="REAUTHORIZE"
 					to={toRoute(Routes.SETTINGS_DATA_SOURCE, {
 						groupId,
-						id
+						id,
 					})}
 				>
 					{Liferay.Language.get('reauthorize').toLowerCase()}
-				</Link>
+				</Link>,
 			],
 			false
 		);
-	} else if (admin && count > 1) {
+	}
+	else if (admin && count > 1) {
 		return Liferay.Language.get(
 			'some-of-your-authorization-tokens-have-expired.-please-reauthorize-the-account-credentials-on-these-data-sources-to-prevent-syncing-interruptions'
 		);
-	} else if (count === 1) {
+	}
+	else if (count === 1) {
 		return sub(
 			Liferay.Language.get(
 				'your-authorization-token-for-x-has-expired.-please-contact-your-oauth-administrator,-x,-to-reauthorize'
 			),
-			[<b key='NAME'>{name}</b>, email],
+			[<b key="NAME">{name}</b>, email],
 			false
 		);
-	} else if (count > 1) {
+	}
+	else if (count > 1) {
 		return Liferay.Language.get(
 			'some-of-your-authorization-tokens-have-expired.-please-contact-your-oauth-administrator-to-reauthorize'
 		);
@@ -190,7 +209,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 	const {timeZoneId} = useTimeZone();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data: invalidDataSources, loading: invalidDataSourcesLoading} =
@@ -202,9 +221,9 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 				page: 1,
 				states: [
 					DataSourceStates.CredentialsInvalid,
-					DataSourceStates.UrlInvalid
-				]
-			}
+					DataSourceStates.UrlInvalid,
+				],
+			},
 		});
 
 	useEffect(() => {
@@ -219,10 +238,12 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 						groupId
 					),
 					title: Liferay.Language.get('warning'),
-					type: AlertTypes.Warning
-				}
+					type: AlertTypes.Warning,
+				},
 			]);
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [invalidDataSourcesLoading]);
 
 	const {data, error, loading} = useRequest({
@@ -232,8 +253,8 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 			groupId,
 			orderIOMap,
 			page,
-			query
-		}
+			query,
+		},
 	});
 
 	const existingConnectorTypes = new Set<string>(
@@ -247,16 +268,16 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 	const connectorItems = listAvailableConnectors(
 		existingConnectorTypes,
 		subscriptionName
-	).map(config => ({
+	).map((config) => ({
 		label: config.displayName,
 		onClick: () => {
 			history.push(
 				toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
 					groupId,
-					id: config.type
+					id: config.type,
 				})
 			);
-		}
+		},
 	}));
 
 	const dataSourceItems = STANDALONE_DATA_SOURCES.filter(
@@ -267,20 +288,20 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 			history.push(
 				toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
 					groupId,
-					id: type
+					id: type,
 				})
 			);
-		}
+		},
 	}));
 
 	const renderDataSourcesDropdown = () => (
 		<ClayDropDownWithItems
 			items={[...dataSourceItems, ...connectorItems]}
 			trigger={
-				<ClayButton displayType='primary' size='sm'>
+				<ClayButton displayType="primary" size="sm">
 					{Liferay.Language.get('add-data-source')}
 
-					<ClayIcon className='ml-2' symbol='caret-bottom' />
+					<ClayIcon className="ml-2" symbol="caret-bottom" />
 				</ClayButton>
 			}
 		/>
@@ -294,10 +315,10 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 				{Liferay.Language.get('add-a-data-source-to-get-started')}
 
 				<ClayLink
-					className='d-block mb-3'
+					className="d-block mb-3"
 					href={URLConstants.DataSourceConnection}
-					key='DOCUMENTATION'
-					target='_blank'
+					key="DOCUMENTATION"
+					target="_blank"
 				>
 					{Liferay.Language.get(
 						'access-our-documentation-to-learn-more'
@@ -319,14 +340,15 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 					)}
 				/>
 			);
-		} else {
+		}
+		else {
 			return (
 				<NoResultsDisplay
 					description={connectMessage}
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 					primary
 					title={Liferay.Language.get('no-data-sources-connected')}
@@ -338,7 +360,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 	return (
 		<BasePage
 			className={className}
-			key='dataSourceListpage'
+			key="dataSourceListpage"
 			pageDescription={Liferay.Language.get(
 				'manage-and-connect-data-sources-to-bring-in-data-from-various-sources-into-liferay-analytics-cloud'
 			)}
@@ -357,27 +379,27 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 								hrefFormatter: (dataSource: {id: string}) =>
 									toRoute(Routes.SETTINGS_DATA_SOURCE, {
 										groupId,
-										id: dataSource.id
-									})
+										id: dataSource.id,
+									}),
 							},
-							label: Liferay.Language.get('data-source-name')
+							label: Liferay.Language.get('data-source-name'),
 						},
 						{
 							accessor: PROVIDER_TYPE,
 							dataFormatter: typeFormatter,
-							label: Liferay.Language.get('type')
+							label: Liferay.Language.get('type'),
 						},
 						{
 							cellRenderer: StatusRenderer,
 							label: Liferay.Language.get('status'),
-							sortable: false
+							sortable: false,
 						},
 						{
 							accessor: CREATE_DATE,
 							dataFormatter: (date: string) =>
 								dateFormatter(date, timeZoneId),
-							label: Liferay.Language.get('date-added')
-						}
+							label: Liferay.Language.get('date-added'),
+						},
 					]}
 					delta={delta}
 					entityLabel={Liferay.Language.get('data-sources')}
@@ -388,16 +410,16 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 					orderByOptions={[
 						{
 							label: Liferay.Language.get('name'),
-							value: NAME
+							value: NAME,
 						},
 						{
 							label: Liferay.Language.get('source'),
-							value: PROVIDER_TYPE
+							value: PROVIDER_TYPE,
 						},
 						{
 							label: Liferay.Language.get('date-added'),
-							value: CREATE_DATE
-						}
+							value: CREATE_DATE,
+						},
 					]}
 					orderIOMap={orderIOMap}
 					page={page}
@@ -405,7 +427,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 					renderNav={
 						currentUser.isAdmin() ? renderDataSourcesDropdown : null
 					}
-					rowIdentifier='id'
+					rowIdentifier="id"
 					showCheckbox={false}
 					total={data?.total}
 				/>

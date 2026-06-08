@@ -1,12 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import FaroConstants from 'shared/util/constants';
-import React from 'react';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
-import {invoke, isFunction} from 'lodash';
 import {Map} from 'immutable';
+import {invoke, isFunction} from 'lodash';
+import React from 'react';
+import FaroConstants from '~/shared/util/constants';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
 
 const {
-	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA}
+	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA},
 } = FaroConstants;
 
 const DEFAULT_PAGINATION_PROPS = {
@@ -14,7 +19,7 @@ const DEFAULT_PAGINATION_PROPS = {
 	initialFilterBy: new Map(),
 	initialOrderIOMap: createOrderIOMap(NAME),
 	initialPage: DEFAULT_PAGE,
-	initialQuery: ''
+	initialQuery: '',
 };
 
 export default function withStatefulPagination(
@@ -23,7 +28,7 @@ export default function withStatefulPagination(
 	mapPropsFn,
 	useRef = true
 ) {
-	const getInitialProps = props => {
+	const getInitialProps = (props) => {
 		const initialProps = isFunction(initialPaginationProps)
 			? initialPaginationProps(props)
 			: initialPaginationProps;
@@ -40,7 +45,7 @@ export default function withStatefulPagination(
 				initialFilterBy,
 				initialOrderIOMap,
 				initialPage,
-				initialQuery
+				initialQuery,
 			} = getInitialProps(props);
 
 			this.state = {
@@ -48,7 +53,7 @@ export default function withStatefulPagination(
 				filterBy: initialFilterBy,
 				orderIOMap: initialOrderIOMap,
 				page: initialPage,
-				query: initialQuery
+				query: initialQuery,
 			};
 
 			this._wrappedComponentRef = React.createRef();
@@ -58,7 +63,7 @@ export default function withStatefulPagination(
 		handleDeltaChange(delta) {
 			this.setState({
 				delta,
-				page: DEFAULT_PAGE
+				page: DEFAULT_PAGE,
 			});
 		}
 
@@ -71,14 +76,14 @@ export default function withStatefulPagination(
 		handleOrderIOMapChange(orderIOMap) {
 			this.setState({
 				orderIOMap,
-				page: DEFAULT_PAGE
+				page: DEFAULT_PAGE,
 			});
 		}
 
 		@autobind
 		handlePageChange(page) {
 			this.setState({
-				page
+				page,
 			});
 		}
 
@@ -86,7 +91,7 @@ export default function withStatefulPagination(
 		handleQueryChange(query) {
 			this.setState({
 				page: DEFAULT_PAGE,
-				query
+				query,
 			});
 		}
 
@@ -107,7 +112,7 @@ export default function withStatefulPagination(
 		render() {
 			const {
 				props,
-				state: {delta, filterBy, orderIOMap, page, query}
+				state: {delta, filterBy, orderIOMap, page, query},
 			} = this;
 
 			const statefulProps = {
@@ -121,7 +126,7 @@ export default function withStatefulPagination(
 				onSearchValueChange: this.handleQueryChange,
 				orderIOMap,
 				page,
-				query
+				query,
 			};
 
 			const mappedStatefulProps = mapPropsFn

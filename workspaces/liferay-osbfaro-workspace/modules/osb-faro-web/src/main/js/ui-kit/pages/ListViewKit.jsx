@@ -1,20 +1,26 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import ListGroup from 'shared/components/list-group';
-import ListView from 'shared/components/ListView';
-import React from 'react';
-import Row from '../components/Row';
 import {Set} from 'immutable';
+import React from 'react';
+import ListView from '~/shared/components/ListView';
+import ListGroup from '~/shared/components/list-group';
+
+import Row from '../components/Row';
 
 const ITEMS = [
 	{
-		id: 'Portland'
+		id: 'Portland',
 	},
 	{
-		id: 'San Diego'
+		id: 'San Diego',
 	},
 	{
-		id: 'Seattle'
-	}
+		id: 'Seattle',
+	},
 ];
 
 class ItemComponent extends React.Component {
@@ -33,13 +39,13 @@ class ItemComponent extends React.Component {
 
 class ListViewKit extends React.Component {
 	state = {
-		selectedItemsISet: new Set()
+		selectedItemsISet: new Set(),
 	};
 
 	@autobind
 	handleSelectItemsChange(newVal) {
 		this.setState({
-			selectedItemsISet: newVal
+			selectedItemsISet: newVal,
 		});
 	}
 
@@ -52,7 +58,7 @@ class ListViewKit extends React.Component {
 			>
 				<Row>
 					<ListView
-						className='w-100'
+						className="w-100"
 						itemRenderer={ItemComponent}
 						items={ITEMS}
 						onClick={this.handleClick}
@@ -61,7 +67,7 @@ class ListViewKit extends React.Component {
 
 				<Row>
 					<ListView
-						className='w-100'
+						className="w-100"
 						itemRenderer={ItemComponent}
 						items={ITEMS}
 						onSelectItemsChange={this.handleSelectItemsChange}
@@ -69,7 +75,7 @@ class ListViewKit extends React.Component {
 					>
 						<ListGroup.Item flex header>
 							<ListGroup.ItemField expand>
-								{'These are selectable'}
+								These are selectable
 							</ListGroup.ItemField>
 						</ListGroup.Item>
 					</ListView>

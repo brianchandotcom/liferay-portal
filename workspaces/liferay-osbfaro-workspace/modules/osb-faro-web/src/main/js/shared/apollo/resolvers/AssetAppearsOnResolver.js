@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {v4 as uuidv4} from 'uuid';
 
 const getRndInteger = (min, max) =>
@@ -6,45 +11,49 @@ const getRndInteger = (min, max) =>
 const metrics = {
 	downloadsMetric: {
 		__typename: 'AssetMetric',
-		name: 'downloadsMetric'
+		name: 'downloadsMetric',
 	},
 	impressionMadeMetric: {
 		__typename: 'AssetMetric',
-		name: 'impressionMadeMetric'
+		name: 'impressionMadeMetric',
 	},
 	submissionsMetric: {
 		__typename: 'AssetMetric',
-		name: 'submissionsMetric'
+		name: 'submissionsMetric',
 	},
 	viewsMetric: {
 		__typename: 'AssetMetric',
-		name: 'viewsMetric'
-	}
+		name: 'viewsMetric',
+	},
 };
 
 function generateItems({selectedMetrics, size}) {
-	const arr = new Array(size);
+	const array = new Array(size);
 
-	for (let i = 0; i < arr.length; i++) {
+	for (let i = 0; i < array.length; i++) {
 		const assetTitle = uuidv4();
 		const assetId = `http://liferay.com/web/test/abc/123/${assetTitle}`;
 
-		arr[i] = {
+		array[i] = {
 			__typename: 'BlogMetric',
 			assetId,
 			assetTitle,
-			selectedMetrics: selectedMetrics.map(selectedMetric => ({
+			selectedMetrics: selectedMetrics.map((selectedMetric) => ({
 				...metrics[selectedMetric],
-				value: getRndInteger(0, 1000000)
-			}))
+				value: getRndInteger(0, 1000000),
+			})),
 		};
 	}
 
-	return arr;
+	return array;
 }
 
-export default (_, variables) => ({
-	__typename: 'AssetPages',
-	assetMetrics: generateItems(variables),
-	total: 1000
-});
+const AssetAppearsOnResolver = function AssetAppearsOnResolver(_, variables) {
+	return {
+		__typename: 'AssetPages',
+		assetMetrics: generateItems(variables),
+		total: 1000,
+	};
+};
+
+export default AssetAppearsOnResolver;

@@ -1,30 +1,38 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import EmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import CriteriaSidebarItem from './CriteriaSidebarItem';
-import EmptyState from '@clayui/empty-state';
+import {List} from 'immutable';
 import React from 'react';
-import URLConstants from 'shared/util/url-constants';
+import {useParams} from 'react-router-dom';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {FieldOwnerTypes} from '~/shared/util/constants';
+import {Property, PropertyGroup, PropertySubgroup} from '~/shared/util/records';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
+
 import {
 	ACTIVITY_KEY,
 	EVENT_KEY,
 	FunctionalOperators,
 	PropertyTypes,
 	RelationalOperators,
-	TimeSpans
+	TimeSpans,
 } from '../utils/constants';
 import {createCustomValueMap} from '../utils/custom-inputs';
-import {FieldOwnerTypes} from 'shared/util/constants';
 import {jsDatetoYYYYMMDD} from '../utils/utils';
-import {List} from 'immutable';
-import {Property, PropertyGroup, PropertySubgroup} from 'shared/util/records';
-import {Routes, toRoute} from 'shared/util/router';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useParams} from 'react-router-dom';
+import CriteriaSidebarItem from './CriteriaSidebarItem';
 
 /**
  * Returns a default value for a property provided.
  */
-export const getDefaultValue = (property: Property): any => {
+export const getDefaultValue = function getDefaultValue(
+	property: Property
+): any {
 	const {name, options, type} = property;
 
 	switch (type) {
@@ -40,10 +48,10 @@ export const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: name,
-							value: jsDatetoYYYYMMDD(new Date())
-						}
-					]
-				}
+							value: jsDatetoYYYYMMDD(new Date()),
+						},
+					],
+				},
 			]);
 		}
 		case PropertyTypes.SessionDateTime:
@@ -55,10 +63,10 @@ export const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: name,
-							value: new Date().toISOString()
-						}
-					]
-				}
+							value: new Date().toISOString(),
+						},
+					],
+				},
 			]);
 		case PropertyTypes.Boolean:
 			return 'true';
@@ -70,15 +78,15 @@ export const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: 'name',
-							value: name
+							value: name,
 						},
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: 'score',
-							value: 'true'
-						}
-					]
-				}
+							value: 'true',
+						},
+					],
+				},
 			]);
 		case PropertyTypes.AccountDate:
 			return createCustomValueMap([
@@ -88,10 +96,10 @@ export const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: name,
-							value: new Date().toISOString()
-						}
-					]
-				}
+							value: new Date().toISOString(),
+						},
+					],
+				},
 			]);
 		case PropertyTypes.AccountNumber:
 		case PropertyTypes.AccountText:
@@ -105,10 +113,10 @@ export const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: name,
-							value: ''
-						}
-					]
-				}
+							value: '',
+						},
+					],
+				},
 			]);
 		case PropertyTypes.Event:
 			return createCustomValueMap([
@@ -118,23 +126,23 @@ export const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: EVENT_KEY,
-							value: name
+							value: name,
 						},
 
 						{
 							operatorName: FunctionalOperators.Contains,
 							propertyName: 'attribute/',
-							value: ''
+							value: '',
 						},
 						{
 							operatorName: RelationalOperators.GT,
 							propertyName: 'day',
-							value: TimeSpans.Last24Hours
-						}
-					]
+							value: TimeSpans.Last24Hours,
+						},
+					],
 				},
 				{key: 'operator', value: RelationalOperators.GE},
-				{key: 'value', value: 1}
+				{key: 'value', value: 1},
 			]);
 		case PropertyTypes.Behavior:
 			return createCustomValueMap([
@@ -144,23 +152,23 @@ export const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: ACTIVITY_KEY,
-							value: ''
+							value: '',
 						},
 						{
 							operatorName: RelationalOperators.GT,
 							propertyName: 'day',
-							value: TimeSpans.Last24Hours
-						}
-					]
+							value: TimeSpans.Last24Hours,
+						},
+					],
 				},
 				{key: 'operator', value: RelationalOperators.GE},
-				{key: 'value', value: 1}
+				{key: 'value', value: 1},
 			]);
 		case PropertyTypes.Tag:
 		case PropertyTypes.Vocabulary:
 			return createCustomValueMap([
 				{key: 'operator', value: RelationalOperators.GE},
-				{key: 'value', value: 1}
+				{key: 'value', value: 1},
 			]);
 		case PropertyTypes.OrganizationBoolean:
 			return createCustomValueMap([
@@ -170,10 +178,10 @@ export const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: name,
-							value: 'true'
-						}
-					]
-				}
+							value: 'true',
+						},
+					],
+				},
 			]);
 		case PropertyTypes.SessionGeolocation:
 		case PropertyTypes.SessionNumber:
@@ -185,15 +193,15 @@ export const getDefaultValue = (property: Property): any => {
 						{
 							operatorName: RelationalOperators.EQ,
 							propertyName: name,
-							value: options?.length ? options[0].value : ''
+							value: options?.length ? options[0].value : '',
 						},
 						{
 							operatorName: RelationalOperators.GT,
 							propertyName: 'completeDate',
-							value: TimeSpans.Last24Hours
-						}
-					]
-				}
+							value: TimeSpans.Last24Hours,
+						},
+					],
+				},
 			]);
 		case PropertyTypes.Text:
 			if (options && !!options.length) {
@@ -215,7 +223,7 @@ interface ICriteriaSidebarCollapseProps {
 const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 	propertyGroupsIList,
 	propertyKey,
-	searchValue
+	searchValue,
 }) => {
 	const {groupId} = useParams();
 	const currentUser = useCurrentUser();
@@ -246,7 +254,7 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 									searchValue.toLowerCase()
 								);
 							}
-						) as List<Property>
+						) as List<Property>,
 					})
 			) as List<PropertySubgroup>;
 		}
@@ -265,9 +273,9 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 
 	if (!!searchValue && noResults) {
 		return (
-			<div className='empty-message'>
+			<div className="empty-message">
 				<EmptyState
-					className='text-center'
+					className="text-center"
 					description={Liferay.Language.get(
 						'review-your-search-and-try-again'
 					)}
@@ -279,33 +287,33 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 
 	if (propertyKey === FieldOwnerTypes.Account && !searchValue && noResults) {
 		return (
-			<div className='empty-message mt-10 text-center'>
+			<div className="empty-message mt-10 text-center">
 				<EmptyState
-					className='text-center'
+					className="text-center"
 					description={Liferay.Language.get(
 						'connect-a-data-source-containing-account-data'
 					)}
 					title={Liferay.Language.get('no-account-data-synced')}
 				>
 					<ClayLink
-						decoration='underline'
+						decoration="underline"
 						href={URLConstants.HelpConnectDxp}
-						key='helpConnectDxpText'
-						target='_blank'
+						key="helpConnectDxpText"
+						target="_blank"
 					>
 						{Liferay.Language.get('learn-more-about-data-sources')}
 
-						<span className='inline-item inline-item-after'>
-							<ClayIcon fontSize={10} symbol='shortcut' />
+						<span className="inline-item inline-item-after">
+							<ClayIcon fontSize={10} symbol="shortcut" />
 						</span>
 					</ClayLink>
 					{authorized && (
 						<ClayLink
 							button
-							className='button-root mt-3'
-							displayType='secondary'
+							className="button-root mt-3"
+							displayType="secondary"
 							href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-								groupId
+								groupId,
 							})}
 						>
 							{Liferay.Language.get('connect-data-source')}
@@ -317,19 +325,19 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 	}
 
 	return (
-		<ul className='property-subgroups-list active'>
+		<ul className="active property-subgroups-list">
 			{filteredProperties.toArray().map(({label, properties}, i) => (
 				<li key={`${label}-${i}`}>
 					{label && (
-						<div className='property-subgroup-label'>{label}</div>
+						<div className="property-subgroup-label">{label}</div>
 					)}
 
 					{properties.isEmpty() ? (
-						<div className='empty-message'>
+						<div className="empty-message">
 							{Liferay.Language.get('no-results-were-found')}
 						</div>
 					) : (
-						<ul className='properties-list'>
+						<ul className="properties-list">
 							{properties.toArray().map((property, i) => {
 								const {label, name, propertyKey, type} =
 									property;

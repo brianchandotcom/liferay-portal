@@ -1,9 +1,14 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import React from 'react';
-import {ClayCheckbox} from '@clayui/form';
-import {sub} from 'shared/util/lang';
+import {sub} from '~/shared/util/lang';
 
 interface ISalesforceAccountsAndIndividualsProps {
 	accountsSyncedCount?: number;
@@ -26,10 +31,10 @@ const SalesforceAccountsAndIndividuals: React.FC<
 	enabledIndividual,
 	individualsSyncedCount,
 	onAccountChange,
-	onIndividualChange
+	onIndividualChange,
 }) => (
-	<div className='pt-1'>
-		<ClayList className='mb-0'>
+	<div className="pt-1">
+		<ClayList className="mb-0">
 			<ClayList.Item flex>
 				<ClayList.ItemField>
 					<ClayCheckbox
@@ -40,10 +45,10 @@ const SalesforceAccountsAndIndividuals: React.FC<
 				</ClayList.ItemField>
 
 				<ClayList.ItemField>
-					<ClaySticker displayType='unstyled'>
+					<ClaySticker displayType="unstyled">
 						<ClayIcon
-							className='text-secondary'
-							symbol='briefcase'
+							className="text-secondary"
+							symbol="briefcase"
 						/>
 					</ClaySticker>
 				</ClayList.ItemField>
@@ -63,7 +68,7 @@ const SalesforceAccountsAndIndividuals: React.FC<
 						accountsSyncedCount >= 0 && (
 							<ClayList.ItemText>
 								{sub(Liferay.Language.get('x-items-synced'), [
-									accountsSyncedCount
+									accountsSyncedCount,
 								])}
 							</ClayList.ItemText>
 						)}
@@ -80,13 +85,13 @@ const SalesforceAccountsAndIndividuals: React.FC<
 				</ClayList.ItemField>
 
 				<ClayList.ItemField>
-					<ClaySticker displayType='unstyled'>
-						<ClayIcon className='text-secondary' symbol='users' />
+					<ClaySticker displayType="unstyled">
+						<ClayIcon className="text-secondary" symbol="users" />
 					</ClaySticker>
 				</ClayList.ItemField>
 
 				<ClayList.ItemField
-					className='d-flex justify-content-center'
+					className="d-flex justify-content-center"
 					expand
 				>
 					<ClayList.ItemTitle>
@@ -103,7 +108,7 @@ const SalesforceAccountsAndIndividuals: React.FC<
 						individualsSyncedCount >= 0 && (
 							<ClayList.ItemText>
 								{sub(Liferay.Language.get('x-items-synced'), [
-									individualsSyncedCount
+									individualsSyncedCount,
 								])}
 							</ClayList.ItemText>
 						)}

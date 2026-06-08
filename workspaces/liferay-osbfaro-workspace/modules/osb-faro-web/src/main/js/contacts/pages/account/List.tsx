@@ -1,23 +1,27 @@
-import * as API from 'shared/api';
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import AccountsDataSet from 'shared/components/AccountsDataSet';
-import BasePage from 'shared/components/base-page';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import Link from '@clayui/link';
-import Loading from 'shared/components/Loading';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useState} from 'react';
-import TotalAccounts from 'contacts/components/account/TotalAccounts';
-import URLConstants from 'shared/util/url-constants';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {isNil} from 'lodash/fp';
-import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {RangeSelectors} from 'shared/types';
-import {Routes, toRoute} from 'shared/util/router';
-import {SectionHeader} from 'shared/components/SectionHeader';
-import {Sizes} from 'shared/util/constants';
-import {useChannelContext} from 'shared/context/channel';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useRequest} from 'shared/hooks/useRequest';
+import React, {useState} from 'react';
+import TotalAccounts from '~/contacts/components/account/TotalAccounts';
+import * as API from '~/shared/api';
+import AccountsDataSet from '~/shared/components/AccountsDataSet';
+import Loading from '~/shared/components/Loading';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import {SectionHeader} from '~/shared/components/SectionHeader';
+import BasePage from '~/shared/components/base-page';
+import {DropdownRangeKey} from '~/shared/components/dropdown-range-key/DropdownRangeKey';
+import {useChannelContext} from '~/shared/context/channel';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {RangeSelectors} from '~/shared/types';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {RangeKeyTimeRanges, Sizes} from '~/shared/util/constants';
+import {Routes, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 interface IListProps {
 	channelId: string;
@@ -31,15 +35,15 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>({
 		rangeEnd: null,
 		rangeKey: RangeKeyTimeRanges.Last30Days,
-		rangeStart: null
+		rangeStart: null,
 	});
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
 		dataSourceFn: API.dataSource.fetchChannels,
 		variables: {
 			channelIds: [channelId],
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const authorized = currentUser.isAdmin();
@@ -59,10 +63,10 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 						<>
 							<p>
 								<Link
-									className='d-block mb-3'
+									className="d-block mb-3"
 									href={URLConstants.DataSourceConnection}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-more'
@@ -71,12 +75,12 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 							</p>
 							<Link
 								button
-								className='button-root'
-								displayType='primary'
+								className="button-root"
+								displayType="primary"
 								href={toRoute(
 									Routes.SETTINGS_DATA_SOURCE_LIST,
 									{
-										groupId
+										groupId,
 									}
 								)}
 							>
@@ -90,7 +94,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 			icon={{
 				border: false,
 				size: Sizes.XXXLarge,
-				symbol: 'ac_satellite'
+				symbol: 'ac_satellite',
 			}}
 			spacer
 			title={Liferay.Language.get('no-data-sources-connected')}
@@ -108,8 +112,8 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
-					})
+						label: selectedChannel && selectedChannel.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -124,10 +128,10 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 					<>
 						<TotalAccounts groupId={groupId} />
 
-						<div className='align-items-center d-flex justify-content-between mb-3'>
+						<div className="align-items-center d-flex justify-content-between mb-3">
 							<SectionHeader
-								className='mb-0'
-								icon='box-container'
+								className="mb-0"
+								icon="box-container"
 								title={Liferay.Language.get('accounts')}
 							/>
 
@@ -139,7 +143,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 						</div>
 
 						<AccountsDataSet
-							activityStatusFilter='ACTIVE'
+							activityStatusFilter="ACTIVE"
 							apiURL={`/o/faro/contacts/${groupId}/account/search?channelId=${channelId}`}
 							channelId={channelId}
 							groupId={groupId}

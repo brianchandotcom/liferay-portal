@@ -1,25 +1,30 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {FieldArray, FormikTouched, FormikValues} from 'formik';
+import React, {useRef} from 'react';
+import {connect} from 'react-redux';
+import PreferenceMutation from '~/settings/data-privacy/queries/PreferenceMutation';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import Card from '~/shared/components/Card';
+import Loading, {Align} from '~/shared/components/Loading';
 import Form, {
 	validateMaxLength,
-	validateRequired
-} from 'shared/components/form';
-import Loading, {Align} from 'shared/components/Loading';
-import PreferenceMutation from 'settings/data-privacy/queries/PreferenceMutation';
-import PreferenceQuery from 'shared/queries/PreferenceQuery';
-import React, {useRef} from 'react';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert, Modal} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose, withHistory} from 'shared/hoc';
-import {connect} from 'react-redux';
-import {FieldArray, FormikTouched, FormikValues} from 'formik';
-import {Routes, toRoute} from 'shared/util/router';
-import {sequence} from 'shared/util/promise';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/client';
-import {WrapSafeResults} from 'shared/hoc/util';
+	validateRequired,
+} from '~/shared/components/form';
+import {compose, withHistory} from '~/shared/hoc';
+import {WrapSafeResults} from '~/shared/hoc/util';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import PreferenceQuery from '~/shared/queries/PreferenceQuery';
+import {Alert, Modal} from '~/shared/types';
+import {sequence} from '~/shared/util/promise';
+import {Routes, toRoute} from '~/shared/util/router';
 
 const QUERY_STRING_SIZE_LIMIT = 512;
 const SEARCH_QUERY_STRINGS_KEY = 'search-query-strings';
@@ -48,11 +53,11 @@ const renderAddButton = (
 			<ClayButton
 				aria-label={Liferay.Language.get('add')}
 				borderless
-				className='button-root ml-1'
-				displayType='secondary'
+				className="button-root ml-1"
+				displayType="secondary"
 				{...props}
 			>
-				<ClayIcon className='icon-root' symbol='plus' />
+				<ClayIcon className="icon-root" symbol="plus" />
 			</ClayButton>
 		);
 	}
@@ -63,21 +68,21 @@ const renderAddButton = (
 const removeSpecialCharacters = (originalValue: string): string =>
 	originalValue.split('=')[0].replace(/[^\w\s]/gi, '');
 
-export const SearchCard: React.FC<ISearchCardProps> = ({
+export const SearchCard = function SearchCard({
 	addAlert,
 	close,
 	groupId,
 	history,
-	open
-}) => {
+	open,
+}: ISearchCardProps) {
 	const currentUser = useCurrentUser();
 	const {
 		data: searchQueryStringsData,
 		error,
-		loading
+		loading,
 	} = useQuery(PreferenceQuery, {
 		fetchPolicy: 'no-cache',
-		variables: {key: SEARCH_QUERY_STRINGS_KEY}
+		variables: {key: SEARCH_QUERY_STRINGS_KEY},
 	});
 
 	const [updatePreference] = useMutation(PreferenceMutation);
@@ -92,7 +97,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 			: [];
 
 	const handleSubmit = ({
-		queryStringList
+		queryStringList,
 	}: {
 		queryStringList: string[];
 	}): void => {
@@ -103,15 +108,15 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 		updatePreference({
 			variables: {
 				key: SEARCH_QUERY_STRINGS_KEY,
-				value: JSON.stringify(searchQueryStrings)
-			}
+				value: JSON.stringify(searchQueryStrings),
+			},
 		})
 			.then(() => {
 				addAlert({
 					alertType: Alert.Types.Success,
 					message: Liferay.Language.get(
 						'search-query-definition-has-been-saved'
-					)
+					),
 				});
 
 				history.push(toRoute(Routes.SETTINGS_DEFINITIONS, {groupId}));
@@ -121,13 +126,13 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 
 				addAlert({
 					alertType: Alert.Types.Error,
-					message: Liferay.Language.get('error')
+					message: Liferay.Language.get('error'),
 				});
 			});
 	};
 
 	const handleCancel = (touchedFields: FormikTouched<FormikValues>): void => {
-		Object.keys(touchedFields).length > 0
+		Object.keys(touchedFields).length
 			? open(modalTypes.CONFIRMATION_MODAL, {
 					cancelMessage: Liferay.Language.get('cancel'),
 					message: Liferay.Language.get(
@@ -143,8 +148,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 					submitButtonDisplay: 'warning',
 					submitMessage: Liferay.Language.get('exit'),
 					title: Liferay.Language.get('exit-without-saving'),
-					titleIcon: 'warning-full'
-			  })
+					titleIcon: 'warning-full',
+				})
 			: history.push(toRoute(Routes.SETTINGS_DEFINITIONS, {groupId}));
 	};
 
@@ -159,17 +164,17 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 	};
 
 	return (
-		<Card className='query-card-root'>
-			<Card.Header className='mb-1'>
+		<Card className="query-card-root">
+			<Card.Header className="mb-1">
 				<Card.Title>{Liferay.Language.get('query-string')}</Card.Title>
 			</Card.Header>
 
 			<Card.Body>
 				<WrapSafeResults
-					className='flex-grow-1'
+					className="flex-grow-1"
 					error={error}
 					errorProps={{
-						className: 'flex-grow-1'
+						className: 'flex-grow-1',
 					}}
 					loading={loading}
 					page={false}
@@ -177,7 +182,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 				>
 					<Form
 						initialValues={{
-							queryStringList: getQueryStringListInitialValue()
+							queryStringList: getQueryStringListInitialValue(),
 						}}
 						innerRef={_formRef as any}
 						onSubmit={handleSubmit}
@@ -189,19 +194,19 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 							setFieldTouched,
 							setFieldValue,
 							touched,
-							values
+							values,
 						}) => (
 							<Form.Form onSubmit={handleSubmit}>
 								<FieldArray
-									name='queryStringList'
-									render={arrayHelpers => (
+									name="queryStringList"
+									render={(arrayHelpers) => (
 										<>
-											<div className='form-inline mb-3'>
+											<div className="form-inline mb-3">
 												<Form.Input
-													className='query-input'
+													className="query-input"
 													disabled
-													name='defaultQueryString'
-													value='q'
+													name="defaultQueryString"
+													value="q"
 												/>
 
 												{renderAddButton(
@@ -213,7 +218,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 														onClick: () =>
 															arrayHelpers.push(
 																''
-															)
+															),
 													}
 												)}
 											</div>
@@ -221,11 +226,11 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 											{values.queryStringList.map(
 												(queryString, index) => (
 													<div
-														className='form-inline mb-3'
+														className="form-inline mb-3"
 														key={index}
 													>
 														<Form.Input
-															className='query-input'
+															className="query-input"
 															disabled={
 																!authorized
 															}
@@ -242,7 +247,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																validateRequired,
 																validateMaxLength(
 																	QUERY_STRING_SIZE_LIMIT
-																)
+																),
 															])}
 														/>
 														{authorized && (
@@ -251,11 +256,11 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																	'delete'
 																)}
 																borderless
-																className='button-root ml-1'
+																className="button-root ml-1"
 																disabled={
 																	isSubmitting
 																}
-																displayType='secondary'
+																displayType="secondary"
 																onClick={() =>
 																	arrayHelpers.remove(
 																		index
@@ -263,8 +268,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																}
 															>
 																<ClayIcon
-																	className='icon-root'
-																	symbol='trash'
+																	className="icon-root"
+																	symbol="trash"
 																/>
 															</ClayButton>
 														)}
@@ -280,7 +285,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																onClick: () =>
 																	arrayHelpers.push(
 																		''
-																	)
+																	),
 															},
 															index
 														)}
@@ -292,12 +297,12 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 								/>
 
 								{authorized && (
-									<div className='mt-4'>
+									<div className="mt-4">
 										<ClayButton
-											className='button-root'
+											className="button-root"
 											disabled={!isValid}
-											displayType='primary'
-											type='submit'
+											displayType="primary"
+											type="submit"
 										>
 											{isSubmitting && (
 												<Loading align={Align.Left} />
@@ -307,8 +312,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 										</ClayButton>
 
 										<ClayButton
-											className='button-root ml-4'
-											displayType='secondary'
+											className="button-root ml-4"
+											displayType="secondary"
 											onClick={() =>
 												handleCancel(touched)
 											}

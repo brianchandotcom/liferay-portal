@@ -1,33 +1,39 @@
-import BasePage from 'settings/components/base-page/BasePage';
-import Constants, {JobRunStatuses} from 'shared/util/constants';
-import OutputVersionsCard from '../components/OutputVersionsCard';
-import React from 'react';
-import RecommendationJobRunsQuery from '../queries/RecommendationJobRunsQuery';
-import TrainingItemsCard from '../components/TrainingItemsCard';
-import withRecommendation from 'shared/hoc/WithRecommendation';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
-import {Filter, Job, JobParameter} from '../utils/utils';
-import {get} from 'lodash';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useMutation, useQuery} from '@apollo/client';
 import {getOperationName} from '@apollo/client/utilities';
-import {getRecommendations} from 'shared/util/breadcrumbs';
+import {get} from 'lodash';
+import React from 'react';
+import {ConnectedProps, connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {compose} from 'redux';
+import BasePage from '~/settings/components/base-page/BasePage';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import {withHistory} from '~/shared/hoc';
+import withRecommendation from '~/shared/hoc/WithRecommendation';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {Alert} from '~/shared/types';
+import {getRecommendations} from '~/shared/util/breadcrumbs';
+import Constants, {JobRunStatuses} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import {Routes, toRoute} from '~/shared/util/router';
+
+import OutputVersionsCard from '../components/OutputVersionsCard';
+import TrainingItemsCard from '../components/TrainingItemsCard';
+import RecommendationJobRunsQuery from '../queries/RecommendationJobRunsQuery';
 import {
 	RECOMMENDATION_DELETE_MUTATION,
-	RECOMMENDATION_RUN_MUTATION
+	RECOMMENDATION_RUN_MUTATION,
 } from '../queries/RecommendationMutation';
-import {Routes, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/client';
-import {useParams} from 'react-router-dom';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
-import {withHistory} from 'shared/hoc';
+import {Filter, Job, JobParameter} from '../utils/utils';
 
 const {
-	pagination: {orderDescending}
+	pagination: {orderDescending},
 } = Constants;
 const connector = connect(null, {addAlert, close, open});
 
@@ -54,10 +60,10 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 			size: 1,
 			sort: {
 				column: 'id',
-				type: orderDescending.toUpperCase()
+				type: orderDescending.toUpperCase(),
 			},
-			start: 0
-		}
+			start: 0,
+		},
 	});
 
 	const [deleteRecommendationJobs] = useMutation(
@@ -81,15 +87,15 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 	const name = get(job, 'name');
 
 	return (
-		<div className='row'>
-			<div className='col-xl-8'>
+		<div className="row">
+			<div className="col-xl-8">
 				<BasePage
 					breadcrumbItems={[
 						getRecommendations({groupId}),
 						{
 							active: true,
-							label: name
-						}
+							label: name,
+						},
 					]}
 					pageActions={
 						currentUser.isAdmin()
@@ -104,7 +110,7 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 													job,
 													onClose: close,
 													onSubmit: ({
-														runDataPeriod
+														runDataPeriod,
 													}: {
 														runDataPeriod: string;
 													}) => {
@@ -114,12 +120,12 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 															refetchQueries: [
 																getOperationName(
 																	RecommendationJobRunsQuery
-																) as string
+																) as string,
 															],
 															variables: {
 																jobId,
-																runDataPeriod
-															}
+																runDataPeriod,
+															},
 														})
 															.then(() => {
 																addAlert({
@@ -130,7 +136,7 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																	message:
 																		Liferay.Language.get(
 																			'retraining-has-been-started'
-																		)
+																		),
 																});
 
 																close();
@@ -146,27 +152,27 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																			'there-was-an-error-processing-your-request.-please-try-again'
 																		),
 																	timeout:
-																		false
+																		false,
 																});
 															});
 													},
 													trainingPeriod: get(
 														job,
 														'trainingPeriod'
-													)
+													),
 												}
 											);
-										}
+										},
 									},
 									{
 										href: toRoute(
 											Routes.SETTINGS_RECOMMENDATION_EDIT,
 											{
 												groupId,
-												jobId
+												jobId,
 											}
 										),
-										label: Liferay.Language.get('edit')
+										label: Liferay.Language.get('edit'),
 									},
 									{
 										label: Liferay.Language.get('delete'),
@@ -176,7 +182,7 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 												{
 													message: (
 														<div>
-															<div className='h4 text-secondary'>
+															<div className="h4 text-secondary">
 																{sub(
 																	Liferay.Language.get(
 																		'delete-x-and-its-historical-training-output-data'
@@ -200,9 +206,9 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 															{
 																variables: {
 																	jobIds: [
-																		jobId
-																	]
-																}
+																		jobId,
+																	],
+																},
 															}
 														)
 															.then(() => {
@@ -217,16 +223,16 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																				'x-has-been-deleted'
 																			),
 																			[
-																				name
+																				name,
 																			]
-																		) as string
+																		) as string,
 																});
 
 																history.push(
 																	toRoute(
 																		Routes.SETTINGS_RECOMMENDATIONS,
 																		{
-																			groupId
+																			groupId,
 																		}
 																	)
 																);
@@ -242,7 +248,7 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																			'there-was-an-error-processing-your-request.-please-try-again'
 																		),
 																	timeout:
-																		false
+																		false,
 																});
 															});
 													},
@@ -258,12 +264,12 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 														),
 														[name]
 													),
-													titleIcon: 'warning-full'
+													titleIcon: 'warning-full',
 												}
 											);
-										}
-									}
-							  ]
+										},
+									},
+								]
 							: []
 					}
 					pageActionsDisplayLimit={3}

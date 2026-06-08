@@ -1,5 +1,10 @@
-import InputModal from 'shared/components/modals/InputModal';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import InputModal from '~/shared/components/modals/InputModal';
 
 class InputModalKit extends React.Component {
 	handleSubmit(val) {
@@ -15,8 +20,8 @@ class InputModalKit extends React.Component {
 			>
 				<InputModal
 					onSubmit={this.handleSubmit}
-					placeholder='Put some text in here'
-					title='Input Modal Preview'
+					placeholder="Put some text in here"
+					title="Input Modal Preview"
 				/>
 			</div>
 		);

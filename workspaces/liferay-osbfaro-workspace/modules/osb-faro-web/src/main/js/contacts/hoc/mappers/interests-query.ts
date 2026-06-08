@@ -1,7 +1,12 @@
-import {COUNT, getSortFromOrderIOMap} from 'shared/util/pagination';
-import {OrderByDirections} from 'shared/util/constants';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-export {getMapResultToProps} from 'sites/hocs/mappers/composition-query';
+import {OrderByDirections} from '~/shared/util/constants';
+import {COUNT, getSortFromOrderIOMap} from '~/shared/util/pagination';
+
+export {getMapResultToProps} from '~/sites/hocs/mappers/composition-query';
 
 interface IMapPropsArgs {
 	channelId: string;
@@ -18,7 +23,7 @@ const mapPropsToOptions = ({
 	id,
 	orderIOMap,
 	page,
-	query
+	query,
 }: IMapPropsArgs) => ({
 	variables: {
 		active: true,
@@ -27,13 +32,13 @@ const mapPropsToOptions = ({
 		keywords: query,
 		size: delta,
 		sort: getSortFromOrderIOMap(orderIOMap),
-		start: (page - 1) * delta
-	}
+		start: (page - 1) * delta,
+	},
 });
 
 const mapCardPropsToOptions = ({
 	channelId,
-	id
+	id,
 }: {
 	channelId: string;
 	id: string;
@@ -45,10 +50,10 @@ const mapCardPropsToOptions = ({
 		size: 5,
 		sort: {
 			column: COUNT,
-			type: OrderByDirections.Descending
+			type: OrderByDirections.Descending,
 		},
-		start: 0
-	}
+		start: 0,
+	},
 });
 
 export {mapCardPropsToOptions, mapPropsToOptions};

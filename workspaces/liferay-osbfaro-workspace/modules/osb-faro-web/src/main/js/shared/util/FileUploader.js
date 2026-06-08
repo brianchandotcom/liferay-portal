@@ -1,6 +1,12 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import FaroConstants from './constants';
 import {get, noop, uniqueId} from 'lodash';
+
+import FaroConstants from './constants';
 
 const {portletNamespace} = FaroConstants;
 
@@ -8,13 +14,14 @@ export const ERROR_TYPES = {
 	FILE_LIMIT: 'FILE_LIMIT',
 	INVALID_FILE: 'INVALID_FILE',
 	MULTIPLE_FILES: 'MULTIPLE_FILES',
-	UPLOAD_FAILURE: 'UPLOAD_FAILURE'
+	UPLOAD_FAILURE: 'UPLOAD_FAILURE',
 };
 
 export function normalizeFiles(files) {
 	if (files instanceof Event) {
 		files = files.target.files;
-	} else if (files instanceof File) {
+	}
+	else if (files instanceof File) {
 		files = [files];
 	}
 
@@ -88,7 +95,8 @@ export default class FileUploader {
 
 		if (error) {
 			this.emitError(error);
-		} else {
+		}
+		else {
 			this.upload(files);
 		}
 	}
@@ -129,7 +137,7 @@ export default class FileUploader {
 			completed: true,
 			name,
 			response,
-			status
+			status,
 		});
 	}
 
@@ -140,7 +148,7 @@ export default class FileUploader {
 			_id,
 			name,
 			progress: (loaded / total) * 100,
-			size: total
+			size: total,
 		});
 	}
 
@@ -149,14 +157,14 @@ export default class FileUploader {
 			_id,
 			name,
 			progress: 0,
-			url
+			url,
 		});
 	}
 
 	sendRequest(file) {
 		this._reader = new FileReader();
 
-		this._reader.onload = event => {
+		this._reader.onload = (event) => {
 			const localFilePath = event.target.result;
 
 			const request = new XMLHttpRequest();
@@ -169,7 +177,8 @@ export default class FileUploader {
 				request.open('PUT', `${this.uploadURL}/${name}`, true);
 
 				request.setRequestHeader('content-type', 'multipart/form-data');
-			} else {
+			}
+			else {
 				data = new FormData();
 
 				data.append('multipartFile', file);
@@ -198,7 +207,7 @@ export default class FileUploader {
 	}
 
 	upload(files) {
-		files.forEach(file => {
+		files.forEach((file) => {
 			this.sendRequest(file);
 		});
 	}
@@ -212,8 +221,8 @@ export default class FileUploader {
 			return ERROR_TYPES.FILE_LIMIT;
 		}
 
-		const validType = files.every(file =>
-			this.fileTypes.some(type => file.name.endsWith(type))
+		const validType = files.every((file) =>
+			this.fileTypes.some((type) => file.name.endsWith(type))
 		);
 
 		if (!validType) {

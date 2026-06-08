@@ -1,12 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import DateInput from 'shared/components/DateInput';
-import Form from 'shared/components/form';
 import React from 'react';
-import {formatDateToTimeZone} from 'shared/util/date';
+import DateInput from '~/shared/components/DateInput';
+import Form from '~/shared/components/form';
+import {formatDateToTimeZone} from '~/shared/util/date';
+
 import {
 	INPUT_DATE_TIME_FORMAT,
 	INPUT_DISPLAY_DATE_TIME_FORMAT,
-	PropertyTypes
+	PropertyTypes,
 } from '../utils/constants';
 import {ISegmentEditorInputBase} from '../utils/types';
 
@@ -19,7 +25,7 @@ export default class DateTimeInput extends React.Component<IDateTimeInputProps> 
 	handleDateChange(value: string) {
 		this.props.onChange({
 			type: PropertyTypes.Date,
-			value: formatDateToTimeZone(value, undefined, 'UTC')
+			value: formatDateToTimeZone(value, undefined, 'UTC'),
 		});
 	}
 
@@ -30,7 +36,7 @@ export default class DateTimeInput extends React.Component<IDateTimeInputProps> 
 			operatorRenderer: OperatorDropdown,
 			property: {entityName},
 			timeZoneId,
-			value
+			value,
 		} = this.props;
 
 		const date = formatDateToTimeZone(
@@ -40,13 +46,13 @@ export default class DateTimeInput extends React.Component<IDateTimeInputProps> 
 		);
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 

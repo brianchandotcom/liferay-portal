@@ -1,26 +1,32 @@
-import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Map} from 'immutable';
 import React from 'react';
-import {CustomValue} from 'shared/util/records';
+import {PropertyTypes} from '~/segment/segment-editor/dynamic/utils/constants';
 import {
 	getFilterCriterionIMap,
 	getIndexFromPropertyName,
 	getOperator,
-	getPropertyValue
-} from 'segment/segment-editor/dynamic/utils/custom-inputs';
+	getPropertyValue,
+} from '~/segment/segment-editor/dynamic/utils/custom-inputs';
+import {isOfKnownType} from '~/segment/segment-editor/dynamic/utils/utils';
+import {CustomValue} from '~/shared/util/records';
+
+import {IDisplayComponentProps} from '../types';
 import {
 	getOperatorLabel,
 	maybeFormatToKnownType,
-	maybeFormatValue
+	maybeFormatValue,
 } from '../utils';
-import {IDisplayComponentProps} from '../types';
-import {isOfKnownType} from 'segment/segment-editor/dynamic/utils/utils';
-import {Map} from 'immutable';
-import {PropertyTypes} from 'segment/segment-editor/dynamic/utils/constants';
+import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
 
 const SessionDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const valueIMap = criterion.value as CustomValue;
 
@@ -48,7 +54,7 @@ const SessionDisplay: React.FC<IDisplayComponentProps> = ({
 		);
 
 		values = [cityIndex, regionIndex, countryIndex].filter(
-			index => index > -1
+			(index) => index > -1
 		);
 	}
 
@@ -67,7 +73,7 @@ const SessionDisplay: React.FC<IDisplayComponentProps> = ({
 			{!isOfKnownType(operatorKey) && (
 				<b>
 					{values
-						.map(index =>
+						.map((index) =>
 							maybeFormatValue(
 								getPropertyValue(valueIMap, 'value', index),
 								type,

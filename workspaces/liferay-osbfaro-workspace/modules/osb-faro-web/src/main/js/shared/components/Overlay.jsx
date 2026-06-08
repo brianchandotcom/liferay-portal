@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {align, POSITIONS} from 'shared/util/align';
 import {debounce, isNil, noop, uniqueId} from 'lodash';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {POSITIONS, align} from '~/shared/util/align';
 
 export const ALIGNMENTS = [
 	'topCenter',
@@ -14,7 +19,7 @@ export const ALIGNMENTS = [
 	'bottomCenter',
 	'bottomLeft',
 	'leftCenter',
-	'topLeft'
+	'topLeft',
 ];
 
 const ALIGNMENTS_MAP = {
@@ -25,7 +30,7 @@ const ALIGNMENTS_MAP = {
 	rightCenter: POSITIONS.RightCenter,
 	topCenter: POSITIONS.TopCenter,
 	topLeft: POSITIONS.TopLeft,
-	topRight: POSITIONS.TopRight
+	topRight: POSITIONS.TopRight,
 };
 
 /**
@@ -54,7 +59,7 @@ const OverlayContent = React.forwardRef(
 		<div
 			{...otherProps}
 			className={getCN('overlay-content-root', className)}
-			data-testid='overlay'
+			data-testid="overlay"
 			ref={ref}
 		>
 			{children}
@@ -68,8 +73,8 @@ export default class Overlay extends React.Component {
 			addChildOverlay: PropTypes.func,
 			onMouseEnter: PropTypes.func,
 			onMouseLeave: PropTypes.func,
-			removeChildOverlay: PropTypes.func
-		})
+			removeChildOverlay: PropTypes.func,
+		}),
 	};
 
 	static defaultProps = {
@@ -79,7 +84,7 @@ export default class Overlay extends React.Component {
 		offset: 8,
 		onOutsideClick: noop,
 		showDelay: 400,
-		usePortal: true
+		usePortal: true,
 	};
 
 	static propTypes = {
@@ -91,12 +96,12 @@ export default class Overlay extends React.Component {
 		offset: PropTypes.number,
 		onOutsideClick: PropTypes.func,
 		showDelay: PropTypes.number,
-		usePortal: PropTypes.bool
+		usePortal: PropTypes.bool,
 	};
 
 	state = {
 		active: false,
-		initialClickOnInput: false
+		initialClickOnInput: false,
 	};
 
 	constructor(props) {
@@ -119,13 +124,13 @@ export default class Overlay extends React.Component {
 				addChildOverlay: this.addChildOverlay,
 				onMouseEnter: this.handleMouseEnter,
 				onMouseLeave: this.handleMouseLeave,
-				removeChildOverlay: this.removeChildOverlay
-			}
+				removeChildOverlay: this.removeChildOverlay,
+			},
 		};
 	}
 
 	componentDidMount() {
-		this.withParent(parent => parent.addChildOverlay(this));
+		this.withParent((parent) => parent.addChildOverlay(this));
 
 		this.addBodyListener();
 	}
@@ -148,7 +153,7 @@ export default class Overlay extends React.Component {
 			this.checkForInitialClickOnInput
 		);
 
-		this.withParent(parent => parent.removeChildOverlay(this));
+		this.withParent((parent) => parent.removeChildOverlay(this));
 	}
 
 	@autobind
@@ -217,7 +222,7 @@ export default class Overlay extends React.Component {
 	@autobind
 	checkForInitialClickOnInput(event) {
 		this.setState({
-			initialClickOnInput: !this.checkIfEventOutside(event)
+			initialClickOnInput: !this.checkIfEventOutside(event),
 		});
 	}
 
@@ -230,7 +235,7 @@ export default class Overlay extends React.Component {
 	checkOutsideClick(event) {
 		const {
 			props: {onOutsideClick},
-			state: {initialClickOnInput}
+			state: {initialClickOnInput},
 		} = this;
 
 		const clickedOutside = this.checkIfEventOutside(event);
@@ -327,11 +332,11 @@ export default class Overlay extends React.Component {
 
 		const triggerProps = {
 			'aria-haspopup': true,
-			className: getCN(children[0].props.className, className),
-			onBlur: this.handleMouseLeave,
-			onMouseEnter: this.handleMouseEnter,
-			onMouseLeave: this.handleMouseLeave,
-			ref: this._elementRef
+			'className': getCN(children[0].props.className, className),
+			'onBlur': this.handleMouseLeave,
+			'onMouseEnter': this.handleMouseEnter,
+			'onMouseLeave': this.handleMouseLeave,
+			'ref': this._elementRef,
 		};
 
 		const active = this.getActive();
@@ -356,7 +361,7 @@ export default class Overlay extends React.Component {
 							onMouseEnter={this.handleMouseEnter}
 							onMouseLeave={this.handleMouseLeave}
 							ref={this._contentElementRef}
-							role='dialog'
+							role="dialog"
 						>
 							{children[1]}
 						</OverlayContent>,
@@ -371,7 +376,7 @@ export default class Overlay extends React.Component {
 						onMouseEnter={this.handleMouseEnter}
 						onMouseLeave={this.handleMouseLeave}
 						ref={this._contentElementRef}
-						role='dialog'
+						role="dialog"
 					>
 						{children[1]}
 					</OverlayContent>

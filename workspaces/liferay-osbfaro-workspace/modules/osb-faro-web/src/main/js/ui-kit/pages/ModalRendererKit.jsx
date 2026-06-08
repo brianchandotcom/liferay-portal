@@ -1,12 +1,18 @@
-import * as modalActions from 'shared/actions/modals';
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import mockStore from 'test/mock-store';
-import ModalRenderer from 'shared/components/ModalRenderer';
-import React from 'react';
-import Row from '../components/Row';
-import {Provider} from 'react-redux';
+import autobind from 'autobind-decorator';
 import {times} from 'lodash';
+import React from 'react';
+import {Provider} from 'react-redux';
+import * as modalActions from '~/shared/actions/modals';
+import ModalRenderer from '~/shared/components/ModalRenderer';
+import mockStore from '~/test/mock-store';
+
+import Row from '../components/Row';
 
 class ModalRendererKit extends React.Component {
 	constructor(props) {
@@ -19,18 +25,18 @@ class ModalRendererKit extends React.Component {
 	handleOpen() {
 		this._store.dispatch(
 			modalActions.open(modalActions.modalTypes.TEST, {
-				onClose: this.handleClose
+				onClose: this.handleClose,
 			})
 		);
 	}
 
 	@autobind
 	handleOpenThree() {
-		times(3, i =>
+		times(3, (i) =>
 			this._store.dispatch(
 				modalActions.open(modalActions.modalTypes.TEST, {
 					onClose: this.handleClose,
-					title: `Modal Number #${i + 1}`
+					title: `Modal Number #${i + 1}`,
 				})
 			)
 		);
@@ -49,21 +55,21 @@ class ModalRendererKit extends React.Component {
 
 					<Row>
 						<ClayButton
-							className='button-root'
-							displayType='primary'
+							className="button-root"
+							displayType="primary"
 							onClick={this.handleOpen}
 						>
-							{'Open Modal'}
+							Open Modal
 						</ClayButton>
 					</Row>
 
 					<Row>
 						<ClayButton
-							className='button-root'
-							displayType='primary'
+							className="button-root"
+							displayType="primary"
 							onClick={this.handleOpenThree}
 						>
-							{'Open Three Modals'}
+							Open Three Modals
 						</ClayButton>
 					</Row>
 				</Provider>

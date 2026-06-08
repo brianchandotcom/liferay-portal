@@ -1,9 +1,15 @@
-import FaroConstants from 'shared/util/constants';
-import React from 'react';
-import Row from '../components/Row';
-import Toolbar from 'shared/components/toolbar';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Map, Set} from 'immutable';
 import {noop} from 'lodash';
+import React from 'react';
+import Toolbar from '~/shared/components/toolbar';
+import FaroConstants from '~/shared/util/constants';
+
+import Row from '../components/Row';
 
 const DefaultToolbar = (props = {}) => (
 	<Toolbar
@@ -14,8 +20,8 @@ const DefaultToolbar = (props = {}) => (
 		onSelectAll={noop}
 		onSelectEntirePage={noop}
 		order={FaroConstants.orderAscending}
-		orderBy=''
-		selectedMessage=''
+		orderBy=""
+		selectedMessage=""
 		{...props}
 	/>
 );
@@ -35,13 +41,13 @@ export default class ToolbarKit extends React.Component {
 				}
 			>
 				<DefaultRow>
-					<h3>{'Default'}</h3>
+					<h3>Default</h3>
 
 					<DefaultToolbar />
 				</DefaultRow>
 
 				<DefaultRow>
-					<h3>{'Disabled'}</h3>
+					<h3>Disabled</h3>
 
 					<div>
 						<DefaultToolbar disabled />
@@ -53,7 +59,7 @@ export default class ToolbarKit extends React.Component {
 				</DefaultRow>
 
 				<DefaultRow>
-					<h3>{'With Ordering'}</h3>
+					<h3>With Ordering</h3>
 
 					<div>
 						<DefaultToolbar
@@ -63,24 +69,24 @@ export default class ToolbarKit extends React.Component {
 				</DefaultRow>
 
 				<DefaultRow>
-					<h3>{'Search values'}</h3>
+					<h3>Search values</h3>
 
 					<div>
-						<DefaultToolbar placeholder='Placeholder' />
+						<DefaultToolbar placeholder="Placeholder" />
 					</div>
 
 					<div>
 						<DefaultToolbar
-							placeholder='Placeholder'
-							query='cat pictures'
-							searchValue='dog pictures'
+							placeholder="Placeholder"
+							query="cat pictures"
+							searchValue="dog pictures"
 							total={42}
 						/>
 					</div>
 				</DefaultRow>
 
 				<DefaultRow>
-					<h3>{'Item selection'}</h3>
+					<h3>Item selection</h3>
 
 					<div>
 						<DefaultToolbar selectEntirePage />
@@ -92,9 +98,9 @@ export default class ToolbarKit extends React.Component {
 
 					<div>
 						<DefaultToolbar
-							placeholder='Placeholder'
-							query='cat pictures'
-							searchValue='dog pictures'
+							placeholder="Placeholder"
+							query="cat pictures"
+							searchValue="dog pictures"
 							selectEntirePageIndeterminate
 							total={42}
 						/>
@@ -102,7 +108,7 @@ export default class ToolbarKit extends React.Component {
 				</DefaultRow>
 
 				<DefaultRow>
-					<h3>{'No checkbox'}</h3>
+					<h3>No checkbox</h3>
 
 					<div>
 						<DefaultToolbar showCheckbox={false} />
@@ -110,15 +116,17 @@ export default class ToolbarKit extends React.Component {
 				</DefaultRow>
 
 				<DefaultRow>
-					<h3>{'With Filter Tags'}</h3>
+					<h3>With Filter Tags</h3>
 
 					<DefaultToolbar
 						filterBy={new Map({fooField: new Set(['fooValue'])})}
 						filterByOptions={[
 							{
 								key: 'fooField',
-								values: [{label: 'fooLabel', value: 'fooValue'}]
-							}
+								values: [
+									{label: 'fooLabel', value: 'fooValue'},
+								],
+							},
 						]}
 					/>
 				</DefaultRow>

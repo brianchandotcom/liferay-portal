@@ -1,17 +1,22 @@
-// To add a new third-party connector, see:
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {DataSourceTypes} from '~/shared/util/constants';
+import {isLDPPlan} from '~/shared/util/subscriptions';
+
 // https://liferay.atlassian.net/wiki/spaces/ENGAC/pages/4841275420/Third-Party+Connector+Framework+-+Adding+a+New+Data+Source+Connector+on+osb-faro-web+frontend
 
 import demandbaseConfig from './configs/demandbase';
 import hubspotConfig from './configs/hubspot';
 import marketoConfig from './configs/marketo';
 import {ConnectorConfig} from './types';
-import {DataSourceTypes} from 'shared/util/constants';
-import {isLDPPlan} from 'shared/util/subscriptions';
 
 const connectorRegistry: Record<string, ConnectorConfig> = {
 	[DataSourceTypes.Demandbase]: demandbaseConfig,
 	[DataSourceTypes.Hubspot]: hubspotConfig,
-	[DataSourceTypes.Marketo]: marketoConfig
+	[DataSourceTypes.Marketo]: marketoConfig,
 };
 
 export function getConnectorConfig(
@@ -34,7 +39,7 @@ export function listAvailableConnectors(
 ): ConnectorConfig[] {
 	const ldpAllowed = isLDPPlan(subscriptionName);
 
-	return listConnectors().filter(config => {
+	return listConnectors().filter((config) => {
 		if (config.singleton && existingTypes.has(config.type)) {
 			return false;
 		}

@@ -1,7 +1,22 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
+import {OrderedMap} from 'immutable';
+import {get} from 'lodash';
+import React from 'react';
+import {ConnectedProps, connect} from 'react-redux';
+import {compose} from 'redux';
+import {
+	BlockCustomEventDefinitions,
+	BlockCustomEventDefinitionsData,
+	BlockCustomEventDefinitionsVariables,
+} from '~/event-analysis/queries/CustomEventDefinitions';
 import EventDefinitionsQuery, {
 	EventDefinitionsData,
 	EventDefinitionsVariables,
@@ -9,47 +24,38 @@ import EventDefinitionsQuery, {
 	HideEventDefinitionsData,
 	HideEventDefinitionsVariables,
 	UnhideEventDefinitions,
-	UnhideEventDefinitionsData
-} from 'event-analysis/queries/EventDefinitionsQuery';
-import Nav from 'shared/components/Nav';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
+	UnhideEventDefinitionsData,
+} from '~/event-analysis/queries/EventDefinitionsQuery';
+import {Event, EventTypes} from '~/event-analysis/utils/types';
+import {addAlert, removeAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import Nav from '~/shared/components/Nav';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
 import NotificationAlertList, {
-	useNotificationsAPI
-} from 'shared/components/NotificationAlertList';
-import React from 'react';
-import RowActions from 'shared/components/RowActions';
-import URLConstants from 'shared/util/url-constants';
-import {addAlert, removeAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {
-	BlockCustomEventDefinitions,
-	BlockCustomEventDefinitionsData,
-	BlockCustomEventDefinitionsVariables
-} from 'event-analysis/queries/CustomEventDefinitions';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
-import {
-	createOrderIOMap,
-	getSortFromOrderIOMap,
-	NAME
-} from 'shared/util/pagination';
-import {Event, EventTypes} from 'event-analysis/utils/types';
-import {eventListColumns} from 'shared/util/table-columns';
-import {get} from 'lodash';
-import {LIMIT_REACHED_ALERT_ID} from './constants';
-import {NotificationSubtypes} from 'shared/util/records/Notification';
-import {OrderedMap} from 'immutable';
-import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
-import {Sizes} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/client';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+	useNotificationsAPI,
+} from '~/shared/components/NotificationAlertList';
+import RowActions from '~/shared/components/RowActions';
 import {
 	useSelectionContext,
-	withSelectionProvider
-} from 'shared/context/selection';
+	withSelectionProvider,
+} from '~/shared/context/selection';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {Alert} from '~/shared/types';
+import {Sizes} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import {
+	NAME,
+	createOrderIOMap,
+	getSortFromOrderIOMap,
+} from '~/shared/util/pagination';
+import {NotificationSubtypes} from '~/shared/util/records/Notification';
+import {Routes, setUriQueryValues, toRoute} from '~/shared/util/router';
+import {eventListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
+
+import {LIMIT_REACHED_ALERT_ID} from './constants';
 
 const connector = connect(null, {addAlert, close, open, removeAlert});
 
@@ -66,12 +72,12 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 	groupId,
 	history,
 	open,
-	removeAlert
+	removeAlert,
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data, error, loading, refetch} = useQuery<
@@ -87,8 +93,8 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 			size: delta,
 			sort: getSortFromOrderIOMap(
 				orderIOMap
-			) as EventDefinitionsVariables['sort']
-		}
+			) as EventDefinitionsVariables['sort'],
+		},
 	});
 
 	const [blockCustomEventDefinitions] = useMutation<
@@ -101,19 +107,19 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 		HideEventDefinitionsVariables
 	>(HideEventDefinitions, {
 		onCompleted: ({
-			hideEventDefinitions
+			hideEventDefinitions,
 		}: {
 			hideEventDefinitions: Event[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
 				selectionDispatch?.({
 					payload: {
-						items: hideEventDefinitions
+						items: hideEventDefinitions,
 					},
-					type: 'add'
+					type: 'add',
 				});
 			}
-		}
+		},
 	});
 
 	const [unhideEventDefinitions] = useMutation<
@@ -121,19 +127,19 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 		HideEventDefinitionsVariables
 	>(UnhideEventDefinitions, {
 		onCompleted: ({
-			unhideEventDefinitions
+			unhideEventDefinitions,
 		}: {
 			unhideEventDefinitions: Event[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
 				selectionDispatch?.({
 					payload: {
-						items: unhideEventDefinitions
+						items: unhideEventDefinitions,
 					},
-					type: 'add'
+					type: 'add',
 				});
 			}
-		}
+		},
 	});
 
 	const notificationResponse = useNotificationsAPI(groupId);
@@ -145,17 +151,17 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
-				<p className='text-secondary'>
+				<p className="text-secondary">
 					{eventsCount > 1
 						? Liferay.Language.get(
 								'blocking-events-will-result-in-the-deletion-of-their-display-names-and-descriptions.-you-must-reassign-these-values-if-you-wish-to-unblock-these-events-in-the-future'
-						  )
+							)
 						: sub(
 								Liferay.Language.get(
 									'blocking-x-will-result-in-the-deletion-of-its-display-name-and-description.-you-must-reassign-these-values-if-you-wish-to-unblock-the-event-in-the-future'
 								),
 								[events[0].displayName]
-						  )}
+							)}
 				</p>
 			),
 			modalVariant: 'modal-warning',
@@ -163,12 +169,12 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 			onSubmit: () => {
 				blockCustomEventDefinitions({
 					variables: {
-						eventDefinitionIds: events.map(({id}) => id)
-					}
+						eventDefinitionIds: events.map(({id}) => id),
+					},
 				})
 					.then(() => {
 						selectionDispatch?.({
-							type: 'clear-all'
+							type: 'clear-all',
 						});
 
 						const updatedPage = eventsCount > 1 ? 1 : page;
@@ -183,17 +189,18 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 									{
 										field,
 										page: updatedPage,
-										sortOrder
+										sortOrder,
 									},
 									toRoute(
 										Routes.SETTINGS_DEFINITIONS_EVENTS_CUSTOM,
 										{
-											groupId
+											groupId,
 										}
 									)
 								)
 							);
-						} else {
+						}
+						else {
 							refetch();
 						}
 
@@ -206,13 +213,13 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 												'x-events-have-been-added-to-the-block-list'
 											),
 											[eventsCount]
-									  )
+										)
 									: sub(
 											Liferay.Language.get(
 												'x-has-been-added-to-the-block-list'
 											),
 											[events[0].displayName]
-									  )
+										),
 						});
 
 						removeAlert(LIMIT_REACHED_ALERT_ID);
@@ -225,7 +232,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 							message: Liferay.Language.get(
 								'there-was-an-error-processing-your-request.-please-try-again'
 							),
-							timeout: false
+							timeout: false,
 						})
 					);
 			},
@@ -235,7 +242,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 				eventsCount > 1
 					? Liferay.Language.get('block-events')
 					: Liferay.Language.get('block-event'),
-			titleIcon: 'warning'
+			titleIcon: 'warning',
 		});
 	};
 
@@ -246,7 +253,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
-				<p className='text-secondary'>
+				<p className="text-secondary">
 					{Liferay.Language.get(
 						'hiding-events-in-the-interface-may-require-reconfiguration-of-segments-and-other-analysis-using-this-event.-hidden-events-will-be-available-for-calculating-metrics'
 					)}
@@ -257,8 +264,8 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 			onSubmit: () => {
 				hideEventDefinitions({
 					variables: {
-						eventDefinitionIds: events.map(({id}) => id)
-					}
+						eventDefinitionIds: events.map(({id}) => id),
+					},
 				})
 					.then(() => {
 						addAlert({
@@ -270,13 +277,13 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 												'x-events-have-been-set-to-hide'
 											),
 											[visibleEventsCount]
-									  )
+										)
 									: sub(
 											Liferay.Language.get(
 												'x-has-been-set-to-hide'
 											),
 											[visibleEvents[0].displayName]
-									  )
+										),
 						});
 					})
 					.catch(() =>
@@ -285,7 +292,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 							message: Liferay.Language.get(
 								'there-was-an-error-processing-your-request.-please-try-again'
 							),
-							timeout: false
+							timeout: false,
 						})
 					);
 			},
@@ -295,9 +302,9 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 				visibleEventsCount > 1
 					? Liferay.Language.get('hide-events')
 					: sub(Liferay.Language.get('hide-x'), [
-							visibleEvents[0].displayName
-					  ]),
-			titleIcon: 'warning'
+							visibleEvents[0].displayName,
+						]),
+			titleIcon: 'warning',
 		});
 	};
 
@@ -308,8 +315,8 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 
 		unhideEventDefinitions({
 			variables: {
-				eventDefinitionIds: events.map(({id}) => id)
-			}
+				eventDefinitionIds: events.map(({id}) => id),
+			},
 		})
 			.then(() => {
 				addAlert({
@@ -321,13 +328,13 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 										'x-events-have-been-set-to-show'
 									),
 									[hiddenEventsCount]
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'x-has-been-set-to-show'
 									),
 									[hiddenEvents[0].displayName]
-							  )
+								),
 				});
 			})
 			.catch(() =>
@@ -336,7 +343,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 					message: Liferay.Language.get(
 						'there-was-an-error-processing-your-request.-please-try-again'
 					),
-					timeout: false
+					timeout: false,
 				})
 			);
 	};
@@ -352,7 +359,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 						label: Liferay.Language.get('block-event'),
 						onClick: () => {
 							handleBlockEvents([data]);
-						}
+						},
 					},
 					{
 						iconSymbol: hidden ? 'view' : 'ac_hidden',
@@ -365,8 +372,8 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 								: handleHideEvents;
 
 							hideEventFn([data]);
-						}
-					}
+						},
+					},
 				]}
 			/>
 		);
@@ -375,11 +382,11 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 	const authorized = currentUser.isAdmin();
 
 	const hasUnhiddenEvent = (events: OrderedMap<string, Event>) =>
-		events.some(event => !event?.hidden);
+		events.some((event) => !event?.hidden);
 
 	return (
 		<>
-			<div className='mx-4'>
+			<div className="mx-4">
 				<NotificationAlertList
 					{...notificationResponse}
 					groupId={groupId}
@@ -392,7 +399,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 					eventListColumns.getName({groupId}),
 					eventListColumns.displayName,
 					eventListColumns.description,
-					eventListColumns.hidden
+					eventListColumns.hidden,
 				]}
 				delta={delta}
 				emptyDescription={Liferay.Language.get(
@@ -411,12 +418,12 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 								)}
 
 								<ClayLink
-									className='d-block mb-3'
+									className="d-block mb-3"
 									href={
 										URLConstants.CustomEventsDocumentation
 									}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-how-to-add-custom-events-on-your-site'
@@ -427,7 +434,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_satellite'
+							symbol: 'ac_satellite',
 						}}
 						title={Liferay.Language.get('no-custom-events-found')}
 					/>
@@ -443,8 +450,8 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 									<Nav.Item>
 										<ClayButton
 											borderless
-											className='button-root nav-btn'
-											displayType='secondary'
+											className="button-root nav-btn"
+											displayType="secondary"
 											onClick={() => {
 												handleBlockEvents(
 													selectedItems.toArray()
@@ -452,8 +459,8 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 											}}
 										>
 											<ClayIcon
-												className='icon-root mr-2'
-												symbol='ac_block'
+												className="icon-root mr-2"
+												symbol="ac_block"
 											/>
 
 											{Liferay.Language.get(
@@ -463,8 +470,8 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 
 										<ClayButton
 											borderless
-											className='button-root nav-btn'
-											displayType='secondary'
+											className="button-root nav-btn"
+											displayType="secondary"
 											onClick={() => {
 												const hideEventFn =
 													hasUnhiddenEvent(
@@ -479,7 +486,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 											}}
 										>
 											<ClayIcon
-												className='icon-root mr-2'
+												className="icon-root mr-2"
 												symbol={
 													hasUnhiddenEvent(
 														selectedItems
@@ -495,13 +502,13 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 										</ClayButton>
 									</Nav.Item>
 								</Nav>
-						  )
+							)
 						: null
 				}
 				renderRowActions={
 					authorized && !selectedItems.size ? renderRowActions : null
 				}
-				rowIdentifier='id'
+				rowIdentifier="id"
 				showCheckbox={authorized}
 				total={get(data, ['eventDefinitions', 'total'], 0)}
 			/>

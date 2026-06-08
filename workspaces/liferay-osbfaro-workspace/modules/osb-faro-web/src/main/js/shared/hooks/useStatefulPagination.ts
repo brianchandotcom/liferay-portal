@@ -1,11 +1,16 @@
-import Constants from 'shared/util/constants';
-import {FilterByType} from 'shared/types';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Map, OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
 import {useReducer} from 'react';
+import {FilterByType} from '~/shared/types';
+import Constants from '~/shared/util/constants';
+import {OrderParams} from '~/shared/util/records';
 
 const {
-	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA}
+	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA},
 } = Constants;
 
 export enum ActionType {
@@ -14,7 +19,7 @@ export enum ActionType {
 	setFilterBy = 'setFilterBy',
 	setOrderIOMap = 'setOrderIOMap',
 	setPage = 'setPage',
-	setQuery = 'setQuery'
+	setQuery = 'setQuery',
 }
 
 interface Action {
@@ -31,12 +36,12 @@ interface State {
 }
 
 interface StatefulPaginationResult extends State {
-	resetPage: () => void;
 	onDeltaChange: (delta: number) => void;
 	onFilterByChange: (filterBy: FilterByType) => void;
 	onOrderIOMapChange: (orderIOMap: OrderedMap<string, OrderParams>) => void;
 	onPageChange: (page: number) => void;
 	onQueryChange: (query: string) => void;
+	resetPage: () => void;
 }
 
 const DEFAULT_INITIAL_PAGINATION_PROPS: {
@@ -50,7 +55,7 @@ const DEFAULT_INITIAL_PAGINATION_PROPS: {
 	initialFilterBy: Map() as FilterByType,
 	initialOrderIOMap: OrderedMap<string, OrderParams>(),
 	initialPage: DEFAULT_PAGE,
-	initialQuery: ''
+	initialQuery: '',
 };
 
 const statefulPaginationReducer = (
@@ -61,36 +66,36 @@ const statefulPaginationReducer = (
 		case 'resetPage':
 			return {
 				...state,
-				page: DEFAULT_PAGE
+				page: DEFAULT_PAGE,
 			};
 		case 'setDelta':
 			return {
 				...state,
 				delta: payload,
-				page: DEFAULT_PAGE
+				page: DEFAULT_PAGE,
 			};
 		case 'setFilterBy':
 			return {
 				...state,
 				filterBy: payload,
-				page: DEFAULT_PAGE
+				page: DEFAULT_PAGE,
 			};
 		case 'setOrderIOMap':
 			return {
 				...state,
 				orderIOMap: payload,
-				page: DEFAULT_PAGE
+				page: DEFAULT_PAGE,
 			};
 		case 'setQuery':
 			return {
 				...state,
 				page: DEFAULT_PAGE,
-				query: payload
+				query: payload,
 			};
 		case 'setPage':
 			return {
 				...state,
-				page: payload
+				page: payload,
 			};
 		default:
 			return state;
@@ -105,7 +110,7 @@ export function useStatefulPagination(
 ): StatefulPaginationResult {
 	const paginationProps = {
 		...DEFAULT_INITIAL_PAGINATION_PROPS,
-		...initialPaginationProps
+		...initialPaginationProps,
 	};
 
 	const {
@@ -113,7 +118,7 @@ export function useStatefulPagination(
 		initialFilterBy,
 		initialOrderIOMap,
 		initialPage,
-		initialQuery
+		initialQuery,
 	} = paginationProps;
 
 	const [state, setState] = useReducer(statefulPaginationReducer, {
@@ -121,47 +126,47 @@ export function useStatefulPagination(
 		filterBy: initialFilterBy,
 		orderIOMap: initialOrderIOMap,
 		page: initialPage,
-		query: initialQuery
+		query: initialQuery,
 	});
 
 	const resetPage = (): void => {
 		setState({
-			type: ActionType.resetPage
+			type: ActionType.resetPage,
 		});
 	};
 
 	const setDelta = (delta: number): void => {
 		setState({
 			payload: delta,
-			type: ActionType.setDelta
+			type: ActionType.setDelta,
 		});
 	};
 
 	const setFilterBy = (filterBy: FilterByType): void => {
 		setState({
 			payload: filterBy,
-			type: ActionType.setFilterBy
+			type: ActionType.setFilterBy,
 		});
 	};
 
 	const setOrderIOMap = (orderIOMap: OrderedMap<string, OrderParams>) => {
 		setState({
 			payload: orderIOMap,
-			type: ActionType.setOrderIOMap
+			type: ActionType.setOrderIOMap,
 		});
 	};
 
 	const setPage = (page: number): void => {
 		setState({
 			payload: page,
-			type: ActionType.setPage
+			type: ActionType.setPage,
 		});
 	};
 
 	const setQuery = (query: string): void => {
 		setState({
 			payload: query,
-			type: ActionType.setQuery
+			type: ActionType.setQuery,
 		});
 	};
 
@@ -174,6 +179,6 @@ export function useStatefulPagination(
 		onOrderIOMapChange: setOrderIOMap,
 		onPageChange: setPage,
 		onQueryChange: setQuery,
-		resetPage
+		resetPage,
 	};
 }

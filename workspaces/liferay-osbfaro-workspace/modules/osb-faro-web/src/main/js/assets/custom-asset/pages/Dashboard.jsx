@@ -1,30 +1,38 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import AddReport from '../components/AddReport';
-import AssetCard from '../hocs/AssetCard';
-import autobind from 'autobind-decorator';
-import BasePage from 'shared/components/base-page';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {graphql} from '@apollo/client/react/hoc';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayPopover from '@clayui/popover';
-import CustomAssetsDashboardQuery from 'shared/queries/CustomAssetsDashboardQuery';
-import CustomAssetsReportMutation from 'shared/queries/CustomAssetsReportMutation';
-import getQuery from 'shared/queries/custom-asset-query';
-import React from 'react';
-import TimeRangeQuery from 'shared/queries/TimeRangeQuery';
-import URLConstants from 'shared/util/url-constants';
-import withCurrentUser from 'shared/hoc/WithCurrentUser';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {ChannelContext} from 'shared/context/channel';
-import {compose} from 'redux';
-import {connect} from 'react-redux';
-import {getRangeSelectorsFromQuery} from 'shared/util/util';
-import {getSafeDecodedURIComponent} from 'shared/util/util';
-import {graphql} from '@apollo/client/react/hoc';
-import {hasChanges} from 'shared/util/react';
+import autobind from 'autobind-decorator';
 import {PropTypes} from 'prop-types';
-import {sub} from 'shared/util/lang';
+import React from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {addAlert} from '~/shared/actions/alerts';
+import BasePage from '~/shared/components/base-page';
+import {ChannelContext} from '~/shared/context/channel';
+import withCurrentUser from '~/shared/hoc/WithCurrentUser';
+import CustomAssetsDashboardQuery from '~/shared/queries/CustomAssetsDashboardQuery';
+import CustomAssetsReportMutation from '~/shared/queries/CustomAssetsReportMutation';
+import TimeRangeQuery from '~/shared/queries/TimeRangeQuery';
+import getQuery from '~/shared/queries/custom-asset-query';
+import {Alert} from '~/shared/types';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {sub} from '~/shared/util/lang';
+import {hasChanges} from '~/shared/util/react';
+import URLConstants from '~/shared/util/url-constants';
+import {
+	getRangeSelectorsFromQuery,
+	getSafeDecodedURIComponent,
+} from '~/shared/util/util';
+
+import AddReport from '../components/AddReport';
+import AssetCard from '../hocs/AssetCard';
 
 /**
  * Blogs Dashboard Page
@@ -34,6 +42,7 @@ class CustomAssetsDashboardPage extends React.Component {
 	static contextType = ChannelContext;
 
 	static propTypes = {
+
 		/**
 		 * @type {function}
 		 * @default undefined
@@ -62,7 +71,7 @@ class CustomAssetsDashboardPage extends React.Component {
 		 * @type {object}
 		 * @default undefined
 		 */
-		router: PropTypes.object.isRequired
+		router: PropTypes.object.isRequired,
 	};
 
 	state = {
@@ -72,7 +81,7 @@ class CustomAssetsDashboardPage extends React.Component {
 		 * @type {object}
 		 * @default {}
 		 */
-		filters: {}
+		filters: {},
 	};
 
 	componentDidMount() {
@@ -103,11 +112,11 @@ class CustomAssetsDashboardPage extends React.Component {
 							chartType,
 							metric,
 							title,
-							width: 100
-						}
-					]
-				}
-			]
+							width: 100,
+						},
+					],
+				},
+			],
 		};
 
 		return JSON.stringify(definition);
@@ -115,7 +124,7 @@ class CustomAssetsDashboardPage extends React.Component {
 
 	updateDefinition(definition) {
 		this.setState({
-			definition: JSON.parse(definition)
+			definition: JSON.parse(definition),
 		});
 	}
 
@@ -131,10 +140,10 @@ class CustomAssetsDashboardPage extends React.Component {
 				currentUser: {id: modifiedByUserId, name: modifiedByUserName},
 				mutate,
 				router: {
-					params: {id: dashboardId}
-				}
+					params: {id: dashboardId},
+				},
 			},
-			state: {definition}
+			state: {definition},
 		} = this;
 
 		const excludedItem = definition.rows[id];
@@ -148,17 +157,17 @@ class CustomAssetsDashboardPage extends React.Component {
 				dashboardId,
 				definition: JSON.stringify({rows}),
 				modifiedByUserId,
-				modifiedByUserName
-			}
+				modifiedByUserName,
+			},
 		})
 			.then(
 				({
 					data: {
-						dashboard: {definition}
-					}
+						dashboard: {definition},
+					},
 				}) => {
 					this.setState({
-						definition: JSON.parse(definition)
+						definition: JSON.parse(definition),
 					});
 
 					addAlert({
@@ -168,7 +177,7 @@ class CustomAssetsDashboardPage extends React.Component {
 								'x-has-been-deleted-from-this-dashboard'
 							),
 							[excludedItem.panels[0].title]
-						)
+						),
 					});
 				}
 			)
@@ -179,7 +188,7 @@ class CustomAssetsDashboardPage extends React.Component {
 					alertType: Alert.Types.Error,
 					message: Liferay.Language.get(
 						'an-unexpected-error-occurred'
-					)
+					),
 				});
 			});
 	}
@@ -195,13 +204,13 @@ class CustomAssetsDashboardPage extends React.Component {
 				dashboardId,
 				definition: this.getDefinition(report),
 				modifiedByUserId,
-				modifiedByUserName
-			}
+				modifiedByUserName,
+			},
 		}).then(({data}) => {
 			const {definition} = data.dashboard;
 
 			this.setState({
-				definition: JSON.parse(definition)
+				definition: JSON.parse(definition),
 			});
 		});
 	}
@@ -209,13 +218,13 @@ class CustomAssetsDashboardPage extends React.Component {
 	renderDefinitions() {
 		const {
 			props: {router},
-			state: {definition}
+			state: {definition},
 		} = this;
 
 		const {id: dashboardId} = router.params;
 
 		return definition.rows.map(({panels}, rowIndex) => (
-			<div className='row' key={rowIndex}>
+			<div className="row" key={rowIndex}>
 				{panels.map(({chartType, metric, title, width}, panelIndex) => (
 					<div className={this.getColumn(width)} key={panelIndex}>
 						<AssetCard
@@ -241,8 +250,8 @@ class CustomAssetsDashboardPage extends React.Component {
 		const {definition} = this.state;
 
 		return (
-			<div className='row'>
-				<div className='col-sm-12'>
+			<div className="row">
+				<div className="col-sm-12">
 					<AddReport
 						isEmptyDashboard={!definition.rows.length}
 						onGetReport={this.handleGetReport}
@@ -254,10 +263,10 @@ class CustomAssetsDashboardPage extends React.Component {
 
 	renderLimitExecededText() {
 		return (
-			<div className='row'>
-				<div className='col-sm-12'>
-					<div className='mt-3 mb-3 text-secondary text-center'>
-						<ClayIcon className='icon-root mr-2' symbol='warning' />
+			<div className="row">
+				<div className="col-sm-12">
+					<div className="mb-3 mt-3 text-center text-secondary">
+						<ClayIcon className="icon-root mr-2" symbol="warning" />
 
 						{Liferay.Language.get(
 							'this-dashboard-has-reached-the-limit-of-10-reports'
@@ -275,11 +284,11 @@ class CustomAssetsDashboardPage extends React.Component {
 		const {
 			context: {selectedChannel},
 			props: {router},
-			state: {definition, filters}
+			state: {definition, filters},
 		} = this;
 
 		const {
-			params: {channelId, groupId, title}
+			params: {channelId, groupId, title},
 		} = router;
 
 		const decodedTitle = getSafeDecodedURIComponent(title);
@@ -291,11 +300,11 @@ class CustomAssetsDashboardPage extends React.Component {
 						breadcrumbs.getHome({
 							channelId,
 							groupId,
-							label: selectedChannel && selectedChannel.name
+							label: selectedChannel && selectedChannel.name,
 						}),
 						breadcrumbs.getAssets({channelId, groupId}),
 						breadcrumbs.getCustomContent({channelId, groupId}),
-						breadcrumbs.getEntityName({label: decodedTitle})
+						breadcrumbs.getEntityName({label: decodedTitle}),
 					]}
 					groupId={groupId}
 				>
@@ -304,14 +313,14 @@ class CustomAssetsDashboardPage extends React.Component {
 						title={decodedTitle}
 					>
 						<ClayPopover
-							alignPosition='bottom'
+							alignPosition="bottom"
 							closeOnClickOutside
 							header={Liferay.Language.get('deprecated-feature')}
 							trigger={
 								<ClayButton
 									data-tooltip
-									data-tooltip-align='top'
-									displayType='warning'
+									data-tooltip-align="top"
+									displayType="warning"
 									title={Liferay.Language.get(
 										'open-deprecated-definition'
 									)}
@@ -320,8 +329,8 @@ class CustomAssetsDashboardPage extends React.Component {
 									{Liferay.Language.get(
 										'deprecated'
 									).toUpperCase()}
-									<span className='inline-item inline-item-before pl-2'>
-										<ClayIcon symbol='warning-full' />
+									<span className="inline-item inline-item-before pl-2">
+										<ClayIcon symbol="warning-full" />
 									</span>
 								</ClayButton>
 							}
@@ -329,13 +338,13 @@ class CustomAssetsDashboardPage extends React.Component {
 							{Liferay.Language.get('this-feature-is-deprecated')}
 
 							<ClayLink
-								className='ml-1'
-								decoration='underline'
+								className="ml-1"
+								decoration="underline"
 								href={
 									URLConstants.MaintenanceModeAndDeprecationDocumentation
 								}
-								key='deprecated'
-								target='_blank'
+								key="deprecated"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'learn-more-about-deprecated-features'
@@ -362,8 +371,8 @@ class CustomAssetsDashboardPage extends React.Component {
 const withTimeRangeQuery = () =>
 	graphql(TimeRangeQuery, {
 		props: ({data: {loading}}) => ({
-			loadingTimeRange: loading
-		})
+			loadingTimeRange: loading,
+		}),
 	});
 
 const withCustomAssetsDashboardData = () =>
@@ -373,8 +382,8 @@ const withCustomAssetsDashboardData = () =>
 
 			return {
 				variables: {
-					dashboardId
-				}
+					dashboardId,
+				},
 			};
 		},
 		props: ({data: {dashboard = {}, loading}}) => {
@@ -382,9 +391,9 @@ const withCustomAssetsDashboardData = () =>
 
 			return {
 				definition,
-				loadingDefinition: loading
+				loadingDefinition: loading,
 			};
-		}
+		},
 	});
 
 const withCustomAssetsReportMutation = () =>
@@ -395,7 +404,9 @@ const WrappedPageComponent = ({
 	loadingTimeRange,
 	...props
 }) => {
-	if (loadingTimeRange || loadingDefinition) return null;
+	if (loadingTimeRange || loadingDefinition) {
+		return null;
+	}
 
 	return <CustomAssetsDashboardPage {...props} />;
 };

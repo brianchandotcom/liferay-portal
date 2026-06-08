@@ -1,11 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import BaseResults from 'shared/components/BaseResults';
 import getCN from 'classnames';
-import omitDefinedProps from 'shared/util/omitDefinedProps';
+import {noop} from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Table from 'shared/components/table';
-import {noop} from 'lodash';
+import BaseResults from '~/shared/components/BaseResults';
+import Table from '~/shared/components/table';
+import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 class SearchableEntityTable extends React.Component {
 	static defaultProps = {
@@ -15,7 +20,7 @@ class SearchableEntityTable extends React.Component {
 		internalSort: false,
 		nowrap: true,
 		overrideLoading: false,
-		showCheckbox: false
+		showCheckbox: false,
 	};
 
 	static propTypes = {
@@ -37,7 +42,7 @@ class SearchableEntityTable extends React.Component {
 		renderInlineRowActions: PropTypes.func,
 		renderRowActions: PropTypes.func,
 		rowIdentifier: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-		showCheckbox: PropTypes.bool
+		showCheckbox: PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -59,7 +64,7 @@ class SearchableEntityTable extends React.Component {
 		items,
 		loading,
 		onSelectItemsChange,
-		selectedItemsIOMap
+		selectedItemsIOMap,
 	}) {
 		const {
 			bordered,
@@ -74,7 +79,7 @@ class SearchableEntityTable extends React.Component {
 			renderRowActions,
 			rowBordered,
 			rowIdentifier,
-			showCheckbox
+			showCheckbox,
 		} = this.props;
 
 		return (
@@ -120,7 +125,7 @@ class SearchableEntityTable extends React.Component {
 		} = this.props;
 
 		const classes = getCN('searchable-table-root', className, {
-			'searchable-table-borderless': !bordered
+			'searchable-table-borderless': !bordered,
 		});
 
 		return (

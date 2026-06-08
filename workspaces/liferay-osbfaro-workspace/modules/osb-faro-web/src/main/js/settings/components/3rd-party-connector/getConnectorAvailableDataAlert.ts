@@ -1,6 +1,12 @@
-import {ConnectorStatus} from './types';
-import {DataSource} from 'shared/util/records';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {DataSource} from '~/shared/util/records';
+
 import {getConnectorStatus} from './getConnectorStatus';
+import {ConnectorStatus} from './types';
 
 export type ConnectorAvailableDataAlertKind = 'previously-synced' | 'syncing';
 
@@ -22,7 +28,7 @@ export function getConnectorAvailableDataAlert(
 			kind: 'previously-synced',
 			message: Liferay.Language.get(
 				'previously-synced-data-remains-available-reconnect-or-check-your-data-source-connection-to-resume-data-syncing'
-			)
+			),
 		};
 	}
 
@@ -32,7 +38,7 @@ export function getConnectorAvailableDataAlert(
 			kind: 'previously-synced',
 			message: Liferay.Language.get(
 				'previously-synced-data-remains-available-reconnect-or-check-your-data-source-connection-to-resume-data-syncing'
-			)
+			),
 		};
 	}
 
@@ -42,7 +48,7 @@ export function getConnectorAvailableDataAlert(
 			kind: 'syncing',
 			message: Liferay.Language.get(
 				'your-data-may-take-some-time-to-appear-as-syncing-completes'
-			)
+			),
 		};
 	}
 

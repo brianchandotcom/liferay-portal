@@ -1,19 +1,25 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import CustomNumberInput from './CustomNumberInput';
-import CustomStringInput from './CustomStringInput';
-import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
-import Form from 'shared/components/form';
-import React from 'react';
-import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {fromJS} from 'immutable';
+import {isNull} from 'lodash';
+import React from 'react';
+import * as API from '~/shared/api';
+import Form from '~/shared/components/form';
+
+import {PropertyTypes} from '../utils/constants';
 import {
 	getFilterCriterionIMap,
 	getIndexFromPropertyName,
-	getPropertyValue
+	getPropertyValue,
 } from '../utils/custom-inputs';
-import {isNull} from 'lodash';
-import {PropertyTypes} from '../utils/constants';
+import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
+import CustomNumberInput from './CustomNumberInput';
+import CustomStringInput from './CustomStringInput';
+import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
 
 interface ISessionInputProps extends ISegmentEditorCustomInputBase {
 	touched: {
@@ -33,7 +39,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 			channelId,
 			groupId,
 			property: {name},
-			value: valueIMap
+			value: valueIMap,
 		} = this.props;
 
 		return API.session
@@ -41,7 +47,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 				channelId,
 				fieldName: name,
 				groupId: groupId!,
-				query: getPropertyValue(valueIMap, 'value', 0)
+				query: getPropertyValue(valueIMap, 'value', 0),
 			})
 			.then(({items}) => items);
 	}
@@ -73,7 +79,10 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 			valid: {...valid, dateFilter: isNull(criterion) || criterion.valid},
 			value: isNull(criterion)
 				? value.deleteIn(['criterionGroup', 'items', 1])
-				: value.setIn(['criterionGroup', 'items', 1], fromJS(criterion))
+				: value.setIn(
+						['criterionGroup', 'items', 1],
+						fromJS(criterion)
+					),
 		});
 	}
 
@@ -88,7 +97,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 		onChange({
 			touched: {...touched, customInput: true},
 			valid: {...valid, customInput: criterion.valid},
-			value: criterion.value
+			value: criterion.value,
 		});
 	}
 
@@ -121,7 +130,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 		const conjunctionCriterion = this.getConjunctionDateFilterIMap();
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>{this.renderCustomInput()}</Form.Group>
 
 				<Form.Group autoFit>

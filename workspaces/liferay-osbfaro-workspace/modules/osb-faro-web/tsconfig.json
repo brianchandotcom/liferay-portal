@@ -24,7 +24,8 @@
 			],
 			"react/jsx-runtime": [
 				"../../../node_modules/@types/react/jsx-runtime"
-			]
+			],
+			"~/*": ["*"]
 		},
 		"skipLibCheck": true,
 		"sourceMap": true,

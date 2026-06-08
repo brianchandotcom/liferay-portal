@@ -1,14 +1,19 @@
-import {getFilters} from 'shared/util/filter';
-import {getLocationsData} from 'shared/util/charts';
-import {getSafeRangeSelectors} from 'shared/util/util';
-import {getVariables, safeResultToProps} from 'shared/util/mappers';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {getLocationsData} from '~/shared/util/charts';
+import {getFilters} from '~/shared/util/filter';
+import {getVariables, safeResultToProps} from '~/shared/util/mappers';
+import {getSafeRangeSelectors} from '~/shared/util/util';
 
 /**
  * MAPPER
  * @description Get Locations Mapper
  * @param {function} getMetric
  */
-const getLocationsMapper = getMetric => {
+const getLocationsMapper = (getMetric) => {
 	const mapResultToProps = safeResultToProps(
 		(result, {filters}, {rangeSelectors}) => {
 			let {geolocation} = getMetric(result);
@@ -25,8 +30,8 @@ const getLocationsMapper = getMetric => {
 				...getSafeRangeSelectors(rangeSelectors),
 				data: {
 					geolocation: locationsData,
-					total: locationsData.length
-				}
+					total: locationsData.length,
+				},
 			};
 		}
 	);
@@ -40,12 +45,12 @@ const getLocationsMapper = getMetric => {
 		filters,
 		interval,
 		rangeSelectors,
-		router: {params}
+		router: {params},
 	}) => getVariables({filters, interval, params, rangeSelectors});
 
 	return {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	};
 };
 
@@ -54,16 +59,16 @@ const getLocationsMapper = getMetric => {
  * @description Get Countries Mapper
  * @param {function} getMetric
  */
-const getLocationsMapperCountries = getMetric => {
-	const mapResultToProps = safeResultToProps(result => {
+const getLocationsMapperCountries = (getMetric) => {
+	const mapResultToProps = safeResultToProps((result) => {
 		const {geolocation} = getMetric(result);
 		const countries = getLocationsData(geolocation, location);
 
 		return {
 			data: {
 				countries,
-				total: countries.length
-			}
+				total: countries.length,
+			},
 		};
 	});
 
@@ -77,27 +82,27 @@ const getLocationsMapperCountries = getMetric => {
 		filters,
 		interval,
 		rangeSelectors,
-		router: {params}
+		router: {params},
 	}) => {
 		const {variables} = getVariables({
 			experienceId,
 			filters,
 			interval,
 			params,
-			rangeSelectors
+			rangeSelectors,
 		});
 
 		return {
 			variables: {
 				...variables,
-				location: 'Any'
-			}
+				location: 'Any',
+			},
 		};
 	};
 
 	return {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	};
 };
 export {getLocationsMapper, getLocationsMapperCountries};

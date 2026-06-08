@@ -1,54 +1,60 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
+import {get} from 'lodash';
+import React from 'react';
+import {ConnectedProps, connect} from 'react-redux';
+import {compose} from 'redux';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import Card from '~/shared/components/Card';
+import Label from '~/shared/components/Label';
+import Nav from '~/shared/components/Nav';
+import {getFormattedTitle} from '~/shared/components/NoResultsDisplay';
+import {NameCell} from '~/shared/components/table/cell-components';
+import {
+	ACTION_TYPES,
+	useSelectionContext,
+	withSelectionProvider,
+} from '~/shared/context/selection';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {RootState} from '~/shared/store';
+import {Alert, Router} from '~/shared/types';
 import Constants, {
 	JobRunDataPeriods,
 	JobRunFrequencies,
 	JobStatuses,
 	JobTypes,
-	OrderByDirections
-} from 'shared/util/constants';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import Label from 'shared/components/Label';
-import Nav from 'shared/components/Nav';
-import React from 'react';
-import RecommendationListQuery from '../queries/RecommendationListQuery';
+	OrderByDirections,
+} from '~/shared/util/constants';
+import {formatDateToTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
 import {
-	ACTION_TYPES,
-	useSelectionContext,
-	withSelectionProvider
-} from 'shared/context/selection';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert, Router} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
-import {
+	NAME,
 	createOrderIOMap,
 	getSortFromOrderIOMap,
-	NAME
-} from 'shared/util/pagination';
-import {formatDateToTimeZone} from 'shared/util/date';
-import {get} from 'lodash';
-import {getFormattedTitle} from 'shared/components/NoResultsDisplay';
+} from '~/shared/util/pagination';
+import {Routes, setUriQueryValues, toRoute} from '~/shared/util/router';
+
+import RecommendationListQuery from '../queries/RecommendationListQuery';
+import {RECOMMENDATION_DELETE_MUTATION} from '../queries/RecommendationMutation';
 import {
 	JOB_RUN_DATA_PERIODS_LABEL_MAP,
 	JOB_RUN_FREQUENCIES_LABEL_MAP,
 	JOB_STATUSES_DISPLAY_MAP,
 	JOB_STATUSES_LABEL_MAP,
-	JOB_TYPES_LABEL_MAP
+	JOB_TYPES_LABEL_MAP,
 } from '../utils/utils';
-import {NameCell} from 'shared/components/table/cell-components';
-import {RECOMMENDATION_DELETE_MUTATION} from '../queries/RecommendationMutation';
-import {RootState} from 'shared/store';
-import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useMutation, useQuery} from '@apollo/client';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const {
-	pagination: {cur: defaultPage}
+	pagination: {cur: defaultPage},
 } = Constants;
 
 const connector = connect(
@@ -58,8 +64,8 @@ const connector = connect(
 			groupId,
 			'data',
 			'timeZone',
-			'timeZoneId'
-		])
+			'timeZoneId',
+		]),
 	}),
 	{addAlert, close, open}
 );
@@ -80,12 +86,12 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 	groupId,
 	history,
 	open,
-	timeZoneId
+	timeZoneId,
 }: IRecommendationListProps) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data, error, loading, refetch} = useQuery(RecommendationListQuery, {
@@ -94,8 +100,8 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 			keywords: query,
 			size: delta,
 			sort: getSortFromOrderIOMap(orderIOMap),
-			start: (page - 1) * delta
-		}
+			start: (page - 1) * delta,
+		},
 	});
 
 	const [deleteRecommendationJobs] = useMutation(
@@ -115,32 +121,32 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 					'delete-x-and-its-historical-training-output-data'
 				),
 				[singleSelectedItem.name]
-		  )
+			)
 		: sub(
 				Liferay.Language.get(
 					'delete-x-models-and-their-historical-training-output-data'
 				),
 				[selectedItemsCount]
-		  );
+			);
 
 	const handleSubmit = () => {
 		deleteRecommendationJobs({
 			variables: {
-				jobIds: selectedItems.map(({id}) => id).toArray()
-			}
+				jobIds: selectedItems.map(({id}) => id).toArray(),
+			},
 		})
 			.then(() => {
 				const successMessage = singleSelectedItem
 					? sub(Liferay.Language.get('x-has-been-deleted'), [
-							singleSelectedItem.name
-					  ])
+							singleSelectedItem.name,
+						])
 					: sub(Liferay.Language.get('x-models-have-been-deleted'), [
-							selectedItemsCount
-					  ]);
+							selectedItemsCount,
+						]);
 
 				addAlert({
 					alertType: Alert.Types.Success,
-					message: successMessage as string
+					message: successMessage as string,
 				});
 
 				selectionDispatch?.({type: ACTION_TYPES.clearAll});
@@ -153,10 +159,10 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 							field: NAME,
 							keywords: '',
 							page: defaultPage,
-							sortOrder: OrderByDirections.Descending
+							sortOrder: OrderByDirections.Descending,
 						},
 						toRoute(Routes.SETTINGS_RECOMMENDATIONS, {
-							groupId
+							groupId,
 						})
 					)
 				);
@@ -167,7 +173,7 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 					message: Liferay.Language.get(
 						'there-was-an-error-processing-your-request.-please-try-again'
 					),
-					timeout: false
+					timeout: false,
 				});
 			});
 	};
@@ -181,57 +187,55 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 			return (
 				<Nav>
 					<Nav.Item>
-						{
-							<ClayButton
-								borderless
-								className='button-root'
-								displayType='secondary'
-								onClick={() => {
-									open(modalTypes.CONFIRMATION_MODAL, {
-										message: (
-											<div>
-												<div className='h4 text-secondary'>
-													{confirmationMessage}
-												</div>
-
-												<p>
-													{singleSelectedItem
-														? Liferay.Language.get(
-																'components-using-this-model-will-need-to-be-reconfigured'
-														  )
-														: Liferay.Language.get(
-																'components-using-these-models-will-need-to-be-reconfigured'
-														  )}
-												</p>
+						<ClayButton
+							borderless
+							className="button-root"
+							displayType="secondary"
+							onClick={() => {
+								open(modalTypes.CONFIRMATION_MODAL, {
+									message: (
+										<div>
+											<div className="h4 text-secondary">
+												{confirmationMessage}
 											</div>
-										),
-										modalVariant: 'modal-warning',
-										onClose: close,
-										onSubmit: handleSubmit,
-										submitButtonDisplay: 'warning',
-										submitMessage:
-											Liferay.Language.get('delete'),
-										title: sub(
-											Liferay.Language.get('deleting-x'),
-											[
-												singleSelectedItem
-													? singleSelectedItem.name
-													: sub(
-															Liferay.Language.get(
-																'x-models'
-															),
-															[selectedItemsCount]
-													  )
-											]
-										),
-										titleIcon: 'warning-full'
-									});
-								}}
-								outline
-							>
-								{Liferay.Language.get('delete')}
-							</ClayButton>
-						}
+
+											<p>
+												{singleSelectedItem
+													? Liferay.Language.get(
+															'components-using-this-model-will-need-to-be-reconfigured'
+														)
+													: Liferay.Language.get(
+															'components-using-these-models-will-need-to-be-reconfigured'
+														)}
+											</p>
+										</div>
+									),
+									modalVariant: 'modal-warning',
+									onClose: close,
+									onSubmit: handleSubmit,
+									submitButtonDisplay: 'warning',
+									submitMessage:
+										Liferay.Language.get('delete'),
+									title: sub(
+										Liferay.Language.get('deleting-x'),
+										[
+											singleSelectedItem
+												? singleSelectedItem.name
+												: sub(
+														Liferay.Language.get(
+															'x-models'
+														),
+														[selectedItemsCount]
+													),
+										]
+									),
+									titleIcon: 'warning-full',
+								});
+							}}
+							outline
+						>
+							{Liferay.Language.get('delete')}
+						</ClayButton>
 					</Nav.Item>
 				</Nav>
 			);
@@ -240,25 +244,23 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 		return (
 			<Nav>
 				<Nav.Item>
-					{
-						<ClayLink
-							button
-							className='nav-btn'
-							href={toRoute(
-								Routes.SETTINGS_RECOMMENDATIONS_CREATE_ITEM_SIMILARITY_MODEL,
-								{groupId}
-							)}
-						>
-							{Liferay.Language.get('new-model')}
-						</ClayLink>
-					}
+					<ClayLink
+						button
+						className="nav-btn"
+						href={toRoute(
+							Routes.SETTINGS_RECOMMENDATIONS_CREATE_ITEM_SIMILARITY_MODEL,
+							{groupId}
+						)}
+					>
+						{Liferay.Language.get('new-model')}
+					</ClayLink>
 				</Nav.Item>
 			</Nav>
 		);
 	};
 
 	return (
-		<Card className='recommendations-list-root' pageDisplay>
+		<Card className="recommendations-list-root" pageDisplay>
 			<CrossPageSelect
 				columns={[
 					{
@@ -270,30 +272,30 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 									Routes.SETTINGS_RECOMMENDATION_MODEL_VIEW,
 									{
 										groupId,
-										jobId: id
+										jobId: id,
 									}
-								)
+								),
 						},
 						className: 'table-cell-expand',
-						label: Liferay.Language.get('name')
+						label: Liferay.Language.get('name'),
 					},
 					{
 						accessor: 'type',
 						dataFormatter: (type: JobTypes) =>
 							JOB_TYPES_LABEL_MAP[type],
-						label: Liferay.Language.get('training-model')
+						label: Liferay.Language.get('training-model'),
 					},
 					{
 						accessor: 'runDataPeriod',
 						dataFormatter: (type: JobRunDataPeriods) =>
 							JOB_RUN_DATA_PERIODS_LABEL_MAP[type],
-						label: Liferay.Language.get('training-period')
+						label: Liferay.Language.get('training-period'),
 					},
 					{
 						accessor: 'runFrequency',
 						dataFormatter: (type: JobRunFrequencies) =>
 							JOB_RUN_FREQUENCIES_LABEL_MAP[type],
-						label: Liferay.Language.get('training-frequency')
+						label: Liferay.Language.get('training-frequency'),
 					},
 					{
 						accessor: 'runDate',
@@ -303,30 +305,30 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 								'MMM Do, YYYY',
 								timeZoneId
 							),
-						label: Liferay.Language.get('last-trained')
+						label: Liferay.Language.get('last-trained'),
 					},
 					{
 						accessor: 'status',
 						cellRenderer: ({
 							className,
-							data: {status}
+							data: {status},
 						}: {
 							className: string;
 							data: {status: JobStatuses};
 						}) => (
 							<td className={className}>
 								<Label
-									className='status'
+									className="status"
 									display={JOB_STATUSES_DISPLAY_MAP[status]}
-									size='lg'
+									size="lg"
 									uppercase
 								>
 									{JOB_STATUSES_LABEL_MAP[status]}
 								</Label>
 							</td>
 						),
-						label: Liferay.Language.get('status')
-					}
+						label: Liferay.Language.get('status'),
+					},
 				]}
 				delta={delta}
 				emptyTitle={getFormattedTitle(
@@ -342,7 +344,7 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 				query={query}
 				refetch={refetch}
 				renderNav={renderNav}
-				rowIdentifier='id'
+				rowIdentifier="id"
 				total={get(data, ['jobs', 'total'], 0)}
 			/>
 		</Card>

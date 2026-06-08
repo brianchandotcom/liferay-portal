@@ -1,30 +1,36 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import {List} from 'immutable';
+import React, {useRef, useState} from 'react';
+import {
+	getContextLabel,
+	numberOfBinsMask,
+} from '~/contacts/components/Distribution';
+import FormSelectFieldInput from '~/contacts/components/form/SelectFieldInput';
+import Card from '~/shared/components/Card';
+import Loading, {Align} from '~/shared/components/Loading';
 import Form, {
 	toPromise,
 	validateMaxLength,
-	validateRequired
-} from 'shared/components/form';
-import FormSelectFieldInput from 'contacts/components/form/SelectFieldInput';
-import Loading, {Align} from 'shared/components/Loading';
-import React, {useRef, useState} from 'react';
-import {DistributionTab} from 'shared/util/records';
-import {FieldContexts, FieldTypes} from 'shared/util/constants';
-import {
-	getContextLabel,
-	numberOfBinsMask
-} from 'contacts/components/Distribution';
-import {isBlank} from 'shared/util/util';
-import {List} from 'immutable';
-import {sequence} from 'shared/util/promise';
-import {sub} from 'shared/util/lang';
+	validateRequired,
+} from '~/shared/components/form';
+import {FieldContexts, FieldTypes} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import {sequence} from '~/shared/util/promise';
+import {DistributionTab} from '~/shared/util/records';
+import {isBlank} from '~/shared/util/util';
 
-const validateNumberOfBins = numberOfBins => {
+const validateNumberOfBins = (numberOfBins) => {
 	let error = '';
 
 	if (isBlank(numberOfBins)) {
 		error = Liferay.Language.get('required');
-	} else if (numberOfBins > 10 || numberOfBins < 1) {
+	}
+	else if (numberOfBins > 10 || numberOfBins < 1) {
 		return Liferay.Language.get('number-of-bins-must-be-between-1-and-10');
 	}
 
@@ -36,7 +42,7 @@ const AddPropertyForm = ({
 	groupId,
 	onCancel,
 	onSubmit,
-	tabsIList = new List()
+	tabsIList = new List(),
 }) => {
 	const _formRef = useRef();
 	const _formSelectFieldInputRef = useRef();
@@ -50,7 +56,7 @@ const AddPropertyForm = ({
 	const handleSubmit = ({
 		numberOfBins,
 		property: {context, id, rawType},
-		title
+		title,
 	}) => {
 		const {setSubmitting} = _formRef.current;
 
@@ -61,7 +67,7 @@ const AddPropertyForm = ({
 				numberOfBins,
 				propertyId: id,
 				propertyType: rawType,
-				title
+				title,
 			})
 		)
 			.then(() => {
@@ -70,11 +76,13 @@ const AddPropertyForm = ({
 			.catch(() => setSubmitting(false));
 	};
 
-	const handleValidateName = value => {
+	const handleValidateName = (value) => {
 		let error = '';
 
 		if (
-			tabsIList.some(tabIMap => tabIMap.get('id') === value.toLowerCase())
+			tabsIList.some(
+				(tabIMap) => tabIMap.get('id') === value.toLowerCase()
+			)
 		) {
 			error = Liferay.Language.get('tab-name-already-exists');
 		}
@@ -82,16 +90,17 @@ const AddPropertyForm = ({
 		return toPromise(error);
 	};
 
-	const handleValidateProperty = property => {
+	const handleValidateProperty = (property) => {
 		let error = '';
 
 		if (!property) {
 			error = Liferay.Language.get('required');
-		} else if (defaultContext !== property.context) {
+		}
+		else if (defaultContext !== property.context) {
 			focusSelectFieldInput();
 
 			return sub(Liferay.Language.get('invalid-breakdown-for-x'), [
-				getContextLabel(defaultContext)
+				getContextLabel(defaultContext),
 			]);
 		}
 
@@ -99,11 +108,11 @@ const AddPropertyForm = ({
 	};
 
 	return (
-		<Card.Body className='add-property-form-root'>
-			<div className='row d-flex flex-column flex-grow-1'>
-				<div className='col-xl-5 d-flex flex-column flex-grow-1'>
-					<div className='description'>
-						<div className='h4'>
+		<Card.Body className="add-property-form-root">
+			<div className="d-flex flex-column flex-grow-1 row">
+				<div className="col-xl-5 d-flex flex-column flex-grow-1">
+					<div className="description">
+						<div className="h4">
 							{Liferay.Language.get(
 								'add-a-breakdown-by-individual-attribute'
 							)}
@@ -120,17 +129,17 @@ const AddPropertyForm = ({
 						initialValues={{
 							numberOfBins: 0,
 							property: null,
-							title: ''
+							title: '',
 						}}
 						onSubmit={handleSubmit}
 						ref={_formRef}
 					>
 						{({handleSubmit, isSubmitting, isValid}) => (
 							<Form.Form
-								className='d-flex flex-column flex-grow-1 justify-content-between'
+								className="d-flex flex-column flex-grow-1 justify-content-between"
 								onSubmit={handleSubmit}
 							>
-								<div className='form-items'>
+								<div className="form-items">
 									<Form.Group autoFit>
 										<Form.GroupItem shrink>
 											<FormSelectFieldInput
@@ -139,7 +148,7 @@ const AddPropertyForm = ({
 												label={Liferay.Language.get(
 													'attribute[noun]'
 												)}
-												name='property'
+												name="property"
 												onSelect={({rawType}) =>
 													setShowBin(
 														rawType ===
@@ -157,12 +166,12 @@ const AddPropertyForm = ({
 										{showBin && (
 											<Form.GroupItem>
 												<Form.Input
-													className='number-of-bins-input'
+													className="number-of-bins-input"
 													label={Liferay.Language.get(
 														'bins'
 													)}
 													mask={numberOfBinsMask}
-													name='numberOfBins'
+													name="numberOfBins"
 													required
 													showSuccess={false}
 													validate={
@@ -179,24 +188,24 @@ const AddPropertyForm = ({
 												label={Liferay.Language.get(
 													'breakdown-name'
 												)}
-												name='title'
+												name="title"
 												required
 												validate={sequence([
 													validateRequired,
 													validateMaxLength(255),
-													handleValidateName
+													handleValidateName,
 												])}
 											/>
 										</Form.GroupItem>
 									</Form.Group>
 								</div>
 
-								<div className='form-navigation'>
+								<div className="form-navigation">
 									<ClayButton
-										className='button-root'
+										className="button-root"
 										disabled={!isValid || isSubmitting}
-										displayType='primary'
-										type='submit'
+										displayType="primary"
+										type="submit"
 									>
 										{isSubmitting && (
 											<Loading align={Align.Left} />
@@ -207,8 +216,8 @@ const AddPropertyForm = ({
 
 									{!!tabsIList.size && (
 										<ClayButton
-											className='button-root'
-											displayType='secondary'
+											className="button-root"
+											displayType="secondary"
 											onClick={onCancel}
 										>
 											{Liferay.Language.get('cancel')}

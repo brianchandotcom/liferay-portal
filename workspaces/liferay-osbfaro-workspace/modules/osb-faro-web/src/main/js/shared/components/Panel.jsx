@@ -1,13 +1,18 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
-import React from 'react';
-import {onEnter} from 'shared/util/key-constants';
+import autobind from 'autobind-decorator';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import {onEnter} from '~/shared/util/key-constants';
 
 class Panel extends React.Component {
 	static defaultProps = {
 		expandable: false,
-		initialExpanded: false
+		initialExpanded: false,
 	};
 
 	static propTypes = {
@@ -15,11 +20,11 @@ class Panel extends React.Component {
 		expandable: PropTypes.bool,
 		initialExpanded: PropTypes.bool,
 		label: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-		title: PropTypes.node
+		title: PropTypes.node,
 	};
 
 	state = {
-		expanded: false
+		expanded: false,
 	};
 
 	constructor(props) {
@@ -27,7 +32,7 @@ class Panel extends React.Component {
 
 		this.state = {
 			...this.state,
-			expanded: this.props.initialExpanded
+			expanded: this.props.initialExpanded,
 		};
 	}
 
@@ -44,14 +49,14 @@ class Panel extends React.Component {
 
 	toggleExpand() {
 		this.setState({
-			expanded: !this.state.expanded
+			expanded: !this.state.expanded,
 		});
 	}
 
 	render() {
 		const {
 			props: {children, expandable, label, title},
-			state: {expanded}
+			state: {expanded},
 		} = this;
 
 		return (
@@ -62,16 +67,16 @@ class Panel extends React.Component {
 			>
 				{title && (
 					<div
-						className='panel-header'
+						className="panel-header"
 						onClick={this.handleClick}
 						onKeyPress={this.handleKeyPress}
-						role='button'
-						tabIndex='0'
+						role="button"
+						tabIndex="0"
 					>
 						{expandable && (
-							<div className='trigger'>
+							<div className="trigger">
 								<ClayIcon
-									className='icon-root'
+									className="icon-root"
 									symbol={
 										expanded ? 'angle-up' : 'angle-down'
 									}
@@ -79,16 +84,16 @@ class Panel extends React.Component {
 							</div>
 						)}
 
-						<div className='panel-title'>{title}</div>
+						<div className="panel-title">{title}</div>
 
 						{label && (
-							<div className='panel-title-label'>{label}</div>
+							<div className="panel-title-label">{label}</div>
 						)}
 					</div>
 				)}
 
 				{(expanded || !expandable) && children && (
-					<div className='panel-body'>{children}</div>
+					<div className="panel-body">{children}</div>
 				)}
 			</div>
 		);

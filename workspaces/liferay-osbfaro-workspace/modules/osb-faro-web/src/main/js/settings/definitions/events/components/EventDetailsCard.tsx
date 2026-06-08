@@ -1,12 +1,16 @@
-import Card from 'shared/components/Card';
-import CodeSnippet from 'shared/components/CodeSnippet';
-import Label from 'shared/components/form/Label';
-import React, {useEffect, useState} from 'react';
-import Table from 'shared/components/table';
-import {Attribute} from 'event-analysis/utils/types';
-import {attributeListColumns} from 'shared/util/table-columns';
-import {Column} from 'shared/components/table';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Map, OrderedMap} from 'immutable';
+import React, {useEffect, useState} from 'react';
+import {Attribute} from '~/event-analysis/utils/types';
+import Card from '~/shared/components/Card';
+import CodeSnippet from '~/shared/components/CodeSnippet';
+import Label from '~/shared/components/form/Label';
+import Table, {Column} from '~/shared/components/table';
+import {attributeListColumns} from '~/shared/util/table-columns';
 
 interface IEventDetailsCardProps {
 	eventAttributes: Attribute[];
@@ -17,20 +21,20 @@ interface IEventDetailsCardProps {
 const EventDetailsCard: React.FC<IEventDetailsCardProps> = ({
 	eventAttributes,
 	eventName,
-	groupId
+	groupId,
 }) => {
 	const [codeLines, setCodeLines] = useState([
 		`Analytics.track('${eventName}', {`,
-		'});'
+		'});',
 	]);
 
 	const [selectedAttributes, setSelectedAttributes] = useState(
 		OrderedMap<string, Map<string, any>>(
 			eventAttributes.map(
-				attribute =>
+				(attribute) =>
 					[attribute.id, Map(attribute)] as [
 						string,
-						Map<string, string>
+						Map<string, string>,
 					]
 			)
 		)
@@ -39,7 +43,7 @@ const EventDetailsCard: React.FC<IEventDetailsCardProps> = ({
 	useEffect(() => {
 		const attributesRepresentations: string[] = [];
 
-		selectedAttributes.forEach(attribute => {
+		selectedAttributes.forEach((attribute) => {
 			const name = attribute?.get('name');
 			const sampleValue = attribute?.get('sampleValue');
 
@@ -49,8 +53,10 @@ const EventDetailsCard: React.FC<IEventDetailsCardProps> = ({
 		setCodeLines([
 			codeLines[0],
 			...attributesRepresentations,
-			codeLines[codeLines.length - 1]
+			codeLines[codeLines.length - 1],
 		]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedAttributes]);
 
 	const addSelectedAttribute = (attribute: Attribute): void =>
@@ -59,11 +65,11 @@ const EventDetailsCard: React.FC<IEventDetailsCardProps> = ({
 		);
 
 	const removeSelectedAttribute = (key: string): void => {
-		setSelectedAttributes(previous => previous.remove(key));
+		setSelectedAttributes((previous) => previous.remove(key));
 	};
 
 	return (
-		<Card key='cardContainer'>
+		<Card key="cardContainer">
 			<Card.Header>
 				<Card.Title>
 					{Liferay.Language.get('send-this-event')}
@@ -71,7 +77,7 @@ const EventDetailsCard: React.FC<IEventDetailsCardProps> = ({
 			</Card.Header>
 
 			<Card.Body>
-				<span className='mt-2 mb-4 w-50'>
+				<span className="mb-4 mt-2 w-50">
 					{Liferay.Language.get(
 						'use-this-script-to-start-sending-events-to-analytics-cloud.-you-can-customize-which-attributes-to-send-with-a-specific-event.-selecting-the-attributes-below-will-generate-a-new-sample-script'
 					)}
@@ -83,26 +89,29 @@ const EventDetailsCard: React.FC<IEventDetailsCardProps> = ({
 			</Card.Body>
 
 			<Table
-				className='mb-0'
+				className="mb-0"
 				columns={
 					[
 						attributeListColumns.getName({
 							channelId: 'channelId',
-							groupId
+							groupId,
 						}),
 						attributeListColumns.displayName,
 						attributeListColumns.description,
 						attributeListColumns.sampleValue,
-						attributeListColumns.dataType
-					].map(column => ({...column, sortable: false})) as Column[]
+						attributeListColumns.dataType,
+					].map((column) => ({
+						...column,
+						sortable: false,
+					})) as Column[]
 				}
 				items={eventAttributes}
-				onSelectItemsChange={selectedAttribute =>
+				onSelectItemsChange={(selectedAttribute) =>
 					selectedAttributes.has(selectedAttribute.id)
 						? removeSelectedAttribute(selectedAttribute.id)
 						: addSelectedAttribute(selectedAttribute as Attribute)
 				}
-				rowIdentifier='id'
+				rowIdentifier="id"
 				selectedItemsIOMap={selectedAttributes}
 				showCheckbox
 			/>

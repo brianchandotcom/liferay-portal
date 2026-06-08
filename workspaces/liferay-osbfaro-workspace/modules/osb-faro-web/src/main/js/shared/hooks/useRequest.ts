@@ -1,19 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {debounce} from 'lodash/fp';
 import {useCallback, useRef, useState} from 'react';
-import {useDeepEqualEffect} from 'shared/hooks/useDeepEqualEffect';
+import {useDeepEqualEffect} from '~/shared/hooks/useDeepEqualEffect';
 
-export const useRequest = <TParams extends object, TData>({
+export const useRequest = function useRequest<TParams extends object, TData>({
 	dataSourceFn,
 	debounceDelay = 0,
 	initialState = {
 		data: null,
 		error: false,
-		loading: true
+		loading: true,
 	},
-	normalize = val => val,
+	normalize = (val) => val,
 	resetStateIfSkipingRequest = false,
 	skipRequest = false,
-	variables
+	variables,
 }: {
 	dataSourceFn?: (params: TParams) => Promise<TData> | undefined;
 	debounceDelay?: number;
@@ -22,12 +27,13 @@ export const useRequest = <TParams extends object, TData>({
 	resetStateIfSkipingRequest?: boolean;
 	skipRequest?: boolean;
 	variables: TParams;
-}) => {
+}) {
 	const requestAbortControllerRef = useRef<AbortController>();
 	const debounceRef = useRef<ReturnType<typeof debounce>>();
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debouncedDataSourceFn = useCallback<any>(
-		debounce(debounceDelay)(vars => {
+		debounce(debounceDelay)((vars) => {
 			if (!dataSourceFn) {
 				return;
 			}
@@ -40,7 +46,7 @@ export const useRequest = <TParams extends object, TData>({
 			}
 
 			promise
-				.then(result => {
+				.then((result) => {
 					if (requestAbortControllerRef.current?.signal.aborted) {
 						return;
 					}
@@ -48,12 +54,12 @@ export const useRequest = <TParams extends object, TData>({
 					setState({
 						...state,
 						data: normalize(result),
-						loading: false
+						loading: false,
 					});
 				})
 				.catch(
-					err =>
-						!err.IS_CANCELLATION_ERROR &&
+					(error) =>
+						!error.IS_CANCELLATION_ERROR &&
 						setState({...state, error: true, loading: false})
 				);
 		}),
@@ -68,13 +74,14 @@ export const useRequest = <TParams extends object, TData>({
 
 	const [state, setState] = useState({
 		...initialState,
-		refetch: getData
+		refetch: getData,
 	});
 
 	useDeepEqualEffect(() => {
 		if (!skipRequest) {
 			getData();
-		} else if (resetStateIfSkipingRequest) {
+		}
+		else if (resetStateIfSkipingRequest) {
 			setState({...state, ...initialState});
 		}
 

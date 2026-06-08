@@ -1,21 +1,26 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
-import BundleRouter from 'route-middleware/BundleRouter';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
-import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import URLConstants from 'shared/util/url-constants';
-import {CSVType} from 'shared/components/download-report/utils';
-import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
-import {Router} from 'shared/types';
+import React, {Suspense, lazy} from 'react';
 import {Switch, useParams} from 'react-router-dom';
-import {useChannelContext} from 'shared/context/channel';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSources} from 'shared/context/dataSources';
-import {User} from 'shared/util/records';
+import BundleRouter from '~/route-middleware/BundleRouter';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import BasePage from '~/shared/components/base-page';
+import DownloadCSVReport from '~/shared/components/download-report/DownloadCSVReport';
+import {CSVType} from '~/shared/components/download-report/utils';
+import StatesRenderer from '~/shared/components/states-renderer/StatesRenderer';
+import {useChannelContext} from '~/shared/context/channel';
+import {useDataSources} from '~/shared/context/dataSources';
+import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
+import {Router} from '~/shared/types';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {User} from '~/shared/util/records';
+import {Routes, getMatchedRoute, toRoute} from '~/shared/util/router';
+import URLConstants from '~/shared/util/url-constants';
 
 const BlogsList = lazy(
 	() => import(/* webpackChunkName: "BlogsList" */ './BlogsList')
@@ -24,6 +29,7 @@ const BlogsList = lazy(
 const DocumentsAndMediaList = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DocumentsAndMediaList" */ './DocumentsAndMediaList'
 		)
 );
@@ -40,23 +46,23 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('blogs'),
-		route: Routes.ASSETS_BLOGS
+		route: Routes.ASSETS_BLOGS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('documents-and-media'),
-		route: Routes.ASSETS_DOCUMENTS_AND_MEDIA
+		route: Routes.ASSETS_DOCUMENTS_AND_MEDIA,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('forms'),
-		route: Routes.ASSETS_FORMS
+		route: Routes.ASSETS_FORMS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('web-content'),
-		route: Routes.ASSETS_WEB_CONTENT
-	}
+		route: Routes.ASSETS_WEB_CONTENT,
+	},
 ];
 
 interface IAssetsProps extends React.HTMLAttributes<HTMLElement> {
@@ -85,8 +91,8 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel?.name
-					})
+						label: selectedChannel?.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -101,7 +107,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 			</BasePage.Header>
 			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_BLOGS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Blog}
@@ -113,7 +119,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 			{getMatchedRoute(NAV_ITEMS) ===
 				Routes.ASSETS_DOCUMENTS_AND_MEDIA && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Document}
@@ -126,7 +132,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 			)}
 			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_FORMS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Form}
@@ -137,7 +143,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 			)}
 			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_WEB_CONTENT && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Journal}
@@ -150,7 +156,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 				<BasePage.Context.Provider
 					value={{
 						filters: {},
-						router
+						router,
 					}}
 				>
 					<Suspense fallback={<Loading />}>
@@ -161,18 +167,18 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 										{authorized
 											? Liferay.Language.get(
 													'connect-a-data-source-with-sites-data'
-											  )
+												)
 											: Liferay.Language.get(
 													'please-contact-your-workspace-administrator-to-add-data-sources'
-											  )}
+												)}
 
 										<ClayLink
-											className='d-block mb-3'
+											className="d-block mb-3"
 											href={
 												URLConstants.DataSourceConnection
 											}
-											key='DOCUMENTATION'
-											target='_blank'
+											key="DOCUMENTATION"
+											target="_blank"
 										>
 											{Liferay.Language.get(
 												'access-our-documentation-to-learn-more'
@@ -182,12 +188,12 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 										{authorized && (
 											<ClayLink
 												button
-												className='button-root'
-												displayType='primary'
+												className="button-root"
+												displayType="primary"
 												href={toRoute(
 													Routes.SETTINGS_DATA_SOURCE_LIST,
 													{
-														groupId
+														groupId,
 													}
 												)}
 											>

@@ -1,10 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import React from 'react';
-import Row from './Row';
-import {fromJS, List, Map} from 'immutable';
+import {List, Map, fromJS} from 'immutable';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+
+import Row from './Row';
 
 function checkIfDuplicateTargetField(suggestionIMap, duplicateFieldsIMap) {
 	return Boolean(duplicateFieldsIMap.get(suggestionIMap.get('name')));
@@ -16,7 +22,7 @@ export default class DataTransformationList extends React.Component {
 		duplicateTargetFieldsIMap: new Map(),
 		fieldsIList: new List(),
 		onChange: noop,
-		readOnly: false
+		readOnly: false,
 	};
 
 	static propTypes = {
@@ -25,7 +31,7 @@ export default class DataTransformationList extends React.Component {
 		fieldsIList: PropTypes.instanceOf(List),
 		fileVersionId: PropTypes.oneOfType([
 			PropTypes.string,
-			PropTypes.number
+			PropTypes.number,
 		]),
 		groupId: PropTypes.string.isRequired,
 		hideMappedFields: PropTypes.bool,
@@ -40,8 +46,8 @@ export default class DataTransformationList extends React.Component {
 		sourceTitle: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
 		suggestionsTitle: PropTypes.oneOfType([
 			PropTypes.array,
-			PropTypes.string
-		])
+			PropTypes.string,
+		]),
 	};
 
 	@autobind
@@ -58,7 +64,7 @@ export default class DataTransformationList extends React.Component {
 
 				suggestion = {
 					name,
-					value: values && values[0]
+					value: values && values[0],
 				};
 			}
 
@@ -67,11 +73,12 @@ export default class DataTransformationList extends React.Component {
 					[index],
 					fromJS({
 						source: item,
-						suggestion
+						suggestion,
 					})
 				)
 			);
-		} else {
+		}
+		else {
 			onChange(fieldsIList.setIn([index, 'suggestion'], fromJS(item)));
 		}
 	}
@@ -101,22 +108,22 @@ export default class DataTransformationList extends React.Component {
 			sourceFieldPlaceholder,
 			sourceFields,
 			sourceTitle,
-			suggestionsTitle
+			suggestionsTitle,
 		} = this.props;
 
 		return (
 			<div
 				className={
 					getCN('data-transformation-list-root', {
-						['read-only']: readOnly
+						['read-only']: readOnly,
 					}) +
 					(this.props.className ? ` ${this.props.className}` : '')
 				}
 			>
-				<div className='data-transformation-header'>
-					<div className='left'>{sourceTitle}</div>
+				<div className="data-transformation-header">
+					<div className="left">{sourceTitle}</div>
 
-					<div className='right'>{suggestionsTitle}</div>
+					<div className="right">{suggestionsTitle}</div>
 				</div>
 
 				{fieldsIList.map((fieldIMap, i) => {

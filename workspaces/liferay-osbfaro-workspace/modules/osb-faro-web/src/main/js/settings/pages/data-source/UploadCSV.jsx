@@ -1,34 +1,39 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import BasePage from 'settings/components/base-page/BasePage';
-import FileDropTarget from 'shared/components/FileDropTarget';
+import getCN from 'classnames';
+import {PropTypes} from 'prop-types';
+import React from 'react';
+import FormNavigation from '~/settings/components/FormNavigation';
+import BasePage from '~/settings/components/base-page/BasePage';
+import FileDropTarget from '~/shared/components/FileDropTarget';
+import NavigationWarning from '~/shared/components/NavigationWarning';
+import Sheet from '~/shared/components/Sheet';
 import Form, {
 	toPromise,
 	validateMaxLength,
-	validateRequired
-} from 'shared/components/form';
-import FormNavigation from 'settings/components/FormNavigation';
-import getCN from 'classnames';
-import NavigationWarning from 'shared/components/NavigationWarning';
-import React from 'react';
-import Sheet from 'shared/components/Sheet';
-import {PropTypes} from 'prop-types';
-import {Routes, setUriQueryValue, toRoute} from 'shared/util/router';
-import {sequence} from 'shared/util/promise';
-import {validateUniqueName} from 'shared/util/data-sources';
-import {withAdminPermission} from 'shared/hoc';
+	validateRequired,
+} from '~/shared/components/form';
+import {withAdminPermission} from '~/shared/hoc';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {validateUniqueName} from '~/shared/util/data-sources';
+import {sequence} from '~/shared/util/promise';
+import {Routes, setUriQueryValue, toRoute} from '~/shared/util/router';
 
 @withAdminPermission
 export default class UploadCSV extends React.Component {
 	static propTypes = {
 		groupId: PropTypes.string.isRequired,
-		history: PropTypes.object.isRequired
+		history: PropTypes.object.isRequired,
 	};
 
 	state = {
 		editing: true,
 		fileUploaded: false,
-		fileVersionId: null
+		fileVersionId: null,
 	};
 
 	constructor(props) {
@@ -42,7 +47,7 @@ export default class UploadCSV extends React.Component {
 	getNextButtonUrl() {
 		const {
 			props: {groupId},
-			state: {fileVersionId}
+			state: {fileVersionId},
 		} = this;
 
 		const {name} = this._formRef.current.values;
@@ -50,7 +55,7 @@ export default class UploadCSV extends React.Component {
 		if (fileVersionId) {
 			const url = toRoute(Routes.SETTINGS_CSV_UPLOAD_CONFIGURE, {
 				fileVersionId: String(fileVersionId),
-				groupId
+				groupId,
 			});
 
 			return name ? setUriQueryValue(url, 'name', name) : url;
@@ -66,7 +71,7 @@ export default class UploadCSV extends React.Component {
 
 			this.setState({
 				fileUploaded: completed && status !== 500,
-				fileVersionId: Number(response)
+				fileVersionId: Number(response),
 			});
 		}
 	}
@@ -88,7 +93,8 @@ export default class UploadCSV extends React.Component {
 
 		if (this._cachedNameValues.has(value)) {
 			error = this._cachedNameValues.get(value);
-		} else {
+		}
+		else {
 			error = validateUniqueName({groupId, value});
 
 			this._cachedNameValues.set(value, error);
@@ -100,7 +106,7 @@ export default class UploadCSV extends React.Component {
 	render() {
 		const {
 			props: {className, groupId},
-			state: {editing, fileUploaded}
+			state: {editing, fileUploaded},
 		} = this;
 
 		return (
@@ -109,14 +115,14 @@ export default class UploadCSV extends React.Component {
 					breadcrumbs.getDataSources({groupId}),
 					{
 						href: toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-							groupId
+							groupId,
 						}),
-						label: Liferay.Language.get('add-data-source')
+						label: Liferay.Language.get('add-data-source'),
 					},
 					{
 						active: true,
-						label: Liferay.Language.get('new-csv')
-					}
+						label: Liferay.Language.get('new-csv'),
+					},
 				]}
 				className={getCN('upload-csv-root', className)}
 				documentTitle={Liferay.Language.get('csv-file')}
@@ -124,8 +130,8 @@ export default class UploadCSV extends React.Component {
 			>
 				<Sheet>
 					<Sheet.Header>
-						<div className='header-content'>
-							<h3 className='title'>
+						<div className="header-content">
+							<h3 className="title">
 								{Liferay.Language.get('csv-file')}
 							</h3>
 						</div>
@@ -144,18 +150,18 @@ export default class UploadCSV extends React.Component {
 											label={Liferay.Language.get(
 												'name-data-source'
 											)}
-											name='name'
+											name="name"
 											required
 											validate={sequence([
 												validateRequired,
 												validateMaxLength(255),
-												this.handleValidate
+												this.handleValidate,
 											])}
 											width={30}
 										/>
 									</Form.Group>
 
-									<Form.Group className='upload-content'>
+									<Form.Group className="upload-content">
 										<Form.Label>
 											{Liferay.Language.get(
 												'file-upload'
@@ -179,7 +185,7 @@ export default class UploadCSV extends React.Component {
 										cancelHref={toRoute(
 											Routes.SETTINGS_DATA_SOURCE_LIST,
 											{
-												groupId
+												groupId,
 											}
 										)}
 										enableNext={isValid && fileUploaded}

@@ -1,10 +1,15 @@
-import autobind from 'autobind-decorator';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Label from 'shared/components/Label';
-import React from 'react';
+import autobind from 'autobind-decorator';
 import {Map, Set} from 'immutable';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
+import React from 'react';
+import Label from '~/shared/components/Label';
 
 export default class EntityRowActions extends React.Component {
 	static defaultProps = {
@@ -15,7 +20,7 @@ export default class EntityRowActions extends React.Component {
 		onRowDelete: noop,
 		onUndoChanges: noop,
 		removeIdsISet: new Set(),
-		showAdded: false
+		showAdded: false,
 	};
 
 	static propTypes = {
@@ -26,7 +31,7 @@ export default class EntityRowActions extends React.Component {
 		onRowDelete: PropTypes.func,
 		onUndoChanges: PropTypes.func,
 		removeIdsISet: PropTypes.instanceOf(Set),
-		showAdded: PropTypes.bool
+		showAdded: PropTypes.bool,
 	};
 
 	@autobind
@@ -34,7 +39,7 @@ export default class EntityRowActions extends React.Component {
 		const {
 			data: {id},
 			itemsIMap,
-			onRowDelete
+			onRowDelete,
 		} = this.props;
 
 		onRowDelete([id], itemsIMap);
@@ -44,7 +49,7 @@ export default class EntityRowActions extends React.Component {
 	handleUndoChanges() {
 		const {
 			data: {id},
-			onUndoChanges
+			onUndoChanges,
 		} = this.props;
 
 		onUndoChanges([id]);
@@ -53,7 +58,7 @@ export default class EntityRowActions extends React.Component {
 	isAddStaged() {
 		const {
 			addIdsISet,
-			data: {id}
+			data: {id},
 		} = this.props;
 
 		return addIdsISet.has(id);
@@ -62,7 +67,7 @@ export default class EntityRowActions extends React.Component {
 	isRemoveStaged() {
 		const {
 			data: {id},
-			removeIdsISet
+			removeIdsISet,
 		} = this.props;
 
 		return removeIdsISet.has(id);
@@ -81,11 +86,11 @@ export default class EntityRowActions extends React.Component {
 					{!itemsSelected && (
 						<ClayButton
 							borderless
-							className='button-root'
-							displayType='primary'
+							className="button-root"
+							displayType="primary"
 							onClick={this.handleUndoChanges}
 							outline
-							size='sm'
+							size="sm"
 						>
 							{Liferay.Language.get('undo')}
 						</ClayButton>
@@ -93,7 +98,7 @@ export default class EntityRowActions extends React.Component {
 
 					<Label
 						display={addStaged ? 'success' : 'warning'}
-						size='lg'
+						size="lg"
 						uppercase
 					>
 						{addStaged
@@ -102,14 +107,15 @@ export default class EntityRowActions extends React.Component {
 					</Label>
 				</>
 			);
-		} else if (!itemsSelected) {
+		}
+		else if (!itemsSelected) {
 			return (
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={this.handleEntityRemoval}
 					outline
-					size='sm'
+					size="sm"
 				>
 					{Liferay.Language.get('remove')}
 				</ClayButton>

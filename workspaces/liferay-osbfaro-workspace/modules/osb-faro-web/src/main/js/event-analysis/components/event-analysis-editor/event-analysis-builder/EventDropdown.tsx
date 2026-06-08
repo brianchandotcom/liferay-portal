@@ -1,24 +1,30 @@
-import BaseDropdown from './base-dropdown';
-import Constants from 'shared/util/constants';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useQuery} from '@apollo/client';
+import {Align} from '@clayui/drop-down';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import EVENT_DEFINITION_QUERY, {
-	UPDATE_EVENT_DEFINITION
-} from 'event-analysis/queries/EventDefinitionQuery';
+	UPDATE_EVENT_DEFINITION,
+} from '~/event-analysis/queries/EventDefinitionQuery';
 import EVENT_DEFINITIONS_QUERY, {
 	EventDefinitionsData,
-	EventDefinitionsVariables
-} from 'event-analysis/queries/EventDefinitionsQuery';
-import React, {useState} from 'react';
-import {Align} from '@clayui/drop-down';
-import {Attribute, Event, EventTypes} from 'event-analysis/utils/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {connect} from 'react-redux';
-import {DISPLAY_NAME} from 'shared/util/pagination';
-import {Modal} from 'shared/types';
-import {SafeResults} from 'shared/hoc/util';
-import {useQuery} from '@apollo/client';
+	EventDefinitionsVariables,
+} from '~/event-analysis/queries/EventDefinitionsQuery';
+import {Attribute, Event, EventTypes} from '~/event-analysis/utils/types';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import {SafeResults} from '~/shared/hoc/util';
+import {Modal} from '~/shared/types';
+import Constants from '~/shared/util/constants';
+import {DISPLAY_NAME} from '~/shared/util/pagination';
+
+import BaseDropdown from './base-dropdown';
 
 const {
-	pagination: {orderDefault}
+	pagination: {orderDefault},
 } = Constants;
 
 interface IAnalysisDropdownProps {
@@ -36,7 +42,7 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 	eventId,
 	onEventChange,
 	open,
-	trigger
+	trigger,
 }) => {
 	const [query, setQuery] = useState('');
 	const [eventType, setEventType] = useState<EventTypes>(EventTypes.All);
@@ -53,9 +59,9 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 				size: 200,
 				sort: {
 					column: DISPLAY_NAME,
-					type: orderDefault.toUpperCase()
-				}
-			}
+					type: orderDefault.toUpperCase(),
+				},
+			},
 		}
 	);
 
@@ -69,25 +75,25 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 							{
 								onClick: () => setEventType(EventTypes.All),
 								tabId: EventTypes.All,
-								title: Liferay.Language.get('all')
+								title: Liferay.Language.get('all'),
 							},
 							{
 								onClick: () => setEventType(EventTypes.Default),
 								tabId: EventTypes.Default,
-								title: Liferay.Language.get('default')
+								title: Liferay.Language.get('default'),
 							},
 							{
 								onClick: () => setEventType(EventTypes.Custom),
 								tabId: EventTypes.Custom,
-								title: Liferay.Language.get('custom')
-							}
+								title: Liferay.Language.get('custom'),
+							},
 						]}
 						title={Liferay.Language.get('events')}
 					/>
 
 					<SafeResults {...result} page={false} pageDisplay={false}>
 						{({
-							eventDefinitions: {eventDefinitions}
+							eventDefinitions: {eventDefinitions},
 						}: {
 							eventDefinitions: {eventDefinitions: Event[]};
 						}) => (
@@ -111,7 +117,7 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 
 												close();
 											},
-											query: EVENT_DEFINITION_QUERY
+											query: EVENT_DEFINITION_QUERY,
 										}
 									);
 

@@ -1,20 +1,25 @@
-import {getFilterItem} from 'shared/util/filter';
-import {getVariables, safeResultToProps} from 'shared/util/mappers';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {getFilterItem} from '~/shared/util/filter';
+import {getVariables, safeResultToProps} from '~/shared/util/mappers';
 
 /**
  * MAPPER
  * @description Get Filters Mapper
  * @param {function} getData
  */
-const getFiltersMapper = getData => {
-	const mapResultToProps = safeResultToProps(result => {
+const getFiltersMapper = (getData) => {
+	const mapResultToProps = safeResultToProps((result) => {
 		const {device = [], geolocation = []} = getData(result);
 
 		return {
 			items: [
 				getFilterItem(device, 'devices'),
-				getFilterItem(geolocation, 'location')
-			]
+				getFilterItem(geolocation, 'location'),
+			],
 		};
 	});
 
@@ -28,7 +33,7 @@ const getFiltersMapper = getData => {
 
 	return {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	};
 };
 

@@ -1,18 +1,23 @@
-import * as API from 'shared/api';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import ListComponent from 'shared/hoc/ListComponent';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
-import RequestActionsRenderer from 'settings/components/user-list/RequestActionsRenderer';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose, withAdminPermission} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
-import {createOrderIOMap, EMAIL_ADDRESS, NAME} from 'shared/util/pagination';
-import {sub} from 'shared/util/lang';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useRequest} from 'shared/hooks/useRequest';
-import {UserStatuses} from 'shared/util/constants';
+import {ConnectedProps, connect} from 'react-redux';
+import RequestActionsRenderer from '~/settings/components/user-list/RequestActionsRenderer';
+import {addAlert} from '~/shared/actions/alerts';
+import {close, modalTypes, open} from '~/shared/actions/modals';
+import * as API from '~/shared/api';
+import {compose, withAdminPermission} from '~/shared/hoc';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import ListComponent from '~/shared/hoc/ListComponent';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {Alert} from '~/shared/types';
+import {UserStatuses} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import {EMAIL_ADDRESS, NAME, createOrderIOMap} from '~/shared/util/pagination';
 
 const connector = connect(null, {addAlert, close, open});
 
@@ -27,17 +32,17 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 	close,
 	groupId,
 	onSetUserRequest,
-	open
+	open,
 }) => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data, error, loading, refetch} = useRequest({
 		dataSourceFn: ({delta, groupId, orderIOMap, page, query, statuses}) =>
 			API.user
 				.fetchMany({delta, groupId, orderIOMap, page, query, statuses})
-				.then(data => {
+				.then((data) => {
 					onSetUserRequest(data.total);
 
 					return data;
@@ -48,13 +53,13 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 			orderIOMap,
 			page,
 			query,
-			statuses: [UserStatuses.Requested]
-		}
+			statuses: [UserStatuses.Requested],
+		},
 	});
 
 	const onAccept = ({
 		emailAddress,
-		id
+		id,
 	}: {
 		emailAddress: string;
 		id: string;
@@ -62,7 +67,7 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: sub(
 				Liferay.Language.get('are-you-sure-you-want-to-accept-x'),
-				[<b key='acceptCount'>{emailAddress}</b>],
+				[<b key="acceptCount">{emailAddress}</b>],
 				false
 			),
 			modalVariant: 'modal-info',
@@ -73,7 +78,7 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 					.then(() => {
 						addAlert({
 							alertType: Alert.Types.Success,
-							message: Liferay.Language.get('user-added')
+							message: Liferay.Language.get('user-added'),
 						});
 
 						refetch?.();
@@ -81,16 +86,16 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 					.catch(() => {
 						addAlert({
 							alertType: Alert.Types.Error,
-							message: Liferay.Language.get('error')
+							message: Liferay.Language.get('error'),
 						});
 					}),
-			title: Liferay.Language.get('accept')
+			title: Liferay.Language.get('accept'),
 		});
 	};
 
 	const onDecline = ({
 		emailAddress,
-		id
+		id,
 	}: {
 		emailAddress: string;
 		id: string;
@@ -98,7 +103,7 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: sub(
 				Liferay.Language.get('are-you-sure-you-want-to-decline-x'),
-				[<b key='declineCount'>{emailAddress}</b>],
+				[<b key="declineCount">{emailAddress}</b>],
 				false
 			),
 			modalVariant: 'modal-info',
@@ -111,7 +116,7 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 							alertType: Alert.Types.Default,
 							message: Liferay.Language.get(
 								'user-request-to-join-denied'
-							)
+							),
 						});
 
 						refetch?.();
@@ -119,10 +124,10 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 					.catch(() => {
 						addAlert({
 							alertType: Alert.Types.Error,
-							message: Liferay.Language.get('error')
+							message: Liferay.Language.get('error'),
 						});
 					}),
-			title: Liferay.Language.get('decline')
+			title: Liferay.Language.get('decline'),
 		});
 	};
 
@@ -132,25 +137,25 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 				{
 					accessor: 'name',
 					label: Liferay.Language.get('name'),
-					title: true
+					title: true,
 				},
 				{
 					accessor: 'emailAddress',
-					label: Liferay.Language.get('email')
+					label: Liferay.Language.get('email'),
 				},
 				{
 					accessor: 'status',
 					cellRenderer: RequestActionsRenderer,
 					cellRendererProps: {
 						onAccept,
-						onDecline
+						onDecline,
 					},
-					className: 'text-right'
-				}
+					className: 'text-right',
+				},
 			]}
 			delta={delta}
 			emptyMessage={sub(Liferay.Language.get('there-are-no-x-found'), [
-				Liferay.Language.get('users')
+				Liferay.Language.get('users'),
 			])}
 			entityLabel={Liferay.Language.get('users')}
 			error={error}
@@ -159,12 +164,12 @@ const UserRequest: React.FC<IUserRequestProps> = ({
 			orderByOptions={[
 				{
 					label: Liferay.Language.get('name'),
-					value: NAME
+					value: NAME,
 				},
 				{
 					label: Liferay.Language.get('email'),
-					value: EMAIL_ADDRESS
-				}
+					value: EMAIL_ADDRESS,
+				},
 			]}
 			orderIOMap={orderIOMap}
 			page={page}

@@ -1,25 +1,31 @@
-import AddDataSource from './AddDataSource';
-import AddPropertyForm from './AddPropertyForm';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import Card from 'shared/components/Card';
-import DistributionChart from './DistributionChart';
-import ErrorDisplay from 'shared/components/ErrorDisplay';
-import Loading from 'shared/components/Loading';
+import {List, Map} from 'immutable';
 import React from 'react';
-import Tabs from './Tabs';
-import {addAlert} from 'shared/actions/alerts';
+import {ConnectedProps, connect} from 'react-redux';
+import {addAlert} from '~/shared/actions/alerts';
 import {
 	addDistributionTab,
 	fetchDistributionTabs,
-	removeDistributionTab
-} from 'shared/actions/preferences';
-import {Alert} from 'shared/types';
-import {connect, ConnectedProps} from 'react-redux';
-import {DistributionTab} from 'shared/util/records';
-import {List, Map} from 'immutable';
-import {PreferencesScopes} from 'shared/util/constants';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {RootState} from 'shared/store';
+	removeDistributionTab,
+} from '~/shared/actions/preferences';
+import Card from '~/shared/components/Card';
+import ErrorDisplay from '~/shared/components/ErrorDisplay';
+import Loading from '~/shared/components/Loading';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {RootState} from '~/shared/store';
+import {Alert} from '~/shared/types';
+import {PreferencesScopes} from '~/shared/util/constants';
+import {DistributionTab} from '~/shared/util/records';
+
+import AddDataSource from './AddDataSource';
+import AddPropertyForm from './AddPropertyForm';
+import DistributionChart from './DistributionChart';
+import Tabs from './Tabs';
 
 const connector = connect(
 	(state: RootState, {distributionKey}: {distributionKey: string}) => {
@@ -28,7 +34,7 @@ const connector = connect(
 				'preferences',
 				PreferencesScopes.Group,
 				'distributionCardTabs',
-				distributionKey
+				distributionKey,
 			],
 			Map()
 		);
@@ -36,7 +42,7 @@ const connector = connect(
 		return {
 			distributionTabsIList: distributionTabs.get('data', List()),
 			error: distributionTabs.get('error', false),
-			loading: distributionTabs.get('loading', true)
+			loading: distributionTabs.get('loading', true),
 		};
 	},
 	{addAlert, addDistributionTab, fetchDistributionTabs, removeDistributionTab}
@@ -68,12 +74,12 @@ class DistributionCard extends React.Component<
 	IDistributionCardState
 > {
 	static defaultProps = {
-		showAddDataSource: false
+		showAddDataSource: false,
 	};
 
 	state = {
 		selectedTabIndex: 0,
-		showAddProperty: false
+		showAddProperty: false,
 	};
 
 	componentDidMount() {
@@ -90,21 +96,21 @@ class DistributionCard extends React.Component<
 			distributionTab: tab,
 			distributionTabId: tab.id,
 			groupId,
-			id
+			id,
 		}) as unknown as Promise<{payload: {order: unknown[]}}>;
 
 		return addPromise
 			.then(({payload: {order}}: {payload: {order: unknown[]}}) =>
 				this.setState({
 					selectedTabIndex: order.length - 1,
-					showAddProperty: false
+					showAddProperty: false,
 				})
 			)
 			.catch(({message}: {message: string}) =>
 				addAlert({
 					alertType: Alert.Types.Error,
 					message,
-					timeout: false
+					timeout: false,
 				})
 			);
 	}
@@ -119,7 +125,7 @@ class DistributionCard extends React.Component<
 				distributionKey,
 				distributionTabId: tabId,
 				groupId,
-				id
+				id,
 			})
 		);
 	}
@@ -139,7 +145,7 @@ class DistributionCard extends React.Component<
 		this.setState({
 			selectedTabIndex: distributionTabsIList.findIndex(
 				(tabIMap: Map<string, string>) => tabIMap.get('id') === tabId
-			)
+			),
 		});
 	}
 
@@ -161,16 +167,16 @@ class DistributionCard extends React.Component<
 				loading,
 				noResultsRenderer,
 				showAddDataSource,
-				viewAllLink
+				viewAllLink,
 			},
-			state: {selectedTabIndex, showAddProperty}
+			state: {selectedTabIndex, showAddProperty},
 		} = this;
 
 		const tabsCount = distributionTabsIList.size;
 
 		return (
 			<Card
-				className='distribution-card-root'
+				className="distribution-card-root"
 				minHeight={536}
 				reportContainer={ReportContainer.DistributionBreakdownCard}
 			>

@@ -1,12 +1,22 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
+import React from 'react';
+import {
+	insertAtIndex,
+	removeAtIndex,
+	replaceAtIndex,
+} from '~/shared/util/array';
+import {SegmentTypes} from '~/shared/util/constants';
+
+import {wrapInCriteriaGroup} from '../utils/odata';
+import {Criteria, Criterion, CriterionGroup} from '../utils/types';
+import {isCriterionGroup} from '../utils/utils';
 import ClearAllButton from './ClearAllButton';
 import CriteriaGroup from './CriteriaGroup';
-import React from 'react';
-import {Criteria, Criterion, CriterionGroup} from '../utils/types';
-import {insertAtIndex, removeAtIndex, replaceAtIndex} from 'shared/util/array';
-import {isCriterionGroup} from '../utils/utils';
-import {SegmentTypes} from 'shared/util/constants';
-import {wrapInCriteriaGroup} from '../utils/odata';
 
 interface ICriteriaBuilderProps {
 	channelId: string;
@@ -19,6 +29,7 @@ interface ICriteriaBuilderProps {
 }
 
 class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
+
 	/**
 	 * Cleans criteria items by performing the following:
 	 * 1. Remove any groups with no items.
@@ -32,10 +43,10 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 		root?: boolean
 	): Criteria[] {
 		const criteria = criteriaItems
-			.filter(criteria =>
+			.filter((criteria) =>
 				isCriterionGroup(criteria) ? criteria.items.length : true
 			)
-			.map(item => {
+			.map((item) => {
 				let cleanedItem: Criteria = item;
 
 				if (isCriterionGroup(item)) {
@@ -48,8 +59,8 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 										...item,
 										items: this.cleanCriteriaMapItems(
 											item.items
-										)
-								  }
+										),
+									}
 								: {
 										conjunctionName:
 											soloItem.conjunctionName,
@@ -57,15 +68,17 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 											soloItem.criteriaGroupId,
 										items: this.cleanCriteriaMapItems(
 											soloItem.items
-										)
-								  };
-						} else {
+										),
+									};
+						}
+						else {
 							cleanedItem = root ? item : soloItem;
 						}
-					} else {
+					}
+					else {
 						cleanedItem = {
 							...item,
-							items: this.cleanCriteriaMapItems(item.items)
+							items: this.cleanCriteriaMapItems(item.items),
 						};
 					}
 				}
@@ -156,7 +169,7 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 
 		return {
 			...criteria,
-			items: updatedCriteriaItems.map(item =>
+			items: updatedCriteriaItems.map((item) =>
 				isCriterionGroup(item) && !!item.items.length
 					? this.searchAndUpdateCriteria(
 							item,
@@ -166,9 +179,9 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 							destIndex,
 							addCriterion,
 							replace
-					  )
+						)
 					: item
-			)
+			),
 		};
 	}
 
@@ -179,7 +192,7 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 		const showClearAll = (criteria?.items?.length ?? 0) > 1;
 
 		return (
-			<div className='criteria-builder-root'>
+			<div className="criteria-builder-root">
 				<CriteriaGroup
 					channelId={channelId}
 					criteria={criteria}

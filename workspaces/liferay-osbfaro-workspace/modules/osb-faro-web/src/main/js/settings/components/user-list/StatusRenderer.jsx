@@ -1,20 +1,25 @@
-import Label from 'shared/components/Label';
-import React from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {PropTypes} from 'prop-types';
-import {UserStatuses} from 'shared/util/constants';
+import React from 'react';
+import Label from '~/shared/components/Label';
+import {UserStatuses} from '~/shared/util/constants';
 
 const STATUS_LANG_MAP = {
 	[UserStatuses.Approved]: Liferay.Language.get('approved'),
-	[UserStatuses.Pending]: Liferay.Language.get('pending')
+	[UserStatuses.Pending]: Liferay.Language.get('pending'),
 };
 
 class StatusRenderer extends React.Component {
 	static defaultProps = {
-		data: {}
+		data: {},
 	};
 
 	static propTypes = {
-		data: PropTypes.object
+		data: PropTypes.object,
 	};
 
 	getDisplayType(status) {
@@ -31,7 +36,7 @@ class StatusRenderer extends React.Component {
 	render() {
 		const {
 			className,
-			data: {status}
+			data: {status},
 		} = this.props;
 
 		const displayType = this.getDisplayType(status);

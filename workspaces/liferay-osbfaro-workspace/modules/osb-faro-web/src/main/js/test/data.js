@@ -1,5 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {List, Map, fromJS} from 'immutable';
+import {isArray, range, times} from 'lodash';
 import moment from 'moment';
-import TimeZone from 'shared/util/records/TimeZone';
+import {AttributeTypes} from '~/event-analysis/utils/types';
+import {
+	Conjunctions,
+	RelationalOperators,
+} from '~/segment/segment-editor/dynamic/utils/constants';
 import {
 	ActivityActions,
 	AssetTypes,
@@ -16,22 +27,16 @@ import {
 	ProjectStates,
 	SegmentStates,
 	SubscriptionStatuses,
-	UserRoleNames
-} from 'shared/util/constants';
-import {AttributeTypes} from 'event-analysis/utils/types';
-import {
-	Conjunctions,
-	RelationalOperators
-} from 'segment/segment-editor/dynamic/utils/constants';
-import {fromJS, List, Map} from 'immutable';
-import {getISODate} from 'shared/util/date';
-import {isArray, range, times} from 'lodash';
-import {Metric} from 'shared/util/records';
+	UserRoleNames,
+} from '~/shared/util/constants';
+import {getISODate} from '~/shared/util/date';
+import {Metric} from '~/shared/util/records';
 import {
 	NotificationSubtypes,
-	NotificationTypes
-} from 'shared/util/records/Notification';
-import {SubscriptionNames} from 'shared/util/subscriptions';
+	NotificationTypes,
+} from '~/shared/util/records/Notification';
+import TimeZone from '~/shared/util/records/TimeZone';
+import {SubscriptionNames} from '~/shared/util/subscriptions';
 
 const BASE_TIMESTAMP = 1531263666366;
 
@@ -57,7 +62,7 @@ export function mockApiToken(data) {
 		expirationDate: getISODate(getTimestamp(30)),
 		lastAccessDate: getISODate(getTimestamp()),
 		token: '1234ABC',
-		...data
+		...data,
 	};
 }
 
@@ -65,7 +70,7 @@ export function mockForm(data) {
 	return {
 		errors: {},
 		touched: {},
-		...data
+		...data,
 	};
 }
 
@@ -87,7 +92,7 @@ export function mockIndividual(seed = 0, properties) {
 			screenWidth: '1920',
 			timeZoneOffset: '-04:00',
 			userAgent: 'Mozilla/5.0',
-			userId: `user-${seed}`
+			userId: `user-${seed}`,
 		},
 		dateCreated: getTimestamp(-2),
 		firstActivityDate: getTimestamp(-1),
@@ -101,9 +106,9 @@ export function mockIndividual(seed = 0, properties) {
 			jobTitle: 'Developer',
 			salary: '50,000',
 			title: 'Developer',
-			...properties
+			...properties,
 		},
-		type: EntityTypes.Individual
+		type: EntityTypes.Individual,
 	};
 }
 
@@ -116,8 +121,8 @@ export function mockIndividualDetails(data = {}) {
 					fieldType: 'Text',
 					name: 'favorite_fruit',
 					sourceName: 'Favorite Fruit',
-					value: 'bananas'
-				}
+					value: 'bananas',
+				},
 			],
 			favorite_pokemon: [
 				{
@@ -125,9 +130,9 @@ export function mockIndividualDetails(data = {}) {
 					fieldType: 'Text',
 					name: 'favorite_pokemon',
 					sourceName: 'Favorite Pokemon',
-					value: 'Charmander'
-				}
-			]
+					value: 'Charmander',
+				},
+			],
 		},
 		demographics: {
 			familyName: [
@@ -135,27 +140,27 @@ export function mockIndividualDetails(data = {}) {
 					dataSourceId: '123',
 					fieldType: 'Text',
 					name: 'familyName',
-					value: 'Foo'
-				}
+					value: 'Foo',
+				},
 			],
 			givenName: [
 				{
 					dataSourceId: '123',
 					fieldType: 'Text',
 					name: 'givenName',
-					value: 'Bar'
-				}
+					value: 'Bar',
+				},
 			],
 			jobTitle: [
 				{
 					dataSourceId: '123',
 					fieldType: 'Text',
 					name: 'jobTitle',
-					value: 'Developer'
-				}
+					value: 'Developer',
+				},
 			],
-			...data
-		}
+			...data,
+		},
 	};
 }
 
@@ -178,10 +183,10 @@ export function mockAccount(seed = 1, data = {}) {
 			phone: '123-123-1234',
 			shippingAddress: '123 Fairy Lane Diamond Bar, CA 91765 USA',
 			website: 'www.liferay.com',
-			yearStarted: '2003'
+			yearStarted: '2003',
 		},
 		type: EntityTypes.Account,
-		...data
+		...data,
 	};
 }
 
@@ -200,8 +205,8 @@ export function mockAccountDetails(data = {}) {
 				ownerId: '23',
 				ownerType: 'account',
 				sourceName: 'industry',
-				value: 'Agriculture'
-			}
+				value: 'Agriculture',
+			},
 		],
 		ownership: [
 			{
@@ -216,7 +221,7 @@ export function mockAccountDetails(data = {}) {
 				ownerId: '23',
 				ownerType: 'account',
 				sourceName: 'businessOwnership',
-				value: 'Northern Parts'
+				value: 'Northern Parts',
 			},
 			{
 				context: 'organization',
@@ -230,8 +235,8 @@ export function mockAccountDetails(data = {}) {
 				ownerId: '23',
 				ownerType: 'account',
 				sourceName: 'businessOwnership',
-				value: 'Southern Parts'
-			}
+				value: 'Southern Parts',
+			},
 		],
 		yearStarted: [
 			{
@@ -246,10 +251,10 @@ export function mockAccountDetails(data = {}) {
 				ownerId: '23',
 				ownerType: 'account',
 				sourceName: 'yearStarted',
-				value: '2003'
-			}
+				value: '2003',
+			},
 		],
-		...data
+		...data,
 	};
 }
 
@@ -262,7 +267,7 @@ export function mockAsset(seed = 0, data = {}) {
 		id: String(seed),
 		name: 'Test Asset',
 		type: 'Form',
-		...data
+		...data,
 	};
 }
 
@@ -273,7 +278,7 @@ export function mockCardTemplate(seed = 0, data = {}) {
 		name: '',
 		size: 2,
 		type: null,
-		...data
+		...data,
 	};
 }
 
@@ -286,7 +291,7 @@ export function mockCompany(seed = 0, data = {}) {
 		status: 1,
 		url: 'http://www.liferay.com',
 		version: '7.1',
-		...data
+		...data,
 	};
 }
 
@@ -296,7 +301,7 @@ export function mockBlockedKeyword(seed = 0, data = {}) {
 		duplicate: false,
 		id: '391941272912793194',
 		keyword: `bar-${seed}`,
-		...data
+		...data,
 	};
 }
 
@@ -307,7 +312,7 @@ export function mockChannel(seed = 1, permissionType = 0, data = {}) {
 		name: `Channel ${seed}`,
 		permissionType,
 		tokenAuth: true,
-		...data
+		...data,
 	};
 }
 
@@ -322,10 +327,10 @@ export function mockChannels() {
 				id: '643280225365059871',
 				name: 'Liferay DXP',
 				permissionType: 0,
-				tokenAuth: false
-			}
+				tokenAuth: false,
+			},
 		],
-		total: 1
+		total: 1,
 	};
 }
 
@@ -336,7 +341,7 @@ export function generateCriterion(customValues) {
 		touched: false,
 		valid: true,
 		value: 'test',
-		...customValues
+		...customValues,
 	};
 }
 
@@ -344,7 +349,7 @@ export function mockNewCriteria(numOfItems = 1, criterionParams) {
 	return {
 		conjunctionName: Conjunctions.And,
 		groupId: 'group_01',
-		items: range(numOfItems).map(() => generateCriterion(criterionParams))
+		items: range(numOfItems).map(() => generateCriterion(criterionParams)),
 	};
 }
 
@@ -364,16 +369,16 @@ export function mockNewCriteriaNested() {
 							{
 								conjunctionName: Conjunctions.Or,
 								groupId: 'group_04',
-								items: range(2).map(generateCriterion)
+								items: range(2).map(generateCriterion),
 							},
-							generateCriterion()
-						]
+							generateCriterion(),
+						],
 					},
-					generateCriterion()
-				]
+					generateCriterion(),
+				],
 			},
-			generateCriterion()
-		]
+			generateCriterion(),
+		],
 	};
 }
 
@@ -387,14 +392,14 @@ export function mockCSVDataSource(seed = 1, data = {}) {
 		name: `CSV${seed}`,
 		properties: {},
 		provider: {
-			type: DataSourceTypes.Csv
+			type: DataSourceTypes.Csv,
 		},
 		providerType: DataSourceTypes.Csv,
 		state: DataSourceStates.Ready,
 		status: DataSourceStatuses.Active,
 		type: EntityTypes.DataSource,
 		url: 'liferay.example.faro.com',
-		...data
+		...data,
 	};
 }
 
@@ -402,7 +407,7 @@ export function mockLiferayDataSource(seed = 1, data = {}) {
 	return {
 		createDate: getTimestamp(-2),
 		credentials: {
-			login: `LiferayUser${seed}`
+			login: `LiferayUser${seed}`,
 		},
 		disabled: false,
 		event: null,
@@ -414,14 +419,14 @@ export function mockLiferayDataSource(seed = 1, data = {}) {
 			analyticsConfiguration: null,
 			contactsConfiguration: null,
 			instanceInfo: {},
-			type: DataSourceTypes.Liferay
+			type: DataSourceTypes.Liferay,
 		},
 		providerType: DataSourceTypes.Liferay,
 		state: DataSourceStates.CredentialsValid,
 		status: DataSourceStatuses.Active,
 		type: EntityTypes.DataSource,
 		url: `https://www.faro-${seed}.io`,
-		...data
+		...data,
 	};
 }
 
@@ -429,7 +434,7 @@ export function mockMetricFragment(seed = 0, data = {}) {
 	return {
 		histogram: {
 			asymmetricComparison: false,
-			metrics: range(30).map(i => ({
+			metrics: range(30).map((i) => ({
 				key: `${moment(getTimestamp(i)).format('YYYY-MM-DD')}T00:00`,
 				previousValue: seed * i * 2,
 				previousValueKey: `${moment(getTimestamp(i - 30)).format(
@@ -439,22 +444,22 @@ export function mockMetricFragment(seed = 0, data = {}) {
 					percentage: 0,
 					trend: {
 						percentage: -50,
-						trendClassification: 'NEGATIVE'
-					}
+						trendClassification: 'NEGATIVE',
+					},
 				},
 				value: seed * i,
 				valueKey: `${moment(getTimestamp(i)).format(
 					'YYYY-MM-DD'
-				)}T00:00`
-			}))
+				)}T00:00`,
+			})),
 		},
 		previousValue: seed * 0.75,
 		trend: {
 			percentage: 33.3,
-			trendClassification: 'POSITIVE'
+			trendClassification: 'POSITIVE',
 		},
 		value: seed,
-		...data
+		...data,
 	};
 }
 
@@ -464,15 +469,15 @@ export function mockProgress(data) {
 			dateRecorded: getTimestamp(),
 			processedOperations: 100,
 			status: DataSourceProgressStatuses.Completed,
-			totalOperations: 100
+			totalOperations: 100,
 		},
 		individuals: {
 			dateRecorded: getTimestamp(),
 			processedOperations: 100,
 			status: DataSourceProgressStatuses.Completed,
-			totalOperations: 100
+			totalOperations: 100,
 		},
-		...data
+		...data,
 	};
 }
 
@@ -482,7 +487,7 @@ export function mockSalesforceDataSource(seed = 1, data = {}) {
 		credentials: {
 			oAuthClientId: `oAuthMockClientId-${seed}`,
 			oAuthClientSecret: `oAuthMockClientSecret-${seed}`,
-			type: CredentialTypes.OAuth2
+			type: CredentialTypes.OAuth2,
 		},
 		disabled: false,
 		event: null,
@@ -493,21 +498,21 @@ export function mockSalesforceDataSource(seed = 1, data = {}) {
 		provider: {
 			analyticsConfiguration: null,
 			contactsConfiguration: null,
-			type: DataSourceTypes.Salesforce
+			type: DataSourceTypes.Salesforce,
 		},
 		providerType: DataSourceTypes.Salesforce,
 		state: DataSourceStates.CredentialsValid,
 		status: DataSourceStatuses.Active,
 		type: EntityTypes.DataSource,
 		url: 'https://login.salesforce.com',
-		...data
+		...data,
 	};
 }
 
 export function mockDistribution(seed = 0) {
 	return {
 		count: seed,
-		values: [`value${seed}`]
+		values: [`value${seed}`],
 	};
 }
 
@@ -521,26 +526,26 @@ export function mockFieldMapping(seed = 0, data = {}) {
 		rawType: 'Text',
 		type: 'Text',
 		values: [`value${seed}`],
-		...data
+		...data,
 	};
 }
 
 export function mockNullFieldMapping(seed = 0, data = {}) {
 	return mockFieldMapping(seed, {
 		value: null,
-		...data
+		...data,
 	});
 }
 
 export function mockIndividualAttributes(seed = 0, data = {}) {
 	return {
-		dataSources: range(seed + 1).map(i => ({
+		dataSources: range(seed + 1).map((i) => ({
 			dataSourceFieldName: `testMiddleName${i}`,
-			dataSourceName: `LIFERAY-DATASOURCE-FARO-EXAMPLE-${i}`
+			dataSourceName: `LIFERAY-DATASOURCE-FARO-EXAMPLE-${i}`,
 		})),
 		dateModified: getTimestamp(),
 		fieldName: `testFildName${seed}`,
-		...data
+		...data,
 	};
 }
 
@@ -551,25 +556,25 @@ export function mockInterestData(seed = 0) {
 				intervalInitDate: getTimestamp(-1),
 				scoreAvg: 1.6,
 				totalElements: 1,
-				viewsSum: 2
+				viewsSum: 2,
 			},
 			{
 				intervalInitDate: getTimestamp(),
 				scoreAvg: 5,
 				totalElements: 1,
-				viewsSum: 2
+				viewsSum: 2,
 			},
 			{
 				intervalInitDate: getTimestamp(1),
 				scoreAvg: 2,
 				totalElements: 1,
-				viewsSum: 2
-			}
+				viewsSum: 2,
+			},
 		],
 		name: `Bar${seed}`,
 		pagesViewCount: 2,
 		relatedPagesCount: 8,
-		score: 1.6
+		score: 1.6,
 	};
 }
 
@@ -577,7 +582,7 @@ export function mockInterestObject(seed = 0, data = {}) {
 	return {
 		individualCount: 5,
 		name: `interest${seed}`,
-		...data
+		...data,
 	};
 }
 
@@ -588,15 +593,15 @@ export function mockLayout(seed = 0, faroEntity = mockSegment()) {
 		contactsLayoutTemplate: {
 			contactsCardTemplatesList: [
 				[mockCardTemplate('cardTemplate1')],
-				[mockCardTemplate('cardTemplate2')]
+				[mockCardTemplate('cardTemplate2')],
 			],
 			headerContactsCardTemplates: [
-				mockCardTemplate('headerCardTemplate1')
+				mockCardTemplate('headerCardTemplate1'),
 			],
 			id: seed,
-			name: 'layoutTemplate'
+			name: 'layoutTemplate',
 		},
-		faroEntity
+		faroEntity,
 	};
 }
 
@@ -607,7 +612,7 @@ export function mockLiferaySyncCounts(data = {}) {
 		organizationsUsersCount: 140,
 		totalUsersCount: 448,
 		userGroupsUsersCount: 260,
-		...data
+		...data,
 	};
 }
 
@@ -619,10 +624,10 @@ export function mockMembershipChange(seed = 0, data = {}) {
 		individualEmail: 'test@faro.io',
 		individualId: `id${seed}`,
 		individualName: `Test${seed}`,
-		individualsCount: 1,
 		individualSegmentId: `segmentid${seed}`,
+		individualsCount: 1,
 		operation: 'ADDED',
-		...data
+		...data,
 	};
 }
 
@@ -634,7 +639,7 @@ export function mockMembershipChangeAggregation(seed = 0, data = {}) {
 		intervalInitDate: getTimestamp(),
 		knownIndividualsCount: 1,
 		removedIndividualsCount: 0,
-		...data
+		...data,
 	};
 }
 
@@ -644,7 +649,7 @@ export function mockNotification(seed = 0, data = {}) {
 		modifiedTime: Date.now(),
 		subtype: NotificationSubtypes.TimeZoneChanged,
 		type: NotificationTypes.Alert,
-		...data
+		...data,
 	};
 }
 
@@ -654,7 +659,7 @@ export function mockGraphqlOrganization(seed = 0, data = {}) {
 		name: `Test Organization ${seed}`,
 		parentName: 'Foo Parent Organization',
 		type: 'organization',
-		...data
+		...data,
 	};
 }
 
@@ -663,7 +668,7 @@ export function mockOrganization(seed = 0, data = {}) {
 		id: String(seed),
 		name: `Test Organization ${seed}`,
 		usersCount: seed,
-		...data
+		...data,
 	};
 }
 
@@ -676,17 +681,17 @@ export function mockPageVisited(seed = 0, data = {}) {
 		title: 'Page Visited Title',
 		url: 'https://www.liferay.com',
 		viewCount: 1,
-		...data
+		...data,
 	};
 }
 
 export function mockSearch(mockEntity, total = 1, data = []) {
 	return {
 		disableSearch: false,
-		items: range(total).map(i =>
+		items: range(total).map((i) =>
 			isArray(data) ? mockEntity(i, ...data) : mockEntity(i, data)
 		),
-		total
+		total,
 	};
 }
 
@@ -706,7 +711,7 @@ export function mockSegment(seed = 0, data = {}) {
 		properties: {},
 		state: SegmentStates.Ready,
 		type: EntityTypes.IndividualsSegment,
-		...data
+		...data,
 	};
 }
 
@@ -715,12 +720,12 @@ export function mockSubscription(data = {}) {
 		addOns: new List([
 			new Map({
 				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseContacts,
-				quantity: 2
+				quantity: 2,
 			}),
 			new Map({
 				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages,
-				quantity: 1
-			})
+				quantity: 1,
+			}),
 		]),
 		endDate: getTimestamp(),
 		individualsCountSinceLastAnniversary: 2057,
@@ -732,7 +737,7 @@ export function mockSubscription(data = {}) {
 		pageViewsLimit: 7000000,
 		pageViewsStatus: SubscriptionStatuses.Ok,
 		startDate: getTimestamp(-2),
-		...data
+		...data,
 	};
 }
 
@@ -742,7 +747,7 @@ export function mockMapping(seed = 0, data = {}) {
 		name: `Test${seed}`,
 		suggestions: [],
 		values: [],
-		...data
+		...data,
 	};
 }
 
@@ -752,10 +757,10 @@ export function mockSession(seed = 0, data = {}, actionData) {
 		completedDate: getTimestamp() + 10000000,
 		createDate: getTimestamp(),
 		day: getTimestamp(),
-		events: times(seed + (1 % 10), i => mockEvent(i, actionData)),
+		events: times(seed + (1 % 10), (i) => mockEvent(i, actionData)),
 		id: `activity_id_${seed}`,
 		name: `activity_${seed}`,
-		...data
+		...data,
 	};
 }
 
@@ -773,19 +778,19 @@ export function mockAction(seed = 0, data = {}) {
 		name: `Asset ${seed}`,
 		startTime: seed + 100000,
 		url: `https://www.liferay${seed}.com`,
-		...data
+		...data,
 	};
 }
 
 export function mockActivity(seed = 0, data = {}, actionData) {
 	return {
-		activities: times(seed + (1 % 10), i => mockAction(i, actionData)),
+		activities: times(seed + (1 % 10), (i) => mockAction(i, actionData)),
 		day: getTimestamp(),
 		endTime: getTimestamp() + 10000000,
 		id: `activity_id_${seed}`,
 		name: `activity_${seed}`,
 		startTime: getTimestamp(),
-		...data
+		...data,
 	};
 }
 
@@ -794,17 +799,17 @@ export function mockActivityHistory(data = {}) {
 		activityAggregations: [
 			{
 				intervalInitDate: getTimestamp(-1),
-				totalElements: 1
+				totalElements: 1,
 			},
 			{
 				intervalInitDate: getTimestamp(),
-				totalElements: 2
-			}
+				totalElements: 2,
+			},
 		],
 		change: 1.28,
 		count: 123,
 		prevCount: 54,
-		...data
+		...data,
 	};
 }
 
@@ -819,7 +824,7 @@ export function mockEvent(seed = 0) {
 		pageKeywords: '',
 		pageTitle: 'Page Title',
 		referrer: 'www.liferay.com',
-		url: `https://www.liferay${seed}.com`
+		url: `https://www.liferay${seed}.com`,
 	};
 }
 
@@ -830,7 +835,7 @@ export function mockBlockedCustomEventDefinition(seed = 0, data = {}) {
 		lastSeenDate: getISODate(getTimestamp()),
 		lastSeenURL: `https//:www.liferay.com/${seed}`,
 		name: `name-${seed}`,
-		...data
+		...data,
 	};
 }
 
@@ -843,7 +848,7 @@ export function mockEventAttributeDefinition(seed = 0, data = {}) {
 		name: `name-${seed}`,
 		sampleValue: `samplevalue-${seed}`,
 		type: AttributeTypes.Global,
-		...data
+		...data,
 	};
 }
 
@@ -856,7 +861,7 @@ export function mockEventDefinition(seed = 0, data = {}) {
 		id: String(seed),
 		name: `name-${seed}`,
 		type: 'DEFAULT',
-		...data
+		...data,
 	};
 }
 
@@ -865,12 +870,12 @@ export function mockPlan({data = {}, individuals = {}, pageViews = {}} = {}) {
 		addOns: {
 			individuals: {
 				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseContacts,
-				quantity: 2
+				quantity: 2,
 			},
 			pageViews: {
 				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages,
-				quantity: 1
-			}
+				quantity: 1,
+			},
 		},
 		endDate: getTimestamp(),
 		lastAnniversaryDate: getTimestamp(-2),
@@ -879,18 +884,18 @@ export function mockPlan({data = {}, individuals = {}, pageViews = {}} = {}) {
 				count: 2057,
 				limit: 105000,
 				status: SubscriptionStatuses.Ok,
-				...individuals
+				...individuals,
 			}),
 			pageViews: new Metric({
 				count: 0,
 				limit: 7000000,
 				status: SubscriptionStatuses.Ok,
-				...pageViews
-			})
+				...pageViews,
+			}),
 		},
 		name: SubscriptionNames.LiferayAnalyticsCloudEnterprise,
 		startDate: getTimestamp(-2),
-		...data
+		...data,
 	};
 }
 
@@ -904,19 +909,19 @@ export function mockProject(seed = 1, data = {}) {
 					SubscriptionNames.LiferayAnalyticsCloudEnterprise,
 				limits: {
 					individuals: 5000,
-					pageViews: 0
+					pageViews: 0,
 				},
-				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseContacts
+				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseContacts,
 			},
 			{
 				baseSubscriptionPlan:
 					SubscriptionNames.LiferayAnalyticsCloudEnterprise,
 				limits: {
 					individuals: 0,
-					pageViews: 5000000
+					pageViews: 5000000,
 				},
-				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages
-			}
+				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages,
+			},
 		]),
 		corpProjectName: `corpProjectName${seed}`,
 		corpProjectUuid: `corpProjectUuid${seed}`,
@@ -929,7 +934,7 @@ export function mockProject(seed = 1, data = {}) {
 		state: ProjectStates.Ready,
 		timeZone: new TimeZone(),
 		userId: seed,
-		...data
+		...data,
 	};
 }
 
@@ -942,7 +947,7 @@ export function mockProperty(seed = 1, data = {}) {
 		name: '',
 		propertyKey: '',
 		type: '',
-		...data
+		...data,
 	};
 }
 
@@ -951,11 +956,11 @@ export function mockRecommendationJobRun(seed = 0, data = {}) {
 		completedDate: '2020-04-24',
 		context: [
 			{key: 'userItemInteractionsDatasetCount', value: 321},
-			{key: 'itemsDatasetCount', value: 123}
+			{key: 'itemsDatasetCount', value: 123},
 		],
 		id: seed,
 		status: 'COMPLETED',
-		...data
+		...data,
 	};
 }
 
@@ -966,7 +971,7 @@ export function mockRecommendationJobRunsMonthlyStatistics(data = {}) {
 		failedJobRuns: 1,
 		runningJobRuns: 1,
 		scheduledJobRuns: 3,
-		...data
+		...data,
 	};
 }
 
@@ -978,7 +983,7 @@ export function mockRecommendationPageAsset(seed = 0, data = {}) {
 		keywords: [],
 		title: 'Test Title',
 		url: `https://www.test${seed}.com`,
-		...data
+		...data,
 	};
 }
 
@@ -993,7 +998,7 @@ export function mockRecommendationJob(seed = 0, data = {}) {
 		runFrequency: JobRunFrequencies.Every30Days,
 		status: JobStatuses.Ready,
 		type: JobTypes.ItemSimilarity,
-		...data
+		...data,
 	};
 }
 
@@ -1003,7 +1008,7 @@ export function mockSite(seed = 0, data = {}) {
 		id: String(seed),
 		name: `Test - ${seed}`,
 		parentGroupId: '23',
-		...data
+		...data,
 	};
 }
 
@@ -1014,7 +1019,7 @@ export function mockUser(seed = 0, data = {}) {
 		name: 'Test Test',
 		roleName: UserRoleNames.Owner,
 		status: 1,
-		...data
+		...data,
 	};
 }
 
@@ -1027,7 +1032,7 @@ export function mockUserGroup(seed = 0, data = {}) {
 		id: String(seed),
 		name: `Test User Group ${seed}`,
 		usersCount: seed,
-		...data
+		...data,
 	};
 }
 
@@ -1044,7 +1049,7 @@ export function mockTreeItem(seed = 0, parentId = 0) {
 		description: count ? `${count} Assets` : '',
 		id,
 		name: `Child${id}`,
-		parentId: parentId || undefined
+		parentId: parentId || undefined,
 	};
 }
 
@@ -1059,14 +1064,14 @@ export function getDummyEvent(
 				{
 					name: 'All Individuals',
 					previousValue,
-					value
-				}
+					value,
+				},
 			],
 			isLeafNode: true,
 			name: event.name,
 			previousValue,
-			value
-		}
+			value,
+		},
 	];
 }
 
@@ -1083,7 +1088,7 @@ export function getDummyBreakdown(i, event, breakdowns, order, currentLevel) {
 		isLeafNode: false,
 		name: `${attribute.name} [${i}]`,
 		previousValue: getRandom(1000, 10000),
-		value: getRandom(1000, 10000)
+		value: getRandom(1000, 10000),
 	};
 }
 
@@ -1107,84 +1112,91 @@ export function getDummyBreakdownData(event, breakdowns, order) {
 			: getDummyEvent(event),
 		count: 25,
 		page: 1,
-		value: 100000
+		value: 100000,
 	};
 }
 
-export const mockBreakdownData = (
+export const mockBreakdownData = function mockBreakdownData(
 	comparePrevious = false,
 	compareSegment = false,
 	compareEvent = false
-) => ({
-	breakdownItems: [
-		{
-			breakdownItems: [
-				{
-					breakdownItems: [
-						{
-							name: 'All Individuals',
-							value: 1717,
-							...(comparePrevious ? {previousValue: 2633} : {})
-						},
-						...(compareSegment
-							? [
-									{
-										name: 'Segmented',
-										value: 1650,
-										...(comparePrevious
-											? {previousValue: 2400}
-											: {})
-									}
-							  ]
-							: [])
-					],
-					leafNode: true,
-					name: 'View Article',
-					value: 3367,
-					...(comparePrevious ? {previousValue: 5033} : {})
-				},
-
-				...(compareEvent
-					? [
+) {
+	return {
+		breakdownItems: [
+			{
+				breakdownItems: [
+					{
+						breakdownItems: [
 							{
-								breakdownItems: [
-									{
-										name: 'All Individuals',
-										value: 700,
-										...(comparePrevious
-											? {previousValue: 800}
-											: {})
-									},
-									...(compareSegment
-										? [
-												{
-													name: 'Segmented',
-													value: 500,
-													...(comparePrevious
-														? {previousValue: 700}
-														: {})
-												}
-										  ]
-										: [])
-								],
-								leafNode: true,
-								name: 'Read Article',
-								value: 1200,
+								name: 'All Individuals',
+								value: 1717,
 								...(comparePrevious
-									? {previousValue: 1500}
-									: {})
-							}
-					  ]
-					: [])
-			],
-			leafNode: false,
-			name: 'articleTitle [0]',
-			value: 3367,
-			...(comparePrevious ? {previousValue: 5033} : {})
-		}
-	],
-	count: 1,
-	page: 1,
-	value: 5033,
-	...(comparePrevious ? {previousValue: 2400} : {})
-});
+									? {previousValue: 2633}
+									: {}),
+							},
+							...(compareSegment
+								? [
+										{
+											name: 'Segmented',
+											value: 1650,
+											...(comparePrevious
+												? {previousValue: 2400}
+												: {}),
+										},
+									]
+								: []),
+						],
+						leafNode: true,
+						name: 'View Article',
+						value: 3367,
+						...(comparePrevious ? {previousValue: 5033} : {}),
+					},
+
+					...(compareEvent
+						? [
+								{
+									breakdownItems: [
+										{
+											name: 'All Individuals',
+											value: 700,
+											...(comparePrevious
+												? {previousValue: 800}
+												: {}),
+										},
+										...(compareSegment
+											? [
+													{
+														name: 'Segmented',
+														value: 500,
+														...(comparePrevious
+															? {
+																	previousValue: 700,
+																}
+															: {}),
+													},
+												]
+											: []),
+									],
+									leafNode: true,
+									name: 'Read Article',
+									value: 1200,
+									...(comparePrevious
+										? {previousValue: 1500}
+										: {}),
+								},
+							]
+						: []),
+				],
+				leafNode: false,
+				name: 'articleTitle [0]',
+				value: 3367,
+				...(comparePrevious ? {previousValue: 5033} : {}),
+			},
+		],
+
+		count: 1,
+		page: 1,
+		value: 5033,
+		...(comparePrevious ? {previousValue: 2400} : {}),
+	};
+};

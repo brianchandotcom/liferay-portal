@@ -1,58 +1,75 @@
-import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'shared/components/base-page';
-import BundleRouter from 'route-middleware/BundleRouter';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLink from '@clayui/link';
-import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
-import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
-import ExperienceDropdown from '../components/ExperienceDropdown';
-import FilterBySegment from '../components/FilterBySegment';
 import getCN from 'classnames';
-import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense, useEffect, useState} from 'react';
-import RouteNotFound from 'shared/components/RouteNotFound';
-import TextTruncate from 'shared/components/TextTruncate';
-import {CSVType} from 'shared/components/download-report/utils';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
-import {getMatchedRoute, Routes} from 'shared/util/router';
-import {getSafeDecodedURIComponent, getSafeTouchpoint} from 'shared/util/util';
 import {pickBy} from 'lodash';
 import {PropTypes} from 'prop-types';
-import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
+import React, {Suspense, lazy, useEffect, useState} from 'react';
 import {Switch, useHistory} from 'react-router-dom';
-import {useChannelContext} from 'shared/context/channel';
-import {useDataSources} from 'shared/context/dataSources';
-import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
+import BundleRouter from '~/route-middleware/BundleRouter';
+import Loading from '~/shared/components/Loading';
+import RouteNotFound from '~/shared/components/RouteNotFound';
+import TextTruncate from '~/shared/components/TextTruncate';
+import BasePage from '~/shared/components/base-page';
+import DownloadCSVReport from '~/shared/components/download-report/DownloadCSVReport';
+import DownloadPDFReport from '~/shared/components/download-report/DownloadPDFReport';
+import {CSVType} from '~/shared/components/download-report/utils';
+import {DropdownRangeKey} from '~/shared/components/dropdown-range-key/DropdownRangeKey';
+import {useChannelContext} from '~/shared/context/channel';
+import {useDataSources} from '~/shared/context/dataSources';
+import {useQueryRangeSelectors} from '~/shared/hooks/useQueryRangeSelectors';
+import * as breadcrumbs from '~/shared/util/breadcrumbs';
+import {
+	Routes,
+	getMatchedRoute,
+	removeUriQueryParam,
+	setUriQueryValues,
+} from '~/shared/util/router';
+import {
+	getSafeDecodedURIComponent,
+	getSafeTouchpoint,
+} from '~/shared/util/util';
 
-const KnownIndividuals = lazy(() =>
-	import(
-		/* webpackChunkName: "TouchpointKnownIndividualsPage" */ './KnownIndividuals'
-	)
+import ExperienceDropdown from '../components/ExperienceDropdown';
+import FilterBySegment from '../components/FilterBySegment';
+
+const KnownIndividuals = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "TouchpointKnownIndividualsPage" */ './KnownIndividuals'
+		)
 );
-const TouchpointOverviewPage = lazy(() =>
-	import(
-		/* webpackChunkName: "TouchpointOverviewPage" */ './TouchpointOverviewPage'
-	)
+const TouchpointOverviewPage = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "TouchpointOverviewPage" */ './TouchpointOverviewPage'
+		)
 );
-const TouchpointPathPage = lazy(() =>
-	import(/* webpackChunkName: "TouchpointPathPage" */ './PagePath')
+const TouchpointPathPage = lazy(
+	() => import(/* webpackChunkName: "TouchpointPathPage" */ './PagePath')
 );
 
 const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.SITES_TOUCHPOINTS_OVERVIEW
+		route: Routes.SITES_TOUCHPOINTS_OVERVIEW,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('path'),
-		route: Routes.SITES_TOUCHPOINTS_PATH
+		route: Routes.SITES_TOUCHPOINTS_PATH,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('known-individuals'),
-		route: Routes.SITES_TOUCHPOINTS_KNOWN_INDIVIDUALS
-	}
+		route: Routes.SITES_TOUCHPOINTS_KNOWN_INDIVIDUALS,
+	},
 ];
 
 function TouchpointRoutes({className, router}) {
@@ -63,7 +80,7 @@ function TouchpointRoutes({className, router}) {
 		experienceId: experienceIdfromURL,
 		groupId,
 		title,
-		touchpoint
+		touchpoint,
 	} = router.params;
 	const [pathRangeSelectors, setPathRangeSelectors] =
 		useState(rangeSelectors);
@@ -77,6 +94,8 @@ function TouchpointRoutes({className, router}) {
 
 	useEffect(() => {
 		setPathRangeSelectors(rangeSelectors);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [matchedRoute]);
 
 	return (
@@ -89,18 +108,19 @@ function TouchpointRoutes({className, router}) {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
+						label: selectedChannel && selectedChannel.name,
 					}),
 					breadcrumbs.getSites({channelId, groupId}),
 					breadcrumbs.getPages({channelId, groupId}),
-					breadcrumbs.getEntityName({label: decodedTitle})
+					breadcrumbs.getEntityName({label: decodedTitle}),
 				]}
 				groupId={groupId}
 			>
 				<BasePage.Header.TitleSection
 					subtitle={
 						<TextTruncate title={decodedTouchpoint}>
-							<ClayLink href={decodedTouchpoint} target='_blank'>
+							<ClayLink href={decodedTouchpoint} target="_blank">
+
 								{/* It should have double decode for cases when there are special characters */}
 
 								{getSafeDecodedURIComponent(decodedTouchpoint)}
@@ -116,7 +136,7 @@ function TouchpointRoutes({className, router}) {
 						channelId,
 						groupId,
 						title,
-						touchpoint
+						touchpoint,
 					}}
 					routeQueries={pickBy({...rangeSelectors})}
 				/>
@@ -126,21 +146,21 @@ function TouchpointRoutes({className, router}) {
 				<BasePage.SubHeader>
 					<ExperienceDropdown
 						groupId={groupId}
-						onChange={experienceId => {
+						onChange={(experienceId) => {
 							history.push(setUriQueryValues({experienceId}));
 
 							setExperienceId(experienceId);
 						}}
 					/>
 
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DropdownRangeKey
 							legacy={false}
-							onRangeSelectorChange={rangeSelectors => {
+							onRangeSelectorChange={(rangeSelectors) => {
 								history.push(
 									setUriQueryValues(
 										pickBy({
-											...rangeSelectors
+											...rangeSelectors,
 										}),
 										removeUriQueryParam(
 											window.location.href,
@@ -169,10 +189,10 @@ function TouchpointRoutes({className, router}) {
 
 			{matchedRoute === Routes.SITES_TOUCHPOINTS_KNOWN_INDIVIDUALS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							assetId={getSafeTouchpoint(touchpoint)}
-							assetType='page'
+							assetType="page"
 							disabled={dataSourceStates.empty}
 							type={CSVType.Individual}
 							typeLang={Liferay.Language.get('known-individuals')}
@@ -186,7 +206,7 @@ function TouchpointRoutes({className, router}) {
 					experienceId,
 					filters: {},
 					rangeSelectors: pathRangeSelectors,
-					router
+					router,
 				}}
 			>
 				{matchedRoute === Routes.SITES_TOUCHPOINTS_PATH && (
@@ -226,7 +246,7 @@ function TouchpointRoutes({className, router}) {
 							<BundleRouter
 								componentProps={{
 									rangeSelectors: pathRangeSelectors,
-									selectedSegment
+									selectedSegment,
 								}}
 								data={TouchpointPathPage}
 								destructured={false}
@@ -244,6 +264,7 @@ function TouchpointRoutes({className, router}) {
 }
 
 TouchpointRoutes.propTypes = {
+
 	/**
 	 * @type {object}
 	 * @default undefined
@@ -254,7 +275,7 @@ TouchpointRoutes.propTypes = {
 	 * @type {string}
 	 * @default undefined
 	 */
-	title: PropTypes.string
+	title: PropTypes.string,
 };
 
 export default TouchpointRoutes;

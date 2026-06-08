@@ -1,13 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import autobind from 'autobind-decorator';
-import DefinitionItem from 'shared/components/DefinitionItem';
-import Item from 'ui-kit/components/Item';
 import React from 'react';
-import Row from 'ui-kit/components/Row';
+import DefinitionItem from '~/shared/components/DefinitionItem';
+import Item from '~/ui-kit/components/Item';
+import Row from '~/ui-kit/components/Row';
 
 export default class DefinitionItemKit extends React.Component {
 	state = {
 		name: 'Test Test',
-		url: 'www.liferay.com'
+		url: 'www.liferay.com',
 	};
 
 	@autobind
@@ -23,8 +28,8 @@ export default class DefinitionItemKit extends React.Component {
 				<Row>
 					<Item>
 						<DefinitionItem
-							label='URL (Non-Editable)'
-							name='url'
+							label="URL (Non-Editable)"
+							name="url"
 							onSubmit={this.handleSubmit}
 							value={url}
 						/>
@@ -35,8 +40,8 @@ export default class DefinitionItemKit extends React.Component {
 					<Item>
 						<DefinitionItem
 							editable
-							label='Name (Editable)'
-							name='name'
+							label="Name (Editable)"
+							name="name"
 							onSubmit={this.handleSubmit}
 							value={name}
 						/>

@@ -1,21 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {DocumentNode, QueryHookOptions, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import CrossPageSelect from 'shared/hoc/CrossPageSelect';
-import Modal from 'shared/components/modal';
+import {OrderedMap} from 'immutable';
+import {noop} from 'lodash';
 import React, {useEffect} from 'react';
+import Modal from '~/shared/components/modal';
 import {
 	ACTION_TYPES,
 	useSelectionContext,
-	withSelectionProvider
-} from 'shared/context/selection';
-import {Columns, IPagination} from 'shared/types';
-import {DocumentNode, QueryHookOptions, useQuery} from '@apollo/client';
-
-import {noop} from 'lodash';
-import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
-
-import {safeResultToProps} from 'shared/util/mappers';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
+	withSelectionProvider,
+} from '~/shared/context/selection';
+import CrossPageSelect from '~/shared/hoc/CrossPageSelect';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {Columns, IPagination} from '~/shared/types';
+import {safeResultToProps} from '~/shared/util/mappers';
+import {OrderParams} from '~/shared/util/records';
 
 interface ISearchableTableModalGraphQLProps extends IPagination {
 	className: string;
@@ -64,7 +67,7 @@ const SearchableTableModalGraphql: React.FC<
 		onQueryChange,
 		orderIOMap,
 		page,
-		query
+		query,
 	} = useStatefulPagination(undefined, {initialDelta, initialOrderIOMap});
 
 	const {data, error, loading} = useQuery(
@@ -80,24 +83,26 @@ const SearchableTableModalGraphql: React.FC<
 			selectionDispatch?.({type: ACTION_TYPES.clearAll});
 			selectionDispatch?.({
 				payload: {items: selectedItems},
-				type: ACTION_TYPES.add
+				type: ACTION_TYPES.add,
 			});
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const handleSubmit = () => onSubmit(contextSelectedItems);
 
 	const {empty, items, total} = safeResultToProps(mapResultToProps)({
 		data: {error, loading, ...data},
-		ownProps: {}
+		ownProps: {},
 	});
 
 	return (
-		<Modal className={className} size='lg'>
+		<Modal className={className} size="lg">
 			<Modal.Header onClose={onClose} title={title} />
 
-			<Modal.Body className='p-0'>
-				<div className='text-secondary'>{instruction}</div>
+			<Modal.Body className="p-0">
+				<div className="text-secondary">{instruction}</div>
 
 				<CrossPageSelect
 					{...otherProps}
@@ -121,17 +126,17 @@ const SearchableTableModalGraphql: React.FC<
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={requireSelection && !contextSelectedItems.size}
-					displayType='primary'
+					displayType="primary"
 					onClick={handleSubmit}
 				>
 					{submitMessage}

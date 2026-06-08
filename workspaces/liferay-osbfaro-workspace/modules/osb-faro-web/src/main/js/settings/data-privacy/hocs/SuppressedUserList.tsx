@@ -1,48 +1,53 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useMutation} from '@apollo/client';
+import {graphql} from '@apollo/client/react/hoc';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import DataControlRequest from '../queries/DataControlRequestMutation';
-import getMetricsMapper from 'shared/hoc/mappers/metrics';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import SuppressedUsersListQuery from '../queries/SuppressedUsersListQuery';
-import URLConstants from 'shared/util/url-constants';
-import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
+import {ConnectedProps, connect} from 'react-redux';
+import {addAlert} from '~/shared/actions/alerts';
+import Card from '~/shared/components/Card';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
 import {
 	compose,
 	withBaseResults,
 	withQueryPagination,
-	withQueryRangeSelectors
-} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
-import {CREATE_DATE, createOrderIOMap} from 'shared/util/pagination';
-import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
-import {formatDateToTimeZone} from 'shared/util/date';
+	withQueryRangeSelectors,
+} from '~/shared/hoc';
+import getMetricsMapper from '~/shared/hoc/mappers/metrics';
+import {Alert} from '~/shared/types';
 import {
 	GDPRRequestStatuses,
 	GDPRRequestTypes,
-	Sizes
-} from 'shared/util/constants';
-import {graphql} from '@apollo/client/react/hoc';
-import {sub} from 'shared/util/lang';
-import {useMutation} from '@apollo/client';
-import {User} from 'shared/util/records';
+	Sizes,
+} from '~/shared/util/constants';
+import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from '~/shared/util/date';
+import {sub} from '~/shared/util/lang';
+import {CREATE_DATE, createOrderIOMap} from '~/shared/util/pagination';
+import {User} from '~/shared/util/records';
+import URLConstants from '~/shared/util/url-constants';
+
+import DataControlRequest from '../queries/DataControlRequestMutation';
+import SuppressedUsersListQuery from '../queries/SuppressedUsersListQuery';
 
 const withData = () =>
 	graphql(
 		SuppressedUsersListQuery,
 		getMetricsMapper(
 			({
-				suppressions: {suppressions, total}
+				suppressions: {suppressions, total},
 			}: {
 				suppressions: {suppressions: any[]; total: number};
 			}) => ({
 				items: suppressions,
-				total
+				total,
 			}),
 			{
-				fetchPolicy: 'no-cache'
+				fetchPolicy: 'no-cache',
 			},
 			SuppressedUsersListQuery as unknown as null
 		)
@@ -66,7 +71,7 @@ const withQueryOptions =
 			<Component
 				{...otherProps}
 				renderInlineRowActions={({
-					data: {dataControlTaskStatus, emailAddress}
+					data: {dataControlTaskStatus, emailAddress},
 				}: {
 					data: {
 						dataControlTaskStatus: GDPRRequestStatuses;
@@ -76,8 +81,8 @@ const withQueryOptions =
 					authorized &&
 					dataControlTaskStatus !== GDPRRequestStatuses.Pending && (
 						<ClayButton
-							className='button-root unsuppress'
-							displayType='secondary'
+							className="button-root unsuppress"
+							displayType="secondary"
 							onClick={() => {
 								unsuppressUser({
 									variables: {
@@ -85,8 +90,8 @@ const withQueryOptions =
 										ownerId: String(currentUser.id),
 										types: [GDPRRequestTypes.Unsuppress],
 										userId: String(currentUser.userId),
-										userName: currentUser.name
-									}
+										userName: currentUser.name,
+									},
 								})
 									.then(() => {
 										addAlert({
@@ -96,7 +101,7 @@ const withQueryOptions =
 													'x-has-been-successfully-unsuppressed'
 												),
 												[emailAddress]
-											) as string
+											) as string,
 										});
 
 										refetch();
@@ -110,7 +115,7 @@ const withQueryOptions =
 												),
 												[emailAddress]
 											) as string,
-											timeout: false
+											timeout: false,
 										});
 									});
 							}}
@@ -130,28 +135,28 @@ const SuppressedListWithData = withBaseResults(withData, {
 			accessor: 'emailAddress',
 			className: 'table-cell-expand',
 			label: Liferay.Language.get('email'),
-			title: true
+			title: true,
 		},
 		{
 			accessor: 'dataControlTaskBatchId',
-			label: Liferay.Language.get('request-id')
+			label: Liferay.Language.get('request-id'),
 		},
 		{
 			accessor: 'dataControlTaskCreateDate',
 			dataFormatter: (val: string) =>
 				formatDateToTimeZone(val, CUSTOM_DATE_FORMAT, timeZoneId),
-			label: Liferay.Language.get('requested-date')
+			label: Liferay.Language.get('requested-date'),
 		},
 		{
 			accessor: 'createDate',
 			dataFormatter: (val: string) =>
 				formatDateToTimeZone(val, CUSTOM_DATE_FORMAT, timeZoneId),
-			label: Liferay.Language.get('suppression-date')
-		}
+			label: Liferay.Language.get('suppression-date'),
+		},
 	],
 	primary: true,
 	showDropdownRangeKey: false,
-	withQueryOptions
+	withQueryOptions,
 });
 
 const connector = connect(null, {addAlert});
@@ -163,12 +168,12 @@ interface ISuppressedUserListProps extends PropsFromRedux {
 	timeZoneId: string;
 }
 
-const SuppressedUserList: React.FC<ISuppressedUserListProps> = props => (
-	<Card className='suppressed-user-list-root' pageDisplay>
+const SuppressedUserList: React.FC<ISuppressedUserListProps> = (props) => (
+	<Card className="suppressed-user-list-root" pageDisplay>
 		<SuppressedListWithData
 			{...props}
 			checkDisabled={({
-				dataControlTaskStatus
+				dataControlTaskStatus,
 			}: {
 				dataControlTaskStatus: GDPRRequestStatuses;
 			}) => dataControlTaskStatus === GDPRRequestStatuses.Pending}
@@ -182,10 +187,10 @@ const SuppressedUserList: React.FC<ISuppressedUserListProps> = props => (
 							)}
 
 							<ClayLink
-								className='d-block mb-3'
+								className="d-block mb-3"
 								href={URLConstants.SuppressedUsersDocumentation}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
@@ -196,7 +201,7 @@ const SuppressedUserList: React.FC<ISuppressedUserListProps> = props => (
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 					title={Liferay.Language.get('no-suppressed-users-found')}
 				/>

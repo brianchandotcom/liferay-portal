@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export const ARROW_DOWN = 40;
 export const ARROW_LEFT = 37;
 export const ARROW_RIGHT = 39;
@@ -25,7 +30,7 @@ export function onKey(keyCode) {
 				if (event && event.keyCode === keyCode) {
 					wrappedFn.call(this, event);
 				}
-			}
+			},
 		};
 	};
 }

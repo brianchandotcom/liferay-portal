@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import Form from 'shared/components/form';
 import getCN from 'classnames';
-import Modal from 'shared/components/modal';
-import React, {useRef, useState} from 'react';
-import ToggleSwitch from 'shared/components/ToggleSwitch';
 import {every, noop} from 'lodash';
+import React, {useRef, useState} from 'react';
+import ToggleSwitch from '~/shared/components/ToggleSwitch';
+import Form from '~/shared/components/form';
+import Modal from '~/shared/components/modal';
 
 interface IToggleSwitchModalProps {
 	className?: string;
@@ -45,7 +50,7 @@ const ToggleSwitchModal: React.FC<IToggleSwitchModalProps> = ({
 
 		const {setFieldValue, values} = _formRef.current;
 
-		Object.keys(values).map(key => setFieldValue(key, checked));
+		Object.keys(values).map((key) => setFieldValue(key, checked));
 
 		setCheckAll(checked);
 	};
@@ -60,11 +65,11 @@ const ToggleSwitchModal: React.FC<IToggleSwitchModalProps> = ({
 			<Modal.Body>{message}</Modal.Body>
 
 			{toggleAllMessage && (
-				<div className='toggle-all'>
+				<div className="toggle-all">
 					<ToggleSwitch
 						checked={checkAll}
 						label={toggleAllMessage}
-						name='toggleAll'
+						name="toggleAll"
 						onChange={handleSelectAllChange}
 					/>
 				</div>
@@ -87,7 +92,7 @@ const ToggleSwitchModal: React.FC<IToggleSwitchModalProps> = ({
 						onChange={handleFormChange}
 						onSubmit={handleSubmit}
 					>
-						{items.map(item => (
+						{items.map((item) => (
 							<Form.Group key={item}>
 								<Form.ToggleSwitch label={item} name={item} />
 							</Form.Group>
@@ -95,17 +100,17 @@ const ToggleSwitchModal: React.FC<IToggleSwitchModalProps> = ({
 
 						<Modal.Footer>
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 								onClick={onClose}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
 							<ClayButton
-								className='button-root'
-								displayType='primary'
-								type='submit'
+								className="button-root"
+								displayType="primary"
+								type="submit"
 							>
 								{Liferay.Language.get('done')}
 							</ClayButton>

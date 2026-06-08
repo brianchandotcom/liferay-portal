@@ -1,10 +1,16 @@
-import DatePicker from '../date-picker';
-import React from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Text as ClayText} from '@clayui/core';
+import React from 'react';
+import {MomentDateRange} from '~/shared/components/DateRangeInput';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {sub} from '~/shared/util/lang';
+
+import DatePicker from '../date-picker';
 import {formatDateWithTimezone} from './utils';
-import {MomentDateRange} from 'shared/components/DateRangeInput';
-import {sub} from 'shared/util/lang';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 interface IDropdownRangeKeyDatePickerProps {
 	customDateRange: MomentDateRange;
@@ -12,11 +18,11 @@ interface IDropdownRangeKeyDatePickerProps {
 	retentionPeriod: number | null;
 }
 
-export const DropdownRangeKeyDatePicker = ({
+export const DropdownRangeKeyDatePicker = function DropdownRangeKeyDatePicker({
 	customDateRange,
 	onCustomRangeChange,
-	retentionPeriod
-}: IDropdownRangeKeyDatePickerProps) => {
+	retentionPeriod,
+}: IDropdownRangeKeyDatePickerProps) {
 	const {timeZoneId} = useTimeZone();
 
 	return (
@@ -25,12 +31,12 @@ export const DropdownRangeKeyDatePicker = ({
 			displayLabel={false}
 			header={
 				<>
-					<ClayText size={2} weight='semi-bold'>
+					<ClayText size={2} weight="semi-bold">
 						{Liferay.Language.get('custom-range').toUpperCase()}
 					</ClayText>
 
 					<div>
-						<ClayText color='secondary' size={2}>
+						<ClayText color="secondary" size={2}>
 							{sub(
 								Liferay.Language.get(
 									'dates-prior-to-x-months-cannot-be-selected-due-to-your-workspaces-data-retention-period'
@@ -51,7 +57,7 @@ export const DropdownRangeKeyDatePicker = ({
 			onSelect={({end, start}: MomentDateRange) =>
 				onCustomRangeChange({
 					end,
-					start
+					start,
 				})
 			}
 			timeZoneId={timeZoneId}

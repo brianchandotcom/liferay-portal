@@ -1,12 +1,17 @@
-import getCN from 'classnames';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import Label from '@clayui/label';
+import getCN from 'classnames';
 import React from 'react';
-import {formatUTCDate} from 'shared/util/date';
+import {formatUTCDate} from '~/shared/util/date';
 
 enum MembershipChange {
 	ADDED = 'ADDED',
 	REMOVED = 'REMOVED',
-	STAYED = 'STAYED'
+	STAYED = 'STAYED',
 }
 
 interface IMembershipChanges {
@@ -19,29 +24,29 @@ interface IMembershipChanges {
 
 const MEMBERSHIP_CHANGE_MAP: Record<
 	MembershipChange,
-	{label: string; displayType?: 'success' | 'danger'}
+	{displayType?: 'success' | 'danger'; label: string}
 > = {
 	ADDED: {
 		displayType: 'success',
-		label: Liferay.Language.get('added')
+		label: Liferay.Language.get('added'),
 	},
 	REMOVED: {
 		displayType: 'danger',
-		label: Liferay.Language.get('removed')
+		label: Liferay.Language.get('removed'),
 	},
 	STAYED: {
-		label: Liferay.Language.get('stayed')
-	}
+		label: Liferay.Language.get('stayed'),
+	},
 };
 
 const MAP_LABEL_TYPE: MembershipChange[] = [
 	MembershipChange.ADDED,
-	MembershipChange.REMOVED
+	MembershipChange.REMOVED,
 ];
 
 const MembershipChanges: React.FC<IMembershipChanges> = ({
 	className,
-	data: {createDateTime, type}
+	data: {createDateTime, type},
 }) => (
 	<td className={getCN('name-cell-root', className)}>
 		<div>{formatUTCDate(createDateTime)}</div>

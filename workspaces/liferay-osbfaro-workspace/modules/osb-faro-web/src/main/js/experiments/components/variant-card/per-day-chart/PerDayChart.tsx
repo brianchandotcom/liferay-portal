@@ -1,8 +1,13 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React from 'react';
+import {formatYAxis, getMetricUnit} from '~/experiments/util/experiments';
+import {MetricName} from '~/experiments/util/types';
+
 import {ComposedChart} from '../../ComposedChart';
-import {formatYAxis} from 'experiments/util/experiments';
-import {getMetricUnit} from 'experiments/util/experiments';
-import {MetricName} from 'experiments/util/types';
 import {Tooltip} from './Tooltip';
 
 interface IPerDayExperiment {
@@ -25,7 +30,7 @@ const formatData = (experiment: IPerDayExperiment) => {
 	const metricUnit = getMetricUnit(experiment.goal?.metric as MetricName);
 	const format = (value: number) => formatYAxis(metricUnit)(value);
 
-	experiment.metricsHistogram.forEach(metric => {
+	experiment.metricsHistogram.forEach((metric) => {
 		const control = metric.variantMetrics[0];
 		const variant = metric.variantMetrics[1];
 
@@ -39,16 +44,16 @@ const formatData = (experiment: IPerDayExperiment) => {
 					improvement:
 						control.improvement && format(control.improvement),
 					low: format(control.confidenceInterval[0]),
-					median: format(control.median)
+					median: format(control.median),
 				},
 				variant: {
 					high: format(variant.confidenceInterval[1]),
 					improvement:
 						variant.improvement && format(variant.improvement),
 					low: format(variant.confidenceInterval[0]),
-					median: format(variant.median)
-				}
-			}
+					median: format(variant.median),
+				},
+			},
 		});
 
 		intervals.push(metric.processedDate);
@@ -59,14 +64,20 @@ const formatData = (experiment: IPerDayExperiment) => {
 		data: chartData,
 		format: formatYAxis(metricUnit),
 		intervals,
-		variantLabel: experiment.dxpVariants[1].dxpVariantName
+		variantLabel: experiment.dxpVariants[1].dxpVariantName,
 	};
 };
 
-export const PerDayChart = ({experiment}: {experiment: IPerDayExperiment}) => (
-	<ComposedChart
-		chartType='area'
-		data={formatData(experiment)}
-		Tooltip={Tooltip}
-	/>
-);
+export const PerDayChart = function PerDayChart({
+	experiment,
+}: {
+	experiment: IPerDayExperiment;
+}) {
+	return (
+		<ComposedChart
+			Tooltip={Tooltip}
+			chartType="area"
+			data={formatData(experiment)}
+		/>
+	);
+};

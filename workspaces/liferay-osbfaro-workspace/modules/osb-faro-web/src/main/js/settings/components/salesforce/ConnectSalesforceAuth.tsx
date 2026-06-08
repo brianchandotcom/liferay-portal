@@ -1,31 +1,36 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import Clipboard from 'clipboard';
-import Form from 'shared/components/form';
 import getCN from 'classnames';
+import Clipboard from 'clipboard';
+import {FormikProps} from 'formik';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert} from 'shared/types';
-import {createSalesforce, updateSalesforce} from 'shared/api/data-source';
-import {DataSource} from 'shared/util/records';
-import {DataSourceStatuses} from 'shared/util/constants';
+import {useParams} from 'react-router-dom';
+import {createSalesforce, updateSalesforce} from '~/shared/api/data-source';
+import Form from '~/shared/components/form';
+import {Alert} from '~/shared/types';
+import {DataSourceStatuses} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
 import {
 	ERROR_TYPES,
+	OAUTH_CALLBACK_URL,
 	getOAuthWindowErrorMessage,
-	getTempCredentials
-} from 'shared/util/oauth';
-import {FormikProps} from 'formik';
-import {OAUTH_CALLBACK_URL} from 'shared/util/oauth';
-import {Routes} from 'shared/util/router';
-import {sequence} from 'shared/util/promise';
-import {sub} from 'shared/util/lang';
-import {Text} from '@clayui/core';
-import {useParams} from 'react-router-dom';
+	getTempCredentials,
+} from '~/shared/util/oauth';
+import {sequence} from '~/shared/util/promise';
+import {DataSource} from '~/shared/util/records';
+import {Routes} from '~/shared/util/router';
 import {
 	validateRequired,
-	validateSalesforceDomain
-} from 'shared/util/validators';
+	validateSalesforceDomain,
+} from '~/shared/util/validators';
 
 /**
  * The salesforceAuthErrorMessage function aims to map all the errors returned
@@ -42,44 +47,44 @@ function salesforceAuthErrorMessage(errMessage: string) {
 			matches: [
 				'access_denied',
 				'immediate_unsuccessful',
-				'authorization_pending'
+				'authorization_pending',
 			],
 			messageKey: Liferay.Language.get(
 				'you-did-not-grant-access-to-the-application.-please-approve-the-request-and-try-again'
-			)
+			),
 		},
 		{
 			matches: [
 				'inactive_user',
 				'inactive_org',
 				'invalid_app_access',
-				'NO_ACCESS'
+				'NO_ACCESS',
 			],
 			messageKey: Liferay.Language.get(
 				'your-account-or-organization-is-not-eligible-for-sign-in.-contact-your-administrator-for-assistance'
-			)
+			),
 		},
 		{
 			matches: [
 				'invalid_grant',
 				'authentication failure',
-				'rate_limit_exceeded'
+				'rate_limit_exceeded',
 			],
 			messageKey: Liferay.Language.get(
 				'we-could-not-verify-your-sign-in.-check-your-credentials-and-try-again'
-			)
+			),
 		},
 		{
 			matches: [
 				'invalid_client',
 				'invalid_client_id',
 				'invalid_assertion_type',
-				'unsupported_response_type'
+				'unsupported_response_type',
 			],
 			messageKey: Liferay.Language.get(
 				'the-application-credentials-or-configuration-are-invalid.-verify-the-client-settings-and-try-again'
-			)
-		}
+			),
+		},
 	];
 
 	for (const {matches, messageKey} of errorGroups) {
@@ -94,18 +99,19 @@ function salesforceAuthErrorMessage(errMessage: string) {
 }
 
 interface IConnectSalesforceAuthProps {
+	addAlert: any;
+	buttonProps?: {
+		[key: string]: any;
+	};
+	dataSource?: DataSource;
+
 	/**
 	 * When disabled, the form renders with all inputs
 	 * read-only and without any buttons.
 	 */
 	disabled?: boolean;
-	addAlert: any;
-	dataSource?: DataSource;
 	onCancel?: () => void;
 	onSubmit: (dataSource: DataSource) => void;
-	buttonProps?: {
-		[key: string]: any;
-	};
 }
 
 const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
@@ -114,7 +120,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 	dataSource,
 	disabled,
 	onCancel,
-	onSubmit
+	onSubmit,
 }) => {
 	const {groupId = ''} = useParams<{groupId: string}>();
 
@@ -136,7 +142,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 
 			addAlert({
 				alertType: Alert.Types.Success,
-				message: Liferay.Language.get('copied')
+				message: Liferay.Language.get('copied'),
 			});
 
 			setTimeout(() => {
@@ -148,6 +154,8 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 		});
 
 		return () => _clipboard.destroy();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -155,7 +163,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 			initialValues={{
 				clientId: dataSource?.credentials?.get('oAuthClientId'),
 				clientSecret: dataSource?.credentials?.get('oAuthClientSecret'),
-				salesForceDataSource: dataSource?.url
+				salesForceDataSource: dataSource?.url,
 			}}
 			innerRef={_formRef}
 			onSubmit={(values: any) => {
@@ -173,9 +181,9 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 					consumerKey: values.clientId,
 					consumerSecret: values.clientSecret,
 					groupId,
-					type: 'salesforce'
+					type: 'salesforce',
 				} as any)
-					.then(async tempCredentials => {
+					.then(async (tempCredentials) => {
 						if (tempCredentials) {
 							if (dataSource) {
 								const updatedDataSource = {
@@ -184,7 +192,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 									id: dataSource.id,
 									name: dataSource.name,
 									status: DataSourceStatuses.Active,
-									url: values.salesForceDataSource
+									url: values.salesForceDataSource,
 								} as any;
 
 								updateSalesforce(updatedDataSource)
@@ -193,7 +201,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 											alertType: Alert.Types.Success,
 											message: Liferay.Language.get(
 												'connection-established-successfully'
-											)
+											),
 										});
 
 										onSubmit(updatedDataSource);
@@ -203,39 +211,40 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 											alertType: Alert.Types.Error,
 											message: Liferay.Language.get(
 												'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-											)
+											),
 										});
 									})
 									.finally(() => {
 										setSubmitting(false);
 									});
-							} else {
+							}
+							else {
 								const dataSource = {
 									accountsConfiguration: {
-										enableAllAccounts: false
+										enableAllAccounts: false,
 									},
 									channelsConfiguration: {
 										channelIds: [],
-										enableAllChannels: false
+										enableAllChannels: false,
 									},
 									contactsConfiguration: {
 										enableAllContacts: false,
-										enableAllLeads: false
+										enableAllLeads: false,
 									},
 									credentials: tempCredentials,
 									groupId,
 									name: Liferay.Language.get('salesforce'),
 									status: DataSourceStatuses.Active,
-									url: values.salesForceDataSource
+									url: values.salesForceDataSource,
 								} as any;
 
 								createSalesforce(dataSource)
-									.then(response => {
+									.then((response) => {
 										addAlert({
 											alertType: Alert.Types.Success,
 											message: Liferay.Language.get(
 												'connection-established-successfully'
-											)
+											),
 										});
 
 										onSubmit(response);
@@ -245,7 +254,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 											alertType: Alert.Types.Error,
 											message: Liferay.Language.get(
 												'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-											)
+											),
 										});
 									})
 									.finally(() => {
@@ -254,14 +263,14 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 							}
 						}
 					})
-					.catch(err => {
+					.catch((error) => {
 						addAlert({
 							alertType: Alert.Types.Error,
 							message:
-								err.type ===
+								error.type ===
 								ERROR_TYPES.AC_RECEIVE_CALLBACK_ERROR
-									? salesforceAuthErrorMessage(err.message)
-									: getOAuthWindowErrorMessage(err)
+									? salesforceAuthErrorMessage(error.message)
+									: getOAuthWindowErrorMessage(error),
 						});
 
 						setSubmitting(false);
@@ -270,7 +279,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 		>
 			{({handleSubmit, isSubmitting, isValid, values}) => (
 				<Form.Form
-					className='oauth-form-root'
+					className="oauth-form-root"
 					onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
 						if (!isValid) {
 							if (
@@ -283,7 +292,8 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 										'please-enter-a-value-before-continuing'
 									)
 								);
-							} else {
+							}
+							else {
 								setInlineAlert(null);
 							}
 						}
@@ -293,7 +303,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 				>
 					{inlineAlert && (
 						<ClayAlert
-							displayType='danger'
+							displayType="danger"
 							title={Liferay.Language.get('error')}
 						>
 							{inlineAlert}
@@ -302,19 +312,19 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 
 					<ClayForm.Group
 						className={getCN({
-							'has-success': isUrlCopied
+							'has-success': isUrlCopied,
 						})}
 					>
-						<label htmlFor='callbackURL'>
-							<Text weight='semi-bold'>
+						<label htmlFor="callbackURL">
+							<Text weight="semi-bold">
 								{Liferay.Language.get('target-url')}
 							</Text>
 
 							<div>
 								<Text
-									color='secondary'
+									color="secondary"
 									size={3}
-									weight='normal'
+									weight="normal"
 								>
 									{sub(
 										Liferay.Language.get(
@@ -329,11 +339,11 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 						<ClayInput.Group>
 							<ClayInput.GroupItem prepend>
 								<ClayInput
-									id='callbackURL'
+									id="callbackURL"
 									insetAfter
-									name='callbackURL'
+									name="callbackURL"
 									readOnly={!isUrlCopied}
-									type='text'
+									type="text"
 									value={OAUTH_CALLBACK_URL}
 								/>
 							</ClayInput.GroupItem>
@@ -358,13 +368,13 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 					</ClayForm.Group>
 
 					<Form.Input
-						className='mb-3'
-						id='salesForceDataSource'
+						className="mb-3"
+						id="salesForceDataSource"
 						label={Liferay.Language.get('salesforce-url')}
-						name='salesForceDataSource'
+						name="salesForceDataSource"
 						readOnly={disabled}
 						required
-						type='text'
+						type="text"
 						validate={sequence([
 							(value: string) =>
 								validateRequired(
@@ -376,12 +386,12 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 										[Liferay.Language.get('salesforce-url')]
 									) as string
 								),
-							validateSalesforceDomain
+							validateSalesforceDomain,
 						])}
 					/>
 
 					<Form.Input
-						className='mb-3'
+						className="mb-3"
 						contentAfter={
 							<ClayButton
 								aria-label={
@@ -389,7 +399,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 										? Liferay.Language.get('view')
 										: Liferay.Language.get('hidden')
 								}
-								displayType='secondary'
+								displayType="secondary"
 								onClick={() => setShowClientId(!showClientId)}
 							>
 								<ClayIcon
@@ -398,9 +408,9 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 							</ClayButton>
 						}
 						contentAfterEnableMagnet
-						id='clientId'
+						id="clientId"
 						label={Liferay.Language.get('consumer-key-client-id')}
-						name='clientId'
+						name="clientId"
 						readOnly={disabled}
 						required
 						type={showClientId ? 'text' : 'password'}
@@ -414,7 +424,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 									[
 										Liferay.Language.get(
 											'consumer-key-client-id'
-										)
+										),
 									]
 								) as string
 							)
@@ -422,7 +432,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 					/>
 
 					<Form.Input
-						className='mb-4'
+						className="mb-4"
 						contentAfter={
 							<ClayButton
 								aria-label={
@@ -430,7 +440,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 										? Liferay.Language.get('view')
 										: Liferay.Language.get('hidden')
 								}
-								displayType='secondary'
+								displayType="secondary"
 								onClick={() =>
 									setShowClientSecret(!showClientSecret)
 								}
@@ -443,11 +453,11 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 							</ClayButton>
 						}
 						contentAfterEnableMagnet
-						id='clientSecret'
+						id="clientSecret"
 						label={Liferay.Language.get(
 							'consumer-secret-client-secret'
 						)}
-						name='clientSecret'
+						name="clientSecret"
 						readOnly={disabled}
 						required
 						type={showClientSecret ? 'text' : 'password'}
@@ -461,7 +471,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 									[
 										Liferay.Language.get(
 											'consumer-secret-client-secret'
-										)
+										),
 									]
 								) as string
 							)
@@ -474,7 +484,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 								{...buttonProps}
 								disabled={isSubmitting}
 								loading={isSubmitting}
-								type='submit'
+								type="submit"
 							>
 								{Liferay.Language.get('connect')}
 							</ClayButton>
@@ -483,7 +493,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 								<ClayButton
 									block
 									borderless
-									displayType='secondary'
+									displayType="secondary"
 									onClick={onCancel}
 								>
 									{Liferay.Language.get('cancel')}

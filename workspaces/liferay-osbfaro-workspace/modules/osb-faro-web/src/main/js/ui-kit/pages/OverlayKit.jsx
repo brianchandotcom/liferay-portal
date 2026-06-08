@@ -1,7 +1,13 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
-import DatePicker from 'shared/components/date-picker';
-import Overlay from 'shared/components/Overlay';
 import React from 'react';
+import Overlay from '~/shared/components/Overlay';
+import DatePicker from '~/shared/components/date-picker';
+
 import Row from '../components/Row';
 
 class OverlayKit extends React.Component {
@@ -15,10 +21,10 @@ class OverlayKit extends React.Component {
 				<Row>
 					<Overlay>
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 						>
-							{'Hover Me'}
+							Hover Me
 						</ClayButton>
 
 						<DatePicker />
@@ -28,26 +34,26 @@ class OverlayKit extends React.Component {
 				<Row>
 					<Overlay>
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 						>
-							{'Nested'}
+							Nested
 						</ClayButton>
 
 						<Overlay>
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 							>
-								{'Nested 2'}
+								Nested 2
 							</ClayButton>
 
 							<Overlay>
 								<ClayButton
-									className='button-root'
-									displayType='secondary'
+									className="button-root"
+									displayType="secondary"
 								>
-									{'Hover Me'}
+									Hover Me
 								</ClayButton>
 
 								<DatePicker />

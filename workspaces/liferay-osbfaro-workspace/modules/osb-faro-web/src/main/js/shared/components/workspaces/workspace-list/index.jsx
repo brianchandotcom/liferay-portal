@@ -1,14 +1,20 @@
-import getCN from 'classnames';
-import React from 'react';
-import WorkspaceListItem from './ListItem';
-import {DataSourceStates} from 'shared/util/constants';
-import {getPlanLabel, SubscriptionNames} from 'shared/util/subscriptions';
-import {noop} from 'lodash';
-import {Project} from 'shared/util/records';
-import {PropTypes} from 'prop-types';
-import {Routes, toRoute} from 'shared/util/router';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-const isSubscriptionLimitReached = subscription => {
+import getCN from 'classnames';
+import {noop} from 'lodash';
+import {PropTypes} from 'prop-types';
+import React from 'react';
+import {DataSourceStates} from '~/shared/util/constants';
+import {Project} from '~/shared/util/records';
+import {Routes, toRoute} from '~/shared/util/router';
+import {SubscriptionNames, getPlanLabel} from '~/shared/util/subscriptions';
+
+import WorkspaceListItem from './ListItem';
+
+const isSubscriptionLimitReached = (subscription) => {
 	if (
 		subscription?.get('name') !== SubscriptionNames.LiferayDataPlatform &&
 		subscription?.get('name') !==
@@ -36,35 +42,36 @@ export default class WorkspaceList extends React.Component {
 		checkDisabled: noop,
 		displayAccountHeaders: false,
 		displayPlanInfo: false,
-		isJoinableProjects: false
+		isJoinableProjects: false,
 	};
 
 	static propTypes = {
 		accounts: PropTypes.arrayOf(
 			PropTypes.shape({
 				accountName: PropTypes.string,
-				projects: PropTypes.arrayOf(PropTypes.instanceOf(Project))
+				projects: PropTypes.arrayOf(PropTypes.instanceOf(Project)),
 			})
 		),
 		checkDisabled: PropTypes.func,
 		displayAccountHeaders: PropTypes.bool,
 		displayPlanInfo: PropTypes.bool,
-		isJoinableProjects: PropTypes.bool
+		isJoinableProjects: PropTypes.bool,
 	};
 
 	getRoute({corpProjectUuid, friendlyURL, groupId, state}) {
 		if (friendlyURL) {
 			return toRoute(Routes.WORKSPACE_WITH_ID, {
-				groupId: friendlyURL.replace('/', '')
+				groupId: friendlyURL.replace('/', ''),
 			});
-		} else if (!!groupId && state !== DataSourceStates.Unconfigured) {
+		}
+		else if (!!groupId && state !== DataSourceStates.Unconfigured) {
 			return toRoute(Routes.WORKSPACE_WITH_ID, {
-				groupId
+				groupId,
 			});
 		}
 
 		return toRoute(Routes.WORKSPACE_ADD_WITH_CORP_PROJECT_UUID, {
-			corpProjectUuid
+			corpProjectUuid,
 		});
 	}
 
@@ -74,13 +81,13 @@ export default class WorkspaceList extends React.Component {
 			checkDisabled,
 			className,
 			displayPlanInfo,
-			isJoinableProjects
+			isJoinableProjects,
 		} = this.props;
 
 		return (
 			<div className={getCN('workspace-list-root', className)}>
 				<ul className={getCN('list-group', className)}>
-					{accounts.map(project => {
+					{accounts.map((project) => {
 						const {
 							className,
 							corpProjectName,
@@ -88,7 +95,7 @@ export default class WorkspaceList extends React.Component {
 							groupId,
 							name,
 							requested,
-							state
+							state,
 						} = project;
 
 						return (
@@ -113,7 +120,7 @@ export default class WorkspaceList extends React.Component {
 									displayPlanInfo
 										? `${getPlanLabel(
 												faroSubscription.get('name')
-										  )}`
+											)}`
 										: ''
 								}
 								projectState={state}

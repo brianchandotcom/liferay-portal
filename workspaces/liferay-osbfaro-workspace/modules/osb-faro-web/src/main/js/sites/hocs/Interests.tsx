@@ -1,41 +1,47 @@
-import Card from 'shared/components/Card';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {OperationOption, graphql} from '@apollo/client/react/hoc';
 import ClayLink from '@clayui/link';
+import {pickBy} from 'lodash';
+import React from 'react';
+import {useParams} from 'react-router-dom';
+import {compose} from 'redux';
+import Card from '~/shared/components/Card';
+import {DropdownRangeKey} from '~/shared/components/dropdown-range-key/DropdownRangeKey';
+import {useChannelContext} from '~/shared/context/channel';
+import {withHistory, withPaginationBar, withTableData} from '~/shared/hoc';
+import {useQueryPagination} from '~/shared/hooks/useQueryPagination';
+import {useQueryRangeSelectors} from '~/shared/hooks/useQueryRangeSelectors';
+import InterestsQuery from '~/shared/queries/InterestsQuery';
+import {RangeSelectors} from '~/shared/types';
 import Constants, {
 	CompositionTypes,
 	RangeKeyTimeRanges,
-	Sizes
-} from 'shared/util/constants';
-import InterestsQuery from 'shared/queries/InterestsQuery';
-import React from 'react';
-import URLConstants from 'shared/util/url-constants';
-import {compose} from 'redux';
-import {compositionListColumns} from 'shared/util/table-columns';
-import {COUNT, createOrderIOMap} from 'shared/util/pagination';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
+	Sizes,
+} from '~/shared/util/constants';
+import {sub} from '~/shared/util/lang';
+import {COUNT, createOrderIOMap} from '~/shared/util/pagination';
+import {Routes, setUriQueryValues, toRoute} from '~/shared/util/router';
+import {compositionListColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
+
 import {
 	getMapResultToProps,
-	mapPropsToOptions
+	mapPropsToOptions,
 } from './mappers/composition-query';
-import {graphql, OperationOption} from '@apollo/client/react/hoc';
-import {pickBy} from 'lodash';
-import {RangeSelectors} from 'shared/types';
-import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
-import {sub} from 'shared/util/lang';
-import {useChannelContext} from 'shared/context/channel';
-import {useParams} from 'react-router-dom';
-import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
-import {withHistory, withPaginationBar, withTableData} from 'shared/hoc';
 
 const {
-	pagination: {cur: defaultPage, delta: defaultDelta}
+	pagination: {cur: defaultPage, delta: defaultDelta},
 } = Constants;
 
 const withData = () =>
 	compose(
 		graphql(InterestsQuery, {
 			options: mapPropsToOptions,
-			props: getMapResultToProps(CompositionTypes.SiteInterests)
+			props: getMapResultToProps(CompositionTypes.SiteInterests),
 		} as OperationOption<object, object>),
 		withPaginationBar({defaultDelta})
 	);
@@ -43,7 +49,7 @@ const withData = () =>
 const TableWithData = withTableData(withData, {
 	emptyDescription: (
 		<>
-			<span className='mr-1'>
+			<span className="mr-1">
 				{Liferay.Language.get(
 					'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 				)}
@@ -51,8 +57,8 @@ const TableWithData = withTableData(withData, {
 
 			<ClayLink
 				href={URLConstants.SitesDashboardSearchTermsAndInterests}
-				key='DOCUMENTATION'
-				target='_blank'
+				key="DOCUMENTATION"
+				target="_blank"
 			>
 				{Liferay.Language.get('learn-more-about-interests')}
 			</ClayLink>
@@ -61,7 +67,7 @@ const TableWithData = withTableData(withData, {
 	emptyIcon: {
 		border: false,
 		size: Sizes.XXXLarge,
-		symbol: 'ac_satellite'
+		symbol: 'ac_satellite',
 	},
 	emptyTitle: Liferay.Language.get('there-are-no-interests-found'),
 	getColumns: ({
@@ -69,7 +75,7 @@ const TableWithData = withTableData(withData, {
 		groupId,
 		maxCount,
 		rangeSelectors,
-		totalCount
+		totalCount,
 	}: {
 		channelId: string;
 		groupId: string;
@@ -87,22 +93,22 @@ const TableWithData = withTableData(withData, {
 					toRoute(Routes.SITES_INTEREST_DETAILS, {
 						channelId,
 						groupId,
-						interestId: name
+						interestId: name,
 					})
 				),
-			sortable: false
+			sortable: false,
 		}),
 		compositionListColumns.getRelativeMetricBar({
 			label: Liferay.Language.get('sessions'),
 			maxCount,
-			totalCount
+			totalCount,
 		}),
 		compositionListColumns.getPercentOf({
 			metricName: Liferay.Language.get('sessions'),
-			totalCount
-		})
+			totalCount,
+		}),
 	],
-	rowIdentifier: 'name'
+	rowIdentifier: 'name',
 });
 
 const Interests = ({history}: {history: {push: (path: string) => void}}) => {
@@ -112,7 +118,7 @@ const Interests = ({history}: {history: {push: (path: string) => void}}) => {
 		groupId: string;
 	}>();
 	const {delta, orderIOMap, page} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(COUNT)
+		initialOrderIOMap: createOrderIOMap(COUNT),
 	});
 
 	const rangeSelectors = useQueryRangeSelectors();
@@ -124,7 +130,7 @@ const Interests = ({history}: {history: {push: (path: string) => void}}) => {
 	const handleRangeKeyValueChange = ({
 		rangeEnd,
 		rangeKey,
-		rangeStart
+		rangeStart,
 	}: {
 		rangeEnd?: string | null;
 		rangeKey: number | string | null;
@@ -136,19 +142,19 @@ const Interests = ({history}: {history: {push: (path: string) => void}}) => {
 					page: defaultPage,
 					rangeEnd,
 					rangeKey,
-					rangeStart
+					rangeStart,
 				})
 			)
 		);
 	};
 
 	return (
-		<Card className='sites-interests-root' pageDisplay>
-			<Card.Header className='align-items-center d-flex justify-content-between'>
+		<Card className="sites-interests-root" pageDisplay>
+			<Card.Header className="align-items-center d-flex justify-content-between">
 				{selectedChannel && (
 					<Card.Title>
 						{sub(Liferay.Language.get('interest-topics-on-x'), [
-							selectedChannel.name
+							selectedChannel.name,
 						])}
 					</Card.Title>
 				)}

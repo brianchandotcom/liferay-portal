@@ -1,13 +1,19 @@
-import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
-import AutocompleteInput from 'shared/components/AutocompleteInput';
-import Form from 'shared/components/form';
-import getCN from 'classnames';
-import React from 'react';
-import {ISegmentEditorInputBase} from '../utils/types';
-import {isNull} from 'lodash';
-import {isValid} from '../utils/utils';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Option, Picker} from '@clayui/core';
+import autobind from 'autobind-decorator';
+import getCN from 'classnames';
+import {isNull} from 'lodash';
+import React from 'react';
+import * as API from '~/shared/api';
+import AutocompleteInput from '~/shared/components/AutocompleteInput';
+import Form from '~/shared/components/form';
+
+import {ISegmentEditorInputBase} from '../utils/types';
+import {isValid} from '../utils/utils';
 
 interface IStringInputProps extends ISegmentEditorInputBase {
 	touched: boolean;
@@ -22,7 +28,7 @@ export default class StringInput extends React.Component<IStringInputProps> {
 			channelId,
 			groupId,
 			property: {id},
-			value
+			value,
 		} = this.props;
 
 		return API.individuals
@@ -30,7 +36,7 @@ export default class StringInput extends React.Component<IStringInputProps> {
 				channelId,
 				fieldMappingFieldName: id,
 				groupId,
-				query: value
+				query: value,
 			})
 			.then(({items}) => items);
 	}
@@ -55,19 +61,19 @@ export default class StringInput extends React.Component<IStringInputProps> {
 			property: {entityName, options = []},
 			touched,
 			valid,
-			value
+			value,
 		} = this.props;
 
 		const showError = !valid && touched;
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
@@ -75,12 +81,12 @@ export default class StringInput extends React.Component<IStringInputProps> {
 
 					{!isNull(value) && (
 						<Form.GroupItem>
-							{options.length === 0 ? (
+							{!options.length ? (
 								<AutocompleteInput
 									className={getCN(className, {
-										'has-error': showError
+										'has-error': showError,
 									})}
-									data-testid='value-input'
+									data-testid="value-input"
 									dataSourceFn={this.fieldValuesDataSourceFn}
 									onBlur={this.handleBlur}
 									onChange={this.handleChange}
@@ -89,13 +95,13 @@ export default class StringInput extends React.Component<IStringInputProps> {
 							) : (
 								<Picker
 									className={getCN({
-										'has-error': showError
+										'has-error': showError,
 									})}
-									data-testid='value-select'
+									data-testid="value-select"
 									items={
 										options.map(({label, value}) => ({
 											label,
-											value
+											value,
 										})) as {label: string; value: string}[]
 									}
 									onBlur={this.handleBlur}

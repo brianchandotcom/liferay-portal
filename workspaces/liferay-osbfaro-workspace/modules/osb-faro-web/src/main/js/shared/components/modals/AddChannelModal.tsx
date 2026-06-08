@@ -1,14 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import React from 'react';
+import Loading, {Align} from '~/shared/components/Loading';
 import Form, {
 	validateMaxLength,
 	validateMinLength,
-	validateRequired
-} from 'shared/components/form';
-import Loading, {Align} from 'shared/components/Loading';
-import Modal from 'shared/components/modal';
-import React from 'react';
-import {Modal as ModalTypes} from 'shared/types';
-import {sequence} from 'shared/util/promise';
+	validateRequired,
+} from '~/shared/components/form';
+import Modal from '~/shared/components/modal';
+import {Modal as ModalTypes} from '~/shared/types';
+import {sequence} from '~/shared/util/promise';
 
 interface IAddChannelModalProps {
 	onClose: ModalTypes.close;
@@ -17,12 +22,12 @@ interface IAddChannelModalProps {
 
 const AddChannelModal: React.FC<IAddChannelModalProps> = ({
 	onClose,
-	onSubmit
+	onSubmit,
 }) => (
-	<Modal className='add-channel-modal'>
+	<Modal className="add-channel-modal">
 		<Form
 			initialValues={{
-				name: ''
+				name: '',
 			}}
 			onSubmit={onSubmit}
 		>
@@ -37,29 +42,29 @@ const AddChannelModal: React.FC<IAddChannelModalProps> = ({
 						<Form.Input
 							autoFocus
 							label={Liferay.Language.get('property-name')}
-							name='name'
+							name="name"
 							validate={sequence([
 								validateRequired,
 								validateMaxLength(65),
-								validateMinLength(3)
+								validateMinLength(3),
 							])}
 						/>
 					</Modal.Body>
 
 					<Modal.Footer>
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={onClose}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
 						<ClayButton
-							className='button-root'
+							className="button-root"
 							disabled={isSubmitting || !isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{isSubmitting && <Loading align={Align.Left} />}
 

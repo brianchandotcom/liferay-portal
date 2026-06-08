@@ -1,60 +1,66 @@
-import * as API from 'shared/api';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import Button from '@clayui/button';
-import Card from 'shared/components/Card';
+import {Text} from '@clayui/core';
 import ClayLink from '@clayui/link';
-import CriteriaCard from 'segment/components/criteria-card';
-import Loading from 'shared/components/Loading';
-import MembershipMetrics from '../components/MembershipMetrics';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useMemo, useState} from 'react';
-import SearchableEntityTable from 'shared/components/SearchableEntityTable';
-import SegmentActivationCard from 'segment/components/SegmentActivationCard';
-import URLConstants from 'shared/util/url-constants';
-import {createOrderIOMap, NAME} from 'shared/util/pagination';
+import {SegmentGrowthChart} from '~/segment/components/Growth';
+import SegmentActivationCard from '~/segment/components/SegmentActivationCard';
+import CriteriaCard from '~/segment/components/criteria-card';
+import {ReferencedObjectsProvider} from '~/segment/segment-editor/dynamic/context/referencedObjects';
+import * as API from '~/shared/api';
+import {fetchMembershipChangesAggregations} from '~/shared/api/individual-segment';
+import Card from '~/shared/components/Card';
+import Loading from '~/shared/components/Loading';
+import NoResultsDisplay from '~/shared/components/NoResultsDisplay';
+import SearchableEntityTable from '~/shared/components/SearchableEntityTable';
+import {ReportContainer} from '~/shared/components/download-report/DownloadPDFReport';
+import {useRequest} from '~/shared/hooks/useRequest';
+import {useStatefulPagination} from '~/shared/hooks/useStatefulPagination';
+import {useTimeZone} from '~/shared/hooks/useTimeZone';
+import {FilterOptionType} from '~/shared/types';
+import {SegmentTypes, TimeIntervals} from '~/shared/util/constants';
 import {
 	CUSTOM_DATE_FORMAT,
+	ISO_8601_DATE_FORMAT,
 	formatUTCDate,
-	ISO_8601_DATE_FORMAT
-} from 'shared/util/date';
-import {fetchMembershipChangesAggregations} from 'shared/api/individual-segment';
-import {FilterOptionType} from 'shared/types';
-import {membershipChangesColumns} from 'shared/util/table-columns';
-import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
-import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
-import {Segment} from 'shared/util/records';
-import {SegmentGrowthChart} from 'segment/components/Growth';
-import {SegmentTypes, TimeIntervals} from 'shared/util/constants';
-import {Text} from '@clayui/core';
-import {useRequest} from 'shared/hooks/useRequest';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
+} from '~/shared/util/date';
+import {NAME, createOrderIOMap} from '~/shared/util/pagination';
+import {Segment} from '~/shared/util/records';
+import {membershipChangesColumns} from '~/shared/util/table-columns';
+import URLConstants from '~/shared/util/url-constants';
+
+import MembershipMetrics from '../components/MembershipMetrics';
 
 const DEFAULT_ORDER_BY_OPTIONS = [
 	{
 		label: Liferay.Language.get('name'),
-		value: 'name'
+		value: 'name',
 	},
 	{
 		label: Liferay.Language.get('account-name'),
-		value: 'accountName'
+		value: 'accountName',
 	},
 	{
 		label: Liferay.Language.get('first-seen'),
-		value: 'firstSeenTime'
+		value: 'firstSeenTime',
 	},
 	{
 		label: Liferay.Language.get('last-active'),
-		value: 'lastActivityTime'
+		value: 'lastActivityTime',
 	},
 	{
 		label: Liferay.Language.get('profile-type'),
-		value: 'profileType'
-	}
+		value: 'profileType',
+	},
 ];
 
 const MEMBERSHIP_CHANGE_ORDER_BY_OPTION = {
 	label: Liferay.Language.get('membership-change'),
-	value: 'membershipChange'
+	value: 'membershipChange',
 };
 
 const FILTER_BY_DEFAULT_OPTIONS: FilterOptionType[] = [
@@ -63,9 +69,9 @@ const FILTER_BY_DEFAULT_OPTIONS: FilterOptionType[] = [
 		label: Liferay.Language.get('profile-type'),
 		values: [
 			{label: Liferay.Language.get('known'), value: 'KNOWN'},
-			{label: Liferay.Language.get('anonymous'), value: 'ANONYMOUS'}
-		]
-	}
+			{label: Liferay.Language.get('anonymous'), value: 'ANONYMOUS'},
+		],
+	},
 ];
 
 const MEMBERSHIP_CHANGE_FILTER_OPTION: FilterOptionType = {
@@ -73,8 +79,8 @@ const MEMBERSHIP_CHANGE_FILTER_OPTION: FilterOptionType = {
 	label: Liferay.Language.get('membership-change'),
 	values: [
 		{label: Liferay.Language.get('added'), value: 'ADDED'},
-		{label: Liferay.Language.get('removed'), value: 'REMOVED'}
-	]
+		{label: Liferay.Language.get('removed'), value: 'REMOVED'},
+	],
 };
 
 const getMembershipChanges = (data: Data) => {
@@ -87,7 +93,7 @@ const getMembershipChanges = (data: Data) => {
 		groupId,
 		orderIOMap,
 		query,
-		segmentId: id
+		segmentId: id,
 	});
 };
 
@@ -97,10 +103,10 @@ type Data = {
 	filters: {string: string[]};
 	groupId: string;
 	id: string;
-	selectedDate: string;
 	orderIOMap: string;
 	page: number;
 	query: string;
+	selectedDate: string;
 };
 
 interface IOverviewProps {
@@ -112,7 +118,7 @@ interface IOverviewProps {
 const SelectedPointInfo = ({
 	dateRange,
 	onClear,
-	selectedPointState
+	selectedPointState,
 }: {
 	dateRange: string | null;
 	onClear: () => void;
@@ -127,16 +133,16 @@ const SelectedPointInfo = ({
 
 	return (
 		<div>
-			<div className='selected-point-info'>
-				<Text color='secondary' size={3}>
+			<div className="selected-point-info">
+				<Text color="secondary" size={3}>
 					{membersLanguageKey} {dateRange}
 					{selectedPointState.hasSelectedPoint && (
 						<Button
-							className='ml-3'
-							displayType='unstyled'
+							className="ml-3"
+							displayType="unstyled"
 							onClick={onClear}
 						>
-							<Text color='primary' size={3} weight='semi-bold'>
+							<Text color="primary" size={3} weight="semi-bold">
 								{Liferay.Language.get('clear-date-selection')}
 							</Text>
 						</Button>
@@ -150,7 +156,7 @@ const SelectedPointInfo = ({
 const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	channelId,
 	groupId,
-	segment
+	segment,
 }) => {
 	const fetchMembers = (params: Record<string, any>) =>
 		getMembershipChanges(params as Data);
@@ -167,8 +173,8 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 			groupId,
 			id,
 			interval: TimeIntervals.Day,
-			max: 30
-		}
+			max: 30,
+		},
 	});
 
 	const [selectedPointState, setSelectedPointState] = useState<{
@@ -176,7 +182,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 		selectedPoint: number | null;
 	}>({
 		hasSelectedPoint: false,
-		selectedPoint: null
+		selectedPoint: null,
 	});
 
 	const dateRange = useMemo(() => {
@@ -209,7 +215,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 			membershipChangesColumns.accountNames,
 			membershipChangesColumns.firstSeen,
 			membershipChangesColumns.lastActive,
-			membershipChangesColumns.profileType
+			membershipChangesColumns.profileType,
 		];
 
 		const columns = selectedPointState.hasSelectedPoint
@@ -220,7 +226,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	};
 
 	const paginationParams = useStatefulPagination(undefined, {
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const orderByOptions = useMemo(
@@ -228,8 +234,8 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 			selectedPointState.hasSelectedPoint
 				? [
 						...DEFAULT_ORDER_BY_OPTIONS,
-						MEMBERSHIP_CHANGE_ORDER_BY_OPTION
-				  ]
+						MEMBERSHIP_CHANGE_ORDER_BY_OPTION,
+					]
 				: DEFAULT_ORDER_BY_OPTIONS,
 		[selectedPointState.hasSelectedPoint]
 	);
@@ -239,8 +245,8 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 			selectedPointState.hasSelectedPoint
 				? [
 						...FILTER_BY_DEFAULT_OPTIONS,
-						MEMBERSHIP_CHANGE_FILTER_OPTION
-				  ]
+						MEMBERSHIP_CHANGE_FILTER_OPTION,
+					]
 				: FILTER_BY_DEFAULT_OPTIONS,
 		[selectedPointState.hasSelectedPoint]
 	);
@@ -253,25 +259,25 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 				? formatUTCDate(
 						data[selectedPointState.selectedPoint].intervalInitDate,
 						ISO_8601_DATE_FORMAT
-				  )
+					)
 				: undefined,
 		[
 			data,
 			selectedPointState.hasSelectedPoint,
-			selectedPointState.selectedPoint
+			selectedPointState.selectedPoint,
 		]
 	);
 
 	const selectedFilters = {
 		profileTypes:
 			paginationParams.filterBy?.get('profileTypes')?.toArray() || [],
-		types: paginationParams.filterBy?.get('types')?.toArray() || []
+		types: paginationParams.filterBy?.get('types')?.toArray() || [],
 	};
 
 	const handleClearDateSelection = () => {
 		setSelectedPointState({
 			hasSelectedPoint: false,
-			selectedPoint: null
+			selectedPoint: null,
 		});
 
 		paginationParams.onFilterByChange?.(
@@ -303,24 +309,24 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 			<MembershipMetrics />
 
 			<Card
-				className='segment-membership-root'
+				className="segment-membership-root"
 				reportContainer={ReportContainer.SegmentMembershipTrendCard}
 			>
-				<Card.Header className='align-items-center d-flex justify-content-between'>
+				<Card.Header className="align-items-center d-flex justify-content-between">
 					<Card.Title>
 						{Liferay.Language.get('segment-membership-trend')}
 					</Card.Title>
-					<span className='text-secondary text-uppercase'>
+					<span className="text-secondary text-uppercase">
 						<strong>{Liferay.Language.get('last-30-days')}</strong>
 					</span>
 				</Card.Header>
 
-				<Card.Body className='segment-growth-root'>
+				<Card.Body className="segment-growth-root">
 					{loading ? (
 						<Loading />
 					) : (
 						<>
-							<div className='segment-growth-chart-container'>
+							<div className="segment-growth-chart-container">
 								<SegmentGrowthChart
 									alwaysShowSelectedTooltip
 									data={data?.map((item: any) => ({
@@ -330,7 +336,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 										knownCount: item.knownIndividualsCount,
 										modifiedDate: item.intervalInitDate,
 										removed: item.removedIndividualsCount,
-										value: item.individualsCount
+										value: item.individualsCount,
 									}))}
 									hasSelectedPoint={
 										selectedPointState.hasSelectedPoint
@@ -342,14 +348,14 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 												.anonymousIndividualsCount,
 										knownCount:
 											data[data.length - 1]
-												.knownIndividualsCount
+												.knownIndividualsCount,
 									}}
 									onSelectedPointChange={(
 										selectedPoint: number
 									) => {
 										setSelectedPointState({
 											hasSelectedPoint: true,
-											selectedPoint
+											selectedPoint,
 										});
 									}}
 									selectedPoint={
@@ -372,7 +378,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 									filters: selectedFilters,
 									groupId,
 									id,
-									selectedDate
+									selectedDate,
 								}}
 								filterByOptions={filterByOptions}
 								key={
@@ -384,7 +390,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 									<NoResultsDisplay
 										description={
 											<>
-												<span className='mr-1'>
+												<span className="mr-1">
 													{Liferay.Language.get(
 														'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 													)}
@@ -394,8 +400,8 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 													href={
 														URLConstants.SegmentsMembershipDocumentationLink
 													}
-													key='DOCUMENTATION'
-													target='_blank'
+													key="DOCUMENTATION"
+													target="_blank"
 												>
 													{Liferay.Language.get(
 														'learn-more-about-individuals'
@@ -410,7 +416,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 									/>
 								)}
 								orderByOptions={orderByOptions}
-								rowIdentifier='id'
+								rowIdentifier="id"
 							/>
 						</>
 					)}

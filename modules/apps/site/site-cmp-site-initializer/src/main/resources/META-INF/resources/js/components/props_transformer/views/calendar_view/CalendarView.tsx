@@ -22,6 +22,7 @@ interface CalendarViewProps {
 
 export default function CalendarView({items}: CalendarViewProps) {
 	const calendarRef = useRef<FullCalendar>(null);
+	const datePickerWrapperRef = useRef<HTMLDivElement>(null);
 
 	const [datePickerExpanded, setDatePickerExpanded] = useState(false);
 	const [datePickerValue, setDatePickerValue] = useState('');
@@ -42,6 +43,19 @@ export default function CalendarView({items}: CalendarViewProps) {
 		return () => {
 			Liferay.fire(UPDATE_TASKS_QUICK_FILTER_VISIBILITY, {visible: true});
 		};
+	}, []);
+
+	// The date picker is only a visual anchor for its dropdown; the visible
+	// title button is the real control. Mark the trigger inert so its hidden
+	// input and built-in toggle button stay out of the tab order and the
+	// accessibility tree. The dropdown is portaled to the body, so it remains
+	// fully interactive. Set via the DOM property because React 18.2 does not
+	// support the JSX "inert" attribute (added in React 18.3).
+
+	useEffect(() => {
+		if (datePickerWrapperRef.current) {
+			datePickerWrapperRef.current.inert = true;
+		}
 	}, []);
 
 	const currentYear = new Date().getFullYear();
@@ -81,25 +95,29 @@ export default function CalendarView({items}: CalendarViewProps) {
 						</span>
 					</ClayButton>
 
-					<ClayDatePicker
-						dateFormat="yyyy-MM-dd"
-						expanded={datePickerExpanded}
-						onChange={(value) => {
-							setDatePickerValue(value);
+					<div ref={datePickerWrapperRef}>
+						<ClayDatePicker
+							dateFormat="yyyy-MM-dd"
+							expanded={datePickerExpanded}
+							onChange={(value) => {
+								setDatePickerValue(value);
 
-							if (value) {
-								calendarRef.current?.getApi().gotoDate(value);
+								if (value) {
+									calendarRef.current
+										?.getApi()
+										.gotoDate(value);
 
-								setDatePickerExpanded(false);
-							}
-						}}
-						onExpandedChange={setDatePickerExpanded}
-						value={datePickerValue}
-						years={{
-							end: currentYear + 10,
-							start: currentYear - 10,
-						}}
-					/>
+									setDatePickerExpanded(false);
+								}
+							}}
+							onExpandedChange={setDatePickerExpanded}
+							value={datePickerValue}
+							years={{
+								end: currentYear + 10,
+								start: currentYear - 10,
+							}}
+						/>
+					</div>
 				</div>
 
 				<ClayButtonWithIcon

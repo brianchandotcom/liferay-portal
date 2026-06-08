@@ -26,21 +26,21 @@ import java.util.Objects;
 /**
  * @author Caio Farias
  */
-public class FIPSComplianceChecker {
+public class FIPSProviderValidator {
 
-	public static void check() {
+	public static void validate() {
 		Provider[] providers = Security.getProviders();
 
-		_checkProviders(providers);
+		_validateProviders(providers);
 
-		_checkFIPSProvider(providers[0]);
+		_validateFIPSProvider(providers[0]);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("FIPS check has passed");
+			_log.info("FIPS provider validation finished successfully");
 		}
 	}
 
-	private static void _checkFIPSProvider(Provider provider) {
+	private static void _validateFIPSProvider(Provider provider) {
 		String providerName = provider.getName();
 
 		if (!_allowedProviders.containsKey(providerName)) {
@@ -50,7 +50,9 @@ public class FIPSComplianceChecker {
 
 		try {
 			if (providerName.equals("BCFIPS")) {
-				ClassLoader classLoader = provider.getClass().getClassLoader();
+				Class<?> providerClass = provider.getClass();
+
+				ClassLoader classLoader = providerClass.getClassLoader();
 
 				Class<?> fipsStatusClass = Class.forName(
 					"org.bouncycastle.crypto.fips.FipsStatus", true,
@@ -65,7 +67,7 @@ public class FIPSComplianceChecker {
 							fipsStatusClass, "getStatusMessage");
 
 					throw new SecurityException(
-						"BCFIPS integrity check failed: " +
+						"BCFIPS integrity self-test failed: " +
 							getStatusMessageMethod.invoke(null));
 				}
 
@@ -85,14 +87,10 @@ public class FIPSComplianceChecker {
 				}
 			}
 			else if (providerName.equals("AmazonCorrettoCryptoProvider")) {
-				Class<?> amazonCorrettoCryptoProviderClass =
-					provider.getClass();
+				Class<?> providerClass = provider.getClass();
 
 				Field instanceField = ReflectionUtil.getDeclaredField(
-					amazonCorrettoCryptoProviderClass, "INSTANCE");
-
-				Method getLoadingErrorMethod = ReflectionUtil.getDeclaredMethod(
-					amazonCorrettoCryptoProviderClass, "getLoadingError");
+					providerClass, "INSTANCE");
 
 				Object instance = instanceField.get(null);
 
@@ -101,19 +99,22 @@ public class FIPSComplianceChecker {
 						"AmazonCorrettoCryptoProvider INSTANCE is null");
 				}
 
+				Method getLoadingErrorMethod = ReflectionUtil.getDeclaredMethod(
+					providerClass, "getLoadingError");
+
 				Throwable loadingErrorThrowable =
 					(Throwable)getLoadingErrorMethod.invoke(instance);
 
 				if (loadingErrorThrowable != null) {
 					throw new SecurityException(
 						StringBundler.concat(
-							"AmazonCorrettoCryptoProvider integrity check ",
+							"AmazonCorrettoCryptoProvider integrity self-test ",
 							"failed: ", loadingErrorThrowable.getMessage()),
 						loadingErrorThrowable);
 				}
 
 				Method isFipsMethod = ReflectionUtil.getDeclaredMethod(
-					amazonCorrettoCryptoProviderClass, "isFips");
+					providerClass, "isFips");
 
 				if (!GetterUtil.getBoolean(isFipsMethod.invoke(instance))) {
 					throw new SecurityException(
@@ -122,8 +123,7 @@ public class FIPSComplianceChecker {
 
 				Method isExperimentalFipsMethod =
 					ReflectionUtil.getDeclaredMethod(
-						amazonCorrettoCryptoProviderClass,
-						"isExperimentalFips");
+						providerClass, "isExperimentalFips");
 
 				if (GetterUtil.getBoolean(
 						isExperimentalFipsMethod.invoke(instance))) {
@@ -134,14 +134,14 @@ public class FIPSComplianceChecker {
 				}
 
 				Method runSelfTestsMethod = ReflectionUtil.getDeclaredMethod(
-					amazonCorrettoCryptoProviderClass, "runSelfTests");
+					providerClass, "runSelfTests");
 
 				Object result = runSelfTestsMethod.invoke(instance);
 
 				if (!Objects.equals(String.valueOf(result), "PASSED")) {
 					throw new SecurityException(
 						StringBundler.concat(
-							"AmazonCorrettoCryptoProvider integrity check ",
+							"AmazonCorrettoCryptoProvider integrity self-test ",
 							"failed: ", result));
 				}
 			}
@@ -163,7 +163,7 @@ public class FIPSComplianceChecker {
 		}
 	}
 
-	private static void _checkProviders(Provider[] providers) {
+	private static void _validateProviders(Provider[] providers) {
 		if (ArrayUtil.isEmpty(providers)) {
 			throw new SecurityException("There are no providers registered");
 		}
@@ -197,7 +197,7 @@ public class FIPSComplianceChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FIPSComplianceChecker.class);
+		FIPSProviderValidator.class);
 
 	private static final Map<String, List<String>> _allowedProviders = Map.of(
 		"AmazonCorrettoCryptoProvider",

@@ -1107,7 +1107,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return buildSearchContext(
 			companyId, groupIds, userId, classTypeId, assetCategoryIds,
 			assetTagNames, showNonindexable, statuses, andSearch, start, end,
-			(sort == null) ? null : new Sort[] {sort});
+			(sort == null) ? new Sort[0] : new Sort[] {sort});
 	}
 
 	protected SearchContext buildSearchContext(

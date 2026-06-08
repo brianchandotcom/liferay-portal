@@ -362,12 +362,12 @@ public class AssetListTypePropertiesUtilTest {
 		JSONArray itemsJSONArray = groupJSONObject.getJSONArray("items");
 
 		Assert.assertEquals(
-			itemsJSONArray.toString(), 13, itemsJSONArray.length());
+			itemsJSONArray.toString(), 12, itemsJSONArray.length());
 
 		String[] expectedNames = {
-			"title", "description", "userName", "createDate", "modified",
-			"displayDate", "publishDate", "expirationDate", "priority",
-			"viewCount", "externalReferenceCode", "reviewDate", "status"
+			"userName", "createDate", "displayDate", "expirationDate",
+			"externalReferenceCode", "modified", "priority", "publishDate",
+			"reviewDate", "status", "title", "viewCount"
 		};
 
 		for (int i = 0; i < expectedNames.length; i++) {

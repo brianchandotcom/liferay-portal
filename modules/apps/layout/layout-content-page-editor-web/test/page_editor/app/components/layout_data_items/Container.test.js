@@ -11,6 +11,11 @@ import Container from '../../../../../src/main/resources/META-INF/resources/page
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import useBackgroundImageValue from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useBackgroundImageValue';
+
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useBackgroundImageValue'
+);
 
 const renderContainer = (config) => {
 	return render(
@@ -36,6 +41,10 @@ const renderContainer = (config) => {
 };
 
 describe('Container', () => {
+	beforeEach(() => {
+		useBackgroundImageValue.mockReturnValue({mediaQueries: '', url: ''});
+	});
+
 	it('wraps the container inside a link if configuration is specified', async () => {
 		const {findByRole} = renderContainer({
 			link: {
@@ -61,5 +70,31 @@ describe('Container', () => {
 		);
 
 		expect(container.style.contentVisibility).toBe('auto');
+	});
+
+	it('adds the CSP nonce to the background image media queries style', () => {
+		const originalCSP = Liferay.CSP;
+
+		Liferay.CSP = {nonce: 'test-nonce'};
+
+		try {
+			useBackgroundImageValue.mockReturnValue({
+				mediaQueries:
+					'@media (max-width: 100px) { #containerId { background-image: url(image.png) !important; } }',
+				url: 'image.png',
+			});
+
+			renderContainer({});
+
+			const styleElement = document.querySelector(
+				'.lfr-layout-structure-item-container style'
+			);
+
+			expect(styleElement).not.toBeNull();
+			expect(styleElement.getAttribute('nonce')).toBe('test-nonce');
+		}
+		finally {
+			Liferay.CSP = originalCSP;
+		}
 	});
 });

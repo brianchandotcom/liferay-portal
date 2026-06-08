@@ -124,7 +124,9 @@ const Container = React.memo(
 				style={style}
 			>
 				{backgroundImageValue.mediaQueries ? (
-					<style>{backgroundImageValue.mediaQueries}</style>
+					<style nonce={Liferay.CSP?.nonce}>
+						{backgroundImageValue.mediaQueries}
+					</style>
 				) : null}
 
 				{children}

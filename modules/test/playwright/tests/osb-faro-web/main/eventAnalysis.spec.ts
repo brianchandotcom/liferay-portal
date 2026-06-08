@@ -2722,3 +2722,91 @@ test(
 		).toBeVisible();
 	}
 );
+
+async function createAndSaveEventAnalysis({
+	channelId,
+	eventName,
+	name,
+	page,
+	projectId,
+}: {
+	channelId: string;
+	eventName: string;
+	name: string;
+	page: Page;
+	projectId: string;
+}) {
+	await navigateToACPageViaURL({
+		acPage: ACPage.eventAnalysisPage,
+		channelID: channelId,
+		page,
+		projectID: projectId,
+	});
+
+	await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+	await setEventAnalysisName({eventAnalysisName: name, page});
+
+	await addCustomEvent({customEventName: eventName, page});
+
+	await page
+		.locator('.event-analysis-toolbar-right-content')
+		.getByRole('button', {name: 'Save Analysis'})
+		.click();
+
+	await expect(page.getByText(name, {exact: true})).toBeVisible();
+}
+
+test(
+	'Event Analysis saved reports can be searched by name',
+	{
+		tag: '@LRAC-10563',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		const names = ['Save Analysis 1', 'Save Analysis 2'];
+
+		for (const name of names) {
+			await createAndSaveEventAnalysis({
+				channelId: channel.id,
+				eventName: 'customEvent',
+				name,
+				page,
+				projectId: project.groupId,
+			});
+		}
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		const listSearch = page
+			.locator('.event-analysis-list-root')
+			.getByPlaceholder('Search');
+
+		// Each saved analysis is found when searching its name
+
+		for (const name of names) {
+			await listSearch.fill(name);
+
+			await page.keyboard.press('Enter');
+
+			await expect(page.getByRole('link', {name})).toBeVisible();
+		}
+
+		// A name that does not exist is not listed
+
+		await listSearch.fill('ac dxp');
+
+		await page.keyboard.press('Enter');
+
+		await expect(page.getByRole('link', {name: 'ac dxp'})).toHaveCount(0);
+	}
+);

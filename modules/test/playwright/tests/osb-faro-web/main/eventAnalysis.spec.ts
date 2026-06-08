@@ -30,7 +30,10 @@ import {
 	navigateToACSettingsViaURL,
 } from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
-import {selectPaginationItemsPerPage} from './utils/utils';
+import {
+	selectPaginationItemsPerPage,
+	selectPaginationPageNumber,
+} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -3301,5 +3304,55 @@ test(
 		await nameColumnHeader.click();
 
 		await expectOrder(names);
+	}
+);
+
+test(
+	'Event Analysis reports list paginates',
+	{
+		tag: '@LRAC-10562',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		for (let index = 0; index < 8; index++) {
+			await createAndSaveEventAnalysis({
+				channelId: channel.id,
+				eventName: 'customEvent',
+				name: `Save Analysis ${index}`,
+				page,
+				projectId: project.groupId,
+			});
+		}
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// All eight reports fit on a single page by default
+
+		await expect(
+			page.getByText('Showing 1 to 8 of 8 entries.')
+		).toBeVisible();
+
+		// Four per page splits them across two pages
+
+		await selectPaginationItemsPerPage({itemsPerPage: '4', page});
+
+		await expect(
+			page.getByText('Showing 1 to 4 of 8 entries.')
+		).toBeVisible();
+
+		await selectPaginationPageNumber({page, paginationPageNumber: '2'});
+
+		await expect(
+			page.getByText('Showing 5 to 8 of 8 entries.')
+		).toBeVisible();
 	}
 );

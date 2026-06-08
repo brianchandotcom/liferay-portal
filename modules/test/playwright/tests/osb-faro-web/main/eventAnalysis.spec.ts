@@ -3038,3 +3038,101 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Event Analysis reports can be deleted individually and in bulk',
+	{
+		tag: '@LRAC-10560',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		const names = ['Save Analysis 1', 'Save Analysis 2', 'Save Analysis 3'];
+
+		for (const name of names) {
+			await createAndSaveEventAnalysis({
+				channelId: channel.id,
+				eventName: 'customEvent',
+				name,
+				page,
+				projectId: project.groupId,
+			});
+		}
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Capture the URL of the first analysis, then return to the list
+
+		await page.getByRole('link', {name: 'Save Analysis 1'}).click();
+
+		const deletedAnalysisURL = page.url();
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Delete the first analysis from its row action
+
+		const firstRow = page.getByRole('row', {name: 'Save Analysis 1'});
+
+		await firstRow.hover();
+
+		await firstRow.getByRole('button', {name: 'Delete'}).click();
+
+		await page
+			.locator('.modal')
+			.getByRole('button', {name: 'Delete'})
+			.click();
+
+		await expect(
+			page.getByRole('link', {name: 'Save Analysis 1'})
+		).toHaveCount(0);
+
+		// The deleted analysis URL shows the not-found page
+
+		await page.goto(deletedAnalysisURL);
+
+		await expect(page.getByText('Analysis Not Found')).toBeVisible();
+
+		// Bulk delete the remaining analyses
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page
+			.locator('.event-analysis-list-root')
+			.getByRole('checkbox')
+			.first()
+			.check();
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await page
+			.locator('.modal')
+			.getByRole('button', {name: 'Delete'})
+			.click();
+
+		await expect(
+			page.getByRole('link', {name: 'Save Analysis 2'})
+		).toHaveCount(0);
+
+		await expect(
+			page.getByRole('link', {name: 'Save Analysis 3'})
+		).toHaveCount(0);
+	}
+);

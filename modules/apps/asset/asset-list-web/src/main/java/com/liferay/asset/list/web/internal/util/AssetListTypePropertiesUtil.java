@@ -95,20 +95,6 @@ public class AssetListTypePropertiesUtil {
 	private static JSONArray _getCommonFieldsItemsJSONArray(Locale locale) {
 		return JSONUtil.putAll(
 			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "title")
-			).put(
-				"name", Field.TITLE
-			).put(
-				"type", "text"
-			),
-			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "description")
-			).put(
-				"name", Field.DESCRIPTION
-			).put(
-				"type", "text"
-			),
-			JSONUtil.put(
 				"label", LanguageUtil.get(locale, "author-name")
 			).put(
 				"name", Field.USER_NAME
@@ -123,23 +109,9 @@ public class AssetListTypePropertiesUtil {
 				"type", "date"
 			),
 			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "modified-date")
-			).put(
-				"name", Field.MODIFIED_DATE
-			).put(
-				"type", "date"
-			),
-			JSONUtil.put(
 				"label", LanguageUtil.get(locale, "display-date")
 			).put(
 				"name", Field.DISPLAY_DATE
-			).put(
-				"type", "date"
-			),
-			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "publish-date")
-			).put(
-				"name", Field.PUBLISH_DATE
 			).put(
 				"type", "date"
 			),
@@ -151,6 +123,20 @@ public class AssetListTypePropertiesUtil {
 				"type", "date"
 			),
 			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "external-reference-code")
+			).put(
+				"name", "externalReferenceCode"
+			).put(
+				"type", "text"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "modified-date")
+			).put(
+				"name", Field.MODIFIED_DATE
+			).put(
+				"type", "date"
+			),
+			JSONUtil.put(
 				"label", LanguageUtil.get(locale, "priority")
 			).put(
 				"name", Field.PRIORITY
@@ -158,18 +144,11 @@ public class AssetListTypePropertiesUtil {
 				"type", "decimal"
 			),
 			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "view-count")
+				"label", LanguageUtil.get(locale, "publish-date")
 			).put(
-				"name", "viewCount"
+				"name", Field.PUBLISH_DATE
 			).put(
-				"type", "integer"
-			),
-			JSONUtil.put(
-				"label", LanguageUtil.get(locale, "external-reference-code")
-			).put(
-				"name", "externalReferenceCode"
-			).put(
-				"type", "text"
+				"type", "date"
 			),
 			JSONUtil.put(
 				"label", LanguageUtil.get(locale, "review-date")
@@ -182,6 +161,20 @@ public class AssetListTypePropertiesUtil {
 				"label", LanguageUtil.get(locale, "status")
 			).put(
 				"name", Field.STATUS
+			).put(
+				"type", "integer"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "title")
+			).put(
+				"name", Field.TITLE
+			).put(
+				"type", "text"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "view-count")
+			).put(
+				"name", "viewCount"
 			).put(
 				"type", "integer"
 			));

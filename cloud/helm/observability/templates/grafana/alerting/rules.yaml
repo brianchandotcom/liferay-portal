@@ -79,7 +79,7 @@ metadata:
     labels:
         {{- include "observability.labels" $ | nindent 8 }}
         grafana_alert: "true"
-    name: {{ printf "%s-alert-%s" (include "observability.fullname" $) $key | trunc 63 | trimSuffix "-" | quote }}
+    name: {{ printf "%s-alert-%s" (include "observability.fullname" $) ($key | lower | replace "_" "-") | trunc 63 | trimSuffix "-" | quote }}
     namespace: {{ $namespace | quote }}
 {{- end }}
 {{- end }}

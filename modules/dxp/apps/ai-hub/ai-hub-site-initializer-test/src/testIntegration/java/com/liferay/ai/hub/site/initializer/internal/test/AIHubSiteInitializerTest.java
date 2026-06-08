@@ -414,7 +414,6 @@ public class AIHubSiteInitializerTest {
 			_listTypeDefinitionLocalService.
 				fetchListTypeDefinitionByExternalReferenceCode(
 					externalReferenceCode, TestPropsValues.getCompanyId());
-
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
 

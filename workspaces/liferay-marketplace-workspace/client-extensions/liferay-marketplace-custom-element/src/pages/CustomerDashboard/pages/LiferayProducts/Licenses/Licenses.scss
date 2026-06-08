@@ -30,7 +30,9 @@
 		transform: none !important;
 		transition: none !important;
 
-		&:hover, &:focus, &:active {
+		&:hover,
+		&:focus,
+		&:active {
 			box-shadow: none !important;
 			transform: none !important;
 		}

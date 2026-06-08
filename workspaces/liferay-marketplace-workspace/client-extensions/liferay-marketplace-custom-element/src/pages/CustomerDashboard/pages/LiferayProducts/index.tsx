@@ -20,6 +20,8 @@ import {Liferay} from '../../../../liferay/liferay';
 import {getSiteURL} from '../../../../utils/site';
 import {safeJSONParse} from '../../../../utils/util';
 import PaymentStatusBadge from '../../../FinanceDashboard/components/PaymentStatus/PaymentStatusBadge';
+import {useProductPurchaseOutletContext} from '../../../ProductPurchase/ProductPurchaseOutlet';
+import {ProductPurchaseAIHubToken} from '../../../ProductPurchase/services/ProductPurchaseAIHubToken';
 import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
 
 const searchParams = new URLSearchParams({
@@ -40,8 +42,17 @@ const getViewDetailsPath = (placedOrder: PlacedOrder) => {
 
 const LiferayProductsListView = () => {
 	const {selectedAccount} = useCustomerDashboardOutletContext();
-
+	const {handlePurchase, product} = useProductPurchaseOutletContext();
 	const navigate = useNavigate();
+
+	const onClickBuyLiferayTokens = () => {
+		const productPurchase = new ProductPurchaseAIHubToken(
+			selectedAccount,
+			product
+		);
+
+		handlePurchase(productPurchase);
+	};
 
 	return (
 		<Page
@@ -108,27 +119,22 @@ const LiferayProductsListView = () => {
 							},
 							{
 								hidden: (placedOrder: PlacedOrder) => {
-									const {orderStatusInfo, orderTypeExternalReferenceCode} = placedOrder;
+									const {
+										orderStatusInfo,
+										orderTypeExternalReferenceCode,
+									} = placedOrder;
 
-									const isNotAIHub = orderTypeExternalReferenceCode !== OrderTypes.AI_HUB;
-									const isNotActive = orderStatusInfo?.code !== OrderWorkflowStatusCode.COMPLETED;
+									const isNotAIHub =
+										orderTypeExternalReferenceCode !==
+										OrderTypes.AI_HUB;
+									const isNotActive =
+										orderStatusInfo?.code !==
+										OrderWorkflowStatusCode.COMPLETED;
 
 									return isNotAIHub || isNotActive;
 								},
 								name: i18n.translate('buy-liferay-tokens'),
-								onClick: (placedOrder: PlacedOrder) => {
-									const placedOrderItems = placedOrder.placedOrderItems ?? [];
-									const firstOrderItem = placedOrderItems[0];
-									const productId = firstOrderItem?.productId;
-
-									if (productId) {
-										const siteURL = getSiteURL();
-
-										Liferay.Util.navigate(
-											`${siteURL}/product-purchase?productId=${productId}&aiHubTokens`
-										);
-									}
-								},
+								onClick: onClickBuyLiferayTokens,
 							},
 						],
 						columns: [

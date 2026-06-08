@@ -43,6 +43,8 @@ public class TestClassFactory {
 		List<JUnitTestClass> jUnitTestClasses = new ArrayList<>(
 			_jUnitTestClasses.values());
 
+		jUnitTestClasses.addAll(_modulesJUnitTestClasses.values());
+
 		Collections.sort(jUnitTestClasses);
 
 		return jUnitTestClasses;
@@ -221,6 +223,32 @@ public class TestClassFactory {
 				return new JSUnitModulesTestClass(
 					batchTestClassGroup, testClassFile);
 			}
+			else if (batchTestClassGroup instanceof
+						ModulesJUnitBatchTestClassGroup) {
+
+				File canonicalFile = _getCanonicalFile(
+					testClassFile, jsonObject);
+
+				if (_modulesJUnitTestClasses.containsKey(canonicalFile)) {
+					return _modulesJUnitTestClasses.get(canonicalFile);
+				}
+
+				ModulesJUnitTestClass modulesJUnitTestClass = null;
+
+				if (jsonObject != null) {
+					modulesJUnitTestClass = new ModulesJUnitTestClass(
+						batchTestClassGroup, jsonObject);
+				}
+				else {
+					modulesJUnitTestClass = new ModulesJUnitTestClass(
+						batchTestClassGroup, testClassFile);
+				}
+
+				_modulesJUnitTestClasses.put(
+					canonicalFile, modulesJUnitTestClass);
+
+				return _modulesJUnitTestClasses.get(canonicalFile);
+			}
 			else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
 				File canonicalFile = _getCanonicalFile(
 					testClassFile, jsonObject);
@@ -232,28 +260,12 @@ public class TestClassFactory {
 				JUnitTestClass jUnitTestClass = null;
 
 				if (jsonObject != null) {
-					if (batchTestClassGroup instanceof
-							ModulesJUnitBatchTestClassGroup) {
-
-						jUnitTestClass = new ModulesJUnitTestClass(
-							batchTestClassGroup, jsonObject);
-					}
-					else {
-						jUnitTestClass = new JUnitTestClass(
-							batchTestClassGroup, jsonObject);
-					}
+					jUnitTestClass = new JUnitTestClass(
+						batchTestClassGroup, jsonObject);
 				}
 				else {
-					if (batchTestClassGroup instanceof
-							ModulesJUnitBatchTestClassGroup) {
-
-						jUnitTestClass = new ModulesJUnitTestClass(
-							batchTestClassGroup, testClassFile);
-					}
-					else {
-						jUnitTestClass = new JUnitTestClass(
-							batchTestClassGroup, testClassFile);
-					}
+					jUnitTestClass = new JUnitTestClass(
+						batchTestClassGroup, testClassFile);
 				}
 
 				_jUnitTestClasses.put(canonicalFile, jUnitTestClass);
@@ -468,6 +480,8 @@ public class TestClassFactory {
 
 	private static final Map<File, JUnitTestClass> _jUnitTestClasses =
 		new ConcurrentHashMap<>();
+	private static final Map<File, ModulesJUnitTestClass>
+		_modulesJUnitTestClasses = new ConcurrentHashMap<>();
 	private static final Map<File, NPMTestClass> _npmTestClasses =
 		new ConcurrentHashMap<>();
 	private static final Map<File, PlaywrightJUnitTestClass>

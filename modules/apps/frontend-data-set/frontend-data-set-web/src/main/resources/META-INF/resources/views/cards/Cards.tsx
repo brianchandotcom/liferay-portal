@@ -213,7 +213,10 @@ const Card = forwardRef<HTMLDivElement, any>(
 			href: (link && item[link]) || null,
 			imgProps:
 				image &&
-				imagePropsTransformer(getLocalizedValue(item, image)?.value),
+				imagePropsTransformer(
+					getLocalizedValue(item, image)?.value,
+					accessibleName
+				),
 			labels: getLabels(item),
 			onClick: (event: React.MouseEvent) => {
 				const target = event.nativeEvent.target as Element;

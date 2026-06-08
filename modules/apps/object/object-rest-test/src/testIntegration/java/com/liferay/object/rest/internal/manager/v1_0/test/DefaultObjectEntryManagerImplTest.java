@@ -6105,6 +6105,69 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	@TestInfo("LPD-93952")
+	public void testGetObjectEntriesFilterByUnlinkedRelationshipExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntry parentObjectEntry =
+			_defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry linkedObjectEntry =
+			_defaultObjectEntryManager.addObjectEntry(
+				dtoConverterContext, _objectDefinition2,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							_objectRelationshipFieldName,
+							parentObjectEntry.getId()
+						).put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry unlinkedObjectEntry =
+			_defaultObjectEntryManager.addObjectEntry(
+				dtoConverterContext, _objectDefinition2,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		// Filtering the relationship's external reference code for an empty
+		// value must return the entries that are not linked through the
+		// relationship
+
+		_assertFilteredObjectEntryIds(
+			buildEqualsExpressionFilterString(
+				_objectRelationshipERCObjectFieldName, StringPool.BLANK),
+			unlinkedObjectEntry.getId());
+
+		// Filtering by a linked external reference code must still return only
+		// the linked entry
+
+		_assertFilteredObjectEntryIds(
+			buildEqualsExpressionFilterString(
+				_objectRelationshipERCObjectFieldName,
+				parentObjectEntry.getExternalReferenceCode()),
+			linkedObjectEntry.getId());
+	}
+
+	@Test
 	public void testGetObjectEntriesWithAccountEntryRestricted1()
 		throws Exception {
 
@@ -10666,6 +10729,27 @@ public class DefaultObjectEntryManagerImplTest
 
 		Assert.assertEquals(
 			objectEntries.toString(), size, objectEntries.size());
+	}
+
+	private void _assertFilteredObjectEntryIds(
+			String filterString, Long... expectedObjectEntryIds)
+		throws Exception {
+
+		Page<ObjectEntry> page = getObjectEntries(
+			HashMapBuilder.put(
+				"filter", filterString
+			).build(),
+			null);
+
+		List<Long> actualObjectEntryIds = new ArrayList<>();
+
+		for (ObjectEntry objectEntry : page.getItems()) {
+			actualObjectEntryIds.add(objectEntry.getId());
+		}
+
+		Assert.assertEquals(
+			page.toString(), Arrays.asList(expectedObjectEntryIds),
+			actualObjectEntryIds);
 	}
 
 	private void _assertListEntries(

@@ -7,30 +7,30 @@ package com.liferay.consent.management.platform.integration.internal.servlet.tag
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.consent.management.platform.integration.configuration.ConsentManagementPlatformConfiguration;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.URLUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.net.URL;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Christian Moura
@@ -62,17 +62,14 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 				"scriptTag", _SCRIPT_TAG
 			).build());
 
-		String body = URLUtil.toString(
-			new URL(
-				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
-		Matcher matcher = _pattern.matcher(body);
+		_dynamicInclude.include(
+			_getMockHttpServletRequest(null), mockHttpServletResponse,
+			StringPool.BLANK);
 
-		Assert.assertTrue(matcher.find());
-
-		String group = matcher.group(0);
-
-		Assert.assertTrue(group.contains(_SCRIPT_TAG));
+		String body = mockHttpServletResponse.getContentAsString();
 
 		int scriptTagIndex = body.indexOf(_SCRIPT_TAG);
 		int bridgeScriptIndex = body.indexOf(_BRIDGE_SCRIPT);
@@ -80,18 +77,54 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 		Assert.assertTrue(scriptTagIndex >= 0);
 		Assert.assertTrue(bridgeScriptIndex >= 0);
 		Assert.assertTrue(scriptTagIndex < bridgeScriptIndex);
+
+		Assert.assertEquals(0, StringUtil.count(body, "nonce=\""));
+
+		String nonce = RandomTestUtil.randomString();
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		_dynamicInclude.include(
+			_getMockHttpServletRequest(nonce), mockHttpServletResponse,
+			StringPool.BLANK);
+
+		Assert.assertEquals(
+			2,
+			StringUtil.count(
+				mockHttpServletResponse.getContentAsString(),
+				"nonce=\"" + nonce + "\""));
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(String nonce)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setAttribute(
+			"com.liferay.portal.security.content.security.policy.internal." +
+				"ContentSecurityPolicyNonceManager#NONCE",
+			nonce);
+
+		return mockHttpServletRequest;
 	}
 
 	private static final String _BRIDGE_SCRIPT =
-		"<script id=\"liferay-cmp-bridge\">/* bridge */</script>";
+		"<SCRIPT id=\"liferay-cmp-bridge\">/* bridge */</SCRIPT>";
 
 	private static final String _SCRIPT_TAG =
 		"<script data-cbid=\"000000\" id=\"Cookiebot\" " +
 			"src=\"https://consent.cookiebot.com/uc.js\" " +
 				"type=\"text/javascript\"></script>";
-
-	private static final Pattern _pattern = Pattern.compile(
-		"<script\\b[^>]*>(.*?)</script>", Pattern.DOTALL);
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

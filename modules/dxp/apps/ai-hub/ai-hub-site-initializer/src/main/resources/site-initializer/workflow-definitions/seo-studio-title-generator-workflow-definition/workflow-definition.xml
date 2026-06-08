@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>SEO Studio Title Generator</name>
+	<version>1</version>
+	<llm>
+		<name>seoStudioTitleGenerator</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						276,
+						242
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				SEO Studio Title Generator
+			</label>
+		</labels>
+		<input-variables>
+			<![CDATA[
+[
+	{
+		"name": "pageContent",
+		"type": "string"
+	}
+]
+]]>
+		</input-variables>
+		<output-variables>
+			<![CDATA[
+[
+	{
+		"name": "titleTag",
+		"type": "string"
+	}
+]
+]]>
+		</output-variables>
+		<prompt>
+			<![CDATA[You are an expert SEO Specialist. Your task is to analyze the raw content of a webpage and generate a perfectly optimized HTML <title> tag to fix a missing or empty title.
+
+SEO CONSTRAINTS & RULES:
+- Length: The entire title tag must be between 30 and 60 characters. Do not exceed 60 characters.
+- Keyword Optimization: Extract the primary topic/keyword from the content. Front-load this primary keyword (place it near the beginning of the title).
+- Formatting: Write the title in Title Case.
+- Style: Avoid generic terms like "Home", "Page", or "Index". Make it descriptive, accurately reflecting the core intent of the page content (e.g., informational, transactional, commercial). Do not use clickbait or keyword-stuffed lists.
+
+OUTPUT FORMAT:
+Return ONLY the valid HTML <title> tag.
+Do not include any introductory text, markdown formatting (like ```html), or conversational explanations. Your entire response must start with "<title>" and end with "</title>".
+Example of acceptable output:
+<title>Best Espresso Machines for Home Brewing</title>]]>
+		</prompt>
+		<tools>
+			<![CDATA[[]]]>
+		</tools>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						End
+					</label>
+				</labels>
+				<name>end</name>
+				<target>end</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+		<user-message>
+			<![CDATA[Page Content: {{pageContent}}]]>
+		</user-message>
+	</llm>
+	<state>
+		<name>start</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						273,
+						25
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				Start
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						SEO Studio Title Generator
+					</label>
+				</labels>
+				<name>seoStudioTitleGenerator</name>
+				<target>seoStudioTitleGenerator</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>end</name>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						277,
+						459
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				End
+			</label>
+		</labels>
+	</state>
+</workflow-definition>

@@ -6,7 +6,10 @@
 package com.liferay.ai.hub.internal.model.listener;
 
 import com.liferay.account.manager.CurrentAccountEntryManager;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -65,6 +68,22 @@ public class AccountEntryUserRelModelListener
 			return;
 		}
 
+		AccountEntry aiHubAccountEntry =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				"L_AI_HUB", serviceContext.getCompanyId());
+
+		if (aiHubAccountEntry != null) {
+			if (accountEntryUserRel.getAccountEntryId() ==
+					aiHubAccountEntry.getAccountEntryId()) {
+
+				return;
+			}
+
+			_accountEntryUserRelLocalService.addAccountEntryUserRels(
+				aiHubAccountEntry.getAccountEntryId(),
+				new long[] {accountEntryUserRel.getAccountUserId()});
+		}
+
 		_currentAccountEntryManager.setCurrentAccountEntry(
 			accountEntryUserRel.getAccountEntryId(), groupId,
 			accountEntryUserRel.getAccountUserId());
@@ -72,6 +91,12 @@ public class AccountEntryUserRelModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountEntryUserRelModelListener.class);
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
 	private CurrentAccountEntryManager _currentAccountEntryManager;

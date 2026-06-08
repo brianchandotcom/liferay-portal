@@ -100,6 +100,10 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 		Long[] layoutSetGroupIds = (Long[])taskContextMap.get(
 			LayoutSetPrototypeSyncSessionManagerUtil.KEY_LAYOUT_SET_GROUP_IDS);
 
+		if (layoutSetGroupIds == null) {
+			return;
+		}
+
 		BackgroundTask[] incompletedBackgroundTasks = _getBackgroundTasks(
 			false, layoutSetGroupIds, syncSessionId);
 

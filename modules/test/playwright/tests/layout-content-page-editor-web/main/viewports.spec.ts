@@ -544,28 +544,29 @@ test(
 		tag: '@LPD-93507',
 	},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
-		await test.step('Open an empty page in Edit Mode', async () => {
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition(),
-				siteId: site.id,
-				title: getRandomString(),
-			});
 
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		// Open an empty page in Edit Mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
 		});
 
-		await test.step('The single viewport selector item must not be announced as a list', async () => {
-			const viewportButton = page.getByLabel('Desktop', {
-				exact: true,
-			});
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-			await expect(
-				page.locator('li.nav-item').filter({has: viewportButton})
-			).toHaveAttribute('role', 'presentation');
+		// The single viewport selector item must not be announced as a list
 
-			await expect(
-				page.locator('ul.navbar-nav').filter({has: viewportButton})
-			).toHaveAttribute('role', 'presentation');
+		const viewportButton = page.getByLabel('Desktop', {
+			exact: true,
 		});
+
+		await expect(
+			page.locator('li.nav-item').filter({has: viewportButton})
+		).toHaveAttribute('role', 'presentation');
+
+		await expect(
+			page.locator('ul.navbar-nav').filter({has: viewportButton})
+		).toHaveAttribute('role', 'presentation');
 	}
 );

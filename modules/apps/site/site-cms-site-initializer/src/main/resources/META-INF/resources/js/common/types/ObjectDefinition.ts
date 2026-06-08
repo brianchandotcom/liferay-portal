@@ -11,6 +11,7 @@ export type ObjectField = {
 		| 'Decimal'
 		| 'Date'
 		| 'DateTime'
+		| 'EmailAddress'
 		| 'Integer'
 		| 'MultiselectPicklist'
 		| 'Long'

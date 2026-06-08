@@ -31,7 +31,7 @@ public class CommerceOrderStatusSelectionFDSFilter
 
 	@Override
 	public String getEntityFieldType() {
-		return FDSEntityFieldTypes.COLLECTION;
+		return FDSEntityFieldTypes.COLLECTION_INTEGER;
 	}
 
 	@Override

@@ -11,6 +11,27 @@
 	},
 	"items": [
 		{
+			"externalReferenceCode": "L_COMMERCE_ORDER_ITEM",
+			"name": "CommerceOrderItem",
+			"objectActions": [
+				{
+					"active": true,
+					"description": "Triggers Spring Boot CX to generate Entitlements per the matching EntitlementDefinitions on the order item's product.",
+					"externalReferenceCode": "OA_COMMERCE_ORDER_ITEM_ENTITLEMENT_GENERATION",
+					"name": "EntitlementGeneration",
+					"objectActionExecutorKey": "function#liferay-one-etc-spring-boot-object-action-commerce-order-item-entitlement-generation",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					}
+				}
+			],
+			"objectFields": [
+			],
+			"objectRelationships": [
+			],
+			"system": true
+		},
+		{
 			"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION",
 			"name": "CPDefinition",
 			"objectFields": [
@@ -53,6 +74,24 @@
 				},
 				{
 					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION_METRIC_COVERAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Metric Coverage"
+					},
+					"name": "metricCoverage",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
 					"businessType": "Picklist",
 					"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION_PRODUCT_FAMILY",
 					"indexed": true,
@@ -69,252 +108,6 @@
 					"state": false,
 					"system": false,
 					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION_METRIC_COVERAGE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Metric Coverage"
-					},
-					"name": "metricCoverage",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				}
-			],
-			"objectRelationships": [
-			],
-			"system": true
-		},
-		{
-			"externalReferenceCode": "L_COMMERCE_ORDER",
-			"name": "CommerceOrder",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "L_COMMERCE_ORDER_LDP_WORKSPACE_NAME",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "LDP Workspace Name"
-					},
-					"name": "ldpWorkspaceName",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				}
-			],
-			"objectRelationships": [
-			],
-			"system": true
-		},
-		{
-			"externalReferenceCode": "L_COMMERCE_ORDER_ITEM",
-			"name": "CommerceOrderItem",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_CLOUD_REGION",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Cloud Region"
-					},
-					"name": "cloudRegion",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_CUSTOM_STATUS",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Status"
-					},
-					"name": "customStatus",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "DateTime",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_EFFECTIVE_END_DATE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Effective End Date"
-					},
-					"name": "effectiveEndDate",
-					"objectFieldSettings": [
-						{
-							"name": "timeStorage",
-							"value": "convertToUTC"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Date"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "DateTime",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_END_DATE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "End Date"
-					},
-					"name": "endDate",
-					"objectFieldSettings": [
-						{
-							"name": "timeStorage",
-							"value": "convertToUTC"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Date"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_MACHINE_TYPE",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Machine Type"
-					},
-					"name": "machineType",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_OPPORTUNITY_SOLD_BY",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Opportunity Sold By"
-					},
-					"name": "opportunitySoldBy",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_ORDER_TYPE",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Order Type"
-					},
-					"name": "orderType",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_SIZING",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Sizing"
-					},
-					"name": "sizing",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Integer"
-				},
-				{
-					"DBType": "Double",
-					"businessType": "Decimal",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_SPEND_LIMIT",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Spend Limit"
-					},
-					"name": "spendLimit",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Double"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "DateTime",
-					"externalReferenceCode": "L_COMMERCE_ORDER_ITEM_START_DATE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Start Date"
-					},
-					"name": "startDate",
-					"objectFieldSettings": [
-						{
-							"name": "timeStorage",
-							"value": "convertToUTC"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Date"
 				}
 			],
 			"objectRelationships": [

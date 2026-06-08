@@ -30,7 +30,8 @@ interface IImageProps {
 }
 
 export default function imagePropsTransformer(
-	imageData: IDocsAndMediaImageProps | IImageProps | string | undefined
+	imageData: IDocsAndMediaImageProps | IImageProps | string | undefined,
+	accessibleName?: string
 ): React.ImgHTMLAttributes<HTMLImageElement> | undefined {
 	let imageProps: React.ImgHTMLAttributes<HTMLImageElement> = {
 		alt: '',
@@ -78,6 +79,10 @@ export default function imagePropsTransformer(
 			alt: imageData.link.label,
 			src: imageData.link.href,
 		};
+	}
+
+	if (!imageProps.alt && accessibleName) {
+		imageProps = {...imageProps, alt: accessibleName};
 	}
 
 	return imageProps;

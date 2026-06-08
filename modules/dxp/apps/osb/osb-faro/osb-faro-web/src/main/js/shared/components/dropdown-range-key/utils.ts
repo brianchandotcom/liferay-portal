@@ -92,16 +92,10 @@ const filterLegacyItems = (
 
 const filterMoreItems = (
 	timeRange: Array<TimeRange>,
-	rangeKeys: Array<RangeKeyTimeRanges>,
 	retentionPeriod: number
 ): Array<TimeRange> =>
 	filterItemsByRetention(
-		timeRange.filter(
-			item =>
-				!rangeKeys
-					.filter(value => !rangeKeys.includes(value))
-					.includes(item.value)
-		),
+		timeRange.filter(({label}) => Boolean(label)),
 		retentionPeriod
 	);
 
@@ -145,7 +139,7 @@ export const getFilteredItems: GetFilteredItems = ({
 	}
 
 	if (seeMore) {
-		return filterMoreItems(timeRange, rangeKeys, retentionPeriod);
+		return filterMoreItems(timeRange, retentionPeriod);
 	}
 
 	return filterItems(timeRange, rangeKey, rangeKeys, retentionPeriod);

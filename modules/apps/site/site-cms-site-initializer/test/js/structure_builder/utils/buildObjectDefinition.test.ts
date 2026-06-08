@@ -40,6 +40,25 @@ const DATE_TIME_FIELD: Field = {
 	uuid: getUuid(),
 };
 
+const EMAIL_FIELD: Field = {
+	erc: 'email-field',
+	indexableConfig: {indexed: false},
+	label: {en_US: 'Email Field'},
+	localized: false,
+	locked: false,
+	name: 'emailField',
+	parent: getUuid(),
+	required: false,
+	settings: {
+		autocompleteDomains: '@liferay.com,@gmail.com',
+		autocompleteEnabled: true,
+		blockedDomains: '@example.com',
+		uniqueValues: true,
+	},
+	type: 'email',
+	uuid: getUuid(),
+};
+
 const TEXT_FIELD: Field = {
 	erc: 'text-field',
 	indexableConfig: {indexed: true, indexedAsKeyword: true},
@@ -209,6 +228,60 @@ describe('buildObjectDefinition', () => {
 			},
 			titleObjectFieldName: 'title',
 		});
+	});
+
+	it('builds an email field as an EmailAddress business type with its connected settings', () => {
+		const result = buildObjectDefinition({
+			children: getChildren([EMAIL_FIELD]),
+			erc: 'structureERC',
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			spaces: [],
+			status: 'draft',
+		});
+
+		expect(result.objectFields).toEqual([
+			{
+				DBType: 'String',
+				businessType: 'EmailAddress',
+				externalReferenceCode: 'email-field',
+				indexed: false,
+				label: {en_US: 'Email Field'},
+				localized: false,
+				name: 'emailField',
+				objectFieldSettings: [
+					{
+						name: 'autocompleteDomains',
+						value: '@liferay.com,@gmail.com',
+					},
+					{name: 'autocompleteEnabled', value: true},
+					{name: 'blockedDomains', value: '@example.com'},
+					{name: 'uniqueValues', value: true},
+				],
+				required: false,
+				system: false,
+			},
+		]);
+	});
+
+	it('omits autocomplete settings when the email field has no autocomplete domains', () => {
+		const result = buildObjectDefinition({
+			children: getChildren([
+				{
+					...EMAIL_FIELD,
+					settings: {blockedDomains: '@example.com'},
+				},
+			]),
+			erc: 'structureERC',
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			spaces: [],
+			status: 'draft',
+		});
+
+		expect(result.objectFields?.[0].objectFieldSettings).toEqual([
+			{name: 'blockedDomains', value: '@example.com'},
+		]);
 	});
 
 	it('builds objectDefinition with spaces and workflows selected', () => {

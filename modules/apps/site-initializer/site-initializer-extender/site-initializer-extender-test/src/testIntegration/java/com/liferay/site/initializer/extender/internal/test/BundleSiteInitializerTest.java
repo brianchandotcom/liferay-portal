@@ -384,8 +384,7 @@ public class BundleSiteInitializerTest {
 				_hasLogEntryMessage(
 					logEntries,
 					"Widget page with friendly URL " +
-						"/test-private-child-layout-1 is deprecated " +
-							"(LPD-76864)"));
+						"/test-private-child-layout-1 is deprecated"));
 		}
 		finally {
 			bundle1.uninstall();
@@ -436,8 +435,7 @@ public class BundleSiteInitializerTest {
 					StringBundler.concat(
 						"Skipping page with friendly URL ",
 						"/test-private-child-layout-1 and any associated ",
-						"child pages because widget pages are deprecated ",
-						"(LPD-76864)")));
+						"child pages because widget pages are deprecated")));
 		}
 		finally {
 			bundle.uninstall();

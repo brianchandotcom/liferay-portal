@@ -2921,3 +2921,43 @@ test(
 		await expect(page.getByRole('cell').getByText('wetsuit')).toBeVisible();
 	}
 );
+
+test(
+	'Event Analysis report accepts special characters in its name',
+	{
+		tag: '@LRAC-10567',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		const name = '@#$%*&_>Save+Analysis<!?';
+
+		await createAndSaveEventAnalysis({
+			channelId: channel.id,
+			eventName: 'customEvent',
+			name,
+			page,
+			projectId: project.groupId,
+		});
+
+		// The saved analysis with the special-character name is listed and reopens
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(page.getByRole('link', {name})).toBeVisible();
+
+		await page.getByRole('link', {name}).click();
+
+		await expect(
+			page.locator('.event-container').filter({hasText: 'customEvent'})
+		).toBeVisible();
+	}
+);

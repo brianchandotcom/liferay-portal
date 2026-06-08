@@ -81,8 +81,8 @@ public class ViewModelArmorTemplatesDisplayContextTest {
 
 		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0),
-			"http://localhost:8080/web/test/guardrails" +
-				"?externalReferenceCode={externalReferenceCode}",
+			"http://localhost:8080/web/test/guardrails?externalReferenceCode=" +
+				"{externalReferenceCode}",
 			"view", "view", "view", "get", null);
 		DisplayContextTestUtil.assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1),

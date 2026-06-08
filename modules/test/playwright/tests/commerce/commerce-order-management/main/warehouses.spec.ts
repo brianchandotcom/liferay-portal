@@ -530,13 +530,16 @@ test(
 	async ({apiHelpers}) => {
 		const skuName = `TestSKU-${getRandomString()}`;
 
-		const channelB =
-			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: `TestChannel-${getRandomString()}`,
-				siteGroupId: site.id,
-			});
+		const [channel1, channel2] = await Promise.all(
+			[0, 1].map(() =>
+				apiHelpers.headlessCommerceAdminChannel.postChannel({
+					name: `TestChannel-${getRandomString()}`,
+					siteGroupId: site.id,
+				})
+			)
+		);
 
-		const [warehouseChannelA, warehouseChannelB, warehouseShared] =
+		const [warehouseChannel1, warehouseChannel2, warehouseShared] =
 			await Promise.all(
 				[20, 60, 60].map((quantity, index) =>
 					apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehouses(
@@ -554,20 +557,20 @@ test(
 			);
 
 		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
-			warehouseChannelA.id,
-			channel.id
+			warehouseChannel1.id,
+			channel1.id
 		);
 		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
-			warehouseChannelB.id,
-			channelB.id
-		);
-		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
-			warehouseShared.id,
-			channel.id
+			warehouseChannel2.id,
+			channel2.id
 		);
 		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
 			warehouseShared.id,
-			channelB.id
+			channel1.id
+		);
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
+			warehouseShared.id,
+			channel2.id
 		);
 
 		const product =
@@ -590,21 +593,21 @@ test(
 			});
 
 		await expect(async () => {
-			const channelASkus =
+			const channel1Skus =
 				await apiHelpers.headlessCommerceDeliveryCatalog.getChannelProductSkusPage(
-					channel.id,
+					channel1.id,
 					product.productId
 				);
-			const channelBSkus =
+			const channel2Skus =
 				await apiHelpers.headlessCommerceDeliveryCatalog.getChannelProductSkusPage(
-					channelB.id,
+					channel2.id,
 					product.productId
 				);
 
-			expect(channelASkus.items?.[0]?.availability?.stockQuantity).toBe(
+			expect(channel1Skus.items?.[0]?.availability?.stockQuantity).toBe(
 				80
 			);
-			expect(channelBSkus.items?.[0]?.availability?.stockQuantity).toBe(
+			expect(channel2Skus.items?.[0]?.availability?.stockQuantity).toBe(
 				120
 			);
 		}).toPass({timeout: 15000});

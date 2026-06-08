@@ -192,11 +192,22 @@ function CollaboratorListItem({
 					{alwaysShowPermissionSelector ||
 					permissionOptions.length > 1 ? (
 						<div>
-							<PermissionSelector
-								actionIds={actionIds}
-								onChange={handleChangeUserProperties}
-								options={permissionOptions}
-							/>
+							{canManageCollaborators ? (
+								<PermissionSelector
+									actionIds={actionIds}
+									onChange={handleChangeUserProperties}
+									options={permissionOptions}
+								/>
+							) : (
+								<span className="permissions-picker text-2 text-secondary text-weight-semi-bold">
+									{
+										permissionOptions.find(
+											(option) =>
+												option.value === actionIds
+										)?.label
+									}
+								</span>
+							)}
 						</div>
 					) : null}
 				</div>

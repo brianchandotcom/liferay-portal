@@ -49,13 +49,15 @@ describe('AssignSegments', () => {
 	});
 
 	it('renders', () => {
-		const {container, getByTestId, getByText} = render(
+		const {container, getAllByText, getByTestId, getByText} = render(
 			<DefaultComponent />
 		);
 
 		fireEvent.click(getByTestId('select-1'));
 
-		expect(getByText('Unassigned')).toBeTruthy();
+		// Both the select trigger and the dropdown option render "Unassigned".
+
+		expect(getAllByText('Unassigned').length).toBeGreaterThan(0);
 		expect(getByText('Delete')).toBeTruthy();
 		expect(getByText('Channel 1')).toBeTruthy();
 		expect(getByText('Channel 2')).toBeTruthy();

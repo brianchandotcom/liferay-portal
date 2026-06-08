@@ -213,8 +213,8 @@ describe('LifecycleStatus', () => {
 
 			expect(items[0].dataset.state).toBe('complete');
 			expect(items[1].dataset.active).toBe('true');
-			expect(items[1].dataset.state).toBeNull();
-			expect(items[2].dataset.state).toBeNull();
+			expect(items[1].dataset.state).toBeUndefined();
+			expect(items[2].dataset.state).toBeUndefined();
 		});
 
 		it('renders the At-Risk stage with a sticker and icon in the multistep view', () => {

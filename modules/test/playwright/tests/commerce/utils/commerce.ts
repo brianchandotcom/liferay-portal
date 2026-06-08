@@ -574,7 +574,8 @@ export async function guestCheckoutSetUp(
 	commerceAdminChannelDetailsPage: CommerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage: CommerceAdminChannelsPage,
 	page: Page,
-	site: Site
+	site: Site,
+	childPages?: Array<{pageName: string; parentPageName: string}>
 ): Promise<void> {
 	const siteURL = `/web${site.friendlyUrlPath}`;
 
@@ -616,6 +617,55 @@ export async function guestCheckoutSetUp(
 		page.frameLocator('iframe[title="Permissions"]'),
 		'success'
 	);
+
+	if (childPages && childPages.length) {
+		const permissionsDialog = page.getByRole('dialog', {
+			name: 'Permissions',
+		});
+
+		await permissionsDialog.getByRole('button', {name: 'Close'}).click();
+
+		await expect(permissionsDialog).toBeHidden();
+
+		for (const {pageName, parentPageName} of childPages) {
+			await page
+				.getByRole('menuitem', {
+					exact: true,
+					name: `${parentPageName} Content Page`,
+				})
+				.click({force: true});
+
+			await page
+				.getByRole('checkbox', {
+					exact: true,
+					name: `Select ${pageName}`,
+				})
+				.click();
+
+			await page.getByRole('button', {name: 'Permissions'}).click();
+
+			const permissionsFrame = page.frameLocator(
+				'iframe[title="Permissions"]'
+			);
+
+			const childGuestActionViewCheckbox =
+				permissionsFrame.locator('#guest_ACTION_VIEW');
+
+			await expect(childGuestActionViewCheckbox).toBeVisible();
+
+			await childGuestActionViewCheckbox.check();
+
+			await permissionsFrame.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(permissionsFrame, 'success');
+
+			await permissionsDialog
+				.getByRole('button', {name: 'Close'})
+				.click();
+
+			await expect(permissionsDialog).toBeHidden();
+		}
+	}
 
 	await page.reload();
 

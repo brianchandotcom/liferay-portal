@@ -19,7 +19,7 @@ import org.junit.Test;
 /**
  * @author Dante Wang
  */
-public class FriendlyURLUtilTest {
+public class GroupFriendlyURLUtilTest {
 
 	@ClassRule
 	@Rule
@@ -33,7 +33,7 @@ public class FriendlyURLUtilTest {
 
 		Assert.assertEquals(
 			groupURL2,
-			FriendlyURLUtil.parseGroupFriendlyURL(
+			GroupFriendlyURLUtil.parseGroupFriendlyURL(
 				StringBundler.concat(
 					groupURL1, DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT,
 					groupURL2.substring(1), StringPool.SLASH,
@@ -46,7 +46,7 @@ public class FriendlyURLUtilTest {
 
 		Assert.assertEquals(
 			groupURL,
-			FriendlyURLUtil.parseGroupFriendlyURL(
+			GroupFriendlyURLUtil.parseGroupFriendlyURL(
 				StringBundler.concat(
 					groupURL, StringPool.SLASH,
 					RandomTestUtil.randomString())));
@@ -57,13 +57,13 @@ public class FriendlyURLUtilTest {
 		String groupURL = _getGroupURL();
 
 		Assert.assertEquals(
-			groupURL, FriendlyURLUtil.parseGroupFriendlyURL(groupURL));
+			groupURL, GroupFriendlyURLUtil.parseGroupFriendlyURL(groupURL));
 	}
 
 	@Test
 	public void testParseGroupFriendlyURLWithRoot() {
 		Assert.assertNull(
-			FriendlyURLUtil.parseGroupFriendlyURL(StringPool.SLASH));
+			GroupFriendlyURLUtil.parseGroupFriendlyURL(StringPool.SLASH));
 	}
 
 	private String _getGroupURL() {

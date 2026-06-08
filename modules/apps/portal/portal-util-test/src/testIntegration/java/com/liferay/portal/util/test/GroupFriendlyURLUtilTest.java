@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.FriendlyURLUtil;
+import com.liferay.portal.util.GroupFriendlyURLUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
  * @author Dante Wang
  */
 @RunWith(Arquillian.class)
-public class FriendlyURLUtilTest {
+public class GroupFriendlyURLUtilTest {
 
 	@ClassRule
 	@Rule
@@ -42,7 +42,7 @@ public class FriendlyURLUtilTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		Group group = FriendlyURLUtil.fetchFriendlyURLGroup(
+		Group group = GroupFriendlyURLUtil.fetchFriendlyURLGroup(
 			TestPropsValues.getCompanyId(), _group.getFriendlyURL());
 
 		Assert.assertEquals(_group.getGroupId(), group.getGroupId());
@@ -53,7 +53,7 @@ public class FriendlyURLUtilTest {
 		throws Exception {
 
 		Assert.assertNull(
-			FriendlyURLUtil.fetchFriendlyURLGroup(
+			GroupFriendlyURLUtil.fetchFriendlyURLGroup(
 				TestPropsValues.getCompanyId(), null));
 	}
 
@@ -62,7 +62,7 @@ public class FriendlyURLUtilTest {
 		throws Exception {
 
 		Assert.assertNull(
-			FriendlyURLUtil.fetchFriendlyURLGroup(
+			GroupFriendlyURLUtil.fetchFriendlyURLGroup(
 				TestPropsValues.getCompanyId(),
 				StringPool.SLASH + RandomTestUtil.randomString()));
 	}
@@ -77,7 +77,7 @@ public class FriendlyURLUtilTest {
 			userGroup.getGroupId(),
 			StringPool.SLASH + RandomTestUtil.randomString());
 
-		Group group = FriendlyURLUtil.fetchFriendlyURLGroup(
+		Group group = GroupFriendlyURLUtil.fetchFriendlyURLGroup(
 			TestPropsValues.getCompanyId(),
 			StringPool.SLASH + _user.getScreenName());
 

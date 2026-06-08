@@ -81,7 +81,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.FriendlyURLUtil;
+import com.liferay.portal.util.GroupFriendlyURLUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.redirect.provider.RedirectProvider;
@@ -135,9 +135,9 @@ public class FriendlyURLServlet extends HttpServlet {
 		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 		if (group == null) {
-			groupFriendlyURL = FriendlyURLUtil.parseGroupFriendlyURL(path);
+			groupFriendlyURL = GroupFriendlyURLUtil.parseGroupFriendlyURL(path);
 
-			group = FriendlyURLUtil.fetchFriendlyURLGroup(
+			group = GroupFriendlyURLUtil.fetchFriendlyURLGroup(
 				companyId, groupFriendlyURL);
 		}
 

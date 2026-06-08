@@ -2,8 +2,7 @@ components:
     schemas:
         Account:
             description:
-                "An account synced to Analytics Cloud. Accounts aggregate individuals (or contacts) employed by or
-                associated with a single organization."
+                "An account synced to Analytics Cloud. Accounts aggregate individuals (or contacts) employed by or associated with a single organization."
             properties:
                 accountName:
                     description:
@@ -51,10 +50,7 @@ components:
             type: object
         AssetSummaryMetric:
             description:
-                "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal,
-                object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date
-                range to the previous date range. Use `getWorkspaceGroupChannelAssetSummariesPage` to list these sets of
-                metrics."
+                "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal, object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date range to the previous date range. Use `getWorkspaceGroupChannelAssetSummariesPage` to list these sets of metrics."
             properties:
                 assetId:
                     description:
@@ -123,8 +119,7 @@ components:
             type: object
         Channel:
             description:
-                "A logical grouping of data coming from configured data sources (e.g. a website, a CRM connection) under
-                which asset metrics, events, individuals, and segments are scoped. Also known as property."
+                "A logical grouping of data coming from configured data sources (e.g. a website, a CRM connection) under which asset metrics, events, individuals, and segments are scoped. Also known as property."
             properties:
                 id:
                     description:
@@ -139,9 +134,7 @@ components:
             type: object
         Event:
             description:
-                "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each
-                event carries free-form `attributes` (a name-value map of contextual properties) plus any matching page
-                metadata. Use `getWorkspaceGroupChannelEventsPage` to retrieve a list of analytics events."
+                "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each event carries free-form `attributes` (a name-value map of contextual properties) plus any matching page metadata. Use `getWorkspaceGroupChannelEventsPage` to retrieve a list of analytics events."
             properties:
                 applicationId:
                     description:
@@ -157,8 +150,7 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        "Free-form event properties as a key-value map. Available keys depend on the event `name` (e.g.
-                        a `pageViewed` event carries different attributes than `formSubmitted`)."
+                        "Free-form event properties as a key-value map. Available keys depend on the event `name` (e.g. a `pageViewed` event carries different attributes than `formSubmitted`)."
                     readOnly: true
                     type: object
                 canonicalUrl:
@@ -174,14 +166,12 @@ components:
                     type: string
                 individualId:
                     description:
-                        "Identifier of the individual that emitted the event. Null for anonymous individuals. Use with
-                        `getWorkspaceGroupIndividual` to fetch the individual."
+                        "Identifier of the individual that emitted the event. Null for anonymous individuals. Use with `getWorkspaceGroupIndividual` to fetch the individual."
                     readOnly: true
                     type: string
                 name:
                     description:
-                        "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.). The set of available names
-                        varies per channel and per integration."
+                        "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.). The set of available names varies per channel and per integration."
                     readOnly: true
                     type: string
                 pageDescription:
@@ -212,9 +202,7 @@ components:
             type: object
         Individual:
             description:
-                "A single individual synced to Analytics Cloud. Individuals are aggregated from data sources configured
-                to sync to Analytics Cloud, and may be either 'known' (identified by email) or 'anonymous'
-                (browser-tracked only)."
+                "A single individual synced to Analytics Cloud. Individuals are aggregated from data sources configured to sync to Analytics Cloud, and may be either 'known' (identified by email) or 'anonymous' (browser-tracked only)."
             properties:
                 accountName:
                     description:
@@ -245,9 +233,7 @@ components:
                             $ref: "#/components/schemas/IndividualDemographicField"
                         type: array
                     description:
-                        "Per-category demographic attributes attached to this Individual. The map key is the demographic
-                        category (e.g. 'profile', 'address', 'employment'), and each value is a list of attribute
-                        records. Use `IndividualDemographicField.fieldType` to interpret each `value`."
+                        "Per-category demographic attributes attached to this Individual. The map key is the demographic category (e.g. 'profile', 'address', 'employment'), and each value is a list of attribute records. Use `IndividualDemographicField.fieldType` to interpret each `value`."
                     readOnly: true
                     type: object
                 firstActivityDate:
@@ -274,16 +260,14 @@ components:
                     type: string
                 profileType:
                     description:
-                        "Profile classification. KNOWN individuals are identified by email/account; ANONYMOUS
-                        individuals are browser-tracked only."
+                        "Profile classification. KNOWN individuals are identified by email/account; ANONYMOUS individuals are browser-tracked only."
                     enum: [ANONYMOUS, KNOWN]
                     readOnly: true
                     type: string
             type: object
         IndividualDemographicField:
             description:
-                "A single demographic attribute attached to an individual (e.g. job title, age, country). Sourced from
-                connected data sources. Multiple attributes can share a category in `Individual.demographics`."
+                "A single demographic attribute attached to an individual (e.g. job title, age, country). Sourced from connected data sources. Multiple attributes can share a category in `Individual.demographics`."
             properties:
                 fieldType:
                     description:
@@ -303,8 +287,7 @@ components:
                     type: string
                 value:
                     description:
-                        "Attribute value, always serialized as a string. Use `fieldType` to interpret/parse it as the
-                        underlying logical type."
+                        "Attribute value, always serialized as a string. Use `fieldType` to interpret/parse it as the underlying logical type."
                     readOnly: true
                     type: string
             type: object
@@ -400,8 +383,7 @@ components:
             type: object
         IndividualSegmentMembership:
             description:
-                "A single individual's membership in an individual segment. Captures when the Individual entered the
-                segment and (if applicable) when they exited."
+                "A single individual's membership in an individual segment. Captures when the Individual entered the segment and (if applicable) when they exited."
             properties:
                 dateCreated:
                     description:
@@ -417,8 +399,7 @@ components:
                     type: string
                 individualId:
                     description:
-                        "Identifier of the individual whose membership this record describes. Use with
-                        `getWorkspaceGroupIndividual` to fetch the individual."
+                        "Identifier of the individual whose membership this record describes. Use with `getWorkspaceGroupIndividual` to fetch the individual."
                     readOnly: true
                     type: string
                 individualSegmentId:
@@ -435,8 +416,7 @@ components:
             type: object
         PageMetric:
             description:
-                "Analytics metrics for a single tracked page over the selected date range. Use
-                `getWorkspaceGroupChannelPagesPage` to list these metrics for a site."
+                "Analytics metrics for a single tracked page over the selected date range. Use `getWorkspaceGroupChannelPagesPage` to list these metrics for a site."
             properties:
                 assetId:
                     description:
@@ -456,8 +436,7 @@ components:
                     type: number
                 bounceRate:
                     description:
-                        "Fraction of sessions that landed on this page and exited without further interaction. Expressed
-                        as a value between 0 to 1."
+                        "Fraction of sessions that landed on this page and exited without further interaction. Expressed as a value between 0 to 1."
                     format: double
                     readOnly: true
                     type: number
@@ -468,8 +447,7 @@ components:
                     type: string
                 directAccess:
                     description:
-                        "Total count of sessions where this page was the entry point with no referrer over the selected
-                        time range."
+                        "Total count of sessions where this page was the entry point with no referrer over the selected time range."
                     format: double
                     readOnly: true
                     type: number
@@ -481,8 +459,7 @@ components:
                     type: number
                 exitRate:
                     description:
-                        "Fraction of sessions on which this page was the last page viewed before exit. Expressed as a
-                        value between 0 to 1."
+                        "Fraction of sessions on which this page was the last page viewed before exit. Expressed as a value between 0 to 1."
                     format: double
                     readOnly: true
                     type: number
@@ -526,8 +503,7 @@ components:
             type: object
         SearchTerm:
             description:
-                "Search term metrics. Use `getWorkspaceGroupChannelSearchTermsPage` to list these metrics for a
-                workspace."
+                "Search term metrics. Use `getWorkspaceGroupChannelSearchTermsPage` to list these metrics for a workspace."
             properties:
                 count:
                     description:
@@ -543,14 +519,11 @@ components:
             type: object
         Workspace:
             description:
-                "An Analytics Cloud workspace synced from a Liferay site. Each workspace owns its own channels,
-                individuals, accounts, segments, and asset analytics. Workspaces are scoped to the Liferay group
-                identified by `groupId`."
+                "An Analytics Cloud workspace synced from a Liferay site. Each workspace owns its own channels, individuals, accounts, segments, and asset analytics. Workspaces are scoped to the Liferay group identified by `groupId`."
             properties:
                 groupId:
                     description:
-                        "Identifier of the Liferay site that owns the Analytics Cloud workspace. Use this with other
-                        endpoints to scope requests to this workspace."
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace. Use this with other endpoints to scope requests to this workspace."
                     format: int64
                     readOnly: true
                     type: integer
@@ -562,11 +535,7 @@ components:
             type: object
 info:
     description:
-        "Read-only headless REST API for Liferay Analytics Cloud. Exposes accounts, asset-summary metrics, events,
-        individuals, individual segments, page metrics, properties, and search terms for use as MCP tools and external
-        integrations. All endpoints are scoped to a provisioned Analytics Cloud workspace. A Java client JAR is
-        available for use with the group ID 'com.liferay', artifact ID 'com.liferay.osb.faro.rest.client', and version
-        '1.0.0'."
+        "Read-only headless REST API for Liferay Analytics Cloud. Exposes accounts, asset-summary metrics, events, individuals, individual segments, page metrics, properties, and search terms for use as MCP tools and external integrations. All endpoints are scoped to a provisioned Analytics Cloud workspace. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.osb.faro.rest.client', and version '1.0.0'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -578,8 +547,7 @@ paths:
     "/workspace/{groupId}/accounts/{accountId}":
         get:
             description:
-                "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an
-                account id. To search accounts by name or filter, use `getWorkspaceGroupChannelAccountsPage`."
+                "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an account id. To search accounts by name or filter, use `getWorkspaceGroupChannelAccountsPage`."
             operationId: getWorkspaceGroupAccount
             parameters:
                 -   in: path
@@ -610,8 +578,7 @@ paths:
     "/workspace/{groupId}/channels":
         get:
             description:
-                "List channels configured within an Analytics Cloud workspaces. To fetch a single channel by id, use
-                `getWorkspaceGroupChannel`."
+                "List channels configured within an Analytics Cloud workspaces. To fetch a single channel by id, use `getWorkspaceGroupChannel`."
             operationId: getWorkspaceGroupChannelsPage
             parameters:
                 -   in: path
@@ -639,8 +606,7 @@ paths:
     "/workspace/{groupId}/channels/{channelId}":
         get:
             description:
-                "Fetch a single channel (also known as property) from an Analytics Cloud workspace. To list available
-                channels in the workspace use `getWorkspaceGroupChannelsPage`."
+                "Fetch a single channel (also known as property) from an Analytics Cloud workspace. To list available channels in the workspace use `getWorkspaceGroupChannelsPage`."
             operationId: getWorkspaceGroupChannel
             parameters:
                 -   in: path
@@ -671,9 +637,7 @@ paths:
     "/workspace/{groupId}/channels/{channelId}/accounts":
         get:
             description:
-                "List or search accounts synced to an Analytics Cloud workspace. Optionally narrow results to a single
-                channel (also known as property). Use this to browse or search accounts by name. To fetch a single
-                account by id, use `getAccount`."
+                "List or search accounts synced to an Analytics Cloud workspace. Optionally narrow results to a single channel (also known as property). Use this to browse or search accounts by name. To fetch a single account by id, use `getAccount`."
             operationId: getWorkspaceGroupChannelAccountsPage
             parameters:
                 -   in: path
@@ -705,15 +669,13 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        "Free-text keyword search across account name and related fields. Empty or null returns all
-                        matching assets."
+                        "Free-text keyword search across account name and related fields. Empty or null returns all matching assets."
                     name: search
                     schema:
                         type: string
                 -   in: query
                     description:
-                        "Sort expression `column:asc|desc`. Defaults to `accountName:asc` when omitted. Separate with
-                        commas for multiple column sort."
+                        "Sort expression `column:asc|desc`. Defaults to `accountName:asc` when omitted. Separate with commas for multiple column sort."
                     example: accountName:asc
                     name: sort
                     schema:
@@ -735,14 +697,7 @@ paths:
     "/workspace/{groupId}/channels/{channelId}/asset-summaries":
         get:
             description:
-                "List analytics asset summaries for pages, blogs, documents, forms, journal articles, and object
-                entries. Rank summaries by the requested sort metric. Each summary includes download, impression, read,
-                and view counts along with their period-over-period trend percentages. Optionally narrow results to a
-                single channel (also known as property) or to a date range. For date-range filtering pass `rangeKey` as
-                one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS,
-                LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this to
-                answer 'what content is performing best' and to pick assets for deeper drill-down via
-                `getWorkspaceGroupChannelPagesPage`."
+                "List analytics asset summaries for pages, blogs, documents, forms, journal articles, and object entries. Rank summaries by the requested sort metric. Each summary includes download, impression, read, and view counts along with their period-over-period trend percentages. Optionally narrow results to a single channel (also known as property) or to a date range. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this to answer 'what content is performing best' and to pick assets for deeper drill-down via `getWorkspaceGroupChannelPagesPage`."
             operationId: getWorkspaceGroupChannelAssetSummariesPage
             parameters:
                 -   in: path
@@ -780,9 +735,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive
-                        with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
-                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
+                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
                     example: LAST_30_DAYS
                     name: rangeKey
                     schema:
@@ -824,11 +777,7 @@ paths:
     "/workspace/{groupId}/channels/{channelId}/events":
         get:
             description:
-                "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a
-                date range. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS,
-                LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and
-                `rangeEnd` as dates for a custom window. For aggregated metrics across events, prefer
-                `getWorkspaceGroupChannelAssetSummariesPage` or `getWorkspaceGroupChannelPagesPage`."
+                "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a date range. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. For aggregated metrics across events, prefer `getWorkspaceGroupChannelAssetSummariesPage` or `getWorkspaceGroupChannelPagesPage`."
             operationId: getWorkspaceGroupChannelEventsPage
             parameters:
                 -   in: path
@@ -872,9 +821,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive
-                        with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
-                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
+                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
                     example: LAST_30_DAYS
                     name: rangeKey
                     schema:
@@ -909,9 +856,7 @@ paths:
     "/workspace/{groupId}/channels/{channelId}/individual-segments":
         get:
             description:
-                "List individual segments within an Analytics Cloud workspace. Optionally narrowed to a channel (also
-                known as a property). To fetch a single segment by id, use `getWorkspaceGroupIndividualSegment`. To list
-                members of a segment, use `getWorkspaceGroupIndividualSegmentMembershipsPage`."
+                "List individual segments within an Analytics Cloud workspace. Optionally narrowed to a channel (also known as a property). To fetch a single segment by id, use `getWorkspaceGroupIndividualSegment`. To list members of a segment, use `getWorkspaceGroupIndividualSegmentMembershipsPage`."
             operationId: getWorkspaceGroupChannelIndividualSegmentsPage
             parameters:
                 -   in: path
@@ -977,9 +922,7 @@ paths:
     "/workspace/{groupId}/channels/{channelId}/individuals":
         get:
             description:
-                "List individuals for an Analytics Cloud workspace. Optionally narrowed to an associated account,
-                channel, segment, or interest. Use this for queries to find a person. To fetch a single individual by
-                id, use `getWorkspaceGroupIndividual` instead."
+                "List individuals for an Analytics Cloud workspace. Optionally narrowed to an associated account, channel, segment, or interest. Use this for queries to find a person. To fetch a single individual by id, use `getWorkspaceGroupIndividual` instead."
             operationId: getWorkspaceGroupChannelIndividualsPage
             parameters:
                 -   in: path
@@ -1057,12 +1000,7 @@ paths:
     "/workspace/{groupId}/channels/{channelId}/pages":
         get:
             description:
-                "List analytics metrics for tracked pages on the workspace, ranked by views or another metric,
-                optionally narrowed to a single channel (also known as property) or data source. Returns flattened view,
-                visitor, bounce, exit, and access-path metrics for each page. For date-range filtering pass `rangeKey`
-                as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS,
-                LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window.
-                Use this for 'top pages' style queries."
+                "List analytics metrics for tracked pages on the workspace, ranked by views or another metric, optionally narrowed to a single channel (also known as property) or data source. Returns flattened view, visitor, bounce, exit, and access-path metrics for each page. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this for 'top pages' style queries."
             operationId: getWorkspaceGroupChannelPagesPage
             parameters:
                 -   in: path
@@ -1106,9 +1044,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive
-                        with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
-                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
+                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
                     example: LAST_30_DAYS
                     name: rangeKey
                     schema:
@@ -1150,11 +1086,7 @@ paths:
     "/workspace/{groupId}/channels/{channelId}/search-terms":
         get:
             description:
-                "List search terms used on pages tracked by the Analytics Cloud workspace for a date range in a single
-                channel (also known as property). Results are ordered in descending order of number of times terms have
-                been searched. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS,
-                LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and
-                `rangeEnd` as dates for a custom window. Use this for 'most searched words' style queries."
+                "List search terms used on pages tracked by the Analytics Cloud workspace for a date range in a single channel (also known as property). Results are ordered in descending order of number of times terms have been searched. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this for 'most searched words' style queries."
             operationId: getWorkspaceGroupChannelSearchTermsPage
             parameters:
                 -   in: path
@@ -1192,9 +1124,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Date-range preset. Use one of the listed enum values. Mutually exclusive with
-                        rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
-                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
+                        "Date-range preset. Use one of the listed enum values. Mutually exclusive with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
                     example: LAST_30_DAYS
                     name: rangeKey
                     schema:
@@ -1223,9 +1153,7 @@ paths:
     "/workspace/{groupId}/individual-segments/{individualSegmentId}":
         get:
             description:
-                "Fetch a single individual segment by id from an Analytics Cloud workspace. To list segments, use
-                `getWorkspaceGroupChannelIndividualSegmentsPage`. To list members of a segment, use
-                `getWorkspaceGroupIndividualSegmentMembershipsPage`."
+                "Fetch a single individual segment by id from an Analytics Cloud workspace. To list segments, use `getWorkspaceGroupChannelIndividualSegmentsPage`. To list members of a segment, use `getWorkspaceGroupIndividualSegmentMembershipsPage`."
             operationId: getWorkspaceGroupIndividualSegment
             parameters:
                 -   in: path
@@ -1256,10 +1184,7 @@ paths:
     "/workspace/{groupId}/individual-segments/{individualSegmentId}/memberships":
         get:
             description:
-                "List individuals currently or formerly in an individual segment. Each entry links one individual to the
-                individual segment and records when the individual entered (and, if applicable, exited). Use the
-                resulting `individualId` values with `getWorkspaceGroupIndividual` to retrieve the full individual
-                record."
+                "List individuals currently or formerly in an individual segment. Each entry links one individual to the individual segment and records when the individual entered (and, if applicable, exited). Use the resulting `individualId` values with `getWorkspaceGroupIndividual` to retrieve the full individual record."
             operationId: getWorkspaceGroupIndividualSegmentMembershipsPage
             parameters:
                 -   in: path
@@ -1313,9 +1238,7 @@ paths:
     "/workspace/{groupId}/individuals/{individualId}":
         get:
             description:
-                "Fetch a single Individual from an Analytics Cloud workspace. Optionally narrowed to a channel (also
-                known as property). Use this to fetch a contact's full profile once you have an id. To search
-                individuals by name, email, or other attributes, use `getWorkspaceGroupChannelIndividualsPage`."
+                "Fetch a single Individual from an Analytics Cloud workspace. Optionally narrowed to a channel (also known as property). Use this to fetch a contact's full profile once you have an id. To search individuals by name, email, or other attributes, use `getWorkspaceGroupChannelIndividualsPage`."
             operationId: getWorkspaceGroupIndividual
             parameters:
                 -   in: path
@@ -1352,9 +1275,7 @@ paths:
     "/workspaces":
         get:
             description:
-                "List Analytics Cloud workspaces accessible to the current user. Use the resulting `groupId` values with
-                other endpoints (e.g. `getWorkspaceGroupChannelAccountsPage`, `getWorkspaceGroupChannelsPage`) to scope
-                requests to a specific workspace."
+                "List Analytics Cloud workspaces accessible to the current user. Use the resulting `groupId` values with other endpoints (e.g. `getWorkspaceGroupChannelAccountsPage`, `getWorkspaceGroupChannelsPage`) to scope requests to a specific workspace."
             operationId: getWorkspacesPage
             responses:
                 200:

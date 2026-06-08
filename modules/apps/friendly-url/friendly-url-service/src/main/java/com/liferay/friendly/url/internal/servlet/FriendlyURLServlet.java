@@ -127,12 +127,12 @@ public class FriendlyURLServlet extends HttpServlet {
 			return new Redirect();
 		}
 
+		long companyId = PortalInstances.getCompanyId(httpServletRequest);
+
 		Group group = (Group)httpServletRequest.getAttribute(
 			WebKeys.FRIENDLY_URL_GROUP);
 		String groupFriendlyURL = (String)httpServletRequest.getAttribute(
 			WebKeys.GROUP_FRIENDLY_URL);
-
-		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 		if (group == null) {
 			groupFriendlyURL = GroupFriendlyURLUtil.parseGroupFriendlyURL(path);

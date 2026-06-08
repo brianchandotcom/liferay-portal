@@ -94,7 +94,7 @@ export function getFieldBusinessType(
 		case 'decimal':
 			return 'Decimal';
 		case 'email':
-			return 'Text';
+			return 'EmailAddress';
 		case 'integer':
 			return 'Integer';
 		case 'long-text':
@@ -170,8 +170,9 @@ export type DateTimeField = BaseField & {
 
 export type EmailField = BaseField & {
 	settings: {
-		autocompleteDomains?: string[];
-		blockedDomains?: string[];
+		autocompleteDomains?: string;
+		autocompleteEnabled?: boolean;
+		blockedDomains?: string;
 	};
 	type: 'email';
 } & UniqueValuesSettingsField;

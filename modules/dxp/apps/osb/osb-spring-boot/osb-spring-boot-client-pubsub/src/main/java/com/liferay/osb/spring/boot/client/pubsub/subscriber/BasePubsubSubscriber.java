@@ -131,7 +131,9 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 		return "";
 	}
 
-	protected abstract String getTopic();
+	protected String getTopic() {
+		return "";
+	}
 
 	protected abstract void receive(Message message) throws Exception;
 

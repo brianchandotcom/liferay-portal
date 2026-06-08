@@ -297,7 +297,9 @@ const FragmentContent = ({
 				/>
 
 				{backgroundImageValue.mediaQueries ? (
-					<style>{backgroundImageValue.mediaQueries}</style>
+					<style nonce={Liferay.CSP?.nonce}>
+						{backgroundImageValue.mediaQueries}
+					</style>
 				) : null}
 			</FragmentContentInteractionsFilter>
 

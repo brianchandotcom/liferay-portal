@@ -74,7 +74,9 @@ const Row = React.forwardRef(({children, className, item}, ref) => {
 				ref={ref}
 			>
 				{backgroundImageValue.mediaQueries ? (
-					<style>{backgroundImageValue.mediaQueries}</style>
+					<style nonce={Liferay.CSP?.nonce}>
+						{backgroundImageValue.mediaQueries}
+					</style>
 				) : null}
 
 				{children}

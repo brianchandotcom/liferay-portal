@@ -139,6 +139,10 @@ function createOrUpdateStyleTag({globalContext, id, styleSheet}) {
 		styleTag.type = 'text/css';
 		styleTag.dataset.sennaTrack = 'temporary';
 
+		if (Liferay.CSP?.nonce) {
+			styleTag.setAttribute('nonce', Liferay.CSP.nonce);
+		}
+
 		globalContext.document.head.appendChild(styleTag);
 	}
 

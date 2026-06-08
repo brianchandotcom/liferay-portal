@@ -5,17 +5,22 @@
 
 package com.liferay.layout.content.versioning.service.impl;
 
+import com.liferay.layout.content.versioning.exception.DuplicateLayoutContentVersionExternalReferenceCodeException;
+import com.liferay.layout.content.versioning.exception.LayoutContentVersionExternalReferenceCodeException;
 import com.liferay.layout.content.versioning.model.LayoutContentVersion;
 import com.liferay.layout.content.versioning.service.base.LayoutContentVersionLocalServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
@@ -45,6 +50,9 @@ public class LayoutContentVersionLocalServiceImpl
 		Layout layout = _layoutLocalService.getLayout(plid);
 
 		FeatureFlagManagerUtil.checkEnabled(layout.getCompanyId(), "LPD-10622");
+
+		_validateExternalReferenceCode(
+			externalReferenceCode, layout.getGroupId());
 
 		String dataHash = DigesterUtil.digestHex(
 			"SHA-256", GetterUtil.getString(data));
@@ -172,6 +180,35 @@ public class LayoutContentVersionLocalServiceImpl
 
 	private int _generateVersion(long plid) {
 		return layoutContentVersionPersistence.countByPlid(plid) + 1;
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		LayoutContentVersion layoutContentVersion =
+			layoutContentVersionPersistence.fetchByERC_G(
+				externalReferenceCode, groupId);
+
+		if (layoutContentVersion != null) {
+			throw new DuplicateLayoutContentVersionExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate layout content version external reference code ",
+					externalReferenceCode, " in group ", groupId));
+		}
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			LayoutContentVersion.class.getName(), "externalReferenceCode");
+
+		if (externalReferenceCode.length() > maxLength) {
+			throw new LayoutContentVersionExternalReferenceCodeException(
+				"External reference code must be less than " + maxLength +
+					" characters");
+		}
 	}
 
 	@Reference

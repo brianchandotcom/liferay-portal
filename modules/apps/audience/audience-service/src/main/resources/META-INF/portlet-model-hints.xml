@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.audience.model.AudienceEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="audienceEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="JSON" type="String" />
+		<field localized="true" name="name" type="String" />
+	</model>
+</model-hints>

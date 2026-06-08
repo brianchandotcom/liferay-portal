@@ -70,7 +70,9 @@ class AppliedFilters extends React.Component {
 	updateFilters(filters) {
 		const {onChange} = this.props;
 
-		onChange && onChange(filters);
+		if (onChange) {
+			onChange(filters);
+		}
 	}
 
 	/**

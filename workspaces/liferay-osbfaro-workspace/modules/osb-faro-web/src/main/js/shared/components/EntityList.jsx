@@ -126,9 +126,9 @@ class EntityList extends React.Component {
 	static defaultProps = {
 		disabledItemsISet: new Set(),
 		loading: false,
-		selectedItemsISet: new Set(),
-
 		selectMultiple: true,
+
+		selectedItemsISet: new Set(),
 		showBorder: true,
 		showHeader: true,
 	};
@@ -145,9 +145,9 @@ class EntityList extends React.Component {
 		noItemsContent: PropTypes.any,
 		noItemsHeader: PropTypes.string,
 		onSelectItemsChange: PropTypes.func,
-		selectedItemsISet: PropTypes.instanceOf(Set),
-
 		selectMultiple: PropTypes.bool,
+
+		selectedItemsISet: PropTypes.instanceOf(Set),
 		showBorder: PropTypes.bool,
 		showHeader: PropTypes.bool,
 		total: PropTypes.number,

@@ -29,7 +29,7 @@ import {
 } from './mappers/visitors-by-time-query';
 
 export const formatHour = function formatHour(hour: string) {
-	const hourAsNumber = parseInt(hour);
+	const hourAsNumber = parseInt(hour, 10);
 	const suffix = hourAsNumber >= 12 ? 'PM' : 'AM';
 	let hourDisplay = hourAsNumber;
 

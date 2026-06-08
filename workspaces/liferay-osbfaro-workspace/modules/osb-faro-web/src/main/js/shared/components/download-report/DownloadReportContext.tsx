@@ -8,9 +8,9 @@ import React, {createContext, useContext, useReducer} from 'react';
 import {ReportContainer} from './DownloadPDFReport';
 
 export const Context = createContext<{
+	clearReportContainers: () => void;
 	reportContainers: ReportContainer[];
 	setReportContainer: (reportContainer: ReportContainer) => void;
-	clearReportContainers: () => void;
 }>({
 	clearReportContainers: () => {},
 	reportContainers: [],

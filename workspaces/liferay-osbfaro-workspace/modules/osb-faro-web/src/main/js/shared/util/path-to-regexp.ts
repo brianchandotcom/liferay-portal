@@ -100,7 +100,7 @@ const tokensToFunction =
 
 			const value = object[token.name];
 
-			if (value == null) {
+			if (value === null || value === undefined) {
 				if (token.optional) {
 					return;
 				}

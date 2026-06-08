@@ -60,7 +60,7 @@ export function formatTimeRange(timeRange: RawTimeRange[]) {
 		})
 		.sort(
 			(a: {value: string}, b: {value: string}) =>
-				parseInt(a.value) - parseInt(b.value)
+				parseInt(a.value, 10) - parseInt(b.value, 10)
 		);
 }
 

@@ -10,7 +10,6 @@ import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 import {Project} from '~/shared/util/records';
 import * as Router from '~/shared/util/router';
-import {Routes, toRoute} from '~/shared/util/router';
 import * as data from '~/test/data';
 import mockStore from '~/test/mock-store';
 
@@ -47,7 +46,7 @@ describe('AddWorkspace', () => {
 
 describe('routingFn', () => {
 	it('routes the user to the workspace home page if the project is already configred', () => {
-		const expectedRoute = toRoute(Routes.WORKSPACE_WITH_ID, {
+		const expectedRoute = Router.toRoute(Router.Routes.WORKSPACE_WITH_ID, {
 			groupId: '23',
 		});
 

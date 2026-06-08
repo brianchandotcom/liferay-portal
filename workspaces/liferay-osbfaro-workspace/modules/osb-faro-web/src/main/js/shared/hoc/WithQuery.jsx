@@ -13,8 +13,12 @@ import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
  * @param {Function} mapResultToProps - Function for formatting result props to WrappedComponent.
  * @returns {Function} The WrappedComponent with data props.
  */
-export default (dataSourceFn, mapRequestProps, mapResultToProps) =>
-	(WrappedComponent) => {
+export default function WithQuery(
+	dataSourceFn,
+	mapRequestProps,
+	mapResultToProps
+) {
+	return (WrappedComponent) => {
 		@hasRequest
 		class RequestContainer extends React.Component {
 			state = {
@@ -78,3 +82,4 @@ export default (dataSourceFn, mapRequestProps, mapResultToProps) =>
 
 		return RequestContainer;
 	};
+}

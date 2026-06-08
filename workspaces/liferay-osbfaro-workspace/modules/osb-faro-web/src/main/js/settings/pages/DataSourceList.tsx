@@ -112,7 +112,7 @@ export const DataSourceName = function DataSourceName({
 		<td className="table-cell-expand">
 			<div className="table-title">
 				{disableRow(
-					data as {[key: string]: any; state: DataSourceStates}
+					data as {state: DataSourceStates; [key: string]: any}
 				) ? (
 					<span className="text-truncate">{data.name}</span>
 				) : (

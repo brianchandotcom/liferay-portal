@@ -73,7 +73,7 @@ export const getSafeRangeSelectors = function getSafeRangeSelectors(
 
 	return {
 		rangeEnd: rangeEnd || null,
-		rangeKey: rangeKey === 'CUSTOM' ? null : parseInt(rangeKey),
+		rangeKey: rangeKey === 'CUSTOM' ? null : parseInt(rangeKey, 10),
 		rangeStart: rangeStart || null,
 	};
 };
@@ -215,10 +215,10 @@ export const truncateText = function truncateText(
 	length?: number | null,
 	ending?: string | null
 ) {
-	if (length == null) {
+	if (length === null || length === undefined) {
 		length = 100;
 	}
-	if (ending == null) {
+	if (ending === null || ending === undefined) {
 		ending = '...';
 	}
 

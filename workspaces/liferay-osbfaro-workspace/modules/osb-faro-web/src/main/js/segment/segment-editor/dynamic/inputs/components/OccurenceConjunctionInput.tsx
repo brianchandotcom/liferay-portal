@@ -85,7 +85,7 @@ const OccurenceConjunctionInput: React.FC<IOccurenceConjunctionInputProps> = ({
 					let numberVal: string | number = '';
 
 					if (isValid(value)) {
-						numberVal = parseInt(value);
+						numberVal = parseInt(value, 10);
 					}
 
 					onChange({

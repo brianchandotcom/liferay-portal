@@ -48,7 +48,7 @@ const ERRORS = {
 		),
 	},
 };
-export default (WrappedComponent) => {
+export default function WithBaseEdit(WrappedComponent) {
 	class BaseEdit extends React.Component {
 		static contextType = ChannelContext;
 
@@ -328,4 +328,4 @@ export default (WrappedComponent) => {
 		close,
 		open,
 	})(BaseEdit);
-};
+}

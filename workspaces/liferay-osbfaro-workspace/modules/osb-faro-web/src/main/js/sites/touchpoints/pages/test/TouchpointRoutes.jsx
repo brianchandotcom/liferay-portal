@@ -97,11 +97,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(
-			screen
-				.getByTestId('download-csv-report')
-				.getAttribute('data-asset-id')
-		).toBe(
+		expect(screen.getByTestId('download-csv-report').dataset.assetId).toBe(
 			'http://example.com/web/site/%E4%BA%BA%E4%BA%8B%E7%99%BA%E5%91%8A'
 		);
 	});

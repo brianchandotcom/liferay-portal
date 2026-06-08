@@ -64,7 +64,7 @@ const BetweenNumberInput: React.FC<IBetweenNumberInputProps> = ({
 						let numberVal: string | number = '';
 
 						if (isValid(start)) {
-							numberVal = parseInt(start);
+							numberVal = parseInt(start, 10);
 						}
 
 						setInputsTouched({...inputsTouched, start: true});
@@ -82,7 +82,6 @@ const BetweenNumberInput: React.FC<IBetweenNumberInputProps> = ({
 					value={value.start}
 				/>
 			</Form.GroupItem>
-
 			<Form.GroupItem
 				className={getCN({
 					'has-error': !inputsValid.end && inputsTouched.end,
@@ -101,7 +100,7 @@ const BetweenNumberInput: React.FC<IBetweenNumberInputProps> = ({
 						let numberVal: string | number = '';
 
 						if (isValid(end)) {
-							numberVal = parseInt(end);
+							numberVal = parseInt(end, 10);
 						}
 
 						setInputsTouched({...inputsTouched, end: true});

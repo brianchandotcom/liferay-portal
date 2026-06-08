@@ -522,7 +522,7 @@ const getExpressionName = (oDataASTNode: ODataASTNode): string => {
 
 	let returnValue = oDataV4ParserNameMap[type];
 
-	if (type == EXPRESSION_TYPES.METHOD_CALL) {
+	if (type === EXPRESSION_TYPES.METHOD_CALL) {
 		returnValue = oDataASTNode.value.method;
 	}
 	else if (type === EXPRESSION_TYPES.FUNCTION) {
@@ -877,7 +877,8 @@ const parseRemoteFilterByCount = (
 
 	const filterContent = match[1].replace(/''/g, "'");
 	const occurrenceOperator = match[2] ?? null;
-	const occurrenceValue = match[3] !== undefined ? parseInt(match[3]) : null;
+	const occurrenceValue =
+		match[3] !== undefined ? parseInt(match[3], 10) : null;
 
 	const innerFilter =
 		filterContent.startsWith('(') && filterContent.endsWith(')')
@@ -1195,10 +1196,10 @@ const transformCommonNode = ({oDataASTNode}: Context): Criteria[] => {
 
 		const methodExpressionName = getExpressionName(methodExpression);
 
-		if (methodExpressionName == OPERATORS.Contains) {
+		if (methodExpressionName === OPERATORS.Contains) {
 			value = removeQuotes(methodExpression.value.parameters[1].raw);
 		}
-		else if (methodExpressionName == OPERATORS.EQ) {
+		else if (methodExpressionName === OPERATORS.EQ) {
 			value = removeQuotes(methodExpression.value.right.raw);
 		}
 
@@ -1319,8 +1320,8 @@ const transformCustomFunctionNode = ({oDataASTNode}: Context): Criterion[] => {
 							.set('_name', detectedEntityName)
 					: accIMap.set('criterionGroup', criterionGroupIMap);
 			}
-			else if (name === 'value' && isFinite(parseInt(value.raw))) {
-				return accIMap.set(name, parseInt(value.raw));
+			else if (name === 'value' && isFinite(parseInt(value.raw, 10))) {
+				return accIMap.set(name, parseInt(value.raw, 10));
 			}
 			else {
 				return accIMap.set(name, removeQuotes(value.raw));
@@ -1458,7 +1459,7 @@ const transformNotNode = ({oDataASTNode}: Context): Criteria[] => {
 
 	let returnValue: Criteria[] = [];
 
-	if (nextNodeExpressionName == OPERATORS.Contains) {
+	if (nextNodeExpressionName === OPERATORS.Contains) {
 		returnValue = [
 			{
 				...transformFunctionalNode({
@@ -1480,14 +1481,14 @@ const transformNotNode = ({oDataASTNode}: Context): Criteria[] => {
 			},
 		] as unknown as Criteria[];
 	}
-	else if (nextNodeExpression.type == EXPRESSION_TYPES.PROPERTY_PATH) {
+	else if (nextNodeExpression.type === EXPRESSION_TYPES.PROPERTY_PATH) {
 		const anyExpression = nextNodeExpression.value.next.value;
 
 		const methodExpression = anyExpression.value.predicate.value;
 
 		const methodExpressionName = getExpressionName(methodExpression);
 
-		if (methodExpressionName == OPERATORS.Contains) {
+		if (methodExpressionName === OPERATORS.Contains) {
 			returnValue = [
 				{
 					...transformFunctionalNode({

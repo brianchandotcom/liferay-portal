@@ -33,10 +33,10 @@ export const getIcon = function getIcon(number) {
  */
 export const getStatsColor = function getStatsColor(str) {
 	if (str) {
-		if (str.toLowerCase() == 'positive') {
+		if (str.toLowerCase() === 'positive') {
 			return Colors.positive;
 		}
-		else if (str.toLowerCase() == 'negative') {
+		else if (str.toLowerCase() === 'negative') {
 			return Colors.negative;
 		}
 		else {

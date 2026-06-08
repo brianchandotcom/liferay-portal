@@ -99,7 +99,7 @@ export default class UIKit extends React.Component {
 											{kitList.map(({name}) => (
 												<Nav.Item
 													active={
-														name == componentName
+														name === componentName
 													}
 													href={toRoute(
 														Routes.UI_KIT,

@@ -246,9 +246,9 @@ export const getAxisMeasures = function getAxisMeasures(value: number) {
 
 	return {
 		intervalCount,
-		intervals,
-
 		intervalValue,
+
+		intervals,
 		maxValue,
 	};
 };
@@ -454,7 +454,7 @@ export const getMetricFormatter = function getMetricFormatter(
 	else if (type === 'time') {
 		return (value: number) => toDuration(value);
 	}
-	else if (type == 'ratings') {
+	else if (type === 'ratings') {
 		return (value: number) => `${(value * 10).toFixed(2)}/10`;
 	}
 	else {
@@ -484,7 +484,7 @@ export const getAxisFormatter = function getAxisFormatter(
 			return toDuration(value, format);
 		};
 	}
-	else if (type == 'ratings') {
+	else if (type === 'ratings') {
 		return (value: number) => `${(value * 10).toFixed(2)}`;
 	}
 

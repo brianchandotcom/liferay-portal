@@ -119,7 +119,7 @@ const StageMetrics = ({
 					</Text>
 				</div>
 				<div className="mt-3 text-secondary">
-					{averageDaysInStage != 0 ? (
+					{averageDaysInStage !== 0 ? (
 						<>
 							<span className="mr-4">{`${averageDaysInStage.toFixed(
 								2

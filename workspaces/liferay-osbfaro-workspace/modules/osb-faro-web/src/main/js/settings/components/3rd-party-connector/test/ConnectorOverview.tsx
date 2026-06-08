@@ -210,11 +210,9 @@ describe('ConnectorOverview', () => {
 			expect(getByTestId('data-source-title-label').textContent).toBe(
 				'Active'
 			);
-			expect(
-				getByTestId('data-source-title').getAttribute(
-					'data-displaytype'
-				)
-			).toBe('success');
+			expect(getByTestId('data-source-title').dataset.displaytype).toBe(
+				'success'
+			);
 		});
 
 		it('renders the Inactive badge with warning display when status is INACTIVE', () => {
@@ -225,11 +223,9 @@ describe('ConnectorOverview', () => {
 			expect(getByTestId('data-source-title-label').textContent).toBe(
 				'Inactive'
 			);
-			expect(
-				getByTestId('data-source-title').getAttribute(
-					'data-displaytype'
-				)
-			).toBe('warning');
+			expect(getByTestId('data-source-title').dataset.displaytype).toBe(
+				'warning'
+			);
 		});
 
 		it('renders the Disconnected badge with secondary display when state is DISCONNECTED', () => {
@@ -242,11 +238,9 @@ describe('ConnectorOverview', () => {
 			expect(getByTestId('data-source-title-label').textContent).toBe(
 				'Disconnected'
 			);
-			expect(
-				getByTestId('data-source-title').getAttribute(
-					'data-displaytype'
-				)
-			).toBe('secondary');
+			expect(getByTestId('data-source-title').dataset.displaytype).toBe(
+				'secondary'
+			);
 		});
 
 		it('renders the data source ID below the title', () => {

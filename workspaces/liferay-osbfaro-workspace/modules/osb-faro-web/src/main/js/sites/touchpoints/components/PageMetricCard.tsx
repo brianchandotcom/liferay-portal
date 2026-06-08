@@ -43,9 +43,9 @@ const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = (props) => {
 			metrics={metrics}
 			queries={{
 				MetricQuery: PageMetricQuery,
-				name: 'page',
-
 				TabsQuery: PageMetricTabsQuery,
+
+				name: 'page',
 			}}
 			reportContainer={ReportContainer.VisitorsBehaviorCard}
 			variables={variables}

@@ -10,8 +10,8 @@ import {paginationDefaults} from '~/shared/util/pagination';
 
 const defaultOptions = {defaultDelta: paginationDefaults.delta};
 
-export default (options = {}) =>
-	(WrappedComponent) => {
+export default function WithPaginationBar(options = {}) {
+	return (WrappedComponent) => {
 		const {defaultDelta} = {...defaultOptions, ...options};
 
 		class WithPaginationBar extends React.Component {
@@ -65,3 +65,4 @@ export default (options = {}) =>
 
 		return WithPaginationBar;
 	};
+}

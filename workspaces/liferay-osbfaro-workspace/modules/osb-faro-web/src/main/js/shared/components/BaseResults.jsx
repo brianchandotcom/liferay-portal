@@ -276,9 +276,9 @@ export default class BaseResults extends React.Component {
 					total,
 				});
 
-				!crossPageSelect &&
-					showCheckbox &&
+				if (!crossPageSelect && showCheckbox) {
 					selectionDispatch({type: ACTION_TYPES.clearAll});
+				}
 			})
 			.catch((error) => {
 				if (!error.IS_CANCELLATION_ERROR) {
@@ -348,8 +348,12 @@ export default class BaseResults extends React.Component {
 		}
 
 		if (onQueryChange || onFilterByChange) {
-			onQueryChange && onQueryChange('');
-			onFilterByChange && onFilterByChange(emptyFilterBy);
+			if (onQueryChange) {
+				onQueryChange('');
+			}
+			if (onFilterByChange) {
+				onFilterByChange(emptyFilterBy);
+			}
 		}
 		else {
 			history.push(
@@ -454,11 +458,9 @@ export default class BaseResults extends React.Component {
 				>
 					{navRenderer && navRenderer(selectedItemsIOMap, items)}
 				</Toolbar>
-
 				{renderSubnav &&
 					!error &&
 					renderSubnav({handleClearChecked: this.clearChecked})}
-
 				<ResultsContent
 					enableClearSearch={enableClearSearch}
 					error={error}
@@ -475,15 +477,14 @@ export default class BaseResults extends React.Component {
 					showCheckbox={showCheckbox}
 					total={total}
 				/>
-
 				{showPagination && !!total && !!items.length && (
 					<PaginationBar
 						href={window.location.href}
 						key="PAGINATION_BAR"
 						onDeltaChange={onDeltaChange}
 						onPageChange={onPageChange}
-						page={parseInt(page)}
-						selectedDelta={parseInt(delta)}
+						page={parseInt(page, 10)}
+						selectedDelta={parseInt(delta, 10)}
 						totalItems={total}
 					/>
 				)}

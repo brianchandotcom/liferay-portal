@@ -97,10 +97,10 @@ const Filter: React.FC<IFilterProps> = ({
 	}: {
 		dropdownItem: Item;
 	}): void => {
-		if (dropdownItem.inputType == 'radio') {
+		if (dropdownItem.inputType === 'radio') {
 			updateRadioItems(dropdownItem);
 		}
-		else if (dropdownItem.inputType == 'checkbox') {
+		else if (dropdownItem.inputType === 'checkbox') {
 			updateCheckboxItems(dropdownItem);
 		}
 	};

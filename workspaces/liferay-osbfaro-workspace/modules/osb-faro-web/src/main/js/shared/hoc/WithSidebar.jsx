@@ -71,9 +71,9 @@ export default compose(
 						permissionType: PropTypes.number,
 					})
 				),
-				collapsed: PropTypes.bool.isRequired,
-
 				collapseSidebar: PropTypes.func.isRequired,
+
+				collapsed: PropTypes.bool.isRequired,
 				currentUser: PropTypes.instanceOf(User).isRequired,
 				defaultChannelId: PropTypes.string,
 				groupId: PropTypes.string.isRequired,

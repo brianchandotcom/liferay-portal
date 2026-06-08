@@ -12,16 +12,15 @@ import {createTagProperty} from '../utils/utils';
 import {RemoteCriterionType} from './RemoteCriterionType';
 
 export const tagCriterionType: RemoteCriterionType = {
+	DisplayComponent: TagDisplay,
+	InputComponent: TagInput,
+
 	get api() {
 		return API.tags.search;
 	},
 
 	createProperty: createTagProperty,
-
-	DisplayComponent: TagDisplay,
 	idProperty: 'tags/id',
-
-	InputComponent: TagInput,
 	nameProperty: 'tags/name',
 	negativeOperator: NotOperators.NotTagsFilter,
 

@@ -26,7 +26,7 @@ let lastProps: {[key: string]: unknown} | undefined;
 
 jest.mock('@liferay/frontend-data-set-web', () => ({
 	...jest.requireActual('@liferay/frontend-data-set-web'),
-	FrontendDataSet: (props: {[key: string]: unknown; id: string}) => {
+	FrontendDataSet: (props: {id: string; [key: string]: unknown}) => {
 		lastProps = props;
 
 		return <div data-testid="base-fds" id={props.id} />;

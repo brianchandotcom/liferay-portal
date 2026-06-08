@@ -61,9 +61,9 @@ class Item extends React.Component {
 		itemRenderer: PropTypes.func,
 		onClick: PropTypes.func,
 		quickActions: PropTypes.arrayOf(PropTypes.object),
-		selected: PropTypes.bool,
-
 		selectMultiple: PropTypes.bool,
+
+		selected: PropTypes.bool,
 	};
 
 	@autobind
@@ -137,9 +137,9 @@ class ListView extends React.Component {
 		disabledItemsISet: new Set(),
 		onClick: noop,
 		quickActions: [],
-		selectedItemsISet: new Set(),
-
 		selectMultiple: true,
+
+		selectedItemsISet: new Set(),
 	};
 
 	static propTypes = {
@@ -149,9 +149,9 @@ class ListView extends React.Component {
 		onClick: PropTypes.func,
 		onSelectItemsChange: PropTypes.func,
 		quickActions: PropTypes.arrayOf(PropTypes.object),
-		selectedItemsISet: PropTypes.instanceOf(Set),
-
 		selectMultiple: PropTypes.bool,
+
+		selectedItemsISet: PropTypes.instanceOf(Set),
 	};
 
 	@autobind

@@ -10,7 +10,6 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import classNames from 'classnames';
 import getCN from 'classnames';
 import {pickBy} from 'lodash';
 import React, {useState} from 'react';
@@ -120,7 +119,7 @@ const PageActions: React.FC<IPageActionsProps> = ({
 				return (
 					<Button
 						button
-						className={classNames(
+						className={getCN(
 							getCN('button-root', {
 								disabled: props.disabled,
 							})

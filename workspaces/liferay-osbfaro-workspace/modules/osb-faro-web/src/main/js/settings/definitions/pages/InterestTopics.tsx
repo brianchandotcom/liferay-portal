@@ -177,11 +177,11 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 
 						refetch();
 					})
-					.catch((err) =>
+					.catch((error) =>
 						addAlert({
 							alertType: Alert.Types.Error,
 							message:
-								err.message === UNAUTHORIZED_ACCESS
+								error.message === UNAUTHORIZED_ACCESS
 									? Liferay.Language.get(
 											'unauthorized-access'
 										)

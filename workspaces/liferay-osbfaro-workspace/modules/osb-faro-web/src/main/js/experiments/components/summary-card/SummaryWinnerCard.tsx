@@ -70,7 +70,6 @@ export const SummaryWinnerCard = function SummaryWinnerCard({
 				}
 				title={Liferay.Language.get('winner-declared')}
 			/>
-
 			{winnerVariant && winnerVariant?.control ? (
 				<SummaryAlert symbol="check-circle">
 					<SummaryTitle
@@ -126,7 +125,6 @@ export const SummaryWinnerCard = function SummaryWinnerCard({
 					</strong>
 				</SummaryAlert>
 			)}
-
 			<SummaryBaseCard.Body>
 				<div className="mt-4 w-100">
 					<SummaryParagraph
@@ -142,7 +140,7 @@ export const SummaryWinnerCard = function SummaryWinnerCard({
 								value={`${toRounded(completion)}%`}
 							/>
 							<SummarySection.ProgressBar
-								value={parseInt(toRounded(completion))}
+								value={parseInt(toRounded(completion), 10)}
 							/>
 						</SummarySection>
 

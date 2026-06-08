@@ -28,7 +28,7 @@ describe('Alert', () => {
 
 		const {container} = render(<Alert onClose={spy} />);
 
-		expect(spy).not.toBeCalled;
+		expect(spy).not.toBeCalled();
 
 		fireEvent.click(container.querySelector('.close'));
 

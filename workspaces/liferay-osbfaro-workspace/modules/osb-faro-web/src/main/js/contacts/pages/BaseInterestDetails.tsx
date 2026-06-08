@@ -84,7 +84,7 @@ const InterestDetailsList: React.FC<IInterestDetailsListProp> = ({
 	tabId,
 	...otherProps
 }) => {
-	if (tabId == tabIds.INDIVIDUALS) {
+	if (tabId === tabIds.INDIVIDUALS) {
 		return <IndividualsList {...otherProps} />;
 	}
 	else {

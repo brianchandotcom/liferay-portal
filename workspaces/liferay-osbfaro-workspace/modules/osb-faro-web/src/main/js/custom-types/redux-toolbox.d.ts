@@ -24,7 +24,7 @@ declare module 'clipboard' {
 		);
 		on(
 			event: ClipboardEventName,
-			callback: (e: ClipboardEvent) => void
+			callback: (event: ClipboardEvent) => void
 		): this;
 		destroy(): void;
 	}

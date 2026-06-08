@@ -433,11 +433,11 @@ const MetricChartRenderer: React.FC<ICommonMetricProps> = ({
 	const metricName = getMetricName(activeItemIndex, metrics);
 
 	const {data, error, loading} = useMetricQuery({
+		Query: queries.MetricQuery(metricName),
 		experienceId,
 		filters,
-		interval,
 
-		Query: queries.MetricQuery(metricName),
+		interval,
 		rangeSelectors,
 		variables,
 	});

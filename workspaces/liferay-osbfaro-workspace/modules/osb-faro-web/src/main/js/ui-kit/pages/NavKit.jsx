@@ -37,7 +37,7 @@ class NavKit extends React.Component {
 					<Nav>
 						{items.map((item, index) => (
 							<Nav.Item
-								active={index == activeHash}
+								active={index === activeHash}
 								href={`#${index}`}
 								key={index}
 							>
@@ -46,12 +46,11 @@ class NavKit extends React.Component {
 						))}
 					</Nav>
 				</Row>
-
 				<Row>
 					<Nav display="stacked">
 						{items.map((item, index) => (
 							<Nav.Item
-								active={index == activeHash}
+								active={index === activeHash}
 								href={`#${index}`}
 								key={index}
 							>
@@ -62,13 +61,12 @@ class NavKit extends React.Component {
 						))}
 					</Nav>
 				</Row>
-
 				<Row>
 					<Nav display="stacked">
 						{items.map((item, index) => (
 							<Nav.Item key={index}>
 								<ClayButton
-									active={index == activeHash}
+									active={index === activeHash}
 									className="button-root nav-link nav-link-monospaced"
 								>
 									<h3>{`Button: ${item}`}</h3>
@@ -79,12 +77,11 @@ class NavKit extends React.Component {
 						))}
 					</Nav>
 				</Row>
-
 				<Row>
 					<Nav display="pills">
 						{items.map((item, index) => (
 							<Nav.Item
-								active={index == activeHash}
+								active={index === activeHash}
 								href={`#${index}`}
 								key={index}
 							>
@@ -93,12 +90,11 @@ class NavKit extends React.Component {
 						))}
 					</Nav>
 				</Row>
-
 				<Row>
 					<Nav display="tabs">
 						{items.map((item, index) => (
 							<Nav.Item
-								active={index == activeHash}
+								active={index === activeHash}
 								href={`#${index}`}
 								key={index}
 							>
@@ -107,12 +103,11 @@ class NavKit extends React.Component {
 						))}
 					</Nav>
 				</Row>
-
 				<Row>
 					<Nav display="underline">
 						{items.map((item, index) => (
 							<Nav.Item
-								active={index == activeHash}
+								active={index === activeHash}
 								href={`#${index}`}
 								key={index}
 							>

@@ -23,9 +23,9 @@ const initialState = {
 	metrics: [],
 	queries: {
 		MetricQuery: null,
-		name: '',
-
 		TabsQuery: null,
+
+		name: '',
 	},
 	variables: () => ({}),
 };

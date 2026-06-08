@@ -318,12 +318,12 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 
 				removeAlert(LIMIT_REACHED_ALERT_ID);
 			})
-			.catch((err) => {
+			.catch((error) => {
 				let message: React.ReactNode = Liferay.Language.get(
 					'there-was-an-error-processing-your-request.-please-try-again'
 				);
 
-				if (EVENT_LIMIT_REACHED.test(err.message)) {
+				if (EVENT_LIMIT_REACHED.test(error.message)) {
 					message = sub(
 						Liferay.Language.get(
 							'your-workspace-is-over-the-event-limit.-please-remove-some-events-from-the-allow-list-to-continue.-visit-our-x-to-learn-more'

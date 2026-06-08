@@ -33,12 +33,12 @@ const defaultParams = {
  * request that are in scope of the wrapped component at run-time.
  * @returns {Function} Returns the new component
  */
-export default (
-		request,
-		stopConditionFn = defaultParams.stopConditionFn,
-		options
-	) =>
-	(WrappedComponent) => {
+export default function WithPolling(
+	request,
+	stopConditionFn = defaultParams.stopConditionFn,
+	options
+) {
+	return (WrappedComponent) => {
 		const {intervalLength, propName, requestProps} = {
 			...defaultParams.options,
 			...options,
@@ -136,3 +136,4 @@ export default (
 			}
 		);
 	};
+}

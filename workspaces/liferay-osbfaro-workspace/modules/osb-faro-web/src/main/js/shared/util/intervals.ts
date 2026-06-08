@@ -218,8 +218,11 @@ export const getIntervalHandle = function getIntervalHandle(
 
 	return (
 		intervalMapsByRangeKey &&
-		(intervalMapsByRangeKey as Record<string, (arr: number[]) => number[]>)[
-			rangeKey
-		]
+		(
+			intervalMapsByRangeKey as Record<
+				string,
+				(array: number[]) => number[]
+			>
+		)[rangeKey]
 	);
 };

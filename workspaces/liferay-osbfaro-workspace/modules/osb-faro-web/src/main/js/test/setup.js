@@ -5,6 +5,8 @@
 
 import '@testing-library/jest-dom';
 
+import 'jest-canvas-mock';
+
 import 'jest-extended/all';
 import {TextDecoder, TextEncoder} from 'util';
 
@@ -98,7 +100,3 @@ global.TextEncoder = TextEncoder;
 // if (typeof queueMicrotask === 'undefined') {
 // 	global.queueMicrotask = cb => Promise.resolve().then(cb);
 // }
-
-require('jest-extended/all');
-
-require('jest-canvas-mock');

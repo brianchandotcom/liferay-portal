@@ -86,7 +86,6 @@ export const SummaryCompletedCard = function SummaryCompletedCard({
 				)}
 				title={Liferay.Language.get('test-complete')}
 			/>
-
 			<SummaryAlert symbol="check-circle">
 				<SummaryTitle
 					className="font-weight-bold mb-1"
@@ -103,7 +102,6 @@ export const SummaryCompletedCard = function SummaryCompletedCard({
 					)}
 				</strong>
 			</SummaryAlert>
-
 			<SummaryBaseCard.Body>
 				<div className="mt-4 w-100">
 					<SummaryParagraph
@@ -119,7 +117,7 @@ export const SummaryCompletedCard = function SummaryCompletedCard({
 								value={`${toRounded(completion)}%`}
 							/>
 							<SummarySection.ProgressBar
-								value={parseInt(toRounded(completion))}
+								value={parseInt(toRounded(completion), 10)}
 							/>
 						</SummarySection>
 

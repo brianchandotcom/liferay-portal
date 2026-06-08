@@ -8,7 +8,6 @@ import React from 'react';
 import {StaticRouter} from 'react-router';
 import {SEGMENTS} from '~/shared/util/router';
 import * as data from '~/test/data';
-import {mockSegment} from '~/test/data';
 import {waitForLoadingToBeRemoved} from '~/test/helpers';
 
 import InterestsCard, {InterestsList} from '../InterestsCard';
@@ -22,7 +21,7 @@ describe('InterestsCard', () => {
 		const {container} = render(
 			<StaticRouter>
 				<InterestsCard
-					entity={mockSegment(15)}
+					entity={data.mockSegment(15)}
 					groupId="23"
 					type={SEGMENTS}
 				/>

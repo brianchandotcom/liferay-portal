@@ -75,10 +75,10 @@ export const useQueryPagination = function useQueryPagination({
 	}
 
 	return {
-		delta: parseInt(delta as string),
+		delta: parseInt(delta as string, 10),
 		filterBy,
 		orderIOMap,
-		page: parseInt(page as string),
+		page: parseInt(page as string, 10),
 		query: query as string,
 	};
 };

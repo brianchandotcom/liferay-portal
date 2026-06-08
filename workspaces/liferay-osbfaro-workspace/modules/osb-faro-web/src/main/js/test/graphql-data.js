@@ -574,9 +574,9 @@ export function mockBlockedCustomEventDefinitionsReq(
 		},
 		result: {
 			data: mockBag({
-				items,
-
 				itemTypeName: 'BlockedCustomEventDefinition',
+
+				items,
 				name: 'blockedCustomEventDefinitions',
 				typeName: 'BlockedCustomEventDefinitionBag',
 			}),
@@ -607,9 +607,9 @@ export function mockCompositionBag({
 
 export function mockDataControlTaskBag(items) {
 	return mockBag({
-		items,
-
 		itemTypeName: 'DataControlTask',
+
+		items,
 		name: 'dataControlTasks',
 		typeName: 'DataControlTaskBag',
 	});
@@ -1909,9 +1909,9 @@ export function mockTouchpointsReq(items, mockVariables = {}) {
 
 export function mockJobBag(items) {
 	return mockBag({
-		items,
-
 		itemTypeName: 'Job',
+
+		items,
 		name: 'jobs',
 		typeName: 'JobBag',
 	});

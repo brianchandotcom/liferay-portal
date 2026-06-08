@@ -154,7 +154,7 @@ export class OptionItem extends React.Component {
 			>
 				<button
 					className={`dropdown-item ${
-						hasHover == true ? 'active' : ''
+						hasHover === true ? 'active' : ''
 					}`}
 					href="javascript:;"
 				>
@@ -173,7 +173,6 @@ export class OptionItem extends React.Component {
 						</div>
 					)}
 				</button>
-
 				{items &&
 					!!items.length &&
 					ReactDOM.createPortal(
@@ -292,8 +291,9 @@ class DropdownMenu extends React.Component {
 				return;
 			}
 
-			onChildOver &&
+			if (onChildOver) {
 				onChildOver({closeAllChildren: true, isVisible: true});
+			}
 		}, DEBOUNCE);
 	}
 
@@ -318,7 +318,9 @@ class DropdownMenu extends React.Component {
 			(!this.state.isMouseOver && event.closeAllChildren) ||
 			(this.state.isMouseOver && !event.closeAllChildren)
 		) {
-			onChildOver && onChildOver(event);
+			if (onChildOver) {
+				onChildOver(event);
+			}
 		}
 	}
 
@@ -330,7 +332,9 @@ class DropdownMenu extends React.Component {
 	handleMouseOverSubitem(index) {
 		const {onChildOver} = this.props;
 
-		onChildOver && onChildOver({isVisible: true});
+		if (onChildOver) {
+			onChildOver({isVisible: true});
+		}
 
 		this.setState({
 			hasChildOpened: true,
@@ -395,9 +399,9 @@ class DropdownMenu extends React.Component {
 	 * @param {string} propertyName
 	 * @param {function} cb
 	 */
-	updateStateByProp(properties, propertyName, cb) {
+	updateStateByProp(properties, propertyName, callback) {
 		if (Object.keys(properties).indexOf(propertyName) > -1) {
-			cb(properties[propertyName]);
+			callback(properties[propertyName]);
 		}
 	}
 
@@ -418,7 +422,7 @@ class DropdownMenu extends React.Component {
 	 */
 	updateChildrenState(index) {
 		this.getItems().map((item, itemIndex) => {
-			if (itemIndex == index) {
+			if (itemIndex === index) {
 				item.hasHover = true;
 			}
 			else {
@@ -444,7 +448,7 @@ class DropdownMenu extends React.Component {
 					({label}) =>
 						label
 							.toLowerCase()
-							.search(this.state.keywords.toLowerCase()) != -1
+							.search(this.state.keywords.toLowerCase()) !== -1
 				)
 			: items;
 	}
@@ -533,8 +537,8 @@ class DropdownMenu extends React.Component {
 		const {show} = this.state;
 
 		const classes = getCN(CLASSNAME, className, 'dropdown-menu', {
-			'dropdown-menu-indicator-end': itemsIconAlignment == 'right',
-			'dropdown-menu-indicator-start': itemsIconAlignment == 'left',
+			'dropdown-menu-indicator-end': itemsIconAlignment === 'right',
+			'dropdown-menu-indicator-start': itemsIconAlignment === 'left',
 			'dropdown-visible': show,
 		});
 

@@ -104,7 +104,7 @@ describe('date', () => {
 		 * @param {string} argument
 		 */
 		toEqualWithoutType(received, argument) {
-			const pass = received == argument;
+			const pass = received === argument;
 			if (pass) {
 				return {
 					message: () =>

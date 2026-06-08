@@ -18,8 +18,8 @@ const defaultOptions = {
  * @param {Function} hoc - The HOC to apply to the component.
  * @returns {Function} - The newly wrapped component.
  */
-export default (hoc, options = {}) =>
-	(WrappedComponent) => {
+export default function Optional(hoc, options = {}) {
+	return (WrappedComponent) => {
 		const OptionalHOC = hoc(WrappedComponent);
 		const {idPropName} = {...defaultOptions, ...options};
 
@@ -36,3 +36,4 @@ export default (hoc, options = {}) =>
 			}
 		};
 	};
+}

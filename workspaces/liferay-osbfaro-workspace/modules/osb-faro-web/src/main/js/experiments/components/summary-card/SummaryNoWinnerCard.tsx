@@ -64,7 +64,6 @@ export const SummaryNoWinnerCard = function SummaryNoWinnerCard({
 				}
 				title={Liferay.Language.get('no-clear-winner')}
 			/>
-
 			<SummaryAlert symbol="exclamation-circle">
 				<SummaryTitle
 					className="font-weight-bold mb-1"
@@ -77,7 +76,6 @@ export const SummaryNoWinnerCard = function SummaryNoWinnerCard({
 					)}
 				</strong>
 			</SummaryAlert>
-
 			<SummaryBaseCard.Body>
 				<div className="mt-4 w-100">
 					<SummaryParagraph
@@ -94,7 +92,7 @@ export const SummaryNoWinnerCard = function SummaryNoWinnerCard({
 							/>
 
 							<SummarySection.ProgressBar
-								value={parseInt(toRounded(completion))}
+								value={parseInt(toRounded(completion), 10)}
 							/>
 						</SummarySection>
 

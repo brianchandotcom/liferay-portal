@@ -12,7 +12,7 @@ import React from 'react';
  * @param {function} WrappedComponent
  * @returns {function} - The WrappedComponent.
  */
-export default (WrappedComponent) => {
+export default function WithSelectedPoint(WrappedComponent) {
 	class WithSelectedPoint extends React.Component {
 		state = {
 			selectedPoint: null,
@@ -42,4 +42,4 @@ export default (WrappedComponent) => {
 	}
 
 	return WithSelectedPoint;
-};
+}

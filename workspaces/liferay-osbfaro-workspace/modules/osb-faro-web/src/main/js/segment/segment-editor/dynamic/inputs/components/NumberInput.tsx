@@ -68,7 +68,7 @@ const NumberInput: React.FC<INumberInputProps> = ({
 					let numberVal: string | number = '';
 
 					if (isValid(value)) {
-						numberVal = parseInt(value);
+						numberVal = parseInt(value, 10);
 					}
 
 					onChange({

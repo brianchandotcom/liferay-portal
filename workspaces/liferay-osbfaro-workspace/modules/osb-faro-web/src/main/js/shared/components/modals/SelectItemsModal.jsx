@@ -39,9 +39,9 @@ export default class SelectItemsModal extends React.Component {
 		onClose: noop,
 		onSubmit: noop,
 		requireSelection: true,
-		selectedItems: [],
-
 		selectMultiple: true,
+
+		selectedItems: [],
 		submitMessage: Liferay.Language.get('select'),
 		title: Liferay.Language.get('select-fields'),
 	};
@@ -55,9 +55,9 @@ export default class SelectItemsModal extends React.Component {
 		onClose: PropTypes.func,
 		onSubmit: PropTypes.func,
 		requireSelection: PropTypes.bool,
-		selectedItems: PropTypes.array,
-
 		selectMultiple: PropTypes.bool,
+
+		selectedItems: PropTypes.array,
 		submitMessage: PropTypes.string,
 		title: PropTypes.string,
 	};

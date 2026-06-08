@@ -106,7 +106,6 @@ export const SummaryTerminatedCard = function SummaryTerminatedCard({
 				)}
 				title={Liferay.Language.get('test-was-terminated')}
 			/>
-
 			{winnerDXPVariantId ? (
 				winnerVariant?.dxpVariantId !== 'DEFAULT' ? (
 					<SummaryAlert symbol="exclamation-circle">
@@ -177,7 +176,6 @@ export const SummaryTerminatedCard = function SummaryTerminatedCard({
 					</strong>
 				</SummaryAlert>
 			)}
-
 			<SummaryBaseCard.Body>
 				<div className="mt-4 w-100">
 					<SummaryParagraph
@@ -194,7 +192,7 @@ export const SummaryTerminatedCard = function SummaryTerminatedCard({
 							/>
 
 							<SummarySection.ProgressBar
-								value={parseInt(toRounded(completion))}
+								value={parseInt(toRounded(completion), 10)}
 							/>
 						</SummarySection>
 

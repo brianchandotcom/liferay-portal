@@ -32,8 +32,8 @@ const defaultOptions = {
  * object and is expected to return a props object for ErrorPage.
  * @returns {Function} - The new component
  */
-export default (action, mapStateToRemoteData, options = {}) =>
-	(WrappedComponent) => {
+export default function WithAction(action, mapStateToRemoteData, options = {}) {
+	return (WrappedComponent) => {
 		const {bypassErrorPage, errorPageProps, propName, renderErrorPage} = {
 			...defaultOptions,
 			...options,
@@ -109,3 +109,4 @@ export default (action, mapStateToRemoteData, options = {}) =>
 			}
 		);
 	};
+}

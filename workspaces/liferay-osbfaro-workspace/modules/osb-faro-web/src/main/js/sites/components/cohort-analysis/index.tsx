@@ -47,7 +47,7 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 
 		return items.reduce<FormattedHeatMap>(
 			(acc, {colDimension, retention, rowDimension, rowKey, value}) => {
-				const period = parseInt(colDimension);
+				const period = parseInt(colDimension, 10);
 
 				const item: CohortHeatMapType = {
 					colorHex:

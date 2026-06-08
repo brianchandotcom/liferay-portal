@@ -22,13 +22,13 @@ import {Routes, SEGMENTS, toRoute} from '~/shared/util/router';
 import URLConstants from '~/shared/util/url-constants';
 
 interface IFetchAssociatedSegmentsArgs {
-	[key: string]: unknown;
 	delta: number;
 	groupId: string;
 	id: string;
 	orderIOMap?: unknown;
 	page: number;
 	query?: string;
+	[key: string]: unknown;
 }
 
 const fetchAssociatedSegments = ({

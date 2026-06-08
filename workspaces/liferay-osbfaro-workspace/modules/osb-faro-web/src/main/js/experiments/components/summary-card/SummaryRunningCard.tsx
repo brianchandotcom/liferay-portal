@@ -63,7 +63,6 @@ export const SummaryRunningCard = function SummaryRunningCard({
 				}
 				title={Liferay.Language.get('test-is-running')}
 			/>
-
 			<SummaryBaseCard.Body>
 				<div className="mt-4 w-100">
 					<SummaryParagraph
@@ -80,7 +79,7 @@ export const SummaryRunningCard = function SummaryRunningCard({
 							/>
 
 							<SummarySection.ProgressBar
-								value={parseInt(toRounded(completion))}
+								value={parseInt(toRounded(completion), 10)}
 							/>
 						</SummarySection>
 

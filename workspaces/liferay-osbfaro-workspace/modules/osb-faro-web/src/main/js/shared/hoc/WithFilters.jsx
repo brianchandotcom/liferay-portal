@@ -15,13 +15,13 @@ import React from 'react';
  * @property {Array.<string>} Config.filterFields - The filter fields to subscribe to.
  * @returns {Function} - The resulting HOC.
  */
-export default (
-		{destructured = true, filterFields = []} = {
-			destructured: true,
-			filterFields: [],
-		}
-	) =>
-	(WrappedComponent) =>
+export default function WithFilters(
+	{destructured = true, filterFields = []} = {
+		destructured: true,
+		filterFields: [],
+	}
+) {
+	return (WrappedComponent) =>
 		class WithFilters extends React.Component {
 			getFilterByFromProps() {
 				const filterProps = destructured
@@ -55,3 +55,4 @@ export default (
 				);
 			}
 		};
+}

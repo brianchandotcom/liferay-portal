@@ -67,9 +67,9 @@ const DocumentsAndMediaMetricCard: React.FC<IGenericMetricBaseCardProps> = (
 			metrics={metrics}
 			queries={{
 				MetricQuery: AssetMetricQuery(NAME),
-				name: NAME,
-
 				TabsQuery: AssetTabsQuery(metrics, NAME),
+
+				name: NAME,
 			}}
 			reportContainer={ReportContainer.VisitorsBehaviorCard}
 			variables={variables}

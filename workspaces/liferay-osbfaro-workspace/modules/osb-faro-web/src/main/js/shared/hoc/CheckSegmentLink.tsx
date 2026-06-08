@@ -59,9 +59,9 @@ const checkSegmentLink =
 							})
 						);
 					})
-					.catch((err) => {
+					.catch((error) => {
 						setLoading(false);
-						setError(err);
+						setError(error);
 					});
 			}
 

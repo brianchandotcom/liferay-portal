@@ -81,7 +81,7 @@ const Chart: React.FC<IChartProps> = ({
 };
 
 const getMetric = (name: any) => {
-	const metric = ASSET_METRICS.find(({key}) => key == name);
+	const metric = ASSET_METRICS.find(({key}) => key === name);
 
 	return [{name, title: metric?.selectTitle, type: metric?.type}];
 };

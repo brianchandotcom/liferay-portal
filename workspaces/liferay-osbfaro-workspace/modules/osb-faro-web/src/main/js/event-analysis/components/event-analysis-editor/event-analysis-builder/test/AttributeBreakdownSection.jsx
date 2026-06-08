@@ -68,19 +68,6 @@ describe('AttributeBreakdownSection', () => {
 						id: '1',
 						name: 'title',
 					},
-					123123: {
-						dataType: 'STRING',
-						displayName: 'Job Title',
-						id: '123123',
-						name: 'jobTitle',
-					},
-					321321: {
-						dataType: 'STRING',
-						displayName: 'Article Title',
-						id: '321321',
-						name: 'articleTitle',
-					},
-
 					400: {
 						dataType: 'STRING',
 						displayName: 'Author',
@@ -93,6 +80,19 @@ describe('AttributeBreakdownSection', () => {
 						id: '500',
 						name: 'date',
 					},
+
+					123123: {
+						dataType: 'STRING',
+						displayName: 'Job Title',
+						id: '123123',
+						name: 'jobTitle',
+					},
+					321321: {
+						dataType: 'STRING',
+						displayName: 'Article Title',
+						id: '321321',
+						name: 'articleTitle',
+					},
 				}}
 				breakdownOrder={['1', '321321', '123123', '400', '500']}
 				breakdowns={{
@@ -101,17 +101,6 @@ describe('AttributeBreakdownSection', () => {
 						dataType: 'STRING',
 						type: 'event',
 					},
-					123123: {
-						attributeId: '123123',
-						dataType: 'STRING',
-						type: 'event',
-					},
-					321321: {
-						attributeId: '321321',
-						dataType: 'STRING',
-						type: 'event',
-					},
-
 					400: {
 						attributeId: '400',
 						dataType: 'STRING',
@@ -119,6 +108,17 @@ describe('AttributeBreakdownSection', () => {
 					},
 					500: {
 						attributeId: '500',
+						dataType: 'STRING',
+						type: 'event',
+					},
+
+					123123: {
+						attributeId: '123123',
+						dataType: 'STRING',
+						type: 'event',
+					},
+					321321: {
+						attributeId: '321321',
 						dataType: 'STRING',
 						type: 'event',
 					},

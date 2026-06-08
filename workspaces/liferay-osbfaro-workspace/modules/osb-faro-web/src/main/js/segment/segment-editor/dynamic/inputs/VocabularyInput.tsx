@@ -313,7 +313,6 @@ export default function VocabularyInput({
 					<b>{displayValue}</b>
 				</Form.GroupItem>
 			</Form.Group>
-
 			<Form.Group autoFit>
 				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('on-the-categories').toLowerCase()}
@@ -327,7 +326,6 @@ export default function VocabularyInput({
 					vocabularyId={property.name}
 				/>
 			</Form.Group>
-
 			<Form.Group autoFit>
 				<Form.GroupItem className="entity-name" label shrink>
 					{Liferay.Language.get('for').toLowerCase()}
@@ -458,7 +456,7 @@ export default function VocabularyInput({
 							let numberVal: string | number = '';
 
 							if (isValid(inputVal)) {
-								numberVal = parseInt(inputVal);
+								numberVal = parseInt(inputVal, 10);
 							}
 
 							const valid = isValidOccurrenceCount(numberVal);

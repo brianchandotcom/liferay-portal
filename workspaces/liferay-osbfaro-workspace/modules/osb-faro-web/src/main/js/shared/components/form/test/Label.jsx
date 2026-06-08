@@ -24,8 +24,10 @@ describe('Label', () => {
 	});
 
 	it('renders with a popover component', () => {
-		const {container} = render(<Label info="foo bar baz" />);
+		const {container} = render(
+			<Label popover={{content: 'foo bar baz'}} />
+		);
 
-		expect(container.querySelector('.info-popover-root')).toBeTruthy;
+		expect(container.querySelector('.info-popover-root')).toBeTruthy();
 	});
 });

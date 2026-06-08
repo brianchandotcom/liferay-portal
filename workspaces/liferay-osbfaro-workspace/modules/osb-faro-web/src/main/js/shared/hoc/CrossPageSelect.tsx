@@ -184,11 +184,11 @@ export const withSelection: (
 					payload: {item},
 					type: ACTION_TYPES.toggle,
 				}),
-			selectedItemsIOMap: selectedItems,
-
 			selectEntirePage: allChecked,
+
 			selectEntirePageIndeterminate:
 				!allChecked && !selectedItems.isEmpty(),
+			selectedItemsIOMap: selectedItems,
 			showCheckbox,
 		};
 

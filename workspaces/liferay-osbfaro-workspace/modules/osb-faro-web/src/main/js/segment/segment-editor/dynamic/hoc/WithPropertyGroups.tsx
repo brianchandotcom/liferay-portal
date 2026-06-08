@@ -250,10 +250,10 @@ const mapResultToProps = (
 	return {propertyGroupsIList};
 };
 
-export const withPropertyGroups = (
+export const withPropertyGroups = function withPropertyGroups(
 	WrappedComponent: React.ComponentType<any>
-) =>
-	class extends React.Component<{
+) {
+	return class extends React.Component<{
 		propertyGroupsIList: List<PropertyGroup>;
 	}> {
 		render() {
@@ -267,6 +267,7 @@ export const withPropertyGroups = (
 			);
 		}
 	};
+};
 
 export default compose(
 	withRequest(fetchPropertyGroups, mapResultToProps),

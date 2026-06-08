@@ -25,15 +25,11 @@ export const STRUCTURES_MAP: Record<
 	string,
 	{className: ClassName; icon: string}
 > = {
-	blog: {
-		className: ClassName.Blog,
-		icon: 'blogs',
-	},
-
 	CMSBasicDocument: {
 		className: ClassName.DocumentDefault,
 		icon: 'document-text',
 	},
+
 	CMSBasicWebContent: {
 		className: ClassName.BasicWebContent,
 		icon: 'forms',
@@ -46,11 +42,11 @@ export const STRUCTURES_MAP: Record<
 		className: ClassName.CustomStructure,
 		icon: 'web-content',
 	},
-
 	CMSDocumentCode: {
 		className: ClassName.DocumentCode,
 		icon: 'code',
 	},
+
 	CMSDocumentCompressed: {
 		className: ClassName.DocumentCompressed,
 		icon: 'document-compressed',
@@ -83,7 +79,6 @@ export const STRUCTURES_MAP: Record<
 		className: ClassName.DocumentVector,
 		icon: 'document-vector',
 	},
-
 	CMSExternalVideo: {
 		className: ClassName.DocumentImage,
 		icon: 'document-multimedia',
@@ -93,6 +88,7 @@ export const STRUCTURES_MAP: Record<
 		className: ClassName.Folder,
 		icon: 'folder',
 	},
+
 	CMSKnowledgeBase: {
 		className: ClassName.KnowledgeBase,
 		icon: 'wiki',
@@ -100,6 +96,10 @@ export const STRUCTURES_MAP: Record<
 	Default: {
 		className: ClassName.FileIconColor0,
 		icon: 'document-default',
+	},
+	blog: {
+		className: ClassName.Blog,
+		icon: 'blogs',
 	},
 	document: {
 		className: ClassName.DocumentDefault,

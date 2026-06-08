@@ -132,10 +132,10 @@ export const IndividualProfileRoutes = function IndividualProfileRoutes({
 						label: selectedChannel && selectedChannel.name,
 					}),
 					breadcrumbs.getIndividuals({
-						channelId,
-						groupId,
-
 						LDPEnabled,
+						channelId,
+
+						groupId,
 					}),
 					breadcrumbs.getEntityName({label: entityName}),
 				]}

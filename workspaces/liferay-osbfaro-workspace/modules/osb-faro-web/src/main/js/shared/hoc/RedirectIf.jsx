@@ -21,40 +21,42 @@ import {Redirect} from 'react-router-dom';
  * rerouted. Should return either a route or false to render WrappedComponent
  * @returns {Function} - The new component
  */
-export default (routingFn) => (WrappedComponent) =>
-	class redirectIf extends React.Component {
-		state = {
-			route: PropTypes.string,
-		};
-
-		constructor(props) {
-			super(props);
-
-			const route = routingFn(props);
-
-			this.state = {
-				...this.state,
-				route,
+export default function RedirectIf(routingFn) {
+	return (WrappedComponent) =>
+		class redirectIf extends React.Component {
+			state = {
+				route: PropTypes.string,
 			};
-		}
 
-		render() {
-			const {route} = this.state;
+			constructor(props) {
+				super(props);
 
-			if (isString(route)) {
-				return <Redirect push to={route} />;
+				const route = routingFn(props);
+
+				this.state = {
+					...this.state,
+					route,
+				};
 			}
-			else {
-				return (
-					<WrappedComponent
-						{...this.props}
-						className={
-							this.props.className
-								? ` ${this.props.className}`
-								: ''
-						}
-					/>
-				);
+
+			render() {
+				const {route} = this.state;
+
+				if (isString(route)) {
+					return <Redirect push to={route} />;
+				}
+				else {
+					return (
+						<WrappedComponent
+							{...this.props}
+							className={
+								this.props.className
+									? ` ${this.props.className}`
+									: ''
+							}
+						/>
+					);
+				}
 			}
-		}
-	};
+		};
+}

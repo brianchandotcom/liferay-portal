@@ -164,11 +164,11 @@ const UserList: React.FC<IUserListProps> = ({
 
 						refetch?.();
 					})
-					.catch((err) =>
+					.catch((error) =>
 						addAlert({
 							alertType: Alert.Types.Error,
 							message:
-								err.message === UNAUTHORIZED_ACCESS
+								error.message === UNAUTHORIZED_ACCESS
 									? Liferay.Language.get(
 											'unauthorized-access'
 										)
@@ -233,11 +233,11 @@ const UserList: React.FC<IUserListProps> = ({
 
 				refetch?.();
 			})
-			.catch((err) =>
+			.catch((error) =>
 				addAlert({
 					alertType: Alert.Types.Error,
 					message:
-						err.message === UNAUTHORIZED_ACCESS
+						error.message === UNAUTHORIZED_ACCESS
 							? Liferay.Language.get('unauthorized-access')
 							: Liferay.Language.get('error'),
 				})

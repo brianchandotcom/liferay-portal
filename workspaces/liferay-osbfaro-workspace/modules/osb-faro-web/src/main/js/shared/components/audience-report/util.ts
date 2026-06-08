@@ -79,7 +79,7 @@ const getSegmentsData = (
 	 * @param {number} value
 	 */
 	const getValue = (value: number) =>
-		parseInt(toRounded(getPercentage(value, total)));
+		parseInt(toRounded(getPercentage(value, total)), 10);
 
 	/**
 	 * Sum all the keys value of the array

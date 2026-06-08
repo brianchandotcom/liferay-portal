@@ -41,9 +41,9 @@ const SitesMetricCard: React.FC<IGenericMetricBaseCardProps> = (props) => {
 			metrics={metrics}
 			queries={{
 				MetricQuery: SitesMetricQuery,
-				name: 'site',
-
 				TabsQuery: SitesTabsQuery,
+
+				name: 'site',
 			}}
 			reportContainer={ReportContainer.SiteActivityCard}
 			variables={(commonVariables) => ({

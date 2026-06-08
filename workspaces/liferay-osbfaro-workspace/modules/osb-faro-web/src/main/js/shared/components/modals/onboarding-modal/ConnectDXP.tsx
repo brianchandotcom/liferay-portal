@@ -47,6 +47,8 @@ const DXP_VERSIONS: Record<string, {label: string; url: URLConstants}> = {
 		label: 'DXP 2024.Q1.1 Quarterly Release',
 		url: URLConstants.DownloadDXP2024Q11,
 	},
+
+	// eslint-disable-next-line sort-keys -- newest-first is the rendered order
 	'dxp-73-u30': {
 		label: 'DXP Version 7.3 U30 + and above with hotfix',
 		url: URLConstants.DownloadDXP73U30,

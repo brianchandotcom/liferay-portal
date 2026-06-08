@@ -23,5 +23,5 @@ export const useRetentionPeriod = function useRetentionPeriod() {
 		return null;
 	}
 
-	return convertMillisecondsToMonths(parseInt(data.preference.value));
+	return convertMillisecondsToMonths(parseInt(data.preference.value, 10));
 };

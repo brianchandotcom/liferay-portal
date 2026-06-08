@@ -43,7 +43,7 @@ const sharedRequestVariables = {
 	interval: 'D',
 	location: 'Any',
 	rangeEnd: null,
-	rangeKey: parseInt(RangeKeyTimeRanges.Last30Days),
+	rangeKey: parseInt(RangeKeyTimeRanges.Last30Days, 10),
 	rangeStart: null,
 };
 

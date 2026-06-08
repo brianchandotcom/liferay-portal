@@ -48,11 +48,11 @@ const MetricTabsRenderer: React.FC<ICommonMetricProps> = ({
 	const {changeActiveItemIndex} = useActions();
 
 	const {data, error, loading} = useMetricQuery({
+		Query: queries.TabsQuery,
 		experienceId,
 		filters,
-		interval,
 
-		Query: queries.TabsQuery,
+		interval,
 		rangeSelectors,
 		variables,
 	});

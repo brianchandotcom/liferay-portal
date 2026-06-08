@@ -236,7 +236,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 		?.filterNot((val) => !!val && val.isEmpty())
 		.map((val, key) =>
 			getFilterOptionType(key as string) === 'radio' && val
-				? parseInt(val.first() ?? '')
+				? parseInt(val.first() ?? '', 10)
 				: val
 		)
 		.toJS();

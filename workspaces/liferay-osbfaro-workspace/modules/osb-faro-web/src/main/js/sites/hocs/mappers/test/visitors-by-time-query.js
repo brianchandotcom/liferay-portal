@@ -37,7 +37,7 @@ describe('VisitorsByTimeQuery Mappers', () => {
 				variables: {
 					channelId: 123,
 					rangeEnd: null,
-					rangeKey: parseInt('30'),
+					rangeKey: parseInt('30', 10),
 					rangeStart: null,
 				},
 			})

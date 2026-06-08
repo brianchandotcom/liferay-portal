@@ -31,27 +31,27 @@ export const SubscriptionNames = {
 	LiferaySaasCspCustomUserTier: 'Liferay SaaS - CSP - Custom User Tier',
 	LiferaySaasCspCustomUserTierExtraUser:
 		'Liferay SaaS - CSP - Custom User Tier - Extra User',
-	LiferaySaasCspUpTo100Users: 'Liferay SaaS - CSP - Up to 100 Users',
-	LiferaySaasCspUpTo100UsersExtraUser:
-		'Liferay SaaS - CSP - Up to 100 Users - Extra User',
-
-	LiferaySaasCspUpTo10kUsers: 'Liferay SaaS - CSP - Up to 10K Users',
-	LiferaySaasCspUpTo10kUsersExtraUser:
-		'Liferay SaaS - CSP - Up to 10K Users - Extra User',
-
 	LiferaySaasCspUpTo1kUsers: 'Liferay SaaS - CSP - Up to 1K Users',
 	LiferaySaasCspUpTo1kUsersExtraUser:
 		'Liferay SaaS - CSP - Up to 1K Users - Extra User',
-	LiferaySaasCspUpTo20kUsers: 'Liferay SaaS - CSP - Up to 20K Users',
-	LiferaySaasCspUpTo20kUsersExtraUser:
-		'Liferay SaaS - CSP - Up to 20K Users - Extra User',
-	LiferaySaasCspUpTo500Users: 'Liferay SaaS - CSP - Up to 500 Users',
-	LiferaySaasCspUpTo500UsersExtraUser:
-		'Liferay SaaS - CSP - Up to 500 Users - Extra User',
 
 	LiferaySaasCspUpTo5kUsers: 'Liferay SaaS - CSP - Up to 5K Users',
 	LiferaySaasCspUpTo5kUsersExtraUser:
 		'Liferay SaaS - CSP - Up to 5K Users - Extra User',
+
+	LiferaySaasCspUpTo10kUsers: 'Liferay SaaS - CSP - Up to 10K Users',
+	LiferaySaasCspUpTo10kUsersExtraUser:
+		'Liferay SaaS - CSP - Up to 10K Users - Extra User',
+	LiferaySaasCspUpTo20kUsers: 'Liferay SaaS - CSP - Up to 20K Users',
+	LiferaySaasCspUpTo20kUsersExtraUser:
+		'Liferay SaaS - CSP - Up to 20K Users - Extra User',
+	LiferaySaasCspUpTo100Users: 'Liferay SaaS - CSP - Up to 100 Users',
+	LiferaySaasCspUpTo100UsersExtraUser:
+		'Liferay SaaS - CSP - Up to 100 Users - Extra User',
+
+	LiferaySaasCspUpTo500Users: 'Liferay SaaS - CSP - Up to 500 Users',
+	LiferaySaasCspUpTo500UsersExtraUser:
+		'Liferay SaaS - CSP - Up to 500 Users - Extra User',
 	LiferaySaasEnterprisePlan: 'Liferay SaaS - Enterprise Plan',
 	LiferaySaasProPlan: 'Liferay SaaS - Pro Plan',
 	LiferaySaasSubscriptionEngageSite:
@@ -63,21 +63,21 @@ export const SubscriptionNames = {
 	LxcBusinessPlan: 'LXC - Business Plan',
 	LxcCspCustomUserTier: 'LXC - CSP - Custom User Tier',
 	LxcCspCustomUserTierExtraUser: 'LXC - CSP - Custom User Tier - Extra User',
-	LxcCspUpTo100Users: 'LXC - CSP - Up to 100 Users',
-	LxcCspUpTo100UsersExtraUser: 'LXC - CSP - Up to 100 Users - Extra User',
-
-	LxcCspUpTo10kUsers: 'LXC - CSP - Up to 10K Users',
-	LxcCspUpTo10kUsersExtraUser: 'LXC - CSP - Up to 10K Users - Extra User',
-
 	LxcCspUpTo1kUsers: 'LXC - CSP - Up to 1K Users',
 	LxcCspUpTo1kUsersExtraUser: 'LXC - CSP - Up to 1K Users - Extra User',
-	LxcCspUpTo20kUsers: 'LXC - CSP - Up to 20K Users',
-	LxcCspUpTo20kUsersExtraUser: 'LXC - CSP - Up to 20K Users - Extra User',
-	LxcCspUpTo500Users: 'LXC - CSP - Up to 500 Users',
-	LxcCspUpTo500UsersExtraUser: 'LXC - CSP - Up to 500 Users - Extra User',
 
 	LxcCspUpTo5kUsers: 'LXC - CSP - Up to 5K Users',
 	LxcCspUpTo5kUsersExtraUser: 'LXC - CSP - Up to 5K Users - Extra User',
+
+	LxcCspUpTo10kUsers: 'LXC - CSP - Up to 10K Users',
+	LxcCspUpTo10kUsersExtraUser: 'LXC - CSP - Up to 10K Users - Extra User',
+	LxcCspUpTo20kUsers: 'LXC - CSP - Up to 20K Users',
+	LxcCspUpTo20kUsersExtraUser: 'LXC - CSP - Up to 20K Users - Extra User',
+	LxcCspUpTo100Users: 'LXC - CSP - Up to 100 Users',
+	LxcCspUpTo100UsersExtraUser: 'LXC - CSP - Up to 100 Users - Extra User',
+
+	LxcCspUpTo500Users: 'LXC - CSP - Up to 500 Users',
+	LxcCspUpTo500UsersExtraUser: 'LXC - CSP - Up to 500 Users - Extra User',
 	LxcEnterprisePlan: 'LXC - Enterprise Plan',
 	LxcProPlan: 'LXC - Pro Plan',
 	LxcSubscriptionEngageSite: 'LXC Subscription - Engage Site',
@@ -160,22 +160,18 @@ export const PLAN_TYPES = {
 function formatSubscriptions(allPlans) {
 	const ADD_ONS = {
 		[INDIVIDUALS]: {},
-		['lxcCspUpTo100UsersExtraUser']: {},
-
-		['lxcCspUpTo10kUsersExtraUser']: {},
-
+		[PAGEVIEWS]: {},
 		['lxcCspUpTo1kUsers']: {},
 		['lxcCspUpTo1kUsersExtraUser']: {},
+		['lxcCspUpTo5kUsersExtraUser']: {},
+		['lxcCspUpTo10kUsersExtraUser']: {},
 		['lxcCspUpTo20kUsers']: {},
 		['lxcCspUpTo20kUsersExtraUser']: {},
+		['lxcCspUpTo100UsersExtraUser']: {},
 		['lxcCspUpTo500UsersExtraUser']: {},
-
-		['lxcCspUpTo5kUsersExtraUser']: {},
 		['lxcSubscriptionEngageSite']: {},
 		['lxcSubscriptionSupportSite']: {},
 		['lxcSubscriptionTransactSite']: {},
-
-		[PAGEVIEWS]: {},
 	};
 
 	const PLANS = {};

@@ -80,6 +80,10 @@ export class JSPDFExtension {
 		date: Date;
 		fontFamily: string;
 		fontSize: {
+			['extra-small']: {
+				lineHeight: number;
+				size: number;
+			};
 			large: {
 				lineHeight: number;
 				size: number;
@@ -89,10 +93,6 @@ export class JSPDFExtension {
 				size: number;
 			};
 			small: {
-				lineHeight: number;
-				size: number;
-			};
-			['extra-small']: {
 				lineHeight: number;
 				size: number;
 			};

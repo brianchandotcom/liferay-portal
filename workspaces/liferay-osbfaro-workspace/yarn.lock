@@ -1127,10 +1127,10 @@
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
-"@clayui/css@^3.161.0":
-  version "3.164.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.164.0.tgz#fe7494c59f635a7069e7e4f0d9622cdeaf598cbe"
-  integrity sha512-HDav09mYgw8h0ZYEyOfRotVIvS0d0iTkl/mFBGnrYih3WYkZbagOs7F0lGmcmaN2hi7b6RCBFL0h58+mSxaNlw==
+"@clayui/css@3.161.0", "@clayui/css@^3.161.0":
+  version "3.161.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.161.0.tgz#f55bb1471af4489814d468735ea72e8c6b96c907"
+  integrity sha512-EDZ7Nit+TpGaBcVTO4xt9SGGlqufHxLjAT2+CF+SeUuTSMiJD4lKp+HVc5vVGjVeY9fmCN0NNfDBkwJkdFtrMw==
 
 "@clayui/data-provider@^3.161.0", "@clayui/data-provider@^3.164.0":
   version "3.164.0"

@@ -8,6 +8,7 @@
 	},
 	"private": true,
 	"resolutions": {
+		"@clayui/css": "3.161.0",
 		"@types/minimatch": "5.1.2",
 		"@types/react": "^18.3.30"
 	},

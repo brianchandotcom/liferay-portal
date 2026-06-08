@@ -62,11 +62,11 @@ export default function CollapsibleGroup({
 				onToggle={onToggle}
 				selected={selected}
 				tags={tags}
-			>
-				<small className="d-block text-secondary text-truncate">
-					{summary || Liferay.Language.get('nothing-selected')}
-				</small>
-			</ControlRow>
+			/>
+
+			<small className="d-block pl-4 text-secondary text-truncate">
+				{summary || Liferay.Language.get('nothing-selected')}
+			</small>
 
 			<div
 				className={classnames(

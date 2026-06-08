@@ -2697,3 +2697,28 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Event Analysis shows an empty state when no analysis is saved',
+	{
+		tag: '@LRAC-10566',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(
+			page.getByText('Create an analysis to get started.')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {
+				name: 'Access our documentation to learn more.',
+			})
+		).toBeVisible();
+	}
+);

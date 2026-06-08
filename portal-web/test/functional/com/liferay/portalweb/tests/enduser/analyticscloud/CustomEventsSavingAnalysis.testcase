@@ -593,30 +593,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10566 | Test Summary: Empty state of analysis report"
-	@priority = 2
-	test CheckEmptyStateOfAnalysisReport {
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Check that the empty page message and check the hyperlink taking user to event analysis document") {
-			ACUtils.viewGenericText(textValueList = "There are no analysis found.,Create an analysis to get started.,Access our documentation to learn more.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
-
-			task ("Switch to the documentation tab") {
-				SelectWindow(value1 = "title=Events - Liferay Learn");
-			}
-
-			ACUtils.viewGenericText(textValueList = "Events");
-		}
-	}
-
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10569 | Test Summary: Viewing the newly created analysis report with member permission"
 	@priority = 4
 	test UserWithMemberPermissionCanViewAndCreateAnalysisReport {

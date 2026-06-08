@@ -168,9 +168,9 @@ public class DLFolderUtilTest {
 
 	@Test(expected = NoSuchFolderException.class)
 	public void testValidateFolderOutsideRootFolder() throws PortalException {
-		Folder topFolder = _mockFolder(RandomTestUtil.randomLong(), null);
+		Folder parentFolder = _mockFolder(RandomTestUtil.randomLong(), null);
 
-		Folder folder = _mockFolder(RandomTestUtil.randomLong(), topFolder);
+		Folder folder = _mockFolder(RandomTestUtil.randomLong(), parentFolder);
 
 		DLFolderUtil.validateFolder(folder, RandomTestUtil.randomLong());
 	}

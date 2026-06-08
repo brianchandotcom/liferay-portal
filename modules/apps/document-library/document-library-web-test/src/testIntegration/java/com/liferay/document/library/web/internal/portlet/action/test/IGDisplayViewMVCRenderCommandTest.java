@@ -64,9 +64,7 @@ public class IGDisplayViewMVCRenderCommandTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
-		_layout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		_layoutWithoutRootFolder = LayoutTestUtil.addTypePortletLayout(_group);
+		_folder = DLAppTestUtil.addFolder(_group.getGroupId());
 
 		_rootFolder = DLAppTestUtil.addFolder(_group.getGroupId());
 
@@ -76,40 +74,44 @@ public class IGDisplayViewMVCRenderCommandTest {
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
-
-		_folderOutsideRootFolder = DLAppTestUtil.addFolder(_group.getGroupId());
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				_layout, DLPortletKeys.MEDIA_GALLERY_DISPLAY);
-
-		portletPreferences.setValue(
-			"rootFolderExternalReferenceCode",
-			_rootFolder.getExternalReferenceCode());
-
-		portletPreferences.store();
 	}
 
 	@Test
 	@TestInfo("LPD-92077")
 	public void testRender() throws Exception {
-		Assert.assertEquals(
-			"/image_gallery_display/view.jsp",
-			_render(_layout, _rootFolder.getFolderId()));
+		Layout layout = _addLayout(_rootFolder);
 
 		Assert.assertEquals(
-			"/image_gallery_display/view.jsp",
-			_render(_layout, _childFolder.getFolderId()));
+			_VIEW_JSP, _render(layout, _rootFolder.getFolderId()));
 
 		Assert.assertEquals(
-			"/image_gallery_display/view.jsp",
-			_render(
-				_layoutWithoutRootFolder,
-				_folderOutsideRootFolder.getFolderId()));
+			_VIEW_JSP, _render(layout, _childFolder.getFolderId()));
 
 		Assert.assertEquals(
 			"/document_library/error.jsp",
-			_render(_layout, _folderOutsideRootFolder.getFolderId()));
+			_render(layout, _folder.getFolderId()));
+
+		Assert.assertEquals(
+			_VIEW_JSP,
+			_render(
+				LayoutTestUtil.addTypePortletLayout(_group),
+				_folder.getFolderId()));
+	}
+
+	private Layout _addLayout(Folder rootFolder) throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, DLPortletKeys.MEDIA_GALLERY_DISPLAY);
+
+		portletPreferences.setValue(
+			"rootFolderExternalReferenceCode",
+			rootFolder.getExternalReferenceCode());
+
+		portletPreferences.store();
+
+		return layout;
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
@@ -144,6 +146,8 @@ public class IGDisplayViewMVCRenderCommandTest {
 			new MockLiferayPortletRenderResponse());
 	}
 
+	private static final String _VIEW_JSP = "/image_gallery_display/view.jsp";
+
 	private Folder _childFolder;
 	private Company _company;
 
@@ -153,7 +157,7 @@ public class IGDisplayViewMVCRenderCommandTest {
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	private Folder _folderOutsideRootFolder;
+	private Folder _folder;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -163,8 +167,6 @@ public class IGDisplayViewMVCRenderCommandTest {
 	)
 	private MVCRenderCommand _igDisplayViewMVCRenderCommand;
 
-	private Layout _layout;
-	private Layout _layoutWithoutRootFolder;
 	private Folder _rootFolder;
 
 }

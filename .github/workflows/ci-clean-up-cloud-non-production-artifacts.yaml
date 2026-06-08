@@ -4,12 +4,12 @@ defaults:
 jobs:
     clean-up-artifacts:
         env:
-            BOOTSTRAP_STORAGE_PATH_NON_PRODUCTION: ${{vars.BOOTSTRAP_STORAGE_PATH_NON_PRODUCTION}}
+            BOOTSTRAP_STORAGE_PATH_NONPRODUCTION: ${{vars.BOOTSTRAP_STORAGE_PATH_NONPRODUCTION}}
             EVENT_REF: ${{github.event.ref}}
-            HELM_CHART_REGISTRY_NON_PRODUCTION: ${{vars.HELM_CHART_REGISTRY_NON_PRODUCTION}}
+            HELM_CHART_REGISTRY_NONPRODUCTION: ${{vars.HELM_CHART_REGISTRY_NONPRODUCTION}}
         if: |
-            github.repository == 'cloudnative-team/liferay-portal' &&
             github.event.ref_type == 'branch' &&
+            github.repository == 'cloudnative-team/liferay-portal' &&
             (
                 startsWith(github.event.ref, 'LCD-') ||
                 startsWith(github.event.ref, 'release/')
@@ -19,20 +19,20 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NON_PRODUCTION}}
-                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NON_PRODUCTION}}
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRODUCTION}}
+                    workload_identity_provider: ${{vars.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL_NONPRODUCTION}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NON_PRODUCTION}}
-            -   name: Clean up chart images
+                    project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_NONPRODUCTION}}
+            -   name: Clean up Helm chart images
                 run: |
                     set -o errexit
                     set -o nounset
                     set -o pipefail
 
                     function main {
-                        local registry_path="${HELM_CHART_REGISTRY_NON_PRODUCTION}/$(echo "${EVENT_REF}" | tr 'A-Z/' 'a-z-')"
+                        local registry_path="${HELM_CHART_REGISTRY_NONPRODUCTION}/$(echo "${EVENT_REF}" | tr 'A-Z/' 'a-z-')"
 
                         local images
 
@@ -54,7 +54,7 @@ jobs:
                     set -o pipefail
 
                     function main {
-                        gcloud storage rm --recursive "${BOOTSTRAP_STORAGE_PATH_NON_PRODUCTION}/$(echo "${EVENT_REF}" | tr '/' '-')/" || true
+                        gcloud storage rm --recursive "${BOOTSTRAP_STORAGE_PATH_NONPRODUCTION}/$(echo "${EVENT_REF}" | tr '/' '-')/" || true
                     }
 
                     main "${@}"

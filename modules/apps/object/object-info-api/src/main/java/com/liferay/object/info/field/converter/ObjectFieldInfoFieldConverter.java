@@ -8,6 +8,7 @@ package com.liferay.object.info.field.converter;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.EmailInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
@@ -65,6 +66,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -215,6 +217,14 @@ public class ObjectFieldInfoFieldConverter {
 				BigDecimal.valueOf(
 					ObjectFieldValidationConstants.BUSINESS_TYPE_LONG_VALUE_MIN)
 			);
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_EMAIL_ADDRESS)) {
+
+			finalStep.attribute(
+				EmailInfoFieldType.PREFERRED_DOMAINS,
+				_getPreferredDomains(objectField));
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
@@ -535,6 +545,23 @@ public class ObjectFieldInfoFieldConverter {
 				Objects.equals(defaultValue, listTypeEntry.getKey()),
 				new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
 				listTypeEntry.getKey()));
+	}
+
+	private List<String> _getPreferredDomains(ObjectField objectField) {
+		if (!GetterUtil.getBoolean(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED,
+					objectField))) {
+
+			return Collections.emptyList();
+		}
+
+		return ListUtil.fromArray(
+			StringUtil.split(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS,
+					objectField),
+				StringPool.COMMA));
 	}
 
 	private String _getRelationshipLabelFieldName(

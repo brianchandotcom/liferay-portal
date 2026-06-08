@@ -28,9 +28,28 @@ import jakarta.servlet.jsp.PageContext;
 public class AddToWishListTag extends IncludeTag {
 
 	@Override
+	public int doEndTag() throws JspException {
+		if (_signedIn) {
+			return super.doEndTag();
+		}
+
+		return EVAL_PAGE;
+	}
+
+	@Override
 	public int doStartTag() throws JspException {
 		try {
 			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_signedIn = themeDisplay.isSignedIn();
+
+			if (!_signedIn) {
+				return SKIP_BODY;
+			}
 
 			_commerceAccountId = CommerceUtil.getCommerceAccountId(
 				(CommerceContext)httpServletRequest.getAttribute(
@@ -41,10 +60,6 @@ public class AddToWishListTag extends IncludeTag {
 			if (!_cpContentHelper.hasMultipleCPSkus(_cpCatalogEntry)) {
 				cpSku = _cpContentHelper.getDefaultCPSku(_cpCatalogEntry);
 			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
 
 			_inWishList = _cpContentHelper.isInWishList(
 				cpSku, _cpCatalogEntry, themeDisplay);
@@ -116,6 +131,7 @@ public class AddToWishListTag extends IncludeTag {
 		_cpContentHelper = null;
 		_inWishList = false;
 		_large = false;
+		_signedIn = false;
 		_skuId = 0;
 	}
 
@@ -134,6 +150,7 @@ public class AddToWishListTag extends IncludeTag {
 	private CPContentHelper _cpContentHelper;
 	private boolean _inWishList;
 	private boolean _large;
+	private boolean _signedIn;
 	private long _skuId;
 
 }

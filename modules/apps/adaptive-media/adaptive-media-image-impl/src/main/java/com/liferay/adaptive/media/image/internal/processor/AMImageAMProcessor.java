@@ -89,11 +89,6 @@ public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 				return;
 			}
 
-			if (amImageEntry != null) {
-				_amImageEntryLocalService.deleteAMImageEntry(
-					amImageEntry.getAmImageEntryId());
-			}
-
 			AMImageScaler amImageScaler =
 				_amImageScalerRegistry.getAMImageScaler(
 					fileVersion.getMimeType());
@@ -108,9 +103,16 @@ public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 			try (InputStream inputStream =
 					amImageScaledImage.getInputStream()) {
 
+				FileVersion scaledFileVersion = _getScaledFileVersion(
+					amImageScaledImage, fileVersion);
+
+				if (amImageEntry != null) {
+					_amImageEntryLocalService.deleteAMImageEntry(
+						amImageEntry.getAmImageEntryId());
+				}
+
 				_amImageEntryLocalService.addAMImageEntry(
-					amImageConfigurationEntry,
-					_getScaledFileVersion(amImageScaledImage, fileVersion),
+					amImageConfigurationEntry, scaledFileVersion,
 					amImageScaledImage.getHeight(),
 					amImageScaledImage.getWidth(), inputStream,
 					amImageScaledImage.getSize());

@@ -24,19 +24,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
 import java.io.Serializable;
@@ -138,34 +131,9 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 					long layoutSetPrototypeId = MapUtil.getLong(
 						parameterMap, "layoutSetPrototypeId");
 
-					LayoutSetPrototype layoutSetPrototype =
-						_layoutSetPrototypeLocalService.getLayoutSetPrototype(
-							layoutSetPrototypeId);
-
-					LayoutSet layoutSetPrototypeLayoutSet =
-						layoutSetPrototype.getLayoutSet();
-
-					UnicodeProperties
-						layoutSetPrototypeSettingsUnicodeProperties =
-							layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-					int mergeFailCount = GetterUtil.getInteger(
-						layoutSetPrototypeSettingsUnicodeProperties.getProperty(
-							Sites.MERGE_FAIL_COUNT));
-
-					mergeFailCount++;
-
-					layoutSetPrototypeSettingsUnicodeProperties.setProperty(
-						Sites.MERGE_FAIL_COUNT, String.valueOf(mergeFailCount));
-
-					_layoutSetLocalService.updateLayoutSet(
-						layoutSetPrototypeLayoutSet);
-
 					_log.error(
-						StringBundler.concat(
-							"Merge fail count increased to ", mergeFailCount,
-							" for layout set prototype ",
-							layoutSetPrototype.getLayoutSetPrototypeId()),
+						"Unable to import the layout set prototype " +
+							layoutSetPrototypeId,
 						throwable);
 
 					throw new SystemException(throwable);
@@ -258,12 +226,6 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 
 	@Reference
 	private com.liferay.portal.kernel.util.File _file;
-
-	@Reference
-	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Reference
-	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	private class LayoutImportCallable implements Callable<Void> {
 

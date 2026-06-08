@@ -12,6 +12,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from '../main/fixtures/cmsPagesTest';
 import {structureBuilderPagesTest} from './fixtures/structureBuilderPagesTest';
 import {FieldType} from './pages/StructureBuilderPage';
@@ -185,5 +186,116 @@ test(
 		await contentsPage.goto();
 
 		await contentsPage.deleteContent(contentTitle);
+	}
+);
+
+test(
+	'Phone prefix dropdown is not clipped when the form is nested in a grid',
+	{tag: '@LPD-93856'},
+	async ({contentsPage, page, pageEditorPage, structureBuilderPage}) => {
+		const structureLabel = `Structure${getRandomInt()}`;
+
+		// Create a structure with a Phone Number field
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			name: structureLabel,
+			page: structureBuilderPage,
+		});
+
+		await structureBuilderPage.addField('Phone Number' as FieldType);
+
+		const structureId = await structureBuilderPage.publishStructure();
+
+		// Customize the editor, add a grid and move the Form Container into one
+		// of its modules
+
+		await structureBuilderPage.editStructure(structureId);
+
+		await structureBuilderPage.customizeEditor();
+
+		await pageEditorPage.addFragment('Layout Elements', 'Grid');
+
+		// Move the Form Container into the first grid module
+
+		await pageEditorPage.dragAndDropFragment({
+			dragTarget: page.locator(
+				'.page-editor__topper[data-name="Form Container"]'
+			),
+			dropTarget: page
+				.locator(
+					'.page-editor__topper[data-name="Grid"] .page-editor__col'
+				)
+				.first(),
+			page,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await expect(
+			page
+				.locator('.page-editor__topper[data-name="Grid"]')
+				.locator('.page-editor__topper[data-name="Form Container"]')
+		).toBeVisible();
+
+		// Publish, confirming the form errors dialog raised by the unmapped
+		// metadata fields of the default form
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.modal-footer', {hasText: 'Publish'}),
+			timeout: 3000,
+			trigger: pageEditorPage.publishButton,
+		});
+
+		await page.locator('.modal-footer').getByText('Publish').click();
+
+		await waitForAlert(
+			page,
+			'Success:The editor was updated successfully.'
+		);
+
+		// Create content and open the country prefix dropdown
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent(structureLabel);
+
+		const prefixMenu = page.locator('.phone-number-input-prefix-menu');
+
+		await expect(async () => {
+			await page.getByLabel('Country Code').click({timeout: 3000});
+
+			await expect(prefixMenu).toHaveClass(/show/, {timeout: 3000});
+		}).toPass();
+
+		// The dropdown must escape the grid's overflow clipping: every corner of
+		// its bounding box has to resolve to the menu itself. Sampling only the
+		// center would miss a menu clipped at its edges, which is exactly how the
+		// overflow cut it off
+
+		await expect(async () => {
+			const fullyVisible = await prefixMenu.evaluate((menu) => {
+				const rect = menu.getBoundingClientRect();
+				const inset = 4;
+
+				const corners = [
+					[rect.left + inset, rect.top + inset],
+					[rect.right - inset, rect.top + inset],
+					[rect.left + inset, rect.bottom - inset],
+					[rect.right - inset, rect.bottom - inset],
+				];
+
+				return corners.every(([x, y]) => {
+					const point = document.elementFromPoint(
+						Math.round(x),
+						Math.round(y)
+					);
+
+					return Boolean(point) && menu.contains(point);
+				});
+			});
+
+			expect(fullyVisible).toBe(true);
+		}).toPass();
 	}
 );

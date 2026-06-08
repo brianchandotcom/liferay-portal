@@ -625,6 +625,9 @@ public interface WebKeys {
 	public static final String SITE_ADMINISTRATION_CATEGORIES_MAP =
 		"SITES_ADMINISTRATION_CATEGORIES_MAP";
 
+	public static final String SITE_VIRTUAL_HOST_RESTRICTED =
+		"SITE_VIRTUAL_HOST_RESTRICTED";
+
 	public static final String SOURCE_NAME = "SOURCE_NAME";
 
 	public static final String SOURCE_VERSION = "SOURCE_VERSION";
@@ -632,9 +635,6 @@ public interface WebKeys {
 	public static final String STALE_SESSION = "STALE_SESSION";
 
 	public static final String STARTUP_FINISHED = "STARTUP_FINISHED";
-
-	public static final String STRICT_VIRTUAL_HOST_BLOCKED =
-		"STRICT_VIRTUAL_HOST_BLOCKED";
 
 	public static final String SUBJECT = "SUBJECT";
 

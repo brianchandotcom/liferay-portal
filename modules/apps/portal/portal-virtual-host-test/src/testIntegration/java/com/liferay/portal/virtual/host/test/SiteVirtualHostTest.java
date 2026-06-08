@@ -84,7 +84,7 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 
 	@Test
 	public void testGroupRestrictedViaVirtualHost() throws Exception {
-		_setStrictMode(true, false);
+		_setStrictMode(false);
 
 		String companyVirtualHostName = _company.getVirtualHostname();
 
@@ -141,7 +141,7 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 
 	@Test
 	public void testGroupRestrictedViaVirtualHostWithBypass() throws Exception {
-		_setStrictMode(true, true);
+		_setStrictMode(true);
 
 		String companyVirtualHostName = _company.getVirtualHostname();
 
@@ -277,8 +277,7 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 				group.getFriendlyURL()));
 	}
 
-	private void _setStrictMode(
-			boolean strictModeEnabled, boolean allowDefaultInstanceURLBypass)
+	private void _setStrictMode(boolean allowDefaultInstanceURLBypass)
 		throws Exception {
 
 		_companyConfigurationTemporarySwapper =
@@ -288,7 +287,7 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 					"allowDefaultInstanceURLBypass",
 					allowDefaultInstanceURLBypass
 				).put(
-					"strictModeEnabled", strictModeEnabled
+					"strictModeEnabled", true
 				).build());
 	}
 

@@ -8061,7 +8061,7 @@ public class PortalImpl implements Portal {
 
 		if (!GetterUtil.getBoolean(
 				httpServletRequest.getAttribute(
-					WebKeys.STRICT_VIRTUAL_HOST_BLOCKED))) {
+					WebKeys.SITE_VIRTUAL_HOST_RESTRICTED))) {
 
 			return 0;
 		}

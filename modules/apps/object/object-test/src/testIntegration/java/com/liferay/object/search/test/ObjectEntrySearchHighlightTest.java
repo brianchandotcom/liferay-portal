@@ -141,7 +141,7 @@ public class ObjectEntrySearchHighlightTest {
 			_nonlocalizedObjectEntry);
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			_localizedObjectDefinition.getDefaultLanguageId());
+			_nonlocalizedObjectDefinition.getDefaultLanguageId());
 
 		_assertHighlight(_getContentFieldName(defaultLocale), searchHit);
 	}

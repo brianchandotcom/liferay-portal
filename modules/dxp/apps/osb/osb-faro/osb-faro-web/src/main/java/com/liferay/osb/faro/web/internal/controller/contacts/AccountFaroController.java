@@ -159,9 +159,9 @@ public class AccountFaroController extends BaseFaroController {
 			getIndividualsFaroFDSResultsDisplay(
 				@PathParam("groupId") long groupId, @PathParam("id") String id,
 				@QueryParam("channelId") String channelId,
+				@QueryParam("search") String search,
 				@QueryParam("page") int page,
 				@QueryParam("pageSize") int pageSize,
-				@QueryParam("search") String search,
 				@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
 					sortString)
 		throws Exception {
@@ -180,11 +180,11 @@ public class AccountFaroController extends BaseFaroController {
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") String channelId,
 			@QueryParam("filter") String filterString,
-			@QueryParam("page") int page, @QueryParam("pageSize") int pageSize,
 			@QueryParam("rangeEnd") String rangeEnd,
 			@QueryParam("rangeKey") Integer rangeKey,
 			@QueryParam("rangeStart") String rangeStart,
-			@QueryParam("search") String search,
+			@QueryParam("search") String search, @QueryParam("page") int page,
+			@QueryParam("pageSize") int pageSize,
 			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
 				sortString)
 		throws Exception {

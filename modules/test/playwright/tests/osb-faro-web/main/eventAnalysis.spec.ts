@@ -3136,3 +3136,116 @@ test(
 		).toHaveCount(0);
 	}
 );
+
+test(
+	'Event Analysis report can be renamed and have a breakdown added when edited',
+	{
+		tag: '@LRAC-10559',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: 'customEvent',
+				properties: [
+					{name: 'like', value: 'true'},
+					{name: 'price', value: '259.95'},
+				],
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: [
+					{
+						dataType: 'BOOLEAN',
+						displayName: 'like',
+						name: 'like',
+						type: 'LOCAL',
+					},
+					{
+						dataType: 'NUMBER',
+						displayName: 'price',
+						name: 'price',
+						type: 'LOCAL',
+					},
+				],
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		const saveButton = page
+			.locator('.event-analysis-toolbar-right-content')
+			.getByRole('button', {name: 'Save Analysis'});
+
+		// Create and save an analysis with a price breakdown
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({eventAnalysisName: 'Save Analysis', page});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'price', page, tab: 'Event'});
+
+		await saveButton.click();
+
+		// Reopen it, rename it and add a second breakdown
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Save Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: 'Edited Analysis',
+			page,
+		});
+
+		await addBreakdown({breakdownName: 'like', page, tab: 'Event'});
+
+		await saveButton.click();
+
+		// The edit persists: the renamed report keeps both breakdowns
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(
+			page.getByRole('link', {name: 'Save Analysis'})
+		).toHaveCount(0);
+
+		await page.getByRole('link', {name: 'Edited Analysis'}).click();
+
+		for (const breakdownName of ['price', 'like']) {
+			await expect(
+				page
+					.locator('.attribute-breakdown-section-root')
+					.getByText(breakdownName)
+			).toBeVisible();
+		}
+	}
+);

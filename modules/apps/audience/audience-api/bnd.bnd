@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Audience API
+Bundle-SymbolicName: com.liferay.audience.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.audience.constants,\
+	com.liferay.audience.exception,\
+	com.liferay.audience.model,\
+	com.liferay.audience.service,\
+	com.liferay.audience.service.persistence

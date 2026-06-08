@@ -28,7 +28,7 @@ public class LayoutSetPrototypeSyncModelListener
 	public void onAfterUpdate(
 		LayoutSet originalLayoutSet, LayoutSet layoutSet) {
 
-		if (!_isInitialLink(originalLayoutSet, layoutSet)) {
+		if (!_isInitialLink(layoutSet, originalLayoutSet)) {
 			return;
 		}
 
@@ -51,7 +51,7 @@ public class LayoutSetPrototypeSyncModelListener
 	}
 
 	private boolean _isInitialLink(
-		LayoutSet originalLayoutSet, LayoutSet layoutSet) {
+		LayoutSet layoutSet, LayoutSet originalLayoutSet) {
 
 		if ((originalLayoutSet == null) || (layoutSet == null)) {
 			return false;

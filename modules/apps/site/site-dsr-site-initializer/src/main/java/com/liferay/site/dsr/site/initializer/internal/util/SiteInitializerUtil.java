@@ -38,6 +38,7 @@ public class SiteInitializerUtil {
 		}
 
 		String fileName = BatchEngineUnitThreadLocal.getFileName();
+
 		String name = PrincipalThreadLocal.getName();
 
 		PermissionChecker permissionChecker =

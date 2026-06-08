@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/button": "^3.164.0",
-		"@clayui/drop-down": "^3.164.0",
-		"@clayui/form": "^3.164.0",
-		"@clayui/modal": "^3.164.0",
+		"@clayui/button": "^3.165.0",
+		"@clayui/drop-down": "^3.165.0",
+		"@clayui/form": "^3.165.0",
+		"@clayui/modal": "^3.165.0",
 		"@liferay/frontend-data-set-admin-web": "*",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-item-selector-web": "*",

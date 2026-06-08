@@ -711,7 +711,7 @@ test.describe('Comments Panel', () => {
 			await page
 				.getByRole('option', {name: 'View, Download, Comment, and'})
 				.click();
-			await page.getByRole('button', {name: 'Save'}).click();
+			await page.getByRole('button', {name: 'Share'}).click();
 
 			await performLogout(page);
 

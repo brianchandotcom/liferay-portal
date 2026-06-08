@@ -67,8 +67,8 @@ public class RichTextFragmentCKEditor5EditorConfigContributor
 					"|", "removeFormat", "|", "numberedList", "bulletedList",
 					"|", "indent", "outdent", "|", "blockQuote", "|", "link",
 					"insertTable", "headlessImageSelector",
-					"headlessVideoSelector", "|", "alignment", "|", "aiCreator",
-					"|", "sourceEditing"
+					"headlessVideoSelector", "|", "alignment", "|",
+					"sourceEditing"
 				}
 			).put(
 				"shouldNotGroupWhenFull", true

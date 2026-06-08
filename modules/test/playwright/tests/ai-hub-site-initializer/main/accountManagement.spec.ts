@@ -75,6 +75,16 @@ test(
 			accountManagementPage.accountCell(account.name)
 		).toBeVisible();
 
+		await test.step('Verify the default AI Hub account is hidden from the widget', async () => {
+			await accountManagementPage.accountsTable.search('Liferay AI Hub');
+
+			await expect(
+				accountManagementPage.accountCell('Liferay AI Hub')
+			).toBeHidden();
+
+			await accountManagementPage.accountsTable.search('');
+		});
+
 		await (
 			await accountManagementPage.accountsTable.cellLink(account.name)
 		).click();

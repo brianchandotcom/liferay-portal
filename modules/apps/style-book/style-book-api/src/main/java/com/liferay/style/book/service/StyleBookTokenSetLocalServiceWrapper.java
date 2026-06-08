@@ -32,6 +32,19 @@ public class StyleBookTokenSetLocalServiceWrapper
 		_styleBookTokenSetLocalService = styleBookTokenSetLocalService;
 	}
 
+	@Override
+	public StyleBookTokenSet addStyleBookTokenSet(
+			String externalReferenceCode, long styleBookEntryId,
+			String frontendTokenDefinitionId, String frontendTokenCategoryName,
+			String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookTokenSetLocalService.addStyleBookTokenSet(
+			externalReferenceCode, styleBookEntryId, frontendTokenDefinitionId,
+			frontendTokenCategoryName, name, description, serviceContext);
+	}
+
 	/**
 	 * Adds the style book token set to the database. Also notifies the appropriate model listeners.
 	 *
@@ -467,4 +480,4 @@ public class StyleBookTokenSetLocalServiceWrapper
 	private StyleBookTokenSetLocalService _styleBookTokenSetLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:895214003
+// LIFERAY-SERVICE-BUILDER-HASH:-1927539745

@@ -11,6 +11,7 @@ import {navigate, sub} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
 
 import DesignLibraryConnectedSitesModal from './modal/DesignLibraryConnectedSitesModal';
+import DesignLibraryManageMembersModal from './modal/DesignLibraryManageMembersModal';
 import confirmAndDeleteEntryAction from './props_transformer/actions/confirmAndDeleteEntryAction';
 
 export interface ActionDropdownItemProps {
@@ -19,7 +20,7 @@ export interface ActionDropdownItemProps {
 	href?: string;
 	label?: string;
 	redirect?: string;
-	target?: 'connected-sites' | string;
+	target?: 'connected-sites' | 'manage-members' | string;
 }
 interface DesignLibraryBreadcrumbProps {
 	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'] &
@@ -44,6 +45,15 @@ function ActionDropdownItem({
 						externalReferenceCode,
 					}),
 				size: 'md',
+			});
+		}
+		else if (target === 'manage-members') {
+			openModal({
+				contentComponent: () =>
+					DesignLibraryManageMembersModal({
+						externalReferenceCode,
+					}),
+				size: 'lg',
 			});
 		}
 		else if (target === 'delete') {

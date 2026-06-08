@@ -536,3 +536,62 @@ test(
 		});
 	}
 );
+
+test(
+	'Can open the manage members modal from a design library',
+	{tag: '@LPD-79454'},
+	async ({apiHelpers, designLibrariesPage, page}) => {
+		const designLibraryName = getRandomString();
+
+		const manageMembersDialog = page.getByRole('dialog');
+
+		const createdDesignLibrary =
+			await test.step('Create a new design library via headless', async () => {
+				return await apiHelpers.headlessAssetLibrary.createAssetLibrary(
+					{
+						name: designLibraryName,
+						settings: {},
+						type: 'DesignLibrary',
+					}
+				);
+			});
+
+		await test.step('Open the manage members modal', async () => {
+			await designLibrariesPage.goToDesignLibrary(designLibraryName);
+
+			const manageMembersMenuItem = page
+				.getByRole('menu')
+				.getByRole('menuitem', {name: 'Manage Members'});
+
+			await page
+				.getByRole('button', {
+					name: 'More Actions',
+				})
+				.click();
+
+			await expect(page.getByRole('menu')).toBeVisible();
+
+			await expect(manageMembersMenuItem).toBeVisible();
+
+			await manageMembersMenuItem.click();
+
+			await expect(manageMembersDialog).toBeVisible();
+
+			await expect(
+				manageMembersDialog.getByText('Manage Members')
+			).toBeVisible();
+
+			await expect(
+				manageMembersDialog.getByText(
+					`modal body: ${createdDesignLibrary.externalReferenceCode}`
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Remove created design library', async () => {
+			await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(
+				createdDesignLibrary.externalReferenceCode
+			);
+		});
+	}
+);

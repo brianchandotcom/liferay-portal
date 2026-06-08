@@ -2,6 +2,22 @@
 
 All notable changes to Clay packages are documented in this file.
 
+# [3.165.0] (2026-06-05)
+
+## @clayui/badge
+
+### Commits
+
+- LPD-83292 Document the ClayBadge icon variant and add a Storybook story ([d6c279b](https://github.com/liferay/liferay-portal/commit/d6c279b70540fca1b26ccd1f46365689dfd59ee3))
+- LPD-83292 Add a SeeAll Badge story covering all icon display types ([c6c6ac3](https://github.com/liferay/liferay-portal/commit/c6c6ac3a56e927ddc221fbd280d319f2beb4e5f8))
+
+## @clayui/css
+
+### Commits
+
+- LPD-93246 SF ([55c262d](https://github.com/liferay/liferay-portal/commit/55c262d7cbe367c92a752227df9c1e7335b73323))
+- LPD-93019 Use the -md border radius for inverse and bold labels ([7b7d581](https://github.com/liferay/liferay-portal/commit/7b7d581445e61dd5af25e365351df085cd8a29f3))
+
 # [3.164.0] (2026-06-02)
 
 ## @clayui/autocomplete

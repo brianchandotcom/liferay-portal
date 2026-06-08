@@ -41,6 +41,6 @@ describe('withSelectedPoint', () => {
 		fireEvent.click(getByText('bar'));
 
 		expect(getByText('bar1')).toBeTruthy();
-		expect(getByText('There is a selected point'));
+		expect(getByText('There is a selected point')).toBeTruthy();
 	});
 });

@@ -241,7 +241,7 @@ describe('DownloadReportModal CSV', () => {
 			getByText(
 				'The Individuals list will be downloaded respecting the current ordering, filter, and search results. Please verify if the desired changes are applied.'
 			)
-		);
+		).toBeInTheDocument();
 
 		expect(getByText('Date Range')).toBeInTheDocument();
 
@@ -359,7 +359,7 @@ describe('DownloadReportModal PDF', () => {
 			getByText(
 				'The dashboard will be downloaded exactly as it is displayed on your screen. Please verify if the desired tabs and filters are selected before proceeding.'
 			)
-		);
+		).toBeInTheDocument();
 
 		expect(
 			getByText(

@@ -27,7 +27,7 @@ describe('Definitions Overview', () => {
 
 		// TODO: LRAC-4511 Remove DEVELOPER_MODE
 
-		Constants.DEVELOPER_MODE = true;
+		jest.replaceProperty(Constants, 'DEVELOPER_MODE', true);
 
 		const {container} = render(
 			<Provider store={mockStore()}>

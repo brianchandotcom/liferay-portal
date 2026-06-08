@@ -16,8 +16,6 @@ import mockStore from '~/test/mock-store';
 
 import {AddWorkspace, routingFn} from '../AddWorkspace';
 
-Router.navigate = jest.fn();
-
 const mockConfiguredProject = new Project(fromJS(data.mockProject(23)));
 
 const mockUnconfiguredProject = new Project(

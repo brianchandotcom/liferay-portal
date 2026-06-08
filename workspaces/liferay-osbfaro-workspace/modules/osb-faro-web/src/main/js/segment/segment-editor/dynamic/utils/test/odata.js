@@ -28,8 +28,10 @@ function testConversionToAndFrom(testQuery, queryConjunction) {
 
 describe('odata', () => {
 	beforeAll(() => {
-		Utils.generateGroupId = jest.fn(() => 'group_01');
-		Utils.generateRowId = jest.fn(() => 'row_01');
+		jest.spyOn(Utils, 'generateGroupId').mockImplementation(
+			() => 'group_01'
+		);
+		jest.spyOn(Utils, 'generateRowId').mockImplementation(() => 'row_01');
 	});
 
 	describe('convertBetweenToSubstring', () => {

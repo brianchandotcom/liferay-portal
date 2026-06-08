@@ -19,10 +19,9 @@ class BreadcrumbsKit extends React.Component {
 		super(props);
 
 		window.addEventListener('hashchange', () => {
-			this.state = {
-				...this.state,
+			this.setState({
 				activeHash: window.location.hash.substring(1),
-			};
+			});
 		});
 	}
 

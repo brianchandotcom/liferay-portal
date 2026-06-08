@@ -69,7 +69,7 @@ describe('EmailReports', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText('Email Reports: Disabled'));
+		expect(getByText('Email Reports: Disabled')).toBeInTheDocument();
 	});
 
 	it('renders email report message w/ status enabled', async () => {
@@ -83,7 +83,7 @@ describe('EmailReports', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText('Email Reports: Enabled'));
+		expect(getByText('Email Reports: Enabled')).toBeInTheDocument();
 	});
 
 	it('renders with config btn disabled', async () => {

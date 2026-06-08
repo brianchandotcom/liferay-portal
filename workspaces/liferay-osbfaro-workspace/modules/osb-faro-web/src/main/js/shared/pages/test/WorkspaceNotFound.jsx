@@ -7,12 +7,9 @@ import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
-import * as Router from '~/shared/util/router';
 import mockStore from '~/test/mock-store';
 
 import WorkspaceNotFound from '../WorkspaceNotFound';
-
-Router.navigate = jest.fn();
 
 jest.unmock('react-dom');
 

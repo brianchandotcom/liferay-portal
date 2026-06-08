@@ -11,5 +11,7 @@ export default function () {
 }
 
 export const mockGetDateNow = function mockGetDateNow(mockDate) {
-	date.getDateNow = jest.fn(() => moment(mockDate).utc());
+	jest.spyOn(date, 'getDateNow').mockImplementation(() =>
+		moment(mockDate).utc()
+	);
 };

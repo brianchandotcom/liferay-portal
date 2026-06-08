@@ -24,6 +24,8 @@ describe('Kits', () => {
 
 		describe(kitName, () => {
 			const kitPath = `../${file}`;
+
+			// eslint-disable-next-line @liferay/no-dynamic-require -- test fixture loader discovers kit files at runtime
 			const {default: Kit} = require(kitPath);
 
 			it('renders', () => {

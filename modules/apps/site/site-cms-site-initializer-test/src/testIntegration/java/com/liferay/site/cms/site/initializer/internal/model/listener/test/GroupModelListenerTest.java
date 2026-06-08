@@ -64,10 +64,10 @@ public class GroupModelListenerTest {
 
 	@Test
 	@TestInfo("LPD-92888")
-	public void testUpdateDepotEntry() throws Exception {
-		_testSetTrashEnabled();
+	public void testOnAfterUpdate() throws Exception {
+		_testOnAfterUpdateWithExternalReferenceCode();
 
-		_testUpdateExternalReferenceCode();
+		_testOnAfterUpdateWithTrashEnabled();
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
@@ -105,27 +105,9 @@ public class GroupModelListenerTest {
 			group.getGroupId(), unicodeProperties.toString());
 	}
 
-	private void _testSetTrashEnabled() throws Exception {
-		Group depotGroup = _addDepotEntry().getGroup();
+	private void _testOnAfterUpdateWithExternalReferenceCode()
+		throws Exception {
 
-		Layout layout = _getRecycleBinLayout(_cmsGroup);
-
-		Assert.assertFalse(layout.isHidden());
-
-		_setTrashEnabled(depotGroup, Boolean.FALSE.toString());
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				depotGroup.getTypeSettingsProperty("trashEnabled")));
-
-		_setTrashEnabled(depotGroup, Boolean.TRUE.toString());
-
-		Assert.assertTrue(
-			GetterUtil.getBoolean(
-				depotGroup.getTypeSettingsProperty("trashEnabled")));
-	}
-
-	private void _testUpdateExternalReferenceCode() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry();
 
 		Group depotGroup = depotEntry.getGroup();
@@ -156,6 +138,28 @@ public class GroupModelListenerTest {
 				depotGroup.getCompanyId(), depotGroup.getCreatorUserId(),
 				externalReferenceCode, depotEntry.getModelClassName(),
 				_filterFactory));
+	}
+
+	private void _testOnAfterUpdateWithTrashEnabled() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		Group depotGroup = depotEntry.getGroup();
+
+		Layout layout = _getRecycleBinLayout(_cmsGroup);
+
+		Assert.assertFalse(layout.isHidden());
+
+		_setTrashEnabled(depotGroup, Boolean.FALSE.toString());
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(
+				depotGroup.getTypeSettingsProperty("trashEnabled")));
+
+		_setTrashEnabled(depotGroup, Boolean.TRUE.toString());
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				depotGroup.getTypeSettingsProperty("trashEnabled")));
 	}
 
 	private Group _cmsGroup;

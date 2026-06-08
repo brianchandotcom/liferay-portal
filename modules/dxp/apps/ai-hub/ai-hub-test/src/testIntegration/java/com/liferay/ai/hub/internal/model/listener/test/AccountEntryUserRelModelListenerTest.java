@@ -93,6 +93,18 @@ public class AccountEntryUserRelModelListenerTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRels(
 			accountEntry2.getAccountEntryId(), new long[] {user.getUserId()});
 
+		Assert.assertTrue(
+			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
+				accountEntry2.getAccountEntryId(), user.getUserId()));
+
+		AccountEntry aiHubAccountEntry =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				"L_AI_HUB", TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(
+			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
+				aiHubAccountEntry.getAccountEntryId(), user.getUserId()));
+
 		Assert.assertEquals(
 			0,
 			_getCurrentAccountEntryId(

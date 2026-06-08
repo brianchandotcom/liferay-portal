@@ -54,7 +54,7 @@
 {{- $rendered = $rendered | replace "\"${HEADER_HTML}\"" (tpl ($.Files.Get "dashboards/html/dashboard-header.html") (index $dashboardHeaders $key) | toJson) -}}
 {{- end -}}
 {{- if and (eq $key "backups") (eq $.Values.cloudProvider "aws") -}}
-{{- $rendered = $rendered | replace "\"${AWS_BACKUP_HTML}\"" (tpl ($.Files.Get "dashboards/html/aws-backup.html") (dict "region" $.Values.aws.region) | toJson) -}}
+{{- $rendered = $rendered | replace "\"${AWS_BACKUP_HTML}\"" (tpl ($.Files.Get "dashboards/html/aws-backup.html") (dict "region" $region) | toJson) -}}
 {{- end -}}
 {{- if eq $key "central-hub" -}}
 {{- $centralHubCtx := dict "gitHref" $gitHref "gitDescription" $gitDescription "gitTileStyle" $gitTileStyle "argocdHref" $argocdHref "argocdDescription" $argocdDescription "argocdTileStyle" $argocdTileStyle "argoWfHref" $argoWfHref "argoWfDescription" $argoWfDescription "argoWfTileStyle" $argoWfTileStyle -}}
@@ -72,7 +72,7 @@ metadata:
     labels:
         {{- include "observability.labels" $ | nindent 8 }}
         grafana_dashboard: "true"
-    name: {{ printf "%s-dashboard-%s" (include "observability.fullname" $) $key | trunc 63 | trimSuffix "-" | quote }}
+    name: {{ printf "%s-dashboard-%s" (include "observability.fullname" $) ($key | lower | replace "_" "-") | trunc 63 | trimSuffix "-" | quote }}
     namespace: {{ $namespace | quote }}
 {{- end }}
 {{- end }}

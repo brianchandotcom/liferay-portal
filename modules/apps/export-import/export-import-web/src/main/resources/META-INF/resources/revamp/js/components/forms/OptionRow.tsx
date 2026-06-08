@@ -7,8 +7,6 @@ import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
 import React from 'react';
 
-import '../../../css/utilities.scss';
-
 export function OptionRow({
 	bordered = false,
 	description,
@@ -60,7 +58,7 @@ export function OptionRow({
 				bordered && 'border p-3 rounded'
 			)}
 		>
-			<ClayLayout.ContentRow className="align-items-center checkbox-row">
+			<ClayLayout.ContentRow className="align-items-center">
 				<ClayLayout.ContentCol className="pr-2" expand={false}>
 					{input}
 				</ClayLayout.ContentCol>

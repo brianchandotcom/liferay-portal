@@ -23,12 +23,9 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -38,32 +35,25 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -73,15 +63,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-
 /**
  * @author Stefano Motta
  */
-@FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-58677")}
-)
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectEntryModelListenerTest {
 
@@ -94,29 +79,7 @@ public class ObjectEntryModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_auditRouter = (AuditRouter)ReflectionTestUtil.getAndSetFieldValue(
-			_objectEntryModelListener, "_auditRouter",
-			ProxyUtil.newProxyInstance(
-				AuditRouter.class.getClassLoader(),
-				new Class<?>[] {AuditRouter.class},
-				(proxy, method, arguments) -> {
-					_auditMessages.add((AuditMessage)arguments[0]);
-
-					return null;
-				}));
-
-		CMPTestUtil.getOrAddGroup(ObjectEntryModelListenerTest.class);
-
-		_cmpTaskObjectEntry = CMPTestUtil.addTaskObjectEntry();
-
-		_cmpTaskObjectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
-			_cmpTaskObjectEntry.getUserId(),
-			_cmpTaskObjectEntry.getObjectEntryId(),
-			_cmpTaskObjectEntry.getObjectEntryFolderId(),
-			HashMapBuilder.<String, Serializable>put(
-				"title", RandomTestUtil.randomString()
-			).build(),
-			_getServiceContext("L_CMP_TASK_123"));
+		CMSTestUtil.getOrAddGroup(ObjectEntryModelListenerTest.class);
 
 		_cmsAdministratorRole = _getOrAddCMSAdministratorRole(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
@@ -131,27 +94,11 @@ public class ObjectEntryModelListenerTest {
 
 	@After
 	public void tearDown() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_objectEntryModelListener, "_auditRouter", _auditRouter);
-
-		_objectEntryLocalService.deleteObjectEntry(_cmpTaskObjectEntry);
-
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
 	public void testOnAfterCreate() throws Exception {
-
-		// Audit router
-
-		String title = RandomTestUtil.randomString();
-
-		_addObjectEntry(title, "L_CMP_TASK_123");
-
-		_assertAuditMessage("CMP_ADD_ASSET", title);
-
-		// Resource permissions
-
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
@@ -379,38 +326,7 @@ public class ObjectEntryModelListenerTest {
 	}
 
 	@Test
-	public void testOnAfterRemove() throws Exception {
-		String title = RandomTestUtil.randomString();
-
-		ObjectEntry objectEntry = _addObjectEntry(title, "L_CMP_TASK_123");
-
-		_assertAuditMessage("CMP_ADD_ASSET", title);
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry);
-
-		_assertAuditMessage("CMP_REMOVE_ASSET", title);
-	}
-
-	@Test
 	public void testOnAfterUpdate() throws Exception {
-
-		// Audit router
-
-		String title = RandomTestUtil.randomString();
-
-		ObjectEntry objectEntry1 = _addObjectEntry(title, "L_CMP_TASK_123");
-
-		_assertAuditMessage("CMP_ADD_ASSET", title);
-
-		_objectEntryLocalService.partialUpdateObjectEntry(
-			objectEntry1.getUserId(), objectEntry1.getObjectEntryId(),
-			objectEntry1.getObjectEntryFolderId(), Collections.emptyMap(),
-			_getServiceContext(RandomTestUtil.randomString()));
-
-		_assertAuditMessage("CMP_REMOVE_ASSET", title);
-
-		// Resource permissions
-
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
@@ -603,60 +519,6 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
 	}
 
-	private ObjectEntry _addObjectEntry(String title, String... assetTagNames)
-		throws Exception {
-
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext());
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_WEB_CONTENT", depotEntry.getCompanyId());
-
-		return _objectEntryLocalService.addObjectEntry(
-			depotEntry.getGroupId(), depotEntry.getUserId(),
-			objectDefinition.getObjectDefinitionId(), 0, "en_US",
-			HashMapBuilder.<String, Serializable>put(
-				"title_i18n",
-				HashMapBuilder.put(
-					"en_US", title
-				).build()
-			).build(),
-			_getServiceContext(assetTagNames));
-	}
-
-	private void _assertAuditMessage(
-			String expectedEventType, String exptectedTitle)
-		throws Exception {
-
-		AuditMessage auditMessage = _auditMessages.poll();
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"attributes",
-				JSONUtil.putAll(JSONUtil.put("name", exptectedTitle))
-			).toString(),
-			String.valueOf(auditMessage.getAdditionalInfo()),
-			JSONCompareMode.STRICT_ORDER);
-		Assert.assertEquals(
-			_cmpTaskObjectEntry.getModelClassName(),
-			auditMessage.getClassName());
-		Assert.assertEquals(
-			_cmpTaskObjectEntry.getObjectEntryId(),
-			GetterUtil.getLong(auditMessage.getClassPK()));
-		Assert.assertEquals(expectedEventType, auditMessage.getEventType());
-
-		_auditMessages.clear();
-	}
-
 	private Role _getOrAddCMSAdministratorRole(long companyId, long userId)
 		throws Exception {
 
@@ -672,20 +534,6 @@ public class ObjectEntryModelListenerTest {
 			RoleConstants.TYPE_REGULAR, null, null);
 	}
 
-	private ServiceContext _getServiceContext(String... assetTagNames)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setAssetTagNames(assetTagNames);
-
-		return serviceContext;
-	}
-
-	private final Queue<AuditMessage> _auditMessages = new LinkedList<>();
-	private AuditRouter _auditRouter;
-	private ObjectEntry _cmpTaskObjectEntry;
 	private Role _cmsAdministratorRole;
 
 	@Inject
@@ -707,11 +555,6 @@ public class ObjectEntryModelListenerTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Inject(
-		filter = "component.name=com.liferay.site.cms.site.initializer.internal.model.listener.ObjectEntryModelListener"
-	)
-	private ModelListener<ObjectEntry> _objectEntryModelListener;
 
 	private Role _ownerRole;
 

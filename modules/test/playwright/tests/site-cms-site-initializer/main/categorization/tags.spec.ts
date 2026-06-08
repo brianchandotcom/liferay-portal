@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {applyFDSSelectionFilter} from '../../../../utils/applyFDSSelectionFilter';
 import {checkAccessibility} from '../../../../utils/checkAccessibility';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
@@ -590,5 +591,66 @@ test(
 				);
 			}
 		}
+	}
+);
+
+test(
+	'Filtering tags by Space shows the tags scoped to that Space',
+	{tag: '@LPD-89720'},
+	async ({apiHelpers, page, tagsPage}) => {
+		const {id: siteId} =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('cms');
+
+		// Create two Spaces, with one tag scoped to each one
+
+		const spaceName = getRandomString();
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			type: 'Space',
+		});
+
+		const anotherSpace =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: getRandomString(),
+				type: 'Space',
+			});
+
+		const tagName = getRandomString();
+
+		await apiHelpers.headlessAdminTaxonomy.postSiteKeyword({
+			assetLibraries: [
+				{externalReferenceCode: space.externalReferenceCode},
+			],
+			name: tagName,
+			siteId,
+		});
+
+		const anotherTagName = getRandomString();
+
+		await apiHelpers.headlessAdminTaxonomy.postSiteKeyword({
+			assetLibraries: [
+				{externalReferenceCode: anotherSpace.externalReferenceCode},
+			],
+			name: anotherTagName,
+			siteId,
+		});
+
+		// Both tags are listed before filtering
+
+		await tagsPage.goto();
+
+		await expect(tagsPage.getItem(tagName)).toBeVisible();
+		await expect(tagsPage.getItem(anotherTagName)).toBeVisible();
+
+		// Filtering by a Space keeps the tag scoped to it and hides the rest
+
+		await applyFDSSelectionFilter(page, {
+			filter: 'Space',
+			value: spaceName,
+		});
+
+		await expect(tagsPage.getItem(tagName)).toBeVisible();
+		await expect(tagsPage.getItem(anotherTagName)).toBeHidden();
 	}
 );

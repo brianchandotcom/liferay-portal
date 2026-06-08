@@ -803,7 +803,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
-	public synchronized void write() {
+	public void write() {
 		synchronized (_buildDatabaseFile) {
 			try {
 				JenkinsResultsParserUtil.write(

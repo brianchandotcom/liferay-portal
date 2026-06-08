@@ -10,7 +10,6 @@ import {useNavigate} from 'react-router-dom';
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
-import marketplaceOAuth2 from '../../../../../services/oauth/Marketplace';
 import HeadlessAdminUser from '../../../../../services/rest/HeadlessAdminUser';
 import HeadlessCommerceDeliveryCart from '../../../../../services/rest/HeadlessCommerceDeliveryCart';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';

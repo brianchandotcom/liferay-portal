@@ -9,7 +9,7 @@ import {useMemo} from 'react';
 
 import ProductPurchase from '../../components/ProductPurchase';
 import {MarketplaceDeliveryProduct} from '../../entity/MarketplaceDeliveryProduct';
-import {ProductPriceModel, SolutionTypes} from '../../enums/Product';
+import {ProductPriceModel} from '../../enums/Product';
 import {cartStore} from './store';
 
 type ProductPurchasePriceProps = {
@@ -22,8 +22,6 @@ const ProductPurchasePrice: React.FC<ProductPurchasePriceProps> = ({
 	skuRef,
 }) => {
 	const cart = useSelector(cartStore, ({context}) => context.cart);
-
-	const searchParams = new URLSearchParams(window.location.search);
 
 	const marketplaceDeliveryProduct = useMemo(() => {
 		return new MarketplaceDeliveryProduct(product);

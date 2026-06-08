@@ -4,7 +4,7 @@
  */
 
 import {useSelector} from '@xstate/store/react';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
@@ -47,7 +47,10 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 	const {data: addressResponse, mutate: mutateUserAccoutAddress} =
 		useAccountAddresses(selectedAccount?.id);
 
-	const addresses = addressResponse?.items ?? [];
+	const addresses = useMemo(
+		() => addressResponse?.items ?? [],
+		[addressResponse]
+	);
 
 	const {billingAddress} = useSelector(
 		productPurchaseStore,

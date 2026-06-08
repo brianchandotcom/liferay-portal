@@ -64,7 +64,7 @@ const AIHubDetails = () => {
 		}
 
 		return activationKeyAlertStatuses.pending;
-	}, []);
+	}, [orderStatusCode]);
 
 	useEffect(() => {
 		if (

@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {Liferay} from '../../../../liferay/liferay';
-import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 
-import HeadlessCommerceDeliveryOrder from '../../../../services/rest/HeadlessCommerceDeliveryOrder';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {OrderTypes} from '../../../../enums/Order';
-import {useEffect, useState} from 'react';
+import {Liferay} from '../../../../liferay/liferay';
 import HeadlessAdminUser from '../../../../services/rest/HeadlessAdminUser';
+import HeadlessCommerceDeliveryOrder from '../../../../services/rest/HeadlessCommerceDeliveryOrder';
 
 export default function AiHubRedirect() {
 	const [loading, setLoading] = useState(false);
@@ -21,7 +21,6 @@ export default function AiHubRedirect() {
 
 	useEffect(() => {
 		async function act() {
-			console.log('Here.');
 			const accountBriefs = myUserAccount.accountBriefs ?? [];
 
 			let selectedAccount = accountBriefs?.find(
@@ -64,7 +63,7 @@ export default function AiHubRedirect() {
 		setLoading(true);
 		act();
 		setLoading(false);
-	}, [myUserAccount]);
+	}, [accountErc, myUserAccount, navigate, tokens]);
 
 	if (loading) {
 		return 'Loading...';

@@ -64,6 +64,8 @@ export type ProductPurchaseOutletContext = {
 	solutionTypeSpecificationValue: SolutionTypes;
 } & Omit<ReturnType<typeof useAccounts>, 'myUserAccount'>;
 
+const searchParams = new URLSearchParams(window.location.search);
+
 const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	product,
 	productTypeRoute,
@@ -76,8 +78,6 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 
 	const {pathname} = useLocation();
 	const navigate = useNavigate();
-
-	const searchParams = new URLSearchParams(window.location.search);
 
 	const skuRef = searchParams.get('skuRef');
 
@@ -94,7 +94,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		}
 
 		return ProductPurchaseApp.getOrderTypeExternalReferenceCode(product);
-	}, [searchParams, solutionTypeSpecificationValue, product]);
+	}, [solutionTypeSpecificationValue, product]);
 
 	const productPurchaseCart = useProductPurchaseCart(
 		selectedAccount?.id,

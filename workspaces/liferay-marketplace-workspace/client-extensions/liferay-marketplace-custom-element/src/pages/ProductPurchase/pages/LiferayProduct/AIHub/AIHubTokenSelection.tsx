@@ -168,10 +168,11 @@ const AIHubTokenSelection = () => {
 			productPurchaseCart.addCart(product.id, defaultSkuId);
 		}
 	}, [
-		isCartLoading,
-		productPurchaseCart.cartItems,
-		selectedSkuId,
 		aiHubTokens,
+		isCartLoading,
+		product.id,
+		productPurchaseCart,
+		selectedSkuId,
 	]);
 
 	const handleSelectToken = async (token: any) => {
@@ -274,7 +275,7 @@ const AIHubTokenSelection = () => {
 
 				<span className="liferay-ai-hub-form-info text-black-50">
 					The per-token price is locked when you purchase. Future rate
-					changes won't affect tokens you've already bought.
+					changes won&apos;t affect tokens you&apos;ve already bought.
 				</span>
 			</div>
 		</ProductPurchase.Shell>

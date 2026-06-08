@@ -150,7 +150,7 @@ const AIHubOpenBetaNextSteps: React.FC<AIHubOpenBetaNextStepsProps> = ({
 					</div>
 
 					<span className="font-weight-semi-bold">
-						Didn't receive the email?{' '}
+						Didn&apos;t receive the email?{' '}
 						<a
 							className="font-weight-bold"
 							href="mailto:support@liferay.com"

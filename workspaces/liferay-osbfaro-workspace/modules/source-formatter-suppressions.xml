@@ -15,13 +15,6 @@
 		<suppress checks="JavaUpgradeMissingTestCheck" files=".*/osb-faro-contacts-service/.*" />
 		<suppress checks="JavaUpgradeMissingTestCheck" files=".*/osb-faro-service/.*" />
 
-		<!-- Begin LRAC-12941 -->
-
-		<suppress checks="JSONPackageJSONCheck" files="osb-faro-theme/package\.json" />
-		<suppress checks="JSONPackageJSONCheck" files="osb-faro-web/package\.json" />
-
-		<!-- End LRAC-12941 -->
-
 		<suppress checks="JSONPackageJSONDependencyVersionCheck" files=".*" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files=".*" />
 		<suppress checks="SHSubshellCheck" files="set_nexus_credentials\.sh" />

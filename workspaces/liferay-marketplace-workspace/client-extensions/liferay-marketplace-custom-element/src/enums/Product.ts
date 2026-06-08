@@ -32,9 +32,16 @@ export enum ProductLicenseTier {
 }
 
 export enum ProductLicenseType {
+	MONTHLY = 'Monthly',
 	PERPETUAL = 'Perpetual',
 	SUBSCRIPTION = 'Subscription',
 }
+
+export const ProductLicenseFriendlyName = {
+	[ProductLicenseType.MONTHLY]: 'Monthly',
+	[ProductLicenseType.PERPETUAL]: 'One-Time',
+	[ProductLicenseType.SUBSCRIPTION]: 'Yearly',
+};
 
 export enum ProductOfferingTypes {
 	LIFERAY_PAAS = 'Liferay PaaS',

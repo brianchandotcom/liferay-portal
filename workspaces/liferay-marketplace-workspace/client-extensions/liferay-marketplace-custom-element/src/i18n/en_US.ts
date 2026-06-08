@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { Liferay } from '../liferay/liferay';
+import {Liferay} from '../liferay/liferay';
 
 export default {
 	'a-license-key-for-the-entered-domain-already-exists':
@@ -455,6 +455,8 @@ export default {
 	'liferay-s-privacy-policy': 'Liferay’s Privacy Policy',
 	'liferay-saas': 'Liferay SaaS',
 	'liferay-self-hosted': 'Liferay Self-Hosted',
+	'liferay-tokens-was-purchased-successfully':
+		'Liferay Tokens was purchased successfully',
 	'liferay-version': 'Liferay Version',
 	'limit-reached': 'Limit Reached',
 	'list-with-latest-published-apps': 'List with latest published apps',
@@ -856,7 +858,6 @@ export default {
 	'token-unavailable': 'Token Unavailable',
 	'tokens': 'Tokens',
 	'tokens-amount': 'Tokens Amount',
-	'liferay-tokens-was-purchased-successfully': 'Liferay Tokens was purchased successfully',
 	'total': 'Total',
 	'transaction-details': 'Transaction Details',
 	'transaction-id': 'Transaction ID',

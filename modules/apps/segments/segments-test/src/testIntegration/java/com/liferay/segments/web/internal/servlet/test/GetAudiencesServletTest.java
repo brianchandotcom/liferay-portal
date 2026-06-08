@@ -159,7 +159,7 @@ public class GetAudiencesServletTest {
 		String[] expectedAttributeNames = {
 			"browser_name", "browser_version", "device_type", "geolocation",
 			"ip_geocoder_country", "language", "last_sign_in_date",
-			"local_date", "local_time", "pathname", "referrer_url",
+			"local_date", "local_time", "pathname", "referrer",
 			"request_parameters", "signed_in", "time_zone", "user_agent", "url"
 		};
 

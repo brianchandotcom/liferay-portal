@@ -97,7 +97,7 @@ public class ObjectEntryFolderModelListenerTest {
 
 	@Test
 	@TestInfo("LPD-92888")
-	public void testAddObjectEntryFolder() throws Exception {
+	public void testOnAfterCreate() throws Exception {
 		JSONObject rootJSONObject = CMSDefaultPermissionUtil.getJSONObject(
 			_group.getCompanyId(), _group.getCreatorUserId(),
 			_group.getExternalReferenceCode(), DepotEntry.class.getName(),
@@ -154,7 +154,7 @@ public class ObjectEntryFolderModelListenerTest {
 	}
 
 	@Test
-	public void testDeleteObjectEntryFolder() throws Exception {
+	public void testOnAfterRemove() throws Exception {
 		ObjectEntryFolder rootObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
@@ -201,10 +201,10 @@ public class ObjectEntryFolderModelListenerTest {
 
 	@Test
 	@TestInfo("LPD-92888")
-	public void testUpdateObjectEntryFolder() throws Exception {
-		_testMoveObjectEntryFolder();
+	public void testOnAfterUpdate() throws Exception {
+		_testOnAfterUpdateWithExternalReferenceCode();
 
-		_testUpdateExternalReferenceCode();
+		_testOnAfterUpdateWithParentObjectEntryFolder();
 	}
 
 	private ObjectEntryFolder _addObjectEntryFolder(
@@ -294,7 +294,42 @@ public class ObjectEntryFolderModelListenerTest {
 			role.getRoleId());
 	}
 
-	private void _testMoveObjectEntryFolder() throws Exception {
+	private void _testOnAfterUpdateWithExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntryFolder rootObjectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					_group.getGroupId(), _group.getCompanyId());
+
+		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+			rootObjectEntryFolder.getObjectEntryFolderId());
+
+		String originalExternalReferenceCode =
+			objectEntryFolder.getExternalReferenceCode();
+
+		Assert.assertNotNull(_fetchObjectEntry(objectEntryFolder));
+
+		objectEntryFolder.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
+		objectEntryFolder =
+			_objectEntryFolderLocalService.updateObjectEntryFolder(
+				objectEntryFolder);
+
+		Assert.assertNull(
+			CMSDefaultPermissionUtil.fetchObjectEntry(
+				objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
+				originalExternalReferenceCode,
+				objectEntryFolder.getModelClassName(), _filterFactory));
+
+		Assert.assertNotNull(_fetchObjectEntry(objectEntryFolder));
+	}
+
+	private void _testOnAfterUpdateWithParentObjectEntryFolder()
+		throws Exception {
+
 		ObjectEntryFolder objectEntryFolder1 =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
@@ -348,37 +383,6 @@ public class ObjectEntryFolderModelListenerTest {
 
 		_assertResourcePermissions(
 			jsonObject, objectEntryFolder3, randomActionId);
-	}
-
-	private void _testUpdateExternalReferenceCode() throws Exception {
-		ObjectEntryFolder rootObjectEntryFolder =
-			_objectEntryFolderLocalService.
-				getObjectEntryFolderByExternalReferenceCode(
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-					_group.getGroupId(), _group.getCompanyId());
-
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
-			rootObjectEntryFolder.getObjectEntryFolderId());
-
-		String originalExternalReferenceCode =
-			objectEntryFolder.getExternalReferenceCode();
-
-		Assert.assertNotNull(_fetchObjectEntry(objectEntryFolder));
-
-		objectEntryFolder.setExternalReferenceCode(
-			RandomTestUtil.randomString());
-
-		objectEntryFolder =
-			_objectEntryFolderLocalService.updateObjectEntryFolder(
-				objectEntryFolder);
-
-		Assert.assertNull(
-			CMSDefaultPermissionUtil.fetchObjectEntry(
-				objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
-				originalExternalReferenceCode,
-				objectEntryFolder.getModelClassName(), _filterFactory));
-
-		Assert.assertNotNull(_fetchObjectEntry(objectEntryFolder));
 	}
 
 	@Inject

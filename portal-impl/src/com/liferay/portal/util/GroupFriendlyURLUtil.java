@@ -16,7 +16,7 @@ import com.liferay.portlet.documentlibrary.constants.DLFriendlyURLConstants;
 /**
  * @author Dante Wang
  */
-public class FriendlyURLUtil {
+public class GroupFriendlyURLUtil {
 
 	public static Group fetchFriendlyURLGroup(
 		long companyId, String groupFriendlyURL) {

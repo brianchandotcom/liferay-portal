@@ -19,10 +19,14 @@ export type HandlerSelection =
 	| string
 	| true;
 
+export const COMPACT_SECTION_NAMES = ['objects'];
+
+export const CONTENT_SECTION_KEY = 'category.site_administration.content';
+
 export const LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY =
 	'PORTLET_DATA_com_liferay_layout_admin_web_portlet_LayoutSetLayoutsPortlet';
 
-export const CONTENT_SECTION_KEY = 'category.site_administration.content';
+export const SCROLLABLE_SECTION_NAMES = ['objects'];
 
 export const SITE_BUILDER_SECTION_KEY = 'category.site_administration.build';
 

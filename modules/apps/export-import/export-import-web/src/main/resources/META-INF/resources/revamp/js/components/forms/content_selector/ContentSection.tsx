@@ -17,8 +17,10 @@ import {
 	PreviewPortletDataHandlerSection as PortletDataHandlerSectionType,
 } from '../../../types/portletDataHandler';
 import {
+	COMPACT_SECTION_NAMES,
 	CONTENT_SECTION_KEY,
 	HandlerSelection,
+	SCROLLABLE_SECTION_NAMES,
 	SITE_BUILDER_SECTION_KEY,
 	getInitialSelections,
 	getSelectionSummary,
@@ -57,8 +59,8 @@ export default function ContentSection({
 	const checkboxId = useId();
 	const [overflowing, setOverflowing] = useState(false);
 
-	const compact = section.name === 'objects';
-	const scrollable = section.name === 'objects';
+	const compact = COMPACT_SECTION_NAMES.includes(section.name);
+	const scrollable = SCROLLABLE_SECTION_NAMES.includes(section.name);
 
 	useEffect(() => {
 		const element = bodyRef.current;

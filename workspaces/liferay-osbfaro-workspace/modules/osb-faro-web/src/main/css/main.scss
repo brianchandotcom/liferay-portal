@@ -86,8 +86,8 @@
 @import 'entity_list';
 @import 'error_display';
 @import 'error_page';
-@import 'event_analysis_editor';
 @import 'event_analysis_breakdown';
+@import 'event_analysis_editor';
 @import 'event_analysis_toolbar';
 @import 'file_drop_target';
 @import 'filter';
@@ -104,9 +104,9 @@
 @import 'hubspot_form';
 @import 'icon';
 @import 'individual_attributes';
-@import 'individuals_dashboard_overview';
 @import 'individual_details_card';
 @import 'individual_profile_card';
+@import 'individuals_dashboard_overview';
 @import 'info_card';
 @import 'info_popover';
 @import 'input_list';
@@ -207,10 +207,10 @@
 @import 'transitions';
 @import 'trend';
 @import 'type_trend';
-@import 'ui_kit';
 @import 'ui-kit/colors';
 @import 'ui-kit/item';
 @import 'ui-kit/row';
+@import 'ui_kit';
 @import 'unassigned_segments_modal';
 @import 'upload_csv_root';
 @import 'usage_overview';

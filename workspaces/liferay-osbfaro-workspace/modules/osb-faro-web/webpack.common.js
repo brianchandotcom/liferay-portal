@@ -22,10 +22,10 @@ const config = {
 		'custom-event-polyfill',
 		'unorm',
 		'whatwg-fetch',
-		resolveModule('main.jsx')
+		resolveModule('main.jsx'),
 	],
 	experiments: {
-		outputModule: true
+		outputModule: true,
 	},
 	externals: [
 		({request}, callback) => {
@@ -40,9 +40,9 @@ const config = {
 		{
 			'@liferay/frontend-data-set-web':
 				'/o/frontend-data-set-web/__liferay__/index.js',
-			react: 'react',
-			'react-dom': 'react-dom'
-		}
+			'react': 'react',
+			'react-dom': 'react-dom',
+		},
 	],
 	externalsType: 'module',
 	module: {
@@ -51,19 +51,19 @@ const config = {
 				include,
 				loader: 'ts-loader',
 				options: {
-					transpileOnly: true
+					transpileOnly: true,
 				},
 				resolve: {
 					alias: {
-						'~': resolveModule()
+						'~': resolveModule(),
 					},
-					extensions: ['.js', '.jsx', '.ts', '.tsx']
+					extensions: ['.js', '.jsx', '.ts', '.tsx'],
 				},
-				test: /\.(js|ts)x?$/
+				test: /\.(js|ts)x?$/,
 			},
 			{
 				loader: 'graphql-tag/loader',
-				test: /\.graphql$/
+				test: /\.graphql$/,
 			},
 			{
 				test: /\.css$/i,
@@ -77,13 +77,13 @@ const config = {
 								ident: 'postcss',
 								plugins: () => [
 									NormalizeCharsetPlugin,
-									AutoprefixerPlugin
+									AutoprefixerPlugin,
 								],
-								sourceMap: true
-							}
-						}
-					}
-				]
+								sourceMap: true,
+							},
+						},
+					},
+				],
 			},
 			{
 				include: path.resolve(__dirname, 'src', 'main', 'css'),
@@ -93,8 +93,8 @@ const config = {
 					{
 						loader: 'css-loader',
 						options: {
-							importLoaders: 2
-						}
+							importLoaders: 2,
+						},
 					},
 					{
 						loader: 'postcss-loader',
@@ -102,9 +102,9 @@ const config = {
 							postcssOptions: {
 								ident: 'postcss',
 								plugins: () => [AutoprefixerPlugin],
-								sourceMap: true
-							}
-						}
+								sourceMap: true,
+							},
+						},
 					},
 					{
 						loader: 'sass-loader',
@@ -112,14 +112,19 @@ const config = {
 							api: 'modern',
 							implementation: require('sass'),
 							sassOptions: {
-								loadPaths: [path.resolve(__dirname, 'node_modules')],
+								loadPaths: [
+									path.resolve(__dirname, 'node_modules'),
+								],
 								quietDeps: true,
-								silenceDeprecations: ['import', 'global-builtin']
+								silenceDeprecations: [
+									'import',
+									'global-builtin',
+								],
 							},
-							sourceMap: true
-						}
-					}
-				]
+							sourceMap: true,
+						},
+					},
+				],
 			},
 			{
 				test: /\.svg$/,
@@ -128,8 +133,8 @@ const config = {
 						loader: 'svg-sprite-loader',
 						options: {
 							extract: true,
-							spriteFilename: 'sprite.svg'
-						}
+							spriteFilename: 'sprite.svg',
+						},
 					},
 					{
 						loader: 'svgo-loader',
@@ -137,50 +142,50 @@ const config = {
 							plugins: [
 								{removeDimensions: true},
 								{removeUselessStrokeAndFill: false},
-								{removeViewBox: false}
-							]
-						}
-					}
-				]
+								{removeViewBox: false},
+							],
+						},
+					},
+				],
 			},
 			{
 				test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-				use: 'file-loader'
-			}
-		]
+				use: 'file-loader',
+			},
+		],
 	},
 	output: {
 		filename: 'main.js',
 		module: true,
 		path: path.resolve('src/main/resources/META-INF/resources/dist'),
 		pathinfo: false,
-		publicPath: PUBLIC_PATH
+		publicPath: PUBLIC_PATH,
 	},
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: 'main.css'
+			filename: 'main.css',
 		}),
 		new ForkTsCheckerWebpackPlugin({
 			issue: {
-				include: [{file: '**/src/main/js/**/*'}]
+				include: [{file: '**/src/main/js/**/*'}],
 			},
-			logger: 'webpack-infrastructure'
+			logger: 'webpack-infrastructure',
 		}),
 		new SpriteLoaderPlugin(),
 		new webpack.DefinePlugin({
-			FARO_ENV: JSON.stringify(process.env.FARO_ENVIRONMENT_NAME || '')
+			FARO_ENV: JSON.stringify(process.env.FARO_ENVIRONMENT_NAME || ''),
 		}),
 		new webpack.DefinePlugin({
 			FARO_PENDO_API_KEY: JSON.stringify(
 				process.env.FARO_PENDO_API_KEY || ''
-			)
+			),
 		}),
 		new webpack.IgnorePlugin({
 			contextRegExp: /moment$/,
-			resourceRegExp: /^\.\/locale$/
-		})
+			resourceRegExp: /^\.\/locale$/,
+		}),
 	],
-	target: 'web'
+	target: 'web',
 };
 
 module.exports = {
@@ -189,6 +194,6 @@ module.exports = {
 	publicPath: PUBLIC_PATH,
 	resolve: {
 		extensions: ['', '.js', '.jsx', '.ts', '.tsx'],
-		root: [resolveModule()]
-	}
+		root: [resolveModule()],
+	},
 };

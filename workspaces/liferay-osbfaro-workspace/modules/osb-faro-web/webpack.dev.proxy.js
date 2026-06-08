@@ -49,7 +49,7 @@ function createOnProxyRes(target) {
 				const cookies = Array.isArray(value) ? value : [value];
 				res.setHeader(
 					'set-cookie',
-					cookies.map(cookie =>
+					cookies.map((cookie) =>
 						cookie.replace(/;\s*Domain=[^;]+/gi, '')
 					)
 				);
@@ -60,7 +60,7 @@ function createOnProxyRes(target) {
 
 		const chunks = [];
 
-		proxyRes.on('data', chunk => chunks.push(chunk));
+		proxyRes.on('data', (chunk) => chunks.push(chunk));
 
 		proxyRes.on('end', async () => {
 			let buffer = Buffer.concat(chunks);
@@ -70,15 +70,20 @@ function createOnProxyRes(target) {
 				try {
 					if (encoding === 'gzip') {
 						buffer = await gunzip(buffer);
-					} else if (encoding === 'br') {
+					}
+					else if (encoding === 'br') {
 						buffer = await brotliDecompress(buffer);
-					} else if (encoding === 'deflate') {
+					}
+					else if (encoding === 'deflate') {
 						buffer = await inflate(buffer);
 					}
-				} catch {
+				}
+				catch {
+
 					// Upstream announced an encoding but the body could not be
 					// decoded (e.g. empty body still carrying Content-Encoding).
 					// Fall through with the raw bytes.
+
 				}
 			}
 

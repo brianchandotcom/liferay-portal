@@ -28,6 +28,8 @@ export class CommerceThemeClassicCatalogPage {
 		productSku: string
 	) => Locator;
 	readonly productCardAddToCartButton: (productName: string) => Locator;
+	readonly productCardAddToWishListButton: (productName: string) => Locator;
+	readonly productCardLink: (productName: string) => Locator;
 
 	constructor(page: Page) {
 		this.changeCurrencyModal = page.locator('.modal-content');
@@ -67,6 +69,15 @@ export class CommerceThemeClassicCatalogPage {
 			this.productCard(productName).getByRole('button', {
 				exact: true,
 				name: 'Add to Cart',
+			});
+		this.productCardAddToWishListButton = (productName: string) =>
+			this.productCard(productName).getByRole('button', {
+				exact: true,
+				name: 'Add to List',
+			});
+		this.productCardLink = (productName: string) =>
+			this.productCard(productName).getByRole('link', {
+				name: productName,
 			});
 	}
 

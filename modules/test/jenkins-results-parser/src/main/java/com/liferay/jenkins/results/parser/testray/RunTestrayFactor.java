@@ -45,16 +45,14 @@ public class RunTestrayFactor extends BaseTestrayFactor {
 			return _jsonObject;
 		}
 
-		final Category category = getCategory();
-		final Option option = getOption();
+		Category category = getCategory();
+		Option option = getOption();
 
 		if ((category == null) || (option == null)) {
 			return null;
 		}
 
-		final TestrayServer testrayServer = _testrayBuild.getTestrayServer();
-
-		final TestrayRun testrayRun = getTestrayRun();
+		TestrayRun testrayRun = getTestrayRun();
 
 		final String filterString = JenkinsResultsParserUtil.combine(
 			"r_factorCategoryToFactors_c_factorCategoryId eq '",
@@ -63,11 +61,23 @@ public class RunTestrayFactor extends BaseTestrayFactor {
 			String.valueOf(option.getID()), "' and r_runToFactors_c_runId eq '",
 			String.valueOf(testrayRun.getID()), "'");
 
+		final JSONObject postRequestJSONObject = new JSONObject();
+
+		postRequestJSONObject.put(
+			"r_factorCategoryToFactors_c_factorCategoryId", category.getID()
+		).put(
+			"r_factorOptionToFactors_c_factorOptionId", option.getID()
+		).put(
+			"r_runToFactors_c_runId", testrayRun.getID()
+		);
+
 		Retryable<JSONObject> retryable = new Retryable<JSONObject>(
 			true, 3, 5, true) {
 
 			@Override
 			public JSONObject execute() {
+				TestrayServer testrayServer = _testrayBuild.getTestrayServer();
+
 				try {
 					JSONObject existingJSONObject = new JSONObject(
 						testrayServer.requestGet(
@@ -82,18 +92,6 @@ public class RunTestrayFactor extends BaseTestrayFactor {
 
 						return existingItemsJSONArray.getJSONObject(0);
 					}
-
-					JSONObject postRequestJSONObject = new JSONObject();
-
-					postRequestJSONObject.put(
-						"r_factorCategoryToFactors_c_factorCategoryId",
-						category.getID()
-					).put(
-						"r_factorOptionToFactors_c_factorOptionId",
-						option.getID()
-					).put(
-						"r_runToFactors_c_runId", testrayRun.getID()
-					);
 
 					return new JSONObject(
 						testrayServer.requestPost(

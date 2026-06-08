@@ -232,7 +232,9 @@ public class ActionUtil {
 
 		Folder folder = DLAppServiceUtil.getFolder(folderId);
 
-		DLFolderUtil.validateFolder(folder, rootFolderId);
+		if (!ignoreRootFolder) {
+			DLFolderUtil.validateFolder(folder, rootFolderId);
+		}
 
 		DLFolderUtil.validateDepotFolder(
 			folderId, folder.getGroupId(), themeDisplay.getScopeGroupId());

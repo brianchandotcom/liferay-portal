@@ -14,7 +14,6 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,20 +33,18 @@ public class LoadBalancerUtil {
 		String blacklistString, String masterPrefix, Properties properties,
 		boolean verbose) {
 
-		List<JenkinsMaster> allJenkinsMasters =
-			_jenkinsMastersMap.computeIfAbsent(
-				masterPrefix,
-				new Function<String, List<JenkinsMaster>>() {
+		List<JenkinsMaster> allJenkinsMasters;
 
-					@Override
-					public List<JenkinsMaster> apply(String key) {
-						return JenkinsResultsParserUtil.getJenkinsMasters(
-							properties,
-							JenkinsMaster.getSlaveRAMMinimumDefault(),
-							JenkinsMaster.getSlavesPerHostDefault(), key);
-					}
+		if (_jenkinsMastersMap.containsKey(masterPrefix)) {
+			allJenkinsMasters = _jenkinsMastersMap.get(masterPrefix);
+		}
+		else {
+			allJenkinsMasters = JenkinsResultsParserUtil.getJenkinsMasters(
+				properties, JenkinsMaster.getSlaveRAMMinimumDefault(),
+				JenkinsMaster.getSlavesPerHostDefault(), masterPrefix);
 
-				});
+			_jenkinsMastersMap.put(masterPrefix, allJenkinsMasters);
+		}
 
 		List<String> blacklist = _getBlacklist(
 			properties, blacklistString, verbose);
@@ -101,18 +98,18 @@ public class LoadBalancerUtil {
 			return null;
 		}
 
-		AtomicInteger counter = _roundRobinCounters.computeIfAbsent(
-			masterPrefix,
-			new Function<String, AtomicInteger>() {
+		AtomicInteger counter;
 
-				@Override
-				public AtomicInteger apply(String key) {
-					Random random = new Random();
+		if (_roundRobinCounters.containsKey(masterPrefix)) {
+			counter = _roundRobinCounters.get(masterPrefix);
+		}
+		else {
+			Random random = new Random();
 
-					return new AtomicInteger(random.nextInt());
-				}
+			counter = new AtomicInteger(random.nextInt());
 
-			});
+			_roundRobinCounters.put(masterPrefix, counter);
+		}
 
 		int index = Math.floorMod(
 			counter.getAndIncrement(), availableJenkinsMasters.size());

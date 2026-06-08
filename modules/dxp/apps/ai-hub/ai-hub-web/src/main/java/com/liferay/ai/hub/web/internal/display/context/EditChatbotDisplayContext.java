@@ -13,10 +13,13 @@ import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,11 +36,13 @@ public class EditChatbotDisplayContext {
 
 	public EditChatbotDisplayContext(
 		AttachmentManager attachmentManager,
-		HttpServletRequest httpServletRequest, Language language) {
+		HttpServletRequest httpServletRequest, Language language,
+		ObjectFieldSettingLocalService objectFieldSettingLocalService) {
 
 		_attachmentManager = attachmentManager;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_objectFieldSettingLocalService = objectFieldSettingLocalService;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -54,8 +59,12 @@ public class EditChatbotDisplayContext {
 				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS,
 				objectField);
 
-			maximumFileSize = _attachmentManager.getMaximumFileSize(
-				objectField.getObjectFieldId(), _themeDisplay.isSignedIn());
+			ObjectFieldSetting objectFieldSetting =
+				_objectFieldSettingLocalService.fetchObjectFieldSetting(
+					objectField.getObjectFieldId(),
+					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE);
+
+			maximumFileSize = GetterUtil.getLong(objectFieldSetting.getValue());
 		}
 
 		return HashMapBuilder.<String, Object>put(
@@ -132,6 +141,8 @@ public class EditChatbotDisplayContext {
 	private final AttachmentManager _attachmentManager;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final ObjectFieldSettingLocalService
+		_objectFieldSettingLocalService;
 	private final ThemeDisplay _themeDisplay;
 
 }

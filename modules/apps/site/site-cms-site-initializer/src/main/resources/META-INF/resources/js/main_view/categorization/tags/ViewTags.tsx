@@ -68,7 +68,7 @@ export default function ViewTags({
 			apiURL: "/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'",
 			entityFieldType: 'string',
 			id: 'groupIds',
-			itemKey: 'id',
+			itemKey: 'siteId',
 			itemLabel: 'name',
 			label: 'Space',
 			multiple: true,

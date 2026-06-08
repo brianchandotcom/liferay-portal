@@ -150,8 +150,6 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 
 	private static String _toResult(Set<Integer> backgroundTaskStatuses) {
 		if (backgroundTaskStatuses.contains(
-				BackgroundTaskConstants.STATUS_CANCELLED) ||
-			backgroundTaskStatuses.contains(
 				BackgroundTaskConstants.STATUS_FAILED)) {
 
 			return LayoutSetPrototypeConstants.STATUS_FAILED;

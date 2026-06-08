@@ -26,25 +26,19 @@ const PaymentTypeSelector = ({
 	const {myUserAccount} = useMarketplaceContext();
 	const {productPurchaseCart} = useProductPurchaseOutletContext();
 
-	const invoice = useSelector(
-		productPurchaseStore,
-		(state) => {
-			const {context} = state;
-			const {payment} = context;
+	const invoice = useSelector(productPurchaseStore, (state) => {
+		const {context} = state;
+		const {payment} = context;
 
-			return payment.invoice;
-		}
-	);
+		return payment.invoice;
+	});
 
-	const paymentType = useSelector(
-		productPurchaseStore,
-		(state) => {
-			const {context} = state;
-			const {payment} = context;
+	const paymentType = useSelector(productPurchaseStore, (state) => {
+		const {context} = state;
+		const {payment} = context;
 
-			return payment.type;
-		}
-	);
+		return payment.type;
+	});
 
 	const paymentModes = [
 		{

@@ -64,9 +64,14 @@ const BillingAddress: React.FC<BillingAddressProps> = ({
 	const regions = regionsResponse?.items ?? [];
 
 	React.useEffect(() => {
-		if (hideNewAddressButton && addresses.length > 0 && !billingAddress.name) {
+		if (
+			hideNewAddressButton &&
+			!!addresses.length &&
+			!billingAddress.name
+		) {
 			const firstAddress = addresses[0];
-			const newBillingAddress = mapPostalAddressToBillingAddress(firstAddress);
+			const newBillingAddress =
+				mapPostalAddressToBillingAddress(firstAddress);
 
 			setSelectedAddress(firstAddress.name || '');
 

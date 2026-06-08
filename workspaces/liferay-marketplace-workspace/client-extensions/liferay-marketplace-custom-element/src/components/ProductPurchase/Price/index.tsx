@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBadge from '@clayui/badge';
-
 import classNames from 'classnames';
 import {ReactNode} from 'react';
 
@@ -12,18 +10,18 @@ import i18n from '../../../i18n';
 
 type ProductPurchasePriceProps = {
 	children: ReactNode;
-	monthlySubscription?: boolean;
 	price: number | string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const ProductPurchasePrice: React.FC<ProductPurchasePriceProps> = ({
 	children,
-	monthlySubscription = false,
 	price,
 	...priceProps
 }) => (
 	<div className="align-items-end d-flex flex-column price-text">
-		<strong className="mr-1 price-text-label">{i18n.translate('price')}</strong>
+		<strong className="mr-1 price-text-label">
+			{i18n.translate('price')}
+		</strong>
 
 		<div
 			{...priceProps}
@@ -32,13 +30,6 @@ const ProductPurchasePrice: React.FC<ProductPurchasePriceProps> = ({
 		>
 			{price}
 		</div>
-		{monthlySubscription && 
-
-			<ClayBadge
-				className="ml-4 px-2 text-2 rounded font-weight-normal monthly-badge"
-				label="Monthly"
-			/>
-		}
 
 		{children}
 	</div>

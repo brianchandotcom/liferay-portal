@@ -48,6 +48,10 @@ export default class ProductPurchase {
 		];
 	}
 
+	public get calculateTax() {
+		return false;
+	}
+
 	protected analyticsTrack() {
 		Analytics.track('ORDER_CREATION', {
 			accountId: this.account.id,

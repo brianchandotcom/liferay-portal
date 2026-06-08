@@ -60,6 +60,7 @@ export type ProductPurchaseOutletContext = {
 	productTypeRoute: ProductPurchaseOutletProps['productTypeRoute'];
 	setAlert: React.Dispatch<ReactNode>;
 	setForm: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
+	skuRef?: null | string;
 	solutionTypeSpecificationValue: SolutionTypes;
 } & Omit<ReturnType<typeof useAccounts>, 'myUserAccount'>;
 
@@ -77,6 +78,8 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	const navigate = useNavigate();
 
 	const searchParams = new URLSearchParams(window.location.search);
+
+	const skuRef = searchParams.get('skuRef');
 
 	const orderTypeExternalReferenceCode = useMemo(() => {
 		if (searchParams.has('aiHubTokens')) {
@@ -151,7 +154,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 
 			const orderId = order?.id || cart?.id;
 
-			if (licenseType === 'PAID') {
+			if (licenseType === 'PAID' && _productPurchase.calculateTax) {
 				await marketplaceOAuth2
 					.taxCalculate(orderId)
 					.catch(console.error);
@@ -201,6 +204,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		setAlert,
 		setForm,
 		setSelectedAccount,
+		skuRef,
 		solutionTypeSpecificationValue,
 	};
 
@@ -226,8 +230,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 					metadata.useCart ? (
 						<ProductPurchasePrice
 							product={product}
-							productPurchaseCart={productPurchaseCart}
-							solutionTypeSpecificationValue={solutionTypeSpecificationValue}
+							skuRef={skuRef}
 						/>
 					) : null
 				}

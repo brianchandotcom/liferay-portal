@@ -23,6 +23,7 @@ import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceAssetConsumption;
 import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceAssetConsumptionItem;
 import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceOverviewMetric;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -619,14 +619,12 @@ public class AnalyticsCloudClient {
 			names.add(performanceAssetConsumptionItem.getTitle());
 		}
 
-		Map<String, Object[]> objectDefinitionsMap = new HashMap<>();
+		Map<String, ObjectDefinition> objectDefinitionsMap = new HashMap<>();
 
-		for (Object[] objectDefinition :
-				_objectDefinitionLocalService.dslQuery(
+		for (ObjectDefinition objectDefinition :
+				(List<ObjectDefinition>)_objectDefinitionLocalService.dslQuery(
 					DSLQueryFactoryUtil.select(
-						ObjectDefinitionTable.INSTANCE.name,
-						ObjectDefinitionTable.INSTANCE.externalReferenceCode,
-						ObjectDefinitionTable.INSTANCE.label
+						ObjectDefinitionTable.INSTANCE
 					).from(
 						ObjectDefinitionTable.INSTANCE
 					).where(
@@ -639,21 +637,20 @@ public class AnalyticsCloudClient {
 					))) {
 
 			objectDefinitionsMap.put(
-				(String)objectDefinition[2], objectDefinition);
+				objectDefinition.getName(), objectDefinition);
 		}
 
 		for (PerformanceAssetConsumptionItem performanceAssetConsumptionItem :
 				performanceAssetConsumptionItems) {
 
-			Object[] objectDefinition = objectDefinitionsMap.get(
+			ObjectDefinition objectDefinition = objectDefinitionsMap.get(
 				performanceAssetConsumptionItem.getTitle());
 
 			if (objectDefinition != null) {
 				performanceAssetConsumptionItem.setKey(
-					() -> (String)objectDefinition[0]);
+					objectDefinition::getExternalReferenceCode);
 				performanceAssetConsumptionItem.setTitle(
-					() -> LocalizationUtil.getLocalization(
-						(String)objectDefinition[1], locale.toString()));
+					() -> objectDefinition.getLabel(locale));
 			}
 		}
 	}

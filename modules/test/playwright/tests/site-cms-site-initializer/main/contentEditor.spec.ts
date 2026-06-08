@@ -1526,7 +1526,7 @@ test.describe('Schedule Publication', () => {
 
 test(
 	'The Rich Text required error only occurs when the field has no value',
-	{tag: '@LPD-69695'},
+	{tag: ['@LPD-69695', '@LPD-93785']},
 	async ({contentsPage, page, structureBuilderPage}) => {
 
 		// Create a structure with a required Rich Text field
@@ -1563,6 +1563,10 @@ test(
 		await expect(
 			page.locator('.rich-text-input [data-required-error]')
 		).toHaveText('This field is required.');
+
+		// The AI Creator button is not available in the CMS Rich Text editor
+
+		await expect(page.getByTitle('Create AI Content')).toBeHidden();
 
 		// Fill the Rich Text field and publish the content
 

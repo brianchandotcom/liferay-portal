@@ -6,6 +6,7 @@
 package com.liferay.one;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.one.converter.BusinessEventConverter;
 import com.liferay.one.model.BusinessEvent;
 import com.liferay.one.model.BusinessEventVersion;
 import com.liferay.one.model.JiraSupportIssue;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import java.util.List;
+import java.util.function.Function;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,20 +55,12 @@ public class JiraRestController extends BaseRestController {
 			@PathVariable("id") String id)
 		throws Exception {
 
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.UPDATE);
+		_businessEventPermission.check(
+			jwt, externalReferenceCode, ActionKeys.UPDATE);
 
-			_jiraService.deleteBusinessEvent(id);
+		_jiraService.deleteBusinessEvent(id);
 
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/accounts/{externalReferenceCode}/business-events")
@@ -74,31 +69,12 @@ public class JiraRestController extends BaseRestController {
 			@PathVariable("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.VIEW);
+		_businessEventPermission.check(
+			jwt, externalReferenceCode, ActionKeys.VIEW);
 
-			JSONObject responseJSONObject = new JSONObject();
-			JSONArray itemsJSONArray = new JSONArray();
-
-			List<BusinessEvent> businessEvents = _jiraService.getBusinessEvents(
-				externalReferenceCode);
-
-			for (BusinessEvent businessEvent : businessEvents) {
-				itemsJSONArray.put(businessEvent.toJSONObject());
-			}
-
-			responseJSONObject.put("items", itemsJSONArray);
-
-			return new ResponseEntity<>(
-				responseJSONObject.toString(), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return _getResponseEntity(
+			_jiraService.getBusinessEvents(externalReferenceCode),
+			BusinessEvent::toJSONObject);
 	}
 
 	@GetMapping("/accounts/{externalReferenceCode}/business-events/{id}")
@@ -108,23 +84,15 @@ public class JiraRestController extends BaseRestController {
 			@PathVariable("id") String id)
 		throws Exception {
 
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.VIEW);
+		_businessEventPermission.check(
+			jwt, externalReferenceCode, ActionKeys.VIEW);
 
-			BusinessEvent businessEvent = _jiraService.getBusinessEvent(id);
+		BusinessEvent businessEvent = _jiraService.getBusinessEvent(id);
 
-			return new ResponseEntity<>(
-				businessEvent.toJSONObject(
-				).toString(),
-				HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return new ResponseEntity<>(
+			businessEvent.toJSONObject(
+			).toString(),
+			HttpStatus.OK);
 	}
 
 	@GetMapping(
@@ -136,33 +104,12 @@ public class JiraRestController extends BaseRestController {
 			@PathVariable("id") String id)
 		throws Exception {
 
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.VIEW);
+		_businessEventPermission.check(
+			jwt, externalReferenceCode, ActionKeys.VIEW);
 
-			JSONObject responseJSONObject = new JSONObject();
-			JSONArray itemsJSONArray = new JSONArray();
-
-			List<BusinessEventVersion> businessEventVersions =
-				_jiraService.getBusinessEventVersions(id);
-
-			for (BusinessEventVersion businessEventVersion :
-					businessEventVersions) {
-
-				itemsJSONArray.put(businessEventVersion.toJSONObject());
-			}
-
-			responseJSONObject.put("items", itemsJSONArray);
-
-			return new ResponseEntity<>(
-				responseJSONObject.toString(), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return _getResponseEntity(
+			_jiraService.getBusinessEventVersions(id),
+			BusinessEventVersion::toJSONObject);
 	}
 
 	@GetMapping("/accounts/{externalReferenceCode}/tickets")
@@ -173,29 +120,28 @@ public class JiraRestController extends BaseRestController {
 				ticketIds)
 		throws Exception {
 
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.VIEW);
+		_businessEventPermission.check(
+			jwt, externalReferenceCode, ActionKeys.VIEW);
 
-			JSONArray ticketsJSONArray = new JSONArray();
+		JSONArray ticketsJSONArray = new JSONArray();
 
-			List<JiraSupportIssue> jiraSupportIssues =
-				_jiraService.getJSMJiraSupportIssues(
-					externalReferenceCode, ticketIds);
+		List<JiraSupportIssue> jiraSupportIssues =
+			_jiraService.getJSMJiraSupportIssues(
+				externalReferenceCode, ticketIds);
 
-			for (JiraSupportIssue jiraSupportIssue : jiraSupportIssues) {
-				ticketsJSONArray.put(jiraSupportIssue.toJSONObject());
-			}
-
-			return new ResponseEntity<>(
-				ticketsJSONArray.toString(), HttpStatus.OK);
+		for (JiraSupportIssue jiraSupportIssue : jiraSupportIssues) {
+			ticketsJSONArray.put(jiraSupportIssue.toJSONObject());
 		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
 
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return new ResponseEntity<>(ticketsJSONArray.toString(), HttpStatus.OK);
+	}
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> handleException(Exception exception) {
+		_log.error(exception, exception);
+
+		return new ResponseEntity<>(
+			exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping("/accounts/{externalReferenceCode}/business-events")
@@ -205,39 +151,19 @@ public class JiraRestController extends BaseRestController {
 			@RequestBody String json)
 		throws Exception {
 
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.UPDATE);
+		_businessEventPermission.check(
+			jwt, externalReferenceCode, ActionKeys.UPDATE);
 
-			JSONObject myUserAccountJSONObject = _getMyUserAccountJSONObject(
-				jwt);
+		JSONObject myUserAccountJSONObject = _getMyUserAccountJSONObject(jwt);
 
-			_jiraService.createBusinessEvent(
-				new BusinessEvent(
-					externalReferenceCode,
-					myUserAccountJSONObject.getString("emailAddress"), json));
+		_jiraService.createBusinessEvent(
+			_businessEventConverter.toBusinessEvent(
+				externalReferenceCode,
+				myUserAccountJSONObject.getString("emailAddress"), json));
 
-			JSONObject responseJSONObject = new JSONObject();
-			JSONArray itemsJSONArray = new JSONArray();
-
-			List<BusinessEvent> businessEvents = _jiraService.getBusinessEvents(
-				externalReferenceCode);
-
-			for (BusinessEvent businessEvent : businessEvents) {
-				itemsJSONArray.put(businessEvent.toJSONObject());
-			}
-
-			responseJSONObject.put("items", itemsJSONArray);
-
-			return new ResponseEntity<>(
-				responseJSONObject.toString(), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return _getResponseEntity(
+			_jiraService.getBusinessEvents(externalReferenceCode),
+			BusinessEvent::toJSONObject);
 	}
 
 	@PutMapping("/accounts/{externalReferenceCode}/business-events/{id}")
@@ -251,30 +177,21 @@ public class JiraRestController extends BaseRestController {
 			_log.info("PUT business event " + id);
 		}
 
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.UPDATE);
+		_businessEventPermission.check(
+			jwt, externalReferenceCode, ActionKeys.UPDATE);
 
-			JSONObject myUserAccountJSONObject = _getMyUserAccountJSONObject(
-				jwt);
+		JSONObject myUserAccountJSONObject = _getMyUserAccountJSONObject(jwt);
 
-			BusinessEvent businessEvent = new BusinessEvent(
-				externalReferenceCode,
-				myUserAccountJSONObject.getString("emailAddress"), json);
+		BusinessEvent businessEvent = _businessEventConverter.toBusinessEvent(
+			externalReferenceCode,
+			myUserAccountJSONObject.getString("emailAddress"), json);
 
-			businessEvent = _jiraService.updateBusinessEvent(id, businessEvent);
+		businessEvent = _jiraService.updateBusinessEvent(id, businessEvent);
 
-			return new ResponseEntity<>(
-				businessEvent.toJSONObject(
-				).toString(),
-				HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error("Unable to update business event " + id, exception);
-
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return new ResponseEntity<>(
+			businessEvent.toJSONObject(
+			).toString(),
+			HttpStatus.OK);
 	}
 
 	private JSONObject _getMyUserAccountJSONObject(Jwt jwt) throws Exception {
@@ -296,7 +213,27 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
+	private <T> ResponseEntity<String> _getResponseEntity(
+		List<T> items, Function<T, JSONObject> transformFunction) {
+
+		JSONObject responseJSONObject = new JSONObject();
+
+		JSONArray itemsJSONArray = new JSONArray();
+
+		for (T item : items) {
+			itemsJSONArray.put(transformFunction.apply(item));
+		}
+
+		responseJSONObject.put("items", itemsJSONArray);
+
+		return new ResponseEntity<>(
+			responseJSONObject.toString(), HttpStatus.OK);
+	}
+
 	private static final Log _log = LogFactory.getLog(JiraRestController.class);
+
+	@Autowired
+	private BusinessEventConverter _businessEventConverter;
 
 	@Autowired
 	private BusinessEventPermission _businessEventPermission;

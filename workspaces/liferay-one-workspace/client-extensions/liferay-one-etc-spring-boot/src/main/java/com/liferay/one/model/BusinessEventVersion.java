@@ -5,28 +5,21 @@
 
 package com.liferay.one.model;
 
-import com.liferay.one.constants.BusinessEventVersionConstants;
-
 import org.json.JSONObject;
 
 /**
  * @author Felipe Franca
  */
-public class BusinessEventVersion extends JiraAssetObject {
+public class BusinessEventVersion {
 
-	public BusinessEventVersion(JSONObject jiraAssetObjectJSONObject) {
-		_authorEmailAddress = getAttributeValue(
-			jiraAssetObjectJSONObject,
-			BusinessEventVersionConstants.ATTRIBUTE_AUTHOR);
-		_changeName = getAttributeValue(
-			jiraAssetObjectJSONObject,
-			BusinessEventVersionConstants.ATTRIBUTE_CHANGE);
-		_comment = getAttributeValue(
-			jiraAssetObjectJSONObject,
-			BusinessEventVersionConstants.ATTRIBUTE_COMMENT);
-		_createdDate = getAttributeKey(
-			jiraAssetObjectJSONObject,
-			BusinessEventVersionConstants.ATTRIBUTE_CREATED);
+	public BusinessEventVersion(
+		String authorEmailAddress, String changeName, String comment,
+		String createdDate) {
+
+		_authorEmailAddress = authorEmailAddress;
+		_changeName = changeName;
+		_comment = comment;
+		_createdDate = createdDate;
 	}
 
 	public String getAuthorEmailAddress() {

@@ -127,14 +127,6 @@ String executeLayoutSetPrototypeSyncInfoMessage = (String)SessionMessages.get(re
 							label="<%= layoutSetPrototype.getName(locale) %>"
 							target="_blank"
 						/>
-
-						<%
-						int mergeFailCount = layoutSetPrototype.getMergeFailCount();
-						%>
-
-						<c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
-							<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
-						</c:if>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

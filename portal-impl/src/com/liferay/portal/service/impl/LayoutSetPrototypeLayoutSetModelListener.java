@@ -14,10 +14,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPrototypeUtil;
-import com.liferay.portal.kernel.service.persistence.LayoutSetUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.sites.kernel.util.Sites;
 
 /**
  * @author Raymond Augé
@@ -61,34 +57,6 @@ public class LayoutSetPrototypeLayoutSetModelListener
 			layoutSetPrototype.setModifiedDate(layoutSet.getModifiedDate());
 
 			LayoutSetPrototypeUtil.update(layoutSetPrototype);
-
-			UnicodeProperties settingsUnicodeProperties =
-				layoutSet.getSettingsProperties();
-
-			if ((settingsUnicodeProperties == null) ||
-				!settingsUnicodeProperties.containsKey(
-					Sites.MERGE_FAIL_COUNT)) {
-
-				return;
-			}
-
-			int mergeFailCount = GetterUtil.getInteger(
-				settingsUnicodeProperties.getProperty(Sites.MERGE_FAIL_COUNT));
-
-			UnicodeProperties originalSettingsUnicodeProperties =
-				originalLayoutSet.getSettingsProperties();
-
-			int originalMergeFailCount = GetterUtil.getInteger(
-				originalSettingsUnicodeProperties.getProperty(
-					Sites.MERGE_FAIL_COUNT));
-
-			if ((mergeFailCount == originalMergeFailCount) ||
-				(mergeFailCount == 0)) {
-
-				settingsUnicodeProperties.remove(Sites.MERGE_FAIL_COUNT);
-
-				LayoutSetUtil.updateImpl(layoutSet);
-			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);

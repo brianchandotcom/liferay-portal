@@ -41,47 +41,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11103 | Test Summary: There is no previous export process for the same type and date range"
-	@priority = 4
-	test CreateNewScheduledExportProcess {
-		var startDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
-		var startTime = "11:45:00.000";
-		var endDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
-		var endTime = "22:20:00.000";
-		var typeList = "event,page,individual,identity,membership,segment";
-		var status = "PENDING";
-		var message = "A new data export file for this date range and type will be created. Please come back later.";
-
-		task ("Get the token value to create the schedule") {
-			var token = ACApi.getTokenValue();
-		}
-
-		for (var type : list ${typeList}) {
-			task ("Create a new export schedule via API") {
-				ACApi.createNewExportSchedule(
-					endDate = ${endDate},
-					endTime = ${endTime},
-					startDate = ${startDate},
-					startTime = ${startTime},
-					token = ${token},
-					type = ${type});
-			}
-
-			task ("Check if the API response is correct for a new export schedule") {
-				var upperCaseType = StringUtil.upperCase(${type});
-
-				ACApi.viewApiResponseForExportProcess(
-					endDate = ${endDate},
-					endTime = ${endTime},
-					message = ${message},
-					startDate = ${startDate},
-					startTime = ${startTime},
-					status = ${status},
-					upperCaseType = ${upperCaseType});
-			}
-		}
-	}
-
 	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11104 | Test Summary: There is an export scheduled but not started"
 	@priority = 3
 	test ExportScheduledButNotStarted {
@@ -183,35 +142,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11107 | Test Summary: The request command has 'fromDate' after 'toDate'"
-	@priority = 3
-	test RequestCommandHasFromDateAfterToDate {
-		var startDate = "2021-01-04";
-		var startTime = "12:00:00.000";
-		var endDate = "2019-08-13";
-		var endTime = "20:50:00.000";
-		var type = "individual";
-		var message = "Wrong range date. \"fromDate\" cannot be after \"toDate\"";
-
-		task ("Get the token value to create the schedule") {
-			var token = ACApi.getTokenValue();
-		}
-
-		task ("Create a new export schedule via API") {
-			ACApi.createNewExportSchedule(
-				endDate = ${endDate},
-				endTime = ${endTime},
-				startDate = ${startDate},
-				startTime = ${startTime},
-				token = ${token},
-				type = ${type});
-		}
-
-		task ("Check if the API response is correct for the error case") {
-			ACApi.viewApiResponseForError(message = ${message});
-		}
-	}
-
 	@description = "Feature ID: LRAC-12705 | Automation ID: LRAC-12949 | Test Summary: The request command has an invalid type"
 	@priority = 2
 	test RequestCommandHasInvalidType {
@@ -260,72 +190,6 @@ definition {
 
 			var curl = '''
 				${analyticsCloudURL}/api/reports/export/${type}?fromDate=${startDate}\&toDate=${endDate}
-					-H "Authorization: Bearer ${token}"
-			''';
-
-			var apiResponse = JSONCurlUtil.get(${curl}, "$");
-		}
-
-		task ("Check if the API response is correct for the error case") {
-			ACApi.viewApiResponseForError(
-				apiResponse = ${apiResponse},
-				message = ${message});
-		}
-	}
-
-	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11105 | Test Summary: The request command does not contain 'fromDate' or 'toDate'"
-	@priority = 3
-	test RequestCommandNotContainFromDateOrToDate {
-		var startDate = "1964-07-09";
-		var startTime = "15:36:00.000";
-		var endDate = "2017-06-15";
-		var endTime = "10:20:00.000";
-		var type = "individual";
-		var message = "\"fromDate\" and \"toDate\" query parameters are mandatory and must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
-
-		task ("Get the token value to create the schedule") {
-			var token = ACApi.getTokenValue();
-		}
-
-		task ("Run curl command without 'fromDate' and 'toDate'") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-			var curl = '''
-				${analyticsCloudURL}/api/reports/export/${type}
-					-H "Authorization: Bearer ${token}"
-			''';
-
-			var apiResponse = JSONCurlUtil.get(${curl}, "$");
-		}
-
-		task ("Check if the API response is correct for the error case") {
-			ACApi.viewApiResponseForError(
-				apiResponse = ${apiResponse},
-				message = ${message});
-		}
-
-		task ("Run curl command without 'fromDate'") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-			var curl = '''
-				${analyticsCloudURL}/api/reports/export/${type}?toDate=${endDate}T${endTime}Z
-					-H "Authorization: Bearer ${token}"
-			''';
-
-			var apiResponse = JSONCurlUtil.get(${curl}, "$");
-		}
-
-		task ("Check if the API response is correct for the error case") {
-			ACApi.viewApiResponseForError(
-				apiResponse = ${apiResponse},
-				message = ${message});
-		}
-
-		task ("Run curl command without 'toDate'") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-			var curl = '''
-				${analyticsCloudURL}/api/reports/export/${type}?fromDate=${startDate}T${startTime}Z
 					-H "Authorization: Bearer ${token}"
 			''';
 

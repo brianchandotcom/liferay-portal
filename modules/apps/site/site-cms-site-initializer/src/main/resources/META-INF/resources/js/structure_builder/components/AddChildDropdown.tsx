@@ -49,11 +49,22 @@ export default function AddChildDropdown({
 
 	const {data: objectDefinitions, status} = useCache('object-definitions');
 
-	const fieldTypes = Liferay.FeatureFlags['LPD-70672']
-		? FIELD_TYPES
-		: FIELD_TYPES.filter(
-				(type) => type !== 'email' && type !== 'phone-number'
-			);
+	const phoneNumberEnabled = !!Liferay.FeatureFlags['LPD-70672'];
+
+	const emailEnabled =
+		phoneNumberEnabled && !!Liferay.FeatureFlags['LPD-70673'];
+
+	const fieldTypes = FIELD_TYPES.filter((type) => {
+		if (type === 'email') {
+			return emailEnabled;
+		}
+
+		if (type === 'phone-number') {
+			return phoneNumberEnabled;
+		}
+
+		return true;
+	});
 
 	const addField = (type: Field['type']) =>
 		dispatch({

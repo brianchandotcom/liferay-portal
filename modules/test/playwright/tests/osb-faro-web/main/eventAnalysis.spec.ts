@@ -2810,3 +2810,114 @@ test(
 		await expect(page.getByRole('link', {name: 'ac dxp'})).toHaveCount(0);
 	}
 );
+
+test(
+	'Event Analysis report persists its event, breakdowns and filter when reopened',
+	{
+		tag: '@LRAC-10558',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: 'customEvent',
+				properties: [
+					{name: 'category', value: 'wetsuit'},
+					{name: 'like', value: 'true'},
+					{name: 'url', value: 'https://www.liferay.com'},
+				],
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: [
+					{
+						dataType: 'STRING',
+						displayName: 'category',
+						name: 'category',
+						type: 'LOCAL',
+					},
+					{
+						dataType: 'BOOLEAN',
+						displayName: 'like',
+						name: 'like',
+						type: 'LOCAL',
+					},
+					{
+						dataType: 'STRING',
+						displayName: 'url',
+						name: 'url',
+						type: 'LOCAL',
+					},
+				],
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({eventAnalysisName: 'Save Analysis', page});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'category', page, tab: 'Event'});
+
+		await addBreakdown({breakdownName: 'url', page, tab: 'Event'});
+
+		await addBooleanFilter({attributeName: 'like', page, value: 'true'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		await page
+			.locator('.event-analysis-toolbar-right-content')
+			.getByRole('button', {name: 'Save Analysis'})
+			.click();
+
+		// The saved analysis is listed; reopen it
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await expect(
+			page.getByRole('link', {name: 'Save Analysis'})
+		).toBeVisible();
+
+		await page.getByRole('link', {name: 'Save Analysis'}).click();
+
+		// The event, breakdowns, filter and result all persisted
+
+		for (const breakdownName of ['category', 'url']) {
+			await expect(
+				page
+					.locator('.attribute-breakdown-section-root')
+					.getByText(breakdownName)
+			).toBeVisible();
+		}
+
+		await expect(
+			page.locator('.attribute-filter-section-root').getByText('like')
+		).toBeVisible();
+
+		await expect(page.getByRole('cell').getByText('wetsuit')).toBeVisible();
+	}
+);

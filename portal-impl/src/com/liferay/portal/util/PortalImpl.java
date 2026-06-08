@@ -6043,9 +6043,23 @@ public class PortalImpl implements Portal {
 
 			dynamicServletRequest.setAttribute("status_code", status);
 
-			// Reset layout params or there will be an infinite loop
+			// Reset layout params or there will be an infinite loop. When the
+			// request was rejected by strict virtual host mode, pin p_l_id to
+			// the requesting host's first layout so the status page renders
+			// with the requesting site's chrome rather than falling through
+			// the default-layout chain to an unrelated site.
 
-			dynamicServletRequest.setParameter("p_l_id", StringPool.BLANK);
+			long strictVirtualHostBlockedPlid =
+				_getStrictVirtualHostBlockedPlid(httpServletRequest);
+
+			if (strictVirtualHostBlockedPlid > 0) {
+				dynamicServletRequest.setParameter(
+					"p_l_id", String.valueOf(strictVirtualHostBlockedPlid));
+			}
+			else {
+				dynamicServletRequest.setParameter("p_l_id", StringPool.BLANK);
+			}
+
 			dynamicServletRequest.setParameter("groupId", StringPool.BLANK);
 			dynamicServletRequest.setParameter("layoutId", StringPool.BLANK);
 			dynamicServletRequest.setParameter(
@@ -8040,6 +8054,36 @@ public class PortalImpl implements Portal {
 		}
 
 		return group;
+	}
+
+	private long _getStrictVirtualHostBlockedPlid(
+		HttpServletRequest httpServletRequest) {
+
+		if (!GetterUtil.getBoolean(
+				httpServletRequest.getAttribute(
+					WebKeys.STRICT_VIRTUAL_HOST_BLOCKED))) {
+
+			return 0;
+		}
+
+		LayoutSet layoutSet = (LayoutSet)httpServletRequest.getAttribute(
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
+
+		if (layoutSet == null) {
+			return 0;
+		}
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (layouts.isEmpty()) {
+			return 0;
+		}
+
+		Layout layout = layouts.get(0);
+
+		return layout.getPlid();
 	}
 
 	private Map<String, String> _getVariables(Layout layout, String mainPath) {

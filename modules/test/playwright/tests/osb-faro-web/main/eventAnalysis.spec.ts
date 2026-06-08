@@ -3249,3 +3249,57 @@ test(
 		}
 	}
 );
+
+test(
+	'Event Analysis reports can be sorted by name',
+	{
+		tag: '@LRAC-10564',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		const names = ['Save Analysis 1', 'Save Analysis 2', 'Save Analysis 3'];
+
+		for (const name of names) {
+			await createAndSaveEventAnalysis({
+				channelId: channel.id,
+				eventName: 'customEvent',
+				name,
+				page,
+				projectId: project.groupId,
+			});
+		}
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		const rows = page.locator('.event-analysis-list-root tbody tr');
+
+		const expectOrder = async (order: string[]) => {
+			for (let index = 0; index < order.length; index++) {
+				await expect(rows.nth(index)).toContainText(order[index]);
+			}
+		};
+
+		const nameColumnHeader = page
+			.locator('.event-analysis-list-root')
+			.getByText('Name', {exact: true});
+
+		// Sorting by name toggles between descending and ascending order
+
+		await nameColumnHeader.click();
+
+		await expectOrder([...names].reverse());
+
+		await nameColumnHeader.click();
+
+		await expectOrder(names);
+	}
+);

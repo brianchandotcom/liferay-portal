@@ -39,7 +39,9 @@ const DATA_STRATEGY_OPTIONS: Record<Scope, DataStrategy[]> = {
 };
 
 export default function SettingsStep({scope}: {scope: Scope}) {
-	const dataStrategyOptions = DATA_STRATEGY_OPTIONS[scope].map((value) => ({
+	const dataStrategyOptions = (
+		DATA_STRATEGY_OPTIONS[scope] ?? DATA_STRATEGY_OPTIONS[SCOPES.SITE]
+	).map((value) => ({
 		...DATA_STRATEGIES[value],
 		value,
 	}));

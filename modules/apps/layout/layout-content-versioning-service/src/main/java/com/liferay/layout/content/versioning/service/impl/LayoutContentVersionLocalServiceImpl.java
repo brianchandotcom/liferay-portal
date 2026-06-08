@@ -112,6 +112,36 @@ public class LayoutContentVersionLocalServiceImpl
 		return layoutContentVersionPersistence.remove(layoutContentVersionId);
 	}
 
+	@Override
+	public LayoutContentVersion getLayoutContentVersion(
+			long layoutContentVersionId)
+		throws PortalException {
+
+		LayoutContentVersion layoutContentVersion =
+			layoutContentVersionPersistence.findByPrimaryKey(
+				layoutContentVersionId);
+
+		FeatureFlagManagerUtil.checkEnabled(
+			layoutContentVersion.getCompanyId(), "LPD-10622");
+
+		return layoutContentVersion;
+	}
+
+	@Override
+	public LayoutContentVersion getLayoutContentVersionByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		LayoutContentVersion layoutContentVersion =
+			layoutContentVersionPersistence.findByERC_G(
+				externalReferenceCode, groupId);
+
+		FeatureFlagManagerUtil.checkEnabled(
+			layoutContentVersion.getCompanyId(), "LPD-10622");
+
+		return layoutContentVersion;
+	}
+
 	public List<LayoutContentVersion> getLayoutContentVersions(long plid)
 		throws PortalException {
 

@@ -20,36 +20,28 @@ import org.junit.function.ThrowingRunnable;
 /**
  * @author Caio Farias
  */
-public class FIPSComplianceCheckerTest {
+public class FIPSProviderValidatorTest {
 
 	@Test
-	public void testCheckFIPSProvider() {
-		_assertSecurityException(
-			"Invalid FIPS provider:",
-			() -> ReflectionTestUtil.invoke(
-				FIPSComplianceChecker.class, "_checkFIPSProvider",
-				new Class<?>[] {Provider.class},
-				_createProvider(RandomTestUtil.randomString())));
-
+	public void testValidateFIPSProvider() {
 		_assertSecurityException(
 			"FIPS provider integrity failed:",
 			() -> ReflectionTestUtil.invoke(
-				FIPSComplianceChecker.class, "_checkFIPSProvider",
+				FIPSProviderValidator.class, "_validateFIPSProvider",
 				new Class<?>[] {Provider.class}, _createProvider("BCFIPS")));
 	}
 
 	@Test
-	public void testCheckProviders() {
+	public void testValidateProviders() {
 		_assertSecurityException(
 			"There are no providers registered",
 			() -> ReflectionTestUtil.invoke(
-				FIPSComplianceChecker.class, "_checkProviders",
+				FIPSProviderValidator.class, "_validateProviders",
 				new Class<?>[] {Provider[].class}, (Object)new Provider[0]));
-
 		_assertSecurityException(
 			"The first provider must be an allowed FIPS provider",
 			() -> ReflectionTestUtil.invoke(
-				FIPSComplianceChecker.class, "_checkProviders",
+				FIPSProviderValidator.class, "_validateProviders",
 				new Class<?>[] {Provider[].class},
 				(Object)new Provider[] {
 					_createProvider(RandomTestUtil.randomString())
@@ -57,13 +49,13 @@ public class FIPSComplianceCheckerTest {
 
 		Map<String, List<String>> allowedProviders =
 			ReflectionTestUtil.getFieldValue(
-				FIPSComplianceChecker.class, "_allowedProviders");
+				FIPSProviderValidator.class, "_allowedProviders");
 
 		for (String allowedProvider : allowedProviders.keySet()) {
 			_assertSecurityException(
 				"are not allowed in FIPS mode for",
 				() -> ReflectionTestUtil.invoke(
-					FIPSComplianceChecker.class, "_checkProviders",
+					FIPSProviderValidator.class, "_validateProviders",
 					new Class<?>[] {Provider[].class},
 					(Object)new Provider[] {
 						_createProvider(allowedProvider),
@@ -84,7 +76,9 @@ public class FIPSComplianceCheckerTest {
 	}
 
 	private Provider _createProvider(String name) {
-		return new Provider(name, "1.0", "") {
+		return new Provider(
+			name, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString()) {
 		};
 	}
 

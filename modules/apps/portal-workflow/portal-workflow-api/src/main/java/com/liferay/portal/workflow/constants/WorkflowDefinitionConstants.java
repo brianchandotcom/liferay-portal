@@ -33,6 +33,10 @@ public class WorkflowDefinitionConstants {
 		EXTERNAL_REFERENCE_CODE_MESSAGE_BOARDS_USER_STATS_MODERATION =
 			"L_MESSAGE_BOARDS_USER_STATS_MODERATION";
 
+	public static final String
+		EXTERNAL_REFERENCE_CODE_SEO_STUDIO_TITLE_GENERATOR =
+			"L_SEO_STUDIO_TITLE_GENERATOR";
+
 	public static final String EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER =
 		"L_SINGLE_APPROVER";
 
@@ -54,6 +58,9 @@ public class WorkflowDefinitionConstants {
 
 	public static final String NAME_PAGE_BUILDER = "Page Builder";
 
+	public static final String NAME_SEO_STUDIO_TITLE_GENERATOR =
+		"SEO Studio Title Generator";
+
 	public static final String NAME_SINGLE_APPROVER = "Single Approver";
 
 	public static final String SCOPE_AI = "ai";
@@ -63,7 +70,7 @@ public class WorkflowDefinitionConstants {
 	public static final String[] SYSTEM_WORKFLOW_DEFINITION_NAMES = {
 		NAME_CHANGE_TONE, NAME_FIX_SPELLING_AND_GRAMMAR, NAME_IMPROVE_WRITING,
 		NAME_LIFERAY_SEARCH, NAME_MAKE_LONGER, NAME_MAKE_SHORTER,
-		NAME_PAGE_BUILDER
+		NAME_PAGE_BUILDER, NAME_SEO_STUDIO_TITLE_GENERATOR
 	};
 
 }

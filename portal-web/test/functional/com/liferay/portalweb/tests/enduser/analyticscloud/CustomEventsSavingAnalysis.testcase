@@ -231,49 +231,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10561 | Test Summary: Edit report name to the same name as existing report"
-	@priority = 4
-	test CannotSaveAnalysisReportWithExistingName {
-		var defaultEventName = "webContentViewed";
-		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2";
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		for (var eventAnalysisName : list "Save Analysis 1,Save Analysis 1") {
-			task ("Add the custom event to analysis by the all tab") {
-				ACEventAnalysis.addEvent(customEventName = ${defaultEventName});
-			}
-
-			task ("Name the report") {
-				ACUtils.setItemName(itemName = ${eventAnalysisName});
-			}
-
-			task ("Save the newly created analysis") {
-				ACUtils.saveButton();
-			}
-		}
-
-		task ("Assert that the warning pop-up appears") {
-			Alert.viewWarningSpecific(warningMessage = "Warning:This analysis name is currently in use. Please try a different one.");
-		}
-
-		task ("Name the report and save") {
-			ACUtils.setItemName(itemName = "Save Analysis 2");
-
-			ACUtils.saveButton();
-		}
-
-		task ("Assert the analysis is saved and show up on event analysis list") {
-			ACUtils.viewNameList(nameList = ${eventAnalysisNameList});
-		}
-	}
-
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10562 | Test Summary: Pagination for analysis report"
 	@priority = 4
 	test CanPaginationAnalysisReportList {

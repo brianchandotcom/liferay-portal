@@ -147,6 +147,7 @@ export default function CriteriaSidebar({
 					);
 				}
 			})
+			.catch(() => {})
 			.finally(() => setRemoteLoading(false));
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps

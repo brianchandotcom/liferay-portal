@@ -117,6 +117,38 @@ const ChannelList: React.FC<IChannelListProps> = ({
 
 	const {timeZoneId} = useTimeZone();
 
+	const handleSubmit = (
+		{name}: FormValues,
+		{setFieldError, setSubmitting}: FormikHelpers<FormValues>
+	) => {
+		API.channels
+			.create({groupId, name: encodeURIComponent(name).trim()})
+			.then(({id, name}) => {
+				addAlert({
+					alertType: Alert.Types.Success,
+					message: sub(Liferay.Language.get('x-has-been-created'), [
+						name,
+					]) as string,
+				});
+
+				close();
+
+				history.push(
+					toRoute(Routes.SETTINGS_CHANNELS_VIEW, {
+						groupId,
+						id,
+					})
+				);
+			})
+			.catch(({field, message}) => {
+				setSubmitting(false);
+
+				if (field) {
+					setFieldError(field, message);
+				}
+			});
+	};
+
 	const handleAddChannel = () => {
 		open(modalTypes.ADD_CHANNEL_MODAL, {
 			onClose: close,
@@ -293,38 +325,6 @@ const ChannelList: React.FC<IChannelListProps> = ({
 					),
 			title: sub(Liferay.Language.get('delete-x?'), [message]),
 		});
-	};
-
-	const handleSubmit = (
-		{name}: FormValues,
-		{setFieldError, setSubmitting}: FormikHelpers<FormValues>
-	) => {
-		API.channels
-			.create({groupId, name: encodeURIComponent(name).trim()})
-			.then(({id, name}) => {
-				addAlert({
-					alertType: Alert.Types.Success,
-					message: sub(Liferay.Language.get('x-has-been-created'), [
-						name,
-					]) as string,
-				});
-
-				close();
-
-				history.push(
-					toRoute(Routes.SETTINGS_CHANNELS_VIEW, {
-						groupId,
-						id,
-					})
-				);
-			})
-			.catch(({field, message}) => {
-				setSubmitting(false);
-
-				if (field) {
-					setFieldError(field, message);
-				}
-			});
 	};
 
 	const renderNav = () => {

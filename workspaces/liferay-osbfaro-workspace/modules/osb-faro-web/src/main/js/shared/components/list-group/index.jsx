@@ -13,16 +13,18 @@ import ItemField from './ItemField';
 import ItemText from './ItemText';
 import ItemTitle from './ItemTitle';
 
+const listGroupPropTypes = {
+	noBorder: PropTypes.bool,
+	showQuickActionsOnHover: PropTypes.bool,
+};
+
 export default class ListGroup extends React.Component {
 	static defaultProps = {
 		noBorder: false,
 		showQuickActionsOnHover: true,
 	};
 
-	static propTypes = {
-		noBorder: PropTypes.bool,
-		showQuickActionsOnHover: PropTypes.bool,
-	};
+	static propTypes = listGroupPropTypes;
 
 	render() {
 		const {
@@ -40,7 +42,7 @@ export default class ListGroup extends React.Component {
 
 		return (
 			<ul
-				{...omitDefinedProps(otherProps, ListGroup.propTypes)}
+				{...omitDefinedProps(otherProps, listGroupPropTypes)}
 				className={classes}
 			>
 				{children}

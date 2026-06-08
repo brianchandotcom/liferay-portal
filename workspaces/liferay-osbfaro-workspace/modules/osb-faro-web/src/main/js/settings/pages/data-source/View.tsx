@@ -28,17 +28,19 @@ interface IViewProps {
 	[key: string]: any;
 }
 
+const viewPropTypes = {
+	dataSource: PropTypes.instanceOf(DataSource).isRequired,
+};
+
 export class View extends React.Component<IViewProps> {
-	static propTypes = {
-		dataSource: PropTypes.instanceOf(DataSource).isRequired,
-	};
+	static propTypes = viewPropTypes;
 
 	render() {
 		const {dataSource, ...otherProps} = this.props;
 
 		const config = getConnectorConfig(dataSource.providerType);
 
-		const restProps = omitDefinedProps(otherProps, View.propTypes);
+		const restProps = omitDefinedProps(otherProps, viewPropTypes);
 
 		if (config) {
 			return (

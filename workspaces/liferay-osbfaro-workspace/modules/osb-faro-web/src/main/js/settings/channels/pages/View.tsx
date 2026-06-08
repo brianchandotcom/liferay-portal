@@ -49,74 +49,6 @@ type Channel = {
 	permissionType: number;
 };
 
-export const ViewContainer = function ViewContainer({
-	groupId,
-	id,
-	...otherProps
-}: Omit<IViewProps, 'channel'>) {
-	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.channels.fetch,
-		variables: {
-			channelId: id,
-			groupId,
-		},
-	});
-
-	return (
-		<SafeResults
-			data={data}
-			error={error}
-			errorProps={{
-				href: toRoute(Routes.SETTINGS_CHANNELS, {groupId}),
-				linkLabel: Liferay.Language.get('go-to-properties'),
-				message: Liferay.Language.get(
-					'the-property-you-are-looking-for-does-not-exist'
-				),
-				subtitle: Liferay.Language.get('property-not-found'),
-			}}
-			loading={loading}
-			onReload={refetch}
-			pageDisplay
-			spacer
-		>
-			{(channel: Channel) => (
-				<View
-					{...otherProps}
-					channel={channel}
-					groupId={groupId}
-					id={id}
-				/>
-			)}
-		</SafeResults>
-	);
-};
-
-const connector = connect(
-	(state: RootState) => ({
-		defaultChannelId: state.getIn([
-			'preferences',
-			'user',
-			'defaultChannelId',
-			'data',
-		]),
-	}),
-	{addAlert, close, open, updateDefaultChannelId}
-);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface IViewProps
-	extends React.HTMLAttributes<HTMLElement>,
-		PropsFromRedux,
-		IPaginationUnsorted {
-	channel: Channel;
-	groupId: string;
-	history: {
-		push: (value: string) => void;
-	};
-	id: string;
-}
-
 const View: React.FC<IViewProps> = ({
 	addAlert,
 	channel,
@@ -522,5 +454,73 @@ const View: React.FC<IViewProps> = ({
 		</BasePage>
 	);
 };
+
+export const ViewContainer = function ViewContainer({
+	groupId,
+	id,
+	...otherProps
+}: Omit<IViewProps, 'channel'>) {
+	const {data, error, loading, refetch} = useRequest({
+		dataSourceFn: API.channels.fetch,
+		variables: {
+			channelId: id,
+			groupId,
+		},
+	});
+
+	return (
+		<SafeResults
+			data={data}
+			error={error}
+			errorProps={{
+				href: toRoute(Routes.SETTINGS_CHANNELS, {groupId}),
+				linkLabel: Liferay.Language.get('go-to-properties'),
+				message: Liferay.Language.get(
+					'the-property-you-are-looking-for-does-not-exist'
+				),
+				subtitle: Liferay.Language.get('property-not-found'),
+			}}
+			loading={loading}
+			onReload={refetch}
+			pageDisplay
+			spacer
+		>
+			{(channel: Channel) => (
+				<View
+					{...otherProps}
+					channel={channel}
+					groupId={groupId}
+					id={id}
+				/>
+			)}
+		</SafeResults>
+	);
+};
+
+const connector = connect(
+	(state: RootState) => ({
+		defaultChannelId: state.getIn([
+			'preferences',
+			'user',
+			'defaultChannelId',
+			'data',
+		]),
+	}),
+	{addAlert, close, open, updateDefaultChannelId}
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+interface IViewProps
+	extends React.HTMLAttributes<HTMLElement>,
+		PropsFromRedux,
+		IPaginationUnsorted {
+	channel: Channel;
+	groupId: string;
+	history: {
+		push: (value: string) => void;
+	};
+	id: string;
+}
 
 export default compose<any>(connector)(ViewContainer);

@@ -27,7 +27,7 @@ import URLConstants from '~/shared/util/url-constants';
 const NAME = 'blog';
 
 const BlogMetricCard: React.FC<IGenericMetricBaseCardProps> = (props) => {
-	const variables = (commonVariables: ICommonVariables) =>
+	const useVariables = (commonVariables: ICommonVariables) =>
 		useAssetVariables(commonVariables);
 
 	const metrics: Metric[] = [
@@ -70,7 +70,7 @@ const BlogMetricCard: React.FC<IGenericMetricBaseCardProps> = (props) => {
 				name: NAME,
 			}}
 			reportContainer={ReportContainer.VisitorsBehaviorCard}
-			variables={variables}
+			variables={useVariables}
 		/>
 	);
 };

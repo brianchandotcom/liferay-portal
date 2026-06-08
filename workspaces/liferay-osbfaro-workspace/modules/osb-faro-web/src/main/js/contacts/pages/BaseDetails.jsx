@@ -15,15 +15,17 @@ import Loading from '~/shared/components/Loading';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 import {autoCancel, hasRequest} from '~/shared/util/request-decorator';
 
+const baseDetailsPropTypes = {
+	dataSourceFn: PropTypes.func.isRequired,
+	groupId: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
+	timeZoneId: PropTypes.string.isRequired,
+	title: PropTypes.string,
+};
+
 @hasRequest
 export class BaseDetails extends React.Component {
-	static propTypes = {
-		dataSourceFn: PropTypes.func.isRequired,
-		groupId: PropTypes.string.isRequired,
-		id: PropTypes.string.isRequired,
-		timeZoneId: PropTypes.string.isRequired,
-		title: PropTypes.string,
-	};
+	static propTypes = baseDetailsPropTypes;
 
 	state = {
 		detailsIMap: new Map(),
@@ -83,7 +85,7 @@ export class BaseDetails extends React.Component {
 		else {
 			return (
 				<EntityDetailsList
-					{...omitDefinedProps(otherProps, BaseDetails.propTypes)}
+					{...omitDefinedProps(otherProps, baseDetailsPropTypes)}
 					demographicsIMap={detailsIMap}
 					groupId={groupId}
 					timeZoneId={timeZoneId}

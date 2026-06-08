@@ -133,8 +133,6 @@ class WebBrowser extends React.Component {
 					<PieChart>
 						<Tooltip content={this.renderTooltip} />
 
-						{/* eslint-disable jsx-a11y/mouse-events-have-key-events
-						 */}
 						<Legend
 							align="right"
 							formatter={(val, {payload: {value, valueKey}}) => (
@@ -194,8 +192,6 @@ class WebBrowser extends React.Component {
 								/>
 							))}
 						</Pie>
-
-						{/* eslint-enable jsx-a11y/mouse-events-have-key-events */}
 					</PieChart>
 				</ResponsiveContainer>
 			</div>

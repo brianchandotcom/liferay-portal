@@ -8,14 +8,16 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
+const itemTextPropTypes = {
+	subtext: PropTypes.bool,
+};
+
 export default class ItemText extends React.Component {
 	static defaultProps = {
 		subtext: false,
 	};
 
-	static propTypes = {
-		subtext: PropTypes.bool,
-	};
+	static propTypes = itemTextPropTypes;
 
 	render() {
 		const {children, className, subtext, ...otherProps} = this.props;
@@ -27,7 +29,7 @@ export default class ItemText extends React.Component {
 
 		return (
 			<p
-				{...omitDefinedProps(otherProps, ItemText.propTypes)}
+				{...omitDefinedProps(otherProps, itemTextPropTypes)}
 				className={classes}
 			>
 				{children}

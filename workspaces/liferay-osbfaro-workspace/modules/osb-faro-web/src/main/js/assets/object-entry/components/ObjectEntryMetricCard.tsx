@@ -28,7 +28,7 @@ const NAME = 'objectEntry';
 const ObjectEntryMetricCard: React.FC<IGenericMetricBaseCardProps> = (
 	props
 ) => {
-	const variables = (commonVariables: Omit<ICommonVariables, 'type'>) =>
+	const useVariables = (commonVariables: Omit<ICommonVariables, 'type'>) =>
 		useAssetVariables({...commonVariables, type: 'objectEntry'});
 
 	const metrics: Metric[] = [
@@ -70,7 +70,7 @@ const ObjectEntryMetricCard: React.FC<IGenericMetricBaseCardProps> = (
 				name: NAME,
 			}}
 			reportContainer={ReportContainer.VisitorsBehaviorCard}
-			variables={variables}
+			variables={useVariables}
 		/>
 	);
 };

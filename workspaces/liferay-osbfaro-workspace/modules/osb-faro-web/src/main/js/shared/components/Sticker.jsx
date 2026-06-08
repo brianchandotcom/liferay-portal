@@ -38,18 +38,20 @@ const ID_DISPLAYS = [
 
 const SIZES = ['xs', 'sm', 'lg', 'xl', 'xxl'];
 
+const stickerPropTypes = {
+	circle: PropTypes.bool,
+	className: PropTypes.string,
+	display: PropTypes.string,
+	size: PropTypes.oneOf(SIZES),
+	symbol: PropTypes.string,
+};
+
 class Sticker extends React.Component {
 	static defaultProps = {
 		circle: false,
 	};
 
-	static propTypes = {
-		circle: PropTypes.bool,
-		className: PropTypes.string,
-		display: PropTypes.string,
-		size: PropTypes.oneOf(SIZES),
-		symbol: PropTypes.string,
-	};
+	static propTypes = stickerPropTypes;
 
 	render() {
 		const {
@@ -77,11 +79,10 @@ class Sticker extends React.Component {
 
 		return (
 			<div
-				{...omitDefinedProps(otherProps, Sticker.propTypes)}
+				{...omitDefinedProps(otherProps, stickerPropTypes)}
 				className={classes}
 			>
 				{symbol && <ClayIcon className="icon-root" symbol={symbol} />}
-
 				{children}
 			</div>
 		);

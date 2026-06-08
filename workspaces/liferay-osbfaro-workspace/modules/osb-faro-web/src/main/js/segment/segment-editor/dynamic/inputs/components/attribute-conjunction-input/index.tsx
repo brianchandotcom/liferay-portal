@@ -65,55 +65,10 @@ const AttributeFilterConjunctionInput: React.FC<
 	touched,
 	valid,
 }) => {
-	useEffect(() => {
-		if (!getAttributeId()) {
-			const defaultAttribute = attributes[0];
-
-			setAttribute(defaultAttribute);
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	const [attributesDisplayed, setAttributesDisplayed] =
-		useState<Attribute[]>(attributes);
-	const [searchValue, setSearchValue] = useState<string>('');
-
-	const getAttributeFromContext = (): Attribute => {
-		const attributeId = getAttributeId();
-
-		return (
-			attributes.find((attribute) => attribute?.id === attributeId) ||
-			attributes[0]
-		);
-	};
-
 	const getAttributeId = (): string => {
 		const [, id] = (conjunctionCriterion.propertyName ?? '').split('/');
 
 		return id;
-	};
-
-	const handleAttributeChange = (value: string) => {
-		const attribute = attributes.find(({id}) => id === value);
-
-		if (attribute) {
-			setAttribute(attribute);
-		}
-	};
-
-	const getAttributes = (query: string) => {
-		if (!query) {
-			return attributes;
-		}
-
-		return attributes.filter(
-			({displayName, name}) =>
-				(displayName ?? '')
-					.toLowerCase()
-					.includes(query.toLowerCase()) ||
-				name.toLowerCase().includes(query.toLowerCase())
-		);
 	};
 
 	const setAttribute = (attribute: Attribute) => {
@@ -152,6 +107,51 @@ const AttributeFilterConjunctionInput: React.FC<
 				),
 			},
 		});
+	};
+
+	useEffect(() => {
+		if (!getAttributeId()) {
+			const defaultAttribute = attributes[0];
+
+			setAttribute(defaultAttribute);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	const [attributesDisplayed, setAttributesDisplayed] =
+		useState<Attribute[]>(attributes);
+	const [searchValue, setSearchValue] = useState<string>('');
+
+	const getAttributeFromContext = (): Attribute => {
+		const attributeId = getAttributeId();
+
+		return (
+			attributes.find((attribute) => attribute?.id === attributeId) ||
+			attributes[0]
+		);
+	};
+
+	const handleAttributeChange = (value: string) => {
+		const attribute = attributes.find(({id}) => id === value);
+
+		if (attribute) {
+			setAttribute(attribute);
+		}
+	};
+
+	const getAttributes = (query: string) => {
+		if (!query) {
+			return attributes;
+		}
+
+		return attributes.filter(
+			({displayName, name}) =>
+				(displayName ?? '')
+					.toLowerCase()
+					.includes(query.toLowerCase()) ||
+				name.toLowerCase().includes(query.toLowerCase())
+		);
 	};
 
 	const attribute = getAttributeFromContext();

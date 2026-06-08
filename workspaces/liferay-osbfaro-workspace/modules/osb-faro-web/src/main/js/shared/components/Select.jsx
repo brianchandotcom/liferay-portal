@@ -20,14 +20,16 @@ class SelectItem extends React.Component {
 	}
 }
 
+const selectPropTypes = {
+	showBlankOption: PropTypes.bool,
+};
+
 class Select extends React.Component {
 	static defaultProps = {
 		showBlankOption: false,
 	};
 
-	static propTypes = {
-		showBlankOption: PropTypes.bool,
-	};
+	static propTypes = selectPropTypes;
 
 	render() {
 		const {children, className, showBlankOption, ...otherProps} =
@@ -36,10 +38,9 @@ class Select extends React.Component {
 		return (
 			<select
 				className={getCN('form-control select-root', className)}
-				{...omitDefinedProps(otherProps, Select.propTypes)}
+				{...omitDefinedProps(otherProps, selectPropTypes)}
 			>
 				{showBlankOption && <SelectItem />}
-
 				{children}
 			</select>
 		);

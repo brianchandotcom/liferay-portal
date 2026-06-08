@@ -183,6 +183,8 @@ export class OptionItem extends React.Component {
 							onChildOver={onChildOver}
 							onSelectItemsChange={onSelectItemsChange}
 							parentNode={dropdownChildrenParentNode}
+
+							// eslint-disable-next-line react/no-string-refs -- parent reaches this child ref; createRef migration is a larger refactor (tracked)
 							ref="nestedItem"
 							show={hover}
 						/>,
@@ -360,12 +362,16 @@ class DropdownMenu extends React.Component {
 		timeout = setTimeout(() => {
 			if (
 				this.state.hasChildOpened ||
+
+				// eslint-disable-next-line react/no-string-refs
 				!this.refs[`item${index}`].refs.nestedItem
 			) {
 				return;
 			}
 
 			this.removeHasHover();
+
+			// eslint-disable-next-line react/no-string-refs
 			this.refs[`item${index}`].refs.nestedItem.state.show = false;
 		}, DEBOUNCE);
 	}
@@ -375,8 +381,12 @@ class DropdownMenu extends React.Component {
 	 */
 	@autobind
 	handleHideAllDropdownChildren() {
+
+		// eslint-disable-next-line react/no-string-refs
 		for (const key in this.refs) {
 			if (key) {
+
+				// eslint-disable-next-line react/no-string-refs
 				this.refs[key].setState({show: false});
 			}
 		}

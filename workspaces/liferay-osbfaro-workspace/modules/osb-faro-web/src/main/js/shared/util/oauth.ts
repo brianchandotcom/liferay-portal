@@ -115,6 +115,27 @@ export function openOAuthWindow({
 		token?: string;
 		verifier?: string;
 	}>((resolve, reject) => {
+		const intervalId = setInterval(() => {
+			if (authWindow.closed) {
+				cleanUp();
+
+				reject(
+					createError(
+						'OAuth window closed.',
+						ERROR_TYPES.WINDOW_CLOSED
+					)
+				);
+			}
+		}, 250);
+
+		const timeoutId = setTimeout(() => {
+			cleanUp();
+
+			reject(
+				createError('OAuth login flow timed out.', ERROR_TYPES.TIMEOUT)
+			);
+		}, timeout);
+
 		function handleMessage(event: MessageEvent) {
 			if (event.origin === location.origin) {
 				cleanUp();
@@ -149,27 +170,6 @@ export function openOAuthWindow({
 
 			authWindow.close();
 		}
-
-		const intervalId = setInterval(() => {
-			if (authWindow.closed) {
-				cleanUp();
-
-				reject(
-					createError(
-						'OAuth window closed.',
-						ERROR_TYPES.WINDOW_CLOSED
-					)
-				);
-			}
-		}, 250);
-
-		const timeoutId = setTimeout(() => {
-			cleanUp();
-
-			reject(
-				createError('OAuth login flow timed out.', ERROR_TYPES.TIMEOUT)
-			);
-		}, timeout);
 
 		addEventListener('message', handleMessage, false);
 	});

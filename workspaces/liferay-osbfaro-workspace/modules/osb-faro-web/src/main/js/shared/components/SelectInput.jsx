@@ -10,15 +10,17 @@ import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 import BaseSelect from './BaseSelect';
 
+const selectInputPropTypes = {
+	placeholder: PropTypes.string,
+	selectedItem: PropTypes.any,
+};
+
 class SelectInput extends React.Component {
 	static defaultProps = {
 		placeholder: '',
 	};
 
-	static propTypes = {
-		placeholder: PropTypes.string,
-		selectedItem: PropTypes.any,
-	};
+	static propTypes = selectInputPropTypes;
 
 	state = {
 		query: '',
@@ -45,7 +47,7 @@ class SelectInput extends React.Component {
 
 		return (
 			<BaseSelect
-				{...omitDefinedProps(otherProps, SelectInput.propTypes)}
+				{...omitDefinedProps(otherProps, selectInputPropTypes)}
 				emptyInputOnInactive
 				inputValue={query}
 				onInputValueChange={this.handleInputValueChange}

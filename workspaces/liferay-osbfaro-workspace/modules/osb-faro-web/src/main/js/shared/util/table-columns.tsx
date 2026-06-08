@@ -831,6 +831,7 @@ export const interestListColumns = {
 		groupId,
 		id,
 		maxWidth,
+		type,
 		routeFn = ({data: {name}}: {data: {name: string}}) =>
 			name &&
 			toRoute(Routes.CONTACTS_INTEREST_DETAILS, {
@@ -840,7 +841,6 @@ export const interestListColumns = {
 				interestId: name,
 				type,
 			}),
-		type,
 	}: {
 		channelId: string | undefined;
 		groupId: string | undefined;

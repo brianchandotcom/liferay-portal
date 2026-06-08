@@ -27,16 +27,16 @@ const FieldPreviewModal: React.FC<IFieldPreviewModalProps> = ({
 }) => {
 	const [fieldData, setFieldData] = useState([]);
 
+	const getFieldData = () =>
+		dataSourceFn().then((fieldData) => {
+			setFieldData(get(fieldData, [0, 'values'], []));
+		});
+
 	useEffect(() => {
 		getFieldData();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	const getFieldData = () =>
-		dataSourceFn().then((fieldData) => {
-			setFieldData(get(fieldData, [0, 'values'], []));
-		});
 
 	return (
 		<Modal

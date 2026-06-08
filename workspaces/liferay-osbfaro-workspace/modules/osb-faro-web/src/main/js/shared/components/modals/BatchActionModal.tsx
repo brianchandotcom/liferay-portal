@@ -76,7 +76,7 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 	};
 
 	const handleSave = () => {
-		onSave({
+		return onSave({
 			edits: {[editableAttr]: selectedKey},
 			ids: selectedItemsIOMap.keySeq().toArray(),
 		}).then(onClose);

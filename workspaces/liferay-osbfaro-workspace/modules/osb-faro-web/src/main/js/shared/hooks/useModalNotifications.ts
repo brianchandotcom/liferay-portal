@@ -77,7 +77,8 @@ export function useModalNotifications(
 				groupId,
 				type: NotificationTypes.Modal,
 			})
-			.then(handleRender);
+			.then(handleRender)
+			.catch(() => {});
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

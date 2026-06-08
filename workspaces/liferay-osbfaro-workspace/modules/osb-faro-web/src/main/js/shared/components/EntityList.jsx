@@ -122,6 +122,26 @@ class EntityListItem extends React.Component {
 	}
 }
 
+const entityListPropTypes = {
+	accentColor: PropTypes.string,
+	channelId: PropTypes.string,
+	disabledItemsISet: PropTypes.instanceOf(Set),
+	entityType: PropTypes.number,
+	groupId: PropTypes.string.isRequired,
+	header: PropTypes.string,
+	items: PropTypes.array,
+	loading: PropTypes.bool,
+	noItemsContent: PropTypes.any,
+	noItemsHeader: PropTypes.string,
+	onSelectItemsChange: PropTypes.func,
+	selectMultiple: PropTypes.bool,
+
+	selectedItemsISet: PropTypes.instanceOf(Set),
+	showBorder: PropTypes.bool,
+	showHeader: PropTypes.bool,
+	total: PropTypes.number,
+};
+
 class EntityList extends React.Component {
 	static defaultProps = {
 		disabledItemsISet: new Set(),
@@ -133,25 +153,7 @@ class EntityList extends React.Component {
 		showHeader: true,
 	};
 
-	static propTypes = {
-		accentColor: PropTypes.string,
-		channelId: PropTypes.string,
-		disabledItemsISet: PropTypes.instanceOf(Set),
-		entityType: PropTypes.number,
-		groupId: PropTypes.string.isRequired,
-		header: PropTypes.string,
-		items: PropTypes.array,
-		loading: PropTypes.bool,
-		noItemsContent: PropTypes.any,
-		noItemsHeader: PropTypes.string,
-		onSelectItemsChange: PropTypes.func,
-		selectMultiple: PropTypes.bool,
-
-		selectedItemsISet: PropTypes.instanceOf(Set),
-		showBorder: PropTypes.bool,
-		showHeader: PropTypes.bool,
-		total: PropTypes.number,
-	};
+	static propTypes = entityListPropTypes;
 
 	@autobind
 	getItemRenderer() {
@@ -192,7 +194,7 @@ class EntityList extends React.Component {
 		return (
 			<div className={classes}>
 				<ListView
-					{...omitDefinedProps(otherProps, EntityList.propTypes)}
+					{...omitDefinedProps(otherProps, entityListPropTypes)}
 					disabledItemsISet={disabledItemsISet}
 					itemRenderer={this.getItemRenderer()}
 					items={items}
@@ -201,9 +203,7 @@ class EntityList extends React.Component {
 					selectMultiple={selectMultiple}
 					selectedItemsISet={selectedItemsISet}
 				/>
-
 				{loading && <Loading overlay />}
-
 				{!loading && noItems && (
 					<div className="status-overlay">{noItemsContent}</div>
 				)}

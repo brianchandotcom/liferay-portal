@@ -182,6 +182,81 @@ export const List = function List({
 		unassignedSegmentsDispatch,
 	} = useContext(UnassignedSegmentsContext);
 
+	const handleDisabledSegmentsAlert = () => [
+		{
+			message: sub(
+				Liferay.Language.get(
+					'some-of-your-segments-are-disabled-because-a-data-source-has-been-removed-x'
+				),
+				[
+					<Link
+						key="DISABLED_SEGMENTS"
+						to={setUriQueryValue(
+							window.location.href,
+							SEGMENT_STATE,
+							SegmentStates.Disabled
+						)}
+					>
+						{Liferay.Language.get('view-disabled-segments')}
+					</Link>,
+				],
+				false
+			),
+			onClose: () => setAlerts(() => []),
+			...ALERT_CONFIG_MAP[AlertTypes.Warning],
+		},
+	];
+
+	const getDisabledSegmentsAlert = (abortSignal: AbortSignal) =>
+		fetchDisabledSegments(channelId, groupId, orderIOMap).then(
+			({total}: {total: number}) => {
+				if (abortSignal.aborted) {
+					return;
+				}
+				if (total) {
+					setAlerts(handleDisabledSegmentsAlert() as any);
+				}
+			}
+		);
+
+	const handleUnassignedSegmentsAlert = () => {
+		const openModal = () => {
+			open(
+				modalTypes.UNASSIGNED_SEGMENTS_MODAL,
+				{
+					groupId,
+					onClose: close,
+				},
+				{closeOnBlur: false}
+			);
+		};
+
+		return {
+			message: sub(
+				Liferay.Language.get(
+					'there-are-existing-segments-that-have-not-been-assigned-to-a-property-x'
+				),
+				[
+					<ClayButton
+						className="button-root p-0"
+						displayType="unstyled"
+						key="UNASSIGNED_SEGMENTS"
+						onClick={openModal}
+						small
+					>
+						{Liferay.Language.get('view-unassigned-segments')}
+					</ClayButton>,
+				],
+				false
+			),
+			onClose: () =>
+				unassignedSegmentsDispatch?.({
+					type: ActionType.updateShowAlert,
+				}),
+			...ALERT_CONFIG_MAP[AlertTypes.Warning],
+		};
+	};
+
 	useEffect(() => {
 		const abortController = new AbortController();
 
@@ -270,18 +345,6 @@ export const List = function List({
 	const usageMessage = getUsageTooltipMessage();
 	const usageDropDownMessage = getUsageDropDownMessage();
 
-	const getDisabledSegmentsAlert = (abortSignal: AbortSignal) =>
-		fetchDisabledSegments(channelId, groupId, orderIOMap).then(
-			({total}: {total: number}) => {
-				if (abortSignal.aborted) {
-					return;
-				}
-				if (total) {
-					setAlerts(handleDisabledSegmentsAlert() as any);
-				}
-			}
-		);
-
 	const getAlerts = () =>
 		[
 			...alerts,
@@ -289,69 +352,6 @@ export const List = function List({
 				unassignedSegments.length &&
 				handleUnassignedSegmentsAlert(),
 		].filter(Boolean);
-
-	const handleDisabledSegmentsAlert = () => [
-		{
-			message: sub(
-				Liferay.Language.get(
-					'some-of-your-segments-are-disabled-because-a-data-source-has-been-removed-x'
-				),
-				[
-					<Link
-						key="DISABLED_SEGMENTS"
-						to={setUriQueryValue(
-							window.location.href,
-							SEGMENT_STATE,
-							SegmentStates.Disabled
-						)}
-					>
-						{Liferay.Language.get('view-disabled-segments')}
-					</Link>,
-				],
-				false
-			),
-			onClose: () => setAlerts(() => []),
-			...ALERT_CONFIG_MAP[AlertTypes.Warning],
-		},
-	];
-
-	const handleUnassignedSegmentsAlert = () => {
-		const openModal = () => {
-			open(
-				modalTypes.UNASSIGNED_SEGMENTS_MODAL,
-				{
-					groupId,
-					onClose: close,
-				},
-				{closeOnBlur: false}
-			);
-		};
-
-		return {
-			message: sub(
-				Liferay.Language.get(
-					'there-are-existing-segments-that-have-not-been-assigned-to-a-property-x'
-				),
-				[
-					<ClayButton
-						className="button-root p-0"
-						displayType="unstyled"
-						key="UNASSIGNED_SEGMENTS"
-						onClick={openModal}
-						small
-					>
-						{Liferay.Language.get('view-unassigned-segments')}
-					</ClayButton>,
-				],
-				false
-			),
-			onClose: () =>
-				unassignedSegmentsDispatch?.({
-					type: ActionType.updateShowAlert,
-				}),
-			...ALERT_CONFIG_MAP[AlertTypes.Warning],
-		};
-	};
 
 	const handleDeleteSegments = ({
 		ids,

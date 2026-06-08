@@ -19,6 +19,10 @@ interface IPasswordInputState {
 	showPassword: boolean;
 }
 
+const passwordInputPropTypes = {
+	disabled: PropTypes.bool,
+};
+
 export default class PasswordInput extends React.Component<
 	IPasswordInputProps,
 	IPasswordInputState
@@ -27,9 +31,7 @@ export default class PasswordInput extends React.Component<
 		disabled: false,
 	};
 
-	static propTypes = {
-		disabled: PropTypes.bool,
-	};
+	static propTypes = passwordInputPropTypes;
 
 	state = {
 		showPassword: false,
@@ -50,7 +52,7 @@ export default class PasswordInput extends React.Component<
 
 		return (
 			<Form.Input
-				{...omitDefinedProps(otherProps, PasswordInput.propTypes)}
+				{...omitDefinedProps(otherProps, passwordInputPropTypes)}
 				disabled={disabled}
 				inset={{
 					content: (

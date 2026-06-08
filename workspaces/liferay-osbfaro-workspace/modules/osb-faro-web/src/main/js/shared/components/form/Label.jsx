@@ -9,16 +9,18 @@ import React from 'react';
 import InfoPopover from '~/shared/components/InfoPopover';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
+const labelPropTypes = {
+	className: PropTypes.string,
+	popover: PropTypes.object,
+	required: PropTypes.bool,
+};
+
 export default class Label extends React.Component {
 	static defaultProps = {
 		required: false,
 	};
 
-	static propTypes = {
-		className: PropTypes.string,
-		popover: PropTypes.object,
-		required: PropTypes.bool,
-	};
+	static propTypes = labelPropTypes;
 
 	render() {
 		const {children, className, popover, required, ...otherProps} =
@@ -26,7 +28,7 @@ export default class Label extends React.Component {
 
 		return (
 			<label
-				{...omitDefinedProps(otherProps, Label.propTypes)}
+				{...omitDefinedProps(otherProps, labelPropTypes)}
 				className={getCN(
 					'form-control-label',
 					'label-root',
@@ -37,7 +39,6 @@ export default class Label extends React.Component {
 				)}
 			>
 				<span className="content-container">{children}</span>
-
 				{popover && (
 					<InfoPopover
 						content={popover.content}

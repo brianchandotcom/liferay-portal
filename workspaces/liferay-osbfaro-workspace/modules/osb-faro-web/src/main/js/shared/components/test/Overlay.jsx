@@ -55,7 +55,7 @@ describe('Overlay', () => {
 					<Overlay {...this.props} active>
 						<button>trigger</button>
 						<div className="content">
-							<Overlay active ref="nested">
+							<Overlay active>
 								<button>nested</button>
 								<div className="nested-content-container">
 									<div className="nested-content" />

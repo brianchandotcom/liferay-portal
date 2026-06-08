@@ -9,19 +9,21 @@ import React from 'react';
 import SearchableSelect from '~/shared/components/SearchableSelect';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
+const fieldDropDownPropTypes = {
+	dataIMap: PropTypes.instanceOf(Map).isRequired,
+	name: PropTypes.string,
+	onFieldPreviewModal: PropTypes.func,
+	onSearchInput: PropTypes.func,
+	onSearchSelect: PropTypes.func,
+	placeholder: PropTypes.string,
+	readOnly: PropTypes.bool,
+	searchInputValue: PropTypes.string,
+	searchItems: PropTypes.array,
+	title: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+};
+
 export default class FieldDropDown extends React.Component {
-	static propTypes = {
-		dataIMap: PropTypes.instanceOf(Map).isRequired,
-		name: PropTypes.string,
-		onFieldPreviewModal: PropTypes.func,
-		onSearchInput: PropTypes.func,
-		onSearchSelect: PropTypes.func,
-		placeholder: PropTypes.string,
-		readOnly: PropTypes.bool,
-		searchInputValue: PropTypes.string,
-		searchItems: PropTypes.array,
-		title: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-	};
+	static propTypes = fieldDropDownPropTypes;
 
 	render() {
 		const {
@@ -43,9 +45,8 @@ export default class FieldDropDown extends React.Component {
 		return (
 			<div className={className}>
 				{title && <label className="text-truncate">{title}</label>}
-
 				<SearchableSelect
-					{...omitDefinedProps(otherProps, FieldDropDown.propTypes)}
+					{...omitDefinedProps(otherProps, fieldDropDownPropTypes)}
 					buttonPlaceholder={(data && data.name) || placeholder}
 					caretDouble
 					inputPlaceholder={Liferay.Language.get('search')}
@@ -57,7 +58,6 @@ export default class FieldDropDown extends React.Component {
 					readOnly={readOnly}
 					selectedItem={data}
 				/>
-
 				<div className="example-value text-truncate">
 					{data && data.value}
 				</div>

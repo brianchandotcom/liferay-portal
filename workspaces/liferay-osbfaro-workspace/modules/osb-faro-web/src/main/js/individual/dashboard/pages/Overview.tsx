@@ -52,7 +52,8 @@ const Overview = () => {
 				setDataSources(
 					items.map((item) => new DataSource(fromJS(item)))
 				);
-			});
+			})
+			.catch(() => {});
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

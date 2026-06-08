@@ -21,8 +21,6 @@ const ToggleSwitch: React.FC<IToggleSwitchProps> = ({
 	name,
 	onChange = noop,
 }) => (
-
-	// eslint-disable-next-line jsx-a11y/label-has-associated-control
 	<label
 		className={getCN('toggle-switch toggle-switch-root', className)}
 		htmlFor={name}

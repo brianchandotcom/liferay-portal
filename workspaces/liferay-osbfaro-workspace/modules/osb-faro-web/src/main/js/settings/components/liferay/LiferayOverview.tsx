@@ -78,17 +78,6 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
-	const {handleDisconnect} = useDisconnectDataSource({
-		addAlert,
-		close,
-		groupId,
-		id,
-		onSubmit: async () => {
-			await handleUpdateDataSource();
-		},
-		open,
-	});
-
 	const handleUpdateDataSource = async () => {
 		try {
 			setLoading(true);
@@ -112,6 +101,17 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 			setLoading(false);
 		}
 	};
+
+	const {handleDisconnect} = useDisconnectDataSource({
+		addAlert,
+		close,
+		groupId,
+		id,
+		onSubmit: async () => {
+			await handleUpdateDataSource();
+		},
+		open,
+	});
 
 	useEffect(() => {
 		const alert: Alert = {

@@ -14,15 +14,17 @@ import {Segment} from '~/shared/util/records';
 
 import DynamicSegment from './edit/Dynamic';
 
+const editPropTypes = {
+	segment: PropTypes.instanceOf(Segment),
+	type: PropTypes.oneOf([SegmentTypes.RealTime, SegmentTypes.Batch]),
+};
+
 export class Edit extends React.Component {
 	static defaultProps = {
 		type: SegmentTypes.Batch,
 	};
 
-	static propTypes = {
-		segment: PropTypes.instanceOf(Segment),
-		type: PropTypes.oneOf([SegmentTypes.RealTime, SegmentTypes.Batch]),
-	};
+	static propTypes = editPropTypes;
 
 	render() {
 		const {segment, type, ...otherProps} = this.props;
@@ -32,7 +34,7 @@ export class Edit extends React.Component {
 		if (segmentType) {
 			return (
 				<DynamicSegment
-					{...omitDefinedProps(otherProps, Edit.propTypes)}
+					{...omitDefinedProps(otherProps, editPropTypes)}
 					segment={segment}
 					type={segmentType}
 				/>

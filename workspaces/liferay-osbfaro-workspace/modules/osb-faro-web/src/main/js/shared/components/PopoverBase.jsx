@@ -29,6 +29,21 @@ const Body = ({children}) => <div className="popover-body">{children}</div>;
  */
 const Footer = ({children}) => <div className="popover-footer">{children}</div>;
 
+const popoverBasePropTypes = {
+
+	/**
+	 * @type {string}
+	 * @default undefined
+	 */
+	placement: PropTypes.oneOf(['bottom', 'left', 'none', 'right', 'top']),
+
+	/**
+	 * @type {boolean}
+	 * @default false
+	 */
+	visible: PropTypes.bool,
+};
+
 /**
  * Popover Base
  * @class
@@ -39,20 +54,7 @@ class PopoverBase extends React.Component {
 		visible: false,
 	};
 
-	static propTypes = {
-
-		/**
-		 * @type {string}
-		 * @default undefined
-		 */
-		placement: PropTypes.oneOf(['bottom', 'left', 'none', 'right', 'top']),
-
-		/**
-		 * @type {boolean}
-		 * @default false
-		 */
-		visible: PropTypes.bool,
-	};
+	static propTypes = popoverBasePropTypes;
 
 	constructor(props) {
 		super(props);
@@ -73,7 +75,7 @@ class PopoverBase extends React.Component {
 
 		return (
 			<div
-				{...omitDefinedProps(otherProps, PopoverBase.propTypes)}
+				{...omitDefinedProps(otherProps, popoverBasePropTypes)}
 				className={classes}
 				ref={this._elementRef}
 			>

@@ -99,6 +99,20 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 	const _groupItemsRef = useRef<HTMLDivElement>(null);
 	const _tooltipRef = useRef<HTMLDivElement>(null);
 
+	const handleShowArrowDownIcon = ({
+		clientHeight,
+		offsetHeight,
+		scrollHeight,
+		scrollTop,
+	}: {
+		clientHeight: number;
+		offsetHeight: number;
+		scrollHeight: number;
+		scrollTop: number;
+	}) =>
+		scrollHeight > clientHeight &&
+		offsetHeight + scrollTop !== scrollHeight;
+
 	useEffect(() => {
 		if (_groupItemsRef.current) {
 			setShowArrowDownIcon(
@@ -246,20 +260,6 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 		return startPosition;
 	};
 
-	const handleShowArrowDownIcon = ({
-		clientHeight,
-		offsetHeight,
-		scrollHeight,
-		scrollTop,
-	}: {
-		clientHeight: number;
-		offsetHeight: number;
-		scrollHeight: number;
-		scrollTop: number;
-	}) =>
-		scrollHeight > clientHeight &&
-		offsetHeight + scrollTop !== scrollHeight;
-
 	const hasItems = (items: unknown[] | undefined) => !!items?.length;
 
 	const renderGridContent = (value: any) => {
@@ -273,6 +273,20 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 			<span>
 				{formatter ? formatter(toThousands(value)) : toThousands(value)}
 			</span>
+		);
+	};
+
+	const renderIcon = ({color, icon}: {color?: string; icon: string}) => {
+		if (color) {
+			return (
+				<Circle color={color} size={32}>
+					<ClayIcon className="icon-root" symbol={icon} />
+				</Circle>
+			);
+		}
+
+		return (
+			<ClayIcon className={`${CLASSNAME}-icon icon-root`} symbol={icon} />
 		);
 	};
 
@@ -359,20 +373,6 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 			)}
 		</div>
 	);
-
-	const renderIcon = ({color, icon}: {color?: string; icon: string}) => {
-		if (color) {
-			return (
-				<Circle color={color} size={32}>
-					<ClayIcon className="icon-root" symbol={icon} />
-				</Circle>
-			);
-		}
-
-		return (
-			<ClayIcon className={`${CLASSNAME}-icon icon-root`} symbol={icon} />
-		);
-	};
 
 	const renderItems = (items: Item[]) => (
 		<ul className={`${CLASSNAME}-items`}>

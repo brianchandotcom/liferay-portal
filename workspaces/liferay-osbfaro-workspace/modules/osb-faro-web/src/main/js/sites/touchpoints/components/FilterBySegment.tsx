@@ -206,7 +206,7 @@ const Dropdown = ({
 	);
 };
 
-const filterBySegment: React.FC<IFilterBySegment> = ({
+const FilterBySegment: React.FC<IFilterBySegment> = ({
 	onFilterChange,
 	rangeSelectors,
 }) => {
@@ -318,4 +318,4 @@ const filterBySegment: React.FC<IFilterBySegment> = ({
 	);
 };
 
-export default filterBySegment;
+export default FilterBySegment;

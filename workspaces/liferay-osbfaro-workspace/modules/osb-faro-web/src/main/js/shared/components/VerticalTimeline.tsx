@@ -68,113 +68,6 @@ type ITEM_SHAPE = {
 	userAgent: string;
 };
 
-type ITimelineItemProps = {
-	channelId?: string;
-	className?: string;
-	groupId?: string;
-	initialExpanded?: boolean;
-	item: ITEM_SHAPE;
-	timeZoneId: string;
-};
-
-const TimelineItem: FC<ITimelineItemProps> = ({
-	className,
-	initialExpanded = false,
-	item: {
-		applicationId,
-		attributes,
-		browserName,
-		description,
-		device,
-		endTime,
-		header,
-		nestedItems,
-		subtitle,
-		time,
-		title,
-		totalEvents,
-		url,
-		userAgent,
-	},
-	timeZoneId,
-}) => {
-	const [expanded, setExpanded] = useState<boolean>(initialExpanded);
-	const expandable = !!attributes;
-
-	return (
-		<li
-			className={getCN('timeline-item', className, {
-				expanded,
-				header,
-			})}
-		>
-			<div className="timeline-panel">
-				<div className="timeline-panel-body">
-					{!header && (
-						<TimelineElement
-							endTime={endTime}
-							nestedItems={nestedItems}
-							time={time}
-							timeZoneId={timeZoneId}
-							userAgent={userAgent}
-						/>
-					)}
-
-					<TimelinePanelBody
-						expandable={expandable}
-						expanded={expanded}
-						setExpanded={setExpanded}
-					>
-						<TimelinePanelBodyContentText
-							className={getCN(
-								'timeline-panel-body-content-text',
-								{
-									header: !title,
-								}
-							)}
-							description={description}
-							header={header}
-							subtitle={subtitle}
-							title={title}
-							totalEvents={totalEvents}
-							url={url}
-						/>
-
-						{expandable && !!nestedItems && (
-							<TimelinePanelBodyContentDetails
-								applicationId={applicationId}
-								browserName={browserName}
-								device={device}
-								itemCount={nestedItems.length}
-								userAgent={userAgent}
-							/>
-						)}
-
-						{!header && (
-							<ClayIcon
-								className="icon-root"
-								symbol={expanded ? 'caret-top' : 'caret-bottom'}
-							/>
-						)}
-					</TimelinePanelBody>
-
-					{expanded && !!attributes && (
-						<TimelineItemAttributes payload={attributes} />
-					)}
-				</div>
-
-				{nestedItems && (
-					<VerticalTimeline
-						items={nestedItems}
-						nested
-						timeZoneId={timeZoneId}
-					/>
-				)}
-			</div>
-		</li>
-	);
-};
-
 const TimelinePanelBody: FC<{
 	children?: React.ReactNode;
 	expandable: boolean;
@@ -401,6 +294,8 @@ const VerticalTimeline: FC<IVerticalTimelineProps> = ({
 				})}
 			>
 				{items.map((item, i) => (
+
+					// eslint-disable-next-line @typescript-eslint/no-use-before-define -- TimelineItem and VerticalTimeline are mutually recursive
 					<TimelineItem
 						groupId={groupId}
 						initialExpanded={initialExpanded}
@@ -412,5 +307,112 @@ const VerticalTimeline: FC<IVerticalTimelineProps> = ({
 			</ul>
 		</div>
 	);
+
+type ITimelineItemProps = {
+	channelId?: string;
+	className?: string;
+	groupId?: string;
+	initialExpanded?: boolean;
+	item: ITEM_SHAPE;
+	timeZoneId: string;
+};
+
+const TimelineItem: FC<ITimelineItemProps> = ({
+	className,
+	initialExpanded = false,
+	item: {
+		applicationId,
+		attributes,
+		browserName,
+		description,
+		device,
+		endTime,
+		header,
+		nestedItems,
+		subtitle,
+		time,
+		title,
+		totalEvents,
+		url,
+		userAgent,
+	},
+	timeZoneId,
+}) => {
+	const [expanded, setExpanded] = useState<boolean>(initialExpanded);
+	const expandable = !!attributes;
+
+	return (
+		<li
+			className={getCN('timeline-item', className, {
+				expanded,
+				header,
+			})}
+		>
+			<div className="timeline-panel">
+				<div className="timeline-panel-body">
+					{!header && (
+						<TimelineElement
+							endTime={endTime}
+							nestedItems={nestedItems}
+							time={time}
+							timeZoneId={timeZoneId}
+							userAgent={userAgent}
+						/>
+					)}
+
+					<TimelinePanelBody
+						expandable={expandable}
+						expanded={expanded}
+						setExpanded={setExpanded}
+					>
+						<TimelinePanelBodyContentText
+							className={getCN(
+								'timeline-panel-body-content-text',
+								{
+									header: !title,
+								}
+							)}
+							description={description}
+							header={header}
+							subtitle={subtitle}
+							title={title}
+							totalEvents={totalEvents}
+							url={url}
+						/>
+
+						{expandable && !!nestedItems && (
+							<TimelinePanelBodyContentDetails
+								applicationId={applicationId}
+								browserName={browserName}
+								device={device}
+								itemCount={nestedItems.length}
+								userAgent={userAgent}
+							/>
+						)}
+
+						{!header && (
+							<ClayIcon
+								className="icon-root"
+								symbol={expanded ? 'caret-top' : 'caret-bottom'}
+							/>
+						)}
+					</TimelinePanelBody>
+
+					{expanded && !!attributes && (
+						<TimelineItemAttributes payload={attributes} />
+					)}
+				</div>
+
+				{nestedItems && (
+					<VerticalTimeline
+						items={nestedItems}
+						nested
+						timeZoneId={timeZoneId}
+					/>
+				)}
+			</div>
+		</li>
+	);
+};
 
 export default VerticalTimeline;

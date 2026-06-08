@@ -26,19 +26,21 @@ class Text extends React.Component {
 	}
 }
 
+const itemPropTypes = {
+	active: PropTypes.bool,
+	disabled: PropTypes.bool,
+	href: PropTypes.string,
+	id: PropTypes.string,
+	onClick: PropTypes.func,
+};
+
 class Item extends React.Component {
 	static defaultProps = {
 		active: false,
 		disabled: false,
 	};
 
-	static propTypes = {
-		active: PropTypes.bool,
-		disabled: PropTypes.bool,
-		href: PropTypes.string,
-		id: PropTypes.string,
-		onClick: PropTypes.func,
-	};
+	static propTypes = itemPropTypes;
 
 	@autobind
 	handleItemClick() {
@@ -73,7 +75,7 @@ class Item extends React.Component {
 
 		return (
 			<li
-				{...omitDefinedProps(otherProps, Item.propTypes)}
+				{...omitDefinedProps(otherProps, itemPropTypes)}
 				className={getCN('nav-item', className, {
 					active,
 					disabled,

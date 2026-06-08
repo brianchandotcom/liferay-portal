@@ -78,6 +78,67 @@ const UserList: React.FC<IUserListProps> = ({
 		},
 	});
 
+	const handleUserInvite = (emailAddresses: string[]) =>
+		API.user
+			.inviteMany({emailAddresses, groupId, roleName: 'Site Member'})
+			.then((response) => {
+				addAlert({
+					alertType: Alert.Types.Success,
+					message: Liferay.Language.get('invitations-have-been-sent'),
+				});
+
+				refetch?.();
+
+				close();
+
+				return response;
+			})
+			.catch(() => {
+				addAlert({
+					alertType: Alert.Types.Error,
+					message: Liferay.Language.get('error'),
+				});
+			});
+
+	const handleUserSave = ({
+		edits,
+		ids,
+	}: {
+		edits: {[key: string]: any};
+		ids: string[];
+	}) =>
+		API.user
+			.updateMany({...edits, groupId, ids} as {
+				groupId: string;
+				ids: string[];
+				roleName: string;
+			})
+			.then((data) => {
+				addAlert({
+					alertType: Alert.Types.Success,
+					message: sub(
+						Liferay.Language.get(
+							'permissions-have-been-changed-for-x-users'
+						),
+						[<b key="changedCount">{data.length}</b>],
+						false
+					),
+				});
+
+				selectionDispatch?.({type: ActionTypes.ClearAll});
+
+				refetch?.();
+			})
+			.catch((error) =>
+				addAlert({
+					alertType: Alert.Types.Error,
+					message:
+						error.message === UNAUTHORIZED_ACCESS
+							? Liferay.Language.get('unauthorized-access')
+							: Liferay.Language.get('error'),
+				})
+			);
+
 	const handleActions = () => {
 		open(modalTypes.BATCH_ACTION_MODAL, {
 			actionOptions: {
@@ -181,67 +242,6 @@ const UserList: React.FC<IUserListProps> = ({
 			titleIcon: 'warning-full',
 		});
 	};
-
-	const handleUserInvite = (emailAddresses: string[]) =>
-		API.user
-			.inviteMany({emailAddresses, groupId, roleName: 'Site Member'})
-			.then((response) => {
-				addAlert({
-					alertType: Alert.Types.Success,
-					message: Liferay.Language.get('invitations-have-been-sent'),
-				});
-
-				refetch?.();
-
-				close();
-
-				return response;
-			})
-			.catch(() => {
-				addAlert({
-					alertType: Alert.Types.Error,
-					message: Liferay.Language.get('error'),
-				});
-			});
-
-	const handleUserSave = ({
-		edits,
-		ids,
-	}: {
-		edits: {[key: string]: any};
-		ids: string[];
-	}) =>
-		API.user
-			.updateMany({...edits, groupId, ids} as {
-				groupId: string;
-				ids: string[];
-				roleName: string;
-			})
-			.then((data) => {
-				addAlert({
-					alertType: Alert.Types.Success,
-					message: sub(
-						Liferay.Language.get(
-							'permissions-have-been-changed-for-x-users'
-						),
-						[<b key="changedCount">{data.length}</b>],
-						false
-					),
-				});
-
-				selectionDispatch?.({type: ActionTypes.ClearAll});
-
-				refetch?.();
-			})
-			.catch((error) =>
-				addAlert({
-					alertType: Alert.Types.Error,
-					message:
-						error.message === UNAUTHORIZED_ACCESS
-							? Liferay.Language.get('unauthorized-access')
-							: Liferay.Language.get('error'),
-				})
-			);
 
 	const isUserDisabled = (user?: object) => {
 		const typedUser = user as {id: string};

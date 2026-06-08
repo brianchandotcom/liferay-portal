@@ -23,27 +23,29 @@ interface IFormSearchableSelectProps
 	onSelect: (value: any) => void;
 }
 
+const formSearchableSelectPropTypes = {
+	field: PropTypes.shape({
+		name: PropTypes.string,
+		onBlur: PropTypes.func,
+		onChange: PropTypes.func,
+		value: PropTypes.any,
+	}),
+	form: PropTypes.shape({
+		errors: PropTypes.object,
+		touched: PropTypes.object,
+	}),
+	initialValue: PropTypes.any,
+	label: PropTypes.node,
+	onSearchChange: PropTypes.func,
+	onSelect: PropTypes.func,
+};
+
 class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 	static defaultProps = {
 		onSearchChange: noop,
 	};
 
-	static propTypes = {
-		field: PropTypes.shape({
-			name: PropTypes.string,
-			onBlur: PropTypes.func,
-			onChange: PropTypes.func,
-			value: PropTypes.any,
-		}),
-		form: PropTypes.shape({
-			errors: PropTypes.object,
-			touched: PropTypes.object,
-		}),
-		initialValue: PropTypes.any,
-		label: PropTypes.node,
-		onSearchChange: PropTypes.func,
-		onSelect: PropTypes.func,
-	};
+	static propTypes = formSearchableSelectPropTypes;
 
 	@autobind
 	handleSelect(value: any) {
@@ -76,10 +78,7 @@ class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 
 		return (
 			<SearchableSelect
-				{...omitDefinedProps(
-					otherProps,
-					FormSearchableSelect.propTypes
-				)}
+				{...omitDefinedProps(otherProps, formSearchableSelectPropTypes)}
 				className={classes}
 				inputPlaceholder={Liferay.Language.get('search')}
 				label={label}

@@ -14,10 +14,12 @@ export const CONTEXT = 'navbar';
 const DISPLAYS = ['dark', 'light', 'primary'];
 const JUSTIFY_CONTENTS = ['start', 'end', 'center', 'around', 'between'];
 
+const brandPropTypes = {
+	href: PropTypes.string,
+};
+
 class Brand extends React.Component {
-	static propTypes = {
-		href: PropTypes.string,
-	};
+	static propTypes = brandPropTypes;
 
 	render() {
 		const {children, className, href, ...otherProps} = this.props;
@@ -25,7 +27,7 @@ class Brand extends React.Component {
 		if (href) {
 			return (
 				<Link
-					{...omitDefinedProps(otherProps, Brand.propTypes)}
+					{...omitDefinedProps(otherProps, brandPropTypes)}
 					className={`navbar-brand${
 						className ? ` ${className}` : ''
 					}`}
@@ -38,7 +40,7 @@ class Brand extends React.Component {
 		else {
 			return (
 				<div
-					{...omitDefinedProps(otherProps, Brand.propTypes)}
+					{...omitDefinedProps(otherProps, brandPropTypes)}
 					className={`navbar-brand${
 						className ? ` ${className}` : ''
 					}`}

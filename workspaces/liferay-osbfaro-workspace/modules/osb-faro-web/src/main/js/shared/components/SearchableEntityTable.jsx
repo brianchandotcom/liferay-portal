@@ -12,6 +12,28 @@ import BaseResults from '~/shared/components/BaseResults';
 import Table from '~/shared/components/table';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
+const searchableEntityTablePropTypes = {
+	autoFocusSearch: PropTypes.bool,
+	bordered: PropTypes.bool,
+	checkDisabled: PropTypes.func,
+	columns: PropTypes.array,
+	delta: PropTypes.number,
+	internalSort: PropTypes.bool,
+	nowrap: PropTypes.bool,
+	onDeltaChange: PropTypes.func,
+	onOrderIOMapChange: PropTypes.func,
+	onPageChange: PropTypes.func,
+	onQueryChange: PropTypes.func,
+	orderIOMap: PropTypes.object,
+	overrideLoading: PropTypes.bool,
+	page: PropTypes.number,
+	query: PropTypes.string,
+	renderInlineRowActions: PropTypes.func,
+	renderRowActions: PropTypes.func,
+	rowIdentifier: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+	showCheckbox: PropTypes.bool,
+};
+
 class SearchableEntityTable extends React.Component {
 	static defaultProps = {
 		autoFocusSearch: true,
@@ -23,27 +45,7 @@ class SearchableEntityTable extends React.Component {
 		showCheckbox: false,
 	};
 
-	static propTypes = {
-		autoFocusSearch: PropTypes.bool,
-		bordered: PropTypes.bool,
-		checkDisabled: PropTypes.func,
-		columns: PropTypes.array,
-		delta: PropTypes.number,
-		internalSort: PropTypes.bool,
-		nowrap: PropTypes.bool,
-		onDeltaChange: PropTypes.func,
-		onOrderIOMapChange: PropTypes.func,
-		onPageChange: PropTypes.func,
-		onQueryChange: PropTypes.func,
-		orderIOMap: PropTypes.object,
-		overrideLoading: PropTypes.bool,
-		page: PropTypes.number,
-		query: PropTypes.string,
-		renderInlineRowActions: PropTypes.func,
-		renderRowActions: PropTypes.func,
-		rowIdentifier: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-		showCheckbox: PropTypes.bool,
-	};
+	static propTypes = searchableEntityTablePropTypes;
 
 	constructor(props) {
 		super(props);
@@ -132,7 +134,7 @@ class SearchableEntityTable extends React.Component {
 			<BaseResults
 				{...omitDefinedProps(
 					otherProps,
-					SearchableEntityTable.propTypes
+					searchableEntityTablePropTypes
 				)}
 				autoFocusSearch={autoFocusSearch}
 				checkDisabled={checkDisabled}

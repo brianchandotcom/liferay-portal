@@ -74,13 +74,6 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 		},
 	});
 
-	const handleInsertModal = () => {
-		open(modalTypes.INSERT_BLOCKED_KEYWORDS, {
-			onClose: close,
-			onSubmit: handleAddKeywords,
-		});
-	};
-
 	const handleAddKeywords = (keywords: string[]) => {
 		API.blockedKeywords
 			.insertMany({groupId, keywords})
@@ -135,6 +128,13 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 					message: Liferay.Language.get('error'),
 				});
 			});
+	};
+
+	const handleInsertModal = () => {
+		open(modalTypes.INSERT_BLOCKED_KEYWORDS, {
+			onClose: close,
+			onSubmit: handleAddKeywords,
+		});
 	};
 
 	const handleDeleteKeyword = (ids: string[]) => () => {

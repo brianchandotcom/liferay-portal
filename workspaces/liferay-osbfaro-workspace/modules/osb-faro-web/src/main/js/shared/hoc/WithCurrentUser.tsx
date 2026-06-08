@@ -9,11 +9,13 @@ import {useCurrentUser} from '~/shared/hooks/useCurrentUser';
 const WithCurrentUser = function WithCurrentUser<P extends object>(
 	Component: React.ComponentType<P>
 ) {
-	return (props: P) => {
+	const WithCurrentUserComponent = (props: P) => {
 		const currentUser = useCurrentUser();
 
 		return <Component {...props} currentUser={currentUser} />;
 	};
+
+	return WithCurrentUserComponent;
 };
 
 /**

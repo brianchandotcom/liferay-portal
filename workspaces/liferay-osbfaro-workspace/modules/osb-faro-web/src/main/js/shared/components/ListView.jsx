@@ -18,12 +18,14 @@ import Checkbox from './Checkbox';
 import RadioGroup from './RadioGroup';
 import ListGroup from './list-group';
 
+const quickActionPropTypes = {
+	item: PropTypes.object,
+	onClick: PropTypes.func,
+	symbol: PropTypes.string.isRequired,
+};
+
 class QuickAction extends React.Component {
-	static propTypes = {
-		item: PropTypes.object,
-		onClick: PropTypes.func,
-		symbol: PropTypes.string.isRequired,
-	};
+	static propTypes = quickActionPropTypes;
 
 	@autobind
 	handleClick() {
@@ -39,7 +41,7 @@ class QuickAction extends React.Component {
 
 		return (
 			<ClayButton
-				{...omitDefinedProps(otherProps, QuickAction.propTypes)}
+				{...omitDefinedProps(otherProps, quickActionPropTypes)}
 				className={getCN('button-root quick-action-item', className)}
 				displayType="unstyled"
 				onClick={this.handleClick}
@@ -132,6 +134,18 @@ class Item extends React.Component {
 	}
 }
 
+const listViewPropTypes = {
+	disabledItemsISet: PropTypes.instanceOf(Set),
+	itemRenderer: PropTypes.func.isRequired,
+	items: PropTypes.array,
+	onClick: PropTypes.func,
+	onSelectItemsChange: PropTypes.func,
+	quickActions: PropTypes.arrayOf(PropTypes.object),
+	selectMultiple: PropTypes.bool,
+
+	selectedItemsISet: PropTypes.instanceOf(Set),
+};
+
 class ListView extends React.Component {
 	static defaultProps = {
 		disabledItemsISet: new Set(),
@@ -142,17 +156,7 @@ class ListView extends React.Component {
 		selectedItemsISet: new Set(),
 	};
 
-	static propTypes = {
-		disabledItemsISet: PropTypes.instanceOf(Set),
-		itemRenderer: PropTypes.func.isRequired,
-		items: PropTypes.array,
-		onClick: PropTypes.func,
-		onSelectItemsChange: PropTypes.func,
-		quickActions: PropTypes.arrayOf(PropTypes.object),
-		selectMultiple: PropTypes.bool,
-
-		selectedItemsISet: PropTypes.instanceOf(Set),
-	};
+	static propTypes = listViewPropTypes;
 
 	@autobind
 	handleItemClick(item) {
@@ -189,9 +193,8 @@ class ListView extends React.Component {
 		} = this.props;
 
 		return (
-			<ListGroup {...omitDefinedProps(otherProps, ListView.propTypes)}>
+			<ListGroup {...omitDefinedProps(otherProps, listViewPropTypes)}>
 				{children}
-
 				{items &&
 					items.map((item) => (
 						<Item

@@ -17,6 +17,14 @@ import Input from './Input';
 
 export const CONTEXT = 'search-input';
 
+const searchInputPropTypes = {
+	disabled: PropTypes.bool,
+	onChange: PropTypes.func,
+	onSubmit: PropTypes.func,
+	placeholder: PropTypes.string,
+	value: PropTypes.string,
+};
+
 export default class SearchInput extends React.Component {
 	static childContextTypes = {
 		clay: PropTypes.instanceOf(Stack),
@@ -29,13 +37,7 @@ export default class SearchInput extends React.Component {
 		value: '',
 	};
 
-	static propTypes = {
-		disabled: PropTypes.bool,
-		onChange: PropTypes.func,
-		onSubmit: PropTypes.func,
-		placeholder: PropTypes.string,
-		value: PropTypes.string,
-	};
+	static propTypes = searchInputPropTypes;
 
 	constructor(props) {
 		super(props);
@@ -95,7 +97,7 @@ export default class SearchInput extends React.Component {
 			<Input.Group className={className}>
 				<Input.GroupItem>
 					<Input
-						{...omitDefinedProps(otherProps, SearchInput.propTypes)}
+						{...omitDefinedProps(otherProps, searchInputPropTypes)}
 						disabled={disabled}
 						inset="after"
 						onChange={this.handleChange}

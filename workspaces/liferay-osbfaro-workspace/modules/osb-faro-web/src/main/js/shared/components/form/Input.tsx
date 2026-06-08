@@ -60,6 +60,49 @@ interface IFormInputProps
 	width: number;
 }
 
+const formInputPropTypes = {
+	contentAfter: PropTypes.node,
+	contentAfterEnableMagnet: PropTypes.bool,
+	field: PropTypes.shape({
+		name: PropTypes.string,
+		onBlur: PropTypes.func,
+		onChange: PropTypes.func,
+		value: PropTypes.any,
+	}),
+	form: PropTypes.shape({
+		errors: PropTypes.object,
+		touched: PropTypes.object,
+	}),
+	inline: PropTypes.bool,
+	inset: PropTypes.shape({
+		content: PropTypes.node,
+		position: PropTypes.oneOf(INSET_POSITIONS),
+	}),
+	label: PropTypes.node,
+	mask: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.func,
+		PropTypes.bool,
+		PropTypes.shape({
+			mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
+			pipe: PropTypes.func,
+		}),
+	]),
+	onChange: PropTypes.func,
+	popover: PropTypes.shape({
+		content: PropTypes.node,
+		title: PropTypes.node,
+	}),
+	required: PropTypes.bool,
+	showHelpBlock: PropTypes.bool,
+	showSuccess: PropTypes.bool,
+	text: PropTypes.shape({
+		content: PropTypes.node,
+		position: PropTypes.oneOf(APPEND_POSITIONS),
+	}),
+	width: PropTypes.number,
+};
+
 export default class FormInput extends React.Component<IFormInputProps> {
 	static defaultProps = {
 		inline: false,
@@ -69,48 +112,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 		showSuccess: true,
 	};
 
-	static propTypes = {
-		contentAfter: PropTypes.node,
-		contentAfterEnableMagnet: PropTypes.bool,
-		field: PropTypes.shape({
-			name: PropTypes.string,
-			onBlur: PropTypes.func,
-			onChange: PropTypes.func,
-			value: PropTypes.any,
-		}),
-		form: PropTypes.shape({
-			errors: PropTypes.object,
-			touched: PropTypes.object,
-		}),
-		inline: PropTypes.bool,
-		inset: PropTypes.shape({
-			content: PropTypes.node,
-			position: PropTypes.oneOf(INSET_POSITIONS),
-		}),
-		label: PropTypes.node,
-		mask: PropTypes.oneOfType([
-			PropTypes.array,
-			PropTypes.func,
-			PropTypes.bool,
-			PropTypes.shape({
-				mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-				pipe: PropTypes.func,
-			}),
-		]),
-		onChange: PropTypes.func,
-		popover: PropTypes.shape({
-			content: PropTypes.node,
-			title: PropTypes.node,
-		}),
-		required: PropTypes.bool,
-		showHelpBlock: PropTypes.bool,
-		showSuccess: PropTypes.bool,
-		text: PropTypes.shape({
-			content: PropTypes.node,
-			position: PropTypes.oneOf(APPEND_POSITIONS),
-		}),
-		width: PropTypes.number,
-	};
+	static propTypes = formInputPropTypes;
 
 	@autobind
 	handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -263,21 +265,18 @@ export default class FormInput extends React.Component<IFormInputProps> {
 						{label}
 					</Label>
 				)}
-
 				{secondaryInfo && (
 					<Label className="font-weight-normal" htmlFor={name}>
 						<p>{secondaryInfo}</p>
 					</Label>
 				)}
-
 				{this.renderInput({
 					...field,
-					...omitDefinedProps(otherProps, FormInput.propTypes),
+					...omitDefinedProps(otherProps, formInputPropTypes),
 					...getOptionalProps(optionalProps),
 					id: name,
 					onChange: this.handleChange,
 				})}
-
 				{showHelpBlock && <HelpBlock name={name} />}
 			</div>
 		);

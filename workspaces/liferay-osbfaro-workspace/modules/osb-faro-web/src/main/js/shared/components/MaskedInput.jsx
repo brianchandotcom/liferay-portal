@@ -11,6 +11,25 @@ import {createTextMaskInputElement} from 'text-mask-core';
 import Input from '~/shared/components/Input';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
+const maskedInputPropTypes = {
+	guide: PropTypes.bool,
+	keepCharPositions: PropTypes.bool,
+	mask: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.func,
+		PropTypes.bool,
+		PropTypes.shape({
+			mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
+			pipe: PropTypes.func,
+		}),
+	]).isRequired,
+	onChange: PropTypes.func,
+	pipe: PropTypes.func,
+	placeholderChar: PropTypes.string,
+	showMask: PropTypes.bool,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
 class MaskedInput extends React.Component {
 	static defaultProps = {
 		guide: true,
@@ -19,24 +38,7 @@ class MaskedInput extends React.Component {
 		showMask: false,
 	};
 
-	static propTypes = {
-		guide: PropTypes.bool,
-		keepCharPositions: PropTypes.bool,
-		mask: PropTypes.oneOfType([
-			PropTypes.array,
-			PropTypes.func,
-			PropTypes.bool,
-			PropTypes.shape({
-				mask: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-				pipe: PropTypes.func,
-			}),
-		]).isRequired,
-		onChange: PropTypes.func,
-		pipe: PropTypes.func,
-		placeholderChar: PropTypes.string,
-		showMask: PropTypes.bool,
-		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	};
+	static propTypes = maskedInputPropTypes;
 
 	constructor(props) {
 		super(props);
@@ -73,7 +75,7 @@ class MaskedInput extends React.Component {
 
 		return (
 			<Input
-				{...omitDefinedProps(otherProps, MaskedInput.propTypes)}
+				{...omitDefinedProps(otherProps, maskedInputPropTypes)}
 				className={className}
 				onChange={this.handleChange}
 				ref={this._inputRef}

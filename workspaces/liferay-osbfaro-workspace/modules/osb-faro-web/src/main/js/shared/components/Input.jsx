@@ -30,10 +30,12 @@ class InputText extends React.Component {
 	}
 }
 
+const inputButtonPropTypes = {
+	position: PropTypes.oneOf(APPEND_POSITIONS).isRequired,
+};
+
 class InputButton extends React.Component {
-	static propTypes = {
-		position: PropTypes.oneOf(APPEND_POSITIONS).isRequired,
-	};
+	static propTypes = inputButtonPropTypes;
 
 	render() {
 		const {className, position, ...otherProps} = this.props;
@@ -41,7 +43,7 @@ class InputButton extends React.Component {
 		return (
 			<InputGroupItem className={className} position={position} shrink>
 				<ClayButton
-					{...omitDefinedProps(otherProps, InputButton.propTypes)}
+					{...omitDefinedProps(otherProps, inputButtonPropTypes)}
 				>
 					{this.props.children}
 				</ClayButton>
@@ -88,10 +90,12 @@ class InputGroupItem extends React.Component {
 	}
 }
 
+const inputGroupPropTypes = {
+	size: PropTypes.oneOf(SIZES),
+};
+
 class InputGroup extends React.Component {
-	static propTypes = {
-		size: PropTypes.oneOf(SIZES),
-	};
+	static propTypes = inputGroupPropTypes;
 
 	render() {
 		const {children, className, size, ...otherProps} = this.props;
@@ -102,7 +106,7 @@ class InputGroup extends React.Component {
 
 		return (
 			<div
-				{...omitDefinedProps(otherProps, InputGroup.propTypes)}
+				{...omitDefinedProps(otherProps, inputGroupPropTypes)}
 				className={classes}
 			>
 				{children}
@@ -111,18 +115,20 @@ class InputGroup extends React.Component {
 	}
 }
 
+const inputPropTypes = {
+	checked: PropTypes.string,
+	inset: PropTypes.oneOf(INSET_POSITIONS),
+	size: PropTypes.oneOf(SIZES),
+	type: PropTypes.string,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
 class Input extends React.Component {
 	static defaultProps = {
 		type: 'text',
 	};
 
-	static propTypes = {
-		checked: PropTypes.string,
-		inset: PropTypes.oneOf(INSET_POSITIONS),
-		size: PropTypes.oneOf(SIZES),
-		type: PropTypes.string,
-		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	};
+	static propTypes = inputPropTypes;
 
 	constructor(props) {
 		super(props);
@@ -171,7 +177,7 @@ class Input extends React.Component {
 
 		return (
 			<ComponentFn
-				{...omitDefinedProps(otherProps, Input.propTypes)}
+				{...omitDefinedProps(otherProps, inputPropTypes)}
 
 				// TODO: Is defaultChecked required here? should we be using this for checkbox?
 

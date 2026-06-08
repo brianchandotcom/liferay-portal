@@ -64,7 +64,7 @@ const Label = React.forwardRef<HTMLButtonElement, ILabelProps>(
 	)
 );
 
-const userDropDown: React.FC<IUserDropdownProps> = ({
+const UserDropDown: React.FC<IUserDropdownProps> = ({
 	alignmentPosition = Align.RightCenter,
 	className,
 	containerElement: ContainerElement = 'div',
@@ -213,4 +213,4 @@ const userDropDown: React.FC<IUserDropdownProps> = ({
 };
 
 export {MenuItem, Menus};
-export default userDropDown;
+export default UserDropDown;

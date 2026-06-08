@@ -179,6 +179,82 @@ export const trimSpacesBeforeParams = function trimSpacesBeforeParams(
 	return queryString.replace(PARAM_REGEX, '$1');
 };
 
+/**
+ * Checks if the value is a certain type.
+ * @param {object} types - A map of supported types.
+ * @param {*} value - The value to validate.
+ */
+const isValueType = (types: object, value: string | undefined): boolean =>
+	value !== undefined && Object.values(types).includes(value);
+
+const encodeQuotes = (text: string): string => text.replace(/'/g, '%27');
+
+/**
+ * Escape all %27 encoded quotes.
+ */
+const decodeQuotesToOdataQuotes = (encodedText: string): string =>
+	encodedText.replace(/%27/g, "''");
+
+/**
+ * Gets the operatorName from the function name & namespace.
+ */
+const getOperatorNameFromFunctionName = (
+	name: string,
+	namespace: string
+): CustomFunctionOperators =>
+	CUSTOM_FUNCTION_OPERATOR_KEY_MAP[
+		`${namespace}.${name}` as keyof typeof CUSTOM_FUNCTION_OPERATOR_KEY_MAP
+	];
+
+/**
+ * Gets the function name & namespace from the operatorName.
+ */
+const getFunctionNameFromOperatorName = (operatorName: string): string =>
+	invert(CUSTOM_FUNCTION_OPERATOR_KEY_MAP)[operatorName];
+
+/**
+ * Gets the internal name of an expression from the oDataV4Parser name.
+ */
+const getExpressionName = (oDataASTNode: ODataASTNode): string => {
+	const {type} = oDataASTNode;
+
+	let returnValue = oDataV4ParserNameMap[type];
+
+	if (type === EXPRESSION_TYPES.METHOD_CALL) {
+		returnValue = oDataASTNode.value.method;
+	}
+	else if (type === EXPRESSION_TYPES.FUNCTION) {
+		const {name, namespace} = oDataASTNode.value.fn.value;
+
+		returnValue = getOperatorNameFromFunctionName(name, namespace);
+	}
+
+	return returnValue;
+};
+
+/**
+ * Removes both single `'` and double `"` quotes from a string.
+ */
+const removeQuotes = (text: string): string => text.replace(/['"]+/g, '');
+
+/**
+ * Unescape single quotes in a string for general purposes.
+ */
+const unescapeSingleQuotes = (text: string) => text.replace(/''/g, "'");
+
+/**
+ * Wraps the criteria items in a criterion group.
+ */
+export const wrapInCriteriaGroup = function wrapInCriteriaGroup(
+	criteriaArray: Criteria[]
+): CriterionGroup {
+	return {
+		conjunctionName: Conjunctions.And,
+		criteriaGroupId: generateGroupId(),
+		items: criteriaArray,
+	};
+};
+
 const buildRemoteFilterString = (
 	criterionGroup: any,
 	criterionType: RemoteCriterionType
@@ -432,8 +508,6 @@ const decodeSpecialCharacters = (queryString: string): string => {
 	});
 };
 
-const encodeQuotes = (text: string): string => text.replace(/'/g, '%27');
-
 /**
  * Encode certain special characters with our own encoding.
  */
@@ -468,12 +542,6 @@ export const escapeSingleQuotes = function escapeSingleQuotes(text: string) {
 };
 
 /**
- * Escape all %27 encoded quotes.
- */
-const decodeQuotesToOdataQuotes = (encodedText: string): string =>
-	encodedText.replace(/%27/g, "''");
-
-/**
  * Encode all %22 decoded quotes.
  */
 const encodeDoubleQuotesToOdataQuotes = (decodedText: string): string =>
@@ -495,43 +563,6 @@ const getConjunctionForGroup = (oDataASTNode: ODataASTNode): string => {
 	return isValueType(Conjunctions, childExpressionName)
 		? childExpressionName
 		: Conjunctions.And;
-};
-
-/**
- * Gets the operatorName from the function name & namespace.
- */
-const getOperatorNameFromFunctionName = (
-	name: string,
-	namespace: string
-): CustomFunctionOperators =>
-	CUSTOM_FUNCTION_OPERATOR_KEY_MAP[
-		`${namespace}.${name}` as keyof typeof CUSTOM_FUNCTION_OPERATOR_KEY_MAP
-	];
-
-/**
- * Gets the function name & namespace from the operatorName.
- */
-const getFunctionNameFromOperatorName = (operatorName: string): string =>
-	invert(CUSTOM_FUNCTION_OPERATOR_KEY_MAP)[operatorName];
-
-/**
- * Gets the internal name of an expression from the oDataV4Parser name.
- */
-const getExpressionName = (oDataASTNode: ODataASTNode): string => {
-	const {type} = oDataASTNode;
-
-	let returnValue = oDataV4ParserNameMap[type];
-
-	if (type === EXPRESSION_TYPES.METHOD_CALL) {
-		returnValue = oDataASTNode.value.method;
-	}
-	else if (type === EXPRESSION_TYPES.FUNCTION) {
-		const {name, namespace} = oDataASTNode.value.fn.value;
-
-		returnValue = getOperatorNameFromFunctionName(name, namespace);
-	}
-
-	return returnValue;
 };
 
 const getFunctionName = (oDataASTNode: ODataASTNode): string =>
@@ -603,15 +634,6 @@ const hasDifferentConjunctions = ({
 	prevConjunction !== oDataASTNode.type && !lastNodeWasGroup;
 
 /**
-/**
- * Checks if the value is a certain type.
- * @param {object} types - A map of supported types.
- * @param {*} value - The value to validate.
- */
-const isValueType = (types: object, value: string | undefined): boolean =>
-	value !== undefined && Object.values(types).includes(value);
-
-/**
  * Checks if the group is needed; It is unnecessary when there are multiple
  * groupings in a row, when the conjunction directly outside the group is the
  * same as the one inside or there is no conjunction within a grouping.
@@ -647,11 +669,6 @@ const parseNestedOdataString = (text: string): string => {
  */
 const removeSurroundingQuotes = (text: string) =>
 	text.replace(/^['"](.*)['"]$/g, '$1');
-
-/**
- * Removes both single `'` and double `"` quotes from a string.
- */
-const removeQuotes = (text: string): string => text.replace(/['"]+/g, '');
 
 /**
  * Removes a grouping node and returns the child node.
@@ -1033,6 +1050,10 @@ const parseMultipleCriteria = (queryString: string): CriterionGroup | null => {
 				const decodedSpecialCharacters =
 					decodeSpecialCharacters(stringified);
 				const oDataASTNode = JSON.parse(decodedSpecialCharacters);
+
+				// Mutually recursive with the transform* nodes and toCriteria; cycle cannot be linearized.
+
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
 				const criteriaArray = toCriteria({oDataASTNode});
 				const parsed = isCriterionGroup(criteriaArray[0])
 					? criteriaArray[0]
@@ -1081,6 +1102,10 @@ const translateQueryToCriteria = (queryString: string): Criteria => {
 		const decodedSpecialCharacters = decodeSpecialCharacters(stringfied);
 
 		const oDataASTNode = JSON.parse(decodedSpecialCharacters);
+
+		// Mutually recursive with the transform* nodes and toCriteria; cycle cannot be linearized.
+
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		const criteriaArray = toCriteria({oDataASTNode});
 
 		criteria = isCriterionGroup(criteriaArray[0])
@@ -1109,6 +1134,59 @@ const translateQueryToCriteria = (queryString: string): Criteria => {
 };
 
 /**
+ * Transform a function expression node into a criterion for the criteria
+ * builder.
+ * @returns an array containing the object representation of an operator
+ * criterion
+ */
+const transformFunctionalNode = ({oDataASTNode}: Context): Criterion[] =>
+	[
+		{
+			operatorName: getFunctionName(oDataASTNode),
+			propertyName: oDataASTNode.value.parameters[0].raw,
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value: removeQuotes(oDataASTNode.value.parameters[1].raw),
+		},
+	] as unknown as Criterion[];
+
+/**
+ * Transform an operator expression node into a criterion for the criteria
+ * builder.
+ * @returns An array containing the object representation of an operator
+ * criterion.
+ */
+const transformOperatorNode = ({oDataASTNode}: Context): Criterion[] => {
+	const valueType = oDataASTNode.value.right.value;
+
+	let value: string | number | null = removeSurroundingQuotes(
+		oDataASTNode.value.right.raw
+	);
+
+	if (EDM_NUMBERS.includes(valueType)) {
+		value = parseFloat(value);
+	}
+	else if (valueType === EDM_STRING) {
+		value = unescapeSingleQuotes(value as string);
+	}
+	else if (valueType === EDM_NULL) {
+		value = null;
+	}
+
+	return [
+		{
+			operatorName: getExpressionName(oDataASTNode),
+			propertyName: oDataASTNode.value.left.raw,
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value,
+		},
+	] as unknown as Criterion[];
+};
+
+/**
  * Recursively transforms the AST generated by the odata-v4-parser library into
  * a shape the criteria builder expects. Returns an array so that left and right
  * arguments can be concatenated together.
@@ -1120,25 +1198,38 @@ const toCriteria = (context: Context): Criteria[] => {
 
 	let criterion: Criteria[] | undefined;
 
+	// The transform* nodes below are mutually recursive with toCriteria; the
+	// cycle cannot be linearized, so the forward references are disabled here.
+
 	if (oDataASTNode.type === EXPRESSION_TYPES.NOT) {
+
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		criterion = transformNotNode(context);
 	}
 	else if (oDataASTNode.type === EXPRESSION_TYPES.COMMON) {
+
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		criterion = transformCommonNode(context);
 	}
 	else if (oDataASTNode.type === EXPRESSION_TYPES.METHOD_CALL) {
 		criterion = transformFunctionalNode(context);
 	}
 	else if (oDataASTNode.type === EXPRESSION_TYPES.FUNCTION) {
+
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		criterion = transformCustomFunctionNode(context);
 	}
 	else if (isValueType(RelationalOperators, expressionName)) {
 		criterion = transformOperatorNode(context);
 	}
 	else if (isValueType(Conjunctions, expressionName)) {
+
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		criterion = transformConjunctionNode(context);
 	}
 	else if (expressionName === GROUP) {
+
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		criterion = transformGroupNode(context);
 	}
 
@@ -1155,6 +1246,10 @@ const transformCommonNode = ({oDataASTNode}: Context): Criteria[] => {
 	let value;
 
 	if (nextNodeExpression.type === EXPRESSION_TYPES.FUNCTION) {
+
+		// transformCustomFunctionNode is mutually recursive with this node via toCriteria.
+
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		return transformCustomFunctionNode({oDataASTNode: nextNodeExpression});
 	}
 	else if (nextNodeExpression.type === EXPRESSION_TYPES.METHOD_CALL) {
@@ -1404,24 +1499,6 @@ const transformCustomFunctionNode = ({oDataASTNode}: Context): Criterion[] => {
 };
 
 /**
- * Transform a function expression node into a criterion for the criteria
- * builder.
- * @returns an array containing the object representation of an operator
- * criterion
- */
-const transformFunctionalNode = ({oDataASTNode}: Context): Criterion[] =>
-	[
-		{
-			operatorName: getFunctionName(oDataASTNode),
-			propertyName: oDataASTNode.value.parameters[0].raw,
-			rowId: generateRowId(),
-			touched: false,
-			valid: true,
-			value: removeQuotes(oDataASTNode.value.parameters[1].raw),
-		},
-	] as unknown as Criterion[];
-
-/**
  * Transforms a group expression node into a criterion for the criteria
  * builder. If it comes across a grouping that is redundant (doesn't provide
  * readability improvements, superfluous to order of operations), it will remove
@@ -1501,59 +1578,6 @@ const transformNotNode = ({oDataASTNode}: Context): Criteria[] => {
 	}
 
 	return returnValue;
-};
-
-/**
- * Transform an operator expression node into a criterion for the criteria
- * builder.
- * @returns An array containing the object representation of an operator
- * criterion.
- */
-const transformOperatorNode = ({oDataASTNode}: Context): Criterion[] => {
-	const valueType = oDataASTNode.value.right.value;
-
-	let value: string | number | null = removeSurroundingQuotes(
-		oDataASTNode.value.right.raw
-	);
-
-	if (EDM_NUMBERS.includes(valueType)) {
-		value = parseFloat(value);
-	}
-	else if (valueType === EDM_STRING) {
-		value = unescapeSingleQuotes(value as string);
-	}
-	else if (valueType === EDM_NULL) {
-		value = null;
-	}
-
-	return [
-		{
-			operatorName: getExpressionName(oDataASTNode),
-			propertyName: oDataASTNode.value.left.raw,
-			rowId: generateRowId(),
-			touched: false,
-			valid: true,
-			value,
-		},
-	] as unknown as Criterion[];
-};
-
-/**
- * Unescape single quotes in a string for general purposes.
- */
-const unescapeSingleQuotes = (text: string) => text.replace(/''/g, "'");
-
-/**
- * Wraps the criteria items in a criterion group.
- */
-export const wrapInCriteriaGroup = function wrapInCriteriaGroup(
-	criteriaArray: Criteria[]
-): CriterionGroup {
-	return {
-		conjunctionName: Conjunctions.And,
-		criteriaGroupId: generateGroupId(),
-		items: criteriaArray,
-	};
 };
 
 export {buildQueryString, translateQueryToCriteria};

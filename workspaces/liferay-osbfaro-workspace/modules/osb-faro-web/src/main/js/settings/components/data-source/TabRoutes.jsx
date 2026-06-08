@@ -10,15 +10,17 @@ import BundleRouter from '~/route-middleware/BundleRouter';
 import RouteNotFound from '~/shared/components/RouteNotFound';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
+const tabRoutesPropTypes = {
+	routes: PropTypes.arrayOf(
+		PropTypes.shape({
+			component: PropTypes.func,
+			path: PropTypes.string,
+		})
+	),
+};
+
 export default class TabRoutes extends React.Component {
-	static propTypes = {
-		routes: PropTypes.arrayOf(
-			PropTypes.shape({
-				component: PropTypes.func,
-				path: PropTypes.string,
-			})
-		),
-	};
+	static propTypes = tabRoutesPropTypes;
 
 	render() {
 		const {routes, ...otherProps} = this.props;
@@ -29,7 +31,7 @@ export default class TabRoutes extends React.Component {
 					<BundleRouter
 						componentProps={omitDefinedProps(
 							otherProps,
-							TabRoutes.propTypes
+							tabRoutesPropTypes
 						)}
 						data={Component}
 						exact
@@ -37,7 +39,6 @@ export default class TabRoutes extends React.Component {
 						path={path}
 					/>
 				))}
-
 				<RouteNotFound />
 			</Switch>
 		);

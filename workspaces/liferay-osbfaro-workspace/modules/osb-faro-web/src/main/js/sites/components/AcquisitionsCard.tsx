@@ -82,25 +82,46 @@ interface IAcquisitionsCardProps extends React.HTMLAttributes<HTMLElement> {
 	legacyDropdownRangeKey?: boolean;
 }
 
-const AcquisitionsCard: React.FC<IAcquisitionsCardProps> = ({
-	className,
-	compositionBagName,
-	label,
-	legacyDropdownRangeKey,
-}) => (
-	<BaseCard
-		className={className}
-		label={label}
-		legacyDropdownRangeKey={legacyDropdownRangeKey ?? true}
-		reportContainer={ReportContainer.AcquisitionsCard}
-	>
-		{({rangeSelectors}) => (
-			<AcquisitionsCardWithData
-				compositionBagName={compositionBagName}
-				rangeSelectors={rangeSelectors}
-			/>
-		)}
-	</BaseCard>
+interface IAcquisitionsCardWithStatesRendererProps
+	extends React.HTMLAttributes<HTMLElement> {
+	empty?: boolean;
+	error?: ApolloError;
+	loading?: boolean;
+}
+
+const AcquisitionsCardWithStatesRenderer: React.FC<
+	IAcquisitionsCardWithStatesRendererProps
+> = ({children, empty, error, loading}) => (
+	<StatesRenderer empty={empty} error={!!error} loading={loading}>
+		<StatesRenderer.Loading />
+		<StatesRenderer.Empty
+			description={
+				<>
+					<span className="mr-1">
+						{Liferay.Language.get(
+							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
+						)}
+					</span>
+
+					<ClayLink
+						href={URLConstants.SitesDashboardAcquisitions}
+						key="DOCUMENTATION"
+						target="_blank"
+					>
+						{Liferay.Language.get('learn-more-about-acquisitions')}
+					</ClayLink>
+				</>
+			}
+			showIcon={false}
+			title={Liferay.Language.get(
+				'there-are-no-sessions-on-the-selected-period'
+			)}
+		/>
+		<StatesRenderer.Error apolloError={error}>
+			<ErrorDisplay />
+		</StatesRenderer.Error>
+		<StatesRenderer.Success>{children}</StatesRenderer.Success>
+	</StatesRenderer>
 );
 
 interface IAcquisitionsCard extends Partial<IAcquisitionsCardProps> {
@@ -173,46 +194,25 @@ const AcquisitionsCardWithData: React.FC<IAcquisitionsCard> = ({
 	);
 };
 
-interface IAcquisitionsCardWithStatesRendererProps
-	extends React.HTMLAttributes<HTMLElement> {
-	empty?: boolean;
-	error?: ApolloError;
-	loading?: boolean;
-}
-
-const AcquisitionsCardWithStatesRenderer: React.FC<
-	IAcquisitionsCardWithStatesRendererProps
-> = ({children, empty, error, loading}) => (
-	<StatesRenderer empty={empty} error={!!error} loading={loading}>
-		<StatesRenderer.Loading />
-		<StatesRenderer.Empty
-			description={
-				<>
-					<span className="mr-1">
-						{Liferay.Language.get(
-							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
-						)}
-					</span>
-
-					<ClayLink
-						href={URLConstants.SitesDashboardAcquisitions}
-						key="DOCUMENTATION"
-						target="_blank"
-					>
-						{Liferay.Language.get('learn-more-about-acquisitions')}
-					</ClayLink>
-				</>
-			}
-			showIcon={false}
-			title={Liferay.Language.get(
-				'there-are-no-sessions-on-the-selected-period'
-			)}
-		/>
-		<StatesRenderer.Error apolloError={error}>
-			<ErrorDisplay />
-		</StatesRenderer.Error>
-		<StatesRenderer.Success>{children}</StatesRenderer.Success>
-	</StatesRenderer>
+const AcquisitionsCard: React.FC<IAcquisitionsCardProps> = ({
+	className,
+	compositionBagName,
+	label,
+	legacyDropdownRangeKey,
+}) => (
+	<BaseCard
+		className={className}
+		label={label}
+		legacyDropdownRangeKey={legacyDropdownRangeKey ?? true}
+		reportContainer={ReportContainer.AcquisitionsCard}
+	>
+		{({rangeSelectors}) => (
+			<AcquisitionsCardWithData
+				compositionBagName={compositionBagName}
+				rangeSelectors={rangeSelectors}
+			/>
+		)}
+	</BaseCard>
 );
 
 export default AcquisitionsCard;

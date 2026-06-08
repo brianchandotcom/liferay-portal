@@ -68,6 +68,56 @@ interface IMetricBaseCardProps<TChartData>
 	variables: (commonVariables: ICommonVariables) => any;
 }
 
+type TMetricState = {
+	activeItemIndex: number;
+	chartDataMapFn: unknown;
+	compareToPrevious: boolean;
+	metrics: Metric[];
+	queries: {
+		MetricQuery: ((metricName: string) => DocumentNode) | null;
+		TabsQuery: DocumentNode | null;
+		name: string;
+	};
+	variables: (commonVariables: ICommonVariables) => any;
+};
+
+type TMetricAction = {
+	payload: any;
+	type: Actions;
+};
+
+enum Actions {
+	UpdateActiveItemIndex = 'UPDATE_ACTIVE_ITEM_INDEX',
+	UpdateCompareToPrevious = 'UPDATE_COMPARE_TO_PREVIOUS',
+}
+
+const actionHandlers: Record<
+	Actions,
+	(state: TMetricState, action: TMetricAction) => TMetricState
+> = {
+	[Actions.UpdateActiveItemIndex]: (state, {payload}) => ({
+		...state,
+		activeItemIndex: payload,
+	}),
+	[Actions.UpdateCompareToPrevious]: (state, {payload}) => ({
+		...state,
+		compareToPrevious: payload,
+	}),
+};
+
+export const reducer = function reducer(
+	state: TMetricState,
+	action: TMetricAction
+) {
+	const handlerFn = actionHandlers[action.type];
+
+	if (handlerFn) {
+		return handlerFn(state, action);
+	}
+
+	throw new Error('Unhandled action type: ${type}');
+};
+
 function MetricBaseCard<TChartData>({
 	chartDataMapFn = getMetricsChartData,
 	emptyDescription,
@@ -141,56 +191,6 @@ function MetricBaseCard<TChartData>({
 		</MetricContext.Provider>
 	);
 }
-
-type TMetricState = {
-	activeItemIndex: number;
-	chartDataMapFn: unknown;
-	compareToPrevious: boolean;
-	metrics: Metric[];
-	queries: {
-		MetricQuery: ((metricName: string) => DocumentNode) | null;
-		TabsQuery: DocumentNode | null;
-		name: string;
-	};
-	variables: (commonVariables: ICommonVariables) => any;
-};
-
-type TMetricAction = {
-	payload: any;
-	type: Actions;
-};
-
-export const reducer = function reducer(
-	state: TMetricState,
-	action: TMetricAction
-) {
-	const handlerFn = actionHandlers[action.type];
-
-	if (handlerFn) {
-		return handlerFn(state, action);
-	}
-
-	throw new Error('Unhandled action type: ${type}');
-};
-
-enum Actions {
-	UpdateActiveItemIndex = 'UPDATE_ACTIVE_ITEM_INDEX',
-	UpdateCompareToPrevious = 'UPDATE_COMPARE_TO_PREVIOUS',
-}
-
-const actionHandlers: Record<
-	Actions,
-	(state: TMetricState, action: TMetricAction) => TMetricState
-> = {
-	[Actions.UpdateActiveItemIndex]: (state, {payload}) => ({
-		...state,
-		activeItemIndex: payload,
-	}),
-	[Actions.UpdateCompareToPrevious]: (state, {payload}) => ({
-		...state,
-		compareToPrevious: payload,
-	}),
-};
 
 export const useData = function useData() {
 	return useContext(MetricContext);

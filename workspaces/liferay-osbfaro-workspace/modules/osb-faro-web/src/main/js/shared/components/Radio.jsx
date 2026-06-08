@@ -8,16 +8,18 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
+const radioPropTypes = {
+	checked: PropTypes.bool,
+	displayInline: PropTypes.bool,
+	label: PropTypes.node,
+};
+
 export default class Radio extends React.Component {
 	static defaultProps = {
 		displayInline: false,
 	};
 
-	static propTypes = {
-		checked: PropTypes.bool,
-		displayInline: PropTypes.bool,
-		label: PropTypes.node,
-	};
+	static propTypes = radioPropTypes;
 
 	render() {
 		const {checked, className, displayInline, label, ...otherProps} =
@@ -31,7 +33,7 @@ export default class Radio extends React.Component {
 			<div className={classes}>
 				<label>
 					<input
-						{...omitDefinedProps(otherProps, Radio.propTypes)}
+						{...omitDefinedProps(otherProps, radioPropTypes)}
 						checked={checked}
 						className="custom-control-input"
 						type="radio"

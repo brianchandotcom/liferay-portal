@@ -164,6 +164,8 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 				</div>
 
 				{expanded && nestedItems && (
+
+					// eslint-disable-next-line @typescript-eslint/no-use-before-define -- mutual recursion: TimelineItem and VerticalTimeline reference each other
 					<VerticalTimeline
 						items={nestedItems}
 						nested

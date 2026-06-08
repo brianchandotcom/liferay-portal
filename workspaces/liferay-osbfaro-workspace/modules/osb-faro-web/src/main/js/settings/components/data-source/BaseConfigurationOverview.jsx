@@ -60,14 +60,16 @@ const ConfigurationItem = ({
 	);
 };
 
+const baseConfigurationOverviewPropTypes = {
+	configurationItems: PropTypes.array,
+};
+
 export default class BaseConfigurationOverview extends React.Component {
 	static defaultProps = {
 		configurationItems: [],
 	};
 
-	static propTypes = {
-		configurationItems: PropTypes.array,
-	};
+	static propTypes = baseConfigurationOverviewPropTypes;
 
 	render() {
 		const {className, configurationItems, ...otherProps} = this.props;
@@ -77,12 +79,11 @@ export default class BaseConfigurationOverview extends React.Component {
 				<Sheet.Subtitle>
 					{Liferay.Language.get('data-configuration')}
 				</Sheet.Subtitle>
-
 				{configurationItems.map((item, i) => (
 					<ConfigurationItem
 						{...omitDefinedProps(
 							otherProps,
-							BaseConfigurationOverview.propTypes
+							baseConfigurationOverviewPropTypes
 						)}
 						{...item}
 						key={i}

@@ -29,7 +29,7 @@ const NAME = 'document';
 const DocumentsAndMediaMetricCard: React.FC<IGenericMetricBaseCardProps> = (
 	props
 ) => {
-	const variables = (commonVariables: ICommonVariables) =>
+	const useVariables = (commonVariables: ICommonVariables) =>
 		useAssetVariables(commonVariables);
 
 	const metrics: Metric[] = [
@@ -72,7 +72,7 @@ const DocumentsAndMediaMetricCard: React.FC<IGenericMetricBaseCardProps> = (
 				name: NAME,
 			}}
 			reportContainer={ReportContainer.VisitorsBehaviorCard}
-			variables={variables}
+			variables={useVariables}
 		/>
 	);
 };

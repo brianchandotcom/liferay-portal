@@ -103,6 +103,15 @@ export function isEnd(dateOrRange, date) {
 	return !!end && end.isSame(date);
 }
 
+const dayPropTypes = {
+	date: PropTypes.instanceOf(moment).isRequired,
+	isSelectingEndDate: PropTypes.bool,
+	onSelect: PropTypes.func,
+	onSetHoveredDate: PropTypes.func,
+	outsideMonth: PropTypes.bool,
+	selected: PropTypes.bool,
+};
+
 class Day extends React.Component {
 	static defaultProps = {
 		isSelectingEndDate: false,
@@ -111,14 +120,7 @@ class Day extends React.Component {
 		selected: false,
 	};
 
-	static propTypes = {
-		date: PropTypes.instanceOf(moment).isRequired,
-		isSelectingEndDate: PropTypes.bool,
-		onSelect: PropTypes.func,
-		onSetHoveredDate: PropTypes.func,
-		outsideMonth: PropTypes.bool,
-		selected: PropTypes.bool,
-	};
+	static propTypes = dayPropTypes;
 
 	@autobind
 	handleClick() {
@@ -152,7 +154,7 @@ class Day extends React.Component {
 				onClick={this.handleClick}
 				onFocus={this.handleMouseOver}
 				onMouseOver={this.handleMouseOver}
-				{...omitDefinedProps(otherProps, Day.propTypes)}
+				{...omitDefinedProps(otherProps, dayPropTypes)}
 			>
 				{date.date()}
 			</ClayButton>

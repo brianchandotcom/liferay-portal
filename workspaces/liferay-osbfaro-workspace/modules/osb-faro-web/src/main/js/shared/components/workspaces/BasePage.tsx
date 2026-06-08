@@ -74,7 +74,7 @@ export class WorkspacesBasePage extends React.Component<IWorkspacesBasePageProps
 							onClick: active
 								? undefined
 								: () => {
-										API.user
+										return API.user
 											.updateLanguage({
 												languageId: id,
 											})

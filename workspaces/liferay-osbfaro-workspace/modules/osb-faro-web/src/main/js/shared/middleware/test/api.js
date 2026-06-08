@@ -125,7 +125,7 @@ describe('API Middleware', () => {
 
 		const next = jest.fn();
 
-		api()(next)(action).then(() => expect(requestFn).toBeCalled());
+		return api()(next)(action).then(() => expect(requestFn).toBeCalled());
 	});
 });
 

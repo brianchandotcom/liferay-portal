@@ -8,14 +8,16 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
+const itemFieldPropTypes = {
+	expand: PropTypes.bool,
+};
+
 export default class ItemField extends React.Component {
 	static defaultProps = {
 		expand: false,
 	};
 
-	static propTypes = {
-		expand: PropTypes.bool,
-	};
+	static propTypes = itemFieldPropTypes;
 
 	render() {
 		const {children, className, expand, ...otherProps} = this.props;
@@ -26,7 +28,7 @@ export default class ItemField extends React.Component {
 
 		return (
 			<div
-				{...omitDefinedProps(otherProps, ItemField.propTypes)}
+				{...omitDefinedProps(otherProps, itemFieldPropTypes)}
 				className={classes}
 			>
 				{children}

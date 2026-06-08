@@ -363,6 +363,24 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 
 	let _tokenRequest: ReturnType<typeof setTimeout> | Promise<any> | undefined;
 
+	const updateChannels = () => {
+		return API.channels.fetchAll({groupId}).then(({items}) => {
+			const channelId = get(items, [0, 'id']);
+
+			history.push(toRoute(Routes.SITES, {channelId, groupId}));
+
+			channelDispatch?.({
+				payload: getDefaultChannel(channelId, items),
+				type: ActionType.setSelectedChannel,
+			});
+
+			channelDispatch?.({
+				payload: items,
+				type: ActionType.setChannels,
+			});
+		});
+	};
+
 	const getNextToken: (prevToken?: string) => Promise<any> = (prevToken) =>
 		API.dataSource
 			.fetchToken(groupId, dataSourceId)
@@ -401,24 +419,6 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 
 				return prevToken;
 			});
-
-	const updateChannels = () => {
-		API.channels.fetchAll({groupId}).then(({items}) => {
-			const channelId = get(items, [0, 'id']);
-
-			history.push(toRoute(Routes.SITES, {channelId, groupId}));
-
-			channelDispatch?.({
-				payload: getDefaultChannel(channelId, items),
-				type: ActionType.setSelectedChannel,
-			});
-
-			channelDispatch?.({
-				payload: items,
-				type: ActionType.setChannels,
-			});
-		});
-	};
 
 	useEffect(() => {
 

@@ -25,6 +25,12 @@ interface IntervalSelectorIProps extends React.HTMLAttributes<HTMLDivElement> {
 	onChange: (val: any) => void;
 }
 
+const intervalSelectorPropTypes = {
+	activeInterval: PropTypes.oneOf([day, month, week]),
+	disabled: PropTypes.bool,
+	onChange: PropTypes.func.isRequired,
+};
+
 const IntervalSelector: React.FC<IntervalSelectorIProps> = ({
 	activeInterval = day,
 	className,
@@ -36,7 +42,7 @@ const IntervalSelector: React.FC<IntervalSelectorIProps> = ({
 
 	return (
 		<ClayButton.Group
-			{...omitDefinedProps(otherProps, IntervalSelector.propTypes)}
+			{...omitDefinedProps(otherProps, intervalSelectorPropTypes)}
 			className={classes}
 		>
 			{[day, week, month].map((interval) => (
@@ -60,11 +66,7 @@ const IntervalSelector: React.FC<IntervalSelectorIProps> = ({
 	);
 };
 
-IntervalSelector.propTypes = {
-	activeInterval: PropTypes.oneOf([day, month, week]),
-	disabled: PropTypes.bool,
-	onChange: PropTypes.func.isRequired,
-};
+IntervalSelector.propTypes = intervalSelectorPropTypes;
 
 IntervalSelector.defaultProps = {
 	activeInterval: day,

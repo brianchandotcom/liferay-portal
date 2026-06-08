@@ -54,35 +54,6 @@ interface IBarComparisonCellProps extends React.HTMLAttributes<HTMLElement> {
 	topValue: number;
 }
 
-const BarComparisonCell: React.FC<IBarComparisonCellProps> = ({
-	compareToPrevious = false,
-	event,
-	events = [],
-	topValue,
-}) => {
-	const isComparingSegment = get(events[0], 'breakdownItems', []).length > 1;
-
-	const sections = getSections(
-		events,
-		compareToPrevious,
-		isComparingSegment,
-		topValue
-	);
-
-	return (
-		<div className="bar-comparison-root table-responsive table-root">
-			{sections.map((items, i) => (
-				<BarComparisonTable
-					event={event}
-					isComparingSegment={isComparingSegment}
-					items={items}
-					key={i}
-				/>
-			))}
-		</div>
-	);
-};
-
 const getSections = (
 	events: BreakdownDataItem[],
 	compareToPrevious: boolean,
@@ -154,6 +125,35 @@ const getSections = (
 	sections.push([...data]);
 
 	return sections;
+};
+
+const BarComparisonCell: React.FC<IBarComparisonCellProps> = ({
+	compareToPrevious = false,
+	event,
+	events = [],
+	topValue,
+}) => {
+	const isComparingSegment = get(events[0], 'breakdownItems', []).length > 1;
+
+	const sections = getSections(
+		events,
+		compareToPrevious,
+		isComparingSegment,
+		topValue
+	);
+
+	return (
+		<div className="bar-comparison-root table-responsive table-root">
+			{sections.map((items, i) => (
+				<BarComparisonTable
+					event={event}
+					isComparingSegment={isComparingSegment}
+					items={items}
+					key={i}
+				/>
+			))}
+		</div>
+	);
 };
 
 export default BarComparisonCell;

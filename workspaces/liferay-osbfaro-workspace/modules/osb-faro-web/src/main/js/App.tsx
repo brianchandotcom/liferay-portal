@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ApolloProvider as ApolloProviderHooks,
-	ApolloProvider,
-} from '@apollo/client';
+import {ApolloProvider} from '@apollo/client';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayLinkContext} from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -152,159 +149,155 @@ const App = () => {
 
 	return (
 		<ApolloProvider client={client}>
-			<ApolloProviderHooks client={client}>
-				<Provider store={store}>
-					<ClayIconSpriteContext.Provider value="/o/osb-faro-web/dist/sprite.svg">
-						<ClayLinkContext.Provider
-							value={({
-								children,
-								externalLink = false,
-								href,
-								...otherProps
-							}: {
-								children?: React.ReactNode;
-								externalLink?: boolean;
-								href?: string;
-							}) => {
-								if (href?.startsWith('http') || externalLink) {
-									return (
-										<a {...otherProps} href={href}>
-											{children}
-										</a>
-									);
-								}
-
+			<Provider store={store}>
+				<ClayIconSpriteContext.Provider value="/o/osb-faro-web/dist/sprite.svg">
+					<ClayLinkContext.Provider
+						value={({
+							children,
+							externalLink = false,
+							href,
+							...otherProps
+						}: {
+							children?: React.ReactNode;
+							externalLink?: boolean;
+							href?: string;
+						}) => {
+							if (href?.startsWith('http') || externalLink) {
 								return (
-									<Link {...otherProps} to={href || ''}>
+									<a {...otherProps} href={href}>
 										{children}
-									</Link>
+									</a>
 								);
-							}}
-						>
-							<UnassignedSegmentsProvider>
-								<OnboardingContext.Provider
-									value={{
-										onboardingTriggered,
-										setOnboardingTriggered: () =>
-											setOnboardingTriggered(true),
-									}}
-								>
-									<ChannelProvider>
-										<ClayTooltipProvider>
-											<div>
-												<Router
-													getUserConfirmation={
-														handleUserConfirmation
-													}
-												>
-													<RoutesContainer>
-														<AlertFeed />
+							}
 
-														<ModalRenderer />
+							return (
+								<Link {...otherProps} to={href || ''}>
+									{children}
+								</Link>
+							);
+						}}
+					>
+						<UnassignedSegmentsProvider>
+							<OnboardingContext.Provider
+								value={{
+									onboardingTriggered,
+									setOnboardingTriggered: () =>
+										setOnboardingTriggered(true),
+								}}
+							>
+								<ChannelProvider>
+									<ClayTooltipProvider>
+										<div>
+											<Router
+												getUserConfirmation={
+													handleUserConfirmation
+												}
+											>
+												<RoutesContainer>
+													<AlertFeed />
 
-														<Suspense
-															fallback={
-																<Loading />
-															}
-														>
-															<Switch>
-																<BundleRouter
-																	data={
-																		Workspaces
-																	}
-																	exact
-																	path={
-																		Routes.BASE
-																	}
-																/>
+													<ModalRenderer />
 
-																<BundleRouter
-																	data={
-																		Workspaces
-																	}
-																	exact
-																	path={
-																		Routes.WORKSPACES
-																	}
-																/>
+													<Suspense
+														fallback={<Loading />}
+													>
+														<Switch>
+															<BundleRouter
+																data={
+																	Workspaces
+																}
+																exact
+																path={
+																	Routes.BASE
+																}
+															/>
 
-																<BundleRouter
-																	data={
-																		SelectWorkspaceAccount
-																	}
-																	exact
-																	path={
-																		Routes.WORKSPACE_ADD
-																	}
-																/>
+															<BundleRouter
+																data={
+																	Workspaces
+																}
+																exact
+																path={
+																	Routes.WORKSPACES
+																}
+															/>
 
-																{ENABLE_ADD_TRIAL_WORKSPACE && (
-																	<BundleRouter
-																		data={
-																			AddWorkspace
-																		}
-																		exact
-																		path={
-																			Routes.WORKSPACE_ADD_TRIAL
-																		}
-																	/>
-																)}
+															<BundleRouter
+																data={
+																	SelectWorkspaceAccount
+																}
+																exact
+																path={
+																	Routes.WORKSPACE_ADD
+																}
+															/>
 
+															{ENABLE_ADD_TRIAL_WORKSPACE && (
 																<BundleRouter
 																	data={
 																		AddWorkspace
 																	}
 																	exact
 																	path={
-																		Routes.WORKSPACE_ADD_WITH_CORP_PROJECT_UUID
+																		Routes.WORKSPACE_ADD_TRIAL
 																	}
 																/>
+															)}
 
-																<BundleRouter
-																	data={
-																		SelectWorkspaceAccount
-																	}
-																	exact
-																	path={
-																		Routes.WORKSPACE_SELECT_ACCOUNT
-																	}
-																/>
+															<BundleRouter
+																data={
+																	AddWorkspace
+																}
+																exact
+																path={
+																	Routes.WORKSPACE_ADD_WITH_CORP_PROJECT_UUID
+																}
+															/>
 
-																<BundleRouter
-																	data={
-																		OAuthReceive
-																	}
-																	exact
-																	path={
-																		Routes.OAUTH_RECEIVE
-																	}
-																/>
+															<BundleRouter
+																data={
+																	SelectWorkspaceAccount
+																}
+																exact
+																path={
+																	Routes.WORKSPACE_SELECT_ACCOUNT
+																}
+															/>
 
-																<Route
-																	component={
-																		Loading
-																	}
-																	path={
-																		Routes.LOADING
-																	}
-																/>
+															<BundleRouter
+																data={
+																	OAuthReceive
+																}
+																exact
+																path={
+																	Routes.OAUTH_RECEIVE
+																}
+															/>
 
-																<WorkspaceLayer />
+															<Route
+																component={
+																	Loading
+																}
+																path={
+																	Routes.LOADING
+																}
+															/>
 
-																<RouteNotFound />
-															</Switch>
-														</Suspense>
-													</RoutesContainer>
-												</Router>
-											</div>
-										</ClayTooltipProvider>
-									</ChannelProvider>
-								</OnboardingContext.Provider>
-							</UnassignedSegmentsProvider>
-						</ClayLinkContext.Provider>
-					</ClayIconSpriteContext.Provider>
-				</Provider>
-			</ApolloProviderHooks>
+															<WorkspaceLayer />
+
+															<RouteNotFound />
+														</Switch>
+													</Suspense>
+												</RoutesContainer>
+											</Router>
+										</div>
+									</ClayTooltipProvider>
+								</ChannelProvider>
+							</OnboardingContext.Provider>
+						</UnassignedSegmentsProvider>
+					</ClayLinkContext.Provider>
+				</ClayIconSpriteContext.Provider>
+			</Provider>
 		</ApolloProvider>
 	);
 };

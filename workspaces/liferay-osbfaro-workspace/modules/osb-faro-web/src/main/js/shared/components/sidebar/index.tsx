@@ -174,7 +174,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 							onClick: active
 								? undefined
 								: () => {
-										API.user
+										return API.user
 											.updateLanguage({
 												languageId: id,
 											})

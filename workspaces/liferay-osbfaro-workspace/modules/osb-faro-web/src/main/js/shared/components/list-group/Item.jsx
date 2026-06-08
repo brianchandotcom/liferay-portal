@@ -8,6 +8,15 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
+const itemPropTypes = {
+	accentColor: PropTypes.string,
+	action: PropTypes.bool,
+	active: PropTypes.bool,
+	disabled: PropTypes.bool,
+	flex: PropTypes.bool,
+	header: PropTypes.bool,
+};
+
 export default class Item extends React.Component {
 	static defaultProps = {
 		action: false,
@@ -17,14 +26,7 @@ export default class Item extends React.Component {
 		header: false,
 	};
 
-	static propTypes = {
-		accentColor: PropTypes.string,
-		action: PropTypes.bool,
-		active: PropTypes.bool,
-		disabled: PropTypes.bool,
-		flex: PropTypes.bool,
-		header: PropTypes.bool,
-	};
+	static propTypes = itemPropTypes;
 
 	render() {
 		const {
@@ -54,7 +56,7 @@ export default class Item extends React.Component {
 
 		return (
 			<li
-				{...omitDefinedProps(otherProps, Item.propTypes)}
+				{...omitDefinedProps(otherProps, itemPropTypes)}
 				className={classes}
 				style={accentColor ? style : undefined}
 			>

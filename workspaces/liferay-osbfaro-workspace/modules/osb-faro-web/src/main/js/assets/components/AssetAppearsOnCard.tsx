@@ -63,29 +63,136 @@ interface IAssetAppearsOnCardProps {
 	emptyStateText: EmptyStateText;
 }
 
-export const AssetAppearsOnCard = function AssetAppearsOnCard({
+const formatItems = (data: any) =>
+	data.assetPages.assetMetrics.map(
+		({assetId, assetTitle, selectedMetrics}: any) => ({
+			title: assetTitle ? assetTitle : assetId,
+			touchpoint: assetId,
+			...selectedMetrics.reduce((acc: any, {name, value}: any) => {
+				acc[name] = value;
+
+				return acc;
+			}, {}),
+		})
+	);
+
+const getTableColumns = ({
 	accessors,
-	assetType,
-	emptyStateLink,
-	emptyStateText,
-}: IAssetAppearsOnCardProps) {
+	channelId,
+	groupId,
+	rangeSelectors,
+}: any) => {
+	const generateURL = ({title, touchpoint}: any) => {
+		const router = {
+			params: {
+				channelId,
+				groupId,
+				title,
+				touchpoint: encodeURIComponent(touchpoint),
+			},
+			query: {
+				...pickBy(rangeSelectors),
+			},
+		};
+
+		return getUrl(Routes.SITES_TOUCHPOINTS_OVERVIEW, router);
+	};
+
+	const tableColumns = [
+		{
+			accessor: 'title',
+			cellRenderer: ({data}: any) => {
+				const url = generateURL(data);
+
+				return (
+					<td className="table-cell-expand">
+						<ClayLink
+							className="font-weight-semibold text-dark text-truncate-inline"
+							href={url}
+						>
+							<TextTruncate title={data.title} />
+						</ClayLink>
+					</td>
+				);
+			},
+			className: 'table-cell-expand',
+			label: Liferay.Language.get('page-name'),
+			sortable: false,
+			title: true,
+		},
+		{
+			accessor: 'url',
+			cellRenderer: ({data}: any) => (
+				<td className="table-cell-expand">
+					<ClayLink
+						className="text-secondary text-truncate-inline"
+
+						// @ts-ignore
+
+						externalLink
+						href={data.touchpoint}
+						target="_blank"
+					>
+						<TextTruncate title={data.touchpoint} />
+					</ClayLink>
+				</td>
+			),
+			className: 'table-cell-expand',
+			label: Liferay.Language.get('canonical-url'),
+			sortable: false,
+		},
+		...accessors.map((accessor: Accessor) => ({
+			...metricsListColumns[accessor],
+			sortable: false,
+		})),
+	];
+
+	return tableColumns;
+};
+
+const AssetApperarsOnContentCard = ({
+	accessors,
+	data,
+	onPaginationChange,
+	pagination,
+}: any) => {
+	const {channelId, groupId} = useParams();
+	const rangeSelectors = useQueryRangeSelectors();
+
+	const items = useMemo(() => formatItems(data), [data]);
+
 	return (
-		<BaseCard
-			label={Liferay.Language.get('asset-appears-on')}
-			legacyDropdownRangeKey={false}
-			minHeight={536}
-			reportContainer={ReportContainer.AssetAppearsOnCard}
-		>
-			{({rangeSelectors}) => (
-				<AssetAppearsOnStateRenderer
-					accessors={accessors}
-					assetType={assetType}
-					emptyStateLink={emptyStateLink}
-					emptyStateText={emptyStateText}
-					rangeSelectors={rangeSelectors}
-				/>
-			)}
-		</BaseCard>
+		<>
+			<Table
+				className="mb-3 table-hover"
+				columns={getTableColumns({
+					accessors,
+					channelId,
+					groupId,
+					rangeSelectors,
+				})}
+				items={items}
+				rowIdentifier={['touchpoint', 'title']}
+			/>
+
+			<ClayPaginationBarWithBasicItems
+				active={pagination.page}
+				activeDelta={pagination.size}
+				className="pb-2 px-3"
+				deltas={deltaValues.map((delta) => ({label: delta}))}
+				onActiveChange={(page) =>
+					onPaginationChange({
+						...pagination,
+						page,
+						start: (page - 1) * pagination.size,
+					})
+				}
+				onDeltaChange={(size) =>
+					onPaginationChange({...pagination, size})
+				}
+				totalItems={data?.assetPages.total}
+			/>
+		</>
 	);
 };
 
@@ -166,135 +273,28 @@ const AssetAppearsOnStateRenderer = ({
 	);
 };
 
-const formatItems = (data: any) =>
-	data.assetPages.assetMetrics.map(
-		({assetId, assetTitle, selectedMetrics}: any) => ({
-			title: assetTitle ? assetTitle : assetId,
-			touchpoint: assetId,
-			...selectedMetrics.reduce((acc: any, {name, value}: any) => {
-				acc[name] = value;
-
-				return acc;
-			}, {}),
-		})
-	);
-
-const AssetApperarsOnContentCard = ({
+export const AssetAppearsOnCard = function AssetAppearsOnCard({
 	accessors,
-	data,
-	onPaginationChange,
-	pagination,
-}: any) => {
-	const {channelId, groupId} = useParams();
-	const rangeSelectors = useQueryRangeSelectors();
-
-	const items = useMemo(() => formatItems(data), [data]);
-
+	assetType,
+	emptyStateLink,
+	emptyStateText,
+}: IAssetAppearsOnCardProps) {
 	return (
-		<>
-			<Table
-				className="mb-3 table-hover"
-				columns={getTableColumns({
-					accessors,
-					channelId,
-					groupId,
-					rangeSelectors,
-				})}
-				items={items}
-				rowIdentifier={['touchpoint', 'title']}
-			/>
-
-			<ClayPaginationBarWithBasicItems
-				active={pagination.page}
-				activeDelta={pagination.size}
-				className="pb-2 px-3"
-				deltas={deltaValues.map((delta) => ({label: delta}))}
-				onActiveChange={(page) =>
-					onPaginationChange({
-						...pagination,
-						page,
-						start: (page - 1) * pagination.size,
-					})
-				}
-				onDeltaChange={(size) =>
-					onPaginationChange({...pagination, size})
-				}
-				totalItems={data?.assetPages.total}
-			/>
-		</>
+		<BaseCard
+			label={Liferay.Language.get('asset-appears-on')}
+			legacyDropdownRangeKey={false}
+			minHeight={536}
+			reportContainer={ReportContainer.AssetAppearsOnCard}
+		>
+			{({rangeSelectors}) => (
+				<AssetAppearsOnStateRenderer
+					accessors={accessors}
+					assetType={assetType}
+					emptyStateLink={emptyStateLink}
+					emptyStateText={emptyStateText}
+					rangeSelectors={rangeSelectors}
+				/>
+			)}
+		</BaseCard>
 	);
-};
-
-const getTableColumns = ({
-	accessors,
-	channelId,
-	groupId,
-	rangeSelectors,
-}: any) => {
-	const generateURL = ({title, touchpoint}: any) => {
-		const router = {
-			params: {
-				channelId,
-				groupId,
-				title,
-				touchpoint: encodeURIComponent(touchpoint),
-			},
-			query: {
-				...pickBy(rangeSelectors),
-			},
-		};
-
-		return getUrl(Routes.SITES_TOUCHPOINTS_OVERVIEW, router);
-	};
-
-	const tableColumns = [
-		{
-			accessor: 'title',
-			cellRenderer: ({data}: any) => {
-				const url = generateURL(data);
-
-				return (
-					<td className="table-cell-expand">
-						<ClayLink
-							className="font-weight-semibold text-dark text-truncate-inline"
-							href={url}
-						>
-							<TextTruncate title={data.title} />
-						</ClayLink>
-					</td>
-				);
-			},
-			className: 'table-cell-expand',
-			label: Liferay.Language.get('page-name'),
-			sortable: false,
-			title: true,
-		},
-		{
-			accessor: 'url',
-			cellRenderer: ({data}: any) => (
-				<td className="table-cell-expand">
-					<ClayLink
-						className="text-secondary text-truncate-inline"
-
-						// @ts-ignore
-
-						externalLink
-						href={data.touchpoint}
-						target="_blank"
-					>
-						<TextTruncate title={data.touchpoint} />
-					</ClayLink>
-				</td>
-			),
-			className: 'table-cell-expand',
-			label: Liferay.Language.get('canonical-url'),
-			sortable: false,
-		},
-		...accessors.map((accessor: Accessor) => ({
-			...metricsListColumns[accessor],
-			sortable: false,
-		})),
-	];
-
-	return tableColumns;
 };

@@ -19,15 +19,17 @@ import omitDefinedProps from '~/shared/util/omitDefinedProps';
 
 import SearchInput from './SearchInput';
 
+const itemPropTypes = {
+	item: PropTypes.object.isRequired,
+	onSelect: PropTypes.func,
+};
+
 class Item extends React.Component {
 	static defaultProps = {
 		onSelect: noop,
 	};
 
-	static propTypes = {
-		item: PropTypes.object.isRequired,
-		onSelect: PropTypes.func,
-	};
+	static propTypes = itemPropTypes;
 
 	@autobind
 	handleClick() {
@@ -39,7 +41,7 @@ class Item extends React.Component {
 
 		return (
 			<ClayDropDown.Item
-				{...omitDefinedProps(otherProps, Item.propTypes)}
+				{...omitDefinedProps(otherProps, itemPropTypes)}
 				closeOnClick
 				onClick={this.handleClick}
 			>

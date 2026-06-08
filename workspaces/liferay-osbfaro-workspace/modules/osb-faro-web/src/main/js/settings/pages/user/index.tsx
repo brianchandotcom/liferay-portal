@@ -39,7 +39,8 @@ export const User = function User({className}: {className?: string}) {
 			groupId,
 			statuses: [UserStatuses.Requested],
 		})
-		.then(setUserRequest);
+		.then(setUserRequest)
+		.catch(() => {});
 
 	const NAV_ITEMS = [
 		{

@@ -33,6 +33,22 @@ export class ItemComponent extends React.Component {
 	}
 }
 
+const selectItemsModalPropTypes = {
+	dataSourceFn: PropTypes.func.isRequired,
+	disabledSelectedDataSourceFn: PropTypes.func,
+	entityType: PropTypes.number,
+	expandDataFn: PropTypes.func,
+	groupId: PropTypes.string.isRequired,
+	onClose: PropTypes.func,
+	onSubmit: PropTypes.func,
+	requireSelection: PropTypes.bool,
+	selectMultiple: PropTypes.bool,
+
+	selectedItems: PropTypes.array,
+	submitMessage: PropTypes.string,
+	title: PropTypes.string,
+};
+
 export default class SelectItemsModal extends React.Component {
 	static defaultProps = {
 		expandDataFn: noop,
@@ -46,21 +62,7 @@ export default class SelectItemsModal extends React.Component {
 		title: Liferay.Language.get('select-fields'),
 	};
 
-	static propTypes = {
-		dataSourceFn: PropTypes.func.isRequired,
-		disabledSelectedDataSourceFn: PropTypes.func,
-		entityType: PropTypes.number,
-		expandDataFn: PropTypes.func,
-		groupId: PropTypes.string.isRequired,
-		onClose: PropTypes.func,
-		onSubmit: PropTypes.func,
-		requireSelection: PropTypes.bool,
-		selectMultiple: PropTypes.bool,
-
-		selectedItems: PropTypes.array,
-		submitMessage: PropTypes.string,
-		title: PropTypes.string,
-	};
+	static propTypes = selectItemsModalPropTypes;
 
 	state = {
 		disabledItemsISet: new Set(),
@@ -183,7 +185,7 @@ export default class SelectItemsModal extends React.Component {
 
 		return (
 			<SearchableModal
-				{...omitDefinedProps(otherProps, SelectItemsModal.propTypes)}
+				{...omitDefinedProps(otherProps, selectItemsModalPropTypes)}
 				dataSourceFn={dataSourceFn}
 				fitContent={fitContent}
 				footer={

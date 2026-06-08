@@ -47,16 +47,19 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 		formatUTCDate(getDateNow(), FORMAT_LT)
 	);
 
-	const onSubmit = (): void => {
-		const {timeZoneId} = _formRef.current.values;
-
-		API.projects.patchTimeZone(groupId, timeZoneId).then(handleClose);
-	};
-
 	const handleClose = (): void => {
 		API.notifications.readNotification(groupId, notificationId);
 
 		onClose();
+	};
+
+	const onSubmit = (): void => {
+		const {timeZoneId} = _formRef.current.values;
+
+		API.projects
+			.patchTimeZone(groupId, timeZoneId)
+			.then(handleClose)
+			.catch(() => {});
 	};
 
 	return (

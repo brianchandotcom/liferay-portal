@@ -30,6 +30,9 @@ const InterestTopicsModal: React.FC<IInterestTopicsModalProps> = ({
 	const [inputValue, setInputValue] = useState('');
 	const [keywords, setKeywords] = useState<string[]>([]);
 
+	const validateKeyword = (value?: string): boolean =>
+		!!value && KEYWORD_VALIDATOR_REGEX.test(value);
+
 	const handleSubmit = () => {
 		if (
 			(keywords.length && !inputValue) ||
@@ -38,9 +41,6 @@ const InterestTopicsModal: React.FC<IInterestTopicsModalProps> = ({
 			onSubmit(keywords);
 		}
 	};
-
-	const validateKeyword = (value?: string): boolean =>
-		!!value && KEYWORD_VALIDATOR_REGEX.test(value);
 
 	return (
 		<Modal

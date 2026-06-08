@@ -53,6 +53,58 @@ interface IWrapperCSVComponentProps extends React.HTMLAttributes<HTMLElement> {
 
 let CSV_URL = '';
 
+interface IWrapperComponent {
+	alertMessage: string;
+	children?: React.ReactNode;
+	infoMessage: string;
+	onSubmit: (rangeSelectors?: RangeSelectors) => void;
+	type: ReportType;
+}
+
+const WrapperComponent: React.FC<IWrapperComponent> = ({
+	children,
+	infoMessage,
+	onSubmit,
+	type,
+	...otherProps
+}) => {
+	const [visible, setVisible] = useState(false);
+	const {observer} = useModal({onClose: () => setVisible(false)});
+	const history = createMemoryHistory();
+
+	return (
+		<>
+			{visible && (
+				<ApolloProvider client={client}>
+					<Router history={history}>
+						<MockedProvider
+							mocks={[mockTimeRangeReq(), mockPreferenceReq()]}
+						>
+							<Provider store={mockStore()}>
+								<DownloadReportModal
+									{...otherProps}
+									infoMessage={infoMessage}
+									observer={observer}
+									onClose={jest.fn()}
+									onSubmit={onSubmit}
+									type={type}
+								>
+									{children}
+								</DownloadReportModal>
+							</Provider>
+						</MockedProvider>
+					</Router>
+				</ApolloProvider>
+			)}
+
+			<DownloadReportButton
+				disabled={false}
+				onClick={() => setVisible(true)}
+			/>
+		</>
+	);
+};
+
 const WrapperCSVComponent: React.FC<IWrapperCSVComponentProps> = ({
 	type,
 	...props
@@ -118,58 +170,6 @@ const WrapperPDFomponent = ({
 		{children}
 	</WrapperComponent>
 );
-
-interface IWrapperComponent {
-	alertMessage: string;
-	children?: React.ReactNode;
-	infoMessage: string;
-	onSubmit: (rangeSelectors?: RangeSelectors) => void;
-	type: ReportType;
-}
-
-const WrapperComponent: React.FC<IWrapperComponent> = ({
-	children,
-	infoMessage,
-	onSubmit,
-	type,
-	...otherProps
-}) => {
-	const [visible, setVisible] = useState(false);
-	const {observer} = useModal({onClose: () => setVisible(false)});
-	const history = createMemoryHistory();
-
-	return (
-		<>
-			{visible && (
-				<ApolloProvider client={client}>
-					<Router history={history}>
-						<MockedProvider
-							mocks={[mockTimeRangeReq(), mockPreferenceReq()]}
-						>
-							<Provider store={mockStore()}>
-								<DownloadReportModal
-									{...otherProps}
-									infoMessage={infoMessage}
-									observer={observer}
-									onClose={jest.fn()}
-									onSubmit={onSubmit}
-									type={type}
-								>
-									{children}
-								</DownloadReportModal>
-							</Provider>
-						</MockedProvider>
-					</Router>
-				</ApolloProvider>
-			)}
-
-			<DownloadReportButton
-				disabled={false}
-				onClick={() => setVisible(true)}
-			/>
-		</>
-	);
-};
 
 const generateCSVURL = (type: CSVType) => {
 	const {getByRole, getByTestId} = render(

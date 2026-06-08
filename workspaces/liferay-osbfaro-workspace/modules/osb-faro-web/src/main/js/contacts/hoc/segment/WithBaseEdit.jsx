@@ -49,19 +49,21 @@ const ERRORS = {
 	},
 };
 export default function WithBaseEdit(WrappedComponent) {
+	const baseEditPropTypes = {
+		addAlert: PropTypes.func.isRequired,
+		channelId: PropTypes.string,
+		close: PropTypes.func.isRequired,
+		groupId: PropTypes.string.isRequired,
+		history: PropTypes.object.isRequired,
+		id: PropTypes.string,
+		open: PropTypes.func.isRequired,
+		segment: PropTypes.instanceOf(Segment),
+	};
+
 	class BaseEdit extends React.Component {
 		static contextType = ChannelContext;
 
-		static propTypes = {
-			addAlert: PropTypes.func.isRequired,
-			channelId: PropTypes.string,
-			close: PropTypes.func.isRequired,
-			groupId: PropTypes.string.isRequired,
-			history: PropTypes.object.isRequired,
-			id: PropTypes.string,
-			open: PropTypes.func.isRequired,
-			segment: PropTypes.instanceOf(Segment),
-		};
+		static propTypes = baseEditPropTypes;
 
 		state = {
 			onDelete: false,
@@ -302,13 +304,9 @@ export default function WithBaseEdit(WrappedComponent) {
 							</BasePage.Header.Section>
 						</BasePage.Row>
 					</BasePage.Header>
-
 					<BasePage.Body pageContainer={false}>
 						<WrappedComponent
-							{...omitDefinedProps(
-								otherProps,
-								BaseEdit.propTypes
-							)}
+							{...omitDefinedProps(otherProps, baseEditPropTypes)}
 							channelId={channelId}
 							editing={editing}
 							groupId={groupId}

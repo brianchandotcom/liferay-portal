@@ -248,6 +248,8 @@ const UserList: React.FC<IUserListProps> = ({
 				close();
 
 				if (!get(data, 'total')) {
+
+					// eslint-disable-next-line @typescript-eslint/no-use-before-define -- mutual recursion with handleAddUserModal; deferred callback so safe at runtime
 					handleNoUsersInPropertyModal();
 				}
 			},

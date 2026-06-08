@@ -57,8 +57,10 @@ const AutocompleteInput: React.FC<IAutocompleteProps> = ({
 			variables,
 		} = graphqlQuery;
 
+		// eslint-disable-next-line react-hooks/rules-of-hooks -- graphql vs dataSourceFn mode is fixed per mount, so the branch (and Hook order) is stable
 		const debouncedInputValue = useDebounce(value, DEBOUNCE_DELAY);
 
+		// eslint-disable-next-line react-hooks/rules-of-hooks
 		response = useQuery(query, {
 			fetchPolicy: 'network-only',
 			variables: {
@@ -73,6 +75,8 @@ const AutocompleteInput: React.FC<IAutocompleteProps> = ({
 		};
 	}
 	else {
+
+		// eslint-disable-next-line react-hooks/rules-of-hooks
 		response = useRequest({
 			dataSourceFn: ({value}) => dataSourceFn?.(value),
 			debounceDelay: DEBOUNCE_DELAY,

@@ -34,6 +34,30 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 }) => {
 	const {referencedProperties} = useContext(ReferencedObjectsContext);
 
+	const renderCriteriaRow = (criterion: any) => {
+		const property = findPropertyByCriterion(
+			criterion,
+			referencedProperties
+		);
+
+		return (
+			<div className="criteria-row">
+				{property ? (
+					<DisplayComponent
+						criterion={criterion}
+						property={property}
+						segmentType={segmentType}
+						timeZoneId={timeZoneId}
+					/>
+				) : (
+					<b className="undefined-property">
+						{Liferay.Language.get('attribute-no-longer-exists')}
+					</b>
+				)}
+			</div>
+		);
+	};
+
 	const renderCriteriaGroup = (criteria: Criteria, depth: number) => {
 		const {conjunctionName, criteriaGroupId, items} = criteria as {
 			conjunctionName: string;
@@ -75,30 +99,6 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 						</Fragment>
 					);
 				})}
-			</div>
-		);
-	};
-
-	const renderCriteriaRow = (criterion: any) => {
-		const property = findPropertyByCriterion(
-			criterion,
-			referencedProperties
-		);
-
-		return (
-			<div className="criteria-row">
-				{property ? (
-					<DisplayComponent
-						criterion={criterion}
-						property={property}
-						segmentType={segmentType}
-						timeZoneId={timeZoneId}
-					/>
-				) : (
-					<b className="undefined-property">
-						{Liferay.Language.get('attribute-no-longer-exists')}
-					</b>
-				)}
 			</div>
 		);
 	};

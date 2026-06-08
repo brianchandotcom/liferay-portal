@@ -16,10 +16,12 @@ const PAGE_MAP = {
 	[DataSourceTypes.Csv]: ConfigureCSV,
 };
 
+const editPropTypes = {
+	dataSource: PropTypes.instanceOf(DataSource).isRequired,
+};
+
 export class Edit extends React.Component {
-	static propTypes = {
-		dataSource: PropTypes.instanceOf(DataSource).isRequired,
-	};
+	static propTypes = editPropTypes;
 
 	render() {
 		const {dataSource, ...otherProps} = this.props;
@@ -29,7 +31,7 @@ export class Edit extends React.Component {
 		if (Page) {
 			return (
 				<Page
-					{...omitDefinedProps(otherProps, Edit.propTypes)}
+					{...omitDefinedProps(otherProps, editPropTypes)}
 					dataSource={dataSource}
 				/>
 			);

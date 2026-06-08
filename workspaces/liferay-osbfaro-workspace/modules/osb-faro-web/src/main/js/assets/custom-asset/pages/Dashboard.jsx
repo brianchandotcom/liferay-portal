@@ -199,7 +199,7 @@ class CustomAssetsDashboardPage extends React.Component {
 		const {id: dashboardId} = router.params;
 		const {id: modifiedByUserId, name: modifiedByUserName} = currentUser;
 
-		mutate({
+		return mutate({
 			variables: {
 				dashboardId,
 				definition: this.getDefinition(report),

@@ -92,7 +92,7 @@ public class AssetEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testSearchWithNullSort() throws Exception {
+	public void testSearch() throws Exception {
 		Hits hits = _assetEntryLocalService.search(
 			TestPropsValues.getCompanyId(),
 			new long[] {TestPropsValues.getGroupId()},

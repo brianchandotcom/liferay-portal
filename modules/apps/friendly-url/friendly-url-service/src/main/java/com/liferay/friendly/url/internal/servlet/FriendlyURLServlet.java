@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.virtual.host.SiteVirtualHostUtil;
 import com.liferay.portal.util.GroupFriendlyURLUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.AsyncPortletServletRequest;
@@ -139,6 +140,15 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			group = GroupFriendlyURLUtil.fetchFriendlyURLGroup(
 				companyId, groupFriendlyURL);
+		}
+
+		if ((group != null) &&
+			SiteVirtualHostUtil.isRestricted(httpServletRequest, group)) {
+
+			throw new NoSuchGroupException(
+				StringBundler.concat(
+					"{companyId=", companyId, ", friendlyURL=",
+					groupFriendlyURL, "}"));
 		}
 
 		if ((group == null) ||

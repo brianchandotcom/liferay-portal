@@ -9,6 +9,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.virtual.host.SiteVirtualHostUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.servlet.I18nServlet;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -267,6 +269,16 @@ public class VirtualHostFilter extends BasePortalFilter {
 			Group group = GroupFriendlyURLUtil.fetchFriendlyURLGroup(
 				CompanyThreadLocal.getCompanyId(), groupFriendlyURL);
 
+			if ((group != null) &&
+				SiteVirtualHostUtil.isRestricted(httpServletRequest, group)) {
+
+				PortalUtil.sendError(
+					new NoSuchGroupException(), httpServletRequest,
+					httpServletResponse);
+
+				return;
+			}
+
 			if (!PropsValues.
 					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
 				(group != null)) {
@@ -359,6 +371,16 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 			Group group = GroupFriendlyURLUtil.fetchFriendlyURLGroup(
 				companyId, groupFriendlyURL);
+
+			if ((group != null) &&
+				SiteVirtualHostUtil.isRestricted(httpServletRequest, group)) {
+
+				PortalUtil.sendError(
+					new NoSuchLayoutException(), httpServletRequest,
+					httpServletResponse);
+
+				return;
+			}
 
 			if (group != null) {
 				httpServletRequest.setAttribute(

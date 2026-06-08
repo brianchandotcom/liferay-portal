@@ -5,9 +5,20 @@
 
 package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceTopAsset;
+import com.liferay.analytics.cms.rest.internal.client.AnalyticsCloudClient;
+import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.PerformanceTopAssetResource;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.Arrays;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -19,4 +30,33 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class PerformanceTopAssetResourceImpl
 	extends BasePerformanceTopAssetResourceImpl {
+
+	@Override
+	public PerformanceTopAsset getPerformanceTopAsset(
+			String assetFilter, Long[] depotEntryIds, Integer rangeKey,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		LicenseManagerUtil.checkFreeTier();
+
+		Long[] groupIds = DepotEntryUtil.getGroupIds(
+			DepotEntryUtil.getDepotEntries(
+				contextCompany.getCompanyId(), depotEntryIds));
+
+		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
+			_http);
+
+		return analyticsCloudClient.getPerformanceTopAsset(
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId()),
+			assetFilter, Arrays.asList(groupIds), pagination.getPage(),
+			rangeKey, pagination.getPageSize(), sorts);
+	}
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private Http _http;
+
 }

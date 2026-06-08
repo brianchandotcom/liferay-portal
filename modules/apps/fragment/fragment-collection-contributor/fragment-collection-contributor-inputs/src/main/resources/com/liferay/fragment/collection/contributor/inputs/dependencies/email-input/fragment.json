@@ -7,7 +7,7 @@
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [
-			"text"
+			"email"
 		]
 	}
 }

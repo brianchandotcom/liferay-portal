@@ -207,7 +207,7 @@ describe('LifecycleStatus', () => {
 		it('marks the in-progress stage as active and completed stages as complete', () => {
 			const {container} = render(<LifecycleStatus />);
 
-			const items = container.querySelectorAll(
+			const items = container.querySelectorAll<HTMLElement>(
 				'.lifecycle-status-multistep li'
 			);
 

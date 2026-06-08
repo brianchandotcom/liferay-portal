@@ -134,7 +134,7 @@ const actionHandlers = {
 			attributes: {...attributes, [attribute!.id]: attribute!},
 			breakdownOrder: [...breakdownOrder, id],
 			breakdowns: {
-				[id]: {...breakdown, id},
+				[id]: {...breakdown!, id},
 				...breakdowns,
 			},
 			filterOrder,
@@ -158,7 +158,7 @@ const actionHandlers = {
 			breakdownOrder,
 			breakdowns,
 			filterOrder: [...filterOrder, id],
-			filters: {[id]: {...filter, id}, ...filters},
+			filters: {[id]: {...filter!, id}, ...filters},
 		};
 	},
 	[ActionTypes.DeleteAllAttributes]: (): AttributesState => ({

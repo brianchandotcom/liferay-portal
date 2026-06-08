@@ -270,6 +270,6 @@ export const withPropertyGroups = function withPropertyGroups(
 };
 
 export default compose(
-	withRequest(fetchPropertyGroups, mapResultToProps),
+	withRequest(fetchPropertyGroups, mapResultToProps as (val: any) => any),
 	withPropertyGroups
 );

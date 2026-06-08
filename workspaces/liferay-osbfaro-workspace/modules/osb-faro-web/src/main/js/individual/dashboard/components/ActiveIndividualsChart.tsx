@@ -64,9 +64,9 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 	rangeSelectors,
 }) => {
 	const [hoverIndex, setHoverIndex] = useState(-1);
-	const [legendHoverItem, setLegendHoverItem] = useState(null);
+	const [legendHoverItem, setLegendHoverItem] = useState<any>(null);
 
-	const renderTooltip = ({active, payload}) => {
+	const renderTooltip = ({active, payload}: any) => {
 		if (active) {
 			const {
 				anonymousVisitors,
@@ -78,7 +78,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 			return (
 				<RechartsTooltip
 					dateTitle={getDateTitle(
-						dateKeysIMap.get(intervalInitDate),
+						dateKeysIMap.get(intervalInitDate) as any,
 						rangeSelectors.rangeKey,
 						interval
 					)}
@@ -163,12 +163,12 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 								value,
 								rangeSelectors.rangeKey,
 								interval,
-								dateKeysIMap
+								dateKeysIMap as any
 							)
 						)}
 						tickLine={false}
 						tickMargin={12}
-						ticks={intervals}
+						ticks={intervals as (string | number)[]}
 					/>
 
 					<XAxis
@@ -227,7 +227,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 					/>
 
 					<Tooltip
-						content={renderTooltip}
+						content={renderTooltip as any}
 						cursor={!intervals.length ? false : true}
 					/>
 
@@ -249,7 +249,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 								fill={getBarColor(
 									index,
 									hoverIndex,
-									null,
+									undefined,
 									'blue'
 								)}
 								key={`cell-${index}`}
@@ -275,7 +275,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 								fill={getBarColor(
 									index,
 									hoverIndex,
-									null,
+									undefined,
 									'orange'
 								)}
 								key={`cell-${index}`}

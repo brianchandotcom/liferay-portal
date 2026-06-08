@@ -31,8 +31,8 @@ const attachChart = (chartElement: HTMLElement, props: HeatmapChartIProps) => {
 		width,
 	} = props;
 
-	const computedHeight = height - MARGIN.top - MARGIN.bottom;
-	const computedWidth = width - MARGIN.left - MARGIN.right;
+	const computedHeight = height! - MARGIN.top - MARGIN.bottom;
+	const computedWidth = width! - MARGIN.left - MARGIN.right;
 
 	const legendMarginTop = 16;
 
@@ -45,8 +45,7 @@ const attachChart = (chartElement: HTMLElement, props: HeatmapChartIProps) => {
 
 	// Append the svg object to the chart element
 
-	const svg = d3
-		.select(chartElement)
+	const svg = (d3.select(chartElement) as any)
 		.append('svg')
 		.attr('viewBox', `0 0 ${width} ${height}`)
 		.append('g')
@@ -54,8 +53,8 @@ const attachChart = (chartElement: HTMLElement, props: HeatmapChartIProps) => {
 
 	// Get row and column keys
 
-	const columns = d3.map(data, ({column}) => column).keys();
-	const rows = d3.map(data, ({row}) => row).keys();
+	const columns = d3.map(data, ({column}: any) => column).keys();
+	const rows = d3.map(data, ({row}: any) => row).keys();
 
 	// Build X scales and axis
 
@@ -67,7 +66,9 @@ const attachChart = (chartElement: HTMLElement, props: HeatmapChartIProps) => {
 
 	svg.append('g')
 		.attr('class', 'axis column-axis')
-		.call(d3.axisTop(x).tickSize(0).tickFormat(columnAxisFormatter))
+		.call(
+			(d3.axisTop(x) as any).tickSize(0).tickFormat(columnAxisFormatter)
+		)
 		.select('.domain')
 		.remove();
 
@@ -81,7 +82,7 @@ const attachChart = (chartElement: HTMLElement, props: HeatmapChartIProps) => {
 
 	svg.append('g')
 		.attr('class', 'axis row-axis')
-		.call(d3.axisLeft(y).tickSize(0).tickFormat(rowAxisFormatter))
+		.call((d3.axisLeft(y) as any).tickSize(0).tickFormat(rowAxisFormatter))
 		.select('.domain')
 		.remove();
 
@@ -90,11 +91,11 @@ const attachChart = (chartElement: HTMLElement, props: HeatmapChartIProps) => {
 	svg.append('g')
 		.attr('class', 'rects')
 		.selectAll()
-		.data(data, ({column, row}) => `${column}:${row}`)
+		.data(data, ({column, row}: any) => `${column}:${row}`)
 		.enter()
 		.append('rect')
-		.attr('x', ({column}) => x(column))
-		.attr('y', ({row}) => y(row))
+		.attr('x', ({column}: any) => x(column))
+		.attr('y', ({row}: any) => y(row))
 		.attr('width', x.bandwidth())
 		.attr('height', y.bandwidth());
 
@@ -119,10 +120,10 @@ const attachChart = (chartElement: HTMLElement, props: HeatmapChartIProps) => {
 	return svg;
 };
 
-const updateChart = (chartElement, props) => {
+const updateChart = (chartElement: any, props: any) => {
 	const {colorRange, data, renderTooltip, thresholds, width} = props;
 
-	const tooltip = d3.select('.heatmap-tooltip');
+	const tooltip = d3.select('.heatmap-tooltip') as any;
 	const computedWidth = width - MARGIN.left - MARGIN.right;
 
 	const legendItems = thresholds.slice(1);
@@ -132,7 +133,7 @@ const updateChart = (chartElement, props) => {
 		(computedWidth - legendItemPadding * (legendItems.length - 1)) /
 		legendItems.length;
 
-	const svg = d3.select(chartElement);
+	const svg = d3.select(chartElement) as any;
 
 	// Build color scale
 
@@ -142,9 +143,9 @@ const updateChart = (chartElement, props) => {
 
 	svg.select('.rects')
 		.selectAll('rect')
-		.data(data, ({column, row}) => `${column}:${row}`)
-		.style('fill', ({value}) => colorScale(value))
-		.on('mouseenter', (d, i, nodes) => {
+		.data(data, ({column, row}: any) => `${column}:${row}`)
+		.style('fill', ({value}: any) => colorScale(value))
+		.on('mouseenter', (d: any, i: any, nodes: any) => {
 			tooltip.style('opacity', 1);
 
 			tooltip.html(renderTooltip(d));
@@ -168,10 +169,10 @@ const updateChart = (chartElement, props) => {
 				colorRange[colorRange.length - 1]
 			);
 		})
-		.on('mouseout', ({value}, i, nodes) => {
+		.on('mouseout', ({value}: any, i: any, nodes: any) => {
 			tooltip.style('opacity', 0);
 
-			d3.select(nodes[i]).style('fill', colorScale(value));
+			(d3.select(nodes[i]) as any).style('fill', colorScale(value));
 		});
 
 	// Update the legend
@@ -198,7 +199,7 @@ const updateChart = (chartElement, props) => {
 	// Update all legend items
 
 	legendItemsSelection
-		.attr('x', (_, i) =>
+		.attr('x', (_: any, i: any) =>
 			i > 0
 				? i * legendItemWidth + i * legendItemPadding
 				: i * legendItemWidth
@@ -206,20 +207,20 @@ const updateChart = (chartElement, props) => {
 		.attr('y', 0)
 		.attr('width', legendItemWidth)
 		.attr('height', 14)
-		.style('fill', (_, i) => legendColors[i]);
+		.style('fill', (_: any, i: any) => legendColors[i]);
 
 	// Update all legend labels
 
 	legendLabelSelection
 		.attr('class', 'legend-label')
-		.attr('x', (_, i) =>
+		.attr('x', (_: any, i: any) =>
 			i > 0 ? i * legendItemWidth + i * legendItemPadding : 0
 		)
 		.attr('y', 30)
-		.text((d) => toThousands(d));
+		.text((d: any) => toThousands(d));
 };
 
-const destroyChart = (svg) => {
+const destroyChart = (svg: any) => {
 	svg && svg.remove();
 
 	d3.select('.heatmap-tooltip').remove();
@@ -240,7 +241,7 @@ export const getThresholdsFromData = function getThresholdsFromData(
 	data: {value: number}[]
 ): number[] {
 	const valuesOverZero = data.map(({value}) => value).filter((d) => d > 0);
-	const extent = d3.extent(valuesOverZero);
+	const extent = d3.extent(valuesOverZero) as [number, number];
 
 	const [min, max]: [number, number] =
 		extent[1] > 5 ? getNicedExtent(extent) : extent;
@@ -261,20 +262,20 @@ interface HeatmapChartIProps extends React.HTMLAttributes<HTMLElement> {
 	columnAxisFormatter?: (label: string) => string;
 	data: any;
 	height?: number;
-	renderTooltip?: (val) => string;
+	renderTooltip?: (val: any) => string;
 	rowAxisFormatter?: (label: string) => string;
 	thresholds?: number[];
 	width?: number;
 }
 
 const HeatmapChart: React.FC<HeatmapChartIProps> = (props) => {
-	const chartRef = useRef();
+	const chartRef = useRef<HTMLDivElement>(null);
 	const {className, data} = props;
 
 	const thresholds = props.thresholds || getThresholdsFromData(data);
 
 	useEffect(() => {
-		const svg = attachChart(chartRef.current, {...props, thresholds});
+		const svg = attachChart(chartRef.current!, {...props, thresholds});
 
 		return () => destroyChart(svg);
 

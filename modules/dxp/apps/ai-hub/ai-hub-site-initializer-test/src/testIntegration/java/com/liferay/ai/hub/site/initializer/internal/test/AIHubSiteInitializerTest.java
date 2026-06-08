@@ -281,24 +281,35 @@ public class AIHubSiteInitializerTest {
 			"L_AI_HUB_CONTENT_RETRIEVER",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertWorkflowDefinitionExists(
+			_ACCOUNT_EXTERNAL_REFERENCE_CODE_AI_HUB,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
 			WorkflowDefinitionConstants.NAME_CHANGE_TONE);
 		_assertWorkflowDefinitionExists(
+			_ACCOUNT_EXTERNAL_REFERENCE_CODE_AI_HUB,
 			WorkflowDefinitionConstants.
 				EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR,
 			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR);
 		_assertWorkflowDefinitionExists(
+			_ACCOUNT_EXTERNAL_REFERENCE_CODE_AI_HUB,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING,
 			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING);
 		_assertWorkflowDefinitionExists(
+			_ACCOUNT_EXTERNAL_REFERENCE_CODE_AI_HUB,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_LIFERAY_SEARCH,
 			WorkflowDefinitionConstants.NAME_LIFERAY_SEARCH);
 		_assertWorkflowDefinitionExists(
+			_ACCOUNT_EXTERNAL_REFERENCE_CODE_AI_HUB,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_LONGER,
 			WorkflowDefinitionConstants.NAME_MAKE_LONGER);
 		_assertWorkflowDefinitionExists(
+			_ACCOUNT_EXTERNAL_REFERENCE_CODE_AI_HUB,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_SHORTER,
 			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
+		_assertWorkflowDefinitionExists(
+			_ACCOUNT_EXTERNAL_REFERENCE_CODE_SEO_STUDIO,
+			WorkflowDefinitionConstants.
+				EXTERNAL_REFERENCE_CODE_SEO_STUDIO_TITLE_GENERATOR,
+			WorkflowDefinitionConstants.NAME_SEO_STUDIO_TITLE_GENERATOR);
 	}
 
 	private void _assertAccountRoleExists(
@@ -536,6 +547,7 @@ public class AIHubSiteInitializerTest {
 	}
 
 	private void _assertWorkflowDefinitionExists(
+			String accountEntryExternalReferenceCode,
 			String externalReferenceCode, String name)
 		throws Exception {
 
@@ -547,12 +559,19 @@ public class AIHubSiteInitializerTest {
 
 		AccountEntry accountEntry =
 			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
-				"L_AI_HUB", TestPropsValues.getCompanyId());
+				accountEntryExternalReferenceCode,
+				TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
 			accountEntry.getAccountEntryGroupId(),
 			workflowDefinition.getGroupId());
 	}
+
+	private static final String _ACCOUNT_EXTERNAL_REFERENCE_CODE_AI_HUB =
+		"L_AI_HUB";
+
+	private static final String _ACCOUNT_EXTERNAL_REFERENCE_CODE_SEO_STUDIO =
+		"L_SEO_STUDIO";
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

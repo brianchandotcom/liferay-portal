@@ -43,3 +43,23 @@ create table StyleBookEntryVersion (
 	themeId VARCHAR(255) null,
 	primary key (styleBookEntryVersionId, ctCollectionId)
 );
+
+create table StyleBookTokenSet (
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
+	styleBookTokenSetId LONG not null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	styleBookEntryId LONG,
+	frontendTokenDefinitionId VARCHAR(75) null,
+	frontendTokenCategoryName VARCHAR(75) null,
+	name VARCHAR(75) null,
+	description STRING null,
+	primary key (styleBookTokenSetId, ctCollectionId)
+);

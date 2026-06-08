@@ -52,171 +52,199 @@ public class InMemoryBuildDatabase implements BuildDatabase {
 
 	@Override
 	public JSONObject getBuildDataJSONObject(String key) {
-		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
+		synchronized (_lock) {
+			JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 
-		if (!buildsJSONObject.has(key)) {
-			return new JSONObject();
+			if (!buildsJSONObject.has(key)) {
+				return new JSONObject();
+			}
+
+			return buildsJSONObject.getJSONObject(key);
 		}
-
-		return buildsJSONObject.getJSONObject(key);
 	}
 
 	@Override
 	public JSONObject getBuildDataJSONObject(URL buildURL) {
-		String buildURLString = buildURL.toString();
+		synchronized (_lock) {
+			String buildURLString = buildURL.toString();
 
-		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
+			JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 
-		for (Object key : buildsJSONObject.keySet()) {
-			JSONObject buildJSONObject = buildsJSONObject.getJSONObject(
-				key.toString());
+			for (Object key : buildsJSONObject.keySet()) {
+				JSONObject buildJSONObject = buildsJSONObject.getJSONObject(
+					key.toString());
 
-			if (!buildJSONObject.has("build_url")) {
-				continue;
+				if (!buildJSONObject.has("build_url")) {
+					continue;
+				}
+
+				if (buildURLString.equals(
+						buildJSONObject.getString("build_url"))) {
+
+					return buildJSONObject;
+				}
 			}
 
-			if (buildURLString.equals(buildJSONObject.getString("build_url"))) {
-				return buildJSONObject;
-			}
+			return new JSONObject();
 		}
-
-		return new JSONObject();
 	}
 
 	@Override
 	public Job getJob(String key) {
-		if (!hasJob(key)) {
-			return null;
+		synchronized (_lock) {
+			if (!hasJob(key)) {
+				return null;
+			}
+
+			JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
+
+			return JobFactory.newJob(jobsJSONObject.getJSONObject(key));
 		}
-
-		JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
-
-		return JobFactory.newJob(jobsJSONObject.getJSONObject(key));
 	}
 
 	@Override
 	public List<Job> getJobs() {
-		List<Job> jobs = new ArrayList<>();
+		synchronized (_lock) {
+			List<Job> jobs = new ArrayList<>();
 
-		JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
+			JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
 
-		for (String key : jobsJSONObject.keySet()) {
-			JSONObject jobJSONObject = jobsJSONObject.getJSONObject(key);
+			for (String key : jobsJSONObject.keySet()) {
+				JSONObject jobJSONObject = jobsJSONObject.getJSONObject(key);
 
-			if ((jobJSONObject != null) && !jobJSONObject.isEmpty()) {
-				jobs.add(JobFactory.newJob(jobJSONObject));
+				if ((jobJSONObject != null) && !jobJSONObject.isEmpty()) {
+					jobs.add(JobFactory.newJob(jobJSONObject));
+				}
 			}
-		}
 
-		return jobs;
+			return jobs;
+		}
 	}
 
 	@Override
 	public JSONObject getJSONObject() {
-		return new JSONObject(_jsonObject.toString());
+		synchronized (_lock) {
+			return new JSONObject(_jsonObject.toString());
+		}
 	}
 
 	@Override
 	public PortalFixpackRelease getPortalFixpackRelease(String key) {
-		if (!hasPortalFixpackRelease(key)) {
-			return null;
+		synchronized (_lock) {
+			if (!hasPortalFixpackRelease(key)) {
+				return null;
+			}
+
+			JSONObject portalFixpackReleasesJSONObject =
+				_jsonObject.getJSONObject("portal_fixpack_releases");
+
+			return new PortalFixpackRelease(
+				portalFixpackReleasesJSONObject.getJSONObject(key));
 		}
-
-		JSONObject portalFixpackReleasesJSONObject = _jsonObject.getJSONObject(
-			"portal_fixpack_releases");
-
-		return new PortalFixpackRelease(
-			portalFixpackReleasesJSONObject.getJSONObject(key));
 	}
 
 	@Override
 	public List<PortalFixpackRelease> getPortalFixpackReleases() {
-		List<PortalFixpackRelease> portalFixpackReleases = new ArrayList<>();
+		synchronized (_lock) {
+			List<PortalFixpackRelease> portalFixpackReleases =
+				new ArrayList<>();
 
-		JSONObject portalFixpackReleasesJSONObject = _jsonObject.getJSONObject(
-			"portal_fixpack_releases");
+			JSONObject portalFixpackReleasesJSONObject =
+				_jsonObject.getJSONObject("portal_fixpack_releases");
 
-		for (String key : portalFixpackReleasesJSONObject.keySet()) {
-			JSONObject portalFixpackReleaseJSONObject =
-				portalFixpackReleasesJSONObject.getJSONObject(key);
+			for (String key : portalFixpackReleasesJSONObject.keySet()) {
+				JSONObject portalFixpackReleaseJSONObject =
+					portalFixpackReleasesJSONObject.getJSONObject(key);
 
-			if ((portalFixpackReleaseJSONObject != null) &&
-				!portalFixpackReleaseJSONObject.isEmpty()) {
+				if ((portalFixpackReleaseJSONObject != null) &&
+					!portalFixpackReleaseJSONObject.isEmpty()) {
 
-				portalFixpackReleases.add(
-					new PortalFixpackRelease(portalFixpackReleaseJSONObject));
+					portalFixpackReleases.add(
+						new PortalFixpackRelease(
+							portalFixpackReleaseJSONObject));
+				}
 			}
-		}
 
-		return portalFixpackReleases;
+			return portalFixpackReleases;
+		}
 	}
 
 	@Override
 	public PortalHotfixRelease getPortalHotfixRelease(String key) {
-		if (!hasPortalHotfixRelease(key)) {
-			return null;
+		synchronized (_lock) {
+			if (!hasPortalHotfixRelease(key)) {
+				return null;
+			}
+
+			JSONObject portalHotfixReleasesJSONObject =
+				_jsonObject.getJSONObject("portal_hotfix_releases");
+
+			return new PortalHotfixRelease(
+				portalHotfixReleasesJSONObject.getJSONObject(key));
 		}
-
-		JSONObject portalHotfixReleasesJSONObject = _jsonObject.getJSONObject(
-			"portal_hotfix_releases");
-
-		return new PortalHotfixRelease(
-			portalHotfixReleasesJSONObject.getJSONObject(key));
 	}
 
 	@Override
 	public List<PortalHotfixRelease> getPortalHotfixReleases() {
-		List<PortalHotfixRelease> portalHotfixReleases = new ArrayList<>();
+		synchronized (_lock) {
+			List<PortalHotfixRelease> portalHotfixReleases = new ArrayList<>();
 
-		JSONObject portalHotfixReleasesJSONObject = _jsonObject.getJSONObject(
-			"portal_hotfix_releases");
+			JSONObject portalHotfixReleasesJSONObject =
+				_jsonObject.getJSONObject("portal_hotfix_releases");
 
-		for (String key : portalHotfixReleasesJSONObject.keySet()) {
-			JSONObject portalHotfixReleaseJSONObject =
-				portalHotfixReleasesJSONObject.getJSONObject(key);
+			for (String key : portalHotfixReleasesJSONObject.keySet()) {
+				JSONObject portalHotfixReleaseJSONObject =
+					portalHotfixReleasesJSONObject.getJSONObject(key);
 
-			if ((portalHotfixReleaseJSONObject != null) &&
-				!portalHotfixReleaseJSONObject.isEmpty()) {
+				if ((portalHotfixReleaseJSONObject != null) &&
+					!portalHotfixReleaseJSONObject.isEmpty()) {
 
-				portalHotfixReleases.add(
-					new PortalHotfixRelease(portalHotfixReleaseJSONObject));
+					portalHotfixReleases.add(
+						new PortalHotfixRelease(portalHotfixReleaseJSONObject));
+				}
 			}
-		}
 
-		return portalHotfixReleases;
+			return portalHotfixReleases;
+		}
 	}
 
 	@Override
 	public PortalRelease getPortalRelease(String key) {
-		if (!hasPortalRelease(key)) {
-			return null;
+		synchronized (_lock) {
+			if (!hasPortalRelease(key)) {
+				return null;
+			}
+
+			JSONObject portalReleasesJSONObject = _jsonObject.getJSONObject(
+				"portal_releases");
+
+			return new PortalRelease(
+				portalReleasesJSONObject.getJSONObject(key));
 		}
-
-		JSONObject portalReleasesJSONObject = _jsonObject.getJSONObject(
-			"portal_releases");
-
-		return new PortalRelease(portalReleasesJSONObject.getJSONObject(key));
 	}
 
 	@Override
 	public List<PortalRelease> getPortalReleases() {
-		List<PortalRelease> portalReleases = new ArrayList<>();
+		synchronized (_lock) {
+			List<PortalRelease> portalReleases = new ArrayList<>();
 
-		JSONObject portalReleasesJSONObject = _jsonObject.getJSONObject(
-			"portal_releases");
+			JSONObject portalReleasesJSONObject = _jsonObject.getJSONObject(
+				"portal_releases");
 
-		for (String key : portalReleasesJSONObject.keySet()) {
-			JSONObject portalReleaseJSONObject =
-				portalReleasesJSONObject.getJSONObject(key);
+			for (String key : portalReleasesJSONObject.keySet()) {
+				JSONObject portalReleaseJSONObject =
+					portalReleasesJSONObject.getJSONObject(key);
 
-			if ((portalReleaseJSONObject != null) &&
-				!portalReleaseJSONObject.isEmpty()) {
+				if ((portalReleaseJSONObject != null) &&
+					!portalReleaseJSONObject.isEmpty()) {
 
-				portalReleases.add(new PortalRelease(portalReleaseJSONObject));
+					portalReleases.add(
+						new PortalRelease(portalReleaseJSONObject));
+				}
 			}
-		}
 
-		return portalReleases;
+			return portalReleases;
+		}
 	}
 
 	@Override
@@ -226,200 +254,233 @@ public class InMemoryBuildDatabase implements BuildDatabase {
 
 	@Override
 	public Properties getProperties(String key, Pattern pattern) {
-		Properties properties = new Properties();
+		synchronized (_lock) {
+			Properties properties = new Properties();
 
-		if (!hasProperties(key)) {
+			if (!hasProperties(key)) {
+				return properties;
+			}
+
+			JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
+				"properties");
+
+			JSONArray propertyJSONArray = propertiesJSONObject.getJSONArray(
+				key);
+
+			for (int i = 0; i < propertyJSONArray.length(); i++) {
+				JSONObject propertyJSONObject = propertyJSONArray.getJSONObject(
+					i);
+
+				String propertyName = propertyJSONObject.getString("name");
+				String propertyValue = propertyJSONObject.getString("value");
+
+				if (pattern == null) {
+					properties.setProperty(propertyName, propertyValue);
+
+					continue;
+				}
+
+				Matcher matcher = pattern.matcher(propertyName);
+
+				if (matcher.matches()) {
+					properties.setProperty(propertyName, propertyValue);
+				}
+			}
+
 			return properties;
 		}
-
-		JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
-			"properties");
-
-		JSONArray propertyJSONArray = propertiesJSONObject.getJSONArray(key);
-
-		for (int i = 0; i < propertyJSONArray.length(); i++) {
-			JSONObject propertyJSONObject = propertyJSONArray.getJSONObject(i);
-
-			String propertyName = propertyJSONObject.getString("name");
-			String propertyValue = propertyJSONObject.getString("value");
-
-			if (pattern == null) {
-				properties.setProperty(propertyName, propertyValue);
-
-				continue;
-			}
-
-			Matcher matcher = pattern.matcher(propertyName);
-
-			if (matcher.matches()) {
-				properties.setProperty(propertyName, propertyValue);
-			}
-		}
-
-		return properties;
 	}
 
 	@Override
 	public PullRequest getPullRequest(String key) {
-		if (!hasPullRequest(key)) {
-			throw new RuntimeException(
-				"Unable to find pull request for " + key);
+		synchronized (_lock) {
+			if (!hasPullRequest(key)) {
+				throw new RuntimeException(
+					"Unable to find pull request for " + key);
+			}
+
+			JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
+				"pull_requests");
+
+			return PullRequestFactory.newPullRequest(
+				pullRequestsJSONObject.getJSONObject(key));
 		}
-
-		JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
-			"pull_requests");
-
-		return PullRequestFactory.newPullRequest(
-			pullRequestsJSONObject.getJSONObject(key));
 	}
 
 	@Override
 	public List<PullRequest> getPullRequests() {
-		List<PullRequest> pullRequests = new ArrayList<>();
+		synchronized (_lock) {
+			List<PullRequest> pullRequests = new ArrayList<>();
 
-		JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
-			"pull_requests");
+			JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
+				"pull_requests");
 
-		for (String key : pullRequestsJSONObject.keySet()) {
-			JSONObject pullRequestJSONObject =
-				pullRequestsJSONObject.getJSONObject(key);
+			for (String key : pullRequestsJSONObject.keySet()) {
+				JSONObject pullRequestJSONObject =
+					pullRequestsJSONObject.getJSONObject(key);
 
-			if ((pullRequestJSONObject != null) &&
-				!pullRequestJSONObject.isEmpty()) {
+				if ((pullRequestJSONObject != null) &&
+					!pullRequestJSONObject.isEmpty()) {
 
-				pullRequests.add(
-					PullRequestFactory.newPullRequest(pullRequestJSONObject));
+					pullRequests.add(
+						PullRequestFactory.newPullRequest(
+							pullRequestJSONObject));
+				}
 			}
-		}
 
-		return pullRequests;
+			return pullRequests;
+		}
 	}
 
 	@Override
 	public Workspace getWorkspace(String key) {
-		if (!hasWorkspace(key)) {
-			throw new RuntimeException("Unable to find workspace");
+		synchronized (_lock) {
+			if (!hasWorkspace(key)) {
+				throw new RuntimeException("Unable to find workspace");
+			}
+
+			JSONObject workspacesJSONObject = _jsonObject.getJSONObject(
+				"workspaces");
+
+			return WorkspaceFactory.newWorkspace(
+				workspacesJSONObject.getJSONObject(key));
 		}
-
-		JSONObject workspacesJSONObject = _jsonObject.getJSONObject(
-			"workspaces");
-
-		return WorkspaceFactory.newWorkspace(
-			workspacesJSONObject.getJSONObject(key));
 	}
 
 	@Override
 	public WorkspaceGitRepository getWorkspaceGitRepository(String key) {
-		if (!hasWorkspaceGitRepository(key)) {
-			throw new RuntimeException(
-				"Unable to find workspace repository for " + key);
+		synchronized (_lock) {
+			if (!hasWorkspaceGitRepository(key)) {
+				throw new RuntimeException(
+					"Unable to find workspace repository for " + key);
+			}
+
+			JSONObject workspaceGitRepositoriesJSONObject =
+				_jsonObject.getJSONObject("workspace_git_repositories");
+
+			return GitRepositoryFactory.getWorkspaceGitRepository(
+				workspaceGitRepositoriesJSONObject.getJSONObject(key));
 		}
-
-		JSONObject workspaceGitRepositoriesJSONObject =
-			_jsonObject.getJSONObject("workspace_git_repositories");
-
-		return GitRepositoryFactory.getWorkspaceGitRepository(
-			workspaceGitRepositoriesJSONObject.getJSONObject(key));
 	}
 
 	@Override
 	public List<Workspace> getWorkspaces() {
-		List<Workspace> workspaces = new ArrayList<>();
+		synchronized (_lock) {
+			List<Workspace> workspaces = new ArrayList<>();
 
-		JSONObject workspacesJSONObject = _jsonObject.getJSONObject(
-			"workspaces");
+			JSONObject workspacesJSONObject = _jsonObject.getJSONObject(
+				"workspaces");
 
-		for (String key : workspacesJSONObject.keySet()) {
-			JSONObject workspaceJSONObject = workspacesJSONObject.getJSONObject(
-				key);
+			for (String key : workspacesJSONObject.keySet()) {
+				JSONObject workspaceJSONObject =
+					workspacesJSONObject.getJSONObject(key);
 
-			if ((workspaceJSONObject != null) &&
-				!workspaceJSONObject.isEmpty()) {
+				if ((workspaceJSONObject != null) &&
+					!workspaceJSONObject.isEmpty()) {
 
-				workspaces.add(
-					WorkspaceFactory.newWorkspace(workspaceJSONObject));
+					workspaces.add(
+						WorkspaceFactory.newWorkspace(workspaceJSONObject));
+				}
 			}
-		}
 
-		return workspaces;
+			return workspaces;
+		}
 	}
 
 	@Override
 	public boolean hasBuildData(String key) {
-		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
+		synchronized (_lock) {
+			JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 
-		return buildsJSONObject.has(key);
+			return buildsJSONObject.has(key);
+		}
 	}
 
 	@Override
 	public boolean hasJob(String key) {
-		JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
+		synchronized (_lock) {
+			JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
 
-		if (jobsJSONObject.has(key)) {
-			JSONObject jobJSONObject = jobsJSONObject.getJSONObject(key);
+			if (jobsJSONObject.has(key)) {
+				JSONObject jobJSONObject = jobsJSONObject.getJSONObject(key);
 
-			if ((jobJSONObject != null) && !jobJSONObject.isEmpty()) {
-				return true;
+				if ((jobJSONObject != null) && !jobJSONObject.isEmpty()) {
+					return true;
+				}
 			}
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	@Override
 	public boolean hasPortalFixpackRelease(String key) {
-		JSONObject portalFixpackReleasesJSONObject = _jsonObject.getJSONObject(
-			"portal_fixpack_releases");
+		synchronized (_lock) {
+			JSONObject portalFixpackReleasesJSONObject =
+				_jsonObject.getJSONObject("portal_fixpack_releases");
 
-		return portalFixpackReleasesJSONObject.has(key);
+			return portalFixpackReleasesJSONObject.has(key);
+		}
 	}
 
 	@Override
 	public boolean hasPortalHotfixRelease(String key) {
-		JSONObject portalHotfixReleasesJSONObject = _jsonObject.getJSONObject(
-			"portal_hotfix_releases");
+		synchronized (_lock) {
+			JSONObject portalHotfixReleasesJSONObject =
+				_jsonObject.getJSONObject("portal_hotfix_releases");
 
-		return portalHotfixReleasesJSONObject.has(key);
+			return portalHotfixReleasesJSONObject.has(key);
+		}
 	}
 
 	@Override
 	public boolean hasPortalRelease(String key) {
-		JSONObject portalReleasesJSONObject = _jsonObject.getJSONObject(
-			"portal_releases");
+		synchronized (_lock) {
+			JSONObject portalReleasesJSONObject = _jsonObject.getJSONObject(
+				"portal_releases");
 
-		return portalReleasesJSONObject.has(key);
+			return portalReleasesJSONObject.has(key);
+		}
 	}
 
 	@Override
 	public boolean hasProperties(String key) {
-		JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
-			"properties");
+		synchronized (_lock) {
+			JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
+				"properties");
 
-		return propertiesJSONObject.has(key);
+			return propertiesJSONObject.has(key);
+		}
 	}
 
 	@Override
 	public boolean hasPullRequest(String key) {
-		JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
-			"pull_requests");
+		synchronized (_lock) {
+			JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
+				"pull_requests");
 
-		return pullRequestsJSONObject.has(key);
+			return pullRequestsJSONObject.has(key);
+		}
 	}
 
 	@Override
 	public boolean hasWorkspace(String key) {
-		JSONObject workspacesJSONObject = _jsonObject.getJSONObject(
-			"workspaces");
+		synchronized (_lock) {
+			JSONObject workspacesJSONObject = _jsonObject.getJSONObject(
+				"workspaces");
 
-		return workspacesJSONObject.has(key);
+			return workspacesJSONObject.has(key);
+		}
 	}
 
 	@Override
 	public boolean hasWorkspaceGitRepository(String key) {
-		JSONObject workspaceGitRepositoriesJSONObject =
-			_jsonObject.getJSONObject("workspace_git_repositories");
+		synchronized (_lock) {
+			JSONObject workspaceGitRepositoriesJSONObject =
+				_jsonObject.getJSONObject("workspace_git_repositories");
 
-		return workspaceGitRepositoriesJSONObject.has(key);
+			return workspaceGitRepositoriesJSONObject.has(key);
+		}
 	}
 
 	@Override
@@ -515,15 +576,17 @@ public class InMemoryBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
-	public synchronized void putProperty(
+	public void putProperty(
 		String key, String propertyName, String propertyValue,
 		boolean writeFile) {
 
-		Properties properties = getProperties(key);
+		synchronized (_lock) {
+			Properties properties = getProperties(key);
 
-		properties.setProperty(propertyName, propertyValue);
+			properties.setProperty(propertyName, propertyValue);
 
-		putProperties(key, properties, writeFile);
+			putProperties(key, properties, writeFile);
+		}
 	}
 
 	@Override

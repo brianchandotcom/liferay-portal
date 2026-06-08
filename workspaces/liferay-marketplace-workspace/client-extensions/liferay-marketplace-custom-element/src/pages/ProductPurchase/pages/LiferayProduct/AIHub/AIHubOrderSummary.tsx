@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayIcon from '@clayui/icon';
 import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
+import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {useSelector} from '@xstate/store/react';
 import {useEffect, useState} from 'react';
 
@@ -15,18 +16,15 @@ import useAccountAddresses from '../../../../../hooks/useAccountAddresses';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import zodSchema, {z} from '../../../../../schema/zod';
+import {productAgreements} from '../../../../../utils/agreements';
 import {formatCurrency} from '../../../../../utils/currencies';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {ProductPurchaseAIHubOpenBeta} from '../../../services/ProductPurchaseAIHubOpenBeta';
 import {productPurchaseStore} from '../../../store';
 
-import {ClayCheckbox} from '@clayui/form';
-import {productAgreements} from '../../../../../utils/agreements';
-
 import './AIHubOrderSummary.scss';
 
 const AIHubOrderSummary = () => {
-
 	const {
 		form,
 		handlePurchase,
@@ -190,10 +188,10 @@ const AIHubOrderSummary = () => {
 					<div className="col-1 d-flex justify-content-end m-0 p-0">
 						{i18n.translate('total')}:
 					</div>
-					<span className="font-weight-bold ml-2 d-flex">
+					<span className="d-flex font-weight-bold ml-2">
 						{valueFallBack(summary?.totalFormatted)}{' '}
 						<ClayBadge
-							className="ml-4 px-2 text-2 rounded font-weight-normal monthly-badge"
+							className="font-weight-normal ml-4 monthly-badge px-2 rounded text-2"
 							label="Monthly"
 						/>
 					</span>
@@ -265,7 +263,7 @@ const AIHubOrderSummary = () => {
 				</label>
 			</div>
 
-			<p className="liferay-ai-hub-form-aggreements-text text-justify mt-2">
+			<p className="liferay-ai-hub-form-aggreements-text mt-2 text-justify">
 				<span>
 					You can stop receiving marketing emails by clicking the
 					unsubscribe link in each email or withdraw your consent at
@@ -292,14 +290,14 @@ const AIHubOrderSummary = () => {
 
 			<div className="d-flex flex-column mt-4 w-100">
 				<ClayButton
-					displayType="primary"
+					className="font-weight-bold w-100"
 					disabled={!userAgreement || !termsAndConditions}
+					displayType="primary"
 					onClick={() =>
 						onSubmit(
 							form as z.infer<typeof zodSchema.aiHubOpenBetaForm>
 						)
 					}
-					className="w-100 font-weight-bold"
 					size="regular"
 				>
 					{i18n.translate('purchase')}

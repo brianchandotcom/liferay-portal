@@ -32,7 +32,6 @@ const activationKeyAlertStatuses = {
 	pending: {
 		description:
 			"We've sent the order form to your email via DocuSign. Please review, sign, and return it to confirm your subscription — once received, we'll provision your AI Hub and notify you by email.",
-		dismissible: false,
 		title: 'Awaiting Signature',
 		type: 'info',
 	},
@@ -49,18 +48,10 @@ const AIHubDetails = () => {
 		`o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${Liferay.CommerceContext.account?.accountId}/placed-orders`,
 		{
 			params: {
-				filter: new SearchBuilder()
-					.eq(
-						'orderTypeExternalReferenceCode',
-						OrderTypes.AI_HUB_TOKEN
-					)
-					.and()
-					.eq(
-						'orderStatusInfo/code',
-						OrderWorkflowStatusCode.COMPLETED,
-						{unquote: true}
-					)
-					.build(),
+				filter: SearchBuilder.eq(
+					'orderTypeExternalReferenceCode',
+					OrderTypes.AI_HUB_TOKEN
+				),
 				nestedFields: 'placedOrderItems',
 				pageSize: 100,
 			},
@@ -68,60 +59,41 @@ const AIHubDetails = () => {
 	);
 
 	const activationKeyAlertStatus = useMemo(() => {
-		if (orderStatusCode !== OrderWorkflowStatusCode.COMPLETED) {
-			return activationKeyAlertStatuses.pending;
-		}
-
-		if (
-			orderStatusCode === OrderWorkflowStatusCode.COMPLETED &&
-			searchParams.has('next-steps')
-		) {
+		if (orderStatusCode === OrderWorkflowStatusCode.COMPLETED) {
 			return activationKeyAlertStatuses.completed;
 		}
 
-		return null;
+		return activationKeyAlertStatuses.pending;
 	}, []);
 
-	const hasCompletedTokenOrders = useMemo(() => {
-		const tokens = tokenOrdersData?.items ?? [];
-
-		if (!tokens.length) {
-			return false;
-		}
-
-		return tokens.some((order) => {
-			const isCompleted =
-				order.orderStatusInfo?.code ===
-				OrderWorkflowStatusCode.COMPLETED;
-
-			const isPaid =
-				order.paymentStatus === PaymentStatus.PAID ||
-				order.paymentStatusInfo?.code === PaymentStatus.PAID;
-
-			return isCompleted && isPaid;
-		});
-	}, [tokenOrdersData]);
-
 	useEffect(() => {
-		if (searchParams.has('tokenPurchaseSuccess') && tokenOrdersData?.items) {
-			const completedOrders = (tokenOrdersData.items ?? []).filter((order) => {
-				const isCompleted =
-					order.orderStatusInfo?.code ===
-					OrderWorkflowStatusCode.COMPLETED;
+		if (
+			searchParams.has('tokenPurchaseSuccess') &&
+			tokenOrdersData?.items
+		) {
+			const completedOrders = (tokenOrdersData.items ?? []).filter(
+				(order) => {
+					const isCompleted =
+						order.orderStatusInfo?.code ===
+						OrderWorkflowStatusCode.COMPLETED;
 
-				const isPaid =
-					order.paymentStatus === PaymentStatus.PAID ||
-					order.paymentStatusInfo?.code === PaymentStatus.PAID;
+					const isPaid =
+						order.paymentStatus === PaymentStatus.PAID ||
+						order.paymentStatusInfo?.code === PaymentStatus.PAID;
 
-				return isCompleted && isPaid;
-			});
+					return isCompleted && isPaid;
+				}
+			);
 
-			if (completedOrders.length > 0) {
+			if (completedOrders.length) {
 				const lastOrder = completedOrders[0];
-				const sku = lastOrder.placedOrderItems?.[0]?.sku
+				const sku = lastOrder.placedOrderItems?.[0]?.sku;
 				const tokensAmount = sku.split(' ')[0] || '';
 
-				const toastMessage = [tokensAmount, i18n.translate('liferay-tokens-was-purchased-successfully')].join(' ');
+				const toastMessage = [
+					tokensAmount,
+					i18n.translate('liferay-tokens-was-purchased-successfully'),
+				].join(' ');
 
 				Liferay.Util.openToast({
 					message: toastMessage,
@@ -148,6 +120,7 @@ const AIHubDetails = () => {
 				<ActivationKeyAlert
 					{...activationKeyAlertStatus}
 					className="license-alert"
+					dismissible={false}
 					symbol="check-circle"
 				>
 					{activationKeyAlertStatus.description}
@@ -164,22 +137,20 @@ const AIHubDetails = () => {
 					columns={2}
 					items={[
 						{
-							className: 'mt-4',
+							className: 'mb-4',
 							title: i18n.translate('ai-hub-account-name'),
 							value: aiHubForm.fullName,
 						},
 						{
-							className: 'mt-4',
+							className: 'mb-4',
 							title: i18n.translate('ai-administration-email'),
 							value: aiHubForm.businessEmailAddress,
 						},
 						{
-							className: 'mt-4',
 							title: i18n.translate('token-monthly-allowance'),
-							value: aiHubForm.tokenMonthlyAllowance,
+							value: aiHubForm.tokenMonthlyAllowance ?? '-',
 						},
 						{
-							className: 'mt-4',
 							title: i18n.translate('ai-hub-url'),
 							value: aiHubForm.aiHubURL ? (
 								<a
@@ -202,7 +173,7 @@ const AIHubDetails = () => {
 				/>
 			</DetailedCard>
 
-			{hasCompletedTokenOrders && (
+			{!!tokenOrdersData?.items.length && (
 				<DetailedCard
 					cardIconAltText="Profile Icon"
 					cardTitle={i18n.translate('token-past-purchases')}
@@ -262,7 +233,7 @@ const AIHubDetails = () => {
 											options[0]?.skuOptionValueName ||
 											'';
 
-										return (
+										return Intl.NumberFormat().format(
 											optionValue
 												.replace(/[^\d]/g, '')
 												.trim() || '-'

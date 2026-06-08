@@ -84,8 +84,8 @@ const AIHubOpenBetaNextSteps: React.FC<AIHubOpenBetaNextStepsProps> = ({
 								<span className="text-center">
 									<p className="mb-1 next-step-page-description">
 										Thank you for your purchase of{' '}
-										<strong>AI Hub.</strong> An order
-										form will be sent to your{' '}
+										<strong>AI Hub.</strong> An order form
+										will be sent to your{' '}
 										<strong>email via DocuSign</strong>.
 										Please review, sign, and return it to
 										confirm your subscription. Once
@@ -123,7 +123,7 @@ const AIHubOpenBetaNextSteps: React.FC<AIHubOpenBetaNextStepsProps> = ({
 					</div>
 				</div>
 
-				<div className="flex-column d-flex justify-content-center mt-4 next-step-page-footer-button-container w-100">
+				<div className="d-flex flex-column justify-content-center mt-4 next-step-page-footer-button-container w-100">
 					<div>
 						<ClayButton
 							className="mr-5 next-step-page-footer-button-secondary"
@@ -149,7 +149,7 @@ const AIHubOpenBetaNextSteps: React.FC<AIHubOpenBetaNextStepsProps> = ({
 						</ClayButton>
 					</div>
 
-					<span className="font-weight-semi-bold ">
+					<span className="font-weight-semi-bold">
 						Didn't receive the email?{' '}
 						<a
 							className="font-weight-bold"

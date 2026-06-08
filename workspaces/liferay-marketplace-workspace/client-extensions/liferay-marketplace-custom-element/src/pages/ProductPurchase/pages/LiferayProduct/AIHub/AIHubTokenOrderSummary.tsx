@@ -2,15 +2,16 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {useSelector} from '@xstate/store/react';
 import {useEffect} from 'react';
+import {Navigate} from 'react-router-dom';
 
 import paypal from '../../../../../assets/images/paypal.png';
-
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import {Section} from '../../../../../components/Section/Section';
 import useAccountAddresses from '../../../../../hooks/useAccountAddresses';
@@ -25,13 +26,8 @@ import LicenseTermsCheckbox from '../../App/License/LicenseTermsCheckbox';
 import './AIHubOrderSummary.scss';
 
 const AIHubTokenOrderSummary = () => {
-	const {
-		actions: {previousStep},
-		handlePurchase,
-		product,
-		productPurchaseCart,
-		selectedAccount,
-	} = useProductPurchaseOutletContext();
+	const {handlePurchase, product, productPurchaseCart, selectedAccount} =
+		useProductPurchaseOutletContext();
 
 	const {payment: paymentStore} = useSelector(
 		productPurchaseStore,
@@ -42,12 +38,6 @@ const AIHubTokenOrderSummary = () => {
 	const addresses = addressResponse?.items;
 
 	const selectedSkuId = productPurchaseCart.cartItems[0]?.skuId;
-
-	useEffect(() => {
-		if (!selectedAccount || !selectedAccount.id || !selectedSkuId) {
-			previousStep();
-		}
-	}, [selectedAccount, selectedSkuId, previousStep]);
 
 	useEffect(() => {
 		if (
@@ -75,10 +65,6 @@ const AIHubTokenOrderSummary = () => {
 		}
 	}, [addresses, paymentStore.billingAddress?.name]);
 
-	if (!selectedAccount || !selectedAccount.id || !selectedSkuId) {
-		return null;
-	}
-
 	const tokens = getAiHubTokenSKUs(product);
 
 	const selectedSku = tokens.find((token) => token.id === selectedSkuId);
@@ -105,10 +91,14 @@ const AIHubTokenOrderSummary = () => {
 			...productPurchaseCart.cart,
 			billingAddress: paymentStore.billingAddress,
 			cartItems: productPurchaseCart.cartItems,
-			paymentMethod: 'money-order',
+			paymentMethod: 'paypal-integration',
 			shippingAddress: paymentStore.billingAddress,
 		});
 	};
+
+	if (!selectedAccount?.id || !selectedSkuId) {
+		return <Navigate to="/payment-method" />;
+	}
 
 	return (
 		<ProductPurchase.Shell
@@ -129,7 +119,7 @@ const AIHubTokenOrderSummary = () => {
 				>
 					<div className="ai-hub-summary-infomation-card">
 						<div className="align-items-center d-flex justify-content-between w-100">
-							<div className="d-flex align-items-center">
+							<div className="align-items-center d-flex">
 								{selectedSku.customFields?.find(
 									(field: any) => field.name === 'icon-url'
 								)?.customValue.data && (
@@ -142,7 +132,8 @@ const AIHubTokenOrderSummary = () => {
 														(field: any) =>
 															field.name ===
 															'icon-url'
-													)?.customValue.data as string
+													)?.customValue
+														.data as string
 												}
 											/>
 										</ClaySticker>
@@ -195,7 +186,9 @@ const AIHubTokenOrderSummary = () => {
 				</div>
 			</Section>
 
-			<Section className="ai-hub-summary" label={i18n.translate('payment-method')}
+			<Section
+				className="ai-hub-summary"
+				label={i18n.translate('payment-method')}
 			>
 				<div className="ai-hub-summary-infomation-card">
 					<img
@@ -216,7 +209,9 @@ const AIHubTokenOrderSummary = () => {
 				</div>
 			</Section>
 
-			<Section className="ai-hub-summary" label={i18n.translate('order-summary')}
+			<Section
+				className="ai-hub-summary"
+				label={i18n.translate('order-summary')}
 			>
 				<div className="d-flex mx-5">
 					<div className="col-1 d-flex justify-content-end m-0 p-0 text-nowrap">
@@ -244,9 +239,9 @@ const AIHubTokenOrderSummary = () => {
 						{valueFallBack(summary?.totalFormatted)}
 					</span>
 					<ClayBadge
-							className="ml-3 px-2 text-2 rounded font-weight-normal monthly-badge"
-							label="One-Time"
-						/>
+						className="font-weight-normal ml-3 monthly-badge px-2 rounded text-2"
+						label="One-Time"
+					/>
 				</div>
 			</Section>
 

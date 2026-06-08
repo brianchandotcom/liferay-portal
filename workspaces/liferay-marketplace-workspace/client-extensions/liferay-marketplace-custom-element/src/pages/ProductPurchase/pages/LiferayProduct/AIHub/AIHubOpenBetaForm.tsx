@@ -5,25 +5,20 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {zodResolver} from '@hookform/resolvers/zod';
-import classNames from 'classnames';
 import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 
-import {RequiredMask} from '../../../../../components/FieldBase';
 import {Input} from '../../../../../components/Input/Input';
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import Select from '../../../../../components/Select/Select';
-import {SkuOptions} from '../../../../../enums/Product';
 import useCommerceRegions from '../../../../../hooks/useCommerceRegions';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import zodSchema, {z} from '../../../../../schema/zod';
-import {productAgreements} from '../../../../../utils/agreements';
 import {phones} from '../../../../../utils/phones';
-import {getSkuByOptionValueKey} from '../../../../../utils/productUtils';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 
 import './AIHubForm.scss';
@@ -43,6 +38,7 @@ const AIHubOpenBetaForm = () => {
 		productPurchaseCart,
 		selectedAccount,
 		setForm,
+		skuRef,
 	} = useProductPurchaseOutletContext();
 
 	const {
@@ -95,19 +91,22 @@ const AIHubOpenBetaForm = () => {
 	const onSubmit = async (
 		form: z.infer<typeof zodSchema.aiHubOpenBetaForm>
 	) => {
-		const sku = getSkuByOptionValueKey(product, SkuOptions.OPEN_BETA);
+		const sku = product.skus.find(
+			({externalReferenceCode}) => externalReferenceCode === skuRef
+		);
 
-		const skuId = sku?.id ?? product.skus[0].id;
+		const skuId = sku?.id;
 
 		const existingItem = productPurchaseCart.cartItems.find(
 			(item) => item?.skuId === skuId
 		);
 
-		if (!existingItem) {
+		if (!existingItem && skuId) {
 			await productPurchaseCart.addCart(product.id, skuId);
 		}
 
 		setForm(form);
+
 		nextStep();
 	};
 

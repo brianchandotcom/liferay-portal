@@ -81,12 +81,6 @@ export default function PaymentMethod() {
 				billingAddress: payment.billingAddress,
 			});
 
-			if (licenseType === 'PAID') {
-				await marketplaceOAuth2.taxCalculate(
-					productPurchaseCart.cart.id
-				);
-			}
-
 			if (payment.taxId && !selectedAccount.taxId) {
 				await HeadlessAdminUser.updateAccount(selectedAccount.id, {
 					taxId: payment.taxId,

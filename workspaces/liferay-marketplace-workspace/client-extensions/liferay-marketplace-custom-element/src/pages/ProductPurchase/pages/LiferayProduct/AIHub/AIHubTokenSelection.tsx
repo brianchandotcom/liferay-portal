@@ -8,12 +8,12 @@ import {useEffect, useMemo, useState} from 'react';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import RadioCardList from '../../../../../components/RadioCardList/RadioCardList';
+import SearchBuilder from '../../../../../core/SearchBuilder';
+import {OrderTypes} from '../../../../../enums/Order';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import HeadlessCommerceDeliveryCart from '../../../../../services/rest/HeadlessCommerceDeliveryCart';
 import HeadlessCommerceDeliveryOrder from '../../../../../services/rest/HeadlessCommerceDeliveryOrder';
-import SearchBuilder from '../../../../../core/SearchBuilder';
-import {OrderTypes} from '../../../../../enums/Order';
 import {getAiHubTokenSKUs} from '../../../../../utils/productUtils';
 import {getSiteURL} from '../../../../../utils/site';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
@@ -40,11 +40,16 @@ const AIHubTokenSelection = () => {
 
 	const aiHubTokens = useMemo(() => getAiHubTokenSKUs(product), [product]);
 
-	const [selectedSkuId, setSelectedSkuId] = useState<number | undefined>();
 	const [isCartLoading, setIsCartLoading] = useState(true);
+	const [selectedSkuId, setSelectedSkuId] = useState<number | undefined>();
 
-	const searchParams = useMemo(() => new URLSearchParams(window.location.search), []);
-	const [orderId, setOrderId] = useState<string | null>(searchParams.get('orderId'));
+	const searchParams = useMemo(
+		() => new URLSearchParams(window.location.search),
+		[]
+	);
+	const [orderId, setOrderId] = useState<string | null>(
+		searchParams.get('orderId')
+	);
 
 	const onClickCancel = () => {
 		if (productPurchaseCart.cart.id) {
@@ -52,11 +57,12 @@ const AIHubTokenSelection = () => {
 		}
 
 		if (orderId) {
-			Liferay.Util.navigate(`${getSiteURL()}/customer-dashboard#/products/${orderId}`);
+			return Liferay.Util.navigate(
+				`${getSiteURL()}/customer-dashboard#/products/${orderId}`
+			);
 		}
-		else {
-			Liferay.Util.navigate(`${getSiteURL()}/customer-dashboard`);
-		}
+
+		Liferay.Util.navigate(`${getSiteURL()}/customer-dashboard`);
 	};
 
 	useEffect(() => {
@@ -64,84 +70,56 @@ const AIHubTokenSelection = () => {
 			return;
 		}
 
-		(async () => {
-			try {
-				const channelId = Liferay.CommerceContext.commerceChannelId;
-
-				const params = new URLSearchParams({
-					filter: new SearchBuilder()
-						.eq(
-							'orderTypeExternalReferenceCode',
-							OrderTypes.AI_HUB
-						)
-						.build(),
-					pageSize: '1',
-				});
-
-				const {items: orders} =
-					await HeadlessCommerceDeliveryOrder.getPlacedOrders(
-						channelId,
-						selectedAccount.id,
-						params
-					);
-
-				if (orders.length) {
-					setOrderId(String(orders[0].id));
+		HeadlessCommerceDeliveryOrder.getPlacedOrders(
+			Liferay.CommerceContext.commerceChannelId,
+			selectedAccount.id,
+			new URLSearchParams({
+				filter: SearchBuilder.eq(
+					'orderTypeExternalReferenceCode',
+					OrderTypes.AI_HUB
+				),
+				pageSize: '1',
+			})
+		)
+			.then(({items}) => {
+				if (items.length) {
+					setOrderId(String(items[0].id));
 				}
-			}
-			catch (error) {
-				console.error(error);
-			}
-		})();
+			})
+			.catch(console.error);
 	}, [orderId, selectedAccount?.id]);
 
 	useEffect(() => {
 		if (!selectedAccount?.id) {
-			setIsCartLoading(true);
-
 			return;
 		}
 
-		let active = true;
-		setIsCartLoading(true);
 		setSelectedSkuId(undefined);
+
 		cartStore.send({type: 'reset'});
 
-		(async () => {
-			try {
-				const channelId = Liferay.CommerceContext.commerceChannelId;
+		const getOrdersItems = async () => {
+			const response = await HeadlessCommerceDeliveryCart.getAccountCarts(
+				selectedAccount.id,
+				Liferay.CommerceContext.commerceChannelId
+			);
 
-				const {items: carts} =
-					await HeadlessCommerceDeliveryCart.getAccountCarts(
-						selectedAccount.id,
-						channelId
-					);
+			if (!response.items.length) {
+				return;
+			}
 
-				if (carts.length) {
-					const [cart] = carts;
-					const {items: cartItems} =
-						await HeadlessCommerceDeliveryCart.getCartItems(
-							cart.id
-						);
-					if (active) {
-						cartStore.send({cart, type: 'setCart'});
-						cartStore.send({cartItems, type: 'setCartItems'});
-					}
-				}
-			}
-			catch (error) {
-				console.error(error);
-			}
-			finally {
-				if (active) {
-					setIsCartLoading(false);
-				}
-			}
-		})();
+			const [cart] = response.items;
 
-		return () => {
-			active = false;
+			cartStore.send({cart, type: 'setCart'});
+			cartStore.send({
+				cartItems: cart.cartItems,
+				type: 'setCartItems',
+			});
+
+			setIsCartLoading(false);
 		};
+
+		getOrdersItems();
 	}, [selectedAccount?.id]);
 
 	useEffect(() => {
@@ -159,6 +137,7 @@ const AIHubTokenSelection = () => {
 
 			if (tokensInCart.length) {
 				const activeToken = tokensInCart[0];
+
 				setSelectedSkuId(activeToken.id);
 
 				if (tokensInCart.length > 1) {
@@ -170,6 +149,7 @@ const AIHubTokenSelection = () => {
 							!tokenSkuIds.includes(item.skuId) ||
 							item.skuId === activeToken.id
 					);
+
 					cartStore.send({
 						cartItems: filteredItems,
 						type: 'setCartItems',
@@ -182,7 +162,9 @@ const AIHubTokenSelection = () => {
 
 		if (!selectedSkuId && !!aiHubTokens.length) {
 			const defaultSkuId = aiHubTokens[0].id;
+
 			setSelectedSkuId(defaultSkuId);
+
 			productPurchaseCart.addCart(product.id, defaultSkuId);
 		}
 	}, [
@@ -246,8 +228,7 @@ const AIHubTokenSelection = () => {
 						contentList={aiHubTokens.map((token: any) => ({
 							...token,
 							imageURL: token.customFields?.find(
-								(field: any) =>
-									field.name === 'icon-url'
+								(field: any) => field.name === 'icon-url'
 							)?.customValue.data,
 							selected: selectedSkuId === token?.id,
 							title: (
@@ -259,6 +240,7 @@ const AIHubTokenSelection = () => {
 													.skuOptionValueNames[0]
 											}
 										</p>
+
 										<p className="liferay-ai-hub-form-token-description mb-0 text-black-50">
 											{
 												token.customFields?.find(
@@ -269,6 +251,7 @@ const AIHubTokenSelection = () => {
 											}
 										</p>
 									</div>
+
 									<p className="liferay-ai-hub-form-token-price mb-0">
 										{token.price.priceFormatted}
 									</p>
@@ -283,14 +266,17 @@ const AIHubTokenSelection = () => {
 				) : (
 					<p className="font-weight-bold my-5">No tokens available</p>
 				)}
-				
-				<ClayIcon className="mr-1 text-black-50 liferay-ai-hub-form-info" symbol="lock" />
 
-				<span className="text-black-50 liferay-ai-hub-form-info">
-					The per-token price is locked when you purchase. Future rate changes won't affect tokens you've already bought.
+				<ClayIcon
+					className="liferay-ai-hub-form-info mr-1 text-black-50"
+					symbol="lock"
+				/>
+
+				<span className="liferay-ai-hub-form-info text-black-50">
+					The per-token price is locked when you purchase. Future rate
+					changes won't affect tokens you've already bought.
 				</span>
 			</div>
-			
 		</ProductPurchase.Shell>
 	);
 };

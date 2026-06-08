@@ -115,11 +115,16 @@ public class PredicateExpressionVisitorImpl
 		Predicate predicate = null;
 
 		if (_isComplexProperExpression(left)) {
-			predicate = _getObjectRelationshipPredicate(
-				left,
-				(objectFieldName, relatedObjectDefinition) -> _getPredicate(
-					objectFieldName, relatedObjectDefinition, operation,
-					right));
+			predicate = _getUnlinkedRelationshipPredicate(
+				operation, (String)left, right);
+
+			if (predicate == null) {
+				predicate = _getObjectRelationshipPredicate(
+					left,
+					(objectFieldName, relatedObjectDefinition) -> _getPredicate(
+						objectFieldName, relatedObjectDefinition, operation,
+						right));
+			}
 		}
 		else {
 			predicate = _getPredicate(
@@ -687,6 +692,46 @@ public class PredicateExpressionVisitorImpl
 		return BinaryExpressionConverterUtil.getExpressionPredicate(
 			_getColumn(left, objectDefinition), operation,
 			_getValue(left, objectDefinition, right));
+	}
+
+	private Predicate _getUnlinkedRelationshipPredicate(
+			BinaryExpression.Operation operation, String left, Object right)
+		throws ExpressionVisitException {
+
+		if ((!Objects.equals(BinaryExpression.Operation.EQ, operation) &&
+			 !Objects.equals(BinaryExpression.Operation.NE, operation)) ||
+			Validator.isNotNull(String.valueOf(right))) {
+
+			return null;
+		}
+
+		List<String> leftParts = ListUtil.fromString(left, StringPool.SLASH);
+
+		if ((leftParts.size() != 2) ||
+			!Objects.equals(leftParts.get(1), "externalReferenceCode")) {
+
+			return null;
+		}
+
+		ObjectRelationship objectRelationship = _fetchObjectRelationship(
+			_objectDefinition, leftParts.get(0));
+
+		if (objectRelationship == null) {
+			return null;
+		}
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		if ((objectField == null) ||
+			(objectField.getObjectDefinitionId() !=
+				_objectDefinition.getObjectDefinitionId())) {
+
+			return null;
+		}
+
+		return _getPredicate(
+			objectField.getName(), _objectDefinition, operation, right);
 	}
 
 	private Object _getValue(

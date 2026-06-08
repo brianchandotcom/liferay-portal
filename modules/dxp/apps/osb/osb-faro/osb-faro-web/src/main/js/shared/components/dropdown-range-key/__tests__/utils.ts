@@ -258,6 +258,58 @@ describe('getFilteredItems', () => {
 		]);
 	});
 
+	it('see more filtered items excludes ranges without a preset label', () => {
+		expect(
+			getFilteredItems({
+				legacy: false,
+				rangeKey: RangeKeyTimeRanges.Last30Days,
+				retentionPeriod: 13,
+				seeMore: true,
+				timeRange: formatTimeRange([
+					...timeRange,
+					{
+						endDate: '2024-01-15T23:59:59.999999',
+						rangeKey: 'CUSTOM',
+						startDate: '2023-01-15T23:59:59.999999'
+					}
+				])
+			})
+		).toEqual([
+			{
+				description: '15 Jan, 07 PM - 16 Jan, 06 PM',
+				label: 'Last 24 hours',
+				value: '0'
+			},
+			{
+				description: '15 Jan, 12 AM - 15 Jan, 11 PM',
+				label: 'Yesterday',
+				value: '1'
+			},
+			{description: '09 Jan - 15 Jan', label: 'Last 7 days', value: '7'},
+			{
+				description: '19 Dec - 15 Jan',
+				label: 'Last 28 days',
+				value: '28'
+			},
+			{
+				description: '17 Dec - 15 Jan',
+				label: 'Last 30 days',
+				value: '30'
+			},
+			{
+				description: '18 Oct - 15 Jan',
+				label: 'Last 90 days',
+				value: '90'
+			},
+			{
+				description: '20 Jul - 15 Jan',
+				label: 'Last 180 days',
+				value: '180'
+			},
+			{description: '15 Jan - 15 Jan', label: 'Last Year', value: '365'}
+		]);
+	});
+
 	it('see more filtered items with 13 months of retention period', () => {
 		expect(
 			getFilteredItems({

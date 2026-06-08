@@ -25,16 +25,6 @@ clean {
 	delete liferayReleaseToolEEDir
 }
 
-def executeCommand = {
-	String command ->
-	def process = command.execute()
-
-	if (process.waitFor() != 0) {
-		throw new GradleException(
-			"Failed: ${command}\n${process.err.text}")
-	}
-}
-
 task cloneReleaseToolEE
 
 cloneReleaseToolEE {
@@ -45,9 +35,17 @@ cloneReleaseToolEE {
 	}
 
 	doLast {
-		executeCommand("git clone --branch master --filter=blob:none --no-checkout git@github.com:liferay/liferay-release-tool-ee.git ${liferayReleaseToolEEDir.absolutePath}")
-		executeCommand("git -C ${liferayReleaseToolEEDir.absolutePath} sparse-checkout set --no-cone ext/shared")
-		executeCommand("git -C ${liferayReleaseToolEEDir.absolutePath} checkout HEAD")
+		exec {
+			commandLine "git", "clone", "--branch", "master", "--filter=blob:none", "--no-checkout", "git@github.com:liferay/liferay-release-tool-ee.git", liferayReleaseToolEEDir.absolutePath
+		}
+
+		exec {
+			commandLine "git", "-C", liferayReleaseToolEEDir.absolutePath, "sparse-checkout", "set", "--no-cone", "ext/shared"
+		}
+
+		exec {
+			commandLine "git", "-C", liferayReleaseToolEEDir.absolutePath, "checkout", "HEAD"
+		}
 	}
 }
 

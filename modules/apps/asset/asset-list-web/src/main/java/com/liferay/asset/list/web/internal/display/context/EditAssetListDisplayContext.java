@@ -33,19 +33,14 @@ import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
-import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -58,7 +53,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -78,7 +72,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -158,8 +151,8 @@ public class EditAssetListDisplayContext {
 		return ddmIndexer.encodeName(ddmStructureId, fieldReference, locale);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() throws Exception {
-		DropdownItemList dropdownItemList = new DropdownItemList();
+	public JSONArray getAssetEntryTypesJSONArray() throws Exception {
+		JSONArray assetEntryTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		AssetListEntry assetListEntry = getAssetListEntry();
 
@@ -199,44 +192,16 @@ public class EditAssetListDisplayContext {
 				continue;
 			}
 
-			if (!assetRendererFactory.isSupportsClassTypes()) {
-				dropdownItemList.add(
-					_getUnsafeConsumer(
-						assetRendererFactory, _DEFAULT_SUBTYPE_SELECTION_ID,
-						assetRendererFactory.getTypeName(
-							_themeDisplay.getLocale())));
-
-				continue;
-			}
-
-			Class<? extends AssetRendererFactory<?>> clazz =
-				_assetRendererFactoryClassProvider.getClass(
-					assetRendererFactory);
-
-			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
-
-			long[] classTypeIds = GetterUtil.getLongValues(
-				StringUtil.split(
-					unicodeProperties.getProperty(
-						"classTypeIds" + clazz.getSimpleName(), null)));
-
-			if (classTypeIds.length == 0) {
-				classTypeIds = _getDefaultClassTypeIds(classTypeReader);
-			}
-
-			for (long classTypeId : classTypeIds) {
-				dropdownItemList.add(
-					_getClassTypeIdUnsafeConsumer(
-						assetRendererFactory,
-						assetListEntry.getAssetEntrySubtype(), classTypeId,
-						classTypeReader));
-			}
+			assetEntryTypesJSONArray.put(
+				JSONUtil.put(
+					"classNameId", classNameId
+				).put(
+					"label",
+					assetRendererFactory.getTypeName(_themeDisplay.getLocale())
+				));
 		}
 
-		return ListUtil.sort(
-			dropdownItemList,
-			new SelectorEntriesLabelComparator(_themeDisplay.getLocale()));
+		return assetEntryTypesJSONArray;
 	}
 
 	public AssetListEntry getAssetListEntry() {
@@ -1290,41 +1255,6 @@ public class EditAssetListDisplayContext {
 		return StringUtil.merge(filteredAssetTagNames);
 	}
 
-	private PortletURL _getAssetEntryItemSelectorPortletURL(
-		AssetRendererFactory<?> assetRendererFactory, long subtypeSelectionId) {
-
-		PortletURL portletURL = assetRendererFactory.getItemSelectorURL(
-			PortalUtil.getLiferayPortletRequest(_portletRequest),
-			PortalUtil.getLiferayPortletResponse(_portletResponse),
-			subtypeSelectionId, _portletResponse.getNamespace() + "selectAsset",
-			_themeDisplay.getScopeGroup(), true, 0);
-
-		if (portletURL != null) {
-			return portletURL;
-		}
-
-		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
-			new AssetEntryItemSelectorCriterion();
-
-		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new AssetEntryItemSelectorReturnType());
-		assetEntryItemSelectorCriterion.setGroupId(
-			_themeDisplay.getScopeGroupId());
-		assetEntryItemSelectorCriterion.setShowNonindexable(true);
-		assetEntryItemSelectorCriterion.setShowScheduled(true);
-		assetEntryItemSelectorCriterion.setSubtypeSelectionId(
-			subtypeSelectionId);
-		assetEntryItemSelectorCriterion.setTypeSelection(
-			assetRendererFactory.getClassName());
-
-		return PortletURLBuilder.create(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-				_portletResponse.getNamespace() + "selectAsset",
-				assetEntryItemSelectorCriterion)
-		).buildPortletURL();
-	}
-
 	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
 		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
 			new ArrayList<>(getAssetListEntrySegmentsEntryRels());
@@ -1414,39 +1344,6 @@ public class EditAssetListDisplayContext {
 		return availableClassTypeIds;
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getClassTypeIdUnsafeConsumer(
-			AssetRendererFactory<?> assetRendererFactory,
-			String assetEntrySubtype, long classTypeId,
-			ClassTypeReader classTypeReader) {
-
-		ClassType classType = null;
-
-		try {
-			classType = classTypeReader.getClassType(
-				classTypeId, _themeDisplay.getLocale());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return null;
-		}
-
-		if (Validator.isNotNull(assetEntrySubtype) &&
-			!Objects.equals(
-				assetEntrySubtype,
-				String.valueOf(classType.getClassTypeId()))) {
-
-			return null;
-		}
-
-		return _getUnsafeConsumer(
-			assetRendererFactory, classType.getClassTypeId(),
-			classType.getName());
-	}
-
 	private long[] _getDefaultClassNameIds() {
 		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
@@ -1456,19 +1353,6 @@ public class EditAssetListDisplayContext {
 
 		return ListUtil.toLongArray(
 			assetRendererFactories, AssetRendererFactory::getClassNameId);
-	}
-
-	private long[] _getDefaultClassTypeIds(ClassTypeReader classTypeReader)
-		throws Exception {
-
-		List<ClassType> assetAvailableClassTypes =
-			classTypeReader.getAvailableClassTypes(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					_themeDisplay.getScopeGroupId()),
-				_themeDisplay.getLocale());
-
-		return ListUtil.toLongArray(
-			assetAvailableClassTypes, ClassType::getClassTypeId);
 	}
 
 	private String _getDeleteAssetListEntryVariationURL(
@@ -1509,27 +1393,6 @@ public class EditAssetListDisplayContext {
 		}
 
 		return typeSettings;
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception> _getUnsafeConsumer(
-		AssetRendererFactory<?> assetRendererFactory, long classTypeId,
-		String classTypeName) {
-
-		return dropdownItem -> {
-			dropdownItem.putData(
-				"href",
-				String.valueOf(
-					_getAssetEntryItemSelectorPortletURL(
-						assetRendererFactory, classTypeId)));
-			dropdownItem.putData(
-				"title",
-				HtmlUtil.escape(
-					LanguageUtil.format(
-						_httpServletRequest, "select-x", classTypeName,
-						false)));
-
-			dropdownItem.setLabel(classTypeName);
-		};
 	}
 
 	private void _setDDMStructure() throws Exception {
@@ -1580,8 +1443,6 @@ public class EditAssetListDisplayContext {
 			_ddmStructureFieldLabel = classTypeField.getLabel();
 		}
 	}
-
-	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = -1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditAssetListDisplayContext.class);

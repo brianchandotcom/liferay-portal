@@ -112,10 +112,16 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 							<clay:content-col
 								containerElement="span"
 							>
-								<clay:dropdown-menu
+								<clay:button
+									additionalProps='<%=
+										HashMapBuilder.<String, Object>put(
+											"assetEntryTypes", editAssetListDisplayContext.getAssetEntryTypesJSONArray()
+										).put(
+											"groupId", themeDisplay.getScopeGroupId()
+										).build()
+									%>'
 									aria-label='<%= LanguageUtil.get(request, "select-items") %>'
 									cssClass="btn btn-secondary btn-sm"
-									dropdownItems="<%= editAssetListDisplayContext.getActionDropdownItems() %>"
 									label='<%= LanguageUtil.get(request, "select") %>'
 									propsTransformer="{EditAssetListEntryManualDefaultPropsTransformer} from asset-list-web"
 								/>

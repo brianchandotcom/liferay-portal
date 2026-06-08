@@ -121,6 +121,14 @@
 					type="com.liferay.portal.dao.orm.hibernate.StringClobType"
 				<#elseif entityColumn.isPrimitiveType() || stringUtil.equals(entityColumn.type, "Map") || stringUtil.equals(entityColumn.type, "String")>
 					type="com.liferay.portal.dao.orm.hibernate.${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}Type"
+				<#elseif serviceBuilder.isVersionGTE_7_4_0()>
+					<#if stringUtil.equals(entityColumn.type, "BigDecimal")>
+						type="org.hibernate.type.BigDecimalType"
+					<#elseif stringUtil.equals(entityColumn.type, "Blob")>
+						type="org.hibernate.type.BlobType"
+					<#elseif stringUtil.equals(entityColumn.type, "Date")>
+						type="org.hibernate.type.TimestampType"
+					</#if>
 				<#else>
 					<#if stringUtil.equals(entityColumn.type, "Date")>
 						type="org.hibernate.type.TimestampType"

@@ -12,6 +12,7 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -79,10 +80,18 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 		LayoutSetPrototype layoutSetPrototype, long userId) {
 
 		if (layoutSets.isEmpty()) {
-			postNotification(
-				Collections.singleton(
-					BackgroundTaskConstants.STATUS_SUCCESSFUL),
-				layoutSetPrototype.getNameMap(), userId);
+			try {
+				postNotification(
+					Collections.singleton(
+						BackgroundTaskConstants.STATUS_SUCCESSFUL),
+					layoutSetPrototype.getNameMap(), userId);
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to post sync completion notification for user " +
+						userId,
+					portalException);
+			}
 
 			return () -> {
 			};
@@ -102,37 +111,37 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 	public static void postFailureNotification(
 		Map<Locale, String> nameMap, long userId) {
 
-		postNotification(
-			Collections.singleton(BackgroundTaskConstants.STATUS_FAILED),
-			nameMap, userId);
+		try {
+			postNotification(
+				Collections.singleton(BackgroundTaskConstants.STATUS_FAILED),
+				nameMap, userId);
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to post sync failure notification for user " + userId,
+				portalException);
+		}
 	}
 
 	public static void postNotification(
-		Set<Integer> backgroundTaskStatuses, Map<Locale, String> nameMap,
-		long userId) {
+			Set<Integer> backgroundTaskStatuses, Map<Locale, String> nameMap,
+			long userId)
+		throws PortalException {
 
-		try {
-			NotificationEvent notificationEvent = new NotificationEvent(
-				System.currentTimeMillis(),
-				LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
-				JSONUtil.put(
-					"layoutSetPrototypeNameMap", _toJSONObject(nameMap)
-				).put(
-					"result", _toResult(backgroundTaskStatuses)
-				));
+		NotificationEvent notificationEvent = new NotificationEvent(
+			System.currentTimeMillis(),
+			LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
+			JSONUtil.put(
+				"layoutSetPrototypeNameMap", _toJSONObject(nameMap)
+			).put(
+				"result", _toResult(backgroundTaskStatuses)
+			));
 
-			notificationEvent.setDeliveryType(
-				UserNotificationDeliveryConstants.TYPE_WEBSITE);
+		notificationEvent.setDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_WEBSITE);
 
-			UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
-				userId, notificationEvent);
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to post sync completion notification for user " +
-					userId,
-				exception);
-		}
+		UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
+			userId, notificationEvent);
 	}
 
 	private static JSONObject _toJSONObject(Map<Locale, String> nameMap) {

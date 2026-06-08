@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -151,13 +154,31 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 					BackgroundTaskConstants.STATUS_FAILED);
 			}
 
-			LayoutSetPrototypeSyncSessionManagerUtil.postNotification(
-				backgroundTaskStatuses, layoutSetPrototype.getNameMap(),
-				MapUtil.getLong(
-					taskContextMap,
-					LayoutSetPrototypeSyncSessionManagerUtil.KEY_SYNC_USER_ID));
+			try {
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					() -> {
+						LayoutSetPrototypeSyncSessionManagerUtil.
+							postNotification(
+								backgroundTaskStatuses,
+								layoutSetPrototype.getNameMap(),
+								MapUtil.getLong(
+									taskContextMap,
+									LayoutSetPrototypeSyncSessionManagerUtil.
+										KEY_SYNC_USER_ID));
 
-			_markNotified(completedBackgroundTasks);
+						_markNotified(completedBackgroundTasks);
+
+						return null;
+					});
+			}
+			catch (Throwable throwable) {
+				_log.error(
+					"Unable to finalize the site template sync session",
+					throwable);
+
+				return;
+			}
 
 			_deleteSuccessfulBackgroundTasks(completedBackgroundTasks);
 		}
@@ -265,26 +286,16 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 
 	private void _markNotified(BackgroundTask[] backgroundTasks) {
 		for (BackgroundTask backgroundTask : backgroundTasks) {
-			try {
-				Map<String, Serializable> taskContextMap =
-					backgroundTask.getTaskContextMap();
+			Map<String, Serializable> taskContextMap =
+				backgroundTask.getTaskContextMap();
 
-				taskContextMap.put(
-					LayoutSetPrototypeSyncSessionManagerUtil.KEY_NOTIFIED,
-					Boolean.TRUE);
+			taskContextMap.put(
+				LayoutSetPrototypeSyncSessionManagerUtil.KEY_NOTIFIED,
+				Boolean.TRUE);
 
-				backgroundTask.setTaskContextMap(taskContextMap);
+			backgroundTask.setTaskContextMap(taskContextMap);
 
-				backgroundTask =
-					_backgroundTaskLocalService.updateBackgroundTask(
-						backgroundTask);
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to mark background task as notified: " +
-						backgroundTask.getBackgroundTaskId(),
-					exception);
-			}
+			_backgroundTaskLocalService.updateBackgroundTask(backgroundTask);
 		}
 	}
 
@@ -294,6 +305,10 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

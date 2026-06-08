@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
@@ -104,9 +103,9 @@ public class LoadBalancerUtil {
 			counter = _roundRobinCounters.get(masterPrefix);
 		}
 		else {
-			Random random = new Random();
-
-			counter = new AtomicInteger(random.nextInt());
+			counter = new AtomicInteger(
+				JenkinsResultsParserUtil.getRandomValue(
+					0, availableJenkinsMasters.size() - 1));
 
 			_roundRobinCounters.put(masterPrefix, counter);
 		}

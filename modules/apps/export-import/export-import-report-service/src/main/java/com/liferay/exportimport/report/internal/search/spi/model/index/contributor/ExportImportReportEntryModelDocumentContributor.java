@@ -65,7 +65,6 @@ public class ExportImportReportEntryModelDocumentContributor
 			"origin_integer", exportImportReportEntry.getOrigin());
 		document.addNumber("status", exportImportReportEntry.getStatus());
 		document.addNumber("type_integer", exportImportReportEntry.getType());
-
 		document.addLocalizedText(
 			"type_label",
 			_localization.getLocalizationMap(

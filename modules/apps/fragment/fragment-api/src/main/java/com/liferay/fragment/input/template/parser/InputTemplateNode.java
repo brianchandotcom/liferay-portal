@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -118,7 +119,14 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 					JSONFactoryUtil.createJSONObject();
 
 				for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
-					attributesJSONObject.put(entry.getKey(), entry.getValue());
+					Object value = entry.getValue();
+
+					if (value instanceof Collection) {
+						value = JSONFactoryUtil.createJSONArray(
+							(Collection<?>)value);
+					}
+
+					attributesJSONObject.put(entry.getKey(), value);
 				}
 
 				attributesJSONObject.put("readOnly", _readOnly);

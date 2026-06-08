@@ -18,11 +18,13 @@ const DEFAULT_PROPS = {
 	selectedItems: [],
 };
 
+let capturedProps;
 let capturedSourceItems;
 
 jest.mock('@clayui/multi-select', () => ({
 	__esModule: true,
 	default: (props) => {
+		capturedProps = props;
 		capturedSourceItems = props.sourceItems;
 
 		return null;
@@ -44,7 +46,24 @@ const setResource = (resource) =>
 
 describe('AssetTagsSelector', () => {
 	beforeEach(() => {
+		capturedProps = undefined;
 		capturedSourceItems = undefined;
+	});
+
+	it('gives the combobox an accessible name via aria-labelledby', () => {
+		setResource([]);
+
+		const {container} = render(<AssetTagsSelector {...DEFAULT_PROPS} />);
+
+		const labelId = 'tags_MultiSelectLabel';
+
+		expect(capturedProps['aria-labelledby']).toBe(labelId);
+
+		const label = container.querySelector(`#${labelId}`);
+
+		expect(label).toBeInTheDocument();
+		expect(label.tagName).toBe('LABEL');
+		expect(label).toHaveAttribute('for', 'tags_MultiSelect');
 	});
 
 	it('Remove duplicates from the list', () => {

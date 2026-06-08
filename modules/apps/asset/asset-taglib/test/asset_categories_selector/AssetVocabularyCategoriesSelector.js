@@ -16,6 +16,18 @@ const DEFAULT_PROPS = {
 	inputName: '',
 	portletURL: '',
 };
+
+let capturedProps;
+
+jest.mock('@clayui/multi-select', () => ({
+	__esModule: true,
+	default: (props) => {
+		capturedProps = props;
+
+		return null;
+	},
+}));
+
 jest.mock('@clayui/data-provider', () => {
 	const originalModule = jest.requireActual('@clayui/data-provider');
 
@@ -30,11 +42,42 @@ jest.mock('@clayui/data-provider', () => {
 });
 
 describe('AssetVocabularyCategoriesSelector', () => {
+	beforeEach(() => {
+		capturedProps = undefined;
+	});
+
 	it('refetch is not called in the first component render', () => {
 		render(<AssetVocabularyCategoriesSelector {...DEFAULT_PROPS} />);
 
 		const {refetch} = useResource();
 
 		expect(refetch).not.toHaveBeenCalled();
+	});
+
+	it('gives the combobox an accessible name via aria-labelledby', () => {
+		const {container} = render(
+			<AssetVocabularyCategoriesSelector
+				{...DEFAULT_PROPS}
+				inputName="assetCategoryIds_42"
+				label="My Vocabulary"
+			/>
+		);
+
+		const labelId = 'assetCategoryIds_42_MultiSelectLabel';
+
+		expect(capturedProps['aria-labelledby']).toBe(labelId);
+
+		const label = container.querySelector(`#${labelId}`);
+
+		expect(label).toBeInTheDocument();
+		expect(label.tagName).toBe('LABEL');
+		expect(label).toHaveAttribute('for', 'assetCategoryIds_42_MultiSelect');
+		expect(label).toHaveTextContent('My Vocabulary');
+	});
+
+	it('does not set aria-labelledby when there is no label', () => {
+		render(<AssetVocabularyCategoriesSelector {...DEFAULT_PROPS} />);
+
+		expect(capturedProps['aria-labelledby']).toBeUndefined();
 	});
 });

@@ -6,12 +6,16 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.headless.delivery.dto.v1_0.AssetEntry;
+import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -70,9 +74,22 @@ public class AssetEntryDTOConverter
 				setClassName(serviceBuilderAssetEntry::getClassName);
 				setClassNameId(serviceBuilderAssetEntry::getClassNameId);
 				setClassPK(serviceBuilderAssetEntry::getClassPK);
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						dtoConverterContext, _portal,
+						_userLocalService.fetchUser(
+							serviceBuilderAssetEntry.getUserId())));
+				setDateModified(serviceBuilderAssetEntry::getModifiedDate);
 				setDescription(
 					() -> serviceBuilderAssetEntry.getDescription(locale));
 				setGroupDescriptiveName(() -> group.getDescriptiveName(locale));
+				setStatus(
+					() -> {
+						AssetRenderer<?> assetRenderer =
+							serviceBuilderAssetEntry.getAssetRenderer();
+
+						return assetRenderer.getStatus();
+					});
 				setTitle(() -> serviceBuilderAssetEntry.getTitle(locale));
 			}
 		};
@@ -80,5 +97,11 @@ public class AssetEntryDTOConverter
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

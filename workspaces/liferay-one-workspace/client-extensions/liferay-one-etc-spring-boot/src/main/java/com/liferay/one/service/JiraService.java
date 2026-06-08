@@ -6,9 +6,9 @@
 package com.liferay.one.service;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
-import com.liferay.one.constants.BusinessEventConstants;
-import com.liferay.one.constants.BusinessEventVersionConstants;
 import com.liferay.one.constants.JiraIssueConstants;
+import com.liferay.one.converter.BusinessEventConverter;
+import com.liferay.one.converter.BusinessEventVersionConverter;
 import com.liferay.one.model.BusinessEvent;
 import com.liferay.one.model.BusinessEventVersion;
 import com.liferay.one.model.JiraSupportIssue;
@@ -29,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -64,12 +65,8 @@ public class JiraService extends BaseService {
 	}
 
 	public BusinessEvent getBusinessEvent(String id) throws Exception {
-		JSONObject assetObjectJSONObject = _getAssetObjectJSONObject(
-			_jiraWorkspaceId, id);
-
-		_injectBusinessEventAttributeNames(assetObjectJSONObject);
-
-		return new BusinessEvent(StringPool.BLANK, assetObjectJSONObject);
+		return _businessEventConverter.toBusinessEvent(
+			StringPool.BLANK, _getAssetObjectJSONObject(_jiraWorkspaceId, id));
 	}
 
 	public List<BusinessEvent> getBusinessEvents(
@@ -86,18 +83,12 @@ public class JiraService extends BaseService {
 		JSONArray assetsObjectsJSONArray = _searchAssetsObjectsJSONArray(
 			_jiraWorkspaceId, aql);
 
-		if ((assetsObjectsJSONArray != null) &&
-			!assetsObjectsJSONArray.isEmpty()) {
-
+		if (assetsObjectsJSONArray != null) {
 			for (int i = 0; i < assetsObjectsJSONArray.length(); i++) {
-				JSONObject assetObjectJSONObject =
-					assetsObjectsJSONArray.getJSONObject(i);
-
-				_injectBusinessEventAttributeNames(assetObjectJSONObject);
-
 				businessEvents.add(
-					new BusinessEvent(
-						accountExternalReferenceCode, assetObjectJSONObject));
+					_businessEventConverter.toBusinessEvent(
+						accountExternalReferenceCode,
+						assetsObjectsJSONArray.getJSONObject(i)));
 			}
 		}
 
@@ -118,18 +109,11 @@ public class JiraService extends BaseService {
 		JSONArray assetsObjectsJSONArray = _searchAssetsObjectsJSONArray(
 			_jiraWorkspaceId, aql);
 
-		if ((assetsObjectsJSONArray != null) &&
-			!assetsObjectsJSONArray.isEmpty()) {
-
+		if (assetsObjectsJSONArray != null) {
 			for (int i = 0; i < assetsObjectsJSONArray.length(); i++) {
-				JSONObject assetObjectJSONObject =
-					assetsObjectsJSONArray.getJSONObject(i);
-
-				_injectBusinessEventVersionAttributeNames(
-					assetObjectJSONObject);
-
 				businessEventVersions.add(
-					new BusinessEventVersion(assetObjectJSONObject));
+					_businessEventVersionConverter.toBusinessEventVersion(
+						assetsObjectsJSONArray.getJSONObject(i)));
 			}
 		}
 
@@ -219,10 +203,8 @@ public class JiraService extends BaseService {
 
 		_syncBusinessEvent(id, businessEvent);
 
-		JSONObject assetObjectJSONObject = _getAssetObjectJSONObject(
-			_jiraWorkspaceId, id);
-
-		return new BusinessEvent(StringPool.BLANK, assetObjectJSONObject);
+		return _businessEventConverter.toBusinessEvent(
+			StringPool.BLANK, _getAssetObjectJSONObject(_jiraWorkspaceId, id));
 	}
 
 	private JSONObject _createAssetObjectJSONObject(
@@ -296,182 +278,6 @@ public class JiraService extends BaseService {
 			_jiraAPIEmailAddress + StringPool.COLON + _jiraAPIToken;
 
 		return "Basic " + encoder.encodeToString(credentials.getBytes());
-	}
-
-	private void _injectBusinessEventAttributeNames(
-			JSONObject assetObjectJSONObject)
-		throws Exception {
-
-		JSONArray attributesJSONArray = assetObjectJSONObject.optJSONArray(
-			"attributes");
-
-		if (attributesJSONArray == null) {
-			return;
-		}
-
-		for (int i = 0; i < attributesJSONArray.length(); i++) {
-			JSONObject attributeJSONObject = attributesJSONArray.getJSONObject(
-				i);
-
-			String objectTypeAttributeId = attributeJSONObject.optString(
-				"objectTypeAttributeId");
-
-			if (Validator.isNull(objectTypeAttributeId)) {
-				continue;
-			}
-
-			if (objectTypeAttributeId.equals(
-					_jiraBusinessEventAssetObjectTypeAttributeAccount)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_ACCOUNT);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeActualEventDate)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_ACTUAL_EVENT_DATE);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeAssociatedTickets)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_ASSOCIATED_TICKETS);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeAuthor)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_AUTHOR);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeCurrentVersion)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_CURRENT_VERSION);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeDescription)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_DESCRIPTION);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeEventStatus)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_EVENT_STATUS);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeEventType)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_EVENT_TYPE);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeLastComment)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_LAST_COMMENT);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeLastUpdatedAuthor)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_LAST_UPDATED_AUTHOR);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeName)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_NAME);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeNewVersion)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_NEW_VERSION);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributePlannedEventDate)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_PLANNED_EVENT_DATE);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventAssetObjectTypeAttributeTimeZone)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventConstants.ATTRIBUTE_TIME_ZONE);
-			}
-		}
-	}
-
-	private void _injectBusinessEventVersionAttributeNames(
-			JSONObject assetObjectJSONObject)
-		throws Exception {
-
-		JSONArray attributesJSONArray = assetObjectJSONObject.optJSONArray(
-			"attributes");
-
-		if (attributesJSONArray == null) {
-			return;
-		}
-
-		for (int i = 0; i < attributesJSONArray.length(); i++) {
-			JSONObject attributeJSONObject = attributesJSONArray.getJSONObject(
-				i);
-
-			String objectTypeAttributeId = attributeJSONObject.optString(
-				"objectTypeAttributeId");
-
-			if (Validator.isNull(objectTypeAttributeId)) {
-				continue;
-			}
-
-			if (objectTypeAttributeId.equals(
-					_jiraBusinessEventVersionAssetObjectTypeAttributeAuthor)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventVersionConstants.ATTRIBUTE_AUTHOR);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventVersionAssetObjectTypeAttributeChange)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventVersionConstants.ATTRIBUTE_CHANGE);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventVersionAssetObjectTypeAttributeComment)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventVersionConstants.ATTRIBUTE_COMMENT);
-			}
-			else if (objectTypeAttributeId.equals(
-						_jiraBusinessEventVersionAssetObjectTypeAttributeCreated)) {
-
-				attributeJSONObject.put(
-					"objectTypeAttributeName",
-					BusinessEventVersionConstants.ATTRIBUTE_CREATED);
-			}
-		}
 	}
 
 	private JSONObject _searchAccountByExternalKeyJSONObject(
@@ -603,63 +409,20 @@ public class JiraService extends BaseService {
 	private void _syncBusinessEvent(String id, BusinessEvent businessEvent)
 		throws Exception {
 
-		JSONObject attributesJSONObject = new JSONObject();
-
-		attributesJSONObject.put(
-			_jiraBusinessEventAssetObjectTypeAttributeActualEventDate,
-			businessEvent.getActualEventDate()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeAssociatedTickets,
-			businessEvent.getAssociatedTickets()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeCurrentVersion,
-			businessEvent.getCurrentLiferayVersionKey()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeDescription,
-			businessEvent.getDescription()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeEventStatus,
-			businessEvent.getEventStatusName()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeEventType,
-			businessEvent.getEventTypeName()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeLastComment,
-			businessEvent.getLastComment()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeLastUpdatedAuthor,
-			businessEvent.getLastUpdatedAuthorEmailAddress()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeName,
-			businessEvent.getName()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeNewVersion,
-			businessEvent.getNewLiferayVersionKey()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributePlannedEventDate,
-			businessEvent.getPlannedEventDate()
-		).put(
-			_jiraBusinessEventAssetObjectTypeAttributeTimeZone,
-			businessEvent.getTimeZoneName()
-		);
-
 		if (Validator.isNull(id)) {
-			attributesJSONObject.put(
-				_jiraBusinessEventAssetObjectTypeAttributeAccount,
-				getAccountObjectKey(
-					businessEvent.getAccountExternalReferenceCode())
-			).put(
-				_jiraBusinessEventAssetObjectTypeAttributeAuthor,
-				businessEvent.getAuthorEmailAddress()
-			);
+			String accountObjectKey = getAccountObjectKey(
+				businessEvent.getAccountExternalReferenceCode());
 
 			_createAssetObjectJSONObject(
 				_jiraWorkspaceId, _jiraBusinessEventAssetObjectTypeId,
-				attributesJSONObject);
+				_businessEventConverter.toAttributesJSONObject(
+					businessEvent, accountObjectKey));
 		}
 		else {
 			_updateAssetObjectJSONObject(
-				_jiraWorkspaceId, id, attributesJSONObject);
+				_jiraWorkspaceId, id,
+				_businessEventConverter.toAttributesJSONObject(
+					businessEvent, null));
 		}
 	}
 
@@ -723,119 +486,20 @@ public class JiraService extends BaseService {
 
 	private static final Log _log = LogFactory.getLog(JiraService.class);
 
+	@Autowired
+	private BusinessEventConverter _businessEventConverter;
+
+	@Autowired
+	private BusinessEventVersionConverter _businessEventVersionConverter;
+
 	@Value("${liferay.one.jira.api.email.address}")
 	private String _jiraAPIEmailAddress;
 
 	@Value("${liferay.one.jira.api.token}")
 	private String _jiraAPIToken;
 
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.account}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeAccount;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.actual." +
-			"event.date}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeActualEventDate;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute." +
-			"associated.tickets}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeAssociatedTickets;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.author}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeAuthor;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute." +
-			"current.version}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeCurrentVersion;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute." +
-			"description}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeDescription;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.event." +
-			"status}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeEventStatus;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.event." +
-			"type}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeEventType;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.last." +
-			"comment}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeLastComment;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.last." +
-			"updated.author}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeLastUpdatedAuthor;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.name}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeName;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.new." +
-			"version}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeNewVersion;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute." +
-			"planned.event.date}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributePlannedEventDate;
-
-	@Value(
-		"${liferay.one.jira.business.event.asset.object.type.attribute.time." +
-			"zone}"
-	)
-	private String _jiraBusinessEventAssetObjectTypeAttributeTimeZone;
-
 	@Value("${liferay.one.jira.business.event.asset.object.type.id}")
 	private String _jiraBusinessEventAssetObjectTypeId;
-
-	@Value(
-		"${liferay.one.jira.business.event.version.asset.object.type." +
-			"attribute.author}"
-	)
-	private String _jiraBusinessEventVersionAssetObjectTypeAttributeAuthor;
-
-	@Value(
-		"${liferay.one.jira.business.event.version.asset.object.type." +
-			"attribute.change}"
-	)
-	private String _jiraBusinessEventVersionAssetObjectTypeAttributeChange;
-
-	@Value(
-		"${liferay.one.jira.business.event.version.asset.object.type." +
-			"attribute.comment}"
-	)
-	private String _jiraBusinessEventVersionAssetObjectTypeAttributeComment;
-
-	@Value(
-		"${liferay.one.jira.business.event.version.asset.object.type." +
-			"attribute.created}"
-	)
-	private String _jiraBusinessEventVersionAssetObjectTypeAttributeCreated;
 
 	@Value("${liferay.one.jira.support.fls.portal.url}")
 	private String _jiraSupportFLSPortalURL;

@@ -265,12 +265,6 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 
 	private void _markNotified(BackgroundTask[] backgroundTasks) {
 		for (BackgroundTask backgroundTask : backgroundTasks) {
-			if (backgroundTask.getStatus() ==
-					BackgroundTaskConstants.STATUS_SUCCESSFUL) {
-
-				continue;
-			}
-
 			try {
 				Map<String, Serializable> taskContextMap =
 					backgroundTask.getTaskContextMap();

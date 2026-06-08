@@ -6,25 +6,19 @@
 package com.liferay.one.license;
 
 import com.liferay.one.constants.ProductVersion;
-import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.ee.license.shared.KeyGenerator;
 import com.liferay.portal.ee.license.shared.LicenseConstants;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import java.text.DateFormat;
 
@@ -33,8 +27,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
 import java.util.TimeZone;
 
 import org.springframework.stereotype.Component;
@@ -93,94 +85,6 @@ public class LicenseKeyExporter {
 		}
 
 		return formatFileName(sb.toString());
-	}
-
-	public String toEncodedLicenseFile(String serverId, String key) {
-		Properties licenseProperties = new Properties();
-
-		licenseProperties.setProperty("serverId", serverId);
-		licenseProperties.setProperty("licenseKey", key);
-
-		String licenseFileDecoded = PropertiesUtil.toString(licenseProperties);
-
-		return Base64.objectToString(licenseFileDecoded);
-	}
-
-	public String toLI(
-			String key, String accountName, String licenseEntryName,
-			String licenseType, int licenseVersion, String productName,
-			String productId, String productVersion, String owner,
-			int maxClusterNodes, int maxServers, int maxHttpSessions,
-			long maxConcurrentUsers, long maxUsers, String sizing,
-			String description, String domains, String hostName,
-			String ipAddresses, String macAddresses, String serverId,
-			Date startDate, Date expirationDate)
-		throws IOException {
-
-		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				unsyncByteArrayOutputStream)) {
-
-			objectOutputStream.writeInt(4);
-			objectOutputStream.writeUTF(GetterUtil.getString(accountName));
-			objectOutputStream.writeUTF(GetterUtil.getString(description));
-			objectOutputStream.writeObject(StringUtil.split(domains));
-			objectOutputStream.writeObject(expirationDate);
-
-			String[] hostNames = null;
-
-			if (Validator.isNotNull(hostName)) {
-				hostNames = new String[] {hostName};
-			}
-			else {
-				hostNames = new String[0];
-			}
-
-			objectOutputStream.writeObject(hostNames);
-
-			objectOutputStream.writeObject(StringUtil.split(ipAddresses));
-			objectOutputStream.writeUTF(GetterUtil.getString(key));
-			objectOutputStream.writeLong(System.currentTimeMillis());
-			objectOutputStream.writeUTF(GetterUtil.getString(licenseEntryName));
-			objectOutputStream.writeUTF(GetterUtil.getString(licenseType));
-			objectOutputStream.writeUTF(String.valueOf(licenseVersion));
-			objectOutputStream.writeObject(StringUtil.split(macAddresses));
-
-			if (Objects.equals(
-					LicenseConstants.TYPE_VIRTUAL_CLUSTER, licenseType)) {
-
-				objectOutputStream.writeInt(maxClusterNodes);
-			}
-
-			objectOutputStream.writeInt(maxHttpSessions);
-			objectOutputStream.writeInt(maxServers);
-			objectOutputStream.writeLong(maxConcurrentUsers);
-			objectOutputStream.writeLong(maxUsers);
-			objectOutputStream.writeUTF(sizing);
-			objectOutputStream.writeUTF(GetterUtil.getString(owner));
-			objectOutputStream.writeUTF(GetterUtil.getString(productName));
-			objectOutputStream.writeUTF(GetterUtil.getString(productId));
-			objectOutputStream.writeUTF(productVersion);
-
-			String[] serverIds = null;
-
-			if (Validator.isNotNull(serverId)) {
-				serverIds = new String[] {serverId};
-			}
-			else {
-				serverIds = new String[0];
-			}
-
-			objectOutputStream.writeObject(serverIds);
-
-			objectOutputStream.writeObject(startDate);
-
-			objectOutputStream.flush();
-
-			return Base64.encode(unsyncByteArrayOutputStream.toByteArray());
-		}
 	}
 
 	public String toXML(
@@ -344,20 +248,26 @@ public class LicenseKeyExporter {
 		Element rootElement = document.addElement("license");
 
 		String licenseEntryType = properties.get("type");
-		String licenseVersion = properties.get("version");
 
 		_addElement(
 			rootElement, "account-name", properties.get("accountEntryName"));
+
 		_addElement(rootElement, "owner", properties.get("owner"));
+
 		_addElement(rootElement, "description", properties.get("description"));
+
 		_addElement(
 			rootElement, "product-name", properties.get("productEntryName"));
+
 		_addElement(
 			rootElement, "product-version", properties.get("productVersion"));
+
 		_addElement(
 			rootElement, "license-name", properties.get("licenseEntryName"));
+
 		_addElement(rootElement, "license-type", licenseEntryType);
-		_addElement(rootElement, "license-version", licenseVersion);
+
+		_addElement(rootElement, "license-version", properties.get("version"));
 
 		DateFormat longDateFormatDateTime = DateFormat.getDateTimeInstance(
 			DateFormat.FULL, DateFormat.FULL, LocaleUtil.US);
@@ -427,7 +337,9 @@ public class LicenseKeyExporter {
 		}
 
 		_addElement(rootElement, "owner", properties.get("owner"));
+
 		_addElement(rootElement, "description", properties.get("description"));
+
 		_addElement(
 			rootElement, "product-name", properties.get("productEntryName"));
 
@@ -445,6 +357,7 @@ public class LicenseKeyExporter {
 		}
 
 		_addElement(rootElement, "license-type", licenseEntryType);
+
 		_addElement(
 			rootElement, "license-version", String.valueOf(licenseVersion));
 

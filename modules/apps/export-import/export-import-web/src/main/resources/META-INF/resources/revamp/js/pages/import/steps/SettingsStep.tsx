@@ -8,23 +8,27 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import {FormikFieldRadioGroup} from '../../../components/forms/formik';
-import {DataStrategy} from '../../../types/exportImportProcess';
+import {
+	DATA_STRATEGIES,
+	DataStrategy,
+	USER_ID_STRATEGIES,
+} from '../../../types/exportImportProcess';
 import {SCOPES, Scope} from '../../../types/scope';
 
 export const SETTINGS_STEP_INITIAL_VALUES = {
-	dataStrategy: 'MIRROR',
-	userIdStrategy: 'CURRENT_USER_ID',
+	dataStrategy: DATA_STRATEGIES.MIRROR,
+	userIdStrategy: USER_ID_STRATEGIES.CURRENT_USER_ID,
 };
 
-const DATA_STRATEGIES: Record<
+const DATA_STRATEGY_LABELS: Record<
 	DataStrategy,
 	{description: string; label: string}
 > = {
-	MIRROR: {
+	[DATA_STRATEGIES.MIRROR]: {
 		description: Liferay.Language.get('import-data-strategy-mirror-help'),
 		label: Liferay.Language.get('mirror'),
 	},
-	MIRROR_OVERWRITE: {
+	[DATA_STRATEGIES.MIRROR_OVERWRITE]: {
 		description: Liferay.Language.get(
 			'import-data-strategy-mirror-with-overwriting-help'
 		),
@@ -33,16 +37,19 @@ const DATA_STRATEGIES: Record<
 };
 
 const DATA_STRATEGY_OPTIONS: Record<Scope, DataStrategy[]> = {
-	[SCOPES.ASSET_LIBRARY]: ['MIRROR', 'MIRROR_OVERWRITE'],
-	[SCOPES.COMPANY]: ['MIRROR'],
-	[SCOPES.SITE]: ['MIRROR', 'MIRROR_OVERWRITE'],
+	[SCOPES.ASSET_LIBRARY]: [
+		DATA_STRATEGIES.MIRROR,
+		DATA_STRATEGIES.MIRROR_OVERWRITE,
+	],
+	[SCOPES.COMPANY]: [DATA_STRATEGIES.MIRROR],
+	[SCOPES.SITE]: [DATA_STRATEGIES.MIRROR, DATA_STRATEGIES.MIRROR_OVERWRITE],
 };
 
 export default function SettingsStep({scope}: {scope: Scope}) {
 	const dataStrategyOptions = (
 		DATA_STRATEGY_OPTIONS[scope] ?? DATA_STRATEGY_OPTIONS[SCOPES.SITE]
 	).map((value) => ({
-		...DATA_STRATEGIES[value],
+		...DATA_STRATEGY_LABELS[value],
 		value,
 	}));
 
@@ -66,7 +73,7 @@ export default function SettingsStep({scope}: {scope: Scope}) {
 							label: Liferay.Language.get(
 								'use-the-original-author'
 							),
-							value: 'CURRENT_USER_ID',
+							value: USER_ID_STRATEGIES.CURRENT_USER_ID,
 						},
 						{
 							description: Liferay.Language.get(
@@ -75,7 +82,7 @@ export default function SettingsStep({scope}: {scope: Scope}) {
 							label: Liferay.Language.get(
 								'use-the-current-user-as-author'
 							),
-							value: 'ALWAYS_CURRENT_USER_ID',
+							value: USER_ID_STRATEGIES.ALWAYS_CURRENT_USER_ID,
 						},
 					]}
 				/>

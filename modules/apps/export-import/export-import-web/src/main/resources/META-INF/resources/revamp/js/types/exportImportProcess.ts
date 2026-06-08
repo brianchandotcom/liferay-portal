@@ -33,9 +33,21 @@ export interface ExportProcessRequest {
 	themeSettings?: boolean;
 }
 
-export type DataStrategy = 'MIRROR' | 'MIRROR_OVERWRITE';
+export const DATA_STRATEGIES = {
+	MIRROR: 'MIRROR',
+	MIRROR_OVERWRITE: 'MIRROR_OVERWRITE',
+} as const;
 
-export type UserIdStrategy = 'CURRENT_USER_ID' | 'ALWAYS_CURRENT_USER_ID';
+export type DataStrategy =
+	(typeof DATA_STRATEGIES)[keyof typeof DATA_STRATEGIES];
+
+export const USER_ID_STRATEGIES = {
+	ALWAYS_CURRENT_USER_ID: 'ALWAYS_CURRENT_USER_ID',
+	CURRENT_USER_ID: 'CURRENT_USER_ID',
+} as const;
+
+export type UserIdStrategy =
+	(typeof USER_ID_STRATEGIES)[keyof typeof USER_ID_STRATEGIES];
 
 export interface ImportProcess {
 	dateCreated?: string;

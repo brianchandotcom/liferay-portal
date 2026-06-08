@@ -7,6 +7,8 @@ package com.liferay.exportimport.web.internal.frontend.data.set.filter;
 
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.web.internal.constants.ExportImportFDSNames;
+import com.liferay.exportimport.web.internal.util.ExportImportConfigurationUtil;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -33,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = FDSFilter.class
 )
 public class ClassExternalReferenceCodeSelectionFDSFilter
-	extends BaseImportReportEntrySelectionFDSFilter {
+	extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getId() {
@@ -46,13 +48,15 @@ public class ClassExternalReferenceCodeSelectionFDSFilter
 	}
 
 	@Override
-	public boolean isAutocompleteEnabled() {
-		return true;
-	}
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
+		Locale locale) {
 
-	@Override
-	protected List<SelectionFDSFilterItem> doGetSelectionFDSFilterItems(
-		long exportImportConfigurationId, Locale locale) {
+		long exportImportConfigurationId =
+			ExportImportConfigurationUtil.getExportImportConfigurationId();
+
+		if (exportImportConfigurationId == 0) {
+			return Collections.emptyList();
+		}
 
 		DynamicQuery dynamicQuery =
 			_exportImportReportEntryLocalService.dynamicQuery();
@@ -82,6 +86,11 @@ public class ClassExternalReferenceCodeSelectionFDSFilter
 				return new SelectionFDSFilterItem(
 					classExternalReferenceCode, classExternalReferenceCode);
 			});
+	}
+
+	@Override
+	public boolean isAutocompleteEnabled() {
+		return true;
 	}
 
 	@Reference

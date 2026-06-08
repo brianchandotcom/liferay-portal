@@ -418,6 +418,31 @@ public class SegmentsDisplayContextTest {
 	}
 
 	@Test
+	public void testGetSegmentsEntryURLWithAsahFaroBackendSourceAndNullCriteriaAndWithoutLiferayAnalyticsURL()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsURL", StringPool.BLANK
+						).build())) {
+
+			SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
+				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), _user.getUserId()));
+
+			Assert.assertEquals(
+				StringPool.BLANK, _getSegmentsEntryURL(segmentsEntry));
+		}
+	}
+
+	@Test
 	public void testIsRoleSegmentationDisabled() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(

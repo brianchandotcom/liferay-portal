@@ -221,7 +221,7 @@ function BulkActions({
 	return showBulkActionsManagementBar && selectedItemsValue.length ? (
 		<FrontendDataSetContext.Consumer>
 			{({formId, formName, loadData, namespace, sidePanelId}) => (
-				<ManagementToolbar.ItemList
+				<div
 					className="container-fluid ml-2 navbar navbar-expand-md"
 					data-qa-id="selectionToolbar"
 				>
@@ -391,7 +391,7 @@ function BulkActions({
 							)}
 						</ManagementToolbar.ItemList>
 					)}
-				</ManagementToolbar.ItemList>
+				</div>
 			)}
 		</FrontendDataSetContext.Consumer>
 	) : null;

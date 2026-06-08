@@ -306,6 +306,16 @@ describe('ShareModalContent', () => {
 		expect(queryByLabelText('edit-permissions')).not.toBeInTheDocument();
 	});
 
+	it('renders the permission as read-only text when the user cannot manage collaborators', () => {
+		const {getByText, queryByLabelText} = renderComponent({
+			...DEFAULT_PROPS,
+			canManageCollaborators: false,
+		});
+
+		expect(queryByLabelText('edit-permissions')).not.toBeInTheDocument();
+		expect(getByText('view-and-download')).toBeInTheDocument();
+	});
+
 	it('renders only the permission options the caller provides', () => {
 		const folderProps = {
 			...DEFAULT_PROPS,

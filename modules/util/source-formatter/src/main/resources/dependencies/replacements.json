@@ -216,6 +216,17 @@
 	},
 	{
 		"classNames": [
+			"InfoItemReference"
+		],
+		"from": "regex:(?<infoItemReference>\\w+)\\.getClassPK\\(\\)",
+		"issueKey": "LPD-8019",
+		"newImports": [
+			"com.liferay.info.item.ClassPKInfoItemIdentifier"
+		],
+		"to": "((ClassPKInfoItemIdentifier)${infoItemReference}.getInfoItemIdentifier()).getClassPK()"
+	},
+	{
+		"classNames": [
 			"HttpServletRequest"
 		],
 		"from": "regex:\t*(?s)\\b\\w+\\s*\\.setAttribute\\s*\\(\\s*InfoDisplayWebKeys\\s*\\.INFO_ITEM_FIELD_VALUES_PROVIDER\\s*,.*?\\);\n",

@@ -10,13 +10,17 @@ import React from 'react';
 
 import SettingsStep from '../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/steps/SettingsStep';
 import {
+	DATA_STRATEGIES,
+	USER_ID_STRATEGIES,
+} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/types/exportImportProcess';
+import {
 	SCOPES,
 	Scope,
 } from '../../../../../../src/main/resources/META-INF/resources/revamp/js/types/scope';
 
 const defaultInitialValues = {
-	dataStrategy: 'MIRROR',
-	userIdStrategy: 'CURRENT_USER_ID',
+	dataStrategy: DATA_STRATEGIES.MIRROR,
+	userIdStrategy: USER_ID_STRATEGIES.CURRENT_USER_ID,
 };
 
 const renderSettingsStep = (

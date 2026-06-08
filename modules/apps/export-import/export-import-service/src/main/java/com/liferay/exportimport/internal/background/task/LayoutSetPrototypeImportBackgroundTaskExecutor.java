@@ -243,9 +243,6 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 
 				MergeLayoutPrototypesThreadLocal.setInProgress(true);
 
-				_exportImportLocalService.importLayoutsDataDeletions(
-					_exportImportConfiguration, _file);
-
 				_exportImportLocalService.importLayouts(
 					_exportImportConfiguration, _file);
 

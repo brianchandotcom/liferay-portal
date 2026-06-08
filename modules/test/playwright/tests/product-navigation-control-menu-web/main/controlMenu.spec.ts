@@ -180,7 +180,7 @@ test('Check if the maintenance mode indicator is displaying correctly', async ({
 	page,
 }) => {
 	const infoButton = page.getByRole('button', {
-		name: 'Open Maintenance Mode Definition',
+		name: 'Maintenance',
 	});
 
 	await test.step('should show only the info icon without "Maintenance" text', async () => {

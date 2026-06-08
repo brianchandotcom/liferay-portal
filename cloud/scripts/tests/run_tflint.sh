@@ -11,7 +11,6 @@ function main {
 		aws/eks
 		aws/gitops/platform
 		aws/gitops/resources
-		aws/grafana
 		gcp/gitops/platform
 		gcp/gitops/resources
 		gcp/gke

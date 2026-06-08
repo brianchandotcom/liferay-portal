@@ -34,7 +34,11 @@
 					</#if>
 
 					<#if stringUtil.equals(entityColumn.type, "Date")>
-						type="org.hibernate.type.TimestampType"
+						<#if serviceBuilder.isVersionGTE_7_4_0()>
+							type="timestamp"
+						<#else>
+							type="org.hibernate.type.TimestampType"
+						</#if>
 					</#if>
 
 					/>
@@ -123,11 +127,11 @@
 					type="com.liferay.portal.dao.orm.hibernate.${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}Type"
 				<#elseif serviceBuilder.isVersionGTE_7_4_0()>
 					<#if stringUtil.equals(entityColumn.type, "BigDecimal")>
-						type="org.hibernate.type.BigDecimalType"
+						type="big_decimal"
 					<#elseif stringUtil.equals(entityColumn.type, "Blob")>
-						type="org.hibernate.type.BlobType"
+						type="blob"
 					<#elseif stringUtil.equals(entityColumn.type, "Date")>
-						type="org.hibernate.type.TimestampType"
+						type="timestamp"
 					</#if>
 				<#else>
 					<#if stringUtil.equals(entityColumn.type, "Date")>
@@ -193,7 +197,11 @@
 							</#if>
 
 							<#if stringUtil.equals(entityColumn.type, "Date")>
-								type="org.hibernate.type.TimestampType"
+								<#if serviceBuilder.isVersionGTE_7_4_0()>
+									type="timestamp"
+								<#else>
+									type="org.hibernate.type.TimestampType"
+								</#if>
 							</#if>
 
 							/>

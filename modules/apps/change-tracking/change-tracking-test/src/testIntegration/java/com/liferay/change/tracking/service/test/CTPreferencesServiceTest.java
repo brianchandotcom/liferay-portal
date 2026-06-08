@@ -28,9 +28,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -53,6 +50,10 @@ public class CTPreferencesServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
 		_group = GroupTestUtil.addGroup();
 
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
@@ -63,34 +64,28 @@ public class CTPreferencesServiceTest {
 
 	@Test
 	public void testCheckoutCTCollectionWithViewPermission() throws Exception {
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), null);
-
-		_ctCollections.add(ctCollection);
-
 		RoleTestUtil.addResourcePermission(
 			_role, CTCollection.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(ctCollection.getCtCollectionId()), ActionKeys.VIEW);
+			String.valueOf(_ctCollection.getCtCollectionId()), ActionKeys.VIEW);
 
 		UserTestUtil.setUser(_user);
 
 		CTPreferences ctPreferences =
 			_ctPreferencesService.checkoutCTCollection(
 				TestPropsValues.getCompanyId(), _user.getUserId(),
-				ctCollection.getCtCollectionId());
+				_ctCollection.getCtCollectionId());
 
 		Assert.assertEquals(
-			ctCollection.getCtCollectionId(),
+			_ctCollection.getCtCollectionId(),
 			ctPreferences.getCtCollectionId());
 	}
 
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection;
+
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@DeleteAfterTestRun
-	private final List<CTCollection> _ctCollections = new ArrayList<>();
 
 	@Inject
 	private CTPreferencesService _ctPreferencesService;

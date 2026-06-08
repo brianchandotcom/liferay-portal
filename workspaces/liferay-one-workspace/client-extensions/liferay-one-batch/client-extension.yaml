@@ -10,7 +10,10 @@ liferay-one-batch-oahs:
     .serviceScheme: http
     name: Liferay One Batch OAuth Application Headless Server
     scopes:
+        -   c_project.everything
+        -   c_property.everything
         -   Liferay.Headless.Admin.List.Type.everything
+        -   Liferay.Headless.Admin.User.everything
         -   Liferay.Headless.Batch.Engine.everything
         -   Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

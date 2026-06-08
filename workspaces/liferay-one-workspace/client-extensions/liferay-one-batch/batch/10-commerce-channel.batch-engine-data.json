@@ -1,0 +1,20 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "PARTIAL_UPDATE"
+		}
+	},
+	"items": [
+		{
+			"currencyCode": "USD",
+			"externalReferenceCode": "SALESFORCE_CHANNEL",
+			"name": "Salesforce Channel",
+			"type": "site"
+		}
+	]
+}

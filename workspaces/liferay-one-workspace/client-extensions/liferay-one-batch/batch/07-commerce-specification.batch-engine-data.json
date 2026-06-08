@@ -1,0 +1,26 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "PARTIAL_UPDATE"
+		}
+	},
+	"items": [
+		{
+			"description": {
+				"en_US": "Designates the product's classification from Salesforce (Add-on, Primary, Regular)."
+			},
+			"facetable": true,
+			"key": "product-type",
+			"priority": 0,
+			"title": {
+				"en_US": "Product Type"
+			},
+			"visible": true
+		}
+	]
+}

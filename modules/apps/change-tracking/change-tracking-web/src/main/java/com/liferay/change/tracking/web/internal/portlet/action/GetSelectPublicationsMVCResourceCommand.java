@@ -13,7 +13,6 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.display.context.DisplayContextUtil;
-import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -91,18 +89,12 @@ public class GetSelectPublicationsMVCResourceCommand
 
 			Date modifiedDate = ctCollection.getModifiedDate();
 
-			boolean readOnly = !CTCollectionPermission.contains(
-				themeDisplay.getPermissionChecker(), ctCollection,
-				ActionKeys.UPDATE);
-
 			JSONObject entryJSONObject = JSONUtil.put(
 				"description", ctCollection.getDescription()
 			).put(
 				"modifiedDate", modifiedDate.getTime()
 			).put(
 				"name", ctCollection.getName()
-			).put(
-				"readOnly", readOnly
 			).put(
 				"userId", ctCollection.getUserId()
 			).put(
@@ -113,9 +105,7 @@ public class GetSelectPublicationsMVCResourceCommand
 					String.valueOf(ctCollection.getCtCollectionId()))
 			);
 
-			if ((ctCollection.getCtCollectionId() != ctCollectionId) &&
-				!readOnly) {
-
+			if (ctCollection.getCtCollectionId() != ctCollectionId) {
 				entryJSONObject.put(
 					"checkoutURL",
 					PublicationsPortletURLUtil.getHref(

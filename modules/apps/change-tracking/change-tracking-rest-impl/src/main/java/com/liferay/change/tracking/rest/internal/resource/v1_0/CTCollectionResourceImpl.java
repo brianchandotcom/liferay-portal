@@ -268,7 +268,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 					}
 
 					return addAction(
-						ActionKeys.UPDATE, ctCollection.getCtCollectionId(),
+						ActionKeys.VIEW, ctCollection.getCtCollectionId(),
 						"postCTCollectionCheckout",
 						_ctCollectionModelResourcePermission);
 				}

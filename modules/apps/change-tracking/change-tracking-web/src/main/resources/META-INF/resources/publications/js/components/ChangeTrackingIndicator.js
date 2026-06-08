@@ -268,28 +268,6 @@ export default function ChangeTrackingIndicator({
 				</ClayList.ItemField>
 			);
 		}
-		else if (entry.readOnly) {
-			itemField = (
-				<ClayList.ItemField expand>
-					<ClayButton
-						data-tooltip-align="top"
-						disabled
-						displayType="unstyled"
-						title={Liferay.Language.get(
-							'you-do-not-have-permission-to-update-this-publication'
-						)}
-					>
-						<ClayList.ItemTitle>{entry.name}</ClayList.ItemTitle>
-
-						{!!entry.description && (
-							<ClayList.ItemText subtext>
-								{entry.description}
-							</ClayList.ItemText>
-						)}
-					</ClayButton>
-				</ClayList.ItemField>
-			);
-		}
 
 		dropdownItems.push({
 			label: Liferay.Language.get('review-changes'),

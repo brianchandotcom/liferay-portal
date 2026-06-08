@@ -59,7 +59,7 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 			}
 
 			_ctCollectionModelResourcePermission.check(
-				getPermissionChecker(), ctCollection, ActionKeys.UPDATE);
+				getPermissionChecker(), ctCollection, ActionKeys.VIEW);
 		}
 
 		CTPreferences ctPreferences =

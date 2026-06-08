@@ -56,11 +56,9 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -437,6 +435,35 @@ public class AssetPublisherDisplayContext {
 		_assetEntryResults = assetEntryResults;
 
 		return _assetEntryResults;
+	}
+
+	public JSONArray getAssetEntryTypesJSONArray() {
+		JSONArray assetEntryTypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				_themeDisplay.getCompanyId()),
+			new AssetRendererFactoryTypeNameComparator(
+				_themeDisplay.getLocale()));
+
+		for (AssetRendererFactory<?> assetRendererFactory :
+				assetRendererFactories) {
+
+			if (!assetRendererFactory.isSelectable()) {
+				continue;
+			}
+
+			assetEntryTypesJSONArray.put(
+				JSONUtil.put(
+					"classNameId",
+					_portal.getClassNameId(assetRendererFactory.getClassName())
+				).put(
+					"label",
+					assetRendererFactory.getTypeName(_themeDisplay.getLocale())
+				));
+		}
+
+		return assetEntryTypesJSONArray;
 	}
 
 	public String getAssetLinkBehavior() {
@@ -823,88 +850,6 @@ public class AssetPublisherDisplayContext {
 
 	public String[] getDisplayStyles() {
 		return _assetPublisherPortletInstanceConfiguration.displayStyles();
-	}
-
-	public List<DropdownItem> getDropdownItems(Group group) throws Exception {
-		DropdownItemList dropdownItemList = new DropdownItemList();
-
-		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				_themeDisplay.getCompanyId()),
-			new AssetRendererFactoryTypeNameComparator(
-				_themeDisplay.getLocale()));
-
-		for (AssetRendererFactory<?> assetRendererFactory :
-				assetRendererFactories) {
-
-			if (!assetRendererFactory.isSelectable()) {
-				continue;
-			}
-
-			Group curGroup;
-
-			if (group.isStagingGroup() &&
-				!group.isStagedPortlet(assetRendererFactory.getPortletId())) {
-
-				curGroup = group.getLiveGroup();
-			}
-			else {
-				curGroup = group;
-			}
-
-			if (!assetRendererFactory.isSupportsClassTypes()) {
-				dropdownItemList.add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"href",
-							_getAssetEntryItemSelectorPortletURL(
-								assetRendererFactory, curGroup,
-								_DEFAULT_SUBTYPE_SELECTION_ID));
-						dropdownItem.putData(
-							"title",
-							LanguageUtil.format(
-								_httpServletRequest, "select-x",
-								assetRendererFactory.getTypeName(
-									_themeDisplay.getLocale()),
-								false));
-						dropdownItem.setLabel(
-							assetRendererFactory.getTypeName(
-								_themeDisplay.getLocale()));
-					});
-
-				continue;
-			}
-
-			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
-
-			List<ClassType> assetAvailableClassTypes =
-				classTypeReader.getAvailableClassTypes(
-					_portal.getCurrentAndAncestorSiteGroupIds(
-						curGroup.getGroupId()),
-					_themeDisplay.getLocale());
-
-			for (ClassType classType : assetAvailableClassTypes) {
-				dropdownItemList.add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"href",
-							_getAssetEntryItemSelectorPortletURL(
-								assetRendererFactory, curGroup,
-								classType.getClassTypeId()));
-						dropdownItem.putData(
-							"title",
-							LanguageUtil.format(
-								_httpServletRequest, "select-x",
-								classType.getName(), false));
-						dropdownItem.setLabel(classType.getName());
-					});
-			}
-		}
-
-		return ListUtil.sort(
-			dropdownItemList,
-			new SelectorEntriesLabelComparator(_themeDisplay.getLocale()));
 	}
 
 	public LocalizedValuesMap getEmailAssetEntryAddedBody() {
@@ -2280,42 +2225,6 @@ public class AssetPublisherDisplayContext {
 		).buildString();
 	}
 
-	private String _getAssetEntryItemSelectorPortletURL(
-		AssetRendererFactory<?> assetRendererFactory, Group scopeGroup,
-		long subtypeSelectionId) {
-
-		PortletURL portletURL = assetRendererFactory.getItemSelectorURL(
-			_portal.getLiferayPortletRequest(_portletRequest),
-			_portal.getLiferayPortletResponse(_portletResponse),
-			subtypeSelectionId, _portletResponse.getNamespace() + "selectAsset",
-			scopeGroup, true, 0);
-
-		if (portletURL != null) {
-			return portletURL.toString();
-		}
-
-		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
-			new AssetEntryItemSelectorCriterion();
-
-		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new AssetEntryItemSelectorReturnType());
-		assetEntryItemSelectorCriterion.setGroupId(
-			_themeDisplay.getScopeGroupId());
-		assetEntryItemSelectorCriterion.setShowNonindexable(true);
-		assetEntryItemSelectorCriterion.setShowScheduled(true);
-		assetEntryItemSelectorCriterion.setSubtypeSelectionId(
-			subtypeSelectionId);
-		assetEntryItemSelectorCriterion.setTypeSelection(
-			assetRendererFactory.getClassName());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-				scopeGroup, _themeDisplay.getScopeGroupId(),
-				_portletResponse.getNamespace() + "selectAsset",
-				assetEntryItemSelectorCriterion));
-	}
-
 	private Comparator<ClassType> _getClassTypeComparator() {
 		if (_classTypeComparator != null) {
 			return _classTypeComparator;
@@ -2539,8 +2448,6 @@ public class AssetPublisherDisplayContext {
 			_ddmStructureFieldLabel = classTypeField.getLabel();
 		}
 	}
-
-	private static final int _DEFAULT_SUBTYPE_SELECTION_ID = -1;
 
 	private static final int _INFO_COLLECTION_PROVIDER_DELTA = 20;
 

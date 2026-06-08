@@ -103,19 +103,21 @@ long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 			String title = LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
 		%>
 
-				<clay:dropdown-menu
+				<clay:button
 					additionalProps='<%=
 						HashMapBuilder.<String, Object>put(
+							"assetEntryTypes", assetPublisherDisplayContext.getAssetEntryTypesJSONArray()
+						).put(
 							"currentURL", configurationRenderURL.toString()
+						).put(
+							"groupId", groupId
 						).build()
 					%>'
 					aria-label="<%= title %>"
 					cssClass="mr-2"
 					displayType="secondary"
-					dropdownItems="<%= assetPublisherDisplayContext.getDropdownItems(group) %>"
 					label="<%= title %>"
 					propsTransformer="{AssetEntrySelectionDropdownPropsTransformer} from asset-publisher-web"
-					title="<%= title %>"
 				/>
 
 		<%

@@ -3,6 +3,8 @@
 		"@clayui/button": "^3.165.0",
 		"@clayui/form": "^3.165.0",
 		"@clayui/icon": "^3.165.0",
+		"@clayui/label": "^3.165.0",
+		"@liferay/frontend-js-item-selector-web": "*",
 		"asset-taglib": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

@@ -56,7 +56,7 @@ public class RunTestrayFactor extends BaseTestrayFactor {
 
 		final TestrayRun testrayRun = getTestrayRun();
 
-		final String filter = JenkinsResultsParserUtil.combine(
+		final String filterString = JenkinsResultsParserUtil.combine(
 			"r_factorCategoryToFactors_c_factorCategoryId eq '",
 			String.valueOf(category.getID()),
 			"' and r_factorOptionToFactors_c_factorOptionId eq '",
@@ -72,7 +72,7 @@ public class RunTestrayFactor extends BaseTestrayFactor {
 					JSONObject existingJSONObject = new JSONObject(
 						testrayServer.requestGet(
 							"/o/c/factors?filter=" +
-								URLEncoder.encode(filter, "UTF-8")));
+								URLEncoder.encode(filterString, "UTF-8")));
 
 					JSONArray existingItemsJSONArray =
 						existingJSONObject.optJSONArray("items");

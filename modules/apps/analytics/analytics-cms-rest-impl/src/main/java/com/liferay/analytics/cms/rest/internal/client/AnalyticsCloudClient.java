@@ -23,16 +23,21 @@ import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceAssetConsumption;
 import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceAssetConsumptionItem;
 import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceMetric;
 import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceOverviewMetric;
+import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceTopAsset;
+import com.liferay.analytics.cms.rest.dto.v1_0.PerformanceTopAssetItem;
+import com.liferay.analytics.cms.rest.dto.v1_0.Trend;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -331,10 +336,10 @@ public class AnalyticsCloudClient {
 				_getLocation(
 					categoryId,
 					analyticsConfiguration.liferayAnalyticsDataSourceId(), null,
-					groupBy, groupIds,
+					null, groupBy, groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
 					metricType, objectType, page, "/asset-consumption",
-					rangeKey, null, size, tagId, vocabularyId));
+					rangeKey, null, size, null, tagId, vocabularyId));
 
 			String content = _http.URLtoString(options);
 
@@ -501,12 +506,63 @@ public class AnalyticsCloudClient {
 		}
 	}
 
+	public PerformanceTopAsset getPerformanceTopAsset(
+			AnalyticsConfiguration analyticsConfiguration, String filterString,
+			List<Long> groupIds, int page, Integer rangeKey, int size,
+			Sort[] sorts)
+		throws Exception {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			options.setLocation(
+				_getLocation(
+					null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					null, filterString, null, groupIds,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					null, null, page, "/summaries", rangeKey, null, size, sorts,
+					null, null));
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				PerformanceTopAsset performanceTopAsset = null;
+
+				JsonNode jsonNode = ObjectMapperHolder._objectMapper.readTree(
+					content);
+
+				if (jsonNode != null) {
+					performanceTopAsset = _getPerformanceTopAsset(jsonNode);
+				}
+
+				return performanceTopAsset;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response code " + response.getResponseCode());
+			}
+
+			throw new PortalException("Unable to get performance top asset");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get performance top asset", exception);
+		}
+	}
+
 	private String _getLocation(
 		Long categoryId, String dataSourceId, String externalReferenceCode,
-		String groupBy, List<Long> groupIds,
+		String filterString, String groupBy, List<Long> groupIds,
 		String liferayAnalyticsFaroBackendURL, String metricType,
 		String objectType, Integer page, String path, Integer rangeKey,
-		String[] selectedMetrics, Integer size, Long tagId, Long vocabularyId) {
+		String[] selectedMetrics, Integer size, Sort[] sorts, Long tagId,
+		Long vocabularyId) {
 
 		String url = String.join(
 			StringPool.BLANK, liferayAnalyticsFaroBackendURL,
@@ -525,6 +581,10 @@ public class AnalyticsCloudClient {
 		if (Validator.isNotNull(externalReferenceCode)) {
 			url = HttpComponentsUtil.addParameter(
 				url, "externalReferenceCode", externalReferenceCode);
+		}
+
+		if (Validator.isNotNull(filterString)) {
+			url = HttpComponentsUtil.addParameter(url, "filter", filterString);
 		}
 
 		if (Validator.isNotNull(groupBy)) {
@@ -564,6 +624,22 @@ public class AnalyticsCloudClient {
 			url = HttpComponentsUtil.addParameter(url, "size", size);
 		}
 
+		if (ArrayUtil.isNotEmpty(sorts)) {
+			StringBundler sb = new StringBundler((sorts.length * 4) - 1);
+
+			for (int i = 0; i < sorts.length; i++) {
+				if (i > 0) {
+					sb.append(StringPool.COMMA);
+				}
+
+				sb.append(sorts[i].getFieldName());
+				sb.append(StringPool.COLON);
+				sb.append(sorts[i].isReverse() ? "desc" : "asc");
+			}
+
+			url = HttpComponentsUtil.addParameter(url, "sort", sb.toString());
+		}
+
 		if (tagId != null) {
 			url = HttpComponentsUtil.addParameter(url, "tagId", tagId);
 		}
@@ -582,9 +658,9 @@ public class AnalyticsCloudClient {
 		Integer rangeKey) {
 
 		return _getLocation(
-			null, dataSourceId, null, null, groupIds,
+			null, dataSourceId, null, null, null, groupIds,
 			liferayAnalyticsFaroBackendURL, metricType, null, null, path,
-			rangeKey, null, null, null, null);
+			rangeKey, null, null, null, null, null);
 	}
 
 	private String _getLocation(
@@ -593,9 +669,25 @@ public class AnalyticsCloudClient {
 		String[] selectedMetrics) {
 
 		return _getLocation(
-			null, dataSourceId, externalReferenceCode, null, groupIds,
+			null, dataSourceId, externalReferenceCode, null, null, groupIds,
 			liferayAnalyticsFaroBackendURL, null, null, null, path, rangeKey,
-			selectedMetrics, null, null, null);
+			selectedMetrics, null, null, null, null);
+	}
+
+	private Double _getMetricValue(JsonNode jsonNode, String metricName) {
+		JsonNode metricJsonNode = jsonNode.get(metricName);
+
+		if (metricJsonNode == null) {
+			return null;
+		}
+
+		JsonNode valueJsonNode = metricJsonNode.get("value");
+
+		if (valueJsonNode == null) {
+			return null;
+		}
+
+		return valueJsonNode.asDouble();
 	}
 
 	private Http.Options _getOptions(
@@ -639,6 +731,128 @@ public class AnalyticsCloudClient {
 		}
 
 		return performanceOverviewMetric;
+	}
+
+	private PerformanceTopAsset _getPerformanceTopAsset(JsonNode jsonNode) {
+		PerformanceTopAsset performanceTopAsset = new PerformanceTopAsset();
+
+		JsonNode pageJsonNode = jsonNode.get("page");
+
+		if (pageJsonNode != null) {
+			JsonNode pageNumberJsonNode = pageJsonNode.get("number");
+
+			if (pageNumberJsonNode != null) {
+				performanceTopAsset.setPage(pageNumberJsonNode::asLong);
+			}
+
+			JsonNode pageSizeJsonNode = pageJsonNode.get("size");
+
+			if (pageSizeJsonNode != null) {
+				performanceTopAsset.setPageSize(pageSizeJsonNode::asLong);
+			}
+
+			JsonNode totalElementsJsonNode = pageJsonNode.get("totalElements");
+
+			if (totalElementsJsonNode != null) {
+				performanceTopAsset.setTotalCount(
+					totalElementsJsonNode::asLong);
+			}
+
+			JsonNode totalPagesJsonNode = pageJsonNode.get("totalPages");
+
+			if (totalPagesJsonNode != null) {
+				performanceTopAsset.setLastPage(totalPagesJsonNode::asLong);
+			}
+		}
+
+		List<PerformanceTopAssetItem> performanceTopAssetItems =
+			new ArrayList<>();
+
+		JsonNode embeddedJsonNode = jsonNode.get("_embedded");
+
+		if (embeddedJsonNode != null) {
+			JsonNode assetSummaryMetricsJsonNode = embeddedJsonNode.get(
+				"assetSummaryMetrics");
+
+			if (assetSummaryMetricsJsonNode != null) {
+				for (JsonNode assetSummaryMetricJsonNode :
+						assetSummaryMetricsJsonNode) {
+
+					performanceTopAssetItems.add(
+						_getPerformanceTopAssetItem(
+							assetSummaryMetricJsonNode));
+				}
+			}
+		}
+
+		performanceTopAsset.setPerformanceTopAssetItems(
+			() -> performanceTopAssetItems.toArray(
+				new PerformanceTopAssetItem[0]));
+
+		return performanceTopAsset;
+	}
+
+	private PerformanceTopAssetItem _getPerformanceTopAssetItem(
+		JsonNode jsonNode) {
+
+		PerformanceTopAssetItem performanceTopAssetItem =
+			new PerformanceTopAssetItem();
+
+		performanceTopAssetItem.setDownloads(
+			() -> _getMetricValue(jsonNode, "downloadsMetric"));
+		performanceTopAssetItem.setEngagement(
+			() -> _getMetricValue(jsonNode, "engagementMetric"));
+		performanceTopAssetItem.setImpressions(
+			() -> _getMetricValue(jsonNode, "impressionsMetric"));
+
+		JsonNode assetTypeJsonNode = jsonNode.get("assetType");
+
+		if (assetTypeJsonNode != null) {
+			performanceTopAssetItem.setMimeType(assetTypeJsonNode::asText);
+		}
+
+		JsonNode assetTitleJsonNode = jsonNode.get("assetTitle");
+
+		if (assetTitleJsonNode != null) {
+			performanceTopAssetItem.setTitle(assetTitleJsonNode::asText);
+		}
+
+		JsonNode engagementMetricJsonNode = jsonNode.get("engagementMetric");
+
+		if (engagementMetricJsonNode != null) {
+			JsonNode trendJsonNode = engagementMetricJsonNode.get("trend");
+
+			if (trendJsonNode != null) {
+				performanceTopAssetItem.setTrend(
+					() -> _getTrend(trendJsonNode));
+			}
+		}
+
+		performanceTopAssetItem.setViews(
+			() -> _getMetricValue(jsonNode, "viewsMetric"));
+
+		return performanceTopAssetItem;
+	}
+
+	private Trend _getTrend(JsonNode jsonNode) {
+		Trend trend = new Trend();
+
+		JsonNode percentageJsonNode = jsonNode.get("percentage");
+
+		if (percentageJsonNode != null) {
+			trend.setPercentage(percentageJsonNode::asDouble);
+		}
+
+		JsonNode trendClassificationJsonNode = jsonNode.get(
+			"trendClassification");
+
+		if (trendClassificationJsonNode != null) {
+			trend.setClassification(
+				() -> Trend.Classification.create(
+					trendClassificationJsonNode.asText()));
+		}
+
+		return trend;
 	}
 
 	private void _renameKey(JsonNode jsonNode, String newKey, String oldKey) {

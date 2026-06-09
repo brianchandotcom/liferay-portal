@@ -98,7 +98,7 @@ public class TrashEntriesMaxAgeUpgradeProcess extends UpgradeProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Set trash entries max age for group ID " + group.getGroupId());
+				"Update trash entries max age for group " + group.getGroupId());
 		}
 	}
 

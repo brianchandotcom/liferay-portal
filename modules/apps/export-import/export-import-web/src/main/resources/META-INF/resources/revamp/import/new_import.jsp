@@ -19,6 +19,8 @@ ExportImportPreviewDisplayContext exportImportPreviewDisplayContext = new Export
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(exportImportPreviewDisplayContext.getBackURL());
+
+renderResponse.setTitle(exportImportPreviewDisplayContext.getImportTitle());
 %>
 
 <clay:container-fluid

@@ -31,7 +31,7 @@ import java.util.Locale;
 public class AssetListFiltersUtil {
 
 	public static BooleanClause[] getFiltersBooleanClauses(
-		JSONArray filtersJSONArray, long companyId, Locale locale) {
+		long companyId, JSONArray filtersJSONArray, Locale locale) {
 
 		if ((filtersJSONArray == null) || (filtersJSONArray.length() == 0)) {
 			return new BooleanClause[0];
@@ -41,7 +41,7 @@ public class AssetListFiltersUtil {
 
 		for (int i = 0; i < filtersJSONArray.length(); i++) {
 			NestedQuery nestedQuery = _toNestedQuery(
-				filtersJSONArray.getJSONObject(i), companyId, locale);
+				companyId, filtersJSONArray.getJSONObject(i), locale);
 
 			if (nestedQuery == null) {
 				continue;
@@ -86,7 +86,7 @@ public class AssetListFiltersUtil {
 	}
 
 	private static String _resolveSubfield(
-		ObjectField objectField, Locale locale) {
+		Locale locale, ObjectField objectField) {
 
 		if (objectField.isIndexedAsKeyword()) {
 			return "nestedFieldArray.value_keyword";
@@ -132,7 +132,7 @@ public class AssetListFiltersUtil {
 	}
 
 	private static NestedQuery _toNestedQuery(
-		JSONObject filterJSONObject, long companyId, Locale locale) {
+		long companyId, JSONObject filterJSONObject, Locale locale) {
 
 		if (filterJSONObject == null) {
 			return null;
@@ -152,7 +152,7 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
-		String subfield = _resolveSubfield(objectField, locale);
+		String subfield = _resolveSubfield(locale, objectField);
 
 		BooleanQuery nestedBooleanQuery = new BooleanQuery();
 

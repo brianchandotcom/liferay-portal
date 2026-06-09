@@ -62,6 +62,22 @@ public class ImportProcessSerDes {
 			sb.append(importProcess.getCreator());
 		}
 
+		if (importProcess.getDateCompleted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCompleted\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					importProcess.getDateCompleted()));
+
+			sb.append("\"");
+		}
+
 		if (importProcess.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -89,6 +105,20 @@ public class ImportProcessSerDes {
 			sb.append(
 				liferayToJSONDateFormat.format(
 					importProcess.getDateModified()));
+
+			sb.append("\"");
+		}
+
+		if (importProcess.getErrorMessage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"errorMessage\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(importProcess.getErrorMessage()));
 
 			sb.append("\"");
 		}
@@ -156,6 +186,16 @@ public class ImportProcessSerDes {
 			map.put("creator", String.valueOf(importProcess.getCreator()));
 		}
 
+		if (importProcess.getDateCompleted() == null) {
+			map.put("dateCompleted", null);
+		}
+		else {
+			map.put(
+				"dateCompleted",
+				liferayToJSONDateFormat.format(
+					importProcess.getDateCompleted()));
+		}
+
 		if (importProcess.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -173,6 +213,15 @@ public class ImportProcessSerDes {
 				"dateModified",
 				liferayToJSONDateFormat.format(
 					importProcess.getDateModified()));
+		}
+
+		if (importProcess.getErrorMessage() == null) {
+			map.put("errorMessage", null);
+		}
+		else {
+			map.put(
+				"errorMessage",
+				String.valueOf(importProcess.getErrorMessage()));
 		}
 
 		if (importProcess.getId() == null) {
@@ -217,10 +266,16 @@ public class ImportProcessSerDes {
 			if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateCompleted")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "errorMessage")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -247,6 +302,12 @@ public class ImportProcessSerDes {
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateCompleted")) {
+				if (jsonParserFieldValue != null) {
+					importProcess.setDateCompleted(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					importProcess.setDateCreated(
@@ -257,6 +318,11 @@ public class ImportProcessSerDes {
 				if (jsonParserFieldValue != null) {
 					importProcess.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "errorMessage")) {
+				if (jsonParserFieldValue != null) {
+					importProcess.setErrorMessage((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -357,4 +423,4 @@ public class ImportProcessSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1954220324
+// LIFERAY-REST-BUILDER-HASH:963935819

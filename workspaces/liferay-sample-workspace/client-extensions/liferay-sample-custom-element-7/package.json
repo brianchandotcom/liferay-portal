@@ -13,7 +13,7 @@
 	"name": "@liferay/liferay-sample-custom-element-7",
 	"private": true,
 	"scripts": {
-		"build": "esbuild src/index.tsx --bundle --entry-names=[name].[hash] --external:react --external:react-dom --format=esm --outdir=build/static"
+		"build": "esbuild src/index.tsx --bundle --entry-names=[name].[hash] --external:@liferay/frontend-data-set-web/api --external:react --external:react-dom --format=esm --outdir=build/static"
 	},
 	"version": "0.0.0"
 }

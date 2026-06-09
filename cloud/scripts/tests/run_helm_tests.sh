@@ -22,6 +22,10 @@ function main {
 		gcp-infrastructure-provider
 	)
 
+	local test_reports_dir="${cloud_dir}/scripts/tests/test-reports"
+
+	mkdir --parents "${test_reports_dir}"
+
 	for chart in "${charts[@]}"
 	do
 		local test_files
@@ -30,13 +34,10 @@ function main {
 
 		if [[ ${test_files} ]]
 		then
-			local test_reports_folder="${cloud_dir}/scripts/tests/test-reports"
-			mkdir --parents "${test_reports_folder}"
-
 			helm dependency update --skip-refresh "${cloud_dir}/helm/${chart}"
 
 			helm unittest \
-				--output-file "${test_reports_folder}/helm-unittest-${chart}.xml" \
+				--output-file "${test_reports_dir}/helm-unittest-${chart}.xml" \
 				--output-type JUnit \
 				"${cloud_dir}/helm/${chart}"
 		fi

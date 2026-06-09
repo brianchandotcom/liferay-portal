@@ -86,6 +86,7 @@ public class KeyReferenceTest {
 		Assert.assertNull(KeyReference.fromString("invalid"));
 		Assert.assertNull(KeyReference.fromString("${keyRef:onlyone}"));
 		Assert.assertNull(KeyReference.fromString("${unknownRef:provider:id}"));
+		Assert.assertNull(KeyReference.fromString("${keyRef:pro}vider:id}"));
 	}
 
 	@Test

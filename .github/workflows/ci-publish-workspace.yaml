@@ -15,7 +15,7 @@ jobs:
             -   name: Build with Ant
                 run: ant
             -   name: Run publish-workspaces task
-                run: ant publish-workspaces -Dsonatype.release.password=${{secrets.LIFERAY_NEXUS_PASSWORD}} -Dsonatype.release.username=${{secrets.LIFERAY_NEXUS_USERNAME}} -Dworkspace.artifact.id.suffix="${{inputs.workspace-artifact-id-suffix}}" -Dworkspace.includes="${{inputs.workspace-includes}}" -Dworkspace.name="${{inputs.workspace-name}}"
+                run: ant publish-workspaces -Dsonatype.release.password="${{secrets.LIFERAY_NEXUS_PASSWORD}}" -Dsonatype.release.username="${{secrets.LIFERAY_NEXUS_USERNAME}}" -Dworkspace.artifact.id.suffix="${{inputs.workspace-artifact-id-suffix}}" -Dworkspace.includes="${{inputs.workspace-includes}}" -Dworkspace.name="${{inputs.workspace-name}}"
 on:
     workflow_call:
         inputs:

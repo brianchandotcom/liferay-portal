@@ -302,47 +302,6 @@ schema=schema.xml</echo>
 		</sequential>
 	</macrodef>
 
-	<target name="print-solr-indices">
-		<property name="solr.print.query">
-			<![CDATA[
-				'{
-					"query": {
-						"bool": {
-							"must": [
-								{
-									"match": {
-										"userName": "test test"
-									}
-								}
-							],
-							"must_not": [
-								{
-									"match": {
-										"hidden": "true"
-									}
-								}
-							]
-						}
-					}
-				}'
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.solr.indices">
-			<arg line="http://localhost:8983/solr/liferay/select?q=*:*&amp;wt=json" />
-			<arg value="-d" />
-			<arg value="${solr.print.query}" />
-		</exec>
-
-		<echo></echo>
-		<echo>##</echo>
-		<echo>## Solr Indices</echo>
-		<echo>##</echo>
-		<echo></echo>
-		<echo>${curl.output.solr.indices}</echo>
-		<echo></echo>
-	</target>
-
 	<target name="start-solr">
 		<lstopwatch action="start" name="start.solr" />
 

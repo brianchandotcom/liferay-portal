@@ -22,24 +22,4 @@
 			value="companyId=L&quot;${companyId}&quot;"
 		/>
 	</target>
-
-	<target name="update-cookies-osgi-site-configuration">
-		<replace
-			file="${liferay.home}/osgi/configs/com.liferay.cookies.configuration.banner.CookiesBannerConfiguration.scoped~default.config"
-			token="groupId=L&quot;20122&quot;"
-			value="groupId=L&quot;${siteId}&quot;"
-		/>
-
-		<replace
-			file="${liferay.home}/osgi/configs/com.liferay.cookies.configuration.consent.CookiesConsentConfiguration.scoped~default.config"
-			token="groupId=L&quot;20122&quot;"
-			value="groupId=L&quot;${siteId}&quot;"
-		/>
-
-		<replace
-			file="${liferay.home}/osgi/configs/com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration.scoped~default.config"
-			token="groupId=L&quot;20122&quot;"
-			value="groupId=L&quot;${siteId}&quot;"
-		/>
-	</target>
 </project>

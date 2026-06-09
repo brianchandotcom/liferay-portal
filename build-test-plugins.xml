@@ -138,56 +138,6 @@ liferay.home=${liferay.home}</echo>
 		</sequential>
 	</macrodef>
 
-	<target name="deploy-extra-apps">
-		<for list="${plugins.includes}" param="plugin">
-			<sequential>
-				<if>
-					<available file="extraapps" />
-					<then>
-						<pathconvert pathsep="," property="extraapps.zip" setonempty="false">
-							<path>
-								<fileset
-									dir="extraapps"
-									includes="@{plugin}*"
-								/>
-							</path>
-						</pathconvert>
-					</then>
-				</if>
-
-				<if>
-					<isset property="extraapps.zip" />
-					<then>
-						<get-auto-deploy-dir />
-
-						<unzip
-							dest="${auto.deploy.dir}"
-							src="${extraapps.zip}"
-						/>
-					</then>
-					<elseif>
-						<and>
-							<available file="plugins/marketplace" />
-							<isset property="marketplace.app[@{plugin}]" />
-						</and>
-						<then>
-							<local name="marketplace.app" />
-
-							<propertycopy from="marketplace.app[@{plugin}]" name="marketplace.app" />
-
-							<get-auto-deploy-dir />
-
-							<copy
-								file="plugins/marketplace/${marketplace.app}"
-								todir="${auto.deploy.dir}"
-							/>
-						</then>
-					</elseif>
-				</if>
-			</sequential>
-		</for>
-	</target>
-
 	<target name="deploy-simple-server-plugins">
 		<get-auto-deploy-dir />
 
@@ -442,17 +392,5 @@ liferay.home=${liferay.home}</echo>
 				<fail message="${plugins.failure.message}" />
 			</then>
 		</if>
-	</target>
-
-	<target name="test-plugins">
-		<fail message="Please set the property ${lp.plugins.dir}" unless="lp.plugins.dir" />
-
-		<antcall target="record-test-plugin-names">
-			<param name="test.plugin.groups.size" value="1" />
-		</antcall>
-
-		<antcall target="test-plugin-group">
-			<param name="test.plugin.group.index" value="0" />
-		</antcall>
 	</target>
 </project>

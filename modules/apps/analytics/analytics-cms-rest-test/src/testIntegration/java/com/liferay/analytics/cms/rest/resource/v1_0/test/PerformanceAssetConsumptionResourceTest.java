@@ -93,267 +93,6 @@ public class PerformanceAssetConsumptionResourceTest
 						testCompany.getCompanyId(),
 						AnalyticsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"liferayAnalyticsDataSourceId",
-							RandomTestUtil.nextLong()
-						).put(
-							"liferayAnalyticsEnableAllGroupIds", true
-						).put(
-							"liferayAnalyticsFaroBackendSecuritySignature",
-							RandomTestUtil.randomString()
-						).put(
-							"liferayAnalyticsFaroBackendURL",
-							"http://" + RandomTestUtil.randomString()
-						).build())) {
-
-			_setUpMockHttp(
-				JSONUtil.put(
-					"metrics",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"key", "key1"
-						).put(
-							"title", "title1"
-						).put(
-							"value", 10
-						),
-						JSONUtil.put(
-							"key", "key2"
-						).put(
-							"title", "title2"
-						).put(
-							"value", 20
-						))
-				).put(
-					"total", 2
-				).put(
-					"totalCount", 30
-				).toString());
-
-			for (String groupBy :
-					new String[] {"category", "tag", "vocabulary"}) {
-
-				PerformanceAssetConsumption performanceAssetConsumption =
-					_performanceAssetConsumptionResource.
-						getPerformanceAssetConsumption(
-							null, null, groupBy, 30, null, null, null,
-							Pagination.of(1, 10));
-
-				PerformanceAssetConsumptionItem[]
-					performanceAssetConsumptionItems =
-						performanceAssetConsumption.
-							getPerformanceAssetConsumptionItems();
-
-				Assert.assertEquals(
-					Arrays.toString(performanceAssetConsumptionItems), 2,
-					performanceAssetConsumptionItems.length);
-				Assert.assertEquals(
-					"key1", performanceAssetConsumptionItems[0].getKey());
-				Assert.assertEquals(
-					"title1", performanceAssetConsumptionItems[0].getTitle());
-				Assert.assertEquals(
-					"key2", performanceAssetConsumptionItems[1].getKey());
-				Assert.assertEquals(
-					"title2", performanceAssetConsumptionItems[1].getTitle());
-
-				Assert.assertEquals(
-					2L,
-					(long)
-						performanceAssetConsumption.
-							getPerformanceAssetConsumptionItemsCount());
-				Assert.assertEquals(
-					30L, (long)performanceAssetConsumption.getTotalCount());
-			}
-
-			CMSTestUtil.getOrAddGroup(
-				PerformanceAssetConsumptionResourceTest.class);
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_CMS_BASIC_WEB_CONTENT", testCompany.getCompanyId());
-
-			_setUpMockHttp(
-				JSONUtil.put(
-					"metrics",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"key", RandomTestUtil.randomString()
-						).put(
-							"title", objectDefinition.getName()
-						).put(
-							"value", 30
-						))
-				).put(
-					"total", 1
-				).put(
-					"totalCount", 30
-				).toString());
-
-			PerformanceAssetConsumption performanceAssetConsumption =
-				_performanceAssetConsumptionResource.
-					getPerformanceAssetConsumption(
-						null, null, "structure", 30, null, null, null,
-						Pagination.of(1, 10));
-
-			PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems =
-				performanceAssetConsumption.
-					getPerformanceAssetConsumptionItems();
-
-			Assert.assertEquals(
-				Arrays.toString(performanceAssetConsumptionItems), 1,
-				performanceAssetConsumptionItems.length);
-			Assert.assertEquals(
-				objectDefinition.getExternalReferenceCode(),
-				performanceAssetConsumptionItems[0].getKey());
-			Assert.assertEquals(
-				objectDefinition.getLabel(LocaleUtil.getDefault()),
-				performanceAssetConsumptionItems[0].getTitle());
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				_performanceAssetConsumptionResource, "_http", _http);
-		}
-	}
-
-	@Test
-	public void testGetPerformanceAssetConsumptionGroupByStructure()
-		throws Exception {
-
-		_performanceAssetConsumptionResource.setContextAcceptLanguage(
-			new AcceptLanguage() {
-
-				@Override
-				public List<Locale> getLocales() {
-					return Arrays.asList(LocaleUtil.getDefault());
-				}
-
-				@Override
-				public String getPreferredLanguageId() {
-					return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-				}
-
-				@Override
-				public Locale getPreferredLocale() {
-					return LocaleUtil.getDefault();
-				}
-
-			});
-
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						testCompany.getCompanyId(),
-						AnalyticsConfiguration.class.getName(),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"liferayAnalyticsDataSourceId",
-							RandomTestUtil.nextLong()
-						).put(
-							"liferayAnalyticsEnableAllGroupIds", true
-						).put(
-							"liferayAnalyticsFaroBackendSecuritySignature",
-							RandomTestUtil.randomString()
-						).put(
-							"liferayAnalyticsFaroBackendURL",
-							"http://" + RandomTestUtil.randomString()
-						).build())) {
-
-			CMSTestUtil.getOrAddGroup(
-				PerformanceAssetConsumptionResourceTest.class);
-
-			ObjectDefinition basicWebContentObjectDefinition =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_CMS_BASIC_WEB_CONTENT", testCompany.getCompanyId());
-			ObjectDefinition blogObjectDefinition =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_CMS_BLOG", testCompany.getCompanyId());
-
-			_setUpMockHttp(
-				JSONUtil.put(
-					"metrics",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"key", RandomTestUtil.randomString()
-						).put(
-							"title", basicWebContentObjectDefinition.getName()
-						).put(
-							"value", 30
-						),
-						JSONUtil.put(
-							"key", RandomTestUtil.randomString()
-						).put(
-							"title", blogObjectDefinition.getName()
-						).put(
-							"value", 20
-						))
-				).put(
-					"total", 2
-				).put(
-					"totalCount", 50
-				).toString());
-
-			PerformanceAssetConsumption performanceAssetConsumption =
-				_performanceAssetConsumptionResource.
-					getPerformanceAssetConsumption(
-						null, null, "structure", 30, null, null, null,
-						Pagination.of(1, 10));
-
-			PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems =
-				performanceAssetConsumption.
-					getPerformanceAssetConsumptionItems();
-
-			Assert.assertEquals(
-				Arrays.toString(performanceAssetConsumptionItems), 2,
-				performanceAssetConsumptionItems.length);
-			Assert.assertEquals(
-				basicWebContentObjectDefinition.getExternalReferenceCode(),
-				performanceAssetConsumptionItems[0].getKey());
-			Assert.assertEquals(
-				basicWebContentObjectDefinition.getLabel(
-					LocaleUtil.getDefault()),
-				performanceAssetConsumptionItems[0].getTitle());
-			Assert.assertEquals(
-				blogObjectDefinition.getExternalReferenceCode(),
-				performanceAssetConsumptionItems[1].getKey());
-			Assert.assertEquals(
-				blogObjectDefinition.getLabel(LocaleUtil.getDefault()),
-				performanceAssetConsumptionItems[1].getTitle());
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				_performanceAssetConsumptionResource, "_http", _http);
-		}
-	}
-
-	@Test
-	public void testGetPerformanceAssetConsumptionURL() throws Exception {
-		_performanceAssetConsumptionResource.setContextAcceptLanguage(
-			new AcceptLanguage() {
-
-				@Override
-				public List<Locale> getLocales() {
-					return Arrays.asList(LocaleUtil.getDefault());
-				}
-
-				@Override
-				public String getPreferredLanguageId() {
-					return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-				}
-
-				@Override
-				public Locale getPreferredLocale() {
-					return LocaleUtil.getDefault();
-				}
-
-			});
-
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						testCompany.getCompanyId(),
-						AnalyticsConfiguration.class.getName(),
-						HashMapDictionaryBuilder.<String, Object>put(
 							"liferayAnalyticsDataSourceId", "12345"
 						).put(
 							"liferayAnalyticsEnableAllGroupIds", true
@@ -365,40 +104,13 @@ public class PerformanceAssetConsumptionResourceTest
 							"http://" + RandomTestUtil.randomString()
 						).build())) {
 
-			RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
-				Collections.singletonMap(
-					"/api/1.0/asset-metric/objectEntry/categories",
-					() -> JSONUtil.put(
-						"metrics", JSONUtil.putAll()
-					).put(
-						"total", 0
-					).put(
-						"totalCount", 0
-					).toString()));
+			_validateGetPerformanceAssetConsumptionGroupByStructure();
 
-			ReflectionTestUtil.setFieldValue(
-				_performanceAssetConsumptionResource, "_http",
-				recordingMockHttp);
+			_validateGetPerformanceAssetConsumptionResponse();
 
-			_performanceAssetConsumptionResource.getPerformanceAssetConsumption(
-				11111L, null, "tag", 30, null, 22222L, 33333L,
-				Pagination.of(2, 5));
+			_validateGetPerformanceAssetConsumptionURL();
 
-			String location = recordingMockHttp._getLocation();
-
-			Assert.assertTrue(location, location.contains("categoryId=11111"));
-			Assert.assertTrue(
-				location, location.contains("dataSourceId=12345"));
-			Assert.assertTrue(location, location.contains("groupBy=tag"));
-			Assert.assertTrue(
-				location,
-				location.contains("assetSummaryMetricTypeString=viewsMetric"));
-			Assert.assertTrue(location, location.contains("page=2"));
-			Assert.assertTrue(location, location.contains("rangeKey=30"));
-			Assert.assertTrue(location, location.contains("size=5"));
-			Assert.assertTrue(location, location.contains("tagId=22222"));
-			Assert.assertTrue(
-				location, location.contains("vocabularyId=33333"));
+			_validateGetPerformanceAssetConsumptionWithInvalidGroupBy();
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -406,10 +118,170 @@ public class PerformanceAssetConsumptionResourceTest
 		}
 	}
 
-	@Test
-	public void testGetPerformanceAssetConsumptionWithInvalidGroupBy()
+	private RecordingMockHttp _setUpMockHttp(String json) {
+		RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
+			Collections.singletonMap(
+				"/api/1.0/asset-metric/objectEntry/categories", () -> json));
+
+		ReflectionTestUtil.setFieldValue(
+			_performanceAssetConsumptionResource, "_http", recordingMockHttp);
+
+		return recordingMockHttp;
+	}
+
+	private void _validateGetPerformanceAssetConsumptionGroupByStructure()
 		throws Exception {
 
+		CMSTestUtil.getOrAddGroup(
+			PerformanceAssetConsumptionResourceTest.class);
+
+		ObjectDefinition basicWebContentObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BASIC_WEB_CONTENT", testCompany.getCompanyId());
+		ObjectDefinition blogObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BLOG", testCompany.getCompanyId());
+
+		_setUpMockHttp(
+			JSONUtil.put(
+				"metrics",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"key", RandomTestUtil.randomString()
+					).put(
+						"title", basicWebContentObjectDefinition.getName()
+					).put(
+						"value", 30
+					),
+					JSONUtil.put(
+						"key", RandomTestUtil.randomString()
+					).put(
+						"title", blogObjectDefinition.getName()
+					).put(
+						"value", 20
+					))
+			).put(
+				"total", 2
+			).put(
+				"totalCount", 50
+			).toString());
+
+		PerformanceAssetConsumption performanceAssetConsumption =
+			_performanceAssetConsumptionResource.getPerformanceAssetConsumption(
+				null, null, "structure", 30, null, null, null,
+				Pagination.of(1, 10));
+
+		PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems =
+			performanceAssetConsumption.getPerformanceAssetConsumptionItems();
+
+		Assert.assertEquals(
+			Arrays.toString(performanceAssetConsumptionItems), 2,
+			performanceAssetConsumptionItems.length);
+		Assert.assertEquals(
+			basicWebContentObjectDefinition.getExternalReferenceCode(),
+			performanceAssetConsumptionItems[0].getKey());
+		Assert.assertEquals(
+			basicWebContentObjectDefinition.getLabel(LocaleUtil.getDefault()),
+			performanceAssetConsumptionItems[0].getTitle());
+		Assert.assertEquals(
+			blogObjectDefinition.getExternalReferenceCode(),
+			performanceAssetConsumptionItems[1].getKey());
+		Assert.assertEquals(
+			blogObjectDefinition.getLabel(LocaleUtil.getDefault()),
+			performanceAssetConsumptionItems[1].getTitle());
+	}
+
+	private void _validateGetPerformanceAssetConsumptionResponse()
+		throws Exception {
+
+		_setUpMockHttp(
+			JSONUtil.put(
+				"metrics",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"key", "key1"
+					).put(
+						"title", "title1"
+					).put(
+						"value", 10
+					),
+					JSONUtil.put(
+						"key", "key2"
+					).put(
+						"title", "title2"
+					).put(
+						"value", 20
+					))
+			).put(
+				"total", 2
+			).put(
+				"totalCount", 30
+			).toString());
+
+		for (String groupBy : new String[] {"category", "tag", "vocabulary"}) {
+			PerformanceAssetConsumption performanceAssetConsumption =
+				_performanceAssetConsumptionResource.
+					getPerformanceAssetConsumption(
+						null, null, groupBy, 30, null, null, null,
+						Pagination.of(1, 10));
+
+			PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems =
+				performanceAssetConsumption.
+					getPerformanceAssetConsumptionItems();
+
+			Assert.assertEquals(
+				Arrays.toString(performanceAssetConsumptionItems), 2,
+				performanceAssetConsumptionItems.length);
+			Assert.assertEquals(
+				"key1", performanceAssetConsumptionItems[0].getKey());
+			Assert.assertEquals(
+				"title1", performanceAssetConsumptionItems[0].getTitle());
+			Assert.assertEquals(
+				"key2", performanceAssetConsumptionItems[1].getKey());
+			Assert.assertEquals(
+				"title2", performanceAssetConsumptionItems[1].getTitle());
+
+			Assert.assertEquals(
+				2L,
+				(long)
+					performanceAssetConsumption.
+						getPerformanceAssetConsumptionItemsCount());
+			Assert.assertEquals(
+				30L, (long)performanceAssetConsumption.getTotalCount());
+		}
+	}
+
+	private void _validateGetPerformanceAssetConsumptionURL() throws Exception {
+		RecordingMockHttp recordingMockHttp = _setUpMockHttp(
+			JSONUtil.put(
+				"metrics", JSONUtil.putAll()
+			).put(
+				"total", 0
+			).put(
+				"totalCount", 0
+			).toString());
+
+		_performanceAssetConsumptionResource.getPerformanceAssetConsumption(
+			11111L, null, "tag", 30, null, 22222L, 33333L, Pagination.of(2, 5));
+
+		String location = recordingMockHttp._getLocation();
+
+		Assert.assertTrue(
+			location,
+			location.contains("assetSummaryMetricTypeString=viewsMetric"));
+		Assert.assertTrue(location, location.contains("categoryId=11111"));
+		Assert.assertTrue(location, location.contains("dataSourceId=12345"));
+		Assert.assertTrue(location, location.contains("groupBy=tag"));
+		Assert.assertTrue(location, location.contains("page=2"));
+		Assert.assertTrue(location, location.contains("rangeKey=30"));
+		Assert.assertTrue(location, location.contains("size=5"));
+		Assert.assertTrue(location, location.contains("tagId=22222"));
+		Assert.assertTrue(location, location.contains("vocabularyId=33333"));
+	}
+
+	private void _validateGetPerformanceAssetConsumptionWithInvalidGroupBy() {
 		Assert.assertThrows(
 			BadRequestException.class,
 			() ->
@@ -417,15 +289,6 @@ public class PerformanceAssetConsumptionResourceTest
 					getPerformanceAssetConsumption(
 						null, null, RandomTestUtil.randomString(), 30, null,
 						null, null, Pagination.of(1, 10)));
-	}
-
-	private void _setUpMockHttp(String json) {
-		ReflectionTestUtil.setFieldValue(
-			_performanceAssetConsumptionResource, "_http",
-			new MockHttp(
-				Collections.singletonMap(
-					"/api/1.0/asset-metric/objectEntry/categories",
-					() -> json)));
 	}
 
 	@Inject

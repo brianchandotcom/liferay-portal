@@ -30,9 +30,9 @@ test(
 			'Text formatting',
 			'Lists',
 			'Bookmark',
-			'Timestamp',
 			'Enter fullscreen mode',
 			'Hello',
+			'Timestamp',
 		];
 
 		const availableButtons =
@@ -47,5 +47,20 @@ test(
 	{tag: '@LPD-89734'},
 	async ({classicPage}) => {
 		await expect(classicPage.wordCountContainer).toBeVisible();
+	}
+);
+
+test(
+	'"Timestamp" custom plugin added via client extension has SVG icon',
+	{tag: '@LPD-89578'},
+	async ({classicPage}) => {
+		const timestampButton = classicPage.toolbar.container.getByRole(
+			'button',
+			{
+				name: 'Timestamp',
+			}
+		);
+
+		await expect(timestampButton.locator('svg')).toBeAttached();
 	}
 );

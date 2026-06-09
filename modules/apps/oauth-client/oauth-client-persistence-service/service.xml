@@ -114,7 +114,7 @@
 		<column name="localWellKnownEnabled" type="boolean" />
 		<column name="localWellKnownURI" type="String" />
 		<column name="metadataJSON" type="String" />
-		<column name="resource" type="String" />
+		<column name="protectedResourceURI" type="String" />
 
 		<!-- Finder methods -->
 
@@ -132,9 +132,9 @@
 			<finder-column name="companyId" />
 			<finder-column name="localWellKnownURI" />
 		</finder>
-		<finder name="C_R" return-type="OAuthClientPRLocalMetadata" unique="true">
+		<finder name="C_PRURI" return-type="OAuthClientPRLocalMetadata" unique="true">
 			<finder-column name="companyId" />
-			<finder-column name="resource" />
+			<finder-column name="protectedResourceURI" />
 		</finder>
 	</entity>
 	<exceptions>

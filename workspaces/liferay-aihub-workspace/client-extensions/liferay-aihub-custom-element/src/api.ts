@@ -19,7 +19,7 @@ export function setURLs(aiHub: string, liferayDXP: string) {
 	liferayDXPURL = liferayDXP;
 }
 
-function shouldUseCellAuthorization(): boolean {
+function isCellAuthorizationAvailable(): boolean {
 	return (
 		Boolean((window as any).Liferay) && cellAuthorizationAvailable !== false
 	);
@@ -100,7 +100,7 @@ export async function createEventSource(): Promise<EventSource | null> {
 		fetch: async (input, init) => {
 			const headers = new Headers({Accept: 'text/event-stream'});
 
-			if (shouldUseCellAuthorization()) {
+			if (isCellAuthorizationAvailable()) {
 				const authorizationToken = await postAuthorizationToken();
 
 				if (authorizationToken?.accessToken) {
@@ -130,7 +130,7 @@ export async function postChatMessage(
 		'Content-Type': 'application/json',
 	});
 
-	if (shouldUseCellAuthorization()) {
+	if (isCellAuthorizationAvailable()) {
 		const authorizationToken = await postAuthorizationToken();
 
 		if (authorizationToken) {

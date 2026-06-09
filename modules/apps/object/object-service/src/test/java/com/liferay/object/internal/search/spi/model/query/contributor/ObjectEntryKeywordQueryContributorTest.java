@@ -217,10 +217,10 @@ public class ObjectEntryKeywordQueryContributorTest {
 
 		BooleanQuery booleanQuery = _mockBooleanQuery(argumentCaptor);
 
-		ObjectEntryKeywordQueryContributor contributor =
+		ObjectEntryKeywordQueryContributor objectEntryKeywordQueryContributor =
 			_createObjectEntryKeywordQueryContributor(objectDefinition);
 
-		contributor.contribute(
+		objectEntryKeywordQueryContributor.contribute(
 			RandomTestUtil.randomString(), booleanQuery,
 			_mockKeywordQueryContributorHelper(LocaleUtil.SPAIN));
 

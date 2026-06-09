@@ -216,12 +216,12 @@ public class ObjectEntrySearchHighlightTest {
 	}
 
 	private static ObjectEntry _addObjectEntry(
-			boolean localizedTitle, ObjectDefinition objectDefinition)
+			boolean localized, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		Map<String, Serializable> values = null;
 
-		if (localizedTitle) {
+		if (localized) {
 			values = HashMapBuilder.<String, Serializable>put(
 				_LOCALIZED_CONTENT_FIELD_NAME + "_i18n",
 				HashMapBuilder.put(
@@ -282,9 +282,6 @@ public class ObjectEntrySearchHighlightTest {
 
 		HighlightField highlightField = highlightFieldsMap.get(
 			highlightFieldName);
-
-		Assert.assertNotNull(
-			"Missing highlight field " + highlightFieldName, highlightField);
 
 		List<String> fragments = highlightField.getFragments();
 

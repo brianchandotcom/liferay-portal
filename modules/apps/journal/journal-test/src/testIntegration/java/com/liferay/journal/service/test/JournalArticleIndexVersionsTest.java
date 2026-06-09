@@ -15,9 +15,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
@@ -39,6 +43,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -47,6 +52,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Eudaldo Alonso
@@ -164,6 +174,61 @@ public class JournalArticleIndexVersionsTest {
 	}
 
 	@Test
+	public void testExpireAllArticleVersionsReindexArticleOnce()
+		throws Exception {
+
+		_enableIndexAllArticleVersions();
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle updatedArticle = JournalTestUtil.updateArticle(
+			article, article.getTitleMap(), article.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		updatedArticle = JournalTestUtil.updateArticle(
+			updatedArticle, updatedArticle.getTitleMap(),
+			updatedArticle.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		AtomicInteger documentBuildCount = new AtomicInteger();
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			JournalArticleIndexVersionsTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Indexer<JournalArticle> indexer = _indexerRegistry.getIndexer(
+			JournalArticle.class);
+
+		ServiceRegistration<IndexerPostProcessor> serviceRegistration =
+			bundleContext.registerService(
+				IndexerPostProcessor.class,
+				new BaseIndexerPostProcessor() {
+
+					@Override
+					public void postProcessDocument(
+						Document document, Object object) {
+
+						documentBuildCount.incrementAndGet();
+					}
+
+				},
+				MapUtil.singletonDictionary(
+					"indexer.class.name", indexer.getClassName()));
+
+		try {
+			JournalTestUtil.expireArticle(_group.getGroupId(), updatedArticle);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+
+		Assert.assertEquals(3, documentBuildCount.get());
+	}
+
+	@Test
 	public void testExpireAllArticleVersionsWhenIndexAllArticleVersionsEnabled()
 		throws Exception {
 
@@ -185,15 +250,10 @@ public class JournalArticleIndexVersionsTest {
 			updatedArticle.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
-		// All three versions are indexed: one head and two non-head
-
 		assertSearchCount(1, true);
-		assertSearchCount(2, false);
+		assertSearchCount(3, false);
 
 		JournalTestUtil.expireArticle(_group.getGroupId(), updatedArticle);
-
-		// After expiring all versions there is no head, but every version
-		// remains indexed (LPD-93976)
 
 		assertSearchCount(0, true);
 		assertSearchCount(3, false);

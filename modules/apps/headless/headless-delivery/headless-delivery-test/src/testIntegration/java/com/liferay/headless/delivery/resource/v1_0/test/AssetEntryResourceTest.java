@@ -43,6 +43,7 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 
 		_testGetAssetEntriesPageAssetEntryFields();
 		_testGetAssetEntriesPageWithClassNameIdFilter();
+		_testGetAssetEntriesPageWithClassPKFilter();
 		_testGetAssetEntriesPageWithClassTypeIdFilter();
 		_testGetAssetEntriesPageWithMultipleClassNameIdsFilter();
 		_testGetAssetEntriesPageWithMultipleGroupIds();
@@ -142,6 +143,23 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 		Assert.assertTrue(_hasClassPK(assetEntries, blogsEntry.getEntryId()));
 		Assert.assertFalse(
 			_hasClassPK(assetEntries, journalArticle.getResourcePrimKey()));
+	}
+
+	private void _testGetAssetEntriesPageWithClassPKFilter() throws Exception {
+		Long groupId = testGroup.getGroupId();
+
+		BlogsEntry blogsEntry1 = _addBlogsEntry(groupId);
+		BlogsEntry blogsEntry2 = _addBlogsEntry(groupId);
+
+		Page<AssetEntry> page = assetEntryResource.getAssetEntriesPage(
+			new Long[] {groupId}, null, null,
+			"classPK eq " + blogsEntry1.getEntryId(), Pagination.of(1, 20),
+			null);
+
+		List<AssetEntry> assetEntries = (List<AssetEntry>)page.getItems();
+
+		Assert.assertTrue(_hasClassPK(assetEntries, blogsEntry1.getEntryId()));
+		Assert.assertFalse(_hasClassPK(assetEntries, blogsEntry2.getEntryId()));
 	}
 
 	private void _testGetAssetEntriesPageWithClassTypeIdFilter()

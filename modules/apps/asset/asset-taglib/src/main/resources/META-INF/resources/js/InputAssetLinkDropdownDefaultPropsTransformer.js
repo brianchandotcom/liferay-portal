@@ -33,7 +33,7 @@ function StatusCell({value}) {
 	);
 }
 
-function buildAPIURL(groupId, classNameIds) {
+function buildAPIURL(groupId, classNameIds, excludedAssetEntry) {
 	const url = new URL(ASSET_ENTRIES_API_URL, window.location.origin);
 
 	url.searchParams.set('groupIds', groupId);
@@ -48,6 +48,10 @@ function buildAPIURL(groupId, classNameIds) {
 		filter = `classNameId in (${classNameIds.join(',')}) and ${STATUS_FILTER}`;
 	}
 
+	if (excludedAssetEntry) {
+		filter += ` and (classNameId ne ${excludedAssetEntry.classNameId} or classPK ne ${excludedAssetEntry.classPK})`;
+	}
+
 	url.searchParams.set('filter', filter);
 
 	return url.toString();
@@ -58,7 +62,13 @@ export default function propsTransformer({
 	portletNamespace,
 	...props
 }) {
-	const {assetEntryTypes = [], groupId, removeIcon} = additionalProps;
+	const {
+		assetEntryTypes = [],
+		groupId,
+		refererClassNameId,
+		refererClassPK,
+		removeIcon,
+	} = additionalProps;
 
 	return {
 		...props,
@@ -81,8 +91,12 @@ export default function propsTransformer({
 
 			const singleAssetEntryType = assetEntryTypes.length === 1;
 
+			const excludedAssetEntry = refererClassPK
+				? {classNameId: refererClassNameId, classPK: refererClassPK}
+				: null;
+
 			openItemSelectorModal({
-				apiURL: buildAPIURL(groupId, classNameIds),
+				apiURL: buildAPIURL(groupId, classNameIds, excludedAssetEntry),
 				fdsProps: {
 					configInURLBehavior: 'OFF',
 					customRenderers: {

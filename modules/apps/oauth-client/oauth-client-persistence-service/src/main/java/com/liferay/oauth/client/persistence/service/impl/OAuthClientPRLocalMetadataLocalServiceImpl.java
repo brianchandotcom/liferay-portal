@@ -23,15 +23,14 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.net.UnknownHostException;
 
 import java.util.List;
 import java.util.Objects;
@@ -388,10 +387,13 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 			throw new OAuthClientPRLocalMetadataResourceException();
 		}
 
-		if (authorizationServers != null) {
-			for (String authorizationServer : authorizationServers) {
-				_validateURL(authorizationServer);
-			}
+		if (ArrayUtil.isEmpty(authorizationServers)) {
+			throw new OAuthClientPRLocalMetadataMetadataJSONException(
+				"authorization_servers is required");
+		}
+
+		for (String authorizationServer : authorizationServers) {
+			_validateURL(authorizationServer);
 		}
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
@@ -443,16 +445,17 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 
 			if (Validator.isNotNull(url.getRef()) ||
 				(!Http.HTTPS.equalsIgnoreCase(protocol) &&
-				 !InetAddressUtil.isLocalInetAddress(
-					 InetAddressUtil.getInetAddressByName(host)))) {
+				 !Objects.equals(host, "localhost") &&
+				 !Objects.equals(host, "127.0.0.1") &&
+				 !Objects.equals(host, "[::1]"))) {
 
 				throw new OAuthClientPRLocalMetadataResourceException(
 					urlString);
 			}
 		}
-		catch (MalformedURLException | UnknownHostException exception) {
+		catch (MalformedURLException malformedURLException) {
 			throw new OAuthClientPRLocalMetadataResourceException(
-				urlString, exception);
+				urlString, malformedURLException);
 		}
 	}
 

@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Import;
  */
 @Import(ClientExtensionUtilSpringBootComponentScan.class)
 @SpringBootApplication
-public class SEOStudioGSCSpringBootApplication {
+public class SEOStudioSpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SEOStudioGSCSpringBootApplication.class, args);
+		SpringApplication.run(SEOStudioSpringBootApplication.class, args);
 	}
 
 }

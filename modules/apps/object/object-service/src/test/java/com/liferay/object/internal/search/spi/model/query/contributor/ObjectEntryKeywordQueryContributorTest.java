@@ -5,7 +5,6 @@
 
 package com.liferay.object.internal.search.spi.model.query.contributor;
 
-import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -217,10 +216,10 @@ public class ObjectEntryKeywordQueryContributorTest {
 
 		BooleanQuery booleanQuery = _mockBooleanQuery(argumentCaptor);
 
-		ObjectEntryKeywordQueryContributor contributor =
+		ObjectEntryKeywordQueryContributor objectEntryKeywordQueryContributor =
 			_createObjectEntryKeywordQueryContributor(objectDefinition);
 
-		contributor.contribute(
+		objectEntryKeywordQueryContributor.contribute(
 			RandomTestUtil.randomString(), booleanQuery,
 			_mockKeywordQueryContributorHelper(LocaleUtil.SPAIN));
 
@@ -236,10 +235,9 @@ public class ObjectEntryKeywordQueryContributorTest {
 		}
 
 		String spainNestedFieldArrayValue = Field.getLocalizedName(
-			LocaleUtil.SPAIN,
-			ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE);
+			LocaleUtil.SPAIN, "nestedFieldArray.value");
 		String usNestedFieldArrayValue = Field.getLocalizedName(
-			LocaleUtil.US, ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE);
+			LocaleUtil.US, "nestedFieldArray.value");
 
 		Assert.assertTrue(
 			StringBundler.concat(
@@ -256,9 +254,8 @@ public class ObjectEntryKeywordQueryContributorTest {
 		Assert.assertFalse(
 			StringBundler.concat(
 				"Expected ", matchQueryFields, " not to contain ",
-				ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE_TEXT),
-			matchQueryFields.contains(
-				ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE_TEXT));
+				"nestedFieldArray.value_text"),
+			matchQueryFields.contains("nestedFieldArray.value_text"));
 	}
 
 	private SearchContext _buildSearchContext(Locale locale) {
@@ -315,12 +312,9 @@ public class ObjectEntryKeywordQueryContributorTest {
 				Mockito.any(String[].class), Mockito.any())
 		).thenReturn(
 			new String[] {
+				Field.getLocalizedName(LocaleUtil.US, "nestedFieldArray.value"),
 				Field.getLocalizedName(
-					LocaleUtil.US,
-					ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE),
-				Field.getLocalizedName(
-					LocaleUtil.SPAIN,
-					ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE)
+					LocaleUtil.SPAIN, "nestedFieldArray.value")
 			}
 		);
 

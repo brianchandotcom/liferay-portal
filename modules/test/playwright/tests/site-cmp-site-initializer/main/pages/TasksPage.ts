@@ -18,6 +18,14 @@ export class TasksPage {
 	readonly allTasksTab: Locator;
 	readonly assetTagNameField: Locator;
 	readonly assignTaskToDialog: Locator;
+	readonly calendarView: {
+		datePickerMenu: Locator;
+		nextMonthButton: Locator;
+		previousMonthButton: Locator;
+		title: Locator;
+		todayButton: Locator;
+		viewOption: Locator;
+	};
 	readonly dataSetFragmentPage: DataSetPage;
 	readonly dialogDeleteButton: Locator;
 	readonly dropdownKanbanViewButton: Locator;
@@ -50,6 +58,16 @@ export class TasksPage {
 		this.assignTaskToDialog = page.getByRole('dialog', {
 			name: 'Assign Tasks to',
 		});
+		this.calendarView = {
+			datePickerMenu: page.getByRole('dialog', {name: 'Choose date'}),
+			nextMonthButton: page.getByRole('button', {name: 'Next Month'}),
+			previousMonthButton: page.getByRole('button', {
+				name: 'Previous Month',
+			}),
+			title: page.getByTestId('calendarTitle'),
+			todayButton: page.getByRole('button', {name: 'Today'}),
+			viewOption: page.getByRole('option', {name: 'Calendar'}),
+		};
 		this.dataSetFragmentPage = new DataSetPage(page);
 		this.dialogDeleteButton = page
 			.getByRole('dialog')

@@ -23,6 +23,7 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-58677': {enabled: true},
+		'LPD-69885': {enabled: true},
 	}),
 	globalMenuPagesTest,
 	loginTest(),
@@ -38,6 +39,23 @@ let taskTags: string[] = [];
 
 const generateTaskTag = () =>
 	'L_CMP_TASK_' + Math.floor(Math.random() * 100000000);
+
+/**
+ * Formats a date as its long month name and year.
+ * For example: getMonthYearLabel(new Date(2026, 5, 15)) // "June 2026"
+ */
+const getMonthYearLabel = (date: Date): string =>
+	date.toLocaleDateString('en-US', {month: 'long', year: 'numeric'});
+
+/**
+ * Formats a date as a "YYYY-MM-DD" string.
+ * For example: toDateString(new Date(2026, 5, 15)) // "2026-06-15"
+ */
+const toDateString = (date: Date): string =>
+	`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+		2,
+		'0'
+	)}-${String(date.getDate()).padStart(2, '0')}`;
 
 test.beforeEach(async ({apiHelpers}) => {
 	taskNames = [getRandomString(), getRandomString(), getRandomString()];
@@ -519,5 +537,116 @@ test(
 		await tasksPage.workflowTasksTab.click();
 
 		await expect(tasksPage.viewSelectorButton).toBeHidden();
+	}
+);
+
+test(
+	'Calendar view shows tasks by due date and navigates between months',
+	{tag: ['@LPD-69885']},
+	async ({apiHelpers, page, projectPage, projectsPage, tasksPage}) => {
+		const now = new Date();
+
+		const currentLabel = getMonthYearLabel(now);
+		const nextLabel = getMonthYearLabel(
+			new Date(now.getFullYear(), now.getMonth() + 1, 1)
+		);
+		const previousLabel = getMonthYearLabel(
+			new Date(now.getFullYear(), now.getMonth() - 1, 1)
+		);
+		const todayDate = toDateString(now);
+
+		const tomorrow = new Date();
+
+		tomorrow.setDate(tomorrow.getDate() + 1);
+
+		const dueDate = toDateString(tomorrow);
+
+		const taskTitle = getRandomString();
+
+		await test.step('Create a task with a due date', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					dueDate: `${dueDate}T00:00:00Z`,
+					r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+					title: taskTitle,
+				},
+				cmpTask,
+				project.scopeKey
+			);
+		});
+
+		const {calendarView} = tasksPage;
+
+		await test.step('View the project and open its Tasks tab', async () => {
+			await projectsPage.goto();
+
+			await projectsPage.getProject(project.title).click();
+
+			await projectPage.tasksTab.click();
+		});
+
+		await test.step('Calendar view is available and can be selected', async () => {
+			await tasksPage.tableViewButton.click();
+
+			await expect(calendarView.viewOption).toBeVisible();
+
+			await calendarView.viewOption.click();
+		});
+
+		await test.step('Calendar shows the current month and year', async () => {
+			await expect(calendarView.title).toBeVisible();
+
+			await expect(calendarView.title).toContainText(currentLabel);
+		});
+
+		await test.step('Next and previous buttons change the title', async () => {
+			await calendarView.nextMonthButton.click();
+
+			await expect(calendarView.title).toContainText(nextLabel);
+
+			await calendarView.previousMonthButton.click();
+			await calendarView.previousMonthButton.click();
+
+			await expect(calendarView.title).toContainText(previousLabel);
+		});
+
+		await test.step('Date picker jumps the calendar to the selected month', async () => {
+			await calendarView.title.click();
+
+			await expect(calendarView.datePickerMenu).toBeVisible();
+
+			await calendarView.datePickerMenu
+				.getByText('15', {exact: true})
+				.click();
+
+			await expect(calendarView.title).toContainText(currentLabel);
+		});
+
+		await test.step('Today button returns to the current month', async () => {
+			await calendarView.previousMonthButton.click();
+
+			await expect(calendarView.title).toContainText(previousLabel);
+
+			await calendarView.todayButton.click();
+
+			await expect(calendarView.title).toContainText(currentLabel);
+		});
+
+		await test.step('The current date is highlighted', async () => {
+			await expect(page.locator('.fc-day-today')).toBeVisible();
+
+			await expect(page.locator('.fc-day-today')).toHaveAttribute(
+				'data-date',
+				todayDate
+			);
+		});
+
+		await test.step('The task appears on its due date', async () => {
+			await expect(
+				page
+					.locator(`[data-date="${dueDate}"]`)
+					.getByText(taskTitle, {exact: true})
+			).toBeVisible();
+		});
 	}
 );

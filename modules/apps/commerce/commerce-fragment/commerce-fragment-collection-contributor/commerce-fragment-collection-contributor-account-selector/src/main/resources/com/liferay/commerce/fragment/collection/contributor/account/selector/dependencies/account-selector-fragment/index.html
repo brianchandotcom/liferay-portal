@@ -10,6 +10,13 @@
 			padding: 0;
 		}
 
+		[#if layoutMode == 'edit']
+			#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu.show {
+				left: auto;
+				right: 0;
+			}
+		[/#if]
+
 		#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu .dropdown-divider {
 			margin: 0;
 		}
@@ -41,7 +48,7 @@
 			<lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="1"></lfr-drop-zone>
 		</div>
 
-		<div class="[#if layoutMode != 'edit']dropdown-menu[/#if]" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-menu">
+		<div class="dropdown-menu" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-menu">
 			<div class="account-selector-dropdown-panel">
 				<div class="align-items-center d-flex dropdown-section item-list-head justify-content-between" data-active-panel-key="${configuration.defaultPanelKey}"[#if layoutMode == 'edit'] data-step="0"[/#if] id="${fragmentEntryLinkNamespace}-account-selector-dropdown-header">
 					<button aria-label="${languageUtil.get(locale, "back-to-accounts")}" class="btn btn-monospaced btn-unstyled" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-prev-button" type="button">
@@ -68,7 +75,7 @@
 				<div id="${fragmentEntryLinkNamespace}-account-selector-panel-wrapper">
 					<div id="${fragmentEntryLinkNamespace}-account-selector-panel-slider">
 						[#list 1..configuration.numberOfPanels as i]
-							<div class="account-selector-panel-content">
+							<div class="account-selector-panel-content"[#if layoutMode == 'edit'] inert[/#if]>
 								<lfr-drop-zone data-lfr-drop-zone-id="${i + 1}" data-lfr-priority="${i + 1}"></lfr-drop-zone>
 							</div>
 						[/#list]

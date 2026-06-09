@@ -43,7 +43,8 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 			activeProfileId);
 
 		if (keyManagerProfile == null) {
-			keyManagerProfile = _serviceTrackerMap.getService("custom");
+			keyManagerProfile = _serviceTrackerMap.getService(
+				CustomKeyManagerProfile.PROFILE_ID);
 		}
 
 		return keyManagerProfile;

@@ -8,13 +8,13 @@ package com.liferay.one.constants;
 /**
  * @author Kyle Bischof
  */
-public class SalesforceCatalogConstants {
+public class CommerceCatalogConstants {
 
 	public static final String DEFAULT_LANGUAGE_ID = "en_US";
 
 	public static final String PRICE_LIST_ERC_PREFIX = "SALESFORCE_PRICE_LIST_";
 
-	public static final String PRODUCT_TYPE = "simple";
+	public static final String PRODUCT_TYPE_SIMPLE = "simple";
 
 	public static final String SALESFORCE_CATALOG = "SALESFORCE_CATALOG";
 

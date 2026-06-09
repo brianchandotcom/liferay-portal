@@ -91,6 +91,11 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                editURL:
+                    description:
+                        Portal URL to the edit page for this entry.
+                    readOnly: true
+                    type: string
                 hideable:
                     readOnly: true
                     type: boolean

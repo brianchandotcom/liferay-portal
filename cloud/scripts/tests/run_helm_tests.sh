@@ -28,7 +28,7 @@ function main {
 
 		test_files=$(ls "${cloud_dir}/helm/${chart}/tests/"*_test.yaml 2>/dev/null || echo "")
 
-		if [ "${test_files}" ]
+		if [[ ${test_files} ]]
 		then
 			local test_reports_folder="${cloud_dir}/scripts/tests/test-reports"
 			mkdir --parents "${test_reports_folder}"

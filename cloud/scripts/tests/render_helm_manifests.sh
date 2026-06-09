@@ -26,11 +26,12 @@ function main {
 	do
 		helm dependency update --skip-refresh "${cloud_dir}/helm/${chart}"
 
-		helm template liferay "${cloud_dir}/helm/${chart}" | \
-			kubeconform --strict --summary \
-				-schema-location default \
-				-schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
-				-skip ClusterProviderConfig,LiferayInfrastructure
+		helm template liferay "${cloud_dir}/helm/${chart}" | kubeconform \
+			--schema-location default \
+			--schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+			--skip ClusterProviderConfig,LiferayInfrastructure \
+	 		--strict \
+			--summary
 	done
 }
 

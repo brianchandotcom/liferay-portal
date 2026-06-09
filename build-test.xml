@@ -15874,7 +15874,8 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 									impdp ${oracle.admin.user}/${oracle.admin.password} dumpfile=oracle.dmp table_exists_action=replace
 
-									sqlplus ${oracle.admin.user}/${oracle.admin.password} << -'EOF'
+									sqlplus /nolog <<-'EOF'
+									connect ${oracle.admin.user}/"${oracle.admin.password}" as sysdba
 									grant select on sys.v_$session to ${database.username};
 									grant select on sys.v_$sql to ${database.username};
 									exit
@@ -16095,12 +16096,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<arg value="table_exists_action=replace" />
 							</exec>
 
-							<sql classpath="${test.app.server.lib.portal.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
-								<![CDATA[
-									grant select on sys.v_$session to lportal;
-									grant select on sys.v_$sql to lportal;
-								]]>
-							</sql>
+							<exec executable="${oracle.sqlplus.executable}" failonerror="true" inputstring="connect ${oracle.admin.user}/&quot;${oracle.admin.password}&quot; as sysdba&#10;grant select on sys.v_$session to lportal;&#10;grant select on sys.v_$sql to lportal;&#10;exit&#10;">
+								<arg value="/nolog" />
+							</exec>
 
 							<delete file="${data.pump.dir}/${database.type}.dmp" />
 						</then>

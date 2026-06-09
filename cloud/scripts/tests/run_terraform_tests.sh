@@ -7,11 +7,11 @@ function main {
 
 	local terraform_modules=(
 		aws/eks
-		aws/gitops/resources
 		aws/gitops/platform
-		gcp/gke
-		gcp/gitops/resources
+		aws/gitops/resources
 		gcp/gitops/platform
+		gcp/gitops/resources
+		gcp/gke
 	)
 
 	if [[ -n "${requested_module}" ]]
@@ -31,10 +31,10 @@ function main {
 	do
 		cd "${terraform_dir}/${terraform_module}"
 
+		terraform init -backend=false -input=false
+
 		local sanitized_terraform_module_name
 		sanitized_terraform_module_name="$(echo "${terraform_module}" | tr "/" "-")"
-
-		terraform init -backend=false -input=false
 
 		terraform test \
 			-junit-xml="${terraform_dir}/test-results/${sanitized_terraform_module_name}.xml"

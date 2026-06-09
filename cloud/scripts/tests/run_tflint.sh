@@ -29,13 +29,13 @@ function main {
 
 	for terraform_module in "${terraform_modules[@]}"
 	do
-		local cloud="${terraform_module%%/*}"
-
-		local config="${terraform_dir}/${cloud}/.tflint.hcl"
-
 		cd "${terraform_dir}/${terraform_module}"
 
 		terraform init -backend=false -input=false
+
+		local cloud="${terraform_module%%/*}"
+
+		local config="${terraform_dir}/${cloud}/.tflint.hcl"
 
 		tflint --config="${config}" --init
 

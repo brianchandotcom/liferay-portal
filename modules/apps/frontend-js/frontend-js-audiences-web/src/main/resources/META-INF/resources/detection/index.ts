@@ -45,7 +45,7 @@ export interface AudienceMatch {
 	retentionType: RetentionType;
 }
 
-type AttributeValue = Set<string> | number | string;
+type AttributeValue = Set<string> | boolean | number | string;
 
 interface OperatorImpl {
 	(actual: any, expected: any): boolean;

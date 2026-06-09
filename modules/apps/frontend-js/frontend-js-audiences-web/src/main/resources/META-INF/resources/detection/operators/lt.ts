@@ -5,7 +5,7 @@
 
 import {checkTypes} from '../util';
 
-export function lt(value: any, expected: any): boolean {
+export function lt<T extends number | string>(value: T, expected: T): boolean {
 	checkTypes(value, ['number', 'string'], `Operator 'lt' value`);
 
 	return value < expected;

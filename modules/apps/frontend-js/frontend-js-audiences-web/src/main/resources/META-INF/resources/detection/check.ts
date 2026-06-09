@@ -49,13 +49,13 @@ const OPERATORS: Operator[] = [
 ];
 
 const OPERATOR_VALUE_TYPES: {[operator in Operator]: string[]} = {
-	eq: ['number', 'string'],
+	eq: ['boolean', 'number', 'string'],
 	gt: ['number', 'string'],
 	gte: ['number', 'string'],
 	includes: ['string'],
 	lt: ['number', 'string'],
 	lte: ['number', 'string'],
-	not_eq: ['number', 'string'],
+	not_eq: ['boolean', 'number', 'string'],
 	not_includes: ['string'],
 };
 

@@ -5,8 +5,15 @@
 
 import {checkTypes} from '../util';
 
-export function notEq(value: any, expected: any): boolean {
-	checkTypes(value, ['number', 'string'], `Operator 'not_eq' value`);
+export function notEq<T extends boolean | number | string>(
+	value: T,
+	expected: T
+): boolean {
+	checkTypes(
+		value,
+		['boolean', 'number', 'string'],
+		`Operator 'not_eq' value`
+	);
 
 	return value !== expected;
 }

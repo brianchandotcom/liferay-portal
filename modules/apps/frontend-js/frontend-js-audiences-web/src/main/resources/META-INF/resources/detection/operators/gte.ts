@@ -5,7 +5,7 @@
 
 import {checkTypes} from '../util';
 
-export function gte(value: any, expected: any): boolean {
+export function gte<T extends number | string>(value: T, expected: T): boolean {
 	checkTypes(value, ['number', 'string'], `Operator 'gte' value`);
 
 	return value >= expected;

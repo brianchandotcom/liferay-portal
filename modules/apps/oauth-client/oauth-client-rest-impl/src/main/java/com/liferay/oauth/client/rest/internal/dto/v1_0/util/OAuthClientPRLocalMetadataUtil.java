@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -44,7 +45,8 @@ public class OAuthClientPRLocalMetadataUtil {
 				metadataJSONObject.getJSONArray("authorization_servers")),
 			JSONUtil.toStringArray(
 				metadataJSONObject.getJSONArray("bearer_methods_supported")),
-			oAuthClientPRLocalMetadata.getLocalWellKnownEnabled(),
+			GetterUtil.getBoolean(
+				oAuthClientPRLocalMetadata.getLocalWellKnownEnabled()),
 			oAuthClientPRLocalMetadata.getProtectedResourceURI(),
 			metadataJSONObject.getString("resource_name"),
 			JSONUtil.toStringArray(

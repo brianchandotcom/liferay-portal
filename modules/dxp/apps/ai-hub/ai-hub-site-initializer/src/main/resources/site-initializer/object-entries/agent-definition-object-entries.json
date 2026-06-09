@@ -82,7 +82,7 @@
 			"active": true,
 			"description": "This agent builds or updates Liferay Content Pages from natural-language instructions, producing a full SitePage payload that can be persisted via the headless-admin-site API.",
 			"externalReferenceCode": "L_PAGE_BUILDER",
-			"inputVariables": "instruction,current_page",
+			"inputVariables": "instruction,currentPage",
 			"outputVariable": "response",
 			"r_accountToAIHubAgentDefinitions_accountEntryERC": "L_AI_HUB",
 			"system": true,

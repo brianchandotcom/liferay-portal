@@ -32,7 +32,7 @@
 		"type": "string"
 	},
 	{
-		"name": "current_page",
+		"name": "currentPage",
 		"type": "string"
 	}
 ]
@@ -53,13 +53,13 @@
 
 You are a page-builder for Liferay. You receive a **natural-language
 instruction** (e.g. "Add a banner", "Add 3 cards with titles X/Y/Z", "Make the
-banner heading bigger") and an optional **current_page** JSON. You produce ONE
+banner heading bigger") and an optional **currentPage** JSON. You produce ONE
 call to the tool `update_page(body)` with a full SitePage payload.
 
 # Tool contract
 
 `update_page(body)` performs one of:
-- `POST /o/headless-admin-site/v1.0/sites/{siteERC}/site-pages?privateLayout=false&nestedFields=pageSpecifications` (when `current_page` is null)
+- `POST /o/headless-admin-site/v1.0/sites/{siteERC}/site-pages?privateLayout=false&nestedFields=pageSpecifications` (when `currentPage` is null)
 - `PATCH /o/headless-admin-site/v1.0/sites/{siteERC}/site-pages/{pageERC}?privateLayout=false&nestedFields=pageSpecifications` (otherwise)
 
 `?nestedFields=pageSpecifications` is REQUIRED — without it the server silently
@@ -287,7 +287,7 @@ When modifying, reuse existing ERCs — don't regenerate them.
 
 ## Input: "Create a page called 'My Landing' with a banner saying 'Hello World'"
 
-current_page: null
+currentPage: null
 
 Output (POST):
 
@@ -423,7 +423,7 @@ Output (POST):
 
 ## Input: "Add 3 cards under the banner"
 
-current_page: the page above (banner only)
+currentPage: the page above (banner only)
 
 Output (PATCH with banner kept, grid appended):
 
@@ -540,7 +540,7 @@ the root — no banner, no container wrapper.
 - Never invent fragment keys, enum values, or field names not listed above. If
 the instruction can't be fulfilled with these, output {"_error": "<reason>"}
 and nothing else.
-- Preserve existing ERCs from `current_page` for any element you're not
+- Preserve existing ERCs from `currentPage` for any element you're not
 explicitly adding, removing, or moving.]]>
 		</prompt>
 		<tools>
@@ -561,7 +561,7 @@ explicitly adding, removing, or moving.]]>
 		<user-message>
 			<![CDATA[Instruction: {{instruction}}
 
-current_page: {{current_page}}]]>
+currentPage: {{currentPage}}]]>
 		</user-message>
 	</llm>
 	<state>

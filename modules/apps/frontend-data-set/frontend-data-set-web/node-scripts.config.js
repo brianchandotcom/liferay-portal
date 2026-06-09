@@ -9,4 +9,8 @@ module.exports = {
 	typescript: {
 		main: './src/main/resources/META-INF/resources/index.ts',
 	},
+
+	submodules: {
+		api: './src/main/resources/META-INF/resources/api/FDSConnection.ts',
+	},
 };

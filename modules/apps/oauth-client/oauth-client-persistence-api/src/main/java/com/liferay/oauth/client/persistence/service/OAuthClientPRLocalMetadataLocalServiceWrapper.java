@@ -65,15 +65,15 @@ public class OAuthClientPRLocalMetadataLocalServiceWrapper
 			addOAuthClientPRLocalMetadata(
 				String externalReferenceCode, long userId,
 				String[] authorizationServers, String[] bearerMethodsSupported,
-				boolean localWellKnownEnabled, String resource,
+				boolean localWellKnownEnabled, String protectedResourceURI,
 				String resourceName, String[] scopesSupported)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientPRLocalMetadataLocalService.
 			addOAuthClientPRLocalMetadata(
 				externalReferenceCode, userId, authorizationServers,
-				bearerMethodsSupported, localWellKnownEnabled, resource,
-				resourceName, scopesSupported);
+				bearerMethodsSupported, localWellKnownEnabled,
+				protectedResourceURI, resourceName, scopesSupported);
 	}
 
 	/**
@@ -294,10 +294,11 @@ public class OAuthClientPRLocalMetadataLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata
-		fetchOAuthClientPRLocalMetadata(long companyId, String resource) {
+		fetchOAuthClientPRLocalMetadata(
+			long companyId, String protectedResourceURI) {
 
 		return _oAuthClientPRLocalMetadataLocalService.
-			fetchOAuthClientPRLocalMetadata(companyId, resource);
+			fetchOAuthClientPRLocalMetadata(companyId, protectedResourceURI);
 	}
 
 	@Override
@@ -530,15 +531,15 @@ public class OAuthClientPRLocalMetadataLocalServiceWrapper
 			updateOAuthClientPRLocalMetadata(
 				long oAuthClientPRLocalMetadataId,
 				String[] authorizationServers, String[] bearerMethodsSupported,
-				boolean localWellKnownEnabled, String resource,
+				boolean localWellKnownEnabled, String protectedResourceURI,
 				String resourceName, String[] scopesSupported)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientPRLocalMetadataLocalService.
 			updateOAuthClientPRLocalMetadata(
 				oAuthClientPRLocalMetadataId, authorizationServers,
-				bearerMethodsSupported, localWellKnownEnabled, resource,
-				resourceName, scopesSupported);
+				bearerMethodsSupported, localWellKnownEnabled,
+				protectedResourceURI, resourceName, scopesSupported);
 	}
 
 	/**
@@ -584,4 +585,4 @@ public class OAuthClientPRLocalMetadataLocalServiceWrapper
 		_oAuthClientPRLocalMetadataLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:754919009
+// LIFERAY-SERVICE-BUILDER-HASH:-974405723

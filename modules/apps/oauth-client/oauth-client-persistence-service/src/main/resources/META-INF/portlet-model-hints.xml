@@ -79,7 +79,7 @@
 		<field name="metadataJSON" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="resource" type="String">
+		<field name="protectedResourceURI" type="String">
 			<hint name="max-length">256</hint>
 		</field>
 	</model>

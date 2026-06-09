@@ -64,9 +64,10 @@ public class OAuthClientPRLocalMetadataTable
 	public final Column<OAuthClientPRLocalMetadataTable, Clob> metadataJSON =
 		createColumn(
 			"metadataJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<OAuthClientPRLocalMetadataTable, String> resource =
-		createColumn(
-			"resource", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<OAuthClientPRLocalMetadataTable, String>
+		protectedResourceURI = createColumn(
+			"protectedResourceURI", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private OAuthClientPRLocalMetadataTable() {
 		super(
@@ -74,4 +75,4 @@ public class OAuthClientPRLocalMetadataTable
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1774357834
+// LIFERAY-SERVICE-BUILDER-HASH:985814282

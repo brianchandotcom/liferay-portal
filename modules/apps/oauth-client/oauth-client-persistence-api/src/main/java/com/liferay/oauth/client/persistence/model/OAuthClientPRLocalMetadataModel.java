@@ -266,19 +266,19 @@ public interface OAuthClientPRLocalMetadataModel
 	public void setMetadataJSON(String metadataJSON);
 
 	/**
-	 * Returns the resource of this o auth client pr local metadata.
+	 * Returns the protected resource uri of this o auth client pr local metadata.
 	 *
-	 * @return the resource of this o auth client pr local metadata
+	 * @return the protected resource uri of this o auth client pr local metadata
 	 */
 	@AutoEscape
-	public String getResource();
+	public String getProtectedResourceURI();
 
 	/**
-	 * Sets the resource of this o auth client pr local metadata.
+	 * Sets the protected resource uri of this o auth client pr local metadata.
 	 *
-	 * @param resource the resource of this o auth client pr local metadata
+	 * @param protectedResourceURI the protected resource uri of this o auth client pr local metadata
 	 */
-	public void setResource(String resource);
+	public void setProtectedResourceURI(String protectedResourceURI);
 
 	@Override
 	public OAuthClientPRLocalMetadata cloneWithOriginalValues();
@@ -288,4 +288,4 @@ public interface OAuthClientPRLocalMetadataModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-127022708
+// LIFERAY-SERVICE-BUILDER-HASH:67104254

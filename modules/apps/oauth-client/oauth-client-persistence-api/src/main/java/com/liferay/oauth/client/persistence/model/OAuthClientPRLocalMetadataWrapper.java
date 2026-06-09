@@ -50,7 +50,7 @@ public class OAuthClientPRLocalMetadataWrapper
 		attributes.put("localWellKnownEnabled", isLocalWellKnownEnabled());
 		attributes.put("localWellKnownURI", getLocalWellKnownURI());
 		attributes.put("metadataJSON", getMetadataJSON());
-		attributes.put("resource", getResource());
+		attributes.put("protectedResourceURI", getProtectedResourceURI());
 
 		return attributes;
 	}
@@ -132,10 +132,11 @@ public class OAuthClientPRLocalMetadataWrapper
 			setMetadataJSON(metadataJSON);
 		}
 
-		String resource = (String)attributes.get("resource");
+		String protectedResourceURI = (String)attributes.get(
+			"protectedResourceURI");
 
-		if (resource != null) {
-			setResource(resource);
+		if (protectedResourceURI != null) {
+			setProtectedResourceURI(protectedResourceURI);
 		}
 	}
 
@@ -245,13 +246,13 @@ public class OAuthClientPRLocalMetadataWrapper
 	}
 
 	/**
-	 * Returns the resource of this o auth client pr local metadata.
+	 * Returns the protected resource uri of this o auth client pr local metadata.
 	 *
-	 * @return the resource of this o auth client pr local metadata
+	 * @return the protected resource uri of this o auth client pr local metadata
 	 */
 	@Override
-	public String getResource() {
-		return model.getResource();
+	public String getProtectedResourceURI() {
+		return model.getProtectedResourceURI();
 	}
 
 	/**
@@ -412,13 +413,13 @@ public class OAuthClientPRLocalMetadataWrapper
 	}
 
 	/**
-	 * Sets the resource of this o auth client pr local metadata.
+	 * Sets the protected resource uri of this o auth client pr local metadata.
 	 *
-	 * @param resource the resource of this o auth client pr local metadata
+	 * @param protectedResourceURI the protected resource uri of this o auth client pr local metadata
 	 */
 	@Override
-	public void setResource(String resource) {
-		model.setResource(resource);
+	public void setProtectedResourceURI(String protectedResourceURI) {
+		model.setProtectedResourceURI(protectedResourceURI);
 	}
 
 	/**
@@ -480,4 +481,4 @@ public class OAuthClientPRLocalMetadataWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1722097359
+// LIFERAY-SERVICE-BUILDER-HASH:-2008473261

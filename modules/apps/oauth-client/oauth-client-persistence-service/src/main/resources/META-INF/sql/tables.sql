@@ -50,5 +50,5 @@ create table OAuthClientPRLocalMetadata (
 	localWellKnownEnabled BOOLEAN,
 	localWellKnownURI VARCHAR(256) null,
 	metadataJSON TEXT null,
-	resource VARCHAR(256) null
+	protectedResourceURI VARCHAR(256) null
 );

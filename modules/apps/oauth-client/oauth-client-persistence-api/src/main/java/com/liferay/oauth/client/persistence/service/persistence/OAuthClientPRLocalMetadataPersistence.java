@@ -525,46 +525,47 @@ public interface OAuthClientPRLocalMetadataPersistence
 	public int countByC_LWKURI(long companyId, String localWellKnownURI);
 
 	/**
-	 * Returns the o auth client pr local metadata where companyId = &#63; and resource = &#63; or throws a <code>NoSuchOAuthClientPRLocalMetadataException</code> if it could not be found.
+	 * Returns the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; or throws a <code>NoSuchOAuthClientPRLocalMetadataException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the matching o auth client pr local metadata
 	 * @throws NoSuchOAuthClientPRLocalMetadataException if a matching o auth client pr local metadata could not be found
 	 */
-	public OAuthClientPRLocalMetadata findByC_R(long companyId, String resource)
+	public OAuthClientPRLocalMetadata findByC_PRURI(
+			long companyId, String protectedResourceURI)
 		throws NoSuchOAuthClientPRLocalMetadataException;
 
 	/**
-	 * Returns the o auth client pr local metadata where companyId = &#63; and resource = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth client pr local metadata, or <code>null</code> if a matching o auth client pr local metadata could not be found
 	 */
-	public OAuthClientPRLocalMetadata fetchByC_R(
-		long companyId, String resource, boolean useFinderCache);
+	public OAuthClientPRLocalMetadata fetchByC_PRURI(
+		long companyId, String protectedResourceURI, boolean useFinderCache);
 
 	/**
-	 * Removes the o auth client pr local metadata where companyId = &#63; and resource = &#63; from the database.
+	 * Removes the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the o auth client pr local metadata that was removed
 	 */
-	public OAuthClientPRLocalMetadata removeByC_R(
-			long companyId, String resource)
+	public OAuthClientPRLocalMetadata removeByC_PRURI(
+			long companyId, String protectedResourceURI)
 		throws NoSuchOAuthClientPRLocalMetadataException;
 
 	/**
-	 * Returns the number of o auth client pr local metadatas where companyId = &#63; and resource = &#63;.
+	 * Returns the number of o auth client pr local metadatas where companyId = &#63; and protectedResourceURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the number of matching o auth client pr local metadatas
 	 */
-	public int countByC_R(long companyId, String resource);
+	public int countByC_PRURI(long companyId, String protectedResourceURI);
 
 	/**
 	 * Returns the o auth client pr local metadata where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOAuthClientPRLocalMetadataException</code> if it could not be found.
@@ -664,16 +665,16 @@ public interface OAuthClientPRLocalMetadataPersistence
 	}
 
 	/**
-	 * Returns the o auth client pr local metadata where companyId = &#63; and resource = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the matching o auth client pr local metadata, or <code>null</code> if a matching o auth client pr local metadata could not be found
 	 */
-	public default OAuthClientPRLocalMetadata fetchByC_R(
-		long companyId, String resource) {
+	public default OAuthClientPRLocalMetadata fetchByC_PRURI(
+		long companyId, String protectedResourceURI) {
 
-		return fetchByC_R(companyId, resource, true);
+		return fetchByC_PRURI(companyId, protectedResourceURI, true);
 	}
 
 	/**
@@ -1134,4 +1135,4 @@ public interface OAuthClientPRLocalMetadataPersistence
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1550310802
+// LIFERAY-SERVICE-BUILDER-HASH:1382951944

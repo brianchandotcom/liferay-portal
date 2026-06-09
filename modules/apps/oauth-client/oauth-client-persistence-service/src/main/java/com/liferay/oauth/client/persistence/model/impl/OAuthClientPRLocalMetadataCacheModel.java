@@ -98,8 +98,8 @@ public class OAuthClientPRLocalMetadataCacheModel
 		sb.append(localWellKnownURI);
 		sb.append(", metadataJSON=");
 		sb.append(metadataJSON);
-		sb.append(", resource=");
-		sb.append(resource);
+		sb.append(", protectedResourceURI=");
+		sb.append(protectedResourceURI);
 		sb.append("}");
 
 		return sb.toString();
@@ -172,11 +172,12 @@ public class OAuthClientPRLocalMetadataCacheModel
 			oAuthClientPRLocalMetadataImpl.setMetadataJSON(metadataJSON);
 		}
 
-		if (resource == null) {
-			oAuthClientPRLocalMetadataImpl.setResource("");
+		if (protectedResourceURI == null) {
+			oAuthClientPRLocalMetadataImpl.setProtectedResourceURI("");
 		}
 		else {
-			oAuthClientPRLocalMetadataImpl.setResource(resource);
+			oAuthClientPRLocalMetadataImpl.setProtectedResourceURI(
+				protectedResourceURI);
 		}
 
 		oAuthClientPRLocalMetadataImpl.resetOriginalValues();
@@ -204,7 +205,7 @@ public class OAuthClientPRLocalMetadataCacheModel
 		localWellKnownEnabled = objectInput.readBoolean();
 		localWellKnownURI = objectInput.readUTF();
 		metadataJSON = (String)objectInput.readObject();
-		resource = objectInput.readUTF();
+		protectedResourceURI = objectInput.readUTF();
 	}
 
 	@Override
@@ -257,11 +258,11 @@ public class OAuthClientPRLocalMetadataCacheModel
 			objectOutput.writeObject(metadataJSON);
 		}
 
-		if (resource == null) {
+		if (protectedResourceURI == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(resource);
+			objectOutput.writeUTF(protectedResourceURI);
 		}
 	}
 
@@ -277,7 +278,7 @@ public class OAuthClientPRLocalMetadataCacheModel
 	public boolean localWellKnownEnabled;
 	public String localWellKnownURI;
 	public String metadataJSON;
-	public String resource;
+	public String protectedResourceURI;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-271475707
+// LIFERAY-SERVICE-BUILDER-HASH:554796365

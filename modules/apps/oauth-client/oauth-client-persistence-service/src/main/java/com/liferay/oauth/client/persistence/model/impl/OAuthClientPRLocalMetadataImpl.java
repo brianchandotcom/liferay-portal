@@ -11,5 +11,3 @@ package com.liferay.oauth.client.persistence.model.impl;
 public class OAuthClientPRLocalMetadataImpl
 	extends OAuthClientPRLocalMetadataBaseImpl {
 }
-
-// LIFERAY-SERVICE-BUILDER-HASH:-1643914109

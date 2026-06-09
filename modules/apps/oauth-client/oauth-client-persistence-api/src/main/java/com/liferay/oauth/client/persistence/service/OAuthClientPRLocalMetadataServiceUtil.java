@@ -41,12 +41,14 @@ public class OAuthClientPRLocalMetadataServiceUtil {
 	public static OAuthClientPRLocalMetadata addOAuthClientPRLocalMetadata(
 			String externalReferenceCode, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,
-			String resource, String resourceName, String[] scopesSupported)
+			String protectedResourceURI, String resourceName,
+			String[] scopesSupported)
 		throws PortalException {
 
 		return getService().addOAuthClientPRLocalMetadata(
 			externalReferenceCode, authorizationServers, bearerMethodsSupported,
-			localWellKnownEnabled, resource, resourceName, scopesSupported);
+			localWellKnownEnabled, protectedResourceURI, resourceName,
+			scopesSupported);
 	}
 
 	public static OAuthClientPRLocalMetadata deleteOAuthClientPRLocalMetadata(
@@ -74,11 +76,11 @@ public class OAuthClientPRLocalMetadataServiceUtil {
 	}
 
 	public static OAuthClientPRLocalMetadata fetchOAuthClientPRLocalMetadata(
-			long companyId, String resource)
+			long companyId, String protectedResourceURI)
 		throws PortalException {
 
 		return getService().fetchOAuthClientPRLocalMetadata(
-			companyId, resource);
+			companyId, protectedResourceURI);
 	}
 
 	public static OAuthClientPRLocalMetadata
@@ -115,10 +117,11 @@ public class OAuthClientPRLocalMetadataServiceUtil {
 	}
 
 	public static OAuthClientPRLocalMetadata getOAuthClientPRLocalMetadata(
-			long companyId, String resource)
+			long companyId, String protectedResourceURI)
 		throws PortalException {
 
-		return getService().getOAuthClientPRLocalMetadata(companyId, resource);
+		return getService().getOAuthClientPRLocalMetadata(
+			companyId, protectedResourceURI);
 	}
 
 	public static OAuthClientPRLocalMetadata
@@ -173,12 +176,13 @@ public class OAuthClientPRLocalMetadataServiceUtil {
 	public static OAuthClientPRLocalMetadata updateOAuthClientPRLocalMetadata(
 			long oAuthClientPRLocalMetadataId, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,
-			String resource, String resourceName, String[] scopesSupported)
+			String protectedResourceURI, String resourceName,
+			String[] scopesSupported)
 		throws PortalException {
 
 		return getService().updateOAuthClientPRLocalMetadata(
 			oAuthClientPRLocalMetadataId, authorizationServers,
-			bearerMethodsSupported, localWellKnownEnabled, resource,
+			bearerMethodsSupported, localWellKnownEnabled, protectedResourceURI,
 			resourceName, scopesSupported);
 	}
 
@@ -192,4 +196,4 @@ public class OAuthClientPRLocalMetadataServiceUtil {
 			OAuthClientPRLocalMetadataService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2115996976
+// LIFERAY-SERVICE-BUILDER-HASH:1318793680

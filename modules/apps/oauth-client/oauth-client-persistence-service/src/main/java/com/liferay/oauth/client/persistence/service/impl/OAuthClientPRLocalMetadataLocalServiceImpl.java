@@ -342,7 +342,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 				"resource_name", resourceName
 			);
 
-			if ((scopesSupported != null) && (scopesSupported.length > 0)) {
+			if (ArrayUtil.isNotEmpty(scopesSupported)) {
 				metadataJSONObject.put(
 					"scopes_supported",
 					JSONUtil.putAll((Object[])scopesSupported));

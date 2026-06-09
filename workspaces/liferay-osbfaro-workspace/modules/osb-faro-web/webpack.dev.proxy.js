@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 const {promisify} = require('util');
 const zlib = require('zlib');
 
@@ -66,7 +71,7 @@ function createOnProxyRes(target) {
 			let buffer = Buffer.concat(chunks);
 
 			const encoding = proxyRes.headers['content-encoding'];
-			if (buffer.length > 0 && encoding) {
+			if (!!buffer.length && encoding) {
 				try {
 					if (encoding === 'gzip') {
 						buffer = await gunzip(buffer);
@@ -94,7 +99,7 @@ function createOnProxyRes(target) {
 				contentType.includes('application/json') ||
 				contentType.includes('text/css');
 
-			if (isTextual && buffer.length > 0) {
+			if (isTextual && !!buffer.length) {
 				buffer = Buffer.from(
 					buffer.toString('utf8').split(target).join(proxyOrigin)
 				);

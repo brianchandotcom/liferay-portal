@@ -54,8 +54,6 @@ export type MergedVariantsFn = (
 	variantMetrics: Array<VariantMetric>
 ) => Array<MergedVariant>;
 
-export type {MergedVariant, MetricName, Status, Variant, VariantMetric};
-
 type Status =
 	| 'COMPLETED'
 	| 'DRAFT'
@@ -82,3 +80,5 @@ type VariantMetric = {
 	median?: number;
 	probabilityToWin?: number;
 };
+
+export type {MergedVariant, MetricName, Status, Variant, VariantMetric};

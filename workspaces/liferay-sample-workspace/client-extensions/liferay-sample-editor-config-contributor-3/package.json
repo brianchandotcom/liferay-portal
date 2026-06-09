@@ -1,0 +1,21 @@
+{
+	"dependencies": {
+		"@ckeditor/ckeditor5-core": "46.0.3",
+		"@ckeditor/ckeditor5-ui": "46.0.3",
+		"@liferay/js-api": "0.8.0"
+	},
+	"description": "Liferay Sample Editor Config Contributor CKEditor 5 Timestamp",
+	"devDependencies": {
+		"serve": "^14.2.0",
+		"typescript": "^5.0.4"
+	},
+	"main": "./src/index.ts",
+	"name": "@liferay/liferay-sample-editor-config-contributor-3",
+	"scripts": {
+		"build": "esbuild src/index.ts --outdir=build --bundle --format=esm --external:@ckeditor/ckeditor5-core --external:@ckeditor/ckeditor5-ui",
+		"start": "PORT=3002 serve --cors",
+		"watch": "tsc --watch"
+	},
+	"type": "module",
+	"version": "0.0.0"
+}

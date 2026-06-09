@@ -10,6 +10,7 @@ import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.dto.v1_0.ContentElement;
+import com.liferay.headless.delivery.dto.v1_0.ContentSet;
 import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
@@ -41,6 +42,7 @@ import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
+import com.liferay.headless.delivery.resource.v1_0.ContentSetResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentDataDefinitionTypeResource;
@@ -139,6 +141,14 @@ public class Query {
 
 		_contentElementResourceComponentServiceObjects =
 			contentElementResourceComponentServiceObjects;
+	}
+
+	public static void setContentSetResourceComponentServiceObjects(
+		ComponentServiceObjects<ContentSetResource>
+			contentSetResourceComponentServiceObjects) {
+
+		_contentSetResourceComponentServiceObjects =
+			contentSetResourceComponentServiceObjects;
 	}
 
 	public static void setContentSetElementResourceComponentServiceObjects(
@@ -904,6 +914,58 @@ public class Query {
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						contentElementResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryContentSets(assetLibraryId: ___, itemSubtype: ___, itemType: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Lists the asset library's persisted content sets, optionally filtered by a search keyword, item type, and item subtype."
+	)
+	public ContentSetPage assetLibraryContentSets(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("itemSubtype") String itemSubtype,
+			@GraphQLName("itemType") String itemType,
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentSetResource -> new ContentSetPage(
+				contentSetResource.getAssetLibraryContentSetsPage(
+					Long.valueOf(assetLibraryId), itemSubtype, itemType, search,
+					Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentSets(itemSubtype: ___, itemType: ___, page: ___, pageSize: ___, search: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Lists the site's persisted content sets, optionally filtered by a search keyword, item type, and item subtype."
+	)
+	public ContentSetPage contentSets(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("itemSubtype") String itemSubtype,
+			@GraphQLName("itemType") String itemType,
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentSetResource -> new ContentSetPage(
+				contentSetResource.getSiteContentSetsPage(
+					Long.valueOf(siteKey), itemSubtype, itemType, search,
+					Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -5987,6 +6049,44 @@ public class Query {
 
 	}
 
+	@GraphQLName("ContentSetPage")
+	public class ContentSetPage {
+
+		public ContentSetPage(Page contentSetPage) {
+			actions = contentSetPage.getActions();
+
+			facets = contentSetPage.getFacets();
+
+			items = contentSetPage.getItems();
+			lastPage = contentSetPage.getLastPage();
+			page = contentSetPage.getPage();
+			pageSize = contentSetPage.getPageSize();
+			totalCount = contentSetPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<ContentSet> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("ContentSetElementPage")
 	public class ContentSetElementPage {
 
@@ -7199,6 +7299,23 @@ public class Query {
 		contentElementResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(ContentSetResource contentSetResource)
+		throws Exception {
+
+		contentSetResource.setContextAcceptLanguage(_acceptLanguage);
+		contentSetResource.setContextCompany(_company);
+		contentSetResource.setContextHttpServletRequest(_httpServletRequest);
+		contentSetResource.setContextHttpServletResponse(_httpServletResponse);
+		contentSetResource.setContextUriInfo(_uriInfo);
+		contentSetResource.setContextUser(_user);
+		contentSetResource.setGroupLocalService(_groupLocalService);
+		contentSetResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		contentSetResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
+		contentSetResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			ContentSetElementResource contentSetElementResource)
 		throws Exception {
@@ -7663,6 +7780,8 @@ public class Query {
 		_commentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentElementResource>
 		_contentElementResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ContentSetResource>
+		_contentSetResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentSetElementResource>
 		_contentSetElementResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentStructureResource>
@@ -7729,4 +7848,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1851934736
+// LIFERAY-REST-BUILDER-HASH:2011358553

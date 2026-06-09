@@ -193,6 +193,26 @@ public class InputAssetLinksDisplayContext {
 		return group.getDescriptiveName(_themeDisplay.getLocale());
 	}
 
+	public long getRefererClassNameId() {
+		AssetEntry assetEntry = _getRefererAssetEntry();
+
+		if (assetEntry == null) {
+			return 0;
+		}
+
+		return assetEntry.getClassNameId();
+	}
+
+	public long getRefererClassPK() {
+		AssetEntry assetEntry = _getRefererAssetEntry();
+
+		if (assetEntry == null) {
+			return 0;
+		}
+
+		return assetEntry.getClassPK();
+	}
+
 	private List<AssetLink> _createAssetLinks() throws PortalException {
 		String assetLinksSearchContainerPrimaryKeys = ParamUtil.getString(
 			_httpServletRequest, "assetLinksSearchContainerPrimaryKeys");
@@ -243,6 +263,14 @@ public class InputAssetLinksDisplayContext {
 
 				return assetLink;
 			});
+	}
+
+	private AssetEntry _getRefererAssetEntry() {
+		if (_assetEntryId <= 0) {
+			return null;
+		}
+
+		return AssetEntryLocalServiceUtil.fetchEntry(_assetEntryId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

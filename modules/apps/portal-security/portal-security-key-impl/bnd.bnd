@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Security Key Implementation
+Bundle-SymbolicName: com.liferay.portal.security.key.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Title: Key Manager

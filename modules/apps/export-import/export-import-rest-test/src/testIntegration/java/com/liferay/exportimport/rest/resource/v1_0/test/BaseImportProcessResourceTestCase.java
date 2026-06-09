@@ -17,12 +17,16 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcess;
+import com.liferay.exportimport.rest.client.dto.v1_0.ProcessProgress;
 import com.liferay.exportimport.rest.client.dto.v1_0.Type;
 import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.exportimport.rest.client.pagination.Page;
 import com.liferay.exportimport.rest.client.pagination.Pagination;
 import com.liferay.exportimport.rest.client.resource.v1_0.ImportProcessResource;
 import com.liferay.exportimport.rest.client.serdes.v1_0.ImportProcessSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -167,6 +171,17 @@ public abstract class BaseImportProcessResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -228,6 +243,7 @@ public abstract class BaseImportProcessResourceTestCase {
 
 		ImportProcess importProcess = randomImportProcess();
 
+		importProcess.setErrorMessage(regex);
 		importProcess.setName(regex);
 
 		String json = ImportProcessSerDes.toJSON(importProcess);
@@ -236,7 +252,75 @@ public abstract class BaseImportProcessResourceTestCase {
 
 		importProcess = ImportProcessSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, importProcess.getErrorMessage());
 		Assert.assertEquals(regex, importProcess.getName());
+	}
+
+	@Test
+	public void testDeleteImportProcess() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ImportProcess importProcess =
+			testDeleteImportProcess_addImportProcess();
+
+		assertHttpResponseStatusCode(
+			204,
+			importProcessResource.deleteImportProcessHttpResponse(
+				importProcess.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			importProcessResource.getImportProcessHttpResponse(
+				importProcess.getId()));
+		assertHttpResponseStatusCode(
+			404, importProcessResource.getImportProcessHttpResponse(0L));
+	}
+
+	protected ImportProcess testDeleteImportProcess_addImportProcess()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteImportProcessBatch() throws Exception {
+		ImportProcess importProcess1 =
+			testDeleteImportProcessBatch_addImportProcess();
+
+		testDeleteImportProcessBatch_deleteImportProcess(
+			202, null, importProcess1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			importProcessResource.getImportProcessHttpResponse(
+				importProcess1.getId()));
+	}
+
+	protected ImportProcess testDeleteImportProcessBatch_addImportProcess()
+		throws Exception {
+
+		return testDeleteImportProcess_addImportProcess();
+	}
+
+	protected void testDeleteImportProcessBatch_deleteImportProcess(
+			int expectedStatusCode, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			importProcessResource.deleteImportProcessBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		waitForFinish(
+			"COMPLETED",
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -293,6 +377,10 @@ public abstract class BaseImportProcessResourceTestCase {
 			page,
 			testGetAssetLibraryImportProcessesPage_getExpectedActions(
 				assetLibraryExternalReferenceCode));
+
+		importProcessResource.deleteImportProcess(importProcess1.getId());
+
+		importProcessResource.deleteImportProcess(importProcess2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -605,6 +693,401 @@ public abstract class BaseImportProcessResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryPortletImportProcessesPage()
+		throws Exception {
+
+		String assetLibraryExternalReferenceCode =
+			testGetAssetLibraryPortletImportProcessesPage_getAssetLibraryExternalReferenceCode();
+		String irrelevantAssetLibraryExternalReferenceCode =
+			testGetAssetLibraryPortletImportProcessesPage_getIrrelevantAssetLibraryExternalReferenceCode();
+		String portletId =
+			testGetAssetLibraryPortletImportProcessesPage_getPortletId();
+		String irrelevantPortletId =
+			testGetAssetLibraryPortletImportProcessesPage_getIrrelevantPortletId();
+
+		Page<ImportProcess> page =
+			importProcessResource.getAssetLibraryPortletImportProcessesPage(
+				assetLibraryExternalReferenceCode, portletId, null, null, null,
+				Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		if ((irrelevantAssetLibraryExternalReferenceCode != null) &&
+			(irrelevantPortletId != null)) {
+
+			ImportProcess irrelevantImportProcess =
+				testGetAssetLibraryPortletImportProcessesPage_addImportProcess(
+					irrelevantAssetLibraryExternalReferenceCode,
+					irrelevantPortletId, randomIrrelevantImportProcess());
+
+			page =
+				importProcessResource.getAssetLibraryPortletImportProcessesPage(
+					irrelevantAssetLibraryExternalReferenceCode,
+					irrelevantPortletId, null, null, null,
+					Pagination.of(1, (int)totalCount + 1), null);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantImportProcess, (List<ImportProcess>)page.getItems());
+			assertValid(
+				page,
+				testGetAssetLibraryPortletImportProcessesPage_getExpectedActions(
+					irrelevantAssetLibraryExternalReferenceCode,
+					irrelevantPortletId));
+		}
+
+		ImportProcess importProcess1 =
+			testGetAssetLibraryPortletImportProcessesPage_addImportProcess(
+				assetLibraryExternalReferenceCode, portletId,
+				randomImportProcess());
+
+		ImportProcess importProcess2 =
+			testGetAssetLibraryPortletImportProcessesPage_addImportProcess(
+				assetLibraryExternalReferenceCode, portletId,
+				randomImportProcess());
+
+		page = importProcessResource.getAssetLibraryPortletImportProcessesPage(
+			assetLibraryExternalReferenceCode, portletId, null, null, null,
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(importProcess1, (List<ImportProcess>)page.getItems());
+		assertContains(importProcess2, (List<ImportProcess>)page.getItems());
+		assertValid(
+			page,
+			testGetAssetLibraryPortletImportProcessesPage_getExpectedActions(
+				assetLibraryExternalReferenceCode, portletId));
+
+		importProcessResource.deleteImportProcess(importProcess1.getId());
+
+		importProcessResource.deleteImportProcess(importProcess2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAssetLibraryPortletImportProcessesPage_getExpectedActions(
+				String assetLibraryExternalReferenceCode, String portletId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetAssetLibraryPortletImportProcessesPageWithPagination()
+		throws Exception {
+
+		String assetLibraryExternalReferenceCode =
+			testGetAssetLibraryPortletImportProcessesPage_getAssetLibraryExternalReferenceCode();
+		String portletId =
+			testGetAssetLibraryPortletImportProcessesPage_getPortletId();
+
+		Page<ImportProcess> importProcessesPage =
+			importProcessResource.getAssetLibraryPortletImportProcessesPage(
+				assetLibraryExternalReferenceCode, portletId, null, null, null,
+				null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			importProcessesPage.getTotalCount());
+
+		ImportProcess importProcess1 =
+			testGetAssetLibraryPortletImportProcessesPage_addImportProcess(
+				assetLibraryExternalReferenceCode, portletId,
+				randomImportProcess());
+
+		ImportProcess importProcess2 =
+			testGetAssetLibraryPortletImportProcessesPage_addImportProcess(
+				assetLibraryExternalReferenceCode, portletId,
+				randomImportProcess());
+
+		ImportProcess importProcess3 =
+			testGetAssetLibraryPortletImportProcessesPage_addImportProcess(
+				assetLibraryExternalReferenceCode, portletId,
+				randomImportProcess());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ImportProcess> page1 =
+				importProcessResource.getAssetLibraryPortletImportProcessesPage(
+					assetLibraryExternalReferenceCode, portletId, null, null,
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				importProcess1, (List<ImportProcess>)page1.getItems());
+
+			Page<ImportProcess> page2 =
+				importProcessResource.getAssetLibraryPortletImportProcessesPage(
+					assetLibraryExternalReferenceCode, portletId, null, null,
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(
+				importProcess2, (List<ImportProcess>)page2.getItems());
+
+			Page<ImportProcess> page3 =
+				importProcessResource.getAssetLibraryPortletImportProcessesPage(
+					assetLibraryExternalReferenceCode, portletId, null, null,
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(
+				importProcess3, (List<ImportProcess>)page3.getItems());
+		}
+		else {
+			Page<ImportProcess> page1 =
+				importProcessResource.getAssetLibraryPortletImportProcessesPage(
+					assetLibraryExternalReferenceCode, portletId, null, null,
+					null, Pagination.of(1, totalCount + 2), null);
+
+			List<ImportProcess> importProcesses1 =
+				(List<ImportProcess>)page1.getItems();
+
+			Assert.assertEquals(
+				importProcesses1.toString(), totalCount + 2,
+				importProcesses1.size());
+
+			Page<ImportProcess> page2 =
+				importProcessResource.getAssetLibraryPortletImportProcessesPage(
+					assetLibraryExternalReferenceCode, portletId, null, null,
+					null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ImportProcess> importProcesses2 =
+				(List<ImportProcess>)page2.getItems();
+
+			Assert.assertEquals(
+				importProcesses2.toString(), 1, importProcesses2.size());
+
+			Page<ImportProcess> page3 =
+				importProcessResource.getAssetLibraryPortletImportProcessesPage(
+					assetLibraryExternalReferenceCode, portletId, null, null,
+					null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				importProcess1, (List<ImportProcess>)page3.getItems());
+			assertContains(
+				importProcess2, (List<ImportProcess>)page3.getItems());
+			assertContains(
+				importProcess3, (List<ImportProcess>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAssetLibraryPortletImportProcessesPageWithSortDateTime()
+		throws Exception {
+
+		testGetAssetLibraryPortletImportProcessesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, importProcess1, importProcess2) -> {
+				BeanTestUtil.setProperty(
+					importProcess1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryPortletImportProcessesPageWithSortDouble()
+		throws Exception {
+
+		testGetAssetLibraryPortletImportProcessesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, importProcess1, importProcess2) -> {
+				BeanTestUtil.setProperty(
+					importProcess1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					importProcess2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryPortletImportProcessesPageWithSortInteger()
+		throws Exception {
+
+		testGetAssetLibraryPortletImportProcessesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, importProcess1, importProcess2) -> {
+				BeanTestUtil.setProperty(
+					importProcess1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					importProcess2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryPortletImportProcessesPageWithSortString()
+		throws Exception {
+
+		testGetAssetLibraryPortletImportProcessesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, importProcess1, importProcess2) -> {
+				Class<?> clazz = importProcess1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						importProcess1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						importProcess2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						importProcess1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						importProcess2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						importProcess1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						importProcess2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetAssetLibraryPortletImportProcessesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, ImportProcess, ImportProcess, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String assetLibraryExternalReferenceCode =
+			testGetAssetLibraryPortletImportProcessesPage_getAssetLibraryExternalReferenceCode();
+		String portletId =
+			testGetAssetLibraryPortletImportProcessesPage_getPortletId();
+
+		ImportProcess importProcess1 = randomImportProcess();
+		ImportProcess importProcess2 = randomImportProcess();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, importProcess1, importProcess2);
+		}
+
+		importProcess1 =
+			testGetAssetLibraryPortletImportProcessesPage_addImportProcess(
+				assetLibraryExternalReferenceCode, portletId, importProcess1);
+
+		importProcess2 =
+			testGetAssetLibraryPortletImportProcessesPage_addImportProcess(
+				assetLibraryExternalReferenceCode, portletId, importProcess2);
+
+		Page<ImportProcess> page =
+			importProcessResource.getAssetLibraryPortletImportProcessesPage(
+				assetLibraryExternalReferenceCode, portletId, null, null, null,
+				null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<ImportProcess> ascPage =
+				importProcessResource.getAssetLibraryPortletImportProcessesPage(
+					assetLibraryExternalReferenceCode, portletId, null, null,
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(
+				importProcess1, (List<ImportProcess>)ascPage.getItems());
+			assertContains(
+				importProcess2, (List<ImportProcess>)ascPage.getItems());
+
+			Page<ImportProcess> descPage =
+				importProcessResource.getAssetLibraryPortletImportProcessesPage(
+					assetLibraryExternalReferenceCode, portletId, null, null,
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(
+				importProcess2, (List<ImportProcess>)descPage.getItems());
+			assertContains(
+				importProcess1, (List<ImportProcess>)descPage.getItems());
+		}
+	}
+
+	protected ImportProcess
+			testGetAssetLibraryPortletImportProcessesPage_addImportProcess(
+				String assetLibraryExternalReferenceCode, String portletId,
+				ImportProcess importProcess)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAssetLibraryPortletImportProcessesPage_getAssetLibraryExternalReferenceCode()
+		throws Exception {
+
+		return testDepotEntryGroup.getExternalReferenceCode();
+	}
+
+	protected String
+			testGetAssetLibraryPortletImportProcessesPage_getIrrelevantAssetLibraryExternalReferenceCode()
+		throws Exception {
+
+		return irrelevantDepotEntryGroup.getExternalReferenceCode();
+	}
+
+	protected String
+			testGetAssetLibraryPortletImportProcessesPage_getPortletId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAssetLibraryPortletImportProcessesPage_getIrrelevantPortletId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetImportProcess() throws Exception {
 		ImportProcess postImportProcess =
 			testGetImportProcess_addImportProcess();
@@ -841,6 +1324,10 @@ public abstract class BaseImportProcessResourceTestCase {
 		assertContains(importProcess1, (List<ImportProcess>)page.getItems());
 		assertContains(importProcess2, (List<ImportProcess>)page.getItems());
 		assertValid(page, testGetImportProcessesPage_getExpectedActions());
+
+		importProcessResource.deleteImportProcess(importProcess1.getId());
+
+		importProcessResource.deleteImportProcess(importProcess2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -1151,6 +1638,10 @@ public abstract class BaseImportProcessResourceTestCase {
 			page,
 			testGetSiteImportProcessesPage_getExpectedActions(
 				siteExternalReferenceCode));
+
+		importProcessResource.deleteImportProcess(importProcess1.getId());
+
+		importProcessResource.deleteImportProcess(importProcess2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -1457,6 +1948,382 @@ public abstract class BaseImportProcessResourceTestCase {
 	}
 
 	@Test
+	public void testGetSitePortletImportProcessesPage() throws Exception {
+		String siteExternalReferenceCode =
+			testGetSitePortletImportProcessesPage_getSiteExternalReferenceCode();
+		String irrelevantSiteExternalReferenceCode =
+			testGetSitePortletImportProcessesPage_getIrrelevantSiteExternalReferenceCode();
+		String portletId = testGetSitePortletImportProcessesPage_getPortletId();
+		String irrelevantPortletId =
+			testGetSitePortletImportProcessesPage_getIrrelevantPortletId();
+
+		Page<ImportProcess> page =
+			importProcessResource.getSitePortletImportProcessesPage(
+				siteExternalReferenceCode, portletId, null, null, null,
+				Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		if ((irrelevantSiteExternalReferenceCode != null) &&
+			(irrelevantPortletId != null)) {
+
+			ImportProcess irrelevantImportProcess =
+				testGetSitePortletImportProcessesPage_addImportProcess(
+					irrelevantSiteExternalReferenceCode, irrelevantPortletId,
+					randomIrrelevantImportProcess());
+
+			page = importProcessResource.getSitePortletImportProcessesPage(
+				irrelevantSiteExternalReferenceCode, irrelevantPortletId, null,
+				null, null, Pagination.of(1, (int)totalCount + 1), null);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantImportProcess, (List<ImportProcess>)page.getItems());
+			assertValid(
+				page,
+				testGetSitePortletImportProcessesPage_getExpectedActions(
+					irrelevantSiteExternalReferenceCode, irrelevantPortletId));
+		}
+
+		ImportProcess importProcess1 =
+			testGetSitePortletImportProcessesPage_addImportProcess(
+				siteExternalReferenceCode, portletId, randomImportProcess());
+
+		ImportProcess importProcess2 =
+			testGetSitePortletImportProcessesPage_addImportProcess(
+				siteExternalReferenceCode, portletId, randomImportProcess());
+
+		page = importProcessResource.getSitePortletImportProcessesPage(
+			siteExternalReferenceCode, portletId, null, null, null,
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(importProcess1, (List<ImportProcess>)page.getItems());
+		assertContains(importProcess2, (List<ImportProcess>)page.getItems());
+		assertValid(
+			page,
+			testGetSitePortletImportProcessesPage_getExpectedActions(
+				siteExternalReferenceCode, portletId));
+
+		importProcessResource.deleteImportProcess(importProcess1.getId());
+
+		importProcessResource.deleteImportProcess(importProcess2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetSitePortletImportProcessesPage_getExpectedActions(
+				String siteExternalReferenceCode, String portletId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetSitePortletImportProcessesPageWithPagination()
+		throws Exception {
+
+		String siteExternalReferenceCode =
+			testGetSitePortletImportProcessesPage_getSiteExternalReferenceCode();
+		String portletId = testGetSitePortletImportProcessesPage_getPortletId();
+
+		Page<ImportProcess> importProcessesPage =
+			importProcessResource.getSitePortletImportProcessesPage(
+				siteExternalReferenceCode, portletId, null, null, null, null,
+				null);
+
+		int totalCount = GetterUtil.getInteger(
+			importProcessesPage.getTotalCount());
+
+		ImportProcess importProcess1 =
+			testGetSitePortletImportProcessesPage_addImportProcess(
+				siteExternalReferenceCode, portletId, randomImportProcess());
+
+		ImportProcess importProcess2 =
+			testGetSitePortletImportProcessesPage_addImportProcess(
+				siteExternalReferenceCode, portletId, randomImportProcess());
+
+		ImportProcess importProcess3 =
+			testGetSitePortletImportProcessesPage_addImportProcess(
+				siteExternalReferenceCode, portletId, randomImportProcess());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ImportProcess> page1 =
+				importProcessResource.getSitePortletImportProcessesPage(
+					siteExternalReferenceCode, portletId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				importProcess1, (List<ImportProcess>)page1.getItems());
+
+			Page<ImportProcess> page2 =
+				importProcessResource.getSitePortletImportProcessesPage(
+					siteExternalReferenceCode, portletId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(
+				importProcess2, (List<ImportProcess>)page2.getItems());
+
+			Page<ImportProcess> page3 =
+				importProcessResource.getSitePortletImportProcessesPage(
+					siteExternalReferenceCode, portletId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(
+				importProcess3, (List<ImportProcess>)page3.getItems());
+		}
+		else {
+			Page<ImportProcess> page1 =
+				importProcessResource.getSitePortletImportProcessesPage(
+					siteExternalReferenceCode, portletId, null, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<ImportProcess> importProcesses1 =
+				(List<ImportProcess>)page1.getItems();
+
+			Assert.assertEquals(
+				importProcesses1.toString(), totalCount + 2,
+				importProcesses1.size());
+
+			Page<ImportProcess> page2 =
+				importProcessResource.getSitePortletImportProcessesPage(
+					siteExternalReferenceCode, portletId, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ImportProcess> importProcesses2 =
+				(List<ImportProcess>)page2.getItems();
+
+			Assert.assertEquals(
+				importProcesses2.toString(), 1, importProcesses2.size());
+
+			Page<ImportProcess> page3 =
+				importProcessResource.getSitePortletImportProcessesPage(
+					siteExternalReferenceCode, portletId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				importProcess1, (List<ImportProcess>)page3.getItems());
+			assertContains(
+				importProcess2, (List<ImportProcess>)page3.getItems());
+			assertContains(
+				importProcess3, (List<ImportProcess>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSitePortletImportProcessesPageWithSortDateTime()
+		throws Exception {
+
+		testGetSitePortletImportProcessesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, importProcess1, importProcess2) -> {
+				BeanTestUtil.setProperty(
+					importProcess1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetSitePortletImportProcessesPageWithSortDouble()
+		throws Exception {
+
+		testGetSitePortletImportProcessesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, importProcess1, importProcess2) -> {
+				BeanTestUtil.setProperty(
+					importProcess1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					importProcess2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetSitePortletImportProcessesPageWithSortInteger()
+		throws Exception {
+
+		testGetSitePortletImportProcessesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, importProcess1, importProcess2) -> {
+				BeanTestUtil.setProperty(
+					importProcess1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					importProcess2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetSitePortletImportProcessesPageWithSortString()
+		throws Exception {
+
+		testGetSitePortletImportProcessesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, importProcess1, importProcess2) -> {
+				Class<?> clazz = importProcess1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						importProcess1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						importProcess2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						importProcess1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						importProcess2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						importProcess1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						importProcess2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetSitePortletImportProcessesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, ImportProcess, ImportProcess, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String siteExternalReferenceCode =
+			testGetSitePortletImportProcessesPage_getSiteExternalReferenceCode();
+		String portletId = testGetSitePortletImportProcessesPage_getPortletId();
+
+		ImportProcess importProcess1 = randomImportProcess();
+		ImportProcess importProcess2 = randomImportProcess();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, importProcess1, importProcess2);
+		}
+
+		importProcess1 = testGetSitePortletImportProcessesPage_addImportProcess(
+			siteExternalReferenceCode, portletId, importProcess1);
+
+		importProcess2 = testGetSitePortletImportProcessesPage_addImportProcess(
+			siteExternalReferenceCode, portletId, importProcess2);
+
+		Page<ImportProcess> page =
+			importProcessResource.getSitePortletImportProcessesPage(
+				siteExternalReferenceCode, portletId, null, null, null, null,
+				null);
+
+		for (EntityField entityField : entityFields) {
+			Page<ImportProcess> ascPage =
+				importProcessResource.getSitePortletImportProcessesPage(
+					siteExternalReferenceCode, portletId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(
+				importProcess1, (List<ImportProcess>)ascPage.getItems());
+			assertContains(
+				importProcess2, (List<ImportProcess>)ascPage.getItems());
+
+			Page<ImportProcess> descPage =
+				importProcessResource.getSitePortletImportProcessesPage(
+					siteExternalReferenceCode, portletId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(
+				importProcess2, (List<ImportProcess>)descPage.getItems());
+			assertContains(
+				importProcess1, (List<ImportProcess>)descPage.getItems());
+		}
+	}
+
+	protected ImportProcess
+			testGetSitePortletImportProcessesPage_addImportProcess(
+				String siteExternalReferenceCode, String portletId,
+				ImportProcess importProcess)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSitePortletImportProcessesPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		return testGroup.getExternalReferenceCode();
+	}
+
+	protected String
+			testGetSitePortletImportProcessesPage_getIrrelevantSiteExternalReferenceCode()
+		throws Exception {
+
+		return irrelevantGroup.getExternalReferenceCode();
+	}
+
+	protected String testGetSitePortletImportProcessesPage_getPortletId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSitePortletImportProcessesPage_getIrrelevantPortletId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testPostAssetLibraryImportProcess() throws Exception {
 		ImportProcess randomImportProcess = randomImportProcess();
 
@@ -1470,6 +2337,27 @@ public abstract class BaseImportProcessResourceTestCase {
 
 	protected ImportProcess testPostAssetLibraryImportProcess_addImportProcess(
 			ImportProcess importProcess)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAssetLibraryPortletImportProcess() throws Exception {
+		ImportProcess randomImportProcess = randomImportProcess();
+
+		ImportProcess postImportProcess =
+			testPostAssetLibraryPortletImportProcess_addImportProcess(
+				randomImportProcess);
+
+		assertEquals(randomImportProcess, postImportProcess);
+		assertValid(postImportProcess);
+	}
+
+	protected ImportProcess
+			testPostAssetLibraryPortletImportProcess_addImportProcess(
+				ImportProcess importProcess)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1515,8 +2403,104 @@ public abstract class BaseImportProcessResourceTestCase {
 	}
 
 	@Test
+	public void testPostSitePortletImportProcess() throws Exception {
+		ImportProcess randomImportProcess = randomImportProcess();
+
+		ImportProcess postImportProcess =
+			testPostSitePortletImportProcess_addImportProcess(
+				randomImportProcess);
+
+		assertEquals(randomImportProcess, postImportProcess);
+		assertValid(postImportProcess);
+	}
+
+	protected ImportProcess testPostSitePortletImportProcess_addImportProcess(
+			ImportProcess importProcess)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		Assert.assertTrue(true);
+		ImportProcess importProcess1 =
+			testBatchEngineDeleteImportTask_addImportProcess();
+
+		testBatchEngineDeleteImportTask_deleteImportProcess(
+			200, null, importProcess1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			importProcessResource.getImportProcessHttpResponse(
+				importProcess1.getId()));
+	}
+
+	protected ImportProcess testBatchEngineDeleteImportTask_addImportProcess()
+		throws Exception {
+
+		return testDeleteImportProcess_addImportProcess();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteImportProcess(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).parameters(
+			parameters
+		).build();
+
+		HttpResponse httpResponse =
+			importTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.exportimport.rest.dto.v1_0.ImportProcess", null,
+				null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
+	}
+
+	@Test
+	public void testGetImportProcessProgress() throws Exception {
+		ImportProcess postImportProcess =
+			testGetImportProcess_addImportProcess();
+
+		ProcessProgress postProcessProgress =
+			testGetImportProcessProgress_addProcessProgress(
+				postImportProcess.getId(), randomProcessProgress());
+
+		ProcessProgress getProcessProgress =
+			importProcessResource.getImportProcessProgress(
+				postImportProcess.getId());
+
+		assertEquals(postProcessProgress, getProcessProgress);
+		assertValid(getProcessProgress);
+	}
+
+	protected ProcessProgress testGetImportProcessProgress_addProcessProgress(
+			long importProcessId, ProcessProgress processProgress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(
@@ -1566,6 +2550,14 @@ public abstract class BaseImportProcessResourceTestCase {
 		}
 	}
 
+	protected void assertEquals(
+		ProcessProgress processProgress1, ProcessProgress processProgress2) {
+
+		Assert.assertTrue(
+			processProgress1 + " does not equal " + processProgress2,
+			equals(processProgress1, processProgress2));
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<ImportProcess> importProcesses1,
 		List<ImportProcess> importProcesses2) {
@@ -1609,6 +2601,22 @@ public abstract class BaseImportProcessResourceTestCase {
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (importProcess.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCompleted", additionalAssertFieldName)) {
+				if (importProcess.getDateCompleted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
+				if (importProcess.getErrorMessage() == null) {
 					valid = false;
 				}
 
@@ -1682,7 +2690,33 @@ public abstract class BaseImportProcessResourceTestCase {
 		}
 	}
 
+	protected void assertValid(ProcessProgress processProgress) {
+		boolean valid = true;
+
+		for (String additionalAssertFieldName :
+				getAdditionalProcessProgressAssertFieldNames()) {
+
+			if (Objects.equals("percentage", additionalAssertFieldName)) {
+				if (processProgress.getPercentage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getAdditionalProcessProgressAssertFieldNames() {
 		return new String[0];
 	}
 
@@ -1763,6 +2797,17 @@ public abstract class BaseImportProcessResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateCompleted", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						importProcess1.getDateCompleted(),
+						importProcess2.getDateCompleted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						importProcess1.getDateCreated(),
@@ -1778,6 +2823,17 @@ public abstract class BaseImportProcessResourceTestCase {
 				if (!Objects.deepEquals(
 						importProcess1.getDateModified(),
 						importProcess2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						importProcess1.getErrorMessage(),
+						importProcess2.getErrorMessage())) {
 
 					return false;
 				}
@@ -1848,6 +2904,35 @@ public abstract class BaseImportProcessResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected boolean equals(
+		ProcessProgress processProgress1, ProcessProgress processProgress2) {
+
+		if (processProgress1 == processProgress2) {
+			return true;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalProcessProgressAssertFieldNames()) {
+
+			if (Objects.equals("percentage", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						processProgress1.getPercentage(),
+						processProgress2.getPercentage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
@@ -1928,6 +3013,35 @@ public abstract class BaseImportProcessResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("dateCompleted")) {
+			if (operator.equals("between")) {
+				Date date = importProcess.getDateCompleted();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(importProcess.getDateCompleted()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				Date date = importProcess.getDateCreated();
@@ -1981,6 +3095,52 @@ public abstract class BaseImportProcessResourceTestCase {
 				sb.append(" ");
 
 				sb.append(_format.format(importProcess.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("errorMessage")) {
+			Object object = importProcess.getErrorMessage();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
 			}
 
 			return sb.toString();
@@ -2089,8 +3249,11 @@ public abstract class BaseImportProcessResourceTestCase {
 	protected ImportProcess randomImportProcess() throws Exception {
 		return new ImportProcess() {
 			{
+				dateCompleted = RandomTestUtil.nextDate();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				errorMessage = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
@@ -2107,7 +3270,38 @@ public abstract class BaseImportProcessResourceTestCase {
 		return randomImportProcess();
 	}
 
+	protected ProcessProgress randomProcessProgress() throws Exception {
+		return new ProcessProgress() {
+			{
+				percentage = RandomTestUtil.randomInt();
+			}
+		};
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected ImportProcessResource importProcessResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry irrelevantDepotEntry;
@@ -2343,4 +3537,4 @@ public abstract class BaseImportProcessResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:104236579
+// LIFERAY-REST-BUILDER-HASH:1167690064

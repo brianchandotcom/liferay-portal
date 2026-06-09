@@ -166,11 +166,10 @@
 	"private": true,
 	"repository": "https://github.com/liferay-ac/liferay-portal",
 	"scripts": {
-		"check-types": "tsc --project tsconfig.json --noEmit",
+		"checkFormat": "node format.mjs --check",
 		"coveralls": "cat ./coverage/lcov.info | coveralls",
 		"email": "mjml -l strict \"src/main/templates/email/*.mjml\" -o \"../osb-faro-service/src/main/resources/com/liferay/osb/faro/dependencies\"",
-		"format": "eslint --fix \"src/main/js/**/*.+(js|ts)?(x)\"",
-		"lint": "eslint \"src/main/js/**/*.+(js|ts)?(x)\"",
+		"format": "node format.mjs",
 		"start": "cross-env FARO_ENVIRONMENT_NAME=local webpack-dev-server --config webpack.dev.js",
 		"test": "cross-env LC_ALL=en_US.UTF-8 TZ=Etc/GMT jest --coverage=false --maxWorkers=4",
 		"webpack": "webpack --config webpack.prod.js",

@@ -38,22 +38,6 @@ const config = {
 				'**/test/**/*.{js,jsx,ts,tsx}',
 			],
 		},
-
-		// @liferay/eslint-plugin pins @typescript-eslint/parser@4.30.0, whose
-		// typescript-estree (supports TS <4.5) reads decorators from the legacy
-		// node.decorators property. Against the resolved TypeScript 5.9.3 that
-		// property is always undefined (decorators live on node.modifiers), so
-		// the v4 parser silently drops every decorator and the decorator-only
-		// imports (@autobind etc.) look unused. Point ts/tsx at the v5.62.0
-		// parser this module declares (package.json), which parses decorators
-		// correctly against TS5. No rule or option changes.
-
-		{
-			files: ['*.{ts,tsx}'],
-			parser: require.resolve('@typescript-eslint/parser', {
-				paths: [__dirname],
-			}),
-		},
 	],
 	parserOptions: {
 		ecmaFeatures: {

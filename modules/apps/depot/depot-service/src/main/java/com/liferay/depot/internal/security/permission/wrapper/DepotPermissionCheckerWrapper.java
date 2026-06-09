@@ -251,7 +251,11 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		if (StringUtil.equals(name, Group.class.getName())) {
 			Group group = _groupLocalService.fetchGroup(primKey);
 
-			if ((group != null) && group.isDepot()) {
+			if (group == null) {
+				return null;
+			}
+
+			if (group.isDepot()) {
 				try {
 					if (!_supportedActionIds.contains(actionId)) {
 						return false;
@@ -267,6 +271,22 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 					return _depotEntryModelResourcePermission.contains(
 						this, group.getClassPK(), actionId);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+
+					return false;
+				}
+			}
+			else if (actionId.equals(ActionKeys.VIEW) && group.isSite()) {
+				try {
+					if (_hasCMSAdministratorRole(group.getCompanyId()) ||
+						_isDepotGroupAdminOrOwner(group.getCompanyId())) {
+
+						return true;
+					}
+
+					return false;
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException);
@@ -386,6 +406,29 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			if (_isDepotGroupAdmin(
 					_groupLocalService.fetchGroup(
 						userGroupRole.getGroupId()))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isDepotGroupAdminOrOwner(long companyId)
+		throws PortalException {
+
+		Role assetLibraryAdministratorRole = _roleLocalService.getRole(
+			companyId, DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
+		Role assetLibraryOwnerRole = _roleLocalService.getRole(
+			companyId, DepotRolesConstants.ASSET_LIBRARY_OWNER);
+
+		for (UserGroupRole userGroupRole :
+				_userGroupRoleLocalService.getUserGroupRoles(getUserId())) {
+
+			long roleId = userGroupRole.getRoleId();
+
+			if ((roleId == assetLibraryAdministratorRole.getRoleId()) ||
+				(roleId == assetLibraryOwnerRole.getRoleId())) {
 
 				return true;
 			}

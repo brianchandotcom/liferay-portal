@@ -291,7 +291,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo("LPD-56213")
+	@TestInfo({"LPD-56213", "LPD-94135"})
 	public void testGetSiteSitePageRenderedPage() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
@@ -320,6 +320,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertTrue(pageHTML, pageHTML.contains("<body"));
 		Assert.assertTrue(pageHTML, pageHTML.contains("</body>"));
 		Assert.assertTrue(pageHTML, pageHTML.contains("</html>"));
+
+		_testGetSiteSitePageRenderedPageInRequestedLocale();
 	}
 
 	@Test
@@ -664,6 +666,27 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
+	private void _assertRenderedPage(
+			String expectedTitle, String friendlyURL, Locale locale)
+		throws Exception {
+
+		SitePageResource sitePageResource = SitePageResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			locale
+		).build();
+
+		String pageHTML = sitePageResource.getSiteSitePageRenderedPage(
+			testGroup.getGroupId(), friendlyURL);
+
+		Assert.assertTrue(
+			pageHTML,
+			pageHTML.contains(
+				" lang=\"" + LocaleUtil.toW3cLanguageId(locale) + "\""));
+		Assert.assertTrue(pageHTML, pageHTML.contains(expectedTitle));
+	}
+
 	private String _getRandomFriendlyURL() {
 		String urlTitle = StringUtil.toLowerCase(
 			RandomTestUtil.randomString(
@@ -841,6 +864,28 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).user(
 			UserTestUtil.getAdminUser(testCompany.getCompanyId())
 		).build();
+	}
+
+	private void _testGetSiteSitePageRenderedPageInRequestedLocale()
+		throws Exception {
+
+		String esName = RandomTestUtil.randomString();
+		String usName = RandomTestUtil.randomString();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			testGroup,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, esName
+			).put(
+				LocaleUtil.US, usName
+			).build());
+
+		String friendlyURL = layout.getFriendlyURL();
+
+		friendlyURL = friendlyURL.substring(1);
+
+		_assertRenderedPage(esName, friendlyURL, LocaleUtil.SPAIN);
+		_assertRenderedPage(usName, friendlyURL, LocaleUtil.US);
 	}
 
 	private void _testGetSiteSitePagesPagePageSet() throws Exception {

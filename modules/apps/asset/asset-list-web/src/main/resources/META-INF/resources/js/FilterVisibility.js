@@ -23,7 +23,8 @@ export default function ({namespace}) {
 		const isSingleCMSType =
 			!!selectedOption && selectedOption.dataset.cms === 'true';
 
-		const isMultiSelection = assetSelector.value === 'false';
+		const isMultiSelection =
+			assetSelector.value === 'false' || assetSelector.value === 'true';
 
 		const showCollection = isSingleCMSType || isMultiSelection;
 

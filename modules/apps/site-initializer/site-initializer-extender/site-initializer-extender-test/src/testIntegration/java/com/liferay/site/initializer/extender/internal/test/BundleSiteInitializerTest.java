@@ -368,7 +368,7 @@ public class BundleSiteInitializerTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.site.initializer.extender.internal." +
 					"BundleSiteInitializer",
-				LoggerTestUtil.WARN)) {
+				LoggerTestUtil.INFO)) {
 
 			_test1(
 				_siteInitializerRegistry.getSiteInitializer(
@@ -401,7 +401,7 @@ public class BundleSiteInitializerTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.site.initializer.extender.internal." +
 					"BundleSiteInitializer",
-				LoggerTestUtil.WARN)) {
+				LoggerTestUtil.INFO)) {
 
 			SiteInitializer siteInitializer =
 				_siteInitializerRegistry.getSiteInitializer(
@@ -450,11 +450,7 @@ public class BundleSiteInitializerTest {
 		File tempDir2 = _getTempDir(
 			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.site.initializer.extender.internal." +
-					"BundleSiteInitializer",
-				LoggerTestUtil.WARN)) {
-
+		try {
 			_test1(
 				_siteInitializerFactory.create(
 					new File(tempDir1, "site-initializer"), null));
@@ -476,11 +472,7 @@ public class BundleSiteInitializerTest {
 		File tempDir1 = _getTempDir(
 			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.site.initializer.extender.internal." +
-					"BundleSiteInitializer",
-				LoggerTestUtil.WARN)) {
-
+		try {
 			SiteInitializer siteInitializer = _siteInitializerFactory.create(
 				new File(tempDir1, "site-initializer"), null);
 

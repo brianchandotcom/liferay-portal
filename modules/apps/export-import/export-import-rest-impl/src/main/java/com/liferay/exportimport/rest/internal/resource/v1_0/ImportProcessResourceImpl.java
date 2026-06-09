@@ -66,19 +66,27 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 
 	@Override
 	public Page<ImportProcess> getAssetLibraryImportProcessesPage(
-			Long assetLibraryId, Long creatorId, String search, Integer status,
-			Pagination pagination, Sort[] sorts)
+			String assetLibraryExternalReferenceCode, Long creatorId,
+			String search, Integer status, Pagination pagination, Sort[] sorts)
 		throws Exception {
+
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+			assetLibraryExternalReferenceCode, contextCompany.getCompanyId());
+
+		if ((group == null) || !group.isDepot()) {
+			throw new NotFoundException();
+		}
 
 		return Page.of(
 			transform(
 				_getBackgroundTasks(
-					creatorId, assetLibraryId, pagination, search, sorts,
+					creatorId, group.getGroupId(), pagination, search, sorts,
 					status),
 				this::_toImportProcess),
 			pagination,
 			_backgroundTaskLocalService.dynamicQueryCount(
-				_getDynamicQuery(creatorId, assetLibraryId, search, status)));
+				_getDynamicQuery(
+					creatorId, group.getGroupId(), search, status)));
 	}
 
 	@Override
@@ -122,18 +130,27 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 
 	@Override
 	public Page<ImportProcess> getSiteImportProcessesPage(
-			Long siteId, Long creatorId, String search, Integer status,
-			Pagination pagination, Sort[] sorts)
+			String siteExternalReferenceCode, Long creatorId, String search,
+			Integer status, Pagination pagination, Sort[] sorts)
 		throws Exception {
+
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		if ((group == null) || !group.isSite()) {
+			throw new NotFoundException();
+		}
 
 		return Page.of(
 			transform(
 				_getBackgroundTasks(
-					creatorId, siteId, pagination, search, sorts, status),
+					creatorId, group.getGroupId(), pagination, search, sorts,
+					status),
 				this::_toImportProcess),
 			pagination,
 			_backgroundTaskLocalService.dynamicQueryCount(
-				_getDynamicQuery(creatorId, siteId, search, status)));
+				_getDynamicQuery(
+					creatorId, group.getGroupId(), search, status)));
 	}
 
 	@Override

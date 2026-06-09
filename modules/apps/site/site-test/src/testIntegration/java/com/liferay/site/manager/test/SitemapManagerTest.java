@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -136,6 +137,13 @@ public class SitemapManagerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_assetCategoryClassNameId = PortalUtil.getClassNameId(
+			AssetCategory.class);
+		_journalArticleClassNameId = PortalUtil.getClassNameId(
+			JournalArticle.class);
+		_layoutClassNameId = PortalUtil.getClassNameId(Layout.class);
+		_objectEntryClassNameId = PortalUtil.getClassNameId(ObjectEntry.class);
+
 		_companyConfigurationTemporarySwapper =
 			new CompanyConfigurationTemporarySwapper(
 				TestPropsValues.getCompanyId(),
@@ -358,7 +366,7 @@ public class SitemapManagerTest {
 			_addObjectDefinitionDisplayPage(_includedObjectDefinition);
 
 			String xml = _sitemapManager.getSitemap(
-				_CLASS_NAME_OBJECT_ENTRY, null, _group.getGroupId(), false,
+				_objectEntryClassNameId, null, _group.getGroupId(), false,
 				_themeDisplay);
 
 			Document document = _saxReader.read(xml);
@@ -389,6 +397,94 @@ public class SitemapManagerTest {
 	}
 
 	@Test
+	public void testSitemapByAssetTypePaginationAttributesAreAbsent()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"xmlSitemapIndexEnabled", true
+						).put(
+							"xmlSitemapIndexMode",
+							SitemapConstants.INDEX_MODE_ASSET_TYPE
+						).build())) {
+
+			_addJournalArticleAssetDisplayPageEntry(_addJournalArticle());
+
+			_sitemapManager.getSitemap(
+				_journalArticleClassNameId, null, _group.getGroupId(), false,
+				_themeDisplay);
+
+			String xml = StringUtil.read(
+				_sitemapStorageHelper.getSitemapInputStream(
+					TestPropsValues.getCompanyId(), _group.getGroupId(),
+					_ASSET_TYPE_KEY_WEB_CONTENT, 1));
+
+			Assert.assertFalse(xml.contains("_assetTypeKey"));
+			Assert.assertFalse(xml.contains("_companyId"));
+			Assert.assertFalse(xml.contains("_groupId"));
+			Assert.assertFalse(xml.contains("_page"));
+			Assert.assertFalse(xml.contains("entries="));
+		}
+	}
+
+	@Test
+	public void testSitemapByAssetTypePaginationStoresMultiplePages()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"xmlSitemapIndexEnabled", true
+						).put(
+							"xmlSitemapIndexMode",
+							SitemapConstants.INDEX_MODE_ASSET_TYPE
+						).build())) {
+
+			ReflectionTestUtil.setFieldValue(
+				_sitemapManager, "_maximumEntries", 3);
+
+			try {
+				for (int i = 0; i < 7; i++) {
+					_addJournalArticleAssetDisplayPageEntry(
+						_addJournalArticle());
+				}
+
+				_sitemapManager.getSitemap(
+					_journalArticleClassNameId, null, _group.getGroupId(), 1,
+					false, _themeDisplay);
+
+				long companyId = TestPropsValues.getCompanyId();
+				long groupId = _group.getGroupId();
+
+				Assert.assertTrue(
+					_sitemapStorageHelper.hasSitemapFile(
+						companyId, groupId, _ASSET_TYPE_KEY_WEB_CONTENT, 1));
+				Assert.assertTrue(
+					_sitemapStorageHelper.hasSitemapFile(
+						companyId, groupId, _ASSET_TYPE_KEY_WEB_CONTENT, 2));
+				Assert.assertTrue(
+					_sitemapStorageHelper.hasSitemapFile(
+						companyId, groupId, _ASSET_TYPE_KEY_WEB_CONTENT, 3));
+				Assert.assertFalse(
+					_sitemapStorageHelper.hasSitemapFile(
+						companyId, groupId, _ASSET_TYPE_KEY_WEB_CONTENT, 4));
+			}
+			finally {
+				ReflectionTestUtil.setFieldValue(
+					_sitemapManager, "_maximumEntries",
+					SitemapManager.MAXIMUM_ENTRIES);
+			}
+		}
+	}
+
+	@Test
 	public void testSitemapByAssetTypeRespectsIncludeFlag() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -409,7 +505,7 @@ public class SitemapManagerTest {
 			_addJournalArticleAssetDisplayPageEntry(journalArticle);
 
 			String xml = _sitemapManager.getSitemap(
-				_CLASS_NAME_JOURNAL_ARTICLE, null, _group.getGroupId(), false,
+				_journalArticleClassNameId, null, _group.getGroupId(), false,
 				_themeDisplay);
 
 			Assert.assertNull(xml);
@@ -435,7 +531,7 @@ public class SitemapManagerTest {
 			_addJournalArticleAssetDisplayPageEntry(journalArticle);
 
 			String xml = _sitemapManager.getSitemap(
-				_CLASS_NAME_JOURNAL_ARTICLE, null, _group.getGroupId(), false,
+				_journalArticleClassNameId, null, _group.getGroupId(), false,
 				_themeDisplay);
 
 			Document document = _saxReader.read(xml);
@@ -660,9 +756,8 @@ public class SitemapManagerTest {
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-					_group.getGroupId(),
-					_portal.getClassNameId(JournalArticle.class.getName()),
-					null, true, WorkflowConstants.STATUS_APPROVED);
+					_group.getGroupId(), _journalArticleClassNameId, null, true,
+					WorkflowConstants.STATUS_APPROVED);
 
 			Layout layout = _layoutLocalService.getLayout(
 				layoutPageTemplateEntry.getPlid());
@@ -1185,13 +1280,11 @@ public class SitemapManagerTest {
 
 			List<String> urls = new ArrayList<>();
 
-			for (Map.Entry<String, String> entry :
+			for (Map.Entry<Long, String> entry :
 					_sitemapManager.getAssetTypeKeys(
 					).entrySet()) {
 
-				if (StringUtil.equals(
-						entry.getKey(), _CLASS_NAME_OBJECT_ENTRY)) {
-
+				if (entry.getKey() == _objectEntryClassNameId) {
 					continue;
 				}
 
@@ -1235,7 +1328,7 @@ public class SitemapManagerTest {
 
 			Element webContentLocElement = _getLocElement(
 				rootElement.elements(),
-				_buildAssetTypeSitemapURL(_CLASS_NAME_JOURNAL_ARTICLE));
+				_buildAssetTypeSitemapURL(_journalArticleClassNameId));
 
 			Assert.assertNotNull(webContentLocElement);
 
@@ -1251,12 +1344,100 @@ public class SitemapManagerTest {
 	}
 
 	@Test
+	public void testSitemapIndexByAssetTypePageParamWithMultiplePages()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"xmlSitemapIndexEnabled", true
+						).put(
+							"xmlSitemapIndexMode",
+							SitemapConstants.INDEX_MODE_ASSET_TYPE
+						).build())) {
+
+			ReflectionTestUtil.setFieldValue(
+				_sitemapManager, "_maximumEntries", 3);
+
+			try {
+				for (int i = 0; i < 7; i++) {
+					_addJournalArticleAssetDisplayPageEntry(
+						_addJournalArticle());
+				}
+
+				Document document = _saxReader.read(
+					_sitemapManager.getSitemap(
+						null, _group.getGroupId(), false, _themeDisplay));
+
+				Element rootElement = document.getRootElement();
+
+				List<String> locs = TransformUtil.transform(
+					rootElement.elements("sitemap"),
+					sitemapElement -> {
+						String loc = sitemapElement.elementText("loc");
+
+						return loc.contains(_ASSET_TYPE_KEY_WEB_CONTENT) ? loc :
+							null;
+					});
+
+				Assert.assertEquals(locs.toString(), 3, locs.size());
+
+				for (int i = 0; i < locs.size(); i++) {
+					String loc = locs.get(i);
+
+					Assert.assertTrue(loc.contains("&page=" + (i + 1)));
+				}
+			}
+			finally {
+				ReflectionTestUtil.setFieldValue(
+					_sitemapManager, "_maximumEntries",
+					SitemapManager.MAXIMUM_ENTRIES);
+			}
+		}
+	}
+
+	@Test
+	public void testSitemapIndexByAssetTypePageParamWithSinglePage()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"xmlSitemapIndexEnabled", true
+						).put(
+							"xmlSitemapIndexMode",
+							SitemapConstants.INDEX_MODE_ASSET_TYPE
+						).build())) {
+
+			_addJournalArticleAssetDisplayPageEntry(_addJournalArticle());
+
+			Document document = _saxReader.read(
+				_sitemapManager.getSitemap(
+					null, _group.getGroupId(), false, _themeDisplay));
+
+			Element rootElement = document.getRootElement();
+
+			for (Element sitemapElement : rootElement.elements("sitemap")) {
+				String loc = sitemapElement.elementText("loc");
+
+				Assert.assertFalse(loc.contains("&page="));
+			}
+		}
+	}
+
+	@Test
 	public void testSitemapIndexByAssetTypeRespectsPerTypeFlagsCompany()
 		throws Exception {
 
 		String categoriesURL = _buildAssetTypeSitemapURL(
-			_CLASS_NAME_ASSET_CATEGORY);
-		String pagesURL = _buildAssetTypeSitemapURL(_CLASS_NAME_LAYOUT);
+			_assetCategoryClassNameId);
+		String pagesURL = _buildAssetTypeSitemapURL(_layoutClassNameId);
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -1278,7 +1459,7 @@ public class SitemapManagerTest {
 		}
 
 		String webContentURL = _buildAssetTypeSitemapURL(
-			_CLASS_NAME_JOURNAL_ARTICLE);
+			_journalArticleClassNameId);
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -1341,6 +1522,29 @@ public class SitemapManagerTest {
 	}
 
 	@Test
+	public void testSitemapIndexByAssetTypeStoresInDLStore() throws Exception {
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"xmlSitemapIndexEnabled", true
+						).put(
+							"xmlSitemapIndexMode",
+							SitemapConstants.INDEX_MODE_ASSET_TYPE
+						).build())) {
+
+			_sitemapManager.getSitemap(
+				null, _group.getGroupId(), false, _themeDisplay);
+
+			Assert.assertTrue(
+				_sitemapStorageHelper.hasSitemapFile(
+					TestPropsValues.getCompanyId(), _group.getGroupId()));
+		}
+	}
+
+	@Test
 	public void testSitemapURLsWithLayoutFriendlyURLPublicServletMappingDisabled()
 		throws Exception {
 
@@ -1371,7 +1575,7 @@ public class SitemapManagerTest {
 
 	private void _addAssetCategoryAssetDisplayPageEntry() throws Exception {
 		_addAssetDisplayPageEntry(
-			_portal.getClassNameId(AssetCategory.class.getName()), 0, null,
+			_assetCategoryClassNameId, 0, null,
 			AssetDisplayPageConstants.TYPE_DEFAULT);
 	}
 
@@ -1408,8 +1612,7 @@ public class SitemapManagerTest {
 		throws Exception {
 
 		return _addAssetDisplayPageEntry(
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			journalArticle.getResourcePrimKey(),
+			_journalArticleClassNameId, journalArticle.getResourcePrimKey(),
 			journalArticle.getDDMStructureKey(),
 			AssetDisplayPageConstants.TYPE_SPECIFIC);
 	}
@@ -1481,7 +1684,8 @@ public class SitemapManagerTest {
 		throws Exception {
 
 		String xml = _sitemapManager.getSitemap(
-			assetType, uuid, groupId, false, _themeDisplay);
+			Validator.isNull(assetType) ? 0 : _portal.getClassNameId(assetType),
+			uuid, groupId, false, _themeDisplay);
 
 		Document document = _saxReader.read(xml);
 
@@ -1500,12 +1704,12 @@ public class SitemapManagerTest {
 		}
 	}
 
-	private String _buildAssetTypeSitemapURL(String assetTypeGroup) {
+	private String _buildAssetTypeSitemapURL(long assetTypeClassNameId) {
 		return StringBundler.concat(
 			_themeDisplay.getPortalURL(), _portal.getPathContext(), "/sitemap-",
 			_sitemapManager.getAssetTypeKeys(
 			).get(
-				assetTypeGroup
+				assetTypeClassNameId
 			),
 			".xml?groupId=", _group.getGroupId(), "&privateLayout=false");
 	}
@@ -1555,7 +1759,7 @@ public class SitemapManagerTest {
 			for (AssetCategory assetCategory : assetCategories) {
 				FriendlyURLEntry friendlyURLEntry =
 					_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-						_portal.getClassNameId(AssetCategory.class),
+						_assetCategoryClassNameId,
 						assetCategory.getCategoryId());
 
 				urls.add(
@@ -1862,16 +2066,7 @@ public class SitemapManagerTest {
 			_group.getGroupId(), uuid, urls);
 	}
 
-	private static final String _CLASS_NAME_ASSET_CATEGORY =
-		AssetCategory.class.getName();
-
-	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
-		JournalArticle.class.getName();
-
-	private static final String _CLASS_NAME_LAYOUT = Layout.class.getName();
-
-	private static final String _CLASS_NAME_OBJECT_ENTRY =
-		ObjectEntry.class.getName();
+	private static final String _ASSET_TYPE_KEY_WEB_CONTENT = "web-content";
 
 	private static final String _PID_SITEMAP_COMPANY_CONFIGURATION =
 		"com.liferay.site.internal.configuration.SitemapCompanyConfiguration";
@@ -1879,8 +2074,12 @@ public class SitemapManagerTest {
 	private static final String _PID_SITEMAP_GROUP_CONFIGURATION =
 		"com.liferay.site.internal.configuration.SitemapGroupConfiguration";
 
+	private static long _assetCategoryClassNameId;
 	private static CompanyConfigurationTemporarySwapper
 		_companyConfigurationTemporarySwapper;
+	private static long _journalArticleClassNameId;
+	private static long _layoutClassNameId;
+	private static long _objectEntryClassNameId;
 
 	@Inject
 	private AssetCategoryService _assetCategoryService;

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -349,10 +348,7 @@ public class OpenSearchQueryVisitor implements QueryVisitor<QueryVariant> {
 				nestedQueryConfig.isHighlightRequireFieldMatch(),
 				nestedQueryConfig.getHighlightSnippetSize());
 
-			if ((highlight != null) &&
-				ArrayUtil.isNotEmpty(
-					nestedQueryConfig.getHighlightFieldNames())) {
-
+			if (highlight != null) {
 				InnerHits.Builder innerHitsBuilder = new InnerHits.Builder(
 				).highlight(
 					highlight
@@ -680,7 +676,7 @@ public class OpenSearchQueryVisitor implements QueryVisitor<QueryVariant> {
 			"Invalid multi match query type " + type);
 	}
 
-	private static final HighlightTranslator _highlightTranslator =
+	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
 
 }

@@ -5880,6 +5880,19 @@
 	},
 	{
 		"classNames": [
+			"BasePortletProvider"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-81227",
+		"newImports": [
+			"com.liferay.portal.kernel.portlet.PortletProvider"
+		],
+		"newMethods": [
+			"@Override\n\tpublic Action[] getSupportedActions() {\n\t\treturn PortletProvider.Action.values();\n\t}"
+		]
+	},
+	{
+		"classNames": [
 			"AssetEntryLocalService",
 			"AssetEntryLocalServiceUtil"
 		],

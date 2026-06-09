@@ -134,8 +134,8 @@ public class ExportImportUtil {
 				themeDisplay.getCompanyId(), "LPD-57655")) {
 
 			return _getActionItemJSONObject(
-				httpServletRequest, "/export_portlet.jsp", portletResource,
-				"export", titleKey, themeDisplay);
+				httpServletRequest, "/revamp/export/view_export.jsp",
+				portletResource, "export", titleKey, themeDisplay);
 		}
 
 		return getActionItemJSONObject(
@@ -151,8 +151,8 @@ public class ExportImportUtil {
 				themeDisplay.getCompanyId(), "LPD-57655")) {
 
 			return _getActionItemJSONObject(
-				httpServletRequest, "/import_portlet.jsp", portletResource,
-				"import", titleKey, themeDisplay);
+				httpServletRequest, "/revamp/import/view_import.jsp",
+				portletResource, "import", titleKey, themeDisplay);
 		}
 
 		return getActionItemJSONObject(

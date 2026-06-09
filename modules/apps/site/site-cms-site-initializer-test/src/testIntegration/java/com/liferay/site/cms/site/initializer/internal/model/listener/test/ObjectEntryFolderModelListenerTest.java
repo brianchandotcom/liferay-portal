@@ -106,13 +106,13 @@ public class ObjectEntryFolderModelListenerTest {
 		ObjectEntryFolder rootObjectEntryFolder = _addObjectEntryFolder(
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
-		_assertResourcePermissions(rootJSONObject, rootObjectEntryFolder, null);
+		_assertResourcePermissions(null, rootJSONObject, rootObjectEntryFolder);
 
 		ObjectEntryFolder childObjectEntryFolder = _addObjectEntryFolder(
 			rootObjectEntryFolder.getObjectEntryFolderId());
 
 		_assertResourcePermissions(
-			rootJSONObject, childObjectEntryFolder, null);
+			null, rootJSONObject, childObjectEntryFolder);
 
 		ObjectEntry objectEntry = _fetchObjectEntry(rootObjectEntryFolder);
 
@@ -149,7 +149,7 @@ public class ObjectEntryFolderModelListenerTest {
 			rootObjectEntryFolder.getObjectEntryFolderId());
 
 		_assertResourcePermissions(
-			rootJSONObject, childObjectEntryFolder, actionId);
+			actionId, rootJSONObject, childObjectEntryFolder);
 	}
 
 	@Test
@@ -220,8 +220,8 @@ public class ObjectEntryFolderModelListenerTest {
 	}
 
 	private void _assertResourcePermissions(
-			JSONObject expectedDefaultPermissionsJSONObject,
-			ObjectEntryFolder objectEntryFolder, String actionId)
+			String actionId, JSONObject expectedDefaultPermissionsJSONObject,
+			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
 		JSONObject actualDefaultPermissionsJSONObject =
@@ -344,12 +344,12 @@ public class ObjectEntryFolderModelListenerTest {
 			objectEntryFolder2.getExternalReferenceCode(),
 			objectEntryFolder2.getModelClassName(), _filterFactory);
 
-		_assertResourcePermissions(jsonObject, objectEntryFolder2, null);
+		_assertResourcePermissions(null, jsonObject, objectEntryFolder2);
 
 		ObjectEntryFolder objectEntryFolder3 = _addObjectEntryFolder(
 			objectEntryFolder1.getObjectEntryFolderId());
 
-		_assertResourcePermissions(jsonObject, objectEntryFolder3, null);
+		_assertResourcePermissions(null, jsonObject, objectEntryFolder3);
 
 		ObjectEntry objectEntry = _fetchObjectEntry(objectEntryFolder2);
 
@@ -380,7 +380,7 @@ public class ObjectEntryFolderModelListenerTest {
 				objectEntryFolder2.getObjectEntryFolderId(), false,
 				ServiceContextTestUtil.getServiceContext());
 
-		_assertResourcePermissions(jsonObject, objectEntryFolder3, actionId);
+		_assertResourcePermissions(actionId, jsonObject, objectEntryFolder3);
 	}
 
 	@Inject

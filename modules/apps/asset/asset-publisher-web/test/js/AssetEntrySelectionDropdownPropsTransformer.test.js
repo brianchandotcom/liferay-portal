@@ -44,8 +44,13 @@ describe('AssetEntrySelectionDropdownPropsTransformer', () => {
 			'/o/headless-delivery/v1.0/asset-entries'
 		);
 		expect(config.apiURL).toContain('groupIds=123');
-		expect(decodeURIComponent(config.apiURL.replace(/\+/g, '%20'))).toContain(
-			'classNameId in (1,2)'
+		expect(config.apiURL).toContain('showNonindexable=true');
+
+		const filter = decodeURIComponent(config.apiURL.replace(/\+/g, '%20'));
+
+		expect(filter).toContain('classNameId in (1,2)');
+		expect(filter).toContain(
+			"(status eq 'approved' or status eq 'scheduled')"
 		);
 		expect(config.multiSelect).toBe(true);
 	});
@@ -66,7 +71,9 @@ describe('AssetEntrySelectionDropdownPropsTransformer', () => {
 		});
 
 		expect(config.fdsProps.filters).toHaveLength(0);
-		expect(decodeURIComponent(config.apiURL.replace(/\+/g, '%20'))).toContain('classNameId eq 9');
+		expect(
+			decodeURIComponent(config.apiURL.replace(/\+/g, '%20'))
+		).toContain('classNameId eq 9');
 	});
 
 	it('posts the selected asset entry ids and type on selection', () => {

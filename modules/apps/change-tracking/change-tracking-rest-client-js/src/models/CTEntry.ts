@@ -20,6 +20,7 @@
 			"ctCollectionStatusUserName"?: string;
 			"dateCreated"?: Date;
 			"dateModified"?: Date;
+			"editURL"?: string;
 			"hideable"?: boolean;
 			"id"?: number;
 			"modelClassNameId"?: number;
@@ -84,6 +85,11 @@
 			baseName: "dateModified",
 			name: "dateModified",
 			type: "Date",
+		},
+		{
+			baseName: "editURL",
+			name: "editURL",
+			type: "string",
 		},
 		{
 			baseName: "hideable",

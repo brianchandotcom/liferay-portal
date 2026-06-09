@@ -200,6 +200,7 @@ public abstract class BaseCTEntryResourceTestCase {
 		ctEntry.setChangeType(regex);
 		ctEntry.setCtCollectionName(regex);
 		ctEntry.setCtCollectionStatusUserName(regex);
+		ctEntry.setEditURL(regex);
 		ctEntry.setOwnerName(regex);
 		ctEntry.setSiteName(regex);
 		ctEntry.setStatusMessage(regex);
@@ -215,6 +216,7 @@ public abstract class BaseCTEntryResourceTestCase {
 		Assert.assertEquals(regex, ctEntry.getChangeType());
 		Assert.assertEquals(regex, ctEntry.getCtCollectionName());
 		Assert.assertEquals(regex, ctEntry.getCtCollectionStatusUserName());
+		Assert.assertEquals(regex, ctEntry.getEditURL());
 		Assert.assertEquals(regex, ctEntry.getOwnerName());
 		Assert.assertEquals(regex, ctEntry.getSiteName());
 		Assert.assertEquals(regex, ctEntry.getStatusMessage());
@@ -1587,6 +1589,14 @@ public abstract class BaseCTEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("editURL", additionalAssertFieldName)) {
+				if (ctEntry.getEditURL() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("hideable", additionalAssertFieldName)) {
 				if (ctEntry.getHideable() == null) {
 					valid = false;
@@ -1886,6 +1896,16 @@ public abstract class BaseCTEntryResourceTestCase {
 				if (!Objects.deepEquals(
 						ctEntry1.getDateModified(),
 						ctEntry2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("editURL", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						ctEntry1.getEditURL(), ctEntry2.getEditURL())) {
 
 					return false;
 				}
@@ -2351,6 +2371,52 @@ public abstract class BaseCTEntryResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("editURL")) {
+			Object object = ctEntry.getEditURL();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("hideable")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2673,6 +2739,7 @@ public abstract class BaseCTEntryResourceTestCase {
 					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				editURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				hideable = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				modelClassNameId = RandomTestUtil.randomLong();
@@ -2936,4 +3003,4 @@ public abstract class BaseCTEntryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1502908298
+// LIFERAY-REST-BUILDER-HASH:-1452172856

@@ -157,7 +157,7 @@ jobs:
     publish-aws-marketplace:
         env:
             ECR_REGISTRY: 709825985650.dkr.ecr.us-east-1.amazonaws.com
-        if: ${{!cancelled() && needs.approve-release.result == 'success'}}
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && vars.ENABLE_AWS_MARKETPLACE_PUBLISHING == 'true'}}
         needs: approve-release
         runs-on: ubuntu-latest
         steps:

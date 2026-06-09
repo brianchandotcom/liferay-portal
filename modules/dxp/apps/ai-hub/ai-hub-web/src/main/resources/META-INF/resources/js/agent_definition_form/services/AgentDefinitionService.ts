@@ -45,8 +45,14 @@ async function getAgentDefinition(externalReferenceCode: string) {
 	return response.json();
 }
 
-async function getAgentDefinitions() {
-	const response = await fetch(AGENT_DEFINITION_BASE_URI, {
+async function getAgentDefinitions(params?: Record<string, string>) {
+	const queryString = params ? new URLSearchParams(params).toString() : '';
+
+	const url = queryString
+		? `${AGENT_DEFINITION_BASE_URI}?${queryString}`
+		: AGENT_DEFINITION_BASE_URI;
+
+	const response = await fetch(url, {
 		method: 'GET',
 	});
 

@@ -161,8 +161,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 							return null;
 						}
 
-						return _getErrorMessages(
-							commerceOrderValidatorResults);
+						return _getErrorMessages(commerceOrderValidatorResults);
 					});
 				setExternalReferenceCode(
 					commerceOrder::getExternalReferenceCode);

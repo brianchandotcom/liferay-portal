@@ -559,44 +559,16 @@ paths:
                                 $ref: "#/components/schemas/ImportPreview"
             tags: ["ImportPreview"]
     "/asset-libraries/{assetLibraryExternalReferenceCode}/import-processes":
-        post:
-            operationId: postAssetLibraryImportProcess
+        get:
+            description:
+                Retrieves the layout import process entries for the specified asset library.
+            operationId: getAssetLibraryImportProcessesPage
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
                     required: true
                     schema:
                         type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/ImportProcessRequest"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/ImportProcessRequest"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ImportProcess"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ImportProcess"
-            tags: ["ImportProcess"]
-    "/asset-libraries/{assetLibraryId}/import-processes":
-        description:
-            Retrieves the import process entries for the specified asset library.
-        get:
-            operationId: getAssetLibraryImportProcessesPage
-            parameters:
-                -   in: path
-                    name: assetLibraryId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
                 -   in: query
                     name: creatorId
                     schema:
@@ -647,6 +619,32 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ImportProcess"
                                 type: array
+            tags: ["ImportProcess"]
+        post:
+            operationId: postAssetLibraryImportProcess
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportProcessRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportProcessRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
             tags: ["ImportProcess"]
     "/export-preview":
         get:
@@ -1025,44 +1023,16 @@ paths:
                                 $ref: "#/components/schemas/ImportPreview"
             tags: ["ImportPreview"]
     "/sites/{siteExternalReferenceCode}/import-processes":
-        post:
-            operationId: postSiteImportProcess
+        description:
+            Retrieves the layout import process entries for the specified site.
+        get:
+            operationId: getSiteImportProcessesPage
             parameters:
                 -   in: path
                     name: siteExternalReferenceCode
                     required: true
                     schema:
                         type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/ImportProcessRequest"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/ImportProcessRequest"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ImportProcess"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ImportProcess"
-            tags: ["ImportProcess"]
-    "/sites/{siteId}/import-processes":
-        description:
-            Retrieves the import process entries for the specified site.
-        get:
-            operationId: getSiteImportProcessesPage
-            parameters:
-                -   in: path
-                    name: siteId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
                 -   in: query
                     name: creatorId
                     schema:
@@ -1113,4 +1083,30 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ImportProcess"
                                 type: array
+            tags: ["ImportProcess"]
+        post:
+            operationId: postSiteImportProcess
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportProcessRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportProcessRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
             tags: ["ImportProcess"]

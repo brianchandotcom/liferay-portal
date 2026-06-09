@@ -75,6 +75,31 @@ describe('check', () => {
 			).not.toThrow();
 		});
 
+		it('accepts a boolean value for an equality operator', () => {
+			expect(() =>
+				check(
+					audiencesDefinition({
+						audiences: [
+							audience({
+								rules: [
+									leafRule({
+										attribute: 'custom:logged_in',
+										operator: 'eq',
+										value: true,
+									}),
+									leafRule({
+										attribute: 'custom:logged_in',
+										operator: 'not_eq',
+										value: false,
+									}),
+								],
+							}),
+						],
+					})
+				)
+			).not.toThrow();
+		});
+
 		it('accepts audiences with distinct ids', () => {
 			expect(() =>
 				check(
@@ -253,7 +278,7 @@ describe('check', () => {
 				check(withRule(leafRule({operator: 'eq', value: {}})))
 			).toThrow(
 				"field 'rules'[0] field 'value' must be of type " +
-					"'number' or 'string' but got: object"
+					"'boolean' or 'number' or 'string' but got: object"
 			);
 		});
 

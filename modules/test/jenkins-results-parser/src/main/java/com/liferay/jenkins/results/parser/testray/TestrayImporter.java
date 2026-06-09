@@ -993,16 +993,13 @@ public class TestrayImporter {
 				testBaseDir = axisTestClassGroup.getTestBaseDir();
 			}
 
-			_recordTopLevelTestrayCaseResult(job, testBaseDir);
-
 			_recordAppServerTestrayCaseResult(
 				job, PersistentResource.Type.ASAH_BUNDLE, testBaseDir);
-
 			_recordAppServerTestrayCaseResult(
 				job, PersistentResource.Type.FARO_BUNDLE, testBaseDir);
-
 			_recordAppServerTestrayCaseResult(
 				job, PersistentResource.Type.PORTAL_BUNDLE, testBaseDir);
+			_recordTopLevelTestrayCaseResult(job, testBaseDir);
 
 			for (final AxisTestClassGroup axisTestClassGroup :
 					axisTestClassGroups) {

@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FDSConnection} from '@liferay/js-api/data-set';
+import {FDSConnection} from '@liferay/frontend-data-set-web/api';
 import React, {useEffect, useRef, useState} from 'react';
+
+// Importing from "@liferay/js-api/data-set" also loads the ambient declaration
+// that types the "@liferay/frontend-data-set-web/api" runtime module above.
 
 import type {
 	FDSConnectionInfo,

@@ -97,7 +97,7 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 	public enum Scope {
 
-		COMPANY, DEPOT, SITE
+		COMPANY, DEPOT, PORTLET, SITE
 
 	}
 

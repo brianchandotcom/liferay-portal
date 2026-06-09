@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Jorge García Jiménez
@@ -28,8 +29,14 @@ public class OAuthClientPRLocalMetadataUtil {
 						oAuthClientPRLocalMetadataService)
 			throws Exception {
 
+		String metadataJSON = oAuthClientPRLocalMetadata.getMetadataJSON();
+
+		if (Validator.isNull(metadataJSON)) {
+			throw new IllegalArgumentException("Metadata JSON is required");
+		}
+
 		JSONObject metadataJSONObject = jsonFactory.createJSONObject(
-			oAuthClientPRLocalMetadata.getMetadataJSON());
+			metadataJSON);
 
 		return oAuthClientPRLocalMetadataService.addOAuthClientPRLocalMetadata(
 			oAuthClientPRLocalMetadata.getExternalReferenceCode(),

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -149,8 +150,14 @@ public class OAuthClientPRLocalMetadataResourceImpl
 						contextCompany.getCompanyId());
 
 		if (serviceBuilderOAuthClientPRLocalMetadata != null) {
+			String metadataJSON = oAuthClientPRLocalMetadata.getMetadataJSON();
+
+			if (Validator.isNull(metadataJSON)) {
+				throw new IllegalArgumentException("Metadata JSON is required");
+			}
+
 			JSONObject metadataJSONObject = _jsonFactory.createJSONObject(
-				oAuthClientPRLocalMetadata.getMetadataJSON());
+				metadataJSON);
 
 			serviceBuilderOAuthClientPRLocalMetadata =
 				_oAuthClientPRLocalMetadataService.

@@ -69,7 +69,6 @@ jobs:
                                 cloud/terraform/aws/eks/*
                                 cloud/terraform/aws/gitops/platform/*
                                 cloud/terraform/aws/gitops/resources/*
-                                cloud/terraform/aws/grafana/*
                             )
                         elif [[ "${provider}" == "gcp" ]]
                         then

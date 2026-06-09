@@ -14,7 +14,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -90,28 +89,12 @@ public class ExportImportToolbarDisplayContext {
 
 					cmd = Constants.EXPORT;
 					label = "custom-export";
-
-					if (FeatureFlagManagerUtil.isEnabled(
-							_themeDisplay.getCompanyId(), "LPD-57655")) {
-
-						mvcPath = "/revamp/export/new_export.jsp";
-					}
-					else {
-						mvcPath = "/export/new_export/export_layouts.jsp";
-					}
+					mvcPath = "/export/new_export/export_layouts.jsp";
 				}
 				else {
 					cmd = Constants.IMPORT;
 					label = "import";
-
-					if (FeatureFlagManagerUtil.isEnabled(
-							_themeDisplay.getCompanyId(), "LPD-57655")) {
-
-						mvcPath = "/revamp/import/new_import.jsp";
-					}
-					else {
-						mvcPath = "/import/new_import/import_layouts.jsp";
-					}
+					mvcPath = "/import/new_import/import_layouts.jsp";
 				}
 
 				addPrimaryDropdownItem(

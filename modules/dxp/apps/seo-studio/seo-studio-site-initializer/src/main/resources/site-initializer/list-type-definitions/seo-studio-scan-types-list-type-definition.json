@@ -2,21 +2,9 @@
 	"externalReferenceCode": "L_SEO_STUDIO_SCAN_TYPES",
 	"listTypeEntries": [
 		{
-			"externalReferenceCode": "FULL",
-			"key": "full",
-			"name": "Full",
-			"system": true
-		},
-		{
-			"externalReferenceCode": "INCREMENTAL",
-			"key": "incremental",
-			"name": "Incremental",
-			"system": true
-		},
-		{
-			"externalReferenceCode": "SINGLE_ITEM",
-			"key": "singleItem",
-			"name": "Single Item",
+			"externalReferenceCode": "PAGESPEED",
+			"key": "pageSpeed",
+			"name": "PageSpeed",
 			"system": true
 		}
 	],

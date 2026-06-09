@@ -36,14 +36,16 @@ public interface ImportProcessResource {
 	}
 
 	public Page<ImportProcess> getAssetLibraryImportProcessesPage(
-			Long assetLibraryId, Long creatorId, String search, Integer status,
-			Pagination pagination, String sortString)
+			String assetLibraryExternalReferenceCode, Long creatorId,
+			String search, Integer status, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAssetLibraryImportProcessesPageHttpResponse(
-				Long assetLibraryId, Long creatorId, String search,
-				Integer status, Pagination pagination, String sortString)
+				String assetLibraryExternalReferenceCode, Long creatorId,
+				String search, Integer status, Pagination pagination,
+				String sortString)
 		throws Exception;
 
 	public ImportProcess getImportProcess(Long importProcessId)
@@ -64,13 +66,13 @@ public interface ImportProcessResource {
 		throws Exception;
 
 	public Page<ImportProcess> getSiteImportProcessesPage(
-			Long siteId, Long creatorId, String search, Integer status,
-			Pagination pagination, String sortString)
+			String siteExternalReferenceCode, Long creatorId, String search,
+			Integer status, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteImportProcessesPageHttpResponse(
-			Long siteId, Long creatorId, String search, Integer status,
-			Pagination pagination, String sortString)
+			String siteExternalReferenceCode, Long creatorId, String search,
+			Integer status, Pagination pagination, String sortString)
 		throws Exception;
 
 	public ImportProcess postAssetLibraryImportProcess(
@@ -97,16 +99,16 @@ public interface ImportProcessResource {
 		throws Exception;
 
 	public void postAssetLibraryImportProcessesPageExportBatch(
-			Long assetLibraryId, Long creatorId, String search, Integer status,
-			String sortString, String callbackURL, String contentType,
-			String fieldNames)
+			String assetLibraryExternalReferenceCode, Long creatorId,
+			String search, Integer status, String sortString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postAssetLibraryImportProcessesPageExportBatchHttpResponse(
-				Long assetLibraryId, Long creatorId, String search,
-				Integer status, String sortString, String callbackURL,
-				String contentType, String fieldNames)
+				String assetLibraryExternalReferenceCode, Long creatorId,
+				String search, Integer status, String sortString,
+				String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public ImportProcess postImportProcess(
@@ -162,16 +164,16 @@ public interface ImportProcessResource {
 		throws Exception;
 
 	public void postSiteImportProcessesPageExportBatch(
-			Long siteId, Long creatorId, String search, Integer status,
-			String sortString, String callbackURL, String contentType,
-			String fieldNames)
+			String siteExternalReferenceCode, Long creatorId, String search,
+			Integer status, String sortString, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postSiteImportProcessesPageExportBatchHttpResponse(
-				Long siteId, Long creatorId, String search, Integer status,
-				String sortString, String callbackURL, String contentType,
-				String fieldNames)
+				String siteExternalReferenceCode, Long creatorId, String search,
+				Integer status, String sortString, String callbackURL,
+				String contentType, String fieldNames)
 		throws Exception;
 
 	public static class Builder {
@@ -284,14 +286,15 @@ public interface ImportProcessResource {
 		implements ImportProcessResource {
 
 		public Page<ImportProcess> getAssetLibraryImportProcessesPage(
-				Long assetLibraryId, Long creatorId, String search,
-				Integer status, Pagination pagination, String sortString)
+				String assetLibraryExternalReferenceCode, Long creatorId,
+				String search, Integer status, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAssetLibraryImportProcessesPageHttpResponse(
-					assetLibraryId, creatorId, search, status, pagination,
-					sortString);
+					assetLibraryExternalReferenceCode, creatorId, search,
+					status, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -354,8 +357,9 @@ public interface ImportProcessResource {
 
 		public HttpInvoker.HttpResponse
 				getAssetLibraryImportProcessesPageHttpResponse(
-					Long assetLibraryId, Long creatorId, String search,
-					Integer status, Pagination pagination, String sortString)
+					String assetLibraryExternalReferenceCode, Long creatorId,
+					String search, Integer status, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -405,9 +409,11 @@ public interface ImportProcessResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/export-import/v1.0/asset-libraries/{assetLibraryId}/import-processes");
+						"/o/export-import/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/import-processes");
 
-			httpInvoker.path("assetLibraryId", assetLibraryId);
+			httpInvoker.path(
+				"assetLibraryExternalReferenceCode",
+				assetLibraryExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -653,13 +659,14 @@ public interface ImportProcessResource {
 		}
 
 		public Page<ImportProcess> getSiteImportProcessesPage(
-				Long siteId, Long creatorId, String search, Integer status,
-				Pagination pagination, String sortString)
+				String siteExternalReferenceCode, Long creatorId, String search,
+				Integer status, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteImportProcessesPageHttpResponse(
-					siteId, creatorId, search, status, pagination, sortString);
+					siteExternalReferenceCode, creatorId, search, status,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -721,8 +728,8 @@ public interface ImportProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteImportProcessesPageHttpResponse(
-				Long siteId, Long creatorId, String search, Integer status,
-				Pagination pagination, String sortString)
+				String siteExternalReferenceCode, Long creatorId, String search,
+				Integer status, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -772,9 +779,10 @@ public interface ImportProcessResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/export-import/v1.0/sites/{siteId}/import-processes");
+						"/o/export-import/v1.0/sites/{siteExternalReferenceCode}/import-processes");
 
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1011,15 +1019,15 @@ public interface ImportProcessResource {
 		}
 
 		public void postAssetLibraryImportProcessesPageExportBatch(
-				Long assetLibraryId, Long creatorId, String search,
-				Integer status, String sortString, String callbackURL,
-				String contentType, String fieldNames)
+				String assetLibraryExternalReferenceCode, Long creatorId,
+				String search, Integer status, String sortString,
+				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAssetLibraryImportProcessesPageExportBatchHttpResponse(
-					assetLibraryId, creatorId, search, status, sortString,
-					callbackURL, contentType, fieldNames);
+					assetLibraryExternalReferenceCode, creatorId, search,
+					status, sortString, callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1071,9 +1079,9 @@ public interface ImportProcessResource {
 
 		public HttpInvoker.HttpResponse
 				postAssetLibraryImportProcessesPageExportBatchHttpResponse(
-					Long assetLibraryId, Long creatorId, String search,
-					Integer status, String sortString, String callbackURL,
-					String contentType, String fieldNames)
+					String assetLibraryExternalReferenceCode, Long creatorId,
+					String search, Integer status, String sortString,
+					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1132,9 +1140,11 @@ public interface ImportProcessResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/export-import/v1.0/asset-libraries/{assetLibraryId}/import-processes/export-batch");
+						"/o/export-import/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/import-processes/export-batch");
 
-			httpInvoker.path("assetLibraryId", assetLibraryId);
+			httpInvoker.path(
+				"assetLibraryExternalReferenceCode",
+				assetLibraryExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1709,15 +1719,15 @@ public interface ImportProcessResource {
 		}
 
 		public void postSiteImportProcessesPageExportBatch(
-				Long siteId, Long creatorId, String search, Integer status,
-				String sortString, String callbackURL, String contentType,
-				String fieldNames)
+				String siteExternalReferenceCode, Long creatorId, String search,
+				Integer status, String sortString, String callbackURL,
+				String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteImportProcessesPageExportBatchHttpResponse(
-					siteId, creatorId, search, status, sortString, callbackURL,
-					contentType, fieldNames);
+					siteExternalReferenceCode, creatorId, search, status,
+					sortString, callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1769,9 +1779,9 @@ public interface ImportProcessResource {
 
 		public HttpInvoker.HttpResponse
 				postSiteImportProcessesPageExportBatchHttpResponse(
-					Long siteId, Long creatorId, String search, Integer status,
-					String sortString, String callbackURL, String contentType,
-					String fieldNames)
+					String siteExternalReferenceCode, Long creatorId,
+					String search, Integer status, String sortString,
+					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1830,9 +1840,10 @@ public interface ImportProcessResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/export-import/v1.0/sites/{siteId}/import-processes/export-batch");
+						"/o/export-import/v1.0/sites/{siteExternalReferenceCode}/import-processes/export-batch");
 
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1854,4 +1865,4 @@ public interface ImportProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1743775649
+// LIFERAY-REST-BUILDER-HASH:116708527

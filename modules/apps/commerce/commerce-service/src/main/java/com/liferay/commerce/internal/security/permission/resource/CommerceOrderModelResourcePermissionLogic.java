@@ -65,6 +65,10 @@ public class CommerceOrderModelResourcePermissionLogic
 			CommerceOrder commerceOrder, String actionId)
 		throws PortalException {
 
+		if (permissionChecker.getCompanyId() != commerceOrder.getCompanyId()) {
+			return false;
+		}
+
 		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
 		if ((accountEntry.getAccountEntryId() ==

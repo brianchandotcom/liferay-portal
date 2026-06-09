@@ -174,7 +174,7 @@ public class OpenAPIUtilTest {
 			IllegalArgumentException.class,
 			StringBundler.concat(
 				"The \"postItem\" tool requires the request payload nested ",
-				"under a \"body\" property; pass any path or query parameters ",
+				"under a \"body\" property. Pass any path or query parameters ",
 				"as siblings of \"body\" rather than flattening the payload ",
 				"into the input map"),
 			() -> OpenAPIUtil.getOptions(

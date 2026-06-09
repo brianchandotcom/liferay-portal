@@ -67,9 +67,9 @@ public class OpenAPIUtil {
 					StringBundler.concat(
 						"The \"", toolName,
 						"\" tool requires the request payload nested under a ",
-						"\"body\" property; pass any path or query parameters ",
-						"as siblings of \"body\" rather than flattening the ",
-						"payload into the input map"));
+						"\"body\" property. Pass any path or query parameters as ",
+						"siblings of \"body\" rather than flattening the payload ",
+						"into the input map"));
 			}
 
 			Object bodyValue = inputJSONObject.opt("body");

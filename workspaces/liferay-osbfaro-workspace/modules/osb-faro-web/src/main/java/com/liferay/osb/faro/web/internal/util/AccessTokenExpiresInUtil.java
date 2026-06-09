@@ -11,17 +11,23 @@ package com.liferay.osb.faro.web.internal.util;
 public class AccessTokenExpiresInUtil {
 
 	public static long getExpiresIn() {
-		return _expiresIn;
+		Long expiresIn = _expiresIn.get();
+
+		if (expiresIn == null) {
+			return 0;
+		}
+
+		return expiresIn;
 	}
 
 	public static void removeExpiresIn() {
-		_expiresIn = 0;
+		_expiresIn.remove();
 	}
 
 	public static void setExpiresIn(long expiresIn) {
-		_expiresIn = expiresIn;
+		_expiresIn.set(expiresIn);
 	}
 
-	private static long _expiresIn;
+	private static final ThreadLocal<Long> _expiresIn = new ThreadLocal<>();
 
 }

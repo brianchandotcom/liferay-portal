@@ -80,8 +80,8 @@ public class KeyReference implements Serializable {
 			throw new IllegalArgumentException("Provider ID must not be empty");
 		}
 
-		if ((providerId.indexOf(CharPool.COLON) >= 0) ||
-			(providerId.indexOf(CharPool.CLOSE_CURLY_BRACE) >= 0)) {
+		if ((providerId.indexOf(CharPool.CLOSE_CURLY_BRACE) >= 0) ||
+			(providerId.indexOf(CharPool.COLON) >= 0)) {
 
 			throw new IllegalArgumentException(
 				"Provider ID must not contain colons or closing curly braces");
@@ -154,7 +154,7 @@ public class KeyReference implements Serializable {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"\\$\\{(keyRef|secretRef):([^:]+):(.+)\\}");
+		"\\$\\{(keyRef|secretRef):([^:}]+):(.+)\\}");
 	private static final long serialVersionUID = 1L;
 
 	private final String _identifier;

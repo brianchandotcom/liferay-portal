@@ -38,15 +38,29 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Picklist",
+			"businessType": "Text",
 			"externalReferenceCode": "NAME",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Name"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_SEO_STUDIO_SCAN_NAMES",
 			"name": "name",
+			"required": true,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "SCAN_TYPE",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Scan Type"
+			},
+			"listTypeDefinitionExternalReferenceCode": "L_SEO_STUDIO_SCAN_TYPES",
+			"name": "scanType",
 			"required": true,
 			"system": true,
 			"type": "String"
@@ -142,14 +156,14 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"externalReferenceCode": "SCAN_TYPE",
+			"externalReferenceCode": "SCAN_RANGE",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {
-				"en_US": "Scan Type"
+				"en_US": "Scan Range"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_SEO_STUDIO_SCAN_TYPES",
-			"name": "scanType",
+			"listTypeDefinitionExternalReferenceCode": "L_SEO_STUDIO_SCAN_RANGES",
+			"name": "scanRange",
 			"required": true,
 			"system": true,
 			"type": "String"

@@ -746,21 +746,24 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						PortletRequest.ACTION_PHASE)
 				).setActionName(
 					"/change_tracking/checkout_ct_collection"
-				).setRedirect(
-					_portal.getCurrentURL(httpServletRequest)
 				).buildString());
 
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");
 
-			String timelineItemsURL = StringBundler.concat(
-				_portal.getPortalURL(themeDisplay),
-				"/o/change-tracking-rest/v1.0/ct-entries/history?",
-				"classNameId=", classNameId);
+			String timelineItemsURL =
+				_portal.getPortalURL(themeDisplay) +
+					"/o/change-tracking-rest/v1.0/ct-entries/history";
+
+			timelineItemsURL = HttpComponentsUtil.addParameter(
+				timelineItemsURL, "classNameId", classNameId);
+			timelineItemsURL = HttpComponentsUtil.addParameter(
+				timelineItemsURL, "currentURL",
+				_portal.getCurrentURL(httpServletRequest));
 
 			if (classPK != 0) {
-				timelineItemsURL = StringBundler.concat(
-					timelineItemsURL, "&classPK=", classPK);
+				timelineItemsURL = HttpComponentsUtil.addParameter(
+					timelineItemsURL, "classPK", classPK);
 			}
 
 			data.put("timelineItemsURL", timelineItemsURL);

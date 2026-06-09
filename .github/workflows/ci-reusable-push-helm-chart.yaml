@@ -2,7 +2,7 @@ defaults:
     run:
         shell: bash
 jobs:
-    publish:
+    push:
         outputs:
             chart_version: ${{steps.vars.outputs.chart_version}}
             image_ref: ${{steps.vars.outputs.image_ref}}
@@ -121,9 +121,9 @@ on:
                 type: string
         outputs:
             chart_version:
-                value: ${{jobs.publish.outputs.chart_version}}
+                value: ${{jobs.push.outputs.chart_version}}
             image_ref:
-                value: ${{jobs.publish.outputs.image_ref}}
+                value: ${{jobs.push.outputs.image_ref}}
 permissions:
     contents: read
     id-token: write

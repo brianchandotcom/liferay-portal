@@ -174,7 +174,8 @@ public class ObjectEntryHistogramMetricResourceTest
 			ObjectEntryHistogramMetric objectEntryHistogramMetric =
 				_objectEntryHistogramMetricResource.
 					getObjectEntryHistogramMetric(
-						"1", null, 7, new String[] {"downloadsMetric"});
+						"1", null, RandomTestUtil.nextInt(),
+						new String[] {"downloadsMetric"});
 
 			Histogram[] histograms = objectEntryHistogramMetric.getHistograms();
 

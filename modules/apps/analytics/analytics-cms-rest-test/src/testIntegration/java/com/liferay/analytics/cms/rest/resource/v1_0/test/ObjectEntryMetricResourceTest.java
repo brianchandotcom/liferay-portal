@@ -129,7 +129,7 @@ public class ObjectEntryMetricResourceTest
 
 			ObjectEntryMetric objectEntryMetric =
 				_objectEntryMetricResource.getObjectEntryMetric(
-					"1", null, 30,
+					"1", null, RandomTestUtil.nextInt(),
 					new String[] {"downloadsMetric", "viewsMetric"});
 
 			Assert.assertEquals(

@@ -483,7 +483,7 @@ public class AssetListTypePropertiesUtilTest {
 
 	private static final long _CLASS_TYPE_ID_2 = 99L;
 
-	private static final long _COMPANY_ID = 12345L;
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final String _LABEL_1 = "Task";
 

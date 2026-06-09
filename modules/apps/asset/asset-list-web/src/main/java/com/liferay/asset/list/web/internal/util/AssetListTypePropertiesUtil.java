@@ -5,7 +5,6 @@
 
 package com.liferay.asset.list.web.internal.util;
 
-import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -18,6 +17,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -260,21 +261,20 @@ public class AssetListTypePropertiesUtil {
 			return jsonObject;
 		}
 
-		JSONArray optionsJSONArray = JSONFactoryUtil.createJSONArray();
-
-		for (ListTypeEntry listTypeEntry :
+		return jsonObject.put(
+			"options",
+			JSONUtil.toJSONArray(
 				ListTypeEntryLocalServiceUtil.getListTypeEntries(
-					objectField.getListTypeDefinitionId())) {
-
-			optionsJSONArray.put(
-				JSONUtil.put(
+					objectField.getListTypeDefinitionId()),
+				listTypeEntry -> JSONUtil.put(
 					"label", listTypeEntry.getName(locale, true)
 				).put(
 					"value", listTypeEntry.getKey()
-				));
-		}
-
-		return jsonObject.put("options", optionsJSONArray);
+				),
+				_log));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetListTypePropertiesUtil.class);
 
 }

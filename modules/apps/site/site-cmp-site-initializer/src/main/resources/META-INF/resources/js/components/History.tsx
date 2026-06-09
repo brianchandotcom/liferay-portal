@@ -163,7 +163,7 @@ function HistoryItemDetails({
 						<strong>{fields[auditFieldChange.name].label}:</strong>
 
 						<div className="autofit-padded-no-gutters-x autofit-row autofit-row-center">
-							<div className="autofit-col text-secondary">
+							<div className="autofit-col autofit-col-expand text-secondary">
 								{getAuditFieldChangeValueLabel(
 									auditFieldChange.name,
 									auditFieldChange.oldValue

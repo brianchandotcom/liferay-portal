@@ -26,8 +26,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.opensearch.client.opensearch._types.ErrorCause;
 import org.opensearch.client.opensearch.core.BulkRequest;
+import org.opensearch.client.opensearch.core.BulkResponse;
 import org.opensearch.client.opensearch.core.bulk.BulkOperation;
+import org.opensearch.client.opensearch.core.bulk.BulkResponseItem;
+import org.opensearch.client.opensearch.core.bulk.OperationType;
 
 /**
  * @author Michael C. Han
@@ -97,7 +101,76 @@ public class BulkDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 		Assert.assertEquals(sb.toString(), 3, bulkOperations.size());
 	}
 
+	@Test
+	public void testBulkDocumentResponseWithRejectedBulkItems() {
+		try {
+			_bulkDocumentRequestExecutor.createBulkDocumentResponse(
+				_createBulkResponse());
+
+			Assert.fail();
+		}
+		catch (RuntimeException runtimeException) {
+			Assert.assertEquals(
+				"Unable to index 2/3 bulk items: " + _REJECTION_REASON,
+				runtimeException.getMessage());
+		}
+	}
+
+	private BulkResponse _createBulkResponse() {
+		ErrorCause errorCause = new ErrorCause.Builder(
+		).reason(
+			_REJECTION_REASON
+		).type(
+			"rejected_execution_exception"
+		).build();
+
+		BulkResponseItem rejectedBulkResponseItem1 =
+			new BulkResponseItem.Builder(
+			).error(
+				errorCause
+			).index(
+				TEST_INDEX_NAME
+			).operationType(
+				OperationType.Index
+			).status(
+				429
+			).build();
+
+		BulkResponseItem rejectedBulkResponseItem2 =
+			new BulkResponseItem.Builder(
+			).index(
+				TEST_INDEX_NAME
+			).operationType(
+				OperationType.Index
+			).status(
+				429
+			).build();
+
+		BulkResponseItem successfulBulkResponseItem =
+			new BulkResponseItem.Builder(
+			).index(
+				TEST_INDEX_NAME
+			).operationType(
+				OperationType.Index
+			).status(
+				200
+			).build();
+
+		return new BulkResponse.Builder(
+		).errors(
+			true
+		).items(
+			rejectedBulkResponseItem1, rejectedBulkResponseItem2,
+			successfulBulkResponseItem
+		).took(
+			0
+		).build();
+	}
+
 	private static final String _MAPPING_NAME = "testMapping";
+
+	private static final String _REJECTION_REASON =
+		"rejected execution of coordinating operation";
 
 	private BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
 	private final DocumentFixture _documentFixture = new DocumentFixture();

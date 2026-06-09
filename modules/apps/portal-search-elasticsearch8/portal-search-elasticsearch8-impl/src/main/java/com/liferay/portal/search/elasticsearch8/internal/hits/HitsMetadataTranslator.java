@@ -20,6 +20,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
@@ -129,7 +130,7 @@ public class HitsMetadataTranslator {
 
 		Map<String, InnerHitsResult> innerHits = hit.innerHits();
 
-		if ((innerHits == null) || innerHits.isEmpty()) {
+		if (MapUtil.isEmpty(innerHits)) {
 			return;
 		}
 

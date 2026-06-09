@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -351,8 +350,7 @@ public class RankingJSONBuilder {
 		String content = sb.toString();
 
 		if (Validator.isBlank(content)) {
-			content = _document.getString(
-				ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT);
+			content = _document.getString("objectEntryContent");
 		}
 
 		return content;

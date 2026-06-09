@@ -7,7 +7,6 @@ package com.liferay.object.internal.search.spi.model.index.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -133,18 +132,14 @@ public class ObjectEntryModelDocumentContributorTest {
 
 		_assertObjectEntryContentField(
 			document, englishObjectFieldValue,
-			Field.getLocalizedName(
-				LocaleUtil.US, ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT),
+			Field.getLocalizedName(LocaleUtil.US, "objectEntryContent"),
 			objectFieldName);
 		_assertObjectEntryContentField(
 			document, portugueseObjectFieldValue,
-			Field.getLocalizedName(
-				LocaleUtil.BRAZIL,
-				ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT),
+			Field.getLocalizedName(LocaleUtil.BRAZIL, "objectEntryContent"),
 			objectFieldName);
 
-		Assert.assertNull(
-			document.getField(ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT));
+		Assert.assertNull(document.getField("objectEntryContent"));
 	}
 
 	@Test
@@ -171,14 +166,11 @@ public class ObjectEntryModelDocumentContributorTest {
 		objectEntryModelDocumentContributor.contribute(document, objectEntry);
 
 		_assertObjectEntryContentField(
-			document, objectFieldValue,
-			ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT, objectFieldName);
+			document, objectFieldValue, "objectEntryContent", objectFieldName);
 
 		Assert.assertNull(
 			document.getField(
-				Field.getLocalizedName(
-					LocaleUtil.US,
-					ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT)));
+				Field.getLocalizedName(LocaleUtil.US, "objectEntryContent")));
 	}
 
 	@FeatureFlag("LPD-17564")

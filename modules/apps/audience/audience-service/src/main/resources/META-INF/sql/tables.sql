@@ -8,6 +8,6 @@ create table AudienceEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	json VARCHAR(75) null,
+	json TEXT null,
 	name STRING null
 );

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -90,8 +90,9 @@ public class AudienceEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AudienceEntry, NoSuchEntryException>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<AudienceEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the audience entries where uuid = &#63;.
@@ -151,6 +152,28 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the audience entries that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AudienceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of audience entries
+	 * @param end the upper bound of the range of audience entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching audience entries that the user has permission to view
+	 */
+	@Override
+	public List<AudienceEntry> filterFindByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<AudienceEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByUuid.filterFind(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator);
+	}
+
+	/**
 	 * Removes all the audience entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -173,8 +196,21 @@ public class AudienceEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<AudienceEntry, NoSuchEntryException>
-		_collectionPersistenceFinderByUuid_C;
+	/**
+	 * Returns the number of audience entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching audience entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByUuid(String uuid) {
+		return _collectionPersistenceFinderByUuid.filterCount(
+			finderCache, new Object[] {uuid});
+	}
+
+	private FilterCollectionPersistenceFinder
+		<AudienceEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the audience entries where uuid = &#63; and companyId = &#63;.
@@ -239,6 +275,30 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the audience entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AudienceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of audience entries
+	 * @param end the upper bound of the range of audience entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching audience entries that the user has permission to view
+	 */
+	@Override
+	public List<AudienceEntry> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<AudienceEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByUuid_C.filterFind(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, companyId, 0);
+	}
+
+	/**
 	 * Removes all the audience entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -263,8 +323,22 @@ public class AudienceEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<AudienceEntry, NoSuchEntryException>
-		_collectionPersistenceFinderByCompanyId;
+	/**
+	 * Returns the number of audience entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching audience entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByUuid_C(String uuid, long companyId) {
+		return _collectionPersistenceFinderByUuid_C.filterCount(
+			finderCache, new Object[] {uuid, companyId}, companyId, 0);
+	}
+
+	private FilterCollectionPersistenceFinder
+		<AudienceEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the audience entries where companyId = &#63;.
@@ -324,6 +398,29 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the audience entries that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AudienceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of audience entries
+	 * @param end the upper bound of the range of audience entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching audience entries that the user has permission to view
+	 */
+	@Override
+	public List<AudienceEntry> filterFindByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<AudienceEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByCompanyId.filterFind(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, companyId, 0);
+	}
+
+	/**
 	 * Removes all the audience entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -346,8 +443,21 @@ public class AudienceEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<AudienceEntry, NoSuchEntryException>
-		_collectionPersistenceFinderByC_LikeN;
+	/**
+	 * Returns the number of audience entries that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching audience entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByCompanyId(long companyId) {
+		return _collectionPersistenceFinderByCompanyId.filterCount(
+			finderCache, new Object[] {companyId}, companyId, 0);
+	}
+
+	private FilterCollectionPersistenceFinder
+		<AudienceEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByC_LikeN;
 
 	/**
 	 * Returns all the audience entries where companyId = &#63; and name LIKE &#63;.
@@ -468,6 +578,65 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns all the audience entries that the user has permission to view where companyId = &#63; and name LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching audience entries that the user has permission to view
+	 */
+	@Override
+	public List<AudienceEntry> filterFindByC_LikeN(
+		long companyId, String name) {
+
+		return filterFindByC_LikeN(
+			companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the audience entries that the user has permission to view where companyId = &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AudienceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param start the lower bound of the range of audience entries
+	 * @param end the upper bound of the range of audience entries (not inclusive)
+	 * @return the range of matching audience entries that the user has permission to view
+	 */
+	@Override
+	public List<AudienceEntry> filterFindByC_LikeN(
+		long companyId, String name, int start, int end) {
+
+		return filterFindByC_LikeN(companyId, name, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the audience entries that the user has permissions to view where companyId = &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AudienceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param start the lower bound of the range of audience entries
+	 * @param end the upper bound of the range of audience entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching audience entries that the user has permission to view
+	 */
+	@Override
+	public List<AudienceEntry> filterFindByC_LikeN(
+		long companyId, String name, int start, int end,
+		OrderByComparator<AudienceEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByC_LikeN.filterFind(
+			finderCache, new Object[] {companyId, name}, start, end,
+			orderByComparator, companyId, 0);
+	}
+
+	/**
 	 * Removes all the audience entries where companyId = &#63; and name LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -490,6 +659,19 @@ public class AudienceEntryPersistenceImpl
 	public int countByC_LikeN(long companyId, String name) {
 		return _collectionPersistenceFinderByC_LikeN.count(
 			finderCache, new Object[] {companyId, name});
+	}
+
+	/**
+	 * Returns the number of audience entries that the user has permission to view where companyId = &#63; and name LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the number of matching audience entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_LikeN(long companyId, String name) {
+		return _collectionPersistenceFinderByC_LikeN.filterCount(
+			finderCache, new Object[] {companyId, name}, companyId, 0);
 	}
 
 	private UniquePersistenceFinder<AudienceEntry, NoSuchEntryException>
@@ -843,31 +1025,33 @@ public class AudienceEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this,
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-				new String[] {
-					String.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"uuid_"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-				new String[] {String.class.getName()}, new String[] {"uuid_"},
-				0, 1, true, null),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-				new String[] {String.class.getName()}, new String[] {"uuid_"},
-				0, 1, false, null),
-			_SQL_SELECT_AUDIENCEENTRY_WHERE, _SQL_COUNT_AUDIENCEENTRY_WHERE,
-			AudienceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"audienceEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
-				"=", true, true, AudienceEntry::getUuid));
+		_collectionPersistenceFinderByUuid =
+			new FilterCollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
+				_SQL_SELECT_AUDIENCEENTRY_WHERE, _SQL_COUNT_AUDIENCEENTRY_WHERE,
+				AudienceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"audienceEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+					"=", true, true, AudienceEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_C =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this,
 				new FinderPath(
 					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -895,7 +1079,7 @@ public class AudienceEntryPersistenceImpl
 					true, true, AudienceEntry::getCompanyId));
 
 		_collectionPersistenceFinderByCompanyId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this,
 				new FinderPath(
 					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
@@ -920,7 +1104,7 @@ public class AudienceEntryPersistenceImpl
 					true, true, AudienceEntry::getCompanyId));
 
 		_collectionPersistenceFinderByC_LikeN =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this,
 				new FinderPath(
 					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN",
@@ -1031,4 +1215,4 @@ public class AudienceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:448362880
+// LIFERAY-SERVICE-BUILDER-HASH:2051340808

@@ -264,7 +264,7 @@ public class AudienceEntryPersistenceTest {
 			"AudienceEntry", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "audienceEntryId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "json", true, "name", true);
+			"modifiedDate", true, "name", true);
 	}
 
 	@Test
@@ -579,4 +579,4 @@ public class AudienceEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-707084781
+// LIFERAY-SERVICE-BUILDER-HASH:-1505647190

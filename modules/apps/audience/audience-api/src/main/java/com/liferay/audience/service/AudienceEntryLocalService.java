@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -68,6 +71,11 @@ public interface AudienceEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AudienceEntry addAudienceEntry(AudienceEntry audienceEntry);
 
+	public AudienceEntry addAudienceEntry(
+			String externalReferenceCode, String json,
+			Map<Locale, String> nameMap, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new audience entry with the primary key. Does not add the audience entry to the database.
 	 *
@@ -92,9 +100,11 @@ public interface AudienceEntryLocalService
 	 *
 	 * @param audienceEntry the audience entry
 	 * @return the audience entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public AudienceEntry deleteAudienceEntry(AudienceEntry audienceEntry);
+	public AudienceEntry deleteAudienceEntry(AudienceEntry audienceEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the audience entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -225,6 +235,17 @@ public interface AudienceEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AudienceEntry> getAudienceEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AudienceEntry> getAudienceEntries(
+		long companyId, int start, int end,
+		OrderByComparator<AudienceEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AudienceEntry> getAudienceEntries(
+			long companyId, String name, int start, int end,
+			OrderByComparator<AudienceEntry> orderByComparator)
+		throws PortalException;
+
 	/**
 	 * Returns the number of audience entries.
 	 *
@@ -232,6 +253,12 @@ public interface AudienceEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAudienceEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAudienceEntriesCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAudienceEntriesCount(long companyId, String name);
 
 	/**
 	 * Returns the audience entry with the primary key.
@@ -297,5 +324,10 @@ public interface AudienceEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AudienceEntry updateAudienceEntry(AudienceEntry audienceEntry);
 
+	public AudienceEntry updateAudienceEntry(
+			long audienceEntryId, String json, Map<Locale, String> nameMap,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1594301374
+// LIFERAY-SERVICE-BUILDER-HASH:365006557

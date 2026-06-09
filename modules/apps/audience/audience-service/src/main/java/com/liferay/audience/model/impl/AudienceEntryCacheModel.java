@@ -162,7 +162,9 @@ public class AudienceEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
@@ -175,7 +177,7 @@ public class AudienceEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		json = objectInput.readUTF();
+		json = (String)objectInput.readObject();
 		name = objectInput.readUTF();
 	}
 
@@ -214,10 +216,10 @@ public class AudienceEntryCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		if (json == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(json);
+			objectOutput.writeObject(json);
 		}
 
 		if (name == null) {
@@ -241,4 +243,4 @@ public class AudienceEntryCacheModel
 	public String name;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1974462325
+// LIFERAY-SERVICE-BUILDER-HASH:-1478573468

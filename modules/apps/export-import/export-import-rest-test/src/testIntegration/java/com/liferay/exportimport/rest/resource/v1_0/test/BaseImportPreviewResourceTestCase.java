@@ -240,6 +240,31 @@ public abstract class BaseImportPreviewResourceTestCase {
 	}
 
 	@Test
+	public void testPostAssetLibraryPortletImportPreview() throws Exception {
+		ImportPreview randomImportPreview = randomImportPreview();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		ImportPreview postImportPreview =
+			testPostAssetLibraryPortletImportPreview_addImportPreview(
+				randomImportPreview, multipartFiles);
+
+		assertEquals(randomImportPreview, postImportPreview);
+		assertValid(postImportPreview);
+
+		assertValid(postImportPreview, multipartFiles);
+	}
+
+	protected ImportPreview
+			testPostAssetLibraryPortletImportPreview_addImportPreview(
+				ImportPreview importPreview, Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostImportPreview() throws Exception {
 		ImportPreview randomImportPreview = randomImportPreview();
 
@@ -280,6 +305,30 @@ public abstract class BaseImportPreviewResourceTestCase {
 	}
 
 	protected ImportPreview testPostSiteImportPreview_addImportPreview(
+			ImportPreview importPreview, Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostSitePortletImportPreview() throws Exception {
+		ImportPreview randomImportPreview = randomImportPreview();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		ImportPreview postImportPreview =
+			testPostSitePortletImportPreview_addImportPreview(
+				randomImportPreview, multipartFiles);
+
+		assertEquals(randomImportPreview, postImportPreview);
+		assertValid(postImportPreview);
+
+		assertValid(postImportPreview, multipartFiles);
+	}
+
+	protected ImportPreview testPostSitePortletImportPreview_addImportPreview(
 			ImportPreview importPreview, Map<String, File> multipartFiles)
 		throws Exception {
 
@@ -1172,4 +1221,4 @@ public abstract class BaseImportPreviewResourceTestCase {
 		_importPreviewResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1343842195
+// LIFERAY-REST-BUILDER-HASH:1602532009

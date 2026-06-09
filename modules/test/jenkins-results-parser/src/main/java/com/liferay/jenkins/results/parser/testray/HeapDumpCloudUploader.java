@@ -88,7 +88,8 @@ public class HeapDumpCloudUploader {
 						DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
 					long uploadMillis = uploadDateTime.toInstant(
-						ZoneOffset.UTC).toEpochMilli();
+						ZoneOffset.UTC
+					).toEpochMilli();
 
 					long elapsedMillis =
 						JenkinsResultsParserUtil.getCurrentTimeMillis() -
@@ -99,9 +100,9 @@ public class HeapDumpCloudUploader {
 					if (minutesAgo < _THROTTLE_MINUTES) {
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
-								"INFO: Skipping heap dump upload, last dump was ",
+								"INFO: Skipping heap dump upload, last was ",
 								String.valueOf(minutesAgo),
-								" minutes ago (throttle window: ",
+								" min ago (throttle window: ",
 								String.valueOf(_THROTTLE_MINUTES),
 								" min). Local file: ",
 								hprofFile.getAbsolutePath()));
@@ -180,10 +181,10 @@ public class HeapDumpCloudUploader {
 		return gzippedFile;
 	}
 
+	private static final int _THROTTLE_MINUTES = 30;
+
 	private static final Pattern _s3ListingDateTimePattern = Pattern.compile(
 		"(?<date>\\d{4}-\\d{2}-\\d{2})\\s+(?<time>\\d{2}:\\d{2}:\\d{2})");
-
-	private static final int _THROTTLE_MINUTES = 30;
 
 	private final String _buildNumber;
 	private final String _jobName;

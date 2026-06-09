@@ -1,4 +1,6 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/_variables';
+
+@import '_mixins';
 
 @import '../ddm_template_editor/components/PropertiesPanel';
 
@@ -92,7 +94,7 @@ $productMenuWidth: 320px;
 					}
 
 					> .tbar-item:first-child {
-						border-bottom: solid thin #e7e7ed;
+						border-bottom: solid thin $gray-300;
 						width: 100%;
 					}
 
@@ -194,7 +196,7 @@ $productMenuWidth: 320px;
 		}
 
 		.edit-article-sidebar {
-			border-left: 1px #e7e7ed solid;
+			border-left: 1px $gray-300 solid;
 			box-shadow: none;
 			max-width: 320px;
 			outline: 0;

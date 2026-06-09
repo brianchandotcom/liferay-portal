@@ -21,12 +21,19 @@ components:
                 creator:
                     $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
                     readOnly: true
+                dateCompleted:
+                    format: date-time
+                    readOnly: true
+                    type: string
                 dateCreated:
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
+                    type: string
+                errorMessage:
                     readOnly: true
                     type: string
                 id:
@@ -123,6 +130,10 @@ components:
                 creator:
                     $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
                     readOnly: true
+                dateCompleted:
+                    format: date-time
+                    readOnly: true
+                    type: string
                 dateCreated:
                     description:
                         The import process's creation date.
@@ -133,6 +144,9 @@ components:
                     description:
                         The import process's last modification date.
                     format: date-time
+                    readOnly: true
+                    type: string
+                errorMessage:
                     readOnly: true
                     type: string
                 id:
@@ -331,6 +345,15 @@ components:
                             readOnly: true
                             type: array
             type: object
+        ProcessProgress:
+            properties:
+                percentage:
+                    description:
+                        The completion percentage of the process.
+                    format: int32
+                    readOnly: true
+                    type: integer
+            type: object
         ReportEntry:
             properties:
                 classExternalReferenceCode:
@@ -504,6 +527,67 @@ paths:
                                 $ref: "#/components/schemas/ExportPreview"
             tags: ["ExportPreview"]
     "/asset-libraries/{assetLibraryExternalReferenceCode}/export-processes":
+        get:
+            description:
+                Retrieves the layout export process entries for the specified asset library.
+            operationId: getAssetLibraryExportProcessesPage
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: creatorId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+            tags: ["ExportProcess"]
         post:
             operationId: postAssetLibraryExportProcess
             parameters:
@@ -646,6 +730,296 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ImportProcess"
             tags: ["ImportProcess"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/portlets/{portletId}/export-preview":
+        get:
+            operationId: getAssetLibraryPortletExportPreview
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: endDate
+                    schema:
+                        format: date-time
+                        type: string
+                -   in: query
+                    name: last
+                    schema:
+                        format: int32
+                        type: integer
+                -   in: query
+                    name: plid
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: range
+                    schema:
+                        default: all
+                        enum: [all, dateRange, last]
+                        type: string
+                -   in: query
+                    name: startDate
+                    schema:
+                        format: date-time
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExportPreview"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExportPreview"
+            tags: ["ExportPreview"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/portlets/{portletId}/export-processes":
+        get:
+            operationId: getAssetLibraryPortletExportProcessesPage
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: creatorId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+            tags: ["ExportProcess"]
+        post:
+            operationId: postAssetLibraryPortletExportProcess
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: plid
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ExportProcessRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ExportProcessRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExportProcess"
+            tags: ["ExportProcess"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/portlets/{portletId}/import-preview":
+        post:
+            operationId: postAssetLibraryPortletImportPreview
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: plid
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+            tags: ["ImportPreview"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/portlets/{portletId}/import-processes":
+        get:
+            operationId: getAssetLibraryPortletImportProcessesPage
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: creatorId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ImportProcess"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ImportProcess"
+                                type: array
+            tags: ["ImportProcess"]
+        post:
+            operationId: postAssetLibraryPortletImportProcess
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: plid
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportProcessRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportProcessRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+            tags: ["ImportProcess"]
     "/export-preview":
         get:
             operationId: getExportPreview
@@ -682,6 +1056,62 @@ paths:
                                 $ref: "#/components/schemas/ExportPreview"
             tags: ["ExportPreview"]
     "/export-processes":
+        description:
+            Retrieves all the layout export process entries.
+        get:
+            operationId: getExportProcessesPage
+            parameters:
+                -   in: query
+                    name: creatorId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+            tags: ["ExportProcess"]
         post:
             operationId: postExportProcess
             requestBody:
@@ -692,6 +1122,121 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/ExportProcessRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExportProcess"
+            tags: ["ExportProcess"]
+    "/export-processes/{exportProcessId}":
+        delete:
+            description:
+                Deletes the export process with the specified ID.
+            operationId: deleteExportProcess
+            parameters:
+                -   in: path
+                    name: exportProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ExportProcess"]
+        get:
+            description:
+                Retrieves the export process with the specified ID.
+            operationId: getExportProcess
+            parameters:
+                -   in: path
+                    name: exportProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExportProcess"
+            tags: ["ExportProcess"]
+    "/export-processes/{exportProcessId}/content":
+        get:
+            description:
+                Downloads the LAR file produced by the export process with the specified ID.
+            operationId: getExportProcessContent
+            parameters:
+                -   in: path
+                    name: exportProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/octet-stream:
+                            schema:
+                                format: binary
+                                type: string
+            tags: ["ExportProcess"]
+    "/export-processes/{exportProcessId}/progress":
+        get:
+            description:
+                Retrieves the live progress of the export process with the specified ID.
+            operationId: getExportProcessProgress
+            parameters:
+                -   in: path
+                    name: exportProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProcessProgress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProcessProgress"
+            tags: ["ExportProcess"]
+    "/export-processes/{exportProcessId}/relaunch":
+        post:
+            description:
+                Relaunches the export process with the specified ID.
+            operationId: postExportProcessRelaunch
+            parameters:
+                -   in: path
+                    name: exportProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -726,7 +1271,7 @@ paths:
             tags: ["ImportPreview"]
     "/import-processes":
         description:
-            Retrieves all the import process entries.
+            Retrieves all the layout import process entries.
         get:
             operationId: getImportProcessesPage
             parameters:
@@ -802,6 +1347,23 @@ paths:
                                 $ref: "#/components/schemas/ImportProcess"
             tags: ["ImportProcess"]
     "/import-processes/{importProcessId}":
+        delete:
+            description:
+                Deletes the import process with the specified ID.
+            operationId: deleteImportProcess
+            parameters:
+                -   in: path
+                    name: importProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ImportProcess"]
         get:
             description:
                 Retrieves the import process entry with the specified ID.
@@ -834,6 +1396,28 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ImportProcess"
+            tags: ["ImportProcess"]
+    "/import-processes/{importProcessId}/progress":
+        get:
+            description:
+                Retrieves the live progress of the import process with the specified ID.
+            operationId: getImportProcessProgress
+            parameters:
+                -   in: path
+                    name: importProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProcessProgress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProcessProgress"
             tags: ["ImportProcess"]
     "/import-processes/{importProcessId}/report-entries":
         get:
@@ -968,6 +1552,67 @@ paths:
                                 $ref: "#/components/schemas/ExportPreview"
             tags: ["ExportPreview"]
     "/sites/{siteExternalReferenceCode}/export-processes":
+        description:
+            Retrieves the layout export process entries for the specified site.
+        get:
+            operationId: getSiteExportProcessesPage
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: creatorId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+            tags: ["ExportProcess"]
         post:
             operationId: postSiteExportProcess
             parameters:
@@ -1092,6 +1737,296 @@ paths:
                     required: true
                     schema:
                         type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportProcessRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportProcessRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+            tags: ["ImportProcess"]
+    "/sites/{siteExternalReferenceCode}/portlets/{portletId}/export-preview":
+        get:
+            operationId: getSitePortletExportPreview
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: endDate
+                    schema:
+                        format: date-time
+                        type: string
+                -   in: query
+                    name: last
+                    schema:
+                        format: int32
+                        type: integer
+                -   in: query
+                    name: plid
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: range
+                    schema:
+                        default: all
+                        enum: [all, dateRange, last]
+                        type: string
+                -   in: query
+                    name: startDate
+                    schema:
+                        format: date-time
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExportPreview"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExportPreview"
+            tags: ["ExportPreview"]
+    "/sites/{siteExternalReferenceCode}/portlets/{portletId}/export-processes":
+        get:
+            operationId: getSitePortletExportProcessesPage
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: creatorId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ExportProcess"
+                                type: array
+            tags: ["ExportProcess"]
+        post:
+            operationId: postSitePortletExportProcess
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: plid
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ExportProcessRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ExportProcessRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ExportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ExportProcess"
+            tags: ["ExportProcess"]
+    "/sites/{siteExternalReferenceCode}/portlets/{portletId}/import-preview":
+        post:
+            operationId: postSitePortletImportPreview
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: plid
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+            tags: ["ImportPreview"]
+    "/sites/{siteExternalReferenceCode}/portlets/{portletId}/import-processes":
+        get:
+            operationId: getSitePortletImportProcessesPage
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: creatorId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ImportProcess"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ImportProcess"
+                                type: array
+            tags: ["ImportProcess"]
+        post:
+            operationId: postSitePortletImportProcess
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: portletId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: plid
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:

@@ -1,27 +1,27 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/_variables';
 
 .lfr-balloon-editor {
 	&.cke_balloon.cke_balloontoolbar {
-		background: white;
-		border-color: #e7e7ed;
-		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+		background: $white;
+		border-color: $gray-300;
+		box-shadow: unquote('0 8px 16px hsl(from #{$black} h s l / 0.2)');
 		z-index: 1100;
 	}
 
 	.cke_balloon_triangle_outer.cke_balloon_triangle_bottom {
-		border-color: #e7e7ed transparent;
+		border-color: $gray-300 transparent;
 	}
 
 	.cke_balloon_triangle_outer.cke_balloon_triangle_top {
-		border-color: #e7e7ed transparent;
+		border-color: $gray-300 transparent;
 	}
 
 	.cke_balloon_triangle_inner.cke_balloon_triangle_bottom {
-		border-color: white transparent;
+		border-color: $white transparent;
 	}
 
 	.cke_balloon_triangle_inner.cke_balloon_triangle_top {
-		border-color: white transparent;
+		border-color: $white transparent;
 	}
 
 	.cke_inner .cke_top {
@@ -70,8 +70,8 @@
 		padding: 4px;
 
 		input {
-			background: #f1f2f5;
-			border: 1px solid #e7e7ed;
+			background: $gray-200;
+			border: 1px solid $gray-300;
 			border-radius: 4px;
 			max-width: 32px;
 			padding: 6px 12px;
@@ -84,7 +84,7 @@
 
 	.ui-select {
 		border: none;
-		color: grey;
+		color: $gray-600;
 		float: left;
 		line-height: 30px;
 		margin: 2px;
@@ -95,7 +95,7 @@
 
 		option {
 			border: none;
-			color: grey;
+			color: $gray-600;
 			float: left;
 			line-height: 30px;
 			outline: none;
@@ -110,7 +110,7 @@
 	}
 
 	.ui-textinput {
-		background: white;
+		background: $white;
 		border-radius: 4px;
 		float: left;
 		height: 16px;
@@ -127,7 +127,7 @@
 
 .lfr-balloon-editor-insert-button {
 	align-items: center;
-	background: white;
+	background: $white;
 	border: 0.75px solid $primary;
 	border-radius: 2px;
 	color: $primary;
@@ -178,8 +178,8 @@
 			display: inline;
 
 			&:after {
-				background-image: linear-gradient(#fff, #e4e4e4);
-				border: 1px solid #a6a6a6;
+				background-image: linear-gradient($white, $gray-300);
+				border: 1px solid $gray-500;
 				border-radius: 2px;
 				content: 'Alt+0';
 				font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
@@ -189,7 +189,7 @@
 			}
 
 			&:hover:after {
-				background-image: linear-gradient(#f2f2f2, #ccc);
+				background-image: linear-gradient($gray-200, $gray-400);
 			}
 
 			&.mac:after {
@@ -202,7 +202,7 @@
 .cke_widget_embedurl,
 .cke_widget_videoembed {
 	.embed-help-message {
-		color: #fff;
+		color: $white;
 		font-weight: 600;
 		opacity: 0;
 		position: absolute;
@@ -223,7 +223,7 @@
 	}
 
 	.cke_widget_mask {
-		background-color: #000;
+		background-color: $black;
 		cursor: pointer;
 		opacity: 0;
 		transition: opacity 0.15s ease-in-out;
@@ -304,10 +304,10 @@
 	word-wrap: break-word;
 
 	blockquote {
-		background: #eef0f2
+		background: $gray-200
 			url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAYCAMAAAA1ddazAAAALVBMVEX////Q3enT3+rZ5O3d5u/g6PDi6vLm7fPp7/Xs8vbv9Pjy9vn2+Pv5+vz8/f47YiUzAAAAAXRSTlMAQObYZgAAAJNJREFUeNqt0dsOhCAMRVFPuRUd+P/PlRrkiAnxZfbbogkpYftbNQfZn9Ygx1CJAiA8jJbeVJtKKrO19qsCWrGp25tTvemMues2d/F9vLBibEZHWsy/pTOsben4YXd5XxpX7mX/MnxZWNBzmQbtMUovqzmBldli8wJ20HxlpMts4XddBZr78MBVmrZyaFIjbc/77gQWOwQvaraRrQAAAABJRU5ErkJggg==)
 			no-repeat 5px 5px;
-		border: 1px solid #777;
+		border: 1px solid $gray-600;
 		padding: 5px 45px;
 
 		&:after {
@@ -330,8 +330,8 @@
 	}
 
 	pre {
-		background: #f9f9f9;
-		border: 1px solid #777;
+		background: $gray-100;
+		border: 1px solid $gray-600;
 		padding: 0.5em;
 	}
 }

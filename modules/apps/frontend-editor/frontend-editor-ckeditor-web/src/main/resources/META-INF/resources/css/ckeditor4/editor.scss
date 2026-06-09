@@ -1,6 +1,8 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-editable {
-	$edit-color: #68bb30;
-	$edit-color-hover: darken(#68bb30, 10);
+	$edit-color: $green-l2;
+	$edit-color-hover: $green-l1;
 
 	outline: 1px dashed $edit-color;
 	outline-offset: 2px;
@@ -31,7 +33,7 @@
 	}
 
 	&:hover {
-		background-color: rgba(255, 255, 255, 0.3);
+		background-color: unquote('hsl(from #{$white} h s l / 0.3)');
 		outline-color: $edit-color-hover;
 
 		&:after {

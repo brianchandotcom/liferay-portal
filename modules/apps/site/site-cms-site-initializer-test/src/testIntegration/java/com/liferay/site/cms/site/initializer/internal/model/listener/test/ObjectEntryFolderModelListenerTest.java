@@ -118,7 +118,7 @@ public class ObjectEntryFolderModelListenerTest {
 
 		Assert.assertNotNull(objectEntry);
 
-		String randomActionId = RandomTestUtil.randomString();
+		String actionId = RandomTestUtil.randomString();
 
 		rootJSONObject.put(
 			"OBJECT_ENTRY_FOLDERS",
@@ -129,8 +129,7 @@ public class ObjectEntryFolderModelListenerTest {
 					ActionKeys.PERMISSIONS)
 			).put(
 				RoleConstants.CMS_ADMINISTRATOR,
-				JSONUtil.putAll(
-					randomActionId, ActionKeys.UPDATE, ActionKeys.VIEW)
+				JSONUtil.putAll(actionId, ActionKeys.UPDATE, ActionKeys.VIEW)
 			).put(
 				RoleConstants.USER,
 				JSONUtil.putAll(
@@ -150,7 +149,7 @@ public class ObjectEntryFolderModelListenerTest {
 			rootObjectEntryFolder.getObjectEntryFolderId());
 
 		_assertResourcePermissions(
-			rootJSONObject, childObjectEntryFolder, randomActionId);
+			rootJSONObject, childObjectEntryFolder, actionId);
 	}
 
 	@Test
@@ -222,7 +221,7 @@ public class ObjectEntryFolderModelListenerTest {
 
 	private void _assertResourcePermissions(
 			JSONObject expectedDefaultPermissionsJSONObject,
-			ObjectEntryFolder objectEntryFolder, String randomActionId)
+			ObjectEntryFolder objectEntryFolder, String actionId)
 		throws Exception {
 
 		JSONObject actualDefaultPermissionsJSONObject =
@@ -250,24 +249,25 @@ public class ObjectEntryFolderModelListenerTest {
 					_resourceActionLocalService.getResourceActions(
 						ObjectEntryFolder.class.getName())) {
 
-				String actionId = resourceAction.getActionId();
+				String resourceActionActionId = resourceAction.getActionId();
 
 				if ((objectEntryFolder.getParentObjectEntryFolderId() ==
 						ObjectEntryFolderConstants.
 							PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) &&
-					Objects.equals(actionId, ActionKeys.DELETE)) {
+					Objects.equals(resourceActionActionId, ActionKeys.DELETE)) {
 
 					Assert.assertFalse(
-						resourcePermission.hasActionId(actionId));
+						resourcePermission.hasActionId(resourceActionActionId));
 				}
 				else {
 					Assert.assertEquals(
-						actionIds.toString(), actionIds.contains(actionId),
-						resourcePermission.hasActionId(actionId));
+						actionIds.toString(),
+						actionIds.contains(resourceActionActionId),
+						resourcePermission.hasActionId(resourceActionActionId));
 				}
 			}
 
-			Assert.assertFalse(resourcePermission.hasActionId(randomActionId));
+			Assert.assertFalse(resourcePermission.hasActionId(actionId));
 		}
 	}
 
@@ -355,14 +355,13 @@ public class ObjectEntryFolderModelListenerTest {
 
 		Assert.assertNotNull(objectEntry);
 
-		String randomActionId = RandomTestUtil.randomString();
+		String actionId = RandomTestUtil.randomString();
 
 		jsonObject.put(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
 			JSONUtil.put(
 				RoleConstants.CMS_ADMINISTRATOR,
-				JSONUtil.putAll(
-					ActionKeys.UPDATE, ActionKeys.VIEW, randomActionId)
+				JSONUtil.putAll(actionId, ActionKeys.UPDATE, ActionKeys.VIEW)
 			).put(
 				RoleConstants.USER, JSONUtil.putAll(ActionKeys.VIEW)
 			));
@@ -381,8 +380,7 @@ public class ObjectEntryFolderModelListenerTest {
 				objectEntryFolder2.getObjectEntryFolderId(), false,
 				ServiceContextTestUtil.getServiceContext());
 
-		_assertResourcePermissions(
-			jsonObject, objectEntryFolder3, randomActionId);
+		_assertResourcePermissions(jsonObject, objectEntryFolder3, actionId);
 	}
 
 	@Inject

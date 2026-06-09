@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
 import classNames from 'classnames';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {ITask} from '../../../../utils/types';
 import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
@@ -28,14 +28,18 @@ export default function CalendarView({items}: CalendarViewProps) {
 	const [datePickerValue, setDatePickerValue] = useState('');
 	const [title, setTitle] = useState('');
 
-	const events = items
-		.filter((item) => item.embedded?.dueDate)
-		.map((item) => ({
-			allDay: true,
-			id: String(item.embedded.id),
-			start: item.embedded.dueDate.slice(0, 10),
-			title: item.embedded.title,
-		}));
+	const events = useMemo(
+		() =>
+			items
+				.filter((item) => item.embedded?.dueDate)
+				.map((item) => ({
+					allDay: true,
+					id: String(item.embedded.id),
+					start: item.embedded.dueDate.slice(0, 10),
+					title: item.embedded.title,
+				})),
+		[items]
+	);
 
 	useEffect(() => {
 		Liferay.fire(UPDATE_TASKS_QUICK_FILTER_VISIBILITY, {visible: false});

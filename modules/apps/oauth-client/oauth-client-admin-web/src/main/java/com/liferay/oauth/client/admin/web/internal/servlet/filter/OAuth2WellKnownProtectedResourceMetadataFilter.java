@@ -125,40 +125,37 @@ public class OAuth2WellKnownProtectedResourceMetadataFilter extends BaseFilter {
 				fetchOAuthClientPRLocalMetadata(companyId, true, null);
 		}
 
-		String resourcePath = requestURI.substring(
-			index + _WELL_KNOWN_PATH.length());
-
-		String protectedResourceURI =
-			_portal.getPortalURL(httpServletRequest) +
-				requestURI.substring(0, index) + resourcePath;
+		String localWellKnownURI =
+			_portal.getPortalURL(httpServletRequest) + requestURI;
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			_oAuthClientPRLocalMetadataLocalService.
-				fetchOAuthClientPRLocalMetadata(
-					companyId, protectedResourceURI);
+				fetchOAuthClientPRLocalMetadataByLocalWellKnownURI(
+					companyId, localWellKnownURI);
+
+		if (oAuthClientPRLocalMetadata == null) {
+			if (localWellKnownURI.endsWith(StringPool.SLASH)) {
+				oAuthClientPRLocalMetadata =
+					_oAuthClientPRLocalMetadataLocalService.
+						fetchOAuthClientPRLocalMetadataByLocalWellKnownURI(
+							companyId,
+							localWellKnownURI.substring(
+								0, localWellKnownURI.length() - 1));
+			}
+			else {
+				oAuthClientPRLocalMetadata =
+					_oAuthClientPRLocalMetadataLocalService.
+						fetchOAuthClientPRLocalMetadataByLocalWellKnownURI(
+							companyId, localWellKnownURI + StringPool.SLASH);
+			}
+		}
 
 		if (oAuthClientPRLocalMetadata != null) {
 			return oAuthClientPRLocalMetadata;
 		}
 
-		if (protectedResourceURI.endsWith(StringPool.SLASH)) {
-			oAuthClientPRLocalMetadata =
-				_oAuthClientPRLocalMetadataLocalService.
-					fetchOAuthClientPRLocalMetadata(
-						companyId,
-						protectedResourceURI.substring(
-							0, protectedResourceURI.length() - 1));
-		}
-		else {
-			oAuthClientPRLocalMetadata =
-				_oAuthClientPRLocalMetadataLocalService.
-					fetchOAuthClientPRLocalMetadata(
-						companyId, protectedResourceURI + StringPool.SLASH);
-		}
-
-		if (oAuthClientPRLocalMetadata != null) {
-			return oAuthClientPRLocalMetadata;
-		}
+		String resourcePath = requestURI.substring(
+			index + _WELL_KNOWN_PATH.length());
 
 		if (resourcePath.isEmpty() ||
 			Objects.equals(resourcePath, StringPool.SLASH)) {

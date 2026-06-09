@@ -25,6 +25,8 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class CustomKeyManagerProfile implements KeyManagerProfile {
 
+	public static final String PROFILE_ID = "custom";
+
 	@Override
 	public void bootstrap() throws Exception {
 	}
@@ -46,7 +48,7 @@ public class CustomKeyManagerProfile implements KeyManagerProfile {
 
 	@Override
 	public String getProfileId() {
-		return "custom";
+		return PROFILE_ID;
 	}
 
 	@Override

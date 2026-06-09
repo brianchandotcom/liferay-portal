@@ -268,6 +268,10 @@ public class StagedLayoutSetStagedModelDataHandler
 					portletDataContext.getLayoutSetPrototypeUuid(),
 					portletDataContext.getCompanyId());
 
+		boolean deleteMissingLayouts = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS, true);
+
 		for (Layout layout :
 				_layoutLocalService.getLayouts(
 					portletDataContext.getGroupId(),
@@ -286,7 +290,7 @@ public class StagedLayoutSetStagedModelDataHandler
 					layout.getLayoutSetPrototypeLayoutERC(),
 					layoutSetPrototype.getGroupId());
 
-			if ((sourcePrototypeLayout != null) ||
+			if (!deleteMissingLayouts || (sourcePrototypeLayout != null) ||
 				!_layoutLocalService.hasLayout(
 					layout.getUuid(), layout.getGroupId(),
 					layout.isPrivateLayout())) {

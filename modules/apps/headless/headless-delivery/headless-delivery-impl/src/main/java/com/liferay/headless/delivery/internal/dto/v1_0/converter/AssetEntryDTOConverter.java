@@ -57,6 +57,10 @@ public class AssetEntryDTOConverter
 				setAssetEntryId(serviceBuilderAssetEntry::getEntryId);
 				setAssetType(
 					() -> {
+						if (assetRendererFactory == null) {
+							return null;
+						}
+
 						if (!assetRendererFactory.isSupportsClassTypes()) {
 							return assetRendererFactory.getTypeName(
 								locale,
@@ -82,11 +86,22 @@ public class AssetEntryDTOConverter
 				setDateModified(serviceBuilderAssetEntry::getModifiedDate);
 				setDescription(
 					() -> serviceBuilderAssetEntry.getDescription(locale));
-				setGroupDescriptiveName(() -> group.getDescriptiveName(locale));
+				setGroupDescriptiveName(
+					() -> {
+						if (group == null) {
+							return null;
+						}
+
+						return group.getDescriptiveName(locale);
+					});
 				setStatus(
 					() -> {
 						AssetRenderer<?> assetRenderer =
 							serviceBuilderAssetEntry.getAssetRenderer();
+
+						if (assetRenderer == null) {
+							return null;
+						}
 
 						return assetRenderer.getStatus();
 					});

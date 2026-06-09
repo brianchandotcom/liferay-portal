@@ -894,6 +894,110 @@ public class ObjectRelationshipLocalServiceTest {
 			objectDefinition2.getClassName(),
 			relatedInfoItemCollectionProvider.getSourceItemClassName());
 
+		ObjectRelationship systemObjectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				_unmodifiableSystemObjectDefinition2.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		relatedInfoItemCollectionProvider = serviceTrackerMap.getService(
+			_unmodifiableSystemObjectDefinition2.getClassName());
+
+		Assert.assertEquals(
+			_unmodifiableSystemObjectDefinition2.getClassName(),
+			relatedInfoItemCollectionProvider.getSourceItemClassName());
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			systemObjectRelationship);
+
+		ObjectDefinition childObjectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName());
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				_unmodifiableSystemObjectDefinition2.getObjectDefinitionId(),
+				childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		Assert.assertNull(
+			serviceTrackerMap.getService(
+				_unmodifiableSystemObjectDefinition2.getClassName()));
+
+		childObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				childObjectDefinition.getObjectDefinitionId());
+
+		relatedInfoItemCollectionProvider = serviceTrackerMap.getService(
+			_unmodifiableSystemObjectDefinition2.getClassName());
+
+		Assert.assertEquals(
+			_unmodifiableSystemObjectDefinition2.getClassName(),
+			relatedInfoItemCollectionProvider.getSourceItemClassName());
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			childObjectDefinition);
+
+		childObjectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName());
+
+		ObjectDefinition parentObjectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			parentObjectDefinition.getObjectDefinitionId(),
+			childObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		Assert.assertNull(
+			serviceTrackerMap.getService(
+				parentObjectDefinition.getClassName()));
+
+		parentObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId());
+
+		Assert.assertNull(
+			serviceTrackerMap.getService(
+				parentObjectDefinition.getClassName()));
+
+		childObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				childObjectDefinition.getObjectDefinitionId());
+
+		relatedInfoItemCollectionProvider = serviceTrackerMap.getService(
+			parentObjectDefinition.getClassName());
+
+		Assert.assertEquals(
+			parentObjectDefinition.getClassName(),
+			relatedInfoItemCollectionProvider.getSourceItemClassName());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			childObjectDefinition);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			parentObjectDefinition);
+
 		serviceTrackerMap.close();
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);

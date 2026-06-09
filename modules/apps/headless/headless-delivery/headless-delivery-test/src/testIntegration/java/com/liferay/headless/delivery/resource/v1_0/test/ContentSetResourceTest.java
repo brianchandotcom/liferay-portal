@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Luis Ortiz
  */
+@FeatureFlag("LPD-91525")
 @RunWith(Arquillian.class)
 public class ContentSetResourceTest extends BaseContentSetResourceTestCase {
 

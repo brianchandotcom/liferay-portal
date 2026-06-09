@@ -18,7 +18,11 @@ import com.liferay.exportimport.rest.internal.util.PreviewPortletDataHandlerUtil
 import com.liferay.exportimport.rest.resource.v1_0.ExportPreviewResource;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
 
 import jakarta.ws.rs.NotFoundException;
@@ -48,15 +52,24 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 			Integer last, String range, Date startDate)
 		throws Exception {
 
-		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-			assetLibraryExternalReferenceCode, contextCompany.getCompanyId());
-
-		if ((group == null) || !group.isDepot()) {
-			throw new NotFoundException();
-		}
+		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, range, startDate);
+			endDate, group.getGroupId(), last, 0, false, null, range,
+			startDate);
+	}
+
+	@Override
+	public ExportPreview getAssetLibraryPortletExportPreview(
+			String assetLibraryExternalReferenceCode, String portletId,
+			Date endDate, Integer last, Long plid, String range, Date startDate)
+		throws Exception {
+
+		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
+
+		return _getExportPreview(
+			endDate, group.getGroupId(), last, GetterUtil.getLong(plid), false,
+			portletId, range, startDate);
 	}
 
 	@Override
@@ -72,7 +85,8 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		}
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, range, startDate);
+			endDate, group.getGroupId(), last, 0, false, null, range,
+			startDate);
 	}
 
 	@Override
@@ -81,19 +95,40 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 			String range, Date startDate)
 		throws Exception {
 
-		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
+		Group group = _getSiteGroup(siteExternalReferenceCode);
 
-		if ((group == null) || !group.isSite()) {
+		return _getExportPreview(
+			endDate, group.getGroupId(), last, 0, false, null, range,
+			startDate);
+	}
+
+	@Override
+	public ExportPreview getSitePortletExportPreview(
+			String siteExternalReferenceCode, String portletId, Date endDate,
+			Integer last, Long plid, String range, Date startDate)
+		throws Exception {
+
+		Group group = _getSiteGroup(siteExternalReferenceCode);
+
+		return _getExportPreview(
+			endDate, group.getGroupId(), last, GetterUtil.getLong(plid), false,
+			portletId, range, startDate);
+	}
+
+	private Group _getAssetLibraryGroup(String externalReferenceCode) {
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		if ((group == null) || !group.isDepot()) {
 			throw new NotFoundException();
 		}
 
-		return _getExportPreview(
-			endDate, group.getGroupId(), last, range, startDate);
+		return group;
 	}
 
 	private ExportPreview _getExportPreview(
-			Date endDate, long groupId, Integer last, String range,
+			Date endDate, long groupId, Integer last, long plid,
+			boolean privateLayout, String portletId, String range,
 			Date startDate)
 		throws Exception {
 
@@ -108,10 +143,21 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Map<String, List<PreviewPortletDataHandler>>
 			previewPortletDataHandlers = new LinkedHashMap<>();
 
-		for (Portlet portlet :
-				_exportImportHelper.getExportablePortlets(
-					contextCompany.getCompanyId(), false, groupId)) {
+		boolean portletScoped = !Validator.isBlank(portletId);
 
+		List<Portlet> portlets = null;
+
+		if (portletScoped) {
+			portlets = ListUtil.fromArray(
+				_portletLocalService.getPortletById(
+					contextCompany.getCompanyId(), portletId));
+		}
+		else {
+			portlets = _exportImportHelper.getExportablePortlets(
+				contextCompany.getCompanyId(), false, groupId);
+		}
+
+		for (Portlet portlet : portlets) {
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(portlet);
 
@@ -131,7 +177,18 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 				portletDataContext.getManifestSummary(), portlet,
 				portletDataHandler,
 				PortletDataHandler::getExportPortletDataHandlerControls,
-				previewPortletDataHandlers);
+				portletScoped, previewPortletDataHandlers);
+
+			if (portletScoped) {
+				PreviewPortletDataHandlerUtil.
+					addConfigurationPreviewPortletDataHandler(
+						locale, portlet,
+						portletDataHandler.
+							getExportConfigurationPortletDataHandlerControls(
+								contextCompany.getCompanyId(), groupId, portlet,
+								plid, privateLayout),
+						previewPortletDataHandlers);
+			}
 		}
 
 		return new ExportPreview() {
@@ -151,6 +208,17 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		};
 	}
 
+	private Group _getSiteGroup(String externalReferenceCode) {
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		if ((group == null) || !group.isSite()) {
+			throw new NotFoundException();
+		}
+
+		return group;
+	}
+
 	@Reference
 	private ExportImportHelper _exportImportHelper;
 
@@ -159,6 +227,9 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 
 	@Reference
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

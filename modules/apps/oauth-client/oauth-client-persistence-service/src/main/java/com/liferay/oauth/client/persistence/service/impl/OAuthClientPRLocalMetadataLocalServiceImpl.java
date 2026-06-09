@@ -12,6 +12,7 @@ import com.liferay.oauth.client.persistence.exception.OAuthClientPRLocalMetadata
 import com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientPRLocalMetadataLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -81,6 +82,8 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateURL(protectedResourceURI);
+
+		protectedResourceURI = _removeTrailingSlash(protectedResourceURI);
 
 		String localWellKnownURI = _generateLocalWellKnownURI(
 			protectedResourceURI);
@@ -276,6 +279,8 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 
 		_validateURL(protectedResourceURI);
 
+		protectedResourceURI = _removeTrailingSlash(protectedResourceURI);
+
 		if (!protectedResourceURI.equals(
 				oAuthClientPRLocalMetadata.getProtectedResourceURI())) {
 
@@ -361,6 +366,14 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 			throw new OAuthClientPRLocalMetadataMetadataJSONException(
 				exception.getMessage(), exception);
 		}
+	}
+
+	private String _removeTrailingSlash(String urlString) {
+		if ((urlString == null) || !urlString.endsWith(StringPool.SLASH)) {
+			return urlString;
+		}
+
+		return urlString.substring(0, urlString.length() - 1);
 	}
 
 	private String[] _toStringArray(JSONArray jsonArray) {

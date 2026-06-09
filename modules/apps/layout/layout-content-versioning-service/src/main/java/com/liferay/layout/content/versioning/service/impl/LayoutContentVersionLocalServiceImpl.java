@@ -61,7 +61,9 @@ public class LayoutContentVersionLocalServiceImpl
 
 		if (skipIfUnchanged) {
 			LayoutContentVersion lastLayoutContentVersion =
-				layoutContentVersionPersistence.fetchByPlid_First(plid, null);
+				layoutContentVersionPersistence.fetchByPlid_First(
+					plid,
+					LayoutContentVersionVersionComparator.getInstance(false));
 
 			if ((lastLayoutContentVersion != null) &&
 				dataHash.equals(lastLayoutContentVersion.getDataHash())) {

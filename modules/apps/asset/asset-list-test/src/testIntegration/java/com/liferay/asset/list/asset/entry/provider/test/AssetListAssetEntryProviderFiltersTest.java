@@ -71,7 +71,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	@FeatureFlag(enable = false, value = "LPD-74731")
 	@Test
-	public void testFiltersAreIgnoredWhenFeatureFlagDisabled()
+	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagDisabled()
 		throws Exception {
 
 		JSONArray filtersJSONArray = JSONUtil.putAll(
@@ -99,7 +99,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testFiltersArePropagatedAsAttributeWhenFeatureFlagEnabled()
+	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagEnabled()
 		throws Exception {
 
 		JSONArray filtersJSONArray = JSONUtil.putAll(
@@ -139,7 +139,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 		JSONArray actualJSONArray = (JSONArray)assetEntryQuery.getAttribute(
 			"filters");
 
-		Assert.assertNotNull(actualJSONArray);
 		Assert.assertEquals(
 			actualJSONArray.toString(), 2, actualJSONArray.length());
 
@@ -154,7 +153,9 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testInvalidFiltersJSONIsTolerated() throws Exception {
+	public void testGetAssetEntryQueryWithInvalidFiltersJSON()
+		throws Exception {
+
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
 			"not-a-json-array");
 
@@ -168,9 +169,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testNoFiltersAttributeWhenTypeSettingsHasNoFilters()
-		throws Exception {
-
+	public void testGetAssetEntryQueryWithoutFilters() throws Exception {
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
 			null);
 

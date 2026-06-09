@@ -748,7 +748,7 @@ public class AssetListAssetEntryProviderImpl
 			"filters");
 
 		return AssetListFiltersUtil.getFiltersBooleanClauses(
-			filtersJSONArray, companyId, LocaleUtil.getMostRelevantLocale());
+			companyId, filtersJSONArray, LocaleUtil.getMostRelevantLocale());
 	}
 
 	private long _getFirstSegmentsEntryId(

@@ -99,9 +99,11 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 		throws Exception {
 
 		_serviceRegistrations.add(
-			_registerEntry(RandomTestUtil.randomString(), 100));
+			_registerEntry(
+				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
 		_serviceRegistrations.add(
-			_registerEntry(RandomTestUtil.randomString(), 200));
+			_registerEntry(
+				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
 
 		String html = _render();
 
@@ -124,7 +126,8 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 		throws Exception {
 
 		_serviceRegistrations.add(
-			_registerEntry(RandomTestUtil.randomString(), 100));
+			_registerEntry(
+				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
 
 		String html = _render();
 
@@ -186,7 +189,8 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 				"product.navigation.control.menu.category.key",
 				ProductNavigationControlMenuCategoryKeys.ROOT
 			).put(
-				"product.navigation.control.menu.category.order", 1000
+				"product.navigation.control.menu.category.order",
+				RandomTestUtil.randomInt()
 			).build());
 	}
 

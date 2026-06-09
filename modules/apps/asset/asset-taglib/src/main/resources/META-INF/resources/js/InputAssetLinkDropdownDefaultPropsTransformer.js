@@ -91,9 +91,10 @@ export default function propsTransformer({
 
 			const singleAssetEntryType = assetEntryTypes.length === 1;
 
-			const excludedAssetEntry = refererClassPK
-				? {classNameId: refererClassNameId, classPK: refererClassPK}
-				: null;
+			const excludedAssetEntry =
+				refererClassNameId > 0 && refererClassPK > 0
+					? {classNameId: refererClassNameId, classPK: refererClassPK}
+					: null;
 
 			openItemSelectorModal({
 				apiURL: buildAPIURL(groupId, classNameIds, excludedAssetEntry),

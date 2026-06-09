@@ -47,6 +47,27 @@ public class ExportProcess implements Cloneable, Serializable {
 
 	protected Creator creator;
 
+	public Date getDateCompleted() {
+		return dateCompleted;
+	}
+
+	public void setDateCompleted(Date dateCompleted) {
+		this.dateCompleted = dateCompleted;
+	}
+
+	public void setDateCompleted(
+		UnsafeSupplier<Date, Exception> dateCompletedUnsafeSupplier) {
+
+		try {
+			dateCompleted = dateCompletedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateCompleted;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -88,6 +109,27 @@ public class ExportProcess implements Cloneable, Serializable {
 	}
 
 	protected Date dateModified;
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public void setErrorMessage(
+		UnsafeSupplier<String, Exception> errorMessageUnsafeSupplier) {
+
+		try {
+			errorMessage = errorMessageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String errorMessage;
 
 	public Long getId() {
 		return id;
@@ -180,4 +222,4 @@ public class ExportProcess implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1089449550
+// LIFERAY-REST-BUILDER-HASH:-523482248

@@ -55,6 +55,11 @@ public interface ImportPreviewResource {
 			MultipartBody multipartBody, String callbackURL, Object object)
 		throws Exception;
 
+	public ImportPreview postAssetLibraryPortletImportPreview(
+			String assetLibraryExternalReferenceCode, String portletId,
+			Long plid, MultipartBody multipartBody)
+		throws Exception;
+
 	public ImportPreview postImportPreview(MultipartBody multipartBody)
 		throws Exception;
 
@@ -69,6 +74,11 @@ public interface ImportPreviewResource {
 	public Response postSiteImportPreviewBatch(
 			String siteExternalReferenceCode, MultipartBody multipartBody,
 			String callbackURL, Object object)
+		throws Exception;
+
+	public ImportPreview postSitePortletImportPreview(
+			String siteExternalReferenceCode, String portletId, Long plid,
+			MultipartBody multipartBody)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -167,4 +177,4 @@ public interface ImportPreviewResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-429379540
+// LIFERAY-REST-BUILDER-HASH:-224406554

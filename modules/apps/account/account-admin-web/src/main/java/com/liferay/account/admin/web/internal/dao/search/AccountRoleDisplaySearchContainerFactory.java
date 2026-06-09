@@ -11,9 +11,11 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
+import com.liferay.account.role.AccountRolePermissionThreadLocal;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountRoleServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -86,34 +88,41 @@ public class AccountRoleDisplaySearchContainerFactory {
 			}
 		}
 
-		BaseModelSearchResult<AccountRole> baseModelSearchResult =
-			AccountRoleServiceUtil.searchAccountRoles(
-				themeDisplay.getCompanyId(),
-				new long[] {
-					accountEntryId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
-				},
-				keywords,
-				LinkedHashMapBuilder.<String, Object>put(
-					"excludedRoleNames",
-					excludedRoleNames.toArray(new String[0])
-				).build(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				RoleNameComparator.getInstance(
-					Objects.equals(searchContainer.getOrderByType(), "asc")));
+		try (SafeCloseable safeCloseable =
+				AccountRolePermissionThreadLocal.
+					setAccountEntryIdWithSafeCloseable(accountEntryId)) {
 
-		searchContainer.setResultsAndTotal(
-			() -> TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(),
-				accountRole -> {
-					if (!AccountRoleConstants.isImpliedRole(
-							accountRole.getRole())) {
+			BaseModelSearchResult<AccountRole> baseModelSearchResult =
+				AccountRoleServiceUtil.searchAccountRoles(
+					themeDisplay.getCompanyId(),
+					new long[] {
+						accountEntryId,
+						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
+					},
+					keywords,
+					LinkedHashMapBuilder.<String, Object>put(
+						"excludedRoleNames",
+						excludedRoleNames.toArray(new String[0])
+					).build(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					RoleNameComparator.getInstance(
+						Objects.equals(
+							searchContainer.getOrderByType(), "asc")));
 
-						return AccountRoleDisplay.of(accountRole);
-					}
+			searchContainer.setResultsAndTotal(
+				() -> TransformUtil.transform(
+					baseModelSearchResult.getBaseModels(),
+					accountRole -> {
+						if (!AccountRoleConstants.isImpliedRole(
+								accountRole.getRole())) {
 
-					return null;
-				}),
-			baseModelSearchResult.getLength());
+							return AccountRoleDisplay.of(accountRole);
+						}
+
+						return null;
+					}),
+				baseModelSearchResult.getLength());
+		}
 
 		searchContainer.setRowChecker(
 			new AccountRoleRowChecker(liferayPortletResponse));

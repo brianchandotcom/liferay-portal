@@ -4,9 +4,10 @@
  */
 
 export const SCOPES = {
-	ASSET_LIBRARY: 'assetLibrary',
-	COMPANY: 'company',
-	SITE: 'site',
+	COMPANY: 'COMPANY',
+	DEPOT: 'DEPOT',
+	PORTLET: 'PORTLET',
+	SITE: 'SITE',
 } as const;
 
 export type Scope = (typeof SCOPES)[keyof typeof SCOPES];

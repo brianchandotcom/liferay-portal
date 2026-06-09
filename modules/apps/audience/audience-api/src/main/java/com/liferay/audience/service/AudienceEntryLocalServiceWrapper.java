@@ -46,6 +46,17 @@ public class AudienceEntryLocalServiceWrapper
 		return _audienceEntryLocalService.addAudienceEntry(audienceEntry);
 	}
 
+	@Override
+	public com.liferay.audience.model.AudienceEntry addAudienceEntry(
+			String externalReferenceCode, String json,
+			java.util.Map<java.util.Locale, String> nameMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _audienceEntryLocalService.addAudienceEntry(
+			externalReferenceCode, json, nameMap, serviceContext);
+	}
+
 	/**
 	 * Creates a new audience entry with the primary key. Does not add the audience entry to the database.
 	 *
@@ -79,10 +90,12 @@ public class AudienceEntryLocalServiceWrapper
 	 *
 	 * @param audienceEntry the audience entry
 	 * @return the audience entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.audience.model.AudienceEntry deleteAudienceEntry(
-		com.liferay.audience.model.AudienceEntry audienceEntry) {
+			com.liferay.audience.model.AudienceEntry audienceEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _audienceEntryLocalService.deleteAudienceEntry(audienceEntry);
 	}
@@ -277,6 +290,30 @@ public class AudienceEntryLocalServiceWrapper
 		return _audienceEntryLocalService.getAudienceEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.audience.model.AudienceEntry>
+		getAudienceEntries(
+			long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.audience.model.AudienceEntry> orderByComparator) {
+
+		return _audienceEntryLocalService.getAudienceEntries(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.audience.model.AudienceEntry>
+			getAudienceEntries(
+				long companyId, String name, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.audience.model.AudienceEntry>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _audienceEntryLocalService.getAudienceEntries(
+			companyId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of audience entries.
 	 *
@@ -285,6 +322,17 @@ public class AudienceEntryLocalServiceWrapper
 	@Override
 	public int getAudienceEntriesCount() {
 		return _audienceEntryLocalService.getAudienceEntriesCount();
+	}
+
+	@Override
+	public int getAudienceEntriesCount(long companyId) {
+		return _audienceEntryLocalService.getAudienceEntriesCount(companyId);
+	}
+
+	@Override
+	public int getAudienceEntriesCount(long companyId, String name) {
+		return _audienceEntryLocalService.getAudienceEntriesCount(
+			companyId, name);
 	}
 
 	/**
@@ -386,6 +434,17 @@ public class AudienceEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.audience.model.AudienceEntry updateAudienceEntry(
+			long audienceEntryId, String json,
+			java.util.Map<java.util.Locale, String> nameMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _audienceEntryLocalService.updateAudienceEntry(
+			audienceEntryId, json, nameMap, serviceContext);
+	}
+
+	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _audienceEntryLocalService.getBasePersistence();
 	}
@@ -405,4 +464,4 @@ public class AudienceEntryLocalServiceWrapper
 	private AudienceEntryLocalService _audienceEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1718025618
+// LIFERAY-SERVICE-BUILDER-HASH:340398818

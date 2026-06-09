@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for AudienceEntry. This utility wraps
@@ -51,6 +52,16 @@ public class AudienceEntryLocalServiceUtil {
 		return getService().addAudienceEntry(audienceEntry);
 	}
 
+	public static AudienceEntry addAudienceEntry(
+			String externalReferenceCode, String json,
+			Map<java.util.Locale, String> nameMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addAudienceEntry(
+			externalReferenceCode, json, nameMap, serviceContext);
+	}
+
 	/**
 	 * Creates a new audience entry with the primary key. Does not add the audience entry to the database.
 	 *
@@ -80,9 +91,10 @@ public class AudienceEntryLocalServiceUtil {
 	 *
 	 * @param audienceEntry the audience entry
 	 * @return the audience entry that was removed
+	 * @throws PortalException
 	 */
-	public static AudienceEntry deleteAudienceEntry(
-		AudienceEntry audienceEntry) {
+	public static AudienceEntry deleteAudienceEntry(AudienceEntry audienceEntry)
+		throws PortalException {
 
 		return getService().deleteAudienceEntry(audienceEntry);
 	}
@@ -245,6 +257,23 @@ public class AudienceEntryLocalServiceUtil {
 		return getService().getAudienceEntries(start, end);
 	}
 
+	public static List<AudienceEntry> getAudienceEntries(
+		long companyId, int start, int end,
+		OrderByComparator<AudienceEntry> orderByComparator) {
+
+		return getService().getAudienceEntries(
+			companyId, start, end, orderByComparator);
+	}
+
+	public static List<AudienceEntry> getAudienceEntries(
+			long companyId, String name, int start, int end,
+			OrderByComparator<AudienceEntry> orderByComparator)
+		throws PortalException {
+
+		return getService().getAudienceEntries(
+			companyId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of audience entries.
 	 *
@@ -252,6 +281,14 @@ public class AudienceEntryLocalServiceUtil {
 	 */
 	public static int getAudienceEntriesCount() {
 		return getService().getAudienceEntriesCount();
+	}
+
+	public static int getAudienceEntriesCount(long companyId) {
+		return getService().getAudienceEntriesCount(companyId);
+	}
+
+	public static int getAudienceEntriesCount(long companyId, String name) {
+		return getService().getAudienceEntriesCount(companyId, name);
 	}
 
 	/**
@@ -339,6 +376,16 @@ public class AudienceEntryLocalServiceUtil {
 		return getService().updateAudienceEntry(audienceEntry);
 	}
 
+	public static AudienceEntry updateAudienceEntry(
+			long audienceEntryId, String json,
+			Map<java.util.Locale, String> nameMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateAudienceEntry(
+			audienceEntryId, json, nameMap, serviceContext);
+	}
+
 	public static AudienceEntryLocalService getService() {
 		return _serviceSnapshot.get();
 	}
@@ -349,4 +396,4 @@ public class AudienceEntryLocalServiceUtil {
 			AudienceEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1392611118
+// LIFERAY-SERVICE-BUILDER-HASH:-1848783454

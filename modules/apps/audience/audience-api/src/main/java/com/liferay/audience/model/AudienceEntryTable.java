@@ -8,6 +8,7 @@ package com.liferay.audience.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -44,8 +45,8 @@ public class AudienceEntryTable extends BaseTable<AudienceEntryTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<AudienceEntryTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<AudienceEntryTable, String> json = createColumn(
-		"json", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AudienceEntryTable, Clob> json = createColumn(
+		"json", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<AudienceEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
@@ -54,4 +55,4 @@ public class AudienceEntryTable extends BaseTable<AudienceEntryTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-10870693
+// LIFERAY-SERVICE-BUILDER-HASH:-1363239532

@@ -5,7 +5,13 @@
 
 package com.liferay.audience.service;
 
+import com.liferay.audience.model.AudienceEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for AudienceEntry. This utility wraps
@@ -26,6 +32,51 @@ public class AudienceEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.audience.service.impl.AudienceEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static AudienceEntry addAudienceEntry(
+			String externalReferenceCode, String json,
+			Map<java.util.Locale, String> nameMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addAudienceEntry(
+			externalReferenceCode, json, nameMap, serviceContext);
+	}
+
+	public static AudienceEntry deleteAudienceEntry(long audienceEntryId)
+		throws PortalException {
+
+		return getService().deleteAudienceEntry(audienceEntryId);
+	}
+
+	public static List<AudienceEntry> getAudienceEntries(
+		long companyId, int start, int end,
+		OrderByComparator<AudienceEntry> orderByComparator) {
+
+		return getService().getAudienceEntries(
+			companyId, start, end, orderByComparator);
+	}
+
+	public static List<AudienceEntry> getAudienceEntries(
+		long companyId, String name, int start, int end,
+		OrderByComparator<AudienceEntry> orderByComparator) {
+
+		return getService().getAudienceEntries(
+			companyId, name, start, end, orderByComparator);
+	}
+
+	public static int getAudienceEntriesCount(long companyId) {
+		return getService().getAudienceEntriesCount(companyId);
+	}
+
+	public static int getAudienceEntriesCount(long companyId, String name) {
+		return getService().getAudienceEntriesCount(companyId, name);
+	}
+
+	public static AudienceEntry getAudienceEntry(long audienceEntryId)
+		throws PortalException {
+
+		return getService().getAudienceEntry(audienceEntryId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -34,6 +85,16 @@ public class AudienceEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static AudienceEntry updateAudienceEntry(
+			long audienceEntryId, String json,
+			Map<java.util.Locale, String> nameMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateAudienceEntry(
+			audienceEntryId, json, nameMap, serviceContext);
 	}
 
 	public static AudienceEntryService getService() {
@@ -45,4 +106,4 @@ public class AudienceEntryServiceUtil {
 			AudienceEntryServiceUtil.class, AudienceEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-960722404
+// LIFERAY-SERVICE-BUILDER-HASH:-571524691

@@ -83,6 +83,7 @@ public abstract class BaseAssetEntryResourceImpl
 				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Scopes the search to the union of the given groups. When omitted, the search runs across every group the user has read permission to.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "groupIds"
 			),
@@ -147,6 +148,7 @@ public abstract class BaseAssetEntryResourceImpl
 				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Scopes the search to the union of the given groups. When omitted, the search runs across every group the user has read permission to.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "groupIds"
 			),
@@ -898,4 +900,4 @@ public abstract class BaseAssetEntryResourceImpl
 		LogFactoryUtil.getLog(BaseAssetEntryResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:522037246
+// LIFERAY-REST-BUILDER-HASH:-753671982

@@ -13,6 +13,8 @@ import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
 import getFragmentDefinition from '../../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -112,5 +114,60 @@ test(
 				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-accountselectorbuttonfragmentrenderer'
 			)
 		).toHaveCount(1);
+	}
+);
+
+test(
+	'Account selector dropdown opens and closes on click in page edit mode',
+	{tag: '@LPD-92403'},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'COMMERCE_ACCOUNT_SELECTOR_FRAGMENTS-account-selector-fragment',
+					pageElements: [
+						{
+							id: getRandomString(),
+							pageElements: [
+								getFragmentDefinition({
+									id: getRandomString(),
+									key: 'com.liferay.commerce.fragment.internal.renderer.AccountSelectorButtonFragmentRenderer',
+								}),
+							],
+							type: 'FragmentDropZone',
+						},
+					],
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		const accountSelectorContainer = page.locator(
+			'.account-selector-container'
+		);
+		const accountSelectorCtaContainer = page.locator(
+			'.account-selector-cta-container'
+		);
+		const accountSelectorDropdownMenu = accountSelectorContainer.locator(
+			'[id$="-account-selector-dropdown-menu"]'
+		);
+
+		await expect(accountSelectorContainer).toBeVisible();
+
+		await expect(accountSelectorDropdownMenu).toBeHidden();
+
+		await clickAndExpectToBeVisible({
+			target: accountSelectorDropdownMenu,
+			trigger: accountSelectorCtaContainer,
+		});
+
+		await clickAndExpectToBeHidden({
+			target: accountSelectorDropdownMenu,
+			trigger: accountSelectorCtaContainer,
+		});
 	}
 );

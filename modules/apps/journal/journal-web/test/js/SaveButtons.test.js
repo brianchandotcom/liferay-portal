@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {render, screen, waitFor} from '@testing-library/react';
+import {act, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -249,6 +249,64 @@ describe('SaveButtons', () => {
 		expect(screen.getByText(yearToCheck)).toBeInTheDocument();
 
 		jest.useRealTimers();
+	});
+
+	it('shows an error alert when the publish validation request fails', async () => {
+		global.Liferay.componentReady = jest.fn().mockResolvedValue({
+			reactComponentRef: {
+				current: {
+					getFields: () => [{valid: true}],
+					validate: jest
+						.fn()
+						.mockRejectedValue(
+							new Error('Upload size is too large.')
+						),
+				},
+			},
+		});
+
+		renderComponent({
+			...DEFAULT_PROPS,
+			articleId: null,
+		});
+
+		userEvent.click(screen.getByText('publish'));
+
+		expect(
+			await screen.findByText('Upload size is too large.')
+		).toBeInTheDocument();
+	});
+
+	it('does not show an error alert when the publish validation request is aborted', async () => {
+		const validate = jest
+			.fn()
+			.mockRejectedValue(
+				new DOMException('The user aborted a request.', 'AbortError')
+			);
+
+		global.Liferay.componentReady = jest.fn().mockResolvedValue({
+			reactComponentRef: {
+				current: {
+					getFields: () => [{valid: true}],
+					validate,
+				},
+			},
+		});
+
+		renderComponent({
+			...DEFAULT_PROPS,
+			articleId: null,
+		});
+
+		userEvent.click(screen.getByText('publish'));
+
+		await waitFor(() => expect(validate).toHaveBeenCalled());
+
+		await act(async () => {});
+
+		expect(
+			screen.queryByText('The user aborted a request.')
+		).not.toBeInTheDocument();
 	});
 
 	it('does not proceed if required fields validation fails', async () => {

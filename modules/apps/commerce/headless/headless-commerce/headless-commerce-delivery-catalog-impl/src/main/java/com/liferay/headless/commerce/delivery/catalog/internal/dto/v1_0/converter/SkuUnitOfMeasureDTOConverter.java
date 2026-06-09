@@ -63,14 +63,16 @@ public class SkuUnitOfMeasureDTOConverter
 			(CommerceContext)dtoConverterContext.getAttribute(
 				"commerceContext");
 
+		if (commerceContext == null) {
+			return null;
+		}
+
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
-
 		CommercePriceEntry commercePriceEntry =
 			_commerceProductPriceCalculation.getUnitCommercePriceEntry(
 				commerceContext, cpInstanceUnitOfMeasure.getCPInstanceId(),
 				cpInstanceUnitOfMeasure.getKey());
-
 		Locale locale = dtoConverterContext.getLocale();
 
 		return new SkuUnitOfMeasure() {
@@ -93,81 +95,9 @@ public class SkuUnitOfMeasureDTOConverter
 				setName(() -> cpInstanceUnitOfMeasure.getName(locale));
 				setPrecision(cpInstanceUnitOfMeasure::getPrecision);
 				setPrice(
-					() -> {
-						if (commercePriceEntry == null) {
-							return null;
-						}
-
-						BigDecimal convertedPrice = PriceUtil.getConvertedPrice(
-							commerceCurrency, _commerceCurrencyLocalService,
-							commercePriceEntry.getCommercePriceList(),
-							commercePriceEntry.getPrice());
-						CommerceMoney pricingQuantityUnitPriceCommerceMoney =
-							PriceUtil.getPricingQuantityUnitPriceCommerceMoney(
-								commerceCurrency, _commerceCurrencyLocalService,
-								_commerceMoneyFactory, commercePriceEntry,
-								commercePriceEntry.getPrice());
-
-						return new Price() {
-							{
-								setCurrency(
-									() -> commerceCurrency.getName(locale));
-								setPrice(convertedPrice::doubleValue);
-								setPriceFormatted(
-									() -> _commercePriceFormatter.format(
-										commerceCurrency, true, locale,
-										convertedPrice));
-								setPriceOnApplication(
-									commercePriceEntry::isPriceOnApplication);
-								setPricingQuantityPrice(
-									() -> {
-										if (pricingQuantityUnitPriceCommerceMoney ==
-												null) {
-
-											return null;
-										}
-
-										BigDecimal pricingQuantityUnitPrice =
-											pricingQuantityUnitPriceCommerceMoney.
-												getPrice();
-
-										if (pricingQuantityUnitPrice == null) {
-											return null;
-										}
-
-										return pricingQuantityUnitPrice.
-											doubleValue();
-									});
-								setPricingQuantityPriceFormatted(
-									() -> {
-										if (pricingQuantityUnitPriceCommerceMoney ==
-												null) {
-
-											return null;
-										}
-
-										BigDecimal pricingQuantity =
-											BigDecimalUtil.get(
-												cpInstanceUnitOfMeasure.
-													getPricingQuantity(),
-												BigDecimal.ZERO);
-
-										if (BigDecimalUtil.lte(
-												pricingQuantity,
-												BigDecimal.ZERO)) {
-
-											pricingQuantity = BigDecimal.ONE;
-										}
-
-										return pricingQuantityUnitPriceCommerceMoney.
-											format(
-												locale, pricingQuantity,
-												cpInstanceUnitOfMeasure.getName(
-													locale));
-									});
-							}
-						};
-					});
+					() -> _toPrice(
+						commerceCurrency, commercePriceEntry,
+						cpInstanceUnitOfMeasure, locale));
 				setPrimary(cpInstanceUnitOfMeasure::isPrimary);
 				setPriority(cpInstanceUnitOfMeasure::getPriority);
 				setRate(
@@ -198,6 +128,73 @@ public class SkuUnitOfMeasureDTOConverter
 									CommerceTierPriceEntryMinQuantityComparator.
 										getInstance(true)),
 							cpInstanceUnitOfMeasure, locale);
+					});
+			}
+		};
+	}
+
+	private Price _toPrice(
+			CommerceCurrency commerceCurrency,
+			CommercePriceEntry commercePriceEntry,
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, Locale locale)
+		throws Exception {
+
+		if (commercePriceEntry == null) {
+			return null;
+		}
+
+		BigDecimal convertedPrice = PriceUtil.getConvertedPrice(
+			commerceCurrency, _commerceCurrencyLocalService,
+			commercePriceEntry.getCommercePriceList(),
+			commercePriceEntry.getPrice());
+		CommerceMoney pricingQuantityUnitPriceCommerceMoney =
+			PriceUtil.getPricingQuantityUnitPriceCommerceMoney(
+				commerceCurrency, _commerceCurrencyLocalService,
+				_commerceMoneyFactory, commercePriceEntry,
+				commercePriceEntry.getPrice());
+
+		return new Price() {
+			{
+				setCurrency(() -> commerceCurrency.getName(locale));
+				setPrice(convertedPrice::doubleValue);
+				setPriceFormatted(
+					() -> _commercePriceFormatter.format(
+						commerceCurrency, true, locale, convertedPrice));
+				setPriceOnApplication(commercePriceEntry::isPriceOnApplication);
+				setPricingQuantityPrice(
+					() -> {
+						if (pricingQuantityUnitPriceCommerceMoney == null) {
+							return null;
+						}
+
+						BigDecimal pricingQuantityUnitPrice =
+							pricingQuantityUnitPriceCommerceMoney.getPrice();
+
+						if (pricingQuantityUnitPrice == null) {
+							return null;
+						}
+
+						return pricingQuantityUnitPrice.doubleValue();
+					});
+				setPricingQuantityPriceFormatted(
+					() -> {
+						if (pricingQuantityUnitPriceCommerceMoney == null) {
+							return null;
+						}
+
+						BigDecimal pricingQuantity = BigDecimalUtil.get(
+							cpInstanceUnitOfMeasure.getPricingQuantity(),
+							BigDecimal.ZERO);
+
+						if (BigDecimalUtil.lte(
+								pricingQuantity, BigDecimal.ZERO)) {
+
+							pricingQuantity = BigDecimal.ONE;
+						}
+
+						return pricingQuantityUnitPriceCommerceMoney.format(
+							locale, pricingQuantity,
+							cpInstanceUnitOfMeasure.getName(locale));
 					});
 			}
 		};

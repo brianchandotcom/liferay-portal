@@ -143,21 +143,10 @@ public class MappedProductDTOConverter
 						cpInstance.getCPInstanceId());
 		}
 
-		BigDecimal defaultQuantity;
-		String defaultUnitOfMeasureKey;
-
-		if (cpInstanceUnitOfMeasures.isEmpty()) {
-			defaultQuantity = BigDecimal.ONE;
-			defaultUnitOfMeasureKey = StringPool.BLANK;
-		}
-		else {
-			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-				cpInstanceUnitOfMeasures.get(0);
-
-			defaultQuantity =
-				cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
-			defaultUnitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
-		}
+		BigDecimal defaultQuantity = _getDefaultQuantity(
+			cpInstanceUnitOfMeasures);
+		String defaultUnitOfMeasureKey = _getDefaultUnitOfMeasureKey(
+			cpInstanceUnitOfMeasures);
 
 		return new MappedProduct() {
 			{
@@ -473,6 +462,34 @@ public class MappedProductDTOConverter
 		}
 
 		return availability;
+	}
+
+	private BigDecimal _getDefaultQuantity(
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures) {
+
+		if (cpInstanceUnitOfMeasures.isEmpty()) {
+			return BigDecimal.ONE;
+		}
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstanceUnitOfMeasures.get(0);
+
+		return BigDecimalUtil.get(
+			cpInstanceUnitOfMeasure.getIncrementalOrderQuantity(),
+			BigDecimal.ONE);
+	}
+
+	private String _getDefaultUnitOfMeasureKey(
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures) {
+
+		if (cpInstanceUnitOfMeasures.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstanceUnitOfMeasures.get(0);
+
+		return cpInstanceUnitOfMeasure.getKey();
 	}
 
 	private String[] _getFormattedDiscountPercentages(

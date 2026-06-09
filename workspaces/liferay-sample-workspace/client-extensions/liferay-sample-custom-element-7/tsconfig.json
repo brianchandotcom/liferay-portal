@@ -9,6 +9,11 @@
 		"module": "ESNext",
 		"moduleResolution": "Node",
 		"noEmit": true,
+		"paths": {
+			"@liferay/frontend-data-set-web/api": [
+				"./node_modules/@liferay/js-api/data-set/client"
+			]
+		},
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "ES2020"

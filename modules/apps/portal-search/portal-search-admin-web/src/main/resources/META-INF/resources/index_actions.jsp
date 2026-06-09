@@ -9,59 +9,22 @@
 
 <%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
-<%@ page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONObject" %><%@
-page import="com.liferay.portal.kernel.model.CompanyConstants" %><%@
-page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
+<%@ page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys" %><%@
 page import="com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayContext" %>
-
-<%@ page import="java.io.Serializable" %>
-
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %>
 
 <portlet:defineObjects />
 
 <%
 IndexActionsDisplayContext indexActionsDisplayContext = (IndexActionsDisplayContext)request.getAttribute(SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT);
-
-List<BackgroundTask> indexReindexerBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.portal.search.internal.background.task.ReindexIndexReindexerBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-
-List<BackgroundTask> reindexPortalBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.portal.search.internal.background.task.ReindexPortalBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-
-List<BackgroundTask> reindexSingleBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-
-JSONObject classNameToBackgroundTaskJSONObject = JSONFactoryUtil.createJSONObject();
-
-if (!reindexPortalBackgroundTasks.isEmpty()) {
-	BackgroundTask backgroundTask = reindexPortalBackgroundTasks.get(0);
-
-	BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(backgroundTask);
-
-	classNameToBackgroundTaskJSONObject.put("portal", backgroundTaskDisplay.getPercentage());
-}
-
-for (BackgroundTask backgroundTask : ListUtil.concat(reindexSingleBackgroundTasks, indexReindexerBackgroundTasks)) {
-	Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
-
-	String className = (String)taskContextMap.get("className");
-
-	BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(backgroundTask);
-
-	classNameToBackgroundTaskJSONObject.put(className, backgroundTaskDisplay.getPercentage());
-}
 %>
 
 <span class="hide" id="<portlet:namespace />classNameToBackgroundTaskMap">
-	<%= classNameToBackgroundTaskJSONObject.toString() %>
+	<%= indexActionsDisplayContext.getClassNameToBackgroundTaskJSONString() %>
+</span>
+<span class="hide" id="<portlet:namespace />failedReindexBackgroundTasksCount">
+	<%= indexActionsDisplayContext.getFailedReindexBackgroundTasksCount() %>
 </span>
 
 <div>

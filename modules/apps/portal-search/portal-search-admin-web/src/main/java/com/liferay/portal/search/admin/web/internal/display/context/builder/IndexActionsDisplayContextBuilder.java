@@ -5,9 +5,15 @@
 
 package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -40,6 +46,8 @@ import com.liferay.product.navigation.control.menu.constants.ProductNavigationCo
 import jakarta.portlet.RenderRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.io.Serializable;
 
 import java.text.Collator;
 
@@ -80,7 +88,11 @@ public class IndexActionsDisplayContextBuilder {
 		IndexActionsDisplayContext indexActionsDisplayContext =
 			new IndexActionsDisplayContext();
 
+		indexActionsDisplayContext.setClassNameToBackgroundTaskJSONString(
+			_getClassNameToBackgroundTaskJSONString());
 		indexActionsDisplayContext.setData(getData());
+		indexActionsDisplayContext.setFailedReindexBackgroundTasksCount(
+			_getFailedReindexBackgroundTasksCount());
 
 		return indexActionsDisplayContext;
 	}
@@ -121,6 +133,65 @@ public class IndexActionsDisplayContextBuilder {
 		).put(
 			"virtualInstances", _getVirtualInstancesJSONArray()
 		).build();
+	}
+
+	private String _getClassNameToBackgroundTaskJSONString() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		List<BackgroundTask> reindexPortalBackgroundTasks =
+			BackgroundTaskManagerUtil.getBackgroundTasks(
+				CompanyConstants.SYSTEM,
+				_CLASS_NAME_REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR,
+				BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+		if (!reindexPortalBackgroundTasks.isEmpty()) {
+			BackgroundTask backgroundTask = reindexPortalBackgroundTasks.get(0);
+
+			BackgroundTaskDisplay backgroundTaskDisplay =
+				BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(
+					backgroundTask);
+
+			jsonObject.put("portal", backgroundTaskDisplay.getPercentage());
+		}
+
+		List<BackgroundTask> backgroundTasks = ListUtil.concat(
+			BackgroundTaskManagerUtil.getBackgroundTasks(
+				CompanyConstants.SYSTEM,
+				_CLASS_NAME_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR,
+				BackgroundTaskConstants.STATUS_IN_PROGRESS),
+			BackgroundTaskManagerUtil.getBackgroundTasks(
+				CompanyConstants.SYSTEM,
+				_CLASS_NAME_REINDEX_INDEX_REINDEXER_BACKGROUND_TASK_EXECUTOR,
+				BackgroundTaskConstants.STATUS_IN_PROGRESS));
+
+		for (BackgroundTask backgroundTask : backgroundTasks) {
+			Map<String, Serializable> taskContextMap =
+				backgroundTask.getTaskContextMap();
+
+			String className = (String)taskContextMap.get("className");
+
+			BackgroundTaskDisplay backgroundTaskDisplay =
+				BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(
+					backgroundTask);
+
+			jsonObject.put(className, backgroundTaskDisplay.getPercentage());
+		}
+
+		return jsonObject.toString();
+	}
+
+	private int _getFailedReindexBackgroundTasksCount() {
+		List<BackgroundTask> failedReindexBackgroundTasks =
+			BackgroundTaskManagerUtil.getBackgroundTasks(
+				CompanyConstants.SYSTEM,
+				new String[] {
+					_CLASS_NAME_REINDEX_INDEX_REINDEXER_BACKGROUND_TASK_EXECUTOR,
+					_CLASS_NAME_REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR,
+					_CLASS_NAME_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR
+				},
+				BackgroundTaskConstants.STATUS_FAILED);
+
+		return failedReindexBackgroundTasks.size();
 	}
 
 	private Map<String, List<Object>> _getIndexersMap() {
@@ -314,6 +385,21 @@ public class IndexActionsDisplayContextBuilder {
 
 		return false;
 	}
+
+	private static final String
+		_CLASS_NAME_REINDEX_INDEX_REINDEXER_BACKGROUND_TASK_EXECUTOR =
+			"com.liferay.portal.search.internal.background.task." +
+				"ReindexIndexReindexerBackgroundTaskExecutor";
+
+	private static final String
+		_CLASS_NAME_REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR =
+			"com.liferay.portal.search.internal.background.task." +
+				"ReindexPortalBackgroundTaskExecutor";
+
+	private static final String
+		_CLASS_NAME_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR =
+			"com.liferay.portal.search.internal.background.task." +
+				"ReindexSingleIndexerBackgroundTaskExecutor";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexActionsDisplayContextBuilder.class);

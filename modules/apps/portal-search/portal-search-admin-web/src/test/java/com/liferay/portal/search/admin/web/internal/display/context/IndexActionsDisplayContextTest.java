@@ -6,6 +6,9 @@
 package com.liferay.portal.search.admin.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -26,6 +29,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.junit.After;
@@ -60,13 +64,42 @@ public class IndexActionsDisplayContextTest {
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
+		_backgroundTaskManagerServiceRegistration =
+			bundleContext.registerService(
+				BackgroundTaskManager.class, _backgroundTaskManager, null);
 		_serviceRegistration = bundleContext.registerService(
 			IndexerRegistry.class, Mockito.mock(IndexerRegistry.class), null);
 	}
 
 	@After
 	public void tearDown() {
+		_backgroundTaskManagerServiceRegistration.unregister();
 		_serviceRegistration.unregister();
+	}
+
+	@Test
+	public void testGetFailedReindexBackgroundTasksCount() {
+		Mockito.when(
+			_backgroundTaskManager.getBackgroundTasks(
+				Mockito.anyLong(), Mockito.any(String[].class),
+				Mockito.eq(BackgroundTaskConstants.STATUS_FAILED))
+		).thenReturn(
+			Arrays.asList(
+				Mockito.mock(BackgroundTask.class),
+				Mockito.mock(BackgroundTask.class))
+		);
+
+		IndexActionsDisplayContextBuilder indexActionsDisplayContextBuilder =
+			new IndexActionsDisplayContextBuilder(
+				_language, _portal, _reindexConfiguration,
+				new MockRenderRequest(), _searchCapabilities);
+
+		IndexActionsDisplayContext indexActionsDisplayContext =
+			indexActionsDisplayContextBuilder.build();
+
+		Assert.assertEquals(
+			2,
+			indexActionsDisplayContext.getFailedReindexBackgroundTasksCount());
 	}
 
 	@Test
@@ -222,6 +255,10 @@ public class IndexActionsDisplayContextTest {
 	private static final ThemeDisplay _themeDisplay = Mockito.mock(
 		ThemeDisplay.class);
 
+	private final BackgroundTaskManager _backgroundTaskManager = Mockito.mock(
+		BackgroundTaskManager.class);
+	private ServiceRegistration<BackgroundTaskManager>
+		_backgroundTaskManagerServiceRegistration;
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 	private final IndexInformation _indexInformation = Mockito.mock(

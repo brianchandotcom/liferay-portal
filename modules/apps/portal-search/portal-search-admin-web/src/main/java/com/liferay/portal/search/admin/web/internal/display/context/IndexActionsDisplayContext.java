@@ -12,14 +12,37 @@ import java.util.Map;
  */
 public class IndexActionsDisplayContext {
 
+	public String getClassNameToBackgroundTaskJSONString() {
+		return _classNameToBackgroundTaskJSONString;
+	}
+
 	public Map<String, Object> getData() {
 		return _data;
+	}
+
+	public int getFailedReindexBackgroundTasksCount() {
+		return _failedReindexBackgroundTasksCount;
+	}
+
+	public void setClassNameToBackgroundTaskJSONString(
+		String classNameToBackgroundTaskJSONString) {
+
+		_classNameToBackgroundTaskJSONString =
+			classNameToBackgroundTaskJSONString;
 	}
 
 	public void setData(Map<String, Object> data) {
 		_data = data;
 	}
 
+	public void setFailedReindexBackgroundTasksCount(
+		int failedReindexBackgroundTasksCount) {
+
+		_failedReindexBackgroundTasksCount = failedReindexBackgroundTasksCount;
+	}
+
+	private String _classNameToBackgroundTaskJSONString;
 	private Map<String, Object> _data;
+	private int _failedReindexBackgroundTasksCount;
 
 }

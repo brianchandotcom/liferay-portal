@@ -168,7 +168,7 @@ public class ProductNavigationControlMenuTagDisplayContext {
 					productNavigationControlMenuEntries) {
 
 			_writeProductNavigationControlMenuEntry(
-				productNavigationControlMenuEntry, useList, singleItem, writer);
+				productNavigationControlMenuEntry, singleItem, useList, writer);
 		}
 
 		if (useList) {
@@ -183,7 +183,7 @@ public class ProductNavigationControlMenuTagDisplayContext {
 
 	private void _writeProductNavigationControlMenuEntry(
 			ProductNavigationControlMenuEntry productNavigationControlMenuEntry,
-			boolean useList, boolean singleItem, Writer writer)
+			boolean singleItem, boolean useList, Writer writer)
 		throws Exception {
 
 		if (productNavigationControlMenuEntry.includeIcon(

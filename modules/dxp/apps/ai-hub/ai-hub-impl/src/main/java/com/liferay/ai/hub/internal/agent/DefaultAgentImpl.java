@@ -8,6 +8,7 @@ package com.liferay.ai.hub.internal.agent;
 import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.agent.DefaultAgent;
 import com.liferay.ai.hub.internal.langchain4j.agentic.internal.InternalAgentImpl;
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
@@ -16,6 +17,7 @@ import dev.langchain4j.agentic.planner.AgentArgument;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Feliphe Marinho
@@ -26,7 +28,8 @@ public class DefaultAgentImpl implements DefaultAgent {
 	@Override
 	public long invoke(AgentContext agentContext) {
 		InternalAgentImpl internalAgentImpl = new InternalAgentImpl(
-			agentContext, _workflowDefinitionManager, _workflowInstanceManager);
+			agentContext, _quotaManager, _workflowDefinitionManager,
+			_workflowInstanceManager);
 
 		internalAgentImpl.setAgentArguments(
 			TransformUtil.transform(
@@ -43,6 +46,9 @@ public class DefaultAgentImpl implements DefaultAgent {
 
 		return (Long)internalAgentImpl.invoke(agentContext.getInput());
 	}
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private QuotaManager _quotaManager;
 
 	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;

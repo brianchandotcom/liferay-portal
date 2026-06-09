@@ -62,7 +62,6 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
@@ -6875,10 +6874,7 @@ public class DefaultObjectEntryManagerImplTest
 		JSONObject objectEntryContentJSONObject =
 			JSONFactoryUtil.createJSONObject(
 				StringBundler.concat(
-					"{",
-					document.getString(
-						ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT),
-					"}"));
+					"{", document.getString("objectEntryContent"), "}"));
 
 		for (ObjectField objectField :
 				objectFieldLocalService.getObjectFields(
@@ -8425,9 +8421,9 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_assertObjectEntriesSizeWithLocale(
-			_objectDefinition2, "pt_BR", LocaleUtil.BRAZIL, 1);
+			LocaleUtil.BRAZIL, _objectDefinition2, "pt_BR", 1);
 		_assertObjectEntriesSizeWithLocale(
-			_objectDefinition2, "pt_BR", LocaleUtil.US, 0);
+			LocaleUtil.US, _objectDefinition2, "pt_BR", 0);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -10840,7 +10836,7 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _assertObjectEntriesSizeWithLocale(
-			ObjectDefinition objectDefinition, String search, Locale locale,
+			Locale locale, ObjectDefinition objectDefinition, String search,
 			long size)
 		throws Exception {
 

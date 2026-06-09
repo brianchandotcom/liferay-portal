@@ -35,7 +35,6 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.info.collection.provider.util.ObjectEntryInfoCollectionProviderUtil;
@@ -403,15 +402,11 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 				new TermQuery(_getFieldName(objectField), entry.getValue()[0]),
 				BooleanClauseOccur.MUST);
 			nestedBooleanQuery.add(
-				new TermQuery(
-					ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_FIELD_NAME,
-					entry.getKey()),
+				new TermQuery("nestedFieldArray.fieldName", entry.getKey()),
 				BooleanClauseOccur.MUST);
 
 			booleanQuery.add(
-				new NestedQuery(
-					ObjectEntrySearchConstants.NESTED_FIELD_ARRAY,
-					nestedBooleanQuery),
+				new NestedQuery("nestedFieldArray", nestedBooleanQuery),
 				BooleanClauseOccur.MUST);
 		}
 
@@ -525,14 +520,13 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 				objectField.getDBType(),
 				ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
 
-			return ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE_BOOLEAN;
+			return "nestedFieldArray.value_boolean";
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_STRING)) {
 
-			return ObjectEntrySearchConstants.
-				NESTED_FIELD_ARRAY_VALUE_KEYWORD_LOWERCASE;
+			return "nestedFieldArray.value_keyword_lowercase";
 		}
 
 		return "";

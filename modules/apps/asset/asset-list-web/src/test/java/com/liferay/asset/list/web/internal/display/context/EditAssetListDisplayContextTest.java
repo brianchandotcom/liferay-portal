@@ -8,7 +8,6 @@ package com.liferay.asset.list.web.internal.display.context;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -16,12 +15,14 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -46,7 +47,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -94,12 +94,13 @@ public class EditAssetListDisplayContextTest {
 
 		_portletRequest = Mockito.mock(PortletRequest.class);
 
+		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
 	}
 
 	@Test
-	public void testGetActionDropdownItems() throws Exception {
+	public void testGetAssetEntryTypesJSONArray() throws Exception {
 		String className = RandomTestUtil.randomString();
 		long classNameId = RandomTestUtil.randomLong();
 		String expectedLabel = RandomTestUtil.randomString();
@@ -119,49 +120,24 @@ public class EditAssetListDisplayContextTest {
 		EditAssetListDisplayContext editAssetListDisplayContext =
 			_getEditAssetListDisplayContext(unicodeProperties);
 
-		List<DropdownItem> dropdownItems =
-			editAssetListDisplayContext.getActionDropdownItems();
+		JSONArray assetEntryTypesJSONArray =
+			editAssetListDisplayContext.getAssetEntryTypesJSONArray();
 
-		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
+		Assert.assertEquals(
+			assetEntryTypesJSONArray.toString(), 1,
+			assetEntryTypesJSONArray.length());
 
-		DropdownItem dropdownItem = dropdownItems.get(0);
+		JSONObject assetEntryTypeJSONObject =
+			assetEntryTypesJSONArray.getJSONObject(0);
 
-		Assert.assertEquals(expectedLabel, dropdownItem.get("label"));
+		Assert.assertEquals(
+			classNameId, assetEntryTypeJSONObject.getLong("classNameId"));
+		Assert.assertEquals(
+			expectedLabel, assetEntryTypeJSONObject.getString("label"));
 	}
 
 	@Test
-	public void testGetActionDropdownItemsEmptyClassTypeIdsProperty()
-		throws Exception {
-
-		String className = RandomTestUtil.randomString();
-		long classNameId = RandomTestUtil.randomLong();
-		String expectedLabel = RandomTestUtil.randomString();
-
-		_setUpAssetRendererFactoryRegistryUtil(
-			className, classNameId,
-			_getClassTypeReader(
-				ListUtil.fromArray(
-					_getClassType(), _getClassType(), _getClassType())),
-			true, expectedLabel);
-
-		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
-			"selectionStyle", "manual"
-		).build();
-
-		_setUpAssetListEntryLocalServiceUtil(
-			StringPool.BLANK, className, unicodeProperties.toString());
-
-		EditAssetListDisplayContext editAssetListDisplayContext =
-			_getEditAssetListDisplayContext(unicodeProperties);
-
-		List<DropdownItem> dropdownItems =
-			editAssetListDisplayContext.getActionDropdownItems();
-
-		Assert.assertEquals(dropdownItems.toString(), 3, dropdownItems.size());
-	}
-
-	@Test
-	public void testGetActionDropdownItemsNoAvailableClassNameId()
+	public void testGetAssetEntryTypesJSONArrayNoAvailableClassNameId()
 		throws Exception {
 
 		long classNameId = RandomTestUtil.randomLong();
@@ -181,103 +157,10 @@ public class EditAssetListDisplayContextTest {
 		EditAssetListDisplayContext editAssetListDisplayContext =
 			_getEditAssetListDisplayContext(unicodeProperties);
 
-		List<DropdownItem> dropdownItems =
-			editAssetListDisplayContext.getActionDropdownItems();
-
-		Assert.assertEquals(dropdownItems.toString(), 0, dropdownItems.size());
-	}
-
-	@Test
-	public void testGetActionDropdownItemsWithNoAvailableSelectedSubtype()
-		throws Exception {
-
-		String className = RandomTestUtil.randomString();
-		long classNameId = RandomTestUtil.randomLong();
-		String expectedLabel = RandomTestUtil.randomString();
-
-		ClassTypeReader classTypeReader = _getClassTypeReader(
-			ListUtil.fromArray(
-				_getClassType(), _getClassType(), _getClassType()));
-
-		_setUpAssetRendererFactoryRegistryUtil(
-			className, classNameId, classTypeReader, true, expectedLabel);
-
-		long classTypeId = RandomTestUtil.randomLong();
-
-		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
-			"classNameIds", classNameId
-		).put(
-			"classTypeIds" + TestAssetRendererFactory.class.getSimpleName(),
-			classTypeId
-		).put(
-			"selectionStyle", "manual"
-		).build();
-
-		_setUpAssetListEntryLocalServiceUtil(
-			StringPool.BLANK, className, unicodeProperties.toString());
-
-		EditAssetListDisplayContext editAssetListDisplayContext =
-			_getEditAssetListDisplayContext(unicodeProperties);
-
-		List<DropdownItem> dropdownItems =
-			editAssetListDisplayContext.getActionDropdownItems();
-
-		Assert.assertEquals(dropdownItems.toString(), 0, dropdownItems.size());
-
-		Mockito.verify(
-			classTypeReader
-		).getClassType(
-			classTypeId, LocaleUtil.US
-		);
-	}
-
-	@Test
-	public void testGetActionDropdownItemsWithSelectedSubtype()
-		throws Exception {
-
-		String className = RandomTestUtil.randomString();
-		long classNameId = RandomTestUtil.randomLong();
-
-		long classTypeId = RandomTestUtil.randomLong();
-		String expectedLabel = RandomTestUtil.randomString();
-
-		ClassTypeReader classTypeReader = _getClassTypeReader(
-			ListUtil.fromArray(
-				_getClassType(), _getClassType(classTypeId, expectedLabel),
-				_getClassType()));
-
-		_setUpAssetRendererFactoryRegistryUtil(
-			className, classNameId, classTypeReader, true, expectedLabel);
-
-		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
-			"classNameIds", classNameId
-		).put(
-			"classTypeIds" + TestAssetRendererFactory.class.getSimpleName(),
-			classTypeId
-		).put(
-			"selectionStyle", "manual"
-		).build();
-
-		_setUpAssetListEntryLocalServiceUtil(
-			StringPool.BLANK, className, unicodeProperties.toString());
-
-		EditAssetListDisplayContext editAssetListDisplayContext =
-			_getEditAssetListDisplayContext(unicodeProperties);
-
-		List<DropdownItem> dropdownItems =
-			editAssetListDisplayContext.getActionDropdownItems();
-
-		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
-
-		DropdownItem dropdownItem = dropdownItems.get(0);
-
-		Assert.assertEquals(expectedLabel, dropdownItem.get("label"));
-
-		Mockito.verify(
-			classTypeReader
-		).getClassType(
-			classTypeId, LocaleUtil.US
-		);
+		Assert.assertEquals(
+			0,
+			editAssetListDisplayContext.getAssetEntryTypesJSONArray(
+			).length());
 	}
 
 	@Test
@@ -381,61 +264,6 @@ public class EditAssetListDisplayContextTest {
 				Collections.emptyList(),
 				editAssetListDisplayContext.getVocabularyIds());
 		}
-	}
-
-	private ClassType _getClassType() {
-		return _getClassType(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
-	}
-
-	private ClassType _getClassType(long classTypeId, String classTypeName) {
-		ClassType classType = Mockito.mock(ClassType.class);
-
-		Mockito.when(
-			classType.getClassTypeId()
-		).thenReturn(
-			classTypeId
-		);
-
-		Mockito.when(
-			classType.getName()
-		).thenReturn(
-			classTypeName
-		);
-
-		return classType;
-	}
-
-	private ClassTypeReader _getClassTypeReader(List<ClassType> classTypes)
-		throws Exception {
-
-		ClassTypeReader classTypeReader = Mockito.mock(ClassTypeReader.class);
-
-		Mockito.when(
-			classTypeReader.getClassType(
-				Mockito.anyLong(), Mockito.eq(LocaleUtil.US))
-		).thenAnswer(
-			(Answer<ClassType>)invocationOnMock -> {
-				Long curClassTypeId = invocationOnMock.getArgument(
-					0, Long.class);
-
-				for (ClassType classType : classTypes) {
-					if (classType.getClassTypeId() == curClassTypeId) {
-						return classType;
-					}
-				}
-
-				throw new PortalException();
-			}
-		);
-
-		Mockito.when(
-			classTypeReader.getAvailableClassTypes(null, LocaleUtil.US)
-		).thenReturn(
-			classTypes
-		);
-
-		return classTypeReader;
 	}
 
 	private EditAssetListDisplayContext _getEditAssetListDisplayContext(
@@ -586,6 +414,12 @@ public class EditAssetListDisplayContextTest {
 
 		_setUpAssetRendererFactoryRegistryUtil(
 			className, classNameId, null, false, typeName);
+	}
+
+	private void _setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	private void _setUpLanguageUtil() {

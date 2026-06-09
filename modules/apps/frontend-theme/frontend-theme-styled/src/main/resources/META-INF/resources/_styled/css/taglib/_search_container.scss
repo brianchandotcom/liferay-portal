@@ -104,6 +104,13 @@ $table-responsive-margin-left-md: 375px !default;
 	}
 
 	.lfr-search-container-list {
+		.list-group:first-child {
+			dt:not(.list-group-header) + .list-group-item {
+				border-top-left-radius: $list-group-border-radius;
+				border-top-right-radius: $list-group-border-radius;
+			}
+		}
+
 		.list-group:last-child {
 			.list-group-item:nth-last-child(2) {
 				border-bottom-left-radius: $list-group-border-radius;

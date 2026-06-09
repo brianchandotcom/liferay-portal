@@ -86,11 +86,6 @@ public class GroupModelListenerTest {
 		return depotEntry;
 	}
 
-	private Layout _getRecycleBinLayout(Group group) throws Exception {
-		return _layoutLocalService.getLayoutByFriendlyURL(
-			group.getGroupId(), false, "/recycle-bin");
-	}
-
 	private void _setTrashEnabled(Group group, String value) throws Exception {
 		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 
@@ -141,13 +136,14 @@ public class GroupModelListenerTest {
 	}
 
 	private void _testOnAfterUpdateWithTrashEnabled() throws Exception {
+		Layout layout = _layoutLocalService.getLayoutByFriendlyURL(
+			_cmsGroup.getGroupId(), false, "/recycle-bin");
+
+		Assert.assertFalse(layout.isHidden());
+
 		DepotEntry depotEntry = _addDepotEntry();
 
 		Group depotGroup = depotEntry.getGroup();
-
-		Layout layout = _getRecycleBinLayout(_cmsGroup);
-
-		Assert.assertFalse(layout.isHidden());
 
 		_setTrashEnabled(depotGroup, Boolean.FALSE.toString());
 

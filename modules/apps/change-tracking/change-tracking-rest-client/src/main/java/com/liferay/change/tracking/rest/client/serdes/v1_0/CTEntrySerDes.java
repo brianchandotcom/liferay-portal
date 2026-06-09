@@ -167,6 +167,20 @@ public class CTEntrySerDes {
 			sb.append("\"");
 		}
 
+		if (ctEntry.getEditURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"editURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(ctEntry.getEditURL()));
+
+			sb.append("\"");
+		}
+
 		if (ctEntry.getHideable() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -405,6 +419,13 @@ public class CTEntrySerDes {
 				liferayToJSONDateFormat.format(ctEntry.getDateModified()));
 		}
 
+		if (ctEntry.getEditURL() == null) {
+			map.put("editURL", null);
+		}
+		else {
+			map.put("editURL", String.valueOf(ctEntry.getEditURL()));
+		}
+
 		if (ctEntry.getHideable() == null) {
 			map.put("hideable", null);
 		}
@@ -542,6 +563,9 @@ public class CTEntrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "editURL")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "hideable")) {
 				return false;
 			}
@@ -643,6 +667,11 @@ public class CTEntrySerDes {
 				if (jsonParserFieldValue != null) {
 					ctEntry.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "editURL")) {
+				if (jsonParserFieldValue != null) {
+					ctEntry.setEditURL((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "hideable")) {
@@ -791,4 +820,4 @@ public class CTEntrySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1485797171
+// LIFERAY-REST-BUILDER-HASH:-254688070

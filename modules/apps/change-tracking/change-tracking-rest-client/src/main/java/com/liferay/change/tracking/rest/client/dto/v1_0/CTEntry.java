@@ -221,6 +221,27 @@ public class CTEntry implements Cloneable, Serializable {
 
 	protected Date dateModified;
 
+	public String getEditURL() {
+		return editURL;
+	}
+
+	public void setEditURL(String editURL) {
+		this.editURL = editURL;
+	}
+
+	public void setEditURL(
+		UnsafeSupplier<String, Exception> editURLUnsafeSupplier) {
+
+		try {
+			editURL = editURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String editURL;
+
 	public Boolean getHideable() {
 		return hideable;
 	}
@@ -503,4 +524,4 @@ public class CTEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1257096928
+// LIFERAY-REST-BUILDER-HASH:1753145406

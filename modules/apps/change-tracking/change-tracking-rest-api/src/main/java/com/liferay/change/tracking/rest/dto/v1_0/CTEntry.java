@@ -428,6 +428,49 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Portal URL to the edit page for this entry."
+	)
+	public String getEditURL() {
+		if (_editURLSupplier != null) {
+			editURL = _editURLSupplier.get();
+
+			_editURLSupplier = null;
+		}
+
+		return editURL;
+	}
+
+	public void setEditURL(String editURL) {
+		this.editURL = editURL;
+
+		_editURLSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEditURL(
+		UnsafeSupplier<String, Exception> editURLUnsafeSupplier) {
+
+		_editURLSupplier = () -> {
+			try {
+				return editURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "Portal URL to the edit page for this entry.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String editURL;
+
+	@JsonIgnore
+	private Supplier<String> _editURLSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getHideable() {
 		if (_hideableSupplier != null) {
@@ -1083,6 +1126,22 @@ public class CTEntry implements Serializable {
 			sb.append("\"");
 		}
 
+		String editURL = getEditURL();
+
+		if (editURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"editURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(editURL));
+
+			sb.append("\"");
+		}
+
 		Boolean hideable = getHideable();
 
 		if (hideable != null) {
@@ -1348,4 +1407,4 @@ public class CTEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-590108986
+// LIFERAY-REST-BUILDER-HASH:1402194769

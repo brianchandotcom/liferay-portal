@@ -33,6 +33,7 @@ public class AssetEntryEntityModel implements EntityModel {
 				locale -> Field.STATUS,
 				value -> String.valueOf(
 					WorkflowConstants.getLabelStatus(String.valueOf(value)))),
+			new IntegerEntityField("classPK", locale -> Field.ENTRY_CLASS_PK),
 			new IntegerEntityField(
 				"classTypeId", locale -> Field.CLASS_TYPE_ID));
 	}

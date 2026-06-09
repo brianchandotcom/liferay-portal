@@ -22,6 +22,10 @@
 		).put(
 			"groupId", themeDisplay.getScopeGroupId()
 		).put(
+			"refererClassNameId", inputAssetLinksDisplayContext.getRefererClassNameId()
+		).put(
+			"refererClassPK", inputAssetLinksDisplayContext.getRefererClassPK()
+		).put(
 			"removeIcon", removeLinkIcon
 		).build()
 	%>'

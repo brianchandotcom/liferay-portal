@@ -9,7 +9,9 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.ai.hub.configuration.VertexAIConfiguration;
 import com.liferay.ai.hub.rest.client.dto.v1_0.AgentDefinition;
+import com.liferay.ai.hub.rest.client.dto.v1_0.Model;
 import com.liferay.ai.hub.rest.client.dto.v1_0.Variable;
 import com.liferay.ai.hub.rest.client.pagination.Page;
 import com.liferay.ai.hub.rest.client.pagination.Pagination;
@@ -23,6 +25,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -43,6 +46,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -188,6 +192,7 @@ public class AgentDefinitionResourceTest
 	public void testGetAgentDefinitionsPage() throws Exception {
 		_testGetAgentDefinitionsPage();
 		_testGetAgentDefinitionsPageWithFilter();
+		_testGetAgentDefinitionsPageWithModel();
 		_testGetAgentDefinitionsPageWithPermissions();
 	}
 
@@ -438,6 +443,35 @@ public class AgentDefinitionResourceTest
 					EXTERNAL_REFERENCE_CODE_CHANGE_TONE);
 	}
 
+	private void _assertAgentDefinitionModel(
+		String expectedLabel, String expectedName, String expectedProviderLabel,
+		AgentDefinition agentDefinition) {
+
+		Model model = agentDefinition.getModel();
+
+		Assert.assertEquals(expectedLabel, model.getLabel());
+		Assert.assertEquals(expectedName, model.getName());
+		Assert.assertEquals(expectedProviderLabel, model.getProviderLabel());
+	}
+
+	private Page<AgentDefinition> _getAgentDefinitionsPageWithModel(
+			String modelName)
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						VertexAIConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"modelName", modelName
+						).build())) {
+
+			return agentDefinitionResource.getAgentDefinitionsPage(
+				null, null, Pagination.of(1, 1), null);
+		}
+	}
+
 	private ObjectDefinition _getObjectDefinition() throws Exception {
 		return _objectDefinitionLocalService.getObjectDefinition(
 			TestPropsValues.getCompanyId(), "AIHubAgentDefinition");
@@ -469,6 +503,28 @@ public class AgentDefinitionResourceTest
 
 		assertEquals(
 			_systemAgentDefinitions, (List<AgentDefinition>)page.getItems());
+	}
+
+	private void _testGetAgentDefinitionsPageWithModel() throws Exception {
+
+		// Mapped model name
+
+		Page<AgentDefinition> page = _getAgentDefinitionsPageWithModel(
+			"gemini-2.5-flash");
+
+		_assertAgentDefinitionModel(
+			"Gemini 2.5 Flash", "gemini-2.5-flash", "Google",
+			page.fetchFirstItem());
+
+		// Unmapped model name
+
+		String modelName = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		page = _getAgentDefinitionsPageWithModel(modelName);
+
+		_assertAgentDefinitionModel(
+			modelName, modelName, "Google", page.fetchFirstItem());
 	}
 
 	private void _testGetAgentDefinitionsPageWithPermissions()

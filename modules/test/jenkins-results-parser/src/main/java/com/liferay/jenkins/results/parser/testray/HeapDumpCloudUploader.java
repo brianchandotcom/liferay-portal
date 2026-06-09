@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.CloudBucketUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
@@ -12,9 +13,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
+import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.Deflater;
 import java.util.zip.GZIPOutputStream;
 
@@ -43,30 +48,70 @@ public class HeapDumpCloudUploader {
 			return;
 		}
 
-		TestrayCloudBucket testrayCloudBucket =
-			TestrayCloudBucket.getInstance();
+		String s3BucketName;
 
-		long latestTimestamp = testrayCloudBucket.getLatestObjectTimestamp(
-			"heap-dumps/");
+		try {
+			s3BucketName = JenkinsResultsParserUtil.getBuildProperty(
+				"env.S3_BUCKET_NAME");
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				"ERROR: Unable to read env.S3_BUCKET_NAME: " +
+					ioException.getMessage());
 
-		if (latestTimestamp != Long.MIN_VALUE) {
-			long elapsedMillis =
-				JenkinsResultsParserUtil.getCurrentTimeMillis() -
-					latestTimestamp;
+			return;
+		}
 
-			long minutesAgo = elapsedMillis / (60 * 1000);
+		if (JenkinsResultsParserUtil.isNullOrEmpty(s3BucketName)) {
+			System.out.println(
+				"INFO: S3_BUCKET_NAME not set, skipping heap dump upload");
 
-			if (minutesAgo < _THROTTLE_MINUTES) {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"INFO: Skipping heap dump upload, last dump was ",
-						String.valueOf(minutesAgo),
-						" minutes ago (throttle window: ",
-						String.valueOf(_THROTTLE_MINUTES),
-						" min). Local file: ", hprofFile.getAbsolutePath()));
+			return;
+		}
 
-				return;
+		String heapDumpsBasePath = "s3://" + s3BucketName + "/heap-dumps";
+
+		String sentinelS3Path = heapDumpsBasePath + "/last-upload";
+
+		try {
+			String listing = CloudBucketUtil.listS3Files(sentinelS3Path, true);
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(listing)) {
+				Matcher matcher = _s3ListingDateTimePattern.matcher(listing);
+
+				if (matcher.find()) {
+					String dateTimeStr = JenkinsResultsParserUtil.combine(
+						matcher.group("date"), " ", matcher.group("time"));
+
+					LocalDateTime uploadDateTime = LocalDateTime.parse(
+						dateTimeStr,
+						DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+					long uploadMillis = uploadDateTime.toInstant(
+						ZoneOffset.UTC).toEpochMilli();
+
+					long elapsedMillis =
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							uploadMillis;
+
+					long minutesAgo = elapsedMillis / (60 * 1000);
+
+					if (minutesAgo < _THROTTLE_MINUTES) {
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"INFO: Skipping heap dump upload, last dump was ",
+								String.valueOf(minutesAgo),
+								" minutes ago (throttle window: ",
+								String.valueOf(_THROTTLE_MINUTES),
+								" min). Local file: ",
+								hprofFile.getAbsolutePath()));
+
+						return;
+					}
+				}
 			}
+		}
+		catch (IOException | TimeoutException exception) {
 		}
 
 		File gzippedFile = _gzip(hprofFile);
@@ -75,16 +120,29 @@ public class HeapDumpCloudUploader {
 			return;
 		}
 
-		LocalDate localDate = LocalDate.now();
+		LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
 
-		String yearMonth = localDate.format(
-			DateTimeFormatter.ofPattern("yyyy-MM"));
+		String yearMonth = now.format(DateTimeFormatter.ofPattern("yyyy-MM"));
 
-		String key = JenkinsResultsParserUtil.combine(
-			"heap-dumps/", yearMonth, "/", _masterHostname, "/", _jobName, "/",
-			_buildNumber, "/", _phase, "/", _slaveHostname, ".hprof.gz");
+		String s3Key = JenkinsResultsParserUtil.combine(
+			heapDumpsBasePath, "/", yearMonth, "/", _masterHostname, "/",
+			_jobName, "/", _buildNumber, "/", _phase, "/", _slaveHostname,
+			".hprof.gz");
 
-		testrayCloudBucket.createTestrayCloudObject(key, gzippedFile);
+		try {
+			CloudBucketUtil.uploadS3File(s3Key, gzippedFile);
+
+			CloudBucketUtil.uploadS3Object("", sentinelS3Path);
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"ERROR: Unable to upload heap dump: ",
+					ioException.getMessage()));
+		}
+		finally {
+			gzippedFile.delete();
+		}
 	}
 
 	private File _gzip(File file) {
@@ -121,6 +179,9 @@ public class HeapDumpCloudUploader {
 
 		return gzippedFile;
 	}
+
+	private static final Pattern _s3ListingDateTimePattern = Pattern.compile(
+		"(?<date>\\d{4}-\\d{2}-\\d{2})\\s+(?<time>\\d{2}:\\d{2}:\\d{2})");
 
 	private static final int _THROTTLE_MINUTES = 30;
 

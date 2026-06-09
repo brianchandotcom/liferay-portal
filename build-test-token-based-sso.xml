@@ -2,24 +2,4 @@
 
 <project basedir="." name="portal-test-tokensso" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
-
-	<target name="verify-token-based-login">
-		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-H &quot;SM_USER:${user.token}&quot; ${portal.url}" />
-		</exec>
-
-		<echo>${curl.output}</echo>
-
-		<if>
-			<not>
-				<contains string="${curl.output}" substring="Sign In" />
-			</not>
-			<then>
-				<echo>Signed in successfully.</echo>
-			</then>
-			<else>
-				<fail>Token-based SSO failed.</fail>
-			</else>
-		</if>
-	</target>
 </project>

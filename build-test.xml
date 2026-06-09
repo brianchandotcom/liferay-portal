@@ -10903,19 +10903,6 @@ go</echo>
 		</delete>
 	</target>
 
-	<target name="clean-up-bundles">
-		<delete file="test.${user.name}.properties" />
-
-		<antcall target="delete-liferay-home" />
-
-		<delete includeemptydirs="true">
-			<fileset
-				dir="${app.server.parent.dir}"
-				excludes="*.zip"
-			/>
-		</delete>
-	</target>
-
 	<target name="clean-up-database-properties">
 		<replaceregexp
 			file="test.${user.name}.properties"
@@ -11035,15 +11022,6 @@ go</echo>
 		<execute>
 			docker exec osbasahredis redis-cli FLUSHALL
 		</execute>
-	</target>
-
-	<target name="cluster-invoke-method">
-		<if>
-			<isset property="cluster.invoke.method" />
-			<then>
-				<echo file="${liferay.home}/osgi/configs/com.liferay.portal.cluster.multiple.sample.web.internal.configuration.ClusterSampleConfiguration.config">clusterSampleCommand="${cluster.invoke.method}"</echo>
-			</then>
-		</if>
 	</target>
 
 	<target name="cluster-session-replication">
@@ -11495,30 +11473,6 @@ org.apache.catalina.ha.session.level=INFO]]>
 					</else>
 				</if>
 			</then>
-		</if>
-	</target>
-
-	<target name="delete-portal-theme">
-		<if>
-			<and>
-				<isset property="theme-name" />
-				<available file="${liferay.home}/osgi/war/${theme-name}.war" />
-			</and>
-			<then>
-				<echo>Deleting ${liferay.home}/osgi/war/${theme-name}.war.</echo>
-
-				<delete file="${liferay.home}/osgi/war/${theme-name}.war" />
-			</then>
-			<else>
-				<echo>Deleting ${liferay.home}/osgi/marketplace/Theme.lpkg.</echo>
-
-				<delete>
-					<fileset
-						dir="${liferay.home}/osgi/marketplace"
-						includes="*Theme*.lpkg"
-					/>
-				</delete>
-			</else>
 		</if>
 	</target>
 
@@ -14814,24 +14768,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<app-server-properties-reset />
 	</target>
 
-	<target name="prepare-test-build-unit">
-		<record-git-commit-portal />
-
-		<antcall inheritAll="false" target="compile" />
-
-		<prepare-test-bundles unit="true" />
-
-		<antcall inheritAll="false" target="compile-test" />
-
-		<record-test-class-file-names />
-
-		<echo if:set="env.JENKINS_HOME">
-ANT_OPTS=${env.ANT_OPTS}</echo>
-
-		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
-		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
-	</target>
-
 	<target name="prepare-test-bundle">
 		<setup-libs />
 
@@ -16326,115 +16262,6 @@ if (ppstate.equals("normal")) {
 		<echo>Updated ${app.server.dir}/webapps/ROOT/html/common/themes/bottom-test.jsp.</echo>
 	</target>
 
-	<target name="record-job-summary">
-		<fail message="Please set the property ${test.suite.name}." unless="test.suite.name" />
-
-		<beanshell>
-			<![CDATA[
-				import com.liferay.jenkins.results.parser.CIJobSummaryReportUtil;
-				import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-				import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
-				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-				import com.liferay.jenkins.results.parser.Job;
-				import com.liferay.jenkins.results.parser.JobFactory;
-				import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
-				import com.liferay.jenkins.results.parser.PortalHotfixRelease;
-
-				public Job.BuildProfile getBuildProfile() {
-					String testPortalBuildProfile = project.getProperty("build.profile");
-
-					if ((testPortalBuildProfile != null) && testPortalBuildProfile.equals("dxp")) {
-						return Job.BuildProfile.DXP;
-					}
-
-					return Job.BuildProfile.PORTAL;
-				}
-
-				public String getJobName() {
-					String jobName = project.getProperty("job.name");
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
-						jobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
-					}
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
-						jobName = project.getProperty("env.JOB_NAME");
-					}
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
-						jobName = "test-portal-testsuite-upstream(" + getUpstreamBranchName() + ")";
-					}
-
-					return jobName;
-				}
-
-				public GitWorkingDirectory getPortalGitWorkingDirectory() {
-					File gitWorkingDir = JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
-
-					GitWorkingDirectory gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(getUpstreamBranchName(), gitWorkingDir, getRepositoryName());
-
-					if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
-						return (PortalGitWorkingDirectory)gitWorkingDirectory;
-					}
-
-					return null;
-				}
-
-				public PortalHotfixRelease getPortalHotfixRelease() {
-					String portalHotfixURL = project.getProperty("portal.hotfix.url");
-
-					if (!JenkinsResultsParserUtil.isURL(portalHotfixURL)) {
-						return null;
-					}
-
-					return new PortalHotfixRelease(new URL(portalHotfixURL));
-				}
-
-				public String getRepositoryName() {
-					String upstreamBranchName = getUpstreamBranchName();
-
-					if (upstreamBranchName.equals("master")) {
-						return "liferay-portal";
-					}
-
-					return "liferay-portal-ee";
-				}
-
-				public File getSummaryDir() {
-					File summaryDir = new File("job/summary");
-
-					summaryDir.mkdirs();
-
-					return JenkinsResultsParserUtil.getCanonicalFile(summaryDir);
-				}
-
-				public String getTestSuiteName() {
-					return project.getProperty("test.suite.name");
-				}
-
-				public String getUpstreamBranchName() {
-					String upstreamBranchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
-						upstreamBranchName = project.getProperty("liferay.portal.branch");
-					}
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
-						upstreamBranchName = project.getProperty("git.working.branch.name");
-					}
-
-					return upstreamBranchName.replace("-private", "");
-				}
-
-				Job job = JobFactory.newJob(getBuildProfile(), getJobName(), null, getPortalGitWorkingDirectory(), getPortalHotfixRelease(), getUpstreamBranchName(), null, getRepositoryName(), getTestSuiteName(), getUpstreamBranchName());
-
-				CIJobSummaryReportUtil.writeJobSummaryReport(getSummaryDir(), job);
-
-				System.out.println("Generated job summary file " + new File(getSummaryDir(), "index.html"));
-			]]>
-		</beanshell>
-	</target>
-
 	<target name="record-test-case-method-names">
 		<setup-libs />
 
@@ -16642,16 +16469,8 @@ if (ppstate.equals("normal")) {
 		</if>
 	</target>
 
-	<target name="record-test-js-csv-report">
-		<record-test-csv-report test.type="js" />
-	</target>
-
 	<target name="record-test-junit-csv-report">
 		<record-test-csv-report test.type="junit" />
-	</target>
-
-	<target name="record-test-playwright-csv-report">
-		<record-test-csv-report test.type="playwright-js" />
 	</target>
 
 	<target name="record-test-plugin-names">
@@ -18408,15 +18227,5 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 				</fail>
 			</then>
 		</if>
-	</target>
-
-	<target name="wait-for-server-startup">
-		<condition property="test.app.server.leading.port.number" value="8">
-			<not>
-				<isset property="test.app.server.leading.port.number" />
-			</not>
-		</condition>
-
-		<wait-for-app-server app.server.bin.dir="${app.server.bin.dir}" />
 	</target>
 </project>

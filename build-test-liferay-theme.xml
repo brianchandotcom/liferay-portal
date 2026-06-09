@@ -2,40 +2,4 @@
 
 <project basedir="." name="portal-test-liferay-theme" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
-
-	<target name="prepare-liferay-theme">
-		<execute>
-			npm install -g generator-liferay-theme
-		</execute>
-
-		<delete dir="${selenium.output.dir.name}/${themeId}" />
-
-		<copy
-			file="${test.base.dir.name}/dependencies/${themeId}/config.json"
-			overwrite="true"
-			todir="${selenium.output.dir.name}"
-		/>
-
-		<execute dir="${selenium.output.dir.name}">
-			yo liferay-theme:classic --config config.json
-		</execute>
-
-		<copy
-			overwrite="true"
-			todir="${selenium.output.dir.name}/${themeId}/src"
-		>
-			<fileset
-				dir="${test.base.dir.name}/dependencies/${themeId}/src"
-			/>
-		</copy>
-
-		<execute dir="${selenium.output.dir.name}/${themeId}">
-			gulp build
-		</execute>
-
-		<copy
-			file="${selenium.output.dir.name}/${themeId}/dist/${themeId}.war"
-			todir="${liferay.home}/deploy"
-		/>
-	</target>
 </project>

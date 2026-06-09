@@ -142,10 +142,10 @@ public class TestrayFactory {
 		TestrayRun testrayRun, TestrayFactor.Option testrayFactorOption) {
 
 		synchronized (_runTestrayFactors) {
+			TestrayBuild testrayBuild = testrayRun.getTestrayBuild();
+
 			TestrayFactor.Category testrayFactorCategory =
 				testrayFactorOption.getCategory();
-
-			TestrayBuild testrayBuild = testrayRun.getTestrayBuild();
 
 			String key = JenkinsResultsParserUtil.combine(
 				String.valueOf(testrayBuild.getID()), "__",

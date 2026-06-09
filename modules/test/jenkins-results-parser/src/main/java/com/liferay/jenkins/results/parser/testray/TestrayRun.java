@@ -461,14 +461,14 @@ public class TestrayRun {
 			"r_runToFactors_c_runId eq '", String.valueOf(runID), "'");
 
 		try {
+			TestrayServer testrayServer = _testrayBuild.getTestrayServer();
+
 			JSONObject responseJSONObject = new JSONObject(
-				_testrayBuild.getTestrayServer(
-				).requestGet(
+				testrayServer.requestGet(
 					JenkinsResultsParserUtil.combine(
 						"/o/c/factors?filter=",
 						URLEncoder.encode(filterString, "UTF-8"),
-						"&pageSize=100")
-				));
+						"&pageSize=100")));
 
 			JSONArray itemsJSONArray = responseJSONObject.optJSONArray("items");
 

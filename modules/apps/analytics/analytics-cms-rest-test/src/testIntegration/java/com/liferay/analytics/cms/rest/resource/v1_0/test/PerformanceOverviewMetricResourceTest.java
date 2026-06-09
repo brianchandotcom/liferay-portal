@@ -156,7 +156,8 @@ public class PerformanceOverviewMetricResourceTest
 
 			PerformanceOverviewMetric performanceOverviewMetric =
 				_performanceOverviewMetricResource.getPerformanceOverviewMetric(
-					new Long[] {_depotEntry.getDepotEntryId()}, 30);
+					new Long[] {_depotEntry.getDepotEntryId()},
+					RandomTestUtil.nextInt());
 
 			_assertMetric(
 				performanceOverviewMetric.getDownloadsMetric(),

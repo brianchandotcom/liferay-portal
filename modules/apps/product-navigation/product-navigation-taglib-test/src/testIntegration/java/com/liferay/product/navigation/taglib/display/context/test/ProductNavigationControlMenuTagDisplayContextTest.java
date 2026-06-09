@@ -71,16 +71,40 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		Bundle bundle = FrameworkUtil.getBundle(
 			ProductNavigationControlMenuTagDisplayContextTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 
-		_serviceRegistrations.add(_registerCategory());
+		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				ProductNavigationControlMenuCategory.class,
+				new ProductNavigationControlMenuCategory() {
+
+					@Override
+					public String getKey() {
+						return _CATEGORY_KEY;
+					}
+
+					@Override
+					public boolean hasAccessPermission(
+						HttpServletRequest httpServletRequest) {
+
+						return true;
+					}
+
+				},
+				HashMapDictionaryBuilder.<String, Object>put(
+					"product.navigation.control.menu.category.key",
+					ProductNavigationControlMenuCategoryKeys.ROOT
+				).put(
+					"product.navigation.control.menu.category.order",
+					RandomTestUtil.randomInt()
+				).build()));
 	}
 
 	@After
@@ -95,17 +119,29 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 	}
 
 	@Test
-	public void testWriteProductNavigationControlMenuEntriesWithMultipleEntries()
+	public void testWriteProductNavigationControlMenuEntries()
 		throws Exception {
 
 		_serviceRegistrations.add(
-			_registerEntry(
-				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
-		_serviceRegistrations.add(
-			_registerEntry(
+			_registerService(
 				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
 
 		String html = _render();
+
+		Assert.assertTrue(
+			html,
+			html.contains(
+				StringBundler.concat(
+					"<div class=\"control-menu-nav-category ", _CATEGORY_KEY,
+					"-control-group\"><ul role=\"presentation\" ",
+					"class=\"control-menu-nav\"><li role=\"presentation\" ",
+					"class=\"control-menu-nav-item\">")));
+
+		_serviceRegistrations.add(
+			_registerService(
+				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
+
+		html = _render();
 
 		Assert.assertTrue(
 			html,
@@ -119,26 +155,6 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 				StringBundler.concat(
 					"<div class=\"control-menu-nav-category ", _CATEGORY_KEY,
 					"-control-group\"><ul role=\"presentation\"")));
-	}
-
-	@Test
-	public void testWriteProductNavigationControlMenuEntriesWithSingleEntry()
-		throws Exception {
-
-		_serviceRegistrations.add(
-			_registerEntry(
-				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
-
-		String html = _render();
-
-		Assert.assertTrue(
-			html,
-			html.contains(
-				StringBundler.concat(
-					"<div class=\"control-menu-nav-category ", _CATEGORY_KEY,
-					"-control-group\"><ul role=\"presentation\" ",
-					"class=\"control-menu-nav\"><li role=\"presentation\" ",
-					"class=\"control-menu-nav-item\">")));
 	}
 
 	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
@@ -165,37 +181,8 @@ public class ProductNavigationControlMenuTagDisplayContextTest {
 		return themeDisplay;
 	}
 
-	private ServiceRegistration<ProductNavigationControlMenuCategory>
-		_registerCategory() {
-
-		return _bundleContext.registerService(
-			ProductNavigationControlMenuCategory.class,
-			new ProductNavigationControlMenuCategory() {
-
-				@Override
-				public String getKey() {
-					return _CATEGORY_KEY;
-				}
-
-				@Override
-				public boolean hasAccessPermission(
-					HttpServletRequest httpServletRequest) {
-
-					return true;
-				}
-
-			},
-			HashMapDictionaryBuilder.<String, Object>put(
-				"product.navigation.control.menu.category.key",
-				ProductNavigationControlMenuCategoryKeys.ROOT
-			).put(
-				"product.navigation.control.menu.category.order",
-				RandomTestUtil.randomInt()
-			).build());
-	}
-
 	private ServiceRegistration<ProductNavigationControlMenuEntry>
-		_registerEntry(String key, int order) {
+		_registerService(String key, int order) {
 
 		return _bundleContext.registerService(
 			ProductNavigationControlMenuEntry.class,

@@ -450,7 +450,11 @@ public class BundleSiteInitializerTest {
 		File tempDir2 = _getTempDir(
 			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.site.initializer.extender.internal." +
+					"BundleSiteInitializer",
+				LoggerTestUtil.WARN)) {
+
 			_test1(
 				_siteInitializerFactory.create(
 					new File(tempDir1, "site-initializer"), null));
@@ -472,7 +476,11 @@ public class BundleSiteInitializerTest {
 		File tempDir1 = _getTempDir(
 			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.site.initializer.extender.internal." +
+					"BundleSiteInitializer",
+				LoggerTestUtil.WARN)) {
+
 			SiteInitializer siteInitializer = _siteInitializerFactory.create(
 				new File(tempDir1, "site-initializer"), null);
 

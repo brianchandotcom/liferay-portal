@@ -189,13 +189,13 @@ public class OpenAPIUtilTest {
 			JSONUtil.put("body", JSONFactoryUtil.createJSONObject()),
 			_openAPIJSONObject, "postItem");
 
+		Assert.assertEquals(
+			"application/json", options.getHeader("Content-Type"));
+
 		Http.Body body = options.getBody();
 
 		Assert.assertEquals("{}", body.getContent());
 		Assert.assertEquals("application/json", body.getContentType());
-
-		Assert.assertEquals(
-			"application/json", options.getHeader("Content-Type"));
 	}
 
 	@Test

@@ -10,19 +10,27 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowInstanceLinkException;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.FutureTask;
+
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -30,12 +38,8 @@ import org.junit.runner.RunWith;
  * @author Mateus Xavier
  */
 @RunWith(Arquillian.class)
-public class KaleoInstanceLocalServiceTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+public class KaleoInstanceLocalServiceTest
+	extends BaseKaleoLocalServiceTestCase {
 
 	@Test
 	public void testDeleteKaleoInstance() throws Exception {
@@ -62,6 +66,63 @@ public class KaleoInstanceLocalServiceTest {
 			() -> _workflowInstanceLinkLocalService.getWorkflowInstanceLink(
 				blogsEntry.getCompanyId(), blogsEntry.getGroupId(),
 				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+	}
+
+	@Test
+	public void testUpdateKaleoInstance() throws Exception {
+		KaleoInstance kaleoInstance = addKaleoInstance();
+
+		int threadCount = 5;
+
+		CyclicBarrier cyclicBarrier = new CyclicBarrier(threadCount);
+
+		List<FutureTask<KaleoInstance>> futureTasks = new ArrayList<>();
+
+		long kaleoInstanceId = kaleoInstance.getKaleoInstanceId();
+
+		for (int i = 0; i < threadCount; i++) {
+			FutureTask<KaleoInstance> futureTask = new FutureTask<>(
+				new CompanyInheritableThreadLocalCallable<>(
+					() -> {
+						cyclicBarrier.await();
+
+						return _kaleoInstanceLocalService.updateKaleoInstance(
+							kaleoInstanceId,
+							HashMapBuilder.<String, Serializable>put(
+								RandomTestUtil.randomString(),
+								RandomTestUtil.randomString()
+							).build());
+					}));
+
+			futureTasks.add(futureTask);
+		}
+
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"org.hibernate.engine.jdbc.batch.internal.BatchingBatch",
+				LoggerTestUtil.ERROR);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.workflow.metrics.internal.petra.executor." +
+					"WorkflowMetricsPortalExecutor",
+				LoggerTestUtil.ERROR)) {
+
+			for (FutureTask<KaleoInstance> futureTask : futureTasks) {
+				Thread thread = new Thread(futureTask);
+
+				thread.start();
+			}
+
+			for (FutureTask<KaleoInstance> futureTask : futureTasks) {
+				futureTask.get();
+			}
+		}
+
+		long mvccVersion = kaleoInstance.getMvccVersion();
+
+		kaleoInstance = _kaleoInstanceLocalService.getKaleoInstance(
+			kaleoInstanceId);
+
+		Assert.assertEquals(
+			mvccVersion + threadCount, kaleoInstance.getMvccVersion());
 	}
 
 	@Inject

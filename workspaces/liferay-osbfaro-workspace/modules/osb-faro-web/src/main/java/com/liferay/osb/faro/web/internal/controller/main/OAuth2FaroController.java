@@ -1,18 +1,19 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.osb.faro.web.internal.controller.main;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.oauth.client.LocalOAuthClient;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.web.internal.application.ApiApplication;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
@@ -57,6 +58,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,39 +116,40 @@ public class OAuth2FaroController extends BaseFaroController {
 			}
 		}
 
-		try {
-			if (expiresIn == null) {
-				expiresIn = 3153600000L;
+		synchronized (this) {
+			try {
+				if (expiresIn == null) {
+					expiresIn = 3153600000L;
+				}
+
+				AccessTokenExpiresInUtil.setExpiresIn(expiresIn);
+
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					_invokeOAuth2Endpoint(
+						oAuth2Application.getClientId(),
+						oAuth2Application.getClientSecret()));
+
+				OAuth2Authorization oAuth2Authorization =
+					_fetchOAuth2AuthorizationByAccessToken(
+						jsonObject.getString("access_token"));
+
+				if (oAuth2Authorization == null) {
+					throw new PortalException(
+						"Unable to find OAuth2 authorization for the created " +
+							"access token");
+				}
+
+				_setOAuth2AuthorizationGroupId(groupId, oAuth2Authorization);
+
+				if (Validator.isNotNull(type)) {
+					_setOAuth2AuthorizationType(oAuth2Authorization, type);
+				}
+
+				return _mapTokenDisplay(oAuth2Authorization);
 			}
-
-			AccessTokenExpiresInUtil.setExpiresIn(expiresIn);
-
-			String tokensJSON = _localOAuthClient.requestTokens(
-				oAuth2Application,
-				oAuth2Application.getClientCredentialUserId());
-
-			if (tokensJSON == null) {
-				throw new PortalException(
-					"Unable to create access token for OAuth2 application " +
-						oAuth2Application.getOAuth2ApplicationId());
+			finally {
+				AccessTokenExpiresInUtil.removeExpiresIn();
 			}
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(tokensJSON);
-
-			OAuth2Authorization oAuth2Authorization =
-				_fetchUserOAuth2AuthorizationByAccessToken(
-					jsonObject.getString("access_token"));
-
-			_setOAuth2AuthorizationGroupId(groupId, oAuth2Authorization);
-
-			if (Validator.isNotNull(type)) {
-				_setOAuth2AuthorizationType(oAuth2Authorization, type);
-			}
-
-			return _mapTokenDisplay(oAuth2Authorization);
-		}
-		finally {
-			AccessTokenExpiresInUtil.removeExpiresIn();
 		}
 	}
 
@@ -150,7 +162,7 @@ public class OAuth2FaroController extends BaseFaroController {
 		throws Exception {
 
 		OAuth2Authorization oAuth2Authorization =
-			_fetchUserOAuth2AuthorizationByAccessToken(token);
+			_fetchOAuth2AuthorizationByAccessToken(token);
 
 		if (oAuth2Authorization == null) {
 			throw new IllegalArgumentException(
@@ -161,26 +173,11 @@ public class OAuth2FaroController extends BaseFaroController {
 			oAuth2Authorization.getOAuth2AuthorizationId());
 	}
 
-	private OAuth2Authorization _fetchUserOAuth2AuthorizationByAccessToken(
-			String accessToken)
-		throws Exception {
+	private OAuth2Authorization _fetchOAuth2AuthorizationByAccessToken(
+		String accessToken) {
 
-		List<OAuth2Authorization> userOAuth2Authorizations =
-			_oAuth2AuthorizationService.getUserOAuth2Authorizations(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		for (OAuth2Authorization userOAuth2Authorization :
-				userOAuth2Authorizations) {
-
-			if (Objects.equals(
-					userOAuth2Authorization.getAccessTokenContent(),
-					accessToken)) {
-
-				return userOAuth2Authorization;
-			}
-		}
-
-		return null;
+		return _oAuth2AuthorizationLocalService.
+			fetchOAuth2AuthorizationByAccessTokenContent(accessToken);
 	}
 
 	private boolean _filterOAuth2Authorization(
@@ -320,6 +317,41 @@ public class OAuth2FaroController extends BaseFaroController {
 			});
 	}
 
+	private String _invokeOAuth2Endpoint(String clientId, String clientSecret)
+		throws Exception {
+
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		try (CloseableHttpClient closeableHttpClient =
+				httpClientBuilder.build()) {
+
+			HttpPost httpPost = new HttpPost(
+				String.format(
+					_O_AUTH2_ENDPOINT_TEMPLATE, FaroPropsValues.FARO_URL));
+
+			httpPost.setEntity(
+				new UrlEncodedFormEntity(
+					Arrays.asList(
+						new BasicNameValuePair(
+							"grant_type", "client_credentials"),
+						new BasicNameValuePair("client_id", clientId),
+						new BasicNameValuePair(
+							"client_secret", clientSecret))));
+
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpPost);
+
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+				throw new PortalException(
+					"HTTP response status code: " + statusLine.getStatusCode());
+			}
+
+			return EntityUtils.toString(closeableHttpResponse.getEntity());
+		}
+	}
+
 	private TokenDisplay _mapTokenDisplay(
 		OAuth2Authorization oAuth2Authorization) {
 
@@ -352,6 +384,9 @@ public class OAuth2FaroController extends BaseFaroController {
 		expandoBridge.setAttribute("type", type, false);
 	}
 
+	private static final String _O_AUTH2_ENDPOINT_TEMPLATE =
+		"%s/o/oauth2/token";
+
 	private static final Pattern _baseIdPattern = Pattern.compile(
 		"(.{8})(.{4})(.{4})(.{4})(.*)");
 
@@ -359,10 +394,10 @@ public class OAuth2FaroController extends BaseFaroController {
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private LocalOAuthClient _localOAuthClient;
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 	@Reference
-	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 	@Reference
 	private OAuth2AuthorizationService _oAuth2AuthorizationService;

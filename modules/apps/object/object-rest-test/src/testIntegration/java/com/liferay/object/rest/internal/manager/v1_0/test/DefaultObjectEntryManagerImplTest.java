@@ -8449,9 +8449,9 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_assertObjectEntriesSizeWithLocale(
-			_objectDefinition2, "pt_BR", LocaleUtil.BRAZIL, 1);
+			LocaleUtil.BRAZIL, _objectDefinition2, "pt_BR", 1);
 		_assertObjectEntriesSizeWithLocale(
-			_objectDefinition2, "pt_BR", LocaleUtil.US, 0);
+			LocaleUtil.US, _objectDefinition2, "pt_BR", 0);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -10823,7 +10823,7 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _assertObjectEntriesSizeWithLocale(
-			ObjectDefinition objectDefinition, String search, Locale locale,
+			Locale locale, ObjectDefinition objectDefinition, String search,
 			long size)
 		throws Exception {
 

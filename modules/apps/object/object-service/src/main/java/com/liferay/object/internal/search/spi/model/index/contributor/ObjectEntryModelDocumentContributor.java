@@ -125,12 +125,10 @@ public class ObjectEntryModelDocumentContributor
 			ObjectEntry objectEntry)
 		throws Exception {
 
-		long titleObjectFieldId = objectDefinition.getTitleObjectFieldId();
-
 		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
 
 		ObjectField titleObjectField = objectFieldBag.getObjectField(
-			titleObjectFieldId);
+			objectDefinition.getTitleObjectFieldId());
 
 		if ((titleObjectField == null) || !titleObjectField.isLocalized()) {
 			document.add(

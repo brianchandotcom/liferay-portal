@@ -18,9 +18,6 @@ public class ObjectEntrySearchConstants {
 	public static final String NESTED_FIELD_ARRAY_VALUE =
 		"nestedFieldArray.value";
 
-	public static final String NESTED_FIELD_ARRAY_VALUE_BINARY =
-		"nestedFieldArray.value_binary";
-
 	public static final String NESTED_FIELD_ARRAY_VALUE_BOOLEAN =
 		"nestedFieldArray.value_boolean";
 

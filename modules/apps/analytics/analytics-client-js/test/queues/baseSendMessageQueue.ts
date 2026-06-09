@@ -58,4 +58,49 @@ describe('BaseSendMessageQueue', () => {
 
 		expect(messages.length).toEqual(1);
 	});
+
+	it('dequeues the message and does not retry when the response status is 403', async () => {
+		fetchMock.restore();
+		fetchMock.mock(/ac-server/i, 403);
+
+		await baseSendMessageQueue.addItem(
+			getMockItem(1) as unknown as AnalyticsType.Event
+		);
+
+		expect(baseSendMessageQueue.getItems().length).toEqual(1);
+
+		await Promise.allSettled(baseSendMessageQueue.onFlush());
+
+		expect(baseSendMessageQueue.getItems().length).toEqual(0);
+	});
+
+	it('dequeues the message and does not retry when the response status is 400', async () => {
+		fetchMock.restore();
+		fetchMock.mock(/ac-server/i, 400);
+
+		await baseSendMessageQueue.addItem(
+			getMockItem(1) as unknown as AnalyticsType.Event
+		);
+
+		expect(baseSendMessageQueue.getItems().length).toEqual(1);
+
+		await Promise.allSettled(baseSendMessageQueue.onFlush());
+
+		expect(baseSendMessageQueue.getItems().length).toEqual(0);
+	});
+
+	it('keeps the message in the queue to retry when the response status is 500', async () => {
+		fetchMock.restore();
+		fetchMock.mock(/ac-server/i, 500);
+
+		await baseSendMessageQueue.addItem(
+			getMockItem(1) as unknown as AnalyticsType.Event
+		);
+
+		expect(baseSendMessageQueue.getItems().length).toEqual(1);
+
+		await Promise.allSettled(baseSendMessageQueue.onFlush());
+
+		expect(baseSendMessageQueue.getItems().length).toEqual(1);
+	});
 });

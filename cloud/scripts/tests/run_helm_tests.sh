@@ -13,6 +13,10 @@ function main {
 
 	cloud_dir=$(cd "${script_dir}/../.." && pwd)
 
+	local test_reports_dir="${cloud_dir}/scripts/tests/test-reports"
+
+	mkdir --parents "${test_reports_dir}"
+
 	local charts=(
 		aws
 		aws-infrastructure
@@ -23,10 +27,6 @@ function main {
 		gcp-infrastructure
 		gcp-infrastructure-provider
 	)
-
-	local test_reports_dir="${cloud_dir}/scripts/tests/test-reports"
-
-	mkdir --parents "${test_reports_dir}"
 
 	for chart in "${charts[@]}"
 	do

@@ -61,6 +61,8 @@ public class CommerceOrderNoteServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		String actionId = CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES;
+
 		CommerceOrderNote commerceOrderNote = null;
 
 		if (commerceOrderNoteId > 0) {
@@ -74,8 +76,6 @@ public class CommerceOrderNoteServiceImpl
 					fetchCommerceOrderNoteByExternalReferenceCode(
 						externalReferenceCode, serviceContext.getCompanyId());
 		}
-
-		String actionId = CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES;
 
 		if (((commerceOrderNote != null) && commerceOrderNote.isRestricted()) ||
 			restricted) {

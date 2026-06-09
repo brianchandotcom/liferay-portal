@@ -244,9 +244,19 @@ export default function SaveButtons({
 			`${portletNamespace}dataEngineLayoutRenderer`
 		);
 
-		const [, isValid] = await renderer.reactComponentRef.current.validate();
+		try {
+			const [, isValid] =
+				await renderer.reactComponentRef.current.validate();
 
-		return isValid;
+			return isValid;
+		}
+		catch (error) {
+			if (error?.message && error.name !== 'AbortError') {
+				showAlert(error.message);
+			}
+
+			return false;
+		}
 	};
 
 	useEffect(() => {

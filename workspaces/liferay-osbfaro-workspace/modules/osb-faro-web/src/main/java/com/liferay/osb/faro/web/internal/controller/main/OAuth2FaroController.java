@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -12,6 +12,7 @@ import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
 import com.liferay.osb.faro.web.internal.application.ApiApplication;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
@@ -125,8 +126,14 @@ public class OAuth2FaroController extends BaseFaroController {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(tokensJSON);
 
 			OAuth2Authorization oAuth2Authorization =
-				_fetchUserOAuth2AuthorizationByAccessToken(
+				_fetchOAuth2AuthorizationByAccessToken(
 					jsonObject.getString("access_token"));
+
+			if (oAuth2Authorization == null) {
+				throw new PortalException(
+					"Unable to find OAuth2 authorization for the created " +
+						"access token");
+			}
 
 			_setOAuth2AuthorizationGroupId(groupId, oAuth2Authorization);
 
@@ -150,7 +157,7 @@ public class OAuth2FaroController extends BaseFaroController {
 		throws Exception {
 
 		OAuth2Authorization oAuth2Authorization =
-			_fetchUserOAuth2AuthorizationByAccessToken(token);
+			_fetchOAuth2AuthorizationByAccessToken(token);
 
 		if (oAuth2Authorization == null) {
 			throw new IllegalArgumentException(
@@ -161,26 +168,11 @@ public class OAuth2FaroController extends BaseFaroController {
 			oAuth2Authorization.getOAuth2AuthorizationId());
 	}
 
-	private OAuth2Authorization _fetchUserOAuth2AuthorizationByAccessToken(
-			String accessToken)
-		throws Exception {
+	private OAuth2Authorization _fetchOAuth2AuthorizationByAccessToken(
+		String accessToken) {
 
-		List<OAuth2Authorization> userOAuth2Authorizations =
-			_oAuth2AuthorizationService.getUserOAuth2Authorizations(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		for (OAuth2Authorization userOAuth2Authorization :
-				userOAuth2Authorizations) {
-
-			if (Objects.equals(
-					userOAuth2Authorization.getAccessTokenContent(),
-					accessToken)) {
-
-				return userOAuth2Authorization;
-			}
-		}
-
-		return null;
+		return _oAuth2AuthorizationLocalService.
+			fetchOAuth2AuthorizationByAccessTokenContent(accessToken);
 	}
 
 	private boolean _filterOAuth2Authorization(
@@ -363,6 +355,9 @@ public class OAuth2FaroController extends BaseFaroController {
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+
+	@Reference
+	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 	@Reference
 	private OAuth2AuthorizationService _oAuth2AuthorizationService;

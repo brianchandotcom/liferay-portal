@@ -119,7 +119,6 @@ describe('ConfigurationForm', () => {
 		mockGetConfiguration.mockResolvedValueOnce({
 			environmentURLs: 'https://test.example.com',
 			externalReferenceCode: 'CONFIG_X',
-			recipientEmailAddress: 'test@example.com',
 		});
 
 		render(
@@ -134,10 +133,6 @@ describe('ConfigurationForm', () => {
 				screen.getByDisplayValue('https://test.example.com')
 			).toBeInTheDocument();
 		});
-
-		expect(
-			screen.getByDisplayValue('test@example.com')
-		).toBeInTheDocument();
 	});
 
 	it('renders the credentials panel when a clientId is provided', () => {
@@ -152,7 +147,6 @@ describe('ConfigurationForm', () => {
 		mockGetConfiguration.mockResolvedValueOnce({
 			environmentURLs: '',
 			externalReferenceCode: 'CONFIG_X',
-			recipientEmailAddress: '',
 		});
 
 		mockPutConfiguration.mockResolvedValueOnce({});
@@ -174,10 +168,6 @@ describe('ConfigurationForm', () => {
 			target: {value: 'https://www.example.com'},
 		});
 
-		fireEvent.change(screen.getByLabelText(/^notification-email/), {
-			target: {value: 'test@example.com'},
-		});
-
 		fireEvent.click(screen.getByRole('button', {name: 'save'}));
 
 		await waitFor(() => {
@@ -186,7 +176,6 @@ describe('ConfigurationForm', () => {
 				expect.objectContaining({
 					environmentURLs: 'https://www.example.com',
 					r_accountToAIHubConfigurations_accountEntryId: 12345,
-					recipientEmailAddress: 'test@example.com',
 				})
 			);
 		});

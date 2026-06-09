@@ -45,7 +45,6 @@ function renderConfigurationHook({
 
 function fillFields(result: any) {
 	result.current.setField('environmentURLs', 'https://www.example.com');
-	result.current.setField('recipientEmailAddress', 'admin@example.com');
 }
 
 describe('fetch lifecycle', () => {
@@ -58,7 +57,6 @@ describe('fetch lifecycle', () => {
 		mockGetConfiguration.mockResolvedValueOnce({
 			environmentURLs: 'https://loaded.example.com',
 			externalReferenceCode: 'CONFIG_X',
-			recipientEmailAddress: 'loaded@example.com',
 		});
 
 		const {result} = renderConfigurationHook({
@@ -70,10 +68,6 @@ describe('fetch lifecycle', () => {
 				'https://loaded.example.com'
 			);
 		});
-
-		expect(result.current.values.recipientEmailAddress).toBe(
-			'loaded@example.com'
-		);
 
 		expect(result.current.values.externalReferenceCode).toBe('CONFIG_X');
 
@@ -121,8 +115,6 @@ describe('useConfigurationForm', () => {
 
 			expect(result.current.values.environmentURLs).toBe('');
 
-			expect(result.current.values.recipientEmailAddress).toBe('');
-
 			expect(result.current.values.externalReferenceCode).toBe('');
 		});
 	});
@@ -151,7 +143,7 @@ describe('useConfigurationForm', () => {
 			});
 		});
 
-		it('saves even when both fields are left empty', async () => {
+		it('saves even when the field is left empty', async () => {
 			mockPutConfiguration.mockResolvedValueOnce({});
 
 			const {result} = renderConfigurationHook({
@@ -167,7 +159,6 @@ describe('useConfigurationForm', () => {
 					'',
 					expect.objectContaining({
 						environmentURLs: '',
-						recipientEmailAddress: '',
 					})
 				);
 			});
@@ -195,7 +186,6 @@ describe('useConfigurationForm', () => {
 						environmentURLs: 'https://www.example.com',
 						r_accountToAIHubConfigurations_accountEntryId:
 							ACCOUNT_ENTRY_ID,
-						recipientEmailAddress: 'admin@example.com',
 					})
 				);
 			});

@@ -36,7 +36,6 @@ const defaultProps = {
 	values: {
 		environmentURLs: '',
 		externalReferenceCode: '',
-		recipientEmailAddress: '',
 	},
 };
 
@@ -62,26 +61,9 @@ describe('AccountConfigurationPanel', () => {
 		);
 	});
 
-	it('calls setField when the Notification Email changes', () => {
-		render(<AccountConfigurationPanel {...defaultProps} />);
-
-		fireEvent.change(screen.getByLabelText(/^notification-email/), {
-			target: {value: 'test@example.com'},
-		});
-
-		expect(mockSetField).toHaveBeenCalledWith(
-			'recipientEmailAddress',
-			'test@example.com'
-		);
-	});
-
-	it('renders the Environment URL and Notification Email fields', () => {
+	it('renders the Environment URL field', () => {
 		render(<AccountConfigurationPanel {...defaultProps} />);
 
 		expect(screen.getByLabelText(/^environment-url/)).toBeInTheDocument();
-
-		expect(
-			screen.getByLabelText(/^notification-email/)
-		).toBeInTheDocument();
 	});
 });

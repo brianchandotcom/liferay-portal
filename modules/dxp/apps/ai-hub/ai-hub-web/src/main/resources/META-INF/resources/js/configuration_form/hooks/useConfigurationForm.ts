@@ -29,7 +29,6 @@ export function useConfigurationForm({
 			initialValues: {
 				environmentURLs: '',
 				externalReferenceCode,
-				recipientEmailAddress: '',
 			},
 			onSubmit: async (formValues) => {
 				try {
@@ -82,8 +81,6 @@ export function useConfigurationForm({
 				setValues({
 					environmentURLs: configuration.environmentURLs || '',
 					externalReferenceCode,
-					recipientEmailAddress:
-						configuration.recipientEmailAddress || '',
 				});
 			})
 			.catch(() => {

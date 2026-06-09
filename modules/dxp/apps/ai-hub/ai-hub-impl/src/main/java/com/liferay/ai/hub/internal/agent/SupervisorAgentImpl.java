@@ -224,8 +224,6 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 			VertexAiGeminiChatModel vertexAiGeminiChatModel)
 		throws PortalException {
 
-		String message = MapUtil.getString(agentContext.getInput(), "message");
-
 		_quotaManager.checkTokensUsage(
 			agentContext.getCompanyId(), agentContext.getUserId());
 
@@ -246,7 +244,8 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 				SupervisorResponseStrategy.SCORED
 			).build();
 
-		String data = supervisorAgent.invoke(message);
+		String data = supervisorAgent.invoke(
+			MapUtil.getString(agentContext.getInput(), "message"));
 
 		if (Validator.isBlank(data)) {
 			DTOConverterContext dtoConverterContext =

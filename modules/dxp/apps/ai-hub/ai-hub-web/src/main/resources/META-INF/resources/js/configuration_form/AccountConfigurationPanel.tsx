@@ -41,21 +41,6 @@ export default function AccountConfigurationPanel({
 					value={values.environmentURLs}
 				/>
 			</FieldBase>
-
-			<FieldBase
-				id="recipientEmailAddress"
-				label={Liferay.Language.get('notification-email')}
-			>
-				<ClayInput
-					id="recipientEmailAddress"
-					name="recipientEmailAddress"
-					onChange={(event) =>
-						setField('recipientEmailAddress', event.target.value)
-					}
-					type="email"
-					value={values.recipientEmailAddress}
-				/>
-			</FieldBase>
 		</>
 	);
 }

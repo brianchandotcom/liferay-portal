@@ -7,7 +7,6 @@ export type Configuration = {
 	environmentURLs: string;
 	externalReferenceCode: string;
 	r_accountToAIHubConfigurations_accountEntryId?: number;
-	recipientEmailAddress: string;
 };
 
 export type Credential = {

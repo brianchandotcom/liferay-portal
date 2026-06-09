@@ -730,6 +730,55 @@ components:
                     description:
                         The field's visible value
                     type: string
+        ContentSet:
+            description:
+                Represents a persisted content set, backed by an AssetListEntry, exposed for discovery by the Item Selector.
+            properties:
+                classNameId:
+                    description:
+                        The class name ID of AssetListEntry, mirrors the legacy click payload.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                classPK:
+                    description:
+                        The content set's ID, equal to contentSetId, is kept as classPK for legacy InfoListItemSelectorReturnType parity.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                contentSetId:
+                    description:
+                        The content set's primary key. Equal to classPK; exposed explicitly because the field name is meaningful to callers reading the DTO.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    description:
+                        This standard Liferay headless field provides a portable reference across systems.
+                    readOnly: true
+                    type: string
+                itemSubtype:
+                    description:
+                        The AssetEntry subtype (DDM structure ID, etc.); mirrors AssetListEntry.assetEntrySubtype.
+                    readOnly: true
+                    type: string
+                itemType:
+                    description:
+                        The AssetEntry FQCN this list returns; mirrors AssetListEntry.assetEntryType.
+                    readOnly: true
+                    type: string
+                title:
+                    readOnly: true
+                    type: string
+            type: object
         ContentSetElement:
             description:
                 Represents each member of a content set and can contain different types of assets.
@@ -6394,6 +6443,56 @@ paths:
                                     $ref: "#/components/schemas/ContentElement"
                                 type: array
             tags: ["ContentElement"]
+    "/asset-libraries/{assetLibraryId}/content-sets":
+        get:
+            description:
+                Lists the asset library's persisted content sets, optionally filtered by a search keyword, item type, and item subtype.
+            operationId: getAssetLibraryContentSetsPage
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: itemSubtype
+                    schema:
+                        type: string
+                -   in: query
+                    name: itemType
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentSet"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentSet"
+                                type: array
+            tags: ["ContentSet"]
     "/asset-libraries/{assetLibraryId}/content-sets/by-key/{key}/content-set-elements":
         get:
             operationId: getAssetLibraryContentSetByKeyContentSetElementsPage
@@ -13100,6 +13199,56 @@ paths:
                                     $ref: "#/components/schemas/ContentSetElement"
                                 type: array
             tags: ["ContentSetElement"]
+    "/sites/{siteId}/content-sets":
+        get:
+            description:
+                Lists the site's persisted content sets, optionally filtered by a search keyword, item type, and item subtype.
+            operationId: getSiteContentSetsPage
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: itemSubtype
+                    schema:
+                        type: string
+                -   in: query
+                    name: itemType
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentSet"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentSet"
+                                type: array
+            tags: ["ContentSet"]
     "/sites/{siteId}/content-sets/by-key/{key}/content-set-elements":
         get:
             description:

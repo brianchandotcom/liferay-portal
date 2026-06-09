@@ -91,6 +91,7 @@ export default function CalendarView({items}: CalendarViewProps) {
 								active: datePickerExpanded,
 							}
 						)}
+						data-testid="calendarTitle"
 						displayType="secondary"
 						onClick={() =>
 							setDatePickerExpanded((expanded) => !expanded)

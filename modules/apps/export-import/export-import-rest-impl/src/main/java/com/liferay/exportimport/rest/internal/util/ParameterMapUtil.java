@@ -23,9 +23,10 @@ import java.util.Map;
 public class ParameterMapUtil {
 
 	public static Map<String, String[]> toParameterMap(
-		ExportProcessRequest exportProcessRequest) {
+		ExportProcessRequest exportProcessRequest, boolean portletScoped) {
 
-		Map<String, String[]> parameterMap = _getDefaultParameterMap();
+		Map<String, String[]> parameterMap = _getDefaultParameterMap(
+			portletScoped);
 
 		_addRequestPortletDataHandlers(
 			exportProcessRequest.getRequestPortletDataHandlers(), parameterMap);
@@ -98,9 +99,10 @@ public class ParameterMapUtil {
 	}
 
 	public static Map<String, String[]> toParameterMap(
-		ImportProcessRequest importProcessRequest) {
+		ImportProcessRequest importProcessRequest, boolean portletScoped) {
 
-		Map<String, String[]> parameterMap = _getDefaultParameterMap();
+		Map<String, String[]> parameterMap = _getDefaultParameterMap(
+			portletScoped);
 
 		_addRequestPortletDataHandlers(
 			importProcessRequest.getRequestPortletDataHandlers(), parameterMap);
@@ -248,7 +250,9 @@ public class ParameterMapUtil {
 		}
 	}
 
-	private static Map<String, String[]> _getDefaultParameterMap() {
+	private static Map<String, String[]> _getDefaultParameterMap(
+		boolean portletScoped) {
+
 		return HashMapBuilder.put(
 			PortletDataHandlerKeys.DATA_STRATEGY,
 			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR}
@@ -263,10 +267,13 @@ public class ParameterMapUtil {
 			new String[] {Boolean.FALSE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL,
+			new String[] {String.valueOf(!portletScoped)}
+		).put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()}
+			new String[] {String.valueOf(!portletScoped)}
 		).put(
 			PortletDataHandlerKeys.PORTLET_DATA,
 			new String[] {Boolean.TRUE.toString()}
@@ -275,10 +282,10 @@ public class ParameterMapUtil {
 			new String[] {Boolean.FALSE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()}
+			new String[] {String.valueOf(!portletScoped)}
 		).put(
 			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL,
-			new String[] {Boolean.TRUE.toString()}
+			new String[] {String.valueOf(!portletScoped)}
 		).put(
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
 			new String[] {UserIdStrategy.CURRENT_USER_ID}

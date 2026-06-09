@@ -31,6 +31,48 @@ const panels = Array.from(
 	};
 });
 
+const accountSelectorContainerSelector = `#${fragmentEntryLinkNamespace}-account-selector-container`;
+const accountSelectorCtaContainerSelector = `#${fragmentEntryLinkNamespace}-account-selector-cta-container`;
+const accountSelectorDropdownMenuSelector = `#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu`;
+
+function handleAccountSelectorEditClick(event) {
+	const accountSelectorContainer = document.querySelector(
+		accountSelectorContainerSelector
+	);
+	const accountSelectorCtaContainer = document.querySelector(
+		accountSelectorCtaContainerSelector
+	);
+	const accountSelectorDropdownMenu = document.querySelector(
+		accountSelectorDropdownMenuSelector
+	);
+
+	if (
+		!accountSelectorContainer ||
+		!accountSelectorCtaContainer ||
+		!accountSelectorDropdownMenu
+	) {
+		return;
+	}
+
+	const shown = accountSelectorDropdownMenu.classList.contains('show');
+
+	let willShow;
+
+	if (isWithin(event, accountSelectorCtaContainer)) {
+		willShow = !shown;
+	}
+	else if (shown && !isWithin(event, accountSelectorDropdownMenu)) {
+		willShow = false;
+	}
+	else {
+		return;
+	}
+
+	accountSelectorContainer.classList.toggle('show', willShow);
+	accountSelectorDropdownMenu.classList.toggle('show', willShow);
+	accountSelectorCtaContainer.setAttribute('aria-expanded', String(willShow));
+}
+
 function handleEditNav(nextStep) {
 	if (nextStep < 0 || nextStep > panels.length - 1) {
 		return;
@@ -87,9 +129,36 @@ function handleTitleChange(panel) {
 	}
 }
 
+function isWithin(event, element) {
+	if (element.contains(event.target)) {
+		return true;
+	}
+
+	const {bottom, left, right, top} = element.getBoundingClientRect();
+
+	return (
+		event.clientX >= left &&
+		event.clientX <= right &&
+		event.clientY >= top &&
+		event.clientY <= bottom
+	);
+}
+
 function main() {
 	if (layoutMode === 'edit') {
 		handleEditNav(0);
+
+		const accountSelectorEditClickListenerKey = `${fragmentEntryLinkNamespace}AccountSelectorEditClickListener`;
+
+		if (!window[accountSelectorEditClickListenerKey]) {
+			window[accountSelectorEditClickListenerKey] = true;
+
+			document.addEventListener(
+				'click',
+				handleAccountSelectorEditClick,
+				true
+			);
+		}
 	}
 	else {
 		Liferay.on('current-account-updated', () => window.location.reload());

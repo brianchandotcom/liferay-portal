@@ -213,7 +213,7 @@ public class SQLServerDB extends BaseDB {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select name from sys.key_constraints where type = 'PK' and " +
-					"OBJECT_NAME(parent_object_id) = ?")) {
+					"parent_object_id = OBJECT_ID(?)")) {
 
 			preparedStatement.setString(1, normalizedTableName);
 

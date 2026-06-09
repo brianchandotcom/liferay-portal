@@ -708,7 +708,6 @@ export default function ChangeTrackingIndicator({
 				>
 					<PublicationTimeline
 						namespace={namespace}
-						navigate={navigate}
 						spritemap={spritemap}
 						timelineClassNameId={timelineClassNameId}
 						timelineClassPK={timelineClassPK}

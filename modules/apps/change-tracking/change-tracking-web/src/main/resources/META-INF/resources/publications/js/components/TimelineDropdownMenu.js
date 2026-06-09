@@ -5,12 +5,16 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {createPortletURL, getPortletId, sub} from 'frontend-js-web';
+import {
+	createPortletURL,
+	getPortletId,
+	navigate as navigateUtil,
+	sub,
+} from 'frontend-js-web';
 import React from 'react';
 
 export default function TimelineDropdownMenu({
 	namespace,
-	navigate,
 	spritemap,
 	timelineClassNameId,
 	timelineClassPK,
@@ -34,6 +38,19 @@ export default function TimelineDropdownMenu({
 		).toString();
 	};
 
+	const checkoutParameters = {
+		ctCollectionId: timelineItem.ctCollectionId,
+	};
+
+	if (timelineItem.editURL) {
+		checkoutParameters.redirect = createPortletURL(timelineItem.editURL);
+	}
+
+	const checkoutURL = createPortletURL(
+		timelineEditURL,
+		checkoutParameters
+	).toString();
+
 	const discardURL = createMVCRenderCommandURL(
 		'/change_tracking/view_discard',
 		{
@@ -41,10 +58,6 @@ export default function TimelineDropdownMenu({
 			modelClassPK: timelineClassPK,
 		}
 	);
-
-	const checkoutURL = createPortletURL(timelineEditURL, {
-		ctCollectionId: timelineItem.ctCollectionId,
-	}).toString();
 
 	const moveURL = createMVCRenderCommandURL(
 		'/change_tracking/view_move_changes',
@@ -59,7 +72,6 @@ export default function TimelineDropdownMenu({
 
 	if (!!timelineItem.actions.update && checkoutURL) {
 		dropdownItems.push({
-			action: true,
 			href: checkoutURL,
 			label: sub(
 				Liferay.Language.get('edit-in-x'),
@@ -102,9 +114,7 @@ export default function TimelineDropdownMenu({
 						borderless
 						className="dropdown-item"
 						displayType="unstyled"
-						onClick={() =>
-							navigate(dropdownItem.href, dropdownItem.action)
-						}
+						onClick={() => navigateUtil(dropdownItem.href)}
 					>
 						<span className="inline-item inline-item-before">
 							<ClayIcon

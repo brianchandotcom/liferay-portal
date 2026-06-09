@@ -21,7 +21,6 @@ import {
 
 const PublicationTimeline = ({
 	namespace,
-	navigate,
 	spritemap,
 	timelineClassNameId,
 	timelineClassPK,
@@ -94,7 +93,6 @@ const PublicationTimeline = ({
 							>
 								<TimelineDropdownMenu
 									namespace={namespace}
-									navigate={navigate}
 									timelineClassNameId={timelineClassNameId}
 									timelineClassPK={timelineItem.modelClassPK}
 									timelineEditURL={timelineEditURL}
@@ -169,12 +167,17 @@ const PublicationTimeline = ({
 												),
 												onClick: ({processClose}) => {
 													processClose();
+
+													window.top.location.reload();
 												},
 											},
 										],
 										id: `${namespace}publication-timeline-history-modal`,
 										iframeBodyCssClass:
 											'entity-history-modal',
+										onClose: function destroy() {
+											window.top.location.reload();
+										},
 										size: 'full-screen',
 										title: Liferay.Language.get(
 											'view-entity-modification-history'

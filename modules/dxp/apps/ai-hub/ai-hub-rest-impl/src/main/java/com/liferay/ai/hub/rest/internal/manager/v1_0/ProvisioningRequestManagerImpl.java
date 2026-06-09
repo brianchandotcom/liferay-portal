@@ -25,6 +25,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -121,6 +122,15 @@ public class ProvisioningRequestManagerImpl
 				companyId, "AIHubConfiguration");
 
 		if (objectDefinition == null) {
+			return;
+		}
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.fetchObjectEntry(
+				accountEntry.getAccountEntryId() + "-ai-hub-configuration", 0,
+				objectDefinition.getObjectDefinitionId());
+
+		if (serviceBuilderObjectEntry != null) {
 			return;
 		}
 
@@ -382,6 +392,9 @@ public class ProvisioningRequestManagerImpl
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference(target = "(object.entry.manager.storage.type=default)")
 	private ObjectEntryManager _objectEntryManager;

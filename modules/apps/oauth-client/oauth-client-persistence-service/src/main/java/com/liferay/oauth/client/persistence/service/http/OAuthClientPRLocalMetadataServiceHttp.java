@@ -91,7 +91,7 @@ public class OAuthClientPRLocalMetadataServiceHttp {
 					HttpPrincipal httpPrincipal, String externalReferenceCode,
 					String[] authorizationServers,
 					String[] bearerMethodsSupported,
-					boolean localWellKnownEnabled, String resource,
+					boolean localWellKnownEnabled, String protectedResourceURI,
 					String resourceName, String[] scopesSupported)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -103,8 +103,8 @@ public class OAuthClientPRLocalMetadataServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, authorizationServers,
-				bearerMethodsSupported, localWellKnownEnabled, resource,
-				resourceName, scopesSupported);
+				bearerMethodsSupported, localWellKnownEnabled,
+				protectedResourceURI, resourceName, scopesSupported);
 
 			Object returnObj = null;
 
@@ -274,7 +274,7 @@ public class OAuthClientPRLocalMetadataServiceHttp {
 		com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata
 				fetchOAuthClientPRLocalMetadata(
 					HttpPrincipal httpPrincipal, long companyId,
-					String resource)
+					String protectedResourceURI)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -284,7 +284,7 @@ public class OAuthClientPRLocalMetadataServiceHttp {
 				_fetchOAuthClientPRLocalMetadataParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, resource);
+				methodKey, companyId, protectedResourceURI);
 
 			Object returnObj = null;
 
@@ -487,7 +487,7 @@ public class OAuthClientPRLocalMetadataServiceHttp {
 		com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata
 				getOAuthClientPRLocalMetadata(
 					HttpPrincipal httpPrincipal, long companyId,
-					String resource)
+					String protectedResourceURI)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -497,7 +497,7 @@ public class OAuthClientPRLocalMetadataServiceHttp {
 				_getOAuthClientPRLocalMetadataParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, resource);
+				methodKey, companyId, protectedResourceURI);
 
 			Object returnObj = null;
 
@@ -743,7 +743,7 @@ public class OAuthClientPRLocalMetadataServiceHttp {
 					long oAuthClientPRLocalMetadataId,
 					String[] authorizationServers,
 					String[] bearerMethodsSupported,
-					boolean localWellKnownEnabled, String resource,
+					boolean localWellKnownEnabled, String protectedResourceURI,
 					String resourceName, String[] scopesSupported)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -755,8 +755,8 @@ public class OAuthClientPRLocalMetadataServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, oAuthClientPRLocalMetadataId, authorizationServers,
-				bearerMethodsSupported, localWellKnownEnabled, resource,
-				resourceName, scopesSupported);
+				bearerMethodsSupported, localWellKnownEnabled,
+				protectedResourceURI, resourceName, scopesSupported);
 
 			Object returnObj = null;
 
@@ -860,4 +860,4 @@ public class OAuthClientPRLocalMetadataServiceHttp {
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1174817114
+// LIFERAY-SERVICE-BUILDER-HASH:-404384554

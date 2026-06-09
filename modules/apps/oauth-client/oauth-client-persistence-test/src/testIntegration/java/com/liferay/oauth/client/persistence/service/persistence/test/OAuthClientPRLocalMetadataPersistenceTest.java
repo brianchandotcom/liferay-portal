@@ -150,7 +150,7 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 		newOAuthClientPRLocalMetadata.setMetadataJSON(
 			RandomTestUtil.randomString());
 
-		newOAuthClientPRLocalMetadata.setResource(
+		newOAuthClientPRLocalMetadata.setProtectedResourceURI(
 			RandomTestUtil.randomString());
 
 		_oAuthClientPRLocalMetadatas.add(
@@ -202,8 +202,8 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 			existingOAuthClientPRLocalMetadata.getMetadataJSON(),
 			newOAuthClientPRLocalMetadata.getMetadataJSON());
 		Assert.assertEquals(
-			existingOAuthClientPRLocalMetadata.getResource(),
-			newOAuthClientPRLocalMetadata.getResource());
+			existingOAuthClientPRLocalMetadata.getProtectedResourceURI(),
+			newOAuthClientPRLocalMetadata.getProtectedResourceURI());
 	}
 
 	@Test(
@@ -282,12 +282,12 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_R() throws Exception {
-		_persistence.countByC_R(RandomTestUtil.nextLong(), "");
+	public void testCountByC_PRURI() throws Exception {
+		_persistence.countByC_PRURI(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_R(0L, "null");
+		_persistence.countByC_PRURI(0L, "null");
 
-		_persistence.countByC_R(0L, (String)null);
+		_persistence.countByC_PRURI(0L, (String)null);
 	}
 
 	@Test
@@ -333,7 +333,7 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 			"externalReferenceCode", true, "oAuthClientPRLocalMetadataId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "localWellKnownEnabled", true,
-			"localWellKnownURI", true, "resource", true);
+			"localWellKnownURI", true, "protectedResourceURI", true);
 	}
 
 	@Test
@@ -656,10 +656,10 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 				oAuthClientPRLocalMetadata, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			oAuthClientPRLocalMetadata.getResource(),
+			oAuthClientPRLocalMetadata.getProtectedResourceURI(),
 			ReflectionTestUtil.invoke(
 				oAuthClientPRLocalMetadata, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "resource"));
+				new Class<?>[] {String.class}, "protectedResourceURI"));
 
 		Assert.assertEquals(
 			oAuthClientPRLocalMetadata.getExternalReferenceCode(),
@@ -707,7 +707,8 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 		oAuthClientPRLocalMetadata.setMetadataJSON(
 			RandomTestUtil.randomString());
 
-		oAuthClientPRLocalMetadata.setResource(RandomTestUtil.randomString());
+		oAuthClientPRLocalMetadata.setProtectedResourceURI(
+			RandomTestUtil.randomString());
 
 		_oAuthClientPRLocalMetadatas.add(
 			_persistence.update(oAuthClientPRLocalMetadata));
@@ -721,4 +722,4 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1177462802
+// LIFERAY-SERVICE-BUILDER-HASH:1645110208

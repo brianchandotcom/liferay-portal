@@ -63,13 +63,13 @@ public class OAuthClientPRLocalMetadataLocalServiceUtil {
 	public static OAuthClientPRLocalMetadata addOAuthClientPRLocalMetadata(
 			String externalReferenceCode, long userId,
 			String[] authorizationServers, String[] bearerMethodsSupported,
-			boolean localWellKnownEnabled, String resource, String resourceName,
-			String[] scopesSupported)
+			boolean localWellKnownEnabled, String protectedResourceURI,
+			String resourceName, String[] scopesSupported)
 		throws PortalException {
 
 		return getService().addOAuthClientPRLocalMetadata(
 			externalReferenceCode, userId, authorizationServers,
-			bearerMethodsSupported, localWellKnownEnabled, resource,
+			bearerMethodsSupported, localWellKnownEnabled, protectedResourceURI,
 			resourceName, scopesSupported);
 	}
 
@@ -253,10 +253,10 @@ public class OAuthClientPRLocalMetadataLocalServiceUtil {
 	}
 
 	public static OAuthClientPRLocalMetadata fetchOAuthClientPRLocalMetadata(
-		long companyId, String resource) {
+		long companyId, String protectedResourceURI) {
 
 		return getService().fetchOAuthClientPRLocalMetadata(
-			companyId, resource);
+			companyId, protectedResourceURI);
 	}
 
 	public static OAuthClientPRLocalMetadata
@@ -448,12 +448,13 @@ public class OAuthClientPRLocalMetadataLocalServiceUtil {
 	public static OAuthClientPRLocalMetadata updateOAuthClientPRLocalMetadata(
 			long oAuthClientPRLocalMetadataId, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,
-			String resource, String resourceName, String[] scopesSupported)
+			String protectedResourceURI, String resourceName,
+			String[] scopesSupported)
 		throws PortalException {
 
 		return getService().updateOAuthClientPRLocalMetadata(
 			oAuthClientPRLocalMetadataId, authorizationServers,
-			bearerMethodsSupported, localWellKnownEnabled, resource,
+			bearerMethodsSupported, localWellKnownEnabled, protectedResourceURI,
 			resourceName, scopesSupported);
 	}
 
@@ -484,4 +485,4 @@ public class OAuthClientPRLocalMetadataLocalServiceUtil {
 			OAuthClientPRLocalMetadataLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1672194168
+// LIFERAY-SERVICE-BUILDER-HASH:-1236153144

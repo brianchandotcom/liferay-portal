@@ -781,69 +781,71 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 
 	private UniquePersistenceFinder
 		<OAuthClientPRLocalMetadata, NoSuchOAuthClientPRLocalMetadataException>
-			_uniquePersistenceFinderByC_R;
+			_uniquePersistenceFinderByC_PRURI;
 
 	/**
-	 * Returns the o auth client pr local metadata where companyId = &#63; and resource = &#63; or throws a <code>NoSuchOAuthClientPRLocalMetadataException</code> if it could not be found.
+	 * Returns the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; or throws a <code>NoSuchOAuthClientPRLocalMetadataException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the matching o auth client pr local metadata
 	 * @throws NoSuchOAuthClientPRLocalMetadataException if a matching o auth client pr local metadata could not be found
 	 */
 	@Override
-	public OAuthClientPRLocalMetadata findByC_R(long companyId, String resource)
+	public OAuthClientPRLocalMetadata findByC_PRURI(
+			long companyId, String protectedResourceURI)
 		throws NoSuchOAuthClientPRLocalMetadataException {
 
-		return _uniquePersistenceFinderByC_R.find(
-			finderCache, new Object[] {companyId, resource});
+		return _uniquePersistenceFinderByC_PRURI.find(
+			finderCache, new Object[] {companyId, protectedResourceURI});
 	}
 
 	/**
-	 * Returns the o auth client pr local metadata where companyId = &#63; and resource = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth client pr local metadata, or <code>null</code> if a matching o auth client pr local metadata could not be found
 	 */
 	@Override
-	public OAuthClientPRLocalMetadata fetchByC_R(
-		long companyId, String resource, boolean useFinderCache) {
+	public OAuthClientPRLocalMetadata fetchByC_PRURI(
+		long companyId, String protectedResourceURI, boolean useFinderCache) {
 
-		return _uniquePersistenceFinderByC_R.fetch(
-			finderCache, new Object[] {companyId, resource}, useFinderCache);
+		return _uniquePersistenceFinderByC_PRURI.fetch(
+			finderCache, new Object[] {companyId, protectedResourceURI},
+			useFinderCache);
 	}
 
 	/**
-	 * Removes the o auth client pr local metadata where companyId = &#63; and resource = &#63; from the database.
+	 * Removes the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the o auth client pr local metadata that was removed
 	 */
 	@Override
-	public OAuthClientPRLocalMetadata removeByC_R(
-			long companyId, String resource)
+	public OAuthClientPRLocalMetadata removeByC_PRURI(
+			long companyId, String protectedResourceURI)
 		throws NoSuchOAuthClientPRLocalMetadataException {
 
-		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata = findByC_R(
-			companyId, resource);
+		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata = findByC_PRURI(
+			companyId, protectedResourceURI);
 
 		return remove(oAuthClientPRLocalMetadata);
 	}
 
 	/**
-	 * Returns the number of o auth client pr local metadatas where companyId = &#63; and resource = &#63;.
+	 * Returns the number of o auth client pr local metadatas where companyId = &#63; and protectedResourceURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the number of matching o auth client pr local metadatas
 	 */
 	@Override
-	public int countByC_R(long companyId, String resource) {
-		return _uniquePersistenceFinderByC_R.count(
-			finderCache, new Object[] {companyId, resource});
+	public int countByC_PRURI(long companyId, String protectedResourceURI) {
+		return _uniquePersistenceFinderByC_PRURI.count(
+			finderCache, new Object[] {companyId, protectedResourceURI});
 	}
 
 	private UniquePersistenceFinder
@@ -1251,7 +1253,7 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 				OAuthClientPRLocalMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"oAuthClientPRLocalMetadata.", "uuid",
+					"oAuthClientPRLocalMetadata.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					OAuthClientPRLocalMetadata::getUuid));
 
@@ -1279,7 +1281,7 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 				OAuthClientPRLocalMetadataModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"oAuthClientPRLocalMetadata.", "uuid",
+					"oAuthClientPRLocalMetadata.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
 					OAuthClientPRLocalMetadata::getUuid),
 				new FinderColumn<>(
@@ -1398,23 +1400,24 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				OAuthClientPRLocalMetadata::getLocalWellKnownURI));
 
-		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
+		_uniquePersistenceFinderByC_PRURI = new UniquePersistenceFinder<>(
 			this,
 			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_PRURI",
 				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"companyId", "resource"}, 0, 2, false,
+				new String[] {"companyId", "protectedResourceURI"}, 0, 2, false,
 				OAuthClientPRLocalMetadata::getCompanyId,
-				convertNullFunction(OAuthClientPRLocalMetadata::getResource)),
+				convertNullFunction(
+					OAuthClientPRLocalMetadata::getProtectedResourceURI)),
 			_SQL_SELECT_OAUTHCLIENTPRLOCALMETADATA_WHERE, "",
 			new FinderColumn<>(
 				"oAuthClientPRLocalMetadata.", "companyId",
 				FinderColumn.Type.LONG, "=", true, true,
 				OAuthClientPRLocalMetadata::getCompanyId),
 			new FinderColumn<>(
-				"oAuthClientPRLocalMetadata.", "resource",
+				"oAuthClientPRLocalMetadata.", "protectedResourceURI",
 				FinderColumn.Type.STRING, "=", true, true,
-				OAuthClientPRLocalMetadata::getResource));
+				OAuthClientPRLocalMetadata::getProtectedResourceURI));
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this,
@@ -1505,4 +1508,4 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:829844604
+// LIFERAY-SERVICE-BUILDER-HASH:1702970969

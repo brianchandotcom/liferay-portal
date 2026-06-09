@@ -1,8 +1,8 @@
 ext {
-	gitHash = "b811c6ad0b005effae8bf4197d53ca0e1f6788dd"
+	gitHash = "5bf5c3b661849e1181d91da7772a129219b36646"
 	gitHubOwner = "liferay"
 	gitHubRepository = "liferay-faces-alloy"
-	mvnJARInclude = "com.liferay.faces.alloy-5.0.0.jar"
+	mvnJARInclude = "com.liferay.faces.alloy-5.0.1.jar"
 	mvnTargetDir = "alloy/target"
 }
 

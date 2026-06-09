@@ -37,8 +37,10 @@ class BaseSendMessageQueue extends BaseQueue {
 				.then(() => {
 					this._dequeue(message.id);
 				})
-				.catch((error: {status: number}) => {
-					if (error.status === 400) {
+				.catch((error: {status?: number}) => {
+					const {status} = error || {};
+
+					if (status === 400 || status === 403) {
 						this._dequeue(message.id);
 					}
 

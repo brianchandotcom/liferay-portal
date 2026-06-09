@@ -14,6 +14,7 @@
 		"@clayui/modal": "^3.165.0",
 		"@clayui/multi-step-nav": "^3.165.0",
 		"@clayui/progress-bar": "^3.165.0",
+		"@clayui/sticker": "^3.165.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"classnames": "2.3.1",

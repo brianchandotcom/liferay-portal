@@ -1,13 +1,23 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"@clayui/button": "^3.164.0",
+		"@clayui/empty-state": "^3.164.0",
+		"@clayui/icon": "^3.164.0",
+		"@clayui/label": "^3.164.0",
+		"@clayui/loading-indicator": "^3.164.0",
+		"@clayui/pagination-bar": "^3.164.0",
+		"@clayui/panel": "^3.164.0",
+		"frontend-js-web": "*",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
 	},
 	"main": "js/index.js",
 	"name": "server-admin-web",
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
-		"format": "node-scripts format"
+		"format": "node-scripts format",
+		"test": "node-scripts test"
 	},
 	"version": "5.0.108"
 }

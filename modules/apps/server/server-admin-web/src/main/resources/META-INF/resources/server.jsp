@@ -47,6 +47,9 @@ ServerDisplayContext serverDisplayContext = (ServerDisplayContext)request.getAtt
 		<c:when test='<%= tabs1.equals("mail") %>'>
 			<liferay-util:include page="/mail.jsp" servletContext="<%= application %>" />
 		</c:when>
+		<c:when test='<%= tabs1.equals("production-readiness") %>'>
+			<liferay-util:include page="/production_readiness.jsp" servletContext="<%= application %>" />
+		</c:when>
 		<c:when test='<%= tabs1.equals("properties") %>'>
 			<liferay-util:include page="/properties.jsp" servletContext="<%= application %>" />
 		</c:when>

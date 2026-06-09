@@ -40,3 +40,48 @@
 		}
 	}
 }
+
+.production-readiness-dashboard {
+	.production-readiness-dot {
+		border-radius: 50%;
+		display: inline-block;
+		height: 8px;
+		width: 8px;
+
+		&.production-readiness-dot-failed {
+			background-color: #da1414;
+		}
+
+		&.production-readiness-dot-ignored {
+			background-color: #6b6c7e;
+		}
+
+		&.production-readiness-dot-passed {
+			background-color: #287d3c;
+		}
+	}
+
+	.production-readiness-rule {
+		border-bottom: 1px solid #e7e7ed;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	.production-readiness-section {
+		.panel-header {
+			background-color: #f7f8f9;
+			width: 100%;
+
+			.panel-title {
+				font-size: 0.875rem;
+				text-transform: uppercase;
+			}
+		}
+
+		.panel-unstyled {
+			border: 0;
+		}
+	}
+}

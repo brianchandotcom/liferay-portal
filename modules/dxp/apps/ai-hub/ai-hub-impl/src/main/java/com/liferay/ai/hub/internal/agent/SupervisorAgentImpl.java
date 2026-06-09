@@ -119,7 +119,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 			InternalAgentFactory internalAgentFactory =
 				new InternalAgentFactory(
-					agentContext, _workflowDefinitionManager,
+					agentContext, _quotaManager, _workflowDefinitionManager,
 					_workflowInstanceManager);
 
 			return TransformUtil.transformToArray(
@@ -226,7 +226,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 		String message = MapUtil.getString(agentContext.getInput(), "message");
 
-		_quotaManager.checkUsage(
+		_quotaManager.checkTokensUsage(
 			agentContext.getCompanyId(), agentContext.getUserId());
 
 		dev.langchain4j.agentic.supervisor.SupervisorAgent supervisorAgent =

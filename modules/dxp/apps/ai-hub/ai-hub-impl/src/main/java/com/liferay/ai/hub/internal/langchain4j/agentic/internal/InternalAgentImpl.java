@@ -9,6 +9,7 @@ import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.internal.agent.util.AgentUtil;
 import com.liferay.ai.hub.internal.audit.constants.AIHubEventTypes;
 import com.liferay.ai.hub.internal.constants.AIHubDestinationNames;
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -30,6 +31,7 @@ import dev.langchain4j.agentic.planner.AgentArgument;
 import dev.langchain4j.agentic.planner.AgentInstance;
 import dev.langchain4j.agentic.planner.AgenticSystemTopology;
 
+import java.io.Closeable;
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
@@ -46,11 +48,12 @@ import java.util.Map;
 public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 
 	public InternalAgentImpl(
-		AgentContext agentContext,
+		AgentContext agentContext, QuotaManager quotaManager,
 		WorkflowDefinitionManager workflowDefinitionManager,
 		WorkflowInstanceManager workflowInstanceManager) {
 
 		_agentContext = agentContext;
+		_quotaManager = quotaManager;
 		_workflowDefinitionManager = workflowDefinitionManager;
 		_workflowInstanceManager = workflowInstanceManager;
 	}
@@ -80,7 +83,9 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 	}
 
 	public Object invoke(Map<String, ?> inputObjects) {
-		try {
+		try (Closeable closeable = _quotaManager.checkConcurrentRequests(
+				_agentContext.getUserId())) {
+
 			Company company = CompanyLocalServiceUtil.getCompany(
 				_agentContext.getCompanyId());
 
@@ -263,6 +268,7 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 	private String _name;
 	private String _outBoundEventName;
 	private String _outputKey;
+	private final QuotaManager _quotaManager;
 	private final WorkflowDefinitionManager _workflowDefinitionManager;
 	private String _workflowDefinitionName;
 	private final WorkflowInstanceManager _workflowInstanceManager;

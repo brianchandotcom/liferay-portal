@@ -7,6 +7,7 @@ package com.liferay.ai.hub.internal.agent;
 
 import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.internal.langchain4j.agentic.internal.InternalAgentImpl;
+import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,18 +27,19 @@ import dev.langchain4j.agentic.planner.AgentArgument;
 public class InternalAgentFactory {
 
 	public InternalAgentFactory(
-		AgentContext agentContext,
+		AgentContext agentContext, QuotaManager quotaManager,
 		WorkflowDefinitionManager workflowDefinitionManager,
 		WorkflowInstanceManager workflowInstanceManager) {
 
 		_agentContext = agentContext;
+		_quotaManager = quotaManager;
 		_workflowDefinitionManager = workflowDefinitionManager;
 		_workflowInstanceManager = workflowInstanceManager;
 	}
 
 	public InternalAgent create(ObjectEntry objectEntry) {
 		InternalAgentImpl internalAgentImpl = new InternalAgentImpl(
-			_agentContext, _workflowDefinitionManager,
+			_agentContext, _quotaManager, _workflowDefinitionManager,
 			_workflowInstanceManager);
 
 		internalAgentImpl.setAgentArguments(
@@ -70,6 +72,7 @@ public class InternalAgentFactory {
 	}
 
 	private final AgentContext _agentContext;
+	private final QuotaManager _quotaManager;
 	private final WorkflowDefinitionManager _workflowDefinitionManager;
 	private final WorkflowInstanceManager _workflowInstanceManager;
 

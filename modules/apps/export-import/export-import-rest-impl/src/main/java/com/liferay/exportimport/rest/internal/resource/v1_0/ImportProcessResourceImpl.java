@@ -14,12 +14,15 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.rest.dto.v1_0.ImportProcess;
 import com.liferay.exportimport.rest.dto.v1_0.ImportProcessRequest;
+import com.liferay.exportimport.rest.dto.v1_0.ProcessProgress;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
+import com.liferay.exportimport.rest.internal.util.BackgroundTaskProgressUtil;
 import com.liferay.exportimport.rest.internal.util.ParameterMapUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ImportPreviewResource;
 import com.liferay.exportimport.rest.resource.v1_0.ImportProcessResource;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -28,11 +31,16 @@ import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -65,28 +73,43 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 
 	@Override
+	public void deleteImportProcess(Long importProcessId) throws Exception {
+		BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.getBackgroundTask(importProcessId);
+
+		PermissionUtil.checkImportPermission(
+			contextCompany.getCompanyId(), backgroundTask.getGroupId());
+
+		_validateImportBackgroundTask(backgroundTask);
+
+		_backgroundTaskLocalService.deleteBackgroundTask(backgroundTask);
+	}
+
+	@Override
 	public Page<ImportProcess> getAssetLibraryImportProcessesPage(
 			String assetLibraryExternalReferenceCode, Long creatorId,
 			String search, Integer status, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-			assetLibraryExternalReferenceCode, contextCompany.getCompanyId());
+		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
-		if ((group == null) || !group.isDepot()) {
-			throw new NotFoundException();
-		}
+		return _getImportProcessesPage(
+			creatorId, group.getGroupId(), null, pagination, search, sorts,
+			status);
+	}
 
-		return Page.of(
-			transform(
-				_getBackgroundTasks(
-					creatorId, group.getGroupId(), pagination, search, sorts,
-					status),
-				this::_toImportProcess),
-			pagination,
-			_backgroundTaskLocalService.dynamicQueryCount(
-				_getDynamicQuery(
-					creatorId, group.getGroupId(), search, status)));
+	@Override
+	public Page<ImportProcess> getAssetLibraryPortletImportProcessesPage(
+			String assetLibraryExternalReferenceCode, String portletId,
+			Long creatorId, String search, Integer status,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
+
+		return _getImportProcessesPage(
+			creatorId, group.getGroupId(), portletId, pagination, search, sorts,
+			status);
 	}
 
 	@Override
@@ -99,13 +122,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		PermissionUtil.checkImportPermission(
 			contextCompany.getCompanyId(), backgroundTask.getGroupId());
 
-		if (!StringUtil.equals(
-				backgroundTask.getTaskExecutorClassName(),
-				BackgroundTaskExecutorNames.
-					LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR)) {
-
-			throw new NoSuchBackgroundTaskException();
-		}
+		_validateImportBackgroundTask(backgroundTask);
 
 		return _toImportProcess(backgroundTask);
 	}
@@ -116,16 +133,30 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		long groupId = _getCompanyGroupId();
+		return _getImportProcessesPage(
+			creatorId, _getCompanyGroupId(), null, pagination, search, sorts,
+			status);
+	}
 
-		return Page.of(
-			transform(
-				_getBackgroundTasks(
-					creatorId, groupId, pagination, search, sorts, status),
-				this::_toImportProcess),
-			pagination,
-			_backgroundTaskLocalService.dynamicQueryCount(
-				_getDynamicQuery(creatorId, groupId, search, status)));
+	@Override
+	public ProcessProgress getImportProcessProgress(Long importProcessId)
+		throws Exception {
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.getBackgroundTask(importProcessId);
+
+		PermissionUtil.checkImportPermission(
+			contextCompany.getCompanyId(), backgroundTask.getGroupId());
+
+		_validateImportBackgroundTask(backgroundTask);
+
+		return new ProcessProgress() {
+			{
+				setPercentage(
+					() -> BackgroundTaskProgressUtil.getPercentage(
+						backgroundTask.getBackgroundTaskId()));
+			}
+		};
 	}
 
 	@Override
@@ -134,23 +165,24 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			Integer status, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
+		Group group = _getSiteGroup(siteExternalReferenceCode);
 
-		if ((group == null) || !group.isSite()) {
-			throw new NotFoundException();
-		}
+		return _getImportProcessesPage(
+			creatorId, group.getGroupId(), null, pagination, search, sorts,
+			status);
+	}
 
-		return Page.of(
-			transform(
-				_getBackgroundTasks(
-					creatorId, group.getGroupId(), pagination, search, sorts,
-					status),
-				this::_toImportProcess),
-			pagination,
-			_backgroundTaskLocalService.dynamicQueryCount(
-				_getDynamicQuery(
-					creatorId, group.getGroupId(), search, status)));
+	@Override
+	public Page<ImportProcess> getSitePortletImportProcessesPage(
+			String siteExternalReferenceCode, String portletId, Long creatorId,
+			String search, Integer status, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		Group group = _getSiteGroup(siteExternalReferenceCode);
+
+		return _getImportProcessesPage(
+			creatorId, group.getGroupId(), portletId, pagination, search, sorts,
+			status);
 	}
 
 	@Override
@@ -159,14 +191,20 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
-		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-			assetLibraryExternalReferenceCode, contextCompany.getCompanyId());
+		return _postLayoutImportProcess(
+			_getAssetLibraryGroup(assetLibraryExternalReferenceCode),
+			importProcessRequest);
+	}
 
-		if ((group == null) || !group.isDepot()) {
-			throw new NotFoundException();
-		}
+	@Override
+	public ImportProcess postAssetLibraryPortletImportProcess(
+			String assetLibraryExternalReferenceCode, String portletId,
+			Long plid, ImportProcessRequest importProcessRequest)
+		throws Exception {
 
-		return _postImportProcess(group, importProcessRequest);
+		return _postPortletImportProcess(
+			_getAssetLibraryGroup(assetLibraryExternalReferenceCode),
+			GetterUtil.getLong(plid), portletId, importProcessRequest);
 	}
 
 	@Override
@@ -181,7 +219,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			throw new NotFoundException();
 		}
 
-		return _postImportProcess(group, importProcessRequest);
+		return _postLayoutImportProcess(group, importProcessRequest);
 	}
 
 	@Override
@@ -190,26 +228,42 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			ImportProcessRequest importProcessRequest)
 		throws Exception {
 
-		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
+		return _postLayoutImportProcess(
+			_getSiteGroup(siteExternalReferenceCode), importProcessRequest);
+	}
 
-		if ((group == null) || !group.isSite()) {
+	@Override
+	public ImportProcess postSitePortletImportProcess(
+			String siteExternalReferenceCode, String portletId, Long plid,
+			ImportProcessRequest importProcessRequest)
+		throws Exception {
+
+		return _postPortletImportProcess(
+			_getSiteGroup(siteExternalReferenceCode), GetterUtil.getLong(plid),
+			portletId, importProcessRequest);
+	}
+
+	private Group _getAssetLibraryGroup(String externalReferenceCode) {
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		if ((group == null) || !group.isDepot()) {
 			throw new NotFoundException();
 		}
 
-		return _postImportProcess(group, importProcessRequest);
+		return group;
 	}
 
 	private List<BackgroundTask> _getBackgroundTasks(
-			Long creatorId, long groupId, Pagination pagination, String search,
-			Sort[] sorts, Integer status)
+			Long creatorId, long groupId, Pagination pagination,
+			String portletId, String search, Sort[] sorts, Integer status)
 		throws Exception {
 
 		PermissionUtil.checkImportPermission(
 			contextCompany.getCompanyId(), groupId);
 
 		DynamicQuery dynamicQuery = _getDynamicQuery(
-			creatorId, groupId, search, status);
+			creatorId, groupId, portletId, search, status);
 
 		_setSorts(dynamicQuery, sorts);
 
@@ -230,7 +284,8 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 	}
 
 	private DynamicQuery _getDynamicQuery(
-		Long creatorId, long groupId, String search, Integer status) {
+		Long creatorId, long groupId, String portletId, String search,
+		Integer status) {
 
 		DynamicQuery dynamicQuery = _backgroundTaskLocalService.dynamicQuery();
 
@@ -240,18 +295,30 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
 
 		if (!Validator.isBlank(search)) {
-			dynamicQuery.add(RestrictionsFactoryUtil.ilike("name", search));
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.ilike(
+					"name", StringUtil.quote(search, StringPool.PERCENT)));
 		}
 
 		if (status != null) {
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("status", status));
 		}
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"taskExecutorClassName",
-				BackgroundTaskExecutorNames.
-					LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR));
+		if (Validator.isBlank(portletId)) {
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"taskExecutorClassName",
+					BackgroundTaskExecutorNames.
+						LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR));
+		}
+		else {
+			dynamicQuery.add(RestrictionsFactoryUtil.eq("name", portletId));
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"taskExecutorClassName",
+					BackgroundTaskExecutorNames.
+						PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR));
+		}
 
 		if (creatorId != null) {
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("userId", creatorId));
@@ -260,15 +327,24 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		return dynamicQuery;
 	}
 
-	private ImportProcess _postImportProcess(
-			Group group, ImportProcessRequest importProcessRequest)
+	private Page<ImportProcess> _getImportProcessesPage(
+			Long creatorId, long groupId, String portletId,
+			Pagination pagination, String search, Sort[] sorts, Integer status)
 		throws Exception {
 
-		long groupId = group.getGroupId();
+		return Page.of(
+			transform(
+				_getBackgroundTasks(
+					creatorId, groupId, pagination, portletId, search, sorts,
+					status),
+				this::_toImportProcess),
+			pagination,
+			_backgroundTaskLocalService.dynamicQueryCount(
+				_getDynamicQuery(
+					creatorId, groupId, portletId, search, status)));
+	}
 
-		PermissionUtil.checkImportPermission(
-			contextCompany.getCompanyId(), groupId);
-
+	private FileEntry _getImportTempFileEntry(long groupId) throws Exception {
 		FileEntry fileEntry = _exportImportHelper.getTempFileEntry(
 			groupId, contextUser.getUserId(),
 			ImportPreviewResource.class.getName());
@@ -277,8 +353,74 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			throw new NotFoundException();
 		}
 
+		return fileEntry;
+	}
+
+	private String _getName(BackgroundTask backgroundTask) {
+		if (!StringUtil.equals(
+				backgroundTask.getTaskExecutorClassName(),
+				BackgroundTaskExecutorNames.
+					PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR)) {
+
+			return backgroundTask.getName();
+		}
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				fetchExportImportConfiguration(
+					MapUtil.getLong(
+						backgroundTask.getTaskContextMap(),
+						"exportImportConfigurationId"));
+
+		if (exportImportConfiguration != null) {
+			String name = MapUtil.getString(
+				exportImportConfiguration.getSettingsMap(), "name");
+
+			if (!Validator.isBlank(name)) {
+				return name;
+			}
+		}
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			backgroundTask.getName());
+
+		if (portlet == null) {
+			return backgroundTask.getName();
+		}
+
+		return portlet.getDisplayName();
+	}
+
+	private Group _getSiteGroup(String externalReferenceCode) {
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		if ((group == null) || !group.isSite()) {
+			throw new NotFoundException();
+		}
+
+		return group;
+	}
+
+	private ImportProcess _postLayoutImportProcess(
+			Group group, ImportProcessRequest importProcessRequest)
+		throws Exception {
+
+		long groupId = group.getGroupId();
+
+		PermissionUtil.checkImportPermission(
+			contextCompany.getCompanyId(), groupId);
+
+		FileEntry fileEntry = _getImportTempFileEntry(groupId);
+
 		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
-			importProcessRequest);
+			importProcessRequest, false);
+
+		String name = importProcessRequest.getName();
+
+		if (Validator.isBlank(name)) {
+			name = fileEntry.getFileName();
+		}
 
 		Map<String, Serializable> settingsMap =
 			_exportImportConfigurationSettingsMapFactory.
@@ -287,12 +429,6 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 					MapUtil.getBoolean(parameterMap, "privateLayout"), null,
 					parameterMap, contextAcceptLanguage.getPreferredLocale(),
 					contextUser.getTimeZone());
-
-		String name = importProcessRequest.getName();
-
-		if (Validator.isBlank(name)) {
-			name = fileEntry.getFileName();
-		}
 
 		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.
@@ -315,9 +451,60 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		}
 	}
 
+	private ImportProcess _postPortletImportProcess(
+			Group group, long plid, String portletId,
+			ImportProcessRequest importProcessRequest)
+		throws Exception {
+
+		long groupId = group.getGroupId();
+
+		PermissionUtil.checkImportPermission(
+			contextCompany.getCompanyId(), groupId);
+
+		FileEntry fileEntry = _getImportTempFileEntry(groupId);
+
+		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
+			importProcessRequest, true);
+
+		String name = importProcessRequest.getName();
+
+		if (Validator.isBlank(name)) {
+			name = fileEntry.getFileName();
+		}
+
+		Map<String, Serializable> settingsMap =
+			_exportImportConfigurationSettingsMapFactory.
+				buildImportPortletSettingsMap(
+					contextUser.getUserId(), plid, groupId, portletId,
+					parameterMap, contextAcceptLanguage.getPreferredLocale(),
+					contextUser.getTimeZone());
+
+		settingsMap.put("name", name);
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					contextUser.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
+					settingsMap);
+
+		try (InputStream inputStream = fileEntry.getContentStream()) {
+			long backgroundTaskId =
+				_exportImportLocalService.importPortletInfoInBackground(
+					contextUser.getUserId(), exportImportConfiguration,
+					inputStream);
+
+			TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());
+
+			return _toImportProcess(
+				_backgroundTaskLocalService.getBackgroundTask(
+					backgroundTaskId));
+		}
+	}
+
 	private void _setSorts(DynamicQuery dynamicQuery, Sort[] sorts) {
 		if (sorts == null) {
-			dynamicQuery.addOrder(OrderFactoryUtil.desc("modifiedDate"));
+			dynamicQuery.addOrder(OrderFactoryUtil.desc("createDate"));
 
 			return;
 		}
@@ -329,6 +516,9 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 
 			if (fieldName.equals("creator")) {
 				fieldName = "userName";
+			}
+			else if (fieldName.equals("dateCompleted")) {
+				fieldName = "completionDate";
 			}
 			else if (fieldName.equals("dateCreated")) {
 				fieldName = "createDate";
@@ -359,25 +549,56 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 						null, _portal,
 						_userLocalService.fetchUser(
 							backgroundTask.getUserId())));
+				setDateCompleted(backgroundTask::getCompletionDate);
 				setDateCreated(backgroundTask::getCreateDate);
 				setDateModified(backgroundTask::getModifiedDate);
+				setErrorMessage(
+					() -> {
+						JSONObject jsonObject =
+							_jsonFactory.safeCreateJSONObject(
+								backgroundTask.getStatusMessage(), true);
+
+						if (jsonObject == null) {
+							return backgroundTask.getStatusMessage();
+						}
+
+						return jsonObject.getString(
+							"message", backgroundTask.getStatusMessage());
+					});
 				setId(backgroundTask::getBackgroundTaskId);
-				setName(backgroundTask::getName);
-				setStatus(() -> _toStatus(backgroundTask.getStatus()));
+				setName(() -> _getName(backgroundTask));
+				setStatus(
+					() -> new Status() {
+						{
+							setCode(backgroundTask::getStatus);
+							setLabel(
+								() -> _language.get(
+									contextAcceptLanguage.getPreferredLocale(),
+									BackgroundTaskConstants.getStatusLabel(
+										backgroundTask.getStatus())));
+						}
+					});
 			}
 		};
 	}
 
-	private Status _toStatus(int status) {
-		return new Status() {
-			{
-				setCode(() -> status);
-				setLabel(
-					() -> _language.get(
-						contextAcceptLanguage.getPreferredLocale(),
-						BackgroundTaskConstants.getStatusLabel(status)));
-			}
-		};
+	private void _validateImportBackgroundTask(BackgroundTask backgroundTask)
+		throws Exception {
+
+		String taskExecutorClassName =
+			backgroundTask.getTaskExecutorClassName();
+
+		if (!StringUtil.equals(
+				taskExecutorClassName,
+				BackgroundTaskExecutorNames.
+					LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR) &&
+			!StringUtil.equals(
+				taskExecutorClassName,
+				BackgroundTaskExecutorNames.
+					PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR)) {
+
+			throw new NoSuchBackgroundTaskException();
+		}
 	}
 
 	@Reference
@@ -398,10 +619,16 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 	private ExportImportLocalService _exportImportLocalService;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

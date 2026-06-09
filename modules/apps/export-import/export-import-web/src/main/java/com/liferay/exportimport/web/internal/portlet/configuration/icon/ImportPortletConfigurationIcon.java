@@ -72,7 +72,7 @@ public class ImportPortletConfigurationIcon
 					portletRequest, ExportImportConfiguration.class.getName(),
 					PortletProvider.Action.VIEW)
 			).setMVCPath(
-				"/import_portlet.jsp"
+				"/revamp/import/view_import.jsp"
 			).setRedirect(
 				themeDisplay.getURLCurrent()
 			).setPortletResource(

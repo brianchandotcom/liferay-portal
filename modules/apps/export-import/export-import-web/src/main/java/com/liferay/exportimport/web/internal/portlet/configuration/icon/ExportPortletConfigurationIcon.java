@@ -77,7 +77,7 @@ public class ExportPortletConfigurationIcon
 					portletRequest, ExportImportConfiguration.class.getName(),
 					PortletProvider.Action.VIEW)
 			).setMVCPath(
-				"/export_portlet.jsp"
+				"/revamp/export/view_export.jsp"
 			).setRedirect(
 				themeDisplay.getURLCurrent()
 			).setPortletResource(

@@ -57,7 +57,7 @@ export default function ProjectTasksFDSPropsTransformer({
 	}));
 
 	const calendarView: IView = {
-		component: (props: any) => CalendarView(props),
+		component: CalendarView,
 		default: false,
 		initialPaginationDelta: FDS_PAGINATION_DELTA_ALL,
 		label: Liferay.Language.get('calendar'),

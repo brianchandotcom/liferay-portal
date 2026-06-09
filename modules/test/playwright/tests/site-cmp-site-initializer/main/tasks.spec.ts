@@ -52,10 +52,7 @@ const getMonthYearLabel = (date: Date): string =>
  * For example: toDateString(new Date(2026, 5, 15)) // "2026-06-15"
  */
 const toDateString = (date: Date): string =>
-	`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-		2,
-		'0'
-	)}-${String(date.getDate()).padStart(2, '0')}`;
+	`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
 test.beforeEach(async ({apiHelpers}) => {
 	taskNames = [getRandomString(), getRandomString(), getRandomString()];

@@ -9,12 +9,14 @@ import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
+import com.liferay.account.role.AccountRolePermissionThreadLocal;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.AccountRoleService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.service.test.util.UserRoleTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -210,6 +213,81 @@ public class AccountRoleServiceTest {
 			accountRoles.contains(accountRoleWithoutViewPermissions));
 	}
 
+	@Test
+	public void testSearchAccountRolesWithScopedAccountEntry()
+		throws Exception {
+
+		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry();
+		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry();
+
+		AccountRole accountRole1 = _accountRoleLocalService.addAccountRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null);
+
+		AccountRole accountRole2 = _accountRoleLocalService.addAccountRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntry1.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
+
+		RoleTestUtil.addResourcePermission(
+			accountRole2.getRole(), AccountRole.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", ActionKeys.VIEW);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), _user.getUserId());
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry2.getAccountEntryId(), _user.getUserId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
+			accountRole2.getRoleId());
+
+		try (SafeCloseable safeCloseable =
+				AccountRolePermissionThreadLocal.
+					setAccountEntryIdWithSafeCloseable(
+						accountEntry1.getAccountEntryId())) {
+
+			BaseModelSearchResult<AccountRole> baseModelSearchResult =
+				_accountRoleService.searchAccountRoles(
+					accountEntry1.getCompanyId(),
+					new long[] {
+						accountEntry1.getAccountEntryId(),
+						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
+					},
+					StringPool.BLANK, null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			List<AccountRole> accountRoles =
+				baseModelSearchResult.getBaseModels();
+
+			Assert.assertTrue(accountRoles.contains(accountRole1));
+			Assert.assertTrue(accountRoles.contains(accountRole2));
+		}
+
+		try (SafeCloseable safeCloseable =
+				AccountRolePermissionThreadLocal.
+					setAccountEntryIdWithSafeCloseable(
+						accountEntry2.getAccountEntryId())) {
+
+			BaseModelSearchResult<AccountRole> baseModelSearchResult =
+				_accountRoleService.searchAccountRoles(
+					accountEntry2.getCompanyId(),
+					new long[] {
+						accountEntry2.getAccountEntryId(),
+						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
+					},
+					StringPool.BLANK, null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			List<AccountRole> accountRoles =
+				baseModelSearchResult.getBaseModels();
+
+			Assert.assertFalse(accountRoles.contains(accountRole1));
+			Assert.assertFalse(accountRoles.contains(accountRole2));
+		}
+	}
+
 	private AccountRole _addAccountRole() throws Exception {
 		return _addAccountRole(_accountEntry.getAccountEntryId());
 	}
@@ -244,6 +322,9 @@ public class AccountRoleServiceTest {
 	private AccountRoleService _accountRoleService;
 
 	private User _user;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

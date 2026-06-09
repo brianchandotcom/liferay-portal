@@ -164,6 +164,42 @@ public class JournalArticleIndexVersionsTest {
 	}
 
 	@Test
+	public void testExpireAllArticleVersionsWhenIndexAllArticleVersionsEnabled()
+		throws Exception {
+
+		_enableIndexAllArticleVersions();
+
+		assertSearchCount(0, true);
+		assertSearchCount(0, false);
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle updatedArticle = JournalTestUtil.updateArticle(
+			article, article.getTitleMap(), article.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		updatedArticle = JournalTestUtil.updateArticle(
+			updatedArticle, updatedArticle.getTitleMap(),
+			updatedArticle.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		// All three versions are indexed: one head and two non-head
+
+		assertSearchCount(1, true);
+		assertSearchCount(2, false);
+
+		JournalTestUtil.expireArticle(_group.getGroupId(), updatedArticle);
+
+		// After expiring all versions there is no head, but every version
+		// remains indexed (LPD-93976)
+
+		assertSearchCount(0, true);
+		assertSearchCount(3, false);
+	}
+
+	@Test
 	public void testExpireArticleVersion() throws Exception {
 		assertSearchCount(0, true);
 
@@ -267,6 +303,20 @@ public class JournalArticleIndexVersionsTest {
 			searchResponse.getRequestString() + "->" +
 				searchResponse.getDocuments(),
 			expectedCount, searchResponse.getCount());
+	}
+
+	private void _enableIndexAllArticleVersions() throws Exception {
+		PortalPreferences portalPreferences =
+			_portletPreferencesFactory.getPortalPreferences(
+				TestPropsValues.getUserId(), true);
+
+		portalPreferences.setValue(
+			"", "indexAllArticleVersionsEnabled", "true");
+
+		_portalPreferencesLocalService.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			PortletPreferencesFactoryUtil.toXML(portalPreferences));
 	}
 
 	@DeleteAfterTestRun

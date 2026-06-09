@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -105,6 +106,10 @@ public class AccountEntryUserRelModelListenerTest {
 			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
 				aiHubAccountEntry.getAccountEntryId(), user.getUserId()));
 
+		Assert.assertTrue(
+			_userLocalService.hasGroupUser(
+				group.getGroupId(), user.getUserId()));
+
 		Assert.assertEquals(
 			0,
 			_getCurrentAccountEntryId(
@@ -151,5 +156,8 @@ public class AccountEntryUserRelModelListenerTest {
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -379,7 +379,8 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			tomcatNode.getPortalExtPropertiesPath(),
 			List.of(
 				"license.cluster.overload.node.auto.shut.down=" +
-					overloadNodeAutoShutDown),
+					overloadNodeAutoShutDown,
+				"virtual.hosts.default.site.name=Guest"),
 			StandardOpenOption.APPEND);
 
 		_restartTomcatNode(tomcatNode, additionalClusterExecutables);

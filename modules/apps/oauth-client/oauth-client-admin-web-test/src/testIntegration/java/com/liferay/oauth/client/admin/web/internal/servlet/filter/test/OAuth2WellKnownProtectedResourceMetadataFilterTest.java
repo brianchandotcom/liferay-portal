@@ -84,7 +84,9 @@ public class OAuth2WellKnownProtectedResourceMetadataFilterTest {
 			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
 		String bearerMethodSupported = RandomTestUtil.randomString();
 
-		String protectedResourceURI = authorizationServer + "/o/mcp";
+		String protectedResourceURI =
+			authorizationServer + StringPool.SLASH +
+				RandomTestUtil.randomString();
 
 		String resourceName = RandomTestUtil.randomString();
 		String scopeSupported = RandomTestUtil.randomString();

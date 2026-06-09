@@ -206,8 +206,7 @@ public class ModelArmorTemplateManagerImpl
 						"guardrailType",
 						String.valueOf(modelArmorTemplate.getGuardrailType())
 					).put(
-						"location",
-						GetterUtil.getString(modelArmorTemplate.getLocation())
+						"location", modelArmorTemplate.getLocation()
 					).put(
 						"maliciousUriFilterEnabled",
 						GetterUtil.getBoolean(

@@ -66,6 +66,24 @@ export function registerInputFeedback({
 		focusInput(inputElement);
 	});
 
+	const clearValidityError = () => {
+		if (
+			formGroup.classList.contains('has-error') &&
+			inputElement.validity.valid
+		) {
+			hideInputError({
+				...errorContainers,
+				message: errorMessageContainer.getAttribute(
+					'data-valid-feedback'
+				),
+			});
+		}
+	};
+
+	inputElement.addEventListener('change', clearValidityError);
+
+	inputElement.addEventListener('input', clearValidityError);
+
 	if (fragmentElement) {
 		fragmentElement.addEventListener('focusout', (event) => {
 			if (

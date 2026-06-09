@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -58,9 +58,7 @@ public class TestPropertiesPQLValidationTest {
 			}
 
 			for (String propertyName : properties.stringPropertyNames()) {
-				if (!propertyName.startsWith(
-						"test.batch.run.property.query")) {
-
+				if (!propertyName.startsWith("test.batch.run.property.query")) {
 					continue;
 				}
 
@@ -81,10 +79,9 @@ public class TestPropertiesPQLValidationTest {
 							}
 							catch (RuntimeException runtimeException) {
 								errors.add(
-									"Invalid PQL in property `" +
-										propertyName + "` in " +
-											testPropertiesFile + ": " +
-												runtimeException.getMessage());
+									"Invalid PQL in property `" + propertyName +
+										"` in " + testPropertiesFile + ": " +
+											runtimeException.getMessage());
 							}
 						}));
 			}
@@ -107,7 +104,7 @@ public class TestPropertiesPQLValidationTest {
 	}
 
 	private List<File> _findTestPropertiesFiles(File portalDir)
-		throws IOException {
+		throws Exception {
 
 		List<File> testPropertiesFiles = new ArrayList<>();
 
@@ -122,8 +119,7 @@ public class TestPropertiesPQLValidationTest {
 					String dirName = dir.getFileName(
 					).toString();
 
-					if (dirName.equals("build") ||
-						dirName.equals("bundles") ||
+					if (dirName.equals("build") || dirName.equals("bundles") ||
 						dirName.equals("classes") ||
 						dirName.equals("node_modules") ||
 						dirName.equals("src") ||

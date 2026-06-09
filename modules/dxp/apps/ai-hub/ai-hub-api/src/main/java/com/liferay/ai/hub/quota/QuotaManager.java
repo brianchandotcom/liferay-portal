@@ -7,6 +7,8 @@ package com.liferay.ai.hub.quota;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.io.Closeable;
+
 /**
  * @author Carolina Barbosa
  */
@@ -15,7 +17,11 @@ public interface QuotaManager {
 	public void addQuotas(long accountEntryId, long companyId, long userId)
 		throws PortalException;
 
-	public void checkUsage(long companyId, long userId) throws PortalException;
+	public Closeable checkConcurrentRequests(long userId)
+		throws PortalException;
+
+	public void checkTokensUsage(long companyId, long userId)
+		throws PortalException;
 
 	public void updateUsage(long companyId, Usage usage, long userId)
 		throws PortalException;

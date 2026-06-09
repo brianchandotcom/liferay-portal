@@ -30,7 +30,7 @@ public class QuotaUtil {
 		throws PortalException {
 
 		try {
-			quotaManager.checkUsage(companyId, userId);
+			quotaManager.checkTokensUsage(companyId, userId);
 
 			return false;
 		}

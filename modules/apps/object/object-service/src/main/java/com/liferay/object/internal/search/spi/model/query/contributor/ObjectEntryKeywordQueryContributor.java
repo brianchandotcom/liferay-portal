@@ -378,10 +378,10 @@ public class ObjectEntryKeywordQueryContributor
 		nestedQueryConfig.setHighlightFieldNames(highlightFieldNames);
 		nestedQueryConfig.setHighlightFragmentSize(
 			queryConfig.getHighlightFragmentSize());
-		nestedQueryConfig.setHighlightSnippetSize(
-			queryConfig.getHighlightSnippetSize());
 		nestedQueryConfig.setHighlightRequireFieldMatch(
 			queryConfig.isHighlightRequireFieldMatch());
+		nestedQueryConfig.setHighlightSnippetSize(
+			queryConfig.getHighlightSnippetSize());
 		nestedQueryConfig.setLocale(queryConfig.getLocale());
 
 		nestedQuery.setInnerHitsEnabled(true);

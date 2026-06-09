@@ -2,6 +2,18 @@
 	"externalReferenceCode": "L_SEO_STUDIO_SCAN_TYPES",
 	"listTypeEntries": [
 		{
+			"externalReferenceCode": "CRAWLER",
+			"key": "crawler",
+			"name": "Crawler",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "GSC",
+			"key": "gsc",
+			"name": "Google Search Console",
+			"system": true
+		},
+		{
 			"externalReferenceCode": "PAGESPEED",
 			"key": "pageSpeed",
 			"name": "PageSpeed",

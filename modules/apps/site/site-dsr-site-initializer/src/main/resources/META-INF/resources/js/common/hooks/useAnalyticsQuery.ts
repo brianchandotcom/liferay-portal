@@ -4,6 +4,10 @@
  */
 
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+
+// @ts-ignore - Check possibility to install package in ts format
+
+import sha256 from 'hash.js/lib/hash/sha/256';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
@@ -15,10 +19,9 @@ import {
 } from '../../main_view/analytics/types';
 import {toFilters} from '../../main_view/analytics/utils';
 import AnalyticsService from '../services/AnalyticsService';
-import hash from '../utils/hash';
 import useIsInViewport from './useIsInViewport';
 
-function toRequestParams(
+export function toRequestParams(
 	filters: TAnalyticsFilter,
 	variables: Record<string, unknown>
 ) {
@@ -33,7 +36,9 @@ function toRequestParams(
 	return {
 		...variables,
 		emailAddresses: userFilter?.value ?? [],
-		entityId: emailAddress ? hash(emailAddress.toLowerCase().trim()) : '',
+		entityId: emailAddress
+			? sha256().update(emailAddress.toLowerCase().trim()).digest('hex')
+			: '',
 		groupIds: roomFilterValue.room?.siteId
 			? [roomFilterValue.room?.siteId]
 			: [],

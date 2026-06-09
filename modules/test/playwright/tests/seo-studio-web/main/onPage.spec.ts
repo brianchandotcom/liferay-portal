@@ -39,7 +39,7 @@ test(
 	'Renders the "no insights found" empty state when the latest scan has no insights',
 	{tag: '@LPD-91406'},
 	async ({apiHelpers, onPagePage, seoStudioSite}) => {
-		const scan = await apiHelpers.seoStudio.createScan();
+		const scan = await apiHelpers.seoStudio.createScan('crawler');
 
 		try {
 			await onPagePage.goto(seoStudioSite.friendlyUrlPath);
@@ -86,7 +86,7 @@ test(
 			},
 		];
 
-		const scan = await apiHelpers.seoStudio.createScan();
+		const scan = await apiHelpers.seoStudio.createScan('crawler');
 
 		try {
 			await apiHelpers.seoStudio.createInsights(scan, insightTypeInputs);

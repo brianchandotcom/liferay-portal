@@ -141,6 +141,15 @@ describe('AccountDetailsModal', () => {
 		expect(screen.queryAllByTestId('fds-item')).toHaveLength(0);
 	});
 
+	it('should render a loading indicator instead of the data set while the request is loading', () => {
+		mockedUseRequest.mockReturnValue({data: undefined, loading: true});
+
+		const {container} = renderModal();
+
+		expect(screen.queryByTestId('fds-component')).not.toBeInTheDocument();
+		expect(container.querySelector('.loading-root')).toBeInTheDocument();
+	});
+
 	it('should not offer any column as sortable since the data set is fed a static items array', () => {
 		renderModal();
 

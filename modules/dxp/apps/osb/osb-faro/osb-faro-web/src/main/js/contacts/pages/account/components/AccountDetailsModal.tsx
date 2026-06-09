@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import ClayModal, {useModal} from '@clayui/modal';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import {columns, FrontendDataSet} from 'shared/components/FrontendDataSet';
 import {Routes} from 'shared/util/router';
@@ -35,7 +36,7 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 	}>();
 	const {observer} = useModal({onClose});
 
-	const {data} = useRequest({
+	const {data, loading} = useRequest({
 		dataSourceFn: API.accounts.fetchDetails,
 		variables: {accountId, channelId, groupId}
 	});
@@ -51,89 +52,106 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body className='px-0'>
-				<FrontendDataSet
-					customDataRenderers={{
-						attributeNameAndValueRenderer: ({
-							itemData,
-							value
-						}: {
-							itemData: {value?: string};
-							value: string;
-						}) =>
-							columns.attributeNameAndValue({
-								attributeName: value,
-								value: itemData.value ?? ''
-							}),
-						dataSourceRenderer: ({
-							itemData,
-							value
-						}: {
-							itemData: {dataSourceId?: string};
-							value: string;
-						}) =>
-							columns.nameAndLinkRenderer({
-								channelId,
-								groupId,
-								itemData: {
-									id: itemData.dataSourceId ?? ''
-								},
-								route: Routes.SETTINGS_DATA_SOURCE,
+				{loading ? (
+					<div
+						className='align-items-center d-flex justify-content-center'
+						style={{minHeight: 400}}
+					>
+						<Loading center={false} />
+					</div>
+				) : (
+					<FrontendDataSet
+						customDataRenderers={{
+							attributeNameAndValueRenderer: ({
+								itemData,
 								value
-							}),
-						lastModifiedRenderer: ({value}: {value: string}) =>
-							columns.dateRenderer({
-								itemData: {},
+							}: {
+								itemData: {value?: string};
+								value: string;
+							}) =>
+								columns.attributeNameAndValue({
+									attributeName: value,
+									value: itemData.value ?? ''
+								}),
+							dataSourceRenderer: ({
+								itemData,
 								value
-							})
-					}}
-					id={FDS_ID}
-					items={items}
-					onItemsPropSearch={(
-						item: IAccountDetailsField,
-						query: string
-					) => item.name.toLowerCase().includes(query.toLowerCase())}
-					views={[
-						{
-							contentRenderer: 'table',
-							default: true,
-							label: Liferay.Language.get('default-view'),
-							name: 'table',
-							schema: {
-								fields: [
-									{
-										contentRenderer:
-											'attributeNameAndValueRenderer',
-										fieldName: 'name',
-										label: `${Liferay.Language.get(
-											'attribute-name'
-										)} | ${Liferay.Language.get('value')}`
+							}: {
+								itemData: {dataSourceId?: string};
+								value: string;
+							}) =>
+								columns.nameAndLinkRenderer({
+									channelId,
+									groupId,
+									itemData: {
+										id: itemData.dataSourceId ?? ''
 									},
-									{
-										fieldName: 'sourceName',
-										label: Liferay.Language.get(
-											'source-name'
-										)
-									},
-									{
-										contentRenderer: 'dataSourceRenderer',
-										fieldName: 'dataSourceName',
-										label: Liferay.Language.get(
-											'data-source'
-										)
-									},
-									{
-										contentRenderer: 'lastModifiedRenderer',
-										fieldName: 'modifiedDate',
-										label: Liferay.Language.get(
-											'last-modified'
-										)
-									}
-								]
-							},
-							thumbnail: 'table'
+									route: Routes.SETTINGS_DATA_SOURCE,
+									value
+								}),
+							lastModifiedRenderer: ({value}: {value: string}) =>
+								columns.dateRenderer({
+									itemData: {},
+									value
+								})
+						}}
+						id={FDS_ID}
+						items={items}
+						onItemsPropSearch={(
+							item: IAccountDetailsField,
+							query: string
+						) =>
+							item.name
+								.toLowerCase()
+								.includes(query.toLowerCase())
 						}
-					]}
-				/>
+						views={[
+							{
+								contentRenderer: 'table',
+								default: true,
+								label: Liferay.Language.get('default-view'),
+								name: 'table',
+								schema: {
+									fields: [
+										{
+											contentRenderer:
+												'attributeNameAndValueRenderer',
+											fieldName: 'name',
+											label: `${Liferay.Language.get(
+												'attribute-name'
+											)} | ${Liferay.Language.get(
+												'value'
+											)}`
+										},
+										{
+											fieldName: 'sourceName',
+											label: Liferay.Language.get(
+												'source-name'
+											)
+										},
+										{
+											contentRenderer:
+												'dataSourceRenderer',
+											fieldName: 'dataSourceName',
+											label: Liferay.Language.get(
+												'data-source'
+											)
+										},
+										{
+											contentRenderer:
+												'lastModifiedRenderer',
+											fieldName: 'modifiedDate',
+											label: Liferay.Language.get(
+												'last-modified'
+											)
+										}
+									]
+								},
+								thumbnail: 'table'
+							}
+						]}
+					/>
+				)}
 			</ClayModal.Body>
 		</ClayModal>
 	);

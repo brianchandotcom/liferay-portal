@@ -9,6 +9,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.headless.delivery.dto.v1_0.ContentSet;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetResource;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,6 +58,12 @@ public class ContentSetResourceImpl extends BaseContentSetResourceImpl {
 			Long groupId, String itemSubtype, String itemType, String search,
 			Pagination pagination)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-91525")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		long[] groupIds = {groupId};
 

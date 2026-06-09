@@ -253,8 +253,8 @@ function ActionsDropdown({
 				active={menuActive}
 				items={items}
 				menuElementAttrs={{onClick: (event) => event.stopPropagation()}}
-				onActiveChange={() =>
-					onMenuActiveChange && onMenuActiveChange(!menuActive)
+				onActiveChange={(active) =>
+					onMenuActiveChange && onMenuActiveChange(active)
 				}
 				trigger={
 					<ClayButton

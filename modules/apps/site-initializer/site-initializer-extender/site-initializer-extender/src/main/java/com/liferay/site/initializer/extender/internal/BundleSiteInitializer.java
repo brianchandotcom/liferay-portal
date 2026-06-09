@@ -2791,8 +2791,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (!FeatureFlagManagerUtil.isEnabled(
 					serviceContext.getCompanyId(), "LPD-76864")) {
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
+				if (_log.isInfoEnabled()) {
+					_log.info(
 						StringBundler.concat(
 							"Skipping page with friendly URL ",
 							pageJSONObject.getString("friendlyURL"),
@@ -2803,8 +2803,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				return Collections.emptyMap();
 			}
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(
+			if (_log.isInfoEnabled()) {
+				_log.info(
 					"Widget page with friendly URL " +
 						pageJSONObject.getString("friendlyURL") +
 							" is deprecated");

@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"jakarta.portlet.name=" + SegmentsPortletKeys.AUDIENCES,
 		"jakarta.portlet.name=" + SegmentsPortletKeys.SEGMENTS,
 		"mvc.command.name=/segments/get_segments_field_value_name"
 	},

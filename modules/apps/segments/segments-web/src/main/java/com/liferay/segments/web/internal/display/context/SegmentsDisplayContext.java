@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
@@ -48,7 +47,6 @@ import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
-import com.liferay.segments.web.internal.util.AudiencesPortletUtil;
 import com.liferay.segments.web.internal.util.comparator.SegmentsEntryModifiedDateComparator;
 import com.liferay.segments.web.internal.util.comparator.SegmentsEntryNameComparator;
 
@@ -156,7 +154,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			_renderRequest, _getPortletId(), "list");
+			_renderRequest, SegmentsPortletKeys.SEGMENTS, "list");
 
 		return _displayStyle;
 	}
@@ -179,7 +177,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
-			_renderRequest, _getPortletId(), "asc");
+			_renderRequest, SegmentsPortletKeys.SEGMENTS, "asc");
 
 		return _orderByType;
 	}
@@ -243,9 +241,7 @@ public class SegmentsDisplayContext {
 		}
 
 		SearchContainer<SegmentsEntry> searchContainer = new SearchContainer<>(
-			_renderRequest, _getPortletURL(), null,
-			AudiencesPortletUtil.isAudiencesPortlet(_renderRequest) ?
-				"there-are-no-audiences" : "there-are-no-segments");
+			_renderRequest, _getPortletURL(), null, "there-are-no-segments");
 
 		searchContainer.setId("segmentsEntries");
 		searchContainer.setOrderByCol(_getOrderByCol());
@@ -253,39 +249,15 @@ public class SegmentsDisplayContext {
 		searchContainer.setOrderByType(getOrderByType());
 
 		if (_isSearch()) {
-			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-			if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
-				params.put(
-					"excludedSources",
-					new String[] {
-						StringUtil.toLowerCase(
-							SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND),
-						StringUtil.toLowerCase(
-							SegmentsEntryConstants.SOURCE_DEFAULT),
-						StringUtil.toLowerCase(
-							SegmentsEntryConstants.SOURCE_REFERRED)
-					});
-			}
-			else {
-				params.put(
-					"excludedSources",
-					new String[] {
-						StringUtil.toLowerCase(
-							SegmentsEntryConstants.SOURCE_AUDIENCE)
-					});
-			}
-
 			searchContainer.setResultsAndTotal(
 				_segmentsEntryService.searchSegmentsEntries(
 					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(), _getKeywords(), params,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					_getSort()));
+					_themeDisplay.getScopeGroupId(), _getKeywords(),
+					new LinkedHashMap<>(), searchContainer.getStart(),
+					searchContainer.getEnd(), _getSort()));
 		}
 		else if (!FeatureFlagManagerUtil.isEnabled(
-					CompanyConstants.SYSTEM, "LPD-78863") &&
-				 !AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+					CompanyConstants.SYSTEM, "LPD-78863")) {
 
 			searchContainer.setResultsAndTotal(
 				() -> _segmentsEntryService.getSegmentsEntries(
@@ -300,17 +272,6 @@ public class SegmentsDisplayContext {
 					new String[] {
 						SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND
 					}));
-		}
-		else if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
-			searchContainer.setResultsAndTotal(
-				() -> _segmentsEntryService.getSegmentsEntries(
-					_themeDisplay.getScopeGroupId(),
-					new String[] {SegmentsEntryConstants.SOURCE_AUDIENCE},
-					searchContainer.getStart(), searchContainer.getEnd(),
-					searchContainer.getOrderByComparator()),
-				_segmentsEntryService.getSegmentsEntriesCount(
-					_themeDisplay.getScopeGroupId(),
-					new String[] {SegmentsEntryConstants.SOURCE_AUDIENCE}));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
@@ -333,8 +294,7 @@ public class SegmentsDisplayContext {
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyConstants.SYSTEM, "LPD-78863") &&
-			!AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+				CompanyConstants.SYSTEM, "LPD-78863")) {
 
 			searchContainer.setRowChecker(null);
 		}
@@ -390,8 +350,7 @@ public class SegmentsDisplayContext {
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyConstants.SYSTEM, "LPD-78863") &&
-			!AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+				CompanyConstants.SYSTEM, "LPD-78863")) {
 
 			return StringPool.BLANK;
 		}
@@ -473,14 +432,8 @@ public class SegmentsDisplayContext {
 					_permissionChecker, segmentsEntry,
 					ActionKeys.ASSIGN_USER_ROLES)) {
 
-				if (FeatureFlagManagerUtil.isEnabled(
-						CompanyConstants.SYSTEM, "LPD-78863") ||
-					AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
-
-					return true;
-				}
-
-				return false;
+				return FeatureFlagManagerUtil.isEnabled(
+					CompanyConstants.SYSTEM, "LPD-78863");
 			}
 
 			return false;
@@ -494,13 +447,6 @@ public class SegmentsDisplayContext {
 
 	public boolean isShowDeleteAction(SegmentsEntry segmentsEntry) {
 		try {
-			if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest) &&
-				SegmentsEntryPermission.contains(
-					_permissionChecker, segmentsEntry, ActionKeys.DELETE)) {
-
-				return true;
-			}
-
 			if ((segmentsEntry.getGroupId() ==
 					_themeDisplay.getScopeGroupId()) &&
 				SegmentsEntryPermission.contains(
@@ -532,9 +478,8 @@ public class SegmentsDisplayContext {
 
 	public boolean isShowUpdateAction(SegmentsEntry segmentsEntry) {
 		try {
-			if ((FeatureFlagManagerUtil.isEnabled(
-					CompanyConstants.SYSTEM, "LPD-78863") ||
-				 AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) &&
+			if (FeatureFlagManagerUtil.isEnabled(
+					CompanyConstants.SYSTEM, "LPD-78863") &&
 				SegmentsEntryPermission.contains(
 					_permissionChecker, segmentsEntry, ActionKeys.UPDATE)) {
 
@@ -552,9 +497,8 @@ public class SegmentsDisplayContext {
 
 	public boolean isShowViewAction(SegmentsEntry segmentsEntry) {
 		try {
-			if ((FeatureFlagManagerUtil.isEnabled(
-					CompanyConstants.SYSTEM, "LPD-78863") ||
-				 AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) &&
+			if (FeatureFlagManagerUtil.isEnabled(
+					CompanyConstants.SYSTEM, "LPD-78863") &&
 				SegmentsEntryPermission.contains(
 					_permissionChecker, segmentsEntry, ActionKeys.VIEW)) {
 
@@ -598,7 +542,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			_renderRequest, _getPortletId(), "modified-date");
+			_renderRequest, SegmentsPortletKeys.SEGMENTS, "modified-date");
 
 		return _orderByCol;
 	}
@@ -620,14 +564,6 @@ public class SegmentsDisplayContext {
 		}
 
 		return null;
-	}
-
-	private String _getPortletId() {
-		if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
-			return SegmentsPortletKeys.AUDIENCES;
-		}
-
-		return SegmentsPortletKeys.SEGMENTS;
 	}
 
 	private PortletURL _getPortletURL() {

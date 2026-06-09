@@ -10,9 +10,6 @@ package com.liferay.segments.constants;
  */
 public class SegmentsPortletKeys {
 
-	public static final String AUDIENCES =
-		"com_liferay_segments_web_internal_portlet_AudiencesPortlet";
-
 	public static final String SEGMENTS =
 		"com_liferay_segments_web_internal_portlet_SegmentsPortlet";
 

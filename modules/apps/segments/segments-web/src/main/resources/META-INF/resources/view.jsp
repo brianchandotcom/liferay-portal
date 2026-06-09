@@ -18,7 +18,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new SegmentsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderResponse, segmentsDisplayContext.getSearchContainer()) %>"
 	propsTransformer="{SegmentsManagementToolbarPropsTransformer} from segments-web"
-	selectable='<%= FeatureFlagManagerUtil.isEnabled(CompanyConstants.SYSTEM, "LPD-78863") || AudiencesPortletUtil.isAudiencesPortlet(renderRequest) %>'
+	selectable='<%= FeatureFlagManagerUtil.isEnabled(CompanyConstants.SYSTEM, "LPD-78863") %>'
 />
 
 <c:if test="<%= !segmentsDisplayContext.isSegmentationEnabled(themeDisplay.getCompanyId()) %>">
@@ -54,7 +54,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 </portlet:actionURL>
 
 <aui:form action="<%= deleteSegmentsEntryURL %>" cssClass="c-p-0 container-fluid container-fluid-max-xl h-100" method="post" name="fmSegmentsEntries">
-	<c:if test='<%= !FeatureFlagManagerUtil.isEnabled(CompanyConstants.SYSTEM, "LPD-78863") && !AudiencesPortletUtil.isAudiencesPortlet(renderRequest) %>'>
+	<c:if test='<%= !FeatureFlagManagerUtil.isEnabled(CompanyConstants.SYSTEM, "LPD-78863") %>'>
 		<clay:alert
 			cssClass="mt-4"
 			displayType="info"

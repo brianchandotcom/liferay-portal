@@ -18,10 +18,8 @@ import com.liferay.portal.kernel.model.Users_OrgsTable;
 import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.mapper.SegmentsCriteriaJSONObjectMapper;
@@ -33,7 +31,6 @@ import jakarta.portlet.PortletRequest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -128,13 +125,6 @@ public class UserSegmentsCriteriaContributor
 	@Override
 	public Criteria.Type getType() {
 		return Criteria.Type.MODEL;
-	}
-
-	@Override
-	public boolean isDisabled(PortletRequest portletRequest) {
-		return Objects.equals(
-			_portal.getPortletId(portletRequest),
-			SegmentsPortletKeys.AUDIENCES);
 	}
 
 	private String _getGroupIdsFilterString(long roleId) {
@@ -286,9 +276,6 @@ public class UserSegmentsCriteriaContributor
 
 	@Reference
 	private EntityModelFieldMapper _entityModelFieldMapper;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

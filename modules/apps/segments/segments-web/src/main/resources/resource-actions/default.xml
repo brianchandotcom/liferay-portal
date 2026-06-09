@@ -3,26 +3,6 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_segments_web_internal_portlet_AudiencesPortlet</portlet-name>
-		<permissions>
-			<supports>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
-				<action-key>CONFIGURATION</action-key>
-			</guest-unsupported>
-		</permissions>
-	</portlet-resource>
-	<portlet-resource>
 		<portlet-name>com_liferay_segments_web_internal_portlet_SegmentsPortlet</portlet-name>
 		<permissions>
 			<supports>

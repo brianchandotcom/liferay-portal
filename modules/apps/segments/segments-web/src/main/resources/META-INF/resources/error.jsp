@@ -9,6 +9,6 @@
 
 <liferay-ui:error-header />
 
-<liferay-ui:error exception="<%= NoSuchEntryException.class %>" message='<%= AudiencesPortletUtil.isAudiencesPortlet(renderRequest) ? "the-audience-could-not-be-found" : "the-segment-could-not-be-found" %>' />
+<liferay-ui:error exception="<%= NoSuchEntryException.class %>" message="the-segment-could-not-be-found" />
 
 <liferay-ui:error-principal />

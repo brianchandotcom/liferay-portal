@@ -44,7 +44,7 @@ public class FIPSProviderValidator {
 		String name = provider.getName();
 
 		try {
-			if (name.equals("BCFIPS")) {
+			if (Objects.equals(name, "BCFIPS")) {
 				Class<?> providerClass = provider.getClass();
 
 				ClassLoader classLoader = providerClass.getClassLoader();
@@ -81,7 +81,7 @@ public class FIPSProviderValidator {
 						"BCFIPS is not in approved only mode");
 				}
 			}
-			else if (name.equals("AmazonCorrettoCryptoProvider")) {
+			else if (Objects.equals(name, "AmazonCorrettoCryptoProvider")) {
 				Class<?> providerClass = provider.getClass();
 
 				Field instanceField = ReflectionUtil.getDeclaredField(
@@ -153,10 +153,14 @@ public class FIPSProviderValidator {
 				causeThrowable = throwable;
 			}
 
+			String message = causeThrowable.getMessage();
+
+			if (message == null) {
+				message = causeThrowable.toString();
+			}
+
 			throw new SecurityException(
-				"FIPS provider integrity failed: " +
-					causeThrowable.getMessage(),
-				causeThrowable);
+				"FIPS provider integrity failed: " + message, causeThrowable);
 		}
 	}
 

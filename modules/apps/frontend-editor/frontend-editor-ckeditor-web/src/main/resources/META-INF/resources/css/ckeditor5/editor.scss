@@ -1,8 +1,126 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/_variables';
 
 :root {
-	--ck-font-family: $font-family-base;
+	--ck-font-family: #{$font-family-base};
 	--ck-icon-font-size: 0.67em;
+
+	--ck-color-base-action: #{$green-l1};
+	--ck-color-base-background: #{$white};
+	--ck-color-base-border: #{$gray-400};
+	--ck-color-base-foreground: #{$gray-100};
+	--ck-color-base-text: #{$dark-l1};
+
+	--ck-color-base-focus: #{$blue-l2};
+
+	--ck-color-base-active: #{$blue-l1};
+
+	--ck-color-base-active-focus: #{$primary};
+
+	--ck-color-base-error: #{$orange};
+
+	--ck-color-focus-border: #{$blue-l1};
+	--ck-color-focus-outer-shadow: #{$blue-l4};
+
+	--ck-color-focus-disabled-shadow: hsl(from #{$blue-l2} h s l / 0.3);
+
+	--ck-color-focus-error-shadow: hsl(from #{$orange-l1} h s l / 0.3);
+
+	--ck-color-shadow-drop: hsl(from #{$black} h s l / 0.15);
+
+	--ck-color-shadow-drop-active: hsl(from #{$black} h s l / 0.2);
+
+	--ck-color-shadow-inner: hsl(from #{$black} h s l / 0.1);
+
+	--ck-color-text: var(--ck-color-base-text);
+
+	--ck-color-button-default-background: transparent;
+
+	--ck-color-button-default-hover-background: #{$gray-200};
+
+	--ck-color-button-default-active-background: #{$gray-200};
+
+	--ck-color-button-default-disabled-background: transparent;
+
+	--ck-color-button-on-background: #{$primary-l3};
+	--ck-color-button-on-color: #{$blue-l1};
+
+	--ck-color-button-on-hover-background: #{$blue-l5};
+
+	--ck-color-button-on-active-background: #{$blue-l5};
+
+	--ck-color-button-on-disabled-background: #{$gray-200};
+
+	--ck-color-button-action-background: var(--ck-color-base-action);
+	--ck-color-button-action-text: var(--ck-color-base-background);
+
+	--ck-color-button-action-hover-background: #{$green-l1};
+
+	--ck-color-button-action-active-background: #{$green-l1};
+
+	--ck-color-button-action-disabled-background: #{$success-l1};
+
+	--ck-color-button-save: #{$green-d1};
+
+	--ck-color-button-cancel: #{$orange};
+
+	--ck-color-switch-button-off-background: #{$secondary-l0};
+	--ck-color-switch-button-off-hover-background: #{$secondary};
+
+	--ck-color-switch-button-on-background: var(
+		--ck-color-button-action-background
+	);
+	--ck-color-switch-button-on-hover-background: #{$green-l1};
+
+	--ck-color-switch-button-inner-background: var(--ck-color-base-background);
+	--ck-color-switch-button-inner-shadow: hsl(from #{$black} h s l / 0.1);
+
+	--ck-color-dropdown-panel-background: var(--ck-color-base-background);
+	--ck-color-dropdown-panel-border: var(--ck-color-base-border);
+
+	--ck-color-dialog-background: var(--ck-custom-background);
+	--ck-color-dialog-form-header-border: var(--ck-custom-border);
+
+	--ck-color-input-background: var(--ck-color-base-background);
+	--ck-color-input-border: var(--ck-color-base-border);
+	--ck-color-input-text: var(--ck-color-base-text);
+
+	--ck-color-input-disabled-background: #{$gray-200};
+	--ck-color-input-disabled-border: var(--ck-color-base-border);
+	--ck-color-input-disabled-text: #{$secondary};
+
+	--ck-color-input-error-border: var(--ck-color-base-error);
+
+	--ck-color-list-background: var(--ck-color-base-background);
+
+	--ck-color-list-button-hover-background: var(
+		--ck-color-button-default-hover-background
+	);
+
+	--ck-color-list-button-on-background: var(--ck-color-button-on-color);
+	--ck-color-list-button-on-text: var(--ck-color-base-background);
+
+	--ck-color-list-button-on-background-focus: var(--ck-color-button-on-color);
+
+	--ck-color-panel-background: var(--ck-color-base-background);
+	--ck-color-panel-border: var(--ck-color-base-border);
+
+	--ck-color-toolbar-background: var(--ck-color-base-background);
+	--ck-color-toolbar-border: var(--ck-color-base-border);
+
+	--ck-color-tooltip-background: var(--ck-color-base-text);
+	--ck-color-tooltip-text: var(--ck-color-base-background);
+
+	--ck-color-engine-placeholder-text: #{$secondary};
+	--ck-color-upload-bar-background: #{$blue-l2};
+
+	--ck-color-link-default: #{$indigo-d4};
+
+	--ck-color-link-selected-background: hsl(from #{$cyan-l2} h s l / 0.1);
+
+	--ck-color-link-fake-selection: hsl(from #{$cyan-l2} h s l / 0.3);
+
+	--ck-color-highlight-background: #{$yellow};
+	--ck-color-light-red: #{$pink-l4};
 }
 
 .lfr-ck {
@@ -20,7 +138,7 @@
 		&.ck-balloon-panel.ck-tooltip {
 			background-color: $dark-d2;
 			border-radius: 0.25rem;
-			box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+			box-shadow: unquote('0 1px 4px 0 hsl(from #{$black} h s l / 0.4)');
 			max-width: 230px;
 			padding: 0.75rem;
 			text-align: center;
@@ -80,19 +198,19 @@
 
 		&.lfr-editor {
 			&-heading_paragraph .ck-button__label {
-				@include font-size($font-size-base);
+				font-size: $font-size-base;
 			}
 
 			&-heading_heading1 .ck-button__label {
-				@include font-size($h1-font-size);
+				font-size: $h1-font-size;
 			}
 
 			&-heading_heading2 .ck-button__label {
-				@include font-size($h2-font-size);
+				font-size: $h2-font-size;
 			}
 
 			&-heading_heading3 .ck-button__label {
-				@include font-size($h3-font-size);
+				font-size: $h3-font-size;
 			}
 		}
 
@@ -126,7 +244,7 @@
 }
 
 .writing-assistant__content--highlight {
-	background-color: #cce6d3;
+	background-color: $success-l2;
 	border-radius: 2px;
 	transition: background-color 0.5s ease;
 }

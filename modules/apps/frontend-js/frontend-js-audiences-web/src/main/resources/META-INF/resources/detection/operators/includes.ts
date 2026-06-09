@@ -5,8 +5,11 @@
 
 import {checkTypes} from '../util';
 
-export function includes(value: Set<string> | string, expected: any): boolean {
-	checkTypes(value, ['string', 'Set'], `Operator 'includes' value`);
+export function includes<T extends Set<string> | string>(
+	value: T,
+	expected: string
+): boolean {
+	checkTypes(value, ['Set', 'string'], `Operator 'includes' value`);
 
 	if (value instanceof Set) {
 		return value.has(expected);

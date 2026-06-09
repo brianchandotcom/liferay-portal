@@ -5,11 +5,11 @@
 
 import {checkTypes} from '../util';
 
-export function notIncludes(
-	value: Set<string> | string,
-	expected: any
+export function notIncludes<T extends Set<string> | string>(
+	value: T,
+	expected: string
 ): boolean {
-	checkTypes(value, ['string', 'Set'], `Operator 'not_includes' value`);
+	checkTypes(value, ['Set', 'string'], `Operator 'not_includes' value`);
 
 	if (value instanceof Set) {
 		return !value.has(expected);

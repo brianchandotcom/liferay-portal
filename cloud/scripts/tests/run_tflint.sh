@@ -22,9 +22,11 @@ function main {
 	fi
 
 	local script_dir
+
 	script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 	local terraform_dir
+
 	terraform_dir=$(cd "${script_dir}/../../terraform" && pwd)
 
 	for terraform_module in "${terraform_modules[@]}"

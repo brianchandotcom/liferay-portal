@@ -375,12 +375,19 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		TomcatNode tomcatNode = builder.build();
 
+		List<String> portalExtProperties = List.of(
+			"configuration.override.com.liferay.captcha.configuration." +
+				"CaptchaConfiguration_createAccountCaptchaEnabled=\"false\"",
+			"configuration.override.com.liferay.captcha.configuration." +
+				"CaptchaConfiguration_maxChallenges=I\"-1\"",
+			"configuration.override.com.liferay.captcha.configuration." +
+				"CaptchaConfiguration_sendPasswordCaptchaEnabled=\"false\"",
+			"license.cluster.overload.node.auto.shut.down=" +
+				overloadNodeAutoShutDown,
+			"virtual.hosts.default.site.name=Guest");
+
 		Files.write(
-			tomcatNode.getPortalExtPropertiesPath(),
-			List.of(
-				"license.cluster.overload.node.auto.shut.down=" +
-					overloadNodeAutoShutDown,
-				"virtual.hosts.default.site.name=Guest"),
+			tomcatNode.getPortalExtPropertiesPath(), portalExtProperties,
 			StandardOpenOption.APPEND);
 
 		_restartTomcatNode(tomcatNode, additionalClusterExecutables);

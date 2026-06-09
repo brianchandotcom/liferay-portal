@@ -905,8 +905,8 @@ public class OpenAPIUtil {
 			body = String.valueOf(bodyValue);
 		}
 
-		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 	}
 
 	private static void _setMultipartBody(

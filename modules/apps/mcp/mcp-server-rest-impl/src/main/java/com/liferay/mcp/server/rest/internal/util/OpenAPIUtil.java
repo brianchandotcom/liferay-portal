@@ -72,7 +72,7 @@ public class OpenAPIUtil {
 						"into the input map"));
 			}
 
-			Object bodyValue = inputJSONObject.opt("body");
+			Object bodyValue = inputJSONObject.get("body");
 
 			String body = StringPool.BLANK;
 

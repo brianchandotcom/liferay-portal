@@ -1546,12 +1546,34 @@ public class JournalArticleLocalServiceImpl
 				groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				ArticleVersionComparator.getInstance(true));
 
-			for (JournalArticle article : articles) {
-				if (!article.isExpired()) {
-					journalArticleLocalService.expireArticle(
-						userId, groupId, article.getArticleId(),
-						article.getVersion(), articleURL, serviceContext);
+			boolean expired = false;
+			boolean indexingEnabled = serviceContext.isIndexingEnabled();
+
+			try {
+				serviceContext.setIndexingEnabled(false);
+
+				for (JournalArticle article : articles) {
+					if (!article.isExpired()) {
+						journalArticleLocalService.expireArticle(
+							userId, groupId, article.getArticleId(),
+							article.getVersion(), articleURL, serviceContext);
+
+						expired = true;
+					}
 				}
+			}
+			finally {
+				serviceContext.setIndexingEnabled(indexingEnabled);
+			}
+
+			if (expired && serviceContext.isIndexingEnabled()) {
+				Indexer<JournalArticle> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						JournalArticle.class);
+
+				indexer.reindex(
+					getLatestArticle(
+						groupId, articleId, WorkflowConstants.STATUS_ANY));
 			}
 		}
 		else {

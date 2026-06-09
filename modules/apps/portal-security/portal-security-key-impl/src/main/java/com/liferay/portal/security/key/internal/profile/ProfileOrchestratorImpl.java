@@ -92,7 +92,9 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		if (_serviceTrackerMap != null) {
+			_serviceTrackerMap.close();
+		}
 	}
 
 	@Modified

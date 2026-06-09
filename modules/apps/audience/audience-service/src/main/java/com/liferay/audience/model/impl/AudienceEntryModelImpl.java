@@ -77,7 +77,7 @@ public class AudienceEntryModelImpl
 		{"audienceEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"json", Types.VARCHAR}, {"name", Types.VARCHAR}
+		{"json", Types.CLOB}, {"name", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -93,22 +93,27 @@ public class AudienceEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("json", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AudienceEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,audienceEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,json VARCHAR(75) null,name STRING null)";
+		"create table AudienceEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,audienceEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,json TEXT null,name STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AudienceEntry";
 
 	public static final String ENTITY_ALIAS = "audienceEntry";
+
+	public static final String FILTER_PK_COLUMN_NAME = "audienceEntryId";
 
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY audienceEntry.modifiedDate DESC";
 
 	public static final String ORDER_BY_SQL =
 		" ORDER BY AudienceEntry.modifiedDate DESC";
+
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY audienceEntry.modifiedDate DESC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -1158,4 +1163,4 @@ public class AudienceEntryModelImpl
 	private AudienceEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1463365395
+// LIFERAY-SERVICE-BUILDER-HASH:1885743365

@@ -130,10 +130,13 @@ public abstract class AudienceEntryLocalServiceBaseImpl
 	 *
 	 * @param audienceEntry the audience entry
 	 * @return the audience entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AudienceEntry deleteAudienceEntry(AudienceEntry audienceEntry) {
+	public AudienceEntry deleteAudienceEntry(AudienceEntry audienceEntry)
+		throws PortalException {
+
 		return audienceEntryPersistence.remove(audienceEntry);
 	}
 
@@ -573,4 +576,4 @@ public abstract class AudienceEntryLocalServiceBaseImpl
 		AudienceEntryLocalServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1286756180
+// LIFERAY-SERVICE-BUILDER-HASH:-1258544166

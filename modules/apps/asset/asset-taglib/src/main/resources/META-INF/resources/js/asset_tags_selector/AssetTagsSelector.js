@@ -268,7 +268,11 @@ function AssetTagsSelector({
 									? `${inputName}_MultiSelectHelpText`
 									: undefined
 							}
-							aria-labelledby={inputName + '_MultiSelectLabel'}
+							aria-labelledby={
+								label
+									? inputName + '_MultiSelectLabel'
+									: undefined
+							}
 							clearAllTitle={Liferay.Language.get('clear-all')}
 							id={inputName + '_MultiSelect'}
 							inputName={inputName}

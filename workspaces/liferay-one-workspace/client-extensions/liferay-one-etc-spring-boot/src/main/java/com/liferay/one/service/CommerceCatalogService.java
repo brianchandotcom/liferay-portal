@@ -12,13 +12,11 @@ import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.problem.Problem;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
-import com.liferay.one.constants.SalesforceCatalogConstants;
-import com.liferay.one.model.SalesforceProduct2;
+import com.liferay.one.constants.CommerceCatalogConstants;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,39 +29,40 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommerceCatalogService extends BaseService {
 
-	public void deactivateProduct(String product2Id) throws Exception {
-		ProductResource productResource = _productResource();
+	public void deactivateProduct(String externalReferenceCode)
+		throws Exception {
 
-		if (!_productExists(productResource, product2Id)) {
+		ProductResource productResource = _buildProductResource();
+
+		Product existingProduct = _fetchProduct(
+			productResource, externalReferenceCode);
+
+		if (existingProduct == null) {
 			return;
 		}
 
 		Product product = new Product();
 
 		product.setActive(() -> Boolean.FALSE);
-		product.setExternalReferenceCode(() -> product2Id);
+		product.setExternalReferenceCode(() -> externalReferenceCode);
 
 		productResource.patchProductByExternalReferenceCode(
-			product2Id, product);
+			externalReferenceCode, product);
 	}
 
-	public Long getSkuId(String product2Id) throws Exception {
-		Long skuId = _skuIds.get(product2Id);
-
-		if (skuId != null) {
-			return skuId;
-		}
-
-		SkuResource skuResource = _skuResource();
+	public Long fetchSkuId(String skuExternalReferenceCode) throws Exception {
+		SkuResource skuResource = SkuResource.builder(
+		).endpoint(
+			lxcDXPMainDomain, lxcDXPServerProtocol
+		).header(
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
+		).build();
 
 		try {
-			Sku sku = skuResource.getSkuByExternalReferenceCode(product2Id);
+			Sku sku = skuResource.getSkuByExternalReferenceCode(
+				skuExternalReferenceCode);
 
-			skuId = sku.getId();
-
-			_skuIds.put(product2Id, skuId);
-
-			return skuId;
+			return sku.getId();
 		}
 		catch (Problem.ProblemException problemException) {
 			if (_isNotFound(problemException)) {
@@ -74,13 +73,41 @@ public class CommerceCatalogService extends BaseService {
 		}
 	}
 
-	public void upsertProduct(SalesforceProduct2 salesforceProduct2)
+	public void upsertProduct(
+			String externalReferenceCode, String name, String description)
 		throws Exception {
 
-		ProductResource productResource = _productResource();
+		ProductResource productResource = _buildProductResource();
 
 		productResource.putProductByExternalReferenceCode(
-			salesforceProduct2.getId(), _toProduct(salesforceProduct2));
+			externalReferenceCode,
+			_toProduct(externalReferenceCode, name, description));
+	}
+
+	private ProductResource _buildProductResource() {
+		return ProductResource.builder(
+		).endpoint(
+			lxcDXPMainDomain, lxcDXPServerProtocol
+		).header(
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
+		).build();
+	}
+
+	private Product _fetchProduct(
+			ProductResource productResource, String externalReferenceCode)
+		throws Exception {
+
+		try {
+			return productResource.getProductByExternalReferenceCode(
+				externalReferenceCode);
+		}
+		catch (Problem.ProblemException problemException) {
+			if (_isNotFound(problemException)) {
+				return null;
+			}
+
+			throw problemException;
+		}
 	}
 
 	private String _getAuthorization() {
@@ -100,66 +127,30 @@ public class CommerceCatalogService extends BaseService {
 		return false;
 	}
 
-	private boolean _productExists(
-			ProductResource productResource, String externalReferenceCode)
-		throws Exception {
-
-		try {
-			productResource.getProductByExternalReferenceCode(
-				externalReferenceCode);
-
-			return true;
-		}
-		catch (Problem.ProblemException problemException) {
-			if (_isNotFound(problemException)) {
-				return false;
-			}
-
-			throw problemException;
-		}
-	}
-
-	private ProductResource _productResource() {
-		return ProductResource.builder(
-		).endpoint(
-			lxcDXPMainDomain, lxcDXPServerProtocol
-		).header(
-			HttpHeaders.AUTHORIZATION, _getAuthorization()
-		).build();
-	}
-
-	private SkuResource _skuResource() {
-		return SkuResource.builder(
-		).endpoint(
-			lxcDXPMainDomain, lxcDXPServerProtocol
-		).header(
-			HttpHeaders.AUTHORIZATION, _getAuthorization()
-		).build();
-	}
-
 	private Map<String, String> _toDefaultLocaleMap(String value) {
 		return Collections.singletonMap(
-			SalesforceCatalogConstants.DEFAULT_LANGUAGE_ID, value);
+			CommerceCatalogConstants.DEFAULT_LANGUAGE_ID, value);
 	}
 
-	private Product _toProduct(SalesforceProduct2 salesforceProduct2) {
+	private Product _toProduct(
+		String externalReferenceCode, String name, String description) {
+
 		Product product = new Product();
 
 		Sku sku = new Sku();
 
-		sku.setExternalReferenceCode(salesforceProduct2::getId);
+		sku.setExternalReferenceCode(() -> externalReferenceCode);
 		sku.setPublished(() -> Boolean.TRUE);
-		sku.setSku(salesforceProduct2::getId);
+		sku.setSku(() -> externalReferenceCode);
 
 		product.setActive(() -> Boolean.TRUE);
 		product.setCatalogExternalReferenceCode(
-			() -> SalesforceCatalogConstants.SALESFORCE_CATALOG);
-		product.setDescription(
-			() -> _toDefaultLocaleMap(salesforceProduct2.getDescription()));
-		product.setExternalReferenceCode(salesforceProduct2::getId);
-		product.setName(
-			() -> _toDefaultLocaleMap(salesforceProduct2.getName()));
-		product.setProductType(() -> SalesforceCatalogConstants.PRODUCT_TYPE);
+			() -> CommerceCatalogConstants.SALESFORCE_CATALOG);
+		product.setDescription(() -> _toDefaultLocaleMap(description));
+		product.setExternalReferenceCode(() -> externalReferenceCode);
+		product.setName(() -> _toDefaultLocaleMap(name));
+		product.setProductType(
+			() -> CommerceCatalogConstants.PRODUCT_TYPE_SIMPLE);
 		product.setSkus(() -> new Sku[] {sku});
 
 		return product;
@@ -167,7 +158,5 @@ public class CommerceCatalogService extends BaseService {
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
-
-	private final Map<String, Long> _skuIds = new ConcurrentHashMap<>();
 
 }

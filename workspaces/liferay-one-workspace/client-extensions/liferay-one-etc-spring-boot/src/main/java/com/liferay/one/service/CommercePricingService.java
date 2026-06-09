@@ -12,15 +12,8 @@ import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.client.problem.Problem;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.PriceEntryResource;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.PriceListResource;
-import com.liferay.one.constants.SalesforceCatalogConstants;
-import com.liferay.one.model.SalesforcePricebookEntry;
 
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,69 +26,64 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommercePricingService extends BaseService {
 
-	public void deletePriceEntry(
-			SalesforcePricebookEntry salesforcePricebookEntry)
+	public void deletePriceEntry(String externalReferenceCode)
 		throws Exception {
 
-		String priceEntryExternalReferenceCode =
-			salesforcePricebookEntry.getId();
+		PriceEntryResource priceEntryResource = _buildPriceEntryResource();
 
-		PriceEntryResource priceEntryResource = _priceEntryResource();
+		PriceEntry priceEntry = _fetchPriceEntry(
+			priceEntryResource, externalReferenceCode);
 
-		if (!_priceEntryExists(
-				priceEntryResource, priceEntryExternalReferenceCode)) {
-
+		if (priceEntry == null) {
 			return;
 		}
 
 		priceEntryResource.deletePriceEntryByExternalReferenceCode(
-			priceEntryExternalReferenceCode);
+			externalReferenceCode);
+	}
+
+	public Long fetchPriceListId(String priceListExternalReferenceCode)
+		throws Exception {
+
+		PriceListResource priceListResource = PriceListResource.builder(
+		).endpoint(
+			lxcDXPMainDomain, lxcDXPServerProtocol
+		).header(
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
+		).build();
+
+		try {
+			PriceList priceList =
+				priceListResource.getPriceListByExternalReferenceCode(
+					priceListExternalReferenceCode);
+
+			return priceList.getId();
+		}
+		catch (Problem.ProblemException problemException) {
+			if (_isNotFound(problemException)) {
+				return null;
+			}
+
+			throw problemException;
+		}
 	}
 
 	public void upsertPriceEntry(
-			SalesforcePricebookEntry salesforcePricebookEntry)
+			String externalReferenceCode, String priceListExternalReferenceCode,
+			long priceListId, long skuId, double price, boolean active)
 		throws Exception {
 
-		String priceListExternalReferenceCode =
-			SalesforceCatalogConstants.priceListErc(
-				salesforcePricebookEntry.getCurrencyIsoCode());
+		PriceEntryResource priceEntryResource = _buildPriceEntryResource();
 
-		Long priceListId = _getPriceListId(priceListExternalReferenceCode);
-
-		if (priceListId == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find price list " +
-						priceListExternalReferenceCode +
-							" for a skipped Salesforce price entry");
-			}
-
-			return;
-		}
-
-		String product2Id = salesforcePricebookEntry.getProduct2Id();
-
-		Long skuId = _commerceCatalogService.getSkuId(product2Id);
-
-		if (skuId == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find SKU for Salesforce product " + product2Id);
-			}
-
-			return;
-		}
-
-		PriceEntryResource priceEntryResource = _priceEntryResource();
+		PriceEntry existingPriceEntry = _fetchPriceEntry(
+			priceEntryResource, externalReferenceCode);
 
 		PriceEntry priceEntry = _toPriceEntry(
-			salesforcePricebookEntry, priceListId, skuId);
+			externalReferenceCode, priceListId, skuId, price, active);
 
-		if (_priceEntryExists(
-				priceEntryResource, priceEntry.getExternalReferenceCode())) {
-
+		if (existingPriceEntry != null) {
 			priceEntryResource.patchPriceEntryByExternalReferenceCode(
-				priceEntry.getExternalReferenceCode(), priceEntry);
+				externalReferenceCode, priceEntry);
 		}
 		else {
 			priceEntryResource.postPriceListByExternalReferenceCodePriceEntry(
@@ -103,13 +91,21 @@ public class CommercePricingService extends BaseService {
 		}
 	}
 
-	private PriceList _fetchPriceList(String externalReferenceCode)
+	private PriceEntryResource _buildPriceEntryResource() {
+		return PriceEntryResource.builder(
+		).endpoint(
+			lxcDXPMainDomain, lxcDXPServerProtocol
+		).header(
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
+		).build();
+	}
+
+	private PriceEntry _fetchPriceEntry(
+			PriceEntryResource priceEntryResource, String externalReferenceCode)
 		throws Exception {
 
-		PriceListResource priceListResource = _priceListResource();
-
 		try {
-			return priceListResource.getPriceListByExternalReferenceCode(
+			return priceEntryResource.getPriceEntryByExternalReferenceCode(
 				externalReferenceCode);
 		}
 		catch (Problem.ProblemException problemException) {
@@ -126,28 +122,6 @@ public class CommercePricingService extends BaseService {
 			"liferay-one-etc-spring-boot-oahs");
 	}
 
-	private Long _getPriceListId(String externalReferenceCode)
-		throws Exception {
-
-		Long priceListId = _priceListIds.get(externalReferenceCode);
-
-		if (priceListId != null) {
-			return priceListId;
-		}
-
-		PriceList priceList = _fetchPriceList(externalReferenceCode);
-
-		if (priceList == null) {
-			return null;
-		}
-
-		priceListId = priceList.getId();
-
-		_priceListIds.put(externalReferenceCode, priceListId);
-
-		return priceListId;
-	}
-
 	private boolean _isNotFound(Problem.ProblemException problemException) {
 		Problem problem = problemException.getProblem();
 
@@ -160,69 +134,22 @@ public class CommercePricingService extends BaseService {
 		return false;
 	}
 
-	private boolean _priceEntryExists(
-			PriceEntryResource priceEntryResource, String externalReferenceCode)
-		throws Exception {
-
-		try {
-			priceEntryResource.getPriceEntryByExternalReferenceCode(
-				externalReferenceCode);
-
-			return true;
-		}
-		catch (Problem.ProblemException problemException) {
-			if (_isNotFound(problemException)) {
-				return false;
-			}
-
-			throw problemException;
-		}
-	}
-
-	private PriceEntryResource _priceEntryResource() {
-		return PriceEntryResource.builder(
-		).endpoint(
-			lxcDXPMainDomain, lxcDXPServerProtocol
-		).header(
-			HttpHeaders.AUTHORIZATION, _getAuthorization()
-		).build();
-	}
-
-	private PriceListResource _priceListResource() {
-		return PriceListResource.builder(
-		).endpoint(
-			lxcDXPMainDomain, lxcDXPServerProtocol
-		).header(
-			HttpHeaders.AUTHORIZATION, _getAuthorization()
-		).build();
-	}
-
 	private PriceEntry _toPriceEntry(
-		SalesforcePricebookEntry salesforcePricebookEntry, long priceListId,
-		long skuId) {
+		String externalReferenceCode, long priceListId, long skuId,
+		double price, boolean active) {
 
 		PriceEntry priceEntry = new PriceEntry();
 
-		priceEntry.setActive(salesforcePricebookEntry::isActive);
-		priceEntry.setExternalReferenceCode(salesforcePricebookEntry::getId);
-		priceEntry.setPrice(salesforcePricebookEntry::getUnitPrice);
+		priceEntry.setActive(() -> active);
+		priceEntry.setExternalReferenceCode(() -> externalReferenceCode);
+		priceEntry.setPrice(() -> price);
 		priceEntry.setPriceListId(() -> priceListId);
-		priceEntry.setSkuExternalReferenceCode(
-			salesforcePricebookEntry::getProduct2Id);
 		priceEntry.setSkuId(() -> skuId);
 
 		return priceEntry;
 	}
 
-	private static final Log _log = LogFactory.getLog(
-		CommercePricingService.class);
-
-	@Autowired
-	private CommerceCatalogService _commerceCatalogService;
-
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
-
-	private final Map<String, Long> _priceListIds = new ConcurrentHashMap<>();
 
 }

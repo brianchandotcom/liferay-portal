@@ -244,31 +244,21 @@ public class OpenAPIUtilTest {
 
 	@Test
 	public void testGetToolMergesRequestBodyAndSchemaDescriptions() {
-		JSONObject openAPIJSONObject = JSONUtil.put(
-			"paths",
+		JSONObject openAPIJSONObject = _createOpenAPIJSONObject(
 			JSONUtil.put(
-				"/things",
+				"content",
 				JSONUtil.put(
-					"post",
+					"application/json",
 					JSONUtil.put(
-						"operationId", "postThing"
-					).put(
-						"requestBody",
+						"schema",
 						JSONUtil.put(
-							"content",
-							JSONUtil.put(
-								"application/json",
-								JSONUtil.put(
-									"schema",
-									JSONUtil.put(
-										"description", "A Thing resource."
-									).put(
-										"type", "object"
-									)))
+							"description", "A Thing resource."
 						).put(
-							"description", "The thing to create."
-						)
-					))));
+							"type", "object"
+						)))
+			).put(
+				"description", "The thing to create."
+			));
 
 		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, "postThing");
 
@@ -285,26 +275,15 @@ public class OpenAPIUtilTest {
 
 	@Test
 	public void testGetToolRequestBodyDescriptionIsSurfaced() {
-		JSONObject openAPIJSONObject = JSONUtil.put(
-			"paths",
+		JSONObject openAPIJSONObject = _createOpenAPIJSONObject(
 			JSONUtil.put(
-				"/things",
+				"content",
 				JSONUtil.put(
-					"post",
-					JSONUtil.put(
-						"operationId", "postThing"
-					).put(
-						"requestBody",
-						JSONUtil.put(
-							"content",
-							JSONUtil.put(
-								"application/json",
-								JSONUtil.put(
-									"schema", JSONUtil.put("type", "object")))
-						).put(
-							"description", "The thing to create."
-						)
-					))));
+					"application/json",
+					JSONUtil.put("schema", JSONUtil.put("type", "object")))
+			).put(
+				"description", "The thing to create."
+			));
 
 		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, "postThing");
 
@@ -320,18 +299,8 @@ public class OpenAPIUtilTest {
 
 	@Test
 	public void testGetToolRequestBodyWithoutContentDoesNotFail() {
-		JSONObject openAPIJSONObject = JSONUtil.put(
-			"paths",
-			JSONUtil.put(
-				"/things",
-				JSONUtil.put(
-					"post",
-					JSONUtil.put(
-						"operationId", "postThing"
-					).put(
-						"requestBody",
-						JSONUtil.put("description", "The thing to create.")
-					))));
+		JSONObject openAPIJSONObject = _createOpenAPIJSONObject(
+			JSONUtil.put("description", "The thing to create."));
 
 		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, "postThing");
 
@@ -401,6 +370,22 @@ public class OpenAPIUtilTest {
 
 		Assert.assertEquals(expectedDescription, toolSummary.getDescription());
 		Assert.assertEquals(expectedName, toolSummary.getName());
+	}
+
+	private JSONObject _createOpenAPIJSONObject(
+		JSONObject requestBodyJSONObject) {
+
+		return JSONUtil.put(
+			"paths",
+			JSONUtil.put(
+				"/things",
+				JSONUtil.put(
+					"post",
+					JSONUtil.put(
+						"operationId", "postThing"
+					).put(
+						"requestBody", requestBodyJSONObject
+					))));
 	}
 
 	private Map<String, ?> _getInputSchema(

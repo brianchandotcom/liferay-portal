@@ -154,7 +154,7 @@ public class KeyReference implements Serializable {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"\\$\\{(keyRef|secretRef):([^:]+):(.+)\\}");
+		"\\$\\{(keyRef|secretRef):([^:}]+):(.+)\\}");
 	private static final long serialVersionUID = 1L;
 
 	private final String _identifier;

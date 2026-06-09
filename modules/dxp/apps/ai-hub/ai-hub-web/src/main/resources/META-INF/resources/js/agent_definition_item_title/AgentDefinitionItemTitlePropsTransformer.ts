@@ -25,16 +25,18 @@ export default function AgentDefinitionItemTitlePropsTransformer({
 
 	const listView = views.find((view) => view.name === 'list')!;
 
-	const listSchema = listView.schema as IListSchema;
+	if (listView) {
+		const listSchema = listView.schema as IListSchema;
 
-	listView.setItemComponentProps = ({props}: {props: any}) => ({
-		...props,
-		schema: {
-			...listSchema,
-			description: '',
-			titleRendererName: 'customListTitleRenderer',
-		},
-	});
+		listView.setItemComponentProps = ({props}: {props: any}) => ({
+			...props,
+			schema: {
+				...listSchema,
+				description: '',
+				titleRendererName: 'customListTitleRenderer',
+			},
+		});
+	}
 
 	return {
 		...otherProps,

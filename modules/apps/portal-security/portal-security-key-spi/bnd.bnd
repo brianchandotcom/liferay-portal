@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Security Key SPI
+Bundle-SymbolicName: com.liferay.portal.security.key.spi
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.security.key.spi.profile
+Liferay-Releng-Module-Group-Title: Key Manager

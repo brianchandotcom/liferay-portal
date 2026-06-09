@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Security Key API
+Bundle-SymbolicName: com.liferay.portal.security.key.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.security.key
+Liferay-Releng-Module-Group-Title: Key Manager

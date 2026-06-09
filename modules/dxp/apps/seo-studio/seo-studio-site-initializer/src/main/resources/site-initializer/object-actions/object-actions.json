@@ -2,6 +2,7 @@
 	"object-actions": [
 		{
 			"active": true,
+			"conditionExpression": "name == 'pageSpeed'",
 			"errorMessage": {
 				"en_US": "PageSpeed scan failed. Please try again later or contact support."
 			},
@@ -11,6 +12,22 @@
 			},
 			"name": "pageSpeed",
 			"objectActionExecutorKey": "function#liferay-seostudio-pagespeed-object-action-pagespeed",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+			}
+		},
+		{
+			"active": true,
+			"conditionExpression": "name == 'crawler'",
+			"errorMessage": {
+				"en_US": "Crawler failed. Please try again later or contact support."
+			},
+			"externalReferenceCode": "L_SEO_STUDIO_SCAN_CRAWLER",
+			"label": {
+				"en_US": "Crawler"
+			},
+			"name": "crawler",
+			"objectActionExecutorKey": "function#liferay-seostudio-crawler-object-action-crawler",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
 			}

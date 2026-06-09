@@ -2,6 +2,12 @@
 	"externalReferenceCode": "L_SEO_STUDIO_SCAN_NAMES",
 	"listTypeEntries": [
 		{
+			"externalReferenceCode": "CRAWLER",
+			"key": "crawler",
+			"name": "Crawler",
+			"system": true
+		},
+		{
 			"externalReferenceCode": "PAGESPEED",
 			"key": "pageSpeed",
 			"name": "PageSpeed",

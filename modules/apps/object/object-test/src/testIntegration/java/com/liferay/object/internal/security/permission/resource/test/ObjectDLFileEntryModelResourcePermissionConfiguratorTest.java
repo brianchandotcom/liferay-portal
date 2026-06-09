@@ -7,7 +7,6 @@ package com.liferay.object.internal.security.permission.resource.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -51,6 +50,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -59,11 +60,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.ws.rs.HttpMethod;
 
-import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -95,18 +96,6 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _company.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			TempFileEntryUtil.getTempFileName("image.jpg"),
-			ContentTypes.APPLICATION_TEXT, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			new ByteArrayInputStream(RandomTestUtil.randomBytes()), 67, null,
-			null, null, serviceContext);
-
-		_dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-			fileEntry.getFileEntryId());
-
 		_objectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
@@ -122,7 +111,8 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 				).name(
 					ObjectFieldSettingConstants.NAME_FILE_SOURCE
 				).value(
-					ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
@@ -137,14 +127,29 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Collections.singletonList(_objectField));
 
+		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+			_objectDefinition.getPortletId(),
+			TempFileEntryUtil.getTempFileName("image.jpg"),
+			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			ContentTypes.APPLICATION_TEXT);
+
 		_objectEntry = _objectEntryLocalService.addOrUpdateObjectEntry(
 			RandomTestUtil.randomString(), 0, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.<String, Serializable>put(
-				"attachment", String.valueOf(_dlFileEntry.getFileEntryId())
+				"attachment", tempFileEntry.getFileEntryId()
 			).build(),
 			serviceContext);
+
+		Map<String, Serializable> values = _objectEntry.getValues();
+
+		long fileEntryId = GetterUtil.getLong(values.get("attachment"));
+
+		_dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(fileEntryId);
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
@@ -207,6 +212,22 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 				PermissionCheckerFactoryUtil.create(_user), _dlFileEntry,
 				ActionKeys.DOWNLOAD));
 
+		_testContains(new String[] {ActionKeys.VIEW}, false);
+		_testContains(new String[] {attachmentDownloadActionKey}, false);
+		_testContains(
+			new String[] {ActionKeys.VIEW, attachmentDownloadActionKey}, true);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(HttpMethod.GET, StringPool.BLANK);
+
+		mockHttpServletRequest.addParameter("download", "true");
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		_testContains(new String[0], false);
 		_testContains(new String[] {ActionKeys.VIEW}, false);
 		_testContains(new String[] {attachmentDownloadActionKey}, false);
 		_testContains(

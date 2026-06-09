@@ -53,7 +53,8 @@ public class OAuthClientPRLocalMetadataServiceImpl
 	public OAuthClientPRLocalMetadata addOAuthClientPRLocalMetadata(
 			String externalReferenceCode, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,
-			String resource, String resourceName, String[] scopesSupported)
+			String protectedResourceURI, String resourceName,
+			String[] scopesSupported)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -65,8 +66,8 @@ public class OAuthClientPRLocalMetadataServiceImpl
 		return oAuthClientPRLocalMetadataLocalService.
 			addOAuthClientPRLocalMetadata(
 				externalReferenceCode, getUserId(), authorizationServers,
-				bearerMethodsSupported, localWellKnownEnabled, resource,
-				resourceName, scopesSupported);
+				bearerMethodsSupported, localWellKnownEnabled,
+				protectedResourceURI, resourceName, scopesSupported);
 	}
 
 	@Override
@@ -127,12 +128,12 @@ public class OAuthClientPRLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientPRLocalMetadata fetchOAuthClientPRLocalMetadata(
-			long companyId, String resource)
+			long companyId, String protectedResourceURI)
 		throws PortalException {
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
-			oAuthClientPRLocalMetadataPersistence.fetchByC_R(
-				companyId, resource);
+			oAuthClientPRLocalMetadataPersistence.fetchByC_PRURI(
+				companyId, protectedResourceURI);
 
 		if (oAuthClientPRLocalMetadata != null) {
 			_oAuthClientPRLocalMetadataModelResourcePermission.check(
@@ -199,12 +200,12 @@ public class OAuthClientPRLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientPRLocalMetadata getOAuthClientPRLocalMetadata(
-			long companyId, String resource)
+			long companyId, String protectedResourceURI)
 		throws PortalException {
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
-			oAuthClientPRLocalMetadataPersistence.findByC_R(
-				companyId, resource);
+			oAuthClientPRLocalMetadataPersistence.findByC_PRURI(
+				companyId, protectedResourceURI);
 
 		_oAuthClientPRLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientPRLocalMetadata,
@@ -282,7 +283,8 @@ public class OAuthClientPRLocalMetadataServiceImpl
 	public OAuthClientPRLocalMetadata updateOAuthClientPRLocalMetadata(
 			long oAuthClientPRLocalMetadataId, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,
-			String resource, String resourceName, String[] scopesSupported)
+			String protectedResourceURI, String resourceName,
+			String[] scopesSupported)
 		throws PortalException {
 
 		_oAuthClientPRLocalMetadataModelResourcePermission.check(
@@ -294,8 +296,8 @@ public class OAuthClientPRLocalMetadataServiceImpl
 		return oAuthClientPRLocalMetadataLocalService.
 			updateOAuthClientPRLocalMetadata(
 				oAuthClientPRLocalMetadataId, authorizationServers,
-				bearerMethodsSupported, localWellKnownEnabled, resource,
-				resourceName, scopesSupported);
+				bearerMethodsSupported, localWellKnownEnabled,
+				protectedResourceURI, resourceName, scopesSupported);
 	}
 
 	@Reference(

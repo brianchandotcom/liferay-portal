@@ -128,30 +128,32 @@ public class OAuth2WellKnownProtectedResourceMetadataFilter extends BaseFilter {
 		String resourcePath = requestURI.substring(
 			index + _WELL_KNOWN_PATH.length());
 
-		String resource =
+		String protectedResourceURI =
 			_portal.getPortalURL(httpServletRequest) +
 				requestURI.substring(0, index) + resourcePath;
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			_oAuthClientPRLocalMetadataLocalService.
-				fetchOAuthClientPRLocalMetadata(companyId, resource);
+				fetchOAuthClientPRLocalMetadata(
+					companyId, protectedResourceURI);
 
 		if (oAuthClientPRLocalMetadata != null) {
 			return oAuthClientPRLocalMetadata;
 		}
 
-		if (resource.endsWith(StringPool.SLASH)) {
+		if (protectedResourceURI.endsWith(StringPool.SLASH)) {
 			oAuthClientPRLocalMetadata =
 				_oAuthClientPRLocalMetadataLocalService.
 					fetchOAuthClientPRLocalMetadata(
 						companyId,
-						resource.substring(0, resource.length() - 1));
+						protectedResourceURI.substring(
+							0, protectedResourceURI.length() - 1));
 		}
 		else {
 			oAuthClientPRLocalMetadata =
 				_oAuthClientPRLocalMetadataLocalService.
 					fetchOAuthClientPRLocalMetadata(
-						companyId, resource + StringPool.SLASH);
+						companyId, protectedResourceURI + StringPool.SLASH);
 		}
 
 		if (oAuthClientPRLocalMetadata != null) {

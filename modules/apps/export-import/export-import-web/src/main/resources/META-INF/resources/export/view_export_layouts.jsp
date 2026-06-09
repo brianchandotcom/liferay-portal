@@ -49,28 +49,35 @@ String searchContainerId = "exportLayoutProcesses";
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/export/navigation.jsp" servletContext="<%= application %>" />
+		<c:choose>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-57655") %>'>
+				<liferay-util:include page="/revamp/export/view_export.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-util:include page="/export/navigation.jsp" servletContext="<%= application %>" />
 
-		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="mvcRenderCommandName" value="/export_import/view_export_layouts" />
-			<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
-			<liferay-util:param name="navigation" value="<%= navigation %>" />
-			<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
-			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
-			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
-		</liferay-util:include>
+				<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="mvcRenderCommandName" value="/export_import/view_export_layouts" />
+					<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+					<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+					<liferay-util:param name="navigation" value="<%= navigation %>" />
+					<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+					<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+					<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+				</liferay-util:include>
 
-		<liferay-util:include page="/export/processes_list/view.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-			<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
-			<liferay-util:param name="navigation" value="<%= navigation %>" />
-			<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
-			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
-			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
-		</liferay-util:include>
+				<liferay-util:include page="/export/processes_list/view.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+					<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+					<liferay-util:param name="navigation" value="<%= navigation %>" />
+					<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+					<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+					<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+				</liferay-util:include>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>
 

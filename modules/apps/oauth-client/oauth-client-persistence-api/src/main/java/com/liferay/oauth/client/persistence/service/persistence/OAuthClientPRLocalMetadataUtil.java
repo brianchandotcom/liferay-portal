@@ -742,59 +742,63 @@ public class OAuthClientPRLocalMetadataUtil {
 	}
 
 	/**
-	 * Returns the o auth client pr local metadata where companyId = &#63; and resource = &#63; or throws a <code>NoSuchOAuthClientPRLocalMetadataException</code> if it could not be found.
+	 * Returns the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; or throws a <code>NoSuchOAuthClientPRLocalMetadataException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the matching o auth client pr local metadata
 	 * @throws NoSuchOAuthClientPRLocalMetadataException if a matching o auth client pr local metadata could not be found
 	 */
-	public static OAuthClientPRLocalMetadata findByC_R(
-			long companyId, String resource)
+	public static OAuthClientPRLocalMetadata findByC_PRURI(
+			long companyId, String protectedResourceURI)
 		throws com.liferay.oauth.client.persistence.exception.
 			NoSuchOAuthClientPRLocalMetadataException {
 
-		return getPersistence().findByC_R(companyId, resource);
+		return getPersistence().findByC_PRURI(companyId, protectedResourceURI);
 	}
 
 	/**
-	 * Returns the o auth client pr local metadata where companyId = &#63; and resource = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth client pr local metadata, or <code>null</code> if a matching o auth client pr local metadata could not be found
 	 */
-	public static OAuthClientPRLocalMetadata fetchByC_R(
-		long companyId, String resource, boolean useFinderCache) {
+	public static OAuthClientPRLocalMetadata fetchByC_PRURI(
+		long companyId, String protectedResourceURI, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_R(companyId, resource, useFinderCache);
+		return getPersistence().fetchByC_PRURI(
+			companyId, protectedResourceURI, useFinderCache);
 	}
 
 	/**
-	 * Removes the o auth client pr local metadata where companyId = &#63; and resource = &#63; from the database.
+	 * Removes the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the o auth client pr local metadata that was removed
 	 */
-	public static OAuthClientPRLocalMetadata removeByC_R(
-			long companyId, String resource)
+	public static OAuthClientPRLocalMetadata removeByC_PRURI(
+			long companyId, String protectedResourceURI)
 		throws com.liferay.oauth.client.persistence.exception.
 			NoSuchOAuthClientPRLocalMetadataException {
 
-		return getPersistence().removeByC_R(companyId, resource);
+		return getPersistence().removeByC_PRURI(
+			companyId, protectedResourceURI);
 	}
 
 	/**
-	 * Returns the number of o auth client pr local metadatas where companyId = &#63; and resource = &#63;.
+	 * Returns the number of o auth client pr local metadatas where companyId = &#63; and protectedResourceURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the number of matching o auth client pr local metadatas
 	 */
-	public static int countByC_R(long companyId, String resource) {
-		return getPersistence().countByC_R(companyId, resource);
+	public static int countByC_PRURI(
+		long companyId, String protectedResourceURI) {
+
+		return getPersistence().countByC_PRURI(companyId, protectedResourceURI);
 	}
 
 	/**
@@ -930,16 +934,16 @@ public class OAuthClientPRLocalMetadataUtil {
 	}
 
 	/**
-	 * Returns the o auth client pr local metadata where companyId = &#63; and resource = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth client pr local metadata where companyId = &#63; and protectedResourceURI = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param resource the resource
+	 * @param protectedResourceURI the protected resource uri
 	 * @return the matching o auth client pr local metadata, or <code>null</code> if a matching o auth client pr local metadata could not be found
 	 */
-	public static OAuthClientPRLocalMetadata fetchByC_R(
-		long companyId, String resource) {
+	public static OAuthClientPRLocalMetadata fetchByC_PRURI(
+		long companyId, String protectedResourceURI) {
 
-		return getPersistence().fetchByC_R(companyId, resource);
+		return getPersistence().fetchByC_PRURI(companyId, protectedResourceURI);
 	}
 
 	/**
@@ -1381,4 +1385,4 @@ public class OAuthClientPRLocalMetadataUtil {
 	private static volatile OAuthClientPRLocalMetadataPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-532527219
+// LIFERAY-SERVICE-BUILDER-HASH:-1898320193

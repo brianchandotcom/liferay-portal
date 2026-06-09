@@ -14,6 +14,6 @@ create index IX_999928DE on OAuthClientEntry (uuid_[$COLUMN_LENGTH:75$]);
 create unique index IX_AA37A6B1 on OAuthClientPRLocalMetadata (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_D26F8E5B on OAuthClientPRLocalMetadata (companyId, localWellKnownEnabled);
 create unique index IX_E3839C6 on OAuthClientPRLocalMetadata (companyId, localWellKnownURI[$COLUMN_LENGTH:256$]);
-create unique index IX_BF510D8E on OAuthClientPRLocalMetadata (companyId, resource[$COLUMN_LENGTH:256$]);
+create unique index IX_B54739F0 on OAuthClientPRLocalMetadata (companyId, protectedResourceURI[$COLUMN_LENGTH:256$]);
 create index IX_96EB4DD6 on OAuthClientPRLocalMetadata (userId);
 create index IX_6B931098 on OAuthClientPRLocalMetadata (uuid_[$COLUMN_LENGTH:75$]);

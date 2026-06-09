@@ -73,7 +73,7 @@ public class OAuthClientPRLocalMetadataModelImpl
 		{"modifiedDate", Types.TIMESTAMP},
 		{"localWellKnownEnabled", Types.BOOLEAN},
 		{"localWellKnownURI", Types.VARCHAR}, {"metadataJSON", Types.CLOB},
-		{"resource", Types.VARCHAR}
+		{"protectedResourceURI", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,11 +92,11 @@ public class OAuthClientPRLocalMetadataModelImpl
 		TABLE_COLUMNS_MAP.put("localWellKnownEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("localWellKnownURI", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("metadataJSON", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("resource", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("protectedResourceURI", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuthClientPRLocalMetadata (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,oAuthClientPRLocalMetadataId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,localWellKnownEnabled BOOLEAN,localWellKnownURI VARCHAR(256) null,metadataJSON TEXT null,resource VARCHAR(256) null)";
+		"create table OAuthClientPRLocalMetadata (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,oAuthClientPRLocalMetadataId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,localWellKnownEnabled BOOLEAN,localWellKnownURI VARCHAR(256) null,metadataJSON TEXT null,protectedResourceURI VARCHAR(256) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OAuthClientPRLocalMetadata";
@@ -149,7 +149,7 @@ public class OAuthClientPRLocalMetadataModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long RESOURCE_COLUMN_BITMASK = 16L;
+	public static final long PROTECTEDRESOURCEURI_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -313,7 +313,8 @@ public class OAuthClientPRLocalMetadataModelImpl
 			attributeGetterFunctions.put(
 				"metadataJSON", OAuthClientPRLocalMetadata::getMetadataJSON);
 			attributeGetterFunctions.put(
-				"resource", OAuthClientPRLocalMetadata::getResource);
+				"protectedResourceURI",
+				OAuthClientPRLocalMetadata::getProtectedResourceURI);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -383,9 +384,9 @@ public class OAuthClientPRLocalMetadataModelImpl
 				(BiConsumer<OAuthClientPRLocalMetadata, String>)
 					OAuthClientPRLocalMetadata::setMetadataJSON);
 			attributeSetterBiConsumers.put(
-				"resource",
+				"protectedResourceURI",
 				(BiConsumer<OAuthClientPRLocalMetadata, String>)
-					OAuthClientPRLocalMetadata::setResource);
+					OAuthClientPRLocalMetadata::setProtectedResourceURI);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -686,22 +687,22 @@ public class OAuthClientPRLocalMetadataModelImpl
 
 	@JSON
 	@Override
-	public String getResource() {
-		if (_resource == null) {
+	public String getProtectedResourceURI() {
+		if (_protectedResourceURI == null) {
 			return "";
 		}
 		else {
-			return _resource;
+			return _protectedResourceURI;
 		}
 	}
 
 	@Override
-	public void setResource(String resource) {
+	public void setProtectedResourceURI(String protectedResourceURI) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_resource = resource;
+		_protectedResourceURI = protectedResourceURI;
 	}
 
 	/**
@@ -709,8 +710,8 @@ public class OAuthClientPRLocalMetadataModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public String getOriginalResource() {
-		return getColumnOriginalValue("resource");
+	public String getOriginalProtectedResourceURI() {
+		return getColumnOriginalValue("protectedResourceURI");
 	}
 
 	@Override
@@ -794,7 +795,8 @@ public class OAuthClientPRLocalMetadataModelImpl
 		oAuthClientPRLocalMetadataImpl.setLocalWellKnownURI(
 			getLocalWellKnownURI());
 		oAuthClientPRLocalMetadataImpl.setMetadataJSON(getMetadataJSON());
-		oAuthClientPRLocalMetadataImpl.setResource(getResource());
+		oAuthClientPRLocalMetadataImpl.setProtectedResourceURI(
+			getProtectedResourceURI());
 
 		oAuthClientPRLocalMetadataImpl.resetOriginalValues();
 
@@ -830,8 +832,8 @@ public class OAuthClientPRLocalMetadataModelImpl
 			this.<String>getColumnOriginalValue("localWellKnownURI"));
 		oAuthClientPRLocalMetadataImpl.setMetadataJSON(
 			this.<String>getColumnOriginalValue("metadataJSON"));
-		oAuthClientPRLocalMetadataImpl.setResource(
-			this.<String>getColumnOriginalValue("resource"));
+		oAuthClientPRLocalMetadataImpl.setProtectedResourceURI(
+			this.<String>getColumnOriginalValue("protectedResourceURI"));
 
 		return oAuthClientPRLocalMetadataImpl;
 	}
@@ -992,12 +994,16 @@ public class OAuthClientPRLocalMetadataModelImpl
 			oAuthClientPRLocalMetadataCacheModel.metadataJSON = null;
 		}
 
-		oAuthClientPRLocalMetadataCacheModel.resource = getResource();
+		oAuthClientPRLocalMetadataCacheModel.protectedResourceURI =
+			getProtectedResourceURI();
 
-		String resource = oAuthClientPRLocalMetadataCacheModel.resource;
+		String protectedResourceURI =
+			oAuthClientPRLocalMetadataCacheModel.protectedResourceURI;
 
-		if ((resource != null) && (resource.length() == 0)) {
-			oAuthClientPRLocalMetadataCacheModel.resource = null;
+		if ((protectedResourceURI != null) &&
+			(protectedResourceURI.length() == 0)) {
+
+			oAuthClientPRLocalMetadataCacheModel.protectedResourceURI = null;
 		}
 
 		return oAuthClientPRLocalMetadataCacheModel;
@@ -1076,7 +1082,7 @@ public class OAuthClientPRLocalMetadataModelImpl
 	private boolean _localWellKnownEnabled;
 	private String _localWellKnownURI;
 	private String _metadataJSON;
-	private String _resource;
+	private String _protectedResourceURI;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1123,7 +1129,8 @@ public class OAuthClientPRLocalMetadataModelImpl
 			"localWellKnownEnabled", _localWellKnownEnabled);
 		_columnOriginalValues.put("localWellKnownURI", _localWellKnownURI);
 		_columnOriginalValues.put("metadataJSON", _metadataJSON);
-		_columnOriginalValues.put("resource", _resource);
+		_columnOriginalValues.put(
+			"protectedResourceURI", _protectedResourceURI);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1171,7 +1178,7 @@ public class OAuthClientPRLocalMetadataModelImpl
 
 		columnBitmasks.put("metadataJSON", 2048L);
 
-		columnBitmasks.put("resource", 4096L);
+		columnBitmasks.put("protectedResourceURI", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
@@ -1180,4 +1187,4 @@ public class OAuthClientPRLocalMetadataModelImpl
 	private OAuthClientPRLocalMetadata _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1141179796
+// LIFERAY-SERVICE-BUILDER-HASH:996639288

@@ -75,8 +75,8 @@ public interface OAuthClientPRLocalMetadataLocalService
 	public OAuthClientPRLocalMetadata addOAuthClientPRLocalMetadata(
 			String externalReferenceCode, long userId,
 			String[] authorizationServers, String[] bearerMethodsSupported,
-			boolean localWellKnownEnabled, String resource, String resourceName,
-			String[] scopesSupported)
+			boolean localWellKnownEnabled, String protectedResourceURI,
+			String resourceName, String[] scopesSupported)
 		throws PortalException;
 
 	/**
@@ -221,7 +221,7 @@ public interface OAuthClientPRLocalMetadataLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientPRLocalMetadata fetchOAuthClientPRLocalMetadata(
-		long companyId, String resource);
+		long companyId, String protectedResourceURI);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientPRLocalMetadata
@@ -357,7 +357,8 @@ public interface OAuthClientPRLocalMetadataLocalService
 	public OAuthClientPRLocalMetadata updateOAuthClientPRLocalMetadata(
 			long oAuthClientPRLocalMetadataId, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,
-			String resource, String resourceName, String[] scopesSupported)
+			String protectedResourceURI, String resourceName,
+			String[] scopesSupported)
 		throws PortalException;
 
 	/**
@@ -375,4 +376,4 @@ public interface OAuthClientPRLocalMetadataLocalService
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1230025180
+// LIFERAY-SERVICE-BUILDER-HASH:-86480446

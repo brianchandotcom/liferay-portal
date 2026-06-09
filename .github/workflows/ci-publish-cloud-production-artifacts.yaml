@@ -7,7 +7,7 @@ defaults:
 jobs:
     approve-release:
         environment: production-release
-        if: ${{needs.test-rcs.result == 'success' && !cancelled() && !failure()}}
+        if: ${{!cancelled() && needs.test-rcs.result == 'success'}}
         needs: test-rcs
         runs-on: ubuntu-latest
         steps:
@@ -67,6 +67,7 @@ jobs:
             chart_name: liferay-gcp-infrastructure-provider
             working_directory: ./cloud/helm/gcp-infrastructure-provider
     promote-rc-aws:
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && needs.push-rc-aws.result == 'success'}}
         needs:
             -   approve-release
             -   push-rc-aws
@@ -76,6 +77,7 @@ jobs:
             chart_version: ${{needs.push-rc-aws.outputs.chart_version}}
             source_image_ref: ${{needs.push-rc-aws.outputs.image_ref}}
     promote-rc-aws-infrastructure:
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && needs.push-rc-aws-infrastructure.result == 'success'}}
         needs:
             -   approve-release
             -   push-rc-aws-infrastructure
@@ -85,6 +87,7 @@ jobs:
             chart_version: ${{needs.push-rc-aws-infrastructure.outputs.chart_version}}
             source_image_ref: ${{needs.push-rc-aws-infrastructure.outputs.image_ref}}
     promote-rc-aws-infrastructure-provider:
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && needs.push-rc-aws-infrastructure-provider.result == 'success'}}
         needs:
             -   approve-release
             -   push-rc-aws-infrastructure-provider
@@ -94,6 +97,7 @@ jobs:
             chart_version: ${{needs.push-rc-aws-infrastructure-provider.outputs.chart_version}}
             source_image_ref: ${{needs.push-rc-aws-infrastructure-provider.outputs.image_ref}}
     promote-rc-bootstrap-aws:
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && needs.push-rc-bootstrap-aws.result == 'success'}}
         needs:
             -   approve-release
             -   push-rc-bootstrap-aws
@@ -102,6 +106,7 @@ jobs:
             provider: aws
             source_object_name: ${{needs.push-rc-bootstrap-aws.outputs.object_name}}
     promote-rc-bootstrap-gcp:
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && needs.push-rc-bootstrap-gcp.result == 'success'}}
         needs:
             -   approve-release
             -   push-rc-bootstrap-gcp
@@ -110,6 +115,7 @@ jobs:
             provider: gcp
             source_object_name: ${{needs.push-rc-bootstrap-gcp.outputs.object_name}}
     promote-rc-default:
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && needs.push-rc-default.result == 'success'}}
         needs:
             -   approve-release
             -   push-rc-default
@@ -119,6 +125,7 @@ jobs:
             chart_version: ${{needs.push-rc-default.outputs.chart_version}}
             source_image_ref: ${{needs.push-rc-default.outputs.image_ref}}
     promote-rc-gcp:
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && needs.push-rc-gcp.result == 'success'}}
         needs:
             -   approve-release
             -   push-rc-gcp
@@ -128,6 +135,7 @@ jobs:
             chart_version: ${{needs.push-rc-gcp.outputs.chart_version}}
             source_image_ref: ${{needs.push-rc-gcp.outputs.image_ref}}
     promote-rc-gcp-infrastructure:
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && needs.push-rc-gcp-infrastructure.result == 'success'}}
         needs:
             -   approve-release
             -   push-rc-gcp-infrastructure
@@ -137,6 +145,7 @@ jobs:
             chart_version: ${{needs.push-rc-gcp-infrastructure.outputs.chart_version}}
             source_image_ref: ${{needs.push-rc-gcp-infrastructure.outputs.image_ref}}
     promote-rc-gcp-infrastructure-provider:
+        if: ${{!cancelled() && needs.approve-release.result == 'success' && needs.push-rc-gcp-infrastructure-provider.result == 'success'}}
         needs:
             -   approve-release
             -   push-rc-gcp-infrastructure-provider
@@ -148,6 +157,7 @@ jobs:
     publish-aws-marketplace:
         env:
             ECR_REGISTRY: 709825985650.dkr.ecr.us-east-1.amazonaws.com
+        if: ${{!cancelled() && needs.approve-release.result == 'success'}}
         needs: approve-release
         runs-on: ubuntu-latest
         steps:
@@ -340,7 +350,7 @@ jobs:
 
                     main "${@}"
     tag-release:
-        if: ${{needs.approve-release.result == 'success' && !cancelled() && !failure()}}
+        if: ${{!cancelled() && !failure() && needs.approve-release.result == 'success'}}
         needs:
             -   approve-release
             -   promote-rc-aws
@@ -385,7 +395,7 @@ jobs:
 
                     main "${@}"
     test-rcs:
-        if: ${{needs.set-up-variables.result == 'success' && !cancelled() && !failure()}}
+        if: ${{!cancelled() && !failure() && needs.set-up-variables.result == 'success'}}
         needs:
             -   push-rc-aws
             -   push-rc-aws-infrastructure

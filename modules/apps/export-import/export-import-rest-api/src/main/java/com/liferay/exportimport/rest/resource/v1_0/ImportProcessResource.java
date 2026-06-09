@@ -48,8 +48,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ImportProcessResource {
 
 	public Page<ImportProcess> getAssetLibraryImportProcessesPage(
-			Long assetLibraryId, Long creatorId, String search, Integer status,
-			Pagination pagination,
+			String assetLibraryExternalReferenceCode, Long creatorId,
+			String search, Integer status, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
@@ -63,8 +63,8 @@ public interface ImportProcessResource {
 		throws Exception;
 
 	public Page<ImportProcess> getSiteImportProcessesPage(
-			Long siteId, Long creatorId, String search, Integer status,
-			Pagination pagination,
+			String siteExternalReferenceCode, Long creatorId, String search,
+			Integer status, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
@@ -80,7 +80,8 @@ public interface ImportProcessResource {
 		throws Exception;
 
 	public Response postAssetLibraryImportProcessesPageExportBatch(
-			Long assetLibraryId, Long creatorId, String search, Integer status,
+			String assetLibraryExternalReferenceCode, Long creatorId,
+			String search, Integer status,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
 		throws Exception;
@@ -112,9 +113,9 @@ public interface ImportProcessResource {
 		throws Exception;
 
 	public Response postSiteImportProcessesPageExportBatch(
-			Long siteId, Long creatorId, String search, Integer status,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+			String siteExternalReferenceCode, Long creatorId, String search,
+			Integer status, com.liferay.portal.kernel.search.Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -213,4 +214,4 @@ public interface ImportProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:862013812
+// LIFERAY-REST-BUILDER-HASH:165486924

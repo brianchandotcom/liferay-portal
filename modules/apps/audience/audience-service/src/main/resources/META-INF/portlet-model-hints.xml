@@ -11,7 +11,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="JSON" type="String" />
+		<field name="JSON" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field localized="true" name="name" type="String" />
 	</model>
 </model-hints>

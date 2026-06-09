@@ -9,12 +9,15 @@ import ClayIcon from '@clayui/icon';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
 import classNames from 'classnames';
+import {dateUtils} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {ITask} from '../../../../utils/types';
 import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
 
 import './CalendarView.scss';
+
+import type {FirstDayOfWeekLocale} from 'frontend-js-web';
 
 interface CalendarViewProps {
 	items: ITask[];
@@ -63,6 +66,7 @@ export default function CalendarView({items}: CalendarViewProps) {
 	}, []);
 
 	const currentYear = new Date().getFullYear();
+	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
 	return (
 		<div className="lfr__calendar-view">
@@ -101,8 +105,29 @@ export default function CalendarView({items}: CalendarViewProps) {
 
 					<div ref={datePickerWrapperRef}>
 						<ClayDatePicker
+							ariaLabels={{
+								buttonChooseDate:
+									Liferay.Language.get('select-date'),
+								buttonDot: Liferay.Language.get(
+									'select-current-date'
+								),
+								buttonNextMonth:
+									Liferay.Language.get('select-next-month'),
+								buttonPreviousMonth: Liferay.Language.get(
+									'select-previous-month'
+								),
+								dialog: Liferay.Language.get('select-date'),
+								selectMonth:
+									Liferay.Language.get('select-a-month'),
+								selectYear:
+									Liferay.Language.get('select-a-year'),
+							}}
 							dateFormat="yyyy-MM-dd"
 							expanded={datePickerExpanded}
+							firstDayOfWeek={dateUtils.getFirstDayOfWeek(
+								locale as FirstDayOfWeekLocale
+							)}
+							months={dateUtils.getMonthsLong(locale)}
 							onChange={(value) => {
 								setDatePickerValue(value);
 
@@ -116,6 +141,7 @@ export default function CalendarView({items}: CalendarViewProps) {
 							}}
 							onExpandedChange={setDatePickerExpanded}
 							value={datePickerValue}
+							weekdaysShort={dateUtils.getWeekdaysShort(locale)}
 							years={{
 								end: currentYear + 10,
 								start: currentYear - 10,

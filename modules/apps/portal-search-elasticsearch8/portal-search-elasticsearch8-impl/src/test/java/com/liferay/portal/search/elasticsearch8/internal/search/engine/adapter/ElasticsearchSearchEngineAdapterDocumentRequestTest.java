@@ -496,10 +496,10 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	@Test
-	public void testExecuteUpdateByQueryDocumentRequestProceedsOnConflicts()
+	public void testExecuteUpdateByQueryDocumentRequestProceedOnConflicts()
 		throws Exception {
 
-		for (int i = 0; i < _DOCUMENT_COUNT; i++) {
+		for (int i = 0; i < 50; i++) {
 			_indexDocument(
 				String.valueOf(i),
 				JsonData.of(
@@ -508,10 +508,10 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 					).build()));
 		}
 
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			_THREAD_COUNT);
-
-		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		List<Throwable> throwables = new CopyOnWriteArrayList<>();
 
@@ -525,7 +525,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 							try {
 								countDownLatch.await();
 
-								for (int j = 0; j < _ITERATION_COUNT; j++) {
+								for (int j = 0; j < 30; j++) {
 									_updateByQueryProceedOnConflicts();
 								}
 							}
@@ -844,13 +844,9 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		return _searchEngineAdapter.execute(updateDocumentRequest);
 	}
 
-	private static final int _DOCUMENT_COUNT = 50;
-
 	private static final String _FIELD_NAME = "matchDocument";
 
 	private static final String _INDEX_NAME = "test_request_index";
-
-	private static final int _ITERATION_COUNT = 30;
 
 	private static final int _THREAD_COUNT = 6;
 

@@ -42,12 +42,15 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
+import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -66,8 +69,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.data.cleanup.DLFileEntryDataCleanupPreupgradeProcess;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.HashMap;
 import java.util.List;
@@ -265,103 +266,61 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 	public void testUpgradeDLFileEntryResourcePermissionScopeCheck()
 		throws Exception {
 
-		long primKeyId = RandomTestUtil.nextLong();
-		long individualPermissionId = CounterLocalServiceUtil.increment();
-		long companyPermissionId = CounterLocalServiceUtil.increment();
 		long companyId = TestPropsValues.getCompanyId();
+		long companyPermissionId = CounterLocalServiceUtil.increment();
+		long individualPermissionId = CounterLocalServiceUtil.increment();
+		long primKeyId = RandomTestUtil.nextLong();
 		long roleId = RandomTestUtil.nextLong();
 
-		String insertSQL = StringBundler.concat(
-			"insert into ResourcePermission (mvccVersion, ctCollectionId, ",
-			"resourcePermissionId, companyId, name, scope, primKey, ",
-			"primKeyId, roleId, ownerId, actionIds, viewActionId) values (0, ",
-			"0, ?, ?, ?, ?, ?, ?, ?, 0, 1, 0)");
-
 		try {
-			try (Connection connection = DataAccess.getConnection()) {
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(insertSQL)) {
+			ResourcePermission companyResourcePermission =
+				_resourcePermissionLocalService.createResourcePermission(
+					companyPermissionId);
 
-					preparedStatement.setLong(1, individualPermissionId);
-					preparedStatement.setLong(2, companyId);
-					preparedStatement.setString(3, DLFileEntry.class.getName());
-					preparedStatement.setInt(
-						4, ResourceConstants.SCOPE_INDIVIDUAL);
-					preparedStatement.setString(5, String.valueOf(primKeyId));
-					preparedStatement.setLong(6, primKeyId);
-					preparedStatement.setLong(7, roleId);
+			companyResourcePermission.setCompanyId(companyId);
+			companyResourcePermission.setName(DLFileEntry.class.getName());
+			companyResourcePermission.setScope(ResourceConstants.SCOPE_COMPANY);
+			companyResourcePermission.setPrimKey(String.valueOf(primKeyId));
+			companyResourcePermission.setPrimKeyId(primKeyId);
+			companyResourcePermission.setRoleId(roleId);
+			companyResourcePermission.setActionIds(1);
 
-					preparedStatement.executeUpdate();
-				}
+			_resourcePermissionLocalService.addResourcePermission(
+				companyResourcePermission);
 
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(insertSQL)) {
+			ResourcePermission individualResourcePermission =
+				_resourcePermissionLocalService.createResourcePermission(
+					individualPermissionId);
 
-					preparedStatement.setLong(1, companyPermissionId);
-					preparedStatement.setLong(2, companyId);
-					preparedStatement.setString(3, DLFileEntry.class.getName());
-					preparedStatement.setInt(
-						4, ResourceConstants.SCOPE_COMPANY);
-					preparedStatement.setString(5, String.valueOf(primKeyId));
-					preparedStatement.setLong(6, primKeyId);
-					preparedStatement.setLong(7, roleId);
+			individualResourcePermission.setCompanyId(companyId);
+			individualResourcePermission.setName(DLFileEntry.class.getName());
+			individualResourcePermission.setScope(
+				ResourceConstants.SCOPE_INDIVIDUAL);
+			individualResourcePermission.setPrimKey(String.valueOf(primKeyId));
+			individualResourcePermission.setPrimKeyId(primKeyId);
+			individualResourcePermission.setRoleId(roleId);
+			individualResourcePermission.setActionIds(1);
 
-					preparedStatement.executeUpdate();
-				}
-			}
+			_resourcePermissionLocalService.addResourcePermission(
+				individualResourcePermission);
 
-			try (Connection connection = DataAccess.getConnection();
-
-				PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select count(*) from ResourcePermission where " +
-							"resourcePermissionId in (?, ?)")) {
-
-				preparedStatement.setLong(1, individualPermissionId);
-				preparedStatement.setLong(2, companyPermissionId);
-
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					resultSet.next();
-
-					Assert.assertEquals(2, resultSet.getInt("count(*)"));
-				}
-			}
+			Assert.assertNotNull(
+				_resourcePermissionLocalService.fetchResourcePermission(
+					companyPermissionId));
+			Assert.assertNotNull(
+				_resourcePermissionLocalService.fetchResourcePermission(
+					individualPermissionId));
 
 			upgrade();
 
-			try (Connection connection = DataAccess.getConnection()) {
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"select count(*) from ResourcePermission where " +
-								"resourcePermissionId = ?")) {
+			_resourcePermissionPersistence.clearCache();
 
-					preparedStatement.setLong(1, individualPermissionId);
-
-					try (ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						resultSet.next();
-
-						Assert.assertEquals(0, resultSet.getInt("count(*)"));
-					}
-				}
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"select count(*) from ResourcePermission where " +
-								"resourcePermissionId = ?")) {
-
-					preparedStatement.setLong(1, companyPermissionId);
-
-					try (ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						resultSet.next();
-
-						Assert.assertEquals(1, resultSet.getInt("count(*)"));
-					}
-				}
-			}
+			Assert.assertNotNull(
+				_resourcePermissionLocalService.fetchResourcePermission(
+					companyPermissionId));
+			Assert.assertNull(
+				_resourcePermissionLocalService.fetchResourcePermission(
+					individualPermissionId));
 		}
 		finally {
 			runSQL(
@@ -376,105 +335,62 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 	public void testUpgradeDLFileShortcutResourcePermissionScopeCheck()
 		throws Exception {
 
-		long primKeyId = RandomTestUtil.nextLong();
-		long individualPermissionId = CounterLocalServiceUtil.increment();
-		long companyPermissionId = CounterLocalServiceUtil.increment();
 		long companyId = TestPropsValues.getCompanyId();
+		long companyPermissionId = CounterLocalServiceUtil.increment();
+		long individualPermissionId = CounterLocalServiceUtil.increment();
+		long primKeyId = RandomTestUtil.nextLong();
 		long roleId = RandomTestUtil.nextLong();
 
-		String insertSQL = StringBundler.concat(
-			"insert into ResourcePermission (mvccVersion, ctCollectionId, ",
-			"resourcePermissionId, companyId, name, scope, primKey, ",
-			"primKeyId, roleId, ownerId, actionIds, viewActionId) values (0, ",
-			"0, ?, ?, ?, ?, ?, ?, ?, 0, 1, 0)");
-
 		try {
-			try (Connection connection = DataAccess.getConnection()) {
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(insertSQL)) {
+			ResourcePermission companyResourcePermission =
+				_resourcePermissionLocalService.createResourcePermission(
+					companyPermissionId);
 
-					preparedStatement.setLong(1, individualPermissionId);
-					preparedStatement.setLong(2, companyId);
-					preparedStatement.setString(
-						3, DLFileShortcut.class.getName());
-					preparedStatement.setInt(
-						4, ResourceConstants.SCOPE_INDIVIDUAL);
-					preparedStatement.setString(5, String.valueOf(primKeyId));
-					preparedStatement.setLong(6, primKeyId);
-					preparedStatement.setLong(7, roleId);
+			companyResourcePermission.setCompanyId(companyId);
+			companyResourcePermission.setName(DLFileShortcut.class.getName());
+			companyResourcePermission.setScope(ResourceConstants.SCOPE_COMPANY);
+			companyResourcePermission.setPrimKey(String.valueOf(primKeyId));
+			companyResourcePermission.setPrimKeyId(primKeyId);
+			companyResourcePermission.setRoleId(roleId);
+			companyResourcePermission.setActionIds(1);
 
-					preparedStatement.executeUpdate();
-				}
+			_resourcePermissionLocalService.addResourcePermission(
+				companyResourcePermission);
 
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(insertSQL)) {
+			ResourcePermission individualResourcePermission =
+				_resourcePermissionLocalService.createResourcePermission(
+					individualPermissionId);
 
-					preparedStatement.setLong(1, companyPermissionId);
-					preparedStatement.setLong(2, companyId);
-					preparedStatement.setString(
-						3, DLFileShortcut.class.getName());
-					preparedStatement.setInt(
-						4, ResourceConstants.SCOPE_COMPANY);
-					preparedStatement.setString(5, String.valueOf(primKeyId));
-					preparedStatement.setLong(6, primKeyId);
-					preparedStatement.setLong(7, roleId);
+			individualResourcePermission.setCompanyId(companyId);
+			individualResourcePermission.setName(
+				DLFileShortcut.class.getName());
+			individualResourcePermission.setScope(
+				ResourceConstants.SCOPE_INDIVIDUAL);
+			individualResourcePermission.setPrimKey(String.valueOf(primKeyId));
+			individualResourcePermission.setPrimKeyId(primKeyId);
+			individualResourcePermission.setRoleId(roleId);
+			individualResourcePermission.setActionIds(1);
 
-					preparedStatement.executeUpdate();
-				}
-			}
+			_resourcePermissionLocalService.addResourcePermission(
+				individualResourcePermission);
 
-			try (Connection connection = DataAccess.getConnection();
-
-				PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select count(*) from ResourcePermission where " +
-							"resourcePermissionId in (?, ?)")) {
-
-				preparedStatement.setLong(1, individualPermissionId);
-				preparedStatement.setLong(2, companyPermissionId);
-
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					resultSet.next();
-
-					Assert.assertEquals(2, resultSet.getInt("count(*)"));
-				}
-			}
+			Assert.assertNotNull(
+				_resourcePermissionLocalService.fetchResourcePermission(
+					companyPermissionId));
+			Assert.assertNotNull(
+				_resourcePermissionLocalService.fetchResourcePermission(
+					individualPermissionId));
 
 			upgrade();
 
-			try (Connection connection = DataAccess.getConnection()) {
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"select count(*) from ResourcePermission where " +
-								"resourcePermissionId = ?")) {
+			_resourcePermissionPersistence.clearCache();
 
-					preparedStatement.setLong(1, individualPermissionId);
-
-					try (ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						resultSet.next();
-
-						Assert.assertEquals(0, resultSet.getInt("count(*)"));
-					}
-				}
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"select count(*) from ResourcePermission where " +
-								"resourcePermissionId = ?")) {
-
-					preparedStatement.setLong(1, companyPermissionId);
-
-					try (ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						resultSet.next();
-
-						Assert.assertEquals(1, resultSet.getInt("count(*)"));
-					}
-				}
-			}
+			Assert.assertNotNull(
+				_resourcePermissionLocalService.fetchResourcePermission(
+					companyPermissionId));
+			Assert.assertNull(
+				_resourcePermissionLocalService.fetchResourcePermission(
+					individualPermissionId));
 		}
 		finally {
 			runSQL(
@@ -593,6 +509,12 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private ResourcePermissionPersistence _resourcePermissionPersistence;
 
 	@Inject
 	private SystemEventLocalService _systemEventLocalService;

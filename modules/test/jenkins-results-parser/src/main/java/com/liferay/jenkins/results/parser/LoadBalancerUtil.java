@@ -32,7 +32,7 @@ public class LoadBalancerUtil {
 		String blacklistString, String masterPrefix, Properties properties,
 		boolean verbose) {
 
-		List<JenkinsMaster> allJenkinsMasters;
+		List<JenkinsMaster> allJenkinsMasters = null;
 
 		if (_jenkinsMastersMap.containsKey(masterPrefix)) {
 			allJenkinsMasters = _jenkinsMastersMap.get(masterPrefix);
@@ -97,7 +97,7 @@ public class LoadBalancerUtil {
 			return null;
 		}
 
-		AtomicInteger counter;
+		AtomicInteger counter = null;
 
 		if (_roundRobinCounters.containsKey(masterPrefix)) {
 			counter = _roundRobinCounters.get(masterPrefix);

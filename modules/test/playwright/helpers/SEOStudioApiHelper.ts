@@ -60,7 +60,7 @@ export class SEOStudioApiHelper {
 		return createdInsightTypes;
 	}
 
-	async createScan(): Promise<Scan> {
+	async createScan(scanType: string): Promise<Scan> {
 		const account = await this.apiHelpers.headlessAdminUser.postAccount({
 			name: `seo-studio-test-${getRandomString()}`,
 		});
@@ -69,7 +69,7 @@ export class SEOStudioApiHelper {
 
 		const domain = await this._postDomain(account.id, instance.id);
 
-		const scan = await this._postScan(account.id, domain.id);
+		const scan = await this._postScan(account.id, domain.id, scanType);
 
 		return {
 			accountId: account.id,
@@ -148,15 +148,18 @@ export class SEOStudioApiHelper {
 
 	private async _postScan(
 		accountId: number,
-		domainId: number
+		domainId: number,
+		scanType: string
 	): Promise<{id: number}> {
 		return this.apiHelpers.post(this._url('scans'), {
 			data: {
+				name: `${scanType} scan`,
 				r_accountToSEOStudioScans_accountEntryId: accountId,
 				r_seoStudioDomainToSEOStudioScans_seoStudioDomainId: domainId,
 				requestDate: new Date().toISOString(),
+				scanRange: 'full',
 				scanScope: 'entireDomain',
-				scanType: 'full',
+				scanType,
 				state: 'completed',
 				triggeredBy: 'manual',
 			},

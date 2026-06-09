@@ -24,7 +24,6 @@ import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
-import com.liferay.segments.web.internal.util.AudiencesPortletUtil;
 
 import jakarta.portlet.PortletSession;
 import jakarta.portlet.PortletURL;
@@ -67,9 +66,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 			_renderRequest, _getPortletURL(), null,
 			LanguageUtil.get(
 				_httpServletRequest,
-				AudiencesPortletUtil.isAudiencesPortlet(_renderRequest) ?
-					"no-users-have-been-assigned-to-this-audience" :
-						"no-users-have-been-assigned-to-this-segment"));
+				"no-users-have-been-assigned-to-this-segment"));
 
 		userSearchContainer.setId("segmentsEntryUsers");
 

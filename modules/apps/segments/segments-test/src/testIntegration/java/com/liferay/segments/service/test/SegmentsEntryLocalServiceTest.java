@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -331,29 +330,6 @@ public class SegmentsEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-91094")
-	public void testGetSegmentsEntriesCountWithSources() throws Exception {
-		_addSegmentsEntry(SegmentsEntryConstants.SOURCE_AUDIENCE);
-		_addSegmentsEntry(SegmentsEntryConstants.SOURCE_AUDIENCE);
-		_addSegmentsEntry(SegmentsEntryConstants.SOURCE_DEFAULT);
-
-		Assert.assertEquals(
-			2,
-			_segmentsEntryLocalService.getSegmentsEntriesCount(
-				_group.getGroupId(),
-				new String[] {SegmentsEntryConstants.SOURCE_AUDIENCE}));
-		Assert.assertEquals(
-			1,
-			_segmentsEntryLocalService.getSegmentsEntriesCount(
-				_group.getGroupId(),
-				new String[] {
-					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-					SegmentsEntryConstants.SOURCE_DEFAULT,
-					SegmentsEntryConstants.SOURCE_REFERRED
-				}));
-	}
-
-	@Test
 	public void testGetSegmentsEntriesWithIncludeAncestorSegmentsEntries()
 		throws Exception {
 
@@ -370,38 +346,6 @@ public class SegmentsEntryLocalServiceTest {
 				null);
 
 		Assert.assertTrue(segmentsEntries.contains(segmentsEntry));
-	}
-
-	@Test
-	@TestInfo("LPD-91094")
-	public void testGetSegmentsEntriesWithSources() throws Exception {
-		SegmentsEntry audienceSegmentsEntry = _addSegmentsEntry(
-			SegmentsEntryConstants.SOURCE_AUDIENCE);
-		SegmentsEntry defaultSegmentsEntry = _addSegmentsEntry(
-			SegmentsEntryConstants.SOURCE_DEFAULT);
-
-		List<SegmentsEntry> segmentsEntries =
-			_segmentsEntryLocalService.getSegmentsEntries(
-				_group.getGroupId(),
-				new String[] {SegmentsEntryConstants.SOURCE_AUDIENCE},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(
-			segmentsEntries.toString(), 1, segmentsEntries.size());
-		Assert.assertTrue(segmentsEntries.contains(audienceSegmentsEntry));
-
-		segmentsEntries = _segmentsEntryLocalService.getSegmentsEntries(
-			_group.getGroupId(),
-			new String[] {
-				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-				SegmentsEntryConstants.SOURCE_DEFAULT,
-				SegmentsEntryConstants.SOURCE_REFERRED
-			},
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(
-			segmentsEntries.toString(), 1, segmentsEntries.size());
-		Assert.assertTrue(segmentsEntries.contains(defaultSegmentsEntry));
 	}
 
 	@Test
@@ -784,14 +728,6 @@ public class SegmentsEntryLocalServiceTest {
 		Assert.assertEquals(
 			SegmentsEntryConstants.SOURCE_REFERRED,
 			updatedSegmentsEntry.getSource());
-	}
-
-	private SegmentsEntry _addSegmentsEntry(String source) throws Exception {
-		return SegmentsTestUtil.addSegmentsEntry(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			CriteriaSerializer.serialize(new Criteria()), source,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	private Group _group;

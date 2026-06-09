@@ -536,10 +536,6 @@ public class SegmentsEntryLocalServiceImpl
 	}
 
 	private String _getSource(String criteria, String source) {
-		if (SegmentsEntryConstants.SOURCE_AUDIENCE.equals(source)) {
-			return source;
-		}
-
 		if (Validator.isNotNull(criteria)) {
 			Criteria deserializedCriteria = CriteriaSerializer.deserialize(
 				criteria);

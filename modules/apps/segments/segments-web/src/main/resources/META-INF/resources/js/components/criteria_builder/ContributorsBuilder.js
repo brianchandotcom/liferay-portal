@@ -26,7 +26,6 @@ import CriteriaBuilder from './CriteriaBuilder';
 import EmptyPlaceholder from './EmptyPlaceholder.es';
 
 export default function ContributorsBuilder({
-	audiences = false,
 	contributors = [],
 	editing,
 	emptyContributors,
@@ -112,98 +111,89 @@ export default function ContributorsBuilder({
 
 						<ClayLayout.ContainerFluid>
 							<div className="c-p-4 content-wrapper">
-								{!audiences && (
-									<ClayAlert
-										displayType="warning"
-										title={
-											Liferay.Language.get('warning') +
-											':'
-										}
-									>
-										{Liferay.Language.get(
-											'segments-deprecation-warning-message'
-										) + ' '}
+								<ClayAlert
+									displayType="warning"
+									title={
+										Liferay.Language.get('warning') + ':'
+									}
+								>
+									{Liferay.Language.get(
+										'segments-deprecation-warning-message'
+									) + ' '}
 
-										<LearnResourcesContext.Provider
-											value={
-												learnResources['segments-web']
-											}
-										>
-											<LearnMessage
-												resource="segments-web"
-												resourceKey="analytics-cloud"
-											/>
-										</LearnResourcesContext.Provider>
-									</ClayAlert>
-								)}
+									<LearnResourcesContext.Provider
+										value={learnResources['segments-web']}
+									>
+										<LearnMessage
+											resource="segments-web"
+											resourceKey="analytics-cloud"
+										/>
+									</LearnResourcesContext.Provider>
+								</ClayAlert>
 
 								<ClayLayout.Sheet className="c-pb-4">
 									<div className="c-mb-4 d-flex flex-wrap justify-content-between mb-4">
 										<h2 className="c-mb-2 sheet-title">
 											{Liferay.Language.get('conditions')}
 
-											{!audiences && (
-												<span className="inline-item inline-item-after">
-													<FeatureIndicator
-														interactive={true}
-														learnResourceContext={
-															learnResources[
-																'frontend-js-components-web'
-															]
-														}
-														type="deprecated"
-													/>
-												</span>
-											)}
+											<span className="inline-item inline-item-after">
+												<FeatureIndicator
+													interactive={true}
+													learnResourceContext={
+														learnResources[
+															'frontend-js-components-web'
+														]
+													}
+													type="deprecated"
+												/>
+											</span>
 										</h2>
 
-										{!audiences && (
-											<div className="c-ml-2 criterion-string">
-												<div className="btn-group">
-													<div className="btn-group-item d-flex flex-wrap inline-item">
-														{membersCountLoading && (
-															<ClayLoadingIndicator
-																className="c-mr-4"
-																small
-															/>
-														)}
-
-														{!membersCountLoading && (
-															<span className="c-mr-4">
-																{Liferay.Language.get(
-																	'conditions-match'
-																)}
-
-																<b className="c-ml-2 font-weight-bold text-dark">
-																	{getPluralMessage(
-																		Liferay.Language.get(
-																			'x-member'
-																		),
-																		Liferay.Language.get(
-																			'x-members'
-																		),
-																		membersCount
-																	)}
-																</b>
-															</span>
-														)}
-
-														<ClayButton
-															displayType="secondary"
-															onClick={
-																onPreviewMembers
-															}
+										<div className="c-ml-2 criterion-string">
+											<div className="btn-group">
+												<div className="btn-group-item d-flex flex-wrap inline-item">
+													{membersCountLoading && (
+														<ClayLoadingIndicator
+															className="c-mr-4"
 															small
-															type="button"
-														>
+														/>
+													)}
+
+													{!membersCountLoading && (
+														<span className="c-mr-4">
 															{Liferay.Language.get(
-																'view-members'
+																'conditions-match'
 															)}
-														</ClayButton>
-													</div>
+
+															<b className="c-ml-2 font-weight-bold text-dark">
+																{getPluralMessage(
+																	Liferay.Language.get(
+																		'x-member'
+																	),
+																	Liferay.Language.get(
+																		'x-members'
+																	),
+																	membersCount
+																)}
+															</b>
+														</span>
+													)}
+
+													<ClayButton
+														displayType="secondary"
+														onClick={
+															onPreviewMembers
+														}
+														small
+														type="button"
+													>
+														{Liferay.Language.get(
+															'view-members'
+														)}
+													</ClayButton>
 												</div>
 											</div>
-										)}
+										</div>
 									</div>
 
 									{emptyContributors &&
@@ -285,7 +275,6 @@ export default function ContributorsBuilder({
 }
 
 ContributorsBuilder.propTypes = {
-	audiences: PropTypes.bool,
 	contributors: PropTypes.arrayOf(contributorShape),
 	editing: PropTypes.bool.isRequired,
 	emptyContributors: PropTypes.bool.isRequired,

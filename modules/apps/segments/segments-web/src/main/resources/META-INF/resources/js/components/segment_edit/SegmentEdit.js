@@ -33,7 +33,6 @@ import KeyboardMovementManager from '../keyboard_movement/KeyboardMovementManage
 import KeyboardMovementPreview from '../keyboard_movement/KeyboardMovementPreview';
 
 function SegmentEdit({
-	audiences = false,
 	availableLocales,
 	contributors: initialContributors = [],
 	defaultLanguageId,
@@ -285,7 +284,6 @@ function SegmentEdit({
 
 		return propertyGroups && data.contributors ? (
 			<ContributorsBuilder
-				audiences={audiences}
 				contributors={data.contributors}
 				editing={data.editing}
 				emptyContributors={emptyContributors}
@@ -361,9 +359,7 @@ function SegmentEdit({
 
 	const disabledSaveButton = data.disabledSave || !data.validTitle;
 
-	const placeholder = audiences
-		? Liferay.Language.get('untitled-audience')
-		: Liferay.Language.get('untitled-segment');
+	const placeholder = Liferay.Language.get('untitled-segment');
 
 	const showDisabledSegmentationAlert =
 		!isSegmentationEnabled && !data.isSegmentationDisabledAlertDismissed;
@@ -524,10 +520,7 @@ function SegmentEdit({
 						render={renderContributors}
 					/>
 
-					<ContributorInputs
-						audiences={audiences}
-						contributors={data.contributors}
-					/>
+					<ContributorInputs contributors={data.contributors} />
 				</div>
 			</div>
 		</>
@@ -535,7 +528,6 @@ function SegmentEdit({
 }
 
 SegmentEdit.propTypes = {
-	audiences: PropTypes.bool,
 	availableLocales: PropTypes.object.isRequired,
 	contributors: PropTypes.arrayOf(initialContributorShape),
 	defaultLanguageId: PropTypes.string.isRequired,

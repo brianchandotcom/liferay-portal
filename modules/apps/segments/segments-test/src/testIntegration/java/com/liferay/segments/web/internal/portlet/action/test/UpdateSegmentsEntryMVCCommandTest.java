@@ -121,44 +121,6 @@ public class UpdateSegmentsEntryMVCCommandTest {
 
 	@Test
 	@TestInfo("LPD-91094")
-	public void testAddSegmentsEntryFromAudiencesPortletUsesAudienceSource()
-		throws Exception {
-
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequests(SegmentsPortletKeys.AUDIENCES);
-
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
-
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.USER, TestPropsValues.getUser());
-
-		mockLiferayPortletActionRequest.setParameter("active", StringPool.TRUE);
-		mockLiferayPortletActionRequest.setParameter(
-			"criterionFiltercontext",
-			String.format("(url eq '%s')", "/pricing"));
-		mockLiferayPortletActionRequest.setParameter(
-			"description_" + LocaleUtil.getDefault(), "An audience.");
-		mockLiferayPortletActionRequest.setParameter(
-			"name_" + LocaleUtil.getDefault(), "New Audience Entry");
-		mockLiferayPortletActionRequest.setParameter(
-			"saveAndContinue", StringPool.TRUE);
-		mockLiferayPortletActionRequest.setParameter(
-			"segmentsEntryKey", "audience_key");
-
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
-
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "audience_key");
-
-		Assert.assertEquals(
-			SegmentsEntryConstants.SOURCE_AUDIENCE, segmentsEntry.getSource());
-	}
-
-	@Test
-	@TestInfo("LPD-91094")
 	public void testAddSegmentsEntryFromSegmentsPortletUsesDefaultSource()
 		throws Exception {
 

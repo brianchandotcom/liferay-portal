@@ -1037,10 +1037,6 @@ public class EditAssetListDisplayContext {
 		segmentsEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.singletonList(
 				new SegmentsEntryItemSelectorReturnType()));
-		segmentsEntryItemSelectorCriterion.setExcludedSources(
-			new String[] {
-				StringUtil.toLowerCase(SegmentsEntryConstants.SOURCE_AUDIENCE)
-			});
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();

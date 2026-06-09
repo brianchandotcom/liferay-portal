@@ -6,11 +6,7 @@
 package com.liferay.segments.internal.criteria.contributor;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.context.Context;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.mapper.SegmentsCriteriaJSONObjectMapper;
@@ -21,8 +17,6 @@ import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 import jakarta.portlet.PortletRequest;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,18 +59,7 @@ public class ContextSegmentsCriteriaContributor
 
 	@Override
 	public List<Field> getFields(PortletRequest portletRequest) {
-		List<Field> fields = _entityModelFieldMapper.getFields(
-			_entityModel, portletRequest);
-
-		if (!Objects.equals(
-				_portal.getPortletId(portletRequest),
-				SegmentsPortletKeys.AUDIENCES)) {
-
-			fields.removeIf(
-				field -> _audiencesFieldNames.contains(field.getName()));
-		}
-
-		return fields;
+		return _entityModelFieldMapper.getFields(_entityModel, portletRequest);
 	}
 
 	@Override
@@ -89,10 +72,6 @@ public class ContextSegmentsCriteriaContributor
 		return Criteria.Type.CONTEXT;
 	}
 
-	private static final Set<String> _audiencesFieldNames = SetUtil.fromArray(
-		Context.BROWSER_VERSION, Context.DEVICE_TYPE, Context.GEOLOCATION,
-		Context.LOCAL_TIME, Context.PATHNAME, Context.TIME_ZONE);
-
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,
 		policy = ReferencePolicy.DYNAMIC,
@@ -103,9 +82,6 @@ public class ContextSegmentsCriteriaContributor
 
 	@Reference
 	private EntityModelFieldMapper _entityModelFieldMapper;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(target = "(segments.criteria.mapper.key=odata)")
 	private SegmentsCriteriaJSONObjectMapper _segmentsCriteriaJSONObjectMapper;

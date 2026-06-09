@@ -7,6 +7,7 @@ package com.liferay.asset.categories.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
@@ -16,15 +17,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -38,6 +46,54 @@ public class AssetCategoryStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testImportStagedModelWithSameNameAndExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+		String name = RandomTestUtil.randomString();
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> titleMap = Collections.singletonMap(locale, name);
+
+		String vocabularyExternalReferenceCode = RandomTestUtil.randomString();
+
+		AssetVocabulary stagingVocabulary = AssetTestUtil.addVocabulary(
+			vocabularyExternalReferenceCode, stagingGroup.getGroupId());
+
+		AssetCategory stagingCategory =
+			AssetCategoryLocalServiceUtil.addCategory(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				stagingGroup.getGroupId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
+				Collections.emptyMap(), stagingVocabulary.getVocabularyId(),
+				null,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId()));
+
+		exportStagedModel(stagingCategory);
+
+		AssetVocabulary liveVocabulary = AssetTestUtil.addVocabulary(
+			vocabularyExternalReferenceCode, liveGroup.getGroupId());
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			liveGroup.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
+			Collections.emptyMap(), liveVocabulary.getVocabularyId(), null,
+			ServiceContextTestUtil.getServiceContext(liveGroup.getGroupId()));
+
+		importStagedModel(stagingCategory);
+
+		AssetCategory importedCategory =
+			AssetCategoryLocalServiceUtil.
+				fetchAssetCategoryByExternalReferenceCode(
+					externalReferenceCode, liveGroup.getGroupId());
+
+		Assert.assertEquals(name, importedCategory.getName());
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

@@ -449,7 +449,19 @@ export class ChangeTrackingPage {
 
 		await renderViewDropdown.click();
 
-		await this.page.getByRole('menuitem', {name}).click();
+		const menuItem = this.page.getByRole('menuitem', {name});
+
+		const isActive = await menuItem.evaluate((element) =>
+			element.classList.contains('active')
+		);
+
+		if (isActive) {
+			await renderViewDropdown.click();
+
+			return;
+		}
+
+		await menuItem.click();
 	}
 
 	async selectTab(tabLabel: string) {

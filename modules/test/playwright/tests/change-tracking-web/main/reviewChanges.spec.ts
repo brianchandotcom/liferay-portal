@@ -1012,7 +1012,7 @@ test('LPD-78919 Unified view in FragmentEntryLink review page is shown', async (
 	await renderViewDropdown.waitFor({state: 'visible', timeout: 15000});
 
 	await clickAndExpectToBeVisible({
-		autoClick: true,
+		autoClick: false,
 		target: page.getByRole('menuitem', {name: 'Unified View'}),
 		trigger: renderViewDropdown,
 	});
@@ -1315,7 +1315,7 @@ test('LPS-179026 Can preview changes for WikiPages', async ({
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
-	await changeTrackingPage.reviewChange(wikiPageTitle);
+	await changeTrackingPage.reviewChange(wikiPageTitle + ' (1.1)');
 
 	await changeTrackingPage.selectRenderView('Unified View');
 

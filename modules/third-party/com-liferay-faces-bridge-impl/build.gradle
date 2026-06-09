@@ -1,8 +1,8 @@
 ext {
-	gitHash = "9f0e9a3100140368631618f84fc5dae5e33d79bd"
+	gitHash = "1340e2b7c668cccc0c6da8747f2b8a23708b9ccd"
 	gitHubOwner = "liferay"
 	gitHubRepository = "liferay-faces-bridge-impl"
-	mvnJARInclude = "com.liferay.faces.bridge.impl-7.0.0.jar"
+	mvnJARInclude = "com.liferay.faces.bridge.impl-7.0.1.jar"
 	mvnTargetDir = "bridge-impl/target"
 }
 

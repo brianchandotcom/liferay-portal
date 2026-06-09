@@ -65,6 +65,21 @@ export class SiteSettingsPage {
 		await waitForSPAToBeLoaded(this.page);
 	}
 
+	async linkSiteTemplate(
+		siteTemplateName: string,
+		{propagationEnabled = false}: {propagationEnabled?: boolean} = {}
+	) {
+		await this.page
+			.locator('select[name$="publicLayoutSetPrototypeId"]')
+			.selectOption({label: siteTemplateName});
+
+		await this.page
+			.locator('input[name$="publicLayoutSetPrototypeLinkEnabled"]')
+			.setChecked(propagationEnabled, {force: true});
+
+		await this.saveConfiguration();
+	}
+
 	async clickOnAction(actionName: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,

@@ -27,7 +27,9 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 	>
 		<div class="add-group-content">
 			<div class="lfr-form-content">
-				<aui:input label="name" name="name" required="<%= true %>" />
+				<aui:input label="name" name="name" required="<%= true %>">
+					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(Group.class.getName(), "groupKey") %></aui:validator>
+				</aui:input>
 
 				<c:if test="<%= addGroupDisplayContext.isShowLayoutSetVisibilityPrivateCheckbox() %>">
 					<aui:input label="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" name="layoutSetVisibilityPrivate" type="checkbox" />

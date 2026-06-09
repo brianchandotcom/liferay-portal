@@ -164,8 +164,8 @@ public abstract class BaseAMImageOptimizer implements AMImageOptimizer {
 					configurationEntryUuid, total, successCounter,
 					errorCounter));
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 	}
 

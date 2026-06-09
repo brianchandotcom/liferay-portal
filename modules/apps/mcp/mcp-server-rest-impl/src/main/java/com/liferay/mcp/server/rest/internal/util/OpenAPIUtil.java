@@ -62,30 +62,7 @@ public class OpenAPIUtil {
 				inputJSONObject, openAPIJSONObject, operation, options);
 		}
 		else if (operation._operationJSONObject.has("requestBody")) {
-			if (!inputJSONObject.has("body")) {
-				throw new IllegalArgumentException(
-					StringBundler.concat(
-						"The \"", toolName,
-						"\" tool requires the request payload nested under a ",
-						"\"body\" property. Pass any path or query parameters as ",
-						"siblings of \"body\" rather than flattening the payload ",
-						"into the input map"));
-			}
-
-			Object bodyValue = inputJSONObject.get("body");
-
-			String body = StringPool.BLANK;
-
-			if (bodyValue instanceof JSONObject) {
-				body = bodyValue.toString();
-			}
-			else if (bodyValue != null) {
-				body = String.valueOf(bodyValue);
-			}
-
-			options.setBody(
-				body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+			_setBody(inputJSONObject, options, toolName);
 		}
 
 		return options;
@@ -902,6 +879,34 @@ public class OpenAPIUtil {
 		}
 
 		return value;
+	}
+
+	private static void _setBody(
+		JSONObject inputJSONObject, Http.Options options, String toolName) {
+
+		if (!inputJSONObject.has("body")) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"The \"", toolName,
+					"\" tool requires the request payload nested under a ",
+					"\"body\" property. Pass any path or query parameters as ",
+					"siblings of \"body\" rather than flattening the payload ",
+					"into the input map"));
+		}
+
+		Object bodyValue = inputJSONObject.get("body");
+
+		String body = StringPool.BLANK;
+
+		if (bodyValue instanceof JSONObject) {
+			body = bodyValue.toString();
+		}
+		else if (bodyValue != null) {
+			body = String.valueOf(bodyValue);
+		}
+
+		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 	}
 
 	private static void _setMultipartBody(

@@ -15,9 +15,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
@@ -39,6 +43,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -47,6 +52,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Eudaldo Alonso
@@ -161,6 +171,46 @@ public class JournalArticleIndexVersionsTest {
 
 		assertSearchCount(0, true);
 		assertSearchCount(1, false);
+	}
+
+	@Test
+	public void testExpireAllArticleVersionsReindexesArticleOnce()
+		throws Exception {
+
+		_enableIndexAllArticleVersions();
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle updatedArticle = JournalTestUtil.updateArticle(
+			article, article.getTitleMap(), article.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		updatedArticle = JournalTestUtil.updateArticle(
+			updatedArticle, updatedArticle.getTitleMap(),
+			updatedArticle.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		AtomicInteger documentBuildCount = new AtomicInteger();
+
+		ServiceRegistration<IndexerPostProcessor> serviceRegistration =
+			_registerDocumentBuildCounter(documentBuildCount);
+
+		try {
+			JournalTestUtil.expireArticle(_group.getGroupId(), updatedArticle);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+
+		// Reindexing the article rebuilds every version document once, so a
+		// single reindex of these three versions builds three documents.
+		// Before LPD-93976 the bulk expiration reindexed the article once per
+		// version, so the document build count grew with the square of the
+		// version count (nine builds for three versions).
+
+		Assert.assertEquals(3, documentBuildCount.get());
 	}
 
 	@Test
@@ -318,6 +368,33 @@ public class JournalArticleIndexVersionsTest {
 			TestPropsValues.getCompanyId(),
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			PortletPreferencesFactoryUtil.toXML(portalPreferences));
+	}
+
+	private ServiceRegistration<IndexerPostProcessor>
+		_registerDocumentBuildCounter(AtomicInteger documentBuildCount) {
+
+		Indexer<JournalArticle> indexer = _indexerRegistry.getIndexer(
+			JournalArticle.class);
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			JournalArticleIndexVersionsTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return bundleContext.registerService(
+			IndexerPostProcessor.class,
+			new BaseIndexerPostProcessor() {
+
+				@Override
+				public void postProcessDocument(
+					Document document, Object object) {
+
+					documentBuildCount.incrementAndGet();
+				}
+
+			},
+			MapUtil.singletonDictionary(
+				"indexer.class.name", indexer.getClassName()));
 	}
 
 	@DeleteAfterTestRun

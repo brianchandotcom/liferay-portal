@@ -6,9 +6,11 @@ set -o pipefail
 
 function main {
 	local script_dir
+
 	script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 	local cloud_dir
+
 	cloud_dir=$(cd "${script_dir}/../.." && pwd)
 
 	local charts=(

@@ -139,13 +139,13 @@ public class TestrayFactory {
 	}
 
 	public static TestrayFactor newRunTestrayFactor(
-		TestrayRun testrayRun, TestrayFactor.Option testrayFactorOption) {
+		TestrayFactor.Option testrayFactorOption, TestrayRun testrayRun) {
 
 		synchronized (_runTestrayFactors) {
+			TestrayBuild testrayBuild = testrayRun.getTestrayBuild();
+
 			TestrayFactor.Category testrayFactorCategory =
 				testrayFactorOption.getCategory();
-
-			TestrayBuild testrayBuild = testrayRun.getTestrayBuild();
 
 			String key = JenkinsResultsParserUtil.combine(
 				String.valueOf(testrayBuild.getID()), "__",
@@ -160,7 +160,7 @@ public class TestrayFactory {
 			}
 
 			runTestrayFactor = new RunTestrayFactor(
-				testrayRun, testrayFactorOption);
+				testrayFactorOption, testrayRun);
 
 			_runTestrayFactors.put(key, runTestrayFactor);
 
@@ -259,7 +259,7 @@ public class TestrayFactory {
 	}
 
 	public static TestrayFactor.Category newTestrayFactorCategory(
-		TestrayServer testrayServer, JSONObject jsonObject) {
+		JSONObject jsonObject, TestrayServer testrayServer) {
 
 		if (jsonObject == null) {
 			return null;
@@ -276,7 +276,7 @@ public class TestrayFactory {
 			}
 
 			testrayFactorCategory = new TestrayFactor.Category(
-				testrayServer, jsonObject);
+				jsonObject, testrayServer);
 
 			_testrayFactorCategoriesIDs.put(id, testrayFactorCategory);
 
@@ -288,7 +288,7 @@ public class TestrayFactory {
 	}
 
 	public static TestrayFactor.Category newTestrayFactorCategory(
-		TestrayServer testrayServer, long id) {
+		long id, TestrayServer testrayServer) {
 
 		if (id <= 0) {
 			return null;
@@ -303,7 +303,7 @@ public class TestrayFactory {
 			}
 
 			testrayFactorCategory = new TestrayFactor.Category(
-				testrayServer, id);
+				id, testrayServer);
 
 			_testrayFactorCategoriesIDs.put(id, testrayFactorCategory);
 
@@ -318,7 +318,7 @@ public class TestrayFactory {
 	}
 
 	public static TestrayFactor.Category newTestrayFactorCategory(
-		TestrayServer testrayServer, String name) {
+		String name, TestrayServer testrayServer) {
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
 			return null;
@@ -333,7 +333,7 @@ public class TestrayFactory {
 			}
 
 			testrayFactorCategory = new TestrayFactor.Category(
-				testrayServer, name);
+				name, testrayServer);
 
 			_testrayFactorCategoriesNames.put(name, testrayFactorCategory);
 
@@ -345,7 +345,7 @@ public class TestrayFactory {
 	}
 
 	public static TestrayFactor.Option newTestrayFactorOption(
-		TestrayServer testrayServer, JSONObject jsonObject) {
+		JSONObject jsonObject, TestrayServer testrayServer) {
 
 		if (jsonObject == null) {
 			return null;
@@ -362,7 +362,7 @@ public class TestrayFactory {
 			}
 
 			testrayFactorOption = new TestrayFactor.Option(
-				testrayServer, jsonObject);
+				jsonObject, testrayServer);
 
 			_testrayFactorOptionsIDs.put(id, testrayFactorOption);
 
@@ -374,7 +374,7 @@ public class TestrayFactory {
 	}
 
 	public static TestrayFactor.Option newTestrayFactorOption(
-		TestrayServer testrayServer, Long id) {
+		Long id, TestrayServer testrayServer) {
 
 		if ((id == null) || (id <= 0)) {
 			return null;
@@ -388,7 +388,7 @@ public class TestrayFactory {
 				return testrayFactorOption;
 			}
 
-			testrayFactorOption = new TestrayFactor.Option(testrayServer, id);
+			testrayFactorOption = new TestrayFactor.Option(id, testrayServer);
 
 			_testrayFactorOptionsIDs.put(id, testrayFactorOption);
 
@@ -403,7 +403,7 @@ public class TestrayFactory {
 	}
 
 	public static TestrayFactor.Option newTestrayFactorOption(
-		TestrayServer testrayServer, String name) {
+		String name, TestrayServer testrayServer) {
 
 		synchronized (_testrayFactorOptionsNames) {
 			TestrayFactor.Option testrayFactorOption =
@@ -413,7 +413,7 @@ public class TestrayFactory {
 				return testrayFactorOption;
 			}
 
-			testrayFactorOption = new TestrayFactor.Option(testrayServer, name);
+			testrayFactorOption = new TestrayFactor.Option(name, testrayServer);
 
 			_testrayFactorOptionsNames.put(name, testrayFactorOption);
 

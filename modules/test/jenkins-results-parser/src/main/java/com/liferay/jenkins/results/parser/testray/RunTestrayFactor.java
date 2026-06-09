@@ -123,23 +123,22 @@ public class RunTestrayFactor extends BaseTestrayFactor {
 	}
 
 	protected RunTestrayFactor(JSONObject jsonObject, TestrayRun testrayRun) {
-		super(testrayRun.getTestrayServer(), jsonObject);
+		super(jsonObject, testrayRun.getTestrayServer());
 
 		_jsonObject = jsonObject;
 		_testrayRun = testrayRun;
 
-		_testrayBuild = testrayRun.getTestrayBuild();
-
 		_option = super.getOption();
+		_testrayBuild = testrayRun.getTestrayBuild();
 	}
 
 	protected RunTestrayFactor(
-		TestrayRun testrayRun, TestrayFactor.Option option) {
+		TestrayFactor.Option option, TestrayRun testrayRun) {
 
 		super(testrayRun.getTestrayServer());
 
-		_testrayRun = testrayRun;
 		_option = option;
+		_testrayRun = testrayRun;
 
 		_testrayBuild = testrayRun.getTestrayBuild();
 	}

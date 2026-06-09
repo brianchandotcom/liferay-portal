@@ -19,7 +19,7 @@ public class RoutineTestrayFactor extends BaseTestrayFactor {
 	protected RoutineTestrayFactor(
 		JSONObject jsonObject, TestrayRoutine testrayRoutine) {
 
-		super(testrayRoutine.getTestrayServer(), jsonObject);
+		super(jsonObject, testrayRoutine.getTestrayServer());
 
 		_testrayRoutine = testrayRoutine;
 	}

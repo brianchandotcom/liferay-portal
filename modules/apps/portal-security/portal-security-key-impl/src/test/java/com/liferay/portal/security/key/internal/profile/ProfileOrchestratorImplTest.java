@@ -40,7 +40,7 @@ public class ProfileOrchestratorImplTest {
 
 		_profileOrchestratorImpl = new ProfileOrchestratorImpl();
 
-		_setActiveProfileId("custom");
+		_setActiveProfileId(CustomKeyManagerProfile.PROFILE_ID);
 
 		_setServiceTrackerMap(_serviceTrackerMap);
 	}
@@ -50,11 +50,11 @@ public class ProfileOrchestratorImplTest {
 		Mockito.when(
 			_keyManagerProfile.getProfileId()
 		).thenReturn(
-			"custom"
+			CustomKeyManagerProfile.PROFILE_ID
 		);
 
 		Mockito.when(
-			_serviceTrackerMap.getService("custom")
+			_serviceTrackerMap.getService(CustomKeyManagerProfile.PROFILE_ID)
 		).thenReturn(
 			_keyManagerProfile
 		);
@@ -95,7 +95,7 @@ public class ProfileOrchestratorImplTest {
 		);
 
 		Mockito.when(
-			_serviceTrackerMap.getService("custom")
+			_serviceTrackerMap.getService(CustomKeyManagerProfile.PROFILE_ID)
 		).thenReturn(
 			_keyManagerProfile
 		);
@@ -107,7 +107,7 @@ public class ProfileOrchestratorImplTest {
 	@Test
 	public void testGetActiveProfileResolvesConfiguredId() {
 		Mockito.when(
-			_serviceTrackerMap.getService("custom")
+			_serviceTrackerMap.getService(CustomKeyManagerProfile.PROFILE_ID)
 		).thenReturn(
 			_keyManagerProfile
 		);

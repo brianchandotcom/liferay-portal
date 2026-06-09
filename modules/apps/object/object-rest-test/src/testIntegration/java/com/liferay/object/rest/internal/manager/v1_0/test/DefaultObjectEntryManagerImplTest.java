@@ -62,7 +62,6 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
@@ -6513,6 +6512,23 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testGetObjectEntriesWithPreferredLocale() throws Exception {
+		_objectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = new HashMap<>(_localizedObjectFieldI18nValues);
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_testGetObjectEntriesWithPreferredLocale(
+			LocaleUtil.BRAZIL, _objectDefinition2, "pt_BR", 1);
+		_testGetObjectEntriesWithPreferredLocale(
+			LocaleUtil.US, _objectDefinition2, "pt_BR", 0);
+	}
+
+	@Test
 	public void testGetObjectEntriesWithRelatedObjectEntries()
 		throws Exception {
 
@@ -6874,11 +6890,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		JSONObject objectEntryContentJSONObject =
 			JSONFactoryUtil.createJSONObject(
-				StringBundler.concat(
-					"{",
-					document.getString(
-						ObjectEntrySearchConstants.OBJECT_ENTRY_CONTENT),
-					"}"));
+				"{" + document.getString("objectEntryContent") + "}");
 
 		for (ObjectField objectField :
 				objectFieldLocalService.getObjectFields(
@@ -8411,23 +8423,6 @@ public class DefaultObjectEntryManagerImplTest
 		_assertObjectEntriesSize1(_objectDefinition3, "Baker", 0);
 		_assertObjectEntriesSize1(_objectDefinition3, "Charlie", 1);
 		_assertObjectEntriesSize1(_objectDefinition3, "Delta", 1);
-	}
-
-	@Test
-	public void testSearchObjectEntriesWithPreferredLocale() throws Exception {
-		_objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition2,
-			new ObjectEntry() {
-				{
-					properties = new HashMap<>(_localizedObjectFieldI18nValues);
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_assertObjectEntriesSizeWithLocale(
-			_objectDefinition2, "pt_BR", LocaleUtil.BRAZIL, 1);
-		_assertObjectEntriesSizeWithLocale(
-			_objectDefinition2, "pt_BR", LocaleUtil.US, 0);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -10839,24 +10834,6 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntries.toString(), size, objectEntries.size());
 	}
 
-	private void _assertObjectEntriesSizeWithLocale(
-			ObjectDefinition objectDefinition, String search, Locale locale,
-			long size)
-		throws Exception {
-
-		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, objectDefinition, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				locale, null, adminUser),
-			(Filter)null, null, search, null);
-
-		Collection<ObjectEntry> objectEntries = page.getItems();
-
-		Assert.assertEquals(
-			objectEntries.toString(), size, objectEntries.size());
-	}
-
 	private void _assertObjectEntry(
 		ObjectEntry actualObjectEntry, ObjectEntry expectedObjectEntry) {
 
@@ -12506,6 +12483,24 @@ public class DefaultObjectEntryManagerImplTest
 					relatedObjectEntriesSize, objectEntryPage.getTotalCount());
 			}
 		}
+	}
+
+	private void _testGetObjectEntriesWithPreferredLocale(
+			Locale locale, ObjectDefinition objectDefinition, String search,
+			long size)
+		throws Exception {
+
+		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
+			companyId, objectDefinition, null, null,
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), dtoConverterRegistry, null,
+				locale, null, adminUser),
+			(Filter)null, null, search, null);
+
+		Collection<ObjectEntry> objectEntries = page.getItems();
+
+		Assert.assertEquals(
+			objectEntries.toString(), size, objectEntries.size());
 	}
 
 	private void _testGetRelatedObjectEntries(

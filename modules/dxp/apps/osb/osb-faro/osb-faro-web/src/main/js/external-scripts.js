@@ -35,6 +35,10 @@ function appendScript(options) {
 		script[name] = value;
 	}
 
+	if (Liferay.CSP?.nonce) {
+		script.setAttribute('nonce', Liferay.CSP.nonce);
+	}
+
 	document.body.appendChild(script);
 }
 

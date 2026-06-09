@@ -141,6 +141,10 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 				''
 			);
 
+			if (Liferay.CSP?.nonce) {
+				style.setAttribute('nonce', Liferay.CSP.nonce);
+			}
+
 			document.head.appendChild(style);
 		}
 

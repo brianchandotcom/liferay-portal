@@ -379,6 +379,10 @@ function OverlayContainer({allowEdit, root}) {
 		style.type = 'text/css';
 		style.appendChild(document.createTextNode(css));
 
+		if (Liferay.CSP?.nonce) {
+			style.setAttribute('nonce', Liferay.CSP.nonce);
+		}
+
 		head.appendChild(style);
 
 		// This must happen after hiding the toppers.

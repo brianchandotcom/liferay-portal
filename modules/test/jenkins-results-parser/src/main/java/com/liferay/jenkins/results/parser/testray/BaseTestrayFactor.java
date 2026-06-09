@@ -39,15 +39,11 @@ public abstract class BaseTestrayFactor implements TestrayFactor {
 		return _testrayServer;
 	}
 
-	protected BaseTestrayFactor(TestrayServer testrayServer) {
-		_testrayServer = testrayServer;
-	}
-
 	protected BaseTestrayFactor(
-		TestrayServer testrayServer, JSONObject jsonObject) {
+		JSONObject jsonObject, TestrayServer testrayServer) {
 
-		_testrayServer = testrayServer;
 		_jsonObject = jsonObject;
+		_testrayServer = testrayServer;
 
 		JSONObject categoryJSONObject = jsonObject.getJSONObject(
 			"factorCategoryToFactors");
@@ -65,6 +61,10 @@ public abstract class BaseTestrayFactor implements TestrayFactor {
 		else {
 			_option = null;
 		}
+	}
+
+	protected BaseTestrayFactor(TestrayServer testrayServer) {
+		_testrayServer = testrayServer;
 	}
 
 	private Category _category;

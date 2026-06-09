@@ -177,7 +177,6 @@ public class TestrayRun {
 		}
 
 		final TestrayBuild testrayBuild = getTestrayBuild();
-		final TestrayServer testrayServer = getTestrayServer();
 
 		final String filterString = JenkinsResultsParserUtil.combine(
 			"environmentHash eq '", getEnvironmentHash(), "' and name eq '",
@@ -189,6 +188,8 @@ public class TestrayRun {
 
 			@Override
 			public JSONObject execute() {
+				TestrayServer testrayServer = getTestrayServer();
+
 				try {
 					JSONObject existingJSONObject = new JSONObject(
 						testrayServer.requestGet(
@@ -461,14 +462,14 @@ public class TestrayRun {
 			"r_runToFactors_c_runId eq '", String.valueOf(runID), "'");
 
 		try {
+			TestrayServer testrayServer = _testrayBuild.getTestrayServer();
+
 			JSONObject responseJSONObject = new JSONObject(
-				_testrayBuild.getTestrayServer(
-				).requestGet(
+				testrayServer.requestGet(
 					JenkinsResultsParserUtil.combine(
 						"/o/c/factors?filter=",
 						URLEncoder.encode(filterString, "UTF-8"),
-						"&pageSize=100")
-				));
+						"&pageSize=100")));
 
 			JSONArray itemsJSONArray = responseJSONObject.optJSONArray("items");
 

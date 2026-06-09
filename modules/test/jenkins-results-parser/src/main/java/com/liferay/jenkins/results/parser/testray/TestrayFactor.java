@@ -68,9 +68,9 @@ public interface TestrayFactor {
 			return _testrayServer;
 		}
 
-		protected Category(TestrayServer testrayServer, JSONObject jsonObject) {
-			_testrayServer = testrayServer;
+		protected Category(JSONObject jsonObject, TestrayServer testrayServer) {
 			_jsonObject = jsonObject;
+			_testrayServer = testrayServer;
 
 			_cached = true;
 
@@ -78,14 +78,14 @@ public interface TestrayFactor {
 			_name = _jsonObject.getString("name");
 		}
 
-		protected Category(TestrayServer testrayServer, long id) {
-			_testrayServer = testrayServer;
+		protected Category(long id, TestrayServer testrayServer) {
 			_id = id;
+			_testrayServer = testrayServer;
 		}
 
-		protected Category(TestrayServer testrayServer, String name) {
-			_testrayServer = testrayServer;
+		protected Category(String name, TestrayServer testrayServer) {
 			_name = name;
+			_testrayServer = testrayServer;
 		}
 
 		private synchronized JSONObject _getJSONObject() {
@@ -200,22 +200,22 @@ public interface TestrayFactor {
 			return _testrayServer;
 		}
 
-		protected Option(TestrayServer testrayServer, JSONObject jsonObject) {
-			_testrayServer = testrayServer;
+		protected Option(JSONObject jsonObject, TestrayServer testrayServer) {
 			_jsonObject = jsonObject;
+			_testrayServer = testrayServer;
 
 			_id = jsonObject.getLong("id");
 			_name = jsonObject.getString("name");
 		}
 
-		protected Option(TestrayServer testrayServer, long id) {
-			_testrayServer = testrayServer;
+		protected Option(long id, TestrayServer testrayServer) {
 			_id = id;
+			_testrayServer = testrayServer;
 		}
 
-		protected Option(TestrayServer testrayServer, String name) {
-			_testrayServer = testrayServer;
+		protected Option(String name, TestrayServer testrayServer) {
 			_name = name;
+			_testrayServer = testrayServer;
 		}
 
 		private synchronized JSONObject _getJSONObject() {

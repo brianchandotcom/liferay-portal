@@ -762,7 +762,14 @@ public class SitePageResourceImpl
 
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
+			themeDisplay.setLanguageId(
+				LocaleUtil.toLanguageId(
+					contextAcceptLanguage.getPreferredLocale()));
+			themeDisplay.setLocale(contextAcceptLanguage.getPreferredLocale());
 			themeDisplay.setRequest(httpServletRequest);
+
+			httpServletRequest.setAttribute(
+				WebKeys.LOCALE, contextAcceptLanguage.getPreferredLocale());
 
 			SegmentsExperience segmentsExperience = _getSegmentsExperience(
 				httpServletRequest, layout, segmentsExperienceKey);

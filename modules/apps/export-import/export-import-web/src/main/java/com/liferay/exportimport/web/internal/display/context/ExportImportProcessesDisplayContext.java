@@ -1,0 +1,247 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.exportimport.web.internal.display.context;
+
+import com.liferay.exportimport.web.internal.constants.ExportImportFDSNames;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.staging.StagingGroupHelper;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.net.URLEncoder;
+
+import java.nio.charset.StandardCharsets;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * @author Daniel Raposo
+ */
+public class ExportImportProcessesDisplayContext {
+
+	public ExportImportProcessesDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse, Group group,
+		long groupId, boolean privateLayout,
+		StagingGroupHelper stagingGroupHelper) {
+
+		_httpServletRequest = httpServletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
+		_group = group;
+		_groupId = groupId;
+		_privateLayout = privateLayout;
+		_stagingGroupHelper = stagingGroupHelper;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
+	public CreationMenu getExportCreationMenu() {
+		return _getCreationMenu(
+			Constants.EXPORT, "/revamp/export/new_export.jsp");
+	}
+
+	public List<FDSActionDropdownItem> getExportFDSActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				_BASE_PATH + "/export-processes/{id}/relaunch", "reload",
+				"relaunch", LanguageUtil.get(_httpServletRequest, "relaunch"),
+				"post", null, "async"),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					_BASE_PATH, "/export-processes/{id}/content?p_auth=",
+					AuthTokenUtil.getToken(_httpServletRequest)),
+				"download", "download",
+				LanguageUtil.get(_httpServletRequest, "download"), "get", null,
+				"link",
+				HashMapBuilder.<String, Object>put(
+					"status.code", BackgroundTaskConstants.STATUS_SUCCESSFUL
+				).build()),
+			_getDeleteFDSActionDropdownItem("/export-processes/{id}"));
+	}
+
+	public String getExportFDSName() {
+		return _getFDSName(
+			ExportImportFDSNames.COMPANY_EXPORT_PROCESSES,
+			ExportImportFDSNames.EXPORT_PROCESSES);
+	}
+
+	public String getExportProcessesAPIURL() {
+		if (_exportProcessesAPIURL != null) {
+			return _exportProcessesAPIURL;
+		}
+
+		_exportProcessesAPIURL = _getAPIURL("/export-processes");
+
+		return _exportProcessesAPIURL;
+	}
+
+	public String getExportTitle() {
+		return _getTitle("export");
+	}
+
+	public CreationMenu getImportCreationMenu() {
+		return _getCreationMenu(
+			Constants.IMPORT, "/revamp/import/new_import.jsp");
+	}
+
+	public List<FDSActionDropdownItem> getImportFDSActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/export_import/view_import_report_entries"
+				).setBackURL(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"backgroundTaskId", "{id}"
+				).buildString(),
+				"list-ul", "view-report-entries",
+				LanguageUtil.get(_httpServletRequest, "view-report-entries"),
+				"get", null, "link",
+				HashMapBuilder.<String, Object>put(
+					"status.code",
+					Arrays.asList(
+						BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
+						BackgroundTaskConstants.STATUS_FAILED)
+				).build()),
+			_getDeleteFDSActionDropdownItem("/import-processes/{id}"));
+	}
+
+	public String getImportFDSName() {
+		return _getFDSName(
+			ExportImportFDSNames.COMPANY_IMPORT_PROCESSES,
+			ExportImportFDSNames.IMPORT_PROCESSES);
+	}
+
+	public String getImportProcessesAPIURL() {
+		if (_importProcessesAPIURL != null) {
+			return _importProcessesAPIURL;
+		}
+
+		_importProcessesAPIURL = _getAPIURL("/import-processes");
+
+		return _importProcessesAPIURL;
+	}
+
+	public String getImportTitle() {
+		return _getTitle("import");
+	}
+
+	private String _getAPIURL(String endpoint) {
+		String portletId = _getPortletId();
+
+		if (!Validator.isBlank(portletId)) {
+			return StringBundler.concat(
+				_BASE_PATH, _getScopePath(), "/portlets/",
+				URLEncoder.encode(portletId, StandardCharsets.UTF_8), endpoint);
+		}
+
+		return _BASE_PATH + _getScopePath() + endpoint;
+	}
+
+	private CreationMenu _getCreationMenu(String cmd, String mvcPath) {
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_liferayPortletResponse.createRenderURL(), "mvcPath",
+					mvcPath, Constants.CMD, cmd, "groupId",
+					String.valueOf(_groupId), "liveGroupId",
+					String.valueOf(_groupId), "privateLayout",
+					String.valueOf(_privateLayout), "plid",
+					String.valueOf(_themeDisplay.getPlid()), "portletId",
+					_getPortletId(), "backURL", _themeDisplay.getURLCurrent());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "new"));
+			}
+		).build();
+	}
+
+	private FDSActionDropdownItem _getDeleteFDSActionDropdownItem(
+		String endpoint) {
+
+		return new FDSActionDropdownItem(
+			LanguageUtil.get(
+				_httpServletRequest, "are-you-sure-you-want-to-delete-this"),
+			_BASE_PATH + endpoint, "trash", "delete",
+			LanguageUtil.get(_httpServletRequest, "delete"), "delete", null,
+			"async");
+	}
+
+	private String _getFDSName(String companyFDSName, String fdsName) {
+		if (_stagingGroupHelper.isCompanyGroup(_group)) {
+			return companyFDSName;
+		}
+
+		return fdsName;
+	}
+
+	private String _getPortletId() {
+		return ParamUtil.getString(
+			_httpServletRequest, "portletId",
+			ParamUtil.getString(_httpServletRequest, "portletResource"));
+	}
+
+	private String _getScopePath() {
+		if (_stagingGroupHelper.isCompanyGroup(_group)) {
+			return StringPool.BLANK;
+		}
+
+		String externalReferenceCode = URLEncoder.encode(
+			_group.getExternalReferenceCode(), StandardCharsets.UTF_8);
+
+		if (_group.isDepot()) {
+			return "/asset-libraries/" + externalReferenceCode;
+		}
+
+		return "/sites/" + externalReferenceCode;
+	}
+
+	private String _getTitle(String key) {
+		String portletId = _getPortletId();
+
+		if (Validator.isBlank(portletId)) {
+			return null;
+		}
+
+		return StringBundler.concat(
+			LanguageUtil.get(_httpServletRequest, key), " ",
+			PortalUtil.getPortletTitle(portletId, _themeDisplay.getLocale()));
+	}
+
+	private static final String _BASE_PATH = "/o/export-import/v1.0";
+
+	private String _exportProcessesAPIURL;
+	private final Group _group;
+	private final long _groupId;
+	private final HttpServletRequest _httpServletRequest;
+	private String _importProcessesAPIURL;
+	private final LiferayPortletResponse _liferayPortletResponse;
+	private final boolean _privateLayout;
+	private final StagingGroupHelper _stagingGroupHelper;
+	private final ThemeDisplay _themeDisplay;
+
+}

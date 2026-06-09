@@ -20,6 +20,8 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
@@ -111,11 +113,11 @@ public class HitsMetadataTranslator {
 	}
 
 	private void _populateHighlightFields(
-		Hit<JsonData> hit, List<HighlightField> highlightFields) {
+		List<HighlightField> highlightFields, Hit<JsonData> hit) {
 
 		Map<String, List<String>> highlight = hit.highlight();
 
-		if (highlight != null) {
+		if (MapUtil.isNotEmpty(highlight)) {
 			for (Map.Entry<String, List<String>> entry : highlight.entrySet()) {
 				highlightFields.add(
 					new HighlightFieldBuilder(
@@ -129,25 +131,21 @@ public class HitsMetadataTranslator {
 
 		Map<String, InnerHitsResult> innerHits = hit.innerHits();
 
-		if ((innerHits == null) || innerHits.isEmpty()) {
+		if (MapUtil.isEmpty(innerHits)) {
 			return;
 		}
 
 		for (InnerHitsResult innerHitsResult : innerHits.values()) {
 			HitsMetadata<JsonData> hitsMetadata = innerHitsResult.hits();
 
-			if (hitsMetadata == null) {
+			if ((hitsMetadata == null) ||
+				ListUtil.isEmpty(hitsMetadata.hits())) {
+
 				continue;
 			}
 
-			List<Hit<JsonData>> hits = hitsMetadata.hits();
-
-			if (hits == null) {
-				continue;
-			}
-
-			for (Hit<JsonData> innerHit : hits) {
-				_populateHighlightFields(innerHit, highlightFields);
+			for (Hit<JsonData> innerHit : hitsMetadata.hits()) {
+				_populateHighlightFields(highlightFields, innerHit);
 			}
 		}
 	}
@@ -174,7 +172,7 @@ public class HitsMetadataTranslator {
 	private List<HighlightField> _translateHighlightFields(Hit<JsonData> hit) {
 		List<HighlightField> highlightFields = new ArrayList<>();
 
-		_populateHighlightFields(hit, highlightFields);
+		_populateHighlightFields(highlightFields, hit);
 
 		return highlightFields;
 	}

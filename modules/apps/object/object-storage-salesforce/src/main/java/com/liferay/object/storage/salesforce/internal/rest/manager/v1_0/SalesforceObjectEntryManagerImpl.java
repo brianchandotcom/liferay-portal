@@ -10,7 +10,6 @@ import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -309,10 +308,7 @@ public class SalesforceObjectEntryManagerImpl
 		for (Sort sort : sorts) {
 			String fieldName = sort.getFieldName();
 
-			if (fieldName.startsWith(
-					ObjectEntrySearchConstants.NESTED_FIELD_ARRAY +
-						StringPool.PERIOD)) {
-
+			if (fieldName.startsWith("nestedFieldArray.")) {
 				String[] parts = StringUtil.split(
 					sort.getFieldName(), StringPool.POUND);
 

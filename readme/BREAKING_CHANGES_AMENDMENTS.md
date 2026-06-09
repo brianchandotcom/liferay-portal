@@ -1,6 +1,6 @@
 # cb2501a618b8b2cfc7e045cc610f8bc872231fb0
 
-This commit is missing a breaking change message. The correct message is:
+The commit message is missing a breaking change. The correct message is:
 
 ```
 LPD-16086: Prevent to compute values for item selector and URL fields. This commit resolves a bug where pages containing item selector or URL fields could not be imported after being exported. Previously, the full value of these fields was computed and stored, leading to data inconsistencies during import/export. For a complete and correct response format, this change should be considered in conjunction with regressions LPD-33951 and LPD-57833.
@@ -188,7 +188,7 @@ ThreadLocalDistributor has no current usage.
 
 # 0bfc1206ac4a93ec401be491f9553ac94ecea0ed
 
-This commit is missing a breaking change message. The correct message is:
+The commit message is missing a breaking change. The correct message is:
 
 ```
 LPS-200453 Make PortletToolbar not a spring bean and provide the instance through filed INSTANCE.
@@ -212,7 +212,7 @@ Directly use PortletToolbar.INSTANCE to get the instance of PortletToolbar.
 
 # f971716348b82b1ea6747ae3c011b40616bb5884
 
-The commit message is missing a breaking change message. The correct message is:
+The commit message is missing a breaking change. The correct message is:
 
 ```
 LPS-198809 Remove ModelSearchRegistrarHelper, not used anymore
@@ -340,7 +340,7 @@ The new configuration to avoid caching documents is now the default configuratio
 
 # a35946f28515783df6d3de0a45ff8c9631dc416a
 
-The commit message is missing a breaking change message. The correct message is:
+The commit message is missing a breaking change. The correct message is:
 
 ```
 LPS-188270 Add new method getPortletInstanceConfiguration in class ConfigurationProviderImpl to replace method getPortletInstanceConfiguration in class PortletDisplay
@@ -562,7 +562,7 @@ If the total time spent searching is still a concern, regulate it with the new P
 
 # 6de9f9ce7bd603ca6b0dbb5035c359c2c9c2ed4f
 
-This commit is missing a breaking change message. The correct message is:
+The commit message is missing a breaking change. The correct message is:
 
 ```
 LPS-196539 SF rename variable name
@@ -586,7 +586,7 @@ Use getPortletPreferences() and setPortletPreferences() instead.
 
 # 3abd46aedba5663099d5c66abd057d1f0392582f
 
-This commit is missing a breaking change message. The correct message is:
+The commit message is missing a breaking change. The correct message is:
 
 ```
 LPS-197267 Move PermissionConverter to portal-security-permission-api and Remove Util
@@ -610,7 +610,7 @@ Use an OSGi service to reference PermissionConverter.
 
 # 91ba4f2de757ad28f4129563b8a0059dad4d58ad
 
-This commit is missing a breaking change message. The correct message is:
+The commit message is missing a breaking change. The correct message is:
 
 ```
 LPS-197267 Remove unused PermissionConverter overloaded methods
@@ -630,7 +630,7 @@ These methods are no longer used after refactoring the PermissionConverter APIs.
 
 # 50b57897005e337516b53e1e592b1eeee70e2950
 
-This commit is missing a breaking change message. The correct message is:
+The commit message is missing a breaking change. The correct message is:
 
 ```
 LPD-47825 portal-search-web: skip deprecation for internal interface
@@ -654,7 +654,7 @@ Vocabulary IDs for all vocabularies related to the returned categories are avail
 
 # 971a14cc0a58eb64a36fc88863a50141b0f09022
 
-This commit is missing a breaking change message. The correct message is:
+The commit message is missing a breaking change. The correct message is:
 
 ```
 LPD-77861 Semantic versioning (gw baseline)

@@ -47,6 +47,11 @@ public interface ExportPreviewResource {
 			Integer last, String range, Date startDate)
 		throws Exception;
 
+	public ExportPreview getAssetLibraryPortletExportPreview(
+			String assetLibraryExternalReferenceCode, String portletId,
+			Date endDate, Integer last, Long plid, String range, Date startDate)
+		throws Exception;
+
 	public ExportPreview getExportPreview(
 			Date endDate, Integer last, String range, Date startDate)
 		throws Exception;
@@ -54,6 +59,11 @@ public interface ExportPreviewResource {
 	public ExportPreview getSiteExportPreview(
 			String siteExternalReferenceCode, Date endDate, Integer last,
 			String range, Date startDate)
+		throws Exception;
+
+	public ExportPreview getSitePortletExportPreview(
+			String siteExternalReferenceCode, String portletId, Date endDate,
+			Integer last, Long plid, String range, Date startDate)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -144,4 +154,4 @@ public interface ExportPreviewResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:618786476
+// LIFERAY-REST-BUILDER-HASH:1698737084

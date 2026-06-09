@@ -52,9 +52,9 @@ public class InputsFragmentCollectionContributor
 	}
 
 	private List<FragmentEntry> _filter(List<FragmentEntry> fragmentEntries) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		Set<String> excludedKeys = new HashSet<>();
+
+		long companyId = CompanyThreadLocal.getCompanyId();
 
 		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
 			excludedKeys.add("INPUTS-drag-and-drop-upload");

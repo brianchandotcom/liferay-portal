@@ -33,6 +33,7 @@ import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentElementResource;
+import com.liferay.headless.delivery.resource.v1_0.ContentSetResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentDataDefinitionTypeResource;
@@ -126,6 +127,14 @@ public class Mutation {
 
 		_contentElementResourceComponentServiceObjects =
 			contentElementResourceComponentServiceObjects;
+	}
+
+	public static void setContentSetResourceComponentServiceObjects(
+		ComponentServiceObjects<ContentSetResource>
+			contentSetResourceComponentServiceObjects) {
+
+		_contentSetResourceComponentServiceObjects =
+			contentSetResourceComponentServiceObjects;
 	}
 
 	public static void setContentStructureResourceComponentServiceObjects(
@@ -1170,6 +1179,46 @@ public class Mutation {
 					_filterBiFunction.apply(
 						contentElementResource, filterString),
 					_sortsBiFunction.apply(contentElementResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryContentSetsPageExportBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("itemSubtype") String itemSubtype,
+			@GraphQLName("itemType") String itemType,
+			@GraphQLName("search") String search,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentSetResource ->
+				contentSetResource.postAssetLibraryContentSetsPageExportBatch(
+					Long.valueOf(assetLibraryId), itemSubtype, itemType, search,
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createSiteContentSetsPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("itemSubtype") String itemSubtype,
+			@GraphQLName("itemType") String itemType,
+			@GraphQLName("search") String search,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentSetResource ->
+				contentSetResource.postSiteContentSetsPageExportBatch(
+					Long.valueOf(siteKey), itemSubtype, itemType, search,
 					callbackURL, contentType, fieldNames));
 	}
 
@@ -6407,6 +6456,25 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(ContentSetResource contentSetResource)
+		throws Exception {
+
+		contentSetResource.setContextAcceptLanguage(_acceptLanguage);
+		contentSetResource.setContextCompany(_company);
+		contentSetResource.setContextHttpServletRequest(_httpServletRequest);
+		contentSetResource.setContextHttpServletResponse(_httpServletResponse);
+		contentSetResource.setContextUriInfo(_uriInfo);
+		contentSetResource.setContextUser(_user);
+		contentSetResource.setGroupLocalService(_groupLocalService);
+		contentSetResource.setRoleLocalService(_roleLocalService);
+
+		contentSetResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		contentSetResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private void _populateResourceContext(
 			ContentStructureResource contentStructureResource)
 		throws Exception {
@@ -6897,6 +6965,8 @@ public class Mutation {
 		_commentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentElementResource>
 		_contentElementResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ContentSetResource>
+		_contentSetResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentStructureResource>
 		_contentStructureResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentTemplateResource>
@@ -6961,4 +7031,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-996168166
+// LIFERAY-REST-BUILDER-HASH:-1984925117

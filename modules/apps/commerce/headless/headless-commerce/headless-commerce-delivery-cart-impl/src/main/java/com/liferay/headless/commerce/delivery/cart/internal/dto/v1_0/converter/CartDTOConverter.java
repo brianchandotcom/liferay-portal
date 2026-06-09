@@ -96,17 +96,16 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 			return null;
 		}
 
-		CommerceShippingMethod commerceShippingMethod =
-			commerceOrder.getCommerceShippingMethod();
-
 		Locale locale = dtoConverterContext.getLocale();
-
-		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-			locale);
 
 		List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
 			_getCommerceOrderValidatorResults(
 				commerceOrder, dtoConverterContext, locale);
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceOrder.getCommerceShippingMethod();
+		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
+			locale);
 
 		return new Cart() {
 			{
@@ -162,7 +161,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 							return null;
 						}
 
-						return _getCommerceOrderValidatorResultsMessages(
+						return _getErrorMessages(
 							commerceOrderValidatorResults);
 					});
 				setExternalReferenceCode(
@@ -422,7 +421,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		return _commerceOrderValidatorRegistry.validate(locale, commerceOrder);
 	}
 
-	private String[] _getCommerceOrderValidatorResultsMessages(
+	private String[] _getErrorMessages(
 		List<CommerceOrderValidatorResult> commerceOrderValidatorResults) {
 
 		List<String> errorMessages = new ArrayList<>();

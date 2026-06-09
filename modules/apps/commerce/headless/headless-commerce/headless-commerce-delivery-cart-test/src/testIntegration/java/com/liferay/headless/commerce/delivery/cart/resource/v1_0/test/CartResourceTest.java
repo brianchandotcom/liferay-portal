@@ -534,8 +534,6 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	}
 
 	private void _testGetCartWithOffendedOrderRule() throws Exception {
-		Cart cart = _createCart();
-
 		Calendar calendar = CalendarFactoryUtil.getCalendar(
 			_user.getTimeZone());
 
@@ -560,6 +558,8 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		_corEntryRelLocalService.addCOREntryRel(
 			_user.getUserId(), CommerceChannel.class.getName(),
 			_commerceChannel.getCommerceChannelId(), corEntry.getCOREntryId());
+
+		Cart cart = _createCart();
 
 		Cart invalidCart = cartResource.getCart(cart.getId());
 

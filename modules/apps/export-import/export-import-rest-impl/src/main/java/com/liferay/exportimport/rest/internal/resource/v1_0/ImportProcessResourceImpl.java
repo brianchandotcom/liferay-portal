@@ -395,7 +395,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
 
-		if ((group == null) || !group.isSite()) {
+		if ((group == null) || (!group.isCMS() && !group.isSite())) {
 			throw new NotFoundException();
 		}
 

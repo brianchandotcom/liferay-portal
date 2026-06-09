@@ -3,16 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FDSConnection} from '@liferay/frontend-data-set-web/api';
-import React, {useEffect, useRef, useState} from 'react';
+// The "@liferay/frontend-data-set-web/api" import-map module is resolved at
+// runtime by the portal. At build time, tsconfig "paths" redirects it to the
+// types provided by "@liferay/js-api", so the value and its types come from a
+// single import.
 
-// Importing from "@liferay/js-api/data-set" also loads the ambient declaration
-// that types the "@liferay/frontend-data-set-web/api" runtime module above.
-
-import type {
+import {
+	FDSConnection,
 	FDSConnectionInfo,
 	FDSConnectionStatus,
-} from '@liferay/js-api/data-set';
+} from '@liferay/frontend-data-set-web/api';
+import React, {useEffect, useRef, useState} from 'react';
 
 interface AppProps {
 	fdsName: string;

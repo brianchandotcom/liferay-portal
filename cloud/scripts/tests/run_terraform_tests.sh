@@ -20,9 +20,11 @@ function main {
 	fi
 
 	local script_dir
+
 	script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 	local terraform_dir
+
 	terraform_dir=$(cd "${script_dir}/../../terraform" && pwd)
 
 	mkdir --parents "${terraform_dir}/test-results"
@@ -34,6 +36,7 @@ function main {
 		terraform init -backend=false -input=false
 
 		local sanitized_terraform_module_name
+
 		sanitized_terraform_module_name="$(echo "${terraform_module}" | tr "/" "-")"
 
 		terraform test \

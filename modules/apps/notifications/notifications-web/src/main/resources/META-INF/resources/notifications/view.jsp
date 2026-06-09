@@ -139,6 +139,7 @@ if (Validator.isNotNull(backURL)) {
 				<liferay-ui:search-iterator
 					displayStyle="descriptive"
 					markupView="lexicon"
+					searchResultCssClass="list-group list-group-notification"
 				/>
 			</liferay-ui:search-container>
 		</div>

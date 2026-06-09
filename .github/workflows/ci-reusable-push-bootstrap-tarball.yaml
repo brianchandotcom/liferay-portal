@@ -2,7 +2,7 @@ defaults:
     run:
         shell: bash
 jobs:
-    publish:
+    push:
         outputs:
             object_name: ${{steps.vars.outputs.object_name}}
         runs-on: ubuntu-latest
@@ -105,7 +105,7 @@ on:
                 type: string
         outputs:
             object_name:
-                value: ${{jobs.publish.outputs.object_name}}
+                value: ${{jobs.push.outputs.object_name}}
 permissions:
     contents: read
     id-token: write

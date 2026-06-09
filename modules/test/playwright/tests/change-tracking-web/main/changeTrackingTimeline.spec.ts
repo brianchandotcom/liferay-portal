@@ -177,6 +177,61 @@ test('LPD-25853 Edit in x publication is added in the timeline dropdown actions'
 	).toBeVisible();
 });
 
+test('LPD-43418 Edit in publication action from the table view timeline redirects to the asset edit page', async ({
+	changeTrackingPage,
+	ctCollection,
+	journalEditArticlePage,
+	journalPage,
+	page,
+	site,
+}) => {
+	const articleTitle = getRandomString();
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+	await journalEditArticlePage.fillTitle(articleTitle);
+	await journalEditArticlePage.fillContent(getRandomString());
+	await journalEditArticlePage.publishArticle();
+
+	await waitForAlert(
+		page,
+		`Success:${articleTitle} was created successfully.`
+	);
+
+	await changeTrackingPage.workOnProduction();
+
+	await journalPage.goto(site.friendlyUrlPath);
+
+	const timelineButton = page.getByLabel('timeline-button');
+	await timelineButton.waitFor();
+	await timelineButton.click();
+
+	const timelineActionsButton = page
+		.getByRole('menuitem')
+		.filter({hasText: articleTitle})
+		.getByLabel('timeline-actions');
+
+	const editButton = page.getByRole('button', {
+		name: `Edit in ${ctCollection.body.name}`,
+	});
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: editButton,
+		trigger: timelineActionsButton,
+	});
+
+	await expect(journalPage.articleTitleInput).toHaveValue(articleTitle);
+
+	await expect(
+		page
+			.locator('.change-tracking-indicator-title')
+			.filter({hasText: ctCollection.body.name})
+	).toBeVisible();
+});
+
 test('LPD-25853 Review Change is added in the timeline dropdown actions', async ({
 	changeTrackingPage,
 	ctCollection,

@@ -117,19 +117,19 @@ public class ProvisioningRequestResourceTest
 			}
 		};
 
-		ProvisioningRequest provisioningRequest = randomProvisioningRequest(
+		ProvisioningRequest provisioningRequest1 = randomProvisioningRequest(
 			userAccounts);
 
 		ProvisioningRequest postProvisioningRequest =
-			provisioningRequestResource.postProvisioning(provisioningRequest);
+			provisioningRequestResource.postProvisioning(provisioningRequest1);
 
-		assertEquals(provisioningRequest, postProvisioningRequest);
+		assertEquals(provisioningRequest1, postProvisioningRequest);
 
 		AccountEntry customerAccountEntry =
 			_accountEntryLocalService.getAccountEntry(
 				postProvisioningRequest.getAccountEntryId());
 
-		_assertAccountEntry(customerAccountEntry, provisioningRequest);
+		_assertAccountEntry(customerAccountEntry, provisioningRequest1);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
@@ -148,12 +148,27 @@ public class ProvisioningRequestResourceTest
 
 		_assertServiceAccountUsers(aiHubAccountEntry, customerAccountEntry);
 
-		_assertOAuth2Application(customerAccountEntry, provisioningRequest);
+		_assertOAuth2Application(customerAccountEntry, provisioningRequest1);
 
 		_assertUserAccounts(
 			aiHubAccountEntry, customerAccountEntry,
-			provisioningRequest.getUserAccounts(),
+			provisioningRequest1.getUserAccounts(),
 			postProvisioningRequest.getUserAccounts());
+
+		ProvisioningRequest provisioningRequest2 =
+			provisioningRequestResource.postProvisioning(provisioningRequest1);
+
+		assertEquals(provisioningRequest1, provisioningRequest2);
+
+		Assert.assertEquals(
+			Long.valueOf(customerAccountEntry.getAccountEntryId()),
+			provisioningRequest2.getAccountEntryId());
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				customerAccountEntry.getAccountEntryId() +
+					"-ai-hub-configuration",
+				0, objectDefinition.getObjectDefinitionId()));
 	}
 
 	@Override

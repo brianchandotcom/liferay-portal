@@ -7,6 +7,8 @@ package com.liferay.commerce.service.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
@@ -17,10 +19,18 @@ import com.liferay.commerce.service.CommerceOrderNoteLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -50,17 +60,16 @@ public class CommerceOrderNoteServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(
-				TestPropsValues.getCompanyId());
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			TestPropsValues.getCompanyId());
 
-		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			TestPropsValues.getGroupId(), commerceCurrency.getCode());
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			TestPropsValues.getGroupId(), _commerceCurrency.getCode());
 
 		_commerceOrder = _commerceOrderLocalService.addCommerceOrder(
-			TestPropsValues.getUserId(), commerceChannel.getGroupId(),
-			AccountConstants.ACCOUNT_ENTRY_ID_GUEST, commerceCurrency.getCode(),
-			0);
+			TestPropsValues.getUserId(), _commerceChannel.getGroupId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_GUEST,
+			_commerceCurrency.getCode(), 0);
 
 		_company = CompanyTestUtil.addCompany(true);
 	}
@@ -132,7 +141,7 @@ public class CommerceOrderNoteServiceTest {
 
 	@Test
 	public void testUpdateCommerceOrderNote() throws Exception {
-		CommerceOrderNote commerceOrderNote =
+		CommerceOrderNote commerceOrderNote1 =
 			_commerceOrderNoteLocalService.addCommerceOrderNote(
 				_commerceOrder.getCommerceOrderId(),
 				RandomTestUtil.randomString(), false,
@@ -144,16 +153,73 @@ public class CommerceOrderNoteServiceTest {
 		Assert.assertThrows(
 			PrincipalException.class,
 			() -> _commerceOrderNoteService.updateCommerceOrderNote(
-				commerceOrderNote.getCommerceOrderNoteId(),
+				commerceOrderNote1.getCommerceOrderNoteId(),
 				RandomTestUtil.randomString(), false));
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		_commerceOrderNoteService.updateCommerceOrderNote(
-			commerceOrderNote.getCommerceOrderNoteId(),
+			commerceOrderNote1.getCommerceOrderNoteId(),
 			RandomTestUtil.randomString(), false);
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			TestPropsValues.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceOrderNote commerceOrderNote2 =
+			_commerceOrderNoteLocalService.addCommerceOrderNote(
+				commerceOrder.getCommerceOrderId(),
+				RandomTestUtil.randomString(), true,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		CommerceOrderNote commerceOrderNote3 =
+			_commerceOrderNoteLocalService.addCommerceOrderNote(
+				commerceOrder.getCommerceOrderId(),
+				RandomTestUtil.randomString(), false,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		Role role = _roleLocalService.addRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			RandomTestUtil.randomString(), null, null,
+			RoleConstants.TYPE_REGULAR, null,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		User user = UserTestUtil.addUser();
+
+		_roleLocalService.addUserRole(user.getUserId(), role);
+
+		RoleTestUtil.addResourcePermission(
+			role, CommerceOrderConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
+
+			Assert.assertThrows(
+				PrincipalException.class,
+				() -> _commerceOrderNoteService.addOrUpdateCommerceOrderNote(
+					null, commerceOrderNote2.getCommerceOrderNoteId(),
+					commerceOrder.getCommerceOrderId(),
+					RandomTestUtil.randomString(), false,
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(), user.getUserId())));
+			Assert.assertThrows(
+				PrincipalException.class,
+				() -> _commerceOrderNoteService.updateCommerceOrderNote(
+					commerceOrderNote2.getCommerceOrderNoteId(),
+					RandomTestUtil.randomString(), false));
+
+			_commerceOrderNoteService.updateCommerceOrderNote(
+				commerceOrderNote3.getCommerceOrderNoteId(),
+				RandomTestUtil.randomString(), false);
+		}
 	}
 
+	private static CommerceChannel _commerceChannel;
+	private static CommerceCurrency _commerceCurrency;
 	private static CommerceOrder _commerceOrder;
 
 	@Inject
@@ -166,5 +232,8 @@ public class CommerceOrderNoteServiceTest {
 
 	@Inject
 	private CommerceOrderNoteService _commerceOrderNoteService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

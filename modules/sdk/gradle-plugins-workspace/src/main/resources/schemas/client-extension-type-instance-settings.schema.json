@@ -1989,7 +1989,7 @@
 			"properties": {
 				"enableLog": {
 					"default": false,
-					"description": "If this is checked, the Frontend Audiences Infrastructure will print informational messages to the browser console.",
+					"description": "If this is checked, the frontend audiences infrastructure will print informational messages to the browser console.",
 					"title": "Enable Log",
 					"type": "boolean"
 				},

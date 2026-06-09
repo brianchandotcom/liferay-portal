@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -179,15 +180,15 @@ public class ObjectEntrySearchHighlightTest {
 	private static ObjectDefinition _addObjectDefinition(boolean localized)
 		throws Exception {
 
-		String contentFieldLabel = "Nonlocalized Field";
+		String contentFieldLabel = RandomTestUtil.randomString();
 		String contentFieldName = _NONLOCALIZED_CONTENT_FIELD_NAME;
-		String titleFieldLabel = "Title";
+		String titleFieldLabel = RandomTestUtil.randomString();
 		String titleFieldName = _NONLOCALIZED_TITLE_FIELD_NAME;
 
 		if (localized) {
-			contentFieldLabel = "Localized Field";
+			contentFieldLabel = RandomTestUtil.randomString();
 			contentFieldName = _LOCALIZED_CONTENT_FIELD_NAME;
-			titleFieldLabel = "Localized Title";
+			titleFieldLabel = RandomTestUtil.randomString();
 			titleFieldName = _LOCALIZED_TITLE_FIELD_NAME;
 		}
 
@@ -216,37 +217,39 @@ public class ObjectEntrySearchHighlightTest {
 	}
 
 	private static ObjectEntry _addObjectEntry(
-			boolean localizedTitle, ObjectDefinition objectDefinition)
+			boolean localized, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		Map<String, Serializable> values = null;
 
-		if (localizedTitle) {
+		if (localized) {
 			values = HashMapBuilder.<String, Serializable>put(
 				_LOCALIZED_CONTENT_FIELD_NAME + "_i18n",
 				HashMapBuilder.put(
 					LocaleUtil.toLanguageId(LocaleUtil.US),
-					"English content " + _KEYWORD
+					RandomTestUtil.randomString() + " " + _KEYWORD
 				).put(
 					LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-					"Contenido en español " + _KEYWORD
+					RandomTestUtil.randomString() + " " + _KEYWORD
 				).build()
 			).put(
 				_LOCALIZED_TITLE_FIELD_NAME + "_i18n",
 				HashMapBuilder.put(
 					LocaleUtil.toLanguageId(LocaleUtil.US),
-					"English title with " + _KEYWORD
+					RandomTestUtil.randomString() + " " + _KEYWORD
 				).put(
 					LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-					"Título en español " + _KEYWORD
+					RandomTestUtil.randomString() + " " + _KEYWORD
 				).build()
 			).build();
 		}
 		else {
 			values = HashMapBuilder.<String, Serializable>put(
-				_NONLOCALIZED_CONTENT_FIELD_NAME, "General content " + _KEYWORD
+				_NONLOCALIZED_CONTENT_FIELD_NAME,
+				RandomTestUtil.randomString() + " " + _KEYWORD
 			).put(
-				_NONLOCALIZED_TITLE_FIELD_NAME, "General title " + _KEYWORD
+				_NONLOCALIZED_TITLE_FIELD_NAME,
+				RandomTestUtil.randomString() + " " + _KEYWORD
 			).build();
 		}
 
@@ -283,19 +286,20 @@ public class ObjectEntrySearchHighlightTest {
 		HighlightField highlightField = highlightFieldsMap.get(
 			highlightFieldName);
 
-		Assert.assertNotNull(
-			"Missing highlight field " + highlightFieldName, highlightField);
-
 		List<String> fragments = highlightField.getFragments();
 
 		Assert.assertFalse(
 			"Highlight fragments missing for " + highlightFieldName,
 			fragments.isEmpty());
 
+		String highlightedResult = StringBundler.concat(
+			HighlightUtil.HIGHLIGHT_TAG_OPEN, _KEYWORD,
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
+
 		for (String fragment : fragments) {
 			Assert.assertTrue(
 				"Missing highlight markup in fragment: " + fragment,
-				fragment.contains(_HIGHLIGHTED_RESULT));
+				fragment.contains(highlightedResult));
 		}
 	}
 
@@ -352,8 +356,6 @@ public class ObjectEntrySearchHighlightTest {
 
 		List<SearchHit> searchHitList = searchHits.getSearchHits();
 
-		Assert.assertFalse(searchHitList.toString(), searchHitList.isEmpty());
-
 		SearchHit searchHit = searchHitList.get(0);
 
 		Document document = searchHit.getDocument();
@@ -365,12 +367,7 @@ public class ObjectEntrySearchHighlightTest {
 		return searchHit;
 	}
 
-	private static final String _HIGHLIGHTED_RESULT = StringBundler.concat(
-		HighlightUtil.HIGHLIGHT_TAG_OPEN,
-		ObjectEntrySearchHighlightTest._KEYWORD,
-		HighlightUtil.HIGHLIGHT_TAG_CLOSE);
-
-	private static final String _KEYWORD = "keyword";
+	private static final String _KEYWORD = RandomTestUtil.randomString();
 
 	private static final String _LOCALIZED_CONTENT_FIELD_NAME = "localizedText";
 

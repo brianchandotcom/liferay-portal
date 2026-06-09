@@ -129,13 +129,16 @@ public class ObjectEntryKeywordQueryContributorTest {
 		QueryTerm queryTerm = termQuery.getQueryTerm();
 
 		Assert.assertEquals(
-			"nestedFieldArray.value_keyword_lowercase", queryTerm.getField());
+			ObjectEntrySearchConstants.
+				NESTED_FIELD_ARRAY_VALUE_KEYWORD_LOWERCASE,
+			queryTerm.getField());
 		Assert.assertEquals(
 			StringUtil.toLowerCase(token), queryTerm.getValue());
 
 		Assert.assertNotNull(matchQuery);
 		Assert.assertEquals(
-			"nestedFieldArray.value_text", matchQuery.getField());
+			ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE_TEXT,
+			matchQuery.getField());
 		Assert.assertEquals(token, matchQuery.getValue());
 	}
 
@@ -217,10 +220,10 @@ public class ObjectEntryKeywordQueryContributorTest {
 
 		BooleanQuery booleanQuery = _mockBooleanQuery(argumentCaptor);
 
-		ObjectEntryKeywordQueryContributor contributor =
+		ObjectEntryKeywordQueryContributor objectEntryKeywordQueryContributor =
 			_createObjectEntryKeywordQueryContributor(objectDefinition);
 
-		contributor.contribute(
+		objectEntryKeywordQueryContributor.contribute(
 			RandomTestUtil.randomString(), booleanQuery,
 			_mockKeywordQueryContributorHelper(LocaleUtil.SPAIN));
 

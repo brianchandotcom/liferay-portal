@@ -680,7 +680,7 @@ public class OpenSearchQueryVisitor implements QueryVisitor<QueryVariant> {
 			"Invalid multi match query type " + type);
 	}
 
-	private static final HighlightTranslator _highlightTranslator =
+	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
 
 }

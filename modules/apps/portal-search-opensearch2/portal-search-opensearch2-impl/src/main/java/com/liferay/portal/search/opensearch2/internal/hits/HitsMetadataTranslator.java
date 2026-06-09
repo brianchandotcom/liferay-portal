@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
@@ -108,7 +109,7 @@ public class HitsMetadataTranslator {
 	}
 
 	private void _populateHighlightFields(
-		Hit<JsonData> hit, List<HighlightField> highlightFields) {
+		List<HighlightField> highlightFields, Hit<JsonData> hit) {
 
 		Map<String, List<String>> highlight = hit.highlight();
 
@@ -126,7 +127,7 @@ public class HitsMetadataTranslator {
 
 		Map<String, InnerHitsResult> innerHits = hit.innerHits();
 
-		if ((innerHits == null) || innerHits.isEmpty()) {
+		if (MapUtil.isEmpty(innerHits)) {
 			return;
 		}
 
@@ -144,7 +145,7 @@ public class HitsMetadataTranslator {
 			}
 
 			for (Hit<JsonData> innerHit : hits) {
-				_populateHighlightFields(innerHit, highlightFields);
+				_populateHighlightFields(highlightFields, innerHit);
 			}
 		}
 	}
@@ -171,7 +172,7 @@ public class HitsMetadataTranslator {
 	private List<HighlightField> _translateHighlightFields(Hit<JsonData> hit) {
 		List<HighlightField> highlightFields = new ArrayList<>();
 
-		_populateHighlightFields(hit, highlightFields);
+		_populateHighlightFields(highlightFields, hit);
 
 		return highlightFields;
 	}

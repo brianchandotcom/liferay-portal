@@ -262,12 +262,10 @@ public class ObjectEntryKeywordQueryContributor
 			queryConfig.addHighlightFieldNames(localizedNestedFieldName);
 		}
 
-		long titleObjectFieldId = _objectDefinition.getTitleObjectFieldId();
-
 		ObjectFieldBag objectFieldBag = _objectDefinition.getObjectFieldBag();
 
 		ObjectField titleObjectField = objectFieldBag.getObjectField(
-			titleObjectFieldId);
+			_objectDefinition.getTitleObjectFieldId());
 
 		if ((titleObjectField != null) && titleObjectField.isLocalized()) {
 			queryConfig.addHighlightFieldNames(
@@ -378,10 +376,10 @@ public class ObjectEntryKeywordQueryContributor
 		nestedQueryConfig.setHighlightFieldNames(highlightFieldNames);
 		nestedQueryConfig.setHighlightFragmentSize(
 			queryConfig.getHighlightFragmentSize());
-		nestedQueryConfig.setHighlightSnippetSize(
-			queryConfig.getHighlightSnippetSize());
 		nestedQueryConfig.setHighlightRequireFieldMatch(
 			queryConfig.isHighlightRequireFieldMatch());
+		nestedQueryConfig.setHighlightSnippetSize(
+			queryConfig.getHighlightSnippetSize());
 		nestedQueryConfig.setLocale(queryConfig.getLocale());
 
 		nestedQuery.setInnerHitsEnabled(true);
@@ -437,13 +435,15 @@ public class ObjectEntryKeywordQueryContributor
 			BooleanQuery assigneeBooleanQuery = new BooleanQuery();
 
 			String keywordFieldName =
-				"nestedFieldArray.value_keyword_lowercase";
+				ObjectEntrySearchConstants.
+					NESTED_FIELD_ARRAY_VALUE_KEYWORD_LOWERCASE;
 
 			assigneeBooleanQuery.add(
 				new TermQuery(keywordFieldName, StringUtil.toLowerCase(token)),
 				BooleanClauseOccur.SHOULD);
 
-			String textFieldName = "nestedFieldArray.value_text";
+			String textFieldName =
+				ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE_TEXT;
 
 			assigneeBooleanQuery.add(
 				new MatchQuery(textFieldName, token),

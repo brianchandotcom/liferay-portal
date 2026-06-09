@@ -233,11 +233,13 @@ public class SitemapStrutsActionTest {
 
 			_addJournalArticleAssetDisplayPageEntry(_addJournalArticle());
 
-			Map<String, String> assetTypeKeys =
+			Map<Long, String> assetTypeKeys =
 				_sitemapManager.getAssetTypeKeys();
 
 			MockHttpServletResponse mockHttpServletResponse = _executeRequest(
-				assetTypeKeys.get(JournalArticle.class.getName()), null);
+				assetTypeKeys.get(
+					_portal.getClassNameId(JournalArticle.class.getName())),
+				null);
 
 			Assert.assertEquals(200, mockHttpServletResponse.getStatus());
 

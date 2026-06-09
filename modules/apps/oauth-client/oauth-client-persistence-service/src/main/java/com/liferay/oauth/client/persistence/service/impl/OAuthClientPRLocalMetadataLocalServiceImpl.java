@@ -71,23 +71,24 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 	public OAuthClientPRLocalMetadata addOAuthClientPRLocalMetadata(
 			String externalReferenceCode, long userId,
 			String[] authorizationServers, String[] bearerMethodsSupported,
-			boolean localWellKnownEnabled, String resource, String resourceName,
-			String[] scopesSupported)
+			boolean localWellKnownEnabled, String protectedResourceURI,
+			String resourceName, String[] scopesSupported)
 		throws PortalException {
 
-		if (Validator.isNull(resource)) {
+		if (Validator.isNull(protectedResourceURI)) {
 			throw new OAuthClientPRLocalMetadataResourceException();
 		}
 
 		User user = _userLocalService.getUser(userId);
 
-		_validateURL(resource);
+		_validateURL(protectedResourceURI);
 
-		String localWellKnownURI = _generateLocalWellKnownURI(resource);
+		String localWellKnownURI = _generateLocalWellKnownURI(
+			protectedResourceURI);
 
 		_validate(
 			null, user.getCompanyId(), authorizationServers, localWellKnownURI,
-			resource);
+			protectedResourceURI);
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			oAuthClientPRLocalMetadataPersistence.create(
@@ -103,9 +104,10 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		oAuthClientPRLocalMetadata.setLocalWellKnownURI(localWellKnownURI);
 		oAuthClientPRLocalMetadata.setMetadataJSON(
 			_generateMetadataJSON(
-				authorizationServers, bearerMethodsSupported, resource,
-				resourceName, scopesSupported));
-		oAuthClientPRLocalMetadata.setResource(resource);
+				authorizationServers, bearerMethodsSupported,
+				protectedResourceURI, resourceName, scopesSupported));
+		oAuthClientPRLocalMetadata.setProtectedResourceURI(
+			protectedResourceURI);
 
 		oAuthClientPRLocalMetadata =
 			oAuthClientPRLocalMetadataPersistence.update(
@@ -175,10 +177,10 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 
 	@Override
 	public OAuthClientPRLocalMetadata fetchOAuthClientPRLocalMetadata(
-		long companyId, String resource) {
+		long companyId, String protectedResourceURI) {
 
-		return oAuthClientPRLocalMetadataPersistence.fetchByC_R(
-			companyId, resource);
+		return oAuthClientPRLocalMetadataPersistence.fetchByC_PRURI(
+			companyId, protectedResourceURI);
 	}
 
 	@Override
@@ -258,10 +260,11 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 	public OAuthClientPRLocalMetadata updateOAuthClientPRLocalMetadata(
 			long oAuthClientPRLocalMetadataId, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,
-			String resource, String resourceName, String[] scopesSupported)
+			String protectedResourceURI, String resourceName,
+			String[] scopesSupported)
 		throws PortalException {
 
-		if (Validator.isNull(resource)) {
+		if (Validator.isNull(protectedResourceURI)) {
 			throw new OAuthClientPRLocalMetadataResourceException();
 		}
 
@@ -272,39 +275,43 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		String localWellKnownURI =
 			oAuthClientPRLocalMetadata.getLocalWellKnownURI();
 
-		_validateURL(resource);
+		_validateURL(protectedResourceURI);
 
-		if (!resource.equals(oAuthClientPRLocalMetadata.getResource())) {
-			localWellKnownURI = _generateLocalWellKnownURI(resource);
+		if (!protectedResourceURI.equals(
+				oAuthClientPRLocalMetadata.getProtectedResourceURI())) {
+
+			localWellKnownURI = _generateLocalWellKnownURI(
+				protectedResourceURI);
 		}
 
 		_validate(
 			oAuthClientPRLocalMetadata,
 			oAuthClientPRLocalMetadata.getCompanyId(), authorizationServers,
-			localWellKnownURI, resource);
+			localWellKnownURI, protectedResourceURI);
 
 		oAuthClientPRLocalMetadata.setLocalWellKnownEnabled(
 			localWellKnownEnabled);
 		oAuthClientPRLocalMetadata.setLocalWellKnownURI(localWellKnownURI);
 		oAuthClientPRLocalMetadata.setMetadataJSON(
 			_generateMetadataJSON(
-				authorizationServers, bearerMethodsSupported, resource,
-				resourceName, scopesSupported));
-		oAuthClientPRLocalMetadata.setResource(resource);
+				authorizationServers, bearerMethodsSupported,
+				protectedResourceURI, resourceName, scopesSupported));
+		oAuthClientPRLocalMetadata.setProtectedResourceURI(
+			protectedResourceURI);
 
 		return oAuthClientPRLocalMetadataPersistence.update(
 			oAuthClientPRLocalMetadata);
 	}
 
-	private String _generateLocalWellKnownURI(String resource)
+	private String _generateLocalWellKnownURI(String protectedResourceURI)
 		throws PortalException {
 
 		try {
-			URI resourceURI = URI.create(resource);
+			URI uri = URI.create(protectedResourceURI);
 
 			return StringBundler.concat(
-				resourceURI.getScheme(), "://", resourceURI.getAuthority(),
-				"/.well-known/oauth-protected-resource", resourceURI.getPath());
+				uri.getScheme(), "://", uri.getAuthority(),
+				"/.well-known/oauth-protected-resource", uri.getPath());
 		}
 		catch (Exception exception) {
 			throw new OAuthClientPRLocalMetadataLocalWellKnownURIException(
@@ -314,7 +321,8 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 
 	private String _generateMetadataJSON(
 			String[] authorizationServers, String[] bearerMethodsSupported,
-			String resource, String resourceName, String[] scopesSupported)
+			String protectedResourceURI, String resourceName,
+			String[] scopesSupported)
 		throws PortalException {
 
 		try {
@@ -325,7 +333,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 				"bearer_methods_supported",
 				JSONUtil.putAll((Object[])bearerMethodsSupported)
 			).put(
-				"resource", resource
+				"resource", protectedResourceURI
 			).put(
 				"resource_name", resourceName
 			);
@@ -373,10 +381,10 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 	private void _validate(
 			OAuthClientPRLocalMetadata oldOAuthClientPRLocalMetadata,
 			long companyId, String[] authorizationServers,
-			String localWellKnownURI, String resource)
+			String localWellKnownURI, String protectedResourceURI)
 		throws PortalException {
 
-		if (Validator.isNull(resource)) {
+		if (Validator.isNull(protectedResourceURI)) {
 			throw new OAuthClientPRLocalMetadataResourceException();
 		}
 
@@ -398,8 +406,8 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		}
 
 		oAuthClientPRLocalMetadata =
-			oAuthClientPRLocalMetadataPersistence.fetchByC_R(
-				companyId, resource);
+			oAuthClientPRLocalMetadataPersistence.fetchByC_PRURI(
+				companyId, protectedResourceURI);
 
 		if ((oAuthClientPRLocalMetadata != null) &&
 			!Objects.equals(

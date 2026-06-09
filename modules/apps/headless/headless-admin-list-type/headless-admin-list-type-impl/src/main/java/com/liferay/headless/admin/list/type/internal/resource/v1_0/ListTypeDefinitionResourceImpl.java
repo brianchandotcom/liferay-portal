@@ -126,7 +126,7 @@ public class ListTypeDefinitionResourceImpl
 
 			@Override
 			public String getSectionKey() {
-				return ExportImportConstants.SECTION_KEY_CONTENT;
+				return ExportImportConstants.SECTION_KEY_CONTENT_AND_DATA;
 			}
 
 		};

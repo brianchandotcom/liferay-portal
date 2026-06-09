@@ -10,6 +10,8 @@ import React from 'react';
 
 const ASSET_ENTRIES_API_URL = '/o/headless-delivery/v1.0/asset-entries';
 
+const STATUS_FILTER = "(status eq 'approved' or status eq 'scheduled')";
+
 const STATUSES = {
 	0: {displayType: 'success', label: Liferay.Language.get('approved')},
 	1: {displayType: 'info', label: Liferay.Language.get('pending')},
@@ -35,16 +37,18 @@ function buildAPIURL(groupId, classNameIds) {
 	const url = new URL(ASSET_ENTRIES_API_URL, window.location.origin);
 
 	url.searchParams.set('groupIds', groupId);
+	url.searchParams.set('showNonindexable', 'true');
+
+	let filter = STATUS_FILTER;
 
 	if (classNameIds.length === 1) {
-		url.searchParams.set('filter', `classNameId eq ${classNameIds[0]}`);
+		filter = `classNameId eq ${classNameIds[0]} and ${STATUS_FILTER}`;
 	}
 	else if (classNameIds.length > 1) {
-		url.searchParams.set(
-			'filter',
-			`classNameId in (${classNameIds.join(',')})`
-		);
+		filter = `classNameId in (${classNameIds.join(',')}) and ${STATUS_FILTER}`;
 	}
+
+	url.searchParams.set('filter', filter);
 
 	return url.toString();
 }

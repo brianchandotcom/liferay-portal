@@ -53,10 +53,9 @@ public class CTPreferencesServiceTest {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, RandomTestUtil.randomString(), null);
-
 		_group = GroupTestUtil.addGroup();
-
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER);
 
 		_roleLocalService.addUserRole(_user.getUserId(), _role);

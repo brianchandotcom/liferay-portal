@@ -53,6 +53,10 @@ public class TierPriceDTOConverter
 			(CommerceContext)dtoConverterContext.getAttribute(
 				"commerceContext");
 
+		if (commerceContext == null) {
+			return null;
+		}
+
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
 

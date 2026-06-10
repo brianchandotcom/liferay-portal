@@ -120,3 +120,69 @@ test('Editing a web content shows its latest values in the side-by-side translat
 		title: 'WC WebContent Título editar',
 	});
 });
+
+test('Translating from a translated base language adds a second translation', async ({
+	apiHelpers,
+	site,
+	webContentTranslationPage,
+}) => {
+	const title = 'WC WebContent Title';
+
+	await apiHelpers.jsonWebServicesJournal.addWebContent({
+		content: 'WC WebContent Content',
+		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+		descriptionMap: {en_US: 'WC WebContent Description'},
+		groupId: site.id,
+		titleMap: {en_US: title},
+	});
+
+	// Translate from English into Spanish
+
+	await webContentTranslationPage.open(site, title);
+
+	await webContentTranslationPage.changeTargetLocale('es-ES');
+
+	await webContentTranslationPage.translateFields({
+		content: 'WC WebContent Contenido',
+		description: 'WC WebContent Descripción',
+		title: 'WC WebContent Título',
+	});
+
+	await webContentTranslationPage.publish();
+
+	// Using Spanish as the base language, translate into Japanese
+
+	await webContentTranslationPage.open(site, title);
+
+	await webContentTranslationPage.changeBaseLocale('es-ES');
+
+	await webContentTranslationPage.changeTargetLocale('ja-JP');
+
+	await webContentTranslationPage.translateFields({
+		content: 'wc webcontentコンテンツ',
+		description: 'wc webcontent記述',
+		title: 'wc webcontentタイトル',
+	});
+
+	await webContentTranslationPage.publish();
+
+	// Both translations persist and switching the target locale shows each one
+
+	await webContentTranslationPage.open(site, title);
+
+	await webContentTranslationPage.changeTargetLocale('es-ES');
+
+	await webContentTranslationPage.assertTargetFields({
+		content: 'WC WebContent Contenido',
+		description: 'WC WebContent Descripción',
+		title: 'WC WebContent Título',
+	});
+
+	await webContentTranslationPage.changeTargetLocale('ja-JP');
+
+	await webContentTranslationPage.assertTargetFields({
+		content: 'wc webcontentコンテンツ',
+		description: 'wc webcontent記述',
+		title: 'wc webcontentタイトル',
+	});
+});

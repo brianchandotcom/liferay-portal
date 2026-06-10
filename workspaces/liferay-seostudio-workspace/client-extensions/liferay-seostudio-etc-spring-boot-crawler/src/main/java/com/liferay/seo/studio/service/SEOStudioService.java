@@ -167,7 +167,7 @@ public class SEOStudioService extends BaseService {
 
 	private String _authorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-seostudio-crawler-oahs");
+			"liferay-seostudio-etc-spring-boot-crawler-oahs");
 	}
 
 	private String _fetchCrawlHits(

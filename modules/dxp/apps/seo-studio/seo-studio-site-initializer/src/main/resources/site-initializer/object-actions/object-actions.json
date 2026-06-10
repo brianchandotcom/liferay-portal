@@ -27,7 +27,7 @@
 				"en_US": "Crawler"
 			},
 			"name": "crawler",
-			"objectActionExecutorKey": "function#liferay-seostudio-crawler-object-action-crawler",
+			"objectActionExecutorKey": "function#liferay-seostudio-etc-spring-boot-crawler-object-action-crawler",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
 			}

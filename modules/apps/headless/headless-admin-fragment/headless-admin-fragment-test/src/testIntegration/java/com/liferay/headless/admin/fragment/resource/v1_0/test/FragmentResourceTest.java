@@ -185,6 +185,20 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		Fragment draftFragment = _postSiteFragmentSetFragment(
 			_randomFragment(false, true));
 
+		FragmentCollection irrelevantFragmentCollection =
+			_addFragmentCollection();
+
+		Fragment irrelevantApprovedAndDraftFragment =
+			_postSiteFragmentSetFragment(
+				_randomFragment(true, true, irrelevantFragmentCollection),
+				irrelevantFragmentCollection.getExternalReferenceCode());
+		Fragment irrelevantApprovedFragment = _postSiteFragmentSetFragment(
+			_randomFragment(true, false, irrelevantFragmentCollection),
+			irrelevantFragmentCollection.getExternalReferenceCode());
+		Fragment irrelevantDraftFragment = _postSiteFragmentSetFragment(
+			_randomFragment(false, true, irrelevantFragmentCollection),
+			irrelevantFragmentCollection.getExternalReferenceCode());
+
 		Page<Fragment> page = fragmentResource.getSiteFragmentSetFragmentsPage(
 			testGroup.getExternalReferenceCode(),
 			_fragmentCollection.getExternalReferenceCode(),
@@ -195,6 +209,11 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		assertContains(approvedAndDraftFragment, items);
 		assertContains(approvedFragment, items);
 		assertContains(draftFragment, items);
+		assertNotContains(irrelevantApprovedAndDraftFragment, items);
+		assertNotContains(irrelevantApprovedFragment, items);
+		assertNotContains(irrelevantDraftFragment, items);
+
+		_testGetSiteFragmentSetFragmentsPageWithNonexistentFragmentSet();
 	}
 
 	@Override
@@ -825,6 +844,23 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 	private void _testGetSiteFragmentDraft() throws Exception {
 		_testGetSiteFragment(false, true);
+	}
+
+	private void _testGetSiteFragmentSetFragmentsPageWithNonexistentFragmentSet()
+		throws Exception {
+
+		try {
+			fragmentResource.getSiteFragmentSetFragmentsPage(
+				testGroup.getExternalReferenceCode(),
+				RandomTestUtil.randomString(), Pagination.of(1, 10));
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
 	}
 
 	private void _testGetSiteFragmentsPageWithFilter() throws Exception {

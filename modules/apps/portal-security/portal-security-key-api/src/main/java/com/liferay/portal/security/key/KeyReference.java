@@ -7,63 +7,15 @@ package com.liferay.portal.security.key;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
-
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Tomas Polesovsky
  * @author Christopher Kian
  */
 public class KeyReference implements Serializable {
-
-	public static final String ANY_PROVIDER = StringPool.STAR;
-
-	public static KeyReference fromString(String value) {
-		if (value == null) {
-			return null;
-		}
-
-		Matcher matcher = _pattern.matcher(value);
-
-		if (!matcher.matches()) {
-			return null;
-		}
-
-		Type type = null;
-
-		String typeString = matcher.group(1);
-
-		if (Objects.equals(typeString, "keyRef")) {
-			type = Type.CRYPTO;
-		}
-		else if (Objects.equals(typeString, "secretRef")) {
-			type = Type.SECRET;
-		}
-		else {
-			return null;
-		}
-
-		String identifier = matcher.group(3);
-		String providerId = matcher.group(2);
-
-		return new KeyReference(identifier, providerId, type);
-	}
-
-	public static boolean isKeyReference(String value) {
-		if (value == null) {
-			return false;
-		}
-
-		Matcher matcher = _pattern.matcher(value);
-
-		return matcher.matches();
-	}
 
 	public KeyReference(String identifier, String providerId, Type type) {
 		if (Validator.isNull(identifier)) {
@@ -102,8 +54,8 @@ public class KeyReference implements Serializable {
 
 		KeyReference keyReference = (KeyReference)object;
 
-		if (Objects.equals(_identifier, keyReference._identifier) &&
-			Objects.equals(_providerId, keyReference._providerId) &&
+		if (_identifier.equals(keyReference._identifier) &&
+			_providerId.equals(keyReference._providerId) &&
 			(_type == keyReference._type)) {
 
 			return true;
@@ -126,7 +78,12 @@ public class KeyReference implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_identifier, _providerId, _type);
+		int result = _identifier.hashCode();
+
+		result = (31 * result) + _providerId.hashCode();
+		result = (31 * result) + _type.hashCode();
+
+		return result;
 	}
 
 	@Override
@@ -148,8 +105,6 @@ public class KeyReference implements Serializable {
 
 	}
 
-	private static final Pattern _pattern = Pattern.compile(
-		"\\$\\{(keyRef|secretRef):([^:}]+):(.+)\\}");
 	private static final long serialVersionUID = 1L;
 
 	private final String _identifier;

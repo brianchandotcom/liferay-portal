@@ -6,7 +6,7 @@
 package com.liferay.audience.service.persistence.impl;
 
 import com.liferay.audience.exception.DuplicateAudienceEntryExternalReferenceCodeException;
-import com.liferay.audience.exception.NoSuchEntryException;
+import com.liferay.audience.exception.NoSuchAudienceEntryException;
 import com.liferay.audience.model.AudienceEntry;
 import com.liferay.audience.model.AudienceEntryTable;
 import com.liferay.audience.model.impl.AudienceEntryImpl;
@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AudienceEntryPersistence.class)
 public class AudienceEntryPersistenceImpl
-	extends BasePersistenceImpl<AudienceEntry, NoSuchEntryException>
+	extends BasePersistenceImpl<AudienceEntry, NoSuchAudienceEntryException>
 	implements AudienceEntryPersistence {
 
 	/*
@@ -91,7 +91,7 @@ public class AudienceEntryPersistenceImpl
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
 	private FilterCollectionPersistenceFinder
-		<AudienceEntry, NoSuchEntryException>
+		<AudienceEntry, NoSuchAudienceEntryException>
 			_collectionPersistenceFinderByUuid;
 
 	/**
@@ -125,12 +125,12 @@ public class AudienceEntryPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	@Override
 	public AudienceEntry findByUuid_First(
 			String uuid, OrderByComparator<AudienceEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchAudienceEntryException {
 
 		return _collectionPersistenceFinderByUuid.findFirst(
 			finderCache, new Object[] {uuid}, orderByComparator);
@@ -209,7 +209,7 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	private FilterCollectionPersistenceFinder
-		<AudienceEntry, NoSuchEntryException>
+		<AudienceEntry, NoSuchAudienceEntryException>
 			_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -245,13 +245,13 @@ public class AudienceEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	@Override
 	public AudienceEntry findByUuid_C_First(
 			String uuid, long companyId,
 			OrderByComparator<AudienceEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchAudienceEntryException {
 
 		return _collectionPersistenceFinderByUuid_C.findFirst(
 			finderCache, new Object[] {uuid, companyId}, orderByComparator);
@@ -337,7 +337,7 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	private FilterCollectionPersistenceFinder
-		<AudienceEntry, NoSuchEntryException>
+		<AudienceEntry, NoSuchAudienceEntryException>
 			_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -371,12 +371,12 @@ public class AudienceEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	@Override
 	public AudienceEntry findByCompanyId_First(
 			long companyId, OrderByComparator<AudienceEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchAudienceEntryException {
 
 		return _collectionPersistenceFinderByCompanyId.findFirst(
 			finderCache, new Object[] {companyId}, orderByComparator);
@@ -456,7 +456,7 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	private FilterCollectionPersistenceFinder
-		<AudienceEntry, NoSuchEntryException>
+		<AudienceEntry, NoSuchAudienceEntryException>
 			_collectionPersistenceFinderByC_LikeN;
 
 	/**
@@ -548,13 +548,13 @@ public class AudienceEntryPersistenceImpl
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	@Override
 	public AudienceEntry findByC_LikeN_First(
 			long companyId, String name,
 			OrderByComparator<AudienceEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchAudienceEntryException {
 
 		return _collectionPersistenceFinderByC_LikeN.findFirst(
 			finderCache, new Object[] {companyId, name}, orderByComparator);
@@ -674,21 +674,21 @@ public class AudienceEntryPersistenceImpl
 			finderCache, new Object[] {companyId, name}, companyId, 0);
 	}
 
-	private UniquePersistenceFinder<AudienceEntry, NoSuchEntryException>
+	private UniquePersistenceFinder<AudienceEntry, NoSuchAudienceEntryException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
-	 * Returns the audience entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the audience entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchAudienceEntryException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code
 	 * @param companyId the company ID
 	 * @return the matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	@Override
 	public AudienceEntry findByERC_C(
 			String externalReferenceCode, long companyId)
-		throws NoSuchEntryException {
+		throws NoSuchAudienceEntryException {
 
 		return _uniquePersistenceFinderByERC_C.find(
 			finderCache, new Object[] {externalReferenceCode, companyId});
@@ -721,7 +721,7 @@ public class AudienceEntryPersistenceImpl
 	@Override
 	public AudienceEntry removeByERC_C(
 			String externalReferenceCode, long companyId)
-		throws NoSuchEntryException {
+		throws NoSuchAudienceEntryException {
 
 		AudienceEntry audienceEntry = findByERC_C(
 			externalReferenceCode, companyId);
@@ -784,11 +784,11 @@ public class AudienceEntryPersistenceImpl
 	 *
 	 * @param audienceEntryId the primary key of the audience entry
 	 * @return the audience entry that was removed
-	 * @throws NoSuchEntryException if a audience entry with the primary key could not be found
+	 * @throws NoSuchAudienceEntryException if a audience entry with the primary key could not be found
 	 */
 	@Override
 	public AudienceEntry remove(long audienceEntryId)
-		throws NoSuchEntryException {
+		throws NoSuchAudienceEntryException {
 
 		return remove((Serializable)audienceEntryId);
 	}
@@ -971,15 +971,15 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the audience entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the audience entry with the primary key or throws a <code>NoSuchAudienceEntryException</code> if it could not be found.
 	 *
 	 * @param audienceEntryId the primary key of the audience entry
 	 * @return the audience entry
-	 * @throws NoSuchEntryException if a audience entry with the primary key could not be found
+	 * @throws NoSuchAudienceEntryException if a audience entry with the primary key could not be found
 	 */
 	@Override
 	public AudienceEntry findByPrimaryKey(long audienceEntryId)
-		throws NoSuchEntryException {
+		throws NoSuchAudienceEntryException {
 
 		return findByPrimaryKey((Serializable)audienceEntryId);
 	}
@@ -1215,4 +1215,4 @@ public class AudienceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1181646747
+// LIFERAY-SERVICE-BUILDER-HASH:-425107667

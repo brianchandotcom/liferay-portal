@@ -7,7 +7,7 @@ package com.liferay.audience.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.audience.exception.DuplicateAudienceEntryExternalReferenceCodeException;
-import com.liferay.audience.exception.NoSuchEntryException;
+import com.liferay.audience.exception.NoSuchAudienceEntryException;
 import com.liferay.audience.model.AudienceEntry;
 import com.liferay.audience.service.AudienceEntryLocalServiceUtil;
 import com.liferay.audience.service.persistence.AudienceEntryPersistence;
@@ -246,7 +246,7 @@ public class AudienceEntryPersistenceTest {
 		Assert.assertEquals(existingAudienceEntry, newAudienceEntry);
 	}
 
-	@Test(expected = NoSuchEntryException.class)
+	@Test(expected = NoSuchAudienceEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -579,4 +579,4 @@ public class AudienceEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1505647190
+// LIFERAY-SERVICE-BUILDER-HASH:1650378738

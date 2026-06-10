@@ -6,11 +6,12 @@
 package com.liferay.layout.content.web.internal.portlet;
 
 import com.liferay.layout.content.web.internal.constants.LayoutContentVersionPortletKeys;
-import com.liferay.layout.content.web.internal.constants.LayoutContentVersionWebKeys;
 import com.liferay.layout.content.web.internal.display.context.LayoutContentVersionDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.template.react.renderer.ComponentDescriptor;
+import com.liferay.portal.template.react.renderer.ReactRenderer;
 
 import jakarta.portlet.Portlet;
 import jakarta.portlet.PortletException;
@@ -38,8 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=false",
 		"jakarta.portlet.display-name=Layout Content Version",
 		"jakarta.portlet.expiration-cache=0",
-		"jakarta.portlet.init-param.template-path=/META-INF/resources/",
-		"jakarta.portlet.init-param.view-template=/view.jsp",
 		"jakarta.portlet.name=" + LayoutContentVersionPortletKeys.LAYOUT_CONTENT_VERSION,
 		"jakarta.portlet.resource-bundle=content.Language",
 		"jakarta.portlet.version=4.0"
@@ -56,23 +55,18 @@ public class LayoutContentVersionPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		LayoutContentVersionDisplayContext layoutContentVersionDisplayContext =
-			(LayoutContentVersionDisplayContext)httpServletRequest.getAttribute(
-				LayoutContentVersionWebKeys.
-					LAYOUT_CONTENT_VERSION_DISPLAY_CONTEXT);
-
-		if (layoutContentVersionDisplayContext == null) {
-			layoutContentVersionDisplayContext =
+		try {
+			_reactRenderer.renderReact(
+				new ComponentDescriptor(
+					"{VersionHistory} from layout-content-web"),
 				new LayoutContentVersionDisplayContext(
-					httpServletRequest, _layoutLocalService);
-
-			httpServletRequest.setAttribute(
-				LayoutContentVersionWebKeys.
-					LAYOUT_CONTENT_VERSION_DISPLAY_CONTEXT,
-				layoutContentVersionDisplayContext);
+					httpServletRequest, _layoutLocalService
+				).getContext(),
+				httpServletRequest, renderResponse.getWriter());
 		}
-
-		super.doDispatch(renderRequest, renderResponse);
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
 	}
 
 	@Reference
@@ -80,5 +74,8 @@ public class LayoutContentVersionPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ReactRenderer _reactRenderer;
 
 }

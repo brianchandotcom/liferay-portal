@@ -135,7 +135,7 @@ test('LPD-71138 Add status filter for ongoing publications', async ({
 	await inProgressCheckbox.check();
 	await pendingApprovalCheckbox.uncheck();
 
-	await addFilterButton.click();
+	await page.getByRole('button', {name: 'Show Results'}).click();
 
 	await expect(
 		page.getByRole('link', {name: inProgressCTCollection.body.name})

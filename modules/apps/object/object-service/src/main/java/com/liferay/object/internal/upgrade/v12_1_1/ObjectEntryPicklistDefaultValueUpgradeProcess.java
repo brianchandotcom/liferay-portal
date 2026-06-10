@@ -41,8 +41,8 @@ public class ObjectEntryPicklistDefaultValueUpgradeProcess
 						"= [$TRUE$] and ObjectFieldSetting.value is not null ",
 						"and not exists (select 1 from ObjectFieldSetting ofs ",
 						"where ofs.objectFieldId = ObjectField.objectFieldId ",
-						"and ofs.name = 'defaultValueType' and ofs.value != ",
-						"'inputAsValue')")))) {
+						"and ofs.name = 'defaultValueType' and ",
+						"CAST_CLOB_TEXT(ofs.value) != 'inputAsValue')")))) {
 
 			preparedStatement1.setInt(1, WorkflowConstants.STATUS_APPROVED);
 			preparedStatement1.setString(

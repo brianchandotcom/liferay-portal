@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,8 +38,8 @@ public class AudienceEntryServiceImpl extends AudienceEntryServiceBaseImpl {
 
 	@Override
 	public AudienceEntry addAudienceEntry(
-			String externalReferenceCode, String json,
-			Map<Locale, String> nameMap, ServiceContext serviceContext)
+			String externalReferenceCode, String json, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -49,7 +47,7 @@ public class AudienceEntryServiceImpl extends AudienceEntryServiceBaseImpl {
 			AudienceActionKeys.MANAGE_AUDIENCE_ENTRIES);
 
 		return audienceEntryLocalService.addAudienceEntry(
-			externalReferenceCode, json, nameMap, serviceContext);
+			externalReferenceCode, json, name, serviceContext);
 	}
 
 	@Override
@@ -106,14 +104,14 @@ public class AudienceEntryServiceImpl extends AudienceEntryServiceBaseImpl {
 
 	@Override
 	public AudienceEntry updateAudienceEntry(
-			long audienceEntryId, String json, Map<Locale, String> nameMap)
+			long audienceEntryId, String json, String name)
 		throws PortalException {
 
 		_audienceEntryResourcePermission.check(
 			getPermissionChecker(), audienceEntryId, ActionKeys.UPDATE);
 
 		return audienceEntryLocalService.updateAudienceEntry(
-			audienceEntryId, json, nameMap);
+			audienceEntryId, json, name);
 	}
 
 	@Reference(

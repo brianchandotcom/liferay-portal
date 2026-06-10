@@ -42,7 +42,8 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 	User currentUser = themeDisplay.getUser();
 	%>
 
-	window.faroConstants = <%=
+	window.faroConstants =
+		<%=
 	JSONUtil.writeValueAsString(
 		HashMapBuilder.<String, Object>put(
 		"activityActions", ActivityConstants.getActions())

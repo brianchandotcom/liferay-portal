@@ -66,7 +66,6 @@ public class GroupModelListenerTest {
 	@TestInfo("LPD-92888")
 	public void testOnAfterUpdate() throws Exception {
 		_testOnAfterUpdateWithExternalReferenceCode();
-
 		_testOnAfterUpdateWithTrashEnabled();
 	}
 

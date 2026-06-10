@@ -422,6 +422,9 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 							objectEntry.getPropertyValue("outputVariable"))));
 				setStatus(
 					() -> _getStatus(dtoConverterContext, workflowDefinition));
+				setSystem(
+					() -> GetterUtil.getBoolean(
+						objectEntry.getPropertyValue("system")));
 				setTitle(
 					() -> GetterUtil.getString(
 						objectEntry.getPropertyValue("title")));

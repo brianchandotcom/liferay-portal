@@ -10,6 +10,8 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -36,11 +38,23 @@ public class ExpiredJournalArticleUpgradeProcess extends UpgradeProcess {
 				dynamicQuery.add(property.eq(WorkflowConstants.STATUS_EXPIRED));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(JournalArticle journalArticle) ->
-				_journalArticleLocalService.deleteArticle(journalArticle));
+			(JournalArticle journalArticle) -> {
+				try {
+					_journalArticleLocalService.deleteArticle(journalArticle);
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to delete expired journal article " +
+							journalArticle.getId(),
+						exception);
+				}
+			});
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExpiredJournalArticleUpgradeProcess.class);
 
 	private final JournalArticleLocalService _journalArticleLocalService;
 

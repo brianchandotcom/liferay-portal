@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.web.internal.frontend.data.set.filter;
 
 import com.liferay.change.tracking.web.internal.constants.PublicationsFDSNames;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
@@ -25,6 +26,11 @@ import org.osgi.service.component.annotations.Component;
 	service = FDSFilter.class
 )
 public class OngoingStatusSelectionFDSFilter extends BaseSelectionFDSFilter {
+
+	@Override
+	public String getEntityFieldType() {
+		return FDSEntityFieldTypes.INTEGER;
+	}
 
 	@Override
 	public String getId() {

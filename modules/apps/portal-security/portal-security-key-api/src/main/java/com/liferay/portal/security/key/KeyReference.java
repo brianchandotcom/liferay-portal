@@ -35,19 +35,10 @@ public class KeyReference implements Serializable {
 			return null;
 		}
 
-		Type type = null;
-
 		String typeString = matcher.group(1);
 
-		if (Objects.equals(typeString, "keyRef")) {
-			type = Type.CRYPTO;
-		}
-		else if (Objects.equals(typeString, "secretRef")) {
-			type = Type.SECRET;
-		}
-		else {
-			return null;
-		}
+		Type type =
+			Objects.equals(typeString, "secretRef") ? Type.SECRET : Type.CRYPTO;
 
 		String identifier = matcher.group(3);
 		String providerId = matcher.group(2);

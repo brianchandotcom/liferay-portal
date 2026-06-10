@@ -9,6 +9,6 @@ liferay-sample-editor-config-contributor-1:
         -   sampleClassicEditor
         -   sampleLegacyEditor
         -   sampleReactClassicEditor
-    name: Liferay Sample Editor Config Contributor
+    name: Liferay Sample Editor Config Contributor 1
     type: editorConfigContributor
     url: index.js

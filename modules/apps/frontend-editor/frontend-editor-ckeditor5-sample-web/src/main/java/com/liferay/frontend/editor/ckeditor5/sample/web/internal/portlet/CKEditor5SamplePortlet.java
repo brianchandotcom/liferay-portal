@@ -52,7 +52,7 @@ public class CKEditor5SamplePortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			CKEditor5SampleWebKeys.CKEDITOR_5_SAMPLE_DISPLAY_CONTEXT,
-			new CKEditor5SampleDisplayContext(_cetManager, renderRequest));
+			new CKEditor5SampleDisplayContext(renderRequest));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

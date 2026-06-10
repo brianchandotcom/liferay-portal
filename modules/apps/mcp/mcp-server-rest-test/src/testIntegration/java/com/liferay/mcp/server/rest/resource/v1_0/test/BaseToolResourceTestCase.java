@@ -181,12 +181,12 @@ public abstract class BaseToolResourceTestCase {
 	}
 
 	@Test
-	public void testGetTool() throws Exception {
+	public void testGetToolSetToolSetNameTool() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testInvokeTool() throws Exception {
+	public void testPostToolSetToolSetNameToolInvoke() throws Exception {
 		Assert.assertTrue(false);
 	}
 
@@ -900,4 +900,4 @@ public abstract class BaseToolResourceTestCase {
 		_toolResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1431034240
+// LIFERAY-REST-BUILDER-HASH:-1507640032

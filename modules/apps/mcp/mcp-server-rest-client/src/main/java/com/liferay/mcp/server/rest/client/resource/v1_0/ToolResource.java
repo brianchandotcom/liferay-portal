@@ -32,17 +32,20 @@ public interface ToolResource {
 		return new Builder();
 	}
 
-	public Tool getTool(String toolSetName, String toolName) throws Exception;
+	public Tool getToolSetToolSetNameTool(String toolSetName, String toolName)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getToolHttpResponse(
+	public HttpInvoker.HttpResponse getToolSetToolSetNameToolHttpResponse(
 			String toolSetName, String toolName)
 		throws Exception;
 
-	public void invokeTool(String toolSetName, String toolName, Object object)
+	public void postToolSetToolSetNameToolInvoke(
+			String toolSetName, String toolName, Object object)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse invokeToolHttpResponse(
-			String toolSetName, String toolName, Object object)
+	public HttpInvoker.HttpResponse
+			postToolSetToolSetNameToolInvokeHttpResponse(
+				String toolSetName, String toolName, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -153,11 +156,12 @@ public interface ToolResource {
 
 	public static class ToolResourceImpl implements ToolResource {
 
-		public Tool getTool(String toolSetName, String toolName)
+		public Tool getToolSetToolSetNameTool(
+				String toolSetName, String toolName)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = getToolHttpResponse(
-				toolSetName, toolName);
+			HttpInvoker.HttpResponse httpResponse =
+				getToolSetToolSetNameToolHttpResponse(toolSetName, toolName);
 
 			String content = httpResponse.getContent();
 
@@ -218,7 +222,7 @@ public interface ToolResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getToolHttpResponse(
+		public HttpInvoker.HttpResponse getToolSetToolSetNameToolHttpResponse(
 				String toolSetName, String toolName)
 			throws Exception {
 
@@ -259,12 +263,13 @@ public interface ToolResource {
 			return httpInvoker.invoke();
 		}
 
-		public void invokeTool(
+		public void postToolSetToolSetNameToolInvoke(
 				String toolSetName, String toolName, Object object)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = invokeToolHttpResponse(
-				toolSetName, toolName, object);
+			HttpInvoker.HttpResponse httpResponse =
+				postToolSetToolSetNameToolInvokeHttpResponse(
+					toolSetName, toolName, object);
 
 			String content = httpResponse.getContent();
 
@@ -314,8 +319,9 @@ public interface ToolResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse invokeToolHttpResponse(
-				String toolSetName, String toolName, Object object)
+		public HttpInvoker.HttpResponse
+				postToolSetToolSetNameToolInvokeHttpResponse(
+					String toolSetName, String toolName, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -369,4 +375,4 @@ public interface ToolResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2081359495
+// LIFERAY-REST-BUILDER-HASH:1170961807

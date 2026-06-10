@@ -48,17 +48,17 @@ public abstract class BaseToolResourceImpl implements ToolResource {
 	 * curl -X 'GET' 'http://localhost:8080/o/mcp-server/v1.0/tool-sets/{toolSetName}/tools/{toolName}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Use this once you have identified a tool (via `getToolSummaries`) and need its input schema before invoking it. Returns the tool's `inputSchema`. Build an input map matching `inputSchema` and POST it to `invoke` under the same URL to execute the tool."
+		description = "Use this once you have identified a tool (via `getToolSetToolSetNameToolSummariesPage`) and need its input schema before invoking it. Returns the tool's `inputSchema`. Build an input map matching `inputSchema` and POST it to `invoke` under the same URL to execute the tool."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "The tool-set name returned by `getToolSets`.",
+				description = "The tool-set name returned by `getToolSetsPage`.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "toolSetName"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "The tool name returned by `getToolSummaries`.",
+				description = "The tool name returned by `getToolSetToolSetNameToolSummariesPage`.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "toolName"
 			)
@@ -71,7 +71,7 @@ public abstract class BaseToolResourceImpl implements ToolResource {
 	@jakarta.ws.rs.Path("/tool-sets/{toolSetName}/tools/{toolName}")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Tool getTool(
+	public Tool getToolSetToolSetNameTool(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("toolSetName")
@@ -91,18 +91,18 @@ public abstract class BaseToolResourceImpl implements ToolResource {
 	 * curl -X 'POST' 'http://localhost:8080/o/mcp-server/v1.0/tool-sets/{toolSetName}/tools/{toolName}/invoke'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Invokes a tool. ALWAYS call `getTool` first to fetch the tool's `inputSchema`, then build the request `body` to match it exactly. Skipping `getTool` leads to malformed input and avoidable failures. Returns the tool's response body unchanged.",
-		operationId = "invokeTool"
+		description = "Invokes a tool. ALWAYS call `getToolSetToolSetNameTool` first to fetch the tool's `inputSchema`, then build the request `body` to match it exactly. Skipping `getToolSetToolSetNameTool` leads to malformed input and avoidable failures. Returns the tool's response body unchanged.",
+		operationId = "postToolSetToolSetNameToolInvoke"
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "The tool-set name returned by `getToolSets`.",
+				description = "The tool-set name returned by `getToolSetsPage`.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "toolSetName"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "The tool name returned by `getToolSummaries`.",
+				description = "The tool name returned by `getToolSetToolSetNameToolSummariesPage`.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "toolName"
 			)
@@ -116,7 +116,7 @@ public abstract class BaseToolResourceImpl implements ToolResource {
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("text/plain")
 	@Override
-	public Response invokeToolObject(
+	public Response postToolSetToolSetNameToolInvokeObject(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("toolSetName")
@@ -578,4 +578,4 @@ public abstract class BaseToolResourceImpl implements ToolResource {
 		LogFactoryUtil.getLog(BaseToolResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:235970562
+// LIFERAY-REST-BUILDER-HASH:1426896571

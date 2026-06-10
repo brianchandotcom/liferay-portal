@@ -33,11 +33,13 @@ public interface ToolSummaryResource {
 		return new Builder();
 	}
 
-	public Page<ToolSummary> getToolSummaries(String toolSetName)
+	public Page<ToolSummary> getToolSetToolSetNameToolSummariesPage(
+			String toolSetName)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getToolSummariesHttpResponse(
-			String toolSetName)
+	public HttpInvoker.HttpResponse
+			getToolSetToolSetNameToolSummariesPageHttpResponse(
+				String toolSetName)
 		throws Exception;
 
 	public static class Builder {
@@ -148,11 +150,12 @@ public interface ToolSummaryResource {
 
 	public static class ToolSummaryResourceImpl implements ToolSummaryResource {
 
-		public Page<ToolSummary> getToolSummaries(String toolSetName)
+		public Page<ToolSummary> getToolSetToolSetNameToolSummariesPage(
+				String toolSetName)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getToolSummariesHttpResponse(toolSetName);
+				getToolSetToolSetNameToolSummariesPageHttpResponse(toolSetName);
 
 			String content = httpResponse.getContent();
 
@@ -213,8 +216,9 @@ public interface ToolSummaryResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getToolSummariesHttpResponse(
-				String toolSetName)
+		public HttpInvoker.HttpResponse
+				getToolSetToolSetNameToolSummariesPageHttpResponse(
+					String toolSetName)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -265,4 +269,4 @@ public interface ToolSummaryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1770733473
+// LIFERAY-REST-BUILDER-HASH:1762417275

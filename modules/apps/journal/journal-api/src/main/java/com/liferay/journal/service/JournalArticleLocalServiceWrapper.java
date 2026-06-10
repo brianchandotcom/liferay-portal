@@ -719,13 +719,6 @@ public class JournalArticleLocalServiceWrapper
 			dynamicQuery, projection);
 	}
 
-	@Override
-	public JournalArticle expireArticle(long articleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _journalArticleLocalService.expireArticle(articleId);
-	}
-
 	/**
 	 * Expires the web content article matching the group, article ID, and
 	 * version.
@@ -3384,4 +3377,4 @@ public class JournalArticleLocalServiceWrapper
 	private JournalArticleLocalService _journalArticleLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-479237326
+// LIFERAY-SERVICE-BUILDER-HASH:-2010132391

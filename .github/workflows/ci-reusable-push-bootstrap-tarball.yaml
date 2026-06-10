@@ -11,6 +11,7 @@ jobs:
                 uses: actions/checkout@v4
                 with:
                     fetch-depth: 1
+                    filter: tree:0
                     sparse-checkout: |
                         cloud/scripts
                         cloud/terraform/${{inputs.provider}}

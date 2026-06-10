@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.web.internal.configuration.RoleVisibilityConfiguration;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributorShowFilterRegistryUtil;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 import com.liferay.roles.admin.search.RoleSearch;
 import com.liferay.roles.admin.search.RoleSearchTerms;
@@ -529,59 +530,24 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public int[] getRoleTypes() {
-		if (_roleTypes != null) {
-			return _roleTypes;
-		}
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
 
-		String roleTypesParam = _getRoleTypesParam();
+		List<Integer> roleTypes = new ArrayList<>();
 
-		if (Validator.isNotNull(roleTypesParam)) {
-			_roleTypes = StringUtil.split(roleTypesParam, 0);
-		}
+		for (int roleType : _getRoleTypes()) {
+			RoleTypeContributor roleTypeContributor =
+				_roleTypeContributorProvider.getRoleTypeContributor(roleType);
 
-		if (_roleTypes != null) {
-			return _roleTypes;
-		}
+			if ((roleTypeContributor == null) ||
+				RoleTypeContributorShowFilterRegistryUtil.isShow(
+					roleTypeContributor, permissionChecker)) {
 
-		_roleTypes = RoleConstants.TYPES_REGULAR_AND_SITE;
-
-		if ((_group != null) && _group.isDepot()) {
-			_roleTypes = _TYPES_DEPOT_AND_REGULAR;
-		}
-
-		if (ResourceActionsUtil.isPortalModelResource(getModelResource())) {
-			if (Objects.equals(
-					getModelResource(), Organization.class.getName()) ||
-				Objects.equals(getModelResource(), User.class.getName())) {
-
-				_roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR;
+				roleTypes.add(roleType);
 			}
-			else {
-				_roleTypes = RoleConstants.TYPES_REGULAR;
-			}
-
-			return _roleTypes;
 		}
 
-		if (_group == null) {
-			return _roleTypes;
-		}
-
-		Group parentGroup = null;
-
-		if (_group.isLayout()) {
-			parentGroup = GroupLocalServiceUtil.fetchGroup(
-				_group.getParentGroupId());
-		}
-
-		if (parentGroup != null) {
-			_roleTypes = _getGroupRoleTypes(parentGroup, _roleTypes);
-		}
-		else {
-			_roleTypes = _getGroupRoleTypes(_group, _roleTypes);
-		}
-
-		return _roleTypes;
+		return ArrayUtil.toIntArray(roleTypes);
 	}
 
 	public String getSearchActionURL() throws Exception {
@@ -727,6 +693,62 @@ public class PortletConfigurationPermissionsDisplayContext {
 			_httpServletRequest, "returnToFullPageURL");
 
 		return _returnToFullPageURL;
+	}
+
+	private int[] _getRoleTypes() {
+		if (_roleTypes != null) {
+			return _roleTypes;
+		}
+
+		String roleTypesParam = _getRoleTypesParam();
+
+		if (Validator.isNotNull(roleTypesParam)) {
+			_roleTypes = StringUtil.split(roleTypesParam, 0);
+		}
+
+		if (_roleTypes != null) {
+			return _roleTypes;
+		}
+
+		_roleTypes = RoleConstants.TYPES_REGULAR_AND_SITE;
+
+		if ((_group != null) && _group.isDepot()) {
+			_roleTypes = _TYPES_DEPOT_AND_REGULAR;
+		}
+
+		if (ResourceActionsUtil.isPortalModelResource(getModelResource())) {
+			if (Objects.equals(
+					getModelResource(), Organization.class.getName()) ||
+				Objects.equals(getModelResource(), User.class.getName())) {
+
+				_roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR;
+			}
+			else {
+				_roleTypes = RoleConstants.TYPES_REGULAR;
+			}
+
+			return _roleTypes;
+		}
+
+		if (_group == null) {
+			return _roleTypes;
+		}
+
+		Group parentGroup = null;
+
+		if (_group.isLayout()) {
+			parentGroup = GroupLocalServiceUtil.fetchGroup(
+				_group.getParentGroupId());
+		}
+
+		if (parentGroup != null) {
+			_roleTypes = _getGroupRoleTypes(parentGroup, _roleTypes);
+		}
+		else {
+			_roleTypes = _getGroupRoleTypes(_group, _roleTypes);
+		}
+
+		return _roleTypes;
 	}
 
 	private String _getRoleTypesParam() {

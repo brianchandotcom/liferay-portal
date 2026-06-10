@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributorShowFilterRegistryUtil;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 import com.liferay.roles.admin.search.RoleSearch;
 import com.liferay.roles.admin.search.RoleSearchTerms;
@@ -45,6 +48,7 @@ import jakarta.portlet.RenderRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -334,6 +338,27 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 		).buildString();
 	}
 
+	private int[] _filterRoleTypes(int[] roleTypes) {
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		List<Integer> roleTypesList = new ArrayList<>();
+
+		for (int roleType : roleTypes) {
+			RoleTypeContributor roleTypeContributor =
+				_roleTypeContributorProvider.getRoleTypeContributor(roleType);
+
+			if ((roleTypeContributor != null) &&
+				RoleTypeContributorShowFilterRegistryUtil.isShow(
+					roleTypeContributor, permissionChecker)) {
+
+				roleTypesList.add(roleType);
+			}
+		}
+
+		return ArrayUtil.toIntArray(roleTypesList);
+	}
+
 	private Map<String, String[]> _getDefaultPermissions() {
 		if (_defaultPermissions != null) {
 			return _defaultPermissions;
@@ -405,6 +430,8 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 		}
 
 		if (_roleTypes != null) {
+			_roleTypes = _filterRoleTypes(_roleTypes);
+
 			return _roleTypes;
 		}
 
@@ -429,10 +456,14 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 				_roleTypes = RoleConstants.TYPES_REGULAR;
 			}
 
+			_roleTypes = _filterRoleTypes(_roleTypes);
+
 			return _roleTypes;
 		}
 
 		if (_group == null) {
+			_roleTypes = _filterRoleTypes(_roleTypes);
+
 			return _roleTypes;
 		}
 
@@ -449,6 +480,8 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 		else {
 			_roleTypes = _getGroupRoleTypes(_group, _roleTypes);
 		}
+
+		_roleTypes = _filterRoleTypes(_roleTypes);
 
 		return _roleTypes;
 	}

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.fragment.internal.odata.entity.v1_0;
 
+import com.liferay.fragment.constants.FragmentCollectionField;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
@@ -20,7 +21,8 @@ public class FragmentSetEntityModel implements EntityModel {
 
 	public FragmentSetEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new BooleanEntityField("marketplace", locale -> "marketplace"),
+			new BooleanEntityField(
+				"marketplace", locale -> FragmentCollectionField.MARKETPLACE),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

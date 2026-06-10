@@ -816,10 +816,12 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		Settings settings = postedAssetLibrary.getSettings();
 
 		Assert.assertEquals(
-			PrefsPropsUtil.getInteger(
-				TestPropsValues.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE,
-				PropsValues.TRASH_ENTRIES_MAX_AGE),
-			(int)settings.getTrashEntriesMaxAge());
+			Integer.valueOf(
+				PrefsPropsUtil.getInteger(
+					TestPropsValues.getCompanyId(),
+					PropsKeys.TRASH_ENTRIES_MAX_AGE,
+					PropsValues.TRASH_ENTRIES_MAX_AGE)),
+			settings.getTrashEntriesMaxAge());
 	}
 
 	private void _testPostAssetLibraryWithNoSettings() throws Exception {

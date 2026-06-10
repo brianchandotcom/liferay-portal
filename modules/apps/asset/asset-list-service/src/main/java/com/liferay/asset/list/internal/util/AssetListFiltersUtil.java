@@ -85,9 +85,7 @@ public class AssetListFiltersUtil {
 			objectDefinition.getObjectDefinitionId(), name);
 	}
 
-	private static String _getSubfield(
-		Locale locale, ObjectField objectField) {
-
+	private static String _getSubfield(Locale locale, ObjectField objectField) {
 		if (objectField.isIndexedAsKeyword()) {
 			return "nestedFieldArray.value_keyword";
 		}

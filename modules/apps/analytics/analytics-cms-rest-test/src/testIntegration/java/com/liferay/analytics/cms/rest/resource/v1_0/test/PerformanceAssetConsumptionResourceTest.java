@@ -87,13 +87,15 @@ public class PerformanceAssetConsumptionResourceTest
 
 			});
 
+		long dataSourceId = RandomTestUtil.nextLong();
+
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						testCompany.getCompanyId(),
 						AnalyticsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"liferayAnalyticsDataSourceId", "12345"
+							"liferayAnalyticsDataSourceId", dataSourceId
 						).put(
 							"liferayAnalyticsEnableAllGroupIds", true
 						).put(
@@ -104,13 +106,13 @@ public class PerformanceAssetConsumptionResourceTest
 							"http://" + RandomTestUtil.randomString()
 						).build())) {
 
-			_validateGetPerformanceAssetConsumptionGroupByStructure();
+			_assertGetPerformanceAssetConsumptionGroupByStructure();
 
-			_validateGetPerformanceAssetConsumptionResponse();
+			_assertGetPerformanceAssetConsumptionResponse();
 
-			_validateGetPerformanceAssetConsumptionURL();
+			_assertGetPerformanceAssetConsumptionURL(dataSourceId);
 
-			_validateGetPerformanceAssetConsumptionWithInvalidGroupBy();
+			_assertGetPerformanceAssetConsumptionWithInvalidGroupBy();
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -118,19 +120,7 @@ public class PerformanceAssetConsumptionResourceTest
 		}
 	}
 
-	private RecordingMockHttp _setUpMockHttp(String json) {
-		RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
-			Collections.singletonMap(
-				"/api/1.0/asset-metric/objectEntry/asset-consumption",
-				() -> json));
-
-		ReflectionTestUtil.setFieldValue(
-			_performanceAssetConsumptionResource, "_http", recordingMockHttp);
-
-		return recordingMockHttp;
-	}
-
-	private void _validateGetPerformanceAssetConsumptionGroupByStructure()
+	private void _assertGetPerformanceAssetConsumptionGroupByStructure()
 		throws Exception {
 
 		CMSTestUtil.getOrAddGroup(
@@ -150,18 +140,18 @@ public class PerformanceAssetConsumptionResourceTest
 				"metrics",
 				JSONUtil.putAll(
 					JSONUtil.put(
+						"count", 30
+					).put(
 						"key", RandomTestUtil.randomString()
 					).put(
 						"title", basicWebContentObjectDefinition.getName()
-					).put(
-						"value", 30
 					),
 					JSONUtil.put(
+						"count", 20
+					).put(
 						"key", RandomTestUtil.randomString()
 					).put(
 						"title", blogObjectDefinition.getName()
-					).put(
-						"value", 20
 					))
 			).put(
 				"total", 2
@@ -181,11 +171,15 @@ public class PerformanceAssetConsumptionResourceTest
 			Arrays.toString(performanceAssetConsumptionItems), 2,
 			performanceAssetConsumptionItems.length);
 		Assert.assertEquals(
+			30L, (long)performanceAssetConsumptionItems[0].getCount());
+		Assert.assertEquals(
 			basicWebContentObjectDefinition.getExternalReferenceCode(),
 			performanceAssetConsumptionItems[0].getKey());
 		Assert.assertEquals(
 			basicWebContentObjectDefinition.getLabel(LocaleUtil.getDefault()),
 			performanceAssetConsumptionItems[0].getTitle());
+		Assert.assertEquals(
+			20L, (long)performanceAssetConsumptionItems[1].getCount());
 		Assert.assertEquals(
 			blogObjectDefinition.getExternalReferenceCode(),
 			performanceAssetConsumptionItems[1].getKey());
@@ -194,7 +188,7 @@ public class PerformanceAssetConsumptionResourceTest
 			performanceAssetConsumptionItems[1].getTitle());
 	}
 
-	private void _validateGetPerformanceAssetConsumptionResponse()
+	private void _assertGetPerformanceAssetConsumptionResponse()
 		throws Exception {
 
 		_setUpMockHttp(
@@ -202,18 +196,18 @@ public class PerformanceAssetConsumptionResourceTest
 				"metrics",
 				JSONUtil.putAll(
 					JSONUtil.put(
+						"count", 10
+					).put(
 						"key", "key1"
 					).put(
 						"title", "title1"
-					).put(
-						"value", 10
 					),
 					JSONUtil.put(
+						"count", 20
+					).put(
 						"key", "key2"
 					).put(
 						"title", "title2"
-					).put(
-						"value", 20
 					))
 			).put(
 				"total", 2
@@ -236,9 +230,13 @@ public class PerformanceAssetConsumptionResourceTest
 				Arrays.toString(performanceAssetConsumptionItems), 2,
 				performanceAssetConsumptionItems.length);
 			Assert.assertEquals(
+				10L, (long)performanceAssetConsumptionItems[0].getCount());
+			Assert.assertEquals(
 				"key1", performanceAssetConsumptionItems[0].getKey());
 			Assert.assertEquals(
 				"title1", performanceAssetConsumptionItems[0].getTitle());
+			Assert.assertEquals(
+				20L, (long)performanceAssetConsumptionItems[1].getCount());
 			Assert.assertEquals(
 				"key2", performanceAssetConsumptionItems[1].getKey());
 			Assert.assertEquals(
@@ -254,7 +252,9 @@ public class PerformanceAssetConsumptionResourceTest
 		}
 	}
 
-	private void _validateGetPerformanceAssetConsumptionURL() throws Exception {
+	private void _assertGetPerformanceAssetConsumptionURL(long dataSourceId)
+		throws Exception {
+
 		RecordingMockHttp recordingMockHttp = _setUpMockHttp(
 			JSONUtil.put(
 				"metrics", JSONUtil.putAll()
@@ -273,7 +273,8 @@ public class PerformanceAssetConsumptionResourceTest
 			location,
 			location.contains("assetSummaryMetricTypeString=viewsMetric"));
 		Assert.assertTrue(location, location.contains("categoryId=11111"));
-		Assert.assertTrue(location, location.contains("dataSourceId=12345"));
+		Assert.assertTrue(
+			location, location.contains("dataSourceId=" + dataSourceId));
 		Assert.assertTrue(location, location.contains("groupBy=tag"));
 		Assert.assertTrue(location, location.contains("page=2"));
 		Assert.assertTrue(location, location.contains("rangeKey=30"));
@@ -282,7 +283,7 @@ public class PerformanceAssetConsumptionResourceTest
 		Assert.assertTrue(location, location.contains("vocabularyId=33333"));
 	}
 
-	private void _validateGetPerformanceAssetConsumptionWithInvalidGroupBy() {
+	private void _assertGetPerformanceAssetConsumptionWithInvalidGroupBy() {
 		Assert.assertThrows(
 			BadRequestException.class,
 			() ->
@@ -290,6 +291,18 @@ public class PerformanceAssetConsumptionResourceTest
 					getPerformanceAssetConsumption(
 						null, null, RandomTestUtil.randomString(), 30, null,
 						null, null, Pagination.of(1, 10)));
+	}
+
+	private RecordingMockHttp _setUpMockHttp(String json) {
+		RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
+			Collections.singletonMap(
+				"/api/1.0/asset-metric/objectEntry/asset-consumption",
+				() -> json));
+
+		ReflectionTestUtil.setFieldValue(
+			_performanceAssetConsumptionResource, "_http", recordingMockHttp);
+
+		return recordingMockHttp;
 	}
 
 	@Inject

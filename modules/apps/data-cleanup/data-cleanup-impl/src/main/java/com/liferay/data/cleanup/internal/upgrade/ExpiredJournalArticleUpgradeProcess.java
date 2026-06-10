@@ -7,13 +7,11 @@ package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.List;
 
 /**
  * @author Kevin Lee
@@ -28,18 +26,20 @@ public class ExpiredJournalArticleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DynamicQuery dynamicQuery = _journalArticleLocalService.dynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			_journalArticleLocalService.getActionableDynamicQuery();
 
-		Property property = PropertyFactoryUtil.forName("status");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName("status");
 
-		dynamicQuery.add(property.eq(WorkflowConstants.STATUS_EXPIRED));
+				dynamicQuery.add(property.eq(WorkflowConstants.STATUS_EXPIRED));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(JournalArticle journalArticle) ->
+				_journalArticleLocalService.deleteArticle(journalArticle));
 
-		List<JournalArticle> journalArticles =
-			_journalArticleLocalService.dynamicQuery(dynamicQuery);
-
-		for (JournalArticle journalArticle : journalArticles) {
-			_journalArticleLocalService.deleteArticle(journalArticle);
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	private final JournalArticleLocalService _journalArticleLocalService;

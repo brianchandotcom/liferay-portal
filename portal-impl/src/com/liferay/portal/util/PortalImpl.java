@@ -6047,7 +6047,7 @@ public class PortalImpl implements Portal {
 			// request was rejected by strict virtual host mode, pin p_l_id to
 			// the requesting host's first layout so the status page renders
 			// with the requesting site's chrome rather than falling through
-			// the default-layout chain to an unrelated site.
+			// the default layout chain to an unrelated site.
 
 			long strictVirtualHostBlockedPlid =
 				_getStrictVirtualHostBlockedPlid(httpServletRequest);

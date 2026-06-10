@@ -22,7 +22,7 @@ String pageSpecificationVersionsURL = "/o/headless-admin-site/v1.0/sites/" + sit
 %>
 
 <react:component
-	module="{PageVersionHistory} from layout-content-web"
+	module="{VersionHistory} from layout-content-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"pageSpecificationVersionsURL", pageSpecificationVersionsURL

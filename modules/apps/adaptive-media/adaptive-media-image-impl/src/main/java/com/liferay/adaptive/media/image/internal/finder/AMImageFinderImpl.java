@@ -228,7 +228,8 @@ public class AMImageFinderImpl implements AMImageFinder {
 			return false;
 		}
 
-		return true;
+		return _amImageEntryLocalService.hasAMImageEntryContent(
+			amImageConfigurationEntry.getUUID(), fileVersion);
 	}
 
 	@Reference

@@ -30,17 +30,17 @@ public class CookiesConsentPreferenceResourceImpl
 	extends BaseCookiesConsentPreferenceResourceImpl {
 
 	@Override
+	public void deleteCookiesConsentPreference() throws Exception {
+		_cookiesConsentPreferenceLocalService.deleteCookiesConsentPreferences(
+			contextUser.getUserId(), _getDomain());
+	}
+
+	@Override
 	public void deleteCookiesConsentPreferenceByName(String name)
 		throws Exception {
 
 		_cookiesConsentPreferenceLocalService.deleteCookiesConsentPreference(
 			contextUser.getUserId(), _getDomain(), name);
-	}
-
-	@Override
-	public void deleteCookiesConsentPreference() throws Exception {
-		_cookiesConsentPreferenceLocalService.deleteCookiesConsentPreferences(
-			contextUser.getUserId(), _getDomain());
 	}
 
 	@Override
@@ -101,12 +101,11 @@ public class CookiesConsentPreferenceResourceImpl
 	}
 
 	private String _getDomain() {
-		StringBuilder sb = new StringBuilder(3);
-
 		URI uri = contextUriInfo.getRequestUri();
 
-		sb.append(uri.getScheme());
+		StringBuilder sb = new StringBuilder(3);
 
+		sb.append(uri.getScheme());
 		sb.append("://");
 		sb.append(uri.getAuthority());
 

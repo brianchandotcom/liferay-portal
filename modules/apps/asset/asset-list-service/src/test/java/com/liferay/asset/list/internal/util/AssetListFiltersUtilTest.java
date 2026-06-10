@@ -24,18 +24,25 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
+
+import java.text.Format;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,6 +59,13 @@ public class AssetListFiltersUtilTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		ReflectionTestUtil.setFieldValue(
+			FastDateFormatFactoryUtil.class, "_fastDateFormatFactory",
+			new FastDateFormatFactoryImpl());
+	}
 
 	@AfterClass
 	public static void tearDownClass() {
@@ -390,6 +404,55 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
+	public void testHandlesRelativeDateOperators() {
+		_setUpObjectField(
+			"dueDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE);
+
+		String lastYearLowerTerm = _runRelativeDateGeLowerTerm("last-year");
+		String nextMonthLowerTerm = _runRelativeDateGeLowerTerm("next-month");
+		String nowLowerTerm = _runRelativeDateGeLowerTerm("now");
+		String past24HoursLowerTerm = _runRelativeDateGeLowerTerm(
+			"past-24-hours");
+		String pastDayLowerTerm = _runRelativeDateGeLowerTerm("past-day");
+		String pastMonthLowerTerm = _runRelativeDateGeLowerTerm("past-month");
+		String pastWeekLowerTerm = _runRelativeDateGeLowerTerm("past-week");
+		String pastYearLowerTerm = _runRelativeDateGeLowerTerm("past-year");
+
+		for (String lowerTerm :
+				new String[] {
+					lastYearLowerTerm, nextMonthLowerTerm, nowLowerTerm,
+					past24HoursLowerTerm, pastDayLowerTerm, pastMonthLowerTerm,
+					pastWeekLowerTerm, pastYearLowerTerm
+				}) {
+
+			Assert.assertEquals(lowerTerm, 14, lowerTerm.length());
+			Assert.assertTrue(lowerTerm, lowerTerm.endsWith("000000"));
+		}
+
+		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMdd");
+
+		Assert.assertEquals(format.format(new Date()) + "000000", nowLowerTerm);
+
+		Assert.assertEquals(lastYearLowerTerm, pastYearLowerTerm);
+		Assert.assertEquals(past24HoursLowerTerm, pastDayLowerTerm);
+
+		Assert.assertTrue(pastYearLowerTerm.compareTo(pastMonthLowerTerm) < 0);
+		Assert.assertTrue(pastMonthLowerTerm.compareTo(pastWeekLowerTerm) < 0);
+		Assert.assertTrue(pastWeekLowerTerm.compareTo(pastDayLowerTerm) < 0);
+		Assert.assertTrue(pastDayLowerTerm.compareTo(nowLowerTerm) < 0);
+		Assert.assertTrue(nowLowerTerm.compareTo(nextMonthLowerTerm) < 0);
+
+		_assertTermRangeQuery(
+			_runAndAssertNestedRow(
+				"dueDate", _buildFilter("le", "dueDate", "now"),
+				BooleanClauseOccur.MUST),
+			"nestedFieldArray.value_date", null,
+			format.format(new Date()) + "235959", false, true);
+	}
+
+	@Test
 	public void testHandlesTextContainsOperators() {
 		_setUpObjectField(
 			"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -663,6 +726,18 @@ public class AssetListFiltersUtilTest {
 			booleanClauses, 0, propertyName, expectedValueOccur);
 	}
 
+	private String _runRelativeDateGeLowerTerm(String value) {
+		Query query = _runAndAssertNestedRow(
+			"dueDate", _buildFilter("ge", "dueDate", value),
+			BooleanClauseOccur.MUST);
+
+		Assert.assertTrue(query.toString(), query instanceof TermRangeQuery);
+
+		TermRangeQuery termRangeQuery = (TermRangeQuery)query;
+
+		return termRangeQuery.getLowerTerm();
+	}
+
 	private ObjectField _setUpKeywordTextObjectField(String name) {
 		ObjectField objectField = _setUpObjectField(
 			name, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -727,8 +802,9 @@ public class AssetListFiltersUtilTest {
 
 		_objectDefinitionLocalServiceUtilMockedStatic.when(
 			() ->
-				ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(
-					_COMPANY_ID, "com.liferay.test.Class" + _CLASS_NAME_ID)
+				ObjectDefinitionLocalServiceUtil.
+					fetchObjectDefinitionByClassName(
+						_COMPANY_ID, "com.liferay.test.Class" + _CLASS_NAME_ID)
 		).thenReturn(
 			objectDefinition
 		);

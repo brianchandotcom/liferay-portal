@@ -25,11 +25,17 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.text.Format;
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -162,6 +168,12 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
+		String relativeDateValue = _resolveRelativeDateValue(value);
+
+		if (relativeDateValue != null) {
+			value = relativeDateValue;
+		}
+
 		String digits = value.replaceAll("[^0-9]", "");
 
 		if (dateTime) {
@@ -177,6 +189,38 @@ public class AssetListFiltersUtil {
 		String paddedDigits = padded.substring(0, 8);
 
 		return paddedDigits + (endOfBound ? "235959" : "000000");
+	}
+
+	private static String _resolveRelativeDateValue(String value) {
+		if (!_relativeDateValues.contains(value)) {
+			return null;
+		}
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.set(Calendar.MILLISECOND, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+
+		if (value.equals("last-year") || value.equals("past-year")) {
+			calendar.add(Calendar.YEAR, -1);
+		}
+		else if (value.equals("next-month")) {
+			calendar.add(Calendar.MONTH, 1);
+		}
+		else if (value.equals("past-24-hours") || value.equals("past-day")) {
+			calendar.add(Calendar.DAY_OF_MONTH, -1);
+		}
+		else if (value.equals("past-month")) {
+			calendar.add(Calendar.MONTH, -1);
+		}
+		else if (value.equals("past-week")) {
+			calendar.add(Calendar.DAY_OF_MONTH, -7);
+		}
+
+		// "now" requires no offset.
+
+		return _format.format(calendar.getTime());
 	}
 
 	private static NestedQuery _toNestedQuery(
@@ -389,5 +433,11 @@ public class AssetListFiltersUtil {
 
 		return new MatchQuery(subfield, value);
 	}
+
+	private static final Format _format =
+		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
+	private static final List<String> _relativeDateValues = Arrays.asList(
+		"last-year", "next-month", "now", "past-24-hours", "past-day",
+		"past-month", "past-week", "past-year");
 
 }

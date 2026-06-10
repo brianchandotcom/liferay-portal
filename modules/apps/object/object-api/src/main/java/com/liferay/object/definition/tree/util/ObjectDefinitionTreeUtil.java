@@ -82,7 +82,11 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId1());
 
-		if (ArrayUtil.isEmpty(objectDefinition1.getRootObjectDefinitionIds())) {
+		if (ArrayUtil.isEmpty(
+				getRootObjectDefinitionIds(
+					objectDefinition1.getObjectDefinitionId(),
+					objectDefinitionSettingLocalService))) {
+
 			_setRootObjectDefinitionIds(
 				new long[] {objectDefinition1.getObjectDefinitionId()},
 				objectDefinition1, objectDefinitionSettingLocalService,
@@ -133,7 +137,9 @@ public class ObjectDefinitionTreeUtil {
 				}
 
 				_setRootObjectDefinitionIds(
-					objectDefinition1.getRootObjectDefinitionIds(),
+					getRootObjectDefinitionIds(
+						objectDefinition1.getObjectDefinitionId(),
+						objectDefinitionSettingLocalService),
 					nodeObjectDefinition, objectDefinitionSettingLocalService,
 					new long[] {objectDefinition2.getObjectDefinitionId()});
 
@@ -147,7 +153,9 @@ public class ObjectDefinitionTreeUtil {
 		}
 		else {
 			if (ArrayUtil.isNotEmpty(
-					objectDefinition2.getRootObjectDefinitionIds())) {
+					getRootObjectDefinitionIds(
+						objectDefinition2.getObjectDefinitionId(),
+						objectDefinitionSettingLocalService))) {
 
 				return;
 			}
@@ -164,7 +172,9 @@ public class ObjectDefinitionTreeUtil {
 		}
 
 		for (long rootObjectDefinitionId :
-				objectDefinition1.getRootObjectDefinitionIds()) {
+				getRootObjectDefinitionIds(
+					objectDefinition1.getObjectDefinitionId(),
+					objectDefinitionSettingLocalService)) {
 
 			ObjectDefinition rootObjectDefinition =
 				objectDefinitionPersistence.findByPrimaryKey(

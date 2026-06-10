@@ -63,7 +63,6 @@ public class IGDisplayViewMVCRenderCommandTest {
 		_group = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
-
 		_folder = DLAppTestUtil.addFolder(_group.getGroupId());
 
 		_rootFolder = DLAppTestUtil.addFolder(_group.getGroupId());
@@ -82,20 +81,20 @@ public class IGDisplayViewMVCRenderCommandTest {
 		Layout layout = _addLayout(_rootFolder);
 
 		Assert.assertEquals(
-			_VIEW_JSP, _render(layout, _rootFolder.getFolderId()));
-
-		Assert.assertEquals(
-			_VIEW_JSP, _render(layout, _childFolder.getFolderId()));
-
-		Assert.assertEquals(
 			"/document_library/error.jsp",
 			_render(layout, _folder.getFolderId()));
 
 		Assert.assertEquals(
-			_VIEW_JSP,
+			"/image_gallery_display/view.jsp",
 			_render(
 				LayoutTestUtil.addTypePortletLayout(_group),
 				_folder.getFolderId()));
+		Assert.assertEquals(
+			"/image_gallery_display/view.jsp",
+			_render(layout, _childFolder.getFolderId()));
+		Assert.assertEquals(
+			"/image_gallery_display/view.jsp",
+			_render(layout, _rootFolder.getFolderId()));
 	}
 
 	private Layout _addLayout(Folder rootFolder) throws Exception {
@@ -117,6 +116,10 @@ public class IGDisplayViewMVCRenderCommandTest {
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setId(DLPortletKeys.MEDIA_GALLERY_DISPLAY);
+
 		themeDisplay.setCompany(_company);
 		themeDisplay.setLayout(layout);
 		themeDisplay.setPermissionChecker(
@@ -124,10 +127,6 @@ public class IGDisplayViewMVCRenderCommandTest {
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		portletDisplay.setId(DLPortletKeys.MEDIA_GALLERY_DISPLAY);
 
 		return themeDisplay;
 	}
@@ -145,8 +144,6 @@ public class IGDisplayViewMVCRenderCommandTest {
 			new MockLiferayPortletRenderRequest(mockHttpServletRequest),
 			new MockLiferayPortletRenderResponse());
 	}
-
-	private static final String _VIEW_JSP = "/image_gallery_display/view.jsp";
 
 	private Folder _childFolder;
 	private Company _company;

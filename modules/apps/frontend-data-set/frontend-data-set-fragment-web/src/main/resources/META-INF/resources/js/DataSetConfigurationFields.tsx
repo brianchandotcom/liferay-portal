@@ -8,9 +8,9 @@ import {IDataSet} from '@liferay/frontend-data-set-admin-web';
 import {useId} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-import DataSetSelector from './DataSetSelector';
-import EntitySelectorRow from './EntitySelectorRow';
-import LiteralInput from './LiteralInput';
+import DataSetSelector from './components/DataSetSelector';
+import EntitySelectorRow from './components/EntitySelectorRow';
+import LiteralInput from './components/LiteralInput';
 import {
 	IdentifierField,
 	MappingMode,

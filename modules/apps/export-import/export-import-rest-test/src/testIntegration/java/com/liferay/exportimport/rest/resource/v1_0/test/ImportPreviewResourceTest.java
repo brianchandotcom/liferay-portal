@@ -17,6 +17,7 @@ import com.liferay.exportimport.rest.client.dto.v1_0.PreviewPortletDataHandler;
 import com.liferay.exportimport.rest.client.dto.v1_0.PreviewPortletDataHandlerSection;
 import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.exportimport.rest.client.resource.v1_0.ImportPreviewResource;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -31,6 +32,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -148,6 +150,62 @@ public class ImportPreviewResourceTest
 		}
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testPostAssetLibraryPortletImportPreview() throws Exception {
+		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
+			ObjectDefinitionConstants.SCOPE_DEPOT,
+			testDepotEntryGroup.getGroupId());
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			testDepotEntryGroup);
+
+		String portletId = objectDefinition.getPortletId();
+
+		LayoutTestUtil.addPortletToLayout(layout, portletId);
+
+		try {
+			assertHttpResponseStatusCode(
+				403,
+				_importPreviewResource.
+					postAssetLibraryPortletImportPreviewHttpResponse(
+						testDepotEntryGroup.getExternalReferenceCode(),
+						portletId, layout.getPlid(), null,
+						HashMapBuilder.put(
+							"file",
+							_exportPortletAsFile(
+								testDepotEntryGroup.getGroupId(),
+								layout.getPlid(), portletId)
+						).build()));
+
+			_testPostImportPreviewWithInvalidFile(
+				file ->
+					importPreviewResource.
+						postAssetLibraryPortletImportPreviewHttpResponse(
+							testDepotEntryGroup.getExternalReferenceCode(),
+							portletId, layout.getPlid(), null,
+							HashMapBuilder.put(
+								"file", file
+							).build()));
+
+			_testPostPortletImportPreviewWithObjectEntries(
+				file ->
+					importPreviewResource.postAssetLibraryPortletImportPreview(
+						testDepotEntryGroup.getExternalReferenceCode(),
+						portletId, layout.getPlid(), null,
+						HashMapBuilder.put(
+							"file", file
+						).build()),
+				testDepotEntryGroup.getGroupId(), layout.getPlid(),
+				objectDefinition);
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
 	@Override
 	@Test
 	public void testPostImportPreview() throws Exception {
@@ -224,6 +282,55 @@ public class ImportPreviewResourceTest
 		}
 	}
 
+	@Override
+	@Test
+	public void testPostSitePortletImportPreview() throws Exception {
+		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
+			ObjectDefinitionConstants.SCOPE_SITE, testGroup.getGroupId());
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
+
+		String portletId = objectDefinition.getPortletId();
+
+		LayoutTestUtil.addPortletToLayout(layout, portletId);
+
+		try {
+			assertHttpResponseStatusCode(
+				403,
+				_importPreviewResource.postSitePortletImportPreviewHttpResponse(
+					testGroup.getExternalReferenceCode(), portletId,
+					layout.getPlid(), null,
+					HashMapBuilder.put(
+						"file",
+						_exportPortletAsFile(
+							testGroup.getGroupId(), layout.getPlid(), portletId)
+					).build()));
+
+			_testPostImportPreviewWithInvalidFile(
+				file ->
+					importPreviewResource.
+						postSitePortletImportPreviewHttpResponse(
+							testGroup.getExternalReferenceCode(), portletId,
+							layout.getPlid(), null,
+							HashMapBuilder.put(
+								"file", file
+							).build()));
+
+			_testPostPortletImportPreviewWithObjectEntries(
+				file -> importPreviewResource.postSitePortletImportPreview(
+					testGroup.getExternalReferenceCode(), portletId,
+					layout.getPlid(), null,
+					HashMapBuilder.put(
+						"file", file
+					).build()),
+				testGroup.getGroupId(), layout.getPlid(), objectDefinition);
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
 	private void _addObjectEntry(
 			ObjectDefinition objectDefinition, long groupId)
 		throws Exception {
@@ -262,6 +369,35 @@ public class ImportPreviewResourceTest
 					parameterMap, new ServiceContext());
 
 		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
+			exportImportConfiguration);
+	}
+
+	private File _exportPortletAsFile(long groupId, long plid, String portletId)
+		throws Exception {
+
+		Map<String, Serializable> parameterMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportPortletSettingsMap(
+					TestPropsValues.getUser(), plid, groupId, portletId,
+					HashMapBuilder.put(
+						PortletDataHandlerKeys.PORTLET_DATA,
+						new String[] {Boolean.TRUE.toString()}
+					).put(
+						PortletDataHandlerKeys.PORTLET_DATA_ALL,
+						new String[] {Boolean.TRUE.toString()}
+					).build(),
+					StringPool.BLANK);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					TestPropsValues.getUserId(), groupId,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
+					parameterMap, new ServiceContext());
+
+		return ExportImportLocalServiceUtil.exportPortletInfoAsFile(
 			exportImportConfiguration);
 	}
 
@@ -348,6 +484,21 @@ public class ImportPreviewResourceTest
 
 		ImportPreview importPreview = unsafeFunction.apply(
 			_exportLayoutAsFile(groupId));
+
+		long additionCount = _getAdditionCount(
+			importPreview, objectDefinition.getPortletId());
+
+		Assert.assertTrue(additionCount > 0);
+	}
+
+	private void _testPostPortletImportPreviewWithObjectEntries(
+			UnsafeFunction<File, ImportPreview, Exception> unsafeFunction,
+			long groupId, long plid, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ImportPreview importPreview = unsafeFunction.apply(
+			_exportPortletAsFile(
+				groupId, plid, objectDefinition.getPortletId()));
 
 		long additionCount = _getAdditionCount(
 			importPreview, objectDefinition.getPortletId());

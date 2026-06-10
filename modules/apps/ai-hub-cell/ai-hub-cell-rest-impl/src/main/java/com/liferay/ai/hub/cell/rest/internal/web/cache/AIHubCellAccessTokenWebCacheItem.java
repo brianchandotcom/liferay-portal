@@ -147,10 +147,10 @@ public class AIHubCellAccessTokenWebCacheItem implements WebCacheItem {
 
 			JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
 
-			Date expirationDate = jwtClaimsSet.getExpirationTime();
+			Date expirationTime = jwtClaimsSet.getExpirationTime();
 
-			if (expirationDate != null) {
-				return expirationDate.getTime();
+			if (expirationTime != null) {
+				return expirationTime.getTime();
 			}
 		}
 		catch (Exception exception) {

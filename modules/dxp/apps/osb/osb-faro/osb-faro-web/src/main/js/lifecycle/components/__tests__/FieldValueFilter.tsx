@@ -1,6 +1,6 @@
 import FieldValueFilter from '../FieldValueFilter';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {LifecycleContextProvider} from '../../context/LifecycleContext';
 
 jest.unmock('react-dom');
@@ -58,6 +58,28 @@ describe('FieldValueFilter', () => {
 		expect(
 			getByRole('combobox', {name: 'Filter By Industries'})
 		).toBeInTheDocument();
+	});
+
+	it('should constrain the dropdown menu width so long values do not overflow', () => {
+		const useRequest = require('shared/hooks/useRequest');
+
+		useRequest.useRequest = jest.fn(() => ({
+			data: {
+				items: [
+					'A very very very long industry value that would overflow the filter'
+				]
+			},
+			loading: false
+		}));
+
+		const {baseElement, getByRole} = renderFilter();
+
+		fireEvent.click(getByRole('combobox', {name: 'Filter By Industries'}));
+
+		const menu = baseElement.querySelector('.dropdown-menu');
+
+		expect(menu).toBeInTheDocument();
+		expect(menu).toHaveStyle({maxWidth: 'none', width: '50px'});
 	});
 
 	it('should pass the fieldMappingFieldName through to the request', () => {

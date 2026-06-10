@@ -118,7 +118,7 @@ public class ToolSetUtil {
 		}
 
 		if (Objects.equals(toolSetName, "mcp-server-v1.0")) {
-			if (Objects.equals(toolName, "getTool")) {
+			if (Objects.equals(toolName, "getToolSetToolSetNameTool")) {
 				return _getResponse(
 					getTool(
 						httpServletRequest,
@@ -126,18 +126,20 @@ public class ToolSetUtil {
 						inputJSONObject.getString("toolSetName")));
 			}
 
-			if (Objects.equals(toolName, "getToolSets")) {
+			if (Objects.equals(toolName, "getToolSetsPage")) {
 				return _getResponse(getToolSetsPage());
 			}
 
-			if (Objects.equals(toolName, "getToolSummaries")) {
+			if (Objects.equals(
+					toolName, "getToolSetToolSetNameToolSummariesPage")) {
+
 				return _getResponse(
 					getToolSummariesPage(
 						httpServletRequest,
 						inputJSONObject.getString("toolSetName")));
 			}
 
-			if (Objects.equals(toolName, "invokeTool")) {
+			if (Objects.equals(toolName, "postToolSetToolSetNameToolInvoke")) {
 				return invokeTool(
 					httpServletRequest, inputJSONObject.opt("body"),
 					inputJSONObject.getString("toolName"),

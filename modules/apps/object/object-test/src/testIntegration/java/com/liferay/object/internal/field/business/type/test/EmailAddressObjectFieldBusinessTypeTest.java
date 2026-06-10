@@ -114,7 +114,9 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 					).name(
 						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
 					).value(
-						"@gmail.com,@outlook.com"
+						StringBundler.concat(
+							"@", RandomTestUtil.randomString(), ".com,@",
+							RandomTestUtil.randomString(), ".com")
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
@@ -222,7 +224,7 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 					).name(
 						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
 					).value(
-						"@liferay.com"
+						"@" + RandomTestUtil.randomString() + ".com"
 					).build())));
 
 		_objectFieldBusinessType.validateObjectFieldSettings(
@@ -232,7 +234,9 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 				).name(
 					ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
 				).value(
-					"@liferay.com,@gmail.com"
+					StringBundler.concat(
+						"@", RandomTestUtil.randomString(), ".com,@",
+						RandomTestUtil.randomString(), ".com")
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
@@ -265,7 +269,9 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 				).name(
 					ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS
 				).value(
-					"@blocked.com,@restricted.org"
+					StringBundler.concat(
+						"@", RandomTestUtil.randomString(), ".com,@",
+						RandomTestUtil.randomString(), ".com")
 				).build()));
 		_objectFieldBusinessType.validateObjectFieldSettings(
 			_objectField, Collections.emptyList());
@@ -336,7 +342,7 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 			_objectField,
 			HashMapBuilder.put(
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-				"User@Example.com"
+				RandomTestUtil.randomString() + "@example.com"
 			).put(
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE

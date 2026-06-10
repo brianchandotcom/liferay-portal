@@ -449,6 +449,50 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	public void testLayoutSetPrototypePropagationDoesNotPropagateDeletions()
+		throws Exception {
+
+		long userId = TestPropsValues.getUserId();
+
+		int initialCount = _layoutLocalService.getLayoutsCount(
+			group.getGroupId(), false);
+
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup, true);
+
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup, true);
+
+		propagateChanges(group);
+
+		Assert.assertEquals(
+			initialCount + 2,
+			_layoutLocalService.getLayoutsCount(group.getGroupId(), false));
+
+		_layoutLocalService.deleteLayout(layout1);
+
+		long timestamp = System.currentTimeMillis();
+
+		propagateChanges(false, group);
+
+		_assertNotification("successful", timestamp, userId);
+
+		Assert.assertEquals(
+			initialCount + 2,
+			_layoutLocalService.getLayoutsCount(group.getGroupId(), false));
+
+		layout1 = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			group.getGroupId(), false, layout1.getFriendlyURL());
+
+		Assert.assertNull(layout1.getLayoutSetPrototypeLayout());
+
+		layout2 = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			group.getGroupId(), false, layout2.getFriendlyURL());
+
+		Assert.assertNotNull(layout2.getLayoutSetPrototypeLayout());
+	}
+
+	@Test
 	public void testLayoutSetPrototypePropagationWithExportImportInProcess()
 		throws Exception {
 

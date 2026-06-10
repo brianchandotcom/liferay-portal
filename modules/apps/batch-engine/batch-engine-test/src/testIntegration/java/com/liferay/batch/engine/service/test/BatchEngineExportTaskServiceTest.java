@@ -66,6 +66,18 @@ public class BatchEngineExportTaskServiceTest
 				).build(),
 				null));
 
+		AssertUtils.assertFailure(
+			PrincipalException.class, null,
+			() -> _batchEngineExportTaskService.addBatchEngineExportTask(
+				null, company.getCompanyId(), omniadminUser.getUserId(), null,
+				BlogPosting.class.getName(), "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				Collections.emptyList(),
+				HashMapBuilder.<String, Serializable>put(
+					"siteId", TestPropsValues.getGroupId()
+				).build(),
+				null));
+
 		_batchEngineExportTaskService.addBatchEngineExportTask(
 			null, company.getCompanyId(), user.getUserId(), null,
 			BlogPosting.class.getName(), "JSON",

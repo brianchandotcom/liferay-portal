@@ -100,6 +100,7 @@ application:
 author: "<Your Name>"
 clientDir: "../<name>-rest-client/src/main/java"
 compatibilityVersion: 15
+forcePredictableOperationId: true
 javaEEPackage: "jakarta"
 testDir: "../<name>-rest-test/src/testIntegration/java"
 ```

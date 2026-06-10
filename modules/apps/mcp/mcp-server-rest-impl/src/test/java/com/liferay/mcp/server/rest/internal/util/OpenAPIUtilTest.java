@@ -246,7 +246,7 @@ public class OpenAPIUtilTest {
 							"type", "object"
 						)))
 			).put(
-				"description", "The thing to create."
+				"description", _REQUEST_BODY_DESCRIPTION
 			));
 
 		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, "postThing");
@@ -271,7 +271,7 @@ public class OpenAPIUtilTest {
 					"application/json",
 					JSONUtil.put("schema", JSONUtil.put("type", "object")))
 			).put(
-				"description", "The thing to create."
+				"description", _REQUEST_BODY_DESCRIPTION
 			));
 
 		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, "postThing");
@@ -283,13 +283,13 @@ public class OpenAPIUtilTest {
 		Map<?, ?> bodySchema = (Map<?, ?>)properties.get("body");
 
 		Assert.assertEquals(
-			"The thing to create.", bodySchema.get("description"));
+			_REQUEST_BODY_DESCRIPTION, bodySchema.get("description"));
 	}
 
 	@Test
 	public void testGetToolRequestBodyWithoutContentDoesNotFail() {
 		JSONObject openAPIJSONObject = _createOpenAPIJSONObject(
-			JSONUtil.put("description", "The thing to create."));
+			JSONUtil.put("description", _REQUEST_BODY_DESCRIPTION));
 
 		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, "postThing");
 
@@ -301,7 +301,7 @@ public class OpenAPIUtilTest {
 
 		Assert.assertEquals("object", bodySchema.get("type"));
 		Assert.assertEquals(
-			"The thing to create.", bodySchema.get("description"));
+			_REQUEST_BODY_DESCRIPTION, bodySchema.get("description"));
 	}
 
 	@Test
@@ -435,6 +435,9 @@ public class OpenAPIUtilTest {
 			),
 			true);
 	}
+
+	private static final String _REQUEST_BODY_DESCRIPTION =
+		"The thing to create.";
 
 	private JSONObject _openAPIJSONObject;
 

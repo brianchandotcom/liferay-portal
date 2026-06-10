@@ -180,7 +180,10 @@ public class OpenAPIUtilTest {
 				"as siblings of \"body\" rather than flattening the payload ",
 				"into the input map."),
 			() -> OpenAPIUtil.getOptions(
-				"http://localhost/test", JSONUtil.put("string", "Test"),
+				"http://localhost/test",
+				JSONUtil.put(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()),
 				_openAPIJSONObject, "postItem"));
 	}
 

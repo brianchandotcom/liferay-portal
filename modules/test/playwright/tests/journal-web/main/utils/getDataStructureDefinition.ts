@@ -10,10 +10,14 @@ interface Props {
 }
 
 interface Field {
+	dataType?: 'double' | 'html' | 'integer' | 'string';
+	displayStyle?: 'singleline' | 'multiline';
 	fieldType?:
 		| 'document_library'
 		| 'image'
 		| 'journal_article'
+		| 'numeric'
+		| 'rich_text'
 		| 'select'
 		| 'text';
 	localizable?: boolean;
@@ -32,6 +36,8 @@ export default function getDataStructureDefinition({
 		availableLanguageIds: [defaultLanguageId],
 		dataDefinitionFields: fields.map(
 			({
+				dataType,
+				displayStyle = 'singleline',
 				fieldType = 'text',
 				localizable = true,
 				name: fieldName,
@@ -39,16 +45,33 @@ export default function getDataStructureDefinition({
 				repeatable = false,
 				required = false,
 			}) => {
+				const customProperties: DefinitionField['customProperties'] = {
+					dataType: 'string',
+					displayStyle,
+					fieldReference: fieldName,
+					options,
+				};
+
+				let indexType: DefinitionField['indexType'] = 'keyword';
+
+				if (fieldType === 'numeric') {
+					customProperties.dataType = dataType || 'integer';
+
+					delete customProperties.displayStyle;
+				}
+				else if (fieldType === 'rich_text') {
+					customProperties.dataType = 'html';
+
+					delete customProperties.displayStyle;
+
+					indexType = 'text';
+				}
+
 				return {
-					customProperties: {
-						dataType: 'string',
-						displayStyle: 'singleline',
-						fieldReference: fieldName,
-						options,
-					},
+					customProperties,
 					defaultValue: {},
 					fieldType,
-					indexType: 'keyword',
+					indexType,
 					label: {
 						[defaultLanguageId]: fieldName,
 					},

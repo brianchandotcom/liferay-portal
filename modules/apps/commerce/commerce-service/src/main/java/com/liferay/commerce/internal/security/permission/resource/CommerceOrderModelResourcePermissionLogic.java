@@ -84,6 +84,12 @@ public class CommerceOrderModelResourcePermissionLogic
 				AccountConstants.ACCOUNT_ENTRY_ID_GUEST) &&
 			permissionChecker.isSignedIn()) {
 
+			if (permissionChecker.getCompanyId() !=
+					commerceOrder.getCompanyId()) {
+
+				return false;
+			}
+
 			return _hasPermission(
 				permissionChecker, 0,
 				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);

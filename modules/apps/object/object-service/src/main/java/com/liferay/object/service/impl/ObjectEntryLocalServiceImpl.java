@@ -6921,6 +6921,48 @@ public class ObjectEntryLocalServiceImpl
 			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(true);
 		}
 
+		for (long assetCategoryId : ListUtil.fromArray(assetCategoryIds)) {
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
+
+			if (assetCategory == null) {
+				assetCategoryIds = ArrayUtil.remove(
+					assetCategoryIds, assetCategoryId);
+
+				continue;
+			}
+
+			List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
+				_assetVocabularyGroupRelLocalService.
+					getAssetVocabularyGroupRelsByVocabularyId(
+						assetCategory.getVocabularyId());
+
+			if (ListUtil.isEmpty(assetVocabularyGroupRels)) {
+				continue;
+			}
+
+			boolean validAssetCategoryId = false;
+
+			for (AssetVocabularyGroupRel assetVocabularyGroupRel :
+					assetVocabularyGroupRels) {
+
+				if ((assetVocabularyGroupRel.getGroupId() ==
+						GroupConstants.ANY_PARENT_GROUP_ID) ||
+					(assetVocabularyGroupRel.getGroupId() ==
+						objectEntry.getGroupId())) {
+
+					validAssetCategoryId = true;
+
+					break;
+				}
+			}
+
+			if (!validAssetCategoryId) {
+				assetCategoryIds = ArrayUtil.remove(
+					assetCategoryIds, assetCategoryId);
+			}
+		}
+
 		try {
 			AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
 				userId, objectEntry.getNonzeroGroupId(),

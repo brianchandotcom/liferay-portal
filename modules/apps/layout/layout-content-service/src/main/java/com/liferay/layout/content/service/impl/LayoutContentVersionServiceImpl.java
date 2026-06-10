@@ -35,8 +35,8 @@ public class LayoutContentVersionServiceImpl
 
 	@Override
 	public LayoutContentVersion addLayoutContentVersion(
-			String externalReferenceCode, long plid,
-			Map<Locale, String> nameMap, String data, int status,
+			String externalReferenceCode, String data,
+			Map<Locale, String> nameMap, long plid, int status,
 			boolean skipIfUnchanged)
 		throws PortalException {
 
@@ -44,7 +44,7 @@ public class LayoutContentVersionServiceImpl
 			getPermissionChecker(), plid, ActionKeys.UPDATE);
 
 		return layoutContentVersionLocalService.addLayoutContentVersion(
-			externalReferenceCode, getUserId(), plid, nameMap, data, status,
+			externalReferenceCode, getUserId(), data, nameMap, plid, status,
 			skipIfUnchanged);
 	}
 

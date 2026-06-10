@@ -20,7 +20,7 @@
 		<!-- Other fields -->
 
 		<column method-name="JSON" name="json" type="String" />
-		<column localized="true" name="name" type="String" />
+		<column name="name" type="String" />
 
 		<!-- Order -->
 

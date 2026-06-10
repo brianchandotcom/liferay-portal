@@ -59,7 +59,7 @@ public class AssetListFiltersUtil {
 		};
 	}
 
-	private static ObjectDefinition _resolveObjectDefinition(
+	private static ObjectDefinition _fetchObjectDefinition(
 		long classNameId, long companyId) {
 
 		if (classNameId <= 0) {
@@ -71,10 +71,10 @@ public class AssetListFiltersUtil {
 				companyId, PortalUtil.getClassName(classNameId));
 	}
 
-	private static ObjectField _resolveObjectField(
+	private static ObjectField _fetchObjectField(
 		long classNameId, long companyId, String name) {
 
-		ObjectDefinition objectDefinition = _resolveObjectDefinition(
+		ObjectDefinition objectDefinition = _fetchObjectDefinition(
 			classNameId, companyId);
 
 		if (objectDefinition == null) {
@@ -85,7 +85,7 @@ public class AssetListFiltersUtil {
 			objectDefinition.getObjectDefinitionId(), name);
 	}
 
-	private static String _resolveSubfield(
+	private static String _fetchSubfield(
 		Locale locale, ObjectField objectField) {
 
 		if (objectField.isIndexedAsKeyword()) {
@@ -145,14 +145,14 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
-		ObjectField objectField = _resolveObjectField(
+		ObjectField objectField = _fetchObjectField(
 			filterJSONObject.getLong("classNameId"), companyId, propertyName);
 
 		if (objectField == null) {
 			return null;
 		}
 
-		String subfield = _resolveSubfield(locale, objectField);
+		String subfield = _fetchSubfield(locale, objectField);
 
 		BooleanQuery nestedBooleanQuery = new BooleanQuery();
 

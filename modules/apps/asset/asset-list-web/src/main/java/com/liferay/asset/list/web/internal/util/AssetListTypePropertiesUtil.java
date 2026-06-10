@@ -193,6 +193,41 @@ public class AssetListTypePropertiesUtil {
 				companyId, PortalUtil.getClassName(classNameId));
 	}
 
+	private static JSONObject _toPropertyJSONObject(
+		long classNameId, long classTypeId, Locale locale,
+		ObjectField objectField, String type) {
+
+		JSONObject jsonObject = JSONUtil.put(
+			"classNameId", classNameId
+		).put(
+			"classTypeId", classTypeId
+		).put(
+			"label", objectField.getLabel(locale, true)
+		).put(
+			"name", objectField.getName()
+		).put(
+			"type", type
+		);
+
+		if (!type.equals("picklist") ||
+			(objectField.getListTypeDefinitionId() <= 0)) {
+
+			return jsonObject;
+		}
+
+		return jsonObject.put(
+			"options",
+			JSONUtil.toJSONArray(
+				ListTypeEntryLocalServiceUtil.getListTypeEntries(
+					objectField.getListTypeDefinitionId()),
+				listTypeEntry -> JSONUtil.put(
+					"label", listTypeEntry.getName(locale, true)
+				).put(
+					"value", listTypeEntry.getKey()
+				),
+				_log));
+	}
+
 	private static String _toType(String businessType) {
 		if (businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
 			return "boolean";
@@ -237,41 +272,6 @@ public class AssetListTypePropertiesUtil {
 		}
 
 		return null;
-	}
-
-	private static JSONObject _toPropertyJSONObject(
-		long classNameId, long classTypeId, Locale locale,
-		ObjectField objectField, String type) {
-
-		JSONObject jsonObject = JSONUtil.put(
-			"classNameId", classNameId
-		).put(
-			"classTypeId", classTypeId
-		).put(
-			"label", objectField.getLabel(locale, true)
-		).put(
-			"name", objectField.getName()
-		).put(
-			"type", type
-		);
-
-		if (!type.equals("picklist") ||
-			(objectField.getListTypeDefinitionId() <= 0)) {
-
-			return jsonObject;
-		}
-
-		return jsonObject.put(
-			"options",
-			JSONUtil.toJSONArray(
-				ListTypeEntryLocalServiceUtil.getListTypeEntries(
-					objectField.getListTypeDefinitionId()),
-				listTypeEntry -> JSONUtil.put(
-					"label", listTypeEntry.getName(locale, true)
-				).put(
-					"value", listTypeEntry.getKey()
-				),
-				_log));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

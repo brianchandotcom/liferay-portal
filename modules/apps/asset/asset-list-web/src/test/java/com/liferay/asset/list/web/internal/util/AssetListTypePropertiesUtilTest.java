@@ -93,7 +93,7 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	@Test
-	public void testEmitsOneGroupPerPair() {
+	public void testGetTypePropertiesJSONArrayEmitsOneGroupPerPair() {
 		_stubObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
 			Collections.singletonList(
@@ -161,7 +161,7 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	@Test
-	public void testEmitsTypeGroupWithEmptyItemsWhenNoFieldsFilterable() {
+	public void testGetTypePropertiesJSONArrayEmitsTypeGroupWithEmptyItemsWhenNoFieldsFilterable() {
 		_stubObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
 			Collections.singletonList(
@@ -187,7 +187,7 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	@Test
-	public void testExcludesMetadataFieldsFromTypeGroup() {
+	public void testGetTypePropertiesJSONArrayExcludesMetadataFieldsFromTypeGroup() {
 		_stubObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
 			Arrays.asList(
@@ -224,7 +224,7 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	@Test
-	public void testIncludesOneTypeGroup() {
+	public void testGetTypePropertiesJSONArrayIncludesOneTypeGroup() {
 		_stubObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
 			Collections.singletonList(
@@ -258,7 +258,7 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	@Test
-	public void testIncludesPicklistOptions() {
+	public void testGetTypePropertiesJSONArrayIncludesPicklistOptions() {
 		long listTypeDefinitionId = RandomTestUtil.randomLong();
 
 		ObjectField objectField = _mockObjectField(
@@ -347,7 +347,7 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	@Test
-	public void testReturnsOnlyCommonFieldsGroupWhenNoClassNameIds() {
+	public void testGetTypePropertiesJSONArrayReturnsOnlyCommonFieldsGroupWhenNoClassNameIds() {
 		JSONArray jsonArray =
 			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
 				new long[0], new long[0], _COMPANY_ID, LocaleUtil.US);

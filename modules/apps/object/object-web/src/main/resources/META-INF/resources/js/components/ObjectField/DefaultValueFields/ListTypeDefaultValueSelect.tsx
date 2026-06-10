@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API, ListTypeEntryBaseField} from '@liferay/object-js-components-web';
-import React, {useEffect, useState} from 'react';
+import {ListTypeEntryBaseField} from '@liferay/object-js-components-web';
+import React from 'react';
 
 import {getUpdatedDefaultValueFieldSettings} from '../../../utils/defaultValues';
-import {fixLocaleKeys} from '../../ListTypeDefinition/utils';
 import {InputAsValueFieldComponentProps} from '../Tabs/Advanced/DefaultValueContainer';
+import {useListTypeEntries} from './useListTypeEntries';
 
 const ListTypeDefaultValueSelect: React.FC<
 	{children?: React.ReactNode | undefined} & InputAsValueFieldComponentProps
@@ -22,7 +22,7 @@ const ListTypeDefaultValueSelect: React.FC<
 	setValues,
 	values,
 }: InputAsValueFieldComponentProps) => {
-	const [listTypeEntries, setListTypeEntries] = useState<ListTypeEntry[]>();
+	const listTypeEntries = useListTypeEntries(values.listTypeDefinitionId);
 
 	const handleChange = (selected?: ListTypeEntry) => {
 		if (selected) {
@@ -45,38 +45,21 @@ const ListTypeDefaultValueSelect: React.FC<
 		}
 	};
 
-	useEffect(() => {
-		if (values.listTypeDefinitionId) {
-			API.getListTypeDefinitionListTypeEntries(
-				values.listTypeDefinitionId
-			).then((items) => {
-				if (items.length) {
-					setListTypeEntries(
-						items.map((item) => ({
-							...item,
-							name_i18n: fixLocaleKeys(item.name_i18n),
-						}))
-					);
-				}
-			});
-		}
-	}, [defaultValue, setValues, values, values.listTypeDefinitionId]);
+	if (!listTypeEntries || !values.listTypeDefinitionId) {
+		return null;
+	}
 
 	return (
-		<>
-			{listTypeEntries && values.listTypeDefinitionId && (
-				<ListTypeEntryBaseField
-					creationLanguageId={creationLanguageId}
-					error={error}
-					label={label}
-					onChange={handleChange}
-					picklistItems={listTypeEntries}
-					placeholder={Liferay.Language.get('choose-an-option')}
-					required={required}
-					selectedPicklistItemKey={defaultValue as string | undefined}
-				/>
-			)}
-		</>
+		<ListTypeEntryBaseField
+			creationLanguageId={creationLanguageId}
+			error={error}
+			label={label}
+			onChange={handleChange}
+			picklistItems={listTypeEntries}
+			placeholder={Liferay.Language.get('choose-an-option')}
+			required={required}
+			selectedPicklistItemKey={defaultValue as string | undefined}
+		/>
 	);
 };
 

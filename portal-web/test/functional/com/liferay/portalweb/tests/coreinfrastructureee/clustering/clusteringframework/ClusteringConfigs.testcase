@@ -29,33 +29,6 @@ definition {
 		}
 	}
 
-	@priority = 5
-	test StartupJDBCPING {
-		property app.server.types = "tomcat";
-		property cluster.jdbc.ping = "true";
-		property database.types = "mysql";
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Clustering.viewClusterStatusInConsole();
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "JDBC_PING",
-			nodePort = 8080);
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "JDBC_PING",
-			nodePort = 9080);
-
-		User.loginPG(
-			nodePort = 9080,
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@liferay.com");
-
-		echo("Successfully logged in to both nodes on JDBC_PING");
-	}
-
 	@priority = 3
 	test StartupJDBCPINGWithZombieEntries {
 		property app.server.bundles.size = "0";

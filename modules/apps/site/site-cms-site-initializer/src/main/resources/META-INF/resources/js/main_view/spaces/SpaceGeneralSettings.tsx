@@ -16,7 +16,6 @@ import {
 	Errors,
 	invalidCharacters,
 	maxLength,
-	minValue,
 	nonNumeric,
 	notNull,
 	required,
@@ -29,8 +28,6 @@ import {ERC_MAX_LENGTH} from '../../common/utils/constants';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import SpaceBaseFields from './SpaceBaseFields';
 import SpacePanel from './SpacePanel';
-
-const MINUTES_PER_DAY = 1440;
 
 export default function SpaceGeneralSettings({
 	backURL,
@@ -70,9 +67,7 @@ export default function SpaceGeneralSettings({
 			sharingEnabled: space.settings?.sharingEnabled ?? false,
 			trashEnabled: space.settings?.trashEnabled ?? true,
 			trashEntriesMaxAge: String(
-				Math.round(
-					(space.settings?.trashEntriesMaxAge ?? 0) / MINUTES_PER_DAY
-				)
+				space.settings?.trashEntriesMaxAge ?? ''
 			),
 		},
 		onSubmit: async (values) => {
@@ -98,8 +93,7 @@ export default function SpaceGeneralSettings({
 						logoColor,
 						sharingEnabled,
 						trashEnabled,
-						trashEntriesMaxAge:
-							Number(trashEntriesMaxAge) * MINUTES_PER_DAY,
+						trashEntriesMaxAge: Number(trashEntriesMaxAge),
 					},
 				}
 			);
@@ -162,7 +156,7 @@ export default function SpaceGeneralSettings({
 						maxLength(150),
 					],
 					trashEntriesMaxAge: values.trashEnabled
-						? [minValue(1), required, validNumber]
+						? [required, validNumber]
 						: [],
 				},
 				values,

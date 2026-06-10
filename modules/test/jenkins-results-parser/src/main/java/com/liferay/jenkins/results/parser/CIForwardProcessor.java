@@ -417,10 +417,14 @@ public class CIForwardProcessor {
 		for (String requiredPassingTestSuiteName :
 				requiredPassingTestSuiteNames) {
 
-			if (!passingTestSuiteNames.contains(requiredPassingTestSuiteName)) {
-				failingRequiredPassingTestSuiteNames.add(
-					requiredPassingTestSuiteName);
+			if (passingTestSuiteNames.contains(requiredPassingTestSuiteName) ||
+				_hasPassingStatus(requiredPassingTestSuiteName)) {
+
+				continue;
 			}
+
+			failingRequiredPassingTestSuiteNames.add(
+				requiredPassingTestSuiteName);
 		}
 
 		return failingRequiredPassingTestSuiteNames;
@@ -608,6 +612,29 @@ public class CIForwardProcessor {
 		return sb.toString();
 	}
 
+	private String _getPRCheckMessage() {
+		if (_pullRequest.hasLabel("pr-check - skipped")) {
+			return JenkinsResultsParserUtil.combine(
+				"Pull requests with a skipped `pr-check` may not be ",
+				"forwarded. Please send this pull request manually using ",
+				"the `pr` Claude Code skill.");
+		}
+
+		if (_pullRequest.hasLabel("pr-check - failure") ||
+			_pullRequest.hasLabel("pr-check - success")) {
+
+			return JenkinsResultsParserUtil.combine(
+				"The `pr-check` result does not match the current head ",
+				"commit. Please rerun the `/pr-check` Claude Code skill ",
+				"and publish the result with `/pr-check-publish`.");
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			"This pull request has no `pr-check` result. Please run the ",
+			"`/pr-check` Claude Code skill and publish the result with ",
+			"`/pr-check-publish`.");
+	}
+
 	private String[] _getRequiredCompletedTestSuiteNames() throws IOException {
 		return _getBuildPropertyAsArray(
 			JenkinsResultsParserUtil.combine(
@@ -724,6 +751,13 @@ public class CIForwardProcessor {
 				sb.append(requiredPassingTestSuiteName);
 				sb.append("`");
 
+				if (requiredPassingTestSuiteName.equals("pr-check") &&
+					failedRequiredPassingTestSuiteNames.contains("pr-check")) {
+
+					sb.append(" - ");
+					sb.append(_getPRCheckMessage());
+				}
+
 				if (requiredPassingTestSuiteName.equals("stable")) {
 					sb.append(" - If you believe that the stable test ");
 					sb.append("failures were caused by flaky tests, please ");
@@ -818,6 +852,39 @@ public class CIForwardProcessor {
 
 			return false;
 		}
+	}
+
+	private boolean _hasPassingStatus(String statusContext) {
+		JSONObject statusJSONObject =
+			_pullRequest.getSenderSHAStatusJSONObject();
+
+		if (statusJSONObject == null) {
+			return false;
+		}
+
+		JSONArray statusesJSONArray = statusJSONObject.optJSONArray("statuses");
+
+		if (statusesJSONArray == null) {
+			return false;
+		}
+
+		for (int i = 0; i < statusesJSONArray.length(); i++) {
+			JSONObject statusesJSONObject = statusesJSONArray.getJSONObject(i);
+
+			String context = statusesJSONObject.getString("context");
+
+			if (!context.equals(statusContext)) {
+				continue;
+			}
+
+			String state = statusesJSONObject.getString("state");
+
+			if (state.equals("success")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isForwardEligible() throws IOException {

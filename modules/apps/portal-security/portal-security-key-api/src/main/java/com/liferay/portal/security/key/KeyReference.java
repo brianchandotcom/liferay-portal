@@ -35,22 +35,17 @@ public class KeyReference implements Serializable {
 			return null;
 		}
 
-		Type type = null;
+		String identifier = matcher.group(3);
+		String providerId = matcher.group(2);
 
-		String typeString = matcher.group(1);
-
-		if (Objects.equals(typeString, "keyRef")) {
-			type = Type.CRYPTO;
-		}
-		else if (Objects.equals(typeString, "secretRef")) {
-			type = Type.SECRET;
-		}
-		else {
+		if (Validator.isNull(identifier) || Validator.isNull(providerId)) {
 			return null;
 		}
 
-		String identifier = matcher.group(3);
-		String providerId = matcher.group(2);
+		String typeString = matcher.group(1);
+
+		Type type =
+			Objects.equals(typeString, "secretRef") ? Type.SECRET : Type.CRYPTO;
 
 		return new KeyReference(identifier, providerId, type);
 	}

@@ -113,6 +113,25 @@ public class FragmentEntryIndexerReindexTest {
 		_assertFieldValues(
 			false, draftFragmentEntry.isMarketplace(),
 			draftFragmentEntry.getName());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, serviceContext.getUserId(), TestPropsValues.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				serviceContext);
+
+		fragmentEntry = _fragmentEntryLocalService.moveFragmentEntry(
+			fragmentEntry.getFragmentEntryId(),
+			fragmentCollection.getFragmentCollectionId());
+
+		_assertFieldValue(
+			FragmentEntryField.FRAGMENT_COLLECTION_ID,
+			String.valueOf(fragmentCollection.getFragmentCollectionId()),
+			fragmentEntry.getName());
 	}
 
 	@Rule

@@ -6,6 +6,10 @@
 package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -13,6 +17,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -139,6 +144,13 @@ public class LayoutPageTemplatesAdminDisplayContextTest {
 			navigationItems.toString(), 0, navigationItems.size());
 	}
 
+	@Test
+	public void testIsShowPageTemplates() {
+		_testIsShowPageTemplates(false, 0, false);
+		_testIsShowPageTemplates(false, RandomTestUtil.randomInt(), true);
+		_testIsShowPageTemplates(true, RandomTestUtil.randomInt(), true);
+	}
+
 	private void _setUpGroup(boolean company) {
 		Mockito.when(
 			_group.isCompany()
@@ -230,6 +242,51 @@ public class LayoutPageTemplatesAdminDisplayContextTest {
 		).thenReturn(
 			_group
 		);
+	}
+
+	private void _testIsShowPageTemplates(
+		boolean featureFlagEnabled, int layoutPageTemplateEntriesCountByType,
+		boolean showPageTemplates) {
+
+		try (MockedStatic<FeatureFlagManagerUtil>
+				featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
+					FeatureFlagManagerUtil.class);
+			MockedStatic<LayoutPageTemplateEntryServiceUtil>
+				layoutPageTemplateEntryServiceUtilMockedStatic =
+					Mockito.mockStatic(
+						LayoutPageTemplateEntryServiceUtil.class)) {
+
+			featureFlagManagerUtilMockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(
+					Mockito.anyLong(), Mockito.eq("LPD-76864"))
+			).thenReturn(
+				featureFlagEnabled
+			);
+
+			layoutPageTemplateEntryServiceUtilMockedStatic.when(
+				() ->
+					LayoutPageTemplateEntryServiceUtil.
+						getLayoutPageTemplateEntriesCountByType(
+							Mockito.anyLong(),
+							Mockito.eq(
+								LayoutPageTemplateConstants.
+									PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
+							Mockito.eq(
+								LayoutPageTemplateEntryTypeConstants.
+									WIDGET_PAGE))
+			).thenReturn(
+				layoutPageTemplateEntriesCountByType
+			);
+
+			LayoutPageTemplatesAdminDisplayContext
+				layoutPageTemplatesAdminDisplayContext =
+					new LayoutPageTemplatesAdminDisplayContext(
+						_liferayPortletRequest, _liferayPortletResponse);
+
+			Assert.assertEquals(
+				showPageTemplates,
+				layoutPageTemplatesAdminDisplayContext.isShowPageTemplates());
+		}
 	}
 
 	private final Group _group = Mockito.mock(Group.class);

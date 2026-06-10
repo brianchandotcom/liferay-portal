@@ -218,7 +218,7 @@ public class LayoutsAdminDisplayContextTest {
 							Mockito.anyLong(), Mockito.anyLong(),
 							Mockito.anyInt())
 			).thenReturn(
-				1
+				RandomTestUtil.randomInt()
 			);
 
 			layoutPageTemplateEntryServiceUtilMockedStatic.when(
@@ -230,39 +230,17 @@ public class LayoutsAdminDisplayContextTest {
 							Mockito.eq(
 								LayoutPageTemplateEntryTypeConstants.BASIC))
 			).thenReturn(
-				1
+				RandomTestUtil.randomInt()
 			);
 
-			for (boolean featureFlagEnabled : new boolean[] {false, true}) {
-				try (MockedStatic<FeatureFlagManagerUtil>
-						featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
-							FeatureFlagManagerUtil.class)) {
-
-					featureFlagManagerUtilMockedStatic.when(
-						() -> FeatureFlagManagerUtil.isEnabled(
-							Mockito.anyLong(), Mockito.eq("LPD-76864"))
-					).thenReturn(
-						featureFlagEnabled
-					);
-
-					VerticalNavItemList verticalNavItemList =
-						layoutsAdminDisplayContext.getVerticalNavItemList(
-							Mockito.mock(
-								SelectLayoutPageTemplateEntryDisplayContext.
-									class));
-
-					if (featureFlagEnabled) {
-						Assert.assertEquals(
-							verticalNavItemList.toString(), 4,
-							verticalNavItemList.size());
-					}
-					else {
-						Assert.assertEquals(
-							verticalNavItemList.toString(), 2,
-							verticalNavItemList.size());
-					}
-				}
-			}
+			_testGetVerticalNavItemList(
+				2, false, layoutsAdminDisplayContext, false);
+			_testGetVerticalNavItemList(
+				3, false, layoutsAdminDisplayContext, true);
+			_testGetVerticalNavItemList(
+				3, true, layoutsAdminDisplayContext, false);
+			_testGetVerticalNavItemList(
+				4, true, layoutsAdminDisplayContext, true);
 		}
 	}
 
@@ -455,6 +433,42 @@ public class LayoutsAdminDisplayContextTest {
 		);
 
 		portalUtil.setPortal(_portal);
+	}
+
+	private void _testGetVerticalNavItemList(
+		int expectedVerticalNavItemsCount, boolean featureFlagEnabled,
+		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
+		boolean showGlobalTemplates) {
+
+		SelectLayoutPageTemplateEntryDisplayContext
+			selectLayoutPageTemplateEntryDisplayContext = Mockito.mock(
+				SelectLayoutPageTemplateEntryDisplayContext.class);
+
+		Mockito.when(
+			selectLayoutPageTemplateEntryDisplayContext.isShowGlobalTemplates()
+		).thenReturn(
+			showGlobalTemplates
+		);
+
+		try (MockedStatic<FeatureFlagManagerUtil>
+				featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
+					FeatureFlagManagerUtil.class)) {
+
+			featureFlagManagerUtilMockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(
+					Mockito.anyLong(), Mockito.eq("LPD-76864"))
+			).thenReturn(
+				featureFlagEnabled
+			);
+
+			VerticalNavItemList verticalNavItemList =
+				layoutsAdminDisplayContext.getVerticalNavItemList(
+					selectLayoutPageTemplateEntryDisplayContext);
+
+			Assert.assertEquals(
+				verticalNavItemList.toString(), expectedVerticalNavItemsCount,
+				verticalNavItemList.size());
+		}
 	}
 
 	private static final Group _group = Mockito.mock(Group.class);

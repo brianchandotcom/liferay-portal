@@ -64,10 +64,8 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>DuplicateLayoutContentVersionExternalReferenceCode</exception>
 		<exception>LayoutContentVersionExternalReferenceCode</exception>
 		<exception>LayoutContentVersionName</exception>
-		<exception>NoSuchLayoutContentVersion</exception>
 		<exception>RequiredLayoutContentVersion</exception>
 		<exception>UnsupportedLayoutLayoutContentVersion</exception>
 	</exceptions>

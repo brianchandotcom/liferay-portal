@@ -56,9 +56,11 @@ import {EEditorConfigPreset, EEditorVariant} from './types';
 const getDefaultEditorConfig = ({
 	editorVariant,
 	preset,
+	showAICreator,
 }: {
 	editorVariant: EEditorVariant;
 	preset: EEditorConfigPreset;
+	showAICreator?: boolean;
 }): EditorConfig => {
 	const basicPlugins = [
 		BlockToolbar,
@@ -127,7 +129,6 @@ const getDefaultEditorConfig = ({
 
 	const advancedPlugins = [
 		...basicPlugins,
-		AICreator,
 		Alignment,
 		BlockQuote,
 		Font,
@@ -151,6 +152,10 @@ const getDefaultEditorConfig = ({
 		TableProperties,
 		TableToolbar,
 	];
+
+	if (showAICreator) {
+		advancedPlugins.push(AICreator);
+	}
 
 	if (editorVariant === EEditorVariant.CLASSIC) {
 		advancedPlugins.push(SourceEditing);
@@ -196,9 +201,12 @@ const getDefaultEditorConfig = ({
 		'horizontalLine',
 		'|',
 		'alignment',
-		'|',
-		'aiCreator',
 	];
+
+	if (showAICreator) {
+		toolbarItems.push('|');
+		toolbarItems.push('aiCreator');
+	}
 
 	if (editorVariant === EEditorVariant.CLASSIC) {
 		toolbarItems.push('|');

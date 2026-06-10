@@ -28,6 +28,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.util.AssetRendererFactoryWrapper;
+import com.liferay.batch.engine.language.LanguageKeyResolver;
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
@@ -308,6 +309,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		KnowledgeBaseArticleResource.Factory
 			knowledgeBaseArticleResourceFactory,
 		KnowledgeBaseFolderResource.Factory knowledgeBaseFolderResourceFactory,
+		LanguageKeyResolver languageKeyResolver,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutsImporter layoutsImporter,
@@ -401,6 +403,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			knowledgeBaseArticleResourceFactory;
 		_knowledgeBaseFolderResourceFactory =
 			knowledgeBaseFolderResourceFactory;
+		_languageKeyResolver = languageKeyResolver;
 		_layoutLocalService = layoutLocalService;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
@@ -1112,6 +1115,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					SiteInitializerUtil.replace(json, serviceContext),
 					stringUtilReplaceValues);
 
+				JSONObject pageDefinitionJSONObject =
+					_jsonFactory.createJSONObject(json);
+
+				_languageKeyResolver.expand(pageDefinitionJSONObject);
+
+				json = pageDefinitionJSONObject.toString();
+
 				String css = _replace(
 					SiteInitializerUtil.read(
 						FileUtil.getPath(urlPath) + "/css.css",
@@ -1183,6 +1193,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				json = _replace(
 					SiteInitializerUtil.replace(json, serviceContext),
 					stringUtilReplaceValues);
+
+				JSONObject pageDefinitionJSONObject =
+					_jsonFactory.createJSONObject(json);
+
+				_languageKeyResolver.expand(pageDefinitionJSONObject);
+
+				json = pageDefinitionJSONObject.toString();
 
 				String css = _replace(
 					SiteInitializerUtil.read(
@@ -1272,7 +1289,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			json = _replace(json, stringUtilReplaceValues);
 
-			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
+			JSONObject objectDefinitionJSONObject =
+				_jsonFactory.createJSONObject(json);
+
+			_languageKeyResolver.expand(objectDefinitionJSONObject);
+
+			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
+				objectDefinitionJSONObject.toString());
 
 			if (objectDefinition == null) {
 				_log.error(
@@ -2945,6 +2968,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
 			json);
+
+		_languageKeyResolver.expand(pageDefinitionJSONObject);
 
 		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT) &&
 			!Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
@@ -6258,6 +6283,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_knowledgeBaseArticleResourceFactory;
 	private final KnowledgeBaseFolderResource.Factory
 		_knowledgeBaseFolderResourceFactory;
+	private final LanguageKeyResolver _languageKeyResolver;
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;

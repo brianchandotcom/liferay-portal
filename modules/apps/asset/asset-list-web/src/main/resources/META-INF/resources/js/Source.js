@@ -70,6 +70,16 @@ export default function ({
 	const eventDelegates = [];
 
 	/**
+	 * When more than one asset type or subtype is selected, the per-type field
+	 * groups can collide, so expose only the first "Common Fields" group
+	 * shared across every type.
+	 */
+	const collapseToCommonFields = (groups, {classNameIds, classTypeIds}) =>
+		classNameIds.length > 1 || classTypeIds.length > 1
+			? groups.slice(0, 1)
+			: groups;
+
+	/**
 	 * Reads the currently selected asset type(s) and subtype(s) from the
 	 * source panel selectors.
 	 */
@@ -128,21 +138,6 @@ export default function ({
 
 		return {classNameIds, classTypeIds};
 	};
-
-	/**
-	 * When more than one asset type or subtype is selected, the per-type field
-	 * groups can collide, so expose only the first "Common Fields" group
-	 * shared across every type.
-	 */
-	const collapseToCommonFields = (groups, {classNameIds, classTypeIds}) =>
-		classNameIds.length > 1 || classTypeIds.length > 1
-			? groups.slice(0, 1)
-			: groups;
-
-	State.write(
-		propertiesAtom,
-		collapseToCommonFields(initialProperties || [], getSelectedIds())
-	);
 
 	/**
 	 * Refetches the filterable properties using `propertiesURL` upon
@@ -440,8 +435,6 @@ export default function ({
 		eventDelegates.push(changeSubtypeSelector);
 	});
 
-	toggleSubclasses(assetSelector.value);
-
 	const onChangeAssetSelector = () => {
 		ddmStructureFieldNameInput.value = '';
 		ddmStructureFieldValueInput.value = '';
@@ -566,10 +559,16 @@ export default function ({
 
 	eventDelegates.push(clickOpenModal);
 
+	toggleSubclasses(assetSelector.value);
 	toggleSelectBox(
 		`${namespace}anyAssetType`,
 		'false',
 		`${namespace}classNamesBoxes`
+	);
+
+	State.write(
+		propertiesAtom,
+		collapseToCommonFields(initialProperties || [], getSelectedIds())
 	);
 
 	return {

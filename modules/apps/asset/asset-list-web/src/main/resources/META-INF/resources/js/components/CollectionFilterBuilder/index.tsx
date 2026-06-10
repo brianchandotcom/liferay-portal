@@ -191,7 +191,7 @@ export default function CollectionFilterBuilder({
 
 					<pre
 						style={{
-							border: '1px #f5f5f5 dashed',
+							background: 'var(--gray-100)',
 							borderRadius: 4,
 							fontSize: 11,
 							marginTop: 8,

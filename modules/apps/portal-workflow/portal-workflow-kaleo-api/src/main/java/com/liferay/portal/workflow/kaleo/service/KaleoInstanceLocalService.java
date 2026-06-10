@@ -377,7 +377,7 @@ public interface KaleoInstanceLocalService
 		properties = {
 			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.hibernate.StaleObjectStateException"
+				value = "org.hibernate.StaleStateException"
 			)
 		}
 	)
@@ -401,4 +401,4 @@ public interface KaleoInstanceLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1052490119
+// LIFERAY-SERVICE-BUILDER-HASH:-980243224

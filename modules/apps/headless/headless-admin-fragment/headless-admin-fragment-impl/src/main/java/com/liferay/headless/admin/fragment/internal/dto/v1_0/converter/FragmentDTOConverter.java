@@ -152,15 +152,20 @@ public class FragmentDTOConverter
 		FragmentEntry fragmentEntry,
 		FragmentVersion.Status fragmentVersionStatus) {
 
-		return new FragmentVersion() {
+		FragmentVersion fragmentVersion = new FragmentVersion() {
 			{
-				setConfiguration(fragmentEntry::getConfiguration);
-				setCss(fragmentEntry::getCss);
-				setHtml(fragmentEntry::getHtml);
-				setJs(fragmentEntry::getJs);
 				setStatus(() -> fragmentVersionStatus);
 			}
 		};
+
+		if (!fragmentEntry.isMarketplace()) {
+			fragmentVersion.setConfiguration(fragmentEntry::getConfiguration);
+			fragmentVersion.setCss(fragmentEntry::getCss);
+			fragmentVersion.setHtml(fragmentEntry::getHtml);
+			fragmentVersion.setJs(fragmentEntry::getJs);
+		}
+
+		return fragmentVersion;
 	}
 
 	@Reference

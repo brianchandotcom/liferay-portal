@@ -559,21 +559,14 @@ test(
 		await test.step('Open the manage members modal', async () => {
 			await designLibrariesPage.goToDesignLibrary(designLibraryName);
 
-			const manageMembersMenuItem = page
-				.getByRole('menu')
-				.getByRole('menuitem', {name: 'Manage Members'});
-
-			await page
-				.getByRole('button', {
-					name: 'More Actions',
-				})
-				.click();
+			await page.getByRole('button', {name: 'More Actions'}).click();
 
 			await expect(page.getByRole('menu')).toBeVisible();
 
-			await expect(manageMembersMenuItem).toBeVisible();
-
-			await manageMembersMenuItem.click();
+			await page
+				.getByRole('menu')
+				.getByRole('menuitem', {name: 'Manage Members'})
+				.click();
 
 			await expect(manageMembersDialog).toBeVisible();
 
@@ -582,10 +575,16 @@ test(
 			).toBeVisible();
 
 			await expect(
-				manageMembersDialog.getByText(
-					`modal body: ${createdDesignLibrary.externalReferenceCode}`
-				)
+				manageMembersDialog.getByText('Add People to Collaborate')
 			).toBeVisible();
+
+			await expect(
+				manageMembersDialog.getByText('Who Has Access')
+			).toBeVisible();
+
+			await expect(
+				manageMembersDialog.getByRole('button', {name: 'Invite'})
+			).toBeDisabled();
 		});
 
 		await test.step('Remove created design library', async () => {

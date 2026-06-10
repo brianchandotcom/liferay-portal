@@ -29,6 +29,25 @@ export interface DesignLibrary {
 	siteId: number;
 }
 
+export interface Role {
+	externalReferenceCode?: string;
+	id?: number;
+	name: string;
+	name_i18n?: {[locale: string]: string};
+}
+
+export type MemberType = 'user' | 'userGroup';
+
+export interface Member {
+	externalReferenceCode: string;
+	id: number;
+	image?: string;
+	name: string;
+	numberOfUserAccounts?: number;
+	roles?: Role[];
+	type: MemberType;
+}
+
 export interface Site {
 	descriptiveName: string;
 	externalReferenceCode: string;

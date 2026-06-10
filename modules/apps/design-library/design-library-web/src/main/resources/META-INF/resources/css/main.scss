@@ -33,3 +33,11 @@
 		color: $purple;
 	}
 }
+
+.design-library-member-selector {
+	&.form-control,
+	.form-control {
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+	}
+}

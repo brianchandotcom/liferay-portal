@@ -85,7 +85,7 @@ public class AssetListFiltersUtil {
 			objectDefinition.getObjectDefinitionId(), name);
 	}
 
-	private static String _fetchSubfield(
+	private static String _getSubfield(
 		Locale locale, ObjectField objectField) {
 
 		if (objectField.isIndexedAsKeyword()) {
@@ -152,7 +152,7 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
-		String subfield = _fetchSubfield(locale, objectField);
+		String subfield = _getSubfield(locale, objectField);
 
 		BooleanQuery nestedBooleanQuery = new BooleanQuery();
 

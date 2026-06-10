@@ -47,10 +47,12 @@ public class AudienceEntryServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.audience.model.AudienceEntry>
-		getAudienceEntries(
-			long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.audience.model.AudienceEntry> orderByComparator) {
+			getAudienceEntries(
+				long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.audience.model.AudienceEntry>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _audienceEntryService.getAudienceEntries(
 			companyId, start, end, orderByComparator);
@@ -58,22 +60,28 @@ public class AudienceEntryServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.audience.model.AudienceEntry>
-		getAudienceEntries(
-			long companyId, String name, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.audience.model.AudienceEntry> orderByComparator) {
+			getAudienceEntries(
+				long companyId, String name, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.audience.model.AudienceEntry>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _audienceEntryService.getAudienceEntries(
 			companyId, name, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getAudienceEntriesCount(long companyId) {
+	public int getAudienceEntriesCount(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _audienceEntryService.getAudienceEntriesCount(companyId);
 	}
 
 	@Override
-	public int getAudienceEntriesCount(long companyId, String name) {
+	public int getAudienceEntriesCount(long companyId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _audienceEntryService.getAudienceEntriesCount(companyId, name);
 	}
 
@@ -117,4 +125,4 @@ public class AudienceEntryServiceWrapper
 	private AudienceEntryService _audienceEntryService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1854002155
+// LIFERAY-SERVICE-BUILDER-HASH:-908842005

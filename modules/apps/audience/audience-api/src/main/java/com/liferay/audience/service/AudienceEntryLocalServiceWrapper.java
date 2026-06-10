@@ -89,12 +89,10 @@ public class AudienceEntryLocalServiceWrapper
 	 *
 	 * @param audienceEntry the audience entry
 	 * @return the audience entry that was removed
-	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.audience.model.AudienceEntry deleteAudienceEntry(
-			com.liferay.audience.model.AudienceEntry audienceEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.audience.model.AudienceEntry audienceEntry) {
 
 		return _audienceEntryLocalService.deleteAudienceEntry(audienceEntry);
 	}
@@ -419,4 +417,4 @@ public class AudienceEntryLocalServiceWrapper
 	private AudienceEntryLocalService _audienceEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1646297337
+// LIFERAY-SERVICE-BUILDER-HASH:-958678190

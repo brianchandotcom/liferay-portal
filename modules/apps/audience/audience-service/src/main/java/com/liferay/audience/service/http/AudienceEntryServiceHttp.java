@@ -124,10 +124,12 @@ public class AudienceEntryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.audience.model.AudienceEntry>
-		getAudienceEntries(
-			HttpPrincipal httpPrincipal, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.audience.model.AudienceEntry> orderByComparator) {
+			getAudienceEntries(
+				HttpPrincipal httpPrincipal, long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.audience.model.AudienceEntry>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -143,6 +145,13 @@ public class AudienceEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -160,11 +169,13 @@ public class AudienceEntryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.audience.model.AudienceEntry>
-		getAudienceEntries(
-			HttpPrincipal httpPrincipal, long companyId, String name, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.audience.model.AudienceEntry> orderByComparator) {
+			getAudienceEntries(
+				HttpPrincipal httpPrincipal, long companyId, String name,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.audience.model.AudienceEntry>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -180,6 +191,13 @@ public class AudienceEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -197,7 +215,8 @@ public class AudienceEntryServiceHttp {
 	}
 
 	public static int getAudienceEntriesCount(
-		HttpPrincipal httpPrincipal, long companyId) {
+			HttpPrincipal httpPrincipal, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -213,6 +232,13 @@ public class AudienceEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -229,7 +255,8 @@ public class AudienceEntryServiceHttp {
 	}
 
 	public static int getAudienceEntriesCount(
-		HttpPrincipal httpPrincipal, long companyId, String name) {
+			HttpPrincipal httpPrincipal, long companyId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -245,6 +272,13 @@ public class AudienceEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -371,4 +405,4 @@ public class AudienceEntryServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-402688479
+// LIFERAY-SERVICE-BUILDER-HASH:-1895173987

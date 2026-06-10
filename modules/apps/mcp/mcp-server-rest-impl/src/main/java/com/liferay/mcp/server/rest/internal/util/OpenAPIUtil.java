@@ -891,7 +891,7 @@ public class OpenAPIUtil {
 					"\" tool requires the request payload nested under a ",
 					"\"body\" property. Pass any path or query parameters as ",
 					"siblings of \"body\" rather than flattening the payload ",
-					"into the input map"));
+					"into the input map."));
 		}
 
 		Object bodyValue = inputJSONObject.get("body");

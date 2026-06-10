@@ -7,10 +7,18 @@ set -o pipefail
 function main {
 	local latest_lts_dxp_version
 
-	latest_lts_dxp_version=($(\
+	latest_lts_dxp_version=$(\
 		blade init --list | \
 		grep --extended-regexp 'dxp-.*-lts' | \
-		sed 's/^dxp-//'))[0]
+		sed 's/^dxp-//' | \
+		head --lines=1)
+
+	if [ -z "${latest_lts_dxp_version}" ]
+	then
+		echo "Unable to determine the latest LTS DXP version."
+
+		exit 1
+	fi
 
 	check_if_image_exists "${latest_lts_dxp_version}"
 

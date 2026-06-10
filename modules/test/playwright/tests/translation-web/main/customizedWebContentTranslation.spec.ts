@@ -52,6 +52,8 @@ async function addCustomWebContent(
 		siteId,
 		title,
 	});
+
+	return structure;
 }
 
 test('Translating the text fields of a customized web content persists them', async ({
@@ -227,4 +229,89 @@ test('Translating the rich text field of a customized web content persists it', 
 		1,
 		'Este es un título HTML'
 	);
+});
+
+test('Translating a customized web content still works after adding a structure field', async ({
+	apiHelpers,
+	site,
+	webContentTranslationPage,
+}) => {
+	const title = getRandomString();
+
+	// Create a web content with a single text field
+
+	const structure = await addCustomWebContent(apiHelpers, site.id, {
+		contentFields: [{contentFieldValue: {data: 'Text'}, name: 'Text'}],
+		fields: [{name: 'Text'}],
+		title,
+	});
+
+	// Translate the text field into Spanish and publish
+
+	await webContentTranslationPage.open(site, title);
+
+	await webContentTranslationPage.changeTargetLocale('es-ES');
+
+	await webContentTranslationPage.translateFields({
+		title: 'WC WebContent Título',
+	});
+
+	await webContentTranslationPage.fillCustomField('Text', 'Mensaje de texto');
+
+	await webContentTranslationPage.publish();
+
+	// Add a numeric field to the structure
+
+	const numericField = getDataStructureDefinition({
+		defaultLanguageId: 'en_US',
+		fields: [{dataType: 'integer', fieldType: 'numeric', name: 'Number'}],
+		name: structure.name.en_US,
+	});
+
+	const dataLayoutRows =
+		structure.defaultDataLayout.dataLayoutPages[0].dataLayoutRows;
+
+	structure.dataDefinitionFields.push(numericField.dataDefinitionFields[0]);
+
+	dataLayoutRows.push(
+		numericField.defaultDataLayout.dataLayoutPages[0].dataLayoutRows[0]
+	);
+
+	await apiHelpers.dataEngine.updateStructure(structure.id, structure);
+
+	// The existing translation is preserved and the new field can be translated
+
+	await webContentTranslationPage.open(site, title);
+
+	await webContentTranslationPage.changeTargetLocale('es-ES');
+
+	await webContentTranslationPage.assertTargetFields({
+		title: 'WC WebContent Título',
+	});
+
+	await webContentTranslationPage.assertCustomFieldValue(
+		'Text',
+		'Mensaje de texto'
+	);
+
+	await webContentTranslationPage.fillCustomField('Number', '200');
+
+	await webContentTranslationPage.publish();
+
+	// The new field's translation persists alongside the existing ones
+
+	await webContentTranslationPage.open(site, title);
+
+	await webContentTranslationPage.changeTargetLocale('es-ES');
+
+	await webContentTranslationPage.assertCustomFieldValue('Number', '200');
+
+	await webContentTranslationPage.assertCustomFieldValue(
+		'Text',
+		'Mensaje de texto'
+	);
+
+	await webContentTranslationPage.assertTargetFields({
+		title: 'WC WebContent Título',
+	});
 });

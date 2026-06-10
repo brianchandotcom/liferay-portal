@@ -89,7 +89,7 @@ export default function SettingsStep({scope}: {scope: Scope}) {
 				/>
 			</ClayLayout.Sheet>
 
-			<ClayLayout.Sheet>
+			<ClayLayout.Sheet className="mt-4">
 				<SectionHeader
 					name="dataStrategy"
 					symbol="restore"

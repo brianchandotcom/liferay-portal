@@ -135,24 +135,9 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				getFragmentCollectionByExternalReferenceCode(
 					fragmentSetExternalReferenceCode, groupId);
 
-		return Page.of(
-			transform(
-				_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
-					groupId, fragmentCollection.getFragmentCollectionId(),
-					WorkflowConstants.STATUS_ANY, pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
-				object -> {
-					if (object instanceof FragmentEntry) {
-						return _toFragment((FragmentEntry)object);
-					}
-
-					return null;
-				}),
-			pagination,
-			_fragmentEntryService.
-				getFragmentCompositionsAndFragmentEntriesCount(
-					groupId, fragmentCollection.getFragmentCollectionId(),
-					WorkflowConstants.STATUS_ANY));
+		return _getFragmentsPage(
+			null, fragmentCollection.getFragmentCollectionId(), groupId,
+			pagination);
 	}
 
 	@Override

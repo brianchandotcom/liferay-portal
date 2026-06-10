@@ -131,6 +131,10 @@ public class OAuthClientPRLocalMetadataServiceImpl
 			long companyId, String protectedResourceURI)
 		throws PortalException {
 
+		if (companyId != getPermissionChecker().getCompanyId()) {
+			throw new PrincipalException();
+		}
+
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			oAuthClientPRLocalMetadataPersistence.fetchByC_PRURI(
 				companyId, protectedResourceURI);
@@ -149,6 +153,10 @@ public class OAuthClientPRLocalMetadataServiceImpl
 			fetchOAuthClientPRLocalMetadataByExternalReferenceCode(
 				String externalReferenceCode, long companyId)
 		throws PortalException {
+
+		if (companyId != getPermissionChecker().getCompanyId()) {
+			throw new PrincipalException();
+		}
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			oAuthClientPRLocalMetadataLocalService.
@@ -187,6 +195,10 @@ public class OAuthClientPRLocalMetadataServiceImpl
 			OrderByComparator<OAuthClientPRLocalMetadata> orderByComparator)
 		throws PortalException {
 
+		if (companyId != getPermissionChecker().getCompanyId()) {
+			throw new PrincipalException();
+		}
+
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			oAuthClientPRLocalMetadataPersistence.findByC_L_First(
 				companyId, localWellKnownEnabled, orderByComparator);
@@ -202,6 +214,10 @@ public class OAuthClientPRLocalMetadataServiceImpl
 	public OAuthClientPRLocalMetadata getOAuthClientPRLocalMetadata(
 			long companyId, String protectedResourceURI)
 		throws PortalException {
+
+		if (companyId != getPermissionChecker().getCompanyId()) {
+			throw new PrincipalException();
+		}
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			oAuthClientPRLocalMetadataPersistence.findByC_PRURI(
@@ -220,6 +236,10 @@ public class OAuthClientPRLocalMetadataServiceImpl
 				String externalReferenceCode, long companyId)
 		throws PortalException {
 
+		if (companyId != getPermissionChecker().getCompanyId()) {
+			throw new PrincipalException();
+		}
+
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			oAuthClientPRLocalMetadataLocalService.
 				getOAuthClientPRLocalMetadataByExternalReferenceCode(
@@ -237,6 +257,10 @@ public class OAuthClientPRLocalMetadataServiceImpl
 			getOAuthClientPRLocalMetadataByLocalWellKnownURI(
 				long companyId, String localWellKnownURI)
 		throws PortalException {
+
+		if (companyId != getPermissionChecker().getCompanyId()) {
+			throw new PrincipalException();
+		}
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			oAuthClientPRLocalMetadataPersistence.findByC_LWKURI(

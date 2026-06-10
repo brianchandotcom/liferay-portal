@@ -9,10 +9,8 @@ import com.liferay.audience.model.AudienceEntry;
 import com.liferay.audience.model.AudienceEntryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -23,12 +21,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -41,11 +35,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -72,8 +63,7 @@ public class AudienceEntryModelImpl
 	public static final String TABLE_NAME = "AudienceEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
 		{"audienceEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -85,7 +75,6 @@ public class AudienceEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("audienceEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -98,7 +87,7 @@ public class AudienceEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AudienceEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,audienceEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,json TEXT null,name STRING null)";
+		"create table AudienceEntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,audienceEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,json TEXT null,name VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AudienceEntry";
 
@@ -140,17 +129,11 @@ public class AudienceEntryModelImpl
 	public static final long NAME_COLUMN_BITMASK = 4L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
-
-	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 16L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -264,7 +247,6 @@ public class AudienceEntryModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", AudienceEntry::getMvccVersion);
-			attributeGetterFunctions.put("uuid", AudienceEntry::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode",
 				AudienceEntry::getExternalReferenceCode);
@@ -301,9 +283,6 @@ public class AudienceEntryModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<AudienceEntry, Long>)AudienceEntry::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"uuid",
-				(BiConsumer<AudienceEntry, String>)AudienceEntry::setUuid);
 			attributeSetterBiConsumers.put(
 				"externalReferenceCode",
 				(BiConsumer<AudienceEntry, String>)
@@ -354,35 +333,6 @@ public class AudienceEntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public String getUuid() {
-		if (_uuid == null) {
-			return "";
-		}
-		else {
-			return _uuid;
-		}
-	}
-
-	@Override
-	public void setUuid(String uuid) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_uuid = uuid;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalUuid() {
-		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -573,99 +523,12 @@ public class AudienceEntryModelImpl
 	}
 
 	@Override
-	public String getName(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getName(languageId);
-	}
-
-	@Override
-	public String getName(Locale locale, boolean useDefault) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getName(languageId, useDefault);
-	}
-
-	@Override
-	public String getName(String languageId) {
-		return LocalizationUtil.getLocalization(getName(), languageId);
-	}
-
-	@Override
-	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getName(), languageId, useDefault);
-	}
-
-	@Override
-	public String getNameCurrentLanguageId() {
-		return _nameCurrentLanguageId;
-	}
-
-	@JSON
-	@Override
-	public String getNameCurrentValue() {
-		Locale locale = getLocale(_nameCurrentLanguageId);
-
-		return getName(locale);
-	}
-
-	@Override
-	public Map<Locale, String> getNameMap() {
-		return LocalizationUtil.getLocalizationMap(getName());
-	}
-
-	@Override
 	public void setName(String name) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
 		_name = name;
-	}
-
-	@Override
-	public void setName(String name, Locale locale) {
-		setName(name, locale, LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void setName(String name, Locale locale, Locale defaultLocale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		if (Validator.isNotNull(name)) {
-			setName(
-				LocalizationUtil.updateLocalization(
-					getName(), "Name", name, languageId, defaultLanguageId));
-		}
-		else {
-			setName(
-				LocalizationUtil.removeLocalization(
-					getName(), "Name", languageId));
-		}
-	}
-
-	@Override
-	public void setNameCurrentLanguageId(String languageId) {
-		_nameCurrentLanguageId = languageId;
-	}
-
-	@Override
-	public void setNameMap(Map<Locale, String> nameMap) {
-		setNameMap(nameMap, LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale) {
-		if (nameMap == null) {
-			return;
-		}
-
-		setName(
-			LocalizationUtil.updateLocalization(
-				nameMap, getName(), "Name",
-				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	/**
@@ -675,12 +538,6 @@ public class AudienceEntryModelImpl
 	@Deprecated
 	public String getOriginalName() {
 		return getColumnOriginalValue("name");
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return new StagedModelType(
-			PortalUtil.getClassNameId(AudienceEntry.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -721,72 +578,6 @@ public class AudienceEntryModelImpl
 	}
 
 	@Override
-	public String[] getAvailableLanguageIds() {
-		Set<String> availableLanguageIds = new TreeSet<String>();
-
-		Map<Locale, String> nameMap = getNameMap();
-
-		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
-			}
-		}
-
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
-	}
-
-	@Override
-	public String getDefaultLanguageId() {
-		String xml = getName();
-
-		if (xml == null) {
-			return "";
-		}
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
-
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
-
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			AudienceEntry.class.getName(), getPrimaryKey(), defaultLocale,
-			availableLocales);
-
-		prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
-		throws LocaleException {
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		String modelDefaultLanguageId = getDefaultLanguageId();
-
-		String name = getName(defaultLocale);
-
-		if (Validator.isNull(name)) {
-			setName(getName(modelDefaultLanguageId), defaultLocale);
-		}
-		else {
-			setName(getName(defaultLocale), defaultLocale, defaultLocale);
-		}
-	}
-
-	@Override
 	public AudienceEntry toEscapedModel() {
 		if (_escapedModel == null) {
 			Function<InvocationHandler, AudienceEntry>
@@ -806,7 +597,6 @@ public class AudienceEntryModelImpl
 		AudienceEntryImpl audienceEntryImpl = new AudienceEntryImpl();
 
 		audienceEntryImpl.setMvccVersion(getMvccVersion());
-		audienceEntryImpl.setUuid(getUuid());
 		audienceEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		audienceEntryImpl.setAudienceEntryId(getAudienceEntryId());
 		audienceEntryImpl.setCompanyId(getCompanyId());
@@ -828,7 +618,6 @@ public class AudienceEntryModelImpl
 
 		audienceEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		audienceEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		audienceEntryImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		audienceEntryImpl.setAudienceEntryId(
@@ -925,14 +714,6 @@ public class AudienceEntryModelImpl
 			new AudienceEntryCacheModel();
 
 		audienceEntryCacheModel.mvccVersion = getMvccVersion();
-
-		audienceEntryCacheModel.uuid = getUuid();
-
-		String uuid = audienceEntryCacheModel.uuid;
-
-		if ((uuid != null) && (uuid.length() == 0)) {
-			audienceEntryCacheModel.uuid = null;
-		}
 
 		audienceEntryCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1056,7 +837,6 @@ public class AudienceEntryModelImpl
 	}
 
 	private long _mvccVersion;
-	private String _uuid;
 	private String _externalReferenceCode;
 	private long _audienceEntryId;
 	private long _companyId;
@@ -1067,11 +847,8 @@ public class AudienceEntryModelImpl
 	private boolean _setModifiedDate;
 	private String _json;
 	private String _name;
-	private String _nameCurrentLanguageId;
 
 	public <T> T getColumnValue(String columnName) {
-		columnName = _attributeNames.getOrDefault(columnName, columnName);
-
 		Function<AudienceEntry, Object> function =
 			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
 				columnName);
@@ -1100,7 +877,6 @@ public class AudienceEntryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("audienceEntryId", _audienceEntryId);
@@ -1111,16 +887,6 @@ public class AudienceEntryModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("json", _json);
 		_columnOriginalValues.put("name", _name);
-	}
-
-	private static final Map<String, String> _attributeNames;
-
-	static {
-		Map<String, String> attributeNames = new HashMap<>();
-
-		attributeNames.put("uuid_", "uuid");
-
-		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1136,25 +902,23 @@ public class AudienceEntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("externalReferenceCode", 4L);
+		columnBitmasks.put("audienceEntryId", 4L);
 
-		columnBitmasks.put("audienceEntryId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("json", 256L);
 
-		columnBitmasks.put("json", 512L);
-
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("name", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
@@ -1163,4 +927,4 @@ public class AudienceEntryModelImpl
 	private AudienceEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1885743365
+// LIFERAY-SERVICE-BUILDER-HASH:-480886064

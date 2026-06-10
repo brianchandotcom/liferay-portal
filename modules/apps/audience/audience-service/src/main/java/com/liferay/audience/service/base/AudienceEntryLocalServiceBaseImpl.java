@@ -8,11 +8,6 @@ package com.liferay.audience.service.base;
 import com.liferay.audience.model.AudienceEntry;
 import com.liferay.audience.service.AudienceEntryLocalService;
 import com.liferay.audience.service.persistence.AudienceEntryPersistence;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
-import com.liferay.exportimport.kernel.lar.ManifestSummary;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -22,7 +17,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +32,6 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
@@ -244,21 +237,6 @@ public abstract class AudienceEntryLocalServiceBaseImpl
 		return audienceEntryPersistence.fetchByPrimaryKey(audienceEntryId);
 	}
 
-	/**
-	 * Returns the audience entry with the matching UUID and company.
-	 *
-	 * @param uuid the audience entry's UUID
-	 * @param companyId the primary key of the company
-	 * @return the matching audience entry, or <code>null</code> if a matching audience entry could not be found
-	 */
-	@Override
-	public AudienceEntry fetchAudienceEntryByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return audienceEntryPersistence.fetchByUuid_C_First(
-			uuid, companyId, null);
-	}
-
 	@Override
 	public AudienceEntry fetchAudienceEntryByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
@@ -332,72 +310,6 @@ public abstract class AudienceEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("audienceEntryId");
 	}
 
-	@Override
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery() {
-
-				@Override
-				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
-
-					StagedModelType stagedModelType = getStagedModelType();
-
-					long modelAdditionCount = super.performCount();
-
-					manifestSummary.addModelAdditionCount(
-						stagedModelType, modelAdditionCount);
-
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
-
-					manifestSummary.addModelDeletionCount(
-						stagedModelType, modelDeletionCount);
-
-					return modelAdditionCount;
-				}
-
-			};
-
-		initActionableDynamicQuery(exportActionableDynamicQuery);
-
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
-				}
-
-			});
-
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
-
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<AudienceEntry>() {
-
-				@Override
-				public void performAction(AudienceEntry audienceEntry)
-					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, audienceEntry);
-				}
-
-			});
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(
-				PortalUtil.getClassNameId(AudienceEntry.class.getName())));
-
-		return exportActionableDynamicQuery;
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -438,23 +350,6 @@ public abstract class AudienceEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return audienceEntryPersistence.findByPrimaryKey(primaryKeyObj);
-	}
-
-	/**
-	 * Returns the audience entry with the matching UUID and company.
-	 *
-	 * @param uuid the audience entry's UUID
-	 * @param companyId the primary key of the company
-	 * @return the matching audience entry
-	 * @throws PortalException if a matching audience entry could not be found
-	 */
-	@Override
-	public AudienceEntry getAudienceEntryByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws PortalException {
-
-		return audienceEntryPersistence.findByUuid_C_First(
-			uuid, companyId, null);
 	}
 
 	/**
@@ -576,4 +471,4 @@ public abstract class AudienceEntryLocalServiceBaseImpl
 		AudienceEntryLocalServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1258544166
+// LIFERAY-SERVICE-BUILDER-HASH:-1966952300

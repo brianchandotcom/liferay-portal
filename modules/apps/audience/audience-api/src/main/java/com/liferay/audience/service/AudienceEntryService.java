@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,8 +45,8 @@ public interface AudienceEntryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.audience.service.impl.AudienceEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the audience entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AudienceEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public AudienceEntry addAudienceEntry(
-			String externalReferenceCode, String json,
-			Map<Locale, String> nameMap, ServiceContext serviceContext)
+			String externalReferenceCode, String json, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public AudienceEntry deleteAudienceEntry(long audienceEntryId)
@@ -82,8 +80,8 @@ public interface AudienceEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public AudienceEntry updateAudienceEntry(
-			long audienceEntryId, String json, Map<Locale, String> nameMap)
+			long audienceEntryId, String json, String name)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-488571389
+// LIFERAY-SERVICE-BUILDER-HASH:-1080680479

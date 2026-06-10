@@ -39,20 +39,16 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -89,252 +85,6 @@ public class AudienceEntryPersistenceImpl
 
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
-
-	private FilterCollectionPersistenceFinder
-		<AudienceEntry, NoSuchAudienceEntryException>
-			_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns an ordered range of all the audience entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AudienceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of audience entries
-	 * @param end the upper bound of the range of audience entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching audience entries
-	 */
-	@Override
-	public List<AudienceEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return _collectionPersistenceFinderByUuid.find(
-			finderCache, new Object[] {uuid}, start, end, orderByComparator,
-			useFinderCache);
-	}
-
-	/**
-	 * Returns the first audience entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching audience entry
-	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
-	 */
-	@Override
-	public AudienceEntry findByUuid_First(
-			String uuid, OrderByComparator<AudienceEntry> orderByComparator)
-		throws NoSuchAudienceEntryException {
-
-		return _collectionPersistenceFinderByUuid.findFirst(
-			finderCache, new Object[] {uuid}, orderByComparator);
-	}
-
-	/**
-	 * Returns the first audience entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching audience entry, or <code>null</code> if a matching audience entry could not be found
-	 */
-	@Override
-	public AudienceEntry fetchByUuid_First(
-		String uuid, OrderByComparator<AudienceEntry> orderByComparator) {
-
-		return _collectionPersistenceFinderByUuid.fetchFirst(
-			finderCache, new Object[] {uuid}, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the audience entries that the user has permissions to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AudienceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of audience entries
-	 * @param end the upper bound of the range of audience entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching audience entries that the user has permission to view
-	 */
-	@Override
-	public List<AudienceEntry> filterFindByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator) {
-
-		return _collectionPersistenceFinderByUuid.filterFind(
-			finderCache, new Object[] {uuid}, start, end, orderByComparator);
-	}
-
-	/**
-	 * Removes all the audience entries where uuid = &#63; from the database.
-	 *
-	 * @param uuid the uuid
-	 */
-	@Override
-	public void removeByUuid(String uuid) {
-		_collectionPersistenceFinderByUuid.remove(
-			finderCache, new Object[] {uuid});
-	}
-
-	/**
-	 * Returns the number of audience entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the number of matching audience entries
-	 */
-	@Override
-	public int countByUuid(String uuid) {
-		return _collectionPersistenceFinderByUuid.count(
-			finderCache, new Object[] {uuid});
-	}
-
-	/**
-	 * Returns the number of audience entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the number of matching audience entries that the user has permission to view
-	 */
-	@Override
-	public int filterCountByUuid(String uuid) {
-		return _collectionPersistenceFinderByUuid.filterCount(
-			finderCache, new Object[] {uuid});
-	}
-
-	private FilterCollectionPersistenceFinder
-		<AudienceEntry, NoSuchAudienceEntryException>
-			_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns an ordered range of all the audience entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AudienceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of audience entries
-	 * @param end the upper bound of the range of audience entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching audience entries
-	 */
-	@Override
-	public List<AudienceEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return _collectionPersistenceFinderByUuid_C.find(
-			finderCache, new Object[] {uuid, companyId}, start, end,
-			orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first audience entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching audience entry
-	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
-	 */
-	@Override
-	public AudienceEntry findByUuid_C_First(
-			String uuid, long companyId,
-			OrderByComparator<AudienceEntry> orderByComparator)
-		throws NoSuchAudienceEntryException {
-
-		return _collectionPersistenceFinderByUuid_C.findFirst(
-			finderCache, new Object[] {uuid, companyId}, orderByComparator);
-	}
-
-	/**
-	 * Returns the first audience entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching audience entry, or <code>null</code> if a matching audience entry could not be found
-	 */
-	@Override
-	public AudienceEntry fetchByUuid_C_First(
-		String uuid, long companyId,
-		OrderByComparator<AudienceEntry> orderByComparator) {
-
-		return _collectionPersistenceFinderByUuid_C.fetchFirst(
-			finderCache, new Object[] {uuid, companyId}, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the audience entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AudienceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of audience entries
-	 * @param end the upper bound of the range of audience entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching audience entries that the user has permission to view
-	 */
-	@Override
-	public List<AudienceEntry> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator) {
-
-		return _collectionPersistenceFinderByUuid_C.filterFind(
-			finderCache, new Object[] {uuid, companyId}, start, end,
-			orderByComparator, companyId, 0);
-	}
-
-	/**
-	 * Removes all the audience entries where uuid = &#63; and companyId = &#63; from the database.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 */
-	@Override
-	public void removeByUuid_C(String uuid, long companyId) {
-		_collectionPersistenceFinderByUuid_C.remove(
-			finderCache, new Object[] {uuid, companyId});
-	}
-
-	/**
-	 * Returns the number of audience entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the number of matching audience entries
-	 */
-	@Override
-	public int countByUuid_C(String uuid, long companyId) {
-		return _collectionPersistenceFinderByUuid_C.count(
-			finderCache, new Object[] {uuid, companyId});
-	}
-
-	/**
-	 * Returns the number of audience entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the number of matching audience entries that the user has permission to view
-	 */
-	@Override
-	public int filterCountByUuid_C(String uuid, long companyId) {
-		return _collectionPersistenceFinderByUuid_C.filterCount(
-			finderCache, new Object[] {uuid, companyId}, companyId, 0);
-	}
 
 	private FilterCollectionPersistenceFinder
 		<AudienceEntry, NoSuchAudienceEntryException>
@@ -743,12 +493,6 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	public AudienceEntryPersistenceImpl() {
-		Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-		dbColumnNames.put("uuid", "uuid_");
-
-		setDBColumnNames(dbColumnNames);
-
 		setModelClass(AudienceEntry.class);
 
 		setModelImplClass(AudienceEntryImpl.class);
@@ -769,10 +513,6 @@ public class AudienceEntryPersistenceImpl
 
 		audienceEntry.setNew(true);
 		audienceEntry.setPrimaryKey(audienceEntryId);
-
-		String uuid = PortalUUIDUtil.generate();
-
-		audienceEntry.setUuid(uuid);
 
 		audienceEntry.setCompanyId(CompanyThreadLocal.getCompanyId());
 
@@ -847,14 +587,9 @@ public class AudienceEntryPersistenceImpl
 		AudienceEntryModelImpl audienceEntryModelImpl =
 			(AudienceEntryModelImpl)audienceEntry;
 
-		if (Validator.isNull(audienceEntry.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
-
-			audienceEntry.setUuid(uuid);
-		}
-
 		if (Validator.isNull(audienceEntry.getExternalReferenceCode())) {
-			audienceEntry.setExternalReferenceCode(audienceEntry.getUuid());
+			audienceEntry.setExternalReferenceCode(
+				String.valueOf(audienceEntry.getPrimaryKey()));
 		}
 		else {
 			if (!Objects.equals(
@@ -996,11 +731,6 @@ public class AudienceEntryPersistenceImpl
 	}
 
 	@Override
-	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
-	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -1025,59 +755,6 @@ public class AudienceEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_collectionPersistenceFinderByUuid =
-			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-					new String[] {
-						String.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"uuid_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-					new String[] {String.class.getName()},
-					new String[] {"uuid_"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-					new String[] {String.class.getName()},
-					new String[] {"uuid_"}, 0, 1, false, null),
-				_SQL_SELECT_AUDIENCEENTRY_WHERE, _SQL_COUNT_AUDIENCEENTRY_WHERE,
-				AudienceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FinderColumn<>(
-					"audienceEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
-					"=", true, true, AudienceEntry::getUuid));
-
-		_collectionPersistenceFinderByUuid_C =
-			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-					new String[] {
-						String.class.getName(), Long.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"uuid_", "companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-					new String[] {String.class.getName(), Long.class.getName()},
-					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-					new String[] {String.class.getName(), Long.class.getName()},
-					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
-				_SQL_SELECT_AUDIENCEENTRY_WHERE, _SQL_COUNT_AUDIENCEENTRY_WHERE,
-				AudienceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FinderColumn<>(
-					"audienceEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
-					"=", true, true, AudienceEntry::getUuid),
-				new FinderColumn<>(
-					"audienceEntry.", "companyId", FinderColumn.Type.LONG, "=",
-					true, true, AudienceEntry::getCompanyId));
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
 				this,
@@ -1206,13 +883,10 @@ public class AudienceEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AudienceEntryPersistenceImpl.class);
 
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid"});
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-425107667
+// LIFERAY-SERVICE-BUILDER-HASH:731468693

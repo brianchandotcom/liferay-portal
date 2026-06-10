@@ -6,17 +6,13 @@
 package com.liferay.audience.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.LocaleException;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
-import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,8 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AudienceEntryModel
-	extends BaseModel<AudienceEntry>, ExternalReferenceCodeModel,
-			LocalizedModel, MVCCModel, ShardedModel, StagedAuditedModel {
+	extends AuditedModel, BaseModel<AudienceEntry>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -71,23 +67,6 @@ public interface AudienceEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the uuid of this audience entry.
-	 *
-	 * @return the uuid of this audience entry
-	 */
-	@AutoEscape
-	@Override
-	public String getUuid();
-
-	/**
-	 * Sets the uuid of this audience entry.
-	 *
-	 * @param uuid the uuid of this audience entry
-	 */
-	@Override
-	public void setUuid(String uuid);
 
 	/**
 	 * Returns the external reference code of this audience entry.
@@ -237,58 +216,8 @@ public interface AudienceEntryModel
 	 *
 	 * @return the name of this audience entry
 	 */
+	@AutoEscape
 	public String getName();
-
-	/**
-	 * Returns the localized name of this audience entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized name of this audience entry
-	 */
-	@AutoEscape
-	public String getName(Locale locale);
-
-	/**
-	 * Returns the localized name of this audience entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this audience entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@AutoEscape
-	public String getName(Locale locale, boolean useDefault);
-
-	/**
-	 * Returns the localized name of this audience entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized name of this audience entry
-	 */
-	@AutoEscape
-	public String getName(String languageId);
-
-	/**
-	 * Returns the localized name of this audience entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this audience entry
-	 */
-	@AutoEscape
-	public String getName(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getNameCurrentLanguageId();
-
-	@AutoEscape
-	public String getNameCurrentValue();
-
-	/**
-	 * Returns a map of the locales and localized names of this audience entry.
-	 *
-	 * @return the locales and localized names of this audience entry
-	 */
-	public Map<Locale, String> getNameMap();
 
 	/**
 	 * Sets the name of this audience entry.
@@ -296,53 +225,6 @@ public interface AudienceEntryModel
 	 * @param name the name of this audience entry
 	 */
 	public void setName(String name);
-
-	/**
-	 * Sets the localized name of this audience entry in the language.
-	 *
-	 * @param name the localized name of this audience entry
-	 * @param locale the locale of the language
-	 */
-	public void setName(String name, Locale locale);
-
-	/**
-	 * Sets the localized name of this audience entry in the language, and sets the default locale.
-	 *
-	 * @param name the localized name of this audience entry
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	public void setName(String name, Locale locale, Locale defaultLocale);
-
-	public void setNameCurrentLanguageId(String languageId);
-
-	/**
-	 * Sets the localized names of this audience entry from the map of locales and localized names.
-	 *
-	 * @param nameMap the locales and localized names of this audience entry
-	 */
-	public void setNameMap(Map<Locale, String> nameMap);
-
-	/**
-	 * Sets the localized names of this audience entry from the map of locales and localized names, and sets the default locale.
-	 *
-	 * @param nameMap the locales and localized names of this audience entry
-	 * @param defaultLocale the default locale
-	 */
-	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
-
-	@Override
-	public String[] getAvailableLanguageIds();
-
-	@Override
-	public String getDefaultLanguageId();
-
-	@Override
-	public void prepareLocalizedFieldsForImport() throws LocaleException;
-
-	@Override
-	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
-		throws LocaleException;
 
 	@Override
 	public AudienceEntry cloneWithOriginalValues();
@@ -352,4 +234,4 @@ public interface AudienceEntryModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1585883763
+// LIFERAY-SERVICE-BUILDER-HASH:768827737

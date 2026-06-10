@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the local service utility for AudienceEntry. This utility wraps
@@ -53,13 +52,12 @@ public class AudienceEntryLocalServiceUtil {
 	}
 
 	public static AudienceEntry addAudienceEntry(
-			String externalReferenceCode, String json,
-			Map<java.util.Locale, String> nameMap,
+			String externalReferenceCode, String json, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addAudienceEntry(
-			externalReferenceCode, json, nameMap, serviceContext);
+			externalReferenceCode, json, name, serviceContext);
 	}
 
 	/**
@@ -222,20 +220,6 @@ public class AudienceEntryLocalServiceUtil {
 			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * Returns the audience entry with the matching UUID and company.
-	 *
-	 * @param uuid the audience entry's UUID
-	 * @param companyId the primary key of the company
-	 * @return the matching audience entry, or <code>null</code> if a matching audience entry could not be found
-	 */
-	public static AudienceEntry fetchAudienceEntryByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return getService().fetchAudienceEntryByUuidAndCompanyId(
-			uuid, companyId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -312,29 +296,6 @@ public class AudienceEntryLocalServiceUtil {
 			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * Returns the audience entry with the matching UUID and company.
-	 *
-	 * @param uuid the audience entry's UUID
-	 * @param companyId the primary key of the company
-	 * @return the matching audience entry
-	 * @throws PortalException if a matching audience entry could not be found
-	 */
-	public static AudienceEntry getAudienceEntryByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws PortalException {
-
-		return getService().getAudienceEntryByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
-		getExportActionableDynamicQuery(
-			com.liferay.exportimport.kernel.lar.PortletDataContext
-				portletDataContext) {
-
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -377,11 +338,10 @@ public class AudienceEntryLocalServiceUtil {
 	}
 
 	public static AudienceEntry updateAudienceEntry(
-			long audienceEntryId, String json,
-			Map<java.util.Locale, String> nameMap)
+			long audienceEntryId, String json, String name)
 		throws PortalException {
 
-		return getService().updateAudienceEntry(audienceEntryId, json, nameMap);
+		return getService().updateAudienceEntry(audienceEntryId, json, name);
 	}
 
 	public static AudienceEntryLocalService getService() {
@@ -394,4 +354,4 @@ public class AudienceEntryLocalServiceUtil {
 			AudienceEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1507306033
+// LIFERAY-SERVICE-BUILDER-HASH:-1693967477

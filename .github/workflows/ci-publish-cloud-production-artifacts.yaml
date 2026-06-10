@@ -167,6 +167,7 @@ jobs:
                     fetch-depth: 1
                     filter: blob:none
                     show-progress: false
+                    sparse-checkout: cloud/helm
             -   name: Configure AWS credentials
                 uses: aws-actions/configure-aws-credentials@v5.1.0
                 with:
@@ -373,6 +374,7 @@ jobs:
                     fetch-depth: 1
                     filter: blob:none
                     show-progress: false
+                    sparse-checkout: .github
             -   name: Tag the release
                 run: |
                     set -o errexit

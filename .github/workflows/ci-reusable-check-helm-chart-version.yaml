@@ -13,6 +13,7 @@ jobs:
                     fetch-depth: 1
                     filter: blob:none
                     show-progress: false
+                    sparse-checkout: cloud/helm
             -   id: auth_production
                 name: Authenticate to Google Cloud (Production)
                 uses: google-github-actions/auth@v3

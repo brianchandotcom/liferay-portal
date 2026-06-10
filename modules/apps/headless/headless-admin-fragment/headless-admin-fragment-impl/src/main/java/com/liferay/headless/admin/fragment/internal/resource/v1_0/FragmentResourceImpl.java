@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.fragment.internal.resource.v1_0;
 
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.constants.FragmentEntryField;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.RequiredFragmentEntryVersionException;
 import com.liferay.fragment.exception.UnsupportedUnpublishFragmentEntryOperationException;
@@ -18,6 +19,7 @@ import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.headless.admin.fragment.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentVersion;
+import com.liferay.headless.admin.fragment.internal.odata.entity.v1_0.FragmentEntityModel;
 import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.FragmentSetUtil;
 import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
@@ -29,15 +31,24 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
+
+import jakarta.ws.rs.core.MultivaluedMap;
+
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,6 +76,11 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			GroupUtil.getStagingAwareGroupId(
 				true, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -137,6 +153,22 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				getFragmentCompositionsAndFragmentEntriesCount(
 					groupId, fragmentCollection.getFragmentCollectionId(),
 					WorkflowConstants.STATUS_ANY));
+	}
+
+	@Override
+	public Page<Fragment> getSiteFragmentsPage(
+			String siteExternalReferenceCode, Filter filter,
+			Pagination pagination)
+		throws Exception {
+
+		EnabledUtil.checkEnabled(contextCompany);
+
+		return _getFragmentsPage(
+			filter, 0,
+			GroupUtil.getGroupId(
+				true, true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode),
+			pagination);
 	}
 
 	@Override
@@ -282,6 +314,47 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		}
 
 		return _toFragment(fragmentEntry);
+	}
+
+	private Page<Fragment> _getFragmentsPage(
+			Filter filter, long fragmentCollectionId, long groupId,
+			Pagination pagination)
+		throws Exception {
+
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.addRequiredTerm(
+					FragmentEntryField.DRAFT_ONLY_OR_PUBLISHED, true);
+
+				if (fragmentCollectionId > 0) {
+					booleanFilter.addRequiredTerm(
+						FragmentEntryField.FRAGMENT_COLLECTION_ID,
+						fragmentCollectionId);
+				}
+			},
+			filter, FragmentEntry.class.getName(), null, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {groupId});
+			},
+			null,
+			document -> {
+				FragmentEntry fragmentEntry =
+					_fragmentEntryService.fetchFragmentEntry(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+				if (fragmentEntry == null) {
+					return null;
+				}
+
+				return _toFragment(fragmentEntry);
+			});
 	}
 
 	private FragmentVersion _getFragmentVersion(
@@ -465,6 +538,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentResourceImpl.class);
+
+	private static final EntityModel _entityModel = new FragmentEntityModel();
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

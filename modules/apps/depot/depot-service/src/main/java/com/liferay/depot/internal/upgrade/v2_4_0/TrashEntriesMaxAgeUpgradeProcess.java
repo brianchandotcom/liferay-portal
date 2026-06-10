@@ -9,7 +9,6 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -54,12 +53,13 @@ public class TrashEntriesMaxAgeUpgradeProcess extends UpgradeProcess {
 				ActionableDynamicQuery actionableDynamicQuery =
 					_depotEntryLocalService.getActionableDynamicQuery();
 
-				Property property = PropertyFactoryUtil.forName("type");
-
 				actionableDynamicQuery.setAddCriteriaMethod(
 					dynamicQuery -> dynamicQuery.add(
-						property.eq(DepotConstants.TYPE_SPACE)));
-
+						PropertyFactoryUtil.forName(
+							"type"
+						).eq(
+							DepotConstants.TYPE_SPACE
+						)));
 				actionableDynamicQuery.setCompanyId(companyId);
 				actionableDynamicQuery.setPerformActionMethod(
 					(DepotEntry depotEntry) -> {

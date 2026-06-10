@@ -38,7 +38,7 @@ public class CookiesConsentPreferenceResourceImpl
 	}
 
 	@Override
-	public void deleteCookiesConsentPreferences() throws Exception {
+	public void deleteCookiesConsentPreference() throws Exception {
 		_cookiesConsentPreferenceLocalService.deleteCookiesConsentPreferences(
 			contextUser.getUserId(), _getDomain());
 	}

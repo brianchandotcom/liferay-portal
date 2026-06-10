@@ -70,7 +70,7 @@ public class ElasticsearchSearchEngineInformationTest {
 	}
 
 	@Test
-	public void testIsInferenceAPISupportedWhenClientUnavailable() {
+	public void testIsInferenceAPISupportedWhenClientIsUnavailable() {
 		Mockito.when(
 			_elasticsearchConnectionManager.getElasticsearchClient()
 		).thenReturn(
@@ -82,21 +82,7 @@ public class ElasticsearchSearchEngineInformationTest {
 	}
 
 	@Test
-	public void testIsInferenceAPISupportedWhenExceptionThrown()
-		throws IOException {
-
-		Mockito.when(
-			_elasticsearchLicenseClient.get()
-		).thenThrow(
-			new IOException(RandomTestUtil.randomString())
-		);
-
-		Assert.assertFalse(
-			_elasticsearchSearchEngineInformation.isInferenceAPISupported());
-	}
-
-	@Test
-	public void testIsInferenceAPISupportedWhenLicenseMissing()
+	public void testIsInferenceAPISupportedWhenLicenseIsMissing()
 		throws IOException {
 
 		Mockito.when(
@@ -110,7 +96,21 @@ public class ElasticsearchSearchEngineInformationTest {
 	}
 
 	@Test
-	public void testIsInferenceAPISupportedWhenResponseNull()
+	public void testIsInferenceAPISupportedWhenLicenseQueryThrowsException()
+		throws IOException {
+
+		Mockito.when(
+			_elasticsearchLicenseClient.get()
+		).thenThrow(
+			new IOException(RandomTestUtil.randomString())
+		);
+
+		Assert.assertFalse(
+			_elasticsearchSearchEngineInformation.isInferenceAPISupported());
+	}
+
+	@Test
+	public void testIsInferenceAPISupportedWhenResponseIsNull()
 		throws IOException {
 
 		Mockito.when(

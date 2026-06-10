@@ -33,6 +33,8 @@ public class RoomSectionTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
+		// Define the columns rendered in the room section table view.
+
 		return fdsTableSchemaBuilder.add(
 			"embedded.name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(

@@ -36,6 +36,7 @@ const test = mergeTests(
 	fragmentsPagesTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
+		'LPD-83570': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
@@ -718,6 +719,11 @@ test(
 						).toBeVisible();
 					},
 					label: 'Upload',
+				},
+				{
+					action: () =>
+						fill(form.locator('input[type="tel"]'), '2125551234'),
+					label: 'Phone Number',
 				},
 			];
 

@@ -15,7 +15,6 @@ import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from '../main/fixtures/cmsPagesTest';
 import {structureBuilderPagesTest} from './fixtures/structureBuilderPagesTest';
-import {FieldType} from './pages/StructureBuilderPage';
 
 const test = mergeTests(
 	cmsPagesTest,
@@ -45,7 +44,7 @@ test(
 			page: structureBuilderPage,
 		});
 
-		await structureBuilderPage.addField('Phone Number' as FieldType);
+		await structureBuilderPage.addField('Phone Number');
 
 		await structureBuilderPage.changeFieldSettings({label: 'Phone'});
 
@@ -203,7 +202,7 @@ test(
 			page: structureBuilderPage,
 		});
 
-		await structureBuilderPage.addField('Phone Number' as FieldType);
+		await structureBuilderPage.addField('Phone Number');
 
 		await structureBuilderPage.publishStructure();
 
@@ -240,7 +239,7 @@ test(
 			page: structureBuilderPage,
 		});
 
-		await structureBuilderPage.addField('Phone Number' as FieldType);
+		await structureBuilderPage.addField('Phone Number');
 
 		const structureId = await structureBuilderPage.publishStructure();
 

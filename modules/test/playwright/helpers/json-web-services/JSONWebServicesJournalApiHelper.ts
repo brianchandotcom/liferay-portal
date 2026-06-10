@@ -360,6 +360,24 @@ export class JSONWebServicesJournalApiHelper {
 		);
 	}
 
+	async deleteArticle(siteId: string, articleId: string): Promise<void> {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('groupId', siteId);
+		urlSearchParams.append('articleId', articleId);
+		urlSearchParams.append('articleURL', '');
+		urlSearchParams.append('serviceContext', JSON.stringify({}));
+
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/delete-article`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
 	async moveArticleToTrash(siteId: string, articleId: string): Promise<void> {
 		const urlSearchParams = new URLSearchParams();
 

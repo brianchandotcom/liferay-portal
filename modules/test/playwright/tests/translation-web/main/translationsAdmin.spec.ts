@@ -61,9 +61,13 @@ test.beforeEach(async ({apiHelpers}) => {
 });
 
 test.afterEach(async ({apiHelpers}) => {
+
+	// Permanently delete the web content so its translation entries are removed
+	// too; trashing alone leaves the entries behind on the shared Guest site
+
 	for (const articleId of createdArticleIds.splice(0)) {
 		await apiHelpers.jsonWebServicesJournal
-			.moveArticleToTrash(guestSite.id, articleId)
+			.deleteArticle(guestSite.id, articleId)
 			.catch(() => {});
 	}
 });

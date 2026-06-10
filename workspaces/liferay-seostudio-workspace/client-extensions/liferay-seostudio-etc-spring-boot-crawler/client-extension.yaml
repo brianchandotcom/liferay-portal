@@ -1,6 +1,6 @@
 assemble:
     -   fromTask: bootJar
-liferay-seostudio-crawler-oahs:
+liferay-seostudio-etc-spring-boot-crawler-oahs:
     .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay SEO Studio Crawler OAuth Application Headless Server
@@ -12,13 +12,13 @@ liferay-seostudio-crawler-oahs:
         -   seostudioscaninsight.everything
         -   Liferay.SEO.Studio.REST.everything.read
     type: oAuthApplicationHeadlessServer
-liferay-seostudio-crawler-oaua:
+liferay-seostudio-etc-spring-boot-crawler-oaua:
     .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay SEO Studio Crawler OAuth Application User Agent
     type: oAuthApplicationUserAgent
-liferay-seostudio-crawler-object-action-crawler:
+liferay-seostudio-etc-spring-boot-crawler-object-action-crawler:
     name: Liferay SEO Studio Crawler Object Action Crawler
-    oAuth2ApplicationExternalReferenceCode: liferay-seostudio-crawler-oaua
+    oAuth2ApplicationExternalReferenceCode: liferay-seostudio-etc-spring-boot-crawler-oaua
     resourcePath: /crawler
     type: objectAction

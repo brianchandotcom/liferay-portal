@@ -11,5 +11,16 @@ export function getCookies(): Set<string> {
 		return new Set();
 	}
 
-	return new Set(document.cookie.split(';').map((item) => item.trim()));
+	return new Set(
+		document.cookie.split(';').map((item) => {
+			const trimmedItem = item.trim();
+
+			try {
+				return decodeURIComponent(trimmedItem);
+			}
+			catch (_) {
+				return trimmedItem;
+			}
+		})
+	);
 }

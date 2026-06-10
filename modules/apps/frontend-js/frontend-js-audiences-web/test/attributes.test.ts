@@ -90,13 +90,48 @@ describe('attributes', () => {
 		expect(value).toBe('151.0');
 	});
 
-	it('attribute cookies works and returns a Set<string>', async () => {
-		const value = getCookies();
+	describe('attribute cookies', () => {
+		it('works and returns a Set<string>', async () => {
+			const value = getCookies();
 
-		expect(value).toBeInstanceOf(Set);
-		expect(value).toEqual(
-			new Set(['REMEMBER_ME=true', 'JSESSIONID=ba8e4d1c'])
-		);
+			expect(value).toBeInstanceOf(Set);
+			expect(value).toEqual(
+				new Set(['REMEMBER_ME=true', 'JSESSIONID=ba8e4d1c'])
+			);
+		});
+
+		it('decodes percent-encoded cookies', async () => {
+			Object.defineProperty(document, 'cookie', {
+				configurable: true,
+				value: 'greeting=hello%20world; city=S%C3%A3o%20Paulo',
+			});
+
+			expect(getCookies()).toEqual(
+				new Set(['greeting=hello world', 'city=São Paulo'])
+			);
+		});
+
+		it('passes cookies that are not encoded unchanged', async () => {
+			Object.defineProperty(document, 'cookie', {
+				configurable: true,
+				value: 'REMEMBER_ME=true; JSESSIONID=ba8e4d1c',
+			});
+
+			expect(getCookies()).toEqual(
+				new Set(['REMEMBER_ME=true', 'JSESSIONID=ba8e4d1c'])
+			);
+		});
+
+		it('passes cookies that are badly encoded unchanged', async () => {
+			Object.defineProperty(document, 'cookie', {
+				configurable: true,
+				value: 'discount=50%; valid=a%20b',
+			});
+
+			expect(getCookies()).toEqual(
+				new Set(['discount=50%', 'valid=a b'])
+			);
+		});
 	});
 
 	it('attribute hostname works and returns a string', async () => {

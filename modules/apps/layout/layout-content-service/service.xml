@@ -24,12 +24,12 @@
 
 		<!-- Other fields -->
 
-		<column name="plid" type="long" />
-		<column localized="true" name="name" type="String" />
-		<column name="version" type="int" />
-		<column name="specSchemaVersion" type="String" />
 		<column name="data" type="String" />
 		<column name="dataHash" type="String" />
+		<column localized="true" name="name" type="String" />
+		<column name="plid" type="long" />
+		<column name="specSchemaVersion" type="String" />
+		<column name="version" type="int" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

@@ -181,22 +181,25 @@ public abstract class BaseToolSummaryResourceTestCase {
 	}
 
 	@Test
-	public void testGetToolSummaries() throws Exception {
-		String toolSetName = testGetToolSummaries_getToolSetName();
+	public void testGetToolSetToolSetNameToolSummariesPage() throws Exception {
+		String toolSetName =
+			testGetToolSetToolSetNameToolSummariesPage_getToolSetName();
 		String irrelevantToolSetName =
-			testGetToolSummaries_getIrrelevantToolSetName();
+			testGetToolSetToolSetNameToolSummariesPage_getIrrelevantToolSetName();
 
-		Page<ToolSummary> page = toolSummaryResource.getToolSummaries(
-			toolSetName);
+		Page<ToolSummary> page =
+			toolSummaryResource.getToolSetToolSetNameToolSummariesPage(
+				toolSetName);
 
 		long totalCount = page.getTotalCount();
 
 		if (irrelevantToolSetName != null) {
 			ToolSummary irrelevantToolSummary =
-				testGetToolSummaries_addToolSummary(
+				testGetToolSetToolSetNameToolSummariesPage_addToolSummary(
 					irrelevantToolSetName, randomIrrelevantToolSummary());
 
-			page = toolSummaryResource.getToolSummaries(irrelevantToolSetName);
+			page = toolSummaryResource.getToolSetToolSetNameToolSummariesPage(
+				irrelevantToolSetName);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -204,26 +207,34 @@ public abstract class BaseToolSummaryResourceTestCase {
 				irrelevantToolSummary, (List<ToolSummary>)page.getItems());
 			assertValid(
 				page,
-				testGetToolSummaries_getExpectedActions(irrelevantToolSetName));
+				testGetToolSetToolSetNameToolSummariesPage_getExpectedActions(
+					irrelevantToolSetName));
 		}
 
-		ToolSummary toolSummary1 = testGetToolSummaries_addToolSummary(
-			toolSetName, randomToolSummary());
+		ToolSummary toolSummary1 =
+			testGetToolSetToolSetNameToolSummariesPage_addToolSummary(
+				toolSetName, randomToolSummary());
 
-		ToolSummary toolSummary2 = testGetToolSummaries_addToolSummary(
-			toolSetName, randomToolSummary());
+		ToolSummary toolSummary2 =
+			testGetToolSetToolSetNameToolSummariesPage_addToolSummary(
+				toolSetName, randomToolSummary());
 
-		page = toolSummaryResource.getToolSummaries(toolSetName);
+		page = toolSummaryResource.getToolSetToolSetNameToolSummariesPage(
+			toolSetName);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
 		assertContains(toolSummary1, (List<ToolSummary>)page.getItems());
 		assertContains(toolSummary2, (List<ToolSummary>)page.getItems());
-		assertValid(page, testGetToolSummaries_getExpectedActions(toolSetName));
+		assertValid(
+			page,
+			testGetToolSetToolSetNameToolSummariesPage_getExpectedActions(
+				toolSetName));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetToolSummaries_getExpectedActions(String toolSetName)
+			testGetToolSetToolSetNameToolSummariesPage_getExpectedActions(
+				String toolSetName)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -231,20 +242,24 @@ public abstract class BaseToolSummaryResourceTestCase {
 		return expectedActions;
 	}
 
-	protected ToolSummary testGetToolSummaries_addToolSummary(
-			String toolSetName, ToolSummary toolSummary)
+	protected ToolSummary
+			testGetToolSetToolSetNameToolSummariesPage_addToolSummary(
+				String toolSetName, ToolSummary toolSummary)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String testGetToolSummaries_getToolSetName() throws Exception {
+	protected String testGetToolSetToolSetNameToolSummariesPage_getToolSetName()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String testGetToolSummaries_getIrrelevantToolSetName()
+	protected String
+			testGetToolSetToolSetNameToolSummariesPage_getIrrelevantToolSetName()
 		throws Exception {
 
 		return null;
@@ -951,4 +966,4 @@ public abstract class BaseToolSummaryResourceTestCase {
 		_toolSummaryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:206144530
+// LIFERAY-REST-BUILDER-HASH:1638616486

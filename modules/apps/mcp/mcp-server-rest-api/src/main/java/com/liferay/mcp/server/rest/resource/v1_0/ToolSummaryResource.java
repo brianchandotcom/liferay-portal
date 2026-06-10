@@ -42,7 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ToolSummaryResource {
 
-	public Page<ToolSummary> getToolSummaries(String toolSetName)
+	public Page<ToolSummary> getToolSetToolSetNameToolSummariesPage(
+			String toolSetName)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -133,4 +134,4 @@ public interface ToolSummaryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1178464445
+// LIFERAY-REST-BUILDER-HASH:1341799841

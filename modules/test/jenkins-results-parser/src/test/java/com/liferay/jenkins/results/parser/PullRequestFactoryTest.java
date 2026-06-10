@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,69 +18,44 @@ public class PullRequestFactoryTest {
 
 	@After
 	public void tearDown() {
-		BuildDatabaseUtil.clearInstances();
+		BuildDatabaseUtil.clearBuildDatabases();
 	}
 
 	@Test
-	public void testNewPullRequestReadsFromInjectedBuildDatabase() {
-		BuildDatabase inMemoryBuildDatabase =
+	public void testNewPullRequest() {
+		BuildDatabase buildDatabase =
 			BuildDatabaseTestUtil.addPortalAcceptancePR();
 
-		PullRequest seededPullRequest = new PullRequest(
-			_newPullRequestJSONObject(_PULL_REQUEST_URL, _PULL_REQUEST_NUMBER));
+		BuildDatabaseUtil.setBuildDatabase(buildDatabase);
 
-		inMemoryBuildDatabase.putPullRequest(
-			_PULL_REQUEST_URL, seededPullRequest);
+		JSONObject jsonObject = buildDatabase.getJSONObject();
 
-		BuildDatabaseUtil.setBuildDatabase(inMemoryBuildDatabase);
+		JSONObject pullRequestsJSONObject = jsonObject.getJSONObject(
+			"pull_requests");
+
+		String pullRequestURL = pullRequestsJSONObject.keys(
+		).next();
+
+		JSONObject pullRequestJSONObject = pullRequestsJSONObject.getJSONObject(
+			pullRequestURL);
 
 		PullRequest pullRequest = PullRequestFactory.newPullRequest(
-			_PULL_REQUEST_URL, null);
+			pullRequestURL, null);
+
+		Assert.assertEquals(pullRequestURL, pullRequest.getHtmlURL());
+		Assert.assertEquals(
+			String.valueOf(pullRequestJSONObject.getInt("number")),
+			pullRequest.getNumber());
+
+		JSONObject baseJSONObject = pullRequestJSONObject.getJSONObject("base");
+
+		JSONObject repositoryJSONObject = baseJSONObject.getJSONObject("repo");
+
+		JSONObject ownerJSONObject = repositoryJSONObject.getJSONObject(
+			"owner");
 
 		Assert.assertEquals(
-			String.valueOf(_PULL_REQUEST_NUMBER), pullRequest.getNumber());
-		Assert.assertEquals(_PULL_REQUEST_URL, pullRequest.getHtmlURL());
-		Assert.assertEquals(_OWNER_LOGIN, pullRequest.getOwnerUsername());
+			ownerJSONObject.getString("login"), pullRequest.getOwnerUsername());
 	}
-
-	private JSONObject _newPullRequestJSONObject(String htmlURL, int number) {
-		JSONObject ownerJSONObject = new JSONObject();
-
-		ownerJSONObject.put("login", _OWNER_LOGIN);
-
-		JSONObject repoJSONObject = new JSONObject();
-
-		repoJSONObject.put(
-			"name", _REPO_NAME
-		).put(
-			"owner", ownerJSONObject
-		);
-
-		JSONObject baseJSONObject = new JSONObject();
-
-		baseJSONObject.put("repo", repoJSONObject);
-
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put(
-			"base", baseJSONObject
-		).put(
-			"html_url", htmlURL
-		).put(
-			"number", number
-		);
-
-		return jsonObject;
-	}
-
-	private static final String _OWNER_LOGIN = "test-pr-factory-owner";
-
-	private static final int _PULL_REQUEST_NUMBER = 999991;
-
-	private static final String _PULL_REQUEST_URL =
-		"https://github.com/test-pr-factory-owner/test-pr-factory-repo/pull/" +
-			_PULL_REQUEST_NUMBER;
-
-	private static final String _REPO_NAME = "test-pr-factory-repo";
 
 }

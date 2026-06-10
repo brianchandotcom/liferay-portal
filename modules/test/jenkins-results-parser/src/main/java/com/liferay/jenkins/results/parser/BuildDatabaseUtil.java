@@ -37,7 +37,7 @@ public class BuildDatabaseUtil {
 		}
 	}
 
-	public static void clearInstances() {
+	public static void clearBuildDatabases() {
 		synchronized (_buildDatabases) {
 			_buildDatabases.clear();
 		}

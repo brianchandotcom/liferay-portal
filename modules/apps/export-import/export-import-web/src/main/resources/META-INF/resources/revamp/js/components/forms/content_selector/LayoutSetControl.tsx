@@ -43,6 +43,7 @@ function SelectPagesButton({
 								: Liferay.Language.get('public-pages')
 						)
 			}
+			className="font-weight-semi-bold"
 			displayType="link"
 			onClick={onClick}
 			size="sm"

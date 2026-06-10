@@ -181,6 +181,7 @@ function PortletDataHandlerPanel({
 											rowProps.label
 										)
 							}
+							className="font-weight-semi-bold"
 							displayType="link"
 							size="sm"
 						>

@@ -7,7 +7,9 @@ package com.liferay.roles.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +30,7 @@ import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.search.RoleSearch;
 import com.liferay.roles.admin.search.RoleSearchTerms;
 import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
@@ -139,34 +142,50 @@ public class SelectRoleManagementToolbarDisplayContext {
 		RoleSearchTerms roleSearchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
-		if (filterManageableRoles) {
-			List<Role> results = RoleLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-				new Integer[] {_currentRoleTypeContributor.getType()},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				roleSearch.getOrderByComparator());
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
-			if (groupId == 0) {
-				results = UsersAdminUtil.filterRoles(
-					themeDisplay.getPermissionChecker(), results);
-			}
-			else {
-				results = UsersAdminUtil.filterGroupRoles(
-					themeDisplay.getPermissionChecker(), groupId, results);
-			}
+		if ((_eventName != null) &&
+			_eventName.contains(UsersAdminPortletKeys.USERS_ADMIN)) {
 
-			roleSearch.setResultsAndTotal(results);
+			ctCollectionId =
+				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
 		}
-		else {
-			roleSearch.setResultsAndTotal(
-				() -> RoleLocalServiceUtil.search(
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
+
+			if (filterManageableRoles) {
+				List<Role> results = RoleLocalServiceUtil.search(
 					themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
 					new Integer[] {_currentRoleTypeContributor.getType()},
-					roleSearch.getStart(), roleSearch.getEnd(),
-					roleSearch.getOrderByComparator()),
-				RoleLocalServiceUtil.searchCount(
-					themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-					new Integer[] {_currentRoleTypeContributor.getType()}));
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					roleSearch.getOrderByComparator());
+
+				if (groupId == 0) {
+					results = UsersAdminUtil.filterRoles(
+						themeDisplay.getPermissionChecker(), results);
+				}
+				else {
+					results = UsersAdminUtil.filterGroupRoles(
+						themeDisplay.getPermissionChecker(), groupId, results);
+				}
+
+				roleSearch.setResultsAndTotal(results);
+			}
+			else {
+				roleSearch.setResultsAndTotal(
+					() -> RoleLocalServiceUtil.search(
+						themeDisplay.getCompanyId(),
+						roleSearchTerms.getKeywords(),
+						new Integer[] {_currentRoleTypeContributor.getType()},
+						roleSearch.getStart(), roleSearch.getEnd(),
+						roleSearch.getOrderByComparator()),
+					RoleLocalServiceUtil.searchCount(
+						themeDisplay.getCompanyId(),
+						roleSearchTerms.getKeywords(),
+						new Integer[] {_currentRoleTypeContributor.getType()}));
+			}
 		}
 
 		_roleSearch = roleSearch;

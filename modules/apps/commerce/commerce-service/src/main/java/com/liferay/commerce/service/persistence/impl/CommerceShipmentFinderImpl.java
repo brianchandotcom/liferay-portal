@@ -87,7 +87,8 @@ public class CommerceShipmentFinderImpl
 					DSLQueryFactoryUtil.select(CommerceShipmentTable.INSTANCE),
 					commerceOrderId
 				).orderBy(
-					CommerceShipmentTable.INSTANCE.createDate.descending()));
+					CommerceShipmentTable.INSTANCE.createDate.descending()
+				));
 
 			sqlQuery.addEntity("CommerceShipment", CommerceShipmentImpl.class);
 

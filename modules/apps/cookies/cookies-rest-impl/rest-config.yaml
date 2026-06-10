@@ -9,5 +9,6 @@ clientDir: ../cookies-rest-client/src/main/java
 compatibilityVersion: 14
 forcePredictableOperationId: true
 forcePredictableSchemaPropertyName: true
+generateBatch: false
 javaEEPackage: jakarta
 testDir: ../cookies-rest-test/src/testIntegration/java

@@ -80,20 +80,19 @@ public class GetProductionReadinessResultsMVCResourceCommand
 				_toJSONObject(ignoredRules, locale, productionReadinessResult));
 		}
 
-		JSONObject summaryJSONObject = _jsonFactory.createJSONObject(
-		).put(
-			"failed", failed
-		).put(
-			"ignored", ignored
-		).put(
-			"passed", passed
-		);
-
 		JSONObject responseJSONObject = _jsonFactory.createJSONObject(
 		).put(
 			"results", resultsJSONArray
 		).put(
-			"summary", summaryJSONObject
+			"summary",
+			_jsonFactory.createJSONObject(
+			).put(
+				"failed", failed
+			).put(
+				"ignored", ignored
+			).put(
+				"passed", passed
+			)
 		);
 
 		resourceResponse.setContentType(ContentTypes.APPLICATION_JSON);

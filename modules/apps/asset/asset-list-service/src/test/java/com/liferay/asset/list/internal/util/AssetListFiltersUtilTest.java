@@ -726,8 +726,9 @@ public class AssetListFiltersUtilTest {
 		);
 
 		_objectDefinitionLocalServiceUtilMockedStatic.when(
-			() -> ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				_CLASS_TYPE_ID)
+			() ->
+				ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(
+					_COMPANY_ID, "com.liferay.test.Class" + _CLASS_NAME_ID)
 		).thenReturn(
 			objectDefinition
 		);

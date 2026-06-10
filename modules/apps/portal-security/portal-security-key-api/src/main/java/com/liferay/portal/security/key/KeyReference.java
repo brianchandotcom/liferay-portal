@@ -138,7 +138,8 @@ public class KeyReference implements Serializable {
 		}
 
 		return StringBundler.concat(
-			"${", typeString, ":", _providerId, ":", _identifier, "}");
+			"{identifier=", _identifier, ", providerId=", _providerId,
+			", type=", typeString, "}");
 	}
 
 	public enum Type {

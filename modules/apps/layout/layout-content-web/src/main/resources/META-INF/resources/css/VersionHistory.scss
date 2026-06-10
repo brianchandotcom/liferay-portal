@@ -1,8 +1,8 @@
 @import 'atlas-variables';
 
-$page-version-history-toolbar-height: 3rem;
+$version-history-toolbar-height: 3rem;
 
-.page-version-history {
+.version-history {
 	&__side-panel {
 		@include media-breakpoint-up(lg) {
 			.close {
@@ -21,5 +21,5 @@ $page-version-history-toolbar-height: 3rem;
 }
 
 #wrapper.c-slideout-container {
-	padding-top: $page-version-history-toolbar-height;
+	padding-top: $version-history-toolbar-height;
 }

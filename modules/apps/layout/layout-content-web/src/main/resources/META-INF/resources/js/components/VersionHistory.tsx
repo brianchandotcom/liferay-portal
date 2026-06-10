@@ -10,7 +10,7 @@ import {useMediaQuery} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import './PageVersionHistory.scss';
+import '../../css/VersionHistory.scss';
 
 const LARGE_MEDIA_QUERY = '(min-width: 992px)';
 
@@ -18,9 +18,7 @@ interface Props {
 	pageSpecificationVersionsURL: string;
 }
 
-export default function PageVersionHistory({
-	pageSpecificationVersionsURL,
-}: Props) {
+export default function VersionHistory({pageSpecificationVersionsURL}: Props) {
 	const [isOpen, setIsOpen] = useState(true);
 
 	const wrapperRef = useRef<HTMLElement | null>(
@@ -33,7 +31,7 @@ export default function PageVersionHistory({
 
 	return (
 		<>
-			<ClayToolbar className="bg-white page-version-history__toolbar px-3">
+			<ClayToolbar className="bg-white px-3 version-history__toolbar">
 				{!isSidePanelOpen ? (
 					<ClayToolbar.Nav>
 						<ClayToolbar.Item>
@@ -56,7 +54,7 @@ export default function PageVersionHistory({
 			</ClayToolbar>
 
 			<SidePanel
-				className="page-version-history__side-panel"
+				className="version-history__side-panel"
 				containerRef={wrapperRef}
 				direction="left"
 				displayType="light"

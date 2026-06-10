@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import React from 'react';
-
-import {ErrorIcon} from './Icons';
 
 export default function ErrorMessage() {
 	return (
 		<div className="aihub-msg-assistant aihub-msg-error">
 			<div className="aihub-msg-assistant-icon">
-				<ErrorIcon />
+				<ClayIcon symbol="exclamation-full" />
 			</div>
 
 			<div className="aihub-msg-assistant-text">

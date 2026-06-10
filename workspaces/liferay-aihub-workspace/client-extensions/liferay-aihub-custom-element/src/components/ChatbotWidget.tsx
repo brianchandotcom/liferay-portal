@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import {EventSource} from 'eventsource';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
@@ -19,7 +20,6 @@ import ChatbotHeader from './ChatbotHeader';
 import ChatbotInput from './ChatbotInput';
 import ChatbotIntro from './ChatbotIntro';
 import ErrorMessage from './ErrorMessage';
-import {ChatIcon, CloseIcon} from './Icons';
 import LoadingIndicator from './LoadingIndicator';
 import SendFeedbackModal from './SendFeedbackModal';
 import Toast from './Toast';
@@ -403,7 +403,7 @@ export default function ChatbotWidget({
 							className="aihub-notification-close"
 							onClick={() => setNotificationDismissed(true)}
 						>
-							<CloseIcon />
+							<ClayIcon symbol="times" />
 						</button>
 					</div>
 				)}
@@ -413,7 +413,11 @@ export default function ChatbotWidget({
 				className="aihub-toggle"
 				onClick={handleToggle}
 			>
-				{open ? <CloseIcon /> : <ChatIcon />}
+				{open ? (
+					<ClayIcon symbol="times" />
+				) : (
+					<ClayIcon symbol="comments" />
+				)}
 			</button>
 
 			{reportContext !== null && (

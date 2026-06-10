@@ -551,7 +551,8 @@ public class ObjectEntryLocalServiceImpl
 			_deleteTempFileEntries(dlFileEntriesMap);
 		}
 
-		objectEntry = _addObjectEntryVersion(objectDefinition, objectEntry);
+		objectEntry = _addObjectEntryVersion(
+			userId, objectDefinition, objectEntry);
 
 		boolean clearObjectEntryIdsMap =
 			ObjectActionThreadLocal.isClearObjectEntryIdsMap();
@@ -2447,11 +2448,13 @@ public class ObjectEntryLocalServiceImpl
 					objectEntry.getObjectEntryId());
 
 			if (count > 0) {
-				_updateLatestObjectEntryVersion(objectDefinition, objectEntry);
+				_updateLatestObjectEntryVersion(
+					userId, objectDefinition, objectEntry);
 			}
 		}
 		else if (!objectEntry.isInTrash() && !originalObjectEntry.isInTrash()) {
-			objectEntry = _addObjectEntryVersion(objectDefinition, objectEntry);
+			objectEntry = _addObjectEntryVersion(
+				userId, objectDefinition, objectEntry);
 		}
 
 		if (objectDefinition.isRootNode()) {
@@ -2906,7 +2909,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private ObjectEntry _addObjectEntryVersion(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+			long userId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws PortalException {
 
 		if (!objectDefinition.isEnableObjectEntryVersioning()) {
@@ -2914,7 +2918,8 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionLocalService.addObjectEntryVersion(objectEntry);
+			_objectEntryVersionLocalService.addObjectEntryVersion(
+				userId, objectEntry);
 
 		objectEntry.setVersion(objectEntryVersion.getVersion());
 
@@ -6949,7 +6954,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _updateLatestObjectEntryVersion(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+			long userId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws PortalException {
 
 		if (!objectDefinition.isEnableObjectEntryVersioning()) {
@@ -6957,7 +6963,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		_objectEntryVersionLocalService.updateLatestObjectEntryVersion(
-			objectEntry);
+			userId, objectEntry);
 	}
 
 	private ObjectEntry _updateObjectEntry(
@@ -7077,6 +7083,9 @@ public class ObjectEntryLocalServiceImpl
 			serviceContext.getAssetPriority(), serviceContext);
 
 		if (move) {
+			_updateLatestObjectEntryVersion(
+				userId, objectDefinition, objectEntry);
+
 			return objectEntry;
 		}
 
@@ -7108,11 +7117,12 @@ public class ObjectEntryLocalServiceImpl
 			if (objectEntry.isPending() || originalObjectEntry.isDraft() ||
 				originalObjectEntry.isExpired()) {
 
-				_updateLatestObjectEntryVersion(objectDefinition, objectEntry);
+				_updateLatestObjectEntryVersion(
+					userId, objectDefinition, objectEntry);
 			}
 			else {
 				objectEntry = _addObjectEntryVersion(
-					objectDefinition, objectEntry);
+					userId, objectDefinition, objectEntry);
 			}
 		}
 

@@ -58,10 +58,10 @@ public class ObjectEntryVersionLocalServiceImpl
 		throws PortalException {
 
 		ObjectEntryVersion objectEntryVersion = _updateObjectEntryVersion(
-			objectEntry,
+			userId, objectEntry,
 			objectEntryVersionPersistence.create(
 				counterLocalService.increment()),
-			userId, objectEntry.getVersion() + 1);
+			objectEntry.getVersion() + 1);
 
 		if (_exceedsMaximumVersions(objectEntry.getObjectEntryId())) {
 			ObjectEntryVersion oldestObjectEntryVersion =
@@ -296,11 +296,11 @@ public class ObjectEntryVersionLocalServiceImpl
 		throws PortalException {
 
 		return _updateObjectEntryVersion(
-			objectEntry,
+			userId, objectEntry,
 			objectEntryVersionPersistence.fetchByObjectEntryId_First(
 				objectEntry.getObjectEntryId(),
 				ObjectEntryVersionVersionComparator.getInstance(false)),
-			userId, objectEntry.getVersion());
+			objectEntry.getVersion());
 	}
 
 	@Override
@@ -390,8 +390,8 @@ public class ObjectEntryVersionLocalServiceImpl
 	}
 
 	private ObjectEntryVersion _updateObjectEntryVersion(
-			ObjectEntry objectEntry, ObjectEntryVersion objectEntryVersion,
-			long userId, int version)
+			long userId, ObjectEntry objectEntry,
+			ObjectEntryVersion objectEntryVersion, int version)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);

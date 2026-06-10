@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.service.persistence.impl.constants;
+package com.liferay.layout.content.service.persistence.impl.constants;
 
 /**
  * @author Lourdes Fernández Besada
@@ -12,7 +12,7 @@ package com.liferay.layout.content.versioning.service.persistence.impl.constants
 public class LayoutContentVersionPersistenceConstants {
 
 	public static final String BUNDLE_SYMBOLIC_NAME =
-		"com.liferay.layout.content.versioning.service";
+		"com.liferay.layout.content.service";
 
 	public static final String ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER =
 		"(origin.bundle.symbolic.name=" + BUNDLE_SYMBOLIC_NAME + ")";
@@ -21,4 +21,4 @@ public class LayoutContentVersionPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1252076443
+// LIFERAY-SERVICE-BUILDER-HASH:-357400011

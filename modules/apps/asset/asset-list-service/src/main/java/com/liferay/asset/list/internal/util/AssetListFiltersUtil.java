@@ -160,12 +160,12 @@ public class AssetListFiltersUtil {
 			new TermQuery("nestedFieldArray.fieldName", propertyName),
 			BooleanClauseOccur.MUST);
 		nestedBooleanQuery.add(
-			_toValueQuery(subfield, value), BooleanClauseOccur.MUST);
+			_toQuery(subfield, value), BooleanClauseOccur.MUST);
 
 		return new NestedQuery("nestedFieldArray", nestedBooleanQuery);
 	}
 
-	private static Query _toValueQuery(String subfield, String value) {
+	private static Query _toQuery(String subfield, String value) {
 		if (subfield.endsWith(".value_keyword") ||
 			subfield.endsWith(".value_boolean") ||
 			subfield.endsWith(".value_date") ||

@@ -1,0 +1,24 @@
+{
+	"dependencies": {
+		"@clayui/alert": "^3.165.0",
+		"@clayui/button": "^3.165.0",
+		"@clayui/empty-state": "^3.165.0",
+		"@clayui/form": "^3.165.0",
+		"@clayui/icon": "^3.165.0",
+		"@clayui/label": "^3.165.0",
+		"@clayui/table": "^3.165.0",
+		"@clayui/tabs": "^3.165.0",
+		"frontend-js-web": "*",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"main": "js/Launches.tsx",
+	"name": "@liferay/launch-web",
+	"private": true,
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "1.0.3"
+}

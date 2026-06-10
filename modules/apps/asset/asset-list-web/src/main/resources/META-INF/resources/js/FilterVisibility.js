@@ -28,8 +28,8 @@ export default function ({namespace}) {
 
 		const showCollection = isSingleCMSType || isMultiSelection;
 
-		collectionWrapper.classList.toggle('hide', !showCollection);
 		assetWrapper.classList.toggle('hide', showCollection);
+		collectionWrapper.classList.toggle('hide', !showCollection);
 	};
 
 	updateVisibility();

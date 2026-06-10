@@ -318,7 +318,7 @@ public class UpgradeQueryMonitorTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Long-running query \"", query, "\" with ID ", id,
+				"Long running query \"", query, "\" with ID ", id,
 				" in schema \"", schema, "\" has been running for 630 seconds"),
 			logEntry.getMessage());
 		Assert.assertEquals("INFO", logEntry.getPriority());

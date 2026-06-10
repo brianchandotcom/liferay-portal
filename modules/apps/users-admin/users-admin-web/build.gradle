@@ -28,6 +28,7 @@ dependencies {
 	compileOnly project(":apps:portal-configuration:portal-configuration-upgrade-api")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")
+	compileOnly project(":apps:roles:roles-admin-api")
 	compileOnly project(":apps:site-navigation:site-navigation-taglib")
 	compileOnly project(":apps:site:site-item-selector-api")
 	compileOnly project(":apps:site:site-taglib")

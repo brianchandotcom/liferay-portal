@@ -14,7 +14,6 @@ import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomize
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,6 +36,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -135,6 +134,17 @@ public class FeatureFlagsBagProviderImpl
 
 		_initSystemFeatureFlags(false);
 
+		if (PropsValues.DATABASE_PARTITION_ENABLED) {
+			FeatureFlagsBag featureFlagsBag = getOrCreateFeatureFlagsBag(
+				CompanyConstants.SYSTEM);
+
+			for (FeatureFlag featureFlag :
+					featureFlagsBag.getFeatureFlags(null)) {
+
+				featureFlag.isEnabled();
+			}
+		}
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, FeatureFlagListener.class, null,
 			(serviceReference, emitter) -> {
@@ -191,19 +201,7 @@ public class FeatureFlagsBagProviderImpl
 			}
 		}
 
-		if (companyId == CompanyThreadLocal.getCompanyId()) {
-			_populateFeatureFlagsMap(
-				companyId, featureFlags, systemFeatureFlags);
-		}
-		else {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						companyId)) {
-
-				_populateFeatureFlagsMap(
-					companyId, featureFlags, systemFeatureFlags);
-			}
-		}
+		_populateFeatureFlagsMap(companyId, featureFlags, systemFeatureFlags);
 
 		return new FeatureFlagsBag(
 			companyId, Collections.unmodifiableMap(featureFlags));

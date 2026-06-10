@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useId, useState} from 'react';
 
 import PageTreeModal, {
 	PageTreeModalConfiguration,
@@ -110,6 +110,8 @@ export default function LayoutSetControl({
 	const {privateLayoutsEnabled, ...modalConfiguration} =
 		pageTreeModalConfiguration;
 
+	const checkboxId = useId();
+
 	const [showModal, setShowModal] = useState(false);
 
 	const {layoutIds = [], privateLayout = false} = (
@@ -125,8 +127,8 @@ export default function LayoutSetControl({
 			<ClayLayout.ContentRow className="align-items-center mb-2">
 				<ClayLayout.ContentCol className="pr-2" expand={false}>
 					<ClayCheckbox
-						aria-label={label}
 						checked={isAll}
+						id={checkboxId}
 						indeterminate={!isAll && !!layoutIds.length}
 						onChange={() =>
 							onChange(isAll ? undefined : {privateLayout})
@@ -136,9 +138,12 @@ export default function LayoutSetControl({
 
 				<ClayLayout.ContentCol expand>
 					<div className="align-items-center d-flex justify-content-between">
-						<span className="font-weight-semi-bold small">
+						<label
+							className="cursor-pointer font-weight-semi-bold mb-0 small"
+							htmlFor={checkboxId}
+						>
 							{label}
-						</span>
+						</label>
 
 						{!privateLayoutsEnabled && (
 							<SelectPagesButton onClick={openModal} />

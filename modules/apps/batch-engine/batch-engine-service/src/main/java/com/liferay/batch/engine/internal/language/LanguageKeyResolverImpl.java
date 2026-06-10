@@ -31,80 +31,73 @@ public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 	@Override
 	public void expand(JSONObject jsonObject) {
 		_expand(jsonObject);
-
-		for (String key : jsonObject.keySet()) {
-			Object value = jsonObject.get(key);
-
-			if (value instanceof JSONObject) {
-				expand((JSONObject)value);
-			}
-			else if (value instanceof JSONArray) {
-				JSONArray jsonArray = (JSONArray)value;
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					Object object = jsonArray.get(i);
-
-					if (object instanceof JSONObject) {
-						expand((JSONObject)object);
-					}
-				}
-			}
-		}
 	}
 
 	@Override
 	public void expand(Map<String, Object> fieldNameValueMap) {
 		_expand(fieldNameValueMap);
+	}
 
-		for (Object value : fieldNameValueMap.values()) {
-			if (value instanceof Map) {
-				expand((Map<String, Object>)value);
+	private void _expand(Object object) {
+		if (object instanceof JSONArray) {
+			JSONArray jsonArray = (JSONArray)object;
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				_expand(jsonArray.get(i));
 			}
-			else if (value instanceof List) {
-				for (Object object : (List<Object>)value) {
-					if (object instanceof Map) {
-						expand((Map<String, Object>)object);
-					}
+		}
+		else if (object instanceof JSONObject) {
+			JSONObject jsonObject = (JSONObject)object;
+
+			for (String key : jsonObject.keySet()) {
+				_expand(jsonObject.get(key));
+			}
+
+			Object value = jsonObject.get(FOR_EACH_LANGUAGE_ID);
+
+			if (!(value instanceof String)) {
+				return;
+			}
+
+			jsonObject.remove(FOR_EACH_LANGUAGE_ID);
+
+			for (Map.Entry<String, String> entry :
+					_resolve(
+						(String)value
+					).entrySet()) {
+
+				if (!jsonObject.has(entry.getKey())) {
+					jsonObject.put(entry.getKey(), entry.getValue());
 				}
 			}
 		}
-	}
-
-	private void _expand(JSONObject jsonObject) {
-		Object value = jsonObject.get(FOR_EACH_LANGUAGE_ID);
-
-		if (!(value instanceof String)) {
-			return;
-		}
-
-		jsonObject.remove(FOR_EACH_LANGUAGE_ID);
-
-		for (Map.Entry<String, String> entry :
-				_resolve(
-					(String)value
-				).entrySet()) {
-
-			if (!jsonObject.has(entry.getKey())) {
-				jsonObject.put(entry.getKey(), entry.getValue());
+		else if (object instanceof List) {
+			for (Object value : (List<Object>)object) {
+				_expand(value);
 			}
 		}
-	}
+		else if (object instanceof Map) {
+			Map<String, Object> map = (Map<String, Object>)object;
 
-	private void _expand(Map<String, Object> fieldNameValueMap) {
-		Object value = fieldNameValueMap.get(FOR_EACH_LANGUAGE_ID);
+			for (Object value : map.values()) {
+				_expand(value);
+			}
 
-		if (!(value instanceof String)) {
-			return;
-		}
+			Object value = map.get(FOR_EACH_LANGUAGE_ID);
 
-		fieldNameValueMap.remove(FOR_EACH_LANGUAGE_ID);
+			if (!(value instanceof String)) {
+				return;
+			}
 
-		for (Map.Entry<String, String> entry :
-				_resolve(
-					(String)value
-				).entrySet()) {
+			map.remove(FOR_EACH_LANGUAGE_ID);
 
-			fieldNameValueMap.putIfAbsent(entry.getKey(), entry.getValue());
+			for (Map.Entry<String, String> entry :
+					_resolve(
+						(String)value
+					).entrySet()) {
+
+				map.putIfAbsent(entry.getKey(), entry.getValue());
+			}
 		}
 	}
 

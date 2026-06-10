@@ -79,18 +79,10 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 		boolean preValidationErrors, long userId) {
 
 		if (layoutSets.isEmpty()) {
-			try {
-				postNotification(
-					Collections.singleton(
-						BackgroundTaskConstants.STATUS_SUCCESSFUL),
-					layoutSetPrototype.getNameMap(), userId);
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Unable to post sync completion notification for user " +
-						userId,
-					portalException);
-			}
+			postNotification(
+				Collections.singleton(
+					BackgroundTaskConstants.STATUS_SUCCESSFUL),
+				layoutSetPrototype.getNameMap(), userId);
 
 			return () -> {
 			};
@@ -109,22 +101,14 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 	public static void postFailureNotification(
 		Map<Locale, String> nameMap, long userId) {
 
-		try {
-			postNotification(
-				Collections.singleton(BackgroundTaskConstants.STATUS_FAILED),
-				nameMap, userId);
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to post sync failure notification for user " + userId,
-				portalException);
-		}
+		postNotification(
+			Collections.singleton(BackgroundTaskConstants.STATUS_FAILED),
+			nameMap, userId);
 	}
 
 	public static void postNotification(
-			Set<Integer> backgroundTaskStatuses, Map<Locale, String> nameMap,
-			long userId)
-		throws PortalException {
+		Set<Integer> backgroundTaskStatuses, Map<Locale, String> nameMap,
+		long userId) {
 
 		NotificationEvent notificationEvent = new NotificationEvent(
 			System.currentTimeMillis(),
@@ -138,8 +122,15 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 		notificationEvent.setDeliveryType(
 			UserNotificationDeliveryConstants.TYPE_WEBSITE);
 
-		UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
-			userId, notificationEvent);
+		try {
+			UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
+				userId, notificationEvent);
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to post sync notification for user " + userId,
+				portalException);
+		}
 	}
 
 	private static JSONObject _toJSONObject(Map<Locale, String> nameMap) {

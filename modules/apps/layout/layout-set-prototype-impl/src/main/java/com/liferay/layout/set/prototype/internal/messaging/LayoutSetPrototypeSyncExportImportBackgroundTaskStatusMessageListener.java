@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -96,7 +93,7 @@ public class
 			if (backgroundTaskStatus ==
 					BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 
-				_deleteSuccessfulBackgroundTasks(backgroundTask);
+				_deleteBackgroundTask(backgroundTask);
 			}
 
 			return;
@@ -156,33 +153,24 @@ public class
 					BackgroundTaskConstants.STATUS_FAILED);
 			}
 
-			try {
-				TransactionInvokerUtil.invoke(
-					_transactionConfig,
-					() -> {
-						LayoutSetPrototypeSyncSessionManagerUtil.
-							postNotification(
-								backgroundTaskStatuses,
-								layoutSetPrototype.getNameMap(),
-								MapUtil.getLong(
-									taskContextMap,
-									LayoutSetPrototypeSyncSessionManagerUtil.
-										KEY_SYNC_USER_ID));
+			LayoutSetPrototypeSyncSessionManagerUtil.postNotification(
+				backgroundTaskStatuses, layoutSetPrototype.getNameMap(),
+				MapUtil.getLong(
+					taskContextMap,
+					LayoutSetPrototypeSyncSessionManagerUtil.KEY_SYNC_USER_ID));
 
-						_markNotified(completedBackgroundTasks);
+			for (BackgroundTask completedBackgroundTask :
+					completedBackgroundTasks) {
 
-						return null;
-					});
+				if (completedBackgroundTask.getStatus() ==
+						BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+
+					_deleteBackgroundTask(completedBackgroundTask);
+				}
+				else {
+					_markNotified(completedBackgroundTask);
+				}
 			}
-			catch (Throwable throwable) {
-				_log.error(
-					"Unable to finalize the site template sync session",
-					throwable);
-
-				return;
-			}
-
-			_deleteSuccessfulBackgroundTasks(completedBackgroundTasks);
 		}
 		finally {
 			_lockManager.unlock(
@@ -217,26 +205,16 @@ public class
 		return lock;
 	}
 
-	private void _deleteSuccessfulBackgroundTasks(
-		BackgroundTask... backgroundTasks) {
-
-		for (BackgroundTask backgroundTask : backgroundTasks) {
-			if (backgroundTask.getStatus() !=
-					BackgroundTaskConstants.STATUS_SUCCESSFUL) {
-
-				continue;
-			}
-
-			try {
-				_backgroundTaskLocalService.deleteBackgroundTask(
-					backgroundTask.getBackgroundTaskId());
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to delete background task " +
-						backgroundTask.getBackgroundTaskId(),
-					exception);
-			}
+	private void _deleteBackgroundTask(BackgroundTask backgroundTask) {
+		try {
+			_backgroundTaskLocalService.deleteBackgroundTask(
+				backgroundTask.getBackgroundTaskId());
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to delete background task " +
+					backgroundTask.getBackgroundTaskId(),
+				exception);
 		}
 	}
 
@@ -286,8 +264,8 @@ public class
 			BackgroundTask.class);
 	}
 
-	private void _markNotified(BackgroundTask[] backgroundTasks) {
-		for (BackgroundTask backgroundTask : backgroundTasks) {
+	private void _markNotified(BackgroundTask backgroundTask) {
+		try {
 			Map<String, Serializable> taskContextMap =
 				backgroundTask.getTaskContextMap();
 
@@ -297,7 +275,14 @@ public class
 
 			backgroundTask.setTaskContextMap(taskContextMap);
 
-			_backgroundTaskLocalService.updateBackgroundTask(backgroundTask);
+			backgroundTask = _backgroundTaskLocalService.updateBackgroundTask(
+				backgroundTask);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to mark background task " +
+					backgroundTask.getBackgroundTaskId() + " as notified",
+				exception);
 		}
 	}
 
@@ -306,10 +291,6 @@ public class
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypeSyncExportImportBackgroundTaskStatusMessageListener.
 			class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

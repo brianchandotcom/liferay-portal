@@ -98,7 +98,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				_layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(
 					layoutSetPrototype.getUuid())) {
 
-			if (_isLayoutSetMergeable(layoutSet.getGroup(), layoutSet)) {
+			if (_isLayoutSetMergeable(layoutSet)) {
 				mergeableLayoutSets.add(layoutSet);
 			}
 		}
@@ -171,12 +171,10 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				MustNotHaveExportImportInProgress();
 		}
 
-		Group group = layoutSet.getGroup();
-
 		layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			layoutSet.getLayoutSetId());
 
-		if (!_isLayoutSetMergeable(group, layoutSet)) {
+		if (!_isLayoutSetMergeable(layoutSet)) {
 			return;
 		}
 
@@ -751,10 +749,16 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		return true;
 	}
 
-	private boolean _isLayoutSetMergeable(Group group, LayoutSet layoutSet) {
-		if (!layoutSet.isLayoutSetPrototypeLinkActive() ||
-			group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+	private boolean _isLayoutSetMergeable(LayoutSet layoutSet)
+		throws PortalException {
 
+		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
+			return false;
+		}
+
+		Group group = layoutSet.getGroup();
+
+		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 			return false;
 		}
 

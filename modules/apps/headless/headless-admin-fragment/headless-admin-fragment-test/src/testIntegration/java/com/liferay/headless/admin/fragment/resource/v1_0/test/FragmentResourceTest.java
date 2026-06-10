@@ -161,25 +161,9 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	public void testDeleteSiteFragment() throws Exception {
 		super.testDeleteSiteFragment();
 
-		Fragment postFragment = _postSiteFragmentSetFragment(randomFragment());
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
-				postFragment.getExternalReferenceCode(),
-				testGroup.getGroupId());
-
-		fragmentResource.deleteSiteFragment(
-			testGroup.getExternalReferenceCode(),
-			postFragment.getExternalReferenceCode());
-
-		Assert.assertNull(
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				fragmentEntry.getFragmentEntryId()));
-
-		List<FragmentEntryVersion> fragmentEntryVersions =
-			_fragmentEntryLocalService.getVersions(fragmentEntry);
-
-		Assert.assertTrue(fragmentEntryVersions.isEmpty());
+		_testDeleteSiteFragment(false, true);
+		_testDeleteSiteFragment(true, false);
+		_testDeleteSiteFragment(true, true);
 	}
 
 	@Override
@@ -881,6 +865,32 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				fetchFragmentEntryByExternalReferenceCode(
 					fragment2.getExternalReferenceCode(),
 					irrelevantGroup.getGroupId()));
+	}
+
+	private void _testDeleteSiteFragment(boolean approved, boolean draft)
+		throws Exception {
+
+		Fragment postFragment = _postSiteFragmentSetFragment(
+			_randomFragment(approved, draft));
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.
+				fetchFragmentEntryByExternalReferenceCode(
+					postFragment.getExternalReferenceCode(),
+					testGroup.getGroupId(), approved);
+
+		fragmentResource.deleteSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			postFragment.getExternalReferenceCode());
+
+		Assert.assertNull(
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntry.getFragmentEntryId()));
+
+		List<FragmentEntryVersion> fragmentEntryVersions =
+			_fragmentEntryLocalService.getVersions(fragmentEntry);
+
+		Assert.assertTrue(fragmentEntryVersions.isEmpty());
 	}
 
 	private void _testGetSiteFragment(boolean approved, boolean draft)

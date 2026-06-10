@@ -153,11 +153,11 @@ public class AudienceEntryUtil {
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public static AudienceEntry findByUuid_First(
 			String uuid, OrderByComparator<AudienceEntry> orderByComparator)
-		throws com.liferay.audience.exception.NoSuchEntryException {
+		throws com.liferay.audience.exception.NoSuchAudienceEntryException {
 
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -256,12 +256,12 @@ public class AudienceEntryUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public static AudienceEntry findByUuid_C_First(
 			String uuid, long companyId,
 			OrderByComparator<AudienceEntry> orderByComparator)
-		throws com.liferay.audience.exception.NoSuchEntryException {
+		throws com.liferay.audience.exception.NoSuchAudienceEntryException {
 
 		return getPersistence().findByUuid_C_First(
 			uuid, companyId, orderByComparator);
@@ -366,11 +366,11 @@ public class AudienceEntryUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public static AudienceEntry findByCompanyId_First(
 			long companyId, OrderByComparator<AudienceEntry> orderByComparator)
-		throws com.liferay.audience.exception.NoSuchEntryException {
+		throws com.liferay.audience.exception.NoSuchAudienceEntryException {
 
 		return getPersistence().findByCompanyId_First(
 			companyId, orderByComparator);
@@ -525,12 +525,12 @@ public class AudienceEntryUtil {
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public static AudienceEntry findByC_LikeN_First(
 			long companyId, String name,
 			OrderByComparator<AudienceEntry> orderByComparator)
-		throws com.liferay.audience.exception.NoSuchEntryException {
+		throws com.liferay.audience.exception.NoSuchAudienceEntryException {
 
 		return getPersistence().findByC_LikeN_First(
 			companyId, name, orderByComparator);
@@ -640,16 +640,16 @@ public class AudienceEntryUtil {
 	}
 
 	/**
-	 * Returns the audience entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the audience entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchAudienceEntryException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code
 	 * @param companyId the company ID
 	 * @return the matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public static AudienceEntry findByERC_C(
 			String externalReferenceCode, long companyId)
-		throws com.liferay.audience.exception.NoSuchEntryException {
+		throws com.liferay.audience.exception.NoSuchAudienceEntryException {
 
 		return getPersistence().findByERC_C(externalReferenceCode, companyId);
 	}
@@ -678,7 +678,7 @@ public class AudienceEntryUtil {
 	 */
 	public static AudienceEntry removeByERC_C(
 			String externalReferenceCode, long companyId)
-		throws com.liferay.audience.exception.NoSuchEntryException {
+		throws com.liferay.audience.exception.NoSuchAudienceEntryException {
 
 		return getPersistence().removeByERC_C(externalReferenceCode, companyId);
 	}
@@ -711,10 +711,10 @@ public class AudienceEntryUtil {
 	 *
 	 * @param audienceEntryId the primary key of the audience entry
 	 * @return the audience entry that was removed
-	 * @throws NoSuchEntryException if a audience entry with the primary key could not be found
+	 * @throws NoSuchAudienceEntryException if a audience entry with the primary key could not be found
 	 */
 	public static AudienceEntry remove(long audienceEntryId)
-		throws com.liferay.audience.exception.NoSuchEntryException {
+		throws com.liferay.audience.exception.NoSuchAudienceEntryException {
 
 		return getPersistence().remove(audienceEntryId);
 	}
@@ -724,14 +724,14 @@ public class AudienceEntryUtil {
 	}
 
 	/**
-	 * Returns the audience entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the audience entry with the primary key or throws a <code>NoSuchAudienceEntryException</code> if it could not be found.
 	 *
 	 * @param audienceEntryId the primary key of the audience entry
 	 * @return the audience entry
-	 * @throws NoSuchEntryException if a audience entry with the primary key could not be found
+	 * @throws NoSuchAudienceEntryException if a audience entry with the primary key could not be found
 	 */
 	public static AudienceEntry findByPrimaryKey(long audienceEntryId)
-		throws com.liferay.audience.exception.NoSuchEntryException {
+		throws com.liferay.audience.exception.NoSuchAudienceEntryException {
 
 		return getPersistence().findByPrimaryKey(audienceEntryId);
 	}
@@ -1009,4 +1009,4 @@ public class AudienceEntryUtil {
 	private static volatile AudienceEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1360633743
+// LIFERAY-SERVICE-BUILDER-HASH:-160566149

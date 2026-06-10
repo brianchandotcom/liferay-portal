@@ -5,7 +5,7 @@
 
 package com.liferay.audience.service.persistence;
 
-import com.liferay.audience.exception.NoSuchEntryException;
+import com.liferay.audience.exception.NoSuchAudienceEntryException;
 import com.liferay.audience.model.AudienceEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -58,13 +58,13 @@ public interface AudienceEntryPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public AudienceEntry findByUuid_First(
 			String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator<AudienceEntry>
 				orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchAudienceEntryException;
 
 	/**
 	 * Returns the first audience entry in the ordered set where uuid = &#63;.
@@ -147,13 +147,13 @@ public interface AudienceEntryPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public AudienceEntry findByUuid_C_First(
 			String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<AudienceEntry>
 				orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchAudienceEntryException;
 
 	/**
 	 * Returns the first audience entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -239,13 +239,13 @@ public interface AudienceEntryPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public AudienceEntry findByCompanyId_First(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<AudienceEntry>
 				orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchAudienceEntryException;
 
 	/**
 	 * Returns the first audience entry in the ordered set where companyId = &#63;.
@@ -373,13 +373,13 @@ public interface AudienceEntryPersistence
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public AudienceEntry findByC_LikeN_First(
 			long companyId, String name,
 			com.liferay.portal.kernel.util.OrderByComparator<AudienceEntry>
 				orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchAudienceEntryException;
 
 	/**
 	 * Returns the first audience entry in the ordered set where companyId = &#63; and name LIKE &#63;.
@@ -466,16 +466,16 @@ public interface AudienceEntryPersistence
 	public int filterCountByC_LikeN(long companyId, String name);
 
 	/**
-	 * Returns the audience entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the audience entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchAudienceEntryException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code
 	 * @param companyId the company ID
 	 * @return the matching audience entry
-	 * @throws NoSuchEntryException if a matching audience entry could not be found
+	 * @throws NoSuchAudienceEntryException if a matching audience entry could not be found
 	 */
 	public AudienceEntry findByERC_C(
 			String externalReferenceCode, long companyId)
-		throws NoSuchEntryException;
+		throws NoSuchAudienceEntryException;
 
 	/**
 	 * Returns the audience entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -497,7 +497,7 @@ public interface AudienceEntryPersistence
 	 */
 	public AudienceEntry removeByERC_C(
 			String externalReferenceCode, long companyId)
-		throws NoSuchEntryException;
+		throws NoSuchAudienceEntryException;
 
 	/**
 	 * Returns the number of audience entries where externalReferenceCode = &#63; and companyId = &#63;.
@@ -521,22 +521,22 @@ public interface AudienceEntryPersistence
 	 *
 	 * @param audienceEntryId the primary key of the audience entry
 	 * @return the audience entry that was removed
-	 * @throws NoSuchEntryException if a audience entry with the primary key could not be found
+	 * @throws NoSuchAudienceEntryException if a audience entry with the primary key could not be found
 	 */
 	public AudienceEntry remove(long audienceEntryId)
-		throws NoSuchEntryException;
+		throws NoSuchAudienceEntryException;
 
 	public AudienceEntry updateImpl(AudienceEntry audienceEntry);
 
 	/**
-	 * Returns the audience entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the audience entry with the primary key or throws a <code>NoSuchAudienceEntryException</code> if it could not be found.
 	 *
 	 * @param audienceEntryId the primary key of the audience entry
 	 * @return the audience entry
-	 * @throws NoSuchEntryException if a audience entry with the primary key could not be found
+	 * @throws NoSuchAudienceEntryException if a audience entry with the primary key could not be found
 	 */
 	public AudienceEntry findByPrimaryKey(long audienceEntryId)
-		throws NoSuchEntryException;
+		throws NoSuchAudienceEntryException;
 
 	/**
 	 * Returns the audience entry with the primary key or returns <code>null</code> if it could not be found.
@@ -819,4 +819,4 @@ public interface AudienceEntryPersistence
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2017459730
+// LIFERAY-SERVICE-BUILDER-HASH:-794630566

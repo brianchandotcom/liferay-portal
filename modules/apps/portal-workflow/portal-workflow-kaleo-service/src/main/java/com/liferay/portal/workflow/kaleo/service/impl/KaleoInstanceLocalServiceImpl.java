@@ -439,7 +439,7 @@ public class KaleoInstanceLocalServiceImpl
 		properties = {
 			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.hibernate.StaleObjectStateException"
+				value = "org.hibernate.StaleStateException"
 			)
 		}
 	)

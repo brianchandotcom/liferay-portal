@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.service;
+package com.liferay.layout.content.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
@@ -29,7 +29,7 @@ public class LayoutContentVersionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.model.LayoutContentVersion
 			addLayoutContentVersion(
 				String externalReferenceCode, long plid,
 				java.util.Map<java.util.Locale, String> nameMap, String data,
@@ -42,7 +42,7 @@ public class LayoutContentVersionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.model.LayoutContentVersion
 			deleteLayoutContentVersion(long layoutContentVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -51,7 +51,7 @@ public class LayoutContentVersionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.model.LayoutContentVersion
 			getLayoutContentVersion(long layoutContentVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -60,7 +60,7 @@ public class LayoutContentVersionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.model.LayoutContentVersion
 			getLayoutContentVersionByExternalReferenceCode(
 				String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -71,10 +71,9 @@ public class LayoutContentVersionServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.layout.content.versioning.model.LayoutContentVersion>
-				getLayoutContentVersions(long plid)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<com.liferay.layout.content.model.LayoutContentVersion>
+			getLayoutContentVersions(long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutContentVersionService.getLayoutContentVersions(plid);
 	}
@@ -90,7 +89,7 @@ public class LayoutContentVersionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.model.LayoutContentVersion
 			updateLayoutContentVersion(
 				long layoutContentVersionId,
 				java.util.Map<java.util.Locale, String> nameMap)
@@ -115,4 +114,4 @@ public class LayoutContentVersionServiceWrapper
 	private LayoutContentVersionService _layoutContentVersionService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-662040126
+// LIFERAY-SERVICE-BUILDER-HASH:1594656606

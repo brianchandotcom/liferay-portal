@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.service.persistence.impl;
+package com.liferay.layout.content.service.persistence.impl;
 
-import com.liferay.layout.content.versioning.exception.DuplicateLayoutContentVersionExternalReferenceCodeException;
-import com.liferay.layout.content.versioning.exception.NoSuchLayoutContentVersionException;
-import com.liferay.layout.content.versioning.model.LayoutContentVersion;
-import com.liferay.layout.content.versioning.model.LayoutContentVersionTable;
-import com.liferay.layout.content.versioning.model.impl.LayoutContentVersionImpl;
-import com.liferay.layout.content.versioning.model.impl.LayoutContentVersionModelImpl;
-import com.liferay.layout.content.versioning.service.persistence.LayoutContentVersionPersistence;
-import com.liferay.layout.content.versioning.service.persistence.LayoutContentVersionUtil;
-import com.liferay.layout.content.versioning.service.persistence.impl.constants.LayoutContentVersionPersistenceConstants;
+import com.liferay.layout.content.exception.DuplicateLayoutContentVersionExternalReferenceCodeException;
+import com.liferay.layout.content.exception.NoSuchLayoutContentVersionException;
+import com.liferay.layout.content.model.LayoutContentVersion;
+import com.liferay.layout.content.model.LayoutContentVersionTable;
+import com.liferay.layout.content.model.impl.LayoutContentVersionImpl;
+import com.liferay.layout.content.model.impl.LayoutContentVersionModelImpl;
+import com.liferay.layout.content.service.persistence.LayoutContentVersionPersistence;
+import com.liferay.layout.content.service.persistence.LayoutContentVersionUtil;
+import com.liferay.layout.content.service.persistence.impl.constants.LayoutContentVersionPersistenceConstants;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -1080,4 +1080,4 @@ public class LayoutContentVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1851031017
+// LIFERAY-SERVICE-BUILDER-HASH:-691994513

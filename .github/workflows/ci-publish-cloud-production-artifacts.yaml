@@ -386,9 +386,9 @@ jobs:
 
                         local release_git_tag
 
-                        release_git_tag=$(echo "${GITHUB_REF_NAME}" | tr '/' '-')
+                        release_git_tag="release-$(date --utc +%F)"
 
-                        git tag --annotate "${release_git_tag}" --message "Release ${release_git_tag}"
+                        git tag --annotate "${release_git_tag}" --message "Release ${release_git_tag} from ${GITHUB_REF_NAME}"
 
                         git push origin "${release_git_tag}"
                     }

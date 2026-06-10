@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {JournalPage} from '../../../journal-web/main/pages/JournalPage';
 
 type TranslationFields = {
@@ -20,19 +21,26 @@ export class WebContentTranslationPage {
 	readonly descriptionEditor: Locator;
 	readonly journalPage: JournalPage;
 	readonly publishButton: Locator;
+	readonly saveAsDraftButton: Locator;
 	readonly targetLocaleToggle: Locator;
 	readonly titleInput: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
-		this.contentEditor = page.locator('.lfr-ck').nth(1).locator('.ck-content');
+		this.contentEditor = page
+			.locator('.lfr-ck')
+			.nth(1)
+			.locator('.ck-content');
 		this.descriptionEditor = page
 			.locator('.lfr-ck')
 			.nth(0)
 			.locator('.ck-content');
 		this.journalPage = new JournalPage(page);
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
+		this.saveAsDraftButton = page.getByRole('button', {
+			name: 'Save as Draft',
+		});
 		this.targetLocaleToggle = page
 			.locator('button.dropdown-toggle')
 			.filter({hasText: /^[a-z]{2}-[A-Z]{2}$/})
@@ -75,6 +83,14 @@ export class WebContentTranslationPage {
 
 	async publish() {
 		await this.publishButton.click();
+
+		await waitForAlert(this.page);
+	}
+
+	async saveAsDraft() {
+		await this.saveAsDraftButton.click();
+
+		await waitForAlert(this.page);
 	}
 
 	async translateFields({content, description, title}: TranslationFields) {

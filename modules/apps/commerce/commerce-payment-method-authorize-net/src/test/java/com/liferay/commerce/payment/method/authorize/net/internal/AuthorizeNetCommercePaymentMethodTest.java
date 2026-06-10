@@ -104,14 +104,14 @@ public class AuthorizeNetCommercePaymentMethodTest {
 		CustomerAddressType customerAddressType =
 			transactionRequestType.getBillTo();
 
-		Assert.assertNull(customerAddressType.getFirstName());
-		Assert.assertNull(customerAddressType.getLastName());
 		Assert.assertNull(customerAddressType.getAddress());
 		Assert.assertNull(customerAddressType.getCity());
-		Assert.assertNull(customerAddressType.getZip());
 		Assert.assertNull(customerAddressType.getCountry());
-		Assert.assertNull(customerAddressType.getState());
+		Assert.assertNull(customerAddressType.getFirstName());
+		Assert.assertNull(customerAddressType.getLastName());
 		Assert.assertNull(customerAddressType.getPhoneNumber());
+		Assert.assertNull(customerAddressType.getState());
+		Assert.assertNull(customerAddressType.getZip());
 	}
 
 	@Test
@@ -151,27 +151,49 @@ public class AuthorizeNetCommercePaymentMethodTest {
 			NameAndAddressType nameAndAddressType)
 		throws Exception {
 
-		Assert.assertEquals(firstName, nameAndAddressType.getFirstName());
-		Assert.assertEquals(lastName, nameAndAddressType.getLastName());
 		Assert.assertEquals(
 			commerceAddress.getStreet1(), nameAndAddressType.getAddress());
 		Assert.assertEquals(
 			commerceAddress.getCity(), nameAndAddressType.getCity());
-		Assert.assertEquals(
-			commerceAddress.getZip(), nameAndAddressType.getZip());
 
 		Country country = commerceAddress.fetchCountry();
 
 		Assert.assertEquals(country.getA2(), nameAndAddressType.getCountry());
 
+		Assert.assertEquals(firstName, nameAndAddressType.getFirstName());
+		Assert.assertEquals(lastName, nameAndAddressType.getLastName());
+
 		Region region = commerceAddress.getRegion();
 
 		Assert.assertEquals(
 			region.getRegionCode(), nameAndAddressType.getState());
+
+		Assert.assertEquals(
+			commerceAddress.getZip(), nameAndAddressType.getZip());
+	}
+
+	private AccountEntry _getAccountEntry() {
+		AccountEntry accountEntry = Mockito.mock(AccountEntry.class);
+
+		Mockito.when(
+			accountEntry.getEmailAddress()
+		).thenReturn(
+			RandomTestUtil.randomString() + "@liferay.com"
+		);
+
+		return accountEntry;
 	}
 
 	private CommerceAddress _getCommerceAddress(String name) throws Exception {
 		CommerceAddress commerceAddress = Mockito.mock(CommerceAddress.class);
+
+		Country country = _getCountry();
+
+		Mockito.when(
+			commerceAddress.fetchCountry()
+		).thenReturn(
+			country
+		);
 
 		Mockito.when(
 			commerceAddress.getCity()
@@ -191,6 +213,14 @@ public class AuthorizeNetCommercePaymentMethodTest {
 			RandomTestUtil.randomString()
 		);
 
+		Region region = _getRegion();
+
+		Mockito.when(
+			commerceAddress.getRegion()
+		).thenReturn(
+			region
+		);
+
 		Mockito.when(
 			commerceAddress.getStreet1()
 		).thenReturn(
@@ -203,32 +233,10 @@ public class AuthorizeNetCommercePaymentMethodTest {
 			RandomTestUtil.randomString()
 		);
 
-		Country country = _getCountry();
-
-		Mockito.when(
-			commerceAddress.fetchCountry()
-		).thenReturn(
-			country
-		);
-
-		Region region = _getRegion();
-
-		Mockito.when(
-			commerceAddress.getRegion()
-		).thenReturn(
-			region
-		);
-
 		return commerceAddress;
 	}
 
-	private CommerceOrder _getCommerceOrder(
-			CommerceAddress billingCommerceAddress,
-			CommerceAddress shippingCommerceAddress, BigDecimal total)
-		throws Exception {
-
-		CommerceOrder commerceOrder = Mockito.mock(CommerceOrder.class);
-
+	private CommerceCurrency _getCommerceCurrency() {
 		CommerceCurrency commerceCurrency = Mockito.mock(
 			CommerceCurrency.class);
 
@@ -244,13 +252,17 @@ public class AuthorizeNetCommercePaymentMethodTest {
 			"HALF_UP"
 		);
 
-		AccountEntry accountEntry = Mockito.mock(AccountEntry.class);
+		return commerceCurrency;
+	}
 
-		Mockito.when(
-			accountEntry.getEmailAddress()
-		).thenReturn(
-			RandomTestUtil.randomString() + "@liferay.com"
-		);
+	private CommerceOrder _getCommerceOrder(
+			CommerceAddress billingCommerceAddress,
+			CommerceAddress shippingCommerceAddress, BigDecimal total)
+		throws Exception {
+
+		CommerceOrder commerceOrder = Mockito.mock(CommerceOrder.class);
+
+		AccountEntry accountEntry = _getAccountEntry();
 
 		Mockito.when(
 			commerceOrder.getAccountEntry()
@@ -263,6 +275,8 @@ public class AuthorizeNetCommercePaymentMethodTest {
 		).thenReturn(
 			billingCommerceAddress
 		);
+
+		CommerceCurrency commerceCurrency = _getCommerceCurrency();
 
 		Mockito.when(
 			commerceOrder.getCommerceCurrency()

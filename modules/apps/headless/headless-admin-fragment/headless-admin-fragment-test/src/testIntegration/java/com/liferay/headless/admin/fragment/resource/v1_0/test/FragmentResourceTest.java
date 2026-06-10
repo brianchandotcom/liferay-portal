@@ -164,6 +164,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_testDeleteSiteFragment(false, true);
 		_testDeleteSiteFragment(true, false);
 		_testDeleteSiteFragment(true, true);
+		_testDeleteSiteFragmentNonexistent();
 	}
 
 	@Override
@@ -891,6 +892,14 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			_fragmentEntryLocalService.getVersions(fragmentEntry);
 
 		Assert.assertTrue(fragmentEntryVersions.isEmpty());
+	}
+
+	private void _testDeleteSiteFragmentNonexistent() throws Exception {
+		assertHttpResponseStatusCode(
+			404,
+			fragmentResource.deleteSiteFragmentHttpResponse(
+				testGroup.getExternalReferenceCode(),
+				RandomTestUtil.randomString()));
 	}
 
 	private void _testGetSiteFragment(boolean approved, boolean draft)

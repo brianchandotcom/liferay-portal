@@ -6,11 +6,16 @@
 package com.liferay.portal.vulcan.internal.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.ZipFileTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
@@ -71,14 +76,24 @@ public class RESTClientTemplateContextContributorTest {
 			HTTPTestUtil.customize(
 			).withoutModulePath(
 			).apply(
-				() -> _test(friendlyUrlPath)
+				() -> _test(friendlyUrlPath, TestPropsValues.getUser())
+			);
+
+			HTTPTestUtil.customize(
+			).withoutModulePath(
+			).apply(
+				() -> HTTPTestUtil.invokeToString(
+					null, "c/portal/logout", Http.Method.GET)
 			);
 
 			HTTPTestUtil.customize(
 			).withoutModulePath(
 			).withGuest(
 			).apply(
-				() -> _test(friendlyUrlPath)
+				() -> _test(
+					friendlyUrlPath,
+					_userLocalService.getGuestUser(
+						TestPropsValues.getCompanyId()))
 			);
 		}
 		finally {
@@ -86,16 +101,29 @@ public class RESTClientTemplateContextContributorTest {
 		}
 	}
 
-	private void _test(String friendlyUrlPath) throws Exception {
-		Assert.assertThat(
-			HTTPTestUtil.invokeToString(
-				null,
-				"web" + friendlyUrlPath + "/portal-vulcan-test?pageSize=2",
-				Http.Method.GET),
-			CoreMatchers.allOf(
-				CoreMatchers.containsString("Name: spain."),
-				CoreMatchers.containsString("Page Size (default): 20."),
-				CoreMatchers.containsString("Page Size (query): 1.")));
+	private void _test(String friendlyUrlPath, User user) throws Exception {
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						"com.liferay.portal.security.auto.login.basic.auth." +
+							"header",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			Assert.assertThat(
+				HTTPTestUtil.invokeToString(
+					null,
+					"web" + friendlyUrlPath + "/portal-vulcan-test?pageSize=2",
+					Http.Method.GET),
+				CoreMatchers.allOf(
+					CoreMatchers.containsString("Name: spain."),
+					CoreMatchers.containsString("Page Size (default): 20."),
+					CoreMatchers.containsString("Page Size (query): 1."),
+					CoreMatchers.containsString(
+						"User: " + user.getScreenName() + ".")));
+		}
 	}
 
 	private InputStream _toInputStream() throws Exception {
@@ -109,6 +137,9 @@ public class RESTClientTemplateContextContributorTest {
 				RESTClientTemplateContextContributorTest.class),
 			_zipWriterFactory.getZipWriter());
 	}
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;

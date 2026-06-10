@@ -1,3 +1,4 @@
 Name: ${restClient.get("/headless-admin-address/v1.0/countries/by-name/spain").name}.
 Page Size (default): ${restClient.get("/headless-admin-address/v1.0/countries").pageSize}.
 Page Size (query): ${restClient.get("/headless-admin-address/v1.0/countries?pageSize=1").pageSize}.
+User: ${restClient.get("/headless-admin-user/v1.0/my-user-account").alternateName!"GUEST"}.

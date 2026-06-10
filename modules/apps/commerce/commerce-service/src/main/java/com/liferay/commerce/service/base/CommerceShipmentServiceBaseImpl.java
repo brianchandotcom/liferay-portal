@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceShipmentService;
-import com.liferay.commerce.service.persistence.CommerceShipmentFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -119,9 +118,6 @@ public abstract class CommerceShipmentServiceBaseImpl
 	protected CommerceShipmentPersistence commerceShipmentPersistence;
 
 	@Reference
-	protected CommerceShipmentFinder commerceShipmentFinder;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
@@ -129,4 +125,4 @@ public abstract class CommerceShipmentServiceBaseImpl
 		CommerceShipmentServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2037320114
+// LIFERAY-SERVICE-BUILDER-HASH:350040243

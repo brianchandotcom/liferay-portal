@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaCompanyThreadLocalCheck" files="feature-flag-web/src/main/java/com/liferay/feature/flag/web/internal/feature/flag/FeatureFlagsBagProviderImpl\.java" />
-	</source-check>
-</suppressions>

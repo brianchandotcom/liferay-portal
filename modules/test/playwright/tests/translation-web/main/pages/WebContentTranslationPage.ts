@@ -50,6 +50,14 @@ export class WebContentTranslationPage {
 		);
 	}
 
+	async assertCustomFieldValue(fieldName: string, value: string) {
+		await expect(this.customField(fieldName)).toHaveValue(value);
+	}
+
+	async assertRichTextValue(index: number, value: string) {
+		await expect(this.richTextEditor(index)).toContainText(value);
+	}
+
 	async assertTargetFields({content, description, title}: TranslationFields) {
 		if (title !== undefined) {
 			await expect(this.titleInput).toHaveValue(title);
@@ -62,6 +70,24 @@ export class WebContentTranslationPage {
 		if (content !== undefined) {
 			await expect(this.contentEditor).toContainText(content);
 		}
+	}
+
+	customField(fieldName: string): Locator {
+		return this.page.locator(
+			`#_com_liferay_translation_web_internal_portlet_TranslationPortlet_infoField--DDMStructure_${fieldName}--0`
+		);
+	}
+
+	async fillCustomField(fieldName: string, value: string) {
+		await this.customField(fieldName).fill(value);
+	}
+
+	async fillRichText(index: number, value: string) {
+		await this.fillEditor(this.richTextEditor(index), value);
+	}
+
+	richTextEditor(index: number): Locator {
+		return this.page.locator('.lfr-ck').nth(index).locator('.ck-content');
 	}
 
 	async changeTargetLocale(locale: string) {

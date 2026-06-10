@@ -563,6 +563,18 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 	}
 
+	private boolean _isLanguageKeyResolutionEnabled(long companyId)
+		throws Exception {
+
+		BatchEngineTaskCompanyConfiguration
+			batchEngineTaskCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					BatchEngineTaskCompanyConfiguration.class, companyId);
+
+		return batchEngineTaskCompanyConfiguration.
+			languageKeyResolutionEnabled();
+	}
+
 	private Map<String, Object> _processFieldNameValueMap(
 		Map<String, Object> map) {
 
@@ -608,9 +620,11 @@ public class BatchEngineImportTaskExecutorImpl
 			return null;
 		}
 
-		// TODO LPD-88510 Gate language key resolution behind configuration
+		if (_isLanguageKeyResolutionEnabled(
+				batchEngineImportTask.getCompanyId())) {
 
-		_languageKeyResolver.expand(fieldNameValueMap);
+			_languageKeyResolver.expand(fieldNameValueMap);
+		}
 
 		if (!_batchEngineContentProcessors.isEmpty() &&
 			ExportImportThreadLocal.isImportInProcess()) {

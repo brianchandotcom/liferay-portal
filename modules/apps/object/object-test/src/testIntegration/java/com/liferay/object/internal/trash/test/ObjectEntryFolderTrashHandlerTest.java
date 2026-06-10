@@ -48,8 +48,8 @@ public class ObjectEntryFolderTrashHandlerTest {
 	@Test
 	@TestInfo("LPD-91679")
 	public void testCheckEntries() throws Exception {
-		_testCheckEntriesWithPermissions();
 		_testCheckEntriesWithoutPermissions();
+		_testCheckEntriesWithPermissions();
 	}
 
 	private ObjectEntryFolder _addExpiredTrashedObjectEntryFolder()

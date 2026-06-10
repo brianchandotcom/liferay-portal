@@ -117,8 +117,8 @@ public class ObjectEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Test
 	@TestInfo("LPD-91679")
 	public void testCheckEntries() throws Exception {
-		_testCheckEntriesWithPermissions();
 		_testCheckEntriesWithoutPermissions();
+		_testCheckEntriesWithPermissions();
 	}
 
 	@Override

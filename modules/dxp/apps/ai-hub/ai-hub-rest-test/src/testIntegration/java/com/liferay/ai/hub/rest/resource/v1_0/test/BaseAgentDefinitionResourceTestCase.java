@@ -833,6 +833,14 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (agentDefinition.getSystem() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (agentDefinition.getTitle() == null) {
 					valid = false;
@@ -1075,6 +1083,17 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						agentDefinition1.getStatus(),
 						agentDefinition2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						agentDefinition1.getSystem(),
+						agentDefinition2.getSystem())) {
 
 					return false;
 				}
@@ -1352,6 +1371,11 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("system")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("title")) {
 			Object object = agentDefinition.getTitle();
 
@@ -1503,6 +1527,7 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				system = RandomTestUtil.randomBoolean();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				version = RandomTestUtil.randomInt();
 				workflowDefinitionName = StringUtil.toLowerCase(
@@ -1757,4 +1782,4 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 		_agentDefinitionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-224583323
+// LIFERAY-REST-BUILDER-HASH:-357511421

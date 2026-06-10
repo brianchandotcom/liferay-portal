@@ -603,6 +603,18 @@ public class TestrayCaseResult {
 	protected Map<String, TestrayAttachment> testrayAttachments;
 
 	private synchronized URL _createTestrayCaseResultURL() {
+		final TestrayBuild testrayBuild = getTestrayBuild();
+
+		if (testrayBuild == null) {
+			return null;
+		}
+
+		TestrayCase testrayCase = getTestrayCase();
+
+		if (testrayCase == null) {
+			return null;
+		}
+
 		final long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		final JSONObject requestJSONObject = new JSONObject();
@@ -636,19 +648,11 @@ public class TestrayCaseResult {
 			requestJSONObject.put("errors", errors);
 		}
 
-		final TestrayBuild testrayBuild = getTestrayBuild();
-
-		if (testrayBuild != null) {
-			requestJSONObject.put(
-				"r_buildToCaseResult_c_buildId", testrayBuild.getID());
-		}
-
-		TestrayCase testrayCase = getTestrayCase();
-
-		if (testrayCase != null) {
-			requestJSONObject.put(
-				"r_caseToCaseResult_c_caseId", testrayCase.getID());
-		}
+		requestJSONObject.put(
+			"r_buildToCaseResult_c_buildId", testrayBuild.getID()
+		).put(
+			"r_caseToCaseResult_c_caseId", testrayCase.getID()
+		);
 
 		TestrayComponent testrayComponent = getTestrayComponent();
 

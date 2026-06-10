@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.audience" short-no-such-exception-enabled="false">
 	<namespace>Audience</namespace>
-	<entity external-reference-code="company" local-service="true" name="AudienceEntry" remote-service="true" trash-enabled="false" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="AudienceEntry" remote-service="true" trash-enabled="false">
 
 		<!-- PK fields -->
 

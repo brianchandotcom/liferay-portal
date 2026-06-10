@@ -12,8 +12,6 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
@@ -22,7 +20,6 @@ import jakarta.annotation.Generated;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.function.BiFunction;
@@ -46,6 +43,20 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes all cookies consent preference entries of the user who made the request."
+	)
+	public boolean deleteCookiesConsentPreference() throws Exception {
+		_applyVoidComponentServiceObjects(
+			_cookiesConsentPreferenceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cookiesConsentPreferenceResource ->
+				cookiesConsentPreferenceResource.
+					deleteCookiesConsentPreference());
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Deletes the specified cookies consent preference of the user who made the request."
 	)
 	public boolean deleteCookiesConsentPreferenceByName(
@@ -58,20 +69,6 @@ public class Mutation {
 			cookiesConsentPreferenceResource ->
 				cookiesConsentPreferenceResource.
 					deleteCookiesConsentPreferenceByName(name));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Deletes all cookies consent preference entries of the user who made the request."
-	)
-	public boolean deleteCookiesConsentPreferences() throws Exception {
-		_applyVoidComponentServiceObjects(
-			_cookiesConsentPreferenceResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cookiesConsentPreferenceResource ->
-				cookiesConsentPreferenceResource.
-					deleteCookiesConsentPreferences());
 
 		return true;
 	}
@@ -90,20 +87,6 @@ public class Mutation {
 			cookiesConsentPreferenceResource ->
 				cookiesConsentPreferenceResource.putCookiesConsentPreference(
 					cookiesConsentPreference));
-	}
-
-	@GraphQLField
-	public Response updateCookiesConsentPreferenceBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cookiesConsentPreferenceResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cookiesConsentPreferenceResource ->
-				cookiesConsentPreferenceResource.
-					putCookiesConsentPreferenceBatch(callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -160,12 +143,6 @@ public class Mutation {
 		cookiesConsentPreferenceResource.setGroupLocalService(
 			_groupLocalService);
 		cookiesConsentPreferenceResource.setRoleLocalService(_roleLocalService);
-
-		cookiesConsentPreferenceResource.setVulcanBatchEngineExportTaskResource(
-			_vulcanBatchEngineExportTaskResource);
-
-		cookiesConsentPreferenceResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<CookiesConsentPreferenceResource>
@@ -181,10 +158,6 @@ public class Mutation {
 		_sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
-	private VulcanBatchEngineExportTaskResource
-		_vulcanBatchEngineExportTaskResource;
-	private VulcanBatchEngineImportTaskResource
-		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-936149283
+// LIFERAY-REST-BUILDER-HASH:1721433606

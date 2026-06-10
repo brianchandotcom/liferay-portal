@@ -7,8 +7,6 @@ package com.liferay.cookies.rest.internal.resource.v1_0;
 
 import com.liferay.cookies.rest.dto.v1_0.CookiesConsentPreference;
 import com.liferay.cookies.rest.resource.v1_0.CookiesConsentPreferenceResource;
-import com.liferay.petra.function.UnsafeBiConsumer;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -17,24 +15,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
-import com.liferay.portal.odata.sort.SortField;
-import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
@@ -43,20 +27,11 @@ import jakarta.annotation.Generated;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.NotSupportedException;
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
-import java.io.Serializable;
-
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Christopher Kian
@@ -65,8 +40,29 @@ import java.util.Set;
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
 public abstract class BaseCookiesConsentPreferenceResourceImpl
-	implements CookiesConsentPreferenceResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<CookiesConsentPreference> {
+	implements CookiesConsentPreferenceResource {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/cookies/v1.0/cookies-consent-preferences'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes all cookies consent preference entries of the user who made the request."
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "CookiesConsentPreference"
+			)
+		}
+	)
+	@jakarta.ws.rs.DELETE
+	@jakarta.ws.rs.Path("/cookies-consent-preferences")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteCookiesConsentPreference() throws Exception {
+	}
 
 	/**
 	 * Invoke this method with the command line:
@@ -101,28 +97,6 @@ public abstract class BaseCookiesConsentPreferenceResourceImpl
 			@jakarta.ws.rs.PathParam("name")
 			String name)
 		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/cookies/v1.0/cookies-consent-preferences'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes all cookies consent preference entries of the user who made the request."
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "CookiesConsentPreference"
-			)
-		}
-	)
-	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/cookies-consent-preferences")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteCookiesConsentPreferences() throws Exception {
 	}
 
 	/**
@@ -189,207 +163,8 @@ public abstract class BaseCookiesConsentPreferenceResourceImpl
 		return new CookiesConsentPreference();
 	}
 
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/cookies/v1.0/cookies-consent-preferences/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "CookiesConsentPreference"
-			)
-		}
-	)
-	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/cookies-consent-preferences/batch")
-	@jakarta.ws.rs.Produces("application/json")
-	@jakarta.ws.rs.PUT
-	@Override
-	public Response putCookiesConsentPreferenceBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.putImportTask(
-				CookiesConsentPreference.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	@Override
-	@SuppressWarnings("PMD.UnusedLocalVariable")
-	public void create(
-			Collection<CookiesConsentPreference> cookiesConsentPreferences,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Override
-	public void delete(
-			Collection<CookiesConsentPreference> cookiesConsentPreferences,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
-	}
-
-	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("UPDATE");
-	}
-
-	@Override
-	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
-		throws Exception {
-
-		return getEntityModel(
-			new MultivaluedHashMap<String, Object>(multivaluedMap));
-	}
-
-	public String getResourceName() {
-		return "CookiesConsentPreference";
-	}
-
-	public String getVersion() {
-		return "v1.0";
-	}
-
-	@Override
-	public Page<CookiesConsentPreference> read(
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts,
-			Map<String, Serializable> parameters, String search)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Override
-	public void setLanguageId(String languageId) {
-		this.contextAcceptLanguage = new AcceptLanguage() {
-
-			@Override
-			public List<Locale> getLocales() {
-				return null;
-			}
-
-			@Override
-			public String getPreferredLanguageId() {
-				return languageId;
-			}
-
-			@Override
-			public Locale getPreferredLocale() {
-				return LocaleUtil.fromLanguageId(languageId);
-			}
-
-		};
-	}
-
-	@Override
-	public void update(
-			Collection<CookiesConsentPreference> cookiesConsentPreferences,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		UnsafeFunction
-			<CookiesConsentPreference, CookiesConsentPreference, Exception>
-				cookiesConsentPreferenceUnsafeFunction = null;
-
-		String updateStrategy = (String)parameters.getOrDefault(
-			"updateStrategy", "UPDATE");
-
-		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			cookiesConsentPreferenceUnsafeFunction =
-				cookiesConsentPreference -> putCookiesConsentPreference(
-					cookiesConsentPreference);
-		}
-
-		if (cookiesConsentPreferenceUnsafeFunction == null) {
-			throw new NotSupportedException(
-				"Update strategy \"" + updateStrategy +
-					"\" is not supported for CookiesConsentPreference");
-		}
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				cookiesConsentPreferences,
-				cookiesConsentPreferenceUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				cookiesConsentPreferences,
-				cookiesConsentPreferenceUnsafeFunction::apply);
-		}
-		else {
-			for (CookiesConsentPreference cookiesConsentPreference :
-					cookiesConsentPreferences) {
-
-				cookiesConsentPreferenceUnsafeFunction.apply(
-					cookiesConsentPreference);
-			}
-		}
-	}
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
-	}
-
-	public void setContextBatchUnsafeBiConsumer(
-		UnsafeBiConsumer
-			<Collection<CookiesConsentPreference>,
-			 UnsafeFunction
-				 <CookiesConsentPreference, CookiesConsentPreference,
-				  Exception>,
-			 Exception> contextBatchUnsafeBiConsumer) {
-
-		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
-	}
-
-	public void setContextBatchUnsafeConsumer(
-		UnsafeBiConsumer
-			<Collection<CookiesConsentPreference>,
-			 UnsafeConsumer<CookiesConsentPreference, Exception>, Exception>
-				contextBatchUnsafeConsumer) {
-
-		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -460,87 +235,6 @@ public abstract class BaseCookiesConsentPreferenceResourceImpl
 
 	protected String getApplicationPath() {
 		return "cookies";
-	}
-
-	public void setVulcanBatchEngineExportTaskResource(
-		VulcanBatchEngineExportTaskResource
-			vulcanBatchEngineExportTaskResource) {
-
-		this.vulcanBatchEngineExportTaskResource =
-			vulcanBatchEngineExportTaskResource;
-	}
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource) {
-
-		this.vulcanBatchEngineImportTaskResource =
-			vulcanBatchEngineImportTaskResource;
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.filter.Filter toFilter(
-		String filterString, Map<String, List<String>> multivaluedMap) {
-
-		try {
-			EntityModel entityModel = getEntityModel(multivaluedMap);
-
-			FilterParser filterParser = filterParserProvider.provide(
-				entityModel);
-
-			com.liferay.portal.odata.filter.Filter oDataFilter =
-				new com.liferay.portal.odata.filter.Filter(
-					filterParser.parse(filterString));
-
-			return expressionConvert.convert(
-				oDataFilter.getExpression(),
-				contextAcceptLanguage.getPreferredLocale(), entityModel);
-		}
-		catch (Exception exception) {
-			_log.error("Invalid filter " + filterString, exception);
-
-			return null;
-		}
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Sort[] toSorts(String sortString) {
-		if (Validator.isNull(sortString)) {
-			return null;
-		}
-
-		try {
-			SortParser sortParser = sortParserProvider.provide(
-				getEntityModel(Collections.emptyMap()));
-
-			if (sortParser == null) {
-				return null;
-			}
-
-			com.liferay.portal.odata.sort.Sort oDataSort =
-				new com.liferay.portal.odata.sort.Sort(
-					sortParser.parse(sortString));
-
-			List<SortField> sortFields = oDataSort.getSortFields();
-			com.liferay.portal.kernel.search.Sort[] sorts =
-				new com.liferay.portal.kernel.search.Sort[sortFields.size()];
-
-			for (int i = 0; i < sortFields.size(); i++) {
-				SortField sortField = sortFields.get(i);
-
-				sorts[i] = new com.liferay.portal.kernel.search.Sort(
-					sortField.getSortableFieldName(
-						contextAcceptLanguage.getPreferredLocale()),
-					!sortField.isAscending());
-			}
-
-			return sorts;
-		}
-		catch (Exception exception) {
-			_log.error("Invalid sort " + sortString, exception);
-
-			return new com.liferay.portal.kernel.search.Sort[0];
-		}
 	}
 
 	protected Map<String, String> addAction(
@@ -895,15 +589,6 @@ public abstract class BaseCookiesConsentPreferenceResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
-	protected UnsafeBiConsumer
-		<Collection<CookiesConsentPreference>,
-		 UnsafeFunction
-			 <CookiesConsentPreference, CookiesConsentPreference, Exception>,
-		 Exception> contextBatchUnsafeBiConsumer;
-	protected UnsafeBiConsumer
-		<Collection<CookiesConsentPreference>,
-		 UnsafeConsumer<CookiesConsentPreference, Exception>, Exception>
-			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -918,13 +603,9 @@ public abstract class BaseCookiesConsentPreferenceResourceImpl
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
 	protected SortParserProvider sortParserProvider;
-	protected VulcanBatchEngineExportTaskResource
-		vulcanBatchEngineExportTaskResource;
-	protected VulcanBatchEngineImportTaskResource
-		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseCookiesConsentPreferenceResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:112616867
+// LIFERAY-REST-BUILDER-HASH:-1824720156

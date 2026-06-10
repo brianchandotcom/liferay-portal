@@ -14,15 +14,12 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 
 import jakarta.annotation.Generated;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -44,10 +41,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CookiesConsentPreferenceResource {
 
+	public void deleteCookiesConsentPreference() throws Exception;
+
 	public void deleteCookiesConsentPreferenceByName(String name)
 		throws Exception;
-
-	public void deleteCookiesConsentPreferences() throws Exception;
 
 	public CookiesConsentPreference getCookiesConsentPreferenceByName(
 			String name)
@@ -55,10 +52,6 @@ public interface CookiesConsentPreferenceResource {
 
 	public CookiesConsentPreference putCookiesConsentPreference(
 			CookiesConsentPreference cookiesConsentPreference)
-		throws Exception;
-
-	public Response putCookiesConsentPreferenceBatch(
-			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -100,14 +93,6 @@ public interface CookiesConsentPreferenceResource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
-
-	public void setVulcanBatchEngineExportTaskResource(
-		VulcanBatchEngineExportTaskResource
-			vulcanBatchEngineExportTaskResource);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default com.liferay.portal.kernel.search.filter.Filter toFilter(
 		String filterString) {
@@ -157,4 +142,4 @@ public interface CookiesConsentPreferenceResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-390898972
+// LIFERAY-REST-BUILDER-HASH:-636529269

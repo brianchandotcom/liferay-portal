@@ -1007,30 +1007,34 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	private void _testGetSiteFragmentSetFragmentsPageWithStatus()
 		throws Exception {
 
+		FragmentCollection fragmentCollection = _addFragmentCollection();
+
 		Fragment approvedAndDraftFragment = _postSiteFragmentSetFragment(
-			_randomFragment(true, true));
+			_randomFragment(true, true, fragmentCollection),
+			fragmentCollection.getExternalReferenceCode());
 		Fragment approvedFragment = _postSiteFragmentSetFragment(
-			_randomFragment(true, false));
+			_randomFragment(true, false, fragmentCollection),
+			fragmentCollection.getExternalReferenceCode());
 		Fragment draftFragment = _postSiteFragmentSetFragment(
-			_randomFragment(false, true));
+			_randomFragment(false, true, fragmentCollection),
+			fragmentCollection.getExternalReferenceCode());
 
 		FragmentCollection irrelevantFragmentCollection =
 			_addFragmentCollection();
 
-		Fragment irrelevantApprovedAndDraftFragment =
-			_postSiteFragmentSetFragment(
-				_randomFragment(true, true, irrelevantFragmentCollection),
-				irrelevantFragmentCollection.getExternalReferenceCode());
-		Fragment irrelevantApprovedFragment = _postSiteFragmentSetFragment(
+		_postSiteFragmentSetFragment(
+			_randomFragment(true, true, irrelevantFragmentCollection),
+			irrelevantFragmentCollection.getExternalReferenceCode());
+		_postSiteFragmentSetFragment(
 			_randomFragment(true, false, irrelevantFragmentCollection),
 			irrelevantFragmentCollection.getExternalReferenceCode());
-		Fragment irrelevantDraftFragment = _postSiteFragmentSetFragment(
+		_postSiteFragmentSetFragment(
 			_randomFragment(false, true, irrelevantFragmentCollection),
 			irrelevantFragmentCollection.getExternalReferenceCode());
 
 		Page<Fragment> page = fragmentResource.getSiteFragmentSetFragmentsPage(
 			testGroup.getExternalReferenceCode(),
-			_fragmentCollection.getExternalReferenceCode(),
+			fragmentCollection.getExternalReferenceCode(),
 			Pagination.of(1, 10));
 
 		List<Fragment> items = (List<Fragment>)page.getItems();
@@ -1038,9 +1042,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		assertContains(approvedAndDraftFragment, items);
 		assertContains(approvedFragment, items);
 		assertContains(draftFragment, items);
-		assertNotContains(irrelevantApprovedAndDraftFragment, items);
-		assertNotContains(irrelevantApprovedFragment, items);
-		assertNotContains(irrelevantDraftFragment, items);
+		Assert.assertEquals(items.toString(), 3, items.size());
 	}
 
 	private void _testGetSiteFragmentsPageWithFilter() throws Exception {

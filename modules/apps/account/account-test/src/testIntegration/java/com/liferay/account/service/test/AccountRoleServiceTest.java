@@ -218,30 +218,32 @@ public class AccountRoleServiceTest {
 		throws Exception {
 
 		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry();
-		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), _user.getUserId());
 
 		AccountRole accountRole1 = _accountRoleLocalService.addAccountRole(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			RandomTestUtil.randomString(), null, null);
-
-		AccountRole accountRole2 = _accountRoleLocalService.addAccountRole(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			accountEntry1.getAccountEntryId(), RandomTestUtil.randomString(),
 			null, null);
 
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
+			accountRole1.getRoleId());
+
 		RoleTestUtil.addResourcePermission(
-			accountRole2.getRole(), AccountRole.class.getName(),
+			accountRole1.getRole(), AccountRole.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", ActionKeys.VIEW);
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry1.getAccountEntryId(), _user.getUserId());
+		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry();
+
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry2.getAccountEntryId(), _user.getUserId());
 
-		_userGroupRoleLocalService.addUserGroupRole(
-			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
-			accountRole2.getRoleId());
+		AccountRole accountRole2 = _accountRoleLocalService.addAccountRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null);
 
 		try (SafeCloseable safeCloseable =
 				AccountRolePermissionThreadLocal.

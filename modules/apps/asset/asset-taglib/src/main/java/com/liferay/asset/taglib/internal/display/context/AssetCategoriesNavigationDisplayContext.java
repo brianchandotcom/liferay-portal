@@ -107,16 +107,22 @@ public class AssetCategoriesNavigationDisplayContext {
 			return _assetVocabularies;
 		}
 
-		List<AssetVocabulary> assetVocabularies = new ArrayList<>();
-
 		if (_vocabularyIds == null) {
-			assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
-				SiteConnectedGroupGroupProviderUtil.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId()),
-				new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
+			_assetVocabularies = ListUtil.sort(
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					SiteConnectedGroupGroupProviderUtil.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							_themeDisplay.getScopeGroupId()),
+					new int[] {
+						AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC
+					}),
+				new AssetVocabularyGroupLocalizedTitleComparator(
+					_themeDisplay.getScopeGroupId(), _themeDisplay.getLocale(),
+					true));
 		}
 		else {
+			List<AssetVocabulary> assetVocabularies = new ArrayList<>();
+
 			for (long vocabularyId : _vocabularyIds) {
 				AssetVocabulary vocabulary =
 					AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
@@ -125,13 +131,9 @@ public class AssetCategoriesNavigationDisplayContext {
 					assetVocabularies.add(vocabulary);
 				}
 			}
-		}
 
-		_assetVocabularies = ListUtil.sort(
-			assetVocabularies,
-			new AssetVocabularyGroupLocalizedTitleComparator(
-				_themeDisplay.getScopeGroupId(), _themeDisplay.getLocale(),
-				true));
+			_assetVocabularies = assetVocabularies;
+		}
 
 		return _assetVocabularies;
 	}

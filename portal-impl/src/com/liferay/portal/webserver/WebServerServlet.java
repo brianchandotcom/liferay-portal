@@ -1230,6 +1230,10 @@ public class WebServerServlet extends HttpServlet {
 
 		boolean download = ParamUtil.getBoolean(httpServletRequest, "download");
 
+		if (!download && _isBrowserExecutableContentType(contentType)) {
+			download = true;
+		}
+
 		if (download) {
 			cacheControlValue = HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE;
 		}
@@ -1273,10 +1277,13 @@ public class WebServerServlet extends HttpServlet {
 				fileEntry, HttpHeaders.CACHE_CONTROL,
 				HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE));
 
+		String mimeType = fileEntry.getMimeType();
+
 		ServletResponseUtil.sendFile(
 			null, httpServletResponse, fileEntry.getTitle(),
-			fileEntry.getContentStream(), fileEntry.getSize(),
-			fileEntry.getMimeType());
+			fileEntry.getContentStream(), fileEntry.getSize(), mimeType,
+			_isBrowserExecutableContentType(mimeType) ?
+				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT : null);
 	}
 
 	protected void sendGroups(
@@ -1374,18 +1381,18 @@ public class WebServerServlet extends HttpServlet {
 
 		boolean download = ParamUtil.getBoolean(httpServletRequest, "download");
 
-		if (download) {
+		String mimeType = fileEntry.getMimeType();
+
+		if (download || !mimeType.startsWith("image/")) {
 			ServletResponseUtil.sendFile(
 				httpServletRequest, httpServletResponse, fileName,
-				fileEntry.getContentStream(), fileEntry.getSize(),
-				fileEntry.getMimeType(),
+				fileEntry.getContentStream(), fileEntry.getSize(), mimeType,
 				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}
 		else {
 			ServletResponseUtil.sendFile(
 				httpServletRequest, httpServletResponse, fileName,
-				fileEntry.getContentStream(), fileEntry.getSize(),
-				fileEntry.getMimeType());
+				fileEntry.getContentStream(), fileEntry.getSize(), mimeType);
 		}
 	}
 
@@ -1409,6 +1416,17 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		String fileName = ParamUtil.getString(httpServletRequest, "fileName");
+
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+		String uuid = ParamUtil.getString(httpServletRequest, "uuid");
+
+		if (Validator.isNotNull(uuid) && (groupId > 0) &&
+			_isBrowserExecutableContentType(contentType)) {
+
+			httpServletResponse.setHeader(
+				HttpHeaders.CONTENT_DISPOSITION,
+				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+		}
 
 		byte[] bytes = getImageBytes(httpServletRequest, image);
 
@@ -1980,6 +1998,25 @@ public class WebServerServlet extends HttpServlet {
 
 		return PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.VIEW);
+	}
+
+	private boolean _isBrowserExecutableContentType(String contentType) {
+		if (contentType == null) {
+			return false;
+		}
+
+		String lowerCaseContentType = StringUtil.toLowerCase(contentType);
+
+		if (lowerCaseContentType.startsWith("application/javascript") ||
+			lowerCaseContentType.startsWith("application/xhtml+xml") ||
+			lowerCaseContentType.startsWith("image/svg+xml") ||
+			lowerCaseContentType.startsWith("text/html") ||
+			lowerCaseContentType.startsWith("text/javascript")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _processCompanyInactiveRequest(

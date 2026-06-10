@@ -8,6 +8,11 @@ import {defineConfig} from 'vite';
 
 export default defineConfig({
 	build: {
+
+		// Atlas CSS is inlined into the bundle (injected into the shadow root),
+		// which exceeds the default 500 kB chunk warning.
+
+		chunkSizeWarningLimit: 2000,
 		cssCodeSplit: false,
 		outDir: 'build/vite',
 		rollupOptions: {

@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.service.impl;
+package com.liferay.layout.content.version.service.impl;
 
-import com.liferay.layout.content.versioning.exception.DuplicateLayoutContentVersionExternalReferenceCodeException;
-import com.liferay.layout.content.versioning.exception.LayoutContentVersionExternalReferenceCodeException;
-import com.liferay.layout.content.versioning.exception.LayoutContentVersionNameException;
-import com.liferay.layout.content.versioning.exception.RequiredLayoutContentVersionException;
-import com.liferay.layout.content.versioning.exception.UnsupportedLayoutLayoutContentVersionException;
-import com.liferay.layout.content.versioning.model.LayoutContentVersion;
-import com.liferay.layout.content.versioning.service.base.LayoutContentVersionLocalServiceBaseImpl;
-import com.liferay.layout.content.versioning.util.comparator.LayoutContentVersionVersionComparator;
+import com.liferay.layout.content.version.exception.DuplicateLayoutContentVersionExternalReferenceCodeException;
+import com.liferay.layout.content.version.exception.LayoutContentVersionExternalReferenceCodeException;
+import com.liferay.layout.content.version.exception.LayoutContentVersionNameException;
+import com.liferay.layout.content.version.exception.RequiredLayoutContentVersionException;
+import com.liferay.layout.content.version.exception.UnsupportedLayoutLayoutContentVersionException;
+import com.liferay.layout.content.version.model.LayoutContentVersion;
+import com.liferay.layout.content.version.service.base.LayoutContentVersionLocalServiceBaseImpl;
+import com.liferay.layout.content.version.util.comparator.LayoutContentVersionVersionComparator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	property = "model.class.name=com.liferay.layout.content.versioning.model.LayoutContentVersion",
+	property = "model.class.name=com.liferay.layout.content.version.model.LayoutContentVersion",
 	service = AopService.class
 )
 public class LayoutContentVersionLocalServiceImpl

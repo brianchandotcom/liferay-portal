@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
@@ -37,6 +38,8 @@ public class ExpiredJournalArticleUpgradeProcess extends UpgradeProcess {
 
 				dynamicQuery.add(property.eq(WorkflowConstants.STATUS_EXPIRED));
 			});
+		actionableDynamicQuery.setInterval(
+			PropsValues.UPGRADE_CONCURRENT_FETCH_SIZE);
 		actionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle journalArticle) -> {
 				try {

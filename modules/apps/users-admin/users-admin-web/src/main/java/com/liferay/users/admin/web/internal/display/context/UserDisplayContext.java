@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -44,6 +45,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributorShowFilterRegistryUtil;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 import com.liferay.site.item.selector.SiteItemSelectorCriterion;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 
@@ -320,6 +324,18 @@ public class UserDisplayContext {
 		return true;
 	}
 
+	public boolean isShowOrganizationRoles() {
+		return _isShowRoleType(RoleConstants.TYPE_ORGANIZATION);
+	}
+
+	public boolean isShowRegularRoles() {
+		return _isShowRoleType(RoleConstants.TYPE_REGULAR);
+	}
+
+	public boolean isShowSiteRoles() {
+		return _isShowRoleType(RoleConstants.TYPE_SITE);
+	}
+
 	private List<Group> _getAllGroups() throws PortalException {
 		List<Group> allGroups = new ArrayList<>();
 
@@ -396,6 +412,29 @@ public class UserDisplayContext {
 		return UsersAdminUtil.filterUserGroupRoles(
 			_permissionChecker, userGroupRoles);
 	}
+
+	private boolean _isShowRoleType(int type) {
+		RoleTypeContributorProvider roleTypeContributorProvider =
+			_roleTypeContributorProviderSnapshot.get();
+
+		if (roleTypeContributorProvider == null) {
+			return true;
+		}
+
+		RoleTypeContributor roleTypeContributor =
+			roleTypeContributorProvider.getRoleTypeContributor(type);
+
+		if (roleTypeContributor == null) {
+			return true;
+		}
+
+		return RoleTypeContributorShowFilterRegistryUtil.isShow(
+			roleTypeContributor, _permissionChecker);
+	}
+
+	private static final Snapshot<RoleTypeContributorProvider>
+		_roleTypeContributorProviderSnapshot = new Snapshot<>(
+			UserDisplayContext.class, RoleTypeContributorProvider.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InitDisplayContext _initDisplayContext;

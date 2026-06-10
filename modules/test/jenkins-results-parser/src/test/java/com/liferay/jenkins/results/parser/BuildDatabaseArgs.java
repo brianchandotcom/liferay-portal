@@ -1,106 +1,42 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jenkins.results.parser;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Calum Ragan
  */
 public class BuildDatabaseArgs {
 
-	public BuildDatabaseArgs() {
-		_jsonObject.put(
-			"builds", new JSONObject()
-		).put(
-			"jobs", new JSONObject()
-		).put(
-			"portal_fixpack_releases", new JSONObject()
-		).put(
-			"portal_hotfix_releases", new JSONObject()
-		).put(
-			"portal_releases", new JSONObject()
-		).put(
-			"properties", new JSONObject()
-		).put(
-			"pull_requests", new JSONObject()
-		).put(
-			"workspace_git_repositories", new JSONObject()
-		).put(
-			"workspaces", new JSONObject()
-		);
+	public void addModifiedFile(String modifiedFile) {
+		_modifiedFiles.add(modifiedFile);
 	}
 
-	public void addModifiedFile(String relativePath) {
-		JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
-
-		JSONObject jobJSONObject = jobsJSONObject.optJSONObject(jobKey);
-
-		if (jobJSONObject == null) {
-			jobJSONObject = new JSONObject();
-
-			jobsJSONObject.put(jobKey, jobJSONObject);
-		}
-
-		JSONObject branchJSONObject = jobJSONObject.optJSONObject("branch");
-
-		if (branchJSONObject == null) {
-			branchJSONObject = new JSONObject();
-
-			jobJSONObject.put("branch", branchJSONObject);
-		}
-
-		JSONArray modifiedFilesJSONArray = branchJSONObject.optJSONArray(
-			"modified_files");
-
-		if (modifiedFilesJSONArray == null) {
-			modifiedFilesJSONArray = new JSONArray();
-
-			branchJSONObject.put("modified_files", modifiedFilesJSONArray);
-		}
-
-		modifiedFilesJSONArray.put(relativePath);
+	public List<String> getModifiedFiles() {
+		return _modifiedFiles;
 	}
 
-	public JSONObject getJSONObject() {
-		return new JSONObject(_jsonObject.toString());
+	public Map<String, Map<String, String>> getProperties() {
+		return _properties;
 	}
 
 	public void setProperty(String key, String name, String value) {
-		JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
-			"properties");
+		Map<String, String> properties = _properties.get(key);
 
-		JSONArray propertyJSONArray = propertiesJSONObject.optJSONArray(key);
+		if (properties == null) {
+			properties = new LinkedHashMap<>();
 
-		if (propertyJSONArray == null) {
-			propertyJSONArray = new JSONArray();
-
-			propertiesJSONObject.put(key, propertyJSONArray);
+			_properties.put(key, properties);
 		}
 
-		for (int i = 0; i < propertyJSONArray.length(); i++) {
-			JSONObject propertyJSONObject = propertyJSONArray.getJSONObject(i);
-
-			if (name.equals(propertyJSONObject.getString("name"))) {
-				propertyJSONObject.put("value", value);
-
-				return;
-			}
-		}
-
-		JSONObject propertyJSONObject = new JSONObject();
-
-		propertyJSONObject.put(
-			"name", name
-		).put(
-			"value", value
-		);
-
-		propertyJSONArray.put(propertyJSONObject);
+		properties.put(name, value);
 	}
 
 	public String jobKey = "PortalAcceptancePullRequestJob";
@@ -110,6 +46,8 @@ public class BuildDatabaseArgs {
 		extends java.util.function.Consumer<BuildDatabaseArgs> {
 	}
 
-	private final JSONObject _jsonObject = new JSONObject();
+	private final List<String> _modifiedFiles = new ArrayList<>();
+	private final Map<String, Map<String, String>> _properties =
+		new LinkedHashMap<>();
 
 }

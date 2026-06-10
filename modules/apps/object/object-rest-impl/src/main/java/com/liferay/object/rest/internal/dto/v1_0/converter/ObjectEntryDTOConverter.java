@@ -338,7 +338,6 @@ public class ObjectEntryDTOConverter
 			() -> NestedFieldsSupplier.supply(
 				"modifiedBy",
 				nestedFieldNames -> {
-
 					if (objectEntryVersion != null) {
 						return CreatorUtil.toCreator(
 							_portal, dtoConverterContext.getUriInfo(),
@@ -346,11 +345,14 @@ public class ObjectEntryDTOConverter
 								objectEntryVersion.getUserId()));
 					}
 
+					if (!objectDefinition.isEnableObjectEntryVersioning()) {
+						return null;
+					}
+
 					ObjectEntryVersion latestObjectEntryVersion =
-						_fetchLatestObjectEntryVersion(
-							objectDefinition,
-							serviceBuilderObjectEntry.getObjectEntryId()
-						);
+						_objectEntryVersionLocalService.
+							fetchLatestObjectEntryVersion(
+								serviceBuilderObjectEntry.getObjectEntryId());
 
 					if (latestObjectEntryVersion == null) {
 						return null;
@@ -677,17 +679,6 @@ public class ObjectEntryDTOConverter
 				unsafeSuppliers.put(manyToOneRelationshipName, entry::getValue);
 			}
 		}
-	}
-
-	private ObjectEntryVersion _fetchLatestObjectEntryVersion(
-		ObjectDefinition objectDefinition, long objectEntryId) {
-
-		if (!objectDefinition.isEnableObjectEntryVersioning()) {
-			return null;
-		}
-
-		return _objectEntryVersionLocalService.fetchLatestObjectEntryVersion(
-			objectEntryId);
 	}
 
 	private <T> T _getAttribute(

@@ -1593,8 +1593,9 @@ public class LayoutsAdminDisplayContext {
 					verticalNavItem.setLabel(name);
 				}
 			).add(
-				() -> FeatureFlagManagerUtil.isEnabled(
-					themeDisplay.getCompanyId(), "LPD-76864"),
+				() ->
+					selectLayoutPageTemplateEntryDisplayContext.
+						isShowGlobalTemplates(),
 				verticalNavItem -> {
 					verticalNavItem.setActive(
 						selectLayoutPageTemplateEntryDisplayContext.

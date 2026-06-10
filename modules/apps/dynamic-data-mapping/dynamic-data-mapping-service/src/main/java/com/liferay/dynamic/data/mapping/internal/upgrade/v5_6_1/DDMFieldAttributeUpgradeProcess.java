@@ -84,8 +84,8 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 					"fieldAttributeId = ?";
 
 		try (SafeCloseable safeCloseable = db.addTemporaryIndex(
-				connection, "DDMFieldAttribute", false, "fieldId",
-				"ctCollectionId")) {
+				connection, "DDMFieldAttribute", false, "ctCollectionId",
+				"fieldId")) {
 
 			long classNameId = _classNameLocalService.getClassNameId(
 				"com.liferay.journal.model.JournalArticle");

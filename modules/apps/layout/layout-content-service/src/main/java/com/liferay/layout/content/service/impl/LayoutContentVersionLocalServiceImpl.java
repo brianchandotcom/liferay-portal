@@ -109,11 +109,6 @@ public class LayoutContentVersionLocalServiceImpl
 
 		layoutContentVersion.setUserName(user.getFullName());
 
-		Date date = new Date();
-
-		layoutContentVersion.setCreateDate(date);
-		layoutContentVersion.setModifiedDate(date);
-
 		layoutContentVersion.setData(data);
 		layoutContentVersion.setDataHash(dataHash);
 
@@ -128,7 +123,7 @@ public class LayoutContentVersionLocalServiceImpl
 		layoutContentVersion.setStatus(status);
 		layoutContentVersion.setStatusByUserId(userId);
 		layoutContentVersion.setStatusByUserName(user.getFullName());
-		layoutContentVersion.setStatusDate(date);
+		layoutContentVersion.setStatusDate(new Date());
 
 		return layoutContentVersionPersistence.update(layoutContentVersion);
 	}

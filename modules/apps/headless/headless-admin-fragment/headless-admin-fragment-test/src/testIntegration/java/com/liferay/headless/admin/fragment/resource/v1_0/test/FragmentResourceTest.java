@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -74,6 +76,8 @@ import java.net.InetSocketAddress;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -328,6 +332,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 					}
 				}
 			});
+		fragment.setMarketplace(false);
 
 		return fragment;
 	}
@@ -450,6 +455,41 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			clazz.getResourceAsStream("dependencies/" + fileName),
 			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
 			false);
+	}
+
+	private void _assertExportImportFragments(
+			List<Fragment> expectedFragments, String filterString,
+			List<Fragment> notExpectedFragments)
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
+
+			waitForFinish(
+				"COMPLETED",
+				HTTPTestUtil.invokeToJSONObject(
+					_exportFragmentsToJSON(
+						filterString, testGroup.getExternalReferenceCode()),
+					"headless-admin-fragment/v1.0/sites/" +
+						group.getExternalReferenceCode() +
+							"/fragments/batch?createStrategy=INSERT",
+					Http.Method.POST));
+		}
+
+		for (Fragment fragment : expectedFragments) {
+			_assertFragmentEntry(fragment, group);
+		}
+
+		for (Fragment fragment : notExpectedFragments) {
+			Assert.assertNull(
+				_fragmentEntryLocalService.
+					fetchFragmentEntryByExternalReferenceCode(
+						fragment.getExternalReferenceCode(),
+						group.getGroupId()));
+		}
 	}
 
 	private void _assertFragmentEntry(Fragment fragment, Group group)
@@ -595,14 +635,25 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	private String _exportFragmentsToJSON(String siteExternalReferenceCode)
 		throws Exception {
 
+		return _exportFragmentsToJSON(null, siteExternalReferenceCode);
+	}
+
+	private String _exportFragmentsToJSON(
+			String filterString, String siteExternalReferenceCode)
+		throws Exception {
+
+		String endpoint = StringBundler.concat(
+			"headless-admin-fragment/v1.0/sites/", siteExternalReferenceCode,
+			"/fragments/export-batch?contentType=JSON");
+
+		if (filterString != null) {
+			endpoint = StringBundler.concat(
+				endpoint, "&filter=", URLCodec.encodeURL(filterString));
+		}
+
 		JSONObject exportTaskJSONObject = _waitForExportFinish(
 			"COMPLETED",
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				"headless-admin-fragment/v1.0/sites/" +
-					siteExternalReferenceCode +
-						"/fragments/export-batch?contentType=JSON",
-				Http.Method.POST));
+			HTTPTestUtil.invokeToJSONObject(null, endpoint, Http.Method.POST));
 
 		try (InputStream inputStream = HTTPTestUtil.invokeToInputStream(
 				null,
@@ -835,6 +886,14 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		return fragmentSet;
 	}
 
+	private Fragment _randomMarketPlaceFragment() throws Exception {
+		Fragment fragment = randomFragment();
+
+		fragment.setMarketplace(true);
+
+		return fragment;
+	}
+
 	private void _testBatchEngineDeleteImportTask() throws Exception {
 		Fragment fragment1 = _postSiteFragmentSetFragment(randomFragment());
 		Fragment fragment2 = _postSiteFragmentSetFragment(randomFragment());
@@ -985,16 +1044,12 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	}
 
 	private void _testGetSiteFragmentsPageWithFilter() throws Exception {
-		Fragment marketplaceFragment = randomFragment();
-
-		marketplaceFragment.setMarketplace(true);
+		Fragment marketplaceFragment = _randomMarketPlaceFragment();
 
 		marketplaceFragment = testGetSiteFragmentsPage_addFragment(
 			testGroup.getExternalReferenceCode(), marketplaceFragment);
 
 		Fragment nonmarketplaceFragment = randomFragment();
-
-		nonmarketplaceFragment.setMarketplace(false);
 
 		nonmarketplaceFragment = testGetSiteFragmentsPage_addFragment(
 			testGroup.getExternalReferenceCode(), nonmarketplaceFragment);
@@ -1177,11 +1232,15 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	}
 
 	private void _testPostSiteFragmentBatch() throws Exception {
+		_testPostSiteFragmentBatchWithLazyReferencingDisabled();
+		_testPostSiteFragmentBatchWithLazyReferencingEnabled();
+	}
+
+	private void _testPostSiteFragmentBatchWithLazyReferencingDisabled()
+		throws Exception {
+
 		Fragment fragment1 = _postSiteFragmentSetFragment(randomFragment());
 		Fragment fragment2 = _postSiteFragmentSetFragment(randomFragment());
-
-		String json = _exportFragmentsToJSON(
-			testGroup.getExternalReferenceCode());
 
 		Assert.assertNull(
 			_fragmentCollectionLocalService.
@@ -1207,7 +1266,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			waitForFinish(
 				"FAILED",
 				HTTPTestUtil.invokeToJSONObject(
-					json,
+					_exportFragmentsToJSON(
+						testGroup.getExternalReferenceCode()),
 					"headless-admin-fragment/v1.0/sites/" +
 						irrelevantGroup.getExternalReferenceCode() +
 							"/fragments/batch?createStrategy=INSERT",
@@ -1247,28 +1307,31 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				fetchFragmentEntryByExternalReferenceCode(
 					fragment2.getExternalReferenceCode(),
 					irrelevantGroup.getGroupId()));
+	}
 
-		try (SafeCloseable safeCloseable =
-				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
-					true)) {
+	private void _testPostSiteFragmentBatchWithLazyReferencingEnabled()
+		throws Exception {
 
-			waitForFinish(
-				"COMPLETED",
-				HTTPTestUtil.invokeToJSONObject(
-					json,
-					"headless-admin-fragment/v1.0/sites/" +
-						irrelevantGroup.getExternalReferenceCode() +
-							"/fragments/batch?createStrategy=INSERT",
-					Http.Method.POST));
-		}
+		Fragment marketplaceFragment = _randomMarketPlaceFragment();
 
-		Assert.assertNotNull(
-			_fragmentCollectionLocalService.
-				fetchFragmentCollectionByExternalReferenceCode(
-					_fragmentCollection.getExternalReferenceCode(),
-					irrelevantGroup.getGroupId()));
-		_assertFragmentEntry(fragment1, irrelevantGroup);
-		_assertFragmentEntry(fragment2, irrelevantGroup);
+		marketplaceFragment = _postSiteFragmentSetFragment(marketplaceFragment);
+
+		Fragment nonmarketplaceFragment = randomFragment();
+
+		nonmarketplaceFragment = _postSiteFragmentSetFragment(
+			nonmarketplaceFragment);
+
+		_assertExportImportFragments(
+			Arrays.asList(marketplaceFragment, nonmarketplaceFragment), null,
+			Collections.emptyList());
+		_assertExportImportFragments(
+			Collections.singletonList(marketplaceFragment),
+			"marketplace eq true",
+			Collections.singletonList(nonmarketplaceFragment));
+		_assertExportImportFragments(
+			Collections.singletonList(nonmarketplaceFragment),
+			"marketplace eq false",
+			Collections.singletonList(marketplaceFragment));
 	}
 
 	private void _testPostSiteFragmentDraft() throws Exception {

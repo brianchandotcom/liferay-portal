@@ -32,6 +32,9 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+                system:
+                    readOnly: true
+                    type: boolean
                 title:
                     type: string
                 version:
@@ -256,8 +259,7 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.ai.hub.rest.client', and version '1.0.6'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.ai.hub.rest.client', and version '1.0.6'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

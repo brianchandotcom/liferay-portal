@@ -46,23 +46,6 @@ public class CommerceSubscriptionEntryServiceWrapper
 			commerceSubscriptionEntryId);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceSubscriptionEntry>
-			getCommerceSubscriptionEntries(
-				long companyId, long userId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.model.CommerceSubscriptionEntry>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceSubscriptionEntryService.getCommerceSubscriptionEntries(
-			companyId, userId, start, end, orderByComparator);
-	}
-
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceSubscriptionEntry>
 			getCommerceSubscriptionEntries(
@@ -74,18 +57,6 @@ public class CommerceSubscriptionEntryServiceWrapper
 
 		return _commerceSubscriptionEntryService.getCommerceSubscriptionEntries(
 			companyId, groupId, userId, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public int getCommerceSubscriptionEntriesCount(long companyId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceSubscriptionEntryService.
-			getCommerceSubscriptionEntriesCount(companyId, userId);
 	}
 
 	@Override
@@ -120,25 +91,6 @@ public class CommerceSubscriptionEntryServiceWrapper
 			searchCommerceSubscriptionEntries(
 				companyId, maxSubscriptionCycles, subscriptionStatus, keywords,
 				start, end, sort);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.model.CommerceSubscriptionEntry>
-				searchCommerceSubscriptionEntries(
-					long companyId, long[] groupIds, Long maxSubscriptionCycles,
-					Integer subscriptionStatus, String keywords, int start,
-					int end, com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceSubscriptionEntryService.
-			searchCommerceSubscriptionEntries(
-				companyId, groupIds, maxSubscriptionCycles, subscriptionStatus,
-				keywords, start, end, sort);
 	}
 
 	@Override
@@ -180,20 +132,6 @@ public class CommerceSubscriptionEntryServiceWrapper
 				deliveryNextIterationDateMinute);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CommerceSubscriptionEntry
-			updateSubscriptionStatus(
-				long commerceSubscriptionEntryId, int subscriptionStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceSubscriptionEntryService.updateSubscriptionStatus(
-			commerceSubscriptionEntryId, subscriptionStatus);
-	}
-
 	@Override
 	public CommerceSubscriptionEntryService getWrappedService() {
 		return _commerceSubscriptionEntryService;
@@ -209,4 +147,4 @@ public class CommerceSubscriptionEntryServiceWrapper
 	private CommerceSubscriptionEntryService _commerceSubscriptionEntryService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1766164157
+// LIFERAY-SERVICE-BUILDER-HASH:-1683528592

@@ -258,11 +258,33 @@ public class TestrayFactory {
 				return testrayBuild;
 			}
 
-			testrayBuild = new TestrayBuild(testrayRoutine, id);
+			String filterString = JenkinsResultsParserUtil.combine(
+				"id eq '", String.valueOf(id),
+				"' and r_routineToBuilds_c_routineId eq '",
+				String.valueOf(testrayRoutine.getID()), "'");
 
-			_testrayBuilds.put(id, testrayBuild);
+			TestrayServer testrayServer = testrayRoutine.getTestrayServer();
 
-			return testrayBuild;
+			try {
+				Set<JSONObject> entityJSONObjects =
+					testrayServer.requestGraphQL(
+						"builds", TestrayBuild.FIELD_NAMES, filterString, null,
+						1, 1);
+
+				for (JSONObject entityJSONObject : entityJSONObjects) {
+					testrayBuild = new TestrayBuild(
+						testrayRoutine, entityJSONObject);
+
+					_testrayBuilds.put(id, testrayBuild);
+
+					return testrayBuild;
+				}
+
+				return null;
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 		}
 	}
 
@@ -276,11 +298,26 @@ public class TestrayFactory {
 				return testrayBuild;
 			}
 
-			testrayBuild = new TestrayBuild(testrayServer, id);
+			try {
+				Set<JSONObject> entityJSONObjects =
+					testrayServer.requestGraphQL(
+						"builds", TestrayBuild.FIELD_NAMES,
+						"id eq '" + id + "'", null, 1, 1);
 
-			_testrayBuilds.put(id, testrayBuild);
+				for (JSONObject entityJSONObject : entityJSONObjects) {
+					testrayBuild = new TestrayBuild(
+						testrayServer, entityJSONObject);
 
-			return testrayBuild;
+					_testrayBuilds.put(id, testrayBuild);
+
+					return testrayBuild;
+				}
+
+				return null;
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 		}
 	}
 

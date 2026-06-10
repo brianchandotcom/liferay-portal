@@ -493,73 +493,21 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		_jsonObject = jsonObject;
 	}
 
-	protected TestrayBuild(TestrayRoutine testrayRoutine, long id) {
-		_testrayRoutine = testrayRoutine;
-
-		_testrayServer = testrayRoutine.getTestrayServer();
-
-		try {
-			String filterString = JenkinsResultsParserUtil.combine(
-				"id eq '", String.valueOf(id),
-				"' and r_routineToBuilds_c_routineId eq '",
-				String.valueOf(testrayRoutine.getID()), "'");
-
-			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"builds", FIELD_NAMES, filterString, null, 1, 1);
-
-			if (entityJSONObjects.isEmpty()) {
-				throw new RuntimeException("Build ID not found: " + id);
-			}
-
-			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
-
-			JSONObject entityJSONObject = iterator.next();
-
-			JSONObject projectJSONObject = entityJSONObject.getJSONObject(
-				"projectToBuilds");
-
-			_testrayProject = _testrayServer.getTestrayProjectByID(
-				projectJSONObject.getLong("id"));
-
-			_jsonObject = entityJSONObject;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	protected TestrayBuild(TestrayServer testrayServer, long id) {
+	protected TestrayBuild(TestrayServer testrayServer, JSONObject jsonObject) {
 		_testrayServer = testrayServer;
+		_jsonObject = jsonObject;
 
-		try {
-			Set<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
-				"builds", FIELD_NAMES, "id eq '" + id + "'", null, 1, 1);
+		JSONObject projectJSONObject = jsonObject.getJSONObject(
+			"projectToBuilds");
 
-			if (entityJSONObjects.isEmpty()) {
-				throw new RuntimeException("Build ID not found: " + id);
-			}
+		_testrayProject = testrayServer.getTestrayProjectByID(
+			projectJSONObject.getLong("id"));
 
-			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+		JSONObject routineJSONObject = jsonObject.getJSONObject(
+			"routineToBuilds");
 
-			JSONObject entityJSONObject = iterator.next();
-
-			JSONObject projectJSONObject = entityJSONObject.getJSONObject(
-				"projectToBuilds");
-
-			_testrayProject = testrayServer.getTestrayProjectByID(
-				projectJSONObject.getLong("id"));
-
-			JSONObject routineJSONObject = entityJSONObject.getJSONObject(
-				"routineToBuilds");
-
-			_testrayRoutine = _testrayProject.getTestrayRoutineByID(
-				routineJSONObject.getLong("id"));
-
-			_jsonObject = entityJSONObject;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		_testrayRoutine = _testrayProject.getTestrayRoutineByID(
+			routineJSONObject.getLong("id"));
 	}
 
 	protected TestrayBuild(URL url) {

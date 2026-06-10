@@ -25,8 +25,11 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -34,17 +37,25 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -67,6 +78,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipInputStream;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -134,6 +146,14 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		super.setUp();
 
 		_fragmentCollection = _addFragmentCollection();
+	}
+
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+
+		_testBatchEngineDeleteImportTask();
 	}
 
 	@Override
@@ -232,6 +252,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		_testPostSiteFragmentApproved();
 		_testPostSiteFragmentApprovedAndDraft();
+		_testPostSiteFragmentBatch();
 		_testPostSiteFragmentDraft();
 		_testPostSiteFragmentDuplicateKeyProblemException();
 		_testPostSiteFragmentEmpty();
@@ -273,6 +294,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	@Override
 	@Test
 	public void testPutSiteFragment() throws Exception {
+		_testPutSiteFragmentBatch();
 		_testPutSiteFragmentCreateApproved();
 		_testPutSiteFragmentCreateApprovedAndDraft();
 		_testPutSiteFragmentCreateDraft();
@@ -479,6 +501,16 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			false);
 	}
 
+	private void _assertFragmentEntry(Fragment fragment, Group group)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
+				fragment.getExternalReferenceCode(), group.getGroupId());
+
+		Assert.assertEquals(fragment.getName(), fragmentEntry.getName());
+	}
+
 	private void _assertFragmentSet(
 		FragmentCollection expectedFragmentCollection,
 		FragmentSet fragmentSet) {
@@ -607,6 +639,38 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		String contentType = httpURLConnection.getContentType();
 
 		Assert.assertTrue(contentType.startsWith("image/"));
+	}
+
+	private String _exportFragmentsToJSON(String siteExternalReferenceCode)
+		throws Exception {
+
+		JSONObject exportTaskJSONObject = _waitForExportFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				"headless-admin-fragment/v1.0/sites/" +
+					siteExternalReferenceCode +
+						"/fragments/export-batch?contentType=JSON",
+				Http.Method.POST));
+
+		try (InputStream inputStream = HTTPTestUtil.invokeToInputStream(
+				null,
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/export-task",
+					"/by-external-reference-code/",
+					exportTaskJSONObject.getString("externalReferenceCode"),
+					"/content"),
+				HashMapBuilder.put(
+					HttpHeaders.ACCEPT, ContentTypes.APPLICATION_OCTET_STREAM
+				).build(),
+				Http.Method.GET)) {
+
+			ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+
+			zipInputStream.getNextEntry();
+
+			return StringUtil.read(zipInputStream);
+		}
 	}
 
 	private FragmentResource _getFragmentResource(String nestedFields)
@@ -818,6 +882,39 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		fragmentSet.setName(RandomTestUtil.randomString());
 
 		return fragmentSet;
+	}
+
+	private void _testBatchEngineDeleteImportTask() throws Exception {
+		Fragment fragment1 = _postSiteFragmentSetFragment(randomFragment());
+		Fragment fragment2 = _postSiteFragmentSetFragment(randomFragment());
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
+
+			waitForFinish(
+				"COMPLETED",
+				HTTPTestUtil.invokeToJSONObject(
+					_exportFragmentsToJSON(
+						testGroup.getExternalReferenceCode()),
+					"headless-admin-fragment/v1.0/sites/" +
+						irrelevantGroup.getExternalReferenceCode() +
+							"/fragments/batch?createStrategy=INSERT",
+					Http.Method.POST));
+		}
+
+		testBatchEngineDeleteImportTask_deleteFragment(
+			200, fragment2.getExternalReferenceCode(),
+			"siteExternalReferenceCode",
+			irrelevantGroup.getExternalReferenceCode());
+
+		_assertFragmentEntry(fragment1, irrelevantGroup);
+
+		Assert.assertNull(
+			_fragmentEntryLocalService.
+				fetchFragmentEntryByExternalReferenceCode(
+					fragment2.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
 	}
 
 	private void _testGetSiteFragment(boolean approved, boolean draft)
@@ -1053,6 +1150,101 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 	private void _testPostSiteFragmentApprovedAndDraft() throws Exception {
 		_testPostFragmentApprovedAndDraft(this::_postSiteFragment);
+	}
+
+	private void _testPostSiteFragmentBatch() throws Exception {
+		Fragment fragment1 = _postSiteFragmentSetFragment(randomFragment());
+		Fragment fragment2 = _postSiteFragmentSetFragment(randomFragment());
+
+		String json = _exportFragmentsToJSON(
+			testGroup.getExternalReferenceCode());
+
+		Assert.assertNull(
+			_fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					_fragmentCollection.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
+		Assert.assertNull(
+			_fragmentEntryLocalService.
+				fetchFragmentEntryByExternalReferenceCode(
+					fragment1.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
+		Assert.assertNull(
+			_fragmentEntryLocalService.
+				fetchFragmentEntryByExternalReferenceCode(
+					fragment2.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			waitForFinish(
+				"FAILED",
+				HTTPTestUtil.invokeToJSONObject(
+					json,
+					"headless-admin-fragment/v1.0/sites/" +
+						irrelevantGroup.getExternalReferenceCode() +
+							"/fragments/batch?createStrategy=INSERT",
+					Http.Method.POST));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertFalse(logEntries.toString(), logEntries.isEmpty());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertTrue(
+				String.valueOf(throwable),
+				throwable instanceof IllegalArgumentException);
+			Assert.assertEquals(
+				_language.format(
+					LocaleUtil.getDefault(),
+					"no-fragment-set-was-found-with-external-reference-code-x",
+					_fragmentCollection.getExternalReferenceCode()),
+				throwable.getMessage());
+		}
+
+		Assert.assertNull(
+			_fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					_fragmentCollection.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
+		Assert.assertNull(
+			_fragmentEntryLocalService.
+				fetchFragmentEntryByExternalReferenceCode(
+					fragment1.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
+		Assert.assertNull(
+			_fragmentEntryLocalService.
+				fetchFragmentEntryByExternalReferenceCode(
+					fragment2.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
+
+			waitForFinish(
+				"COMPLETED",
+				HTTPTestUtil.invokeToJSONObject(
+					json,
+					"headless-admin-fragment/v1.0/sites/" +
+						irrelevantGroup.getExternalReferenceCode() +
+							"/fragments/batch?createStrategy=INSERT",
+					Http.Method.POST));
+		}
+
+		Assert.assertNotNull(
+			_fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					_fragmentCollection.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
+		_assertFragmentEntry(fragment1, irrelevantGroup);
+		_assertFragmentEntry(fragment2, irrelevantGroup);
 	}
 
 	private void _testPostSiteFragmentDraft() throws Exception {
@@ -1436,6 +1628,57 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		assertEquals(fragment, getFragment);
 		assertValid(getFragment);
+	}
+
+	private void _testPutSiteFragmentBatch() throws Exception {
+		Fragment fragment1 = _postSiteFragmentSetFragment(randomFragment());
+		Fragment fragment2 = _postSiteFragmentSetFragment(randomFragment());
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
+
+			waitForFinish(
+				"COMPLETED",
+				HTTPTestUtil.invokeToJSONObject(
+					_exportFragmentsToJSON(
+						testGroup.getExternalReferenceCode()),
+					"headless-admin-fragment/v1.0/sites/" +
+						irrelevantGroup.getExternalReferenceCode() +
+							"/fragments/batch?createStrategy=INSERT",
+					Http.Method.POST));
+		}
+
+		Fragment putFragment = fragmentResource.putSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			fragment2.getExternalReferenceCode(),
+			_randomFragment(
+				true, true, fragment2.getExternalReferenceCode(), null));
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
+
+			waitForFinish(
+				"COMPLETED",
+				HTTPTestUtil.invokeToJSONObject(
+					_exportFragmentsToJSON(
+						testGroup.getExternalReferenceCode()),
+					"headless-admin-fragment/v1.0/sites/" +
+						irrelevantGroup.getExternalReferenceCode() +
+							"/fragments/batch?createStrategy=UPSERT",
+					Http.Method.POST));
+		}
+
+		_assertFragmentEntry(fragment1, irrelevantGroup);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.
+				fetchFragmentEntryByExternalReferenceCode(
+					putFragment.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId());
+
+		Assert.assertEquals(putFragment.getName(), fragmentEntry.getName());
 	}
 
 	private void _testPutSiteFragmentCreateApproved() throws Exception {
@@ -2032,6 +2275,47 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			}
 		};
 	}
+
+	private JSONObject _waitForExportFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		String externalReferenceCode = jsonObject.getString(
+			"externalReferenceCode");
+
+		long time = System.currentTimeMillis() + _EXPORT_TIMEOUT;
+
+		while (true) {
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null,
+				"headless-batch-engine/v1.0/export-task" +
+					"/by-external-reference-code/" + externalReferenceCode,
+				Http.Method.GET);
+
+			String executeStatus = jsonObject.getString("executeStatus");
+
+			if (StringUtil.equals(executeStatus, "COMPLETED") ||
+				StringUtil.equals(executeStatus, "FAILED")) {
+
+				Assert.assertEquals(expectedExecuteStatus, executeStatus);
+
+				return jsonObject;
+			}
+
+			if (System.currentTimeMillis() > time) {
+				throw new AssertionError(
+					StringBundler.concat(
+						"Export task ", externalReferenceCode,
+						" did not finish within ", _EXPORT_TIMEOUT, " ms"));
+			}
+
+			Thread.sleep(_EXPORT_POLL_INTERVAL);
+		}
+	}
+
+	private static final long _EXPORT_POLL_INTERVAL = 500;
+
+	private static final long _EXPORT_TIMEOUT = 60000;
 
 	private static HttpServer _httpServer;
 	private static String _thumbnail1Base64;

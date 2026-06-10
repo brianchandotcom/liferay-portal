@@ -206,6 +206,7 @@ import {config as smokeConfig} from './tests/smoke/main/config';
 import {config as stagingConfig} from './tests/staging-configuration-web/main/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/main/config';
 import {config as templateWebConfig} from './tests/template-web/main/config';
+import {config as translationWebConfig} from './tests/translation-web/main/config';
 import {config as trashWebConfig} from './tests/trash-web/main/config';
 import {config as usersAdminWebEmailConfig} from './tests/users-admin-web/email/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/main/config';
@@ -432,6 +433,7 @@ export default defineConfig({
 		stagingConfig,
 		stylebookWebConfig,
 		templateWebConfig,
+		translationWebConfig,
 		trashWebConfig,
 		usersAdminWebConfig,
 		usersAdminWebEmailConfig,

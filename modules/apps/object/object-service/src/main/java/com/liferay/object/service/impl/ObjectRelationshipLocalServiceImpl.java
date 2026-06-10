@@ -817,6 +817,14 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Override
 	public List<ObjectRelationship> getObjectRelationships(
+		long objectDefinitionId1, boolean reverse, String type) {
+
+		return objectRelationshipPersistence.findByODI1_R_T(
+			objectDefinitionId1, reverse, type);
+	}
+
+	@Override
+	public List<ObjectRelationship> getObjectRelationships(
 		long objectDefinitionId1, int start, int end) {
 
 		return objectRelationshipPersistence.findByObjectDefinitionId1(

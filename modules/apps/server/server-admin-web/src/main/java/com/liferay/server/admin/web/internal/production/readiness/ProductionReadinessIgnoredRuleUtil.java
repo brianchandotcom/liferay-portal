@@ -8,10 +8,10 @@ package com.liferay.server.admin.web.internal.production.readiness;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.server.admin.web.internal.configuration.ProductionReadinessConfiguration;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Lily Chi
@@ -21,30 +21,28 @@ public class ProductionReadinessIgnoredRuleUtil {
 	public static void addIgnoredRule(String ruleKey)
 		throws ConfigurationException {
 
-		List<String> ignoredRules = getIgnoredRules();
+		Set<String> ignoredRules = getIgnoredRules();
 
-		if (ignoredRules.contains(ruleKey)) {
+		if (!ignoredRules.add(ruleKey)) {
 			return;
 		}
-
-		ignoredRules.add(ruleKey);
 
 		_saveIgnoredRules(ignoredRules);
 	}
 
-	public static List<String> getIgnoredRules() throws ConfigurationException {
+	public static Set<String> getIgnoredRules() throws ConfigurationException {
 		ProductionReadinessConfiguration productionReadinessConfiguration =
 			ConfigurationProviderUtil.getSystemConfiguration(
 				ProductionReadinessConfiguration.class);
 
-		return ListUtil.fromArray(
+		return SetUtil.fromArray(
 			productionReadinessConfiguration.ignoredRules());
 	}
 
 	public static void removeIgnoredRule(String ruleKey)
 		throws ConfigurationException {
 
-		List<String> ignoredRules = getIgnoredRules();
+		Set<String> ignoredRules = getIgnoredRules();
 
 		ignoredRules.remove(ruleKey);
 
@@ -57,7 +55,7 @@ public class ProductionReadinessIgnoredRuleUtil {
 		}
 	}
 
-	private static void _saveIgnoredRules(List<String> ignoredRules)
+	private static void _saveIgnoredRules(Set<String> ignoredRules)
 		throws ConfigurationException {
 
 		ConfigurationProviderUtil.saveSystemConfiguration(

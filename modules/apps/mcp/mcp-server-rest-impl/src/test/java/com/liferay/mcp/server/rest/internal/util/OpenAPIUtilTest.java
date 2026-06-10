@@ -94,6 +94,11 @@ public class OpenAPIUtilTest {
 				"itemId", "123"
 			),
 			"patchItem");
+		_testGetOptions(
+			"{}", "application/json", Http.Method.POST,
+			"http://localhost/test/v1.0/items",
+			JSONUtil.put("body", JSONFactoryUtil.createJSONObject()),
+			"postItem");
 
 		String fileContent = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString();
@@ -166,10 +171,7 @@ public class OpenAPIUtilTest {
 		Assert.assertEquals("true", parts.get("boolean"));
 		Assert.assertEquals("1", parts.get("integer"));
 		Assert.assertEquals(fileContent, parts.get("string"));
-	}
 
-	@Test
-	public void testGetOptionsRequiresBodyForRequestBody() {
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			StringBundler.concat(
@@ -180,22 +182,6 @@ public class OpenAPIUtilTest {
 			() -> OpenAPIUtil.getOptions(
 				"http://localhost/test", JSONUtil.put("string", "Test"),
 				_openAPIJSONObject, "postItem"));
-	}
-
-	@Test
-	public void testGetOptionsSetsJSONContentTypeForRequestBody() {
-		Http.Options options = OpenAPIUtil.getOptions(
-			"http://localhost/test",
-			JSONUtil.put("body", JSONFactoryUtil.createJSONObject()),
-			_openAPIJSONObject, "postItem");
-
-		Assert.assertEquals(
-			"application/json", options.getHeader("Content-Type"));
-
-		Http.Body body = options.getBody();
-
-		Assert.assertEquals("{}", body.getContent());
-		Assert.assertEquals("application/json", body.getContentType());
 	}
 
 	@Test
@@ -416,6 +402,8 @@ public class OpenAPIUtilTest {
 			Assert.assertNull(body);
 		}
 		else {
+			Assert.assertEquals(
+				expectedContentType, options.getHeader("Content-Type"));
 			Assert.assertEquals(expectedBody, body.getContent());
 			Assert.assertEquals(expectedContentType, body.getContentType());
 		}

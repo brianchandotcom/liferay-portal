@@ -25,6 +25,18 @@ const SPANISH = {
 	title: 'WC WebContent Título',
 };
 
+const SPANISH_EDITED = {
+	content: 'WC WebContent Contenido editar',
+	description: 'WC WebContent Descripción editar',
+	title: 'WC WebContent Título editar',
+};
+
+const JAPANESE = {
+	content: 'wc webcontentコンテンツ',
+	description: 'wc webcontent記述',
+	title: 'wc webcontentタイトル',
+};
+
 // The Translations admin app redirects to the home page when reached on a
 // freshly created site right after publishing, so these tests run against the
 // Guest site (where the Poshi suite also ran them). Guest is shared, so each
@@ -159,4 +171,90 @@ test('Deleting a draft translation entry removes the web content translation', a
 		description: 'WC WebContent Description',
 		title,
 	});
+});
+
+test('Editing a translation entry updates the web content translation', async ({
+	apiHelpers,
+	translationsAdminPage,
+	webContentTranslationPage,
+}) => {
+	const title = getRandomString();
+
+	const entry = `Translation of ${title} to es-ES`;
+
+	await addWebContent(apiHelpers, title);
+
+	// Translate the web content into Spanish and publish
+
+	await webContentTranslationPage.open(guestSite, title);
+
+	await webContentTranslationPage.changeTargetLocale('es-ES');
+
+	await webContentTranslationPage.translateFields(SPANISH);
+
+	await webContentTranslationPage.publish();
+
+	// Edit the translation entry from the Translations app
+
+	await translationsAdminPage.goto(guestSite);
+
+	await translationsAdminPage.editEntry(entry);
+
+	await webContentTranslationPage.assertTargetFields(SPANISH);
+
+	await webContentTranslationPage.translateFields(SPANISH_EDITED);
+
+	await webContentTranslationPage.publish();
+
+	// The edited values persist
+
+	await translationsAdminPage.goto(guestSite);
+
+	await translationsAdminPage.editEntry(entry);
+
+	await webContentTranslationPage.assertTargetFields(SPANISH_EDITED);
+});
+
+test('Editing a translation entry into a new language adds that translation', async ({
+	apiHelpers,
+	translationsAdminPage,
+	webContentTranslationPage,
+}) => {
+	const title = getRandomString();
+
+	const spanishEntry = `Translation of ${title} to es-ES`;
+
+	const japaneseEntry = `Translation of ${title} to ja-JP`;
+
+	await addWebContent(apiHelpers, title);
+
+	// Translate the web content into Spanish and publish
+
+	await webContentTranslationPage.open(guestSite, title);
+
+	await webContentTranslationPage.changeTargetLocale('es-ES');
+
+	await webContentTranslationPage.translateFields(SPANISH);
+
+	await webContentTranslationPage.publish();
+
+	// Edit the entry and translate into Japanese instead
+
+	await translationsAdminPage.goto(guestSite);
+
+	await translationsAdminPage.editEntry(spanishEntry);
+
+	await webContentTranslationPage.changeTargetLocale('ja-JP');
+
+	await webContentTranslationPage.translateFields(JAPANESE);
+
+	await webContentTranslationPage.publish();
+
+	// The Japanese translation persists
+
+	await translationsAdminPage.goto(guestSite);
+
+	await translationsAdminPage.editEntry(japaneseEntry);
+
+	await webContentTranslationPage.assertTargetFields(JAPANESE);
 });

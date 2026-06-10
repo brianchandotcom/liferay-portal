@@ -1205,6 +1205,88 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		/>
 	</target>
 
+	<target name="print-elasticsearch-indices">
+		<if>
+			<http url="http://localhost:${elasticsearch.port}" />
+			<then>
+				<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
+					<arg value="localhost:${elasticsearch.port}/_cat/indices" />
+					<arg value="--silent" />
+				</exec>
+
+				<echo></echo>
+				<echo>##</echo>
+				<echo>## All Elasticsearch Indices on Port ${elasticsearch.port}</echo>
+				<echo>##</echo>
+				<echo></echo>
+				<echo>${curl.output.elasticsearch.indices}</echo>
+				<echo></echo>
+
+				<propertyregex
+					input="${curl.output.elasticsearch.indices}"
+					property="liferay.company.index"
+					regexp="liferay-\d{5}"
+					select="\0"
+				/>
+
+				<property name="company.index.query">
+					<![CDATA[
+						{
+							"query": {
+								"bool": {
+									"must": [
+										{
+											"match": {
+												"userName": "test test"
+											}
+										}
+									],
+									"must_not": [
+										{
+											"match": {
+												"entryClassName": "com.liferay.calendar.model.Calendar"
+											}
+										},
+										{
+											"match": {
+												"entryClassName": "com.liferay.portal.kernel.model.Layout"
+											}
+										},
+										{
+											"match": {
+												"hidden": "true"
+											}
+										}
+									]
+								}
+							}
+						}
+					]]>
+				</property>
+
+				<exec executable="curl" outputproperty="curl.output.company.index">
+					<arg value="-H" />
+					<arg value="Content-Type: application/json" />
+					<arg value="localhost:${elasticsearch.port}/${liferay.company.index}/_search?pretty" />
+					<arg value="-d" />
+					<arg value="${company.index.query}" />
+					<arg value="--silent" />
+				</exec>
+
+				<echo></echo>
+				<echo>##</echo>
+				<echo>## Elasticsearch Liferay Company Index ${liferay.company.index} on Port ${elasticsearch.port}</echo>
+				<echo>##</echo>
+				<echo></echo>
+				<echo>${curl.output.company.index}</echo>
+				<echo></echo>
+			</then>
+			<else>
+				<echo>Unable to print Elasticsearch indices at localhost:${elasticsearch.port}</echo>
+			</else>
+		</if>
+	</target>
+
 	<target name="restore-backup">
 		<property name="register.repository">
 			<![CDATA[

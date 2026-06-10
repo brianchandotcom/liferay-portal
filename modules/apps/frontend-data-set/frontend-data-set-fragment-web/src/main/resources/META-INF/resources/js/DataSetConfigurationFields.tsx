@@ -3,63 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import {
-	IDataSet,
-	getDataSetResourceURL,
-} from '@liferay/frontend-data-set-admin-web';
-import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
-import {openSelectionModal, useId} from 'frontend-js-components-web';
-import {fetch, sub} from 'frontend-js-web';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import {IDataSet} from '@liferay/frontend-data-set-admin-web';
+import {useId} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-const EDITOR_PORTLET_ID =
-	'com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet';
-
-const ITEM_SELECTOR_URL_RESOURCE_COMMAND =
-	'/frontend_data_set_fragment/get_info_item_selector_url';
-
-type IdentifierField = 'classPK' | 'externalReferenceCode';
-
-type MappingMode = 'literal' | 'content' | 'context';
-
-interface IContentMappedTokenValue {
-	className: string;
-	classPK: string;
-	externalReferenceCode: string;
-	fieldId: IdentifierField;
-	source?: 'content';
-	title?: string;
-}
-
-interface IContextMappedTokenValue {
-	fieldId: IdentifierField;
-	source: 'context';
-}
-
-type IMappedTokenValue = IContentMappedTokenValue | IContextMappedTokenValue;
-
-type TokenMapping = string | IMappedTokenValue;
-
-function isMappedTokenValue(value: TokenMapping): value is IMappedTokenValue {
-	return typeof value === 'object' && value !== null;
-}
-
-function isContextMapped(
-	value: IMappedTokenValue
-): value is IContextMappedTokenValue {
-	return value.source === 'context';
-}
-
-function getMappingMode(value: TokenMapping): MappingMode {
-	if (!isMappedTokenValue(value)) {
-		return 'literal';
-	}
-
-	return isContextMapped(value) ? 'context' : 'content';
-}
+import DataSetSelector from './DataSetSelector';
+import EntitySelectorRow from './EntitySelectorRow';
+import LiteralInput from './LiteralInput';
+import {
+	IdentifierField,
+	MappingMode,
+	TokenMapping,
+	getMappingMode,
+	isContextMapped,
+	isMappedTokenValue,
+} from './tokenMapping';
 
 function isOnDisplayPageTemplate(): boolean {
 	return !!document.getElementById('infoItemSelectorContainer');
@@ -73,121 +32,6 @@ interface IConfigurationField {
 	};
 }
 
-function buildResourceURL(resourceCommand: string): string {
-	const url = new URL(window.location.href);
-
-	const params = new URLSearchParams();
-
-	url.searchParams.forEach((paramValue, paramKey) => {
-		if (!paramKey.startsWith('p_p_') && !paramKey.startsWith('_')) {
-			params.append(paramKey, paramValue);
-		}
-	});
-
-	params.set('p_p_id', EDITOR_PORTLET_ID);
-	params.set('p_p_lifecycle', '2');
-	params.set('p_p_resource_id', resourceCommand);
-	params.set('p_p_state', 'normal');
-
-	if (Liferay.authToken) {
-		params.set('p_auth', Liferay.authToken);
-	}
-
-	url.search = params.toString();
-
-	return url.toString();
-}
-
-function LiteralInput({
-	inputId,
-	onCommit,
-	value,
-}: {
-	inputId: string;
-	onCommit: (value: string) => void;
-	value: string;
-}) {
-	const [localValue, setLocalValue] = useState(value);
-
-	useEffect(() => {
-		setLocalValue(value);
-	}, [value]);
-
-	return (
-		<ClayInput
-			id={inputId}
-			onBlur={() => {
-				if (localValue !== value) {
-					onCommit(localValue);
-				}
-			}}
-			onChange={(event) => setLocalValue(event.target.value)}
-			sizing="sm"
-			type="text"
-			value={localValue}
-		/>
-	);
-}
-
-function EntitySelectorRow({
-	entity,
-	onSelectEntity,
-}: {
-	entity: IContentMappedTokenValue;
-	onSelectEntity: () => void;
-}) {
-	const entityLabel = Liferay.Language.get('entity');
-	const isEntitySelected = !!entity.className;
-
-	const selectButtonIcon = isEntitySelected ? 'change' : 'plus';
-
-	const selectButtonLabel = sub(
-		isEntitySelected
-			? Liferay.Language.get('change-x')
-			: Liferay.Language.get('select-x'),
-		entityLabel
-	);
-
-	const displayValue = isEntitySelected
-		? entity.title ||
-			(entity.fieldId === 'externalReferenceCode'
-				? entity.externalReferenceCode
-				: entity.classPK)
-		: '';
-
-	return (
-		<ClayForm.Group>
-			<label>{entityLabel}</label>
-
-			<ClayInput.Group small>
-				<ClayInput.GroupItem>
-					<ClayInput
-						placeholder={sub(
-							Liferay.Language.get('no-x-selected'),
-							entityLabel
-						)}
-						readOnly
-						sizing="sm"
-						type="text"
-						value={displayValue}
-					/>
-				</ClayInput.GroupItem>
-
-				<ClayInput.GroupItem shrink>
-					<ClayButtonWithIcon
-						aria-label={selectButtonLabel}
-						displayType="secondary"
-						onClick={onSelectEntity}
-						size="sm"
-						symbol={selectButtonIcon}
-						title={selectButtonLabel}
-					/>
-				</ClayInput.GroupItem>
-			</ClayInput.Group>
-		</ClayForm.Group>
-	);
-}
-
 export default function DataSetConfigurationFields({
 	onValueSelect,
 	values,
@@ -196,67 +40,9 @@ export default function DataSetConfigurationFields({
 		Record<string, TokenMapping>
 	>(JSON.parse(values.apiURLTokenMappings || '{}'));
 
-	const itemSelectorInputId = useId();
 	const tokenSelectId = useId();
 	const mappingSelectId = useId();
 	const fieldInputId = useId();
-
-	const dataSetLabel = Liferay.Language.get('data-set');
-
-	const dataSetSelected: boolean =
-		Object.keys(values.itemSelector).length !== 0;
-
-	const selectContentButtonIcon = dataSetSelected ? 'change' : 'plus';
-
-	const selectContentButtonLabel = sub(
-		dataSetSelected
-			? Liferay.Language.get('change-x')
-			: Liferay.Language.get('select-x'),
-		dataSetLabel
-	);
-
-	const fdsViews = [
-		{
-			contentRenderer: 'list',
-			name: 'list',
-			schema: {
-				description: 'description',
-				sticker: 'sticker',
-				symbol: 'symbol',
-				title: 'label',
-				tooltip: 'tooltip',
-			},
-			setItemComponentProps: ({item, props}: {item: any; props: any}) => {
-				if (
-					!item.dataSetToDataSetCardsSections.length &&
-					!item.dataSetToDataSetTableSections.length &&
-					!item.dataSetToDataSetListSections.length
-				) {
-					return {
-						...props,
-						item: {
-							...item,
-							sticker: {displayType: 'warning'},
-							symbol: 'exclamation-circle',
-							tooltip: Liferay.Language.get(
-								'no-visualization-modes-have-been-defined'
-							),
-						},
-					};
-				}
-				else {
-					return {
-						...props,
-						item: {
-							...item,
-							sticker: {displayType: 'unstyled'},
-							symbol: 'catalog',
-						},
-					};
-				}
-			},
-		},
-	];
 
 	const apiURL =
 		(values.itemSelector.restEndpoint || '') +
@@ -326,68 +112,6 @@ export default function DataSetConfigurationFields({
 		[apiURLTokenMappings, onValueSelect]
 	);
 
-	const openInfoItemSelector = useCallback(
-		async (handleSelectedEntity: (selected: any) => void) => {
-			const response = await fetch(
-				buildResourceURL(ITEM_SELECTOR_URL_RESOURCE_COMMAND)
-			);
-
-			if (!response.ok) {
-				return;
-			}
-
-			const {eventName, url} = (await response.json()) as {
-				eventName: string;
-				url: string;
-			};
-
-			if (!url) {
-				return;
-			}
-
-			openSelectionModal({
-				onSelect: (selection: any) => {
-					if (!selection) {
-						return;
-					}
-
-					const selectedValue = JSON.parse(selection.value);
-
-					if (!selectedValue) {
-						return;
-					}
-
-					handleSelectedEntity(selectedValue);
-				},
-				selectEventName: eventName,
-				title: Liferay.Language.get('select-an-entity'),
-				url,
-			});
-		},
-		[]
-	);
-
-	const openEntitySelector = useCallback(
-		(tokenKey: string) => {
-			const currentMapping = apiURLTokenMappings[tokenKey] ?? '';
-			const mappedFieldId = isMappedTokenValue(currentMapping)
-				? currentMapping.fieldId
-				: 'classPK';
-
-			openInfoItemSelector((selected) => {
-				updateTokenMapping(tokenKey, {
-					className: selected.className,
-					classPK: String(selected.classPK ?? ''),
-					externalReferenceCode: selected.externalReferenceCode ?? '',
-					fieldId: mappedFieldId,
-					source: 'content',
-					title: selected.title,
-				});
-			});
-		},
-		[apiURLTokenMappings, openInfoItemSelector, updateTokenMapping]
-	);
-
 	const changeMappingMode = useCallback(
 		(mappingMode: MappingMode) => {
 			if (mappingMode === currentMappingMode) {
@@ -431,110 +155,10 @@ export default function DataSetConfigurationFields({
 
 	return (
 		<>
-			<ClayForm.Group>
-				<label htmlFor={itemSelectorInputId}>{dataSetLabel}</label>
-
-				<ClayInput.Group small>
-					<ClayInput.GroupItem>
-						<ClayInput
-							className="page-editor__item-selector__content-input"
-							id={itemSelectorInputId}
-							placeholder={sub(
-								Liferay.Language.get('no-x-selected'),
-								dataSetLabel
-							)}
-							readOnly
-							sizing="sm"
-							type="text"
-							value={values.itemSelector.label || ''}
-						/>
-					</ClayInput.GroupItem>
-
-					<ClayInput.GroupItem shrink>
-						<ClayButtonWithIcon
-							aria-label={selectContentButtonLabel}
-							displayType="secondary"
-							onClick={() => {
-								openItemSelectorModal({
-									apiURL: getDataSetResourceURL({
-										params: {
-											nestedFields:
-												'dataSetToDataSetCardsSections, dataSetToDataSetTableSections, dataSetToDataSetListSections',
-										},
-									}),
-									fdsProps: {
-										id: 'dataSetsItemSelectorModal',
-										views: fdsViews,
-									},
-									itemTypeLabel: dataSetLabel,
-									items: values.itemSelector
-										.externalReferenceCode
-										? [values.itemSelector]
-										: [],
-									onItemsChange: (items: IDataSet[]) => {
-										onValueSelect('itemSelector', {
-											additionalAPIURLParameters:
-												items[0]
-													.additionalAPIURLParameters,
-											externalReferenceCode:
-												items[0].externalReferenceCode,
-											id: items[0].id,
-											label: items[0].label,
-											restEndpoint: items[0].restEndpoint,
-										});
-									},
-								});
-							}}
-							size="sm"
-							symbol={selectContentButtonIcon}
-							title={selectContentButtonLabel}
-						/>
-					</ClayInput.GroupItem>
-
-					{dataSetSelected && (
-						<ClayInput.GroupItem shrink>
-							<ClayDropDownWithItems
-								items={[
-									{
-										label: sub(
-											Liferay.Language.get('remove-x'),
-											dataSetLabel
-										),
-										onClick: () => {
-											onValueSelect('itemSelector', {});
-										},
-										symbolLeft: 'trash',
-									},
-								]}
-								menuElementAttrs={{
-									containerProps: {
-										className: 'cadmin',
-									},
-								}}
-								trigger={
-									<ClayButtonWithIcon
-										aria-label={sub(
-											Liferay.Language.get(
-												'view-x-options'
-											),
-											dataSetLabel
-										)}
-										displayType="secondary"
-										size="sm"
-										symbol="ellipsis-v"
-										title={sub(
-											Liferay.Language.get(
-												'view-x-options'
-											),
-											dataSetLabel
-										)}
-									/>
-								}
-							/>
-						</ClayInput.GroupItem>
-					)}
-				</ClayInput.Group>
-			</ClayForm.Group>
+			<DataSetSelector
+				onChange={(dataSet) => onValueSelect('itemSelector', dataSet)}
+				value={values.itemSelector}
+			/>
 
 			{Liferay.FeatureFlags['LPD-38564'] &&
 				!!tokenKeys.length &&
@@ -582,8 +206,11 @@ export default function DataSetConfigurationFields({
 							!isContextMapped(currentTokenMapping) && (
 								<EntitySelectorRow
 									entity={currentTokenMapping}
-									onSelectEntity={() =>
-										openEntitySelector(selectedTokenKey)
+									onEntityChange={(entity) =>
+										updateTokenMapping(
+											selectedTokenKey,
+											entity
+										)
 									}
 								/>
 							)}

@@ -40,15 +40,15 @@ public class GetTypePropertiesMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long[] classNameIds = GetterUtil.getLongValues(
 			StringUtil.split(
 				ParamUtil.getString(resourceRequest, "classNameIds")));
 		long[] classTypeIds = GetterUtil.getLongValues(
 			StringUtil.split(
 				ParamUtil.getString(resourceRequest, "classTypeIds")));
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

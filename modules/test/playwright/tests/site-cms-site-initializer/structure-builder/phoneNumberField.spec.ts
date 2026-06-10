@@ -190,6 +190,43 @@ test(
 );
 
 test(
+	'Publishing a content with an invalid phone number shows a descriptive validation error',
+	{tag: '@LPD-94363'},
+	async ({contentsPage, page, structureBuilderPage}) => {
+		const structureLabel = `Structure${getRandomInt()}`;
+
+		// Create a structure with a Phone Number field
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			name: structureLabel,
+			page: structureBuilderPage,
+		});
+
+		await structureBuilderPage.addField('Phone Number' as FieldType);
+
+		await structureBuilderPage.publishStructure();
+
+		// Create a content and enter an invalid phone number
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent(structureLabel);
+
+		await page.getByLabel('Title').fill(getRandomString());
+
+		await page.locator('input[type="tel"]').fill('1');
+
+		// Publish and check the error is descriptive instead of generic
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('Please enter a valid phone number.'),
+			trigger: contentsPage.publishButton,
+		});
+	}
+);
+
+test(
 	'Phone prefix dropdown is not clipped when the form is nested in a grid',
 	{tag: '@LPD-93856'},
 	async ({contentsPage, page, pageEditorPage, structureBuilderPage}) => {

@@ -7582,7 +7582,7 @@ public class ObjectEntryLocalServiceTest {
 		ObjectEntry objectEntry = _addObjectEntry(
 			objectDefinition,
 			HashMapBuilder.<String, Serializable>put(
-				objectFieldName, "user@example.com"
+				objectFieldName, RandomTestUtil.randomString() + "@example.com"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 

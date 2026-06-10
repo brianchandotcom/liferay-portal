@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.VirtualHost;
@@ -210,14 +208,8 @@ public class VirtualHostLocalServiceImpl
 			}
 
 			if (virtualHost == null) {
-				long virtualHostId = 0;
-
-				try (SafeCloseable safeCloseable =
-						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-							CompanyConstants.SYSTEM)) {
-
-					virtualHostId = counterLocalService.increment();
-				}
+				long virtualHostId =
+					CompanyThreadLocal.incrementSystemCounter();
 
 				virtualHost = virtualHostPersistence.create(virtualHostId);
 

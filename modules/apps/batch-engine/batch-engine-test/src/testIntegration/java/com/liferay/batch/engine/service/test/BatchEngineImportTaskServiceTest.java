@@ -61,6 +61,15 @@ public class BatchEngineImportTaskServiceTest
 				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null));
 
+		AssertUtils.assertFailure(
+			PrincipalException.class, null,
+			() -> _batchEngineImportTaskService.addBatchEngineImportTask(
+				null, company.getCompanyId(), omniadminUser.getUserId(), 10,
+				null, BlogPosting.class.getName(), new byte[0], "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
+				BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null));
+
 		_batchEngineImportTaskService.addBatchEngineImportTask(
 			null, company.getCompanyId(), user.getUserId(), 10, null,
 			BlogPosting.class.getName(), new byte[0], "JSON",

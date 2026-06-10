@@ -25,6 +25,7 @@ export const FIELD_TYPES = [
 	'Date and Time',
 	'Boolean',
 	'Upload',
+	'Phone Number',
 ] as const;
 
 export type FieldType = (typeof FIELD_TYPES)[number];

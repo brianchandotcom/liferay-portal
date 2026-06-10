@@ -326,6 +326,45 @@
 			<finder-column name="segmentsExperienceId" />
 		</finder>
 	</entity>
+	<entity external-reference-code="group" local-service="true" name="LayoutPageTemplateStructureRelElementVariation" remote-service="false" table="LPTStructureElementVariation" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="lPTStructureElementVariationId" name="layoutPageTemplateStructureRelElementVariationId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="audienceEntryERC" type="String" />
+		<column localized="true" name="hide" type="String" />
+		<column localized="true" name="html" type="String" />
+		<column localized="true" name="js" type="String" />
+		<column name="name" type="String" />
+		<column name="plid" type="long" />
+		<column name="segmentsExperienceERC" type="String" />
+		<column name="targetElement" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="SegmentsExperienceERC" return-type="Collection">
+			<finder-column name="segmentsExperienceERC" />
+		</finder>
+		<finder name="P_SEERC" return-type="Collection">
+			<finder-column name="plid" />
+			<finder-column name="segmentsExperienceERC" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>DuplicateLayoutPageTemplateCollection</exception>
 		<exception>DuplicateLayoutPageTemplateCollectionType</exception>

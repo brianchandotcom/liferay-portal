@@ -108,11 +108,16 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					cssClass="table-cell-expand"
 					name="title"
 				>
-					<liferay-ui:icon
-						iconCssClass="<%= role.getIconCssClass() %>"
-						label="<%= true %>"
-						message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-					/>
+					<span>
+						<span class="inline-item inline-item-before">
+							<clay:icon
+								symbol="<%= role.getIconCssClass() %>"
+							/>
+						</span>
+						<span class="taglib-text">
+							<%= HtmlUtil.escape(role.getTitle(locale)) %>
+						</span>
+					</span>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
@@ -253,11 +258,16 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						Role groupRole = groupRoles.get(0);
 						%>
 
-						<liferay-ui:icon
-							iconCssClass="<%= groupRole.getIconCssClass() %>"
-							label="<%= true %>"
-							message="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
-						/>
+						<span>
+							<span class="inline-item inline-item-before">
+								<clay:icon
+									symbol="<%= groupRole.getIconCssClass() %>"
+								/>
+							</span>
+							<span class="taglib-text">
+								<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>
+							</span>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
@@ -334,11 +344,16 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						cssClass="table-cell-expand"
 						name="title"
 					>
-						<liferay-ui:icon
-							iconCssClass="<%= role.getIconCssClass() %>"
-							label="<%= true %>"
-							message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-						/>
+						<span>
+							<span class="inline-item inline-item-before">
+								<clay:icon
+									symbol="<%= role.getIconCssClass() %>"
+								/>
+							</span>
+							<span class="taglib-text">
+								<%= HtmlUtil.escape(role.getTitle(locale)) %>
+							</span>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
@@ -594,11 +609,16 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						cssClass="table-cell-expand"
 						name="title"
 					>
-						<liferay-ui:icon
-							iconCssClass="<%= role.getIconCssClass() %>"
-							label="<%= true %>"
-							message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-						/>
+						<span>
+							<span class="inline-item inline-item-before">
+								<clay:icon
+									symbol="<%= role.getIconCssClass() %>"
+								/>
+							</span>
+							<span class="taglib-text">
+								<%= HtmlUtil.escape(role.getTitle(locale)) %>
+							</span>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
@@ -809,11 +829,16 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						Role role = userGroupGroupRole.getRole();
 						%>
 
-						<liferay-ui:icon
-							iconCssClass="<%= role.getIconCssClass() %>"
-							label="<%= true %>"
-							message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-						/>
+						<span>
+							<span class="inline-item inline-item-before">
+								<clay:icon
+									symbol="<%= role.getIconCssClass() %>"
+								/>
+							</span>
+							<span class="taglib-text">
+								<%= HtmlUtil.escape(role.getTitle(locale)) %>
+							</span>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

@@ -4,31 +4,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-function main {
-	local latest_lts_dxp_version
-
-	latest_lts_dxp_version=$(\
-		blade init --list | \
-		grep --extended-regexp 'dxp-.*-lts' | \
-		sed 's/^dxp-//' | \
-		head --lines=1)
-
-	if [ -z "${latest_lts_dxp_version}" ]
-	then
-		echo "Unable to determine the latest LTS DXP version."
-
-		exit 1
-	fi
-
-	check_if_image_exists "${latest_lts_dxp_version}"
-
-	sed \
-		--in-place \
-		--regexp-extended \
-		"s/^ {4}tag:.*/    tag: ${latest_lts_dxp_version}/" ./values.yaml
-}
-
-function check_if_image_exists {
+function _check_if_image_exists {
 	local tag="${1}"
 
 	local http_code
@@ -46,6 +22,29 @@ function check_if_image_exists {
 
 		exit 1
 	fi
+}
+
+function main {
+	local latest_lts_dxp_version
+
+	latest_lts_dxp_version=$(blade init --list | \
+		grep --extended-regexp 'dxp-.*-lts' | \
+		sed 's/^dxp-//' | \
+		head --lines=1)
+
+	if [ -z "${latest_lts_dxp_version}" ]
+	then
+		echo "Unable to determine the latest LTS DXP version."
+
+		exit 1
+	fi
+
+	_check_if_image_exists "${latest_lts_dxp_version}"
+
+	sed \
+		--in-place \
+		--regexp-extended \
+		"s/^ {4}tag:.*/    tag: ${latest_lts_dxp_version}/" ./values.yaml
 }
 
 main "${@}"

@@ -61,11 +61,9 @@ public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 
 			jsonObject.remove(FOR_EACH_LANGUAGE_ID);
 
-			for (Map.Entry<String, String> entry :
-					_resolve(
-						(String)value
-					).entrySet()) {
+			Map<String, String> translations = _resolve((String)value);
 
+			for (Map.Entry<String, String> entry : translations.entrySet()) {
 				if (!jsonObject.has(entry.getKey())) {
 					jsonObject.put(entry.getKey(), entry.getValue());
 				}
@@ -91,11 +89,9 @@ public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 
 			map.remove(FOR_EACH_LANGUAGE_ID);
 
-			for (Map.Entry<String, String> entry :
-					_resolve(
-						(String)value
-					).entrySet()) {
+			Map<String, String> translations = _resolve((String)value);
 
+			for (Map.Entry<String, String> entry : translations.entrySet()) {
 				map.putIfAbsent(entry.getKey(), entry.getValue());
 			}
 		}
@@ -115,7 +111,7 @@ public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 		}
 
 		if (translations.isEmpty() && _log.isWarnEnabled()) {
-			_log.warn("Unable to resolve language key " + key);
+			_log.warn("Unable to resolve language key \"" + key + "\"");
 		}
 
 		return translations;

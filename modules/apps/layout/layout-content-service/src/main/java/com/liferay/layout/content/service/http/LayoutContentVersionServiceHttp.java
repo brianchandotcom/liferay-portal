@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.service.http;
+package com.liferay.layout.content.service.http;
 
-import com.liferay.layout.content.versioning.service.LayoutContentVersionServiceUtil;
+import com.liferay.layout.content.service.LayoutContentVersionServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -41,13 +41,12 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 public class LayoutContentVersionServiceHttp {
 
-	public static
-		com.liferay.layout.content.versioning.model.LayoutContentVersion
-				addLayoutContentVersion(
-					HttpPrincipal httpPrincipal, String externalReferenceCode,
-					long plid, java.util.Map<java.util.Locale, String> nameMap,
-					String data, int status, boolean skipIfUnchanged)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.layout.content.model.LayoutContentVersion
+			addLayoutContentVersion(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long plid, java.util.Map<java.util.Locale, String> nameMap,
+				String data, int status, boolean skipIfUnchanged)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -76,8 +75,8 @@ public class LayoutContentVersionServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.layout.content.versioning.model.
-				LayoutContentVersion)returnObj;
+			return (com.liferay.layout.content.model.LayoutContentVersion)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -88,11 +87,10 @@ public class LayoutContentVersionServiceHttp {
 		}
 	}
 
-	public static
-		com.liferay.layout.content.versioning.model.LayoutContentVersion
-				deleteLayoutContentVersion(
-					HttpPrincipal httpPrincipal, long layoutContentVersionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.layout.content.model.LayoutContentVersion
+			deleteLayoutContentVersion(
+				HttpPrincipal httpPrincipal, long layoutContentVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -120,8 +118,8 @@ public class LayoutContentVersionServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.layout.content.versioning.model.
-				LayoutContentVersion)returnObj;
+			return (com.liferay.layout.content.model.LayoutContentVersion)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -132,11 +130,10 @@ public class LayoutContentVersionServiceHttp {
 		}
 	}
 
-	public static
-		com.liferay.layout.content.versioning.model.LayoutContentVersion
-				getLayoutContentVersion(
-					HttpPrincipal httpPrincipal, long layoutContentVersionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.layout.content.model.LayoutContentVersion
+			getLayoutContentVersion(
+				HttpPrincipal httpPrincipal, long layoutContentVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -164,8 +161,8 @@ public class LayoutContentVersionServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.layout.content.versioning.model.
-				LayoutContentVersion)returnObj;
+			return (com.liferay.layout.content.model.LayoutContentVersion)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -176,12 +173,11 @@ public class LayoutContentVersionServiceHttp {
 		}
 	}
 
-	public static
-		com.liferay.layout.content.versioning.model.LayoutContentVersion
-				getLayoutContentVersionByExternalReferenceCode(
-					HttpPrincipal httpPrincipal, String externalReferenceCode,
-					long groupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.layout.content.model.LayoutContentVersion
+			getLayoutContentVersionByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -209,8 +205,8 @@ public class LayoutContentVersionServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.layout.content.versioning.model.
-				LayoutContentVersion)returnObj;
+			return (com.liferay.layout.content.model.LayoutContentVersion)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -222,7 +218,7 @@ public class LayoutContentVersionServiceHttp {
 	}
 
 	public static java.util.List
-		<com.liferay.layout.content.versioning.model.LayoutContentVersion>
+		<com.liferay.layout.content.model.LayoutContentVersion>
 				getLayoutContentVersions(HttpPrincipal httpPrincipal, long plid)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -252,8 +248,8 @@ public class LayoutContentVersionServiceHttp {
 			}
 
 			return (java.util.List
-				<com.liferay.layout.content.versioning.model.
-					LayoutContentVersion>)returnObj;
+				<com.liferay.layout.content.model.LayoutContentVersion>)
+					returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -264,12 +260,11 @@ public class LayoutContentVersionServiceHttp {
 		}
 	}
 
-	public static
-		com.liferay.layout.content.versioning.model.LayoutContentVersion
-				updateLayoutContentVersion(
-					HttpPrincipal httpPrincipal, long layoutContentVersionId,
-					java.util.Map<java.util.Locale, String> nameMap)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.layout.content.model.LayoutContentVersion
+			updateLayoutContentVersion(
+				HttpPrincipal httpPrincipal, long layoutContentVersionId,
+				java.util.Map<java.util.Locale, String> nameMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -297,8 +292,8 @@ public class LayoutContentVersionServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.layout.content.versioning.model.
-				LayoutContentVersion)returnObj;
+			return (com.liferay.layout.content.model.LayoutContentVersion)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -330,4 +325,4 @@ public class LayoutContentVersionServiceHttp {
 		new Class[] {long.class, java.util.Map.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1843348578
+// LIFERAY-SERVICE-BUILDER-HASH:1063969446

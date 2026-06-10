@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.model.impl;
+package com.liferay.layout.content.model.impl;
 
-import com.liferay.layout.content.versioning.model.LayoutContentVersion;
+import com.liferay.layout.content.model.LayoutContentVersion;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -339,4 +339,4 @@ public class LayoutContentVersionCacheModel
 	public long statusDate;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1901399511
+// LIFERAY-SERVICE-BUILDER-HASH:1230440371

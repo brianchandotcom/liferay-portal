@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.model;
+package com.liferay.layout.content.model;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -19,7 +19,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ImplementationClassName(
-	"com.liferay.layout.content.versioning.model.impl.LayoutContentVersionImpl"
+	"com.liferay.layout.content.model.impl.LayoutContentVersionImpl"
 )
 @ProviderType
 public interface LayoutContentVersion
@@ -28,7 +28,7 @@ public interface LayoutContentVersion
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.content.versioning.model.impl.LayoutContentVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.content.model.impl.LayoutContentVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<LayoutContentVersion, Long>
 		LAYOUT_CONTENT_VERSION_ID_ACCESSOR =
@@ -52,4 +52,4 @@ public interface LayoutContentVersion
 			};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1253565612
+// LIFERAY-SERVICE-BUILDER-HASH:1077624158

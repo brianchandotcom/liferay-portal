@@ -45,7 +45,7 @@
 				resourceValueKey="id"
 				selectEventName="selectLayout"
 				selectResourceURL="<%= siteNavigationSiteMapDisplayContext.getItemSelectorURL() %>"
-				showRemoveButton="<%= false %>"
+				showRemoveButton="<%= true %>"
 			/>
 
 			<aui:select name="preferences--displayDepth--">
@@ -63,7 +63,7 @@
 
 			</aui:select>
 
-			<div class="<%= Validator.isNotNull(siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />includeRootInTreeContainer">
+			<div class="<%= Validator.isNotNull(rootLayout) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />includeRootInTreeContainer">
 				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--includeRootInTree--" type="toggle-switch" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
 			</div>
 

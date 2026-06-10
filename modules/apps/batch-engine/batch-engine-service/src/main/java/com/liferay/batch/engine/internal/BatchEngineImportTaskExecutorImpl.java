@@ -29,6 +29,7 @@ import com.liferay.batch.engine.internal.task.progress.BatchEngineTaskProgressFa
 import com.liferay.batch.engine.internal.util.ErrorMessageUtil;
 import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
 import com.liferay.batch.engine.internal.util.ZipInputStreamUtil;
+import com.liferay.batch.engine.language.LanguageKeyResolver;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
@@ -607,6 +608,10 @@ public class BatchEngineImportTaskExecutorImpl
 			return null;
 		}
 
+		// TODO LPD-88510 Gate language key resolution behind configuration
+
+		_languageKeyResolver.expand(fieldNameValueMap);
+
 		if (!_batchEngineContentProcessors.isEmpty() &&
 			ExportImportThreadLocal.isImportInProcess()) {
 
@@ -699,6 +704,9 @@ public class BatchEngineImportTaskExecutorImpl
 	private ItemClassRegistry _itemClassRegistry;
 
 	private ServiceTrackerList<ItemReaderPostAction> _itemReaderPostActions;
+
+	@Reference
+	private LanguageKeyResolver _languageKeyResolver;
 
 	@Reference
 	private UserLocalService _userLocalService;

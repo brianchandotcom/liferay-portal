@@ -81,6 +81,7 @@ public interface FragmentEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public FragmentEntry addFragmentEntry(FragmentEntry fragmentEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public FragmentEntry addFragmentEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long fragmentCollectionId, String fragmentEntryKey, String name,
@@ -96,6 +97,7 @@ public interface FragmentEntryLocalService
 			FragmentEntry publishedFragmentEntry, int version)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public FragmentEntry copyFragmentEntry(
 			long userId, long groupId, long sourceFragmentEntryId,
 			long fragmentCollectionId, ServiceContext serviceContext)
@@ -159,6 +161,7 @@ public interface FragmentEntryLocalService
 	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.DELETE)
 	public FragmentEntry deleteFragmentEntry(
 			String externalReferenceCode, long groupId)
 		throws PortalException;
@@ -471,14 +474,17 @@ public interface FragmentEntryLocalService
 	public FragmentEntry updateFragmentEntry(FragmentEntry draftFragmentEntry)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, boolean cacheable)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long previewFileEntryId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, long fragmentCollectionId,
 			String name, String css, String html, String js, boolean cacheable,
@@ -486,6 +492,7 @@ public interface FragmentEntryLocalService
 			boolean readOnly, String typeOptions, int status)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId, String name)
 		throws PortalException;
 
@@ -505,4 +512,4 @@ public interface FragmentEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1870565390
+// LIFERAY-SERVICE-BUILDER-HASH:2100304562

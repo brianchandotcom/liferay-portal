@@ -9,9 +9,11 @@
 
 <liferay-util:dynamic-include key="com.liferay.users.admin.web#/user/memberships.jsp#pre" />
 
-<clay:sheet-section>
-	<liferay-util:include page="/user/sites.jsp" servletContext="<%= application %>" />
-</clay:sheet-section>
+<c:if test="<%= userDisplayContext.isShowSiteRoles() %>">
+	<clay:sheet-section>
+		<liferay-util:include page="/user/sites.jsp" servletContext="<%= application %>" />
+	</clay:sheet-section>
+</c:if>
 
 <clay:sheet-section>
 	<liferay-util:include page="/user/user_groups.jsp" servletContext="<%= application %>" />

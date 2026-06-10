@@ -142,6 +142,10 @@ export async function runHandlers(): Promise<void> {
 			}
 		}
 	}
+
+	for (const key of Object.keys(handlers)) {
+		delete handlers[key];
+	}
 }
 
 export function setLogEnabled(enabled: boolean) {

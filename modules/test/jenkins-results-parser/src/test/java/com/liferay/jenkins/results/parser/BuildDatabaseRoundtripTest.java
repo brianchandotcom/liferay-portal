@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -13,9 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
  * @author Calum Ragan
@@ -24,34 +22,30 @@ public class BuildDatabaseRoundtripTest {
 
 	@Test
 	public void testRoundtrip() throws Exception {
-		BuildDatabase inMemoryBuildDatabase =
+		BuildDatabase stagedBuildDatabase =
 			BuildDatabaseTestUtil.addPortalAcceptancePR(
-				args -> args.addModifiedFile("modules/apps/foo/Bar.java"),
-				args -> args.setProperty(
-					"start.properties", "junit.test.timeout.minutes", "30"));
+				buildDatabaseArgs -> buildDatabaseArgs.addModifiedFile(
+					_MODIFIED_FILE),
+				buildDatabaseArgs -> buildDatabaseArgs.setProperty(
+					_PROPERTIES_KEY, _PROPERTY_NAME, _PROPERTY_VALUE));
 
-		File buildDir = temporaryFolder.newFolder();
-
-		DefaultBuildDatabase stagedBuildDatabase = new DefaultBuildDatabase(
-			buildDir);
-
-		stagedBuildDatabase.setJSONObject(
-			inMemoryBuildDatabase.getJSONObject());
-
-		stagedBuildDatabase.write();
+		File buildDatabaseFile = stagedBuildDatabase.getBuildDatabaseFile();
 
 		DefaultBuildDatabase reloadedBuildDatabase = new DefaultBuildDatabase(
-			buildDir);
+			buildDatabaseFile.getParentFile());
 
-		Assert.assertEquals(
-			inMemoryBuildDatabase.getJSONObject(
-			).toString(),
-			reloadedBuildDatabase.getJSONObject(
-			).toString());
+		JSONObject stagedJSONObject = stagedBuildDatabase.getJSONObject();
+		JSONObject reloadedJSONObject = reloadedBuildDatabase.getJSONObject();
+
+		Assert.assertTrue(
+			"Reloaded build database did not match the staged build database",
+			stagedJSONObject.similar(reloadedJSONObject));
+
+		// getJob constructs a Git-coupled Job, so assert the staged job and its
+		// modified files through the hermetic has* accessor and the re-read
+		// JSON.
 
 		Assert.assertTrue(reloadedBuildDatabase.hasJob(_JOB_KEY));
-
-		JSONObject reloadedJSONObject = reloadedBuildDatabase.getJSONObject();
 
 		JSONObject jobsJSONObject = reloadedJSONObject.getJSONObject("jobs");
 
@@ -64,21 +58,52 @@ public class BuildDatabaseRoundtripTest {
 
 		Assert.assertEquals(1, modifiedFilesJSONArray.length());
 		Assert.assertEquals(
-			"modules/apps/foo/Bar.java", modifiedFilesJSONArray.getString(0));
+			_MODIFIED_FILE, modifiedFilesJSONArray.getString(0));
 
-		Assert.assertTrue(
-			reloadedBuildDatabase.hasProperties("start.properties"));
+		// getProperties is hermetic.
+
+		Assert.assertTrue(reloadedBuildDatabase.hasProperties(_PROPERTIES_KEY));
 
 		Properties properties = reloadedBuildDatabase.getProperties(
-			"start.properties");
+			_PROPERTIES_KEY);
 
 		Assert.assertEquals(
-			"30", properties.getProperty("junit.test.timeout.minutes"));
+			_PROPERTY_VALUE, properties.getProperty(_PROPERTY_NAME));
+
+		// getPullRequest is hermetic.
+
+		JSONObject pullRequestsJSONObject = reloadedJSONObject.getJSONObject(
+			"pull_requests");
+
+		String pullRequestURL = pullRequestsJSONObject.keys(
+		).next();
+
+		Assert.assertTrue(reloadedBuildDatabase.hasPullRequest(pullRequestURL));
+
+		PullRequest pullRequest = reloadedBuildDatabase.getPullRequest(
+			pullRequestURL);
+
+		Assert.assertEquals(pullRequestURL, pullRequest.getHtmlURL());
+
+		// getWorkspace constructs a Git-coupled Workspace, so assert the staged
+		// workspace through the hermetic has* accessor.
+
+		JSONObject workspacesJSONObject = reloadedJSONObject.getJSONObject(
+			"workspaces");
+
+		for (String workspaceKey : workspacesJSONObject.keySet()) {
+			Assert.assertTrue(reloadedBuildDatabase.hasWorkspace(workspaceKey));
+		}
 	}
 
-	@Rule
-	public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
 	private static final String _JOB_KEY = "PortalAcceptancePullRequestJob";
+
+	private static final String _MODIFIED_FILE = "modules/apps/foo/Bar.java";
+
+	private static final String _PROPERTIES_KEY = "start.properties";
+
+	private static final String _PROPERTY_NAME = "junit.test.timeout.minutes";
+
+	private static final String _PROPERTY_VALUE = "30";
 
 }

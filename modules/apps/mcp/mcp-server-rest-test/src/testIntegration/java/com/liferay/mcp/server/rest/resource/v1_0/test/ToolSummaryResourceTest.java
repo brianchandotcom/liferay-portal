@@ -26,17 +26,23 @@ public class ToolSummaryResourceTest extends BaseToolSummaryResourceTestCase {
 
 	@Override
 	@Test
-	public void testGetToolSummaries() throws Exception {
-		Page<ToolSummary> page = toolSummaryResource.getToolSummaries(
-			"mcp-server-v1.0");
+	public void testGetToolSetToolSetNameToolSummariesPage() throws Exception {
+		Page<ToolSummary> page =
+			toolSummaryResource.getToolSetToolSetNameToolSummariesPage(
+				"mcp-server-v1.0");
 
 		List<String> names = TransformUtil.transform(
 			page.getItems(), ToolSummary::getName);
 
-		Assert.assertTrue(names.toString(), names.contains("getTool"));
-		Assert.assertTrue(names.toString(), names.contains("getToolSets"));
-		Assert.assertTrue(names.toString(), names.contains("getToolSummaries"));
-		Assert.assertTrue(names.toString(), names.contains("invokeTool"));
+		Assert.assertTrue(
+			names.toString(), names.contains("getToolSetToolSetNameTool"));
+		Assert.assertTrue(
+			names.toString(),
+			names.contains("getToolSetToolSetNameToolSummariesPage"));
+		Assert.assertTrue(names.toString(), names.contains("getToolSetsPage"));
+		Assert.assertTrue(
+			names.toString(),
+			names.contains("postToolSetToolSetNameToolInvoke"));
 	}
 
 }

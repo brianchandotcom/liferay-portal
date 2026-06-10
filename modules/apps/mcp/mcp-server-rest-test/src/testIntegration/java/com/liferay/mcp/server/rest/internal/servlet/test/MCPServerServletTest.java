@@ -165,7 +165,7 @@ public class MCPServerServletTest {
 
 		McpSchema.CallToolResult callToolResult = mcpSyncClient.callTool(
 			new McpSchema.CallToolRequest(
-				"invokeTool",
+				"postToolSetToolSetNameToolInvoke",
 				HashMapBuilder.<String, Object>put(
 					"body",
 					HashMapBuilder.<String, Object>put(
@@ -205,15 +205,18 @@ public class MCPServerServletTest {
 
 		Assert.assertEquals(tools.toString(), 4, tools.size());
 
-		_assertTool(tools.get(0), "getToolSets", "get_tool_sets.json");
+		_assertTool(tools.get(0), "getToolSetsPage", "get_tool_sets.json");
 		_assertTool(
-			tools.get(1), "getToolSummaries", "get_tool_summaries.json");
-		_assertTool(tools.get(2), "getTool", "get_tool.json");
-		_assertTool(tools.get(3), "invokeTool", "invoke_tool.json");
+			tools.get(1), "getToolSetToolSetNameToolSummariesPage",
+			"get_tool_summaries.json");
+		_assertTool(tools.get(2), "getToolSetToolSetNameTool", "get_tool.json");
+		_assertTool(
+			tools.get(3), "postToolSetToolSetNameToolInvoke",
+			"invoke_tool.json");
 
 		McpSchema.CallToolResult callToolResult = mcpSyncClient.callTool(
 			new McpSchema.CallToolRequest(
-				"getToolSets", Collections.emptyMap()));
+				"getToolSetsPage", Collections.emptyMap()));
 
 		List<McpSchema.Content> contents = callToolResult.content();
 
@@ -237,7 +240,7 @@ public class MCPServerServletTest {
 
 		callToolResult = mcpSyncClient.callTool(
 			new McpSchema.CallToolRequest(
-				"getToolSummaries",
+				"getToolSetToolSetNameToolSummariesPage",
 				HashMapBuilder.<String, Object>put(
 					"toolSetName", "mcp-server-profiles"
 				).build()));
@@ -263,7 +266,7 @@ public class MCPServerServletTest {
 
 		callToolResult = mcpSyncClient.callTool(
 			new McpSchema.CallToolRequest(
-				"getTool",
+				"getToolSetToolSetNameTool",
 				HashMapBuilder.<String, Object>put(
 					"toolName", "getMCPServerProfilesPage"
 				).put(
@@ -285,7 +288,7 @@ public class MCPServerServletTest {
 
 		callToolResult = mcpSyncClient.callTool(
 			new McpSchema.CallToolRequest(
-				"invokeTool",
+				"postToolSetToolSetNameToolInvoke",
 				HashMapBuilder.<String, Object>put(
 					"body", Collections.<String, Object>emptyMap()
 				).put(

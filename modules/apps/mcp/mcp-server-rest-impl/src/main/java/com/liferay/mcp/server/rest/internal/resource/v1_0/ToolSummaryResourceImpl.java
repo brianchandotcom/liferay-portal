@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ToolSummaryResourceImpl extends BaseToolSummaryResourceImpl {
 
 	@Override
-	public Page<ToolSummary> getToolSummaries(String toolSetName)
+	public Page<ToolSummary> getToolSetToolSetNameToolSummariesPage(
+			String toolSetName)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(

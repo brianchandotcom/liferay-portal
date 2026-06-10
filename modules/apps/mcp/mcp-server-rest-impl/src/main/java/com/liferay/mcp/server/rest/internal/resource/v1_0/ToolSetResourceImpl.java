@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ToolSetResourceImpl extends BaseToolSetResourceImpl {
 
 	@Override
-	public Page<ToolSet> getToolSets() {
+	public Page<ToolSet> getToolSetsPage() {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-63311")) {
 

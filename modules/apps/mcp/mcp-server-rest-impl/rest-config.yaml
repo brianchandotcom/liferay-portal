@@ -7,6 +7,7 @@ application:
 author: Alejandro Tardín
 clientDir: ../mcp-server-rest-client/src/main/java
 compatibilityVersion: 15
+forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
 javaEEPackage: jakarta

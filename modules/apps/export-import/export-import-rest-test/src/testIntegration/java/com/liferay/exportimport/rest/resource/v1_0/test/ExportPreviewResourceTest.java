@@ -6,10 +6,12 @@
 package com.liferay.exportimport.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.rest.client.dto.v1_0.ExportPreview;
 import com.liferay.exportimport.rest.client.dto.v1_0.PreviewPortletDataHandler;
 import com.liferay.exportimport.rest.client.dto.v1_0.PreviewPortletDataHandlerSection;
 import com.liferay.exportimport.rest.client.resource.v1_0.ExportPreviewResource;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -22,7 +24,9 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -30,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -39,6 +44,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
@@ -124,6 +130,36 @@ public class ExportPreviewResourceTest
 			_companyObjectDefinition, _siteObjectDefinition);
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Override
+	@Test
+	public void testGetAssetLibraryPortletExportPreview() throws Exception {
+		String portletId = _depotObjectDefinition.getPortletId();
+
+		assertHttpResponseStatusCode(
+			404,
+			_exportPreviewResource.
+				getAssetLibraryPortletExportPreviewHttpResponse(
+					testDepotEntryGroup.getExternalReferenceCode(), portletId,
+					null, null, 0L, null, null));
+
+		_testGetExportPreviewWithDateFilter(
+			testDateFilter ->
+				exportPreviewResource.getAssetLibraryPortletExportPreview(
+					testDepotEntryGroup.getExternalReferenceCode(), portletId,
+					testDateFilter.getEndDate(), testDateFilter.getLast(), 0L,
+					testDateFilter.getRange(), testDateFilter.getStartDate()),
+			_depotObjectDefinition);
+
+		long plid = _addLayoutWithPortlet(testDepotEntryGroup, portletId);
+
+		_testGetPortletExportPreview(
+			exportPreviewResource.getAssetLibraryPortletExportPreview(
+				testDepotEntryGroup.getExternalReferenceCode(), portletId, null,
+				null, plid, null, null),
+			portletId);
+	}
+
 	@Override
 	@Test
 	public void testGetExportPreview() throws Exception {
@@ -160,6 +196,48 @@ public class ExportPreviewResourceTest
 			exportPreviewResource.getSiteExportPreview(
 				testGroup.getExternalReferenceCode(), null, null, null, null),
 			_companyObjectDefinition, _depotObjectDefinition);
+	}
+
+	@Override
+	@Test
+	public void testGetSitePortletExportPreview() throws Exception {
+		String portletId = _siteObjectDefinition.getPortletId();
+
+		assertHttpResponseStatusCode(
+			404,
+			_exportPreviewResource.getSitePortletExportPreviewHttpResponse(
+				testGroup.getExternalReferenceCode(), portletId, null, null, 0L,
+				null, null));
+
+		_testGetExportPreviewWithDateFilter(
+			testDateFilter -> exportPreviewResource.getSitePortletExportPreview(
+				testGroup.getExternalReferenceCode(), portletId,
+				testDateFilter.getEndDate(), testDateFilter.getLast(), 0L,
+				testDateFilter.getRange(), testDateFilter.getStartDate()),
+			_siteObjectDefinition);
+
+		long plid = _addLayoutWithPortlet(testGroup, portletId);
+
+		_testGetPortletExportPreview(
+			exportPreviewResource.getSitePortletExportPreview(
+				testGroup.getExternalReferenceCode(), portletId, null, null,
+				plid, null, null),
+			portletId);
+	}
+
+	private long _addLayoutWithPortlet(Group group, String portletId)
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
+
+		LayoutTestUtil.addPortletToLayout(
+			layout, portletId,
+			HashMapBuilder.put(
+				RandomTestUtil.randomString(),
+				new String[] {RandomTestUtil.randomString()}
+			).build());
+
+		return layout.getPlid();
 	}
 
 	private void _addObjectEntry(
@@ -201,6 +279,20 @@ public class ExportPreviewResourceTest
 		}
 
 		return 0L;
+	}
+
+	private PreviewPortletDataHandlerSection _getSection(
+		ExportPreview exportPreview, String name) {
+
+		for (PreviewPortletDataHandlerSection previewPortletDataHandlerSection :
+				exportPreview.getPreviewPortletDataHandlerSections()) {
+
+			if (name.equals(previewPortletDataHandlerSection.getName())) {
+				return previewPortletDataHandlerSection;
+			}
+		}
+
+		return null;
 	}
 
 	private ObjectDefinition _publishObjectDefinitionWithEntries(
@@ -289,6 +381,40 @@ public class ExportPreviewResourceTest
 
 			Assert.assertTrue(additionCount <= 0);
 		}
+	}
+
+	private void _testGetPortletExportPreview(
+		ExportPreview exportPreview, String portletId) {
+
+		PreviewPortletDataHandlerSection contentSection = _getSection(
+			exportPreview, ExportImportConstants.SECTION_KEY_CONTENT);
+
+		PreviewPortletDataHandler[] contentPreviewPortletDataHandlers =
+			contentSection.getPreviewPortletDataHandlers();
+
+		Assert.assertEquals(
+			Arrays.toString(contentPreviewPortletDataHandlers), 1,
+			contentPreviewPortletDataHandlers.length);
+		Assert.assertEquals(
+			"PORTLET_DATA_" + portletId,
+			contentPreviewPortletDataHandlers[0].getName());
+
+		PreviewPortletDataHandlerSection configurationSection = _getSection(
+			exportPreview, ExportImportConstants.SECTION_KEY_CONFIGURATION);
+
+		PreviewPortletDataHandler[] configurationPreviewPortletDataHandlers =
+			configurationSection.getPreviewPortletDataHandlers();
+
+		Assert.assertEquals(
+			Arrays.toString(configurationPreviewPortletDataHandlers), 1,
+			configurationPreviewPortletDataHandlers.length);
+		Assert.assertEquals(
+			"PORTLET_CONFIGURATION_" + portletId,
+			configurationPreviewPortletDataHandlers[0].getName());
+		Assert.assertTrue(
+			ArrayUtil.isNotEmpty(
+				configurationPreviewPortletDataHandlers[0].
+					getPreviewPortletDataHandlerControls()));
 	}
 
 	private ObjectDefinition _companyObjectDefinition;

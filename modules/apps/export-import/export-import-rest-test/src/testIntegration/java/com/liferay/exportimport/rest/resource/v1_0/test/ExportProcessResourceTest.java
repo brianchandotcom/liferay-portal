@@ -6,12 +6,15 @@
 package com.liferay.exportimport.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.rest.client.dto.v1_0.ExportProcess;
 import com.liferay.exportimport.rest.client.dto.v1_0.ExportProcessRequest;
+import com.liferay.exportimport.rest.client.dto.v1_0.ProcessProgress;
 import com.liferay.exportimport.rest.client.dto.v1_0.RequestPortletDataHandler;
 import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.exportimport.rest.client.resource.v1_0.ExportProcessResource;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -26,14 +29,19 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -46,7 +54,9 @@ import com.liferay.staging.StagingGroupHelper;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -96,6 +106,79 @@ public class ExportProcessResourceTest
 
 	@Override
 	@Test
+	public void testGetExportProcessContent() throws Exception {
+		ObjectDefinition objectDefinition = _publishObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		try {
+			ExportProcessRequest exportProcessRequest =
+				new ExportProcessRequest();
+
+			exportProcessRequest.setName(RandomTestUtil.randomString());
+			exportProcessRequest.setRequestPortletDataHandlers(
+				new RequestPortletDataHandler[] {
+					new RequestPortletDataHandler() {
+						{
+							name =
+								"PORTLET_DATA_" +
+									objectDefinition.getPortletId();
+						}
+					}
+				});
+
+			ExportProcess exportProcess = null;
+
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.batch.engine.internal." +
+						"BatchEngineExportTaskExecutorImpl",
+					LoggerTestUtil.WARN)) {
+
+				exportProcess = exportProcessResource.postSiteExportProcess(
+					testGroup.getExternalReferenceCode(), exportProcessRequest);
+
+				ExportProcess finalExportProcess = exportProcess;
+
+				ExportImportTestUtil.retryAssert(
+					1, TimeUnit.SECONDS, 30, TimeUnit.SECONDS,
+					() -> {
+						BackgroundTask backgroundTask =
+							_backgroundTaskLocalService.getBackgroundTask(
+								finalExportProcess.getId());
+
+						Assert.assertEquals(
+							BackgroundTaskConstants.STATUS_SUCCESSFUL,
+							backgroundTask.getStatus());
+					});
+			}
+
+			HttpInvoker.HttpResponse httpResponse =
+				exportProcessResource.getExportProcessContentHttpResponse(
+					exportProcess.getId());
+
+			assertHttpResponseStatusCode(200, httpResponse);
+
+			Assert.assertNotNull(httpResponse.getContent());
+
+			BackgroundTask backgroundTask =
+				_backgroundTaskLocalService.getBackgroundTask(
+					exportProcess.getId());
+
+			FileEntry fileEntry = backgroundTask.getAttachmentsFileEntries(
+			).get(
+				0
+			);
+
+			Assert.assertEquals(
+				exportProcess.getName() + ".lar", fileEntry.getTitle());
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
+	@Override
+	@Test
 	public void testPostAssetLibraryExportProcess() throws Exception {
 		assertHttpResponseStatusCode(
 			403,
@@ -122,6 +205,54 @@ public class ExportProcessResourceTest
 					exportProcessResource.postAssetLibraryExportProcess(
 						testDepotEntryGroup.getExternalReferenceCode(),
 						exportProcessRequest),
+				testDepotEntryGroup.getGroupId(), objectDefinition,
+				_addObjectEntries(
+					objectDefinition, testDepotEntryGroup.getGroupId()));
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
+	@Override
+	@Test
+	public void testPostAssetLibraryPortletExportProcess() throws Exception {
+		ObjectDefinition objectDefinition = _publishObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			testDepotEntryGroup);
+
+		String portletId = objectDefinition.getPortletId();
+
+		LayoutTestUtil.addPortletToLayout(layout, portletId);
+
+		try {
+			assertHttpResponseStatusCode(
+				403,
+				_exportProcessResource.
+					postAssetLibraryPortletExportProcessHttpResponse(
+						testDepotEntryGroup.getExternalReferenceCode(),
+						portletId, layout.getPlid(),
+						new ExportProcessRequest() {
+							{
+								name = RandomTestUtil.randomString();
+							}
+						}));
+
+			_testPostExportProcessWithInvalidDateRange(
+				exportProcessRequest ->
+					exportProcessResource.
+						postAssetLibraryPortletExportProcessHttpResponse(
+							testDepotEntryGroup.getExternalReferenceCode(),
+							portletId, layout.getPlid(), exportProcessRequest));
+
+			_testPostExportProcessWithObjectDefinition(
+				exportProcessRequest ->
+					exportProcessResource.postAssetLibraryPortletExportProcess(
+						testDepotEntryGroup.getExternalReferenceCode(),
+						portletId, layout.getPlid(), exportProcessRequest),
 				testDepotEntryGroup.getGroupId(), objectDefinition,
 				_addObjectEntries(
 					objectDefinition, testDepotEntryGroup.getGroupId()));
@@ -204,8 +335,243 @@ public class ExportProcessResourceTest
 	}
 
 	@Override
-	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"creator", "name", "status"};
+	@Test
+	public void testPostSitePortletExportProcess() throws Exception {
+		ObjectDefinition objectDefinition = _publishObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
+
+		String portletId = objectDefinition.getPortletId();
+
+		LayoutTestUtil.addPortletToLayout(layout, portletId);
+
+		try {
+			assertHttpResponseStatusCode(
+				403,
+				_exportProcessResource.postSitePortletExportProcessHttpResponse(
+					testGroup.getExternalReferenceCode(), portletId,
+					layout.getPlid(),
+					new ExportProcessRequest() {
+						{
+							name = RandomTestUtil.randomString();
+						}
+					}));
+
+			_testPostExportProcessWithInvalidDateRange(
+				exportProcessRequest ->
+					exportProcessResource.
+						postSitePortletExportProcessHttpResponse(
+							testGroup.getExternalReferenceCode(), portletId,
+							layout.getPlid(), exportProcessRequest));
+
+			_testPostExportProcessWithObjectDefinition(
+				exportProcessRequest ->
+					exportProcessResource.postSitePortletExportProcess(
+						testGroup.getExternalReferenceCode(), portletId,
+						layout.getPlid(), exportProcessRequest),
+				testGroup.getGroupId(), objectDefinition,
+				_addObjectEntries(objectDefinition, testGroup.getGroupId()));
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
+	@Override
+	protected ExportProcess testBatchEngineDeleteImportTask_addExportProcess()
+		throws Exception {
+
+		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+	}
+
+	@Override
+	protected ExportProcess testDeleteExportProcess_addExportProcess()
+		throws Exception {
+
+		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+	}
+
+	@Override
+	protected ExportProcess testDeleteExportProcessBatch_addExportProcess()
+		throws Exception {
+
+		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+	}
+
+	@Override
+	protected ExportProcess
+			testGetAssetLibraryExportProcessesPage_addExportProcess(
+				String assetLibraryExternalReferenceCode,
+				ExportProcess exportProcess)
+		throws Exception {
+
+		return _addExportProcess(
+			_getGroupId(assetLibraryExternalReferenceCode),
+			randomExportProcess());
+	}
+
+	@Override
+	protected Map<String, Map<String, String>>
+			testGetAssetLibraryExportProcessesPage_getExpectedActions(
+				String assetLibraryExternalReferenceCode)
+		throws Exception {
+
+		return new HashMap<>();
+	}
+
+	@Override
+	protected ExportProcess
+			testGetAssetLibraryPortletExportProcessesPage_addExportProcess(
+				String assetLibraryExternalReferenceCode, String portletId,
+				ExportProcess exportProcess)
+		throws Exception {
+
+		return _addExportProcess(
+			_getGroupId(assetLibraryExternalReferenceCode), portletId,
+			BackgroundTaskExecutorNames.
+				PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR);
+	}
+
+	@Override
+	protected Map<String, Map<String, String>>
+			testGetAssetLibraryPortletExportProcessesPage_getExpectedActions(
+				String assetLibraryExternalReferenceCode, String portletId)
+		throws Exception {
+
+		return new HashMap<>();
+	}
+
+	@Override
+	protected String
+			testGetAssetLibraryPortletExportProcessesPage_getPortletId()
+		throws Exception {
+
+		return RandomTestUtil.randomString();
+	}
+
+	@Override
+	protected ExportProcess testGetExportProcess_addExportProcess()
+		throws Exception {
+
+		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+	}
+
+	@Override
+	protected ExportProcess testGetExportProcessesPage_addExportProcess(
+			ExportProcess exportProcess)
+		throws Exception {
+
+		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+	}
+
+	@Override
+	protected ProcessProgress testGetExportProcessProgress_addProcessProgress(
+			long exportProcessId, ProcessProgress processProgress)
+		throws Exception {
+
+		BackgroundTaskStatus backgroundTaskStatus =
+			BackgroundTaskStatusRegistryUtil.registerBackgroundTaskStatus(
+				exportProcessId, null);
+
+		backgroundTaskStatus.setAttribute(
+			"allModelAdditionCountersTotal", 100L);
+		backgroundTaskStatus.setAttribute(
+			"currentModelAdditionCountersTotal", 50L);
+
+		return new ProcessProgress() {
+			{
+				percentage = 50;
+			}
+		};
+	}
+
+	@Override
+	protected ExportProcess testGetSiteExportProcessesPage_addExportProcess(
+			String siteExternalReferenceCode, ExportProcess exportProcess)
+		throws Exception {
+
+		return _addExportProcess(
+			_getGroupId(siteExternalReferenceCode), randomExportProcess());
+	}
+
+	@Override
+	protected Map<String, Map<String, String>>
+			testGetSiteExportProcessesPage_getExpectedActions(
+				String siteExternalReferenceCode)
+		throws Exception {
+
+		return new HashMap<>();
+	}
+
+	@Override
+	protected ExportProcess
+			testGetSitePortletExportProcessesPage_addExportProcess(
+				String siteExternalReferenceCode, String portletId,
+				ExportProcess exportProcess)
+		throws Exception {
+
+		return _addExportProcess(
+			_getGroupId(siteExternalReferenceCode), portletId,
+			BackgroundTaskExecutorNames.
+				PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR);
+	}
+
+	@Override
+	protected Map<String, Map<String, String>>
+			testGetSitePortletExportProcessesPage_getExpectedActions(
+				String siteExternalReferenceCode, String portletId)
+		throws Exception {
+
+		return new HashMap<>();
+	}
+
+	@Override
+	protected String testGetSitePortletExportProcessesPage_getPortletId()
+		throws Exception {
+
+		return RandomTestUtil.randomString();
+	}
+
+	@Override
+	protected ExportProcess testPostExportProcessRelaunch_addExportProcess(
+			ExportProcess exportProcess)
+		throws Exception {
+
+		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+	}
+
+	private ExportProcess _addExportProcess(
+			long groupId, ExportProcess exportProcess)
+		throws Exception {
+
+		return _addExportProcess(
+			groupId, exportProcess.getName(),
+			BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR);
+	}
+
+	private ExportProcess _addExportProcess(
+			long groupId, String name, String taskExecutorClassName)
+		throws Exception {
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.addBackgroundTask(
+				TestPropsValues.getUserId(), groupId, name,
+				taskExecutorClassName,
+				HashMapBuilder.<String, Serializable>put(
+					"exportImportConfigurationId", RandomTestUtil.randomLong()
+				).build(),
+				null);
+
+		return new ExportProcess() {
+			{
+				setDateCreated(backgroundTask.getCreateDate());
+				setDateModified(backgroundTask.getModifiedDate());
+				setId(backgroundTask.getBackgroundTaskId());
+				setName(backgroundTask.getName());
+			}
+		};
 	}
 
 	private ObjectEntry[] _addObjectEntries(
@@ -227,6 +593,20 @@ public class ExportProcessResourceTest
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
 			).build());
+	}
+
+	private long _getCompanyGroupId() throws Exception {
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			testCompany.getCompanyId());
+
+		return group.getGroupId();
+	}
+
+	private long _getGroupId(String externalReferenceCode) throws Exception {
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			externalReferenceCode, testCompany.getCompanyId());
+
+		return group.getGroupId();
 	}
 
 	private ObjectDefinition _publishObjectDefinition(String scope)
@@ -361,6 +741,9 @@ public class ExportProcessResourceTest
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	private ExportProcessResource _exportProcessResource;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

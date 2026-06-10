@@ -8,8 +8,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.Files;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -79,11 +77,11 @@ public class BuildDatabaseTestUtil {
 
 	private static File _newBuildDir() {
 		try {
-			File buildDir = Files.createTempDirectory(
-				"build-database"
-			).toFile();
+			File buildDir = File.createTempFile("build-database-", null);
 
-			buildDir.deleteOnExit();
+			buildDir.delete();
+
+			buildDir.mkdir();
 
 			return buildDir;
 		}
@@ -97,7 +95,7 @@ public class BuildDatabaseTestUtil {
 
 		JSONArray modifiedFilesJSONArray = new JSONArray();
 
-		for (String modifiedFile : buildDatabaseArgs.getModifiedFiles()) {
+		for (String modifiedFile : buildDatabaseArgs.modifiedFiles) {
 			modifiedFilesJSONArray.put(modifiedFile);
 		}
 
@@ -122,7 +120,7 @@ public class BuildDatabaseTestUtil {
 		JSONObject propertiesJSONObject = new JSONObject();
 
 		Map<String, Map<String, String>> properties =
-			buildDatabaseArgs.getProperties();
+			buildDatabaseArgs.properties;
 
 		for (Map.Entry<String, Map<String, String>> entry :
 				properties.entrySet()) {

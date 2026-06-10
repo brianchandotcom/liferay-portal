@@ -338,11 +338,19 @@ public class ObjectEntryDTOConverter
 			() -> NestedFieldsSupplier.supply(
 				"modifiedBy",
 				nestedFieldNames -> {
+
+					if (objectEntryVersion != null) {
+						return CreatorUtil.toCreator(
+							_portal, dtoConverterContext.getUriInfo(),
+							_userLocalService.fetchUser(
+								objectEntryVersion.getUserId()));
+					}
+
 					ObjectEntryVersion latestObjectEntryVersion =
 						_fetchLatestObjectEntryVersion(
 							objectDefinition,
-							serviceBuilderObjectEntry.getObjectEntryId(),
-							objectEntryVersion);
+							serviceBuilderObjectEntry.getObjectEntryId()
+						);
 
 					if (latestObjectEntryVersion == null) {
 						return null;
@@ -672,12 +680,7 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectEntryVersion _fetchLatestObjectEntryVersion(
-		ObjectDefinition objectDefinition, long objectEntryId,
-		ObjectEntryVersion objectEntryVersion) {
-
-		if (objectEntryVersion != null) {
-			return objectEntryVersion;
-		}
+		ObjectDefinition objectDefinition, long objectEntryId) {
 
 		if (!objectDefinition.isEnableObjectEntryVersioning()) {
 			return null;

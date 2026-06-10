@@ -12,9 +12,9 @@ import com.liferay.oauth.client.persistence.exception.OAuthClientPRLocalMetadata
 import com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientPRLocalMetadataLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -28,9 +28,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
+import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Objects;
@@ -57,13 +56,13 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 
 		return addOAuthClientPRLocalMetadata(
 			null, userId,
-			_toStringArray(
+			JSONUtil.toStringArray(
 				metadataJSONObject.getJSONArray("authorization_servers")),
-			_toStringArray(
+			JSONUtil.toStringArray(
 				metadataJSONObject.getJSONArray("bearer_methods_supported")),
 			false, metadataJSONObject.getString("resource"),
 			metadataJSONObject.getString("resource_name"),
-			_toStringArray(
+			JSONUtil.toStringArray(
 				metadataJSONObject.getJSONArray("scopes_supported")));
 	}
 
@@ -78,16 +77,18 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 			throw new OAuthClientPRLocalMetadataResourceException();
 		}
 
-		User user = _userLocalService.getUser(userId);
-
 		_validateURL(protectedResourceURI);
+
+		protectedResourceURI = _removeTrailingSlash(protectedResourceURI);
+
+		User user = _userLocalService.getUser(userId);
 
 		String localWellKnownURI = _generateLocalWellKnownURI(
 			protectedResourceURI);
 
 		_validate(
-			null, user.getCompanyId(), authorizationServers, localWellKnownURI,
-			protectedResourceURI);
+			null, user.getCompanyId(), authorizationServers,
+			bearerMethodsSupported, localWellKnownURI, protectedResourceURI);
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			oAuthClientPRLocalMetadataPersistence.create(
@@ -246,13 +247,13 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 
 		return updateOAuthClientPRLocalMetadata(
 			oAuthClientPRLocalMetadataId,
-			_toStringArray(
+			JSONUtil.toStringArray(
 				metadataJSONObject.getJSONArray("authorization_servers")),
-			_toStringArray(
+			JSONUtil.toStringArray(
 				metadataJSONObject.getJSONArray("bearer_methods_supported")),
 			false, metadataJSONObject.getString("resource"),
 			metadataJSONObject.getString("resource_name"),
-			_toStringArray(
+			JSONUtil.toStringArray(
 				metadataJSONObject.getJSONArray("scopes_supported")));
 	}
 
@@ -276,6 +277,8 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 
 		_validateURL(protectedResourceURI);
 
+		protectedResourceURI = _removeTrailingSlash(protectedResourceURI);
+
 		if (!protectedResourceURI.equals(
 				oAuthClientPRLocalMetadata.getProtectedResourceURI())) {
 
@@ -286,7 +289,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		_validate(
 			oAuthClientPRLocalMetadata,
 			oAuthClientPRLocalMetadata.getCompanyId(), authorizationServers,
-			localWellKnownURI, protectedResourceURI);
+			bearerMethodsSupported, localWellKnownURI, protectedResourceURI);
 
 		oAuthClientPRLocalMetadata.setLocalWellKnownEnabled(
 			localWellKnownEnabled);
@@ -308,6 +311,15 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		try {
 			URI uri = URI.create(protectedResourceURI);
 
+			String query = uri.getRawQuery();
+
+			if (Validator.isNotNull(query)) {
+				return StringBundler.concat(
+					uri.getScheme(), "://", uri.getAuthority(),
+					"/.well-known/oauth-protected-resource", uri.getPath(),
+					StringPool.QUESTION, query);
+			}
+
 			return StringBundler.concat(
 				uri.getScheme(), "://", uri.getAuthority(),
 				"/.well-known/oauth-protected-resource", uri.getPath());
@@ -325,7 +337,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		throws PortalException {
 
 		try {
-			JSONObject metadataJSONObject = JSONUtil.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"authorization_servers",
 				JSONUtil.putAll((Object[])authorizationServers)
 			).put(
@@ -337,13 +349,13 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 				"resource_name", resourceName
 			);
 
-			if ((scopesSupported != null) && (scopesSupported.length > 0)) {
-				metadataJSONObject.put(
+			if (ArrayUtil.isNotEmpty(scopesSupported)) {
+				jsonObject.put(
 					"scopes_supported",
 					JSONUtil.putAll((Object[])scopesSupported));
 			}
 
-			return metadataJSONObject.toString();
+			return jsonObject.toString();
 		}
 		catch (Exception exception) {
 			throw new OAuthClientPRLocalMetadataMetadataJSONException(
@@ -363,24 +375,19 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		}
 	}
 
-	private String[] _toStringArray(JSONArray jsonArray) {
-		if (jsonArray == null) {
-			return new String[0];
+	private String _removeTrailingSlash(String urlString) {
+		if ((urlString == null) || !urlString.endsWith(StringPool.SLASH)) {
+			return urlString;
 		}
 
-		String[] strings = new String[jsonArray.length()];
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			strings[i] = jsonArray.getString(i);
-		}
-
-		return strings;
+		return urlString.substring(0, urlString.length() - 1);
 	}
 
 	private void _validate(
 			OAuthClientPRLocalMetadata oldOAuthClientPRLocalMetadata,
 			long companyId, String[] authorizationServers,
-			String localWellKnownURI, String protectedResourceURI)
+			String[] bearerMethodsSupported, String localWellKnownURI,
+			String protectedResourceURI)
 		throws PortalException {
 
 		if (Validator.isNull(protectedResourceURI)) {
@@ -390,6 +397,11 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		if (ArrayUtil.isEmpty(authorizationServers)) {
 			throw new OAuthClientPRLocalMetadataMetadataJSONException(
 				"authorization_servers is required");
+		}
+
+		if (ArrayUtil.isEmpty(bearerMethodsSupported)) {
+			throw new OAuthClientPRLocalMetadataMetadataJSONException(
+				"bearer_methods_supported is required");
 		}
 
 		for (String authorizationServer : authorizationServers) {
@@ -425,37 +437,37 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		}
 
 		try {
-			URL url = new URL(urlString);
+			URI uri = new URI(urlString);
 
-			String protocol = url.getProtocol();
+			String scheme = uri.getScheme();
 
-			if (!Http.HTTP.equalsIgnoreCase(protocol) &&
-				!Http.HTTPS.equalsIgnoreCase(protocol)) {
+			if (!Http.HTTP.equalsIgnoreCase(scheme) &&
+				!Http.HTTPS.equalsIgnoreCase(scheme)) {
 
 				throw new OAuthClientPRLocalMetadataResourceException(
 					urlString);
 			}
 
-			String host = url.getHost();
+			String host = uri.getHost();
 
 			if (Validator.isNull(host)) {
 				throw new OAuthClientPRLocalMetadataResourceException(
 					urlString);
 			}
 
-			if (Validator.isNotNull(url.getRef()) ||
-				(!Http.HTTPS.equalsIgnoreCase(protocol) &&
-				 !Objects.equals(host, "localhost") &&
+			if (Validator.isNotNull(uri.getFragment()) ||
+				(!Http.HTTPS.equalsIgnoreCase(scheme) &&
 				 !Objects.equals(host, "127.0.0.1") &&
-				 !Objects.equals(host, "[::1]"))) {
+				 !Objects.equals(host, "[::1]") &&
+				 !Objects.equals(host, "localhost"))) {
 
 				throw new OAuthClientPRLocalMetadataResourceException(
 					urlString);
 			}
 		}
-		catch (MalformedURLException malformedURLException) {
+		catch (URISyntaxException uriSyntaxException) {
 			throw new OAuthClientPRLocalMetadataResourceException(
-				urlString, malformedURLException);
+				urlString, uriSyntaxException);
 		}
 	}
 

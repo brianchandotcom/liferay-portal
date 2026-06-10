@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -125,35 +126,6 @@ public class OAuth2WellKnownProtectedResourceMetadataFilter extends BaseFilter {
 				fetchOAuthClientPRLocalMetadata(companyId, true, null);
 		}
 
-		String localWellKnownURI =
-			_portal.getPortalURL(httpServletRequest) + requestURI;
-
-		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
-			_oAuthClientPRLocalMetadataLocalService.
-				fetchOAuthClientPRLocalMetadataByLocalWellKnownURI(
-					companyId, localWellKnownURI);
-
-		if (oAuthClientPRLocalMetadata == null) {
-			String alternativeURI;
-
-			if (localWellKnownURI.endsWith(StringPool.SLASH)) {
-				alternativeURI = localWellKnownURI.substring(
-					0, localWellKnownURI.length() - 1);
-			}
-			else {
-				alternativeURI = localWellKnownURI + StringPool.SLASH;
-			}
-
-			oAuthClientPRLocalMetadata =
-				_oAuthClientPRLocalMetadataLocalService.
-					fetchOAuthClientPRLocalMetadataByLocalWellKnownURI(
-						companyId, alternativeURI);
-		}
-
-		if (oAuthClientPRLocalMetadata != null) {
-			return oAuthClientPRLocalMetadata;
-		}
-
 		String resourcePath = requestURI.substring(
 			index + _WELL_KNOWN_PATH.length());
 
@@ -162,7 +134,33 @@ public class OAuth2WellKnownProtectedResourceMetadataFilter extends BaseFilter {
 				fetchOAuthClientPRLocalMetadata(companyId, true, null);
 		}
 
-		return null;
+		String localWellKnownURI =
+			_portal.getPortalURL(httpServletRequest) + requestURI;
+
+		String queryString = httpServletRequest.getQueryString();
+
+		if (Validator.isNotNull(queryString)) {
+			localWellKnownURI =
+				localWellKnownURI + StringPool.QUESTION + queryString;
+		}
+
+		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
+			_oAuthClientPRLocalMetadataLocalService.
+				fetchOAuthClientPRLocalMetadataByLocalWellKnownURI(
+					companyId, localWellKnownURI);
+
+		if ((oAuthClientPRLocalMetadata == null) &&
+			localWellKnownURI.endsWith(StringPool.SLASH)) {
+
+			oAuthClientPRLocalMetadata =
+				_oAuthClientPRLocalMetadataLocalService.
+					fetchOAuthClientPRLocalMetadataByLocalWellKnownURI(
+						companyId,
+						localWellKnownURI.substring(
+							0, localWellKnownURI.length() - 1));
+		}
+
+		return oAuthClientPRLocalMetadata;
 	}
 
 	private static final String _WELL_KNOWN_PATH =

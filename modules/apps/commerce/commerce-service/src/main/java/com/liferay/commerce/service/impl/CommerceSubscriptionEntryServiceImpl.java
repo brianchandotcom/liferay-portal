@@ -16,6 +16,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -43,9 +45,7 @@ public class CommerceSubscriptionEntryServiceImpl
 			long commerceSubscriptionEntryId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
+		_checkPortletResourcePermission(commerceSubscriptionEntryId);
 
 		commerceSubscriptionEntryLocalService.deleteCommerceSubscriptionEntry(
 			commerceSubscriptionEntryId);
@@ -56,9 +56,7 @@ public class CommerceSubscriptionEntryServiceImpl
 			long commerceSubscriptionEntryId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
+		_checkPortletResourcePermission(commerceSubscriptionEntryId);
 
 		return commerceSubscriptionEntryLocalService.
 			fetchCommerceSubscriptionEntry(commerceSubscriptionEntryId);
@@ -73,6 +71,8 @@ public class CommerceSubscriptionEntryServiceImpl
 			long companyId, long userId, int start, int end,
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
 		throws PortalException {
+
+		_checkCompanyId(companyId);
 
 		if (userId != getUserId()) {
 			_portletResourcePermission.check(
@@ -90,6 +90,8 @@ public class CommerceSubscriptionEntryServiceImpl
 			long companyId, long groupId, long userId, int start, int end,
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
 		throws PortalException {
+
+		_checkCompanyId(companyId);
 
 		if (userId != getUserId()) {
 			_portletResourcePermission.check(
@@ -110,6 +112,8 @@ public class CommerceSubscriptionEntryServiceImpl
 	public int getCommerceSubscriptionEntriesCount(long companyId, long userId)
 		throws PortalException {
 
+		_checkCompanyId(companyId);
+
 		if (userId != getUserId()) {
 			_portletResourcePermission.check(
 				getPermissionChecker(), null,
@@ -124,6 +128,8 @@ public class CommerceSubscriptionEntryServiceImpl
 	public int getCommerceSubscriptionEntriesCount(
 			long companyId, long groupId, long userId)
 		throws PortalException {
+
+		_checkCompanyId(companyId);
 
 		if (userId != getUserId()) {
 			_portletResourcePermission.check(
@@ -142,6 +148,8 @@ public class CommerceSubscriptionEntryServiceImpl
 				Integer subscriptionStatus, String keywords, int start, int end,
 				Sort sort)
 		throws PortalException {
+
+		_checkCompanyId(companyId);
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
@@ -168,6 +176,8 @@ public class CommerceSubscriptionEntryServiceImpl
 				Integer subscriptionStatus, String keywords, int start, int end,
 				Sort sort)
 		throws PortalException {
+
+		_checkCompanyId(companyId);
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
@@ -197,9 +207,7 @@ public class CommerceSubscriptionEntryServiceImpl
 			int deliveryNextIterationDateMinute)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
+		_checkPortletResourcePermission(commerceSubscriptionEntryId);
 
 		return commerceSubscriptionEntryLocalService.
 			updateCommerceSubscriptionEntry(
@@ -226,12 +234,35 @@ public class CommerceSubscriptionEntryServiceImpl
 			long commerceSubscriptionEntryId, int subscriptionStatus)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
+		_checkPortletResourcePermission(commerceSubscriptionEntryId);
 
 		return commerceSubscriptionEntryLocalService.updateSubscriptionStatus(
 			commerceSubscriptionEntryId, subscriptionStatus);
+	}
+
+	private void _checkCompanyId(long companyId) throws PortalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (companyId != permissionChecker.getCompanyId()) {
+			throw new PrincipalException();
+		}
+	}
+
+	private void _checkPortletResourcePermission(
+			long commerceSubscriptionEntryId)
+		throws PortalException {
+
+		CommerceSubscriptionEntry commerceSubscriptionEntry =
+			commerceSubscriptionEntryLocalService.
+				fetchCommerceSubscriptionEntry(commerceSubscriptionEntryId);
+
+		if (commerceSubscriptionEntry == null) {
+			return;
+		}
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), commerceSubscriptionEntry.getGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
 	}
 
 	@Reference

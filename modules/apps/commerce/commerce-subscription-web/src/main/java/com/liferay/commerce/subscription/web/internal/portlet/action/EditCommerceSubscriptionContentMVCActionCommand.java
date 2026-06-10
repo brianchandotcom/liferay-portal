@@ -8,14 +8,19 @@ package com.liferay.commerce.subscription.web.internal.portlet.action;
 import com.liferay.commerce.exception.CommerceSubscriptionEntrySubscriptionStatusException;
 import com.liferay.commerce.exception.CommerceSubscriptionTypeException;
 import com.liferay.commerce.exception.NoSuchSubscriptionEntryException;
+import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.subscription.CommerceSubscriptionEntryActionHelper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -41,26 +46,32 @@ public class EditCommerceSubscriptionContentMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long commerceSubscriptionEntryId = ParamUtil.getLong(
-			actionRequest, "commerceSubscriptionEntryId");
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			CommerceSubscriptionEntry commerceSubscriptionEntry =
+				_getCommerceSubscriptionEntry(
+					actionRequest,
+					ParamUtil.getLong(
+						actionRequest, "commerceSubscriptionEntryId"));
+
 			if (cmd.equals("activate")) {
 				_commerceSubscriptionEntryActionHelper.
 					activateCommerceSubscriptionEntry(
-						commerceSubscriptionEntryId);
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
 			}
 			else if (cmd.equals("cancel")) {
 				_commerceSubscriptionEntryActionHelper.
 					cancelCommerceSubscriptionEntry(
-						commerceSubscriptionEntryId);
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
 			}
 			else if (cmd.equals("suspend")) {
 				_commerceSubscriptionEntryActionHelper.
 					suspendCommerceSubscriptionEntry(
-						commerceSubscriptionEntryId);
+						commerceSubscriptionEntry.
+							getCommerceSubscriptionEntryId());
 			}
 		}
 		catch (Exception exception) {
@@ -90,8 +101,32 @@ public class EditCommerceSubscriptionContentMVCActionCommand
 		}
 	}
 
+	private CommerceSubscriptionEntry _getCommerceSubscriptionEntry(
+			ActionRequest actionRequest, long commerceSubscriptionEntryId)
+		throws PortalException {
+
+		CommerceSubscriptionEntry commerceSubscriptionEntry =
+			_commerceSubscriptionEntryLocalService.getCommerceSubscriptionEntry(
+				commerceSubscriptionEntryId);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (commerceSubscriptionEntry.getCompanyId() !=
+				themeDisplay.getCompanyId()) {
+
+			throw new PrincipalException();
+		}
+
+		return commerceSubscriptionEntry;
+	}
+
 	@Reference
 	private CommerceSubscriptionEntryActionHelper
 		_commerceSubscriptionEntryActionHelper;
+
+	@Reference
+	private CommerceSubscriptionEntryLocalService
+		_commerceSubscriptionEntryLocalService;
 
 }

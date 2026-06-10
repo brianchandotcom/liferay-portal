@@ -10,11 +10,6 @@ module.exports = {
 		jest: true,
 		node: true
 	},
-	extends: [
-		'liferay',
-		'plugin:jsx-a11y/recommended',
-		'plugin:prettier/recommended'
-	],
 	globals: {
 		analytics: true,
 		FARO_DEV_MODE: true,
@@ -32,15 +27,13 @@ module.exports = {
 			jsx: true,
 			legacyDecorators: true
 		},
-		ecmaVersion: 2020,
+		ecmaVersion: 2022,
 		sourceType: 'module'
 	},
 	plugins: [
+		'@typescript-eslint',
 		'react',
-		'sort-destructure-keys',
-		'sort-imports-es6-autofix',
-		'jsx-a11y',
-		'@typescript-eslint'
+		'sort-destructure-keys'
 	],
 	root: true,
 	rules: {
@@ -55,14 +48,6 @@ module.exports = {
 		'arrow-body-style': [2, 'as-needed'],
 		'comma-dangle': 0,
 		'default-case': 2,
-		'jsx-a11y/label-has-associated-control': 2,
-		'jsx-a11y/label-has-for': 0,
-		'jsx-a11y/no-autofocus': [
-			2,
-			{
-				ignoreNonDOM: true
-			}
-		],
 		'max-len': 0,
 		'new-cap': [
 			2,
@@ -126,14 +111,6 @@ module.exports = {
 		],
 		'require-jsdoc': 0,
 		'sort-destructure-keys/sort-destructure-keys': 2,
-		'sort-imports-es6-autofix/sort-imports-es6': [
-			2,
-			{
-				ignoreCase: true,
-				ignoreMemberSort: false,
-				memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple']
-			}
-		],
 		'sort-keys': [
 			2,
 			'asc',

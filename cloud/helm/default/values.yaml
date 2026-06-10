@@ -279,7 +279,7 @@ image:
     pullPolicy: IfNotPresent
     pullSecrets: []
     repository: liferay/dxp
-    tag: latest
+    tag: 2026.q1.8-lts
 initContainers: []
 livenessProbe:
     failureThreshold: 3

@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -82,6 +84,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentEntryLocalServiceImpl
 	extends FragmentEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentEntry addFragmentEntry(
 			String externalReferenceCode, long userId, long groupId,
@@ -166,6 +169,7 @@ public class FragmentEntryLocalServiceImpl
 		return updatedDraftFragmentEntry;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentEntry copyFragmentEntry(
 			long userId, long groupId, long sourceFragmentEntryId,
@@ -299,6 +303,7 @@ public class FragmentEntryLocalServiceImpl
 		return draftFragmentEntry;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
@@ -349,6 +354,7 @@ public class FragmentEntryLocalServiceImpl
 		return delete(fragmentEntry);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
 		throws PortalException {
@@ -357,6 +363,7 @@ public class FragmentEntryLocalServiceImpl
 			getFragmentEntry(fragmentEntryId));
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public FragmentEntry deleteFragmentEntry(
 			String externalReferenceCode, long groupId)
@@ -596,6 +603,7 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentEntry publishDraft(FragmentEntry draftFragmentEntry)
 		throws PortalException {
@@ -613,6 +621,7 @@ public class FragmentEntryLocalServiceImpl
 		return _publishDraft(draftFragmentEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentEntry updateFragmentEntry(FragmentEntry fragmentEntry)
 		throws PortalException {
@@ -641,6 +650,7 @@ public class FragmentEntryLocalServiceImpl
 		return publishDraft(updatedDraftFragmentEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, boolean cacheable)
@@ -654,6 +664,7 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long previewFileEntryId)
@@ -676,6 +687,7 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntry;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, long fragmentCollectionId,
@@ -734,6 +746,7 @@ public class FragmentEntryLocalServiceImpl
 		return _publishDraft(fragmentEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId, String name)
 		throws PortalException {

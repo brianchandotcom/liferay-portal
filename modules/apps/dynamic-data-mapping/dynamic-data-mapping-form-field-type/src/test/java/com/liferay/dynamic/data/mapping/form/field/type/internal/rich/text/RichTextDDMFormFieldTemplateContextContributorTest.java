@@ -5,13 +5,11 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.rich.text;
 
-import com.liferay.ai.creator.openai.manager.AICreatorOpenAIManager;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -22,7 +20,6 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,23 +38,6 @@ public class RichTextDDMFormFieldTemplateContextContributorTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		AICreatorOpenAIManager aiCreatorOpenAIManager = Mockito.mock(
-			AICreatorOpenAIManager.class);
-
-		Mockito.when(
-			aiCreatorOpenAIManager.isAICreatorToolbarEnabled(
-				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
-		).thenReturn(
-			RandomTestUtil.randomBoolean()
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			_richTextDDMFormFieldTemplateContextContributor,
-			"_aiCreatorOpenAIManager", aiCreatorOpenAIManager);
-	}
 
 	@After
 	public void tearDown() {

@@ -6,7 +6,6 @@
 package com.liferay.ai.creator.openai.web.internal.editor.configuration.test;
 
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
-import com.liferay.ai.creator.openai.manager.AICreatorOpenAIManager;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -27,10 +26,11 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -79,6 +79,48 @@ public class AICreatorOpenAIEditorConfigurationTest {
 	}
 
 	@Test
+	public void testAICreatorCKEditor5ConfigCompanyAndGroupEnabledJournalPortlet()
+		throws Exception {
+
+		_aiCreatorOpenAIConfigurationManager.
+			saveAICreatorOpenAICompanyConfiguration(
+				_group.getCompanyId(), RandomTestUtil.randomString(), true,
+				true);
+		_aiCreatorOpenAIConfigurationManager.
+			saveAICreatorOpenAIGroupConfiguration(
+				_group.getGroupId(), RandomTestUtil.randomString(), true, true);
+
+		_assertCKEditor5EditorConfigurationConfigJSONObject(
+			true, JournalPortletKeys.JOURNAL);
+	}
+
+	@Test
+	public void testAICreatorCKEditor5ConfigCompanyAndGroupEnabledNoJournalPortlet()
+		throws Exception {
+
+		_aiCreatorOpenAIConfigurationManager.
+			saveAICreatorOpenAICompanyConfiguration(
+				_group.getCompanyId(), RandomTestUtil.randomString(), true,
+				true);
+		_aiCreatorOpenAIConfigurationManager.
+			saveAICreatorOpenAIGroupConfiguration(
+				_group.getGroupId(), RandomTestUtil.randomString(), true, true);
+
+		_assertCKEditor5EditorConfigurationConfigJSONObject(
+			false, RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testAICreatorCKEditor5ConfigCompanyDisabled() throws Exception {
+		_aiCreatorOpenAIConfigurationManager.
+			saveAICreatorOpenAICompanyConfiguration(
+				_group.getCompanyId(), StringPool.BLANK, false, false);
+
+		_assertCKEditor5EditorConfigurationConfigJSONObject(
+			false, RandomTestUtil.randomString());
+	}
+
+	@Test
 	public void testAICreatorToolbarCompanyAndGroupEnabledWithAPIKeyInCompany()
 		throws Exception {
 
@@ -92,7 +134,7 @@ public class AICreatorOpenAIEditorConfigurationTest {
 				_group.getGroupId(), StringPool.BLANK, true, true);
 
 		_assertEditorConfigurationConfigJSONObject(
-			true, true, JournalPortletKeys.JOURNAL);
+			true, true, true, JournalPortletKeys.JOURNAL);
 	}
 
 	@Test
@@ -107,7 +149,7 @@ public class AICreatorOpenAIEditorConfigurationTest {
 				_group.getGroupId(), RandomTestUtil.randomString(), true, true);
 
 		_assertEditorConfigurationConfigJSONObject(
-			true, true, JournalPortletKeys.JOURNAL);
+			true, true, true, JournalPortletKeys.JOURNAL);
 	}
 
 	@Test
@@ -123,7 +165,7 @@ public class AICreatorOpenAIEditorConfigurationTest {
 				_group.getGroupId(), RandomTestUtil.randomString(), true, true);
 
 		_assertEditorConfigurationConfigJSONObject(
-			false, false, RandomTestUtil.randomString());
+			false, false, false, RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -138,7 +180,7 @@ public class AICreatorOpenAIEditorConfigurationTest {
 				_group.getGroupId(), StringPool.BLANK, true, true);
 
 		_assertEditorConfigurationConfigJSONObject(
-			false, true, JournalPortletKeys.JOURNAL);
+			false, true, true, JournalPortletKeys.JOURNAL);
 	}
 
 	@Test
@@ -154,7 +196,7 @@ public class AICreatorOpenAIEditorConfigurationTest {
 				false);
 
 		_assertEditorConfigurationConfigJSONObject(
-			false, false, JournalPortletKeys.JOURNAL);
+			false, false, false, JournalPortletKeys.JOURNAL);
 	}
 
 	@Test
@@ -171,27 +213,19 @@ public class AICreatorOpenAIEditorConfigurationTest {
 				false);
 
 		_assertEditorConfigurationConfigJSONObject(
-			false, false, JournalPortletKeys.JOURNAL);
+			false, false, false, JournalPortletKeys.JOURNAL);
 	}
 
-	private void _assertEditorConfigurationConfigJSONObject(
-			boolean expectedAPIKey, boolean expectedEnabled, String portletId)
+	private void _assertCKEditor5EditorConfigurationConfigJSONObject(
+			boolean expectedEnabled, String portletId)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+		ThemeDisplay themeDisplay = _getThemeDisplay(portletId);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				portletId, "rich_text", "ckeditor_classic",
-				HashMapBuilder.<String, Object>put(
-					"liferay-ui:input-editor:name", "testEditor"
-				).put(
-					"liferay-ui:input-editor:showAICreator",
-					_aiCreatorOpenAIManager.isAICreatorToolbarEnabled(
-						_group.getCompanyId(), _group.getGroupId(),
-						_portal.getPortletNamespace(portletId))
-				).build(),
-				themeDisplay,
+				portletId, RandomTestUtil.randomString(), "ckeditor5_classic",
+				new HashMap<String, Object>(), themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(
 					themeDisplay.getRequest()));
 
@@ -204,26 +238,62 @@ public class AICreatorOpenAIEditorConfigurationTest {
 		Assert.assertEquals(
 			expectedEnabled, configJSONObject.has("isAICreatorOpenAIAPIKey"));
 		Assert.assertEquals(
-			expectedAPIKey && expectedEnabled,
+			expectedEnabled, configJSONObject.has("showAICreator"));
+	}
+
+	private void _assertEditorConfigurationConfigJSONObject(
+			boolean expectedAPIKey, boolean expectedAICreatorConfig,
+			boolean expectedAICreatorToolbar, String portletId)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(portletId);
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				portletId, "rich_text", "ckeditor_classic",
+				HashMapBuilder.<String, Object>put(
+					"liferay-ui:input-editor:name", "testEditor"
+				).build(),
+				themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(
+					themeDisplay.getRequest()));
+
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
+
+		Assert.assertEquals(
+			expectedAICreatorConfig,
+			configJSONObject.has("aiCreatorOpenAIURL"));
+		Assert.assertEquals(
+			expectedAICreatorConfig,
+			configJSONObject.has("aiCreatorPortletNamespace"));
+		Assert.assertEquals(
+			expectedAICreatorConfig,
+			configJSONObject.has("isAICreatorOpenAIAPIKey"));
+		Assert.assertEquals(
+			expectedAPIKey && expectedAICreatorConfig,
 			configJSONObject.getBoolean("isAICreatorOpenAIAPIKey"));
+		Assert.assertEquals(
+			expectedAICreatorConfig, configJSONObject.has("showAICreator"));
 
 		String extraPlugins = configJSONObject.getString("extraPlugins");
 
 		Assert.assertNotNull(extraPlugins);
 		Assert.assertEquals(
-			expectedEnabled, extraPlugins.contains("aicreator"));
+			expectedAICreatorToolbar, extraPlugins.contains("aicreator"));
 
 		Assert.assertEquals(
-			expectedEnabled, _isAICreatorInToolbars(configJSONObject));
+			expectedAICreatorToolbar, _isAICreatorInToolbars(configJSONObject));
 	}
 
-	private ThemeDisplay _getThemeDisplay() throws Exception {
+	private ThemeDisplay _getThemeDisplay(String portletId) throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId());
 
 		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
 			_companyLocalService.getCompany(_group.getCompanyId()), _group,
 			layout);
+
+		themeDisplay.setPpid(portletId);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -273,9 +343,6 @@ public class AICreatorOpenAIEditorConfigurationTest {
 		_aiCreatorOpenAIConfigurationManager;
 
 	@Inject
-	private AICreatorOpenAIManager _aiCreatorOpenAIManager;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	private Group _group;
@@ -286,8 +353,5 @@ public class AICreatorOpenAIEditorConfigurationTest {
 	private String _originalAPIKey;
 	private boolean _originalChatGPTEnabled;
 	private boolean _originalDALLEEnabled;
-
-	@Inject
-	private Portal _portal;
 
 }

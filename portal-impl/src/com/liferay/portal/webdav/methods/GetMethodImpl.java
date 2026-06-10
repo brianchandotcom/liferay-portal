@@ -7,7 +7,9 @@ package com.liferay.portal.webdav.methods;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
@@ -45,14 +47,26 @@ public class GetMethodImpl implements Method {
 			}
 
 			if (inputStream != null) {
+				String contentType = resource.getContentType();
 				String fileName = resource.getDisplayName();
 
+				HttpServletResponse httpServletResponse =
+					webDAVRequest.getHttpServletResponse();
+
 				try {
-					ServletResponseUtil.sendFileWithRangeHeader(
-						webDAVRequest.getHttpServletRequest(),
-						webDAVRequest.getHttpServletResponse(), fileName,
-						inputStream, resource.getSize(),
-						resource.getContentType());
+					if (_isBrowserExecutableContentType(contentType)) {
+						ServletResponseUtil.sendFile(
+							webDAVRequest.getHttpServletRequest(),
+							httpServletResponse, fileName, inputStream,
+							resource.getSize(), contentType,
+							HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+					}
+					else {
+						ServletResponseUtil.sendFileWithRangeHeader(
+							webDAVRequest.getHttpServletRequest(),
+							httpServletResponse, fileName, inputStream,
+							resource.getSize(), contentType);
+					}
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -68,6 +82,25 @@ public class GetMethodImpl implements Method {
 		catch (Exception exception) {
 			throw new WebDAVException(exception);
 		}
+	}
+
+	private boolean _isBrowserExecutableContentType(String contentType) {
+		if (contentType == null) {
+			return false;
+		}
+
+		String lowerCaseContentType = StringUtil.toLowerCase(contentType);
+
+		if (lowerCaseContentType.startsWith("application/javascript") ||
+			lowerCaseContentType.startsWith("application/xhtml+xml") ||
+			lowerCaseContentType.startsWith("image/svg+xml") ||
+			lowerCaseContentType.startsWith("text/html") ||
+			lowerCaseContentType.startsWith("text/javascript")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(GetMethodImpl.class);

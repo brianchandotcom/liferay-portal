@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -127,6 +128,13 @@ public class OAuth2WellKnownProtectedResourceMetadataFilter extends BaseFilter {
 
 		String localWellKnownURI =
 			_portal.getPortalURL(httpServletRequest) + requestURI;
+
+		String queryString = httpServletRequest.getQueryString();
+
+		if (Validator.isNotNull(queryString)) {
+			localWellKnownURI =
+				localWellKnownURI + StringPool.QUESTION + queryString;
+		}
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			_oAuthClientPRLocalMetadataLocalService.

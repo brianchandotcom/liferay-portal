@@ -65,7 +65,7 @@ public class LicenseKeyExporter {
 		sb.append(StringPool.DASH);
 		sb.append(licenseKeyName);
 
-		return formatFileName(sb.toString());
+		return _formatFileName(sb.toString());
 	}
 
 	public String getFileName(String[] productNames, String[] licenseKeyNames) {
@@ -84,7 +84,37 @@ public class LicenseKeyExporter {
 			sb.append(licenseKeyName);
 		}
 
-		return formatFileName(sb.toString());
+		return _formatFileName(sb.toString());
+	}
+
+	public String toXML(
+			String accountName, String licenseEntryName, String licenseType,
+			int licenseVersion, String productName, String productId,
+			String productVersion, String owner, int maxClusterNodes,
+			int maxServers, int maxHttpSessions, long maxConcurrentUsers,
+			long maxUsers, String sizing, String description, String domains,
+			String hostNames, String ipAddresses, String macAddresses,
+			String serverIds, Date startDate, Date expirationDate,
+			Date createDate, String key)
+		throws Exception {
+
+		Document document = null;
+
+		Map<String, String> properties = _getProperties(
+			accountName, licenseEntryName, licenseType, licenseVersion,
+			productName, productId, productVersion, owner, maxClusterNodes,
+			maxServers, maxHttpSessions, maxConcurrentUsers, maxUsers, sizing,
+			description, domains, hostNames, ipAddresses, macAddresses,
+			serverIds, startDate, expirationDate, createDate);
+
+		if (licenseVersion >= 3) {
+			document = _toXMLVersion3_4(properties, false, key);
+		}
+		else {
+			document = _toXMLVersion2(properties, key);
+		}
+
+		return document.formattedString();
 	}
 
 	public String toXML(
@@ -111,7 +141,8 @@ public class LicenseKeyExporter {
 			properties.put("maxServers", String.valueOf(serverIds.length));
 		}
 
-		Document document = toXMLVersion3_4(properties, StringPool.BLANK, true);
+		Document document = _toXMLVersion3_4(
+			properties, true, StringPool.BLANK);
 
 		Element rootElement = document.getRootElement();
 
@@ -132,7 +163,7 @@ public class LicenseKeyExporter {
 
 			Element serverElement = serversElement.addElement("server");
 
-			exportServerToXML(serverElement, curProperties);
+			_exportServerToXML(serverElement, curProperties);
 
 			String curHostName = curProperties.get("hostNames");
 
@@ -155,44 +186,20 @@ public class LicenseKeyExporter {
 		properties.put("ipAddresses", StringUtil.merge(allIpAddresses));
 		properties.put("macAddresses", StringUtil.merge(allMacAddresses));
 
-		String key = KeyGenerator.encrypt(properties);
-
-		_addElement(rootElement, "key", key);
+		_addElement(rootElement, "key", KeyGenerator.encrypt(properties));
 
 		return document.formattedString();
 	}
 
-	public String toXML(
-			String key, String accountName, String licenseEntryName,
-			String licenseType, int licenseVersion, String productName,
-			String productId, String productVersion, String owner,
-			int maxClusterNodes, int maxServers, int maxHttpSessions,
-			long maxConcurrentUsers, long maxUsers, String sizing,
-			String description, String domains, String hostNames,
-			String ipAddresses, String macAddresses, String serverIds,
-			Date startDate, Date expirationDate, Date createDate)
-		throws Exception {
+	private void _addElement(Element parentElement, String name, String value) {
+		Element childElement = parentElement.addElement(name);
 
-		Document document = null;
-
-		Map<String, String> properties = _getProperties(
-			accountName, licenseEntryName, licenseType, licenseVersion,
-			productName, productId, productVersion, owner, maxClusterNodes,
-			maxServers, maxHttpSessions, maxConcurrentUsers, maxUsers, sizing,
-			description, domains, hostNames, ipAddresses, macAddresses,
-			serverIds, startDate, expirationDate, createDate);
-
-		if (licenseVersion >= 3) {
-			document = toXMLVersion3_4(properties, key, false);
+		if (value != null) {
+			childElement.addText(value);
 		}
-		else {
-			document = toXMLVersion2(properties, key);
-		}
-
-		return document.formattedString();
 	}
 
-	protected void exportServerToXML(
+	private void _exportServerToXML(
 		Element element, Map<String, String> properties) {
 
 		Element hostNamesElement = element.addElement("host-names");
@@ -231,7 +238,7 @@ public class LicenseKeyExporter {
 		}
 	}
 
-	protected String formatFileName(String fileName) {
+	private String _formatFileName(String fileName) {
 		fileName = StringUtil.replace(
 			fileName, CharPool.SPACE, StringPool.BLANK);
 		fileName = StringUtil.toLowerCase(fileName);
@@ -240,7 +247,44 @@ public class LicenseKeyExporter {
 		return fileName.concat(".xml");
 	}
 
-	protected Document toXMLVersion2(Map<String, String> properties, String key)
+	private Map<String, String> _getProperties(
+		String accountName, String licenseEntryName, String licenseType,
+		int licenseVersion, String productName, String productId,
+		String productVersion, String owner, int maxClusterNodes,
+		int maxServers, int maxHttpSessions, long maxConcurrentUsers,
+		long maxUsers, String sizing, String description, String domains,
+		String hostNames, String ipAddresses, String macAddresses,
+		String serverIds, Date startDate, Date expirationDate,
+		Date createDate) {
+
+		Map<String, String> properties = KeyGenerator.getProperties(
+			accountName, description, StringUtil.split(domains), expirationDate,
+			StringUtil.split(hostNames), sizing, StringUtil.split(ipAddresses),
+			licenseEntryName, licenseType, String.valueOf(licenseVersion),
+			StringUtil.split(macAddresses), maxClusterNodes, maxConcurrentUsers,
+			maxHttpSessions, maxServers, maxUsers, owner, productName,
+			productId, productVersion, new String[] {serverIds}, startDate);
+
+		// See LRDCOM-2568
+
+		if (productVersion.equals(ProductVersion.PORTAL_VERSION_6_1_10) ||
+			productVersion.equals("6.1 GA 1")) {
+
+			Calendar cal = Calendar.getInstance();
+
+			cal.set(Calendar.DAY_OF_MONTH, 31);
+			cal.set(Calendar.MONTH, 6);
+			cal.set(Calendar.YEAR, 2012);
+
+			if (createDate.before(cal.getTime())) {
+				properties.put("productVersion", "6.1");
+			}
+		}
+
+		return properties;
+	}
+
+	private Document _toXMLVersion2(Map<String, String> properties, String key)
 		throws Exception {
 
 		Document document = SAXReaderUtil.createDocument();
@@ -318,8 +362,8 @@ public class LicenseKeyExporter {
 		return document;
 	}
 
-	protected Document toXMLVersion3_4(
-			Map<String, String> properties, String key, boolean aggregate)
+	private Document _toXMLVersion3_4(
+			Map<String, String> properties, boolean aggregate, String key)
 		throws Exception {
 
 		Document document = SAXReaderUtil.createDocument();
@@ -444,58 +488,13 @@ public class LicenseKeyExporter {
 				licenseEntryType.equals(LicenseConstants.TYPE_PER_USER) ||
 				licenseEntryType.equals(LicenseConstants.TYPE_PRODUCTION)) {
 
-				exportServerToXML(rootElement, properties);
+				_exportServerToXML(rootElement, properties);
 			}
 
 			_addElement(rootElement, "key", key);
 		}
 
 		return document;
-	}
-
-	private void _addElement(Element parentElement, String name, String value) {
-		Element childElement = parentElement.addElement(name);
-
-		if (value != null) {
-			childElement.addText(value);
-		}
-	}
-
-	private Map<String, String> _getProperties(
-		String accountName, String licenseEntryName, String licenseType,
-		int licenseVersion, String productName, String productId,
-		String productVersion, String owner, int maxClusterNodes,
-		int maxServers, int maxHttpSessions, long maxConcurrentUsers,
-		long maxUsers, String sizing, String description, String domains,
-		String hostNames, String ipAddresses, String macAddresses,
-		String serverIds, Date startDate, Date expirationDate,
-		Date createDate) {
-
-		Map<String, String> properties = KeyGenerator.getProperties(
-			accountName, description, StringUtil.split(domains), expirationDate,
-			StringUtil.split(hostNames), sizing, StringUtil.split(ipAddresses),
-			licenseEntryName, licenseType, String.valueOf(licenseVersion),
-			StringUtil.split(macAddresses), maxClusterNodes, maxConcurrentUsers,
-			maxHttpSessions, maxServers, maxUsers, owner, productName,
-			productId, productVersion, new String[] {serverIds}, startDate);
-
-		// See LRDCOM-2568
-
-		if (productVersion.equals(ProductVersion.PORTAL_VERSION_6_1_10) ||
-			productVersion.equals("6.1 GA 1")) {
-
-			Calendar cal = Calendar.getInstance();
-
-			cal.set(Calendar.DAY_OF_MONTH, 31);
-			cal.set(Calendar.MONTH, 6);
-			cal.set(Calendar.YEAR, 2012);
-
-			if (createDate.before(cal.getTime())) {
-				properties.put("productVersion", "6.1");
-			}
-		}
-
-		return properties;
 	}
 
 }

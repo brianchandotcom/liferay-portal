@@ -133,13 +133,13 @@ public class AssetListAssetEntryProviderFiltersTest {
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null);
 
-		JSONArray actualJSONArray = (JSONArray)assetEntryQuery.getAttribute(
+		JSONArray filtersJSONArray = (JSONArray)assetEntryQuery.getAttribute(
 			"filters");
 
 		Assert.assertEquals(
-			actualJSONArray.toString(), 2, actualJSONArray.length());
+			filtersJSONArray.toString(), 2, filtersJSONArray.length());
 
-		JSONObject jsonObject = actualJSONArray.getJSONObject(0);
+		JSONObject jsonObject = filtersJSONArray.getJSONObject(0);
 
 		Assert.assertEquals("title", jsonObject.getString("propertyName"));
 		Assert.assertEquals("keyword", jsonObject.getString("value"));

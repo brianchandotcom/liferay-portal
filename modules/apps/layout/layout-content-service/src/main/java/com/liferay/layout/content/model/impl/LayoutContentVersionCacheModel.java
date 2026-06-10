@@ -89,18 +89,18 @@ public class LayoutContentVersionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", plid=");
-		sb.append(plid);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append(", version=");
-		sb.append(version);
-		sb.append(", specSchemaVersion=");
-		sb.append(specSchemaVersion);
 		sb.append(", data=");
 		sb.append(data);
 		sb.append(", dataHash=");
 		sb.append(dataHash);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", plid=");
+		sb.append(plid);
+		sb.append(", specSchemaVersion=");
+		sb.append(specSchemaVersion);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -156,24 +156,6 @@ public class LayoutContentVersionCacheModel
 			layoutContentVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		layoutContentVersionImpl.setPlid(plid);
-
-		if (name == null) {
-			layoutContentVersionImpl.setName("");
-		}
-		else {
-			layoutContentVersionImpl.setName(name);
-		}
-
-		layoutContentVersionImpl.setVersion(version);
-
-		if (specSchemaVersion == null) {
-			layoutContentVersionImpl.setSpecSchemaVersion("");
-		}
-		else {
-			layoutContentVersionImpl.setSpecSchemaVersion(specSchemaVersion);
-		}
-
 		if (data == null) {
 			layoutContentVersionImpl.setData("");
 		}
@@ -188,6 +170,23 @@ public class LayoutContentVersionCacheModel
 			layoutContentVersionImpl.setDataHash(dataHash);
 		}
 
+		if (name == null) {
+			layoutContentVersionImpl.setName("");
+		}
+		else {
+			layoutContentVersionImpl.setName(name);
+		}
+
+		layoutContentVersionImpl.setPlid(plid);
+
+		if (specSchemaVersion == null) {
+			layoutContentVersionImpl.setSpecSchemaVersion("");
+		}
+		else {
+			layoutContentVersionImpl.setSpecSchemaVersion(specSchemaVersion);
+		}
+
+		layoutContentVersionImpl.setVersion(version);
 		layoutContentVersionImpl.setStatus(status);
 		layoutContentVersionImpl.setStatusByUserId(statusByUserId);
 
@@ -227,14 +226,14 @@ public class LayoutContentVersionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		plid = objectInput.readLong();
-		name = objectInput.readUTF();
-
-		version = objectInput.readInt();
-		specSchemaVersion = objectInput.readUTF();
 		data = (String)objectInput.readObject();
 		dataHash = objectInput.readUTF();
+		name = objectInput.readUTF();
+
+		plid = objectInput.readLong();
+		specSchemaVersion = objectInput.readUTF();
+
+		version = objectInput.readInt();
 
 		status = objectInput.readInt();
 
@@ -272,24 +271,6 @@ public class LayoutContentVersionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(plid);
-
-		if (name == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
-		objectOutput.writeInt(version);
-
-		if (specSchemaVersion == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(specSchemaVersion);
-		}
-
 		if (data == null) {
 			objectOutput.writeObject("");
 		}
@@ -303,6 +284,24 @@ public class LayoutContentVersionCacheModel
 		else {
 			objectOutput.writeUTF(dataHash);
 		}
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		objectOutput.writeLong(plid);
+
+		if (specSchemaVersion == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(specSchemaVersion);
+		}
+
+		objectOutput.writeInt(version);
 
 		objectOutput.writeInt(status);
 
@@ -327,16 +326,16 @@ public class LayoutContentVersionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long plid;
-	public String name;
-	public int version;
-	public String specSchemaVersion;
 	public String data;
 	public String dataHash;
+	public String name;
+	public long plid;
+	public String specSchemaVersion;
+	public int version;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1230440371
+// LIFERAY-SERVICE-BUILDER-HASH:-761278589

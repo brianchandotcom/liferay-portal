@@ -219,18 +219,34 @@ public interface LayoutContentVersionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the plid of this layout content version.
+	 * Returns the data of this layout content version.
 	 *
-	 * @return the plid of this layout content version
+	 * @return the data of this layout content version
 	 */
-	public long getPlid();
+	@AutoEscape
+	public String getData();
 
 	/**
-	 * Sets the plid of this layout content version.
+	 * Sets the data of this layout content version.
 	 *
-	 * @param plid the plid of this layout content version
+	 * @param data the data of this layout content version
 	 */
-	public void setPlid(long plid);
+	public void setData(String data);
+
+	/**
+	 * Returns the data hash of this layout content version.
+	 *
+	 * @return the data hash of this layout content version
+	 */
+	@AutoEscape
+	public String getDataHash();
+
+	/**
+	 * Sets the data hash of this layout content version.
+	 *
+	 * @param dataHash the data hash of this layout content version
+	 */
+	public void setDataHash(String dataHash);
 
 	/**
 	 * Returns the name of this layout content version.
@@ -332,18 +348,18 @@ public interface LayoutContentVersionModel
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
-	 * Returns the version of this layout content version.
+	 * Returns the plid of this layout content version.
 	 *
-	 * @return the version of this layout content version
+	 * @return the plid of this layout content version
 	 */
-	public int getVersion();
+	public long getPlid();
 
 	/**
-	 * Sets the version of this layout content version.
+	 * Sets the plid of this layout content version.
 	 *
-	 * @param version the version of this layout content version
+	 * @param plid the plid of this layout content version
 	 */
-	public void setVersion(int version);
+	public void setPlid(long plid);
 
 	/**
 	 * Returns the spec schema version of this layout content version.
@@ -361,34 +377,18 @@ public interface LayoutContentVersionModel
 	public void setSpecSchemaVersion(String specSchemaVersion);
 
 	/**
-	 * Returns the data of this layout content version.
+	 * Returns the version of this layout content version.
 	 *
-	 * @return the data of this layout content version
+	 * @return the version of this layout content version
 	 */
-	@AutoEscape
-	public String getData();
+	public int getVersion();
 
 	/**
-	 * Sets the data of this layout content version.
+	 * Sets the version of this layout content version.
 	 *
-	 * @param data the data of this layout content version
+	 * @param version the version of this layout content version
 	 */
-	public void setData(String data);
-
-	/**
-	 * Returns the data hash of this layout content version.
-	 *
-	 * @return the data hash of this layout content version
-	 */
-	@AutoEscape
-	public String getDataHash();
-
-	/**
-	 * Sets the data hash of this layout content version.
-	 *
-	 * @param dataHash the data hash of this layout content version
-	 */
-	public void setDataHash(String dataHash);
+	public void setVersion(int version);
 
 	/**
 	 * Returns the status of this layout content version.
@@ -556,4 +556,4 @@ public interface LayoutContentVersionModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1913677871
+// LIFERAY-SERVICE-BUILDER-HASH:753649079

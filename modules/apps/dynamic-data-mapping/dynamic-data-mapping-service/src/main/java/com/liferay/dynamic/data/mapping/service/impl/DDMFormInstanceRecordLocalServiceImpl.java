@@ -322,6 +322,14 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	@Override
+	public int getFormInstanceRecordsCount(
+		long ddmFormInstanceId, String ipAddress) {
+
+		return ddmFormInstanceRecordPersistence.countByF_I(
+			ddmFormInstanceId, ipAddress);
+	}
+
+	@Override
 	public void revertFormInstanceRecord(
 			long userId, long ddmFormInstanceRecordId, String version,
 			ServiceContext serviceContext)

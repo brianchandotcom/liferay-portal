@@ -64,28 +64,30 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		String selectSQL = StringBundler.concat(
-			"select DDMFieldAttribute.ctCollectionId, DDMFieldAttribute.",
-			"fieldAttributeId, DDMFieldAttribute.companyId, DDMFieldAttribute.",
-			"largeAttributeValue, DDMFieldAttribute.smallAttributeValue from ",
-			"DDMStructure inner join DDMStructureVersion on DDMStructure.",
-			"ctCollectionId = DDMStructureVersion.ctCollectionId and ",
-			"DDMStructure.structureId = DDMStructureVersion.structureId inner ",
-			"join DDMField on DDMStructureVersion.ctCollectionId = DDMField.",
-			"ctCollectionId and DDMStructureVersion.structureVersionId = ",
-			"DDMField.structureVersionId inner join DDMFieldAttribute on ",
-			"DDMField.ctCollectionId = DDMFieldAttribute.ctCollectionId and ",
-			"DDMField.fieldId = DDMFieldAttribute.fieldId where DDMStructure.",
-			"classNameId = ? and DDMField.fieldType = 'rich_text'");
-
-		String updateSQL =
-			"update DDMFieldAttribute set largeAttributeValue = ?, " +
-				"smallAttributeValue = ? where ctCollectionId = ? and " +
-					"fieldAttributeId = ?";
-
 		try (SafeCloseable safeCloseable = db.addTemporaryIndex(
 				connection, "DDMFieldAttribute", false, "ctCollectionId",
 				"fieldId")) {
+
+			String selectSQL = StringBundler.concat(
+				"select DDMFieldAttribute.ctCollectionId, DDMFieldAttribute.",
+				"fieldAttributeId, DDMFieldAttribute.companyId, ",
+				"DDMFieldAttribute.largeAttributeValue, DDMFieldAttribute.",
+				"smallAttributeValue from DDMStructure inner join ",
+				"DDMStructureVersion on DDMStructure.ctCollectionId = ",
+				"DDMStructureVersion.ctCollectionId and DDMStructure.",
+				"structureId = DDMStructureVersion.structureId inner join ",
+				"DDMField on DDMStructureVersion.ctCollectionId = DDMField.",
+				"ctCollectionId and DDMStructureVersion.structureVersionId = ",
+				"DDMField.structureVersionId inner join DDMFieldAttribute on ",
+				"DDMField.ctCollectionId = DDMFieldAttribute.ctCollectionId ",
+				"and DDMField.fieldId = DDMFieldAttribute.fieldId where ",
+				"DDMStructure.classNameId = ? and DDMField.fieldType = ",
+				"'rich_text'");
+
+			String updateSQL =
+				"update DDMFieldAttribute set largeAttributeValue = ?, " +
+					"smallAttributeValue = ? where ctCollectionId = ? and " +
+						"fieldAttributeId = ?";
 
 			long classNameId = _classNameLocalService.getClassNameId(
 				"com.liferay.journal.model.JournalArticle");

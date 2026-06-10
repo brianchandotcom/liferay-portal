@@ -33,6 +33,7 @@ export interface LiferayEditorConfig extends EditorConfig {
 	itemSelectorEventName?: string;
 	itemSelectorRememberSelectionFolder?: boolean;
 	preset?: EEditorConfigPreset;
+	showAICreator?: boolean;
 }
 
 export type TEditor = BalloonEditor | ClassicEditor;

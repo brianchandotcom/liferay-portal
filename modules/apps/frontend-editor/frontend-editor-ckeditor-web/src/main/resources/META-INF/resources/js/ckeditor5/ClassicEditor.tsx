@@ -46,6 +46,7 @@ const ClassicEditor = ({
 				...getDefaultEditorConfig({
 					editorVariant: EEditorVariant.CLASSIC,
 					preset: config?.preset || EEditorConfigPreset.ADVANCED,
+					showAICreator: config?.showAICreator,
 				}),
 				...config,
 			}}

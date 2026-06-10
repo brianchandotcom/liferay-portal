@@ -81,7 +81,7 @@ public class KeyReference implements Serializable {
 				"Provider ID must not contain colons or a closing curly brace");
 		}
 
-		if (Validator.isNull(type)) {
+		if (type == null) {
 			throw new IllegalArgumentException("Type is null");
 		}
 

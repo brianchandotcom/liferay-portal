@@ -23,8 +23,8 @@ import jakarta.portlet.ResourceResponse;
 
 import java.io.PrintWriter;
 
-import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,7 +58,7 @@ public class GetProductionReadinessResultsMVCResourceCommand
 		int ignored = 0;
 		int passed = 0;
 
-		List<String> ignoredRules =
+		Set<String> ignoredRules =
 			ProductionReadinessIgnoredRuleUtil.getIgnoredRules();
 
 		for (ProductionReadinessResult productionReadinessResult :
@@ -104,7 +104,7 @@ public class GetProductionReadinessResultsMVCResourceCommand
 	}
 
 	private JSONObject _toJSONObject(
-		List<String> ignoredRules, Locale locale,
+		Set<String> ignoredRules, Locale locale,
 		ProductionReadinessResult productionReadinessResult) {
 
 		String message = LanguageUtil.format(

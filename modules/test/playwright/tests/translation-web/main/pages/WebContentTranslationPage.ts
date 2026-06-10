@@ -17,6 +17,7 @@ type TranslationFields = {
 export class WebContentTranslationPage {
 	readonly page: Page;
 
+	readonly baseLocaleToggle: Locator;
 	readonly contentEditor: Locator;
 	readonly descriptionEditor: Locator;
 	readonly journalPage: JournalPage;
@@ -28,6 +29,10 @@ export class WebContentTranslationPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.baseLocaleToggle = page
+			.locator('button.dropdown-toggle')
+			.filter({hasText: /^[a-z]{2}-[A-Z]{2}$/})
+			.first();
 		this.contentEditor = page
 			.locator('.lfr-ck')
 			.nth(1)
@@ -88,6 +93,17 @@ export class WebContentTranslationPage {
 
 	richTextEditor(index: number): Locator {
 		return this.page.locator('.lfr-ck').nth(index).locator('.ck-content');
+	}
+
+	async changeBaseLocale(locale: string) {
+		await this.baseLocaleToggle.click();
+
+		await this.page
+			.locator('.dropdown-menu.show button.dropdown-item')
+			.filter({hasText: new RegExp(`^${locale}$`)})
+			.click();
+
+		await expect(this.baseLocaleToggle).toHaveText(locale);
 	}
 
 	async changeTargetLocale(locale: string) {

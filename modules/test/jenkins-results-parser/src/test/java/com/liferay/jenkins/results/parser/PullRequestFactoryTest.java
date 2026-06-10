@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Iterator;
+
 import org.json.JSONObject;
 
 import org.junit.After;
@@ -33,8 +35,9 @@ public class PullRequestFactoryTest {
 		JSONObject pullRequestsJSONObject = jsonObject.getJSONObject(
 			"pull_requests");
 
-		String pullRequestURL = pullRequestsJSONObject.keys(
-		).next();
+		Iterator<String> iterator = pullRequestsJSONObject.keys();
+
+		String pullRequestURL = iterator.next();
 
 		JSONObject pullRequestJSONObject = pullRequestsJSONObject.getJSONObject(
 			pullRequestURL);

@@ -88,7 +88,7 @@ export default function FileSelectionStep({
 				/>
 			</ClayLayout.Sheet>
 
-			<ClayLayout.Sheet>
+			<ClayLayout.Sheet className="mt-4">
 				<ClayLayout.SheetHeader className="mb-1">
 					<div className="mb-2 sheet-title" id="fileSelector-label">
 						{Liferay.Language.get('file-upload')}

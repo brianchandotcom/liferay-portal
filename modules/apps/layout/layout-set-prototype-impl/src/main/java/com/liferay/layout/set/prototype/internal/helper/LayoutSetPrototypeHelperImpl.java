@@ -106,7 +106,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		Map<Long, ExportImportConfiguration> exportImportConfigurations =
 			new HashMap<>();
 
-		boolean hasPreValidationErrors = false;
+		boolean preValidationErrors = false;
 
 		for (Iterator<LayoutSet> iterator = mergeableLayoutSets.iterator();
 			 iterator.hasNext();) {
@@ -126,11 +126,11 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 				iterator.remove();
 
-				hasPreValidationErrors = true;
+				preValidationErrors = true;
 			}
 		}
 
-		if (mergeableLayoutSets.isEmpty() && hasPreValidationErrors) {
+		if (mergeableLayoutSets.isEmpty() && preValidationErrors) {
 			LayoutSetPrototypeSyncSessionManagerUtil.postFailureNotification(
 				layoutSetPrototype.getNameMap(), userId);
 
@@ -139,8 +139,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 		try (SafeCloseable safeCloseable =
 				LayoutSetPrototypeSyncSessionManagerUtil.openSession(
-					hasPreValidationErrors, mergeableLayoutSets,
-					layoutSetPrototype, userId)) {
+					layoutSetPrototype, mergeableLayoutSets,
+					preValidationErrors, userId)) {
 
 			for (LayoutSet layoutSet : mergeableLayoutSets) {
 				try {

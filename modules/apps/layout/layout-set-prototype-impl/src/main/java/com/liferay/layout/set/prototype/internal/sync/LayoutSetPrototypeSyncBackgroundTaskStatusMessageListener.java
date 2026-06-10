@@ -148,7 +148,7 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 			if (MapUtil.getBoolean(
 					taskContextMap,
 					LayoutSetPrototypeSyncSessionManagerUtil.
-						KEY_HAS_PRE_VALIDATION_ERRORS)) {
+						KEY_PRE_VALIDATION_ERRORS)) {
 
 				backgroundTaskStatuses.add(
 					BackgroundTaskConstants.STATUS_FAILED);

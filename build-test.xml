@@ -3441,25 +3441,6 @@ cluster.link.bind.addr["cluster-link-control"]=${ip.address}
 cluster.link.bind.addr["cluster-link-udp"]=${ip.address}</echo>
 				</then>
 			</if>
-
-			<get-testcase-property property.name="cluster.tcp.jdbc.ping" />
-
-			<if>
-				<equals arg1="${cluster.tcp.jdbc.ping}" arg2="true" />
-				<then>
-					<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-cluster.link.channel.properties.control=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_tcp_jdbc_ping.xml
-cluster.link.channel.properties.transport.0=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_tcp_jdbc_ping.xml</echo>
-
-					<replace
-						file="portal-impl/src/portal-ext.properties"
-					>
-						<replacetoken>cluster.link.autodetect.address=</replacetoken>
-						<replacevalue></replacevalue>
-					</replace>
-				</then>
-			</if>
 		</sequential>
 	</macrodef>
 

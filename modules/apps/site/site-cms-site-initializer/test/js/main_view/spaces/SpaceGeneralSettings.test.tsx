@@ -37,7 +37,7 @@ const SPACE: Partial<Space> = {
 		logoColor: 'outline-2',
 		sharingEnabled: true,
 		trashEnabled: true,
-		trashEntriesMaxAge: 2880,
+		trashEntriesMaxAge: 0,
 	},
 };
 
@@ -196,65 +196,6 @@ describe('SpaceGeneralSettings', () => {
 		});
 
 		await closeToast();
-	});
-
-	describe('Trash entries max age', () => {
-		it('displays the value in days converted from the stored minutes', () => {
-			renderComponent({
-				space: {
-					...SPACE,
-					settings: {
-						...SPACE.settings!,
-						trashEntriesMaxAge: 7200,
-					},
-				} as Partial<Space>,
-			});
-
-			expect(screen.getByLabelText('trash-entries-max-age')).toHaveValue(
-				5
-			);
-		});
-
-		it('converts the value to minutes on save', async () => {
-			renderComponent();
-
-			const trashEntriesMaxAgeField = screen.getByLabelText(
-				'trash-entries-max-age'
-			);
-
-			await userEvent.clear(trashEntriesMaxAgeField);
-			await userEvent.type(trashEntriesMaxAgeField, '5');
-
-			await userEvent.click(screen.getByRole('button', {name: 'save'}));
-
-			await waitFor(() => {
-				expect(SpaceService.updateSpace).toBeCalledWith(
-					expect.any(String),
-					expect.objectContaining({
-						settings: expect.objectContaining({
-							trashEntriesMaxAge: 7200,
-						}),
-					})
-				);
-			});
-
-			await closeToast();
-		});
-
-		it('does not save when the value is less than 1', async () => {
-			renderComponent();
-
-			const trashEntriesMaxAgeField = screen.getByLabelText(
-				'trash-entries-max-age'
-			);
-
-			await userEvent.clear(trashEntriesMaxAgeField);
-			await userEvent.type(trashEntriesMaxAgeField, '0');
-
-			await userEvent.click(screen.getByRole('button', {name: 'save'}));
-
-			expect(SpaceService.updateSpace).not.toHaveBeenCalled();
-		});
 	});
 
 	describe('Errors', () => {

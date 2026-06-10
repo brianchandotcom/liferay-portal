@@ -5,6 +5,8 @@
 
 package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -50,6 +52,7 @@ public class ViewProjectInfoSummaryJSPSectionFragmentRenderer
 					objectEntry.getObjectDefinitionId()));
 
 		return new ViewProjectInfoSummarySectionDisplayContext(
+			_assetCategoryLocalService, _assetVocabularyLocalService,
 			objectEntry,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
@@ -64,6 +67,12 @@ public class ViewProjectInfoSummaryJSPSectionFragmentRenderer
 	protected String getLabelKey() {
 		return "project-info-summary";
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

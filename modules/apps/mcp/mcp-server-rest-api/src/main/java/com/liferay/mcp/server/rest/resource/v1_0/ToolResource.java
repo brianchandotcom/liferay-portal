@@ -42,9 +42,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ToolResource {
 
-	public Tool getTool(String toolSetName, String toolName) throws Exception;
+	public Tool getToolSetToolSetNameTool(String toolSetName, String toolName)
+		throws Exception;
 
-	public Response invokeToolObject(
+	public Response postToolSetToolSetNameToolInvokeObject(
 			String toolSetName, String toolName, Object object)
 		throws Exception;
 
@@ -136,4 +137,4 @@ public interface ToolResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1506309239
+// LIFERAY-REST-BUILDER-HASH:-2034767775

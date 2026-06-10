@@ -50,7 +50,7 @@ public abstract class BaseToolSummaryResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/mcp-server/v1.0/tool-sets/{toolSetName}/tool-summaries'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Use this once you have identified a tool-set (via `getToolSets`) and need to find which of its tools matches the user's request. Returns every tool in the tool-set, each with a `name` and a description. Pick the tool whose description matches the user's intent and pass its `name` to `getTool` to see its input schema."
+		description = "Use this once you have identified a tool-set (via `getToolSetsPage`) and need to find which of its tools matches the user's request. Returns every tool in the tool-set, each with a `name` and a description. Pick the tool whose description matches the user's intent and pass its `name` to `getToolSetToolSetNameTool` to see its input schema."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -67,7 +67,7 @@ public abstract class BaseToolSummaryResourceImpl
 	@jakarta.ws.rs.Path("/tool-sets/{toolSetName}/tool-summaries")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<ToolSummary> getToolSummaries(
+	public Page<ToolSummary> getToolSetToolSetNameToolSummariesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("toolSetName")
@@ -522,4 +522,4 @@ public abstract class BaseToolSummaryResourceImpl
 		LogFactoryUtil.getLog(BaseToolSummaryResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1545639353
+// LIFERAY-REST-BUILDER-HASH:-515175279

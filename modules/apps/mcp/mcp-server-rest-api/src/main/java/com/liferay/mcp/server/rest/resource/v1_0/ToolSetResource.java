@@ -42,7 +42,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ToolSetResource {
 
-	public Page<ToolSet> getToolSets() throws Exception;
+	public Page<ToolSet> getToolSetsPage() throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -132,4 +132,4 @@ public interface ToolSetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1706257410
+// LIFERAY-REST-BUILDER-HASH:1121132273

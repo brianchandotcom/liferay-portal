@@ -33,9 +33,10 @@ public interface ToolSetResource {
 		return new Builder();
 	}
 
-	public Page<ToolSet> getToolSets() throws Exception;
+	public Page<ToolSet> getToolSetsPage() throws Exception;
 
-	public HttpInvoker.HttpResponse getToolSetsHttpResponse() throws Exception;
+	public HttpInvoker.HttpResponse getToolSetsPageHttpResponse()
+		throws Exception;
 
 	public static class Builder {
 
@@ -145,8 +146,9 @@ public interface ToolSetResource {
 
 	public static class ToolSetResourceImpl implements ToolSetResource {
 
-		public Page<ToolSet> getToolSets() throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getToolSetsHttpResponse();
+		public Page<ToolSet> getToolSetsPage() throws Exception {
+			HttpInvoker.HttpResponse httpResponse =
+				getToolSetsPageHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -207,7 +209,7 @@ public interface ToolSetResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getToolSetsHttpResponse()
+		public HttpInvoker.HttpResponse getToolSetsPageHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -256,4 +258,4 @@ public interface ToolSetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:62739855
+// LIFERAY-REST-BUILDER-HASH:1784794432

@@ -13,7 +13,7 @@ $c: '.ddm-form-builder';
 	}
 
 	.ddm-drag {
-		background-color: #fff;
+		background-color: $white;
 		padding: 1rem 0;
 		width: 100%;
 
@@ -32,7 +32,7 @@ $c: '.ddm-form-builder';
 
 	.ddm-drag.dragging {
 		border-radius: 4px;
-		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+		box-shadow: 0 0 3px 0 unquote('hsl(from #{$black} h s l / 0.2)');
 		cursor: grabbing;
 		opacity: 0.7;
 		position: absolute;
@@ -46,17 +46,17 @@ $c: '.ddm-form-builder';
 	}
 
 	.ddm-drag-item.dragging {
-		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+		box-shadow: 0 8px 16px 0 unquote('hsl(from #{$black} h s l / 0.2)');
 		cursor: grabbing;
 		z-index: 20;
 	}
 
 	.col.col-empty.lfr-initial-col .ddm-target,
 	.dragging {
-		background-color: #f7f8f9;
-		border: 2px dashed #a7a9bc;
+		background-color: $gray-100;
+		border: 2px dashed $gray-500;
 		border-radius: 4px;
-		color: #a7a9bc;
+		color: $gray-500;
 	}
 
 	.col.col-empty {

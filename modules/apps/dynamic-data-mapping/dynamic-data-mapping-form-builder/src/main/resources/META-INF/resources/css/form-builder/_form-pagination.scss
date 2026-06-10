@@ -65,7 +65,7 @@ $c: '.ddm-form-pagination';
 }
 
 .horizontal-line {
-	background-color: #cdced9;
+	background-color: $gray-400;
 	height: 1px;
 	margin-bottom: 40px;
 	margin-top: 40px;
@@ -87,7 +87,7 @@ $c: '.ddm-form-pagination';
 		}
 
 		.horizontal-line {
-			background-color: #cdced9;
+			background-color: $gray-400;
 			height: 1px;
 			margin: 4px 0;
 			padding: 0;
@@ -96,7 +96,7 @@ $c: '.ddm-form-pagination';
 	}
 
 	.h5.pagination {
-		color: #a7a9bc;
+		color: $gray-500;
 		font-size: 10px;
 		text-transform: uppercase;
 	}
@@ -107,12 +107,12 @@ $c: '.ddm-form-pagination';
 
 		button.dropdown-toggle {
 			border-width: 0;
-			color: #6b6c7e;
+			color: $gray-600;
 
 			&:hover {
-				background-color: #f7f8f9;
-				border-color: #cdced9;
-				color: #272833;
+				background-color: $gray-100;
+				border-color: $gray-400;
+				color: $gray-900;
 			}
 		}
 	}

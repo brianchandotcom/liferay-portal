@@ -69,7 +69,7 @@ td.lfr-name-column {
 .ddm-form-settings-modal,
 .publish-modal-container {
 	.modal-body {
-		background-color: #fff;
+		background-color: $white;
 	}
 }
 
@@ -136,7 +136,7 @@ td.lfr-name-column {
 
 .ddm-icon-check {
 	.sticker {
-		color: #287d3c;
+		color: $success-d1;
 	}
 }
 
@@ -251,7 +251,7 @@ div.lfr-de__partial-results--background {
 	}
 
 	.input-group-container .input-group-addon {
-		background-color: #e7e7ed;
+		background-color: $gray-300;
 	}
 
 	.liferay-ddm-form-field-editor .form-control-feedback {
@@ -358,8 +358,8 @@ div.lfr-de__partial-results--background {
 
 		.form-builder-content,
 		.lfr-ddm-form-content {
-			background: #fff;
-			border-color: #e7e7ed;
+			background: $white;
+			border-color: $gray-300;
 			border-radius: 4px;
 			margin: 0 auto;
 			width: auto;
@@ -400,7 +400,7 @@ div.lfr-de__partial-results--background {
 
 	.taglib-workflow-status {
 		.workflow-version {
-			color: #6b6c7e;
+			color: $gray-600;
 		}
 	}
 }
@@ -408,12 +408,12 @@ div.lfr-de__partial-results--background {
 .portlet-forms-admin {
 	#formsNavigationBar .nav-item {
 		.nav-link {
-			color: #cdced9;
+			color: $gray-400;
 			cursor: pointer;
 
 			&.active,
 			&:hover {
-				color: #fff;
+				color: $white;
 			}
 		}
 	}
@@ -442,7 +442,7 @@ div.lfr-de__partial-results--background {
 	margin-bottom: 42px !important;
 
 	&:before {
-		background-color: #cad3db;
+		background-color: $gray-500;
 		content: '';
 		display: block;
 		height: 12px;
@@ -480,20 +480,20 @@ div.lfr-de__partial-results--background {
 				font-weight: 600;
 
 				&::placeholder {
-					color: #b0b4bb;
+					color: $gray-500;
 					font-weight: 500;
 				}
 			}
 
 			&.ddm-form-description {
-				color: #000;
+				color: $black;
 				font-size: 14px;
 				font-weight: 400;
 				height: auto;
 				padding-top: 0;
 
 				&::placeholder {
-					color: #b0b4bb;
+					color: $gray-500;
 				}
 			}
 		}

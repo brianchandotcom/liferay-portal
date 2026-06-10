@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -19,7 +20,11 @@ import com.liferay.portal.security.permission.ResourceActionsImpl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * @author Luis Ortiz
@@ -40,6 +45,8 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 		Set<String> liferayTableNames = DBResourceUtil.getLiferayTableNames(
 			connection);
 
+		Map<String, List<String>> namesByTableName = new TreeMap<>();
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select distinct name from ResourcePermission where name " +
 					"like 'com.liferay.%' and primKeyId != 0 and primKeyId " +
@@ -51,12 +58,14 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 				ResourceActionsImpl resourceActionsImpl =
 					new ResourceActionsImpl();
 
+				String compositeModelNameSeparator =
+					resourceActionsImpl.getCompositeModelNameSeparator();
+
 				while (resultSet.next()) {
 					String name = resultSet.getString("name");
 
 					String[] classNames = StringUtil.split(
-						name,
-						resourceActionsImpl.getCompositeModelNameSeparator());
+						name, compositeModelNameSeparator);
 
 					String tableName = null;
 
@@ -102,38 +111,56 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 						continue;
 					}
 
-					String primaryKeyColumnName = "resourcePrimKey";
+					List<String> names = namesByTableName.computeIfAbsent(
+						tableName, key -> new ArrayList<>());
 
-					if (!dbInspector.hasColumn(
-							tableName, primaryKeyColumnName)) {
-
-						primaryKeyColumnName =
-							DataCleanupPreupgradeProcessUtil.
-								getPrimaryKeyColumnName(
-									connection, dbInspector, tableName);
-					}
-
-					if (primaryKeyColumnName == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Skipping table " + tableName +
-									" because it does not have a primary key");
-						}
-
-						continue;
-					}
-
-					upgrade(
-						new TableOrphanReferencesDataCleanupPreupgradeProcess(
-							null,
-							StringBundler.concat(
-								"[$SOURCE_TABLE_ALIAS$].scope = ",
-								ResourceConstants.SCOPE_INDIVIDUAL, " and ",
-								"[$SOURCE_TABLE_ALIAS$].name = '", name, "'"),
-							"primKeyId", "ResourcePermission",
-							primaryKeyColumnName, tableName));
+					names.add(name);
 				}
 			}
+		}
+
+		for (Map.Entry<String, List<String>> entry :
+				namesByTableName.entrySet()) {
+
+			String tableName = entry.getKey();
+
+			String primaryKeyColumnName = "resourcePrimKey";
+
+			if (!dbInspector.hasColumn(tableName, primaryKeyColumnName)) {
+				primaryKeyColumnName =
+					DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
+						connection, dbInspector, tableName);
+			}
+
+			if (primaryKeyColumnName == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Skipping table " + tableName +
+							" because it does not have a primary key");
+				}
+
+				continue;
+			}
+
+			List<String> names = entry.getValue();
+
+			List<String> quotedNames = new ArrayList<>(names.size());
+
+			for (String name : names) {
+				quotedNames.add(StringBundler.concat("'", name, "'"));
+			}
+
+			upgrade(
+				new TableOrphanReferencesDataCleanupPreupgradeProcess(
+					null,
+					StringBundler.concat(
+						"[$SOURCE_TABLE_ALIAS$].scope = ",
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						" and [$SOURCE_TABLE_ALIAS$].name in (",
+						String.join(StringPool.COMMA_AND_SPACE, quotedNames),
+						")"),
+					"primKeyId", "ResourcePermission", primaryKeyColumnName,
+					tableName));
 		}
 	}
 

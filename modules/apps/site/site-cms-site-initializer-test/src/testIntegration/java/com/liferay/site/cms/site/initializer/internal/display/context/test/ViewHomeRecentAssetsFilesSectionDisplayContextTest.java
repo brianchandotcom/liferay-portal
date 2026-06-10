@@ -60,9 +60,8 @@ public class ViewHomeRecentAssetsFilesSectionDisplayContextTest
 		Map<String, Object> baseAdditionalProps =
 			super.getBaseAdditionalProps();
 
-		baseAdditionalProps.remove("additionalAPIURLParameters");
-
 		baseAdditionalProps.put("breadcrumbProps", _getBreadcrumbProps());
+		baseAdditionalProps.remove("additionalAPIURLParameters");
 
 		return baseAdditionalProps;
 	}

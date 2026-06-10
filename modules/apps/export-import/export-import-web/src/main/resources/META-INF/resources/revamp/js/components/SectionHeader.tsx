@@ -21,7 +21,7 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
 	return (
 		<div className={classNames('mb-1 sheet-header', className)}>
-			<div className="h2 mb-1" id={id}>
+			<div className="font-weight-bold mb-1 text-7" id={id}>
 				{title}
 			</div>
 

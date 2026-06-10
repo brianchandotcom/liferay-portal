@@ -165,7 +165,7 @@ export default function ContentSection({
 					)
 				}
 				label={section.label}
-				labelClassName="font-weight-bold h3"
+				labelClassName="font-weight-bold text-6"
 				onToggle={() =>
 					onChange(
 						allSelected

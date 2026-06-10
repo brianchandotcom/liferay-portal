@@ -9,8 +9,8 @@ package com.liferay.portal.security.key.spi.profile;
  * @author Tomas Polesovsky
  * @author Christopher Kian
  */
-public interface ProfileOrchestrator {
+public interface KeyManagerProfileOrchestrator {
 
-	public KeyManagerProfile getActiveProfile();
+	public KeyManagerProfile getActiveKeyManagerProfile();
 
 }

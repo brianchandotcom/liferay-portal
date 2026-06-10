@@ -27,7 +27,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Christopher Kian
  */
-public class ProfileOrchestratorImplTest {
+public class KeyManagerProfileOrchestratorImplTest {
 
 	@ClassRule
 	@Rule
@@ -38,7 +38,8 @@ public class ProfileOrchestratorImplTest {
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 
-		_profileOrchestratorImpl = new ProfileOrchestratorImpl();
+		_keyManagerProfileOrchestratorImpl =
+			new KeyManagerProfileOrchestratorImpl();
 
 		_setActiveProfileId(CustomKeyManagerProfile.PROFILE_ID);
 
@@ -83,7 +84,7 @@ public class ProfileOrchestratorImplTest {
 	}
 
 	@Test
-	public void testGetActiveProfileFallsBackToCustom() {
+	public void testGetActiveKeyManagerProfileFallsBackToCustom() {
 		String activeProfileId = RandomTestUtil.randomString();
 
 		_setActiveProfileId(activeProfileId);
@@ -101,11 +102,12 @@ public class ProfileOrchestratorImplTest {
 		);
 
 		Assert.assertSame(
-			_keyManagerProfile, _profileOrchestratorImpl.getActiveProfile());
+			_keyManagerProfile,
+			_keyManagerProfileOrchestratorImpl.getActiveKeyManagerProfile());
 	}
 
 	@Test
-	public void testGetActiveProfileResolvesConfiguredId() {
+	public void testGetActiveKeyManagerProfileResolvesConfiguredId() {
 		Mockito.when(
 			_serviceTrackerMap.getService(CustomKeyManagerProfile.PROFILE_ID)
 		).thenReturn(
@@ -113,17 +115,19 @@ public class ProfileOrchestratorImplTest {
 		);
 
 		Assert.assertSame(
-			_keyManagerProfile, _profileOrchestratorImpl.getActiveProfile());
+			_keyManagerProfile,
+			_keyManagerProfileOrchestratorImpl.getActiveKeyManagerProfile());
 	}
 
 	private void _invokeBootstrap(KeyManagerProfile keyManagerProfile)
 		throws Exception {
 
-		Method method = ProfileOrchestratorImpl.class.getDeclaredMethod(
-			"_bootstrap", KeyManagerProfile.class);
+		Method method =
+			KeyManagerProfileOrchestratorImpl.class.getDeclaredMethod(
+				"_bootstrap", KeyManagerProfile.class);
 
 		method.setAccessible(true);
-		method.invoke(_profileOrchestratorImpl, keyManagerProfile);
+		method.invoke(_keyManagerProfileOrchestratorImpl, keyManagerProfile);
 	}
 
 	private void _setActiveProfileId(String activeProfileId) {
@@ -131,11 +135,14 @@ public class ProfileOrchestratorImplTest {
 			() -> activeProfileId;
 
 		try {
-			Field field = ProfileOrchestratorImpl.class.getDeclaredField(
-				"_keyManagerGlobalConfiguration");
+			Field field =
+				KeyManagerProfileOrchestratorImpl.class.getDeclaredField(
+					"_keyManagerGlobalConfiguration");
 
 			field.setAccessible(true);
-			field.set(_profileOrchestratorImpl, keyManagerGlobalConfiguration);
+			field.set(
+				_keyManagerProfileOrchestratorImpl,
+				keyManagerGlobalConfiguration);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -146,11 +153,12 @@ public class ProfileOrchestratorImplTest {
 		ServiceTrackerMap<String, KeyManagerProfile> serviceTrackerMap) {
 
 		try {
-			Field field = ProfileOrchestratorImpl.class.getDeclaredField(
-				"_serviceTrackerMap");
+			Field field =
+				KeyManagerProfileOrchestratorImpl.class.getDeclaredField(
+					"_serviceTrackerMap");
 
 			field.setAccessible(true);
-			field.set(_profileOrchestratorImpl, serviceTrackerMap);
+			field.set(_keyManagerProfileOrchestratorImpl, serviceTrackerMap);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -160,7 +168,8 @@ public class ProfileOrchestratorImplTest {
 	@Mock
 	private KeyManagerProfile _keyManagerProfile;
 
-	private ProfileOrchestratorImpl _profileOrchestratorImpl;
+	private KeyManagerProfileOrchestratorImpl
+		_keyManagerProfileOrchestratorImpl;
 
 	@Mock
 	private ServiceTrackerMap<String, KeyManagerProfile> _serviceTrackerMap;

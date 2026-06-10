@@ -16,38 +16,28 @@ import java.util.Map;
 public class BuildDatabaseArgs {
 
 	public void addModifiedFile(String modifiedFile) {
-		_modifiedFiles.add(modifiedFile);
-	}
-
-	public List<String> getModifiedFiles() {
-		return _modifiedFiles;
-	}
-
-	public Map<String, Map<String, String>> getProperties() {
-		return _properties;
+		modifiedFiles.add(modifiedFile);
 	}
 
 	public void setProperty(String key, String name, String value) {
-		Map<String, String> properties = _properties.get(key);
+		Map<String, String> values = properties.get(key);
 
-		if (properties == null) {
-			properties = new LinkedHashMap<>();
+		if (values == null) {
+			values = new LinkedHashMap<>();
 
-			_properties.put(key, properties);
+			properties.put(key, values);
 		}
 
-		properties.put(name, value);
+		values.put(name, value);
 	}
 
 	public String jobKey = "PortalAcceptancePullRequestJob";
+	public List<String> modifiedFiles = new ArrayList<>();
+	public Map<String, Map<String, String>> properties = new LinkedHashMap<>();
 
 	@FunctionalInterface
 	public interface Consumer
 		extends java.util.function.Consumer<BuildDatabaseArgs> {
 	}
-
-	private final List<String> _modifiedFiles = new ArrayList<>();
-	private final Map<String, Map<String, String>> _properties =
-		new LinkedHashMap<>();
 
 }

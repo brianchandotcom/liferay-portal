@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.Iterator;
 import java.util.Properties;
 
 import org.json.JSONArray;
@@ -18,10 +19,10 @@ import org.junit.Test;
 /**
  * @author Calum Ragan
  */
-public class BuildDatabaseRoundtripTest {
+public class DefaultBuildDatabaseTest {
 
 	@Test
-	public void testRoundtrip() throws Exception {
+	public void testRoundtrip() {
 		BuildDatabase stagedBuildDatabase =
 			BuildDatabaseTestUtil.addPortalAcceptancePR(
 				buildDatabaseArgs -> buildDatabaseArgs.addModifiedFile(
@@ -37,13 +38,7 @@ public class BuildDatabaseRoundtripTest {
 		JSONObject stagedJSONObject = stagedBuildDatabase.getJSONObject();
 		JSONObject reloadedJSONObject = reloadedBuildDatabase.getJSONObject();
 
-		Assert.assertTrue(
-			"Reloaded build database did not match the staged build database",
-			stagedJSONObject.similar(reloadedJSONObject));
-
-		// getJob constructs a Git-coupled Job, so assert the staged job and its
-		// modified files through the hermetic has* accessor and the re-read
-		// JSON.
+		Assert.assertTrue(stagedJSONObject.similar(reloadedJSONObject));
 
 		Assert.assertTrue(reloadedBuildDatabase.hasJob(_JOB_KEY));
 
@@ -60,8 +55,6 @@ public class BuildDatabaseRoundtripTest {
 		Assert.assertEquals(
 			_MODIFIED_FILE, modifiedFilesJSONArray.getString(0));
 
-		// getProperties is hermetic.
-
 		Assert.assertTrue(reloadedBuildDatabase.hasProperties(_PROPERTIES_KEY));
 
 		Properties properties = reloadedBuildDatabase.getProperties(
@@ -70,13 +63,12 @@ public class BuildDatabaseRoundtripTest {
 		Assert.assertEquals(
 			_PROPERTY_VALUE, properties.getProperty(_PROPERTY_NAME));
 
-		// getPullRequest is hermetic.
-
 		JSONObject pullRequestsJSONObject = reloadedJSONObject.getJSONObject(
 			"pull_requests");
 
-		String pullRequestURL = pullRequestsJSONObject.keys(
-		).next();
+		Iterator<String> iterator = pullRequestsJSONObject.keys();
+
+		String pullRequestURL = iterator.next();
 
 		Assert.assertTrue(reloadedBuildDatabase.hasPullRequest(pullRequestURL));
 
@@ -84,9 +76,6 @@ public class BuildDatabaseRoundtripTest {
 			pullRequestURL);
 
 		Assert.assertEquals(pullRequestURL, pullRequest.getHtmlURL());
-
-		// getWorkspace constructs a Git-coupled Workspace, so assert the staged
-		// workspace through the hermetic has* accessor.
 
 		JSONObject workspacesJSONObject = reloadedJSONObject.getJSONObject(
 			"workspaces");

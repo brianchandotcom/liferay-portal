@@ -83,11 +83,12 @@ public class OAuth2WellKnownProtectedResourceMetadataFilterTest {
 		String authorizationServer =
 			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
 		String bearerMethodSupported = RandomTestUtil.randomString();
-
-		String protectedResourceURI = authorizationServer + "/o/mcp";
-
 		String resourceName = RandomTestUtil.randomString();
 		String scopeSupported = RandomTestUtil.randomString();
+
+		String protectedResourceURI =
+			authorizationServer + StringPool.SLASH +
+				RandomTestUtil.randomString();
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			_oAuthClientPRLocalMetadataLocalService.
@@ -121,11 +122,15 @@ public class OAuth2WellKnownProtectedResourceMetadataFilterTest {
 
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, httpResponse.statusCode());
-		Assert.assertEquals(
+
+		OAuthClientPRLocalMetadata updatedOAuthClientPRLocalMetadata =
 			_oAuthClientPRLocalMetadataLocalService.
 				getOAuthClientPRLocalMetadata(
-					oAuthClientPRLocalMetadata.getOAuthClientPRLocalMetadataId()
-				).getMetadataJSON(),
+					oAuthClientPRLocalMetadata.
+						getOAuthClientPRLocalMetadataId());
+
+		Assert.assertEquals(
+			updatedOAuthClientPRLocalMetadata.getMetadataJSON(),
 			httpResponse.body());
 
 		httpResponse = _send(urlString, "HEAD");

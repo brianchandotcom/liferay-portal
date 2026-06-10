@@ -76,25 +76,20 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#deleteCookiesConsentPreference",
+						new ObjectValuePair<>(
+							CookiesConsentPreferenceResourceImpl.class,
+							"deleteCookiesConsentPreference"));
+					put(
 						"mutation#deleteCookiesConsentPreferenceByName",
 						new ObjectValuePair<>(
 							CookiesConsentPreferenceResourceImpl.class,
 							"deleteCookiesConsentPreferenceByName"));
 					put(
-						"mutation#deleteCookiesConsentPreferences",
-						new ObjectValuePair<>(
-							CookiesConsentPreferenceResourceImpl.class,
-							"deleteCookiesConsentPreferences"));
-					put(
 						"mutation#updateCookiesConsentPreference",
 						new ObjectValuePair<>(
 							CookiesConsentPreferenceResourceImpl.class,
 							"putCookiesConsentPreference"));
-					put(
-						"mutation#updateCookiesConsentPreferenceBatch",
-						new ObjectValuePair<>(
-							CookiesConsentPreferenceResourceImpl.class,
-							"putCookiesConsentPreferenceBatch"));
 
 					put(
 						"query#cookiesConsentPreferenceByName",
@@ -109,4 +104,4 @@ public class ServletDataImpl implements ServletData {
 		_cookiesConsentPreferenceResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:256119608
+// LIFERAY-REST-BUILDER-HASH:-2090217516

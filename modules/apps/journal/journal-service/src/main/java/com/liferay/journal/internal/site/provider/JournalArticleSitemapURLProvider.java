@@ -189,14 +189,12 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		DynamicQuery assetDisplayPageEntryDynamicQuery =
 			_assetDisplayPageEntryLocalService.dynamicQuery();
 
-		long classNameId = _portal.getClassNameId(
-			JournalArticle.class.getName());
-
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
 
 		assetDisplayPageEntryDynamicQuery.add(
-			classNameIdProperty.eq(classNameId));
+			classNameIdProperty.eq(
+				_portal.getClassNameId(JournalArticle.class.getName())));
 
 		Property layoutPageTemplateEntryIdProperty =
 			PropertyFactoryUtil.forName("layoutPageTemplateEntryId");
@@ -298,9 +296,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			return null;
 		}
 
-		long assetDisplayPageEntryPlid = assetDisplayPageEntry.getPlid();
-
-		return _layoutLocalService.fetchLayout(assetDisplayPageEntryPlid);
+		return _layoutLocalService.fetchLayout(assetDisplayPageEntry.getPlid());
 	}
 
 	protected void visitArticles(

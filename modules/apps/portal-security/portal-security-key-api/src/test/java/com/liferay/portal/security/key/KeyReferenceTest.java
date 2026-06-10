@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.key;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -25,23 +27,36 @@ public class KeyReferenceTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorRejectsClosingCurlyBraceInProviderId() {
-		new KeyReference("identifier", "pro}vider", KeyReference.Type.CRYPTO);
+		new KeyReference(
+			RandomTestUtil.randomString(), "pro}vider",
+			KeyReference.Type.CRYPTO);
 	}
 
 	@Test
 	public void testEqualsAndHashCode() {
-		KeyReference keyReference1 = KeyReference.fromString("${keyRef:p1:i1}");
+		String identifier = RandomTestUtil.randomString();
+		String providerId = RandomTestUtil.randomString();
 
-		Assert.assertNotEquals("string", keyReference1);
+		KeyReference keyReference1 = KeyReference.fromString(
+			StringBundler.concat(
+				"${keyRef:", providerId, ":", identifier, "}"));
 
-		KeyReference keyReference2 = KeyReference.fromString("${keyRef:p1:i1}");
+		Assert.assertNotEquals(RandomTestUtil.randomString(), keyReference1);
+
+		KeyReference keyReference2 = KeyReference.fromString(
+			StringBundler.concat(
+				"${keyRef:", providerId, ":", identifier, "}"));
 
 		Assert.assertEquals(keyReference1, keyReference2);
 		Assert.assertEquals(keyReference1.hashCode(), keyReference2.hashCode());
 
 		KeyReference keyReference3 = KeyReference.fromString(
-			"${secretRef:p1:i1}");
-		KeyReference keyReference4 = KeyReference.fromString("${keyRef:p2:i1}");
+			StringBundler.concat(
+				"${secretRef:", providerId, ":", identifier, "}"));
+		KeyReference keyReference4 = KeyReference.fromString(
+			StringBundler.concat(
+				"${keyRef:", RandomTestUtil.randomString(), ":", identifier,
+				"}"));
 
 		Assert.assertNotEquals(keyReference1, keyReference3);
 		Assert.assertNotEquals(keyReference1, keyReference4);
@@ -81,7 +96,8 @@ public class KeyReferenceTest {
 	@Test
 	public void testFromStringInvalid() {
 		Assert.assertNull(KeyReference.fromString(null));
-		Assert.assertNull(KeyReference.fromString("invalid"));
+		Assert.assertNull(
+			KeyReference.fromString(RandomTestUtil.randomString()));
 		Assert.assertNull(KeyReference.fromString("${keyRef:onlyone}"));
 		Assert.assertNull(KeyReference.fromString("${unknownRef:provider:id}"));
 		Assert.assertNull(KeyReference.fromString("${keyRef:pro}vider:id}"));
@@ -100,10 +116,19 @@ public class KeyReferenceTest {
 
 	@Test
 	public void testIsKeyReference() {
-		Assert.assertFalse(KeyReference.isKeyReference("not a ref"));
+		Assert.assertFalse(
+			KeyReference.isKeyReference(RandomTestUtil.randomString()));
 		Assert.assertFalse(KeyReference.isKeyReference(null));
-		Assert.assertTrue(KeyReference.isKeyReference("${keyRef:p:i}"));
-		Assert.assertTrue(KeyReference.isKeyReference("${secretRef:*:i}"));
+		Assert.assertTrue(
+			KeyReference.isKeyReference(
+				StringBundler.concat(
+					"${keyRef:", RandomTestUtil.randomString(), ":",
+					RandomTestUtil.randomString(), "}")));
+		Assert.assertTrue(
+			KeyReference.isKeyReference(
+				StringBundler.concat(
+					"${secretRef:", RandomTestUtil.randomString(), ":",
+					RandomTestUtil.randomString(), "}")));
 	}
 
 	@Test

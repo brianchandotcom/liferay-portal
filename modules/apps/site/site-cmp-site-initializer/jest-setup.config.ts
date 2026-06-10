@@ -74,6 +74,8 @@ class MockBroadcastChannel {
 		getDefaultLanguageId: () => 'en_US',
 		getLanguageId: () => 'en_US',
 		getPathThemeImages: () => '/images',
+		getPortalURL: () => 'http://localhost:8080',
+		getSiteGroupId: () => '20121',
 		getUserId: () => '1',
 	},
 	Util: {

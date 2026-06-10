@@ -347,11 +347,11 @@ public class AnalyticsCloudClient {
 
 				if (jsonNode != null) {
 					_renameKey(
-						jsonNode, "performanceAssetConsumptionItemsCount",
-						"total");
-					_renameKey(
 						jsonNode, "performanceAssetConsumptionItems",
 						"metrics");
+					_renameKey(
+						jsonNode, "performanceAssetConsumptionItemsCount",
+						"total");
 
 					ObjectReader objectReader =
 						ObjectMapperHolder._objectMapper.readerFor(

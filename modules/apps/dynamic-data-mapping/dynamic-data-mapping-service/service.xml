@@ -272,6 +272,10 @@
 			<finder-column name="formInstanceId" />
 			<finder-column name="formInstanceVersion" />
 		</finder>
+		<finder name="F_I" return-type="Collection">
+			<finder-column name="formInstanceId" />
+			<finder-column name="ipAddress" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="DDMFormInstanceRecordVersion" remote-service="true">
 

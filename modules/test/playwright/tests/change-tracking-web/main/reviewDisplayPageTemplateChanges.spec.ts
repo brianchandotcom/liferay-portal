@@ -144,7 +144,11 @@ test(
 
 		await changeTrackingPage.reviewChange(blogTitle);
 
-		await expect(page.getByText(blogBody)).toBeVisible();
+		await expect(
+			page.locator('td.publications-render-view-content', {
+				hasText: blogBody,
+			})
+		).toBeVisible();
 
 		const journalArticleTitle = getRandomString();
 		const journalContent = getRandomString();
@@ -171,6 +175,10 @@ test(
 
 		await changeTrackingPage.reviewChange(journalArticleTitle);
 
-		await expect(page.getByText(journalContent)).toBeVisible();
+		await expect(
+			page.locator('td.publications-render-view-content', {
+				hasText: journalContent,
+			})
+		).toBeVisible();
 	}
 );

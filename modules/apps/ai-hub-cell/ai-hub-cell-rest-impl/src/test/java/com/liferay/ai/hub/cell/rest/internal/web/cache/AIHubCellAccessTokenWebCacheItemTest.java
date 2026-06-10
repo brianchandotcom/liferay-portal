@@ -90,7 +90,7 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 	public void testConvertWhenAccessTokenIsMissing() throws Exception {
 		try (MockedStatic<HttpUtil> httpUtilMockedStatic = _mockHttpUtil(
 				JSONUtil.put(
-					"error", "invalid_client"
+					"error", RandomTestUtil.randomString()
 				).toString())) {
 
 			AIHubCellAccessTokenWebCacheItem aiHubCellAccessTokenWebCacheItem =

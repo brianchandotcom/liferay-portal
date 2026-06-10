@@ -53,22 +53,22 @@ public class LayoutContentVersionTable
 	public final Column<LayoutContentVersionTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<LayoutContentVersionTable, Long> plid = createColumn(
-		"plid", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<LayoutContentVersionTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<LayoutContentVersionTable, Integer> version =
-		createColumn(
-			"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<LayoutContentVersionTable, String> specSchemaVersion =
-		createColumn(
-			"specSchemaVersion", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<LayoutContentVersionTable, Clob> data = createColumn(
 		"data_", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<LayoutContentVersionTable, String> dataHash =
 		createColumn(
 			"dataHash", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutContentVersionTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutContentVersionTable, Long> plid = createColumn(
+		"plid", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<LayoutContentVersionTable, String> specSchemaVersion =
+		createColumn(
+			"specSchemaVersion", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<LayoutContentVersionTable, Integer> version =
+		createColumn(
+			"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<LayoutContentVersionTable, Integer> status =
 		createColumn(
 			"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
@@ -88,4 +88,4 @@ public class LayoutContentVersionTable
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1843336260
+// LIFERAY-SERVICE-BUILDER-HASH:-486035598

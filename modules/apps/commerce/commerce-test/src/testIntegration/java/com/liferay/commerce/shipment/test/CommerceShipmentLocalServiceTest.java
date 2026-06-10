@@ -175,10 +175,7 @@ public class CommerceShipmentLocalServiceTest {
 		commerceOrder.setShippingOptionName(
 			commerceShippingFixedOption.getNameCurrentValue());
 
-		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			commerceOrder);
-
-		return commerceOrder;
+		return _commerceOrderLocalService.updateCommerceOrder(commerceOrder);
 	}
 
 	private CommerceOrder _addCommerceOrderWithShipments() throws Exception {

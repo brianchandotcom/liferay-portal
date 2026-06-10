@@ -11,3 +11,4 @@ export {default as AssetVocabularyCategoriesSelector} from './asset_categories_s
 export {ASSET_VOCABULARY_VISIBILITY_TYPES} from './asset_categories_selector/assetVocabularyVisibilityTypes';
 export {default as AssetTagsSelector} from './asset_tags_selector/AssetTagsSelector';
 export {default as AssetTagsSelectorTag} from './asset_tags_selector/AssetTagsSelectorTag';
+export {default as getAssetEntriesItemSelectorProps} from './getAssetEntriesItemSelectorProps';

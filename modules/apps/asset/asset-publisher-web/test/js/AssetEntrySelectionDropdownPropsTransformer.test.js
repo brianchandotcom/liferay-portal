@@ -14,8 +14,8 @@ const ASSET_ENTRY_TYPES = [
 	{classNameId: 2, label: 'Blogs'},
 ];
 
-function transform(additionalProps = {}) {
-	return propsTransformer({
+function open(additionalProps = {}) {
+	propsTransformer({
 		additionalProps: {
 			assetEntryTypes: ASSET_ENTRY_TYPES,
 			currentURL: 'currentURL',
@@ -23,11 +23,7 @@ function transform(additionalProps = {}) {
 			...additionalProps,
 		},
 		portletNamespace: 'ns',
-	});
-}
-
-function open(additionalProps) {
-	transform(additionalProps).onClick({preventDefault() {}});
+	}).onClick({preventDefault() {}});
 
 	return openItemSelectorModal.mock.calls[0][0];
 }
@@ -40,13 +36,13 @@ describe('AssetEntrySelectionDropdownPropsTransformer', () => {
 	it('opens the asset entries endpoint scoped to the group and permitted types', () => {
 		const config = open();
 
-		expect(config.apiURL).toContain(
-			'/o/headless-delivery/v1.0/asset-entries'
-		);
-		expect(config.apiURL).toContain('groupIds=123');
-		expect(config.apiURL).toContain('showNonindexable=true');
+		const url = new URL(config.apiURL);
 
-		const filter = decodeURIComponent(config.apiURL.replace(/\+/g, '%20'));
+		expect(url.pathname).toBe('/o/headless-delivery/v1.0/asset-entries');
+		expect(url.searchParams.get('groupIds')).toBe('123');
+		expect(url.searchParams.get('showNonindexable')).toBe('true');
+
+		const filter = url.searchParams.get('filter');
 
 		expect(filter).toContain('classNameId in (1,2)');
 		expect(filter).toContain(
@@ -71,9 +67,10 @@ describe('AssetEntrySelectionDropdownPropsTransformer', () => {
 		});
 
 		expect(config.fdsProps.filters).toHaveLength(0);
-		expect(
-			decodeURIComponent(config.apiURL.replace(/\+/g, '%20'))
-		).toContain('classNameId eq 9');
+
+		const url = new URL(config.apiURL);
+
+		expect(url.searchParams.get('filter')).toContain('classNameId eq 9');
 	});
 
 	it('posts the selected asset entry ids and type on selection', () => {

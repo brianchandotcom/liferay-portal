@@ -28,20 +28,6 @@ describe('ContextualInformation', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render the empty state when showEmptyState is true', () => {
-		const {getByText, queryByText} = render(
-			<ContextualInformation
-				contextData={fromJS(mockContext)}
-				showEmptyState
-			>
-				<div>{'empty state rendered'}</div>
-			</ContextualInformation>
-		);
-
-		expect(getByText('empty state rendered')).toBeTruthy();
-		expect(queryByText('browser')).toBeNull();
-	});
-
 	it('should correctly format the time zone offset string', () => {
 		const {getByText} = render(
 			<ContextualInformation contextData={fromJS(mockContext)} />

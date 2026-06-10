@@ -6,7 +6,6 @@
 package com.liferay.exportimport.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
@@ -59,7 +58,6 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.io.File;
@@ -289,13 +287,12 @@ public class ImportProcessResourceTest
 	@Override
 	protected ImportProcess
 			testGetAssetLibraryImportProcessesPage_addImportProcess(
-				Long assetLibraryId, ImportProcess importProcess)
+				String assetLibraryExternalReferenceCode,
+				ImportProcess importProcess)
 		throws Exception {
 
 		return _addImportProcess(
-			GroupUtil.getDepotGroupId(
-				String.valueOf(assetLibraryId), TestPropsValues.getCompanyId(),
-				_depotEntryLocalService, _groupLocalService),
+			_getGroupId(assetLibraryExternalReferenceCode),
 			randomImportProcess());
 	}
 
@@ -316,10 +313,11 @@ public class ImportProcessResourceTest
 
 	@Override
 	protected ImportProcess testGetSiteImportProcessesPage_addImportProcess(
-			Long siteId, ImportProcess importProcess)
+			String siteExternalReferenceCode, ImportProcess importProcess)
 		throws Exception {
 
-		return _addImportProcess(siteId, randomImportProcess());
+		return _addImportProcess(
+			_getGroupId(siteExternalReferenceCode), randomImportProcess());
 	}
 
 	private ImportProcess _addImportProcess(
@@ -392,6 +390,13 @@ public class ImportProcessResourceTest
 	private long _getCompanyGroupId() throws Exception {
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			TestPropsValues.getCompanyId());
+
+		return group.getGroupId();
+	}
+
+	private long _getGroupId(String externalReferenceCode) throws Exception {
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			externalReferenceCode, TestPropsValues.getCompanyId());
 
 		return group.getGroupId();
 	}
@@ -582,9 +587,6 @@ public class ImportProcessResourceTest
 
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
-
-	@Inject
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

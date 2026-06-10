@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -78,6 +81,49 @@ public class ExpiredJournalArticleUpgradeProcessTest {
 		Assert.assertNull(
 			_journalArticleLocalService.fetchArticle(
 				expiredJournalArticle2.getId()));
+		Assert.assertNotNull(
+			_journalArticleLocalService.fetchArticle(
+				unexpiredJournalArticle.getId()));
+	}
+
+	@Test
+	public void testUpgradeMultipleExpiredJournalArticles() throws Exception {
+		List<JournalArticle> expiredJournalArticles = new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			JournalTestUtil.expireArticle(
+				journalArticle.getGroupId(), journalArticle);
+
+			expiredJournalArticles.add(journalArticle);
+		}
+
+		JournalArticle unexpiredJournalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		for (DataCleanup dataCleanup :
+				DataCleanupUtil.getSystemDataCleanups()) {
+
+			if (StringUtil.equals(
+					dataCleanup.getLabel(),
+					"remove-expired-journal-articles")) {
+
+				dataCleanup.cleanup();
+
+				break;
+			}
+		}
+
+		for (JournalArticle expiredJournalArticle : expiredJournalArticles) {
+			Assert.assertNull(
+				_journalArticleLocalService.fetchArticle(
+					expiredJournalArticle.getId()));
+		}
+
 		Assert.assertNotNull(
 			_journalArticleLocalService.fetchArticle(
 				unexpiredJournalArticle.getId()));

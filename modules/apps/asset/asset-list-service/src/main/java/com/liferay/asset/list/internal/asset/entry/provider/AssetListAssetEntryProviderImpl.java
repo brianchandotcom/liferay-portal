@@ -253,8 +253,7 @@ public class AssetListAssetEntryProviderImpl
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Unable to parse filters JSON: " + filters,
-							exception);
+							"Unable to parse filters: " + filters, exception);
 					}
 				}
 			}

@@ -74,14 +74,14 @@ public class LayoutContentVersionLocalServiceTest {
 		LayoutContentVersion draftLayoutContentVersion =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-				false);
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
+				WorkflowConstants.STATUS_DRAFT, false);
 
+		Assert.assertNotNull(draftLayoutContentVersion.getDataHash());
 		Assert.assertEquals(
 			_draftLayout.getPlid(), draftLayoutContentVersion.getPlid());
 		Assert.assertEquals(1, draftLayoutContentVersion.getVersion());
-		Assert.assertNotNull(draftLayoutContentVersion.getDataHash());
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			draftLayoutContentVersion.getStatus());
@@ -89,8 +89,8 @@ public class LayoutContentVersionLocalServiceTest {
 		LayoutContentVersion approvedLayoutContentVersion =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
 				WorkflowConstants.STATUS_APPROVED, false);
 
 		Assert.assertEquals(2, approvedLayoutContentVersion.getVersion());
@@ -110,23 +110,23 @@ public class LayoutContentVersionLocalServiceTest {
 		LayoutContentVersion approvedLayoutContentVersion =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
 				WorkflowConstants.STATUS_APPROVED, false);
 
 		LayoutContentVersion latestApprovedLayoutContentVersion =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
 				WorkflowConstants.STATUS_APPROVED, false);
 
 		LayoutContentVersion draftLayoutContentVersion =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-				false);
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
+				WorkflowConstants.STATUS_DRAFT, false);
 
 		_layoutContentVersionLocalService.deleteLayoutContentVersion(
 			approvedLayoutContentVersion.getLayoutContentVersionId());
@@ -166,14 +166,14 @@ public class LayoutContentVersionLocalServiceTest {
 	public void testGetLayoutContentVersions() throws Exception {
 		_layoutContentVersionLocalService.addLayoutContentVersion(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-			false);
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
+			WorkflowConstants.STATUS_DRAFT, false);
 		_layoutContentVersionLocalService.addLayoutContentVersion(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-			false);
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
+			WorkflowConstants.STATUS_DRAFT, false);
 
 		List<LayoutContentVersion> layoutContentVersions =
 			_layoutContentVersionLocalService.getLayoutContentVersions(
@@ -198,10 +198,9 @@ public class LayoutContentVersionLocalServiceTest {
 		try {
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(maxLength + 1),
-				TestPropsValues.getUserId(), _draftLayout.getPlid(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-				false);
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
+				WorkflowConstants.STATUS_DRAFT, false);
 
 			Assert.fail();
 		}
@@ -219,10 +218,10 @@ public class LayoutContentVersionLocalServiceTest {
 
 		LayoutContentVersion layoutContentVersion =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
-				null, TestPropsValues.getUserId(), _draftLayout.getPlid(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-				false);
+				null, TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
+				WorkflowConstants.STATUS_DRAFT, false);
 
 		Assert.assertEquals(
 			_draftLayout.getExternalReferenceCode() + "_v_" +
@@ -236,7 +235,7 @@ public class LayoutContentVersionLocalServiceTest {
 		LayoutContentVersion layoutContentVersion =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, _draftLayout.getPlid(),
 				WorkflowConstants.STATUS_DRAFT, false);
 
 		Assert.assertEquals(
@@ -251,13 +250,13 @@ public class LayoutContentVersionLocalServiceTest {
 		LayoutContentVersion layoutContentVersion1 =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				data, WorkflowConstants.STATUS_DRAFT, false);
+				data, RandomTestUtil.randomLocaleStringMap(),
+				_draftLayout.getPlid(), WorkflowConstants.STATUS_DRAFT, false);
 		LayoutContentVersion layoutContentVersion2 =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				data, WorkflowConstants.STATUS_DRAFT, false);
+				data, RandomTestUtil.randomLocaleStringMap(),
+				_draftLayout.getPlid(), WorkflowConstants.STATUS_DRAFT, false);
 
 		Assert.assertNotEquals(
 			layoutContentVersion1.getLayoutContentVersionId(),
@@ -268,13 +267,15 @@ public class LayoutContentVersionLocalServiceTest {
 		LayoutContentVersion layoutContentVersion3 =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				otherData, WorkflowConstants.STATUS_APPROVED, true);
+				otherData, RandomTestUtil.randomLocaleStringMap(),
+				_draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
+				true);
 		LayoutContentVersion layoutContentVersion4 =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				otherData, WorkflowConstants.STATUS_APPROVED, true);
+				otherData, RandomTestUtil.randomLocaleStringMap(),
+				_draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
+				true);
 
 		Assert.assertEquals(
 			layoutContentVersion3.getLayoutContentVersionId(),
@@ -325,9 +326,9 @@ public class LayoutContentVersionLocalServiceTest {
 		try {
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				plid, RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-				false);
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), plid,
+				WorkflowConstants.STATUS_DRAFT, false);
 
 			Assert.fail();
 		}
@@ -346,9 +347,9 @@ public class LayoutContentVersionLocalServiceTest {
 		LayoutContentVersion layoutContentVersion =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-				false);
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
+				WorkflowConstants.STATUS_DRAFT, false);
 
 		try {
 			_layoutContentVersionLocalService.updateLayoutContentVersion(
@@ -372,9 +373,9 @@ public class LayoutContentVersionLocalServiceTest {
 		LayoutContentVersion layoutContentVersion =
 			_layoutContentVersionLocalService.addLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-				false);
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), _draftLayout.getPlid(),
+				WorkflowConstants.STATUS_DRAFT, false);
 
 		try {
 			_layoutContentVersionLocalService.updateLayoutContentVersion(

@@ -64,31 +64,30 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		String selectSQL = StringBundler.concat(
-			"select DDMFieldAttribute.ctCollectionId, DDMFieldAttribute.",
-			"fieldAttributeId, DDMFieldAttribute.companyId, DDMFieldAttribute.",
-			"largeAttributeValue, DDMFieldAttribute.smallAttributeValue from ",
-			"DDMStructure inner join DDMStructureVersion on DDMStructure.",
-			"ctCollectionId = DDMStructureVersion.ctCollectionId and ",
-			"DDMStructure.structureId = DDMStructureVersion.structureId inner ",
-			"join DDMField on DDMStructureVersion.ctCollectionId = DDMField.",
-			"ctCollectionId and DDMStructureVersion.structureVersionId = ",
-			"DDMField.structureVersionId inner join DDMFieldAttribute on ",
-			"DDMField.ctCollectionId = DDMFieldAttribute.ctCollectionId and ",
-			"DDMField.fieldId = DDMFieldAttribute.fieldId where DDMStructure.",
-			"classNameId = ? and DDMField.fieldType = 'rich_text'");
-
-		String updateSQL =
-			"update DDMFieldAttribute set largeAttributeValue = ?, " +
-				"smallAttributeValue = ? where ctCollectionId = ? and " +
-					"fieldAttributeId = ?";
-
 		try (SafeCloseable safeCloseable = db.addTemporaryIndex(
 				connection, "DDMFieldAttribute", false, "ctCollectionId",
 				"fieldId")) {
 
-			long classNameId = _classNameLocalService.getClassNameId(
-				"com.liferay.journal.model.JournalArticle");
+			String selectSQL = StringBundler.concat(
+				"select DDMFieldAttribute.ctCollectionId, DDMFieldAttribute.",
+				"fieldAttributeId, DDMFieldAttribute.companyId, ",
+				"DDMFieldAttribute.largeAttributeValue, DDMFieldAttribute.",
+				"smallAttributeValue from DDMStructure inner join ",
+				"DDMStructureVersion on DDMStructure.ctCollectionId = ",
+				"DDMStructureVersion.ctCollectionId and DDMStructure.",
+				"structureId = DDMStructureVersion.structureId inner join ",
+				"DDMField on DDMStructureVersion.ctCollectionId = DDMField.",
+				"ctCollectionId and DDMStructureVersion.structureVersionId = ",
+				"DDMField.structureVersionId inner join DDMFieldAttribute on ",
+				"DDMField.ctCollectionId = DDMFieldAttribute.ctCollectionId ",
+				"and DDMField.fieldId = DDMFieldAttribute.fieldId where ",
+				"DDMStructure.classNameId = ? and DDMField.fieldType = ",
+				"'rich_text'");
+
+			String updateSQL =
+				"update DDMFieldAttribute set largeAttributeValue = ?, " +
+					"smallAttributeValue = ? where ctCollectionId = ? and " +
+						"fieldAttributeId = ?";
 
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(selectSQL);
@@ -96,35 +95,40 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 					AutoBatchPreparedStatementUtil.autoBatch(
 						connection, updateSQL)) {
 
-				preparedStatement1.setLong(1, classNameId);
+				preparedStatement1.setLong(
+					1,
+					_classNameLocalService.getClassNameId(
+						"com.liferay.journal.model.JournalArticle"));
 
-				ResultSet resultSet = preparedStatement1.executeQuery();
+				try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+					while (resultSet.next()) {
+						long companyId = resultSet.getLong("companyId");
 
-				while (resultSet.next()) {
-					long companyId = resultSet.getLong("companyId");
+						String largeAttributeValue = _transform(
+							companyId,
+							resultSet.getString("largeAttributeValue"));
+						String smallAttributeValue = _transform(
+							companyId,
+							resultSet.getString("smallAttributeValue"));
 
-					String largeAttributeValue = _transform(
-						companyId, resultSet.getString("largeAttributeValue"));
-					String smallAttributeValue = _transform(
-						companyId, resultSet.getString("smallAttributeValue"));
+						if ((smallAttributeValue != null) &&
+							(smallAttributeValue.length() > 255)) {
 
-					if ((smallAttributeValue != null) &&
-						(smallAttributeValue.length() > 255)) {
+							largeAttributeValue = smallAttributeValue;
 
-						largeAttributeValue = smallAttributeValue;
+							smallAttributeValue = null;
+						}
 
-						smallAttributeValue = null;
+						preparedStatement2.setString(1, largeAttributeValue);
+						preparedStatement2.setString(2, smallAttributeValue);
+
+						preparedStatement2.setLong(
+							3, resultSet.getLong("ctCollectionId"));
+						preparedStatement2.setLong(
+							4, resultSet.getLong("fieldAttributeId"));
+
+						preparedStatement2.addBatch();
 					}
-
-					preparedStatement2.setString(1, largeAttributeValue);
-					preparedStatement2.setString(2, smallAttributeValue);
-
-					preparedStatement2.setLong(
-						3, resultSet.getLong("ctCollectionId"));
-					preparedStatement2.setLong(
-						4, resultSet.getLong("fieldAttributeId"));
-
-					preparedStatement2.addBatch();
 				}
 
 				preparedStatement2.executeBatch();

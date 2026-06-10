@@ -258,6 +258,25 @@ public class ObjectEntryInfoItemExceptionRequestHandler {
 					objectEntryValuesException.getObjectFieldName()));
 		}
 
+		if (exception instanceof
+				ObjectEntryValuesException.InvalidPhoneNumber) {
+
+			ObjectEntryValuesException.InvalidPhoneNumber
+				objectEntryValuesException =
+					(ObjectEntryValuesException.InvalidPhoneNumber)exception;
+
+			String infoFieldUniqueId = _getInfoFieldUniqueId(
+				groupId, infoItemFormProvider, objectDefinition,
+				objectEntryValuesException.getObjectFieldName());
+
+			if (infoFieldUniqueId == null) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.InvalidPhoneNumber(
+				infoFieldUniqueId);
+		}
+
 		if (exception instanceof ObjectEntryValuesException.ListTypeEntry) {
 			ObjectEntryValuesException.ListTypeEntry
 				objectEntryValuesException =

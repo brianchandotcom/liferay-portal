@@ -303,6 +303,20 @@ public class InfoFormValidationException extends InfoFormException {
 
 	}
 
+	public static class InvalidPhoneNumber extends InvalidInfoFieldValue {
+
+		public InvalidPhoneNumber(String infoFieldUniqueId) {
+			super(infoFieldUniqueId);
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.get(
+				locale, "please-enter-a-valid-phone-number");
+		}
+
+	}
+
 	public static class RequiredAssetCategory
 		extends InfoFormValidationException {
 

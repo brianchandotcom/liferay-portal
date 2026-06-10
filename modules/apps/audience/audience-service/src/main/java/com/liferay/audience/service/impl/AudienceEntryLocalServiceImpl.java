@@ -11,9 +11,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -55,29 +53,7 @@ public class AudienceEntryLocalServiceImpl
 		audienceEntry.setJSON(json);
 		audienceEntry.setName(name);
 
-		audienceEntry = audienceEntryPersistence.update(audienceEntry);
-
-		// Resources
-
-		_resourceLocalService.addModelResources(audienceEntry, serviceContext);
-
-		return audienceEntry;
-	}
-
-	@Override
-	public AudienceEntry deleteAudienceEntry(AudienceEntry audienceEntry)
-		throws PortalException {
-
-		// Audience entry
-
-		audienceEntryPersistence.remove(audienceEntry);
-
-		// Resources
-
-		_resourceLocalService.deleteResource(
-			audienceEntry, ResourceConstants.SCOPE_INDIVIDUAL);
-
-		return audienceEntry;
+		return audienceEntryPersistence.update(audienceEntry);
 	}
 
 	@Override
@@ -141,9 +117,6 @@ public class AudienceEntryLocalServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
-
-	@Reference
-	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

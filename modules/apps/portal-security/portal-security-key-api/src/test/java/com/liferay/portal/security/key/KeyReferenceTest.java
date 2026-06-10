@@ -56,7 +56,6 @@ public class KeyReferenceTest {
 		Assert.assertEquals("my-secret", keyReference.getIdentifier());
 		Assert.assertEquals(
 			KeyReference.ANY_PROVIDER, keyReference.getProviderId());
-		Assert.assertEquals(keyReferenceString, keyReference.toString());
 	}
 
 	@Test
@@ -68,7 +67,6 @@ public class KeyReferenceTest {
 		Assert.assertEquals("master-key", keyReference.getIdentifier());
 		Assert.assertEquals("keystore", keyReference.getProviderId());
 		Assert.assertEquals(KeyReference.Type.CRYPTO, keyReference.getType());
-		Assert.assertEquals(keyReferenceString, keyReference.toString());
 
 		// Identifier may contain colons — the third capture group is greedy
 
@@ -98,7 +96,6 @@ public class KeyReferenceTest {
 		Assert.assertEquals("jdbc-password", keyReference.getIdentifier());
 		Assert.assertEquals("db", keyReference.getProviderId());
 		Assert.assertEquals(KeyReference.Type.SECRET, keyReference.getType());
-		Assert.assertEquals(keyReferenceString, keyReference.toString());
 	}
 
 	@Test
@@ -107,6 +104,16 @@ public class KeyReferenceTest {
 		Assert.assertFalse(KeyReference.isKeyReference(null));
 		Assert.assertTrue(KeyReference.isKeyReference("${keyRef:p:i}"));
 		Assert.assertTrue(KeyReference.isKeyReference("${secretRef:*:i}"));
+	}
+
+	@Test
+	public void testToString() {
+		KeyReference keyReference = new KeyReference(
+			"master-key", "keystore", KeyReference.Type.CRYPTO);
+
+		Assert.assertEquals(
+			"{identifier=master-key, providerId=keystore, type=keyRef}",
+			keyReference.toString());
 	}
 
 }

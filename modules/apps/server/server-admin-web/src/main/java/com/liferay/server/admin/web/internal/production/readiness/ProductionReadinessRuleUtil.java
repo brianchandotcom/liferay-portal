@@ -88,7 +88,7 @@ public class ProductionReadinessRuleUtil {
 				String.valueOf(counterIncrement)
 			);
 
-		if (counterIncrement < 2000) {
+		if (counterIncrement < _MIN_COUNTER_INCREMENT) {
 			return builder.fail();
 		}
 
@@ -113,8 +113,7 @@ public class ProductionReadinessRuleUtil {
 					"DB Pool Size=", jdbcMaxPoolSize, ", Tomcat Threads=",
 					tomcatMaxThreads)
 			).recommendedValue(
-				"The database pool size should be greater than or equal to " +
-					"the thread pool size"
+				"DB Pool Size >= Tomcat Threads"
 			);
 
 		if (jdbcMaxPoolSize >= tomcatMaxThreads) {
@@ -135,9 +134,9 @@ public class ProductionReadinessRuleUtil {
 				String.valueOf(dpi)
 			);
 
-		if (dpi > 75) {
+		if (dpi > _MAX_DL_IMAGE_PREVIEW_DPI) {
 			return builder.recommendedValue(
-				"75"
+				String.valueOf(_MAX_DL_IMAGE_PREVIEW_DPI)
 			).fail();
 		}
 
@@ -198,19 +197,12 @@ public class ProductionReadinessRuleUtil {
 				dlStoreImpl
 			);
 
-		if (dlStoreImpl.equals(
-				"com.liferay.portal.store.file.system." +
-					"AdvancedFileSystemStore") ||
-			dlStoreImpl.equals("com.liferay.portal.store.s3.S3Store") ||
-			dlStoreImpl.equals("com.liferay.portal.store.s3.IBMS3Store") ||
-			dlStoreImpl.equals("com.liferay.portal.store.gcs.GCSStore") ||
-			dlStoreImpl.equals("com.liferay.portal.store.azure.AzureStore")) {
-
+		if (_recommendedDLStoreImplClassNames.contains(dlStoreImpl)) {
 			return builder.pass();
 		}
 
 		return builder.recommendedValue(
-			"AdvancedFileSystemStore or Cloud Store"
+			StringUtil.merge(_recommendedDLStoreImplClassNames)
 		).fail();
 	}
 
@@ -291,7 +283,7 @@ public class ProductionReadinessRuleUtil {
 				maxMemoryGB + "GB"
 			);
 
-		if (maxMemoryGB <= 32.0) {
+		if (maxMemoryGB <= _MAX_HEAP_SIZE_GB) {
 			return builder.pass();
 		}
 
@@ -310,7 +302,7 @@ public class ProductionReadinessRuleUtil {
 				_CATEGORY_JVM_AND_INFRASTRUCTURE_VALIDATION,
 				"huge-pages-configuration");
 
-		if (maxMemoryGB <= 4.0) {
+		if (maxMemoryGB <= _HUGE_PAGES_HEAP_SIZE_THRESHOLD_GB) {
 			return builder.messageKeySuffix(
 				"heap-under-4gb"
 			).pass();
@@ -743,7 +735,7 @@ public class ProductionReadinessRuleUtil {
 			if (parts.length >= 3) {
 				int rounds = GetterUtil.getInteger(parts[2]);
 
-				if (rounds >= 1300000) {
+				if (rounds >= _MIN_PBKDF2_ROUNDS) {
 					return true;
 				}
 			}
@@ -793,6 +785,16 @@ public class ProductionReadinessRuleUtil {
 
 	private static final int _DEFAULT_MAX_THREADS = 200;
 
+	private static final double _HUGE_PAGES_HEAP_SIZE_THRESHOLD_GB = 4.0;
+
+	private static final int _MAX_DL_IMAGE_PREVIEW_DPI = 75;
+
+	private static final double _MAX_HEAP_SIZE_GB = 32.0;
+
+	private static final int _MIN_COUNTER_INCREMENT = 2000;
+
+	private static final int _MIN_PBKDF2_ROUNDS = 1300000;
+
 	private static final String _PREFIX_HUGEPAGESIZE = "Hugepagesize:";
 
 	private static final String _PREFIX_LARGE_PAGE_SIZE_IN_BYTES =
@@ -803,24 +805,31 @@ public class ProductionReadinessRuleUtil {
 
 	private static final List<Supplier<ProductionReadinessResult>>
 		_productionReadinessResultSuppliers = List.of(
+			ProductionReadinessRuleUtil::_checkBetaLanguages,
+			ProductionReadinessRuleUtil::_checkCounterIncrement,
+			ProductionReadinessRuleUtil::_checkDatabaseConfiguration,
+			ProductionReadinessRuleUtil::_checkDLImagePreviewDPI,
+			ProductionReadinessRuleUtil::_checkDLPreviewForking,
+			ProductionReadinessRuleUtil::_checkExplicitGCDisabled,
+			ProductionReadinessRuleUtil::_checkFileStoreImplementation,
+			ProductionReadinessRuleUtil::_checkGarbageCollectorType,
 			ProductionReadinessRuleUtil::_checkHeapAllocationConsistency,
 			ProductionReadinessRuleUtil::_checkHeapSizeUpperLimit,
 			ProductionReadinessRuleUtil::_checkHugePagesConfiguration,
-			ProductionReadinessRuleUtil::_checkJSPEngineSettings,
-			ProductionReadinessRuleUtil::_checkGarbageCollectorType,
-			ProductionReadinessRuleUtil::_checkExplicitGCDisabled,
-			ProductionReadinessRuleUtil::_checkPreventDiagnosticOverhead,
 			ProductionReadinessRuleUtil::_checkJMXConfigurationDisabled,
-			ProductionReadinessRuleUtil::_checkDatabaseConfiguration,
+			ProductionReadinessRuleUtil::_checkJSPEngineSettings,
 			ProductionReadinessRuleUtil::_checkJSPReloading,
-			ProductionReadinessRuleUtil::_checkCounterIncrement,
-			ProductionReadinessRuleUtil::_checkDLPreviewForking,
-			ProductionReadinessRuleUtil::_checkDLImagePreviewDPI,
-			ProductionReadinessRuleUtil::_checkFileStoreImplementation,
 			ProductionReadinessRuleUtil::_checkPasswordEncryption,
-			ProductionReadinessRuleUtil::_checkBetaLanguages,
-			ProductionReadinessRuleUtil::_checkUnusedLanguages,
 			ProductionReadinessRuleUtil::_checkPortalDeveloperProperties,
-			ProductionReadinessRuleUtil::_checkSidecarDetection);
+			ProductionReadinessRuleUtil::_checkPreventDiagnosticOverhead,
+			ProductionReadinessRuleUtil::_checkSidecarDetection,
+			ProductionReadinessRuleUtil::_checkUnusedLanguages);
+	private static final List<String> _recommendedDLStoreImplClassNames =
+		List.of(
+			"com.liferay.portal.store.azure.AzureStore",
+			"com.liferay.portal.store.file.system.AdvancedFileSystemStore",
+			"com.liferay.portal.store.gcs.GCSStore",
+			"com.liferay.portal.store.s3.IBMS3Store",
+			"com.liferay.portal.store.s3.S3Store");
 
 }

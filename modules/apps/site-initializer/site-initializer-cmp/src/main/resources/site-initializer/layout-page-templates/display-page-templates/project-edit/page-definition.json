@@ -188,117 +188,34 @@
 									},
 									{
 										"definition": {
-											"gutters": true,
-											"indexed": true,
-											"modulesPerRow": 2,
-											"numberOfColumns": 2,
-											"reverseOrder": false,
-											"rowViewports": [
-												{
-													"id": "landscapeMobile",
-													"rowViewportDefinition": {
-														"modulesPerRow": 1
-													}
-												},
-												{
-													"id": "portraitMobile",
-													"rowViewportDefinition": {
-													}
-												},
-												{
-													"id": "tablet",
-													"rowViewportDefinition": {
-													}
-												}
-											],
-											"verticalAlignment": "top"
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"columnViewports": [
-														{
-															"columnViewportDefinition": {
-																"size": 12
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "tablet"
-														}
-													],
-													"size": 6
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "INPUTS-date-input"
-															},
-															"fragmentConfig": {
-																"inputFieldId": "ObjectField_dueDate",
-																"inputReadOnly": false
-															},
-															"fragmentFields": [
-															],
-															"fragmentStyle": {
-																"marginBottom": "3"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Column"
+											"fragment": {
+												"key": "INPUTS-date-input"
 											},
-											{
-												"definition": {
-													"columnViewports": [
-														{
-															"columnViewportDefinition": {
-																"size": 12
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "tablet"
-														}
-													],
-													"size": 6
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.TagsComponentSectionFragmentRenderer"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Column"
-											}
-										],
-										"type": "Row"
+											"fragmentConfig": {
+												"inputFieldId": "ObjectField_dueDate",
+												"inputReadOnly": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.CategorizationComponentSectionFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
 									}
 								],
 								"type": "Form"

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.service;
+package com.liferay.layout.content.version.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -40,9 +40,9 @@ public class LayoutContentVersionLocalServiceWrapper
 	 * @return the layout content version that was added
 	 */
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 		addLayoutContentVersion(
-			com.liferay.layout.content.versioning.model.LayoutContentVersion
+			com.liferay.layout.content.version.model.LayoutContentVersion
 				layoutContentVersion) {
 
 		return _layoutContentVersionLocalService.addLayoutContentVersion(
@@ -50,7 +50,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 			addLayoutContentVersion(
 				String externalReferenceCode, long userId, long plid,
 				java.util.Map<java.util.Locale, String> nameMap, String data,
@@ -69,7 +69,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	 * @return the new layout content version
 	 */
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 		createLayoutContentVersion(long layoutContentVersionId) {
 
 		return _layoutContentVersionLocalService.createLayoutContentVersion(
@@ -99,9 +99,9 @@ public class LayoutContentVersionLocalServiceWrapper
 	 * @return the layout content version that was removed
 	 */
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 		deleteLayoutContentVersion(
-			com.liferay.layout.content.versioning.model.LayoutContentVersion
+			com.liferay.layout.content.version.model.LayoutContentVersion
 				layoutContentVersion) {
 
 		return _layoutContentVersionLocalService.deleteLayoutContentVersion(
@@ -120,7 +120,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	 * @throws PortalException if a layout content version with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 			deleteLayoutContentVersion(long layoutContentVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -174,7 +174,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.content.versioning.model.impl.LayoutContentVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.content.version.model.impl.LayoutContentVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -195,7 +195,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.content.versioning.model.impl.LayoutContentVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.content.version.model.impl.LayoutContentVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -245,7 +245,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 		fetchLayoutContentVersion(long layoutContentVersionId) {
 
 		return _layoutContentVersionLocalService.fetchLayoutContentVersion(
@@ -253,7 +253,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 		fetchLayoutContentVersionByExternalReferenceCode(
 			String externalReferenceCode, long groupId) {
 
@@ -285,7 +285,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	 * @throws PortalException if a layout content version with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 			getLayoutContentVersion(long layoutContentVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -294,7 +294,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 			getLayoutContentVersionByExternalReferenceCode(
 				String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -308,7 +308,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	 * Returns a range of all the layout content versions.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.content.versioning.model.impl.LayoutContentVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.content.version.model.impl.LayoutContentVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of layout content versions
@@ -317,7 +317,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List
-		<com.liferay.layout.content.versioning.model.LayoutContentVersion>
+		<com.liferay.layout.content.version.model.LayoutContentVersion>
 			getLayoutContentVersions(int start, int end) {
 
 		return _layoutContentVersionLocalService.getLayoutContentVersions(
@@ -326,7 +326,7 @@ public class LayoutContentVersionLocalServiceWrapper
 
 	@Override
 	public java.util.List
-		<com.liferay.layout.content.versioning.model.LayoutContentVersion>
+		<com.liferay.layout.content.version.model.LayoutContentVersion>
 				getLayoutContentVersions(long plid)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -377,9 +377,9 @@ public class LayoutContentVersionLocalServiceWrapper
 	 * @return the layout content version that was updated
 	 */
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 		updateLayoutContentVersion(
-			com.liferay.layout.content.versioning.model.LayoutContentVersion
+			com.liferay.layout.content.version.model.LayoutContentVersion
 				layoutContentVersion) {
 
 		return _layoutContentVersionLocalService.updateLayoutContentVersion(
@@ -387,7 +387,7 @@ public class LayoutContentVersionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.layout.content.versioning.model.LayoutContentVersion
+	public com.liferay.layout.content.version.model.LayoutContentVersion
 			updateLayoutContentVersion(
 				long layoutContentVersionId,
 				java.util.Map<java.util.Locale, String> nameMap)
@@ -417,4 +417,4 @@ public class LayoutContentVersionLocalServiceWrapper
 	private LayoutContentVersionLocalService _layoutContentVersionLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:658162689
+// LIFERAY-SERVICE-BUILDER-HASH:2007230715

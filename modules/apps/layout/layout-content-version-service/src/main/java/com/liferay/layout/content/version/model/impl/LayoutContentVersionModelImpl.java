@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.model.impl;
+package com.liferay.layout.content.version.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-import com.liferay.layout.content.versioning.model.LayoutContentVersion;
-import com.liferay.layout.content.versioning.model.LayoutContentVersionModel;
+import com.liferay.layout.content.version.model.LayoutContentVersion;
+import com.liferay.layout.content.version.model.LayoutContentVersionModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -1590,4 +1590,4 @@ public class LayoutContentVersionModelImpl
 	private LayoutContentVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:626894610
+// LIFERAY-SERVICE-BUILDER-HASH:-1112416926

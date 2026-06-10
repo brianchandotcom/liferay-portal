@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.service;
+package com.liferay.layout.content.version.service;
 
-import com.liferay.layout.content.versioning.model.LayoutContentVersion;
+import com.liferay.layout.content.version.model.LayoutContentVersion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * Provides the remote service utility for LayoutContentVersion. This utility wraps
- * <code>com.liferay.layout.content.versioning.service.impl.LayoutContentVersionServiceImpl</code> and is an
+ * <code>com.liferay.layout.content.version.service.impl.LayoutContentVersionServiceImpl</code> and is an
  * access point for service operations in application layer code running on a
  * remote server. Methods of this service are expected to have security checks
  * based on the propagated JAAS credentials because this service can be
@@ -29,7 +29,7 @@ public class LayoutContentVersionServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.content.versioning.service.impl.LayoutContentVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.content.version.service.impl.LayoutContentVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static LayoutContentVersion addLayoutContentVersion(
 			String externalReferenceCode, long plid,
@@ -98,4 +98,4 @@ public class LayoutContentVersionServiceUtil {
 			LayoutContentVersionService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-352061722
+// LIFERAY-SERVICE-BUILDER-HASH:174923938

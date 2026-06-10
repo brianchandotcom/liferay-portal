@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.layout.content.versioning.model.LayoutContentVersion" />
-	<class dynamic-update="true" name="com.liferay.layout.content.versioning.model.impl.LayoutContentVersionImpl" table="LayoutContentVersion">
+	<import class="com.liferay.layout.content.version.model.LayoutContentVersion" />
+	<class dynamic-update="true" name="com.liferay.layout.content.version.model.impl.LayoutContentVersionImpl" table="LayoutContentVersion">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="layoutContentVersionId" type="long">
 			<generator class="assigned" />
 		</id>

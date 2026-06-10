@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.service.persistence.impl;
+package com.liferay.layout.content.version.service.persistence.impl;
 
-import com.liferay.layout.content.versioning.model.LayoutContentVersionTable;
-import com.liferay.layout.content.versioning.model.impl.LayoutContentVersionImpl;
-import com.liferay.layout.content.versioning.model.impl.LayoutContentVersionModelImpl;
+import com.liferay.layout.content.version.model.LayoutContentVersionTable;
+import com.liferay.layout.content.version.model.impl.LayoutContentVersionImpl;
+import com.liferay.layout.content.version.model.impl.LayoutContentVersionModelImpl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"class.name=com.liferay.layout.content.versioning.model.impl.LayoutContentVersionImpl",
+		"class.name=com.liferay.layout.content.version.model.impl.LayoutContentVersionImpl",
 		"table.name=LayoutContentVersion"
 	},
 	service = ArgumentsResolver.class
@@ -142,4 +142,4 @@ public class LayoutContentVersionModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1140071947
+// LIFERAY-SERVICE-BUILDER-HASH:-264283149

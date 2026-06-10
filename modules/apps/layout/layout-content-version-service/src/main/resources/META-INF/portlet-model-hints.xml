@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.layout.content.versioning.model.LayoutContentVersion">
+	<model name="com.liferay.layout.content.version.model.LayoutContentVersion">
 		<field name="mvccVersion" type="long" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="layoutContentVersionId" type="long" />

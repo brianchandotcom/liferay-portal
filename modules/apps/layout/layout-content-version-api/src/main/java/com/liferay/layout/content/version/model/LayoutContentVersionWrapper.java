@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.model;
+package com.liferay.layout.content.version.model;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
@@ -864,4 +864,4 @@ public class LayoutContentVersionWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:826929976
+// LIFERAY-SERVICE-BUILDER-HASH:1783535814

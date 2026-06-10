@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.versioning.service;
+package com.liferay.layout.content.version.service;
 
-import com.liferay.layout.content.versioning.model.LayoutContentVersion;
+import com.liferay.layout.content.version.model.LayoutContentVersion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -42,7 +42,7 @@ public interface LayoutContentVersionService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.layout.content.versioning.service.impl.LayoutContentVersionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the layout content version remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LayoutContentVersionServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.layout.content.version.service.impl.LayoutContentVersionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the layout content version remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LayoutContentVersionServiceUtil} if injection and service tracking are not available.
 	 */
 	public LayoutContentVersion addLayoutContentVersion(
 			String externalReferenceCode, long plid,
@@ -80,4 +80,4 @@ public interface LayoutContentVersionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:19530578
+// LIFERAY-SERVICE-BUILDER-HASH:1286825910

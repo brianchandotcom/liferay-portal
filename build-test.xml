@@ -3431,17 +3431,6 @@ web.server.display.node=true</echo>
 				</then>
 			</if>
 
-			<get-testcase-property property.name="cluster.jdbc.ping" />
-
-			<if>
-				<equals arg1="${cluster.jdbc.ping}" arg2="true" />
-				<then>
-					<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-cluster.link.channel.properties.control=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_jdbc_ping.xml</echo>
-				</then>
-			</if>
-
 			<get-testcase-property property.name="cluster.node.ip" />
 
 			<if>

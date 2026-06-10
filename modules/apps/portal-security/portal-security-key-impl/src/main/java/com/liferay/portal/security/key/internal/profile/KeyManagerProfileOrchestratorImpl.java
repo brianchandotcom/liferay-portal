@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
-import com.liferay.portal.security.key.spi.profile.ProfileOrchestrator;
+import com.liferay.portal.security.key.spi.profile.KeyManagerProfileOrchestrator;
 
 import java.util.Map;
 import java.util.Objects;
@@ -30,20 +30,30 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration",
-	service = ProfileOrchestrator.class
+	service = KeyManagerProfileOrchestrator.class
 )
-public class ProfileOrchestratorImpl implements ProfileOrchestrator {
+public class KeyManagerProfileOrchestratorImpl
+	implements KeyManagerProfileOrchestrator {
 
 	@Override
-	public KeyManagerProfile getActiveProfile() {
-		String activeProfileId =
-			_keyManagerGlobalConfiguration.activeProfileId();
+	public KeyManagerProfile getActiveKeyManagerProfile() {
+		KeyManagerGlobalConfiguration keyManagerGlobalConfiguration =
+			_keyManagerGlobalConfiguration;
 
-		KeyManagerProfile keyManagerProfile = _serviceTrackerMap.getService(
-			activeProfileId);
+		ServiceTrackerMap<String, KeyManagerProfile> serviceTrackerMap =
+			_serviceTrackerMap;
+
+		if ((keyManagerGlobalConfiguration == null) ||
+			(serviceTrackerMap == null)) {
+
+			return null;
+		}
+
+		KeyManagerProfile keyManagerProfile = serviceTrackerMap.getService(
+			keyManagerGlobalConfiguration.activeProfileId());
 
 		if (keyManagerProfile == null) {
-			keyManagerProfile = _serviceTrackerMap.getService(
+			keyManagerProfile = serviceTrackerMap.getService(
 				CustomKeyManagerProfile.PROFILE_ID);
 		}
 
@@ -79,7 +89,7 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 					String key, KeyManagerProfile keyManagerProfile,
 					KeyManagerProfile content) {
 
-					synchronized (ProfileOrchestratorImpl.this) {
+					synchronized (KeyManagerProfileOrchestratorImpl.this) {
 						if (Objects.equals(_lastBootstrappedProfileId, key)) {
 							_lastBootstrappedProfileId = null;
 						}
@@ -88,14 +98,18 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 
 			});
 
-		_bootstrap(getActiveProfile());
+		_bootstrap(getActiveKeyManagerProfile());
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		if (_serviceTrackerMap != null) {
 			_serviceTrackerMap.close();
+
+			_serviceTrackerMap = null;
 		}
+
+		_keyManagerGlobalConfiguration = null;
 	}
 
 	@Modified
@@ -103,18 +117,21 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 		_keyManagerGlobalConfiguration = ConfigurableUtil.createConfigurable(
 			KeyManagerGlobalConfiguration.class, properties);
 
-		_bootstrap(getActiveProfile());
+		_bootstrap(getActiveKeyManagerProfile());
 	}
 
 	private void _bootstrap(KeyManagerProfile keyManagerProfile) {
+		KeyManagerGlobalConfiguration keyManagerGlobalConfiguration =
+			_keyManagerGlobalConfiguration;
+
 		if ((keyManagerProfile == null) ||
-			(_keyManagerGlobalConfiguration == null)) {
+			(keyManagerGlobalConfiguration == null)) {
 
 			return;
 		}
 
 		String activeProfileId =
-			_keyManagerGlobalConfiguration.activeProfileId();
+			keyManagerGlobalConfiguration.activeProfileId();
 
 		if (!Objects.equals(
 				activeProfileId, keyManagerProfile.getProfileId())) {
@@ -154,7 +171,7 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ProfileOrchestratorImpl.class);
+		KeyManagerProfileOrchestratorImpl.class);
 
 	private volatile KeyManagerGlobalConfiguration
 		_keyManagerGlobalConfiguration;

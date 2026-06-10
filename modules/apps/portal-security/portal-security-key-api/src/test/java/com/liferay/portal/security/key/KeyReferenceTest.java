@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.key;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -23,97 +25,81 @@ public class KeyReferenceTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testConstructorRejectsClosingCurlyBraceInProviderId() {
-		new KeyReference("identifier", "pro}vider", KeyReference.Type.CRYPTO);
+	@Test
+	public void testConstructorRejectsInvalidProviderId() {
+		_testConstructorRejectsInvalidProviderId("pro:vider");
+		_testConstructorRejectsInvalidProviderId("pro}vider");
 	}
 
 	@Test
 	public void testEqualsAndHashCode() {
-		KeyReference keyReference1 = KeyReference.fromString("${keyRef:p1:i1}");
+		String identifier = RandomTestUtil.randomString();
+		String providerId = RandomTestUtil.randomString();
 
-		Assert.assertNotEquals("string", keyReference1);
+		KeyReference keyReference1 = new KeyReference(
+			identifier, providerId, KeyReference.Type.CRYPTO);
 
-		KeyReference keyReference2 = KeyReference.fromString("${keyRef:p1:i1}");
+		Assert.assertNotEquals(keyReference1, RandomTestUtil.randomString());
+
+		KeyReference keyReference2 = new KeyReference(
+			identifier, providerId, KeyReference.Type.CRYPTO);
 
 		Assert.assertEquals(keyReference1, keyReference2);
 		Assert.assertEquals(keyReference1.hashCode(), keyReference2.hashCode());
 
-		KeyReference keyReference3 = KeyReference.fromString(
-			"${secretRef:p1:i1}");
-		KeyReference keyReference4 = KeyReference.fromString("${keyRef:p2:i1}");
+		KeyReference keyReference3 = new KeyReference(
+			identifier, providerId, KeyReference.Type.SECRET);
 
 		Assert.assertNotEquals(keyReference1, keyReference3);
+
+		KeyReference keyReference4 = new KeyReference(
+			identifier, RandomTestUtil.randomString(),
+			KeyReference.Type.CRYPTO);
+
 		Assert.assertNotEquals(keyReference1, keyReference4);
 	}
 
 	@Test
-	public void testFromStringAnyProvider() {
-		String keyReferenceString = "${secretRef:*:my-secret}";
-
-		KeyReference keyReference = KeyReference.fromString(keyReferenceString);
-
-		Assert.assertEquals("my-secret", keyReference.getIdentifier());
-		Assert.assertEquals(
-			KeyReference.ANY_PROVIDER, keyReference.getProviderId());
-	}
-
-	@Test
-	public void testFromStringCrypto() {
-		String keyReferenceString = "${keyRef:keystore:master-key}";
-
-		KeyReference keyReference = KeyReference.fromString(keyReferenceString);
-
-		Assert.assertEquals("master-key", keyReference.getIdentifier());
-		Assert.assertEquals("keystore", keyReference.getProviderId());
-		Assert.assertEquals(KeyReference.Type.CRYPTO, keyReference.getType());
-
-		// Identifier may contain colons — the third capture group is greedy
-
-		keyReferenceString = "${keyRef:gcp:my.key:v1}";
-
-		keyReference = KeyReference.fromString(keyReferenceString);
-
-		Assert.assertEquals("my.key:v1", keyReference.getIdentifier());
-		Assert.assertEquals("gcp", keyReference.getProviderId());
-	}
-
-	@Test
-	public void testFromStringInvalid() {
-		Assert.assertNull(KeyReference.fromString(null));
-		Assert.assertNull(KeyReference.fromString("invalid"));
-		Assert.assertNull(KeyReference.fromString("${keyRef:onlyone}"));
-		Assert.assertNull(KeyReference.fromString("${unknownRef:provider:id}"));
-		Assert.assertNull(KeyReference.fromString("${keyRef:pro}vider:id}"));
-	}
-
-	@Test
-	public void testFromStringSecret() {
-		String keyReferenceString = "${secretRef:db:jdbc-password}";
-
-		KeyReference keyReference = KeyReference.fromString(keyReferenceString);
-
-		Assert.assertEquals("jdbc-password", keyReference.getIdentifier());
-		Assert.assertEquals("db", keyReference.getProviderId());
-		Assert.assertEquals(KeyReference.Type.SECRET, keyReference.getType());
-	}
-
-	@Test
-	public void testIsKeyReference() {
-		Assert.assertFalse(KeyReference.isKeyReference("not a ref"));
-		Assert.assertFalse(KeyReference.isKeyReference(null));
-		Assert.assertTrue(KeyReference.isKeyReference("${keyRef:p:i}"));
-		Assert.assertTrue(KeyReference.isKeyReference("${secretRef:*:i}"));
-	}
-
-	@Test
 	public void testToString() {
-		KeyReference keyReference = new KeyReference(
-			"master-key", "keystore", KeyReference.Type.CRYPTO);
+		String identifier = RandomTestUtil.randomString();
+		String providerId = RandomTestUtil.randomString();
+
+		KeyReference cryptoKeyReference = new KeyReference(
+			identifier, providerId, KeyReference.Type.CRYPTO);
 
 		Assert.assertEquals(
-			"{identifier=master-key, providerId=keystore, type=keyRef}",
-			keyReference.toString());
+			StringBundler.concat(
+				"{identifier=", identifier, ", providerId=", providerId,
+				", type=keyRef}"),
+			cryptoKeyReference.toString());
+
+		KeyReference secretKeyReference = new KeyReference(
+			identifier, providerId, KeyReference.Type.SECRET);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"{identifier=", identifier, ", providerId=", providerId,
+				", type=secretRef}"),
+			secretKeyReference.toString());
+	}
+
+	private KeyReference.Type _randomType() {
+		if (RandomTestUtil.randomBoolean()) {
+			return KeyReference.Type.CRYPTO;
+		}
+
+		return KeyReference.Type.SECRET;
+	}
+
+	private void _testConstructorRejectsInvalidProviderId(String providerId) {
+		try {
+			new KeyReference(
+				RandomTestUtil.randomString(), providerId, _randomType());
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+		}
 	}
 
 }

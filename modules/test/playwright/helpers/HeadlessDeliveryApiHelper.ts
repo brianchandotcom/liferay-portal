@@ -313,6 +313,7 @@ export class HeadlessDeliveryApiHelper {
 
 	async postStructuredContent({
 		categoryIds,
+		contentFields,
 		contentStructureId,
 		datePublished,
 		description = '',
@@ -323,6 +324,7 @@ export class HeadlessDeliveryApiHelper {
 		viewableBy = '',
 	}: {
 		categoryIds?: number[];
+		contentFields?: {contentFieldValue: {data: string}; name: string}[];
 		contentStructureId: number;
 		datePublished: string;
 		description?: string;
@@ -336,6 +338,7 @@ export class HeadlessDeliveryApiHelper {
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/structured-contents`,
 			{
 				data: {
+					contentFields,
 					contentStructureId,
 					datePublished,
 					description,

@@ -38,7 +38,7 @@ public interface LayoutSetPrototypeHelper {
 			LayoutSetPrototype layoutSetPrototype)
 		throws PortalException;
 
-	public Map<String, String[]> getLayoutSetPrototypesParameters(
+	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		boolean initialSync);
 
 	public boolean hasDuplicatedFriendlyURLs(

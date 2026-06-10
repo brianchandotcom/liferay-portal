@@ -746,7 +746,7 @@ public class SitesImpl implements Sites {
 						importLayoutSetPrototype(
 							layoutSetPrototype, groupId, privateLayout,
 							_layoutSetPrototypeHelper.
-								getLayoutSetPrototypesParameters(true),
+								getLayoutSetPrototypeParameters(true),
 							true);
 					}
 					finally {

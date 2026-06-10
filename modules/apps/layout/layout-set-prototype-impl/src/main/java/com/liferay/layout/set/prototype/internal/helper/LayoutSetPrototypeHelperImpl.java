@@ -332,7 +332,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	@Override
-	public Map<String, String[]> getLayoutSetPrototypesParameters(
+	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		boolean initialSync) {
 
 		return LinkedHashMapBuilder.put(
@@ -489,7 +489,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
 
-		Map<String, String[]> parameterMap = getLayoutSetPrototypesParameters(
+		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
 			initialSync);
 
 		parameterMap.put(

@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.set.prototype.internal.sync;
+package com.liferay.layout.set.prototype.internal.messaging;
 
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypeConstants;
+import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncSessionManagerUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -49,15 +50,16 @@ import org.osgi.service.component.annotations.Reference;
 	property = "destination.name=" + DestinationNames.BACKGROUND_TASK_STATUS,
 	service = MessageListener.class
 )
-public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
-	implements MessageListener {
+public class
+	LayoutSetPrototypeSyncExportImportBackgroundTaskStatusMessageListener
+		implements MessageListener {
 
 	@Override
 	public void receive(Message message) throws MessageListenerException {
 		if (!Objects.equals(
 				message.getString("taskExecutorClassName"),
 				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_SYNC_BACKGROUND_TASK_EXECUTOR)) {
+					LAYOUT_SET_PROTOTYPE_SYNC_EXPORT_IMPORT_BACKGROUND_TASK_EXECUTOR)) {
 
 			return;
 		}
@@ -250,7 +252,7 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 				).where(
 					BackgroundTaskTable.INSTANCE.taskExecutorClassName.eq(
 						BackgroundTaskExecutorNames.
-							LAYOUT_SET_PROTOTYPE_SYNC_BACKGROUND_TASK_EXECUTOR
+							LAYOUT_SET_PROTOTYPE_SYNC_EXPORT_IMPORT_BACKGROUND_TASK_EXECUTOR
 					).and(
 						BackgroundTaskTable.INSTANCE.completed.eq(completed)
 					).and(
@@ -302,7 +304,8 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 	private static final long _LOCK_EXPIRATION_TIME = 5 * 60 * 1000;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener.class);
+		LayoutSetPrototypeSyncExportImportBackgroundTaskStatusMessageListener.
+			class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

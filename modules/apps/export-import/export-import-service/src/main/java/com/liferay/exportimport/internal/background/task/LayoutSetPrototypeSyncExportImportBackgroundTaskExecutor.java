@@ -60,10 +60,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tamas Molnar
  */
 @Component(
-	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.LayoutSetPrototypeSyncBackgroundTaskExecutor",
+	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor",
 	service = BackgroundTaskExecutor.class
 )
-public class LayoutSetPrototypeSyncBackgroundTaskExecutor
+public class LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor
 	extends BaseExportImportBackgroundTaskExecutor {
 
 	@Override
@@ -241,7 +241,7 @@ public class LayoutSetPrototypeSyncBackgroundTaskExecutor
 			"/liferay/layout_set_prototype/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutSetPrototypeSyncBackgroundTaskExecutor.class);
+		LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor.class);
 
 	@Reference
 	private ExportImportConfigurationLocalService

@@ -36,9 +36,9 @@ public class BackgroundTaskExecutorNames {
 				"LayoutSetPrototypeImportBackgroundTaskExecutor";
 
 	public static final String
-		LAYOUT_SET_PROTOTYPE_SYNC_BACKGROUND_TASK_EXECUTOR =
+		LAYOUT_SET_PROTOTYPE_SYNC_EXPORT_IMPORT_BACKGROUND_TASK_EXECUTOR =
 			"com.liferay.exportimport.internal.background.task." +
-				"LayoutSetPrototypeSyncBackgroundTaskExecutor";
+				"LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor";
 
 	public static final String LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR =
 		"com.liferay.exportimport.internal.background.task." +

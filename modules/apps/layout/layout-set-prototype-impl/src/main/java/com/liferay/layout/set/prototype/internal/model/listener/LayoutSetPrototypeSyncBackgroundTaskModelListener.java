@@ -27,7 +27,7 @@ public class LayoutSetPrototypeSyncBackgroundTaskModelListener
 		if (!Objects.equals(
 				backgroundTask.getTaskExecutorClassName(),
 				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_SYNC_BACKGROUND_TASK_EXECUTOR)) {
+					LAYOUT_SET_PROTOTYPE_SYNC_EXPORT_IMPORT_BACKGROUND_TASK_EXECUTOR)) {
 
 			return;
 		}

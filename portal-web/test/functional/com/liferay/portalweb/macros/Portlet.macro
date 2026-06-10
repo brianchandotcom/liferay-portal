@@ -525,12 +525,7 @@ definition {
 			configurationName = "Deprecation",
 			configurationScope = "Virtual Instance Scope");
 
-		if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Widget Setting Scope", toggle_state = "Disabled")) {
-			Check.checkToggleSwitch(
-				locator1 = "FeatureFlag#TOGGLE_ROW",
-				title_row = "Widget Setting Scope",
-				toggle_state = "Disabled");
-		}
+		FeatureFlag.enableFeatureFlag(featureFlag = "LPD-11131");
 
 		Navigator.openURL();
 	}

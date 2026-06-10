@@ -8,6 +8,9 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -121,6 +124,25 @@ public class LayoutPageTemplatesAdminDisplayContext {
 			_liferayPortletRequest, "tabs1", "master-layouts");
 
 		return _tabs1;
+	}
+
+	public boolean isShowPageTemplates() {
+		int layoutPageTemplateEntriesCountByType =
+			LayoutPageTemplateEntryServiceUtil.
+				getLayoutPageTemplateEntriesCountByType(
+					_themeDisplay.getScopeGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-76864") ||
+			(layoutPageTemplateEntriesCountByType > 0)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

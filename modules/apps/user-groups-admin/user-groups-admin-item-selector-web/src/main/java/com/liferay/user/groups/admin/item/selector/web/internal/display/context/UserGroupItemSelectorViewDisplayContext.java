@@ -5,6 +5,8 @@
 
 package com.liferay.user.groups.admin.item.selector.web.internal.display.context;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -17,6 +19,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 import com.liferay.user.groups.admin.item.selector.web.internal.search.UserGroupItemSelectorChecker;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
@@ -86,23 +89,40 @@ public class UserGroupItemSelectorViewDisplayContext {
 
 		String keywords = getKeywords();
 
-		if (_userGroupItemSelectorCriterion.isFilterManageableUserGroups()) {
-			_searchContainer.setResultsAndTotal(
-				UsersAdminUtil.filterUserGroups(
-					_themeDisplay.getPermissionChecker(),
-					UserGroupLocalServiceUtil.search(
-						_themeDisplay.getCompanyId(), keywords, null,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						_searchContainer.getOrderByComparator())));
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
+		String itemSelectedEventName = ParamUtil.getString(
+			_renderRequest, "itemSelectedEventName");
+
+		if (itemSelectedEventName.contains(UsersAdminPortletKeys.USERS_ADMIN)) {
+			ctCollectionId =
+				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
 		}
-		else {
-			_searchContainer.setResultsAndTotal(
-				() -> _userGroupLocalService.search(
-					_themeDisplay.getCompanyId(), keywords, null,
-					_searchContainer.getStart(), _searchContainer.getEnd(),
-					_searchContainer.getOrderByComparator()),
-				_userGroupLocalService.searchCount(
-					_themeDisplay.getCompanyId(), keywords, null));
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
+
+			if (_userGroupItemSelectorCriterion.
+					isFilterManageableUserGroups()) {
+
+				_searchContainer.setResultsAndTotal(
+					UsersAdminUtil.filterUserGroups(
+						_themeDisplay.getPermissionChecker(),
+						UserGroupLocalServiceUtil.search(
+							_themeDisplay.getCompanyId(), keywords, null,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+							_searchContainer.getOrderByComparator())));
+			}
+			else {
+				_searchContainer.setResultsAndTotal(
+					() -> _userGroupLocalService.search(
+						_themeDisplay.getCompanyId(), keywords, null,
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						_searchContainer.getOrderByComparator()),
+					_userGroupLocalService.searchCount(
+						_themeDisplay.getCompanyId(), keywords, null));
+			}
 		}
 
 		_searchContainer.setRowChecker(

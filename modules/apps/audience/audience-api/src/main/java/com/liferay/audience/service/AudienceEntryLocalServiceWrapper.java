@@ -436,12 +436,11 @@ public class AudienceEntryLocalServiceWrapper
 	@Override
 	public com.liferay.audience.model.AudienceEntry updateAudienceEntry(
 			long audienceEntryId, String json,
-			java.util.Map<java.util.Locale, String> nameMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			java.util.Map<java.util.Locale, String> nameMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _audienceEntryLocalService.updateAudienceEntry(
-			audienceEntryId, json, nameMap, serviceContext);
+			audienceEntryId, json, nameMap);
 	}
 
 	@Override
@@ -464,4 +463,4 @@ public class AudienceEntryLocalServiceWrapper
 	private AudienceEntryLocalService _audienceEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:340398818
+// LIFERAY-SERVICE-BUILDER-HASH:306973777

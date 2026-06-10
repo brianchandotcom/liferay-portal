@@ -303,8 +303,7 @@ public class AudienceEntryServiceHttp {
 
 	public static com.liferay.audience.model.AudienceEntry updateAudienceEntry(
 			HttpPrincipal httpPrincipal, long audienceEntryId, String json,
-			java.util.Map<java.util.Locale, String> nameMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			java.util.Map<java.util.Locale, String> nameMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -313,7 +312,7 @@ public class AudienceEntryServiceHttp {
 				_updateAudienceEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, audienceEntryId, json, nameMap, serviceContext);
+				methodKey, audienceEntryId, json, nameMap);
 
 			Object returnObj = null;
 
@@ -370,10 +369,7 @@ public class AudienceEntryServiceHttp {
 	private static final Class<?>[] _getAudienceEntryParameterTypes6 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateAudienceEntryParameterTypes7 =
-		new Class[] {
-			long.class, String.class, java.util.Map.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
+		new Class[] {long.class, String.class, java.util.Map.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-284082358
+// LIFERAY-SERVICE-BUILDER-HASH:-1352682489

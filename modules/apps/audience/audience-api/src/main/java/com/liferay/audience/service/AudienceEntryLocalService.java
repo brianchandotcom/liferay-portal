@@ -325,9 +325,8 @@ public interface AudienceEntryLocalService
 	public AudienceEntry updateAudienceEntry(AudienceEntry audienceEntry);
 
 	public AudienceEntry updateAudienceEntry(
-			long audienceEntryId, String json, Map<Locale, String> nameMap,
-			ServiceContext serviceContext)
+			long audienceEntryId, String json, Map<Locale, String> nameMap)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:365006557
+// LIFERAY-SERVICE-BUILDER-HASH:1966579073

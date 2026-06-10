@@ -378,12 +378,10 @@ public class AudienceEntryLocalServiceUtil {
 
 	public static AudienceEntry updateAudienceEntry(
 			long audienceEntryId, String json,
-			Map<java.util.Locale, String> nameMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			Map<java.util.Locale, String> nameMap)
 		throws PortalException {
 
-		return getService().updateAudienceEntry(
-			audienceEntryId, json, nameMap, serviceContext);
+		return getService().updateAudienceEntry(audienceEntryId, json, nameMap);
 	}
 
 	public static AudienceEntryLocalService getService() {
@@ -396,4 +394,4 @@ public class AudienceEntryLocalServiceUtil {
 			AudienceEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1848783454
+// LIFERAY-SERVICE-BUILDER-HASH:1507306033

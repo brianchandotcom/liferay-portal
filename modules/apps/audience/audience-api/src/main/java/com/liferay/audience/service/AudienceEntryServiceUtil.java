@@ -47,26 +47,32 @@ public class AudienceEntryServiceUtil {
 	}
 
 	public static List<AudienceEntry> getAudienceEntries(
-		long companyId, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator) {
+			long companyId, int start, int end,
+			OrderByComparator<AudienceEntry> orderByComparator)
+		throws PortalException {
 
 		return getService().getAudienceEntries(
 			companyId, start, end, orderByComparator);
 	}
 
 	public static List<AudienceEntry> getAudienceEntries(
-		long companyId, String name, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator) {
+			long companyId, String name, int start, int end,
+			OrderByComparator<AudienceEntry> orderByComparator)
+		throws PortalException {
 
 		return getService().getAudienceEntries(
 			companyId, name, start, end, orderByComparator);
 	}
 
-	public static int getAudienceEntriesCount(long companyId) {
+	public static int getAudienceEntriesCount(long companyId)
+		throws PortalException {
+
 		return getService().getAudienceEntriesCount(companyId);
 	}
 
-	public static int getAudienceEntriesCount(long companyId, String name) {
+	public static int getAudienceEntriesCount(long companyId, String name)
+		throws PortalException {
+
 		return getService().getAudienceEntriesCount(companyId, name);
 	}
 
@@ -101,4 +107,4 @@ public class AudienceEntryServiceUtil {
 			AudienceEntryServiceUtil.class, AudienceEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-435651736
+// LIFERAY-SERVICE-BUILDER-HASH:-941878168

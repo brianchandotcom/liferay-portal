@@ -54,19 +54,22 @@ public interface AudienceEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AudienceEntry> getAudienceEntries(
-		long companyId, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator);
+			long companyId, int start, int end,
+			OrderByComparator<AudienceEntry> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AudienceEntry> getAudienceEntries(
-		long companyId, String name, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator);
+			long companyId, String name, int start, int end,
+			OrderByComparator<AudienceEntry> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAudienceEntriesCount(long companyId);
+	public int getAudienceEntriesCount(long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAudienceEntriesCount(long companyId, String name);
+	public int getAudienceEntriesCount(long companyId, String name)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AudienceEntry getAudienceEntry(long audienceEntryId)
@@ -84,4 +87,4 @@ public interface AudienceEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1080680479
+// LIFERAY-SERVICE-BUILDER-HASH:-1972767991

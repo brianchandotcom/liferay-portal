@@ -233,7 +233,7 @@ public class TestrayCaseResult {
 			}
 
 			if (_testrayCase == null) {
-				_testrayCase = getCachedTestrayCase();
+				_testrayCase = _fetchTestrayCase();
 			}
 
 			return _testrayCase;
@@ -523,38 +523,6 @@ public class TestrayCaseResult {
 		}
 	}
 
-	protected TestrayCase getCachedTestrayCase() {
-		String name = getName();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
-			return null;
-		}
-
-		String type = getType();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(type)) {
-			return null;
-		}
-
-		TestrayServer testrayServer = getTestrayServer();
-
-		TestrayCaseType testrayCaseType =
-			testrayServer.getTestrayCaseTypeByName(type);
-
-		if (testrayCaseType == null) {
-			return null;
-		}
-
-		TestrayProject testrayProject = getTestrayProject();
-
-		if (testrayProject == null) {
-			return null;
-		}
-
-		return TestrayFactory.newTestrayCase(
-			testrayProject, name, testrayCaseType);
-	}
-
 	protected synchronized void initTestrayAttachments() {
 		if (testrayAttachments != null) {
 			return;
@@ -713,6 +681,38 @@ public class TestrayCaseResult {
 		};
 
 		return retryable.executeWithRetries();
+	}
+
+	private TestrayCase _fetchTestrayCase() {
+		String name = getName();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+			return null;
+		}
+
+		String type = getType();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(type)) {
+			return null;
+		}
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		TestrayCaseType testrayCaseType =
+			testrayServer.getTestrayCaseTypeByName(type);
+
+		if (testrayCaseType == null) {
+			return null;
+		}
+
+		TestrayProject testrayProject = getTestrayProject();
+
+		if (testrayProject == null) {
+			return null;
+		}
+
+		return TestrayFactory.newTestrayCase(
+			testrayProject, name, testrayCaseType);
 	}
 
 	private URL _fetchTestrayCaseResultURL() {

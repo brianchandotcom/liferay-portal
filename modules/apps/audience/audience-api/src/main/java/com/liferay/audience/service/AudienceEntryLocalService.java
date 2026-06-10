@@ -96,11 +96,9 @@ public interface AudienceEntryLocalService
 	 *
 	 * @param audienceEntry the audience entry
 	 * @return the audience entry that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public AudienceEntry deleteAudienceEntry(AudienceEntry audienceEntry)
-		throws PortalException;
+	public AudienceEntry deleteAudienceEntry(AudienceEntry audienceEntry);
 
 	/**
 	 * Deletes the audience entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -297,4 +295,4 @@ public interface AudienceEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1130542073
+// LIFERAY-SERVICE-BUILDER-HASH:-781662170

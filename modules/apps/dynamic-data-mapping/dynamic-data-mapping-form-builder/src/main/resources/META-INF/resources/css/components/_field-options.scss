@@ -1,4 +1,4 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/_variables';
 
 $c: '.ddm-field-options';
 
@@ -12,8 +12,8 @@ $c: '.ddm-field-options';
 	padding: 16px 22px 16px 15px;
 
 	&.dragging {
-		background: #fff;
-		box-shadow: 0 1px 50px rgba(0, 0, 0, 0.35);
+		background: $white;
+		box-shadow: 0 1px 50px unquote('hsl(from #{$black} h s l / 0.35)');
 		height: 65px;
 		position: absolute;
 		width: 300px;
@@ -89,7 +89,7 @@ $c: '.ddm-field-options';
 	}
 
 	.lexicon-icon-drag {
-		color: #a7a9bc;
+		color: $gray-500;
 		font-size: 16px;
 		margin-left: -8px;
 		margin-top: 4px;
@@ -106,8 +106,8 @@ $c: '.ddm-field-options';
 }
 
 .ddm-options-target {
-	background: #f1f5ff;
-	border: solid 2px #82aaf8;
+	background: $blue-l5;
+	border: solid 2px $blue-l2;
 	height: 10px;
 	margin: 6px 0;
 	opacity: 0;

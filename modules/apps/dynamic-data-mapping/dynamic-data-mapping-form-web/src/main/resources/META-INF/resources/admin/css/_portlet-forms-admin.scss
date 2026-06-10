@@ -26,7 +26,7 @@
 }
 
 .error-icon {
-	color: #da1414;
+	color: $danger;
 	margin-right: 5px;
 }
 
@@ -54,7 +54,7 @@
 	}
 
 	.autosave-feedback {
-		color: #6b6c7e;
+		color: $gray-600;
 		display: block;
 		font-style: italic;
 		padding-bottom: 18.071px;
@@ -77,19 +77,19 @@
 	}
 
 	.publish-icon {
-		color: #879dae;
+		color: $gray-500;
 		cursor: pointer;
 		float: right;
 
 		&.disabled {
-			background-color: #fff;
-			border-color: #cdced9;
+			background-color: $white;
+			border-color: $gray-400;
 			cursor: not-allowed;
 			opacity: 0.26;
 		}
 
 		&:hover:not(.disabled) {
-			color: #65b3f0;
+			color: $blue-l1;
 		}
 	}
 
@@ -115,7 +115,7 @@
 		padding: 16px 10px;
 
 		&:hover {
-			background-color: #f0f8fe;
+			background-color: $blue-l5;
 			cursor: pointer;
 		}
 	}
@@ -156,7 +156,7 @@
 	}
 
 	.form-builder-field-list-add-button-label {
-		color: #4a90e2;
+		color: $blue-l2;
 	}
 
 	.form-builder-field-list-add-button-large
@@ -316,7 +316,7 @@
 	}
 
 	.form-builder-page-manager-content {
-		border-top: 1px solid #dce0e3;
+		border-top: 1px solid $gray-300;
 
 		.form-builder-controls-trigger {
 			margin: 0;
@@ -371,7 +371,7 @@
 	input[type='checkbox'],
 	input[type='radio'] {
 		background-color: transparent;
-		border-color: #869cad;
+		border-color: $gray-500;
 		color: initial;
 		cursor: default;
 	}
@@ -396,8 +396,8 @@
 	}
 
 	.layout-builder-remove-row-button {
-		background: #fff;
-		border: 1px solid #65b6f0;
+		background: $white;
+		border: 1px solid $blue-l1;
 		height: auto;
 		padding: 0;
 		top: -22px;
@@ -405,15 +405,15 @@
 		z-index: 9;
 
 		.lexicon-icon {
-			color: #65b6f0;
+			color: $blue-l1;
 			margin: 10px;
 		}
 
 		&:hover {
-			background: #65b6f0;
+			background: $blue-l1;
 
 			.lexicon-icon {
-				color: #fff;
+				color: $white;
 			}
 		}
 	}

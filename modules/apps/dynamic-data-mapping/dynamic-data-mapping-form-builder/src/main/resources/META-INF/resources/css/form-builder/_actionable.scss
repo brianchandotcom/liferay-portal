@@ -3,7 +3,7 @@
 	border: 2px solid $active-blue;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
-	color: #fff;
+	color: $white;
 	display: flex;
 	font-weight: 600;
 	height: 28px;
@@ -26,8 +26,8 @@
 	}
 
 	&.ddm-fieldset {
-		background-color: #5aca75;
-		border-color: #5aca75;
+		background-color: $success;
+		border-color: $success;
 	}
 
 	.actions-label {
@@ -36,7 +36,7 @@
 	}
 
 	.dropdown-action button {
-		color: #fff;
+		color: $white;
 		margin-right: -8px;
 		margin-top: -4px;
 	}

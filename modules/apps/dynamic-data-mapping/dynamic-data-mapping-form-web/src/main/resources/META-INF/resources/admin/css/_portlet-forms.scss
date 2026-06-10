@@ -38,7 +38,7 @@
 	.ddm-form-basic-info {
 		.ddm-form-name,
 		.ddm-form-description {
-			color: #6b6c7e;
+			color: $gray-600;
 			margin: 0;
 			word-wrap: break-word;
 		}
@@ -102,7 +102,7 @@
 	}
 
 	.horizontal-line {
-		background-color: #cdced9;
+		background-color: $gray-400;
 		height: 1px;
 		margin-bottom: 40px;
 		margin-top: 40px;
@@ -147,7 +147,7 @@
 	}
 
 	.management-bar {
-		border-bottom: 1px solid #e7e7ed;
+		border-bottom: 1px solid $gray-300;
 	}
 
 	.checkbox-multiple-options .checkbox-multiple-switcher-inline {

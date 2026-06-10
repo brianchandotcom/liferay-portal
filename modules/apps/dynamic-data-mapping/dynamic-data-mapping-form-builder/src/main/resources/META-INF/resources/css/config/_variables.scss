@@ -1,11 +1,13 @@
+@import 'atlas-custom-properties/_variables';
+
 // Measures
 $baseline: 1rem;
 
 // Colors
-$active-blue: #0b5fff;
-$dark-blue: rgba(179, 205, 255, 0.3);
-$light-blue: #80acff;
-$strong-blue: #2e5aac;
+$active-blue: $primary;
+$dark-blue: unquote('hsl(from #{$blue-l3} h s l / 0.3)');
+$light-blue: $blue-l2;
+$strong-blue: $blue-d3;
 
-$light-400: #dee4e9;
-$light-blue-100: #f0f5ff;
+$light-400: $gray-300;
+$light-blue-100: $blue-l5;

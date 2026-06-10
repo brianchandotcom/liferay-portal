@@ -18,7 +18,7 @@ $c: '.ddm-form-builder';
 
 		.ddm-resize-handle-left,
 		.ddm-resize-handle-right {
-			background-color: #ccc;
+			background-color: $gray-400;
 			cursor: inherit;
 			opacity: 0;
 		}
@@ -37,7 +37,7 @@ $c: '.ddm-form-builder';
 		&.selected {
 			> .ddm-resize-handle-left,
 			> .ddm-resize-handle-right {
-				background-color: #1c67fb;
+				background-color: $primary;
 				cursor: col-resize;
 				opacity: 1;
 			}
@@ -48,7 +48,7 @@ $c: '.ddm-form-builder';
 			&.selected {
 				> .ddm-resize-handle-left,
 				> .ddm-resize-handle-right {
-					background-color: #5aca75;
+					background-color: $success;
 				}
 			}
 		}

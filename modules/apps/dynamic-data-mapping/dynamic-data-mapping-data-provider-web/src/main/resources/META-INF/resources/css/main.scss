@@ -1,6 +1,8 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-ddm-edit-data-provider .has-success .form-control {
-	background-color: #f1f2f5;
-	border: 0.0625rem solid #e7e7ed;
+	background-color: $gray-200;
+	border: 0.0625rem solid $gray-300;
 }
 
 .portlet-dynamic-data-mapping-data-provider {

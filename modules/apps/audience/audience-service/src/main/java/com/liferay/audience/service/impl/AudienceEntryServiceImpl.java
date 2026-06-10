@@ -13,8 +13,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -43,7 +41,7 @@ public class AudienceEntryServiceImpl extends AudienceEntryServiceBaseImpl {
 		throws PortalException {
 
 		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			getPermissionChecker(), 0,
 			AudienceActionKeys.MANAGE_AUDIENCE_ENTRIES);
 
 		return audienceEntryLocalService.addAudienceEntry(
@@ -54,40 +52,61 @@ public class AudienceEntryServiceImpl extends AudienceEntryServiceBaseImpl {
 	public AudienceEntry deleteAudienceEntry(long audienceEntryId)
 		throws PortalException {
 
-		_audienceEntryResourcePermission.check(
-			getPermissionChecker(), audienceEntryId, ActionKeys.DELETE);
+		_portletResourcePermission.check(
+			getPermissionChecker(), 0,
+			AudienceActionKeys.MANAGE_AUDIENCE_ENTRIES);
 
 		return audienceEntryLocalService.deleteAudienceEntry(audienceEntryId);
 	}
 
 	@Override
 	public List<AudienceEntry> getAudienceEntries(
-		long companyId, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator) {
+			long companyId, int start, int end,
+			OrderByComparator<AudienceEntry> orderByComparator)
+		throws PortalException {
 
-		return audienceEntryPersistence.filterFindByCompanyId(
+		_portletResourcePermission.check(
+			getPermissionChecker(), 0,
+			AudienceActionKeys.MANAGE_AUDIENCE_ENTRIES);
+
+		return audienceEntryPersistence.findByCompanyId(
 			companyId, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<AudienceEntry> getAudienceEntries(
-		long companyId, String name, int start, int end,
-		OrderByComparator<AudienceEntry> orderByComparator) {
+			long companyId, String name, int start, int end,
+			OrderByComparator<AudienceEntry> orderByComparator)
+		throws PortalException {
 
-		return audienceEntryPersistence.filterFindByC_LikeN(
+		_portletResourcePermission.check(
+			getPermissionChecker(), 0,
+			AudienceActionKeys.MANAGE_AUDIENCE_ENTRIES);
+
+		return audienceEntryPersistence.findByC_LikeN(
 			companyId,
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], start,
 			end, orderByComparator);
 	}
 
 	@Override
-	public int getAudienceEntriesCount(long companyId) {
-		return audienceEntryPersistence.filterCountByCompanyId(companyId);
+	public int getAudienceEntriesCount(long companyId) throws PortalException {
+		_portletResourcePermission.check(
+			getPermissionChecker(), 0,
+			AudienceActionKeys.MANAGE_AUDIENCE_ENTRIES);
+
+		return audienceEntryPersistence.countByCompanyId(companyId);
 	}
 
 	@Override
-	public int getAudienceEntriesCount(long companyId, String name) {
-		return audienceEntryPersistence.filterCountByC_LikeN(
+	public int getAudienceEntriesCount(long companyId, String name)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), 0,
+			AudienceActionKeys.MANAGE_AUDIENCE_ENTRIES);
+
+		return audienceEntryPersistence.countByC_LikeN(
 			companyId,
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
 	}
@@ -96,8 +115,9 @@ public class AudienceEntryServiceImpl extends AudienceEntryServiceBaseImpl {
 	public AudienceEntry getAudienceEntry(long audienceEntryId)
 		throws PortalException {
 
-		_audienceEntryResourcePermission.check(
-			getPermissionChecker(), audienceEntryId, ActionKeys.VIEW);
+		_portletResourcePermission.check(
+			getPermissionChecker(), 0,
+			AudienceActionKeys.MANAGE_AUDIENCE_ENTRIES);
 
 		return audienceEntryLocalService.getAudienceEntry(audienceEntryId);
 	}
@@ -107,18 +127,13 @@ public class AudienceEntryServiceImpl extends AudienceEntryServiceBaseImpl {
 			long audienceEntryId, String json, String name)
 		throws PortalException {
 
-		_audienceEntryResourcePermission.check(
-			getPermissionChecker(), audienceEntryId, ActionKeys.UPDATE);
+		_portletResourcePermission.check(
+			getPermissionChecker(), 0,
+			AudienceActionKeys.MANAGE_AUDIENCE_ENTRIES);
 
 		return audienceEntryLocalService.updateAudienceEntry(
 			audienceEntryId, json, name);
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.audience.model.AudienceEntry)"
-	)
-	private ModelResourcePermission<AudienceEntry>
-		_audienceEntryResourcePermission;
 
 	@Reference
 	private CustomSQL _customSQL;

@@ -38,34 +38,29 @@ export function ListTypeEntryBaseField({
 	selectedPicklistItemKey,
 }: ListTypeEntryBaseFieldProps) {
 	return (
-		<>
-			{picklistItems.length ? (
-				<SingleSelect
-					error={error}
-					items={picklistItems.map((item) => ({
-						label: creationLanguageId
-							? getLocalizableLabel({
-									fallbackLanguageId: creationLanguageId,
-									labels: item.name_i18n,
-								})
-							: item.name,
-						value: item.key,
-					}))}
-					label={label}
-					onSelectionChange={(value) => {
-						onChange(
-							picklistItems.find((item) => item.key === value)
-						);
-					}}
-					placeholder={placeholder}
-					required={required}
-					selectedKey={
-						picklistItems.find(
-							(item) => item.key === selectedPicklistItemKey
-						)?.key
-					}
-				/>
-			) : null}
-		</>
+		<SingleSelect
+			error={error}
+			items={picklistItems.map((item) => ({
+				label: creationLanguageId
+					? getLocalizableLabel({
+							fallbackLanguageId: creationLanguageId,
+							labels: item.name_i18n,
+						})
+					: item.name,
+				value: item.key,
+			}))}
+			key={picklistItems.map((item) => item.id).join()}
+			label={label}
+			onSelectionChange={(value) => {
+				onChange(picklistItems.find((item) => item.key === value));
+			}}
+			placeholder={placeholder}
+			required={required}
+			selectedKey={
+				picklistItems.find(
+					(item) => item.key === selectedPicklistItemKey
+				)?.key
+			}
+		/>
 	);
 }

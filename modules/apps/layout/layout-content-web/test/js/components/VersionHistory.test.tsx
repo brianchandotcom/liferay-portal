@@ -55,7 +55,7 @@ describe('VersionHistory', () => {
 		expect(screen.getByText('version-history')).toBeInTheDocument();
 
 		expect(
-			screen.queryByRole('button', {name: 'open-x'})
+			screen.queryByRole('button', {name: 'open-version-history-panel'})
 		).not.toBeInTheDocument();
 	});
 
@@ -65,13 +65,13 @@ describe('VersionHistory', () => {
 		renderComponent();
 
 		expect(
-			screen.queryByRole('button', {name: 'open-x'})
+			screen.queryByRole('button', {name: 'open-version-history-panel'})
 		).not.toBeInTheDocument();
 
 		await userEvent.click(screen.getByRole('button', {name: 'close'}));
 
 		expect(
-			screen.getByRole('button', {name: 'open-x'})
+			screen.getByRole('button', {name: 'open-version-history-panel'})
 		).toBeInTheDocument();
 	});
 });

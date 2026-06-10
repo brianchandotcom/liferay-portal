@@ -8,6 +8,7 @@ package com.liferay.portal.security.key;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -34,7 +35,8 @@ public class KeyReference implements Serializable {
 			return null;
 		}
 
-		Type type;
+		Type type = null;
+
 		String typeString = matcher.group(1);
 
 		if (Objects.equals(typeString, "keyRef")) {
@@ -64,31 +66,23 @@ public class KeyReference implements Serializable {
 	}
 
 	public KeyReference(String identifier, String providerId, Type type) {
-		if (identifier == null) {
-			throw new IllegalArgumentException("Identifier must not be null");
+		if (Validator.isNull(identifier)) {
+			throw new IllegalArgumentException("Identifier is null");
 		}
 
-		if (identifier.isEmpty()) {
-			throw new IllegalArgumentException("Identifier must not be empty");
-		}
-
-		if (providerId == null) {
-			throw new IllegalArgumentException("Provider ID must not be null");
-		}
-
-		if (providerId.isEmpty()) {
-			throw new IllegalArgumentException("Provider ID must not be empty");
+		if (Validator.isNull(providerId)) {
+			throw new IllegalArgumentException("Provider ID is null");
 		}
 
 		if ((providerId.indexOf(CharPool.COLON) >= 0) ||
 			(providerId.indexOf(CharPool.CLOSE_CURLY_BRACE) >= 0)) {
 
 			throw new IllegalArgumentException(
-				"Provider ID must not contain colons or closing curly braces");
+				"Provider ID must not contain colons or a closing curly brace");
 		}
 
-		if (type == null) {
-			throw new IllegalArgumentException("Type must not be null");
+		if (Validator.isNull(type)) {
+			throw new IllegalArgumentException("Type is null");
 		}
 
 		_identifier = identifier;

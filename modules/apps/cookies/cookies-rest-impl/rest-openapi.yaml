@@ -51,7 +51,7 @@ paths:
         delete:
             description:
                 Deletes all cookies consent preference entries of the user who made the request.
-            operationId: deleteCookiesConsentPreferences
+            operationId: deleteCookiesConsentPreference
             responses:
                 204:
                     content:

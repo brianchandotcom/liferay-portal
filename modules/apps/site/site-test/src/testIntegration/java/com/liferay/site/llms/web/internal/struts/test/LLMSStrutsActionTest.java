@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -42,6 +44,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Jonathan McCann
  */
+@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-80518"))
 @RunWith(Arquillian.class)
 public class LLMSStrutsActionTest {
 

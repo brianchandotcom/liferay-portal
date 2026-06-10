@@ -1,3 +1,9 @@
+create unique index IX_5B6AF448 on SExperienceAudienceEntryRel (segmentsExperienceERC[$COLUMN_LENGTH:75$], audienceEntryERC[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_1F1DEAC2 on SExperienceAudienceEntryRel (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
+
+create index IX_38B0398D on SExperienceElementVariation (segmentsExperienceERC[$COLUMN_LENGTH:75$], plid);
+create unique index IX_9C58314E on SExperienceElementVariation (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
+
 create index IX_F6225631 on SegmentsEntry (active_);
 create index IX_C6E84946 on SegmentsEntry (groupId, active_, source[$COLUMN_LENGTH:75$]);
 create unique index IX_E42D8589 on SegmentsEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);

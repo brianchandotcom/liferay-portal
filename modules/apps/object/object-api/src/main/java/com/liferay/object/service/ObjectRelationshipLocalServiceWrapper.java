@@ -541,6 +541,15 @@ public class ObjectRelationshipLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectRelationship>
+		getObjectRelationships(
+			long objectDefinitionId1, boolean reverse, String type) {
+
+		return _objectRelationshipLocalService.getObjectRelationships(
+			objectDefinitionId1, reverse, type);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectRelationship>
 		getObjectRelationships(long objectDefinitionId1, int start, int end) {
 
 		return _objectRelationshipLocalService.getObjectRelationships(
@@ -713,4 +722,4 @@ public class ObjectRelationshipLocalServiceWrapper
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1131588211
+// LIFERAY-SERVICE-BUILDER-HASH:1817623923

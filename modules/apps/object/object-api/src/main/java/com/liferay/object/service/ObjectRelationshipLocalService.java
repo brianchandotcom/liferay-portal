@@ -365,6 +365,10 @@ public interface ObjectRelationshipLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectRelationship> getObjectRelationships(
+		long objectDefinitionId1, boolean reverse, String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectRelationship> getObjectRelationships(
 		long objectDefinitionId1, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -448,4 +452,4 @@ public interface ObjectRelationshipLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1607602875
+// LIFERAY-SERVICE-BUILDER-HASH:146478146

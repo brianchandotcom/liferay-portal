@@ -37,7 +37,9 @@ function mockSmallScreen() {
 }
 
 function renderComponent() {
-	return render(<VersionHistory pageSpecificationVersionsURL="url" />);
+	return render(
+		<VersionHistory config={{pageSpecificationVersionsURL: 'url'}} />
+	);
 }
 
 describe('VersionHistory', () => {

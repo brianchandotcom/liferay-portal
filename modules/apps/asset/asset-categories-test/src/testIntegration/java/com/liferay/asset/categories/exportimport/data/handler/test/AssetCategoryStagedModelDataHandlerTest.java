@@ -52,11 +52,11 @@ public class AssetCategoryStagedModelDataHandlerTest
 		throws Exception {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
+
 		String name = RandomTestUtil.randomString();
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		Map<Locale, String> titleMap = Collections.singletonMap(locale, name);
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			LocaleUtil.getSiteDefault(), name);
 
 		String vocabularyExternalReferenceCode = RandomTestUtil.randomString();
 

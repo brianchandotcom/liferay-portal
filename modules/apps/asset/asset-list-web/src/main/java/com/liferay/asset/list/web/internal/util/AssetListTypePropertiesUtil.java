@@ -53,7 +53,7 @@ public class AssetListTypePropertiesUtil {
 				classTypeId = classTypeIds[i];
 			}
 
-			ObjectDefinition objectDefinition = _resolveObjectDefinition(
+			ObjectDefinition objectDefinition = _fetchObjectDefinition(
 				classNameIds[i], companyId);
 
 			if (objectDefinition == null) {
@@ -91,6 +91,18 @@ public class AssetListTypePropertiesUtil {
 		}
 
 		return jsonArray;
+	}
+
+	private static ObjectDefinition _fetchObjectDefinition(
+		long classNameId, long companyId) {
+
+		if (classNameId <= 0) {
+			return null;
+		}
+
+		return ObjectDefinitionLocalServiceUtil.
+			fetchObjectDefinitionByClassName(
+				companyId, PortalUtil.getClassName(classNameId));
 	}
 
 	private static JSONArray _getCommonFieldsItemsJSONArray(Locale locale) {
@@ -179,18 +191,6 @@ public class AssetListTypePropertiesUtil {
 			).put(
 				"type", "integer"
 			));
-	}
-
-	private static ObjectDefinition _resolveObjectDefinition(
-		long classNameId, long companyId) {
-
-		if (classNameId <= 0) {
-			return null;
-		}
-
-		return ObjectDefinitionLocalServiceUtil.
-			fetchObjectDefinitionByClassName(
-				companyId, PortalUtil.getClassName(classNameId));
 	}
 
 	private static JSONObject _toPropertyJSONObject(

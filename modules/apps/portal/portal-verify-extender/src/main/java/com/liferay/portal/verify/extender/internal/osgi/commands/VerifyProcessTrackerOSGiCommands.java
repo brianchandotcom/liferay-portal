@@ -376,6 +376,10 @@ public class VerifyProcessTrackerOSGiCommands {
 			return true;
 		}
 
+		if (release.isVerified()) {
+			return false;
+		}
+
 		try {
 			Collection<ServiceReference<Release>> releases =
 				bundleContext.getServiceReferences(

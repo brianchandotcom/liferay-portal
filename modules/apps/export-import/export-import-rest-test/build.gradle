@@ -11,6 +11,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:export-import:export-import-rest-api")
 	testIntegrationImplementation project(":apps:export-import:export-import-rest-client")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
+	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-scope-api")
 	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":apps:object:object-rest-test-util")

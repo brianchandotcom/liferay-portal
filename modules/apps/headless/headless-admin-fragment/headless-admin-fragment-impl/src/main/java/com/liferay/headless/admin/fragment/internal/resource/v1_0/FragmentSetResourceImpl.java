@@ -103,9 +103,17 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 				searchContext.setGroupIds(new long[] {groupId});
 			},
 			null,
-			document -> _toFragmentSet(
-				_fragmentCollectionService.fetchFragmentCollection(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+			document -> {
+				FragmentCollection fragmentCollection =
+					_fragmentCollectionService.fetchFragmentCollection(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+				if (fragmentCollection == null) {
+					return null;
+				}
+
+				return _toFragmentSet(fragmentCollection);
+			});
 	}
 
 	@Override

@@ -83,7 +83,7 @@ public class SEOStudioService extends BaseService {
 	public String createScanInsightsBatch(JSONArray jsonArray) {
 		return post(
 			_authorization(), jsonArray.toString(),
-			URI.create(_SCAN_INSIGHTS + "/batch"));
+			URI.create("/o/seo-studio/scan-insights/batch"));
 	}
 
 	public List<CrawlHit> fetchCrawlHits(long seoStudioDomainId) {
@@ -164,12 +164,12 @@ public class SEOStudioService extends BaseService {
 	public String updateScan(long seoStudioScanId, JSONObject jsonObject) {
 		return patch(
 			_authorization(), jsonObject.toString(),
-			URI.create(_SCANS + "/" + seoStudioScanId));
+			URI.create("/o/seo-studio/scans/" + seoStudioScanId));
 	}
 
 	private String _authorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-seostudio-crawler-oahs");
+			"liferay-seostudio-etc-spring-boot-crawler-oahs");
 	}
 
 	private String _fetchCrawlHits(
@@ -193,10 +193,6 @@ public class SEOStudioService extends BaseService {
 	private static final String _INSIGHT_TYPES = "/o/seo-studio/insight-types";
 
 	private static final String _PAGES = "/o/seo-studio/pages";
-
-	private static final String _SCAN_INSIGHTS = "/o/seo-studio/scan-insights";
-
-	private static final String _SCANS = "/o/seo-studio/scans";
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

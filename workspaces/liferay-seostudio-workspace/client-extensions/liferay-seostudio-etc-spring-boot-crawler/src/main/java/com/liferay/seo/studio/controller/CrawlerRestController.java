@@ -358,14 +358,13 @@ public class CrawlerRestController extends BaseRestController {
 		long seoStudioScanId, String state, String errorMessage) {
 
 		try {
-			JSONObject jsonObject = new JSONObject(
-			).put(
-				"state", state
-			);
+			JSONObject jsonObject = new JSONObject();
 
 			if (errorMessage != null) {
 				jsonObject.put("errorMessage", errorMessage);
 			}
+
+			jsonObject.put("state", state);
 
 			_seoStudioService.updateScan(seoStudioScanId, jsonObject);
 		}

@@ -8,9 +8,6 @@ package com.liferay.depot.internal.upgrade.v2_4_0;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -22,6 +19,9 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.List;
 
 /**
  * @author Alicia García
@@ -42,56 +42,49 @@ public class TrashEntriesMaxAgeUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				int trashEntriesMaxAge = PrefsPropsUtil.getInteger(
+				int trashEntriesMaxAgeCompany = PrefsPropsUtil.getInteger(
 					companyId, PropsKeys.TRASH_ENTRIES_MAX_AGE,
 					PropsValues.TRASH_ENTRIES_MAX_AGE);
 
-				if (trashEntriesMaxAge <= 0) {
+				if (trashEntriesMaxAgeCompany <= 0) {
 					return;
 				}
 
-				ActionableDynamicQuery actionableDynamicQuery =
-					_depotEntryLocalService.getActionableDynamicQuery();
+				List<DepotEntry> depotEntries =
+					_depotEntryLocalService.getDepotEntries(
+						companyId, DepotConstants.TYPE_SPACE);
 
-				actionableDynamicQuery.setAddCriteriaMethod(
-					dynamicQuery -> dynamicQuery.add(
-						PropertyFactoryUtil.forName(
-							"type"
-						).eq(
-							DepotConstants.TYPE_SPACE
-						)));
-				actionableDynamicQuery.setCompanyId(companyId);
-				actionableDynamicQuery.setPerformActionMethod(
-					(DepotEntry depotEntry) -> {
-						Group group = _groupLocalService.fetchGroup(
-							depotEntry.getGroupId());
+				for (DepotEntry depotEntry : depotEntries) {
+					Group group = _groupLocalService.fetchGroup(
+						depotEntry.getGroupId());
 
-						if (group == null) {
-							return;
-						}
+					if (group == null) {
+						continue;
+					}
 
-						_updateTrashEntriesMaxAge(group, trashEntriesMaxAge);
-					});
-
-				actionableDynamicQuery.performActions();
+					_updateTrashEntriesMaxAge(group, trashEntriesMaxAgeCompany);
+				}
 			});
 	}
 
-	private void _updateTrashEntriesMaxAge(Group group, int trashEntriesMaxAge)
-		throws PortalException {
+	private void _updateTrashEntriesMaxAge(
+			Group group, int trashEntriesMaxAgeCompany)
+		throws Exception {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
-		int currentTrashEntriesMaxAge = GetterUtil.getInteger(
-			typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"));
+		String trashEntriesMaxAgeGroup =
+			typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge");
 
-		if (currentTrashEntriesMaxAge > 0) {
+		if (Validator.isNotNull(trashEntriesMaxAgeGroup) &&
+			(GetterUtil.getInteger(trashEntriesMaxAgeGroup) > 0)) {
+
 			return;
 		}
 
 		typeSettingsUnicodeProperties.setProperty(
-			"trashEntriesMaxAge", String.valueOf(trashEntriesMaxAge));
+			"trashEntriesMaxAge", String.valueOf(trashEntriesMaxAgeCompany));
 
 		_groupLocalService.updateGroup(
 			group.getGroupId(), typeSettingsUnicodeProperties.toString());

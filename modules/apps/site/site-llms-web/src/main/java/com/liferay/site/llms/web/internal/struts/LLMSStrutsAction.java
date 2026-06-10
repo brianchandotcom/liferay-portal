@@ -6,6 +6,7 @@
 package com.liferay.site.llms.web.internal.struts;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -40,6 +41,16 @@ public class LLMSStrutsAction implements StrutsAction {
 		throws Exception {
 
 		try {
+			Company company = _portal.getCompany(httpServletRequest);
+
+			if (!FeatureFlagManagerUtil.isEnabled(
+					company.getCompanyId(), "LPD-80518")) {
+
+				httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
+
+				return null;
+			}
+
 			boolean enabled = false;
 			String content = null;
 
@@ -64,8 +75,6 @@ public class LLMSStrutsAction implements StrutsAction {
 				}
 			}
 			else {
-				Company company = _portal.getCompany(httpServletRequest);
-
 				enabled = _llmsConfigurationManager.isCompanyEnabled(
 					company.getCompanyId());
 				content = _llmsConfigurationManager.getCompanyContent(

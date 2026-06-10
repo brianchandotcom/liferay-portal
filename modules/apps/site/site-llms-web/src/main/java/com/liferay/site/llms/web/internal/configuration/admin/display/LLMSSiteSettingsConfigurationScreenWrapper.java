@@ -7,6 +7,7 @@ package com.liferay.site.llms.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -88,6 +89,12 @@ public class LLMSSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public boolean isVisible(Group group) {
+			if (!FeatureFlagManagerUtil.isEnabled(
+					group.getCompanyId(), "LPD-80518")) {
+
+				return false;
+			}
+
 			LayoutSet layoutSet = group.getPublicLayoutSet();
 
 			if ((layoutSet != null) &&

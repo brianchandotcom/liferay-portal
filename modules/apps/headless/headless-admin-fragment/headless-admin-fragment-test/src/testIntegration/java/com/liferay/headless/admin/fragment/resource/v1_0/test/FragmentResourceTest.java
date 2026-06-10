@@ -63,7 +63,9 @@ import java.net.InetSocketAddress;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
@@ -197,6 +199,15 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetSiteFragmentsPage() throws Exception {
+		super.testGetSiteFragmentsPage();
+
+		_testGetSiteFragmentsPageWithFilter();
+		_testGetSiteFragmentsPageWithFragmentSets();
+	}
+
+	@Override
+	@Test
 	public void testPostSiteFragment() throws Exception {
 		super.testPostSiteFragment();
 
@@ -275,6 +286,22 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_testPutSiteFragmentUpdateThumbnailURLReferenceURL();
 	}
 
+	protected void assertNotContains(
+		Fragment fragment, List<Fragment> fragments) {
+
+		boolean contains = false;
+
+		for (Fragment curFragment : fragments) {
+			if (equals(fragment, curFragment)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertFalse(fragments + " contains " + fragment, contains);
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
@@ -338,6 +365,28 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		throws Exception {
 
 		return _fragmentCollection.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Fragment testGetSiteFragmentsPage_addFragment(
+			String siteExternalReferenceCode, Fragment fragment)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
+
+			return fragmentResource.postSiteFragment(
+				siteExternalReferenceCode, fragment);
+		}
+	}
+
+	@Override
+	protected Map<String, Map<String, String>>
+		testGetSiteFragmentsPage_getExpectedActions(
+			String siteExternalReferenceCode) {
+
+		return new HashMap<>();
 	}
 
 	@Override
@@ -435,6 +484,20 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			fragmentSet.getExternalReferenceCode());
 		Assert.assertEquals(
 			expectedFragmentSet.getName(), fragmentSet.getName());
+	}
+
+	private void _assertGetSiteFragmentsPageWithFilter(
+			Fragment expectedFragment, String filterString,
+			Fragment notExpectedFragment)
+		throws Exception {
+
+		Page<Fragment> page = fragmentResource.getSiteFragmentsPage(
+			testGroup.getExternalReferenceCode(), filterString, null);
+
+		List<Fragment> fragments = (List<Fragment>)page.getItems();
+
+		assertContains(expectedFragment, fragments);
+		assertNotContains(notExpectedFragment, fragments);
 	}
 
 	private void _assertProblemException(
@@ -606,9 +669,17 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	private Fragment _postSiteFragmentSetFragment(Fragment fragment)
 		throws Exception {
 
+		return _postSiteFragmentSetFragment(
+			fragment, _fragmentCollection.getExternalReferenceCode());
+	}
+
+	private Fragment _postSiteFragmentSetFragment(
+			Fragment fragment, String fragmentSetExternalReferenceCode)
+		throws Exception {
+
 		return fragmentResource.postSiteFragmentSetFragment(
 			testGroup.getExternalReferenceCode(),
-			_fragmentCollection.getExternalReferenceCode(), fragment);
+			fragmentSetExternalReferenceCode, fragment);
 	}
 
 	private Fragment _putSiteFragment(
@@ -655,8 +726,16 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	}
 
 	private Fragment _randomFragment(
+			boolean approved, boolean draft,
+			FragmentCollection fragmentCollection)
+		throws Exception {
+
+		return _randomFragment(approved, draft, null, fragmentCollection, null);
+	}
+
+	private Fragment _randomFragment(
 			boolean approved, boolean draft, String externalReferenceCode,
-			String key)
+			FragmentCollection fragmentCollection, String key)
 		throws Exception {
 
 		Fragment fragment = super.randomFragment();
@@ -690,7 +769,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		}
 
 		fragment.setExternalReferenceCode(externalReferenceCode);
-		fragment.setFragmentSet(_toFragmentSet(_fragmentCollection));
+		fragment.setFragmentSet(_toFragmentSet(fragmentCollection));
 		fragment.setFragmentVersions(
 			fragmentVersions.toArray(new FragmentVersion[0]));
 
@@ -701,6 +780,15 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		fragment.setMarketplace(false);
 
 		return fragment;
+	}
+
+	private Fragment _randomFragment(
+			boolean approved, boolean draft, String externalReferenceCode,
+			String key)
+		throws Exception {
+
+		return _randomFragment(
+			approved, draft, externalReferenceCode, _fragmentCollection, key);
 	}
 
 	private FragmentSet _randomFragmentSet(String externalReferenceCode) {
@@ -737,6 +825,66 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 	private void _testGetSiteFragmentDraft() throws Exception {
 		_testGetSiteFragment(false, true);
+	}
+
+	private void _testGetSiteFragmentsPageWithFilter() throws Exception {
+		Fragment marketplaceFragment = randomFragment();
+
+		marketplaceFragment.setMarketplace(true);
+
+		marketplaceFragment = testGetSiteFragmentsPage_addFragment(
+			testGroup.getExternalReferenceCode(), marketplaceFragment);
+
+		Fragment nonmarketplaceFragment = randomFragment();
+
+		nonmarketplaceFragment.setMarketplace(false);
+
+		nonmarketplaceFragment = testGetSiteFragmentsPage_addFragment(
+			testGroup.getExternalReferenceCode(), nonmarketplaceFragment);
+
+		_assertGetSiteFragmentsPageWithFilter(
+			marketplaceFragment, "marketplace eq true", nonmarketplaceFragment);
+		_assertGetSiteFragmentsPageWithFilter(
+			nonmarketplaceFragment, "marketplace eq false",
+			marketplaceFragment);
+	}
+
+	private void _testGetSiteFragmentsPageWithFragmentSets() throws Exception {
+		FragmentCollection fragmentCollection1 = _addFragmentCollection();
+
+		Fragment approvedAndDraftFragment1 = _postSiteFragmentSetFragment(
+			_randomFragment(true, true, fragmentCollection1),
+			fragmentCollection1.getExternalReferenceCode());
+		Fragment approvedFragment1 = _postSiteFragmentSetFragment(
+			_randomFragment(true, false, fragmentCollection1),
+			fragmentCollection1.getExternalReferenceCode());
+		Fragment draftFragment1 = _postSiteFragmentSetFragment(
+			_randomFragment(false, true, fragmentCollection1),
+			fragmentCollection1.getExternalReferenceCode());
+
+		FragmentCollection fragmentCollection2 = _addFragmentCollection();
+
+		Fragment approvedAndDraftFragment2 = _postSiteFragmentSetFragment(
+			_randomFragment(true, true, fragmentCollection2),
+			fragmentCollection2.getExternalReferenceCode());
+		Fragment approvedFragment2 = _postSiteFragmentSetFragment(
+			_randomFragment(true, false, fragmentCollection2),
+			fragmentCollection2.getExternalReferenceCode());
+		Fragment draftFragment2 = _postSiteFragmentSetFragment(
+			_randomFragment(false, true, fragmentCollection2),
+			fragmentCollection2.getExternalReferenceCode());
+
+		Page<Fragment> page = fragmentResource.getSiteFragmentsPage(
+			testGroup.getExternalReferenceCode(), null, null);
+
+		List<Fragment> items = (List<Fragment>)page.getItems();
+
+		assertContains(approvedAndDraftFragment1, items);
+		assertContains(approvedAndDraftFragment2, items);
+		assertContains(approvedFragment1, items);
+		assertContains(approvedFragment2, items);
+		assertContains(draftFragment1, items);
+		assertContains(draftFragment2, items);
 	}
 
 	private void _testGetSiteFragmentThumbnailURLReference() throws Exception {

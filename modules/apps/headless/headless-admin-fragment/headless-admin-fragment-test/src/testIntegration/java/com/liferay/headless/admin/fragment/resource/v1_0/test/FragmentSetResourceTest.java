@@ -405,10 +405,13 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		FragmentSet fragmentSet2 = testPostSiteFragmentSet_addFragmentSet(
 			randomFragmentSet());
 
+		String json = _exportFragmentSetsToJSON(
+			testGroup.getExternalReferenceCode());
+
 		waitForFinish(
 			"COMPLETED",
 			HTTPTestUtil.invokeToJSONObject(
-				_exportFragmentSetsToJSON(testGroup.getExternalReferenceCode()),
+				json,
 				"headless-admin-fragment/v1.0/sites/" +
 					irrelevantGroup.getExternalReferenceCode() +
 						"/fragment-sets/batch?createStrategy=INSERT",
@@ -425,8 +428,7 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			waitForFinish(
 				"FAILED",
 				HTTPTestUtil.invokeToJSONObject(
-					_exportFragmentSetsToJSON(
-						testGroup.getExternalReferenceCode()),
+					json,
 					"headless-admin-fragment/v1.0/sites/" +
 						irrelevantGroup.getExternalReferenceCode() +
 							"/fragment-sets/batch?createStrategy=INSERT",

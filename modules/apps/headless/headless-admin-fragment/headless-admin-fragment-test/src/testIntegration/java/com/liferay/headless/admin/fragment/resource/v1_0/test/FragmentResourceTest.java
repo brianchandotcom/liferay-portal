@@ -216,6 +216,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_testPostSiteFragmentFragmentSetNonexisting();
 		_testPostSiteFragmentFragmentSetNonexistingProblemException();
 		_testPostSiteFragmentFragmentSetNullProblemException();
+		_testPostSiteFragmentMarketplace();
 		_testPostSiteFragmentThumbnailURLReferenceExternalReferenceCode();
 		_testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeAndFileBase64();
 		_testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeEmptyAndFileBase64();
@@ -489,6 +490,44 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 					fetchFragmentEntryByExternalReferenceCode(
 						fragment.getExternalReferenceCode(),
 						group.getGroupId()));
+		}
+	}
+
+	private void _assertExportImportFragmentsFails(String filterString)
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR);
+			SafeCloseable safeCloseable =
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
+
+			waitForFinish(
+				"FAILED",
+				HTTPTestUtil.invokeToJSONObject(
+					_exportFragmentsToJSON(
+						filterString, testGroup.getExternalReferenceCode()),
+					"headless-admin-fragment/v1.0/sites/" +
+						group.getExternalReferenceCode() +
+							"/fragments/batch?createStrategy=INSERT",
+					Http.Method.POST));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertFalse(logEntries.toString(), logEntries.isEmpty());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertEquals(
+				_language.get(
+					LocaleUtil.getDefault(), "html-content-must-not-be-empty"),
+				throwable.getMessage());
 		}
 	}
 
@@ -1324,16 +1363,12 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			nonmarketplaceFragment);
 
 		_assertExportImportFragments(
-			Arrays.asList(marketplaceFragment, nonmarketplaceFragment), null,
-			Collections.emptyList());
-		_assertExportImportFragments(
-			Collections.singletonList(marketplaceFragment),
-			"marketplace eq true",
-			Collections.singletonList(nonmarketplaceFragment));
-		_assertExportImportFragments(
 			Collections.singletonList(nonmarketplaceFragment),
 			"marketplace eq false",
 			Collections.singletonList(marketplaceFragment));
+
+		_assertExportImportFragmentsFails(null);
+		_assertExportImportFragmentsFails("marketplace eq true");
 	}
 
 	private void _testPostSiteFragmentDraft() throws Exception {
@@ -1436,6 +1471,57 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			"a-fragment-set-external-reference-code-is-required-to-create-a-" +
 				"new-fragment",
 			() -> _postSiteFragment(fragment));
+	}
+
+	private void _testPostSiteFragmentMarketplace() throws Exception {
+		Fragment fragment = _randomMarketPlaceFragment();
+
+		Fragment postFragment = _postSiteFragmentSetFragment(fragment);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
+				postFragment.getExternalReferenceCode(),
+				testGroup.getGroupId());
+
+		FragmentEntry draftFragmentEntry =
+			_fragmentEntryLocalService.fetchDraft(
+				fragmentEntry.getFragmentEntryId());
+
+		FragmentVersion[] fragmentVersions = fragment.getFragmentVersions();
+
+		FragmentVersion[] postFragmentVersions =
+			postFragment.getFragmentVersions();
+
+		Assert.assertTrue(
+			Arrays.toString(postFragmentVersions),
+			postFragmentVersions.length > 0);
+
+		for (int i = 0; i < fragmentVersions.length; i++) {
+			FragmentVersion fragmentVersion = fragmentVersions[i];
+
+			FragmentVersion postFragmentVersion = postFragmentVersions[i];
+
+			Assert.assertNull(postFragmentVersion.getConfiguration());
+			Assert.assertNull(postFragmentVersion.getCss());
+			Assert.assertNull(postFragmentVersion.getHtml());
+			Assert.assertNull(postFragmentVersion.getJs());
+
+			FragmentEntry curFragmentEntry = fragmentEntry;
+
+			if (fragmentVersion.getStatus() == FragmentVersion.Status.DRAFT) {
+				curFragmentEntry = draftFragmentEntry;
+			}
+
+			Assert.assertEquals(
+				fragmentVersion.getConfiguration(),
+				curFragmentEntry.getConfiguration());
+			Assert.assertEquals(
+				fragmentVersion.getCss(), curFragmentEntry.getCss());
+			Assert.assertEquals(
+				fragmentVersion.getHtml(), curFragmentEntry.getHtml());
+			Assert.assertEquals(
+				fragmentVersion.getJs(), curFragmentEntry.getJs());
+		}
 	}
 
 	private void _testPostSiteFragmentSetFragmentApproved() throws Exception {

@@ -158,6 +158,16 @@ public class AgentDefinitionSerDes {
 			sb.append(String.valueOf(agentDefinition.getStatus()));
 		}
 
+		if (agentDefinition.getSystem() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"system\": ");
+
+			sb.append(agentDefinition.getSystem());
+		}
+
 		if (agentDefinition.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -286,6 +296,13 @@ public class AgentDefinitionSerDes {
 			map.put("status", String.valueOf(agentDefinition.getStatus()));
 		}
 
+		if (agentDefinition.getSystem() == null) {
+			map.put("system", null);
+		}
+		else {
+			map.put("system", String.valueOf(agentDefinition.getSystem()));
+		}
+
 		if (agentDefinition.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -354,6 +371,9 @@ public class AgentDefinitionSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
@@ -439,6 +459,11 @@ public class AgentDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					agentDefinition.setStatus(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
+				if (jsonParserFieldValue != null) {
+					agentDefinition.setSystem((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
@@ -541,4 +566,4 @@ public class AgentDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1678907248
+// LIFERAY-REST-BUILDER-HASH:-538709709

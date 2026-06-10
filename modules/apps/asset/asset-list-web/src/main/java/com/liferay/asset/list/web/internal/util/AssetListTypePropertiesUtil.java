@@ -70,7 +70,7 @@ public class AssetListTypePropertiesUtil {
 					continue;
 				}
 
-				String type = _toFilterType(objectField.getBusinessType());
+				String type = _toType(objectField.getBusinessType());
 
 				if (type == null) {
 					continue;
@@ -193,7 +193,7 @@ public class AssetListTypePropertiesUtil {
 				companyId, PortalUtil.getClassName(classNameId));
 	}
 
-	private static String _toFilterType(String businessType) {
+	private static String _toType(String businessType) {
 		if (businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
 			return "boolean";
 		}

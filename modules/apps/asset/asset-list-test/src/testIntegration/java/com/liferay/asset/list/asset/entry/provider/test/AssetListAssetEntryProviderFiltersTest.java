@@ -57,7 +57,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
@@ -74,20 +73,19 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagDisabled()
 		throws Exception {
 
-		JSONArray filtersJSONArray = JSONUtil.putAll(
-			JSONUtil.put(
-				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
-			).put(
-				"classTypeId", _objectDefinition.getObjectDefinitionId()
-			).put(
-				"propertyName", "title"
-			).put(
-				"value", "keyword"
-			));
-
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			filtersJSONArray.toString());
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"classNameId",
+					_portal.getClassNameId(_objectDefinition.getClassName())
+				).put(
+					"classTypeId", _objectDefinition.getObjectDefinitionId()
+				).put(
+					"propertyName", "title"
+				).put(
+					"value", "keyword"
+				)
+			).toString());
 
 		AssetEntryQuery assetEntryQuery =
 			_assetListAssetEntryProvider.getAssetEntryQuery(
@@ -102,34 +100,33 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagEnabled()
 		throws Exception {
 
-		JSONArray filtersJSONArray = JSONUtil.putAll(
-			JSONUtil.put(
-				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
-			).put(
-				"classTypeId", _objectDefinition.getObjectDefinitionId()
-			).put(
-				"operatorName", "contains"
-			).put(
-				"propertyName", "title"
-			).put(
-				"value", "keyword"
-			),
-			JSONUtil.put(
-				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
-			).put(
-				"classTypeId", _objectDefinition.getObjectDefinitionId()
-			).put(
-				"operatorName", "eq"
-			).put(
-				"propertyName", "priority"
-			).put(
-				"value", "1"
-			));
-
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			filtersJSONArray.toString());
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"classNameId",
+					_portal.getClassNameId(_objectDefinition.getClassName())
+				).put(
+					"classTypeId", _objectDefinition.getObjectDefinitionId()
+				).put(
+					"operatorName", "contains"
+				).put(
+					"propertyName", "title"
+				).put(
+					"value", "keyword"
+				),
+				JSONUtil.put(
+					"classNameId",
+					_portal.getClassNameId(_objectDefinition.getClassName())
+				).put(
+					"classTypeId", _objectDefinition.getObjectDefinitionId()
+				).put(
+					"operatorName", "eq"
+				).put(
+					"propertyName", "priority"
+				).put(
+					"value", "1"
+				)
+			).toString());
 
 		AssetEntryQuery assetEntryQuery =
 			_assetListAssetEntryProvider.getAssetEntryQuery(

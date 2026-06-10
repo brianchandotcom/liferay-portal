@@ -67,18 +67,16 @@ export class TranslationsAdminPage {
 
 	async goto(site: Site) {
 
-		// p_v_l_s_g_id pins the control panel to the site scope; without it the
-		// app cannot resolve the scope after a publish and redirects away
+		// After a publish the editor fires a deferred navigation that can
+		// briefly bounce the admin list to the home page; retry until it renders
 
-		const url = `/group${site.friendlyUrlPath}${PORTLET_URLS.translation}&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=${site.id}`;
+		const url = `/group${site.friendlyUrlPath}${PORTLET_URLS.translation}&p_p_lifecycle=0&p_p_state=maximized`;
 
 		await expect(async () => {
 			await this.page.goto(url);
 
-			await this.page.waitForLoadState('networkidle');
-
 			await expect(this.heading).toBeVisible({timeout: 5000});
-		}).toPass({timeout: 30000});
+		}).toPass({timeout: 20000});
 	}
 
 	private entryRow(title: string): Locator {

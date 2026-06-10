@@ -52,19 +52,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="stop-keycloak-server">
-		<sequential>
-			<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
-
-			<exec dir="${liferay.dependency.dir}/keycloak-16.1.0/bin" executable="/bin/bash">
-				<arg value="./jboss-cli.sh" />
-				<arg value="--connect" />
-				<arg value="--controller=localhost:19990" />
-				<arg value="command=:shutdown" />
-			</exec>
-		</sequential>
-	</macrodef>
-
 	<target name="prepare-selenium-keycloak-server">
 		<start-keycloak-server />
 	</target>

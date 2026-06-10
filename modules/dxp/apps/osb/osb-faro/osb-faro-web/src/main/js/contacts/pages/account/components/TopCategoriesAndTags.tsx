@@ -190,7 +190,7 @@ const TabContent: React.FC<ITabContentProps> = ({
 									</ClayTable.Cell>
 								)}
 								<ClayTable.Cell>
-									{toThousands(item[selectedMetric].value)}
+									{toThousands(item[selectedMetric]?.value)}
 								</ClayTable.Cell>
 							</ClayTable.Row>
 						))}

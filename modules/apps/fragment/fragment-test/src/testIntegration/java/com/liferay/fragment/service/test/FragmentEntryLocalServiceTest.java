@@ -8,6 +8,7 @@ package com.liferay.fragment.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.exception.DuplicateFragmentEntryExternalReferenceCodeException;
+import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -646,6 +647,14 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertNull(
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				fragmentEntry.getFragmentEntryId()));
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testDeleteNonexistentFragmentEntryByExternalReferenceCode()
+		throws Exception {
+
+		_fragmentEntryLocalService.deleteFragmentEntry(
+			RandomTestUtil.randomString(), _group.getGroupId());
 	}
 
 	@Test

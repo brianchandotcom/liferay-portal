@@ -6,39 +6,18 @@ import {cleanup, render} from '@testing-library/react';
 import {Individual} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
-import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSources} from 'shared/context/dataSources';
-import {useRequest} from 'shared/hooks/useRequest';
 
 jest.unmock('react-dom');
 
-jest.mock('shared/hooks/useCurrentUser', () => ({
-	useCurrentUser: jest.fn()
-}));
-
-jest.mock('shared/context/dataSources', () => ({
-	useDataSources: jest.fn()
-}));
-
-jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: jest.fn()
-}));
-
 jest.mock('../../components/ContextualInformation', () => ({
 	__esModule: true,
-	default: ({children, showEmptyState}) =>
-		showEmptyState ? <>{children}</> : null
+	default: () => <div>{'ContextualInformation'}</div>
 }));
 
 jest.mock('../../hoc/ProfileCardCDP', () => ({
 	__esModule: true,
-	default: ({children, showEmptyState}) =>
-		showEmptyState ? <>{children}</> : null
+	default: () => <div>{'ProfileCardCDP'}</div>
 }));
-
-const mockedUseCurrentUser = useCurrentUser;
-const mockedUseDataSource = useDataSources;
-const mockedUseRequest = useRequest;
 
 const mockIndividual = data.getImmutableMock(Individual, data.mockIndividual);
 
@@ -53,33 +32,20 @@ const renderComponent = () =>
 
 describe('IndividualOverview', () => {
 	afterEach(() => {
-		jest.clearAllMocks();
 		cleanup();
 	});
 
-	it('should show connect data source button when no data sources exist', () => {
-		mockedUseCurrentUser.mockReturnValue({isAdmin: () => true});
-		mockedUseDataSource.mockReturnValue({empty: true});
-		mockedUseRequest.mockReturnValue({
-			data: {items: [], total: 0},
-			loading: false
-		});
+	it('should render the contextual information and profile card sections', () => {
+		const {getByText} = renderComponent();
 
-		const {getAllByText} = renderComponent();
-
-		expect(getAllByText('Connect Data Source').length).toBeGreaterThan(0);
+		expect(getByText('ContextualInformation')).toBeTruthy();
+		expect(getByText('ProfileCardCDP')).toBeTruthy();
 	});
 
-	it('should not show connect data source button when connected but no site data synced', () => {
-		mockedUseCurrentUser.mockReturnValue({isAdmin: () => true});
-		mockedUseDataSource.mockReturnValue({empty: false});
-		mockedUseRequest.mockReturnValue({
-			data: {items: [{sitesSelected: false}], total: 1},
-			loading: false
-		});
-
+	it('should not render the no site data synced empty state', () => {
 		const {queryByText} = renderComponent();
 
+		expect(queryByText('No Site Data Synced')).not.toBeInTheDocument();
 		expect(queryByText('Connect Data Source')).not.toBeInTheDocument();
 	});
 });

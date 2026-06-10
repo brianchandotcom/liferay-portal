@@ -10,7 +10,6 @@ import co.elastic.clients.elasticsearch._types.ElasticsearchVersionInfo;
 import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.elasticsearch.core.InfoResponse;
-import co.elastic.clients.elasticsearch.license.ElasticsearchLicenseClient;
 import co.elastic.clients.elasticsearch.license.GetLicenseResponse;
 import co.elastic.clients.elasticsearch.license.LicenseStatus;
 import co.elastic.clients.elasticsearch.license.LicenseType;
@@ -188,58 +187,15 @@ public class ElasticsearchSearchEngineInformation
 
 	@Override
 	public boolean isInferenceAPISupported() {
-		try {
-			ElasticsearchClient elasticsearchClient =
-				elasticsearchConnectionManager.getElasticsearchClient();
+		LicenseType licenseType = _getActiveLicenseType();
 
-			if (elasticsearchClient == null) {
-				return false;
-			}
+		if ((licenseType == LicenseType.Trial) ||
+			(licenseType == LicenseType.Enterprise)) {
 
-			ElasticsearchLicenseClient elasticsearchLicenseClient =
-				elasticsearchClient.license();
-
-			GetLicenseResponse getLicenseResponse =
-				elasticsearchLicenseClient.get();
-
-			if (getLicenseResponse == null) {
-				return false;
-			}
-
-			LicenseInformation licenseInformation =
-				getLicenseResponse.license();
-
-			if ((licenseInformation == null) ||
-				(licenseInformation.status() != LicenseStatus.Active)) {
-
-				return false;
-			}
-
-			LicenseType type = licenseInformation.type();
-
-			if ((type == LicenseType.Trial) ||
-				(type == LicenseType.Enterprise)) {
-
-				return true;
-			}
-
-			return false;
+			return true;
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to query the Elasticsearch \"_license\" API: " +
-						exception.getMessage());
-			}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to query the Elasticsearch \"_license\" API",
-					exception);
-			}
-
-			return false;
-		}
+		return false;
 	}
 
 	@Reference
@@ -368,6 +324,46 @@ public class ElasticsearchSearchEngineInformation
 
 		_addConnectionInformation(
 			elasticsearchConnection, connectionInformationList, labels);
+	}
+
+	private LicenseType _getActiveLicenseType() {
+		try {
+			ElasticsearchClient elasticsearchClient =
+				elasticsearchConnectionManager.getElasticsearchClient();
+
+			GetLicenseResponse getLicenseResponse = elasticsearchClient.license(
+			).get();
+
+			if (getLicenseResponse == null) {
+				return null;
+			}
+
+			LicenseInformation licenseInformation =
+				getLicenseResponse.license();
+
+			if ((licenseInformation == null) ||
+				(licenseInformation.status() != LicenseStatus.Active)) {
+
+				return null;
+			}
+
+			return licenseInformation.type();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to query the Elasticsearch \"_license\" API: " +
+						exception.getMessage());
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to query the Elasticsearch \"_license\" API",
+					exception);
+			}
+
+			return null;
+		}
 	}
 
 	private String _getClusterNodesString(

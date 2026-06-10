@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the remote service utility for AudienceEntry. This utility wraps
@@ -33,13 +32,12 @@ public class AudienceEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.audience.service.impl.AudienceEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static AudienceEntry addAudienceEntry(
-			String externalReferenceCode, String json,
-			Map<java.util.Locale, String> nameMap,
+			String externalReferenceCode, String json, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addAudienceEntry(
-			externalReferenceCode, json, nameMap, serviceContext);
+			externalReferenceCode, json, name, serviceContext);
 	}
 
 	public static AudienceEntry deleteAudienceEntry(long audienceEntryId)
@@ -88,11 +86,10 @@ public class AudienceEntryServiceUtil {
 	}
 
 	public static AudienceEntry updateAudienceEntry(
-			long audienceEntryId, String json,
-			Map<java.util.Locale, String> nameMap)
+			long audienceEntryId, String json, String name)
 		throws PortalException {
 
-		return getService().updateAudienceEntry(audienceEntryId, json, nameMap);
+		return getService().updateAudienceEntry(audienceEntryId, json, name);
 	}
 
 	public static AudienceEntryService getService() {
@@ -104,4 +101,4 @@ public class AudienceEntryServiceUtil {
 			AudienceEntryServiceUtil.class, AudienceEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-14207890
+// LIFERAY-SERVICE-BUILDER-HASH:-435651736

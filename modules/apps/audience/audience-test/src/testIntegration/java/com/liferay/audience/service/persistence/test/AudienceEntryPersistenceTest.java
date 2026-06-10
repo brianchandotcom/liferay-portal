@@ -118,8 +118,6 @@ public class AudienceEntryPersistenceTest {
 
 		newAudienceEntry.setMvccVersion(RandomTestUtil.nextLong());
 
-		newAudienceEntry.setUuid(RandomTestUtil.randomString());
-
 		newAudienceEntry.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -145,8 +143,6 @@ public class AudienceEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAudienceEntry.getMvccVersion(),
 			newAudienceEntry.getMvccVersion());
-		Assert.assertEquals(
-			existingAudienceEntry.getUuid(), newAudienceEntry.getUuid());
 		Assert.assertEquals(
 			existingAudienceEntry.getExternalReferenceCode(),
 			newAudienceEntry.getExternalReferenceCode());
@@ -191,24 +187,6 @@ public class AudienceEntryPersistenceTest {
 			audienceEntry.getExternalReferenceCode());
 
 		_persistence.update(newAudienceEntry);
-	}
-
-	@Test
-	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid("");
-
-		_persistence.countByUuid("null");
-
-		_persistence.countByUuid((String)null);
-	}
-
-	@Test
-	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
-
-		_persistence.countByUuid_C("null", 0L);
-
-		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -261,10 +239,10 @@ public class AudienceEntryPersistenceTest {
 
 	protected OrderByComparator<AudienceEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AudienceEntry", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "audienceEntryId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true);
+			"AudienceEntry", "mvccVersion", true, "externalReferenceCode", true,
+			"audienceEntryId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true);
 	}
 
 	@Test
@@ -550,8 +528,6 @@ public class AudienceEntryPersistenceTest {
 
 		audienceEntry.setMvccVersion(RandomTestUtil.nextLong());
 
-		audienceEntry.setUuid(RandomTestUtil.randomString());
-
 		audienceEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		audienceEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -579,4 +555,4 @@ public class AudienceEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1650378738
+// LIFERAY-SERVICE-BUILDER-HASH:-1891683297

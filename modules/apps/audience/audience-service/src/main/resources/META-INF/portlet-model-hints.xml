@@ -3,7 +3,6 @@
 <model-hints>
 	<model name="com.liferay.audience.model.AudienceEntry">
 		<field name="mvccVersion" type="long" />
-		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="audienceEntryId" type="long" />
 		<field name="companyId" type="long" />
@@ -14,6 +13,6 @@
 		<field name="JSON" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field localized="true" name="name" type="String" />
+		<field name="name" type="String" />
 	</model>
 </model-hints>

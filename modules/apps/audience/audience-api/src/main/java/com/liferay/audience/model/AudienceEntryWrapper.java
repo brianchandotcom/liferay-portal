@@ -5,7 +5,6 @@
 
 package com.liferay.audience.model;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -35,7 +34,6 @@ public class AudienceEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("audienceEntryId", getAudienceEntryId());
 		attributes.put("companyId", getCompanyId());
@@ -55,12 +53,6 @@ public class AudienceEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
 		}
 
 		String externalReferenceCode = (String)attributes.get(
@@ -134,11 +126,6 @@ public class AudienceEntryWrapper
 		return model.getAudienceEntryId();
 	}
 
-	@Override
-	public String[] getAvailableLanguageIds() {
-		return model.getAvailableLanguageIds();
-	}
-
 	/**
 	 * Returns the company ID of this audience entry.
 	 *
@@ -157,11 +144,6 @@ public class AudienceEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
-	}
-
-	@Override
-	public String getDefaultLanguageId() {
-		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -215,72 +197,6 @@ public class AudienceEntryWrapper
 	}
 
 	/**
-	 * Returns the localized name of this audience entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized name of this audience entry
-	 */
-	@Override
-	public String getName(java.util.Locale locale) {
-		return model.getName(locale);
-	}
-
-	/**
-	 * Returns the localized name of this audience entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this audience entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@Override
-	public String getName(java.util.Locale locale, boolean useDefault) {
-		return model.getName(locale, useDefault);
-	}
-
-	/**
-	 * Returns the localized name of this audience entry in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized name of this audience entry
-	 */
-	@Override
-	public String getName(String languageId) {
-		return model.getName(languageId);
-	}
-
-	/**
-	 * Returns the localized name of this audience entry in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this audience entry
-	 */
-	@Override
-	public String getName(String languageId, boolean useDefault) {
-		return model.getName(languageId, useDefault);
-	}
-
-	@Override
-	public String getNameCurrentLanguageId() {
-		return model.getNameCurrentLanguageId();
-	}
-
-	@Override
-	public String getNameCurrentValue() {
-		return model.getNameCurrentValue();
-	}
-
-	/**
-	 * Returns a map of the locales and localized names of this audience entry.
-	 *
-	 * @return the locales and localized names of this audience entry
-	 */
-	@Override
-	public Map<java.util.Locale, String> getNameMap() {
-		return model.getNameMap();
-	}
-
-	/**
 	 * Returns the primary key of this audience entry.
 	 *
 	 * @return the primary key of this audience entry
@@ -320,34 +236,9 @@ public class AudienceEntryWrapper
 		return model.getUserUuid();
 	}
 
-	/**
-	 * Returns the uuid of this audience entry.
-	 *
-	 * @return the uuid of this audience entry
-	 */
-	@Override
-	public String getUuid() {
-		return model.getUuid();
-	}
-
 	@Override
 	public void persist() {
 		model.persist();
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport()
-		throws com.liferay.portal.kernel.exception.LocaleException {
-
-		model.prepareLocalizedFieldsForImport();
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport(
-			java.util.Locale defaultImportLocale)
-		throws com.liferay.portal.kernel.exception.LocaleException {
-
-		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -431,59 +322,6 @@ public class AudienceEntryWrapper
 	}
 
 	/**
-	 * Sets the localized name of this audience entry in the language.
-	 *
-	 * @param name the localized name of this audience entry
-	 * @param locale the locale of the language
-	 */
-	@Override
-	public void setName(String name, java.util.Locale locale) {
-		model.setName(name, locale);
-	}
-
-	/**
-	 * Sets the localized name of this audience entry in the language, and sets the default locale.
-	 *
-	 * @param name the localized name of this audience entry
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setName(
-		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
-
-		model.setName(name, locale, defaultLocale);
-	}
-
-	@Override
-	public void setNameCurrentLanguageId(String languageId) {
-		model.setNameCurrentLanguageId(languageId);
-	}
-
-	/**
-	 * Sets the localized names of this audience entry from the map of locales and localized names.
-	 *
-	 * @param nameMap the locales and localized names of this audience entry
-	 */
-	@Override
-	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		model.setNameMap(nameMap);
-	}
-
-	/**
-	 * Sets the localized names of this audience entry from the map of locales and localized names, and sets the default locale.
-	 *
-	 * @param nameMap the locales and localized names of this audience entry
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setNameMap(
-		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
-
-		model.setNameMap(nameMap, defaultLocale);
-	}
-
-	/**
 	 * Sets the primary key of this audience entry.
 	 *
 	 * @param primaryKey the primary key of this audience entry
@@ -523,24 +361,9 @@ public class AudienceEntryWrapper
 		model.setUserUuid(userUuid);
 	}
 
-	/**
-	 * Sets the uuid of this audience entry.
-	 *
-	 * @param uuid the uuid of this audience entry
-	 */
-	@Override
-	public void setUuid(String uuid) {
-		model.setUuid(uuid);
-	}
-
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return model.getStagedModelType();
 	}
 
 	@Override
@@ -549,4 +372,4 @@ public class AudienceEntryWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1696495064
+// LIFERAY-SERVICE-BUILDER-HASH:-63623288

@@ -26,8 +26,6 @@ public class AudienceEntryTable extends BaseTable<AudienceEntryTable> {
 
 	public final Column<AudienceEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<AudienceEntryTable, String> uuid = createColumn(
-		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AudienceEntryTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,
@@ -55,4 +53,4 @@ public class AudienceEntryTable extends BaseTable<AudienceEntryTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1363239532
+// LIFERAY-SERVICE-BUILDER-HASH:-1329907185

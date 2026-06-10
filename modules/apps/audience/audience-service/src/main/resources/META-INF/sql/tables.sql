@@ -1,6 +1,5 @@
 create table AudienceEntry (
 	mvccVersion LONG default 0 not null,
-	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	audienceEntryId LONG not null primary key,
 	companyId LONG,
@@ -9,5 +8,5 @@ create table AudienceEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	json TEXT null,
-	name STRING null
+	name VARCHAR(75) null
 );

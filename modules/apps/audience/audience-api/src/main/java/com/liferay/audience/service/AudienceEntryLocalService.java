@@ -6,11 +6,9 @@
 package com.liferay.audience.service;
 
 import com.liferay.audience.model.AudienceEntry;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,8 +27,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,8 +68,8 @@ public interface AudienceEntryLocalService
 	public AudienceEntry addAudienceEntry(AudienceEntry audienceEntry);
 
 	public AudienceEntry addAudienceEntry(
-			String externalReferenceCode, String json,
-			Map<Locale, String> nameMap, ServiceContext serviceContext)
+			String externalReferenceCode, String json, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -207,17 +203,6 @@ public interface AudienceEntryLocalService
 	public AudienceEntry fetchAudienceEntryByExternalReferenceCode(
 		String externalReferenceCode, long companyId);
 
-	/**
-	 * Returns the audience entry with the matching UUID and company.
-	 *
-	 * @param uuid the audience entry's UUID
-	 * @param companyId the primary key of the company
-	 * @return the matching audience entry, or <code>null</code> if a matching audience entry could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AudienceEntry fetchAudienceEntryByUuidAndCompanyId(
-		String uuid, long companyId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -276,23 +261,6 @@ public interface AudienceEntryLocalService
 			String externalReferenceCode, long companyId)
 		throws PortalException;
 
-	/**
-	 * Returns the audience entry with the matching UUID and company.
-	 *
-	 * @param uuid the audience entry's UUID
-	 * @param companyId the primary key of the company
-	 * @return the matching audience entry
-	 * @throws PortalException if a matching audience entry could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AudienceEntry getAudienceEntryByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
@@ -325,8 +293,8 @@ public interface AudienceEntryLocalService
 	public AudienceEntry updateAudienceEntry(AudienceEntry audienceEntry);
 
 	public AudienceEntry updateAudienceEntry(
-			long audienceEntryId, String json, Map<Locale, String> nameMap)
+			long audienceEntryId, String json, String name)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1966579073
+// LIFERAY-SERVICE-BUILDER-HASH:1130542073

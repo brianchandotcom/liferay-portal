@@ -43,7 +43,7 @@ public class AudienceEntryServiceHttp {
 
 	public static com.liferay.audience.model.AudienceEntry addAudienceEntry(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			String json, java.util.Map<java.util.Locale, String> nameMap,
+			String json, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -53,8 +53,7 @@ public class AudienceEntryServiceHttp {
 				_addAudienceEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, json, nameMap,
-				serviceContext);
+				methodKey, externalReferenceCode, json, name, serviceContext);
 
 			Object returnObj = null;
 
@@ -303,7 +302,7 @@ public class AudienceEntryServiceHttp {
 
 	public static com.liferay.audience.model.AudienceEntry updateAudienceEntry(
 			HttpPrincipal httpPrincipal, long audienceEntryId, String json,
-			java.util.Map<java.util.Locale, String> nameMap)
+			String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -312,7 +311,7 @@ public class AudienceEntryServiceHttp {
 				_updateAudienceEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, audienceEntryId, json, nameMap);
+				methodKey, audienceEntryId, json, name);
 
 			Object returnObj = null;
 
@@ -347,7 +346,7 @@ public class AudienceEntryServiceHttp {
 
 	private static final Class<?>[] _addAudienceEntryParameterTypes0 =
 		new Class[] {
-			String.class, String.class, java.util.Map.class,
+			String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteAudienceEntryParameterTypes1 =
@@ -369,7 +368,7 @@ public class AudienceEntryServiceHttp {
 	private static final Class<?>[] _getAudienceEntryParameterTypes6 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateAudienceEntryParameterTypes7 =
-		new Class[] {long.class, String.class, java.util.Map.class};
+		new Class[] {long.class, String.class, String.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1352682489
+// LIFERAY-SERVICE-BUILDER-HASH:-402688479

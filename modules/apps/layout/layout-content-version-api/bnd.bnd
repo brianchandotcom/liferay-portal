@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Layout Content Version API
+Bundle-SymbolicName: com.liferay.layout.content.version.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.layout.content.version.exception,\
+	com.liferay.layout.content.version.model,\
+	com.liferay.layout.content.version.service,\
+	com.liferay.layout.content.version.service.persistence,\
+	com.liferay.layout.content.version.util.comparator

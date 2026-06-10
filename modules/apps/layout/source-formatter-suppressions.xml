@@ -11,4 +11,7 @@
 		<suppress checks="MethodNamingCheck" files="layout-impl/src/main/java/com/liferay/layout/internal/util/LayoutServiceContextHelperImpl\.java" />
 		<suppress checks="VariableDeclarationAsUsedCheck" files="layout-impl/src/main/java/com/liferay/layout/internal/struts/UpdateLayoutStrutsAction\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="XMLServiceEntityNameCheck" files="layout-content-version-service/service\.xml" />
+	</source-check>
 </suppressions>

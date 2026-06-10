@@ -61,9 +61,6 @@ public class AudienceEntryLocalServiceImpl
 		audienceEntry.setUserId(user.getUserId());
 		audienceEntry.setUserName(user.getFullName());
 
-		audienceEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
-		audienceEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 		audienceEntry.setJSON(json);
 		audienceEntry.setNameMap(nameMap);
 
@@ -137,8 +134,7 @@ public class AudienceEntryLocalServiceImpl
 
 	@Override
 	public AudienceEntry updateAudienceEntry(
-			long audienceEntryId, String json, Map<Locale, String> nameMap,
-			ServiceContext serviceContext)
+			long audienceEntryId, String json, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		// Audience entry
@@ -148,8 +144,6 @@ public class AudienceEntryLocalServiceImpl
 
 		_validateName(nameMap);
 
-		audienceEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 		audienceEntry.setJSON(json);
 		audienceEntry.setNameMap(nameMap);
 

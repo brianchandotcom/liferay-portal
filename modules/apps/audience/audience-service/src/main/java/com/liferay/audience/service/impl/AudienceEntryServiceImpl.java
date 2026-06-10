@@ -106,15 +106,14 @@ public class AudienceEntryServiceImpl extends AudienceEntryServiceBaseImpl {
 
 	@Override
 	public AudienceEntry updateAudienceEntry(
-			long audienceEntryId, String json, Map<Locale, String> nameMap,
-			ServiceContext serviceContext)
+			long audienceEntryId, String json, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		_audienceEntryResourcePermission.check(
 			getPermissionChecker(), audienceEntryId, ActionKeys.UPDATE);
 
 		return audienceEntryLocalService.updateAudienceEntry(
-			audienceEntryId, json, nameMap, serviceContext);
+			audienceEntryId, json, nameMap);
 	}
 
 	@Reference(

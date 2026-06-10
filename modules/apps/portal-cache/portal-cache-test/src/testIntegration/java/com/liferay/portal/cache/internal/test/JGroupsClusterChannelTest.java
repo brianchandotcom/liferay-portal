@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -44,6 +45,7 @@ import java.sql.Driver;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
@@ -141,6 +143,103 @@ public class JGroupsClusterChannelTest implements Serializable {
 
 					return clusterNodes.contains(clusterNode1);
 				}));
+
+		_assertAuthenticatedUserId(tomcatNode2);
+	}
+
+	@Test
+	public void testConnectWithJDBCPingZombieEntries() throws Exception {
+		_recreateJGroupsPingTable();
+
+		Path zombieJDBCPingXMLPath = _createJDBCPingXMLPath(
+			"clustering_jdbc_ping_zombie.xml");
+
+		TomcatCluster.Builder builder1 =
+			tomcatClusterTestRule.buildTomcatNode();
+
+		TomcatNode tomcatNode1 = builder1.build();
+
+		Files.write(
+			tomcatNode1.getPortalExtPropertiesPath(),
+			List.of(
+				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=" +
+					zombieJDBCPingXMLPath.toAbsolutePath(),
+				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT + ".0=" +
+					zombieJDBCPingXMLPath.toAbsolutePath()),
+			StandardOpenOption.APPEND);
+
+		tomcatNode1.start(true);
+
+		_injectDataSourceIntoJDBCPing(tomcatNode1);
+
+		List<String> clusterNames = new ArrayList<>();
+		List<String> ownAddresses = new ArrayList<>();
+		List<byte[]> pingDataArrays = new ArrayList<>();
+
+		try (Connection connection = DataAccess.getConnection();
+
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select own_addr, cluster_name, ping_data from JGROUPSPING");
+
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				ownAddresses.add(resultSet.getString("own_addr"));
+				clusterNames.add(resultSet.getString("cluster_name"));
+				pingDataArrays.add(resultSet.getBytes("ping_data"));
+			}
+		}
+
+		Assert.assertFalse(ownAddresses.isEmpty());
+
+		tomcatNode1.stop();
+
+		_recreateJGroupsPingTable();
+
+		try (Connection connection = DataAccess.getConnection();
+
+			PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"insert into JGROUPSPING (own_addr, cluster_name, " +
+						"ping_data) values (?, ?, ?)")) {
+
+			for (int i = 0; i < ownAddresses.size(); i++) {
+				preparedStatement.setString(1, ownAddresses.get(i));
+				preparedStatement.setString(2, clusterNames.get(i));
+				preparedStatement.setBytes(3, pingDataArrays.get(i));
+
+				preparedStatement.addBatch();
+			}
+
+			preparedStatement.executeBatch();
+		}
+
+		_assertJGroupsPingCount(ownAddresses.size());
+
+		Path jdbcPingXMLPath = _createJDBCPingXMLPath(
+			"clustering_jdbc_ping.xml");
+
+		TomcatCluster.Builder builder2 =
+			tomcatClusterTestRule.buildTomcatNode();
+
+		TomcatNode tomcatNode2 = builder2.build();
+
+		Files.write(
+			tomcatNode2.getPortalExtPropertiesPath(),
+			List.of(
+				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=" +
+					jdbcPingXMLPath.toAbsolutePath(),
+				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT + ".0=" +
+					jdbcPingXMLPath.toAbsolutePath()),
+			StandardOpenOption.APPEND);
+
+		tomcatNode2.start(true);
+
+		_injectDataSourceIntoJDBCPing(tomcatNode2);
+
+		Assert.assertNotNull(
+			tomcatNode2.syncExecute(ClusterExecutorUtil::getLocalClusterNode));
 
 		_assertAuthenticatedUserId(tomcatNode2);
 	}

@@ -6,6 +6,8 @@
 package com.liferay.site.item.selector.web.internal.display.context;
 
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.provider.GroupSearchProvider;
 import com.liferay.site.search.GroupSearch;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletURL;
@@ -73,9 +76,26 @@ public class MySitesItemSelectorViewDisplayContext
 
 		_groupSearch = new GroupSearch(_portletRequest, portletURL);
 
-		GroupSearchProvider.setResultsAndTotal(
-			_getClassNames(), groupItemSelectorCriterion.getExcludedGroupIds(),
-			_groupSearch, _portletRequest);
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
+		String itemSelectedEventName = getItemSelectedEventName();
+
+		if ((itemSelectedEventName != null) &&
+			itemSelectedEventName.contains(UsersAdminPortletKeys.USERS_ADMIN)) {
+
+			ctCollectionId =
+				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
+		}
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
+
+			GroupSearchProvider.setResultsAndTotal(
+				_getClassNames(),
+				groupItemSelectorCriterion.getExcludedGroupIds(), _groupSearch,
+				_portletRequest);
+		}
 
 		if (_groupSearch.getStart() == 0) {
 			if (groupItemSelectorCriterion.isIncludeUserPersonalSite()) {

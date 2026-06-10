@@ -67,9 +67,7 @@ public class GetProductionReadinessResultsMVCResourceCommand
 			if (ignoredRules.contains(productionReadinessResult.getKey())) {
 				ignored++;
 			}
-			else if (productionReadinessResult.getStatus() ==
-						ProductionReadinessResult.Status.PASS) {
-
+			else if (productionReadinessResult.isPass()) {
 				passed++;
 			}
 			else {
@@ -138,7 +136,7 @@ public class GetProductionReadinessResultsMVCResourceCommand
 		).put(
 			"severity", String.valueOf(productionReadinessResult.getSeverity())
 		).put(
-			"status", String.valueOf(productionReadinessResult.getStatus())
+			"status", productionReadinessResult.isPass() ? "PASS" : "FAIL"
 		);
 	}
 

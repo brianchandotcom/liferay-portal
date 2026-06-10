@@ -143,7 +143,6 @@ public class ProductionReadinessRuleUtilTest {
 				Assert.assertNotNull(productionReadinessResult.getCategory());
 				Assert.assertNotNull(productionReadinessResult.getKey());
 				Assert.assertNotNull(productionReadinessResult.getSeverity());
-				Assert.assertNotNull(productionReadinessResult.getStatus());
 			}
 		}
 	}
@@ -163,9 +162,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkBetaLanguages",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"languages-beta", productionReadinessResult.getKey());
 			Assert.assertEquals(
@@ -188,9 +185,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkBetaLanguages",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"languages-beta", productionReadinessResult.getKey());
 		}
@@ -212,9 +207,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkCounterIncrement",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"counter-increment", productionReadinessResult.getKey());
 			Assert.assertEquals(
@@ -238,9 +231,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkCounterIncrement",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"counter-increment", productionReadinessResult.getKey());
 		}
@@ -266,9 +257,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkDatabaseConfiguration", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"pool-vs-thread-size", productionReadinessResult.getKey());
 		}
@@ -318,9 +307,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkDatabaseConfiguration", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"pool-vs-thread-size", productionReadinessResult.getKey());
 		}
@@ -338,9 +325,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkDLImagePreviewDPI", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"dl-image-preview-dpi", productionReadinessResult.getKey());
 			Assert.assertEquals(
@@ -360,9 +345,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkDLImagePreviewDPI", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"dl-image-preview-dpi", productionReadinessResult.getKey());
 		}
@@ -380,9 +363,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkDLPreviewForking",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"dl-preview-forking", productionReadinessResult.getKey());
 		}
@@ -400,9 +381,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkDLPreviewForking",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"dl-preview-forking", productionReadinessResult.getKey());
 		}
@@ -421,9 +400,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkExplicitGCDisabled", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"explicit-gc-disabled", productionReadinessResult.getKey());
 			Assert.assertEquals(
@@ -446,9 +423,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkExplicitGCDisabled", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"explicit-gc-disabled", productionReadinessResult.getKey());
 		}
@@ -466,9 +441,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkFileStoreImplementation", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"file-store-implementation",
 				productionReadinessResult.getKey());
@@ -495,10 +468,9 @@ public class ProductionReadinessRuleUtilTest {
 						ProductionReadinessRuleUtil.class,
 						"_checkFileStoreImplementation", new Class<?>[0]);
 
-				Assert.assertEquals(
+				Assert.assertTrue(
 					"Expected PASS for " + impl,
-					ProductionReadinessResult.Status.PASS,
-					productionReadinessResult.getStatus());
+					productionReadinessResult.isPass());
 				Assert.assertEquals(
 					impl, productionReadinessResult.getCurrentValue());
 			}
@@ -530,9 +502,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkGarbageCollectorType", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"garbage-collector-type", productionReadinessResult.getKey());
 		}
@@ -563,9 +533,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkGarbageCollectorType", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"garbage-collector-type", productionReadinessResult.getKey());
 		}
@@ -585,9 +553,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkHeapAllocationConsistency", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"heap-allocation-consistency",
 				productionReadinessResult.getKey());
@@ -608,9 +574,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkHeapAllocationConsistency", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"heap-allocation-consistency",
 				productionReadinessResult.getKey());
@@ -632,9 +596,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkHeapSizeUpperLimit", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"heap-size-upper-limit", productionReadinessResult.getKey());
 		}
@@ -655,9 +617,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkHeapSizeUpperLimit", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"heap-size-upper-limit", productionReadinessResult.getKey());
 		}
@@ -690,9 +650,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkHugePagesConfiguration", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"huge-pages-configuration", productionReadinessResult.getKey());
 		}
@@ -716,9 +674,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkHugePagesConfiguration", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"huge-pages-configuration", productionReadinessResult.getKey());
 		}
@@ -741,9 +697,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkHugePagesConfiguration", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"huge-pages-configuration", productionReadinessResult.getKey());
 			Assert.assertEquals(
@@ -766,9 +720,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkHugePagesConfiguration", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"huge-pages-configuration", productionReadinessResult.getKey());
 		}
@@ -789,9 +741,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkJMXConfigurationDisabled", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"jmx-configuration-disabled",
 				productionReadinessResult.getKey());
@@ -817,9 +767,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkJMXConfigurationDisabled", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"jmx-configuration-disabled",
 				productionReadinessResult.getKey());
@@ -875,9 +823,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkJSPEngineSettings", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"jsp-engine-settings", productionReadinessResult.getKey());
 		}
@@ -986,9 +932,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkJSPEngineSettings", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"jsp-engine-settings", productionReadinessResult.getKey());
 		}
@@ -1014,9 +958,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkJSPReloading",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"jsp-reloading", productionReadinessResult.getKey());
 			Assert.assertEquals(
@@ -1041,9 +983,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkJSPReloading",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"jsp-reloading", productionReadinessResult.getKey());
 		}
@@ -1051,28 +991,23 @@ public class ProductionReadinessRuleUtilTest {
 
 	@Test
 	public void testCheckPasswordEncryptionBCRYPTPass() {
-		_assertPasswordEncryption(
-			"BCRYPT", ProductionReadinessResult.Status.PASS);
+		_assertPasswordEncryption("BCRYPT", true);
 	}
 
 	@Test
 	public void testCheckPasswordEncryptionMD5Fail() {
-		_assertPasswordEncryption("MD5", ProductionReadinessResult.Status.FAIL);
+		_assertPasswordEncryption("MD5", false);
 	}
 
 	@Test
 	public void testCheckPasswordEncryptionPBKDF2StrongPass() {
-		_assertPasswordEncryption(
-			"PBKDF2WithHmacSHA1/160/1300000",
-			ProductionReadinessResult.Status.PASS);
+		_assertPasswordEncryption("PBKDF2WithHmacSHA1/160/1300000", true);
 	}
 
 	@Test
 	public void testCheckPasswordEncryptionPBKDF2WeakFail() {
 		ProductionReadinessResult productionReadinessResult =
-			_assertPasswordEncryption(
-				"PBKDF2WithHmacSHA1/160/1000",
-				ProductionReadinessResult.Status.FAIL);
+			_assertPasswordEncryption("PBKDF2WithHmacSHA1/160/1000", false);
 
 		Assert.assertEquals(
 			ProductionReadinessResult.Severity.HIGH,
@@ -1095,9 +1030,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkPortalDeveloperProperties", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"portal-developer-properties",
 				productionReadinessResult.getKey());
@@ -1123,9 +1056,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkPortalDeveloperProperties", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"portal-developer-properties",
 				productionReadinessResult.getKey());
@@ -1146,9 +1077,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkPreventDiagnosticOverhead", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"prevent-diagnostic-overhead",
 				productionReadinessResult.getKey());
@@ -1168,9 +1097,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class,
 					"_checkPreventDiagnosticOverhead", new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"prevent-diagnostic-overhead",
 				productionReadinessResult.getKey());
@@ -1191,9 +1118,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkSidecarDetection",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"sidecar-detection", productionReadinessResult.getKey());
 			Assert.assertEquals(
@@ -1218,9 +1143,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkSidecarDetection",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"sidecar-detection", productionReadinessResult.getKey());
 		}
@@ -1244,9 +1167,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkSidecarDetection",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"sidecar-detection", productionReadinessResult.getKey());
 		}
@@ -1268,9 +1189,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkUnusedLanguages",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.FAIL,
-				productionReadinessResult.getStatus());
+			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"languages-unused", productionReadinessResult.getKey());
 			Assert.assertEquals(
@@ -1293,9 +1212,7 @@ public class ProductionReadinessRuleUtilTest {
 					ProductionReadinessRuleUtil.class, "_checkUnusedLanguages",
 					new Class<?>[0]);
 
-			Assert.assertEquals(
-				ProductionReadinessResult.Status.PASS,
-				productionReadinessResult.getStatus());
+			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"languages-unused", productionReadinessResult.getKey());
 		}
@@ -1367,7 +1284,7 @@ public class ProductionReadinessRuleUtilTest {
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private ProductionReadinessResult _assertPasswordEncryption(
-		String algorithm, ProductionReadinessResult.Status expectedStatus) {
+		String algorithm, boolean expectedPass) {
 
 		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
 				PropsUtil.class)) {
@@ -1384,7 +1301,7 @@ public class ProductionReadinessRuleUtilTest {
 					"_checkPasswordEncryption", new Class<?>[0]);
 
 			Assert.assertEquals(
-				expectedStatus, productionReadinessResult.getStatus());
+				expectedPass, productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"password-encryption", productionReadinessResult.getKey());
 

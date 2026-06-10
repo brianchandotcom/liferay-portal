@@ -257,7 +257,7 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 		)
 	).toBeVisible();
 	await expect(
-		page.getByText(site2.name + ' (3):  Blogs Entry (3)')
+		page.getByText(site2.name + ' (2):  Blogs Entry (2)')
 	).toBeVisible();
 
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
@@ -282,7 +282,7 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 		)
 	).toBeVisible();
 	await expect(
-		page.getByText(site2.name + ' (3):   Blogs Entry (3)')
+		page.getByText(site2.name + ' (2):   Blogs Entry (2)')
 	).toBeVisible();
 });
 

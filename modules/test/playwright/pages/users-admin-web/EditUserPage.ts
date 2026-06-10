@@ -135,6 +135,10 @@ export class EditUserPage {
 	readonly screenNameError: Locator;
 	readonly screenNameInput: Locator;
 	readonly selectAccountsButton: Locator;
+	readonly selectAssetLibrariesButton: Locator;
+	readonly selectAssetLibrariesFrame: FrameLocator;
+	readonly selectAssetLibrariesFrameEntry: (name: string) => Locator;
+	readonly selectAssetLibrariesSearchBar: Locator;
 	readonly selectOrganizationRolesButton: Locator;
 	readonly selectOrganizationRolesChooseButton: (
 		name: string
@@ -185,6 +189,8 @@ export class EditUserPage {
 	readonly selectSitesTableRowButton: (siteName: string) => Promise<Locator>;
 	readonly selectTagsButton: Locator;
 	readonly selectUserGroupIFrame: FrameLocator;
+	readonly selectUserGroupFrameEntry: (name: string) => Locator;
+	readonly selectUserGroupSearchBar: Locator;
 	readonly selectUserGroupTable: DataTablePage;
 	readonly selectUserGroupsButton: Locator;
 	readonly selectUserLanguage: Locator;
@@ -579,6 +585,16 @@ export class EditUserPage {
 		);
 		this.screenNameInput = page.getByLabel('Screen Name');
 		this.selectAccountsButton = page.getByLabel('Select Accounts');
+		this.selectAssetLibrariesButton = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectDepotGroupLink'
+		);
+		this.selectAssetLibrariesFrame = page.frameLocator(
+			'iframe[title^="Select Asset Librar"]'
+		);
+		this.selectAssetLibrariesFrameEntry = (name) =>
+			this.selectAssetLibrariesFrame.getByText(name, {exact: true});
+		this.selectAssetLibrariesSearchBar =
+			this.selectAssetLibrariesFrame.getByPlaceholder('Search for');
 		this.selectOrganizationRolesButton = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectOrganizationRoleLink'
 		);
@@ -756,6 +772,10 @@ export class EditUserPage {
 		this.selectUserGroupIFrame = page.frameLocator(
 			'iframe[title="Select User Group"]'
 		);
+		this.selectUserGroupFrameEntry = (name) =>
+			this.selectUserGroupIFrame.getByText(name, {exact: true});
+		this.selectUserGroupSearchBar =
+			this.selectUserGroupIFrame.getByPlaceholder('Search for');
 		this.selectUserGroupTable = new DataTablePage(
 			this.selectUserGroupIFrame,
 			this.selectUserGroupIFrame.locator(

@@ -55,28 +55,10 @@ public interface CommerceSubscriptionEntryService extends BaseService {
 			long commerceSubscriptionEntryId)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceSubscriptionEntry> getCommerceSubscriptionEntries(
-			long companyId, long userId, int start, int end,
-			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceSubscriptionEntry> getCommerceSubscriptionEntries(
 			long companyId, long groupId, long userId, int start, int end,
 			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceSubscriptionEntriesCount(long companyId, long userId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -99,18 +81,6 @@ public interface CommerceSubscriptionEntryService extends BaseService {
 				Sort sort)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CommerceSubscriptionEntry>
-			searchCommerceSubscriptionEntries(
-				long companyId, long[] groupIds, Long maxSubscriptionCycles,
-				Integer subscriptionStatus, String keywords, int start, int end,
-				Sort sort)
-		throws PortalException;
-
 	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId, int subscriptionLength,
 			String subscriptionType,
@@ -128,13 +98,5 @@ public interface CommerceSubscriptionEntryService extends BaseService {
 			int deliveryNextIterationDateMinute)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public CommerceSubscriptionEntry updateSubscriptionStatus(
-			long commerceSubscriptionEntryId, int subscriptionStatus)
-		throws PortalException;
-
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-834234507
+// LIFERAY-SERVICE-BUILDER-HASH:1123984977

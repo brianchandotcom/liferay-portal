@@ -124,55 +124,6 @@ public class CommerceSubscriptionEntryServiceHttp {
 	public static java.util.List
 		<com.liferay.commerce.model.CommerceSubscriptionEntry>
 				getCommerceSubscriptionEntries(
-					HttpPrincipal httpPrincipal, long companyId, long userId,
-					int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.model.CommerceSubscriptionEntry>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommerceSubscriptionEntryServiceUtil.class,
-				"getCommerceSubscriptionEntries",
-				_getCommerceSubscriptionEntriesParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, userId, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List
-				<com.liferay.commerce.model.CommerceSubscriptionEntry>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceSubscriptionEntry>
-				getCommerceSubscriptionEntries(
 					HttpPrincipal httpPrincipal, long companyId, long groupId,
 					long userId, int start, int end,
 					com.liferay.portal.kernel.util.OrderByComparator
@@ -184,7 +135,7 @@ public class CommerceSubscriptionEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceSubscriptionEntryServiceUtil.class,
 				"getCommerceSubscriptionEntries",
-				_getCommerceSubscriptionEntriesParameterTypes3);
+				_getCommerceSubscriptionEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, userId, start, end,
@@ -221,47 +172,6 @@ public class CommerceSubscriptionEntryServiceHttp {
 	}
 
 	public static int getCommerceSubscriptionEntriesCount(
-			HttpPrincipal httpPrincipal, long companyId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommerceSubscriptionEntryServiceUtil.class,
-				"getCommerceSubscriptionEntriesCount",
-				_getCommerceSubscriptionEntriesCountParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, userId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static int getCommerceSubscriptionEntriesCount(
 			HttpPrincipal httpPrincipal, long companyId, long groupId,
 			long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -270,7 +180,7 @@ public class CommerceSubscriptionEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceSubscriptionEntryServiceUtil.class,
 				"getCommerceSubscriptionEntriesCount",
-				_getCommerceSubscriptionEntriesCountParameterTypes5);
+				_getCommerceSubscriptionEntriesCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, userId);
@@ -316,60 +226,11 @@ public class CommerceSubscriptionEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceSubscriptionEntryServiceUtil.class,
 				"searchCommerceSubscriptionEntries",
-				_searchCommerceSubscriptionEntriesParameterTypes6);
+				_searchCommerceSubscriptionEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, maxSubscriptionCycles, subscriptionStatus,
 				keywords, start, end, sort);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.portal.kernel.search.BaseModelSearchResult
-				<com.liferay.commerce.model.CommerceSubscriptionEntry>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.model.CommerceSubscriptionEntry>
-				searchCommerceSubscriptionEntries(
-					HttpPrincipal httpPrincipal, long companyId,
-					long[] groupIds, Long maxSubscriptionCycles,
-					Integer subscriptionStatus, String keywords, int start,
-					int end, com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommerceSubscriptionEntryServiceUtil.class,
-				"searchCommerceSubscriptionEntries",
-				_searchCommerceSubscriptionEntriesParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupIds, maxSubscriptionCycles,
-				subscriptionStatus, keywords, start, end, sort);
 
 			Object returnObj = null;
 
@@ -427,7 +288,7 @@ public class CommerceSubscriptionEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceSubscriptionEntryServiceUtil.class,
 				"updateCommerceSubscriptionEntry",
-				_updateCommerceSubscriptionEntryParameterTypes8);
+				_updateCommerceSubscriptionEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceSubscriptionEntryId, subscriptionLength,
@@ -472,50 +333,6 @@ public class CommerceSubscriptionEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceSubscriptionEntry
-			updateSubscriptionStatus(
-				HttpPrincipal httpPrincipal, long commerceSubscriptionEntryId,
-				int subscriptionStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommerceSubscriptionEntryServiceUtil.class,
-				"updateSubscriptionStatus",
-				_updateSubscriptionStatusParameterTypes9);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceSubscriptionEntryId, subscriptionStatus);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.model.CommerceSubscriptionEntry)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		CommerceSubscriptionEntryServiceHttp.class);
 
@@ -529,34 +346,20 @@ public class CommerceSubscriptionEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_getCommerceSubscriptionEntriesParameterTypes2 = new Class[] {
-			long.class, long.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[]
-		_getCommerceSubscriptionEntriesParameterTypes3 = new Class[] {
 			long.class, long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getCommerceSubscriptionEntriesCountParameterTypes4 = new Class[] {
-			long.class, long.class
-		};
-	private static final Class<?>[]
-		_getCommerceSubscriptionEntriesCountParameterTypes5 = new Class[] {
+		_getCommerceSubscriptionEntriesCountParameterTypes3 = new Class[] {
 			long.class, long.class, long.class
 		};
 	private static final Class<?>[]
-		_searchCommerceSubscriptionEntriesParameterTypes6 = new Class[] {
+		_searchCommerceSubscriptionEntriesParameterTypes4 = new Class[] {
 			long.class, Long.class, Integer.class, String.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[]
-		_searchCommerceSubscriptionEntriesParameterTypes7 = new Class[] {
-			long.class, long[].class, Long.class, Integer.class, String.class,
-			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
-		};
-	private static final Class<?>[]
-		_updateCommerceSubscriptionEntryParameterTypes8 = new Class[] {
+		_updateCommerceSubscriptionEntryParameterTypes5 = new Class[] {
 			long.class, int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
@@ -564,8 +367,6 @@ public class CommerceSubscriptionEntryServiceHttp {
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			int.class, int.class, int.class, int.class, int.class, int.class
 		};
-	private static final Class<?>[] _updateSubscriptionStatusParameterTypes9 =
-		new Class[] {long.class, int.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:763593275
+// LIFERAY-SERVICE-BUILDER-HASH:-2006442370

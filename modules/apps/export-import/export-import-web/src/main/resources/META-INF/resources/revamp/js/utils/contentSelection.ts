@@ -19,7 +19,10 @@ export type HandlerSelection =
 	| string
 	| true;
 
-export const COMPACT_SECTION_NAMES = ['objects'];
+export const COMPACT_SECTION_NAMES = [
+	'category.control_panel.users',
+	'objects',
+];
 
 export const CONTENT_SECTION_KEY = 'category.site_administration.content';
 

@@ -29,6 +29,7 @@ const Item = ({item, onClick}) => {
 					{unescapeHTML(item.label)}
 
 					<ClayBadge
+						className="text-uppercase"
 						displayType="warning"
 						label={Liferay.Language.get('deprecated')}
 						translucent

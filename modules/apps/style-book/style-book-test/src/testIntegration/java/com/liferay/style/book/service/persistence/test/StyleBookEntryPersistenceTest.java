@@ -116,8 +116,6 @@ public class StyleBookEntryPersistenceTest {
 
 		StyleBookEntry newStyleBookEntry = _persistence.create(pk);
 
-		newStyleBookEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		newStyleBookEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		newStyleBookEntry.setUuid(RandomTestUtil.randomString());
@@ -218,7 +216,6 @@ public class StyleBookEntryPersistenceTest {
 
 		StyleBookEntry draftStyleBookEntry = _persistence.create(pk);
 
-		draftStyleBookEntry.setMvccVersion(styleBookEntry.getMvccVersion());
 		draftStyleBookEntry.setCtCollectionId(
 			styleBookEntry.getCtCollectionId());
 		draftStyleBookEntry.setUuid(styleBookEntry.getUuid());
@@ -300,8 +297,6 @@ public class StyleBookEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		StyleBookEntry styleBookEntry2 = _persistence.create(pk);
-
-		styleBookEntry2.setMvccVersion(RandomTestUtil.nextLong());
 
 		styleBookEntry2.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -964,8 +959,6 @@ public class StyleBookEntryPersistenceTest {
 
 		StyleBookEntry styleBookEntry = _persistence.create(pk);
 
-		styleBookEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		styleBookEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		styleBookEntry.setUuid(RandomTestUtil.randomString());
@@ -1009,4 +1002,4 @@ public class StyleBookEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1336971331
+// LIFERAY-SERVICE-BUILDER-HASH:1830352404

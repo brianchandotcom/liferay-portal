@@ -2897,8 +2897,8 @@ public class StyleBookEntryPersistenceImpl
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
 			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, StyleBookEntry::getUuid));
+				"styleBookEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, StyleBookEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_Head =
 			new CollectionPersistenceFinder<>(
@@ -2929,8 +2929,9 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, StyleBookEntry::getUuid),
+					"styleBookEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -2958,8 +2959,9 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, StyleBookEntry::getUuid),
+					"styleBookEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getGroupId));
@@ -2977,8 +2979,8 @@ public class StyleBookEntryPersistenceImpl
 				StyleBookEntry::getGroupId, StyleBookEntry::isHead),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, "",
 			new FinderColumn<>(
-				"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, StyleBookEntry::getUuid),
+				"styleBookEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
+				"=", true, true, StyleBookEntry::getUuid),
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, StyleBookEntry::getGroupId),
@@ -3009,8 +3011,9 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, StyleBookEntry::getUuid),
+					"styleBookEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getCompanyId));
@@ -3049,8 +3052,9 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, true, StyleBookEntry::getUuid),
+					"styleBookEntry.", "uuid", "uuid_",
+					FinderColumn.Type.STRING, "=", true, true,
+					StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getCompanyId),
@@ -3676,4 +3680,4 @@ public class StyleBookEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1514538721
+// LIFERAY-SERVICE-BUILDER-HASH:745950

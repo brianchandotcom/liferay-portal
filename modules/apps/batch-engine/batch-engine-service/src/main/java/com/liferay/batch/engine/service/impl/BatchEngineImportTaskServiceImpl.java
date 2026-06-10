@@ -51,7 +51,7 @@ public class BatchEngineImportTaskServiceImpl
 			String taskItemDelegateName)
 		throws PortalException {
 
-		_checkPermission(companyId);
+		_checkPermission(companyId, userId);
 
 		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
 			externalReferenceCode, companyId, userId, batchSize, callbackURL,
@@ -70,7 +70,7 @@ public class BatchEngineImportTaskServiceImpl
 			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate)
 		throws PortalException {
 
-		_checkPermission(companyId);
+		_checkPermission(companyId, userId);
 
 		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
 			externalReferenceCode, companyId, userId, batchSize, callbackURL,
@@ -176,6 +176,18 @@ public class BatchEngineImportTaskServiceImpl
 		if ((companyId != permissionChecker.getCompanyId()) &&
 			!permissionChecker.isOmniadmin()) {
 
+			throw new PrincipalException();
+		}
+	}
+
+	private void _checkPermission(long companyId, long userId)
+		throws PrincipalException {
+
+		_checkPermission(companyId);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (userId != permissionChecker.getUserId()) {
 			throw new PrincipalException();
 		}
 	}

@@ -44,7 +44,7 @@ public class BatchEngineExportTaskServiceImpl
 			Map<String, Serializable> parameters, String taskItemDelegateName)
 		throws PortalException {
 
-		_checkPermission(companyId);
+		_checkPermission(companyId, userId);
 
 		return batchEngineExportTaskLocalService.addBatchEngineExportTask(
 			externalReferenceCode, companyId, userId, callbackURL, className,
@@ -149,6 +149,18 @@ public class BatchEngineExportTaskServiceImpl
 		if ((companyId != permissionChecker.getCompanyId()) &&
 			!permissionChecker.isOmniadmin()) {
 
+			throw new PrincipalException();
+		}
+	}
+
+	private void _checkPermission(long companyId, long userId)
+		throws PrincipalException {
+
+		_checkPermission(companyId);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (userId != permissionChecker.getUserId()) {
 			throw new PrincipalException();
 		}
 	}

@@ -13,7 +13,7 @@ import {
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import {openSelectionModal, useId} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 const EDITOR_PORTLET_ID =
 	'com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet';
@@ -22,6 +22,8 @@ const ITEM_SELECTOR_URL_RESOURCE_COMMAND =
 	'/frontend_data_set_fragment/get_info_item_selector_url';
 
 type IdentifierField = 'classPK' | 'externalReferenceCode';
+
+type MappingMode = 'literal' | 'content' | 'context';
 
 interface IContentMappedTokenValue {
 	className: string;
@@ -49,6 +51,14 @@ function isContextMapped(
 	value: IMappedTokenValue
 ): value is IContextMappedTokenValue {
 	return value.source === 'context';
+}
+
+function getMappingMode(value: TokenMapping): MappingMode {
+	if (!isMappedTokenValue(value)) {
+		return 'literal';
+	}
+
+	return isContextMapped(value) ? 'context' : 'content';
 }
 
 function isOnDisplayPageTemplate(): boolean {
@@ -88,227 +98,90 @@ function buildResourceURL(resourceCommand: string): string {
 	return url.toString();
 }
 
-function TokenRow({
-	onChange,
-	token,
-	tokenInputId,
+function LiteralInput({
+	inputId,
+	onCommit,
 	value,
 }: {
-	onChange: (next: TokenMapping) => void;
-	token: string;
-	tokenInputId: string;
-	value: TokenMapping;
+	inputId: string;
+	onCommit: (value: string) => void;
+	value: string;
 }) {
-	const fieldSelectId = useId();
+	const [localValue, setLocalValue] = useState(value);
 
-	const [inputValue, setInputValue] = useState(
-		isMappedTokenValue(value) ? '' : value
-	);
-
-	const displayPageTemplate = isOnDisplayPageTemplate();
-
-	const mapToContext = useCallback(() => {
-		const currentFieldId = isMappedTokenValue(value)
-			? value.fieldId
-			: 'classPK';
-
-		onChange({
-			fieldId: currentFieldId,
-			source: 'context',
-		});
-	}, [onChange, value]);
-
-	const openInfoItemSelector = useCallback(async () => {
-		const response = await fetch(
-			buildResourceURL(ITEM_SELECTOR_URL_RESOURCE_COMMAND)
-		);
-
-		if (!response.ok) {
-			return;
-		}
-
-		const {eventName, url} = (await response.json()) as {
-			eventName: string;
-			url: string;
-		};
-
-		if (!url) {
-			return;
-		}
-
-		openSelectionModal({
-			onSelect: (selection: any) => {
-				if (!selection) {
-					return;
-				}
-
-				const selectedValue = JSON.parse(selection.value);
-
-				if (!selectedValue) {
-					return;
-				}
-
-				const currentFieldId = isMappedTokenValue(value)
-					? value.fieldId
-					: 'classPK';
-
-				onChange({
-					className: selectedValue.className,
-					classPK: String(selectedValue.classPK ?? ''),
-					externalReferenceCode:
-						selectedValue.externalReferenceCode ?? '',
-					fieldId: currentFieldId,
-					source: 'content',
-					title: selectedValue.title,
-				});
-			},
-			selectEventName: eventName,
-			title: Liferay.Language.get('select-an-entity'),
-			url,
-		});
-	}, [onChange, value]);
-
-	const unmap = useCallback(() => {
-		onChange('');
-	}, [onChange]);
-
-	const fieldOptions = [
-		{label: Liferay.Language.get('id'), value: 'classPK'},
-		{
-			label: Liferay.Language.get('external-reference-code'),
-			value: 'externalReferenceCode',
-		},
-	];
-
-	if (isMappedTokenValue(value)) {
-		const displayValue = isContextMapped(value)
-			? Liferay.Language.get('current-entity-display-page-template')
-			: value.title ||
-				(value.fieldId === 'externalReferenceCode'
-					? value.externalReferenceCode
-					: value.classPK);
-
-		return (
-			<ClayForm.Group key={token}>
-				<label htmlFor={tokenInputId}>{token}</label>
-
-				<ClayInput.Group small>
-					<ClayInput.GroupItem>
-						<ClayInput
-							id={tokenInputId}
-							readOnly
-							sizing="sm"
-							type="text"
-							value={displayValue}
-						/>
-					</ClayInput.GroupItem>
-
-					{!isContextMapped(value) && (
-						<ClayInput.GroupItem shrink>
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'change-entity'
-								)}
-								displayType="secondary"
-								onClick={openInfoItemSelector}
-								size="sm"
-								symbol="change"
-								title={Liferay.Language.get('change-entity')}
-							/>
-						</ClayInput.GroupItem>
-					)}
-
-					<ClayInput.GroupItem shrink>
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('unmap')}
-							displayType="secondary"
-							onClick={unmap}
-							size="sm"
-							symbol="times"
-							title={Liferay.Language.get('unmap')}
-						/>
-					</ClayInput.GroupItem>
-				</ClayInput.Group>
-
-				<label htmlFor={fieldSelectId}>
-					{Liferay.Language.get('identifier-field')}
-				</label>
-
-				<ClaySelectWithOption
-					id={fieldSelectId}
-					onChange={(event) => {
-						onChange({
-							...value,
-							fieldId: event.target.value as IdentifierField,
-						});
-					}}
-					options={fieldOptions}
-					sizing="sm"
-					value={value.fieldId}
-				/>
-			</ClayForm.Group>
-		);
-	}
+	useEffect(() => {
+		setLocalValue(value);
+	}, [value]);
 
 	return (
-		<ClayForm.Group key={token}>
-			<label htmlFor={tokenInputId}>{token}</label>
+		<ClayInput
+			id={inputId}
+			onBlur={() => {
+				if (localValue !== value) {
+					onCommit(localValue);
+				}
+			}}
+			onChange={(event) => setLocalValue(event.target.value)}
+			sizing="sm"
+			type="text"
+			value={localValue}
+		/>
+	);
+}
+
+function EntitySelectorRow({
+	entity,
+	onSelectEntity,
+}: {
+	entity: IContentMappedTokenValue;
+	onSelectEntity: () => void;
+}) {
+	const entityLabel = Liferay.Language.get('entity');
+	const isEntitySelected = !!entity.className;
+
+	const selectButtonIcon = isEntitySelected ? 'change' : 'plus';
+
+	const selectButtonLabel = sub(
+		isEntitySelected
+			? Liferay.Language.get('change-x')
+			: Liferay.Language.get('select-x'),
+		entityLabel
+	);
+
+	const displayValue = isEntitySelected
+		? entity.title ||
+			(entity.fieldId === 'externalReferenceCode'
+				? entity.externalReferenceCode
+				: entity.classPK)
+		: '';
+
+	return (
+		<ClayForm.Group>
+			<label>{entityLabel}</label>
 
 			<ClayInput.Group small>
 				<ClayInput.GroupItem>
 					<ClayInput
-						id={tokenInputId}
-						onBlur={(event) => onChange(event.target.value)}
-						onChange={(event) => setInputValue(event.target.value)}
+						placeholder={sub(
+							Liferay.Language.get('no-x-selected'),
+							entityLabel
+						)}
+						readOnly
 						sizing="sm"
 						type="text"
-						value={inputValue || ''}
+						value={displayValue}
 					/>
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem shrink>
-					{displayPageTemplate ? (
-						<ClayDropDownWithItems
-							items={[
-								{
-									onClick: mapToContext,
-									symbolLeft: 'page',
-									title: Liferay.Language.get(
-										'map-to-current-entity'
-									),
-								},
-								{
-									onClick: openInfoItemSelector,
-									symbolLeft: 'link',
-									title: Liferay.Language.get(
-										'map-to-a-specific-entity'
-									),
-								},
-							]}
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('map')}
-									displayType="secondary"
-									size="sm"
-									symbol="link"
-									title={Liferay.Language.get('map')}
-								/>
-							}
-						/>
-					) : (
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get(
-								'map-to-a-specific-entity'
-							)}
-							displayType="secondary"
-							onClick={openInfoItemSelector}
-							size="sm"
-							symbol="link"
-							title={Liferay.Language.get(
-								'map-to-a-specific-entity'
-							)}
-						/>
-					)}
+					<ClayButtonWithIcon
+						aria-label={selectButtonLabel}
+						displayType="secondary"
+						onClick={onSelectEntity}
+						size="sm"
+						symbol={selectButtonIcon}
+						title={selectButtonLabel}
+					/>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
 		</ClayForm.Group>
@@ -319,14 +192,16 @@ export default function DataSetConfigurationFields({
 	onValueSelect,
 	values,
 }: IConfigurationField) {
-	const [localAPIURLTokenMappings, setLocalAPIURLTokenMappings] = useState<
+	const [apiURLTokenMappings, setApiURLTokenMappings] = useState<
 		Record<string, TokenMapping>
 	>(JSON.parse(values.apiURLTokenMappings || '{}'));
 
 	const itemSelectorInputId = useId();
-	const tokenBaseInputId = useId();
+	const tokenSelectId = useId();
+	const mappingSelectId = useId();
+	const fieldInputId = useId();
 
-	const label = Liferay.Language.get('data-set');
+	const dataSetLabel = Liferay.Language.get('data-set');
 
 	const dataSetSelected: boolean =
 		Object.keys(values.itemSelector).length !== 0;
@@ -337,7 +212,7 @@ export default function DataSetConfigurationFields({
 		dataSetSelected
 			? Liferay.Language.get('change-x')
 			: Liferay.Language.get('select-x'),
-		label
+		dataSetLabel
 	);
 
 	const fdsViews = [
@@ -384,32 +259,180 @@ export default function DataSetConfigurationFields({
 	];
 
 	const apiURL =
-		values.itemSelector.restEndpoint +
-			values.itemSelector.additionalAPIURLParameters || '';
+		(values.itemSelector.restEndpoint || '') +
+		(values.itemSelector.additionalAPIURLParameters || '');
 
-	const tokens = apiURL?.match(/{(.*?)}/g);
+	const tokenKeys = useMemo(() => {
+		const matches = apiURL.match(/{(.*?)}/g) ?? [];
+
+		return matches.map((token) => token.replaceAll(/[{}]/g, ''));
+	}, [apiURL]);
+
+	const [selectedTokenKey, setSelectedTokenKey] = useState(
+		tokenKeys[0] ?? ''
+	);
+
+	useEffect(() => {
+		if (!tokenKeys.length) {
+			if (selectedTokenKey !== '') {
+				setSelectedTokenKey('');
+			}
+
+			return;
+		}
+
+		if (!tokenKeys.includes(selectedTokenKey)) {
+			setSelectedTokenKey(tokenKeys[0]);
+		}
+	}, [tokenKeys, selectedTokenKey]);
+
+	const currentTokenMapping: TokenMapping =
+		apiURLTokenMappings[selectedTokenKey] ?? '';
+
+	const currentMappingMode = getMappingMode(currentTokenMapping);
+
+	const displayPageTemplate = isOnDisplayPageTemplate();
+
+	const mappingOptions = [
+		{label: Liferay.Language.get('type-value'), value: 'literal'},
+		{
+			label: Liferay.Language.get('map-to-selected-entity'),
+			value: 'content',
+		},
+		...(displayPageTemplate
+			? [
+					{
+						label: Liferay.Language.get('map-to-context-entity'),
+						value: 'context',
+					},
+				]
+			: []),
+	];
 
 	const updateTokenMapping = useCallback(
 		(tokenKey: string, tokenMapping: TokenMapping) => {
 			const newTokenMappings = {
-				...localAPIURLTokenMappings,
+				...apiURLTokenMappings,
 				[tokenKey]: tokenMapping,
 			};
 
-			setLocalAPIURLTokenMappings(newTokenMappings);
+			setApiURLTokenMappings(newTokenMappings);
 
 			onValueSelect(
 				'apiURLTokenMappings',
 				JSON.stringify(newTokenMappings)
 			);
 		},
-		[localAPIURLTokenMappings, onValueSelect]
+		[apiURLTokenMappings, onValueSelect]
+	);
+
+	const openInfoItemSelector = useCallback(
+		async (handleSelectedEntity: (selected: any) => void) => {
+			const response = await fetch(
+				buildResourceURL(ITEM_SELECTOR_URL_RESOURCE_COMMAND)
+			);
+
+			if (!response.ok) {
+				return;
+			}
+
+			const {eventName, url} = (await response.json()) as {
+				eventName: string;
+				url: string;
+			};
+
+			if (!url) {
+				return;
+			}
+
+			openSelectionModal({
+				onSelect: (selection: any) => {
+					if (!selection) {
+						return;
+					}
+
+					const selectedValue = JSON.parse(selection.value);
+
+					if (!selectedValue) {
+						return;
+					}
+
+					handleSelectedEntity(selectedValue);
+				},
+				selectEventName: eventName,
+				title: Liferay.Language.get('select-an-entity'),
+				url,
+			});
+		},
+		[]
+	);
+
+	const openEntitySelector = useCallback(
+		(tokenKey: string) => {
+			const currentMapping = apiURLTokenMappings[tokenKey] ?? '';
+			const mappedFieldId = isMappedTokenValue(currentMapping)
+				? currentMapping.fieldId
+				: 'classPK';
+
+			openInfoItemSelector((selected) => {
+				updateTokenMapping(tokenKey, {
+					className: selected.className,
+					classPK: String(selected.classPK ?? ''),
+					externalReferenceCode: selected.externalReferenceCode ?? '',
+					fieldId: mappedFieldId,
+					source: 'content',
+					title: selected.title,
+				});
+			});
+		},
+		[apiURLTokenMappings, openInfoItemSelector, updateTokenMapping]
+	);
+
+	const changeMappingMode = useCallback(
+		(mappingMode: MappingMode) => {
+			if (mappingMode === currentMappingMode) {
+				return;
+			}
+
+			if (mappingMode === 'literal') {
+				updateTokenMapping(selectedTokenKey, '');
+
+				return;
+			}
+
+			const existingFieldId = isMappedTokenValue(currentTokenMapping)
+				? currentTokenMapping.fieldId
+				: 'classPK';
+
+			if (mappingMode === 'context') {
+				updateTokenMapping(selectedTokenKey, {
+					fieldId: existingFieldId,
+					source: 'context',
+				});
+
+				return;
+			}
+
+			updateTokenMapping(selectedTokenKey, {
+				className: '',
+				classPK: '',
+				externalReferenceCode: '',
+				fieldId: existingFieldId,
+				source: 'content',
+			});
+		},
+		[
+			currentTokenMapping,
+			currentMappingMode,
+			selectedTokenKey,
+			updateTokenMapping,
+		]
 	);
 
 	return (
 		<>
 			<ClayForm.Group>
-				<label htmlFor={itemSelectorInputId}>{label}</label>
+				<label htmlFor={itemSelectorInputId}>{dataSetLabel}</label>
 
 				<ClayInput.Group small>
 					<ClayInput.GroupItem>
@@ -418,7 +441,7 @@ export default function DataSetConfigurationFields({
 							id={itemSelectorInputId}
 							placeholder={sub(
 								Liferay.Language.get('no-x-selected'),
-								label
+								dataSetLabel
 							)}
 							readOnly
 							sizing="sm"
@@ -443,7 +466,7 @@ export default function DataSetConfigurationFields({
 										id: 'dataSetsItemSelectorModal',
 										views: fdsViews,
 									},
-									itemTypeLabel: label,
+									itemTypeLabel: dataSetLabel,
 									items: values.itemSelector
 										.externalReferenceCode
 										? [values.itemSelector]
@@ -475,7 +498,7 @@ export default function DataSetConfigurationFields({
 									{
 										label: sub(
 											Liferay.Language.get('remove-x'),
-											label
+											dataSetLabel
 										),
 										onClick: () => {
 											onValueSelect('itemSelector', {});
@@ -494,7 +517,7 @@ export default function DataSetConfigurationFields({
 											Liferay.Language.get(
 												'view-x-options'
 											),
-											label
+											dataSetLabel
 										)}
 										displayType="secondary"
 										size="sm"
@@ -503,7 +526,7 @@ export default function DataSetConfigurationFields({
 											Liferay.Language.get(
 												'view-x-options'
 											),
-											label
+											dataSetLabel
 										)}
 									/>
 								}
@@ -514,26 +537,118 @@ export default function DataSetConfigurationFields({
 			</ClayForm.Group>
 
 			{Liferay.FeatureFlags['LPD-38564'] &&
-				tokens?.map((token) => {
-					const tokenKey = token.replaceAll(/[{}]/g, '');
+				!!tokenKeys.length &&
+				selectedTokenKey && (
+					<>
+						<ClayForm.Group>
+							<label htmlFor={tokenSelectId}>
+								{Liferay.Language.get('token')}
+							</label>
 
-					const tokenInputId = `${tokenBaseInputId}_${tokenKey}`;
+							<ClaySelectWithOption
+								id={tokenSelectId}
+								onChange={(event) =>
+									setSelectedTokenKey(event.target.value)
+								}
+								options={tokenKeys.map((key) => ({
+									label: `{${key}}`,
+									value: key,
+								}))}
+								sizing="sm"
+								value={selectedTokenKey}
+							/>
+						</ClayForm.Group>
 
-					const tokenMapping: TokenMapping =
-						localAPIURLTokenMappings[tokenKey] ?? '';
+						<ClayForm.Group>
+							<label htmlFor={mappingSelectId}>
+								{Liferay.Language.get('mapping')}
+							</label>
 
-					return (
-						<TokenRow
-							key={token}
-							onChange={(value) =>
-								updateTokenMapping(tokenKey, value)
-							}
-							token={token}
-							tokenInputId={tokenInputId}
-							value={tokenMapping}
-						/>
-					);
-				})}
+							<ClaySelectWithOption
+								id={mappingSelectId}
+								onChange={(event) =>
+									changeMappingMode(
+										event.target.value as MappingMode
+									)
+								}
+								options={mappingOptions}
+								sizing="sm"
+								value={currentMappingMode}
+							/>
+						</ClayForm.Group>
+
+						{currentMappingMode === 'content' &&
+							isMappedTokenValue(currentTokenMapping) &&
+							!isContextMapped(currentTokenMapping) && (
+								<EntitySelectorRow
+									entity={currentTokenMapping}
+									onSelectEntity={() =>
+										openEntitySelector(selectedTokenKey)
+									}
+								/>
+							)}
+
+						<ClayForm.Group>
+							<label htmlFor={fieldInputId}>
+								{Liferay.Language.get('field')}
+							</label>
+
+							{currentMappingMode === 'literal' ? (
+								<LiteralInput
+									inputId={fieldInputId}
+									onCommit={(value) =>
+										updateTokenMapping(
+											selectedTokenKey,
+											value
+										)
+									}
+									value={
+										typeof currentTokenMapping === 'string'
+											? currentTokenMapping
+											: ''
+									}
+								/>
+							) : (
+								<ClaySelectWithOption
+									id={fieldInputId}
+									onChange={(event) => {
+										if (
+											!isMappedTokenValue(
+												currentTokenMapping
+											)
+										) {
+											return;
+										}
+
+										updateTokenMapping(selectedTokenKey, {
+											...currentTokenMapping,
+											fieldId: event.target
+												.value as IdentifierField,
+										});
+									}}
+									options={[
+										{
+											label: Liferay.Language.get('id'),
+											value: 'classPK',
+										},
+										{
+											label: Liferay.Language.get(
+												'external-reference-code'
+											),
+											value: 'externalReferenceCode',
+										},
+									]}
+									sizing="sm"
+									value={
+										isMappedTokenValue(currentTokenMapping)
+											? currentTokenMapping.fieldId
+											: 'classPK'
+									}
+								/>
+							)}
+						</ClayForm.Group>
+					</>
+				)}
 		</>
 	);
 }

@@ -51,7 +51,7 @@ export default function ScopeDropdown({
 						<ClayBadge
 							className="c-ml-2 text-uppercase"
 							displayType="warning"
-							label="deprecated"
+							label={Liferay.Language.get('deprecated')}
 							translucent
 						/>
 					)}

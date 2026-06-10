@@ -508,12 +508,11 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 					).build()));
 		}
 
-		CountDownLatch countDownLatch = new CountDownLatch(1);
+		List<Throwable> throwables = new CopyOnWriteArrayList<>();
 
+		CountDownLatch countDownLatch = new CountDownLatch(1);
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			_THREAD_COUNT);
-
-		List<Throwable> throwables = new CopyOnWriteArrayList<>();
 
 		try {
 			List<Future<?>> futures = new ArrayList<>();

@@ -59,6 +59,16 @@
 		}
 	}
 
+	.lfr-cmp__info-categories {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+
+		.label {
+			text-transform: none;
+		}
+	}
+
 	.lfr-cmp__state-selector {
 		&--small {
 			display: inline-flex;

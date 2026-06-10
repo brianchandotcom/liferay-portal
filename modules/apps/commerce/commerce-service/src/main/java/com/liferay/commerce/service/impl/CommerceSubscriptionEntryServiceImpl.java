@@ -62,29 +62,6 @@ public class CommerceSubscriptionEntryServiceImpl
 			fetchCommerceSubscriptionEntry(commerceSubscriptionEntryId);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public List<CommerceSubscriptionEntry> getCommerceSubscriptionEntries(
-			long companyId, long userId, int start, int end,
-			OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
-		throws PortalException {
-
-		_checkCompanyId(companyId);
-
-		if (userId != getUserId()) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), null,
-				CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
-		}
-
-		return commerceSubscriptionEntryLocalService.
-			getCommerceSubscriptionEntries(
-				companyId, userId, start, end, orderByComparator);
-	}
-
 	@Override
 	public List<CommerceSubscriptionEntry> getCommerceSubscriptionEntries(
 			long companyId, long groupId, long userId, int start, int end,
@@ -102,26 +79,6 @@ public class CommerceSubscriptionEntryServiceImpl
 		return commerceSubscriptionEntryLocalService.
 			getCommerceSubscriptionEntries(
 				companyId, groupId, userId, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public int getCommerceSubscriptionEntriesCount(long companyId, long userId)
-		throws PortalException {
-
-		_checkCompanyId(companyId);
-
-		if (userId != getUserId()) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), null,
-				CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
-		}
-
-		return commerceSubscriptionEntryLocalService.
-			getCommerceSubscriptionEntriesCount(companyId, userId);
 	}
 
 	@Override
@@ -165,30 +122,6 @@ public class CommerceSubscriptionEntryServiceImpl
 				sort);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<CommerceSubscriptionEntry>
-			searchCommerceSubscriptionEntries(
-				long companyId, long[] groupIds, Long maxSubscriptionCycles,
-				Integer subscriptionStatus, String keywords, int start, int end,
-				Sort sort)
-		throws PortalException {
-
-		_checkCompanyId(companyId);
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
-
-		return commerceSubscriptionEntryLocalService.
-			searchCommerceSubscriptionEntries(
-				companyId, groupIds, maxSubscriptionCycles, subscriptionStatus,
-				keywords, start, end, sort);
-	}
-
 	@Override
 	public CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId, int subscriptionLength,
@@ -223,21 +156,6 @@ public class CommerceSubscriptionEntryServiceImpl
 				deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
 				deliveryNextIterationDateYear, deliveryNextIterationDateHour,
 				deliveryNextIterationDateMinute);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CommerceSubscriptionEntry updateSubscriptionStatus(
-			long commerceSubscriptionEntryId, int subscriptionStatus)
-		throws PortalException {
-
-		_checkPortletResourcePermission(commerceSubscriptionEntryId);
-
-		return commerceSubscriptionEntryLocalService.updateSubscriptionStatus(
-			commerceSubscriptionEntryId, subscriptionStatus);
 	}
 
 	private void _checkCompanyId(long companyId) throws PortalException {

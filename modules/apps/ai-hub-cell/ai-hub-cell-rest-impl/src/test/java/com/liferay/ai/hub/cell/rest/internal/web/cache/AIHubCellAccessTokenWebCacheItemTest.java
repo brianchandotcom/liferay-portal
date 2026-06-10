@@ -63,7 +63,7 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 				JSONUtil.put(
 					"access_token", signedJWT.serialize()
 				).put(
-					"expires_in", 86400
+					"expires_in", RandomTestUtil.randomLong()
 				).toString())) {
 
 			AIHubCellAccessTokenWebCacheItem aiHubCellAccessTokenWebCacheItem =
@@ -110,7 +110,7 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 				JSONUtil.put(
 					"access_token", RandomTestUtil.randomString()
 				).put(
-					"expires_in", 600
+					"expires_in", _EXPIRES_IN
 				).toString())) {
 
 			AIHubCellAccessTokenWebCacheItem aiHubCellAccessTokenWebCacheItem =
@@ -124,13 +124,14 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 			long expirationTime = jsonObject.getLong("expirationTime");
 
 			Assert.assertTrue(
-				expirationTime >= (startTime + (600 * Time.SECOND)));
+				expirationTime >= (startTime + (_EXPIRES_IN * Time.SECOND)));
 
 			long refreshTime =
 				aiHubCellAccessTokenWebCacheItem.getRefreshTime();
 
 			Assert.assertTrue(refreshTime > 0);
-			Assert.assertTrue(refreshTime <= (long)(600 * Time.SECOND * 0.8));
+			Assert.assertTrue(
+				refreshTime <= (long)(_EXPIRES_IN * Time.SECOND * 0.8));
 		}
 	}
 
@@ -234,5 +235,7 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 
 		return httpUtilMockedStatic;
 	}
+
+	private static final long _EXPIRES_IN = 600;
 
 }

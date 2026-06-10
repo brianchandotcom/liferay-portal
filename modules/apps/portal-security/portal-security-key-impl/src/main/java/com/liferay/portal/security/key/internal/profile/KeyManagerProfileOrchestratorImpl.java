@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
-import com.liferay.portal.security.key.spi.profile.ProfileOrchestrator;
+import com.liferay.portal.security.key.spi.profile.KeyManagerProfileOrchestrator;
 
 import java.util.Map;
 import java.util.Objects;
@@ -30,12 +30,13 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration",
-	service = ProfileOrchestrator.class
+	service = KeyManagerProfileOrchestrator.class
 )
-public class ProfileOrchestratorImpl implements ProfileOrchestrator {
+public class KeyManagerProfileOrchestratorImpl
+	implements KeyManagerProfileOrchestrator {
 
 	@Override
-	public KeyManagerProfile getActiveProfile() {
+	public KeyManagerProfile getActiveKeyManagerProfile() {
 		String activeProfileId =
 			_keyManagerGlobalConfiguration.activeProfileId();
 
@@ -79,7 +80,7 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 					String key, KeyManagerProfile keyManagerProfile,
 					KeyManagerProfile content) {
 
-					synchronized (ProfileOrchestratorImpl.this) {
+					synchronized (KeyManagerProfileOrchestratorImpl.this) {
 						if (Objects.equals(_lastBootstrappedProfileId, key)) {
 							_lastBootstrappedProfileId = null;
 						}
@@ -88,7 +89,7 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 
 			});
 
-		_bootstrap(getActiveProfile());
+		_bootstrap(getActiveKeyManagerProfile());
 	}
 
 	@Deactivate
@@ -107,7 +108,7 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 			_lastBootstrappedProfileId = null;
 		}
 
-		_bootstrap(getActiveProfile());
+		_bootstrap(getActiveKeyManagerProfile());
 	}
 
 	private void _bootstrap(KeyManagerProfile keyManagerProfile) {
@@ -158,7 +159,7 @@ public class ProfileOrchestratorImpl implements ProfileOrchestrator {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ProfileOrchestratorImpl.class);
+		KeyManagerProfileOrchestratorImpl.class);
 
 	private volatile KeyManagerGlobalConfiguration
 		_keyManagerGlobalConfiguration;

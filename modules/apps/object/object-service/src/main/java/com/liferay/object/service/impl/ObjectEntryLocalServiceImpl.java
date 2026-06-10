@@ -5971,6 +5971,32 @@ public class ObjectEntryLocalServiceImpl
 		return staticValues;
 	}
 
+	private boolean _isAssetVocabularyScoped(long groupId, long vocabularyId) {
+		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
+			_assetVocabularyGroupRelLocalService.
+				getAssetVocabularyGroupRelsByVocabularyId(vocabularyId);
+
+		if (assetVocabularyGroupRels.isEmpty()) {
+			return true;
+		}
+
+		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
+				assetVocabularyGroupRels) {
+
+			long assetVocabularyGroupRelGroupId =
+				assetVocabularyGroupRel.getGroupId();
+
+			if ((assetVocabularyGroupRelGroupId == groupId) ||
+				(assetVocabularyGroupRelGroupId ==
+					GroupConstants.ANY_PARENT_GROUP_ID)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private List<Object[]> _list(
 			DSLQuery dslQuery, ObjectFieldBag objectFieldBag,
 			Expression<?>[] selectExpressions)
@@ -6297,6 +6323,37 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
+	}
+
+	private long[] _removeInvalidAssetCategoryIds(
+		long groupId, long[] assetCategoryIds) {
+
+		if (ArrayUtil.isEmpty(assetCategoryIds)) {
+			return assetCategoryIds;
+		}
+
+		List<Long> validAssetCategoryIds = new ArrayList<>(
+			assetCategoryIds.length);
+		Map<Long, Boolean> scopedByVocabularyId = new HashMap<>();
+
+		for (long assetCategoryId : assetCategoryIds) {
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
+			if (scopedByVocabularyId.computeIfAbsent(
+					assetCategory.getVocabularyId(),
+					vocabularyId -> _isAssetVocabularyScoped(
+						groupId, vocabularyId))) {
+
+				validAssetCategoryIds.add(assetCategoryId);
+			}
+		}
+
+		return ArrayUtil.toLongArray(validAssetCategoryIds);
 	}
 
 	private void _removeInvalidAssetTags(
@@ -6915,6 +6972,9 @@ public class ObjectEntryLocalServiceImpl
 
 			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(true);
 		}
+
+		assetCategoryIds = _removeInvalidAssetCategoryIds(
+			objectEntry.getGroupId(), assetCategoryIds);
 
 		try {
 			AssetEntry assetEntry = _assetEntryLocalService.updateEntry(

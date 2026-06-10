@@ -72,7 +72,7 @@ beforeEach(() => {
 	fetchMock.get('http://localhost/url', {});
 });
 
-describe('when the business type is "Formula"', () => {
+describe('Formula field business type', () => {
 	const formulaProps = {
 		...objectFieldFormBaseDefaultProps,
 		objectField: {

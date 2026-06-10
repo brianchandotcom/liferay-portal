@@ -1744,6 +1744,105 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		}
 	);
 
+	test(
+		'can view description for each field business type',
+		{tag: '@LPD-93353'},
+		async ({apiHelpers, objectFieldsPage, page}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await objectFieldsPage.goto(objectDefinition.label.en_US);
+
+			await objectFieldsPage.addObjectFieldButton.click();
+
+			await objectFieldsPage.objectFieldLabelInput.waitFor();
+
+			await objectFieldsPage.objectFieldOptionsDropdown.click();
+
+			const fieldTypeDescriptions = [
+				{
+					description: 'Assign the entry to a user or role.',
+					type: 'Assignee',
+				},
+				{
+					description:
+						'Upload files or select from Documents and Media.',
+					type: 'Attachment',
+				},
+				{
+					description:
+						'Automatically generate a unique value when a new entry is added.',
+					type: 'Auto Increment',
+				},
+				{
+					description: 'Select between true or false.',
+					type: 'Boolean',
+				},
+				{description: 'Add a date.', type: 'Date'},
+				{
+					description: 'Add date and time values.',
+					type: 'Date and Time',
+				},
+				{
+					description:
+						'Add a decimal number that supports fractional portions.',
+					type: 'Decimal',
+				},
+				{
+					description: 'Store content as encrypted text.',
+					type: 'Encrypted',
+				},
+				{
+					description:
+						'Add an algorithm that derives its value from other fields.',
+					type: 'Formula',
+				},
+				{
+					description: 'Add an integer up to nine digits.',
+					type: 'Integer',
+				},
+				{
+					description: 'Add a long integer up to 16 digits.',
+					type: 'Long Integer',
+				},
+				{
+					description: 'Add text up to 65,000 characters.',
+					type: 'Long Text',
+				},
+				{
+					description: 'Choose from a picklist.',
+					type: 'Picklist',
+				},
+				{
+					description:
+						'Add a high precision decimal number without rounding.',
+					type: 'Precision Decimal',
+				},
+				{
+					description: 'Create rich text content.',
+					type: 'Rich Text',
+				},
+				{
+					description: 'Add text up to 280 characters.',
+					type: 'Text',
+				},
+			];
+
+			for (const {description, type} of fieldTypeDescriptions) {
+				await expect(
+					page.getByRole('option', {exact: true, name: type})
+				).toContainText(description);
+			}
+		}
+	);
+
 	test('can view more than 20 picklists in the picklist drop-down', async ({
 		apiHelpers,
 		objectFieldsPage,
@@ -3404,76 +3503,6 @@ test.describe('Manage object fields default value properties', () => {
 			await modelBuilderRightSidebarPage.useDefaultValueToggle.uncheck();
 
 			await expect(rightSidebar).toHaveCSS('width', '320px');
-		}
-	);
-});
-
-test.describe('View object field type descriptions', () => {
-	test(
-		'can view a description for each field type',
-		{tag: '@LPD-93353'},
-		async ({apiHelpers, objectFieldsPage, page}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await objectFieldsPage.goto(objectDefinition.label.en_US);
-
-			await objectFieldsPage.addObjectFieldButton.click();
-
-			await objectFieldsPage.objectFieldLabelInput.waitFor();
-
-			await objectFieldsPage.objectFieldOptionsDropdown.click();
-
-			const fieldTypeDescriptions = [
-				{
-					description: 'Select between true or false.',
-					fieldType: 'Boolean',
-				},
-				{description: 'Add a date.', fieldType: 'Date'},
-				{
-					description:
-						'Add a decimal number that supports fractional portions.',
-					fieldType: 'Decimal',
-				},
-				{
-					description: 'Add an integer up to nine digits.',
-					fieldType: 'Integer',
-				},
-				{
-					description: 'Add a long integer up to 16 digits.',
-					fieldType: 'Long Integer',
-				},
-				{
-					description: 'Add text up to 65,000 characters.',
-					fieldType: 'Long Text',
-				},
-				{
-					description: 'Choose from a picklist.',
-					fieldType: 'Picklist',
-				},
-				{
-					description:
-						'Add a high precision decimal number without rounding.',
-					fieldType: 'Precision Decimal',
-				},
-				{
-					description: 'Add text up to 280 characters.',
-					fieldType: 'Text',
-				},
-			];
-
-			for (const {description, fieldType} of fieldTypeDescriptions) {
-				await expect(
-					page.getByRole('option', {exact: true, name: fieldType})
-				).toContainText(description);
-			}
 		}
 	);
 });

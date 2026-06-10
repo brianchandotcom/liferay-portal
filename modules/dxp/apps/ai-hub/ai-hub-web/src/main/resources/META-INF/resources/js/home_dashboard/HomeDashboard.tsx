@@ -15,6 +15,7 @@ interface Entry {
 	description?: string;
 	externalReferenceCode: string;
 	title: string;
+	workflowDefinitionName?: string;
 }
 
 interface HomeDashboardProps {
@@ -34,9 +35,14 @@ function appendBackURL(url: string, backURL: string) {
 function appendEntryParams(
 	url: string,
 	externalReferenceCode: string,
-	backURL: string
+	backURL: string,
+	workflowDefinitionName?: string
 ) {
 	const params = new URLSearchParams({backURL, externalReferenceCode});
+
+	if (workflowDefinitionName) {
+		params.set('workflowDefinitionName', workflowDefinitionName);
+	}
 
 	return `${url}?${params.toString()}`;
 }
@@ -123,7 +129,8 @@ export default function HomeDashboard({
 						detailURL={appendEntryParams(
 							agentURL,
 							item.externalReferenceCode,
-							backURL
+							backURL,
+							item.workflowDefinitionName
 						)}
 						key={item.externalReferenceCode}
 						title={item.title}

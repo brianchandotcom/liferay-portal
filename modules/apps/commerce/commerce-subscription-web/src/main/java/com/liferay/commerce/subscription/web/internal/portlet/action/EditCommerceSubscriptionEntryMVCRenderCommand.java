@@ -6,7 +6,12 @@
 package com.liferay.commerce.subscription.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.subscription.web.internal.display.context.CommerceSubscriptionEntryDisplayContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
@@ -33,7 +38,26 @@ public class EditCommerceSubscriptionEntryMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/edit_commerce_subscription_entry.jsp";
+		try {
+			CommerceSubscriptionEntryDisplayContext
+				commerceSubscriptionEntryDisplayContext =
+					(CommerceSubscriptionEntryDisplayContext)
+						renderRequest.getAttribute(
+							WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+			commerceSubscriptionEntryDisplayContext.
+				getCommerceSubscriptionEntry();
+
+			return "/edit_commerce_subscription_entry.jsp";
+		}
+		catch (PrincipalException principalException) {
+			SessionErrors.add(renderRequest, principalException.getClass());
+
+			return "/error.jsp";
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
 	}
 
 }

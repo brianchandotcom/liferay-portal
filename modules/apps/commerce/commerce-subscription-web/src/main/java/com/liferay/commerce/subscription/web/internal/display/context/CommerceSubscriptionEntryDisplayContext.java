@@ -19,7 +19,7 @@ import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributor;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
+import com.liferay.commerce.service.CommerceSubscriptionEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,22 +56,20 @@ import java.util.List;
 public class CommerceSubscriptionEntryDisplayContext {
 
 	public CommerceSubscriptionEntryDisplayContext(
+		CommerceOrderItemLocalService commerceOrderItemLocalService,
 		CommercePaymentMethodGroupRelLocalService
 			commercePaymentMethodGroupRelLocalService,
-		CommerceSubscriptionEntryLocalService
-			commerceSubscriptionEntryLocalService,
-		CommerceOrderItemLocalService commerceOrderItemLocalService,
+		CommerceSubscriptionEntryService commerceSubscriptionEntryService,
 		CPSubscriptionTypeJSPContributorRegistry
 			cpSubscriptionTypeJSPContributorRegistry,
 		CPSubscriptionTypeRegistry cpSubscriptionTypeRegistry,
 		HttpServletRequest httpServletRequest,
 		PortletResourcePermission portletResourcePermission) {
 
+		_commerceOrderItemLocalService = commerceOrderItemLocalService;
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
-		_commerceSubscriptionEntryLocalService =
-			commerceSubscriptionEntryLocalService;
-		_commerceOrderItemLocalService = commerceOrderItemLocalService;
+		_commerceSubscriptionEntryService = commerceSubscriptionEntryService;
 		_cpSubscriptionTypeJSPContributorRegistry =
 			cpSubscriptionTypeJSPContributorRegistry;
 		_cpSubscriptionTypeRegistry = cpSubscriptionTypeRegistry;
@@ -122,7 +120,9 @@ public class CommerceSubscriptionEntryDisplayContext {
 		return commerceOrderItem.getCommerceOrderId();
 	}
 
-	public CommerceSubscriptionEntry getCommerceSubscriptionEntry() {
+	public CommerceSubscriptionEntry getCommerceSubscriptionEntry()
+		throws PortalException {
+
 		if (_commerceSubscriptionEntry != null) {
 			return _commerceSubscriptionEntry;
 		}
@@ -132,14 +132,14 @@ public class CommerceSubscriptionEntryDisplayContext {
 
 		if (commerceSubscriptionEntryId > 0) {
 			_commerceSubscriptionEntry =
-				_commerceSubscriptionEntryLocalService.
+				_commerceSubscriptionEntryService.
 					fetchCommerceSubscriptionEntry(commerceSubscriptionEntryId);
 		}
 
 		return _commerceSubscriptionEntry;
 	}
 
-	public long getCommerceSubscriptionEntryId() {
+	public long getCommerceSubscriptionEntryId() throws PortalException {
 		CommerceSubscriptionEntry commerceSubscriptionEntry =
 			getCommerceSubscriptionEntry();
 
@@ -150,7 +150,9 @@ public class CommerceSubscriptionEntryDisplayContext {
 		return 0;
 	}
 
-	public String getCommerceSubscriptionEntryStartDate() {
+	public String getCommerceSubscriptionEntryStartDate()
+		throws PortalException {
+
 		Date showDate = null;
 
 		CommerceSubscriptionEntry commerceSubscriptionEntry =
@@ -419,8 +421,8 @@ public class CommerceSubscriptionEntryDisplayContext {
 	private final CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
 	private CommerceSubscriptionEntry _commerceSubscriptionEntry;
-	private final CommerceSubscriptionEntryLocalService
-		_commerceSubscriptionEntryLocalService;
+	private final CommerceSubscriptionEntryService
+		_commerceSubscriptionEntryService;
 	private final CPRequestHelper _cpRequestHelper;
 	private final CPSubscriptionTypeJSPContributorRegistry
 		_cpSubscriptionTypeJSPContributorRegistry;

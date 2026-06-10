@@ -50,8 +50,8 @@ public class LayoutContentVersionLocalServiceImpl
 
 	@Override
 	public LayoutContentVersion addLayoutContentVersion(
-			String externalReferenceCode, long userId, long plid,
-			Map<Locale, String> nameMap, String data, int status,
+			String externalReferenceCode, long userId, String data,
+			Map<Locale, String> nameMap, long plid, int status,
 			boolean skipIfUnchanged)
 		throws PortalException {
 
@@ -114,17 +114,17 @@ public class LayoutContentVersionLocalServiceImpl
 		layoutContentVersion.setCreateDate(date);
 		layoutContentVersion.setModifiedDate(date);
 
-		layoutContentVersion.setPlid(plid);
+		layoutContentVersion.setData(data);
+		layoutContentVersion.setDataHash(dataHash);
 
 		if (MapUtil.isEmpty(nameMap)) {
 			nameMap = layout.getNameMap();
 		}
 
 		layoutContentVersion.setNameMap(nameMap);
-		layoutContentVersion.setVersion(version);
+		layoutContentVersion.setPlid(plid);
 		layoutContentVersion.setSpecSchemaVersion("v1.0");
-		layoutContentVersion.setData(data);
-		layoutContentVersion.setDataHash(dataHash);
+		layoutContentVersion.setVersion(version);
 		layoutContentVersion.setStatus(status);
 		layoutContentVersion.setStatusByUserId(userId);
 		layoutContentVersion.setStatusByUserName(user.getFullName());

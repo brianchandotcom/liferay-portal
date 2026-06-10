@@ -22,8 +22,10 @@ describe('ProjectInfoSummary', () => {
 		const {getByText} = render(
 			<ProjectInfoSummary
 				dueDate="2023-12-31"
+				funnelStages={[]}
 				initialState="notStarted"
 				manager={mockManager}
+				personas={[]}
 				projectId="123"
 				sponsor={mockSponsor}
 				states={mockStates}
@@ -37,5 +39,45 @@ describe('ProjectInfoSummary', () => {
 		expect(getByText('not-started')).toBeInTheDocument();
 		expect(getByText('tag1')).toBeInTheDocument();
 		expect(getByText('tag2')).toBeInTheDocument();
+	});
+
+	it('renders personas and funnel stages as chips', () => {
+		const {getByText} = render(
+			<ProjectInfoSummary
+				dueDate="2023-12-31"
+				funnelStages={['Awareness', 'Consideration']}
+				initialState="notStarted"
+				manager={mockManager}
+				personas={['Decision Maker', 'Champion']}
+				projectId="123"
+				sponsor={mockSponsor}
+				states={mockStates}
+				tags={[]}
+			/>
+		);
+
+		expect(getByText('Decision Maker')).toBeInTheDocument();
+		expect(getByText('Champion')).toBeInTheDocument();
+		expect(getByText('Awareness')).toBeInTheDocument();
+		expect(getByText('Consideration')).toBeInTheDocument();
+	});
+
+	it('renders empty personas and funnel stages without chips', () => {
+		const {queryByText} = render(
+			<ProjectInfoSummary
+				dueDate="2023-12-31"
+				funnelStages={[]}
+				initialState="notStarted"
+				manager={mockManager}
+				personas={[]}
+				projectId="123"
+				sponsor={mockSponsor}
+				states={mockStates}
+				tags={[]}
+			/>
+		);
+
+		expect(queryByText('Decision Maker')).not.toBeInTheDocument();
+		expect(queryByText('Awareness')).not.toBeInTheDocument();
 	});
 });

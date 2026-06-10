@@ -11,14 +11,17 @@ import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import '../../css/VersionHistory.scss';
+import {Config, initializeConfig} from '../config';
 
 const LARGE_MEDIA_QUERY = '(min-width: 992px)';
 
 interface Props {
-	pageSpecificationVersionsURL: string;
+	config: Config;
 }
 
-export default function VersionHistory({pageSpecificationVersionsURL}: Props) {
+export default function VersionHistory({config}: Props) {
+	initializeConfig(config);
+
 	const [isOpen, setIsOpen] = useState(true);
 
 	const wrapperRef = useRef<HTMLElement | null>(
@@ -71,7 +74,7 @@ export default function VersionHistory({pageSpecificationVersionsURL}: Props) {
 				</SidePanel.Header>
 
 				<SidePanel.Body>
-					<p>{pageSpecificationVersionsURL}</p>
+					<p>{config.pageSpecificationVersionsURL}</p>
 				</SidePanel.Body>
 			</SidePanel>
 		</>

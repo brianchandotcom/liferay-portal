@@ -44,7 +44,9 @@ public class ProductionReadinessIgnoredRuleUtil {
 
 		Set<String> ignoredRules = getIgnoredRules();
 
-		ignoredRules.remove(ruleKey);
+		if (!ignoredRules.remove(ruleKey)) {
+			return;
+		}
 
 		if (ignoredRules.isEmpty()) {
 			ConfigurationProviderUtil.deleteSystemConfiguration(

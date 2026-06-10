@@ -198,42 +198,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	public void testGetSiteFragmentSetFragmentsPage() throws Exception {
 		super.testGetSiteFragmentSetFragmentsPage();
 
-		Fragment approvedAndDraftFragment = _postSiteFragmentSetFragment(
-			_randomFragment(true, true));
-		Fragment approvedFragment = _postSiteFragmentSetFragment(
-			_randomFragment(true, false));
-		Fragment draftFragment = _postSiteFragmentSetFragment(
-			_randomFragment(false, true));
-
-		FragmentCollection irrelevantFragmentCollection =
-			_addFragmentCollection();
-
-		Fragment irrelevantApprovedAndDraftFragment =
-			_postSiteFragmentSetFragment(
-				_randomFragment(true, true, irrelevantFragmentCollection),
-				irrelevantFragmentCollection.getExternalReferenceCode());
-		Fragment irrelevantApprovedFragment = _postSiteFragmentSetFragment(
-			_randomFragment(true, false, irrelevantFragmentCollection),
-			irrelevantFragmentCollection.getExternalReferenceCode());
-		Fragment irrelevantDraftFragment = _postSiteFragmentSetFragment(
-			_randomFragment(false, true, irrelevantFragmentCollection),
-			irrelevantFragmentCollection.getExternalReferenceCode());
-
-		Page<Fragment> page = fragmentResource.getSiteFragmentSetFragmentsPage(
-			testGroup.getExternalReferenceCode(),
-			_fragmentCollection.getExternalReferenceCode(),
-			Pagination.of(1, 10));
-
-		List<Fragment> items = (List<Fragment>)page.getItems();
-
-		assertContains(approvedAndDraftFragment, items);
-		assertContains(approvedFragment, items);
-		assertContains(draftFragment, items);
-		assertNotContains(irrelevantApprovedAndDraftFragment, items);
-		assertNotContains(irrelevantApprovedFragment, items);
-		assertNotContains(irrelevantDraftFragment, items);
-
 		_testGetSiteFragmentSetFragmentsPageWithNonexistentFragmentSet();
+		_testGetSiteFragmentSetFragmentsPageWithStatus();
 	}
 
 	@Override
@@ -958,6 +924,45 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 		}
+	}
+
+	private void _testGetSiteFragmentSetFragmentsPageWithStatus()
+		throws Exception {
+
+		Fragment approvedAndDraftFragment = _postSiteFragmentSetFragment(
+			_randomFragment(true, true));
+		Fragment approvedFragment = _postSiteFragmentSetFragment(
+			_randomFragment(true, false));
+		Fragment draftFragment = _postSiteFragmentSetFragment(
+			_randomFragment(false, true));
+
+		FragmentCollection irrelevantFragmentCollection =
+			_addFragmentCollection();
+
+		Fragment irrelevantApprovedAndDraftFragment =
+			_postSiteFragmentSetFragment(
+				_randomFragment(true, true, irrelevantFragmentCollection),
+				irrelevantFragmentCollection.getExternalReferenceCode());
+		Fragment irrelevantApprovedFragment = _postSiteFragmentSetFragment(
+			_randomFragment(true, false, irrelevantFragmentCollection),
+			irrelevantFragmentCollection.getExternalReferenceCode());
+		Fragment irrelevantDraftFragment = _postSiteFragmentSetFragment(
+			_randomFragment(false, true, irrelevantFragmentCollection),
+			irrelevantFragmentCollection.getExternalReferenceCode());
+
+		Page<Fragment> page = fragmentResource.getSiteFragmentSetFragmentsPage(
+			testGroup.getExternalReferenceCode(),
+			_fragmentCollection.getExternalReferenceCode(),
+			Pagination.of(1, 10));
+
+		List<Fragment> items = (List<Fragment>)page.getItems();
+
+		assertContains(approvedAndDraftFragment, items);
+		assertContains(approvedFragment, items);
+		assertContains(draftFragment, items);
+		assertNotContains(irrelevantApprovedAndDraftFragment, items);
+		assertNotContains(irrelevantApprovedFragment, items);
+		assertNotContains(irrelevantDraftFragment, items);
 	}
 
 	private void _testGetSiteFragmentsPageWithFilter() throws Exception {

@@ -31,7 +31,7 @@ public class ToolSetResourceTest extends BaseToolSetResourceTestCase {
 
 	@Override
 	@Test
-	public void testGetToolSets() throws Exception {
+	public void testGetToolSetsPage() throws Exception {
 		_assertToolSet(
 			toolSet ->
 				Objects.equals(toolSet.getName(), "mcp-server-v1.0") &&
@@ -48,7 +48,7 @@ public class ToolSetResourceTest extends BaseToolSetResourceTestCase {
 	}
 
 	private void _assertToolSet(Predicate<ToolSet> predicate) throws Exception {
-		Page<ToolSet> toolSetsPage = toolSetResource.getToolSets();
+		Page<ToolSet> toolSetsPage = toolSetResource.getToolSetsPage();
 
 		Assert.assertTrue(
 			ListUtil.exists(

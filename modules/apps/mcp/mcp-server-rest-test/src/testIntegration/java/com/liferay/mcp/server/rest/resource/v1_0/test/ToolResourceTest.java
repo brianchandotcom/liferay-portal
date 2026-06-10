@@ -29,22 +29,23 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 
 	@Override
 	@Test
-	public void testGetTool() throws Exception {
-		Tool tool = toolResource.getTool("mcp-server-v1.0", "getToolSets");
+	public void testGetToolSetToolSetNameTool() throws Exception {
+		Tool tool = toolResource.getToolSetToolSetNameTool(
+			"mcp-server-v1.0", "getToolSetsPage");
 
-		Assert.assertEquals("getToolSets", tool.getName());
+		Assert.assertEquals("getToolSetsPage", tool.getName());
 		Assert.assertNotNull(tool.getInputSchema());
 	}
 
 	@Override
 	@Test
-	public void testInvokeTool() throws Exception {
+	public void testPostToolSetToolSetNameToolInvoke() throws Exception {
 		byte[] bytes = RandomTestUtil.randomBytes();
 		String fileName =
 			"mcp-upload-" + RandomTestUtil.randomString() + ".txt";
 
 		HttpInvoker.HttpResponse httpResponse =
-			toolResource.invokeToolHttpResponse(
+			toolResource.postToolSetToolSetNameToolInvokeHttpResponse(
 				"headless-delivery-v1.0", "postSiteDocument",
 				JSONUtil.put(
 					"file",
@@ -74,11 +75,12 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 			bytes.length, documentJSONObject.getInt("sizeInBytes"));
 		Assert.assertEquals(fileName, documentJSONObject.getString("title"));
 
-		httpResponse = toolResource.invokeToolHttpResponse(
-			"mcp-server-v1.0", "getToolSummaries",
-			JSONUtil.put(
-				"toolSetName", "mcp-server-v1.0"
-			).toString());
+		httpResponse =
+			toolResource.postToolSetToolSetNameToolInvokeHttpResponse(
+				"mcp-server-v1.0", "getToolSetToolSetNameToolSummariesPage",
+				JSONUtil.put(
+					"toolSetName", "mcp-server-v1.0"
+				).toString());
 
 		Assert.assertFalse(
 			JSONFactoryUtil.createJSONObject(

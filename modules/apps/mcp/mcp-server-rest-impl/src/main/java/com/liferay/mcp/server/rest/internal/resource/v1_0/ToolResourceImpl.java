@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ToolResourceImpl extends BaseToolResourceImpl {
 
 	@Override
-	public Tool getTool(String toolSetName, String toolName) {
+	public Tool getToolSetToolSetNameTool(String toolSetName, String toolName) {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-63311")) {
 
@@ -37,7 +37,7 @@ public class ToolResourceImpl extends BaseToolResourceImpl {
 	}
 
 	@Override
-	public Response invokeToolObject(
+	public Response postToolSetToolSetNameToolInvokeObject(
 			String toolSetName, String toolName, Object object)
 		throws Exception {
 

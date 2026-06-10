@@ -10,7 +10,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom';
 
-import PageVersionHistory from '../../src/main/resources/META-INF/resources/js/PageVersionHistory';
+import VersionHistory from '../../../src/main/resources/META-INF/resources/js/components/VersionHistory';
 
 jest.mock('@liferay/layout-js-components-web', () => ({
 	useMediaQuery: jest.fn(),
@@ -37,10 +37,10 @@ function mockSmallScreen() {
 }
 
 function renderComponent() {
-	return render(<PageVersionHistory pageSpecificationVersionsURL="url" />);
+	return render(<VersionHistory pageSpecificationVersionsURL="url" />);
 }
 
-describe('PageVersionHistory', () => {
+describe('VersionHistory', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 	});

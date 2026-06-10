@@ -26,6 +26,7 @@
 		connection_password="${jdbc.default.password}"
 		connection_url="${jdbc.default.url}"
 		connection_username="${jdbc.default.username}"
+		initialize_sql=""
 	/>
 	<MERGE3
 		max_interval="30000"

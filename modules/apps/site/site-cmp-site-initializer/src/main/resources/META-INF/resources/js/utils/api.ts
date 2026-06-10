@@ -72,6 +72,18 @@ export async function getUserAccount(id: string) {
 		});
 }
 
+export async function getVocabularyByExternalReferenceCode({
+	siteGroupId,
+	vocabularyERC,
+}: {
+	siteGroupId: number | string;
+	vocabularyERC: string;
+}) {
+	return await ApiHelper.get<{id: number}>(
+		`/o/headless-admin-taxonomy/v1.0/sites/${siteGroupId}/taxonomy-vocabularies/by-external-reference-code/${vocabularyERC}`
+	);
+}
+
 export async function patchProjectById({
 	body,
 	projectId,

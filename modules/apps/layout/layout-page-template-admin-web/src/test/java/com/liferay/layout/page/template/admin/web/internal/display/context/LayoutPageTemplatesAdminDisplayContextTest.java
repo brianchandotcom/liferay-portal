@@ -6,6 +6,9 @@
 package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -137,6 +140,53 @@ public class LayoutPageTemplatesAdminDisplayContextTest {
 
 		Assert.assertEquals(
 			navigationItems.toString(), 0, navigationItems.size());
+	}
+
+	@Test
+	public void testIsShowWidgetPageTemplates() {
+		for (boolean featureFlagEnabled : new boolean[] {false, true}) {
+			try (MockedStatic<FeatureFlagManagerUtil>
+					featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
+						FeatureFlagManagerUtil.class);
+				MockedStatic<LayoutPageTemplateEntryServiceUtil>
+					layoutPageTemplateEntryServiceUtilMockedStatic =
+						Mockito.mockStatic(
+							LayoutPageTemplateEntryServiceUtil.class)) {
+
+				featureFlagManagerUtilMockedStatic.when(
+					() -> FeatureFlagManagerUtil.isEnabled(
+						Mockito.anyLong(), Mockito.eq("LPD-76864"))
+				).thenReturn(
+					featureFlagEnabled
+				);
+
+				for (int widgetPageTemplateEntriesCount : new int[] {0, 1}) {
+					layoutPageTemplateEntryServiceUtilMockedStatic.when(
+						() ->
+							LayoutPageTemplateEntryServiceUtil.
+								getLayoutPageTemplateEntriesCountByType(
+									Mockito.anyLong(), Mockito.eq(0L),
+									Mockito.eq(
+										LayoutPageTemplateEntryTypeConstants.
+											WIDGET_PAGE))
+					).thenReturn(
+						widgetPageTemplateEntriesCount
+					);
+
+					LayoutPageTemplatesAdminDisplayContext
+						layoutPageTemplatesAdminDisplayContext =
+							new LayoutPageTemplatesAdminDisplayContext(
+								_liferayPortletRequest,
+								_liferayPortletResponse);
+
+					Assert.assertEquals(
+						featureFlagEnabled ||
+						(widgetPageTemplateEntriesCount > 0),
+						layoutPageTemplatesAdminDisplayContext.
+							isShowWidgetPageTemplates());
+				}
+			}
+		}
 	}
 
 	private void _setUpGroup(boolean company) {

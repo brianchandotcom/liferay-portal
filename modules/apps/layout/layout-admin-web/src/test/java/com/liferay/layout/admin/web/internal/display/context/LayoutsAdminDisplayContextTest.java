@@ -233,33 +233,50 @@ public class LayoutsAdminDisplayContextTest {
 				1
 			);
 
-			for (boolean featureFlagEnabled : new boolean[] {false, true}) {
-				try (MockedStatic<FeatureFlagManagerUtil>
-						featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
-							FeatureFlagManagerUtil.class)) {
+			SelectLayoutPageTemplateEntryDisplayContext
+				selectLayoutPageTemplateEntryDisplayContext = Mockito.mock(
+					SelectLayoutPageTemplateEntryDisplayContext.class);
 
-					featureFlagManagerUtilMockedStatic.when(
-						() -> FeatureFlagManagerUtil.isEnabled(
-							Mockito.anyLong(), Mockito.eq("LPD-76864"))
-					).thenReturn(
-						featureFlagEnabled
-					);
+			for (boolean showGlobalTemplates : new boolean[] {false, true}) {
+				Mockito.when(
+					selectLayoutPageTemplateEntryDisplayContext.
+						isShowGlobalTemplates()
+				).thenReturn(
+					showGlobalTemplates
+				);
 
-					VerticalNavItemList verticalNavItemList =
-						layoutsAdminDisplayContext.getVerticalNavItemList(
-							Mockito.mock(
-								SelectLayoutPageTemplateEntryDisplayContext.
-									class));
+				for (boolean featureFlagEnabled : new boolean[] {false, true}) {
+					try (MockedStatic<FeatureFlagManagerUtil>
+							featureFlagManagerUtilMockedStatic =
+								Mockito.mockStatic(
+									FeatureFlagManagerUtil.class)) {
 
-					if (featureFlagEnabled) {
+						featureFlagManagerUtilMockedStatic.when(
+							() -> FeatureFlagManagerUtil.isEnabled(
+								Mockito.anyLong(), Mockito.eq("LPD-76864"))
+						).thenReturn(
+							featureFlagEnabled
+						);
+
+						VerticalNavItemList verticalNavItemList =
+							layoutsAdminDisplayContext.getVerticalNavItemList(
+								selectLayoutPageTemplateEntryDisplayContext);
+
+						int expectedNavItemsCount = 1;
+
+						if (showGlobalTemplates) {
+							expectedNavItemsCount++;
+						}
+
+						expectedNavItemsCount++;
+
+						if (featureFlagEnabled) {
+							expectedNavItemsCount++;
+						}
+
 						Assert.assertEquals(
-							verticalNavItemList.toString(), 4,
-							verticalNavItemList.size());
-					}
-					else {
-						Assert.assertEquals(
-							verticalNavItemList.toString(), 2,
-							verticalNavItemList.size());
+							verticalNavItemList.toString(),
+							expectedNavItemsCount, verticalNavItemList.size());
 					}
 				}
 			}

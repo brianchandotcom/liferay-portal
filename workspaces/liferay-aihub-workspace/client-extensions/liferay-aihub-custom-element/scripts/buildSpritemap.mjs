@@ -1,0 +1,114 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import fs from 'fs';
+import {createRequire} from 'module';
+import path from 'path';
+
+const require = createRequire(import.meta.url);
+
+// Build a minimal Clay icon spritemap holding only the symbols the widget
+// actually renders. Keeping it minimal (vs the full ~375 KB Clay sprite) is
+// what makes shipping Clay icons on a Liferay DXP agnostic embed cheap.
+//
+// The symbol list is auto-derived: every `symbol="name"` reference in the
+// source is collected, so adding or removing a Clay icon in a component
+// automatically updates the bundled sprite with no list to maintain by hand.
+
+const srcDir = path.resolve('src');
+const outDir = path.resolve('src/assets');
+const outFile = path.join(outDir, 'icons.svg');
+
+function collectSourceFiles(dir) {
+	const files = [];
+
+	for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {
+		const entryPath = path.join(dir, entry.name);
+
+		if (entry.isDirectory()) {
+			files.push(...collectSourceFiles(entryPath));
+		}
+		else if (/\.tsx?$/.test(entry.name)) {
+			files.push(entryPath);
+		}
+	}
+
+	return files;
+}
+
+const CLAY_COMPONENT_SYMBOLS = ['times'];
+
+const usedSymbols = new Set(CLAY_COMPONENT_SYMBOLS);
+
+const symbolPattern =
+	/symbol=(?:"([\w-]+)"|'([\w-]+)'|\{\s*['"]([\w-]+)['"]\s*\})/g;
+
+for (const file of collectSourceFiles(srcDir)) {
+	const source = fs.readFileSync(file, 'utf8');
+
+	let match;
+
+	while ((match = symbolPattern.exec(source)) !== null) {
+		usedSymbols.add(match[1] || match[2] || match[3]);
+	}
+}
+
+const symbolNames = [...usedSymbols].sort();
+
+// Resolve the Clay spritemap through Node module resolution so it is found
+// whether @clayui/css is installed locally or hoisted to the yarn workspace
+// root. If it cannot be resolved (e.g. a pruned install), keep the committed
+// src/assets/icons.svg rather than failing the build.
+
+let source;
+
+try {
+	source = require.resolve('@clayui/css/lib/images/icons/icons.svg');
+}
+catch (error) {
+
+	// eslint-disable-next-line no-console
+	console.warn(
+		'Clay spritemap not resolvable; keeping the committed src/assets/icons.svg'
+	);
+
+	process.exit(0);
+}
+
+const svg = fs.readFileSync(source, 'utf8');
+
+const symbols = [];
+
+for (const name of symbolNames) {
+	const match = svg.match(
+		new RegExp(`<symbol id="${name}"[\\s\\S]*?</symbol>`)
+	);
+
+	if (match) {
+		symbols.push(match[0]);
+	}
+	else {
+		throw new Error(
+			`Icon symbol "${name}" was not found in Clay spritemap`
+		);
+	}
+}
+
+fs.mkdirSync(outDir, {recursive: true});
+
+fs.writeFileSync(
+	outFile,
+	`<svg xmlns="http://www.w3.org/2000/svg" style="display: none">${symbols.join(
+		''
+	)}</svg>`
+);
+
+// eslint-disable-next-line no-console
+console.log(
+	`Wrote ${symbols.length} icon(s) to ${path.relative(
+		process.cwd(),
+		outFile
+	)}: ${symbolNames.join(', ') || '(none)'}`
+);

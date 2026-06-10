@@ -3,6 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+:host {
+	color: #272833;
+	font-family:
+		-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans,
+		Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+.aihub-shadow-portal {
+	all: initial;
+	color: #272833;
+	font-family:
+		-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans,
+		Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+}
+
 #aihub-chatbot-widget {
 	--aihub-accent: #0b5fff;
 	--aihub-bg-light: #f7f8f9;

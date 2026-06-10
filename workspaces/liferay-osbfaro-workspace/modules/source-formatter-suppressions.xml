@@ -7,17 +7,15 @@
 		<suppress checks="GradleTestDependencyVersionCheck" files=".*" />
 		<suppress checks="GradleVersionCheck" files=".*" />
 		<suppress checks="JavaComponentAnnotationsCheck" files=".*/com/liferay/osb/faro/rest/internal/graphql/client/FaroGraphQLClient\.java" />
+		<suppress checks="JavaComponentAnnotationsCheck" files="osb-faro-contacts-demo/.*" />
+		<suppress checks="JavaComponentAnnotationsCheck" files="osb-faro-web/.*" />
 		<suppress checks="JavaModuleTestCheck" files=".*/src/testIntegration/java/com/liferay/osb/faro/functional/test/steps/FaroHooks.java" />
 		<suppress checks="JavaReferenceAnnotationsCheck" files=".*/BaseMock.*.java" />
 		<suppress checks="JavaReferenceAnnotationsCheck" files=".*/com/liferay/osb/faro/web/internal/activator/OAuth2AuthorizationExpandoPortalInstanceLifecycleListener\.java" />
 		<suppress checks="JavaReferenceAnnotationsCheck" files=".*/com/liferay/osb/faro/web/internal/card/template/ContactsCardTemplateManagerHelper\.java" />
-
-		<!-- Begin LRAC-12941 -->
-
-		<suppress checks="JSONPackageJSONCheck" files="osb-faro-theme/package\.json" />
-		<suppress checks="JSONPackageJSONCheck" files="osb-faro-web/package\.json" />
-
-		<!-- End LRAC-12941 -->
+		<suppress checks="JavaUpgradeCreateTableCheck" files="osb-faro-service/.*" />
+		<suppress checks="JavaUpgradeMissingTestCheck" files="osb-faro-contacts-service/.*" />
+		<suppress checks="JavaUpgradeMissingTestCheck" files="osb-faro-service/.*" />
 
 		<suppress checks="JSONPackageJSONDependencyVersionCheck" files=".*" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files=".*" />

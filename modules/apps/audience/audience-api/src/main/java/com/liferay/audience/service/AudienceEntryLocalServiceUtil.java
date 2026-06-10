@@ -89,10 +89,9 @@ public class AudienceEntryLocalServiceUtil {
 	 *
 	 * @param audienceEntry the audience entry
 	 * @return the audience entry that was removed
-	 * @throws PortalException
 	 */
-	public static AudienceEntry deleteAudienceEntry(AudienceEntry audienceEntry)
-		throws PortalException {
+	public static AudienceEntry deleteAudienceEntry(
+		AudienceEntry audienceEntry) {
 
 		return getService().deleteAudienceEntry(audienceEntry);
 	}
@@ -354,4 +353,4 @@ public class AudienceEntryLocalServiceUtil {
 			AudienceEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1693967477
+// LIFERAY-SERVICE-BUILDER-HASH:-1703879626

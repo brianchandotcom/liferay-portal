@@ -93,16 +93,11 @@ public class AudienceEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "audienceEntry";
 
-	public static final String FILTER_PK_COLUMN_NAME = "audienceEntryId";
-
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY audienceEntry.modifiedDate DESC";
 
 	public static final String ORDER_BY_SQL =
 		" ORDER BY AudienceEntry.modifiedDate DESC";
-
-	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
-		" ORDER BY audienceEntry.modifiedDate DESC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -927,4 +922,4 @@ public class AudienceEntryModelImpl
 	private AudienceEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-480886064
+// LIFERAY-SERVICE-BUILDER-HASH:1231800925

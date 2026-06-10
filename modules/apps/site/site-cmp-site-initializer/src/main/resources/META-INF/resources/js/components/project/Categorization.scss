@@ -1,0 +1,41 @@
+@import 'atlas-variables';
+
+.lfr-cmp__categorization {
+	.panel-header {
+		margin-bottom: 1.5rem;
+	}
+
+	&-grid {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: 1fr 1fr;
+
+		@media (max-width: 767px) {
+			grid-template-columns: 1fr;
+		}
+	}
+}
+
+.lfr-cmp__vocabulary-multi-select {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	.control-label {
+		font-size: 0.875rem;
+		font-weight: 600;
+		margin-bottom: 0;
+	}
+
+	&-selected {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+		margin-bottom: 1rem;
+		margin-top: 1rem;
+
+		.label {
+			text-transform: none;
+		}
+	}
+}

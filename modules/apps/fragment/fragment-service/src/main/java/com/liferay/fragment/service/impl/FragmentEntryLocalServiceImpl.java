@@ -369,8 +369,14 @@ public class FragmentEntryLocalServiceImpl
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByERC_G_Head(
-			externalReferenceCode, groupId, true);
+		FragmentEntry fragmentEntry =
+			fragmentEntryPersistence.fetchByERC_G_Head(
+				externalReferenceCode, groupId, true);
+
+		if (fragmentEntry == null) {
+			fragmentEntry = fragmentEntryPersistence.findByERC_G_Head(
+				externalReferenceCode, groupId, false);
+		}
 
 		return fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
 	}

@@ -551,6 +551,65 @@ public class FragmentEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteApprovedAndDraftFragmentEntryByExternalReferenceCode()
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
+				false, false, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		FragmentEntry draftFragmentEntry = _fragmentEntryLocalService.getDraft(
+			fragmentEntry.getFragmentEntryId());
+
+		_fragmentEntryLocalService.deleteFragmentEntry(
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getGroupId());
+
+		Assert.assertNull(
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntry.getFragmentEntryId()));
+
+		Assert.assertNull(
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				draftFragmentEntry.getFragmentEntryId()));
+	}
+
+	@Test
+	public void testDeleteDraftFragmentEntryByExternalReferenceCode()
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
+				false, false, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_DRAFT,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		_fragmentEntryLocalService.deleteFragmentEntry(
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getGroupId());
+
+		Assert.assertNull(
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntry.getFragmentEntryId()));
+	}
+
+	@Test
 	public void testDeleteFragmentEntry() throws Exception {
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId());

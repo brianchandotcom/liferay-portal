@@ -216,6 +216,27 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	}
 
 	@Test
+	public void testRegisterInitialDeploymentVerifyProcessTwiceWithInitialRelease() {
+		_initialDeployment = true;
+
+		try (SafeCloseable safeCloseable1 = _publishInitialRelease()) {
+			try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
+					true, false)) {
+
+				_assertVerify(true);
+			}
+
+			_verifyProcessRun = false;
+
+			try (SafeCloseable safeCloseable3 = _registerVerifyProcess(
+					true, false)) {
+
+				_assertVerify(false);
+			}
+		}
+	}
+
+	@Test
 	public void testRegisterNewVerifyProcessDuringUpgradePortal() {
 		try (SafeCloseable safeCloseable1 = _upgradePortal(false);
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
@@ -359,6 +380,28 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 				).build());
 
 		return upgradeStepServiceRegistration::unregister;
+	}
+
+	private SafeCloseable _publishInitialRelease() {
+		Release release = _releaseLocalService.createRelease(
+			_counterLocalService.increment());
+
+		release.setServletContextName(_symbolicName);
+		release.setVerified(false);
+
+		release = _releaseLocalService.updateRelease(release);
+
+		ServiceRegistration<Release> releaseServiceRegistration =
+			_bundleContext.registerService(
+				Release.class, release,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"release.bundle.symbolic.name",
+					release.getBundleSymbolicName()
+				).put(
+					"release.initial", true
+				).build());
+
+		return releaseServiceRegistration::unregister;
 	}
 
 	private SafeCloseable _registerVerifyProcess(

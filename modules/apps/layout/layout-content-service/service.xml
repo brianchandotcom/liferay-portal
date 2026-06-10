@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" change-tracking-enabled="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.layout.content" short-no-such-exception-enabled="false">
+	<author>Lourdes Fernández Besada</author>
+	<namespace>LayoutContentVersion</namespace>
+	<entity external-reference-code="group" local-service="true" name="LayoutContentVersion" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="layoutContentVersionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="plid" type="long" />
+		<column localized="true" name="name" type="String" />
+		<column name="version" type="int" />
+		<column name="specSchemaVersion" type="String" />
+		<column name="data" type="String" />
+		<column name="dataHash" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="Plid" return-type="Collection">
+			<finder-column name="plid" />
+		</finder>
+		<finder name="G_DH" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="dataHash" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="P_V" return-type="LayoutContentVersion">
+			<finder-column name="plid" />
+			<finder-column name="version" />
+		</finder>
+		<finder name="P_S" return-type="Collection">
+			<finder-column name="plid" />
+			<finder-column name="status" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>DuplicateLayoutContentVersionExternalReferenceCode</exception>
+		<exception>LayoutContentVersionExternalReferenceCode</exception>
+		<exception>LayoutContentVersionName</exception>
+		<exception>NoSuchLayoutContentVersion</exception>
+		<exception>RequiredLayoutContentVersion</exception>
+		<exception>UnsupportedLayoutLayoutContentVersion</exception>
+	</exceptions>
+</service-builder>

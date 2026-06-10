@@ -26,6 +26,7 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -611,13 +612,9 @@ public class AnalyticsCloudClient {
 			return;
 		}
 
-		List<String> names = new ArrayList<>();
-
-		for (PerformanceAssetConsumptionItem performanceAssetConsumptionItem :
-				performanceAssetConsumptionItems) {
-
-			names.add(performanceAssetConsumptionItem.getTitle());
-		}
+		List<String> names = TransformUtil.transformToList(
+			performanceAssetConsumptionItems,
+			PerformanceAssetConsumptionItem::getTitle);
 
 		Map<String, ObjectDefinition> objectDefinitionsMap = new HashMap<>();
 

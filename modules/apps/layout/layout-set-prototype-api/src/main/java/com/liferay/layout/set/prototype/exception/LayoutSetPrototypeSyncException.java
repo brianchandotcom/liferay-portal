@@ -18,7 +18,7 @@ public class LayoutSetPrototypeSyncException extends PortalException {
 		public MustNotHaveExportImportInProgress() {
 			super(
 				"The site template sync cannot start while an export, " +
-					"import, or staging process is in progress.");
+					"import, or staging process is in progress");
 		}
 
 	}

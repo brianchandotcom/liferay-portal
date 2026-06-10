@@ -190,7 +190,7 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 
 	private Lock _acquireLock(String syncSessionId) {
 		String lockClassName = LayoutSetPrototype.class.getName();
-		String lockKey = _LOCK_KEY_PREFIX + syncSessionId;
+		String lockKey = "sync-notify:" + syncSessionId;
 		String owner = PortalUUIDUtil.generate();
 
 		Lock lock = _lockManager.lock(lockClassName, lockKey, owner);
@@ -300,8 +300,6 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 	}
 
 	private static final long _LOCK_EXPIRATION_TIME = 5 * 60 * 1000;
-
-	private static final String _LOCK_KEY_PREFIX = "sync-notify:";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener.class);

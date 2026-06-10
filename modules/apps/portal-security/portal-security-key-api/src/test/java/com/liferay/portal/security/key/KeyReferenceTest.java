@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.key;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -25,14 +26,16 @@ public class KeyReferenceTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorRejectsClosingCurlyBraceInProviderId() {
-		new KeyReference("identifier", "pro}vider", KeyReference.Type.CRYPTO);
+		new KeyReference(
+			RandomTestUtil.randomString(), "pro}vider",
+			KeyReference.Type.CRYPTO);
 	}
 
 	@Test
 	public void testEqualsAndHashCode() {
 		KeyReference keyReference1 = KeyReference.fromString("${keyRef:p1:i1}");
 
-		Assert.assertNotEquals("string", keyReference1);
+		Assert.assertNotEquals(RandomTestUtil.randomString(), keyReference1);
 
 		KeyReference keyReference2 = KeyReference.fromString("${keyRef:p1:i1}");
 
@@ -81,7 +84,8 @@ public class KeyReferenceTest {
 	@Test
 	public void testFromStringInvalid() {
 		Assert.assertNull(KeyReference.fromString(null));
-		Assert.assertNull(KeyReference.fromString("invalid"));
+		Assert.assertNull(
+			KeyReference.fromString(RandomTestUtil.randomString()));
 		Assert.assertNull(KeyReference.fromString("${keyRef:onlyone}"));
 		Assert.assertNull(KeyReference.fromString("${unknownRef:provider:id}"));
 		Assert.assertNull(KeyReference.fromString("${keyRef:pro}vider:id}"));
@@ -100,7 +104,8 @@ public class KeyReferenceTest {
 
 	@Test
 	public void testIsKeyReference() {
-		Assert.assertFalse(KeyReference.isKeyReference("not a ref"));
+		Assert.assertFalse(
+			KeyReference.isKeyReference(RandomTestUtil.randomString()));
 		Assert.assertFalse(KeyReference.isKeyReference(null));
 		Assert.assertTrue(KeyReference.isKeyReference("${keyRef:p:i}"));
 		Assert.assertTrue(KeyReference.isKeyReference("${secretRef:*:i}"));

@@ -282,7 +282,9 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 
 		_companyConfigurationTemporarySwapper =
 			new CompanyConfigurationTemporarySwapper(
-				_company.getCompanyId(), _PID_SITE_VIRTUAL_HOST_CONFIGURATION,
+				_company.getCompanyId(),
+				"com.liferay.site.internal.configuration." +
+					"SiteVirtualHostConfiguration",
 				HashMapDictionaryBuilder.<String, Object>put(
 					"allowDefaultInstanceURLBypass",
 					allowDefaultInstanceURLBypass
@@ -290,9 +292,6 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 					"strictModeEnabled", true
 				).build());
 	}
-
-	private static final String _PID_SITE_VIRTUAL_HOST_CONFIGURATION =
-		"com.liferay.site.internal.configuration.SiteVirtualHostConfiguration";
 
 	private Group _childGroup1;
 	private Group _childGroup2;

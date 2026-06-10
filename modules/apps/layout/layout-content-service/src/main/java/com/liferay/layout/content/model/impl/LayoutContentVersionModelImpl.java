@@ -76,10 +76,10 @@ public class LayoutContentVersionModelImpl
 		{"layoutContentVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"plid", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"version", Types.INTEGER},
-		{"specSchemaVersion", Types.VARCHAR}, {"data_", Types.CLOB},
-		{"dataHash", Types.VARCHAR}, {"status", Types.INTEGER},
+		{"modifiedDate", Types.TIMESTAMP}, {"data_", Types.CLOB},
+		{"dataHash", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"plid", Types.BIGINT}, {"specSchemaVersion", Types.VARCHAR},
+		{"version", Types.INTEGER}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
 	};
@@ -97,12 +97,12 @@ public class LayoutContentVersionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("specSchemaVersion", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("dataHash", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("specSchemaVersion", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
@@ -110,7 +110,7 @@ public class LayoutContentVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutContentVersion (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,layoutContentVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,name STRING null,version INTEGER,specSchemaVersion VARCHAR(75) null,data_ TEXT null,dataHash VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table LayoutContentVersion (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,layoutContentVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,data_ TEXT null,dataHash VARCHAR(75) null,name STRING null,plid LONG,specSchemaVersion VARCHAR(75) null,version INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutContentVersion";
@@ -302,16 +302,16 @@ public class LayoutContentVersionModelImpl
 				"createDate", LayoutContentVersion::getCreateDate);
 			attributeGetterFunctions.put(
 				"modifiedDate", LayoutContentVersion::getModifiedDate);
-			attributeGetterFunctions.put("plid", LayoutContentVersion::getPlid);
-			attributeGetterFunctions.put("name", LayoutContentVersion::getName);
-			attributeGetterFunctions.put(
-				"version", LayoutContentVersion::getVersion);
-			attributeGetterFunctions.put(
-				"specSchemaVersion",
-				LayoutContentVersion::getSpecSchemaVersion);
 			attributeGetterFunctions.put("data", LayoutContentVersion::getData);
 			attributeGetterFunctions.put(
 				"dataHash", LayoutContentVersion::getDataHash);
+			attributeGetterFunctions.put("name", LayoutContentVersion::getName);
+			attributeGetterFunctions.put("plid", LayoutContentVersion::getPlid);
+			attributeGetterFunctions.put(
+				"specSchemaVersion",
+				LayoutContentVersion::getSpecSchemaVersion);
+			attributeGetterFunctions.put(
+				"version", LayoutContentVersion::getVersion);
 			attributeGetterFunctions.put(
 				"status", LayoutContentVersion::getStatus);
 			attributeGetterFunctions.put(
@@ -376,22 +376,6 @@ public class LayoutContentVersionModelImpl
 				(BiConsumer<LayoutContentVersion, Date>)
 					LayoutContentVersion::setModifiedDate);
 			attributeSetterBiConsumers.put(
-				"plid",
-				(BiConsumer<LayoutContentVersion, Long>)
-					LayoutContentVersion::setPlid);
-			attributeSetterBiConsumers.put(
-				"name",
-				(BiConsumer<LayoutContentVersion, String>)
-					LayoutContentVersion::setName);
-			attributeSetterBiConsumers.put(
-				"version",
-				(BiConsumer<LayoutContentVersion, Integer>)
-					LayoutContentVersion::setVersion);
-			attributeSetterBiConsumers.put(
-				"specSchemaVersion",
-				(BiConsumer<LayoutContentVersion, String>)
-					LayoutContentVersion::setSpecSchemaVersion);
-			attributeSetterBiConsumers.put(
 				"data",
 				(BiConsumer<LayoutContentVersion, String>)
 					LayoutContentVersion::setData);
@@ -399,6 +383,22 @@ public class LayoutContentVersionModelImpl
 				"dataHash",
 				(BiConsumer<LayoutContentVersion, String>)
 					LayoutContentVersion::setDataHash);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<LayoutContentVersion, String>)
+					LayoutContentVersion::setName);
+			attributeSetterBiConsumers.put(
+				"plid",
+				(BiConsumer<LayoutContentVersion, Long>)
+					LayoutContentVersion::setPlid);
+			attributeSetterBiConsumers.put(
+				"specSchemaVersion",
+				(BiConsumer<LayoutContentVersion, String>)
+					LayoutContentVersion::setSpecSchemaVersion);
+			attributeSetterBiConsumers.put(
+				"version",
+				(BiConsumer<LayoutContentVersion, Integer>)
+					LayoutContentVersion::setVersion);
 			attributeSetterBiConsumers.put(
 				"status",
 				(BiConsumer<LayoutContentVersion, Integer>)
@@ -609,17 +609,42 @@ public class LayoutContentVersionModelImpl
 
 	@JSON
 	@Override
-	public long getPlid() {
-		return _plid;
+	public String getData() {
+		if (_data == null) {
+			return "";
+		}
+		else {
+			return _data;
+		}
 	}
 
 	@Override
-	public void setPlid(long plid) {
+	public void setData(String data) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_plid = plid;
+		_data = data;
+	}
+
+	@JSON
+	@Override
+	public String getDataHash() {
+		if (_dataHash == null) {
+			return "";
+		}
+		else {
+			return _dataHash;
+		}
+	}
+
+	@Override
+	public void setDataHash(String dataHash) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_dataHash = dataHash;
 	}
 
 	/**
@@ -627,8 +652,8 @@ public class LayoutContentVersionModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public long getOriginalPlid() {
-		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("plid"));
+	public String getOriginalDataHash() {
+		return getColumnOriginalValue("dataHash");
 	}
 
 	@JSON
@@ -740,17 +765,17 @@ public class LayoutContentVersionModelImpl
 
 	@JSON
 	@Override
-	public int getVersion() {
-		return _version;
+	public long getPlid() {
+		return _plid;
 	}
 
 	@Override
-	public void setVersion(int version) {
+	public void setPlid(long plid) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_version = version;
+		_plid = plid;
 	}
 
 	/**
@@ -758,9 +783,8 @@ public class LayoutContentVersionModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public int getOriginalVersion() {
-		return GetterUtil.getInteger(
-			this.<Integer>getColumnOriginalValue("version"));
+	public long getOriginalPlid() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("plid"));
 	}
 
 	@JSON
@@ -785,42 +809,17 @@ public class LayoutContentVersionModelImpl
 
 	@JSON
 	@Override
-	public String getData() {
-		if (_data == null) {
-			return "";
-		}
-		else {
-			return _data;
-		}
+	public int getVersion() {
+		return _version;
 	}
 
 	@Override
-	public void setData(String data) {
+	public void setVersion(int version) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_data = data;
-	}
-
-	@JSON
-	@Override
-	public String getDataHash() {
-		if (_dataHash == null) {
-			return "";
-		}
-		else {
-			return _dataHash;
-		}
-	}
-
-	@Override
-	public void setDataHash(String dataHash) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_dataHash = dataHash;
+		_version = version;
 	}
 
 	/**
@@ -828,8 +827,9 @@ public class LayoutContentVersionModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public String getOriginalDataHash() {
-		return getColumnOriginalValue("dataHash");
+	public int getOriginalVersion() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("version"));
 	}
 
 	@JSON
@@ -1138,12 +1138,12 @@ public class LayoutContentVersionModelImpl
 		layoutContentVersionImpl.setUserName(getUserName());
 		layoutContentVersionImpl.setCreateDate(getCreateDate());
 		layoutContentVersionImpl.setModifiedDate(getModifiedDate());
-		layoutContentVersionImpl.setPlid(getPlid());
-		layoutContentVersionImpl.setName(getName());
-		layoutContentVersionImpl.setVersion(getVersion());
-		layoutContentVersionImpl.setSpecSchemaVersion(getSpecSchemaVersion());
 		layoutContentVersionImpl.setData(getData());
 		layoutContentVersionImpl.setDataHash(getDataHash());
+		layoutContentVersionImpl.setName(getName());
+		layoutContentVersionImpl.setPlid(getPlid());
+		layoutContentVersionImpl.setSpecSchemaVersion(getSpecSchemaVersion());
+		layoutContentVersionImpl.setVersion(getVersion());
 		layoutContentVersionImpl.setStatus(getStatus());
 		layoutContentVersionImpl.setStatusByUserId(getStatusByUserId());
 		layoutContentVersionImpl.setStatusByUserName(getStatusByUserName());
@@ -1177,18 +1177,18 @@ public class LayoutContentVersionModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		layoutContentVersionImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		layoutContentVersionImpl.setPlid(
-			this.<Long>getColumnOriginalValue("plid"));
-		layoutContentVersionImpl.setName(
-			this.<String>getColumnOriginalValue("name"));
-		layoutContentVersionImpl.setVersion(
-			this.<Integer>getColumnOriginalValue("version"));
-		layoutContentVersionImpl.setSpecSchemaVersion(
-			this.<String>getColumnOriginalValue("specSchemaVersion"));
 		layoutContentVersionImpl.setData(
 			this.<String>getColumnOriginalValue("data_"));
 		layoutContentVersionImpl.setDataHash(
 			this.<String>getColumnOriginalValue("dataHash"));
+		layoutContentVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		layoutContentVersionImpl.setPlid(
+			this.<Long>getColumnOriginalValue("plid"));
+		layoutContentVersionImpl.setSpecSchemaVersion(
+			this.<String>getColumnOriginalValue("specSchemaVersion"));
+		layoutContentVersionImpl.setVersion(
+			this.<Integer>getColumnOriginalValue("version"));
 		layoutContentVersionImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
 		layoutContentVersionImpl.setStatusByUserId(
@@ -1327,28 +1327,6 @@ public class LayoutContentVersionModelImpl
 			layoutContentVersionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		layoutContentVersionCacheModel.plid = getPlid();
-
-		layoutContentVersionCacheModel.name = getName();
-
-		String name = layoutContentVersionCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			layoutContentVersionCacheModel.name = null;
-		}
-
-		layoutContentVersionCacheModel.version = getVersion();
-
-		layoutContentVersionCacheModel.specSchemaVersion =
-			getSpecSchemaVersion();
-
-		String specSchemaVersion =
-			layoutContentVersionCacheModel.specSchemaVersion;
-
-		if ((specSchemaVersion != null) && (specSchemaVersion.length() == 0)) {
-			layoutContentVersionCacheModel.specSchemaVersion = null;
-		}
-
 		layoutContentVersionCacheModel.data = getData();
 
 		String data = layoutContentVersionCacheModel.data;
@@ -1364,6 +1342,28 @@ public class LayoutContentVersionModelImpl
 		if ((dataHash != null) && (dataHash.length() == 0)) {
 			layoutContentVersionCacheModel.dataHash = null;
 		}
+
+		layoutContentVersionCacheModel.name = getName();
+
+		String name = layoutContentVersionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			layoutContentVersionCacheModel.name = null;
+		}
+
+		layoutContentVersionCacheModel.plid = getPlid();
+
+		layoutContentVersionCacheModel.specSchemaVersion =
+			getSpecSchemaVersion();
+
+		String specSchemaVersion =
+			layoutContentVersionCacheModel.specSchemaVersion;
+
+		if ((specSchemaVersion != null) && (specSchemaVersion.length() == 0)) {
+			layoutContentVersionCacheModel.specSchemaVersion = null;
+		}
+
+		layoutContentVersionCacheModel.version = getVersion();
 
 		layoutContentVersionCacheModel.status = getStatus();
 
@@ -1459,13 +1459,13 @@ public class LayoutContentVersionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _plid;
-	private String _name;
-	private String _nameCurrentLanguageId;
-	private int _version;
-	private String _specSchemaVersion;
 	private String _data;
 	private String _dataHash;
+	private String _name;
+	private String _nameCurrentLanguageId;
+	private long _plid;
+	private String _specSchemaVersion;
+	private int _version;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;
@@ -1512,12 +1512,12 @@ public class LayoutContentVersionModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("plid", _plid);
-		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("version", _version);
-		_columnOriginalValues.put("specSchemaVersion", _specSchemaVersion);
 		_columnOriginalValues.put("data_", _data);
 		_columnOriginalValues.put("dataHash", _dataHash);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("plid", _plid);
+		_columnOriginalValues.put("specSchemaVersion", _specSchemaVersion);
+		_columnOriginalValues.put("version", _version);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
 		_columnOriginalValues.put("statusByUserName", _statusByUserName);
@@ -1563,17 +1563,17 @@ public class LayoutContentVersionModelImpl
 
 		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("plid", 512L);
+		columnBitmasks.put("data_", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("dataHash", 1024L);
 
-		columnBitmasks.put("version", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("specSchemaVersion", 4096L);
+		columnBitmasks.put("plid", 4096L);
 
-		columnBitmasks.put("data_", 8192L);
+		columnBitmasks.put("specSchemaVersion", 8192L);
 
-		columnBitmasks.put("dataHash", 16384L);
+		columnBitmasks.put("version", 16384L);
 
 		columnBitmasks.put("status", 32768L);
 
@@ -1590,4 +1590,4 @@ public class LayoutContentVersionModelImpl
 	private LayoutContentVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1908599952
+// LIFERAY-SERVICE-BUILDER-HASH:753460274

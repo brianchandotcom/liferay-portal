@@ -32,13 +32,13 @@ public class LayoutContentVersionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.content.service.impl.LayoutContentVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static LayoutContentVersion addLayoutContentVersion(
-			String externalReferenceCode, long plid,
-			Map<java.util.Locale, String> nameMap, String data, int status,
+			String externalReferenceCode, String data,
+			Map<java.util.Locale, String> nameMap, long plid, int status,
 			boolean skipIfUnchanged)
 		throws PortalException {
 
 		return getService().addLayoutContentVersion(
-			externalReferenceCode, plid, nameMap, data, status,
+			externalReferenceCode, data, nameMap, plid, status,
 			skipIfUnchanged);
 	}
 
@@ -98,4 +98,4 @@ public class LayoutContentVersionServiceUtil {
 			LayoutContentVersionService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1064776350
+// LIFERAY-SERVICE-BUILDER-HASH:-1824906468

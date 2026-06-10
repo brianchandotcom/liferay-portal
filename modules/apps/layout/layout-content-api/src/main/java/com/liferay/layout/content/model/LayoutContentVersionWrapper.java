@@ -44,12 +44,12 @@ public class LayoutContentVersionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("plid", getPlid());
-		attributes.put("name", getName());
-		attributes.put("version", getVersion());
-		attributes.put("specSchemaVersion", getSpecSchemaVersion());
 		attributes.put("data", getData());
 		attributes.put("dataHash", getDataHash());
+		attributes.put("name", getName());
+		attributes.put("plid", getPlid());
+		attributes.put("specSchemaVersion", getSpecSchemaVersion());
+		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -116,30 +116,6 @@ public class LayoutContentVersionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Integer version = (Integer)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		String specSchemaVersion = (String)attributes.get("specSchemaVersion");
-
-		if (specSchemaVersion != null) {
-			setSpecSchemaVersion(specSchemaVersion);
-		}
-
 		String data = (String)attributes.get("data");
 
 		if (data != null) {
@@ -150,6 +126,30 @@ public class LayoutContentVersionWrapper
 
 		if (dataHash != null) {
 			setDataHash(dataHash);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		Long plid = (Long)attributes.get("plid");
+
+		if (plid != null) {
+			setPlid(plid);
+		}
+
+		String specSchemaVersion = (String)attributes.get("specSchemaVersion");
+
+		if (specSchemaVersion != null) {
+			setSpecSchemaVersion(specSchemaVersion);
+		}
+
+		Integer version = (Integer)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -864,4 +864,4 @@ public class LayoutContentVersionWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:981853680
+// LIFERAY-SERVICE-BUILDER-HASH:147941824

@@ -44,8 +44,8 @@ public class LayoutContentVersionServiceHttp {
 	public static com.liferay.layout.content.model.LayoutContentVersion
 			addLayoutContentVersion(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long plid, java.util.Map<java.util.Locale, String> nameMap,
-				String data, int status, boolean skipIfUnchanged)
+				String data, java.util.Map<java.util.Locale, String> nameMap,
+				long plid, int status, boolean skipIfUnchanged)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -55,7 +55,7 @@ public class LayoutContentVersionServiceHttp {
 				_addLayoutContentVersionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, plid, nameMap, data, status,
+				methodKey, externalReferenceCode, data, nameMap, plid, status,
 				skipIfUnchanged);
 
 			Object returnObj = null;
@@ -309,7 +309,7 @@ public class LayoutContentVersionServiceHttp {
 
 	private static final Class<?>[] _addLayoutContentVersionParameterTypes0 =
 		new Class[] {
-			String.class, long.class, java.util.Map.class, String.class,
+			String.class, String.class, java.util.Map.class, long.class,
 			int.class, boolean.class
 		};
 	private static final Class<?>[] _deleteLayoutContentVersionParameterTypes1 =
@@ -325,4 +325,4 @@ public class LayoutContentVersionServiceHttp {
 		new Class[] {long.class, java.util.Map.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1063969446
+// LIFERAY-SERVICE-BUILDER-HASH:611163886

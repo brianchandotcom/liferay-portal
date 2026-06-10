@@ -41,10 +41,14 @@ function main {
 
 	_check_if_image_exists "${latest_lts_dxp_version}"
 
+	local script_dir
+
+	script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
 	sed \
 		--in-place \
 		--regexp-extended \
-		"s/^ {4}tag:.*/    tag: ${latest_lts_dxp_version}/" ./values.yaml
+		"s/^ {4}tag:.*/    tag: ${latest_lts_dxp_version}/" "${script_dir}/values.yaml"
 }
 
 main "${@}"

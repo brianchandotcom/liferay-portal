@@ -43,10 +43,11 @@ public class DBInspector {
 	}
 
 	public static void clearSchemaSnapshot() {
+		_schemaSnapshotEnabled = false;
+
 		_columnExistsCache.clear();
 		_columnNumericCache.clear();
 		_tableNamesCache.clear();
-		_schemaSnapshotEnabled = false;
 	}
 
 	public static boolean isSchemaSnapshotEnabled() {

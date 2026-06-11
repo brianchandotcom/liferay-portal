@@ -54,6 +54,7 @@ type Event = {
 	properties?: Property[];
 	referrer?: string;
 	title: string;
+	url?: string;
 	userId: string;
 };
 

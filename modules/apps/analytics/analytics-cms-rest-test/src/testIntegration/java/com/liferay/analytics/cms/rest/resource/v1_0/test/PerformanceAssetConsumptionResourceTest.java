@@ -106,13 +106,13 @@ public class PerformanceAssetConsumptionResourceTest
 							"http://" + RandomTestUtil.randomString()
 						).build())) {
 
-			_assertGetPerformanceAssetConsumptionGroupByStructure();
+			_testGetPerformanceAssetConsumptionGroupByStructure();
 
-			_assertGetPerformanceAssetConsumptionResponse();
+			_testGetPerformanceAssetConsumptionResponse();
 
-			_assertGetPerformanceAssetConsumptionURL(dataSourceId);
+			_testGetPerformanceAssetConsumptionURL(dataSourceId);
 
-			_assertGetPerformanceAssetConsumptionWithInvalidGroupBy();
+			_testGetPerformanceAssetConsumptionWithInvalidGroupBy();
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -120,7 +120,19 @@ public class PerformanceAssetConsumptionResourceTest
 		}
 	}
 
-	private void _assertGetPerformanceAssetConsumptionGroupByStructure()
+	private RecordingMockHttp _setUpMockHttp(String json) {
+		RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
+			Collections.singletonMap(
+				"/api/1.0/asset-metric/objectEntry/asset-consumption",
+				() -> json));
+
+		ReflectionTestUtil.setFieldValue(
+			_performanceAssetConsumptionResource, "_http", recordingMockHttp);
+
+		return recordingMockHttp;
+	}
+
+	private void _testGetPerformanceAssetConsumptionGroupByStructure()
 		throws Exception {
 
 		CMSTestUtil.getOrAddGroup(
@@ -188,7 +200,7 @@ public class PerformanceAssetConsumptionResourceTest
 			performanceAssetConsumptionItems[1].getTitle());
 	}
 
-	private void _assertGetPerformanceAssetConsumptionResponse()
+	private void _testGetPerformanceAssetConsumptionResponse()
 		throws Exception {
 
 		String key1 = RandomTestUtil.randomString();
@@ -251,7 +263,7 @@ public class PerformanceAssetConsumptionResourceTest
 			30L, (long)performanceAssetConsumption.getTotalCount());
 	}
 
-	private void _assertGetPerformanceAssetConsumptionURL(long dataSourceId)
+	private void _testGetPerformanceAssetConsumptionURL(long dataSourceId)
 		throws Exception {
 
 		RecordingMockHttp recordingMockHttp = _setUpMockHttp(
@@ -285,7 +297,7 @@ public class PerformanceAssetConsumptionResourceTest
 		Assert.assertTrue(location, location.contains("vocabularyId=33333"));
 	}
 
-	private void _assertGetPerformanceAssetConsumptionWithInvalidGroupBy() {
+	private void _testGetPerformanceAssetConsumptionWithInvalidGroupBy() {
 		Assert.assertThrows(
 			BadRequestException.class,
 			() ->
@@ -293,18 +305,6 @@ public class PerformanceAssetConsumptionResourceTest
 					getPerformanceAssetConsumption(
 						null, null, RandomTestUtil.randomString(), 30, null,
 						null, null, Pagination.of(1, 10)));
-	}
-
-	private RecordingMockHttp _setUpMockHttp(String json) {
-		RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
-			Collections.singletonMap(
-				"/api/1.0/asset-metric/objectEntry/asset-consumption",
-				() -> json));
-
-		ReflectionTestUtil.setFieldValue(
-			_performanceAssetConsumptionResource, "_http", recordingMockHttp);
-
-		return recordingMockHttp;
 	}
 
 	@Inject

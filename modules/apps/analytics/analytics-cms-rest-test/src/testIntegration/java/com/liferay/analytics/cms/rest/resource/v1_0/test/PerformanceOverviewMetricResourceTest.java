@@ -159,16 +159,16 @@ public class PerformanceOverviewMetricResourceTest
 					new Long[] {_depotEntry.getDepotEntryId()},
 					RandomTestUtil.nextInt());
 
-			_assertMetric(
+			_testMetric(
 				performanceOverviewMetric.getDownloadsMetric(),
 				"downloadsMetric", 4, 6, Trend.Classification.POSITIVE, 50);
-			_assertMetric(
+			_testMetric(
 				performanceOverviewMetric.getImpressionsMetric(),
 				"impressionsMetric", 4, 3, Trend.Classification.NEGATIVE, 25);
-			_assertMetric(
+			_testMetric(
 				performanceOverviewMetric.getReadsMetric(), "readsMetric", 5, 5,
 				Trend.Classification.NEUTRAL, 0);
-			_assertMetric(
+			_testMetric(
 				performanceOverviewMetric.getViewsMetric(), "viewsMetric", 1, 2,
 				Trend.Classification.POSITIVE, 100);
 		}
@@ -178,7 +178,7 @@ public class PerformanceOverviewMetricResourceTest
 		}
 	}
 
-	private void _assertMetric(
+	private void _testMetric(
 		Metric metric, String metricType, double previousValue, double value,
 		Trend.Classification classification, double percentage) {
 

@@ -84,25 +84,25 @@ public class InventoryAnalysisResourceTest
 				null, _depotEntry.getDepotEntryId(), null, null, null, null,
 				null, null, null, null, null);
 
-		_assertInventoryAnalysis(inventoryAnalysis, 3, 5L, null);
+		_testInventoryAnalysis(inventoryAnalysis, 3, 5L, null);
 
 		inventoryAnalysis = inventoryAnalysisResource.getInventoryAnalysis(
 			null, _depotEntry.getDepotEntryId(), null, null, null, null, null,
 			_webContentDefinition.getObjectDefinitionId(), null, null, null);
 
-		_assertInventoryAnalysis(inventoryAnalysis, 1, 3L, "Basic Web Content");
+		_testInventoryAnalysis(inventoryAnalysis, 1, 3L, "Basic Web Content");
 
 		inventoryAnalysis = inventoryAnalysisResource.getInventoryAnalysis(
 			null, _depotEntry.getDepotEntryId(), null, null, null, null, null,
 			_documentDefinition.getObjectDefinitionId(), null, null, null);
 
-		_assertInventoryAnalysis(inventoryAnalysis, 1, 1L, "Basic Document");
+		_testInventoryAnalysis(inventoryAnalysis, 1, 1L, "Basic Document");
 
 		inventoryAnalysis = inventoryAnalysisResource.getInventoryAnalysis(
 			null, _depotEntry.getDepotEntryId(), null, null, null, null, null,
 			_externalVideoDefinition.getObjectDefinitionId(), null, null, null);
 
-		_assertInventoryAnalysis(inventoryAnalysis, 1, 1L, "External Video");
+		_testInventoryAnalysis(inventoryAnalysis, 1, 1L, "External Video");
 
 		inventoryAnalysis = inventoryAnalysisResource.getInventoryAnalysis(
 			null, _depotEntry.getDepotEntryId(), "category", null, null, null,
@@ -148,30 +148,6 @@ public class InventoryAnalysisResourceTest
 		Assert.assertEquals(1L, (long)inventoryAnalysisItem.getCount());
 
 		Assert.assertEquals("Category", inventoryAnalysisItem.getTitle());
-	}
-
-	private void _assertInventoryAnalysis(
-			InventoryAnalysis inventoryAnalysis, int expectedItemsCount,
-			long expectedTotalCount, String expectedTitle)
-		throws Exception {
-
-		InventoryAnalysisItem[] inventoryAnalysisItems =
-			inventoryAnalysis.getInventoryAnalysisItems();
-
-		Assert.assertEquals(
-			Arrays.toString(inventoryAnalysisItems), expectedItemsCount,
-			inventoryAnalysisItems.length);
-
-		Assert.assertEquals(
-			expectedTotalCount, (long)inventoryAnalysis.getTotalCount());
-
-		if (expectedTitle != null) {
-			InventoryAnalysisItem inventoryAnalysisItem =
-				inventoryAnalysisItems[0];
-
-			Assert.assertEquals(
-				expectedTitle, inventoryAnalysisItem.getTitle());
-		}
 	}
 
 	private void _setUpCMSContext() throws Exception {
@@ -287,6 +263,30 @@ public class InventoryAnalysisResourceTest
 				).put(
 					"videoURL", "https://www.youtube.com/watch?v=HOdbzGCI5ME"
 				).build()));
+	}
+
+	private void _testInventoryAnalysis(
+			InventoryAnalysis inventoryAnalysis, int expectedItemsCount,
+			long expectedTotalCount, String expectedTitle)
+		throws Exception {
+
+		InventoryAnalysisItem[] inventoryAnalysisItems =
+			inventoryAnalysis.getInventoryAnalysisItems();
+
+		Assert.assertEquals(
+			Arrays.toString(inventoryAnalysisItems), expectedItemsCount,
+			inventoryAnalysisItems.length);
+
+		Assert.assertEquals(
+			expectedTotalCount, (long)inventoryAnalysis.getTotalCount());
+
+		if (expectedTitle != null) {
+			InventoryAnalysisItem inventoryAnalysisItem =
+				inventoryAnalysisItems[0];
+
+			Assert.assertEquals(
+				expectedTitle, inventoryAnalysisItem.getTitle());
+		}
 	}
 
 	@DeleteAfterTestRun

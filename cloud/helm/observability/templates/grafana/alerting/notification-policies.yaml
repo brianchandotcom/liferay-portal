@@ -21,7 +21,7 @@ data:
                         object_matchers:
                             -   {{ list "channel" "=" $key | toJson }}
                             -   {{ list "type" "=" $kind | toJson }}
-                        continue: {{ if hasKey $route "continue" }}{{ index $route "continue" }}{{ else }}true{{ end }}
+                        continue: {{ if hasKey $route "continue" }}{{ index $route "continue" }}{{ else }}false{{ end }}
                         group_wait: {{ default "1m" $route.group_wait }}
                         {{- with $route.group_interval }}
                         group_interval: {{ . }}

@@ -1,3 +1,5 @@
+@import 'atlas-custom-properties/_variables';
+
 .lfr-forms {
 	&__form-view-ddm-target {
 		align-items: center;
@@ -6,7 +8,7 @@
 		width: 100%;
 
 		&.lfr-forms__form-view-ddm-target-over > span {
-			background-color: #0b5fff;
+			background-color: $primary;
 			border-radius: 2px;
 			display: inline-block;
 			height: 2px;
@@ -22,7 +24,7 @@
 		&:focus-within,
 		&:hover {
 			&::after {
-				border: 0.125rem solid #0b5fff;
+				border: 0.125rem solid $primary;
 				border-radius: 0 4px 4px;
 				bottom: -4px;
 				content: '';
@@ -50,10 +52,10 @@
 	}
 
 	&__form-view-field-dragging {
-		background-color: #fff;
-		border: 2px dashed #a7a9bc;
+		background-color: $white;
+		border: 2px dashed $gray-500;
 		border-radius: 4px;
-		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+		box-shadow: 0 0 3px 0 unquote('hsl(from #{$black} h s l / 0.2)');
 		opacity: 0.7;
 		padding: 2px 6px 6px !important;
 		z-index: 10;
@@ -61,10 +63,10 @@
 
 	&__form-view-field-topbar {
 		align-items: center;
-		background-color: #0b5fff;
+		background-color: $primary;
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
-		color: #fff;
+		color: $white;
 		display: none;
 		font-size: 12px;
 		font-weight: 600;

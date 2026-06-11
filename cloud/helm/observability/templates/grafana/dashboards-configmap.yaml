@@ -38,10 +38,10 @@
 {{- $gitTileStyle = $activeTileStyle -}}
 {{- end -}}
 {{- $dashboardHeaders := dict
-    "backups" (dict "title" "Backups" "subtitle" "View backup history and status across the platform.")
-    "databases" (dict "title" "Database Health" "subtitle" "Monitor database instance health and operational metrics.")
-    "kubernetes-workloads" (dict "title" "Kubernetes Workloads" "subtitle" "Track performance and resource metrics across pods.")
-    "load-balancers" (dict "title" "Load Balancer Metrics" "subtitle" "Analyze traffic and monitor Envoy health.")
+    "backups" (dict "subtitle" "View backup history and status across the platform." "title" "Backups")
+    "databases" (dict "subtitle" "Monitor database instance health and operational metrics." "title" "Database Health")
+    "kubernetes-workloads" (dict "subtitle" "Track performance and resource metrics across pods." "title" "Kubernetes Workloads")
+    "load-balancers" (dict "subtitle" "Analyze traffic and monitor Envoy health." "title" "Load Balancer Metrics")
 -}}
 {{- range $key, $entry := $items }}
 {{- if not (eq $entry.enabled false) }}
@@ -57,7 +57,7 @@
 {{- $rendered = $rendered | replace "\"${AWS_BACKUP_HTML}\"" (tpl ($.Files.Get "dashboards/html/aws-backup.html") (dict "region" $region) | toJson) -}}
 {{- end -}}
 {{- if eq $key "central-hub" -}}
-{{- $centralHubCtx := dict "gitHref" $gitHref "gitDescription" $gitDescription "gitTileStyle" $gitTileStyle "argocdHref" $argocdHref "argocdDescription" $argocdDescription "argocdTileStyle" $argocdTileStyle "argoWfHref" $argoWfHref "argoWfDescription" $argoWfDescription "argoWfTileStyle" $argoWfTileStyle -}}
+{{- $centralHubCtx := dict "argocdDescription" $argocdDescription "argocdHref" $argocdHref "argocdTileStyle" $argocdTileStyle "argoWfDescription" $argoWfDescription "argoWfHref" $argoWfHref "argoWfTileStyle" $argoWfTileStyle "gitDescription" $gitDescription "gitHref" $gitHref "gitTileStyle" $gitTileStyle -}}
 {{- $rendered = $rendered | replace "\"${CENTRAL_HUB_HTML}\"" (tpl ($.Files.Get "dashboards/html/central-hub.html") $centralHubCtx | toJson) -}}
 {{- end }}
 ---

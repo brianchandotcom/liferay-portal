@@ -11,6 +11,8 @@ Two ordering principles apply:
 
 This rule applies only to assignments that are already grouped into a consecutive block. It does not require grouping assignments that are better declared at their first use, and it never overrides a necessary dependency order: when one assignment uses the value of another, the dependency wins over alphabetical order.
 
-A violation is a block of consecutive, independent assignments left in an order that is not alphabetical, or a derived assignment sorted ahead of or interleaved with the variables it depends on instead of being grouped after them.
+The derived assignment caveat assumes an imperative language, where the order of declarations is the order of execution. It does not apply in a declarative language such as Terraform or other HCL, where a dependency graph decides evaluation. Since derived assignment carries no "near its use" meaning, the whole block sorts in one absolute alphabetical order; see rule 204.
+
+A violation is a block of consecutive, independent assignments left in an order that is not alphabetical, or, in an imperative language, a derived assignment sorted ahead of or interleaved with the variables it depends on instead of being grouped after them.
 
 **Example:** https://github.com/brianchandotcom/liferay-portal/pull/175376 — in the phone-number-input fragment a block of `[#assign]` statements was in arbitrary order and was sorted alphabetically (`countryA2`, `countrySource`, `defaultLanguageId`, `disabled`, ...). The derived `fixed = countrySource == "fixed"` was then moved out of the sorted block and placed after it, next to the `[#if fixed ...]` that uses it, because it depends on `countrySource`.

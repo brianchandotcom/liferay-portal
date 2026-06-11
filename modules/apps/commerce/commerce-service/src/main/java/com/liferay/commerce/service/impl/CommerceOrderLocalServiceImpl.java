@@ -1011,6 +1011,8 @@ public class CommerceOrderLocalServiceImpl
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(
 				commerceOrder, false, commerceContext);
 
+		commerceOrder = getCommerceOrder(commerceOrderId);
+
 		CommerceMoney subtotalCommerceMoney = commerceOrderPrice.getSubtotal();
 		CommerceMoney shippingValueCommerceMoney =
 			commerceOrderPrice.getShippingValue();

@@ -571,6 +571,12 @@
 					"title": "Import Batch Size",
 					"type": "number"
 				},
+				"languageKeyResolutionEnabled": {
+					"default": false,
+					"description": "Enable resolving the [$FOR_EACH_LANGUAGE_ID$] language key placeholder into translations for all portal supported locales when importing batch files or running site initializers.",
+					"title": "Language Key Resolution Enabled",
+					"type": "boolean"
+				},
 				"pid": {
 					"const": "com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration",
 					"title": "Batch Engine Task Configuration"

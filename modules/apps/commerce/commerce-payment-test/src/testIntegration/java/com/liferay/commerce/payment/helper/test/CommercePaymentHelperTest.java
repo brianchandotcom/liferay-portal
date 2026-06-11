@@ -87,12 +87,12 @@ public class CommercePaymentHelperTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				new MockHttpServletRequest("GET", ""), _commercePaymentMethod);
 
+		String cancelUrl = commercePaymentRequest.getCancelUrl();
+
 		String guestToken = URLCodec.encodeURL(
 			_encryptor.encrypt(
 				_company.getKeyObj(),
 				String.valueOf(commerceOrder.getCommerceOrderId())));
-
-		String cancelUrl = commercePaymentRequest.getCancelUrl();
 
 		Assert.assertTrue(cancelUrl.contains("guestToken=" + guestToken));
 

@@ -11,13 +11,13 @@ export interface IContentMappedTokenValue {
 	className: string;
 	classPK: string;
 	externalReferenceCode: string;
-	fieldId: IdentifierField;
+	fieldId: IdentifierField | '';
 	source?: 'content';
 	title?: string;
 }
 
 export interface IContextMappedTokenValue {
-	fieldId: IdentifierField;
+	fieldId: IdentifierField | '';
 	source: 'context';
 }
 

@@ -89,21 +89,25 @@ export default function DataSetConfigurationFields({
 
 	const isTokenMapped = useCallback(
 		(tokenKey: string): boolean => {
-			if (backendResolvedTokens.has(tokenKey)) {
-				return true;
-			}
-
 			const mapping = apiURLTokenMappings[tokenKey];
 
 			if (mapping === undefined) {
-				return false;
+				return backendResolvedTokens.has(tokenKey);
 			}
 
 			if (typeof mapping === 'string') {
-				return !!mapping.length;
+				return !!mapping.trim().length;
 			}
 
-			if (isBackendMapped(mapping) || isContextMapped(mapping)) {
+			if (isBackendMapped(mapping)) {
+				return true;
+			}
+
+			if (!mapping.fieldId) {
+				return false;
+			}
+
+			if (isContextMapped(mapping)) {
 				return true;
 			}
 
@@ -197,7 +201,7 @@ export default function DataSetConfigurationFields({
 				isMappedTokenValue(currentTokenMapping) &&
 				!isBackendMapped(currentTokenMapping)
 					? currentTokenMapping.fieldId
-					: 'classPK';
+					: '';
 
 			if (mappingMode === 'context') {
 				updateTokenMapping(selectedTokenKey, {
@@ -212,7 +216,7 @@ export default function DataSetConfigurationFields({
 				className: '',
 				classPK: '',
 				externalReferenceCode: '',
-				fieldId: existingFieldId,
+				fieldId: '',
 				source: 'content',
 			});
 		},
@@ -413,6 +417,20 @@ export default function DataSetConfigurationFields({
 										/>
 									) : (
 										<ClaySelectWithOption
+											disabled={
+												currentMappingMode ===
+													'content' &&
+												isMappedTokenValue(
+													currentTokenMapping
+												) &&
+												!isBackendMapped(
+													currentTokenMapping
+												) &&
+												!isContextMapped(
+													currentTokenMapping
+												) &&
+												!currentTokenMapping.className
+											}
 											id={fieldInputId}
 											onChange={(event) => {
 												if (
@@ -431,11 +449,19 @@ export default function DataSetConfigurationFields({
 													{
 														...currentTokenMapping,
 														fieldId: event.target
-															.value as IdentifierField,
+															.value as
+															| IdentifierField
+															| '',
 													}
 												);
 											}}
 											options={[
+												{
+													label: `-- ${Liferay.Language.get(
+														'unmapped'
+													)} --`,
+													value: '',
+												},
 												{
 													label: Liferay.Language.get(
 														'id'
@@ -456,9 +482,17 @@ export default function DataSetConfigurationFields({
 												) &&
 												!isBackendMapped(
 													currentTokenMapping
+												) &&
+												!(
+													currentMappingMode ===
+														'content' &&
+													!isContextMapped(
+														currentTokenMapping
+													) &&
+													!currentTokenMapping.className
 												)
 													? currentTokenMapping.fieldId
-													: 'classPK'
+													: ''
 											}
 										/>
 									)}

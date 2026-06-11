@@ -54,12 +54,24 @@ public class LayoutContentVersionLocalServiceWrapper
 			addLayoutContentVersion(
 				String externalReferenceCode, long userId, String data,
 				java.util.Map<java.util.Locale, String> nameMap, long plid,
-				int status, boolean skipIfUnchanged)
+				int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutContentVersionLocalService.addLayoutContentVersion(
-			externalReferenceCode, userId, data, nameMap, plid, status,
-			skipIfUnchanged);
+			externalReferenceCode, userId, data, nameMap, plid, status);
+	}
+
+	@Override
+	public com.liferay.layout.content.model.LayoutContentVersion
+			addOrUpdateLayoutContentVersion(
+				String externalReferenceCode, long userId, String data,
+				java.util.Map<java.util.Locale, String> nameMap, long plid,
+				int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionLocalService.
+			addOrUpdateLayoutContentVersion(
+				externalReferenceCode, userId, data, nameMap, plid, status);
 	}
 
 	/**
@@ -415,4 +427,4 @@ public class LayoutContentVersionLocalServiceWrapper
 	private LayoutContentVersionLocalService _layoutContentVersionLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1397061417
+// LIFERAY-SERVICE-BUILDER-HASH:-1534139706

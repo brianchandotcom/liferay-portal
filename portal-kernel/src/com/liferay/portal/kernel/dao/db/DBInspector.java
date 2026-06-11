@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -84,8 +85,8 @@ public class DBInspector {
 
 		if (_schemaSnapshotEnabled && (tableNamePattern == null)) {
 			String cacheKey = StringBundler.concat(
-				StringUtil.defaultString(getCatalog()), ".",
-				StringUtil.defaultString(getSchema()));
+				Objects.toString(getCatalog(), StringPool.BLANK), ".",
+				Objects.toString(getSchema(), StringPool.BLANK));
 
 			Set<String> tableNames = _tableNamesCache.get(cacheKey);
 
@@ -102,7 +103,7 @@ public class DBInspector {
 
 			_tableNamesCache.putIfAbsent(cacheKey, tableNamesSnapshot);
 
-			return names;
+			return new ArrayList<>(tableNamesSnapshot);
 		}
 
 		return _getNames(tableNamePattern, "TABLE");
@@ -130,9 +131,9 @@ public class DBInspector {
 				tableName, databaseMetaData);
 
 			String cacheKey = StringBundler.concat(
-				StringUtil.defaultString(getCatalog()), ".",
-				StringUtil.defaultString(getSchema()), ".", normalizedTableName,
-				".", normalizedColumnName);
+				Objects.toString(getCatalog(), StringPool.BLANK), ".",
+				Objects.toString(getSchema(), StringPool.BLANK), ".",
+				normalizedTableName, ".", normalizedColumnName);
 
 			Boolean cached = _columnExistsCache.get(cacheKey);
 
@@ -305,8 +306,8 @@ public class DBInspector {
 	public boolean hasTable(String tableName) throws Exception {
 		if (_schemaSnapshotEnabled) {
 			String cacheKey = StringBundler.concat(
-				StringUtil.defaultString(getCatalog()), ".",
-				StringUtil.defaultString(getSchema()));
+				Objects.toString(getCatalog(), StringPool.BLANK), ".",
+				Objects.toString(getSchema(), StringPool.BLANK));
 
 			Set<String> tableNames = _tableNamesCache.get(cacheKey);
 
@@ -385,9 +386,9 @@ public class DBInspector {
 				tableName, databaseMetaData);
 
 			String cacheKey = StringBundler.concat(
-				StringUtil.defaultString(getCatalog()), ".",
-				StringUtil.defaultString(getSchema()), ".", normalizedTableName,
-				".", normalizedColumnName);
+				Objects.toString(getCatalog(), StringPool.BLANK), ".",
+				Objects.toString(getSchema(), StringPool.BLANK), ".",
+				normalizedTableName, ".", normalizedColumnName);
 
 			Boolean cached = _columnNumericCache.get(cacheKey);
 

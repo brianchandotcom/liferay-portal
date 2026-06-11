@@ -56,13 +56,20 @@ public class LayoutContentVersionLocalServiceUtil {
 
 	public static LayoutContentVersion addLayoutContentVersion(
 			String externalReferenceCode, long userId, String data,
-			Map<java.util.Locale, String> nameMap, long plid, int status,
-			boolean skipIfUnchanged)
+			Map<java.util.Locale, String> nameMap, long plid, int status)
 		throws PortalException {
 
 		return getService().addLayoutContentVersion(
-			externalReferenceCode, userId, data, nameMap, plid, status,
-			skipIfUnchanged);
+			externalReferenceCode, userId, data, nameMap, plid, status);
+	}
+
+	public static LayoutContentVersion addOrUpdateLayoutContentVersion(
+			String externalReferenceCode, long userId, String data,
+			Map<java.util.Locale, String> nameMap, long plid, int status)
+		throws PortalException {
+
+		return getService().addOrUpdateLayoutContentVersion(
+			externalReferenceCode, userId, data, nameMap, plid, status);
 	}
 
 	/**
@@ -350,4 +357,4 @@ public class LayoutContentVersionLocalServiceUtil {
 			LayoutContentVersionLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1019170478
+// LIFERAY-SERVICE-BUILDER-HASH:-1311579954

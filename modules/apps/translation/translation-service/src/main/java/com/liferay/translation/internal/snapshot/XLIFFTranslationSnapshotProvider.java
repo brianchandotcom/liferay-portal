@@ -391,7 +391,7 @@ public class XLIFFTranslationSnapshotProvider
 					TextFragment targetTextFragment =
 						targetTextPart.getContent();
 
-					if (Validator.isNull(targetTextFragment.getText())) {
+					if (targetTextFragment.getText() == null) {
 						continue;
 					}
 

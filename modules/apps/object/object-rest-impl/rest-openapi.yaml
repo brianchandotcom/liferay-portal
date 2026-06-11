@@ -185,12 +185,6 @@ components:
                         $ref: "#/components/schemas/AuditEvent"
                     readOnly: true
                     type: array
-                comments:
-                    description:
-                        Optional field with the comments associated with this object entry, can be embedded with nestedFields
-                    items:
-                        $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Comment
-                    type: array
                 creator:
                     $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
                     readOnly: true
@@ -267,7 +261,6 @@ components:
                     $ref: "#/components/schemas/Status"
                 systemProperties:
                     $ref: "#/components/schemas/SystemProperties"
-                    readOnly: true
                 taxonomyCategoryBriefs:
                     description:
                         The categories associated with this object entry.
@@ -300,6 +293,12 @@ components:
             properties:
                 collaboratorBrief:
                     $ref: "#/components/schemas/CollaboratorBrief"
+                comments:
+                    description:
+                        Optional field with the comments associated with this object entry, can be embedded with nestedFields
+                    items:
+                        $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Comment
+                    type: array
                 objectDefinitionBrief:
                     $ref: "#/components/schemas/ObjectDefinitionBrief"
                 scope:

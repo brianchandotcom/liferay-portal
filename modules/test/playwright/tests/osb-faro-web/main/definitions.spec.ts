@@ -11,7 +11,13 @@ import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest
 import {loginTest} from '../../../fixtures/loginTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {faroConfig} from './faro.config';
-import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
+import {
+	ACPage,
+	navigateToACPageViaURL,
+	navigateToACSettingsViaURL,
+} from './utils/navigation';
+import {CardSelectors} from './utils/selectors';
+import {changeTimeFilter} from './utils/time-filter';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -227,5 +233,78 @@ test(
 		// Assert no Add button is rendered when the limit is reached
 
 		await expect(page.getByRole('button', {name: 'Add'})).not.toBeVisible();
+	}
+);
+
+test(
+	'A customized search query string parameter collects searched terms in the Search Terms report',
+	{tag: '@LRAC-14680'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const queryParameter = 'query';
+
+		const searchTerm = 'test parameter';
+
+		// Define a customized search query string parameter
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsSearchPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('button', {name: 'Add'}).click();
+
+		await page
+			.locator('input[name="queryStringList.0"]')
+			.fill(queryParameter);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Search query definition has been saved', {
+			autoClose: false,
+		});
+
+		// Seed a search event carrying the customized keyword parameter
+
+		const date = new Date();
+
+		const searchUrl = `https://www.liferay.com/search?${queryParameter}=${encodeURIComponent(
+			searchTerm
+		)}`;
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Page',
+				canonicalUrl: searchUrl,
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: searchTerm,
+				url: searchUrl,
+				userId: 'searchUser',
+			},
+		]);
+
+		// The searched term surfaces in the Site overview Search Terms report
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.sitePage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await changeTimeFilter({
+			cardSelector: CardSelectors.SearchTerms,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await expect(
+			page
+				.locator(CardSelectors.SearchTerms)
+				.getByText(searchTerm)
+				.first()
+		).toBeVisible();
 	}
 );

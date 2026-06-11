@@ -15,6 +15,7 @@
 		{
 			"active": true,
 			"className": "com.liferay.object.model.ObjectDefinition#P7M3",
+			"enableObjectEntryHistory": true,
 			"externalReferenceCode": "L_MCP_SERVER_PROFILE_DATA_MASK",
 			"friendlyURLSeparator": "l",
 			"label": {
@@ -24,21 +25,6 @@
 			"name": "MCPServerProfileDataMask",
 			"objectFields": [
 				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"defaultValue": "true",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Active"
-					},
-					"name": "active",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Boolean"
-				},
-				{
 					"DBType": "Clob",
 					"businessType": "LongText",
 					"defaultValue": "null",
@@ -46,9 +32,9 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Disable Reason"
+						"en_US": "Delete Reason"
 					},
-					"name": "disableReason",
+					"name": "deleteReason",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -83,6 +69,22 @@
 					"state": false,
 					"system": true,
 					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "null",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Data Mask"
+					},
+					"name": "dataMaskExternalReferenceCode",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
 				}
 			],
 			"panelCategoryKey": "control_panel.object",

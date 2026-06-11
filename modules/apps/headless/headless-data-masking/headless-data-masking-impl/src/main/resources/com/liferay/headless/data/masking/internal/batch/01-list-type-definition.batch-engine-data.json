@@ -13,7 +13,7 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "L_MCP_DATA_MASK_TYPE",
+			"externalReferenceCode": "L_DATA_MASK_TYPE",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "CUSTOM",
@@ -28,7 +28,7 @@
 					"system": true
 				}
 			],
-			"name": "MCP Data Mask Type",
+			"name": "Data Mask Type",
 			"system": true
 		}
 	]

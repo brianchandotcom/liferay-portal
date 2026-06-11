@@ -15,28 +15,14 @@
 		{
 			"active": true,
 			"className": "com.liferay.object.model.ObjectDefinition#D7M9",
-			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK",
+			"enableObjectEntryHistory": true,
+			"externalReferenceCode": "L_DATA_MASK",
 			"label": {
-				"en_US": "MCP Server Data Mask"
+				"en_US": "Data Mask"
 			},
 			"modifiable": true,
-			"name": "MCPServerDataMask",
+			"name": "DataMask",
 			"objectFields": [
-				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"defaultValue": "true",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Active"
-					},
-					"name": "active",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Boolean"
-				},
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
@@ -78,7 +64,7 @@
 					"label": {
 						"en_US": "Mask Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "L_MCP_DATA_MASK_TYPE",
+					"listTypeDefinitionExternalReferenceCode": "L_DATA_MASK_TYPE",
 					"name": "maskType",
 					"required": true,
 					"state": false,
@@ -140,57 +126,9 @@
 					"type": "String"
 				}
 			],
-			"objectRelationships": [
-				{
-					"deletionType": "cascade",
-					"edge": false,
-					"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_TO_L_MCP_SERVER_PROFILE_DATA_MASK",
-					"label": {
-						"en_US": "MCP Server Data Mask to MCP Server Profile Data Masks"
-					},
-					"name": "dataMaskToProfileDataMasks",
-					"objectDefinitionExternalReferenceCode1": "L_MCP_SERVER_DATA_MASK",
-					"objectDefinitionExternalReferenceCode2": "L_MCP_SERVER_PROFILE_DATA_MASK",
-					"objectDefinitionModifiable2": true,
-					"objectDefinitionName2": "MCPServerProfileDataMask",
-					"objectDefinitionSystem2": true,
-					"objectField": {
-						"DBType": "Long",
-						"businessType": "Relationship",
-						"externalReferenceCode": "MCP_SERVER_DATA_MASK_TO_MCP_SERVER_PROFILE_DATA_MASK",
-						"indexed": true,
-						"indexedAsKeyword": false,
-						"label": {
-							"en_US": "MCP Server Data Mask to MCP Server Profile Data Masks"
-						},
-						"localized": false,
-						"name": "r_dataMaskToProfileDataMasks_mcpServerDataMaskId",
-						"objectFieldSettings": [
-							{
-								"name": "objectDefinition1ShortName",
-								"value": "MCPServerDataMask"
-							},
-							{
-								"name": "objectRelationshipERCObjectFieldName",
-								"value": "r_dataMaskToProfileDataMasks_mcpServerDataMaskERC"
-							}
-						],
-						"relationshipType": "oneToMany",
-						"required": true,
-						"state": false,
-						"system": false,
-						"type": "Long"
-					},
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": false,
-					"type": "oneToMany"
-				}
-			],
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
-				"en_US": "MCP Server Data Masks"
+				"en_US": "Data Masks"
 			},
 			"scope": "company",
 			"status": {

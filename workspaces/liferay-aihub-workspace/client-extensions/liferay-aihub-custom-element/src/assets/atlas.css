@@ -163,11 +163,6 @@ button::-moz-focus-inner,
   border-style: none;
 }
 
-
-input[type=time] {
-  -webkit-appearance: listbox;
-}
-
 textarea {
   overflow: auto;
 }
@@ -1493,59 +1488,6 @@ input[type=button].btn-block {
 
 .fade:not(.show) {
   opacity: 0;
-}
-
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: calc(24px * 0.5);
-  padding-right: calc(24px * 0.5);
-  width: 100%;
-}
-@media (min-width: 576px) {
-  .container {
-    max-width: 540px;
-  }
-}
-@media (min-width: 768px) {
-  .container {
-    max-width: 720px;
-  }
-}
-@media (min-width: 992px) {
-  .container {
-    max-width: 960px;
-  }
-}
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1248px;
-  }
-}
-.container {
-  max-width: 1392px;
-  max-width: 1872px;
-}
-
-@media (min-width: 576px) {
-   .container {
-    max-width: 540px;
-  }
-}
-@media (min-width: 768px) {
-   .container {
-    max-width: 720px;
-  }
-}
-@media (min-width: 992px) {
-   .container {
-    max-width: 960px;
-  }
-}
-@media (min-width: 1280px) {
-   .container {
-    max-width: 1248px;
-  }
 }
 
 .alert {
@@ -4374,9 +4316,6 @@ a.text-danger:hover, a.text-danger:focus {
     size: a3;
   }
   body {
-    min-width: 992px !important;
-  }
-  .container {
     min-width: 992px !important;
   }
 }

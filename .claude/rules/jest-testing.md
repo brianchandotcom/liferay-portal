@@ -179,6 +179,22 @@ act(() => {
 jest.useRealTimers();
 ```
 
+## Debugging
+
+The `node-scripts test` wrapper appends `--silent` to every Jest run, so `console.log` and `screen.debug()` output never reaches the terminal. Re-enable it with the `--force-debug` flag:
+
+```bash
+yarn test path/to/Foo.test.tsx --force-debug
+```
+
+Every other Jest CLI flag passes through unchanged, so the usual iteration helpers compose with it:
+
+```bash
+yarn test path/to/Foo.test.tsx --force-debug --testNamePattern "<test title>"
+```
+
+Failure output (the DOM dump under a failed query, assertion diffs) is printed regardless of `--silent`; the flag is only needed for output the test itself logs.
+
 ## Accessibility
 
 Tests for UI components should include accessibility assertions using `checkAccessibility` from `@liferay/layout-js-components-web/test/__lib__`. It wraps `axe-core` to assert zero violations against WCAG 2.1a, 2.1aa, and 2.2aa rulesets:

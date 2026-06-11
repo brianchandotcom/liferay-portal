@@ -55,7 +55,7 @@ exports[`TypeTrendCard should render 1`] = `
                 -25%
               </b>
             </span>
-             vs. Previous 30 days
+             vs. Last 30 Days
           </div>
         </div>
         <div
@@ -114,7 +114,7 @@ exports[`TypeTrendCard should render 1`] = `
                 +12.5%
               </b>
             </span>
-             vs. Previous 30 days
+             vs. Last 30 Days
           </div>
         </div>
         <div
@@ -165,7 +165,7 @@ exports[`TypeTrendCard should render 1`] = `
                 0%
               </b>
             </span>
-             vs. Previous 30 days
+             vs. Last 30 Days
           </div>
         </div>
       </div>

@@ -37,6 +37,9 @@ describe('TrendItem', () => {
 		expect(
 			container.querySelector('.change .lexicon-icon-caret-bottom')
 		).not.toBeNull();
+		expect(container.querySelector('.change')).toHaveTextContent(
+			'vs. Last 30 Days'
+		);
 	});
 
 	it('should render a positive change', () => {

@@ -46,7 +46,7 @@ exports[`TrendItem should render 1`] = `
           -0.02%
         </b>
       </span>
-       vs. Previous 30 days
+       vs. Last 30 Days
     </div>
   </div>
 </div>

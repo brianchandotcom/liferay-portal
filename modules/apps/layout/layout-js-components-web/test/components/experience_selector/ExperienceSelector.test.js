@@ -51,6 +51,7 @@ jest.mock('frontend-js-web', () => ({
 const renderComponent = ({
 	displayType = 'light',
 	disabled,
+	onChangeExperience,
 	segmentsExperiences = mockSegments.segmentsExperiences,
 	selectedSegmentsExperience = mockSegments.selectedSegmentsExperience,
 } = {}) =>
@@ -58,6 +59,7 @@ const renderComponent = ({
 		<ExperienceSelector
 			disabled={disabled}
 			displayType={displayType}
+			onChangeExperience={onChangeExperience}
 			segmentsExperiences={segmentsExperiences}
 			selectedSegmentsExperience={selectedSegmentsExperience}
 		/>
@@ -111,5 +113,68 @@ describe('ExperienceSelector', () => {
 		fireEvent.click(button);
 
 		expect(navigate).toHaveBeenCalled();
+	});
+
+	it('does not render the segment line when there is no segment name', async () => {
+		const segmentsExperiences = [
+			{
+				active: true,
+				segmentsExperienceERC: 'erc-0',
+				segmentsExperienceName: 'Experience Default',
+				statusLabel: 'Active',
+				url: 'url',
+			},
+			{
+				active: false,
+				segmentsExperienceERC: 'erc-1',
+				segmentsExperienceName: 'Experience 1',
+				statusLabel: 'Inactive',
+				url: 'url',
+			},
+		];
+
+		const {findByRole, queryByText} = renderComponent({
+			segmentsExperiences,
+			selectedSegmentsExperience: segmentsExperiences[0],
+		});
+
+		await userEvent.click(await findByRole('combobox'));
+
+		expect(await queryByText(/^segment:/)).not.toBeInTheDocument();
+	});
+
+	it('keys options by external reference code when provided', async () => {
+		const segmentsExperiences = [
+			{
+				active: true,
+				segmentsExperienceERC: 'erc-0',
+				segmentsExperienceName: 'Experience Default',
+				statusLabel: 'Active',
+				url: 'url',
+			},
+			{
+				active: false,
+				segmentsExperienceERC: 'erc-1',
+				segmentsExperienceName: 'Experience 1',
+				statusLabel: 'Inactive',
+				url: 'url-1',
+			},
+		];
+
+		const onChangeExperience = jest.fn();
+
+		const {findByRole} = renderComponent({
+			onChangeExperience,
+			segmentsExperiences,
+			selectedSegmentsExperience: segmentsExperiences[0],
+		});
+
+		await userEvent.click(await findByRole('combobox'));
+
+		fireEvent.click(
+			await findByRole('option', {name: 'Experience 1 Inactive'})
+		);
+
+		expect(onChangeExperience).toHaveBeenCalledWith('erc-1');
 	});
 });

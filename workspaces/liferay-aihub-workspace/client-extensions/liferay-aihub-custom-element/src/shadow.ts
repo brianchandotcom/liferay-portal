@@ -5,13 +5,6 @@
 
 import React from 'react';
 
-/**
- * Holds a ref to a container element living inside the widget's shadow root.
- * Clay overlays (modal, dropdowns) portal to `document.body` by default, which
- * escapes the shadow root and loses the injected Atlas CSS. Components read
- * this ref and pass it to Clay's `containerElementRef` so overlays render
- * inside the shadow tree where Atlas applies.
- */
 const ShadowPortalContext =
 	React.createContext<React.RefObject<Element> | null>(null);
 

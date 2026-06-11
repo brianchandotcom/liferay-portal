@@ -9,14 +9,6 @@ import path from 'path';
 
 const require = createRequire(import.meta.url);
 
-// Build a minimal Clay icon spritemap holding only the symbols the widget
-// actually renders. Keeping it minimal (vs the full ~375 KB Clay sprite) is
-// what makes shipping Clay icons on a Liferay DXP agnostic embed cheap.
-//
-// The symbol list is auto-derived: every `symbol="name"` reference in the
-// source is collected, so adding or removing a Clay icon in a component
-// automatically updates the bundled sprite with no list to maintain by hand.
-
 const srcDir = path.resolve('src');
 const outDir = path.resolve('src/assets');
 const outFile = path.join(outDir, 'icons.svg');
@@ -57,11 +49,6 @@ for (const file of collectSourceFiles(srcDir)) {
 
 const symbolNames = [...usedSymbols].sort();
 
-// Resolve the Clay spritemap through Node module resolution so it is found
-// whether @clayui/css is installed locally or hoisted to the yarn workspace
-// root. If it cannot be resolved (e.g. a pruned install), keep the committed
-// src/assets/icons.svg rather than failing the build.
-
 let source;
 
 try {
@@ -97,9 +84,6 @@ for (const name of symbolNames) {
 }
 
 fs.mkdirSync(outDir, {recursive: true});
-
-// The leading comment carries an @generated marker so the source formatter
-// skips this file; it is rewritten on every build and must not be hand-edited.
 
 fs.writeFileSync(
 	outFile,

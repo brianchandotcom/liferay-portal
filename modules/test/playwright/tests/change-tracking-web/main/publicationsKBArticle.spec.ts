@@ -12,7 +12,6 @@ import {knowledgeBasePages} from '../../../fixtures/knowledgeBasePagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {KnowledgeBaseUrls} from '../../knowledge-base-web/main/utils/knowledgeBaseUrls';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -104,35 +103,28 @@ test('Can publish a Publication containing an edited KBArticle', async ({
 	ctCollection,
 	knowledgeBaseEditArticlePage,
 	knowledgeBasePage,
+	knowledgeBaseViewArticlePage,
 	page,
 	site,
 }) => {
 	const content = getRandomString();
 	const title = getRandomString();
 
-	const kbArticle =
-		await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
-			articleBody: content,
-			siteId: site.id,
-			title,
-		});
+	await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
+		articleBody: content,
+		siteId: site.id,
+		title,
+	});
 
 	await changeTrackingPage.workOnPublication(ctCollection);
 
-	const knowledgeBaseUrls = new KnowledgeBaseUrls(site.friendlyUrlPath);
+	await knowledgeBaseViewArticlePage.goto(site.friendlyUrlPath, title);
 
-	await page.goto(knowledgeBaseUrls.getEditKBArticleUrl(kbArticle.id));
+	await page.getByLabel('Edit').click();
 
-	await knowledgeBaseEditArticlePage.titlePlaceholder.waitFor();
-
-	await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
-		`${content} edit`,
-		`${title} edit`
-	);
-
-	await waitForAlert(
-		page,
-		`Success:${title} edit was successfully published.`
+	await knowledgeBaseEditArticlePage.editKBArticle(
+		`${title} edit`,
+		`${content} edit`
 	);
 
 	await apiHelpers.headlessChangeTracking.publishCTCollection(

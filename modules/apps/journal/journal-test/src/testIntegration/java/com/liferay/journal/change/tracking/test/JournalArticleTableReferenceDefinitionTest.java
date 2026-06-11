@@ -11,6 +11,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -56,10 +57,10 @@ public class JournalArticleTableReferenceDefinitionTest
 			_journalArticle.getContent(), false, false,
 			ServiceContextTestUtil.getServiceContext());
 
+		User user = TestPropsValues.getUser();
+
 		_mbMessageLocalService.addDiscussionMessage(
-			TestPropsValues.getUserId(),
-			TestPropsValues.getUser(
-			).getFullName(),
+			TestPropsValues.getUserId(), user.getFullName(),
 			journalArticle.getGroupId(), JournalArticle.class.getName(),
 			journalArticle.getId(), WorkflowConstants.ACTION_PUBLISH);
 

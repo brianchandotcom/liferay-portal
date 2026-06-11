@@ -253,13 +253,12 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			new long[] {testDepotEntry.getGroupId()},
 			ServiceContextTestUtil.getServiceContext());
 
+		com.liferay.portal.kernel.model.Role role = _roleLocalService.getRole(
+			testCompany.getCompanyId(), roleName);
+
 		_userGroupRoleService.addUserGroupRoles(
 			user.getUserId(), testDepotEntry.getGroupId(),
-			new long[] {
-				_roleLocalService.getRole(
-					testCompany.getCompanyId(), roleName
-				).getRoleId()
-			});
+			new long[] {role.getRoleId()});
 
 		return RoleResource.builder(
 		).authentication(

@@ -6282,8 +6282,7 @@ paths:
     "/asset-entries":
         get:
             description:
-                Retrieves the asset entries in the given groups, across one or more class names, mirroring the legacy
-                asset browser item selector search. Results can be paginated, filtered, searched, and sorted.
+                Retrieves the asset entries in the given groups, across one or more class names, mirroring the legacy asset browser item selector search. Results can be paginated, filtered, searched, and sorted.
             operationId: getAssetEntriesPage
             parameters:
                 -   in: query
@@ -6292,8 +6291,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        Scopes the search to the union of the given groups. When omitted, the search runs across every
-                        group the user has read permission to.
+                        Scopes the search to the union of the given groups. When omitted, the search runs across every group the user has read permission to.
                     name: groupIds
                     schema:
                         items:

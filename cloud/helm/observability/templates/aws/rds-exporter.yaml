@@ -1,20 +1,20 @@
 {{- if and (eq (include "observability.cloudProvider" .) "aws") .Values.rdsExporter.enabled -}}
 {{- $awsRegion := default .Values.aws.region .Values.rdsExporter.region -}}
-{{- $namespace := include "observability.namespace" . -}}
 {{- $name := printf "%s-rds-exporter" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- $namespace := include "observability.namespace" . -}}
 apiVersion: v1
 automountServiceAccountToken: false
 kind: ServiceAccount
 metadata:
+    {{- with .Values.rdsExporter.iam.awsRoleArn }}
+    annotations:
+        eks.amazonaws.com/role-arn: {{ . | quote }}
+    {{- end }}
     labels:
         {{- include "observability.labels" . | nindent 8 }}
         app.kubernetes.io/component: rds-exporter
     name: liferay-rds-exporter
     namespace: {{ $namespace | quote }}
-    {{- with .Values.rdsExporter.iam.awsRoleArn }}
-    annotations:
-        eks.amazonaws.com/role-arn: {{ . | quote }}
-    {{- end }}
 ---
 apiVersion: apps/v1
 kind: Deployment

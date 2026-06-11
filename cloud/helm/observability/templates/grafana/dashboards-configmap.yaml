@@ -1,7 +1,7 @@
-{{- $folder := .Values.dashboards.folder -}}
 {{- $datasourceUid := include "observability.datasourceUid" . -}}
-{{- $namespace := include "observability.namespace" . -}}
+{{- $folder := .Values.dashboards.folder -}}
 {{- $items := deepCopy .Values.dashboards.items -}}
+{{- $namespace := include "observability.namespace" . -}}
 {{- $region := "" -}}
 {{- with .Values.aws -}}
 {{- $region = (.region | default "") -}}
@@ -13,35 +13,35 @@
 {{- end -}}
 {{- $activeTileStyle := "ch-tile" -}}
 {{- $mutedTileStyle := "ch-tile-muted" -}}
-{{- $argocdHref := "#" -}}
 {{- $argocdDescription := "Set centralHub.argocdURL in your values.yaml to enable this link." -}}
+{{- $argocdHref := "#" -}}
 {{- $argocdTileStyle := $mutedTileStyle -}}
 {{- if .Values.centralHub.argocdURL -}}
+{{- $argocdDescription = "GitOps and Delivery" -}}
 {{- $argocdHref = .Values.centralHub.argocdURL -}}
-{{- $argocdDescription = "GitOps & Delivery." -}}
 {{- $argocdTileStyle = $activeTileStyle -}}
 {{- end -}}
-{{- $argoWfHref := "#" -}}
 {{- $argoWfDescription := "Set centralHub.argoWorkflowsURL in your values.yaml to enable this link." -}}
+{{- $argoWfHref := "#" -}}
 {{- $argoWfTileStyle := $mutedTileStyle -}}
 {{- if .Values.centralHub.argoWorkflowsURL -}}
+{{- $argoWfDescription = "Workflow Automation" -}}
 {{- $argoWfHref = .Values.centralHub.argoWorkflowsURL -}}
-{{- $argoWfDescription = "Workflow automation." -}}
 {{- $argoWfTileStyle = $activeTileStyle -}}
 {{- end -}}
-{{- $gitHref := "#" -}}
 {{- $gitDescription := "Set centralHub.gitURL in your values.yaml to enable this link." -}}
+{{- $gitHref := "#" -}}
 {{- $gitTileStyle := $mutedTileStyle -}}
 {{- if .Values.centralHub.gitURL -}}
+{{- $gitDescription = "Source Code History" -}}
 {{- $gitHref = .Values.centralHub.gitURL -}}
-{{- $gitDescription = "Source code history." -}}
 {{- $gitTileStyle = $activeTileStyle -}}
 {{- end -}}
 {{- $dashboardHeaders := dict
-    "backups" (dict "title" "Backups" "subtitle" "Backup history and status across the platform.")
-    "databases" (dict "title" "Database Health" "subtitle" "Database instance health and operational metrics.")
-    "kubernetes-workloads" (dict "title" "Kubernetes Workloads" "subtitle" "Performance and resource metrics across pods.")
-    "load-balancers" (dict "title" "Load Balancer Metrics" "subtitle" "Traffic analysis and envoy health monitoring.")
+    "backups" (dict "title" "Backups" "subtitle" "View backup history and status across the platform.")
+    "databases" (dict "title" "Database Health" "subtitle" "Monitor database instance health and operational metrics.")
+    "kubernetes-workloads" (dict "title" "Kubernetes Workloads" "subtitle" "Track performance and resource metrics across pods.")
+    "load-balancers" (dict "title" "Load Balancer Metrics" "subtitle" "Analyze traffic and monitor Envoy health.")
 -}}
 {{- range $key, $entry := $items }}
 {{- if not (eq $entry.enabled false) }}

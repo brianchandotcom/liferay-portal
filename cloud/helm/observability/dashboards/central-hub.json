@@ -53,8 +53,8 @@
 	"preload": false,
 	"schemaVersion": 42,
 	"tags": [
-		"Liferay",
-		"Central Hub"
+		"Central Hub",
+		"Liferay"
 	],
 	"templating": {
 		"list": [

@@ -639,8 +639,9 @@ const ManageCollaborators = ({
 									displayType="secondary"
 									onClick={() => {
 										if (
-											Object.keys(selectedItems) === 0 &&
-											Object.keys(updatedRoles) === 0
+											!Object.keys(selectedItems)
+												.length &&
+											!Object.keys(updatedRoles).length
 										) {
 											onClose();
 											resetForm();

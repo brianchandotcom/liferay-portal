@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -36,6 +37,8 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
 import jakarta.ws.rs.core.Response;
+
+import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,6 +88,8 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		assertContains(country1, (List<Country>)page.getItems());
 		assertContains(country2, (List<Country>)page.getItems());
 		assertValid(page);
+
+		_testGetCountriesPageWithFilter();
 	}
 
 	@Override
@@ -280,6 +285,11 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"a2", "a3", "name", "number"};
+	}
+
+	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"dateCreated", "dateModified"};
 	}
 
 	@Override
@@ -483,6 +493,74 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		return randomValue ->
 			StringUtil.isLowerCase(randomValue) &&
 			!existingValues.contains(randomValue);
+	}
+
+	private void _testGetCountriesPageWithFilter() throws Exception {
+		String keywords = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+		// Sleep for 1 second to ensure that country 1 and country 2 are created
+		// 1 second apart
+
+		Thread.sleep(1000);
+
+		Country country1 = randomCountry();
+
+		country1.setName(keywords + country1.getName());
+
+		country1 = testGetCountriesPage_addCountry(country1);
+
+		Thread.sleep(1000);
+
+		Country country2 = randomCountry();
+
+		country2.setName(keywords + country2.getName());
+
+		country2 = testGetCountriesPage_addCountry(country2);
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		Page<Country> page = countryResource.getCountriesPage(
+			null, keywords,
+			"dateCreated lt " + dateFormat.format(country1.getDateCreated()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		page = countryResource.getCountriesPage(
+			null, keywords,
+			"dateCreated ge " + dateFormat.format(country1.getDateCreated()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		// Sleep for 1 second to ensure that country 1 and country 2 are
+		// modified 1 second apart
+
+		Thread.sleep(1000);
+
+		country1.setName(
+			keywords + StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		country1 = countryResource.patchCountry(country1.getId(), country1);
+
+		page = countryResource.getCountriesPage(
+			null, keywords,
+			"dateModified ge " + dateFormat.format(country1.getDateModified()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertContains(country1, (List<Country>)page.getItems());
+
+		page = countryResource.getCountriesPage(
+			null, keywords,
+			"dateModified lt " + dateFormat.format(country1.getDateModified()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertContains(country2, (List<Country>)page.getItems());
 	}
 
 	private void _testGetCountryWithNestedFields() throws Exception {

@@ -14,6 +14,8 @@ import getRandomString from '../../../utils/getRandomString';
 import {faroConfig} from './faro.config';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
+import {CardSelectors} from './utils/selectors';
+import {changeTimeFilter} from './utils/time-filter';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -136,6 +138,55 @@ test(
 				page
 					.locator('li.card-tab.active')
 					.getByText(tabName, {exact: true})
+			).toBeVisible();
+		}
+	}
+);
+
+test(
+	'Searched keywords appear in the Site overview Search Terms report',
+	{
+		tag: '@LRAC-8298',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const keywords = ['liferay', 'ac'];
+
+		const date = new Date();
+
+		// Seed search events so the searched keywords surface in the Search Terms report
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+			keywords.map((keyword) => ({
+				applicationId: 'Page',
+				canonicalUrl: `https://www.liferay.com/search?q=${keyword}`,
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: keyword,
+				url: `https://www.liferay.com/search?q=${keyword}`,
+				userId: 'searchUser',
+			}))
+		);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.sitePage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await changeTimeFilter({
+			cardSelector: CardSelectors.SearchTerms,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		for (const keyword of keywords) {
+			await expect(
+				page
+					.locator(CardSelectors.SearchTerms)
+					.getByText(keyword)
+					.first()
 			).toBeVisible();
 		}
 	}

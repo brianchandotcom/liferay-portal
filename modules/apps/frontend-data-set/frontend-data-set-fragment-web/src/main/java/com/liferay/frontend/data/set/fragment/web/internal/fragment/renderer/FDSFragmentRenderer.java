@@ -392,7 +392,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 		String source = mappingJSONObject.getString("source");
 
-		if (Objects.equals(source, "backend")) {
+		if (Objects.equals(source, "backend-resolved")) {
 			return null;
 		}
 

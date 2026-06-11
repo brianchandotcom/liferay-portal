@@ -153,27 +153,25 @@ public class CMSDefaultPermissionUtil {
 			String className, FilterFactory<Predicate> filterFactory)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_DEFAULT_PERMISSION", companyId);
-
-		Predicate predicate = filterFactory.create(
+		return _fetchObjectEntry(
+			companyId, userId,
 			StringBundler.concat(
 				"(classExternalReferenceCode eq '", classExternalReferenceCode,
 				"') and (className eq '", className, "')"),
-			objectDefinition);
+			filterFactory);
+	}
 
-		List<Long> primaryKeys = ObjectEntryLocalServiceUtil.getPrimaryKeys(
-			new Long[0], companyId, userId,
-			objectDefinition.getObjectDefinitionId(), predicate, false, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public static ObjectEntry fetchObjectEntryByDepotGroupId(
+			long companyId, long userId, long depotGroupId, String className,
+			FilterFactory<Predicate> filterFactory)
+		throws PortalException {
 
-		if (ListUtil.isEmpty(primaryKeys)) {
-			return null;
-		}
-
-		return ObjectEntryLocalServiceUtil.fetchObjectEntry(primaryKeys.get(0));
+		return _fetchObjectEntry(
+			companyId, userId,
+			StringBundler.concat(
+				"(depotGroupId eq ", depotGroupId, ") and (className eq '",
+				className, "')"),
+			filterFactory);
 	}
 
 	public static JSONObject getCMSDefaultPermissionJSONObject(
@@ -244,6 +242,56 @@ public class CMSDefaultPermissionUtil {
 
 		return JSONFactoryUtil.createJSONObject(
 			String.valueOf(values.getOrDefault("defaultPermissions", "{}")));
+	}
+
+	public static void updateClassExternalReferenceCode(
+			ObjectEntry objectEntry, String classExternalReferenceCode,
+			long userId)
+		throws PortalException {
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		if (Objects.equals(
+				values.get("classExternalReferenceCode"),
+				classExternalReferenceCode)) {
+
+			return;
+		}
+
+		ObjectEntryLocalServiceUtil.updateObjectEntry(
+			userId, objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>putAll(
+				values
+			).put(
+				"classExternalReferenceCode", classExternalReferenceCode
+			).build(),
+			new ServiceContext());
+	}
+
+	private static ObjectEntry _fetchObjectEntry(
+			long companyId, long userId, String filterString,
+			FilterFactory<Predicate> filterFactory)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_DEFAULT_PERMISSION", companyId);
+
+		Predicate predicate = filterFactory.create(
+			filterString, objectDefinition);
+
+		List<Long> primaryKeys = ObjectEntryLocalServiceUtil.getPrimaryKeys(
+			new Long[0], companyId, userId,
+			objectDefinition.getObjectDefinitionId(), predicate, false, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isEmpty(primaryKeys)) {
+			return null;
+		}
+
+		return ObjectEntryLocalServiceUtil.fetchObjectEntry(primaryKeys.get(0));
 	}
 
 }

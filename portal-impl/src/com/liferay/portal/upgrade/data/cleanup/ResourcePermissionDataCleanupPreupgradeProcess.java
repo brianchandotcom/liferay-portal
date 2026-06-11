@@ -6,7 +6,6 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -58,14 +57,12 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 				ResourceActionsImpl resourceActionsImpl =
 					new ResourceActionsImpl();
 
-				String compositeModelNameSeparator =
-					resourceActionsImpl.getCompositeModelNameSeparator();
-
 				while (resultSet.next()) {
 					String name = resultSet.getString("name");
 
 					String[] classNames = StringUtil.split(
-						name, compositeModelNameSeparator);
+						name,
+						resourceActionsImpl.getCompositeModelNameSeparator());
 
 					String tableName = null;
 
@@ -142,23 +139,14 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 				continue;
 			}
 
-			List<String> names = entry.getValue();
-
-			List<String> quotedNames = new ArrayList<>(names.size());
-
-			for (String name : names) {
-				quotedNames.add(StringBundler.concat("'", name, "'"));
-			}
-
 			upgrade(
 				new TableOrphanReferencesDataCleanupPreupgradeProcess(
 					null,
 					StringBundler.concat(
 						"[$SOURCE_TABLE_ALIAS$].scope = ",
 						ResourceConstants.SCOPE_INDIVIDUAL,
-						" and [$SOURCE_TABLE_ALIAS$].name in (",
-						String.join(StringPool.COMMA_AND_SPACE, quotedNames),
-						")"),
+						" and [$SOURCE_TABLE_ALIAS$].name in ('",
+						StringUtil.merge(entry.getValue(), "', '"), "')"),
 					"primKeyId", "ResourcePermission", primaryKeyColumnName,
 					tableName));
 		}

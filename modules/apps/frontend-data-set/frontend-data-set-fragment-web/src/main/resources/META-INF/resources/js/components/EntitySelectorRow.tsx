@@ -85,9 +85,14 @@ async function openInfoItemSelector(
 interface IProps {
 	entity: IContentMappedTokenValue;
 	onEntityChange: (entity: IContentMappedTokenValue) => void;
+	onEntityRemove: () => void;
 }
 
-export default function EntitySelectorRow({entity, onEntityChange}: IProps) {
+export default function EntitySelectorRow({
+	entity,
+	onEntityChange,
+	onEntityRemove,
+}: IProps) {
 	const entityLabel = Liferay.Language.get('entity');
 	const isEntitySelected = !!entity.className;
 
@@ -97,6 +102,11 @@ export default function EntitySelectorRow({entity, onEntityChange}: IProps) {
 		isEntitySelected
 			? Liferay.Language.get('change-x')
 			: Liferay.Language.get('select-x'),
+		entityLabel
+	);
+
+	const removeButtonLabel = sub(
+		Liferay.Language.get('remove-x'),
 		entityLabel
 	);
 
@@ -148,6 +158,19 @@ export default function EntitySelectorRow({entity, onEntityChange}: IProps) {
 						title={selectButtonLabel}
 					/>
 				</ClayInput.GroupItem>
+
+				{isEntitySelected && (
+					<ClayInput.GroupItem shrink>
+						<ClayButtonWithIcon
+							aria-label={removeButtonLabel}
+							displayType="secondary"
+							onClick={onEntityRemove}
+							size="sm"
+							symbol="trash"
+							title={removeButtonLabel}
+						/>
+					</ClayInput.GroupItem>
+				)}
 			</ClayInput.Group>
 		</ClayForm.Group>
 	);

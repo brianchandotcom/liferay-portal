@@ -1,7 +1,9 @@
 ---
+
 description: Guide for generating, deploying, and verifying Liferay Client Extensions for beginners
 globs: client-extensions/**
 alwaysApply: false
+
 ---
 
 # Liferay Client Extension Mentor Protocol (Beginner Friendly)

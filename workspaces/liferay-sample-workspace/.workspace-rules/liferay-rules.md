@@ -1,7 +1,9 @@
 ---
+
 description: General rules for Liferay Workspaces
 globs: *
 alwaysApply: true
+
 ---
 
 # Liferay General Rules

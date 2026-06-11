@@ -738,13 +738,13 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder);
 
-		String paymentURL = placedOrderResource.getPlacedOrderPaymentURL(
-			commerceOrder.getCommerceOrderId(), RandomTestUtil.randomString());
-
 		String guestToken = URLCodec.encodeURL(
 			_encryptor.encrypt(
 				testCompany.getKeyObj(),
 				String.valueOf(commerceOrder.getCommerceOrderId())));
+
+		String paymentURL = placedOrderResource.getPlacedOrderPaymentURL(
+			commerceOrder.getCommerceOrderId(), RandomTestUtil.randomString());
 
 		Assert.assertTrue(paymentURL.contains("guestToken=" + guestToken));
 	}

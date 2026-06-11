@@ -424,7 +424,8 @@ test(
 					'false',
 					'customAuthorTableCellRenderer'
 				),
-				'date': buildTableRowSpec('false', 'Date and Time'),
+				'date': buildTableRowSpec('false', 'Date'),
+				'dateTime': buildTableRowSpec('false', 'Date and Time'),
 				'description': buildTableRowSpec('false', 'Default'),
 				'id': buildTableRowSpec('true', 'Action Link'),
 				'size': buildTableRowSpec('false', ''),
@@ -542,6 +543,7 @@ test(
 					true,
 				],
 				['Date Range', 'date', 'Date Filter', true],
+				['Date Time Range', 'dateTime', 'Date Filter', true],
 				['Color', 'color', 'System Filter', false],
 				['Creator', 'creator.name', 'System Filter', false],
 				['Size', 'size', 'System Filter', false],

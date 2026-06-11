@@ -133,21 +133,18 @@ const DataSet = ({
 
 				const {restApplication, restSchema} = responseJSON;
 
-				getOpenApiData({restApplication, restSchema}).then(
-					(oApiData) => {
-						if (!oApiData) {
-							return;
+				getOpenApiData({restApplication, restSchema})
+					.then((oApiData) => {
+						if (oApiData) {
+							setFieldTreeItems(getFields(oApiData));
+
+							setFilterableFieldTreeItems(
+								getFilterableFields(oApiData)
+							);
 						}
-
-						setFieldTreeItems(getFields(oApiData));
-
-						setFilterableFieldTreeItems(
-							getFilterableFields(oApiData)
-						);
-
-						setLoading(false);
-					}
-				);
+					})
+					.catch(openDefaultFailureToast)
+					.finally(() => setLoading(false));
 			}
 			else {
 				openDefaultFailureToast();

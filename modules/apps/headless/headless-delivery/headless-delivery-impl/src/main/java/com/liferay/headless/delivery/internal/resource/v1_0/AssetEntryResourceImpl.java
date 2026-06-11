@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.search.AssetSearcherFactoryUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.headless.delivery.dto.v1_0.AssetEntry;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.AssetEntryEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.AssetEntryResource;
@@ -73,7 +74,10 @@ public class AssetEntryResourceImpl extends BaseAssetEntryResourceImpl {
 
 				if (ArrayUtil.isNotEmpty(groupIds)) {
 					searchContext.setGroupIds(
-						ArrayUtil.toLongArray(Arrays.asList(groupIds)));
+						SiteConnectedGroupGroupProviderUtil.
+							getCurrentAndAncestorSiteAndDepotGroupIds(
+								ArrayUtil.toLongArray(
+									Arrays.asList(groupIds))));
 				}
 
 				searchContext.setUserId(contextUser.getUserId());

@@ -90,7 +90,7 @@ File Name | Description
 
 File Name | Description
 --------- | -----------
-`.lfrbuild-cms` | Deploys the module during the `ant all` execution when the `cms` build profile is selected (`-Dbuild.profile=cms`).
+`.lfrbuild-cms-standalone` | Deploys the module during the `ant all` execution when the `cms-standalone` build profile is selected (`-Dbuild.profile=cms-standalone`).
 `.lfrbuild-portal-deprecated` | Marks the module as deprecated and skip deployment during the `ant all` execution. `-test` modules never have this file.
 `.lfrbuild-portal-pre` | Builds the module during the `ant compile` execution in the `tmp/lib-pre` directory before building `portal-kernel`, `portal-impl`, etc.
 `.lfrbuild-portal-private` | Deploys the module during the `ant all` execution in a private branch. `-test` modules never have this file.

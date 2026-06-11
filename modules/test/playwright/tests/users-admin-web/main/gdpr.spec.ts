@@ -2064,16 +2064,12 @@ testAdmin(
 
 		await expect(async () => {
 			await exportUserDataPage.orderButton.click();
-			await exportUserDataPage
-				.orderMenuItem('Name')
-				.click({timeout: 1000});
+			await exportUserDataPage.clickOrderMenuItem('Name');
 		}).toPass({timeout: 5000});
 
 		await expect(async () => {
 			await exportUserDataPage.orderButton.click();
-			await exportUserDataPage
-				.orderMenuItem('Descending')
-				.click({timeout: 1000});
+			await exportUserDataPage.clickOrderMenuItem('Descending');
 		}).toPass({timeout: 5000});
 
 		await expect(exportUserDataPage.optionalColumnRow(0, 1)).toContainText(

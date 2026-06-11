@@ -494,16 +494,16 @@ test(
 
 		await expect(async () => {
 			await usersAndOrganizationsPage.organizationsTable.orderButton.click();
-			await usersAndOrganizationsPage.organizationsTable
-				.orderMenuItem('Name')
-				.click({timeout: 500});
+			await usersAndOrganizationsPage.organizationsTable.clickOrderMenuItem(
+				'Name'
+			);
 		}).toPass({timeout: 5000});
 
 		await expect(async () => {
 			await usersAndOrganizationsPage.organizationsTable.orderButton.click();
-			await usersAndOrganizationsPage.organizationsTable
-				.orderMenuItem('Ascending')
-				.click({timeout: 500});
+			await usersAndOrganizationsPage.organizationsTable.clickOrderMenuItem(
+				'Ascending'
+			);
 
 			await expect(
 				usersAndOrganizationsPage.organizationsTable.cell(
@@ -518,9 +518,9 @@ test(
 
 		await expect(async () => {
 			await usersAndOrganizationsPage.organizationsTable.orderButton.click();
-			await usersAndOrganizationsPage.organizationsTable
-				.orderMenuItem('Descending')
-				.click({timeout: 500});
+			await usersAndOrganizationsPage.organizationsTable.clickOrderMenuItem(
+				'Descending'
+			);
 
 			await expect(
 				usersAndOrganizationsPage.organizationsTable.cell(
@@ -535,9 +535,9 @@ test(
 
 		await expect(async () => {
 			await usersAndOrganizationsPage.organizationsTable.orderButton.click();
-			await usersAndOrganizationsPage.organizationsTable
-				.orderMenuItem('Ascending')
-				.click({timeout: 500});
+			await usersAndOrganizationsPage.organizationsTable.clickOrderMenuItem(
+				'Ascending'
+			);
 		}).toPass({timeout: 5000});
 	}
 );

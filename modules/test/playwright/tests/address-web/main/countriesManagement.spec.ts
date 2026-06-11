@@ -18,14 +18,6 @@ export const test = mergeTests(
 	loginTest()
 );
 
-async function waitForLoading(page: Page) {
-	await page.waitForFunction(() => {
-		const loaders = document.querySelectorAll('.loading-animation');
-
-		return !loaders.length;
-	});
-}
-
 async function deleteRegion(
 	countriesManagementPage: any,
 	page: Page,
@@ -677,16 +669,16 @@ test(
 
 		await expect(async () => {
 			await countriesManagementPage.countriesTable.orderButton.click();
-			await countriesManagementPage.countriesTable
-				.orderMenuItem('Name')
-				.click({timeout: 500});
+			await countriesManagementPage.countriesTable.clickOrderMenuItem(
+				'Name'
+			);
 
-			await waitForLoading(page);
+			await page.waitForLoadState('networkidle');
 
 			await countriesManagementPage.countriesTable.orderButton.click();
-			await countriesManagementPage.countriesTable
-				.orderMenuItem('Ascending')
-				.click({timeout: 500});
+			await countriesManagementPage.countriesTable.clickOrderMenuItem(
+				'Ascending'
+			);
 
 			await expect(
 				countriesManagementPage.countriesTable.cell('Antarctica')
@@ -698,9 +690,9 @@ test(
 
 		await expect(async () => {
 			await countriesManagementPage.countriesTable.orderButton.click();
-			await countriesManagementPage.countriesTable
-				.orderMenuItem('Descending')
-				.click({timeout: 500});
+			await countriesManagementPage.countriesTable.clickOrderMenuItem(
+				'Descending'
+			);
 
 			await expect(
 				countriesManagementPage.countriesTable.cell('Antarctica')
@@ -735,20 +727,20 @@ test(
 
 		await expect(async () => {
 			await countriesManagementPage.countriesTable.orderButton.click();
-			await countriesManagementPage.countriesTable
-				.orderMenuItem('Priority')
-				.click({timeout: 500});
+			await countriesManagementPage.countriesTable.clickOrderMenuItem(
+				'Priority'
+			);
 
-			await waitForLoading(page);
+			await page.waitForLoadState('networkidle');
 
 			await expect(
 				countriesManagementPage.countriesTable.searchInput
 			).toBeEditable();
 
 			await countriesManagementPage.countriesTable.orderButton.click();
-			await countriesManagementPage.countriesTable
-				.orderMenuItem('Ascending')
-				.click({timeout: 500});
+			await countriesManagementPage.countriesTable.clickOrderMenuItem(
+				'Ascending'
+			);
 
 			await expect(
 				countriesManagementPage.countriesTable.cell(country.title)
@@ -757,9 +749,9 @@ test(
 
 		await expect(async () => {
 			await countriesManagementPage.countriesTable.orderButton.click();
-			await countriesManagementPage.countriesTable
-				.orderMenuItem('Descending')
-				.click({timeout: 500});
+			await countriesManagementPage.countriesTable.clickOrderMenuItem(
+				'Descending'
+			);
 
 			await expect(
 				countriesManagementPage.countriesTable.cell(country.title)
@@ -777,20 +769,20 @@ test(
 
 		await expect(async () => {
 			await countriesManagementPage.countriesTable.orderButton.click();
-			await countriesManagementPage.countriesTable
-				.orderMenuItem('Name')
-				.click({timeout: 500});
+			await countriesManagementPage.countriesTable.clickOrderMenuItem(
+				'Name'
+			);
 
-			await waitForLoading(page);
+			await page.waitForLoadState('networkidle');
 
 			await expect(
 				countriesManagementPage.countriesTable.searchInput
 			).toBeEditable();
 
 			await countriesManagementPage.countriesTable.orderButton.click();
-			await countriesManagementPage.countriesTable
-				.orderMenuItem('Ascending')
-				.click({timeout: 500});
+			await countriesManagementPage.countriesTable.clickOrderMenuItem(
+				'Ascending'
+			);
 
 			await expect(
 				countriesManagementPage.countriesTable.cell('Antarctica')
@@ -836,59 +828,34 @@ test(
 
 			await expect(async () => {
 				await countriesManagementPage.regionsTable.orderButton.click();
-				await countriesManagementPage.regionsTable
-					.orderMenuItem('Name')
-					.click({timeout: 500});
+				await countriesManagementPage.regionsTable.clickOrderMenuItem(
+					'Name'
+				);
 
-				await waitForLoading(page);
-
-				await expect(
-					countriesManagementPage.regionsTable.searchInput
-				).toBeEditable();
-
-				await countriesManagementPage.regionsTable.orderButton.click();
-				await countriesManagementPage.regionsTable
-					.orderMenuItem('Ascending')
-					.click({timeout: 500});
-
-				await expect(
-					await countriesManagementPage.regionsTable.firstRow()
-				).toContainText('AAAA');
-				await expect(
-					await countriesManagementPage.regionsTable.lastRow()
-				).toContainText('ZZZZ');
-			}).toPass();
-
-			await expect(async () => {
-				await countriesManagementPage.regionsTable.orderButton.click();
-				await countriesManagementPage.regionsTable
-					.orderMenuItem('Descending')
-					.click({timeout: 500});
-
-				await expect(
-					await countriesManagementPage.regionsTable.firstRow()
-				).toContainText('ZZZZ');
-				await expect(
-					await countriesManagementPage.regionsTable.lastRow()
-				).toContainText('AAAA');
-			}).toPass();
-
-			await expect(async () => {
-				await countriesManagementPage.regionsTable.orderButton.click();
-				await countriesManagementPage.regionsTable
-					.orderMenuItem('Priority')
-					.click({timeout: 500});
-
-				await waitForLoading(page);
+				await page.waitForLoadState('networkidle');
 
 				await expect(
 					countriesManagementPage.regionsTable.searchInput
 				).toBeEditable();
 
 				await countriesManagementPage.regionsTable.orderButton.click();
-				await countriesManagementPage.regionsTable
-					.orderMenuItem('Ascending')
-					.click({timeout: 500});
+				await countriesManagementPage.regionsTable.clickOrderMenuItem(
+					'Ascending'
+				);
+
+				await expect(
+					await countriesManagementPage.regionsTable.firstRow()
+				).toContainText('AAAA');
+				await expect(
+					await countriesManagementPage.regionsTable.lastRow()
+				).toContainText('ZZZZ');
+			}).toPass();
+
+			await expect(async () => {
+				await countriesManagementPage.regionsTable.orderButton.click();
+				await countriesManagementPage.regionsTable.clickOrderMenuItem(
+					'Descending'
+				);
 
 				await expect(
 					await countriesManagementPage.regionsTable.firstRow()
@@ -900,9 +867,34 @@ test(
 
 			await expect(async () => {
 				await countriesManagementPage.regionsTable.orderButton.click();
-				await countriesManagementPage.regionsTable
-					.orderMenuItem('Descending')
-					.click({timeout: 500});
+				await countriesManagementPage.regionsTable.clickOrderMenuItem(
+					'Priority'
+				);
+
+				await page.waitForLoadState('networkidle');
+
+				await expect(
+					countriesManagementPage.regionsTable.searchInput
+				).toBeEditable();
+
+				await countriesManagementPage.regionsTable.orderButton.click();
+				await countriesManagementPage.regionsTable.clickOrderMenuItem(
+					'Ascending'
+				);
+
+				await expect(
+					await countriesManagementPage.regionsTable.firstRow()
+				).toContainText('ZZZZ');
+				await expect(
+					await countriesManagementPage.regionsTable.lastRow()
+				).toContainText('AAAA');
+			}).toPass();
+
+			await expect(async () => {
+				await countriesManagementPage.regionsTable.orderButton.click();
+				await countriesManagementPage.regionsTable.clickOrderMenuItem(
+					'Descending'
+				);
 
 				await expect(
 					await countriesManagementPage.regionsTable.firstRow()
@@ -947,9 +939,9 @@ test(
 			}).toPass();
 
 			await countriesManagementPage.regionsTable.orderButton.click();
-			await countriesManagementPage.regionsTable
-				.orderMenuItem('Ascending')
-				.click({timeout: 500});
+			await countriesManagementPage.regionsTable.clickOrderMenuItem(
+				'Ascending'
+			);
 		}
 	}
 );

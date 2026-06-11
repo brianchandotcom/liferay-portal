@@ -60,10 +60,10 @@ public class VIESAccountEntryValidatorConfigurationDisplayContextTest {
 		_availableCountryA2 = RandomTestUtil.randomString();
 
 		Country availableCountry = _mockCountry(
-			_availableCountryA2, _availableCountryA2);
+			_availableCountryA2, RandomTestUtil.randomString());
 
 		Country currentCountry = _mockCountry(
-			_currentCountryA2, _currentCountryA2);
+			_currentCountryA2, RandomTestUtil.randomString());
 
 		Mockito.when(
 			_countryService.getCompanyCountries(

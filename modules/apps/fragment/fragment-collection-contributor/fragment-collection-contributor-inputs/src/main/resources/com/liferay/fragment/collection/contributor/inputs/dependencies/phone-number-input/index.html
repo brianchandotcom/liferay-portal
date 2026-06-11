@@ -114,6 +114,10 @@
 
 [#assign displayValue = (input.value)!"" /]
 
+[#if displayValue == "null"]
+	[#assign displayValue = "" /]
+[/#if]
+
 [#if prefix?has_content && displayValue?starts_with(prefix)]
 	[#assign displayValue = displayValue?remove_beginning(prefix) /]
 [/#if]

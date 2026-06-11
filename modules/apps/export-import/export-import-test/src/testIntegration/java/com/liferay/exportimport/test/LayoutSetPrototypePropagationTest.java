@@ -1083,8 +1083,14 @@ public class LayoutSetPrototypePropagationTest
 
 		propagateChanges(group);
 
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount, getGroupLayoutCount());
+		if (linkEnabled) {
+			Assert.assertEquals(
+				_initialPrototypeLayoutsCount + 2, getGroupLayoutCount());
+		}
+		else {
+			Assert.assertEquals(
+				_initialPrototypeLayoutsCount, getGroupLayoutCount());
+		}
 	}
 
 	protected void doTestLayoutPropagationWithLayoutPrototype(

@@ -34,27 +34,32 @@ public class RoomSectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"embedded.name", "name",
+			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"view"
 			).setContentRenderer(
 				"roomNameTableCellRenderer"
 			)
 		).add(
-			"embedded.creator.name", "owner"
+			"creator.name", "owner"
 		).add(
-			_getDateFDSTableSchemaField("embedded.dateCreated", "creation-date")
+			_getDateFDSTableSchemaField("dateCreated", "creation-date")
 		).add(
-			_getDateFDSTableSchemaField(
-				"embedded.dateModified", "last-modified")
+			_getDateFDSTableSchemaField("dateModified", "last-modified")
 		).add(
-			"embedded.trend", "trend",
+			"trend", "trend",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"roomTrendTableCellRenderer")
 		).add(
-			"embedded.status", "status",
+			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"roomStatusTableCellRenderer")
+		).add(
+			"roomStatus", "room-status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"roomStatusFieldTableCellRenderer")
+		).add(
+			_getDateFDSTableSchemaField("archiveDate", "archive-date")
 		).build();
 	}
 

@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {eq} from '../src/main/resources/META-INF/resources/detection/operators/eq';
-import {gt} from '../src/main/resources/META-INF/resources/detection/operators/gt';
-import {gte} from '../src/main/resources/META-INF/resources/detection/operators/gte';
-import {includes} from '../src/main/resources/META-INF/resources/detection/operators/includes';
-import {lt} from '../src/main/resources/META-INF/resources/detection/operators/lt';
-import {lte} from '../src/main/resources/META-INF/resources/detection/operators/lte';
-import {notEq} from '../src/main/resources/META-INF/resources/detection/operators/not_eq';
-import {notIncludes} from '../src/main/resources/META-INF/resources/detection/operators/not_includes';
+import {eq} from '../src/main/resources/META-INF/resources/main/detection/operators/eq';
+import {gt} from '../src/main/resources/META-INF/resources/main/detection/operators/gt';
+import {gte} from '../src/main/resources/META-INF/resources/main/detection/operators/gte';
+import {includes} from '../src/main/resources/META-INF/resources/main/detection/operators/includes';
+import {lt} from '../src/main/resources/META-INF/resources/main/detection/operators/lt';
+import {lte} from '../src/main/resources/META-INF/resources/main/detection/operators/lte';
+import {notEq} from '../src/main/resources/META-INF/resources/main/detection/operators/not_eq';
+import {notIncludes} from '../src/main/resources/META-INF/resources/main/detection/operators/not_includes';
 
 describe('operators', () => {
 	it('operator eq works with boolean, string and number, fails for Set', async () => {

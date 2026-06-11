@@ -27,8 +27,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="countryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -42,11 +42,11 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPublishDate" type="timestamp" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.model.impl.CommerceOrderImpl" table="CommerceOrder">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderId" type="long">
@@ -59,8 +59,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="billingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceAccountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceCurrencyCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -74,61 +74,61 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="couponCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="deliveryCTermEntryDescription" name="deliveryCommerceTermEntryDescription" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliveryCommerceTermEntryName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPriceUpdateDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPriceUpdateDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="manuallyAdjusted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="orderDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="orderDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="orderStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="paymentCTermEntryDescription" name="paymentCommerceTermEntryDescription" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="paymentCommerceTermEntryName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="paymentStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="printedNote" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="purchaseOrderNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="requestedDeliveryDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="requestedDeliveryDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingDiscountAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPercentLevel1" name="shippingDiscountPercentageLevel1" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPercentLevel2" name="shippingDiscountPercentageLevel2" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPercentLevel3" name="shippingDiscountPercentageLevel3" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPercentLevel4" name="shippingDiscountPercentageLevel4" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPctLev1WithTax" name="shippingDiscountPercentageLevel1WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPctLev2WithTax" name="shippingDiscountPercentageLevel2WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPctLev3WithTax" name="shippingDiscountPercentageLevel3WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPctLev4WithTax" name="shippingDiscountPercentageLevel4WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingDiscountWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingDiscountAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPercentLevel1" name="shippingDiscountPercentageLevel1" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPercentLevel2" name="shippingDiscountPercentageLevel2" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPercentLevel3" name="shippingDiscountPercentageLevel3" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPercentLevel4" name="shippingDiscountPercentageLevel4" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPctLev1WithTax" name="shippingDiscountPercentageLevel1WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPctLev2WithTax" name="shippingDiscountPercentageLevel2WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPctLev3WithTax" name="shippingDiscountPercentageLevel3WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPctLev4WithTax" name="shippingDiscountPercentageLevel4WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingDiscountWithTaxAmount" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingOptionName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subtotal" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subtotalDiscountAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPercentLevel1" name="subtotalDiscountPercentageLevel1" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPercentLevel2" name="subtotalDiscountPercentageLevel2" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPercentLevel3" name="subtotalDiscountPercentageLevel3" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPercentLevel4" name="subtotalDiscountPercentageLevel4" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPctLev1WithTax" name="subtotalDiscountPercentageLevel1WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPctLev2WithTax" name="subtotalDiscountPercentageLevel2WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPctLev3WithTax" name="subtotalDiscountPercentageLevel3WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPctLev4WithTax" name="subtotalDiscountPercentageLevel4WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subtotalDiscountWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subtotalWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="taxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="total" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountPercentageLevel1" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountPercentageLevel2" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountPercentageLevel3" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountPercentageLevel4" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="totalDiscountPctLev1WithTax" name="totalDiscountPercentageLevel1WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="totalDiscountPctLev2WithTax" name="totalDiscountPercentageLevel2WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="totalDiscountPctLev3WithTax" name="totalDiscountPercentageLevel3WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="totalDiscountPctLev4WithTax" name="totalDiscountPercentageLevel4WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingWithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subtotal" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subtotalDiscountAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPercentLevel1" name="subtotalDiscountPercentageLevel1" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPercentLevel2" name="subtotalDiscountPercentageLevel2" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPercentLevel3" name="subtotalDiscountPercentageLevel3" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPercentLevel4" name="subtotalDiscountPercentageLevel4" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPctLev1WithTax" name="subtotalDiscountPercentageLevel1WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPctLev2WithTax" name="subtotalDiscountPercentageLevel2WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPctLev3WithTax" name="subtotalDiscountPercentageLevel3WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="subtotalDiscountPctLev4WithTax" name="subtotalDiscountPercentageLevel4WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subtotalDiscountWithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subtotalWithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="taxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="total" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountPercentageLevel1" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountPercentageLevel2" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountPercentageLevel3" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountPercentageLevel4" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="totalDiscountPctLev1WithTax" name="totalDiscountPercentageLevel1WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="totalDiscountPctLev2WithTax" name="totalDiscountPercentageLevel2WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="totalDiscountPctLev3WithTax" name="totalDiscountPercentageLevel3WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="totalDiscountPctLev4WithTax" name="totalDiscountPercentageLevel4WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalDiscountWithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="totalWithTaxAmount" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="transactionId" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusDate" type="timestamp" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.model.impl.CommerceOrderAttachmentImpl" table="CommerceOrderAttachment">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderAttachmentId" type="long">
@@ -141,8 +141,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
@@ -161,8 +161,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="CIBookedQuantityId" name="commerceInventoryBookedQuantityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commercePriceListId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -178,19 +178,19 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliverySubscriptionType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="depth" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountAmount" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountAmount" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountManuallyAdjusted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountPercentageLevel1" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountPercentageLevel2" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountPercentageLevel3" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountPercentageLevel4" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="discountPctLevel1WithTaxAmount" name="discountPercentageLevel1WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="discountPctLevel2WithTaxAmount" name="discountPercentageLevel2WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="discountPctLevel3WithTaxAmount" name="discountPercentageLevel3WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="discountPctLevel4WithTaxAmount" name="discountPercentageLevel4WithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="finalPrice" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="finalPriceWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountPercentageLevel1" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountPercentageLevel2" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountPercentageLevel3" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountPercentageLevel4" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="discountPctLevel1WithTaxAmount" name="discountPercentageLevel1WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="discountPctLevel2WithTaxAmount" name="discountPercentageLevel2WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="discountPctLevel3WithTaxAmount" name="discountPercentageLevel3WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="discountPctLevel4WithTaxAmount" name="discountPercentageLevel4WithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="discountWithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="finalPrice" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="finalPriceWithTaxAmount" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="freeShipping" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="height" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="json" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
@@ -200,25 +200,25 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="priceManuallyAdjusted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="priceOnApplication" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="printedNote" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="promoPrice" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="promoPriceWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantity" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="promoPrice" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="promoPriceWithTaxAmount" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantity" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="replacedCPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="replacedSku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="requestedDeliveryDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="requestedDeliveryDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shipSeparately" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippedQuantity" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippedQuantity" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingExtraPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subscription" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subscriptionLength" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subscriptionType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subscriptionTypeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="UOMIncrementalOrderQuantity" name="unitOfMeasureIncrementalOrderQuantity" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="UOMIncrementalOrderQuantity" name="unitOfMeasureIncrementalOrderQuantity" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="unitOfMeasureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="unitPrice" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="unitPriceWithTaxAmount" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="unitPrice" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="unitPriceWithTaxAmount" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="weight" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="width" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
@@ -233,8 +233,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="restricted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
@@ -248,8 +248,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commercePaymentMethodKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
@@ -265,19 +265,19 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="displayDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="displayDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="displayOrder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="expirationDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="expirationDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPublishDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusDate" type="timestamp" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.model.impl.CommerceOrderTypeRelImpl" table="CommerceOrderTypeRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderTypeRelId" type="long">
@@ -289,8 +289,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -306,14 +306,14 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceAccountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceShippingMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="carrier" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="expectedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="expectedDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingOptionName" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="trackingNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="trackingURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -330,12 +330,12 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceShipmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderItemId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceInventoryWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantity" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantity" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="unitOfMeasureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.model.impl.CommerceShippingMethodImpl" table="CommerceShippingMethod">
@@ -347,8 +347,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
@@ -366,8 +366,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="accountEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceChannelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceShippingMethodKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -383,8 +383,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPInstanceUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CProductId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceOrderItemId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -394,18 +394,18 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="currentCycle" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="maxSubscriptionCycles" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subscriptionStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastIterationDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="nextIterationDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="startDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastIterationDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="nextIterationDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="startDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliverySubscriptionLength" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliverySubscriptionType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliveryCurrentCycle" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliveryMaxSubscriptionCycles" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliverySubscriptionStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliveryLastIterationDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliveryNextIterationDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliveryStartDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliveryLastIterationDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliveryNextIterationDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="deliveryStartDate" type="timestamp" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.model.impl.CPDAvailabilityEstimateImpl" table="CPDAvailabilityEstimate">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPDAvailabilityEstimateId" type="long">
@@ -416,11 +416,11 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="commerceAvailabilityEstimateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CProductId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPublishDate" type="timestamp" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.model.impl.CPDefinitionInventoryImpl" table="CPDefinitionInventory">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPDefinitionInventoryId" type="long">
@@ -433,18 +433,18 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPDefinitionInventoryEngine" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lowStockActivity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="displayAvailability" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="displayStockQuantity" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="minStockQuantity" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="minStockQuantity" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="backOrders" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="minOrderQuantity" type="org.hibernate.type.BigDecimalType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="maxOrderQuantity" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="minOrderQuantity" type="big_decimal" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="maxOrderQuantity" type="big_decimal" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="allowedOrderQuantities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="multipleOrderQuantity" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="multipleOrderQuantity" type="big_decimal" />
 	</class>
 </hibernate-mapping>

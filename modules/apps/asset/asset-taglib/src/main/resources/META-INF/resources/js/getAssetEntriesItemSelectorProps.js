@@ -11,13 +11,38 @@ const ASSET_ENTRIES_API_URL = '/o/headless-delivery/v1.0/asset-entries';
 
 const STATUS_FILTER = "(status eq 'approved' or status eq 'scheduled')";
 
+const STATUS_APPROVED = 0;
+const STATUS_DENIED = 4;
+const STATUS_DRAFT = 2;
+const STATUS_EXPIRED = 3;
+const STATUS_PENDING = 1;
+const STATUS_SCHEDULED = 7;
+
 const STATUSES = {
-	0: {displayType: 'success', label: Liferay.Language.get('approved')},
-	1: {displayType: 'info', label: Liferay.Language.get('pending')},
-	2: {displayType: 'secondary', label: Liferay.Language.get('draft')},
-	3: {displayType: 'warning', label: Liferay.Language.get('expired')},
-	4: {displayType: 'danger', label: Liferay.Language.get('denied')},
-	8: {displayType: 'info', label: Liferay.Language.get('scheduled')},
+	[STATUS_APPROVED]: {
+		displayType: 'success',
+		label: Liferay.Language.get('approved'),
+	},
+	[STATUS_DENIED]: {
+		displayType: 'danger',
+		label: Liferay.Language.get('denied'),
+	},
+	[STATUS_DRAFT]: {
+		displayType: 'secondary',
+		label: Liferay.Language.get('draft'),
+	},
+	[STATUS_EXPIRED]: {
+		displayType: 'warning',
+		label: Liferay.Language.get('expired'),
+	},
+	[STATUS_PENDING]: {
+		displayType: 'info',
+		label: Liferay.Language.get('pending'),
+	},
+	[STATUS_SCHEDULED]: {
+		displayType: 'info',
+		label: Liferay.Language.get('scheduled'),
+	},
 };
 
 function StatusCell({value}) {

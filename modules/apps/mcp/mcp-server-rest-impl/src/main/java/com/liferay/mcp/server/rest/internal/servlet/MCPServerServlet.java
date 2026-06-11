@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -349,11 +350,8 @@ public class MCPServerServlet extends HttpServlet {
 		HttpServletRequest httpServletRequest, long companyId,
 		ObjectEntry mcpServerProfileObjectEntry) {
 
-		String mcpServerProfileName =
-			(String)mcpServerProfileObjectEntry.getValues(
-			).get(
-				"name"
-			);
+		String mcpServerProfileName = MapUtil.getString(
+			mcpServerProfileObjectEntry.getValues(), "name");
 
 		synchronized (this) {
 			return _servlets.computeIfAbsent(

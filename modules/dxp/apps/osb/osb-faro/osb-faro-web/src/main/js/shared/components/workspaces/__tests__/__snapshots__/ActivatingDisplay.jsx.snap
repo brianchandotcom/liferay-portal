@@ -10,7 +10,7 @@ exports[`ActivatingDisplay should render 1`] = `
     >
       <a
         class=""
-        href="https://liferay-portal.com"
+        href="https://liferay.com"
         rel="noreferrer noopener"
         target="_blank"
       >

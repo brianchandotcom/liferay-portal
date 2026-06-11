@@ -463,8 +463,10 @@ journalEditArticleDisplayContext.setViewAttributes();
 									</span>
 
 									<liferay-friendly-url:input
+										availableLocales="<%= journalEditArticleDisplayContext.getAvailableLocales() %>"
 										className="<%= JournalArticle.class.getName() %>"
 										classPK="<%= (article == null) || (article.getPrimaryKey() == 0) ? 0 : article.getResourcePrimKey() %>"
+										defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
 										inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
 										languagesDropdownVisible="<%= false %>"
 										name="friendlyURL"

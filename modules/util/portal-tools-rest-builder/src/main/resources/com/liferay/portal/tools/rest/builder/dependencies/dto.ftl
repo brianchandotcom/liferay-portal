@@ -91,22 +91,34 @@ import java.util.function.Supplier;
 	</#if>
 )
 @JsonFilter("Liferay.Vulcan")
-<#if schema.requiredPropertySchemaNames?has_content>
+<#if schema.deprecated || schema.requiredPropertySchemaNames?has_content || schema.description??>
 	@io.swagger.v3.oas.annotations.media.Schema(
 		<#if schema.deprecated>
-			deprecated = ${schema.deprecated?c},
+			deprecated = ${schema.deprecated?c}
 		</#if>
-		requiredProperties =
-			{
-				<#list schema.requiredPropertySchemaNames as requiredProperty>
-					"${requiredProperty}"
-					<#if requiredProperty_has_next>
-						,
-					</#if>
-				</#list>
-			}
+
+		<#if schema.requiredPropertySchemaNames?has_content>
+			<#if schema.deprecated>
+				,
+			</#if>
+
+			requiredProperties =
+				{
+					<#list schema.requiredPropertySchemaNames as requiredProperty>
+						"${requiredProperty}"
+						<#if requiredProperty_has_next>
+							,
+						</#if>
+					</#list>
+				}
+		</#if>
+
 		<#if schema.description??>
-			, description = "${schema.description?j_string}"
+			<#if schema.deprecated || schema.requiredPropertySchemaNames?has_content>
+				,
+			</#if>
+
+			description = "${schema.description?j_string}"
 		</#if>
 	)
 </#if>

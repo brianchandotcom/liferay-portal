@@ -837,14 +837,15 @@ public class CTCollectionLocalServiceImpl
 						));
 
 				for (long workflowInstanceLinkId : workflowInstanceLinkIds) {
-					_getRelatedCTEntriesMap(
+					Map<Long, List<CTEntry>> map = _getRelatedCTEntriesMap(
 						ctCollection, workflowInstanceLinkClassNameId,
-						workflowInstanceLinkId
-					).forEach(
+						workflowInstanceLinkId);
+
+					map.forEach(
 						(key, value) -> workflowRelatedCTEntriesMap.merge(
 							key, value,
-							(value1, value2) -> ListUtil.concat(value1, value2))
-					);
+							(value1, value2) -> ListUtil.concat(
+								value1, value2)));
 				}
 			}
 		}

@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.custom.facet.portlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.portlet.PortletPreferences;
@@ -56,7 +57,7 @@ public class CustomFacetPortletPreferencesImplTest {
 		_mockValue(
 			portletPreferences,
 			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD,
-			"userName");
+			RandomTestUtil.randomString());
 		_mockValue(
 			portletPreferences,
 			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,

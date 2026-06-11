@@ -15,9 +15,10 @@ import {ExportImportProcess} from '../../../types/exportImportProcess';
 import {PreviewPortletDataHandlerSection as PortletDataHandlerSectionType} from '../../../types/portletDataHandler';
 import {
 	COMPACT_SECTION_NAMES,
-	CONTENT_SECTION_KEY,
 	HandlerSelection,
 	SCROLLABLE_SECTION_NAMES,
+	SECTION_KEY_CONTENT,
+	SECTION_KEY_CONTENT_AND_DATA,
 	getSectionPreviewPortletDataHandlers,
 	getSectionSelection,
 	getSelectionSummary,
@@ -98,7 +99,8 @@ export default function ContentSection({
 		{
 			applies:
 				commentsAndRatingsEnabled &&
-				section.name === CONTENT_SECTION_KEY &&
+				(section.name === SECTION_KEY_CONTENT ||
+					section.name === SECTION_KEY_CONTENT_AND_DATA) &&
 				anySelected,
 			fields: [
 				{key: 'comments', label: Liferay.Language.get('comments')},

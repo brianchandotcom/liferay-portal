@@ -8,7 +8,7 @@ import React from 'react';
 
 import ContentSection from '../../../../../../src/main/resources/META-INF/resources/revamp/js/components/forms/content_selector/ContentSection';
 import {PreviewPortletDataHandlerSection} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/types/portletDataHandler';
-import {CONTENT_SECTION_KEY} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/contentSelection';
+import {SECTION_KEY_CONTENT} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/contentSelection';
 
 function makeSection(
 	name: string,
@@ -23,8 +23,8 @@ function makeSection(
 }
 
 const contentSection: PreviewPortletDataHandlerSection = {
-	label: CONTENT_SECTION_KEY,
-	name: CONTENT_SECTION_KEY,
+	label: SECTION_KEY_CONTENT,
+	name: SECTION_KEY_CONTENT,
 	previewPortletDataHandlers: [
 		{
 			label: 'Handler',

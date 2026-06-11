@@ -25,14 +25,17 @@ export const COMPACT_SECTION_NAMES = [
 	'objects',
 ];
 
-export const CONTENT_SECTION_KEY = 'category.site_administration.content';
-
 export const LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY =
 	'PORTLET_DATA_com_liferay_layout_admin_web_portlet_LayoutSetLayoutsPortlet';
 
 export const SCROLLABLE_SECTION_NAMES = ['objects'];
 
-export const SITE_BUILDER_SECTION_KEY = 'category.site_administration.build';
+export const SECTION_KEY_CONTENT = 'category.content';
+
+export const SECTION_KEY_CONTENT_AND_DATA =
+	'category.site_administration.content';
+
+export const SECTION_KEY_SITE_BUILDER = 'category.site_administration.build';
 
 export function isAllLayoutsSelected(
 	value: HandlerSelection | undefined
@@ -103,7 +106,7 @@ export function getSectionPreviewPortletDataHandlers(
 			(handler) => ({...handler, type: 'Boolean'})
 		);
 
-	if (!(lookAndFeelEnabled && section.name === SITE_BUILDER_SECTION_KEY)) {
+	if (!(lookAndFeelEnabled && section.name === SECTION_KEY_SITE_BUILDER)) {
 		return previewPortletDataHandlers;
 	}
 
@@ -150,7 +153,11 @@ export function getSectionSelection(
 		getSectionPreviewPortletDataHandlers(section, {lookAndFeelEnabled})
 	);
 
-	if (commentsAndRatingsEnabled && section.name === CONTENT_SECTION_KEY) {
+	if (
+		commentsAndRatingsEnabled &&
+		(section.name === SECTION_KEY_CONTENT ||
+			section.name === SECTION_KEY_CONTENT_AND_DATA)
+	) {
 		selection.commentsAndRatings = {comments: true, ratings: true};
 	}
 
@@ -221,7 +228,7 @@ export function withSiteBuilderSection(
 	sections: PreviewPortletDataHandlerSection[],
 	label = ''
 ): PreviewPortletDataHandlerSection[] {
-	if (sections.some((section) => section.name === SITE_BUILDER_SECTION_KEY)) {
+	if (sections.some((section) => section.name === SECTION_KEY_SITE_BUILDER)) {
 		return sections;
 	}
 
@@ -229,7 +236,7 @@ export function withSiteBuilderSection(
 		...sections,
 		{
 			label,
-			name: SITE_BUILDER_SECTION_KEY,
+			name: SECTION_KEY_SITE_BUILDER,
 			previewPortletDataHandlers: [],
 		},
 	];
@@ -258,9 +265,11 @@ export function getVisibleSections(
 export function toProcessRequestFlags(
 	contentSelection: ContentSelection | undefined
 ) {
-	const commentsAndRatings = (contentSelection?.[CONTENT_SECTION_KEY]
-		?.commentsAndRatings ?? {}) as Record<string, boolean>;
-	const lookAndFeel = (contentSelection?.[SITE_BUILDER_SECTION_KEY]
+	const commentsAndRatings = (contentSelection?.[SECTION_KEY_CONTENT]
+		?.commentsAndRatings ??
+		contentSelection?.[SECTION_KEY_CONTENT_AND_DATA]?.commentsAndRatings ??
+		{}) as Record<string, boolean>;
+	const lookAndFeel = (contentSelection?.[SECTION_KEY_SITE_BUILDER]
 		?.lookAndFeel ?? {}) as Record<string, boolean>;
 
 	return {

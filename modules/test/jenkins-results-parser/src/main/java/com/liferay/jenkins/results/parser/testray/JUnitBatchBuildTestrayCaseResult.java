@@ -295,6 +295,8 @@ public class JUnitBatchBuildTestrayCaseResult
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
 		testrayAttachments.add(getFailureMessagesTestrayAttachment());
+		testrayAttachments.addAll(getLiferayLogTestrayAttachments());
+		testrayAttachments.addAll(getLiferayOSGiLogTestrayAttachments());
 		testrayAttachments.add(getParentTestrayCaseResultTestrayAttachment());
 
 		testrayAttachments.removeAll(Collections.singleton(null));

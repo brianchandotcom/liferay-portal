@@ -180,6 +180,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	public List<TestrayAttachment> getTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
+		testrayAttachments.addAll(getLiferayLogTestrayAttachments());
 		testrayAttachments.add(getParentTestrayCaseResultTestrayAttachment());
 		testrayAttachments.add(getPlaywrightReportTestrayAttachment());
 		testrayAttachments.add(getPlaywrightTraceViewerTestrayAttachment());

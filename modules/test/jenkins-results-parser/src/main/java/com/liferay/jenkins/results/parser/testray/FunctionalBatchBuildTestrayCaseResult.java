@@ -107,10 +107,13 @@ public class FunctionalBatchBuildTestrayCaseResult
 	public List<TestrayAttachment> getTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
+		testrayAttachments.addAll(getLiferayLogTestrayAttachments());
+		testrayAttachments.addAll(getLiferayOSGiLogTestrayAttachments());
 		testrayAttachments.add(getParentTestrayCaseResultTestrayAttachment());
 		testrayAttachments.add(_getPoshiConsoleTestrayAttachment());
 		testrayAttachments.add(_getPoshiReportTestrayAttachment());
 		testrayAttachments.add(_getPoshiSummaryTestrayAttachment());
+		testrayAttachments.add(getWarningsTestrayAttachment());
 
 		testrayAttachments.removeAll(Collections.singleton(null));
 

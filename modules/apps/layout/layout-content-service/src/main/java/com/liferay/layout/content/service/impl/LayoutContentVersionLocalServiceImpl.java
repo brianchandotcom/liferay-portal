@@ -51,8 +51,7 @@ public class LayoutContentVersionLocalServiceImpl
 	@Override
 	public LayoutContentVersion addLayoutContentVersion(
 			String externalReferenceCode, long userId, String data,
-			Map<Locale, String> nameMap, long plid, int status,
-			boolean skipIfUnchanged)
+			Map<Locale, String> nameMap, long plid, int status)
 		throws PortalException {
 
 		Layout layout = _layoutLocalService.getLayout(plid);
@@ -65,19 +64,6 @@ public class LayoutContentVersionLocalServiceImpl
 
 		String dataHash = DigesterUtil.digestHex(
 			"SHA-256", GetterUtil.getString(data));
-
-		if (skipIfUnchanged) {
-			LayoutContentVersion lastLayoutContentVersion =
-				layoutContentVersionPersistence.fetchByPlid_First(
-					plid,
-					LayoutContentVersionVersionComparator.getInstance(false));
-
-			if ((lastLayoutContentVersion != null) &&
-				dataHash.equals(lastLayoutContentVersion.getDataHash())) {
-
-				return lastLayoutContentVersion;
-			}
-		}
 
 		LayoutContentVersion layoutContentVersion =
 			layoutContentVersionPersistence.create(
@@ -126,6 +112,43 @@ public class LayoutContentVersionLocalServiceImpl
 		layoutContentVersion.setStatusDate(new Date());
 
 		return layoutContentVersionPersistence.update(layoutContentVersion);
+	}
+
+	@Override
+	public LayoutContentVersion addOrUpdateLayoutContentVersion(
+			String externalReferenceCode, long userId, String data,
+			Map<Locale, String> nameMap, long plid, int status)
+		throws PortalException {
+
+		Layout layout = _layoutLocalService.getLayout(plid);
+
+		FeatureFlagManagerUtil.checkEnabled(layout.getCompanyId(), "LPD-10622");
+
+		_validateLayout(layout);
+
+		LayoutContentVersion lastLayoutContentVersion =
+			layoutContentVersionPersistence.fetchByPlid_First(
+				plid, LayoutContentVersionVersionComparator.getInstance(false));
+
+		String dataHash = DigesterUtil.digestHex(
+			"SHA-256", GetterUtil.getString(data));
+
+		if ((lastLayoutContentVersion == null) ||
+			!dataHash.equals(lastLayoutContentVersion.getDataHash())) {
+
+			return addLayoutContentVersion(
+				externalReferenceCode, userId, data, nameMap, plid, status);
+		}
+
+		lastLayoutContentVersion.setUserId(userId);
+
+		User user = _userLocalService.getUser(userId);
+
+		lastLayoutContentVersion.setUserName(user.getFullName());
+
+		lastLayoutContentVersion.setModifiedDate(new Date());
+
+		return layoutContentVersionPersistence.update(lastLayoutContentVersion);
 	}
 
 	@Override

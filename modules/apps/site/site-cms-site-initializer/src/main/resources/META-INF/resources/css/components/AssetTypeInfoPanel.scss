@@ -1,30 +1,51 @@
 @import 'atlas-variables';
 
-.asset-navigation-container {
-	--asset-sidebar-layout-width: 472px;
+.asset-navigation-container,
+.sidebar-layout {
+	--cms-info-panel-width: 472px;
+}
 
+.asset-navigation-container {
 	@include media-breakpoint-up(sm) {
 		&.c-slideout-push-end {
-			padding-right: var(--asset-sidebar-layout-width);
+			padding-right: var(--cms-info-panel-width);
 		}
 
 		.sidebar {
-			width: var(--asset-sidebar-layout-width);
+			width: var(--cms-info-panel-width);
+		}
+	}
+}
+
+.cms-all-view {
+	.fds.c-slideout-container {
+		position: static;
+
+		.fds-info-panel {
+			top: 0;
+		}
+	}
+
+	@include media-breakpoint-up(xl) {
+		.all-quick-filters-container {
+			@include transition(padding-right 0.3s ease-in-out);
+		}
+
+		&:has(.fds.c-slideout-push-end) .all-quick-filters-container {
+			padding-right: var(--cms-info-panel-width);
 		}
 	}
 }
 
 .sidebar-layout {
-	--fds-sidebar-layout-width: 472px;
-
 	@include media-breakpoint-up(sm) {
 		.fds {
 			&-info-panel {
-				--sidebar-layout-width: var(--fds-sidebar-layout-width);
+				--sidebar-layout-width: var(--cms-info-panel-width);
 			}
 
 			&.c-slideout-push-end {
-				padding-right: var(--fds-sidebar-layout-width);
+				padding-right: var(--cms-info-panel-width);
 			}
 		}
 	}

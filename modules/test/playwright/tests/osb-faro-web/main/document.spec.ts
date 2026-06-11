@@ -12,6 +12,9 @@ import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
 import {searchByTerm} from './utils/utils';
@@ -170,3 +173,129 @@ test('Documents visitor behavior card shows expected amount of views', async ({
 		).toBe('2');
 	});
 });
+
+test(
+	'Document overview surfaces appears-on, technology, and audience metrics',
+	{
+		tag: ['@LRAC-8419', '@LRAC-8403', '@LRAC-8414'],
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+
+		// Seed two known individuals and one anonymous identity so the audience card splits 2 known / 1 anonymous (66.67% / 33.33%)
+
+		const knownIndividualA = generateIndividual({name: 'ac'});
+		const knownIndividualB = generateIndividual({name: 'liferay'});
+
+		await createIndividuals({
+			apiHelpers,
+			individuals: [knownIndividualA, knownIndividualB],
+		});
+
+		const date = new Date();
+		const anonymousIdentityId = getRandomString();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
+			{createDate: date.toISOString(), id: anonymousIdentityId},
+		]);
+
+		// Three documentDownloaded events from three distinct viewers (Downloads = 3, all Desktop)
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Document',
+				assetId: '1',
+				assetTitle: 'DM AC Title',
+				browserName: 'Chrome',
+				canonicalUrl:
+					'/web/site-name/ac-page/-/document_library/view_file/1',
+				channelId: channel.id,
+				dataSourceId: 0,
+				deviceType: 'Desktop',
+				eventDate: date.toISOString(),
+				eventId: 'documentDownloaded',
+				title: 'DM AC Title',
+				userId: knownIndividualA.id,
+			},
+			{
+				applicationId: 'Document',
+				assetId: '1',
+				assetTitle: 'DM AC Title',
+				browserName: 'Chrome',
+				canonicalUrl:
+					'/web/site-name/ac-page/-/document_library/view_file/1',
+				channelId: channel.id,
+				dataSourceId: 0,
+				deviceType: 'Desktop',
+				eventDate: date.toISOString(),
+				eventId: 'documentDownloaded',
+				title: 'DM AC Title',
+				userId: knownIndividualB.id,
+			},
+			{
+				applicationId: 'Document',
+				assetId: '1',
+				assetTitle: 'DM AC Title',
+				browserName: 'Chrome',
+				canonicalUrl:
+					'/web/site-name/ac-page/-/document_library/view_file/1',
+				channelId: channel.id,
+				dataSourceId: 0,
+				deviceType: 'Desktop',
+				eventDate: date.toISOString(),
+				eventId: 'documentDownloaded',
+				title: 'DM AC Title',
+				userId: anonymousIdentityId,
+			},
+		]);
+
+		// Open the document overview
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.assetDocumentsAndMediaPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Last 24 hours'}),
+			trigger: page.getByRole('button', {name: 'Last 30 days'}),
+		});
+
+		await page
+			.getByRole('link', {exact: true, name: 'DM AC Title'})
+			.click();
+
+		// Visitors Behavior shows Downloads = 3
+
+		await expect(
+			page
+				.locator('.analytics-metrics-tabs .card-tab')
+				.filter({hasText: 'Downloads'})
+				.locator('.metric-value')
+		).toHaveText('3');
+
+		// Asset Appears On lists the seeded document page URL
+
+		await expect(
+			page.getByRole('cell', {
+				name: '/web/site-name/ac-page/-/document_library/view_file/1',
+			})
+		).toBeVisible();
+
+		// Downloads by Technology surfaces the Desktop device
+
+		await expect(
+			page
+				.locator('.card-root')
+				.filter({hasText: 'Downloads by Technology'})
+				.getByText('Desktop')
+		).toBeVisible();
+
+		// Audience card splits 66.67% known / 33.33% anonymous
+
+		await expect(page.getByText('66.67%')).toBeVisible();
+		await expect(page.getByText('33.33%')).toBeVisible();
+	}
+);

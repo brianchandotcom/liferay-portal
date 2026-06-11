@@ -17,7 +17,7 @@ import com.liferay.exportimport.rest.dto.v1_0.ExportProcess;
 import com.liferay.exportimport.rest.dto.v1_0.ExportProcessRequest;
 import com.liferay.exportimport.rest.dto.v1_0.ProcessProgress;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
-import com.liferay.exportimport.rest.internal.util.BackgroundTaskProgressUtil;
+import com.liferay.exportimport.rest.internal.util.BackgroundTaskUtil;
 import com.liferay.exportimport.rest.internal.util.DateRangeUtil;
 import com.liferay.exportimport.rest.internal.util.ParameterMapUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
@@ -183,7 +183,7 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 		return new ProcessProgress() {
 			{
 				setPercentage(
-					() -> BackgroundTaskProgressUtil.getPercentage(
+					() -> BackgroundTaskUtil.getPercentage(
 						backgroundTask.getBackgroundTaskId()));
 			}
 		};
@@ -415,41 +415,6 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 					creatorId, groupId, portletId, search, status)));
 	}
 
-	private String _getName(BackgroundTask backgroundTask) {
-		if (!StringUtil.equals(
-				backgroundTask.getTaskExecutorClassName(),
-				BackgroundTaskExecutorNames.
-					PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR)) {
-
-			return backgroundTask.getName();
-		}
-
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				fetchExportImportConfiguration(
-					MapUtil.getLong(
-						backgroundTask.getTaskContextMap(),
-						"exportImportConfigurationId"));
-
-		if (exportImportConfiguration != null) {
-			String name = MapUtil.getString(
-				exportImportConfiguration.getSettingsMap(), "name");
-
-			if (!Validator.isBlank(name)) {
-				return name;
-			}
-		}
-
-		Portlet portlet = _portletLocalService.getPortletById(
-			backgroundTask.getName());
-
-		if (portlet == null) {
-			return backgroundTask.getName();
-		}
-
-		return portlet.getDisplayName();
-	}
-
 	private Group _getSiteGroup(String externalReferenceCode) {
 		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
@@ -641,7 +606,7 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 							"message", backgroundTask.getStatusMessage());
 					});
 				setId(backgroundTask::getBackgroundTaskId);
-				setName(() -> _getName(backgroundTask));
+				setName(() -> BackgroundTaskUtil.getName(backgroundTask));
 				setStatus(
 					() -> new Status() {
 						{

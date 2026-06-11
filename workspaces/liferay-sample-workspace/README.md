@@ -38,6 +38,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	...
 
+- *liferay-sample-commerce-checkout-step*
+
+    Add a new checkout step to the commerce checkout widget.
+
 - *liferay-sample-commerce-payment-integration*
 
 	TODO

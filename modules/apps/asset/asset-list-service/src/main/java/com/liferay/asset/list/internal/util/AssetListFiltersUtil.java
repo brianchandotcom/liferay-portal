@@ -163,11 +163,11 @@ public class AssetListFiltersUtil {
 	}
 
 	private static Query _toQuery(String subfield, String value) {
-		if (subfield.endsWith(".value_keyword") ||
-			subfield.endsWith(".value_boolean") ||
+		if (subfield.endsWith(".value_boolean") ||
 			subfield.endsWith(".value_date") ||
 			subfield.endsWith(".value_double") ||
 			subfield.endsWith(".value_integer") ||
+			subfield.endsWith(".value_keyword") ||
 			subfield.endsWith(".value_long")) {
 
 			return new TermQuery(subfield, value);

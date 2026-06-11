@@ -95,18 +95,18 @@ public class AssetListTypePropertiesUtilTest {
 	@Test
 	public void testGetTypePropertiesJSONArrayEmitsOneGroupPerPair() {
 		_setUpObjectDefinition(
-			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
+			_CLASS_NAME_ID_1, _LABEL_1, _CLASS_TYPE_ID_1,
 			Collections.singletonList(
 				_mockObjectField(
-					"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT, false)));
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, false, "title")));
 		_setUpObjectDefinition(
-			_CLASS_NAME_ID_2, _CLASS_TYPE_ID_2, _LABEL_2,
+			_CLASS_NAME_ID_2, _LABEL_2, _CLASS_TYPE_ID_2,
 			Arrays.asList(
 				_mockObjectField(
-					"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT, false),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, false, "title"),
 				_mockObjectField(
-					"priority", ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-					false)));
+					ObjectFieldConstants.BUSINESS_TYPE_INTEGER, false,
+					"priority")));
 
 		JSONArray jsonArray =
 			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
@@ -163,11 +163,11 @@ public class AssetListTypePropertiesUtilTest {
 	@Test
 	public void testGetTypePropertiesJSONArrayEmitsTypeGroupWithEmptyItemsWhenNoFieldsFilterable() {
 		_setUpObjectDefinition(
-			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
+			_CLASS_NAME_ID_1, _LABEL_1, _CLASS_TYPE_ID_1,
 			Collections.singletonList(
 				_mockObjectField(
-					"attachment", ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
-					false)));
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, false,
+					"attachment")));
 
 		JSONArray jsonArray =
 			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
@@ -189,15 +189,15 @@ public class AssetListTypePropertiesUtilTest {
 	@Test
 	public void testGetTypePropertiesJSONArrayExcludesMetadataFieldsFromTypeGroup() {
 		_setUpObjectDefinition(
-			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
+			_CLASS_NAME_ID_1, _LABEL_1, _CLASS_TYPE_ID_1,
 			Arrays.asList(
 				_mockObjectField(
-					"attachment", ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
-					false),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, false,
+					"attachment"),
 				_mockObjectField(
-					"creator", ObjectFieldConstants.BUSINESS_TYPE_TEXT, true),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, true, "creator"),
 				_mockObjectField(
-					"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT, false)));
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, false, "title")));
 
 		JSONArray jsonArray =
 			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
@@ -226,10 +226,10 @@ public class AssetListTypePropertiesUtilTest {
 	@Test
 	public void testGetTypePropertiesJSONArrayIncludesOneTypeGroup() {
 		_setUpObjectDefinition(
-			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
+			_CLASS_NAME_ID_1, _LABEL_1, _CLASS_TYPE_ID_1,
 			Collections.singletonList(
 				_mockObjectField(
-					"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT, false)));
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, false, "title")));
 
 		JSONArray jsonArray =
 			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
@@ -262,7 +262,7 @@ public class AssetListTypePropertiesUtilTest {
 		long listTypeDefinitionId = RandomTestUtil.randomLong();
 
 		ObjectField objectField = _mockObjectField(
-			"status", ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, false);
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, false, "status");
 
 		Mockito.when(
 			objectField.getListTypeDefinitionId()
@@ -271,7 +271,7 @@ public class AssetListTypePropertiesUtilTest {
 		);
 
 		_setUpObjectDefinition(
-			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
+			_CLASS_NAME_ID_1, _LABEL_1, _CLASS_TYPE_ID_1,
 			Collections.singletonList(objectField));
 
 		ListTypeEntry approvedListTypeEntry = Mockito.mock(ListTypeEntry.class);
@@ -388,7 +388,7 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	private ObjectField _mockObjectField(
-		String name, String businessType, boolean metadata) {
+		String businessType, boolean metadata, String name) {
 
 		ObjectField objectField = Mockito.mock(ObjectField.class);
 
@@ -434,7 +434,7 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	private void _setUpObjectDefinition(
-		long classNameId, long objectDefinitionId, String label,
+		long classNameId, String label, long objectDefinitionId,
 		List<ObjectField> objectFields) {
 
 		ObjectDefinition objectDefinition = Mockito.mock(

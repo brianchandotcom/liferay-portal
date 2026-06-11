@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -81,9 +82,9 @@ public class AssetListAssetEntryProviderFiltersTest {
 				).put(
 					"classTypeId", _objectDefinition.getObjectDefinitionId()
 				).put(
-					"propertyName", "title"
+					"propertyName", RandomTestUtil.randomString()
 				).put(
-					"value", "keyword"
+					"value", RandomTestUtil.randomString()
 				)
 			).toString());
 

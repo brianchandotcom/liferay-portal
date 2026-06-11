@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import atlasCss from '@clayui/css/lib/css/atlas.css?inline';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
 import {setURLs} from './api';
+import atlasCss from './assets/atlas.css?inline';
 import iconsSpriteMap from './assets/icons.svg?raw';
 import ChatbotWidget from './components/ChatbotWidget';
 import widgetCss from './index.css?inline';

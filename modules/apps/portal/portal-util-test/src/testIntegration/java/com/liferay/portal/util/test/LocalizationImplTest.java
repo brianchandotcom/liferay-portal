@@ -173,12 +173,11 @@ public class LocalizationImplTest {
 		fieldMap1.put(key, key);
 		fieldMap2.put(key, value);
 
-		Map<Locale, String> localizationMap =
-			_localization.getLocalizationMap(
-				Arrays.asList(
-					LocaleUtil.BRAZIL, LocaleUtil.GERMANY, LocaleUtil.SPAIN,
-					_defaultLocale),
-				_defaultLocale, key);
+		Map<Locale, String> localizationMap = _localization.getLocalizationMap(
+			Arrays.asList(
+				LocaleUtil.BRAZIL, LocaleUtil.GERMANY, LocaleUtil.SPAIN,
+				_defaultLocale),
+			_defaultLocale, key);
 
 		Assert.assertEquals(key, localizationMap.get(LocaleUtil.BRAZIL));
 		Assert.assertFalse(localizationMap.containsKey(LocaleUtil.GERMANY));

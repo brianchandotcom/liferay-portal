@@ -10,10 +10,13 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -50,6 +53,11 @@ public class EditDiscussionStrutsActionTest {
 
 	@Test
 	public void testExecute() throws Exception {
+		_testExecuteAdd();
+		_testExecuteDelete();
+	}
+
+	private void _testExecuteAdd() throws Exception {
 		Comment comment = Mockito.mock(Comment.class);
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -112,6 +120,50 @@ public class EditDiscussionStrutsActionTest {
 		);
 	}
 
+	private void _testExecuteDelete() throws Exception {
+		JSONObject jsonObject = Mockito.mock(JSONObject.class);
+
+		Mockito.when(
+			jsonObject.toString()
+		).thenReturn(
+			"{}"
+		);
+
+		Mockito.when(
+			_jsonFactory.createJSONObject()
+		).thenReturn(
+			jsonObject
+		);
+
+		long commentId = RandomTestUtil.randomLong();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, Mockito.mock(ThemeDisplay.class));
+		mockHttpServletRequest.setParameter(Constants.CMD, Constants.DELETE);
+		mockHttpServletRequest.setParameter(
+			"commentId", String.valueOf(commentId));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_editDiscussionStrutsAction.execute(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_JSON,
+			mockHttpServletResponse.getContentType());
+		Assert.assertEquals("{}", mockHttpServletResponse.getContentAsString());
+
+		Mockito.verify(
+			_commentManager, Mockito.times(1)
+		).deleteComment(
+			commentId
+		);
+	}
+
 	@Mock
 	private CommentManager _commentManager;
 
@@ -123,6 +175,9 @@ public class EditDiscussionStrutsActionTest {
 
 	@InjectMocks
 	private EditDiscussionStrutsAction _editDiscussionStrutsAction;
+
+	@Mock
+	private JSONFactory _jsonFactory;
 
 	@Mock
 	private UserLocalService _userLocalService;

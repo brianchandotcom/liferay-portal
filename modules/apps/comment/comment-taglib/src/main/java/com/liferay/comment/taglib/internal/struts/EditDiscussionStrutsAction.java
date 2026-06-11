@@ -77,11 +77,11 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			AuthTokenUtil.checkCSRFToken(
 				httpServletRequest, EditDiscussionStrutsAction.class.getName());
 
+			boolean ajax = ParamUtil.getBoolean(
+				namespacedHttpServletRequest, "ajax", true);
+
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				long commentId = _updateComment(namespacedHttpServletRequest);
-
-				boolean ajax = ParamUtil.getBoolean(
-					namespacedHttpServletRequest, "ajax", true);
 
 				if (ajax) {
 					Comment comment = _commentManager.fetchComment(commentId);
@@ -104,12 +104,33 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				_deleteComment(namespacedHttpServletRequest);
+
+				if (ajax) {
+					_writeJSON(
+						httpServletResponse, _jsonFactory.createJSONObject());
+
+					return null;
+				}
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE_TO_COMMENTS)) {
 				_subscribeToComments(namespacedHttpServletRequest, true);
+
+				if (ajax) {
+					_writeJSON(
+						httpServletResponse, _jsonFactory.createJSONObject());
+
+					return null;
+				}
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE_FROM_COMMENTS)) {
 				_subscribeToComments(namespacedHttpServletRequest, false);
+
+				if (ajax) {
+					_writeJSON(
+						httpServletResponse, _jsonFactory.createJSONObject());
+
+					return null;
+				}
 			}
 
 			String redirect = _portal.escapeRedirect(

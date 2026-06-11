@@ -20,10 +20,10 @@ const RoomNameRenderer = ({
 	options,
 }: {
 	actions: ActionItem[];
-	itemData: {embedded: IRoomObjectEntry};
+	itemData: IRoomObjectEntry;
 	options: {actionId: string};
 }) => {
-	const {name, r_accountToDSRRooms_accountEntry: account} = itemData.embedded;
+	const {name, r_accountToDSRRooms_accountEntry: account} = itemData;
 	const {actionId} = options;
 
 	const selectedAction =

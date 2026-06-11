@@ -5,14 +5,21 @@
 
 import {IInternalRenderer, IItemsActions} from '@liferay/frontend-data-set-web';
 import {openModal, openToast} from 'frontend-js-components-web';
-import {sessionStorage} from 'frontend-js-web';
+import {sessionStorage, sub} from 'frontend-js-web';
 
+import RoomService from '../../common/services/RoomService';
 import {openFDSDeleteConfirmationModal} from '../../common/utils/openModalUtil';
-import {IRoom} from '../../common/utils/types';
+import {ROOM_STATUS} from '../../common/utils/roomStatus';
+import {
+	displayErrorToast,
+	displaySuccessToast,
+} from '../../common/utils/toastUtil';
+import {IRoomObjectEntry} from '../../common/utils/types';
 import DuplicateRoom from '../DuplicateRoom';
 import RoomInitializer from '../RoomInitializer';
 import RoomShare from '../RoomShare';
 import RoomNameRenderer from './cell_renderers/RoomNameRenderer';
+import RoomStatusFieldRenderer from './cell_renderers/RoomStatusFieldRenderer';
 import RoomStatusRenderer from './cell_renderers/RoomStatusRenderer';
 import RoomTrendRenderer from './cell_renderers/RoomTrendRenderer';
 
@@ -92,17 +99,70 @@ export default function RoomsFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
+					component: RoomStatusFieldRenderer,
+					name: 'roomStatusFieldTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
 					component: RoomTrendRenderer,
 					name: 'roomTrendTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 			],
 		},
+		filters: [
+			{
+				entityFieldType: 'integer',
+				id: 'roomStatus',
+				items: [
+					{
+						label: Liferay.Language.get('active'),
+						value: ROOM_STATUS.ACTIVE,
+					},
+					{
+						label: Liferay.Language.get('archived'),
+						value: ROOM_STATUS.INACTIVE,
+					},
+				],
+				label: Liferay.Language.get('status'),
+				multiple: false,
+				preloadedData: {
+					exclude: false,
+					selectedItems: [
+						{
+							label: Liferay.Language.get('active'),
+							value: ROOM_STATUS.ACTIVE,
+						},
+					],
+				},
+				type: 'selection',
+			},
+		],
 		itemsActions: itemsActions.map((action) => {
-			if (action?.data?.id === 'delete') {
+			const id = action?.data?.id;
+
+			if (id === 'archive' || id === 'edit' || id === 'share') {
+				return {
+					...action,
+					isVisible: (item: IRoomObjectEntry) =>
+						item?.roomStatus === ROOM_STATUS.ACTIVE,
+				};
+			}
+
+			if (id === 'delete') {
 				return {
 					...action,
 					className: 'text-danger',
+					isVisible: (item: IRoomObjectEntry) =>
+						item?.roomStatus === ROOM_STATUS.INACTIVE,
+				};
+			}
+
+			if (id === 'restore') {
+				return {
+					...action,
+					isVisible: (item: IRoomObjectEntry) =>
+						item?.roomStatus === ROOM_STATUS.INACTIVE,
 				};
 			}
 
@@ -116,17 +176,65 @@ export default function RoomsFDSPropsTransformer({
 		}: {
 			action: {data: {id: string}};
 			event: Event;
-			itemData: IRoom;
+			itemData: IRoomObjectEntry;
 			loadData: any;
 		}) {
-			if (action.data.id === 'delete') {
+			if (action.data.id === 'archive') {
+				event?.preventDefault();
+
+				openModal({
+					bodyHTML: Liferay.Language.get(
+						'archive-digital-sales-room-confirmation-body'
+					),
+					buttons: [
+						{
+							autoFocus: true,
+							displayType: 'secondary',
+							label: Liferay.Language.get('cancel'),
+							type: 'cancel',
+						},
+						{
+							displayType: 'primary',
+							label: Liferay.Language.get('archive'),
+							onClick: ({
+								processClose,
+							}: {
+								processClose: () => void;
+							}) => {
+								RoomService.archiveRoom(itemData.id)
+									.then(() => {
+										processClose();
+
+										displaySuccessToast();
+
+										loadData();
+									})
+									.catch(() => {
+										displayErrorToast();
+									});
+							},
+						},
+					],
+					containerProps: {
+						className: '',
+					},
+					status: 'warning',
+					title: sub(
+						Liferay.Language.get(
+							'archive-digital-sales-room-confirmation-title'
+						),
+						'"' + itemData.name + '"'
+					),
+				});
+			}
+			else if (action.data.id === 'delete') {
 				event?.preventDefault();
 
 				openFDSDeleteConfirmationModal({
 					bodyHTML: Liferay.Language.get(
 						'delete-digital-sales-room-confirmation-body'
 					),
-					itemName: itemData.embedded.name,
+					itemName: itemData.name,
 					loadData,
 					title: Liferay.Language.get(
 						'delete-digital-sales-room-confirmation-title'
@@ -149,12 +257,25 @@ export default function RoomsFDSPropsTransformer({
 						DuplicateRoom({
 							closeModal,
 							loadData,
-							name: itemData.embedded.name,
-							roomId: itemData.embedded.id,
-							siteId: itemData.embedded.siteId,
+							name: itemData.name,
+							roomId: itemData.id,
+							siteId: itemData.siteId,
 						}),
 					size: 'lg',
 				});
+			}
+			else if (action.data.id === 'restore') {
+				event?.preventDefault();
+
+				RoomService.restoreRoom(itemData.id)
+					.then(() => {
+						displaySuccessToast();
+
+						loadData();
+					})
+					.catch(() => {
+						displayErrorToast();
+					});
 			}
 			else if (action.data.id === 'share') {
 				event?.preventDefault();
@@ -170,7 +291,7 @@ export default function RoomsFDSPropsTransformer({
 					}) =>
 						RoomShare({
 							closeModal,
-							roomId: itemData.embedded.id,
+							roomId: itemData.id,
 						}),
 					size: 'lg',
 				});

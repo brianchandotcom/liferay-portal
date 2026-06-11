@@ -192,12 +192,18 @@ export default function ContentEditorToolbar({
 			sessionStorage.TYPES.NECESSARY
 		);
 
-		if (message) {
-			openToast({message, type: 'success'});
-
-			sessionStorage.removeItem(SUCCESS_MESSAGE_SESSION_KEY);
+		if (!message) {
+			return;
 		}
-	}, []);
+
+		sessionStorage.removeItem(SUCCESS_MESSAGE_SESSION_KEY);
+
+		if (getForm()?.querySelector('.form-group.has-error')) {
+			return;
+		}
+
+		openToast({message, type: 'success'});
+	}, [getForm]);
 
 	return (
 		<Toolbar

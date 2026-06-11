@@ -36,15 +36,15 @@ public class BuildDatabaseTestUtil {
 	private static BuildDatabase _addBuildDatabase(
 		BuildDatabaseArgs buildDatabaseArgs) {
 
-		StagedBuildDatabase stagedBuildDatabase = new StagedBuildDatabase(
+		TestBuildDatabase testBuildDatabase = new TestBuildDatabase(
 			_newBuildDir());
 
-		stagedBuildDatabase.setJSONObject(
+		testBuildDatabase.setJSONObject(
 			_newBuildDatabaseJSONObject(buildDatabaseArgs));
 
-		stagedBuildDatabase.write();
+		testBuildDatabase.write();
 
-		return stagedBuildDatabase;
+		return testBuildDatabase;
 	}
 
 	private static JSONObject _newBuildDatabaseJSONObject(
@@ -207,7 +207,7 @@ public class BuildDatabaseTestUtil {
 	private static final AtomicInteger _pullRequestNumber = new AtomicInteger(
 		1);
 
-	private static class StagedBuildDatabase extends DefaultBuildDatabase {
+	private static class TestBuildDatabase extends DefaultBuildDatabase {
 
 		@Override
 		public FilePropagator rsyncBuildDatabaseFile(
@@ -246,7 +246,7 @@ public class BuildDatabaseTestUtil {
 			throw new UnsupportedOperationException(_MESSAGE);
 		}
 
-		private StagedBuildDatabase(File buildDir) {
+		private TestBuildDatabase(File buildDir) {
 			super(buildDir);
 		}
 

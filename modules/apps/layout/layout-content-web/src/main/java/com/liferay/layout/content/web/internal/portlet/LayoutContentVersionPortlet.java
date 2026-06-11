@@ -8,9 +8,11 @@ package com.liferay.layout.content.web.internal.portlet;
 import com.liferay.layout.content.web.internal.constants.LayoutContentVersionPortletKeys;
 import com.liferay.layout.content.web.internal.constants.LayoutContentVersionWebKeys;
 import com.liferay.layout.content.web.internal.display.context.LayoutContentVersionDisplayContext;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import jakarta.portlet.Portlet;
 import jakarta.portlet.PortletException;
@@ -64,7 +66,8 @@ public class LayoutContentVersionPortlet extends MVCPortlet {
 		if (layoutContentVersionDisplayContext == null) {
 			layoutContentVersionDisplayContext =
 				new LayoutContentVersionDisplayContext(
-					httpServletRequest, _layoutLocalService);
+					httpServletRequest, _language, _layoutLocalService,
+					_segmentsExperienceLocalService);
 
 			httpServletRequest.setAttribute(
 				LayoutContentVersionWebKeys.
@@ -76,9 +79,15 @@ public class LayoutContentVersionPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

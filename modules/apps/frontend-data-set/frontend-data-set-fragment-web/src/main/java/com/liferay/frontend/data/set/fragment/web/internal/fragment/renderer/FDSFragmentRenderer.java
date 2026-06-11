@@ -398,6 +398,10 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 		String fieldId = mappingJSONObject.getString("fieldId");
 
+		if (Validator.isNull(fieldId)) {
+			return null;
+		}
+
 		if (Objects.equals(source, "context")) {
 			return _resolveContextValue(httpServletRequest, fieldId);
 		}

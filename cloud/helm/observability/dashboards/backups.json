@@ -329,7 +329,7 @@
 					"useBackend": false
 				}
 			],
-			"title": "SUCCESS RUNS #",
+			"title": "Success Runs #",
 			"type": "stat"
 		},
 		{
@@ -413,7 +413,7 @@
 					"useBackend": false
 				}
 			],
-			"title": "FAILED RUNS #",
+			"title": "Failed Runs #",
 			"type": "stat"
 		},
 		{
@@ -497,7 +497,7 @@
 					"useBackend": false
 				}
 			],
-			"title": "TOTAL RUNS #",
+			"title": "Total Runs #",
 			"type": "stat"
 		},
 		{
@@ -590,8 +590,8 @@
 	"preload": false,
 	"schemaVersion": 42,
 	"tags": [
-		"Liferay",
-		"Backups"
+		"Backups",
+		"Liferay"
 	],
 	"templating": {
 		"list": [

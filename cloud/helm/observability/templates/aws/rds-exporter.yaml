@@ -6,15 +6,15 @@ apiVersion: v1
 automountServiceAccountToken: false
 kind: ServiceAccount
 metadata:
+    {{- with .Values.rdsExporter.iam.awsRoleArn }}
+    annotations:
+        eks.amazonaws.com/role-arn: {{ . | quote }}
+    {{- end }}
     labels:
         {{- include "observability.labels" . | nindent 8 }}
         app.kubernetes.io/component: rds-exporter
     name: liferay-rds-exporter
     namespace: {{ $namespace | quote }}
-    {{- with .Values.rdsExporter.iam.awsRoleArn }}
-    annotations:
-        eks.amazonaws.com/role-arn: {{ . | quote }}
-    {{- end }}
 ---
 apiVersion: apps/v1
 kind: Deployment

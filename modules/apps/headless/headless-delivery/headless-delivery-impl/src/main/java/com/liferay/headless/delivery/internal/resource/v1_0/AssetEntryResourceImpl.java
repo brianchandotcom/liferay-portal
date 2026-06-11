@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -67,6 +68,8 @@ public class AssetEntryResourceImpl extends BaseAssetEntryResourceImpl {
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.setAttribute(
+					Field.STATUS, WorkflowConstants.STATUS_ANY);
 				searchContext.setAttribute(
 					"showNonindexable",
 					GetterUtil.getBoolean(showNonindexable));

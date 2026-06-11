@@ -15874,7 +15874,8 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 									impdp ${oracle.admin.user}/${oracle.admin.password} dumpfile=oracle.dmp table_exists_action=replace
 
-									sqlplus ${oracle.admin.user}/${oracle.admin.password} as sysdba << -'EOF'
+									sqlplus /nolog <<-'EOF'
+									connect ${oracle.admin.user}/"${oracle.admin.password}" as sysdba
 									grant select on sys.v_$session to ${database.username};
 									grant select on sys.v_$sql to ${database.username};
 									exit
@@ -16097,7 +16098,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 							<exec executable="/bin/bash" failonerror="true">
 								<arg value="-c" />
-								<arg value="printf 'grant select on sys.v_$session to lportal;\ngrant select on sys.v_$sql to lportal;\nexit\n' | sqlplus ${oracle.admin.user}/${oracle.admin.password} as sysdba" />
+								<arg value="printf 'connect ${oracle.admin.user}/${oracle.admin.password} as sysdba\ngrant select on sys.v_$session to lportal;\ngrant select on sys.v_$sql to lportal;\nexit\n' | sqlplus /nolog" />
 							</exec>
 
 							<delete file="${data.pump.dir}/${database.type}.dmp" />

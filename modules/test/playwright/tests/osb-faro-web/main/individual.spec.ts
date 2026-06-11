@@ -209,6 +209,87 @@ test(
 );
 
 test(
+	'Enriched Profiles count increases by one when an anonymous individual is later created as known',
+	{
+		tag: '@LRAC-8911',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const individualId = getRandomString();
+		const individualName = 'enriched' + getRandomString();
+
+		const date = new Date();
+
+		await test.step('Create an anonymous identity and page event', async () => {
+			await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
+				{createDate: date.toISOString(), id: individualId},
+			]);
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'Page',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'pageViewed',
+					title: 'My Page',
+					userId: individualId,
+				},
+			]);
+
+			await apiHelpers.jsonWebServicesOSBAsah.createSessions([
+				{
+					channelId: channel.id,
+					id: individualId,
+					sessionEnd: date.toISOString(),
+					sessionStart: date.toISOString(),
+					userId: individualId,
+				},
+			]);
+		});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.individualPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await test.step('Verify Enriched Profiles count is zero before enrichment', async () => {
+			await expect(
+				page.locator('.enriched-profiles-card-root')
+			).toContainText('0 Profiles');
+		});
+
+		await test.step('Create a known individual record for the anonymous identity', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals: [{id: individualId, name: individualName}],
+			});
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'Page',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: new Date().toISOString(),
+					eventId: 'pageViewed',
+					title: 'My Page',
+					userId: individualId,
+				},
+			]);
+		});
+
+		await page.reload();
+
+		await test.step('Verify Enriched Profiles count became one after enrichment', async () => {
+			await expect(
+				page.locator('.enriched-profiles-card-root')
+			).toContainText('1 Profiles');
+		});
+	}
+);
+
+test(
 	'The Individuals dashboard overview shows all of its summary cards',
 	{
 		tag: '@LRAC-8903',

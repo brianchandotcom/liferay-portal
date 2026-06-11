@@ -3,18 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-// The version of this plugin must match the version DXP ships (see
-// frontend-editor-ckeditor-web/package.json). Keeping them in sync provides
-// correct types at dev time and avoids runtime mismatches.
-//
-// The import path must match the key DXP exposes in its CKEditor 5 import
-// map so that the bundler resolves this to the shared copy at runtime instead
-// of packaging a duplicate. The build marks it external for the same reason.
-
-import {WordCount} from '@ckeditor/ckeditor5-word-count/dist/index.js';
 import {
 	EditorConfigTransformer,
 	EditorTransformer,
+	WordCount,
 } from '@liferay/js-api/editor';
 
 const editorConfigTransformer: EditorConfigTransformer<any> = (config) => {

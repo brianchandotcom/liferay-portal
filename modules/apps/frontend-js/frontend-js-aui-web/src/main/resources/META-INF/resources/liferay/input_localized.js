@@ -377,6 +377,10 @@ AUI.add(
 				_onLocaleChanged(event) {
 					const instance = this;
 
+					if (!event.item) {
+						return;
+					}
+
 					const languageId = event.item.getAttribute('data-value');
 
 					instance.selectFlag(languageId, event.source === instance);
@@ -673,27 +677,24 @@ AUI.add(
 					);
 
 					let translationAriaLabel =
-						languagesTranslationsAriaLabels[languageId][
-							'notTranslatedStatus'
-						];
+						languagesTranslationsAriaLabels?.[languageId]
+							?.notTranslatedStatus || STR_BLANK;
 					let translationStatus =
 						Liferay.Language.get('not-translated');
 					let translationStatusCssClass = 'warning';
 
 					if (translatedLanguages.has(languageId)) {
 						translationAriaLabel =
-							languagesTranslationsAriaLabels[languageId][
-								'translatedStatus'
-							];
+							languagesTranslationsAriaLabels?.[languageId]
+								?.translatedStatus || STR_BLANK;
 						translationStatus = Liferay.Language.get('translated');
 						translationStatusCssClass = 'success';
 					}
 
 					if (languageId === instance.get('defaultLanguageId')) {
 						translationAriaLabel =
-							languagesTranslationsAriaLabels[languageId][
-								'defaultStatus'
-							];
+							languagesTranslationsAriaLabels?.[languageId]
+								?.defaultStatus || STR_BLANK;
 						translationStatus = Liferay.Language.get('default');
 						translationStatusCssClass = 'info';
 					}
@@ -724,9 +725,8 @@ AUI.add(
 					);
 
 					const updatedTriggerAriaLabel =
-						languagesTranslationsAriaLabels[languageId][
-							'currentlySelected'
-						];
+						languagesTranslationsAriaLabels?.[languageId]
+							?.currentlySelected || STR_BLANK;
 
 					languageId = languageId.replaceAll('_', '-');
 

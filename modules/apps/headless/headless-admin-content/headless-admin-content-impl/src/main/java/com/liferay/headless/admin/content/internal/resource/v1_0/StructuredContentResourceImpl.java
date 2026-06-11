@@ -304,7 +304,10 @@ public class StructuredContentResourceImpl
 
 		return _toExtensionStructuredContent(
 			_journalArticleService.addArticle(
-				null, siteId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				null, siteId,
+				GetterUtil.getLong(
+					structuredContent.getStructuredContentFolderId(),
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 				0, 0, null, true, titleMap, descriptionMap, friendlyUrlMap,
 				StructuredContentUtil.getJournalArticleContent(
 					_ddm,

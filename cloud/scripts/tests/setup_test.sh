@@ -278,7 +278,7 @@ function _test_aborts_with_old_terraform_version {
 	exit_code=$(echo "${result}" | head -n 1)
 	output=$(echo "${result}" | tail -n +2)
 
-	if [ "${exit_code}" -ne 0 ] && [[ "${output}" == *"below minimum version"* ]]
+	if [ "${exit_code}" -ne 0 ] && [[ "${output}" == *"is older than"* ]]
 	then
 		return 0
 	fi

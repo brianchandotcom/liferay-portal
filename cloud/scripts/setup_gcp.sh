@@ -78,7 +78,7 @@ function _check_terraform_version {
 
 	if [ "${lowest_version}" != "${required_version}" ]
 	then
-		echo "The installed Terraform version ${found_version} is below minimum version ${required_version}." >&2
+		echo "The installed Terraform version ${found_version} is older than ${required_version}." >&2
 
 		exit 1
 	fi

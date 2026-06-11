@@ -5282,8 +5282,7 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		// Sleep for 1 second to ensure that child object entry 1 and child
-		// object entry 2 are created 1 second apart to ensure that the
-		// tests with buildRangeExpression work
+		// object entry 2 are created 1 second apart
 
 		Thread.sleep(1000);
 

@@ -241,7 +241,13 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 		await apiHelpers.headlessDelivery.postBlog(site2.id);
 	}
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+	await expect(async () => {
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await expect(
+			page.getByText(site2.name + ' (3):  Blogs Entry (3)')
+		).toBeVisible({timeout: 10000});
+	}).toPass();
 
 	await expect(page.getByText('Liferay DXP Site (1): Tag (1)')).toBeVisible();
 	await expect(
@@ -258,7 +264,15 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 		ctCollection.body.id
 	);
 
-	await changeTrackingPage.goToReviewChangesHistory(ctCollection.body.name);
+	await expect(async () => {
+		await changeTrackingPage.goToReviewChangesHistory(
+			ctCollection.body.name
+		);
+
+		await expect(
+			page.getByText(site2.name + ' (3):   Blogs Entry (3)')
+		).toBeVisible({timeout: 10000});
+	}).toPass();
 
 	await expect(page.getByText('Liferay DXP Site (1): Tag (1)')).toBeVisible();
 	await expect(

@@ -16,7 +16,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
@@ -171,13 +170,6 @@ public class JournalDataCleanupPreupgradeProcessTest
 				ResourceConstants.SCOPE_GROUP,
 				String.valueOf(_group.getGroupId()), ownerRoleId,
 				ActionKeys.VIEW));
-
-		runSQL(
-			StringBundler.concat(
-				"delete from ResourcePermission where name = '",
-				JournalArticle.class.getName(), "' and scope = ",
-				ResourceConstants.SCOPE_GROUP, " and primKey = '",
-				_group.getGroupId(), "'"));
 
 		_ddmTemplateLocalService.deleteTemplate(
 			journalArticle.getDDMTemplate());

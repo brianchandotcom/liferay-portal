@@ -188,12 +188,12 @@ export class SegmentsPage {
 	}
 
 	async deleteProperty() {
-		const deleteButton = this.page.getByTitle('Delete Segment Property');
+		const deleteButton = this.page.getByTitle('Delete Property');
 		await deleteButton.click();
 	}
 
 	async deleteUnavailableProperty() {
-		const deleteButton = this.page.getByText('Delete Segment Property');
+		const deleteButton = this.page.getByText('Delete Property');
 		await deleteButton.click();
 	}
 

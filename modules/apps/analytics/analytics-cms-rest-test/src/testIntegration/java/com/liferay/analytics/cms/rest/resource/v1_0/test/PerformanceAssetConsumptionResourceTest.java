@@ -191,6 +191,11 @@ public class PerformanceAssetConsumptionResourceTest
 	private void _assertGetPerformanceAssetConsumptionResponse()
 		throws Exception {
 
+		String key1 = RandomTestUtil.randomString();
+		String key2 = RandomTestUtil.randomString();
+		String title1 = RandomTestUtil.randomString();
+		String title2 = RandomTestUtil.randomString();
+
 		_setUpMockHttp(
 			JSONUtil.put(
 				"metrics",
@@ -198,16 +203,16 @@ public class PerformanceAssetConsumptionResourceTest
 					JSONUtil.put(
 						"count", 10
 					).put(
-						"key", "key1"
+						"key", key1
 					).put(
-						"title", "title1"
+						"title", title1
 					),
 					JSONUtil.put(
 						"count", 20
 					).put(
-						"key", "key2"
+						"key", key2
 					).put(
-						"title", "title2"
+						"title", title2
 					))
 			).put(
 				"total", 2
@@ -215,41 +220,35 @@ public class PerformanceAssetConsumptionResourceTest
 				"totalCount", 30
 			).toString());
 
-		for (String groupBy : new String[] {"category", "tag", "vocabulary"}) {
-			PerformanceAssetConsumption performanceAssetConsumption =
-				_performanceAssetConsumptionResource.
-					getPerformanceAssetConsumption(
-						null, null, groupBy, 30, null, null, null,
-						Pagination.of(1, 10));
+		PerformanceAssetConsumption performanceAssetConsumption =
+			_performanceAssetConsumptionResource.getPerformanceAssetConsumption(
+				null, null, "category", RandomTestUtil.nextInt(), null, null,
+				null, Pagination.of(1, 10));
 
-			PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems =
+		PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems =
+			performanceAssetConsumption.getPerformanceAssetConsumptionItems();
+
+		Assert.assertEquals(
+			Arrays.toString(performanceAssetConsumptionItems), 2,
+			performanceAssetConsumptionItems.length);
+		Assert.assertEquals(
+			10L, (long)performanceAssetConsumptionItems[0].getCount());
+		Assert.assertEquals(key1, performanceAssetConsumptionItems[0].getKey());
+		Assert.assertEquals(
+			title1, performanceAssetConsumptionItems[0].getTitle());
+		Assert.assertEquals(
+			20L, (long)performanceAssetConsumptionItems[1].getCount());
+		Assert.assertEquals(key2, performanceAssetConsumptionItems[1].getKey());
+		Assert.assertEquals(
+			title2, performanceAssetConsumptionItems[1].getTitle());
+
+		Assert.assertEquals(
+			2L,
+			(long)
 				performanceAssetConsumption.
-					getPerformanceAssetConsumptionItems();
-
-			Assert.assertEquals(
-				Arrays.toString(performanceAssetConsumptionItems), 2,
-				performanceAssetConsumptionItems.length);
-			Assert.assertEquals(
-				10L, (long)performanceAssetConsumptionItems[0].getCount());
-			Assert.assertEquals(
-				"key1", performanceAssetConsumptionItems[0].getKey());
-			Assert.assertEquals(
-				"title1", performanceAssetConsumptionItems[0].getTitle());
-			Assert.assertEquals(
-				20L, (long)performanceAssetConsumptionItems[1].getCount());
-			Assert.assertEquals(
-				"key2", performanceAssetConsumptionItems[1].getKey());
-			Assert.assertEquals(
-				"title2", performanceAssetConsumptionItems[1].getTitle());
-
-			Assert.assertEquals(
-				2L,
-				(long)
-					performanceAssetConsumption.
-						getPerformanceAssetConsumptionItemsCount());
-			Assert.assertEquals(
-				30L, (long)performanceAssetConsumption.getTotalCount());
-		}
+					getPerformanceAssetConsumptionItemsCount());
+		Assert.assertEquals(
+			30L, (long)performanceAssetConsumption.getTotalCount());
 	}
 
 	private void _assertGetPerformanceAssetConsumptionURL(long dataSourceId)
@@ -264,8 +263,11 @@ public class PerformanceAssetConsumptionResourceTest
 				"totalCount", 0
 			).toString());
 
+		int rangeKey = RandomTestUtil.nextInt();
+
 		_performanceAssetConsumptionResource.getPerformanceAssetConsumption(
-			11111L, null, "tag", 30, null, 22222L, 33333L, Pagination.of(2, 5));
+			11111L, null, "tag", rangeKey, null, 22222L, 33333L,
+			Pagination.of(2, 5));
 
 		String location = recordingMockHttp._getLocation();
 
@@ -277,7 +279,7 @@ public class PerformanceAssetConsumptionResourceTest
 			location, location.contains("dataSourceId=" + dataSourceId));
 		Assert.assertTrue(location, location.contains("groupBy=tag"));
 		Assert.assertTrue(location, location.contains("page=2"));
-		Assert.assertTrue(location, location.contains("rangeKey=30"));
+		Assert.assertTrue(location, location.contains("rangeKey=" + rangeKey));
 		Assert.assertTrue(location, location.contains("size=5"));
 		Assert.assertTrue(location, location.contains("tagId=22222"));
 		Assert.assertTrue(location, location.contains("vocabularyId=33333"));

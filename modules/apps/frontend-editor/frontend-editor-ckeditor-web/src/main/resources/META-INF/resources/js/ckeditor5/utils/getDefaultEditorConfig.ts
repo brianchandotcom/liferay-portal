@@ -30,7 +30,7 @@ import {
 	ImageToolbar,
 } from '@ckeditor/ckeditor5-image/dist/index.js';
 import {Indent} from '@ckeditor/ckeditor5-indent/dist/index.js';
-import {Link} from '@ckeditor/ckeditor5-link/dist/index.js';
+import {Link, LinkImage} from '@ckeditor/ckeditor5-link/dist/index.js';
 import {List} from '@ckeditor/ckeditor5-list/dist/index.js';
 import {MediaEmbed} from '@ckeditor/ckeditor5-media-embed/dist/index.js';
 import {Paragraph} from '@ckeditor/ckeditor5-paragraph/dist/index.js';
@@ -68,6 +68,7 @@ const getDefaultEditorConfig = ({
 		Italic,
 		Image,
 		Link,
+		LinkImage,
 		List,
 		Paragraph,
 		PasteFromOffice,

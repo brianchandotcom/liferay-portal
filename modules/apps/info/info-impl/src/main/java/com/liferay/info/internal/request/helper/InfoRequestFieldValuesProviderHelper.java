@@ -132,7 +132,7 @@ public class InfoRequestFieldValuesProviderHelper {
 				infoField, LocaleUtil.toLanguageIds(availableLocales),
 				multipartParameterMap, regularParameterMap);
 
-			if (inputNames.isEmpty() && !infoField.isLocalizable()) {
+			if (inputNames.isEmpty()) {
 				if ((infoField.getInfoFieldType() instanceof
 						BooleanInfoFieldType) &&
 					ArrayUtil.contains(

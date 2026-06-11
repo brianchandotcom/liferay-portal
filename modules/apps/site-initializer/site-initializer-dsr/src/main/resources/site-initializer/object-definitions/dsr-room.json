@@ -27,6 +27,20 @@
 	],
 	"objectFields": [
 		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "ARCHIVE_DATE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Archive Date"
+			},
+			"name": "archiveDate",
+			"required": false,
+			"system": true
+		},
+		{
 			"DBType": "Clob",
 			"businessType": "LongText",
 			"externalReferenceCode": "DESCRIPTION",
@@ -65,6 +79,21 @@
 			},
 			"name": "name",
 			"required": true,
+			"system": true
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": 0,
+			"externalReferenceCode": "ROOM_STATUS",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Room Status"
+			},
+			"name": "roomStatus",
+			"required": false,
 			"system": true
 		},
 		{

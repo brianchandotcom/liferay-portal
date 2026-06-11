@@ -7,6 +7,7 @@ package com.liferay.mcp.server.rest.internal.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
 import com.liferay.mcp.server.rest.dto.v1_0.Tool;
 import com.liferay.mcp.server.rest.internal.configuration.MCPServerConfiguration;
 import com.liferay.mcp.server.rest.internal.constants.MCPServerConstants;
@@ -55,6 +56,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -149,6 +151,9 @@ public class MCPServerServlet extends HttpServlet {
 
 		String mcpServerProfileName = (String)values.get("name");
 
+		long profileObjectEntryId =
+			mcpServerProfileObjectEntry.getObjectEntryId();
+
 		HttpServletStatelessServerTransport
 			httpServletStatelessServerTransport =
 				HttpServletStatelessServerTransport.builder(
@@ -181,7 +186,8 @@ public class MCPServerServlet extends HttpServlet {
 						_getTool(httpServletRequest, toolName, toolSetName),
 						(mcpTransportContext, callToolRequest) -> _call(
 							mcpTransportContext, callToolRequest.arguments(),
-							toolName, toolSetName));
+							companyId, profileObjectEntryId, toolName,
+							toolSetName));
 				});
 
 		McpStatelessSyncServer mcpStatelessSyncServer = McpServer.sync(
@@ -237,17 +243,27 @@ public class MCPServerServlet extends HttpServlet {
 
 	private McpSchema.CallToolResult _call(
 		McpTransportContext mcpTransportContext, Object inputObject,
-		String toolName, String toolSetName) {
+		long companyId, long profileObjectEntryId, String toolName,
+		String toolSetName) {
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)mcpTransportContext.get("httpServletRequest");
 
 		try {
+			List<String> maskExternalReferenceCodes = _resolveDataMaskERCs(
+				companyId, profileObjectEntryId);
+
 			Response response = ToolSetUtil.invokeTool(
 				httpServletRequest, inputObject, toolName, toolSetName);
 
 			int responseCode = response.getStatus();
+
 			String content = (String)response.getEntity();
+
+			if (content != null) {
+				content = _dataMaskingService.redact(
+					companyId, maskExternalReferenceCodes, content);
+			}
 
 			if (responseCode < 300) {
 				if (content == null) {
@@ -443,6 +459,68 @@ public class MCPServerServlet extends HttpServlet {
 		}
 	}
 
+	private List<String> _resolveDataMaskERCs(
+		long companyId, long profileObjectEntryId) {
+
+		ObjectDefinition profileDataMaskObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					MCPServerConstants.
+						EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROFILE_DATA_MASK,
+					companyId);
+
+		if (profileDataMaskObjectDefinition == null) {
+			return Collections.emptyList();
+		}
+
+		List<ObjectEntry> profileDataMaskObjectEntries = new ArrayList<>();
+
+		for (ObjectEntry profileDataMaskObjectEntry :
+				_objectEntryLocalService.getObjectEntries(
+					0, profileDataMaskObjectDefinition.getObjectDefinitionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			Map<String, Serializable> values =
+				profileDataMaskObjectEntry.getValues();
+
+			long profileId = GetterUtil.getLong(
+				values.get("mcpServerProfileId"));
+
+			if (profileId != profileObjectEntryId) {
+				continue;
+			}
+
+			profileDataMaskObjectEntries.add(profileDataMaskObjectEntry);
+		}
+
+		profileDataMaskObjectEntries.sort(
+			Comparator.comparing(
+				objectEntry -> GetterUtil.getInteger(
+					objectEntry.getValues(
+					).get(
+						"executionOrder"
+					),
+					Integer.MAX_VALUE)));
+
+		List<String> maskExternalReferenceCodes = new ArrayList<>();
+
+		for (ObjectEntry profileDataMaskObjectEntry :
+				profileDataMaskObjectEntries) {
+
+			String externalReferenceCode =
+				(String)profileDataMaskObjectEntry.getValues(
+				).get(
+					"dataMaskExternalReferenceCode"
+				);
+
+			if (Validator.isNotNull(externalReferenceCode)) {
+				maskExternalReferenceCodes.add(externalReferenceCode);
+			}
+		}
+
+		return maskExternalReferenceCodes;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MCPServerServlet.class);
 
@@ -450,6 +528,9 @@ public class MCPServerServlet extends HttpServlet {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DataMaskingService _dataMaskingService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

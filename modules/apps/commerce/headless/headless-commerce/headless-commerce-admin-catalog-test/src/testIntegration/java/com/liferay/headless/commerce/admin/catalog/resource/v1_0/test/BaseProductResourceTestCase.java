@@ -1827,12 +1827,57 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testPatchProduct() throws Exception {
-		Assert.assertTrue(false);
+		Product postProduct = testPatchProduct_addProduct();
+
+		Product randomPatchProduct = randomPatchProduct();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Product patchProduct = productResource.patchProduct(
+			postProduct.getId(), randomPatchProduct);
+
+		Product expectedPatchProduct = postProduct.clone();
+
+		BeanTestUtil.copyProperties(randomPatchProduct, expectedPatchProduct);
+
+		Product getProduct = productResource.getProduct(patchProduct.getId());
+
+		assertEquals(expectedPatchProduct, getProduct);
+		assertValid(getProduct);
+	}
+
+	protected Product testPatchProduct_addProduct() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testPatchProductByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
+		Product postProduct =
+			testPatchProductByExternalReferenceCode_addProduct();
+
+		Product randomPatchProduct = randomPatchProduct();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Product patchProduct =
+			productResource.patchProductByExternalReferenceCode(
+				postProduct.getExternalReferenceCode(), randomPatchProduct);
+
+		Product expectedPatchProduct = postProduct.clone();
+
+		BeanTestUtil.copyProperties(randomPatchProduct, expectedPatchProduct);
+
+		Product getProduct = productResource.getProductByExternalReferenceCode(
+			patchProduct.getExternalReferenceCode());
+
+		assertEquals(expectedPatchProduct, getProduct);
+		assertValid(getProduct);
+	}
+
+	protected Product testPatchProductByExternalReferenceCode_addProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -4431,4 +4476,4 @@ public abstract class BaseProductResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:460039582
+// LIFERAY-REST-BUILDER-HASH:-1889484572

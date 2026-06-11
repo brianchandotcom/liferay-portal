@@ -10,7 +10,7 @@ exports[`SuccessDisplayIf should render a scheduled maintenance error page if th
     >
       <a
         class=""
-        href="https://liferay-portal.com"
+        href="https://liferay.com"
         rel="noreferrer noopener"
         target="_blank"
       >
@@ -111,7 +111,7 @@ exports[`SuccessDisplayIf should render activating display if project state is "
     >
       <a
         class=""
-        href="https://liferay-portal.com"
+        href="https://liferay.com"
         rel="noreferrer noopener"
         target="_blank"
       >
@@ -254,7 +254,7 @@ exports[`SuccessDisplayIf should render activating display if project state is "
     >
       <a
         class=""
-        href="https://liferay-portal.com"
+        href="https://liferay.com"
         rel="noreferrer noopener"
         target="_blank"
       >
@@ -379,7 +379,7 @@ exports[`SuccessDisplayIf should render an unavailable error page if the project
     >
       <a
         class=""
-        href="https://liferay-portal.com"
+        href="https://liferay.com"
         rel="noreferrer noopener"
         target="_blank"
       >

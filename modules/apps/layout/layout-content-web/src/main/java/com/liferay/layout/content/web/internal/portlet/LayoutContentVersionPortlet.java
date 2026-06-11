@@ -7,11 +7,13 @@ package com.liferay.layout.content.web.internal.portlet;
 
 import com.liferay.layout.content.web.internal.constants.LayoutContentVersionPortletKeys;
 import com.liferay.layout.content.web.internal.display.context.LayoutContentVersionDisplayContext;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import jakarta.portlet.Portlet;
 import jakarta.portlet.PortletException;
@@ -60,7 +62,8 @@ public class LayoutContentVersionPortlet extends MVCPortlet {
 				new ComponentDescriptor(
 					"{VersionHistory} from layout-content-web"),
 				new LayoutContentVersionDisplayContext(
-					httpServletRequest, _layoutLocalService
+					httpServletRequest, _language, _layoutLocalService,
+					_segmentsExperienceLocalService
 				).getContext(),
 				httpServletRequest, renderResponse.getWriter());
 		}
@@ -70,6 +73,9 @@ public class LayoutContentVersionPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -77,5 +83,8 @@ public class LayoutContentVersionPortlet extends MVCPortlet {
 
 	@Reference
 	private ReactRenderer _reactRenderer;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

@@ -26,6 +26,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -124,14 +126,14 @@ public class XLIFF12InfoFormTranslationExporter
 
 			List<InfoFieldValue<Object>> infoFieldValues = entry.getValue();
 
-			StringBundler sb = new StringBundler(infoFieldValues.size() * 2);
+			StringBundler sb = new StringBundler(infoFieldValues.size());
 
 			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-				sb.append(infoFieldValue.getValue(sourceLocale));
-				sb.append(StringPool.COMMA_AND_SPACE);
-			}
+				Object value = infoFieldValue.getValue(sourceLocale);
 
-			sb.setIndex(sb.index() - 1);
+				sb.append(
+					(value != null) ? value.toString() : StringPool.BLANK);
+			}
 
 			sourceElement.addCDATA(_getStringValue(sb));
 
@@ -180,9 +182,10 @@ public class XLIFF12InfoFormTranslationExporter
 			}
 		}
 
-		String formattedString = document.formattedString();
-
-		return new ByteArrayInputStream(formattedString.getBytes());
+		return new ByteArrayInputStream(
+			document.asXML(
+			).getBytes(
+				StandardCharsets.UTF_8));
 	}
 
 	@Override

@@ -93,20 +93,21 @@ public abstract class BaseRelevantRuleTestCase {
 			file = JenkinsResultsParserUtil.getCanonicalFile(file);
 		}
 
-		String fileName = file.getName();
+		File gitFile = new File(file, ".git");
+		File portalImplDir = new File(file, "portal-impl");
 
-		if (fileName.equals("liferay-portal")) {
+		if (gitFile.exists() && portalImplDir.exists()) {
 			return file;
 		}
 
-		file = file.getParentFile();
+		File parentFile = file.getParentFile();
 
-		if (file == null) {
+		if (parentFile == null) {
 			throw new RuntimeException(
 				"Unable to find portal directory from: " + file);
 		}
 
-		return getPortalDir(file);
+		return getPortalDir(parentFile);
 	}
 
 	protected RelevantRuleEngine getRelevantRuleEngine() {

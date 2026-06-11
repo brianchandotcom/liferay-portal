@@ -10,16 +10,9 @@ package com.liferay.one.constants;
  */
 public class CommerceCatalogConstants {
 
-	public static final String DEFAULT_LANGUAGE_ID = "en_US";
-
-	public static final String PRICE_LIST_ERC_PREFIX = "SALESFORCE_PRICE_LIST_";
+	public static final String EXTERNAL_REFERENCE_CODE_SALESFORCE_CATALOG =
+		"SALESFORCE_CATALOG";
 
 	public static final String PRODUCT_TYPE_SIMPLE = "simple";
-
-	public static final String SALESFORCE_CATALOG = "SALESFORCE_CATALOG";
-
-	public static String priceListErc(String currencyIsoCode) {
-		return PRICE_LIST_ERC_PREFIX + currencyIsoCode;
-	}
 
 }

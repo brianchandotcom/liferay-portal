@@ -16,6 +16,7 @@ import {
 	MappingMode,
 	TokenMapping,
 	getMappingMode,
+	isBackendMapped,
 	isContextMapped,
 	isMappedTokenValue,
 } from './tokenMapping';
@@ -28,6 +29,7 @@ interface IConfigurationField {
 	onValueSelect: (name: string, value: any) => void;
 	values: {
 		apiURLTokenMappings: string;
+		backendResolvedTokens: string;
 		itemSelector: IDataSet;
 	};
 }
@@ -72,8 +74,20 @@ export default function DataSetConfigurationFields({
 		}
 	}, [tokenKeys, selectedTokenKey]);
 
-	const currentTokenMapping: TokenMapping =
-		apiURLTokenMappings[selectedTokenKey] ?? '';
+	const backendResolvedTokens = useMemo(
+		() => new Set<string>(JSON.parse(values.backendResolvedTokens || '[]')),
+		[values.backendResolvedTokens]
+	);
+
+	const isCurrentTokenBackendResolvable =
+		backendResolvedTokens.has(selectedTokenKey);
+
+	const currentTokenMapping: TokenMapping = useMemo(
+		() =>
+			apiURLTokenMappings[selectedTokenKey] ??
+			(isCurrentTokenBackendResolvable ? {source: 'backend'} : ''),
+		[apiURLTokenMappings, isCurrentTokenBackendResolvable, selectedTokenKey]
+	);
 
 	const currentMappingMode = getMappingMode(currentTokenMapping);
 
@@ -90,6 +104,16 @@ export default function DataSetConfigurationFields({
 					{
 						label: Liferay.Language.get('map-to-context-entity'),
 						value: 'context',
+					},
+				]
+			: []),
+		...(isCurrentTokenBackendResolvable
+			? [
+					{
+						label: Liferay.Language.get(
+							'use-backend-provided-value'
+						),
+						value: 'backend',
 					},
 				]
 			: []),
@@ -124,9 +148,17 @@ export default function DataSetConfigurationFields({
 				return;
 			}
 
-			const existingFieldId = isMappedTokenValue(currentTokenMapping)
-				? currentTokenMapping.fieldId
-				: 'classPK';
+			if (mappingMode === 'backend') {
+				updateTokenMapping(selectedTokenKey, {source: 'backend'});
+
+				return;
+			}
+
+			const existingFieldId =
+				isMappedTokenValue(currentTokenMapping) &&
+				!isBackendMapped(currentTokenMapping)
+					? currentTokenMapping.fieldId
+					: 'classPK';
 
 			if (mappingMode === 'context') {
 				updateTokenMapping(selectedTokenKey, {
@@ -203,7 +235,8 @@ export default function DataSetConfigurationFields({
 
 						{currentMappingMode === 'content' &&
 							isMappedTokenValue(currentTokenMapping) &&
-							!isContextMapped(currentTokenMapping) && (
+							!isContextMapped(currentTokenMapping) &&
+							!isBackendMapped(currentTokenMapping) && (
 								<EntitySelectorRow
 									entity={currentTokenMapping}
 									onEntityChange={(entity) =>
@@ -215,65 +248,83 @@ export default function DataSetConfigurationFields({
 								/>
 							)}
 
-						<ClayForm.Group>
-							<label htmlFor={fieldInputId}>
-								{Liferay.Language.get('field')}
-							</label>
+						{currentMappingMode !== 'backend' && (
+							<ClayForm.Group>
+								<label htmlFor={fieldInputId}>
+									{currentMappingMode === 'literal'
+										? Liferay.Language.get('token-value')
+										: Liferay.Language.get('field')}
+								</label>
 
-							{currentMappingMode === 'literal' ? (
-								<LiteralInput
-									inputId={fieldInputId}
-									onCommit={(value) =>
-										updateTokenMapping(
-											selectedTokenKey,
-											value
-										)
-									}
-									value={
-										typeof currentTokenMapping === 'string'
-											? currentTokenMapping
-											: ''
-									}
-								/>
-							) : (
-								<ClaySelectWithOption
-									id={fieldInputId}
-									onChange={(event) => {
-										if (
-											!isMappedTokenValue(
+								{currentMappingMode === 'literal' ? (
+									<LiteralInput
+										inputId={fieldInputId}
+										onCommit={(value) =>
+											updateTokenMapping(
+												selectedTokenKey,
+												value
+											)
+										}
+										value={
+											typeof currentTokenMapping ===
+											'string'
+												? currentTokenMapping
+												: ''
+										}
+									/>
+								) : (
+									<ClaySelectWithOption
+										id={fieldInputId}
+										onChange={(event) => {
+											if (
+												!isMappedTokenValue(
+													currentTokenMapping
+												) ||
+												isBackendMapped(
+													currentTokenMapping
+												)
+											) {
+												return;
+											}
+
+											updateTokenMapping(
+												selectedTokenKey,
+												{
+													...currentTokenMapping,
+													fieldId: event.target
+														.value as IdentifierField,
+												}
+											);
+										}}
+										options={[
+											{
+												label: Liferay.Language.get(
+													'id'
+												),
+												value: 'classPK',
+											},
+											{
+												label: Liferay.Language.get(
+													'external-reference-code'
+												),
+												value: 'externalReferenceCode',
+											},
+										]}
+										sizing="sm"
+										value={
+											isMappedTokenValue(
+												currentTokenMapping
+											) &&
+											!isBackendMapped(
 												currentTokenMapping
 											)
-										) {
-											return;
+												? currentTokenMapping.fieldId
+												: 'classPK'
 										}
-
-										updateTokenMapping(selectedTokenKey, {
-											...currentTokenMapping,
-											fieldId: event.target
-												.value as IdentifierField,
-										});
-									}}
-									options={[
-										{
-											label: Liferay.Language.get('id'),
-											value: 'classPK',
-										},
-										{
-											label: Liferay.Language.get(
-												'external-reference-code'
-											),
-											value: 'externalReferenceCode',
-										},
-									]}
-									sizing="sm"
-									value={
-										isMappedTokenValue(currentTokenMapping)
-											? currentTokenMapping.fieldId
-											: 'classPK'
-									}
-								/>
-							)}
-						</ClayForm.Group>
+									/>
+								)}
+							</ClayForm.Group>
+						)}
 					</>
 				)}
 		</>

@@ -37,8 +37,11 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.portlet.PortletPreferences;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -93,6 +96,34 @@ public class InputTagTest {
 	@Test
 	public void testInputTag() throws Exception {
 		_assertInputTag(_layout.getFriendlyURLMap());
+	}
+
+	@Test
+	public void testInputTagAvailableLocales() throws Exception {
+		Set<Locale> availableLocales = new HashSet<>(
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US));
+
+		InputTag inputTag = new InputTag();
+
+		inputTag.setAvailableLocales(availableLocales);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(inputTag);
+
+		Assert.assertEquals(
+			availableLocales,
+			mockHttpServletRequest.getAttribute(
+				"liferay-friendly-url:input:availableLocales"));
+	}
+
+	@Test
+	public void testInputTagAvailableLocalesIsNullByDefault() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(new InputTag());
+
+		Assert.assertNull(
+			mockHttpServletRequest.getAttribute(
+				"liferay-friendly-url:input:availableLocales"));
 	}
 
 	@Test
@@ -205,17 +236,8 @@ public class InputTagTest {
 	private void _assertInputTag(Map<Locale, String> expectedFriendlyURLMap)
 		throws Exception {
 
-		InputTag inputTag = new InputTag();
-
-		inputTag.setClassName(Layout.class.getName());
-		inputTag.setClassPK(_layout.getPlid());
-
 		MockHttpServletRequest mockHttpServletRequest =
-			ContentLayoutTestUtil.getMockHttpServletRequest(
-				_companyLocalService.getCompany(_layout.getCompanyId()), _group,
-				_layout);
-
-		inputTag.doTag(mockHttpServletRequest, new MockHttpServletResponse());
+			_getMockHttpServletRequest(new InputTag());
 
 		Map<Locale, String> friendlyURLMap = _localization.getLocalizationMap(
 			(String)mockHttpServletRequest.getAttribute(
@@ -233,6 +255,22 @@ public class InputTagTest {
 			Assert.assertEquals(
 				entry.getValue(), friendlyURLMap.get(entry.getKey()));
 		}
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(InputTag inputTag)
+		throws Exception {
+
+		inputTag.setClassName(Layout.class.getName());
+		inputTag.setClassPK(_layout.getPlid());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			ContentLayoutTestUtil.getMockHttpServletRequest(
+				_companyLocalService.getCompany(_layout.getCompanyId()), _group,
+				_layout);
+
+		inputTag.doTag(mockHttpServletRequest, new MockHttpServletResponse());
+
+		return mockHttpServletRequest;
 	}
 
 	@Inject

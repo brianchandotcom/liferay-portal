@@ -63,6 +63,8 @@ public class HealthScanConfigurationDisplayContext {
 	private JSONArray _getTimeZonesJSONArray() {
 		JSONArray timeZonesJSONArray = JSONFactoryUtil.createJSONArray();
 
+		Date date = new Date();
+
 		Locale locale = _themeDisplay.getLocale();
 
 		NumberFormat numberFormat = NumberFormat.getInstance(locale);
@@ -74,8 +76,6 @@ public class HealthScanConfigurationDisplayContext {
 		for (String timeZoneId : PropsUtil.getArray(PropsKeys.TIME_ZONES)) {
 			timeZones.add(TimeZoneUtil.getTimeZone(timeZoneId));
 		}
-
-		Date date = new Date();
 
 		for (TimeZone timeZone : timeZones) {
 			int totalOffset = timeZone.getOffset(date.getTime());

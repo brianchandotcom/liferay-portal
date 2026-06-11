@@ -22,8 +22,12 @@ function getCancelButton() {
 	return screen.getByRole('button', {name: 'cancel'});
 }
 
-function toggleContentTechnical() {
+function toggleCrawler() {
 	fireEvent.click(screen.getByLabelText('crawler-insights'));
+}
+
+function enableAutoScan() {
+	fireEvent.click(screen.getByLabelText(/auto-scan/, {selector: 'input'}));
 }
 
 const TIME_ZONES = [
@@ -56,8 +60,22 @@ describe('HealthScanConfiguration', () => {
 	});
 
 	describe('schedule section', () => {
-		it('shows the schedule fields when Auto Scan is on', () => {
+		it('hides the schedule fields when Auto Scan is off by default', () => {
 			renderConfiguration();
+
+			expect(
+				screen.queryByLabelText('frequency')
+			).not.toBeInTheDocument();
+			expect(screen.queryByLabelText('time')).not.toBeInTheDocument();
+			expect(
+				screen.queryByLabelText('time-zone')
+			).not.toBeInTheDocument();
+		});
+
+		it('shows the schedule fields when Auto Scan is turned on', () => {
+			renderConfiguration();
+
+			enableAutoScan();
 
 			expect(screen.getByLabelText('frequency')).toBeInTheDocument();
 			expect(screen.getByLabelText('time')).toHaveValue('00:00');
@@ -67,6 +85,8 @@ describe('HealthScanConfiguration', () => {
 		it('populates the time zone select with the provided time zones', () => {
 			renderConfiguration();
 
+			enableAutoScan();
+
 			expect(
 				screen.getByText('(UTC -05:00) Eastern Standard Time')
 			).toBeInTheDocument();
@@ -74,6 +94,8 @@ describe('HealthScanConfiguration', () => {
 
 		it('reveals the day-of-week selector only for Weekly', () => {
 			renderConfiguration();
+
+			enableAutoScan();
 
 			expect(
 				screen.queryByLabelText('day-of-week')
@@ -92,6 +114,8 @@ describe('HealthScanConfiguration', () => {
 		it('reveals the day-of-month selector only for Monthly', () => {
 			renderConfiguration();
 
+			enableAutoScan();
+
 			fireEvent.change(screen.getByLabelText('frequency'), {
 				target: {value: 'monthly'},
 			});
@@ -101,41 +125,28 @@ describe('HealthScanConfiguration', () => {
 				screen.queryByLabelText('day-of-week')
 			).not.toBeInTheDocument();
 		});
-
-		it('hides the schedule fields when Auto Scan is off', () => {
-			renderConfiguration();
-
-			fireEvent.click(
-				screen.getByLabelText(/auto-scan/, {selector: 'input'})
-			);
-
-			expect(
-				screen.queryByLabelText('frequency')
-			).not.toBeInTheDocument();
-			expect(screen.queryByLabelText('time')).not.toBeInTheDocument();
-			expect(
-				screen.queryByLabelText('time-zone')
-			).not.toBeInTheDocument();
-		});
 	});
 
 	describe('scope section', () => {
-		it('renders a block for every engine, enabled by default', () => {
+		it('renders a toggle for every engine, disabled by default', () => {
 			renderConfiguration();
 
-			expect(screen.getAllByLabelText('scope')).toHaveLength(4);
+			expect(screen.getByLabelText('crawler-insights')).not.toBeChecked();
+			expect(screen.queryAllByLabelText('scope')).toHaveLength(0);
 		});
 
-		it("hides an engine's fields when its toggle is off", () => {
+		it("shows an engine's fields when its toggle is on", () => {
 			renderConfiguration();
 
-			toggleContentTechnical();
+			toggleCrawler();
 
-			expect(screen.getAllByLabelText('scope')).toHaveLength(3);
+			expect(screen.getAllByLabelText('scope')).toHaveLength(1);
 		});
 
 		it('reveals the Included Path input only for "Included Paths Only"', () => {
 			renderConfiguration();
+
+			toggleCrawler();
 
 			expect(
 				screen.queryByLabelText(/included-path/, {selector: 'input'})
@@ -152,6 +163,8 @@ describe('HealthScanConfiguration', () => {
 
 		it('shows no path input for "Public Sitemap Pages"', () => {
 			renderConfiguration();
+
+			toggleCrawler();
 
 			fireEvent.change(screen.getAllByLabelText('scope')[0], {
 				target: {value: 'sitemapOnly'},
@@ -170,6 +183,8 @@ describe('HealthScanConfiguration', () => {
 	describe('path validation', () => {
 		function selectIncludedPathsOnly() {
 			renderConfiguration();
+
+			toggleCrawler();
 
 			fireEvent.change(screen.getAllByLabelText('scope')[0], {
 				target: {value: 'includedPathsOnly'},
@@ -215,6 +230,8 @@ describe('HealthScanConfiguration', () => {
 		it('requires an Excluded Path and disables Save while it is empty', () => {
 			renderConfiguration();
 
+			toggleCrawler();
+
 			fireEvent.change(screen.getAllByLabelText('scope')[0], {
 				target: {value: 'excludedPathsOnly'},
 			});
@@ -243,13 +260,13 @@ describe('HealthScanConfiguration', () => {
 		it('reverts unsaved changes on Cancel', () => {
 			renderConfiguration();
 
-			toggleContentTechnical();
+			toggleCrawler();
 
-			expect(screen.getAllByLabelText('scope')).toHaveLength(3);
+			expect(screen.getAllByLabelText('scope')).toHaveLength(1);
 
 			fireEvent.click(getCancelButton());
 
-			expect(screen.getAllByLabelText('scope')).toHaveLength(4);
+			expect(screen.queryAllByLabelText('scope')).toHaveLength(0);
 			expect(getSaveButton()).toBeEnabled();
 			expect(getCancelButton()).toBeEnabled();
 		});
@@ -278,13 +295,13 @@ describe('HealthScanConfiguration', () => {
 
 			const body = JSON.parse(init.body);
 
-			expect(body.autoScanEnabled).toBe(true);
+			expect(body.autoScanEnabled).toBe(false);
 			expect(body.scanFrequency).toBe('daily');
 			expect(body.scanTimeZone).toBe('UTC');
 
 			const scanConfig = JSON.parse(body.scanConfig);
 
-			expect(scanConfig.engines.crawler.enabled).toBe(true);
+			expect(scanConfig.engines.crawler.enabled).toBe(false);
 
 			await waitFor(() =>
 				expect(openToast).toHaveBeenCalledWith(
@@ -340,16 +357,19 @@ describe('HealthScanConfiguration', () => {
 				scanConfig: JSON.stringify({
 					engines: {
 						crawler: {
-							scope: 'sitemapOnly',
+							enabled: true,
 						},
 					},
 				}),
 			});
 
 			expect(screen.getByLabelText('crawler-insights')).toBeChecked();
-			expect(screen.getAllByLabelText('scope')).toHaveLength(4);
+			expect(
+				screen.getByLabelText('ai-generated-insights')
+			).not.toBeChecked();
+			expect(screen.getAllByLabelText('scope')).toHaveLength(1);
 			expect(screen.getAllByLabelText('scope')[0]).toHaveValue(
-				'sitemapOnly'
+				'allPublishedPages'
 			);
 		});
 	});

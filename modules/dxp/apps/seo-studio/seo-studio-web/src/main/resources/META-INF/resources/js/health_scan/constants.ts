@@ -89,7 +89,7 @@ export function getDefaultConfig(defaultTimeZoneId: string): HealthScanConfig {
 
 	for (const {key} of ENGINE_DESCRIPTORS) {
 		engines[key] = {
-			enabled: true,
+			enabled: false,
 			excludedPaths: '',
 			includedPaths: '',
 			maxPagesPerScan: 100,
@@ -101,7 +101,7 @@ export function getDefaultConfig(defaultTimeZoneId: string): HealthScanConfig {
 	return {
 		engines,
 		schedule: {
-			autoScanEnabled: true,
+			autoScanEnabled: false,
 			scanDayOfMonth: 1,
 			scanDayOfWeek: 'MO',
 			scanFrequency: 'daily',

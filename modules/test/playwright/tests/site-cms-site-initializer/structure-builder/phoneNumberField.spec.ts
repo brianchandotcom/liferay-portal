@@ -189,12 +189,12 @@ test(
 );
 
 test(
-	'Publishing a content with an invalid phone number shows a descriptive validation error',
+	'Publishing a content with an invalid phone number shows a descriptive error, keeps the untouched field empty, and raises no success toast',
 	{tag: '@LPD-94363'},
 	async ({contentsPage, page, structureBuilderPage}) => {
 		const structureLabel = `Structure${getRandomInt()}`;
 
-		// Create a structure with a Phone Number field
+		// Create a structure with two Phone Number fields
 
 		await structureBuilderPage.createStructureFromData({
 			label: structureLabel,
@@ -204,9 +204,12 @@ test(
 
 		await structureBuilderPage.addField('Phone Number');
 
+		await structureBuilderPage.addField('Phone Number');
+
 		await structureBuilderPage.publishStructure();
 
-		// Create a content and enter an invalid phone number
+		// Create a content, enter an invalid number in the first phone field and
+		// leave the second one untouched
 
 		await contentsPage.goto();
 
@@ -214,7 +217,9 @@ test(
 
 		await page.getByLabel('Title').fill(getRandomString());
 
-		await page.locator('input[type="tel"]').fill('1');
+		const phoneInputs = page.locator('input[type="tel"]');
+
+		await phoneInputs.first().fill('123');
 
 		// Publish and check the error is descriptive instead of generic
 
@@ -222,6 +227,14 @@ test(
 			target: page.getByText('Please enter a valid phone number.'),
 			trigger: contentsPage.publishButton,
 		});
+
+		// The failed publish must not raise the optimistic success toast
+
+		await expect(page.locator('.alert-success')).not.toBeVisible();
+
+		// The untouched second field must stay empty instead of rendering "null"
+
+		await expect(phoneInputs.nth(1)).toHaveValue('');
 	}
 );
 

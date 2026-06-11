@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.custom.filter.portlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.portlet.PortletPreferences;
@@ -56,7 +57,7 @@ public class CustomFilterPortletPreferencesImplTest {
 		_mockValue(
 			portletPreferences,
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_FIELD,
-			"modified");
+			RandomTestUtil.randomString());
 		_mockValue(
 			portletPreferences,
 			CustomFilterPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,

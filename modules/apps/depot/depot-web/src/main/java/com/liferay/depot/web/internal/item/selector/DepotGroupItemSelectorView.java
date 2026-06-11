@@ -251,8 +251,9 @@ public class DepotGroupItemSelectorView
 				String itemSelectedEventName = ParamUtil.getString(
 					portletRequest, "itemSelectedEventName");
 
-				if (itemSelectedEventName.contains(
-						UsersAdminPortletKeys.USERS_ADMIN)) {
+				if (itemSelectedEventName.startsWith(
+						_portal.getPortletNamespace(
+							UsersAdminPortletKeys.USERS_ADMIN))) {
 
 					ctCollectionId =
 						CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;

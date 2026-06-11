@@ -145,7 +145,9 @@ public class SelectRoleManagementToolbarDisplayContext {
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
 		if ((_eventName != null) &&
-			_eventName.contains(UsersAdminPortletKeys.USERS_ADMIN)) {
+			_eventName.startsWith(
+				PortalUtil.getPortletNamespace(
+					UsersAdminPortletKeys.USERS_ADMIN))) {
 
 			ctCollectionId =
 				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;

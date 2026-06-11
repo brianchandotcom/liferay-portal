@@ -179,38 +179,76 @@ test(
 );
 
 test(
-	'Select image by modal URL input',
-	{tag: '@LPD-11235'},
-	async ({classicPage}) => {
-		await classicPage.toolbar.container
-			.getByRole('button', {name: 'Image'})
-			.click();
+	'Select image by modal URL input and check image link when aligned',
+	{tag: ['@LPD-11235', '@LPD-94512']},
+	async ({classicPage, page}) => {
+		const linkURL = 'https://www.liferay.com';
 
-		const itemSelectorFrame = classicPage.itemSelectorFrame;
+		await test.step('Insert an image by modal URL input', async () => {
+			await classicPage.toolbar.container
+				.getByRole('button', {name: 'Image'})
+				.click();
 
-		itemSelectorFrame.getByRole('link', {name: 'URL'}).click();
+			const itemSelectorFrame = classicPage.itemSelectorFrame;
 
-		const imageURLInput = itemSelectorFrame.getByLabel('URL', {
-			exact: true,
+			itemSelectorFrame.getByRole('link', {name: 'URL'}).click();
+
+			const imageURLInput = itemSelectorFrame.getByLabel('URL', {
+				exact: true,
+			});
+
+			await expect(imageURLInput).toBeEnabled();
+
+			const addButton = itemSelectorFrame.getByRole('button', {
+				exact: true,
+				name: 'Add',
+			});
+
+			await expect(addButton).toBeDisabled();
+
+			await imageURLInput.fill('/documents/d/guest/tree-png');
+
+			await expect(addButton).toBeEnabled();
+
+			await addButton.click();
+
+			await expect(
+				classicPage.editable.locator('img[src*="tree-png"]')
+			).toBeVisible();
 		});
 
-		await expect(imageURLInput).toBeEnabled();
+		await test.step('Center align the image', async () => {
+			await classicPage.editable.locator('img[src*="tree-png"]').click();
 
-		const addButton = itemSelectorFrame.getByRole('button', {
-			exact: true,
-			name: 'Add',
+			const centerButton = page.getByRole('button', {
+				name: 'Centered image',
+			});
+
+			await expect(centerButton).toBeVisible();
+
+			await centerButton.click();
+
+			await expect(centerButton).toHaveAttribute('aria-pressed', 'true');
 		});
 
-		await expect(addButton).toBeDisabled();
+		await test.step('Add a hyperlink to the centered image', async () => {
+			await classicPage.toolbar.container
+				.getByRole('button', {name: 'Link'})
+				.click();
 
-		await imageURLInput.fill('/documents/d/guest/tree-png');
+			const urlInput = page.getByLabel('Link URL');
 
-		await expect(addButton).toBeEnabled();
+			await expect(urlInput).toBeVisible({timeout: 3000});
 
-		await addButton.click();
+			await urlInput.fill(linkURL);
+
+			await page.getByLabel('Insert', {exact: true}).click();
+		});
 
 		await expect(
-			classicPage.editable.locator('img[src*="tree-png"]')
+			classicPage.editable.locator(
+				`figure.image a[href*="${linkURL}"] img[src*="tree-png"]`
+			)
 		).toBeVisible();
 	}
 );

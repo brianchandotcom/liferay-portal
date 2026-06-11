@@ -1,7 +1,9 @@
 ---
+
 description: Initial setup guide for users brand new to Liferay Workspace
 globs: *
 alwaysApply: true
+
 ---
 
 # Liferay Workspace Setup Guide

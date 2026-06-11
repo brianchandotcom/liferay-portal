@@ -6,11 +6,15 @@
 package com.liferay.site.dsr.site.initializer.internal.struts;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -20,7 +24,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.io.Serializable;
+
+import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -89,11 +98,35 @@ public class ViewRoomStrutsActionTest {
 			_objectDefinition
 		);
 
+		Mockito.when(
+			_objectEntryLocalService.fetchObjectEntry(Mockito.anyLong())
+		).thenReturn(
+			_objectEntry
+		);
+
+		Mockito.when(
+			_objectEntry.getValues()
+		).thenReturn(
+			Collections.emptyMap()
+		);
+
+		_permissionThreadLocalMockedStatic.when(
+			PermissionThreadLocal::getPermissionChecker
+		).thenReturn(
+			_permissionChecker
+		);
+
 		_groupPermissionUtilMockedStatic.when(
 			() -> GroupPermissionUtil.contains(
 				Mockito.any(), Mockito.any(), Mockito.anyString())
 		).thenReturn(
 			true
+		);
+
+		Mockito.when(
+			_portal.escapeRedirect(Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArgument(0)
 		);
 
 		Mockito.when(
@@ -107,8 +140,9 @@ public class ViewRoomStrutsActionTest {
 
 	@After
 	public void tearDown() {
-		_portalUtilMockedStatic.close();
 		_groupPermissionUtilMockedStatic.close();
+		_permissionThreadLocalMockedStatic.close();
+		_portalUtilMockedStatic.close();
 	}
 
 	@Test
@@ -195,6 +229,77 @@ public class ViewRoomStrutsActionTest {
 			SessionErrors.contains(
 				mockHttpServletRequest,
 				PrincipalException.MustHavePermission.class.getName()));
+
+		_groupPermissionUtilMockedStatic.when(
+			() -> GroupPermissionUtil.contains(
+				Mockito.any(), Mockito.any(), Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		String className = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_group.getClassName()
+		).thenReturn(
+			className
+		);
+
+		Mockito.when(
+			_objectDefinition.getClassName()
+		).thenReturn(
+			className
+		);
+
+		Mockito.when(
+			_objectEntry.getValues()
+		).thenReturn(
+			Collections.<String, Serializable>singletonMap(
+				"roomStatus", WorkflowConstants.STATUS_INACTIVE)
+		);
+
+		Mockito.when(
+			_permissionChecker.isCompanyAdmin()
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			_permissionChecker.isGroupOwner(Mockito.anyLong())
+		).thenReturn(
+			false
+		);
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		Assert.assertNull(
+			_viewRoomStrutsAction.execute(
+				mockHttpServletRequest, mockHttpServletResponse));
+
+		Assert.assertEquals(
+			referer, mockHttpServletResponse.getRedirectedUrl());
+
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockHttpServletRequest,
+				PrincipalException.MustHavePermission.class.getName()));
+
+		Mockito.when(
+			_permissionChecker.isCompanyAdmin()
+		).thenReturn(
+			true
+		);
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		Assert.assertNull(
+			_viewRoomStrutsAction.execute(
+				mockHttpServletRequest, mockHttpServletResponse));
+
+		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
+		Assert.assertEquals(
+			"/web/" + _group.getFriendlyURL(),
+			mockHttpServletResponse.getRedirectedUrl());
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest() {
@@ -217,6 +322,14 @@ public class ViewRoomStrutsActionTest {
 		ObjectDefinition.class);
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
 		Mockito.mock(ObjectDefinitionLocalService.class);
+	private final ObjectEntry _objectEntry = Mockito.mock(ObjectEntry.class);
+	private final ObjectEntryLocalService _objectEntryLocalService =
+		Mockito.mock(ObjectEntryLocalService.class);
+	private final PermissionChecker _permissionChecker = Mockito.mock(
+		PermissionChecker.class);
+	private final MockedStatic<PermissionThreadLocal>
+		_permissionThreadLocalMockedStatic = Mockito.mockStatic(
+			PermissionThreadLocal.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
 	private final MockedStatic<PortalUtil> _portalUtilMockedStatic =
 		Mockito.mockStatic(PortalUtil.class);

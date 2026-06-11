@@ -237,6 +237,13 @@
 	</target>
 
 	<target name="build-rests">
+		<if>
+			<available file="${basedir}/../modules/util/portal-tools-rest-builder" />
+			<then>
+				<gradle-execute dir="../modules/util/portal-tools-rest-builder" task="deploy" />
+			</then>
+		</if>
+
 		<tstamp>
 			<format pattern="yyyyMMddkkmmssSSS" property="build.rests.tstamp.value" />
 		</tstamp>
@@ -381,6 +388,13 @@
 	</target>
 
 	<target name="build-services">
+		<if>
+			<available file="${basedir}/../modules/util/portal-tools-service-builder" />
+			<then>
+				<gradle-execute dir="../modules/util/portal-tools-service-builder" task="deploy" />
+			</then>
+		</if>
+
 		<build-service
 			hbm.file="counter-hbm.xml"
 			service.file="${basedir}/src/com/liferay/counter/service.xml"

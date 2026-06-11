@@ -45,7 +45,7 @@ public class LayoutContentVersionServiceHttp {
 			addLayoutContentVersion(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				String data, java.util.Map<java.util.Locale, String> nameMap,
-				long plid, int status, boolean skipIfUnchanged)
+				long plid, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -55,8 +55,52 @@ public class LayoutContentVersionServiceHttp {
 				_addLayoutContentVersionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, data, nameMap, plid, status,
-				skipIfUnchanged);
+				methodKey, externalReferenceCode, data, nameMap, plid, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.layout.content.model.LayoutContentVersion)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.layout.content.model.LayoutContentVersion
+			addOrUpdateLayoutContentVersion(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				String data, java.util.Map<java.util.Locale, String> nameMap,
+				long plid, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutContentVersionServiceUtil.class,
+				"addOrUpdateLayoutContentVersion",
+				_addOrUpdateLayoutContentVersionParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, data, nameMap, plid, status);
 
 			Object returnObj = null;
 
@@ -96,7 +140,7 @@ public class LayoutContentVersionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutContentVersionServiceUtil.class,
 				"deleteLayoutContentVersion",
-				_deleteLayoutContentVersionParameterTypes1);
+				_deleteLayoutContentVersionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutContentVersionId);
@@ -139,7 +183,7 @@ public class LayoutContentVersionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutContentVersionServiceUtil.class,
 				"getLayoutContentVersion",
-				_getLayoutContentVersionParameterTypes2);
+				_getLayoutContentVersionParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutContentVersionId);
@@ -183,7 +227,7 @@ public class LayoutContentVersionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutContentVersionServiceUtil.class,
 				"getLayoutContentVersionByExternalReferenceCode",
-				_getLayoutContentVersionByExternalReferenceCodeParameterTypes3);
+				_getLayoutContentVersionByExternalReferenceCodeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId);
@@ -226,7 +270,7 @@ public class LayoutContentVersionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutContentVersionServiceUtil.class,
 				"getLayoutContentVersions",
-				_getLayoutContentVersionsParameterTypes4);
+				_getLayoutContentVersionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, plid);
 
@@ -270,7 +314,7 @@ public class LayoutContentVersionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutContentVersionServiceUtil.class,
 				"updateLayoutContentVersion",
-				_updateLayoutContentVersionParameterTypes5);
+				_updateLayoutContentVersionParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutContentVersionId, nameMap);
@@ -310,19 +354,24 @@ public class LayoutContentVersionServiceHttp {
 	private static final Class<?>[] _addLayoutContentVersionParameterTypes0 =
 		new Class[] {
 			String.class, String.class, java.util.Map.class, long.class,
-			int.class, boolean.class
+			int.class
 		};
-	private static final Class<?>[] _deleteLayoutContentVersionParameterTypes1 =
+	private static final Class<?>[]
+		_addOrUpdateLayoutContentVersionParameterTypes1 = new Class[] {
+			String.class, String.class, java.util.Map.class, long.class,
+			int.class
+		};
+	private static final Class<?>[] _deleteLayoutContentVersionParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getLayoutContentVersionParameterTypes2 =
+	private static final Class<?>[] _getLayoutContentVersionParameterTypes3 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_getLayoutContentVersionByExternalReferenceCodeParameterTypes3 =
+		_getLayoutContentVersionByExternalReferenceCodeParameterTypes4 =
 			new Class[] {String.class, long.class};
-	private static final Class<?>[] _getLayoutContentVersionsParameterTypes4 =
+	private static final Class<?>[] _getLayoutContentVersionsParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateLayoutContentVersionParameterTypes5 =
+	private static final Class<?>[] _updateLayoutContentVersionParameterTypes6 =
 		new Class[] {long.class, java.util.Map.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:611163886
+// LIFERAY-SERVICE-BUILDER-HASH:-521909876

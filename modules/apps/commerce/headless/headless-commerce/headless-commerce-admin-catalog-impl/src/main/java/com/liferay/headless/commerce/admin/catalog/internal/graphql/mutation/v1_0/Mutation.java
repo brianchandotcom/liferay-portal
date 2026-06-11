@@ -1825,7 +1825,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Partially updates the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + internal _updateProduct (CPDefinitionService.updateCPDefinition and friends). Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Updates ExpandoBridge, asset categorization, asset tags, and may trigger workflow draft transition."
 	)
-	public Response patchProduct(
+	public Product patchProduct(
 			@GraphQLName("id") Long id, @GraphQLName("product") Product product)
 		throws Exception {
 
@@ -1838,7 +1838,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Partially updates the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + internal _updateProduct (honors STATUS_DRAFT workflow hint). Validation -- NoSuchCPDefinitionException -> 404 when ERC not found. Side effects -- Updates ExpandoBridge, asset categorization, asset tags; may set workflowAction=SAVE_DRAFT when productStatus=DRAFT."
 	)
-	public Response patchProductByExternalReferenceCode(
+	public Product patchProductByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("product") Product product)
 		throws Exception {
@@ -4829,4 +4829,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-977209963
+// LIFERAY-REST-BUILDER-HASH:253130593

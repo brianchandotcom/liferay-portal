@@ -82,9 +82,9 @@ public interface ProductResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response patchProduct(Long id, Product product) throws Exception;
+	public Product patchProduct(Long id, Product product) throws Exception;
 
-	public Response patchProductByExternalReferenceCode(
+	public Product patchProductByExternalReferenceCode(
 			String externalReferenceCode, Product product)
 		throws Exception;
 
@@ -206,4 +206,4 @@ public interface ProductResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-338766011
+// LIFERAY-REST-BUILDER-HASH:1357357605

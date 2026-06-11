@@ -17,7 +17,7 @@
 }
 
 .ddm-info {
-	color: #6b6c7e;
+	color: $gray-600;
 	display: flex;
 	font-size: 0.875rem;
 	font-weight: 400;
@@ -28,7 +28,7 @@
 	}
 
 	.ddm-tooltip {
-		color: #6b6c7e;
+		color: $gray-600;
 		padding-left: 0;
 	}
 }

@@ -1,3 +1,5 @@
+@import 'atlas-custom-properties/_variables';
+
 @import '../../../css/variables';
 
 .fieldset-modal {
@@ -33,8 +35,8 @@
 	}
 
 	.lfr-ddm-form-container:not(.ddm-user-view-content) {
-		background-color: white;
-		border: 1px solid #e7e7ed;
+		background-color: $white;
+		border: 1px solid $gray-300;
 		border-radius: 0.25rem;
 		margin: 1.5rem auto;
 		padding: 0 1.5rem;

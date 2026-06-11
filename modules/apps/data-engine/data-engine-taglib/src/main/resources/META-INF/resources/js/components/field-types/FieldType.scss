@@ -1,7 +1,9 @@
+@import 'atlas-custom-properties/_variables';
+
 @import '../../../css/variables';
 
-$fieldTypeFieldGroup: #0b5fff;
-$fieldTypeFieldSet: #5aca75;
+$fieldTypeFieldGroup: $primary;
+$fieldTypeFieldSet: $success;
 
 .field-type {
 	border: 2px solid transparent;
@@ -17,8 +19,8 @@ $fieldTypeFieldSet: #5aca75;
 
 	&:focus,
 	&:hover:not(.disabled) {
-		border-color: #80acff;
-		box-shadow: 0 2px 4px rgba(39, 40, 51, 0.12);
+		border-color: $blue-l2;
+		box-shadow: 0 2px 4px unquote('hsl(from #{$gray-900} h s l / 0.12)');
 		outline: none;
 	}
 
@@ -27,13 +29,13 @@ $fieldTypeFieldSet: #5aca75;
 	}
 
 	&.dragging {
-		background-color: #e7e7ed;
+		background-color: $gray-300;
 		opacity: 0.5;
 	}
 
 	.sticker {
-		background-color: #f7f8f9;
-		color: #6b6c7e;
+		background-color: $gray-100;
+		color: $gray-600;
 	}
 
 	.list-group-subtitle {
@@ -55,9 +57,9 @@ $fieldTypeFieldSet: #5aca75;
 	max-width: 280px;
 
 	.field-type {
-		background-color: #fff;
-		border-color: #80acff;
-		box-shadow: 0 8px 16px rgba(39, 40, 51, 0.16);
+		background-color: $white;
+		border-color: $blue-l2;
+		box-shadow: 0 8px 16px unquote('hsl(from #{$gray-900} h s l / 0.16)');
 		cursor: grabbing;
 	}
 }
@@ -66,11 +68,11 @@ $fieldTypeFieldSet: #5aca75;
 	.field-type-fieldgroup {
 		.field-type-header {
 			&:hover {
-				background-color: rgba($fieldTypeFieldGroup, 0.05) !important;
+				background-color: unquote('hsl(from #{$fieldTypeFieldGroup} h s l / 0.05)') !important;
 			}
 
 			.data-layout-builder-field-sticker {
-				background-color: rgba($fieldTypeFieldGroup, 0.1) !important;
+				background-color: unquote('hsl(from #{$fieldTypeFieldGroup} h s l / 0.1)') !important;
 
 				.sticker-overlay {
 					svg {
@@ -81,18 +83,18 @@ $fieldTypeFieldSet: #5aca75;
 		}
 
 		.field-type-item:before {
-			border-color: rgba($fieldTypeFieldGroup, 0.2);
+			border-color: unquote('hsl(from #{$fieldTypeFieldGroup} h s l / 0.2)');
 		}
 	}
 
 	.field-type-fieldset {
 		.field-type-header {
 			&:hover {
-				background-color: rgba($fieldTypeFieldSet, 0.1) !important;
+				background-color: unquote('hsl(from #{$fieldTypeFieldSet} h s l / 0.1)') !important;
 			}
 
 			.data-layout-builder-field-sticker {
-				background-color: rgba($fieldTypeFieldSet, 0.2) !important;
+				background-color: unquote('hsl(from #{$fieldTypeFieldSet} h s l / 0.2)') !important;
 
 				.sticker-overlay {
 					svg {
@@ -103,7 +105,7 @@ $fieldTypeFieldSet: #5aca75;
 		}
 
 		.field-type-item:before {
-			border-color: rgba($fieldTypeFieldSet, 0.2);
+			border-color: unquote('hsl(from #{$fieldTypeFieldSet} h s l / 0.2)');
 		}
 	}
 

@@ -1,9 +1,11 @@
+@import 'atlas-custom-properties/_variables';
+
 .ddm-field-renderer {
 	&--error {
-		background-color: #feefef;
-		border: 2px dashed #f48989;
+		background-color: $danger-l2;
+		border: 2px dashed $danger-l1;
 		border-radius: 4px;
-		color: #da1414;
+		color: $danger;
 		padding: 20px;
 	}
 

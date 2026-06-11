@@ -1,3 +1,5 @@
+@import 'atlas-custom-properties/_variables';
+
 .form-rule-builder-timeline {
 	// Autofill
 
@@ -15,8 +17,8 @@
 		}
 
 		.data-provider-parameter-container {
-			background-color: #f8f8f8;
-			border-top: 1px solid #dce0e3;
+			background-color: $gray-100;
+			border-top: 1px solid $gray-300;
 			margin-top: 15px;
 			padding: 20px 55px;
 		}

@@ -1,4 +1,4 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/_variables';
 
 @import 'date-picker';
 @import 'field-type-checkbox-switch';
@@ -59,7 +59,7 @@ body .ddm-user-view-content {
 	}
 
 	.multi-step-item.active .multi-step-divider {
-		background-color: #1865fb;
+		background-color: $primary;
 	}
 
 	.multi-step-indicator-label {
@@ -106,14 +106,14 @@ body .ddm-user-view-content {
 		.custom-control-input:checked:disabled
 		~ .custom-control-label::before {
 		background-color: $primary;
-		border-color: #0043c5;
+		border-color: $primary-d1;
 	}
 
 	.custom-checkbox
 		.custom-control-input:checked:disabled
 		~ .custom-control-label::before {
 		background-color: $primary;
-		border-color: #0043c5;
+		border-color: $primary-d1;
 	}
 
 	.form-control:disabled {
@@ -190,7 +190,7 @@ body .ddm-user-view-content {
 	}
 
 	.lfr-ddm-form-field-repeatable-toolbar a {
-		color: #65b6f0;
+		color: $blue-l1;
 		text-decoration: none;
 
 		&:hover {
@@ -300,7 +300,7 @@ body .ddm-user-view-content {
 }
 
 .liferay-ddm-form-field-tip {
-	color: #5b7b86;
+	color: $gray-700;
 	line-height: 16px;
 }
 
@@ -343,10 +343,10 @@ body .ddm-user-view-content {
 
 .multi-step-progress-bar {
 	> .complete {
-		color: #65b6f0;
+		color: $blue-l1;
 
 		.divider {
-			background-color: #65b6f0;
+			background-color: $blue-l1;
 		}
 	}
 }
@@ -369,7 +369,7 @@ body .ddm-user-view-content {
 	position: relative;
 
 	.option-selected-placeholder {
-		color: #6a6c7d;
+		color: $gray-600;
 	}
 
 	.dropdown-menu {
@@ -403,7 +403,7 @@ body .ddm-user-view-content {
 	}
 
 	.search-chosen {
-		border-bottom: 1px solid #e4e9ec;
+		border-bottom: 1px solid $gray-300;
 		position: relative;
 	}
 
@@ -413,12 +413,12 @@ body .ddm-user-view-content {
 		top: 2px;
 
 		a {
-			color: #869cad;
+			color: $gray-500;
 		}
 	}
 
 	&.active .select-field-trigger {
-		border-bottom: 2px solid #65b6f0;
+		border-bottom: 2px solid $blue-l1;
 	}
 
 	.form-control {
@@ -431,7 +431,7 @@ body .ddm-user-view-content {
 	}
 
 	.form-control[disabled]:focus {
-		border-bottom: 2px solid #869cad;
+		border-bottom: 2px solid $gray-500;
 		text-decoration: none;
 	}
 
@@ -543,7 +543,7 @@ body .ddm-user-view-content {
 	}
 
 	fieldset {
-		border: 1px solid rgba(134, 156, 173, 0.4);
+		border: 1px solid unquote('hsl(from #{$gray-500} h s l / 0.4)');
 		border-bottom-width: 0;
 		border-top-width: 0;
 		padding: 10px 10px 0;
@@ -559,7 +559,7 @@ body .ddm-user-view-content {
 
 		legend {
 			border-width: 0;
-			color: #869cad;
+			color: $gray-500;
 			font-size: 12px;
 			font-weight: bold;
 			line-height: 20px;

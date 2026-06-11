@@ -1,4 +1,4 @@
-@import 'atlas-variables';
+@import 'atlas-custom-properties/_variables';
 
 %entries-list {
 	font-size: 14px;
@@ -97,7 +97,7 @@
 	}
 
 	.menubar-vertical-expand-lg.menubar-transparent .menubar-toggler {
-		color: #272833;
+		color: $gray-900;
 		font-size: 0.875rem;
 		font-weight: var(--font-weight-semi-bold, 600);
 		text-decoration: none;
@@ -105,14 +105,14 @@
 	}
 
 	.menubar-vertical-expand-lg.menubar-transparent .menubar-collapse {
-		background-color: #fff;
-		border-color: #e7e7ed;
+		background-color: $white;
+		border-color: $gray-300;
 		border-radius: 0.25rem;
-		box-shadow: 0 1px 5px -1px rgb(0 0 0 / 30%);
+		box-shadow: 0 1px 5px -1px unquote('hsl(from #{$black} h s l / 0.3)');
 	}
 
 	.menubar-vertical-expand-lg.menubar-transparent {
-		background-color: #fff;
+		background-color: $white;
 		z-index: 1;
 	}
 
@@ -176,12 +176,12 @@
 }
 
 .document-title-link {
-	color: #272833;
+	color: $gray-900;
 	font-size: 0.875rem;
 	font-weight: 600;
 
 	&:hover {
-		color: #272833;
+		color: $gray-900;
 	}
 }
 
@@ -361,7 +361,7 @@
 		.custom-tooltip {
 			background: $secondary-d1;
 			border-radius: 4px;
-			box-shadow: 0 2px 4px rgba(39, 40, 51, 0.2);
+			box-shadow: 0 2px 4px unquote('hsl(from #{$gray-900} h s l / 0.2)');
 			color: $white;
 			display: flex;
 			flex-direction: column;
@@ -394,7 +394,7 @@
 			}
 
 			.header {
-				border-bottom: 1px solid #ccc;
+				border-bottom: 1px solid $gray-400;
 				font-size: 13px;
 				font-weight: 600;
 				font-weight: 600;

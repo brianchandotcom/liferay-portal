@@ -18,7 +18,7 @@
 
 		.panel-unstyled {
 			border-bottom-width: 1px;
-			border-color: #e7e7ed;
+			border-color: $gray-300;
 			margin-bottom: 0;
 
 			.panel-header {
@@ -38,12 +38,12 @@
 		}
 
 		.panel-unstyled:hover {
-			background-color: #f0f5ff;
+			background-color: $blue-l5;
 		}
 	}
 
 	hr {
-		border: 0.5px solid #e7e7ed;
+		border: 0.5px solid $gray-300;
 		margin-bottom: 0;
 		margin-top: 0;
 		width: 100%;

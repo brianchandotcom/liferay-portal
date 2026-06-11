@@ -37,7 +37,7 @@
 
 		.ddm-drag {
 			&.dragging {
-				background-color: #fff;
+				background-color: $white;
 				padding: 2px 6px 6px !important;
 			}
 		}
@@ -74,7 +74,7 @@
 
 			&.targetOver:after,
 			&.target-over:after {
-				background-color: #0b5fff;
+				background-color: $primary;
 				border-radius: 2px;
 				bottom: 0;
 				content: '';

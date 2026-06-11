@@ -5,6 +5,7 @@
 
 import {ApiHelper} from '@liferay/site-cms-site-initializer';
 
+import {ROOM_STATUS} from '../utils/roomStatus';
 import {
 	IAccount,
 	IInvitedMember,
@@ -49,6 +50,22 @@ async function addRoomUserAccount(
 	const {data, error} = await ApiHelper.post<IUserAccount>(
 		`${DSR_PATH}/${roomId}/user-accounts`,
 		userAccount
+	);
+
+	if (data) {
+		return data;
+	}
+
+	throw new Error(error);
+}
+
+async function archiveRoom(roomId: number): Promise<IRoomObjectEntry> {
+	const {data, error} = await ApiHelper.patch<IRoomObjectEntry>(
+		{
+			archiveDate: new Date().toISOString().slice(0, 10),
+			roomStatus: ROOM_STATUS.INACTIVE,
+		},
+		`${BASE_PATH}/${roomId}`
 	);
 
 	if (data) {
@@ -201,6 +218,22 @@ async function getRooms(): Promise<{items: IRoomObjectEntry[]}> {
 	throw new Error(error);
 }
 
+async function restoreRoom(roomId: number): Promise<IRoomObjectEntry> {
+	const {data, error} = await ApiHelper.patch<IRoomObjectEntry>(
+		{
+			archiveDate: '',
+			roomStatus: ROOM_STATUS.ACTIVE,
+		},
+		`${BASE_PATH}/${roomId}`
+	);
+
+	if (data) {
+		return data;
+	}
+
+	throw new Error(error);
+}
+
 async function updateRoom(
 	roomId: number,
 	{
@@ -260,6 +293,7 @@ async function updateRoomUserAccount(
 export default {
 	addRoom,
 	addRoomUserAccount,
+	archiveRoom,
 	checkSitePages,
 	deleteRoomInvitedMember,
 	deleteRoomUserAccount,
@@ -270,6 +304,7 @@ export default {
 	getRoomInvitedMembers,
 	getRoomUserAccounts,
 	getRooms,
+	restoreRoom,
 	updateRoom,
 	updateRoomInvitedMember,
 	updateRoomUserAccount,

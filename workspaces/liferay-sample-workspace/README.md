@@ -32,7 +32,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-audiences-custom-attributes*
 
-	Add new custom attributes that can be used to detect a visitor's audiences.
+	Add custom attributes to detect a visitor's audiences.
 
 - *liferay-sample-batch*
 
@@ -40,7 +40,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-commerce-checkout-step*
 
-    Add a new checkout step to the commerce checkout widget.
+    Add a checkout step to the commerce checkout widget.
 
 - *liferay-sample-commerce-payment-integration*
 

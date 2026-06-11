@@ -2633,13 +2633,25 @@ test(
 		await commerceMiniCartPage.quickAddToCart('MIN55861');
 		await commerceMiniCartPage.submitButton.click();
 
-		await checkoutPage.shippingAddressSelect.selectOption({
-			label: shippingAddress.name,
-		});
-		await checkoutPage.useAsBillingCheckbox.setChecked(false);
-		await checkoutPage.continueButton.click();
+		await page.waitForURL((url) => url.href.includes('shipping-address'));
 
-		await page.waitForURL((url) => url.href.includes('shipping-method'));
+		await expect(async () => {
+			await checkoutPage.shippingAddressSelect.selectOption(
+				{
+					label: shippingAddress.name,
+				},
+				{timeout: 5000}
+			);
+			await checkoutPage.useAsBillingCheckbox.setChecked(false, {
+				timeout: 5000,
+			});
+			await checkoutPage.continueButton.click({timeout: 5000});
+
+			await page.waitForURL(
+				(url) => url.href.includes('shipping-method'),
+				{timeout: 5000}
+			);
+		}).toPass({timeout: 30000});
 
 		await checkoutPage.continueButton.click();
 

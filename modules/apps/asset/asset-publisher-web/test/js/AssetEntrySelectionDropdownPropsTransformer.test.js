@@ -23,7 +23,7 @@ function open(additionalProps = {}) {
 			...additionalProps,
 		},
 		portletNamespace: 'ns',
-	}).onClick({preventDefault() {}});
+	}).onClick({preventDefault: () => {}});
 
 	return openItemSelectorModal.mock.calls[0][0];
 }

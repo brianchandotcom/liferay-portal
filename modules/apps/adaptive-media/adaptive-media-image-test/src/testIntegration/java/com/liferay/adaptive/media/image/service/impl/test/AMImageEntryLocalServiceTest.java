@@ -570,6 +570,37 @@ public class AMImageEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testHasAMImageEntryContentReturnsCachedResultWhenContentMissing()
+		throws Exception {
+
+		AMImageConfigurationEntry amImageConfigurationEntry =
+			_addAMImageConfigurationEntry("uuid", 100, 200);
+
+		byte[] bytes = _getImageBytes();
+
+		FileEntry fileEntry = _addFileEntry(
+			bytes,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		AMImageEntryLocalServiceUtil.addAMImageEntry(
+			amImageConfigurationEntry, fileVersion, 100, 300,
+			new UnsyncByteArrayInputStream(bytes), 12345);
+
+		Assert.assertTrue(
+			AMImageEntryLocalServiceUtil.hasAMImageEntryContent(
+				amImageConfigurationEntry.getUUID(), fileVersion));
+
+		DLStoreUtil.deleteDirectory(
+			fileEntry.getCompanyId(), CompanyConstants.SYSTEM, "adaptive");
+
+		Assert.assertTrue(
+			AMImageEntryLocalServiceUtil.hasAMImageEntryContent(
+				amImageConfigurationEntry.getUUID(), fileVersion));
+	}
+
+	@Test
 	public void testHasAMImageEntryContentWhenContentPresent()
 		throws Exception {
 

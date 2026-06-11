@@ -177,7 +177,7 @@ public class ObjectEntryAuditModelListenerTest {
 	}
 
 	private void _assertAuditMessage(
-			String expectedEventType, String exptectedTitle)
+			String expectedEventType, String expectedTitle)
 		throws Exception {
 
 		AuditMessage auditMessage = _auditMessages.poll();
@@ -185,7 +185,7 @@ public class ObjectEntryAuditModelListenerTest {
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"attributes",
-				JSONUtil.putAll(JSONUtil.put("name", exptectedTitle))
+				JSONUtil.putAll(JSONUtil.put("name", expectedTitle))
 			).toString(),
 			String.valueOf(auditMessage.getAdditionalInfo()),
 			JSONCompareMode.STRICT_ORDER);

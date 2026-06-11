@@ -25,6 +25,7 @@ import com.liferay.headless.admin.content.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.admin.content.client.pagination.Page;
 import com.liferay.headless.admin.content.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -493,19 +494,30 @@ public class StructuredContentResourceTest
 		// Localized structured content with the default language
 
 		_testPostSiteStructuredContentDraft(
-			LocaleUtil.getDefault(), RandomTestUtil.randomDouble());
+			LocaleUtil.getDefault(), RandomTestUtil.randomDouble(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		// Localized structured content with a different language from the
 		// default language
 
 		_testPostSiteStructuredContentDraft(
-			LocaleUtil.fromLanguageId("es-ES"), RandomTestUtil.randomDouble());
+			LocaleUtil.fromLanguageId("es-ES"), RandomTestUtil.randomDouble(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		// Structured content in a folder
+
+		JournalFolder journalFolder = JournalTestUtil.addFolder(
+			testGroup.getGroupId(), RandomTestUtil.randomString());
+
+		_testPostSiteStructuredContentDraft(
+			LocaleUtil.getDefault(), null, journalFolder.getFolderId());
 
 		// Structured content with a priority
 
 		StructuredContent structuredContent1 =
 			_testPostSiteStructuredContentDraft(
-				LocaleUtil.getDefault(), Double.valueOf(1));
+				LocaleUtil.getDefault(), Double.valueOf(1),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Assert.assertEquals(
 			Double.valueOf(1.0), structuredContent1.getPriority());
@@ -513,7 +525,9 @@ public class StructuredContentResourceTest
 		// Structured content with the default priority
 
 		StructuredContent structuredContent2 =
-			_testPostSiteStructuredContentDraft(LocaleUtil.getDefault(), null);
+			_testPostSiteStructuredContentDraft(
+				LocaleUtil.getDefault(), null,
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Assert.assertEquals(
 			Double.valueOf(0.0), structuredContent2.getPriority());
@@ -550,6 +564,8 @@ public class StructuredContentResourceTest
 		StructuredContent structuredContent = super.randomStructuredContent();
 
 		structuredContent.setContentStructureId(_ddmStructure.getStructureId());
+		structuredContent.setStructuredContentFolderId(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return structuredContent;
 	}
@@ -762,7 +778,7 @@ public class StructuredContentResourceTest
 	private StructuredContent _randomStructuredContent(Locale locale)
 		throws Exception {
 
-		StructuredContent structuredContent = super.randomStructuredContent();
+		StructuredContent structuredContent = randomStructuredContent();
 
 		String w3cLanguageId = LocaleUtil.toW3cLanguageId(locale);
 
@@ -841,13 +857,15 @@ public class StructuredContentResourceTest
 	}
 
 	private StructuredContent _testPostSiteStructuredContentDraft(
-			Locale locale, Double priority)
+			Locale locale, Double priority, Long structuredContentFolderId)
 		throws Exception {
 
 		StructuredContent randomStructuredContent = _randomStructuredContent(
 			locale);
 
 		randomStructuredContent.setPriority(priority);
+		randomStructuredContent.setStructuredContentFolderId(
+			structuredContentFolderId);
 
 		com.liferay.headless.admin.content.client.resource.v1_0.
 			StructuredContentResource structuredContentResource =
@@ -864,6 +882,11 @@ public class StructuredContentResourceTest
 		if (priority != null) {
 			assertEquals(randomStructuredContent, postStructuredContent);
 		}
+
+		Assert.assertEquals(
+			GetterUtil.getLong(structuredContentFolderId),
+			GetterUtil.getLong(
+				postStructuredContent.getStructuredContentFolderId()));
 
 		assertValid(postStructuredContent);
 

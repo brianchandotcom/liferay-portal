@@ -86,7 +86,7 @@ public class VIESAccountEntryValidatorTest {
 	@Test
 	public void testGetClassPK() throws Exception {
 		_mockVIESAccountEntryValidatorConfiguration(
-			true, new String[] {RandomTestUtil.randomString()});
+			new String[] {RandomTestUtil.randomString()}, true);
 
 		Assert.assertNull(
 			_viesAccountEntryValidator.getClassPK(
@@ -144,7 +144,7 @@ public class VIESAccountEntryValidatorTest {
 					ConfigurationProviderUtil.class)) {
 
 			_mockVIESAccountEntryValidatorConfiguration(
-				false, new String[] {RandomTestUtil.randomString()});
+				new String[] {RandomTestUtil.randomString()}, false);
 
 			Assert.assertNull(
 				_validate(
@@ -152,7 +152,7 @@ public class VIESAccountEntryValidatorTest {
 					RandomTestUtil.randomString()));
 
 			_mockVIESAccountEntryValidatorConfiguration(
-				true, new String[] {RandomTestUtil.randomString()});
+				new String[] {RandomTestUtil.randomString()}, true);
 
 			Assert.assertNull(
 				_viesAccountEntryValidator.validate(
@@ -174,14 +174,14 @@ public class VIESAccountEntryValidatorTest {
 			_mockAddress(billingAddressId, countryA2);
 
 			_mockVIESAccountEntryValidatorConfiguration(
-				true, new String[] {RandomTestUtil.randomString()});
+				new String[] {RandomTestUtil.randomString()}, true);
 
 			Assert.assertNull(
 				_validate(
 					billingAddressId, RandomTestUtil.randomLong(),
 					RandomTestUtil.randomString()));
 
-			_mockVIESAccountEntryValidatorConfiguration(true, new String[0]);
+			_mockVIESAccountEntryValidatorConfiguration(new String[0], true);
 
 			Assert.assertNull(
 				_validate(
@@ -191,7 +191,7 @@ public class VIESAccountEntryValidatorTest {
 			VIESAccountEntryValidatorConfiguration
 				viesAccountEntryValidatorConfiguration =
 					_mockVIESAccountEntryValidatorConfiguration(
-						true, new String[] {countryA2});
+						new String[] {countryA2}, true);
 
 			Mockito.when(
 				viesAccountEntryValidatorConfiguration.viesEndpointURL()
@@ -230,7 +230,7 @@ public class VIESAccountEntryValidatorTest {
 					JSONUtil.put(
 						"errorWrappers",
 						JSONUtil.putAll(
-							JSONUtil.put("error", "SERVICE_UNAVAILABLE"))
+							JSONUtil.put("error", _SERVICE_UNAVAILABLE))
 					).toString()
 				).put(
 					validVatNumber,
@@ -256,7 +256,7 @@ public class VIESAccountEntryValidatorTest {
 				AccountEntryValidatorConstants.RESULT_WARNING,
 				accountEntryValidatorResult.getResultStatus());
 			Assert.assertEquals(
-				"SERVICE_UNAVAILABLE",
+				_SERVICE_UNAVAILABLE,
 				accountEntryValidatorResult.getResultMessage());
 			Assert.assertTrue(accountEntryValidatorResult.isValid());
 
@@ -320,7 +320,7 @@ public class VIESAccountEntryValidatorTest {
 
 	private VIESAccountEntryValidatorConfiguration
 			_mockVIESAccountEntryValidatorConfiguration(
-				boolean enabled, String[] countries)
+				String[] countries, boolean enabled)
 		throws Exception {
 
 		VIESAccountEntryValidatorConfiguration
@@ -413,6 +413,8 @@ public class VIESAccountEntryValidatorTest {
 	}
 
 	private static final int _PORT = 4252;
+
+	private static final String _SERVICE_UNAVAILABLE = "SERVICE_UNAVAILABLE";
 
 	private final AddressLocalService _addressLocalService = Mockito.mock(
 		AddressLocalService.class);

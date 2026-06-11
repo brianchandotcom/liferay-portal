@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -84,15 +85,15 @@ public class EditVIESAccountEntryValidatorConfigurationMVCActionCommandTest {
 						VIESAccountEntryValidatorConfiguration.class.getName(),
 						new Hashtable<>())) {
 
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				new MockLiferayPortletActionRequest();
+
 			int checkInterval = RandomTestUtil.randomInt();
 			String[] countries = {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			};
 			String viesEndpointURL =
 				"https://" + RandomTestUtil.randomString() + ".com";
-
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-				new MockLiferayPortletActionRequest();
 
 			mockLiferayPortletActionRequest.setAttribute(
 				WebKeys.PORTLET_ID,
@@ -142,7 +143,7 @@ public class EditVIESAccountEntryValidatorConfigurationMVCActionCommandTest {
 						VIESAccountEntryValidatorConfiguration.class.getName(),
 						".scoped)(companyId=", companyId, "))"));
 
-			if ((configurations != null) && (configurations.length > 0)) {
+			if (ArrayUtil.isNotEmpty(configurations)) {
 				return configurations[0];
 			}
 

@@ -46,8 +46,12 @@ public interface LayoutContentVersionService extends BaseService {
 	 */
 	public LayoutContentVersion addLayoutContentVersion(
 			String externalReferenceCode, String data,
-			Map<Locale, String> nameMap, long plid, int status,
-			boolean skipIfUnchanged)
+			Map<Locale, String> nameMap, long plid, int status)
+		throws PortalException;
+
+	public LayoutContentVersion addOrUpdateLayoutContentVersion(
+			String externalReferenceCode, String data,
+			Map<Locale, String> nameMap, long plid, int status)
 		throws PortalException;
 
 	public LayoutContentVersion deleteLayoutContentVersion(
@@ -80,4 +84,4 @@ public interface LayoutContentVersionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:688243232
+// LIFERAY-SERVICE-BUILDER-HASH:-1822243029

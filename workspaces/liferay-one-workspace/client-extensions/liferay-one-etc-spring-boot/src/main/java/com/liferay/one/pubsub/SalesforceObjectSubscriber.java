@@ -66,9 +66,7 @@ public class SalesforceObjectSubscriber extends BasePubsubSubscriber {
 			for (int i = 0; i < recordsJSONArray.length(); i++) {
 				JSONObject recordJSONObject = recordsJSONArray.getJSONObject(i);
 
-				if (Objects.equals(
-							salesforceObjectName, "PricebookEntry")) {
-
+				if (Objects.equals(salesforceObjectName, "PricebookEntry")) {
 					_processPricebookEntry(action, recordJSONObject);
 				}
 				else if (Objects.equals(salesforceObjectName, "Product2")) {
@@ -133,10 +131,10 @@ public class SalesforceObjectSubscriber extends BasePubsubSubscriber {
 		}
 
 		_commercePriceEntryService.addOrUpdatePriceEntry(
-			salesforcePricebookEntry.getId(), priceListExternalReferenceCode,
-			priceList.getId(), sku.getId(),
+			salesforcePricebookEntry.isActive(),
+			salesforcePricebookEntry.getId(),
 			salesforcePricebookEntry.getUnitPrice(),
-			salesforcePricebookEntry.isActive());
+			priceListExternalReferenceCode, priceList.getId(), sku.getId());
 	}
 
 	private void _processProduct2(String action, JSONObject recordJSONObject)
@@ -151,8 +149,8 @@ public class SalesforceObjectSubscriber extends BasePubsubSubscriber {
 		}
 		else {
 			_commerceProductService.addOrUpdateProduct(
-				salesforceProduct2.getId(), salesforceProduct2.getName(),
-				salesforceProduct2.getDescription());
+				salesforceProduct2.getDescription(), salesforceProduct2.getId(),
+				salesforceProduct2.getName());
 		}
 	}
 

@@ -5,15 +5,6 @@ set -o pipefail
 function main {
 	local requested_module="${1:-}"
 
-	if [[ -n "${requested_module}" ]]
-	then
-		terraform_modules=("${requested_module}")
-	fi
-
-	local terraform_dir
-
-	terraform_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/../../terraform" && pwd)
-
 	local terraform_modules=(
 		aws/dependencies
 		aws/ecr
@@ -24,6 +15,15 @@ function main {
 		gcp/gitops/resources
 		gcp/gke
 	)
+
+	if [[ -n "${requested_module}" ]]
+	then
+		terraform_modules=("${requested_module}")
+	fi
+
+	local terraform_dir
+
+	terraform_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/../../terraform" && pwd)
 
 	for terraform_module in "${terraform_modules[@]}"
 	do

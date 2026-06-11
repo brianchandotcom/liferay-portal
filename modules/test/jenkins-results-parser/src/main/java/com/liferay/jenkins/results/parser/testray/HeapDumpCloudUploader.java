@@ -56,7 +56,7 @@ public class HeapDumpCloudUploader {
 		}
 		catch (IOException ioException) {
 			System.out.println(
-				"ERROR: Unable to read env.S3_BUCKET_NAME: " +
+				"ERROR: Unable to read \"env.S3_BUCKET_NAME\": " +
 					ioException.getMessage());
 
 			return;
@@ -64,7 +64,8 @@ public class HeapDumpCloudUploader {
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(s3BucketName)) {
 			System.out.println(
-				"INFO: S3_BUCKET_NAME not set, skipping heap dump upload");
+				"INFO: \"S3_BUCKET_NAME\" is not set, skipping heap dump " +
+					"upload");
 
 			return;
 		}
@@ -80,11 +81,11 @@ public class HeapDumpCloudUploader {
 				Matcher matcher = _s3ListingDateTimePattern.matcher(listing);
 
 				if (matcher.find()) {
-					String dateTimeStr = JenkinsResultsParserUtil.combine(
+					String dateTimeString = JenkinsResultsParserUtil.combine(
 						matcher.group("date"), " ", matcher.group("time"));
 
 					LocalDateTime uploadDateTime = LocalDateTime.parse(
-						dateTimeStr,
+						dateTimeString,
 						DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
 					long uploadMillis = uploadDateTime.toInstant(
@@ -137,8 +138,8 @@ public class HeapDumpCloudUploader {
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"INFO: Heap dump uploaded. To download:\naws s3 cp ",
-					s3Key, " /tmp/", _slaveHostname, ".hprof.gz"));
+					"INFO: Heap dump uploaded. To download:\naws s3 cp ", s3Key,
+					" /tmp/", _slaveHostname, ".hprof.gz"));
 		}
 		catch (IOException ioException) {
 			System.out.println(

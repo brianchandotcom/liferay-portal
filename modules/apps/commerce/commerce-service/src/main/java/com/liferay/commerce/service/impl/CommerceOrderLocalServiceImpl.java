@@ -1061,44 +1061,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder,
 			commerceOrderPrice.getTotalDiscountValueWithTaxAmount(), true);
 
-		return commerceOrderLocalService.updateCommerceOrderPrices(
-			commerceOrder.getCommerceOrderId(),
-			commerceOrder.getShippingAmount(),
-			commerceOrder.getShippingDiscountAmount(),
-			commerceOrder.getShippingDiscountPercentageLevel1(),
-			commerceOrder.getShippingDiscountPercentageLevel2(),
-			commerceOrder.getShippingDiscountPercentageLevel3(),
-			commerceOrder.getShippingDiscountPercentageLevel4(),
-			commerceOrder.getShippingDiscountPercentageLevel1WithTaxAmount(),
-			commerceOrder.getShippingDiscountPercentageLevel2WithTaxAmount(),
-			commerceOrder.getShippingDiscountPercentageLevel3WithTaxAmount(),
-			commerceOrder.getShippingDiscountPercentageLevel4WithTaxAmount(),
-			commerceOrder.getShippingDiscountWithTaxAmount(),
-			commerceOrder.getShippingWithTaxAmount(),
-			commerceOrder.getSubtotal(),
-			commerceOrder.getSubtotalDiscountAmount(),
-			commerceOrder.getSubtotalDiscountPercentageLevel1(),
-			commerceOrder.getSubtotalDiscountPercentageLevel2(),
-			commerceOrder.getSubtotalDiscountPercentageLevel3(),
-			commerceOrder.getSubtotalDiscountPercentageLevel4(),
-			commerceOrder.getSubtotalDiscountPercentageLevel1WithTaxAmount(),
-			commerceOrder.getSubtotalDiscountPercentageLevel2WithTaxAmount(),
-			commerceOrder.getSubtotalDiscountPercentageLevel3WithTaxAmount(),
-			commerceOrder.getSubtotalDiscountPercentageLevel4WithTaxAmount(),
-			commerceOrder.getSubtotalDiscountWithTaxAmount(),
-			commerceOrder.getSubtotalWithTaxAmount(),
-			commerceOrder.getTaxAmount(), commerceOrder.getTotal(),
-			commerceOrder.getTotalDiscountAmount(),
-			commerceOrder.getTotalDiscountPercentageLevel1(),
-			commerceOrder.getTotalDiscountPercentageLevel2(),
-			commerceOrder.getTotalDiscountPercentageLevel3(),
-			commerceOrder.getTotalDiscountPercentageLevel4(),
-			commerceOrder.getTotalDiscountPercentageLevel1WithTaxAmount(),
-			commerceOrder.getTotalDiscountPercentageLevel2WithTaxAmount(),
-			commerceOrder.getTotalDiscountPercentageLevel3WithTaxAmount(),
-			commerceOrder.getTotalDiscountPercentageLevel4WithTaxAmount(),
-			commerceOrder.getTotalDiscountWithTaxAmount(),
-			commerceOrder.getTotalWithTaxAmount());
+		return commerceOrderLocalService.updateCommerceOrder(commerceOrder);
 	}
 
 	@Override

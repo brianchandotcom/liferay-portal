@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Unit-of-measure tier bound to the SKU on a cart item. The key and name identify the tier (for example a Pallet tier on a base unit); the rate is the conversion factor against the base unit; the incremental order quantity is the minimum order increment in this tier.",
 	value = "SkuUnitOfMeasure"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Unit-of-measure tier bound to the SKU on a cart item. The key and name identify the tier (for example a Pallet tier on a base unit); the rate is the conversion factor against the base unit; the incremental order quantity is the minimum order increment in this tier."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuUnitOfMeasure")
 public class SkuUnitOfMeasure implements Serializable {
@@ -597,4 +600,4 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1689500995
+// LIFERAY-REST-BUILDER-HASH:-337004810

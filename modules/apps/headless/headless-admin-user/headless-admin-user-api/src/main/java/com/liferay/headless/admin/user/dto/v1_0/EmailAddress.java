@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents an email address. Properties follow the [email](https://schema.org/email) specification.",
 	value = "EmailAddress"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents an email address. Properties follow the [email](https://schema.org/email) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "EmailAddress")
 public class EmailAddress implements Serializable {
@@ -463,4 +466,4 @@ public class EmailAddress implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1951929636
+// LIFERAY-REST-BUILDER-HASH:789416052

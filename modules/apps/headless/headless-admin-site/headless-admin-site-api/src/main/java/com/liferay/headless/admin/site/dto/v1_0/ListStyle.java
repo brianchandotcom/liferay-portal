@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "The collection display's list style.", value = "ListStyle"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The collection display's list style."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ListStyle")
 public class ListStyle
@@ -360,4 +363,4 @@ public class ListStyle
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1447256107
+// LIFERAY-REST-BUILDER-HASH:-152284705

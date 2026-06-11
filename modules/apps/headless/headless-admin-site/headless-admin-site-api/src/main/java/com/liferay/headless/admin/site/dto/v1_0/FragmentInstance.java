@@ -40,6 +40,9 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "A fragment instance.", value = "FragmentInstance")
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A fragment instance."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentInstance")
 public class FragmentInstance implements Serializable {
@@ -1313,4 +1316,4 @@ public class FragmentInstance implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1757875987
+// LIFERAY-REST-BUILDER-HASH:183393237

@@ -34,6 +34,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "An Icon Image URL.", value = "IconImageURL")
+@io.swagger.v3.oas.annotations.media.Schema(description = "An Icon Image URL.")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "IconImageURL")
 public class IconImageURL implements Serializable {
@@ -229,4 +230,4 @@ public class IconImageURL implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2019802010
+// LIFERAY-REST-BUILDER-HASH:-215146216

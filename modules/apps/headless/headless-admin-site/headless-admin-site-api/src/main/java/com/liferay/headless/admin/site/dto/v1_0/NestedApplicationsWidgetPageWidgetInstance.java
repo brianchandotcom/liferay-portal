@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A nested applications widget instance in a widget page.",
 	value = "NestedApplicationsWidgetPageWidgetInstance"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A nested applications widget instance in a widget page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NestedApplicationsWidgetPageWidgetInstance")
 public class NestedApplicationsWidgetPageWidgetInstance
@@ -414,4 +417,4 @@ public class NestedApplicationsWidgetPageWidgetInstance
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1942736791
+// LIFERAY-REST-BUILDER-HASH:978786872

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Dynamic-data-mapping form option captured against a configurable SKU. Represents either a free-form or a selected value supplied by the buyer when ordering.",
 	value = "DDMOption"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Dynamic-data-mapping form option captured against a configurable SKU. Represents either a free-form or a selected value supplied by the buyer when ordering."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DDMOption")
 public class DDMOption implements Serializable {
@@ -367,4 +370,4 @@ public class DDMOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:541973863
+// LIFERAY-REST-BUILDER-HASH:-497093182

@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Individual file or external URL attached to a SKU's virtual settings as a downloadable asset.",
 	value = "SkuVirtualSettingsFileEntry"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Individual file or external URL attached to a SKU's virtual settings as a downloadable asset."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuVirtualSettingsFileEntry")
 public class SkuVirtualSettingsFileEntry implements Serializable {
@@ -544,4 +547,4 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-765353821
+// LIFERAY-REST-BUILDER-HASH:1216695259

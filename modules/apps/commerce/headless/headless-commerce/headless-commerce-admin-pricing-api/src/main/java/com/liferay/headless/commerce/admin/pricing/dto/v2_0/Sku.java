@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of a SKU (SKU) referenced by a discount sku binding or a price entry. Carries the SKU id, sku key, optional unit-of-measure key, and price-bearing identifiers.",
 	value = "Sku"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of a SKU (SKU) referenced by a discount sku binding or a price entry. Carries the SKU id, sku key, optional unit-of-measure key, and price-bearing identifiers."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Sku")
 public class Sku implements Serializable {
@@ -534,4 +537,4 @@ public class Sku implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1673346125
+// LIFERAY-REST-BUILDER-HASH:2040645618

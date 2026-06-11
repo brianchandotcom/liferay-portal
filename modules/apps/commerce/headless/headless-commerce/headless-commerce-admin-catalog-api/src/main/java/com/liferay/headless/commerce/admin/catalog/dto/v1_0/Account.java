@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Read-only reference to a Liferay account, embedded by catalog resources to identify the supplier or business that owns a catalog or product configuration list scope.",
 	value = "Account"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only reference to a Liferay account, embedded by catalog resources to identify the supplier or business that owns a catalog or product configuration list scope."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Account")
 public class Account implements Serializable {
@@ -355,4 +358,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2004855395
+// LIFERAY-REST-BUILDER-HASH:831068338

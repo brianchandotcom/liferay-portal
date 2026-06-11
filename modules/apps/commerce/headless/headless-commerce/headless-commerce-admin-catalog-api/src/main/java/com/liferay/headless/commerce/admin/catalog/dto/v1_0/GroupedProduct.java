@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Bundle membership entry for a grouped-type product; links a parent grouped product to a child product with a quantity and a sort priority; admin catalog write view used under a parent product whose `productType` is grouped.",
 	value = "GroupedProduct"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Bundle membership entry for a grouped-type product; links a parent grouped product to a child product with a quantity and a sort priority; admin catalog write view used under a parent product whose `productType` is grouped."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "GroupedProduct")
 public class GroupedProduct implements Serializable {
@@ -726,4 +729,4 @@ public class GroupedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:978254871
+// LIFERAY-REST-BUILDER-HASH:192235261

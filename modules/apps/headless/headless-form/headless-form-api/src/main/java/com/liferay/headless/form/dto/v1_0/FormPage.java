@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "https://www.schema.org/FormPage", value = "FormPage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/FormPage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormPage")
 public class FormPage implements Serializable {
@@ -515,4 +518,4 @@ public class FormPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1117110859
+// LIFERAY-REST-BUILDER-HASH:701002250

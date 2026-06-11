@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The user's contact information.",
 	value = "UserAccountContactInformation"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The user's contact information."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UserAccountContactInformation")
 public class UserAccountContactInformation implements Serializable {
@@ -803,4 +806,4 @@ public class UserAccountContactInformation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1029489427
+// LIFERAY-REST-BUILDER-HASH:1714645239

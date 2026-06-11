@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A mapped fragment image value.",
 	value = "MappedFragmentImageValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A mapped fragment image value."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MappedFragmentImageValue")
 public class MappedFragmentImageValue
@@ -253,4 +256,4 @@ public class MappedFragmentImageValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1013765940
+// LIFERAY-REST-BUILDER-HASH:-1232749302

@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "Stock-availability snapshot for a SKU resolved in the active commerce channel and inventory engine. Computed at response time and never persisted.",
 	value = "Availability"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Stock-availability snapshot for a SKU resolved in the active commerce channel and inventory engine. Computed at response time and never persisted."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Availability")
 public class Availability implements Serializable {
@@ -364,4 +367,4 @@ public class Availability implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-589263914
+// LIFERAY-REST-BUILDER-HASH:-726235064

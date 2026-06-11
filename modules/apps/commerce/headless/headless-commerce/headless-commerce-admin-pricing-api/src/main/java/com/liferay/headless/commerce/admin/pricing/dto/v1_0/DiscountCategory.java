@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Category binding that restricts a discount to products tagged with a specific AssetCategory. Backed by discount link where classNameId resolves to AssetCategory; honoured only when the parent discount's `target` is `categories`.",
 	value = "DiscountCategory"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Category binding that restricts a discount to products tagged with a specific AssetCategory. Backed by discount link where classNameId resolves to AssetCategory; honoured only when the parent discount's `target` is `categories`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DiscountCategory")
 public class DiscountCategory implements Serializable {
@@ -488,4 +491,4 @@ public class DiscountCategory implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1174238770
+// LIFERAY-REST-BUILDER-HASH:-89027164

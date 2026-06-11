@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "The FavIcon of the page specification.", value = "FavIcon"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The FavIcon of the page specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -309,4 +312,4 @@ public abstract class FavIcon implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1313706766
+// LIFERAY-REST-BUILDER-HASH:-181192711

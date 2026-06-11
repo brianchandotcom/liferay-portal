@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "A clickable hot-spot on a shop-by-diagram image, identified within the product by its sequence. Created and updated by the admin catalog write surface; deleting the last pin for a sequence cascades into the matching mapped product.",
 	value = "Pin"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A clickable hot-spot on a shop-by-diagram image, identified within the product by its sequence. Created and updated by the admin catalog write surface; deleting the last pin for a sequence cascades into the matching mapped product."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Pin")
 public class Pin implements Serializable {
@@ -469,4 +472,4 @@ public class Pin implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1962224796
+// LIFERAY-REST-BUILDER-HASH:-178377951

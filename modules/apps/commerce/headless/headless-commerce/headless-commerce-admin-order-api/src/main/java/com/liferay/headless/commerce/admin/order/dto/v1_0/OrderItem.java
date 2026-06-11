@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 	description = "A single line item within an order. Carries the SKU, quantity, options, unit price, line discount, line-level tax, and an optional per-item shipping address.",
 	value = "OrderItem"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A single line item within an order. Carries the SKU, quantity, options, unit price, line discount, line-level tax, and an optional per-item shipping address."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrderItem")
 public class OrderItem implements Serializable {
@@ -3277,4 +3280,4 @@ public class OrderItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1470961903
+// LIFERAY-REST-BUILDER-HASH:445175166

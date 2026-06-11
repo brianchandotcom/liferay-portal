@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a reference to a fragment image class primary key.",
 	value = "FragmentImageClassPKReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a reference to a fragment image class primary key."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentImageClassPKReference")
 public class FragmentImageClassPKReference implements Serializable {
@@ -305,4 +308,4 @@ public class FragmentImageClassPKReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1088096613
+// LIFERAY-REST-BUILDER-HASH:2125779602

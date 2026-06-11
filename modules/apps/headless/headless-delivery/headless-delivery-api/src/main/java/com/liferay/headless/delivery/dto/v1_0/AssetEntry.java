@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents an asset entry returned by the unified asset search endpoint.",
 	value = "AssetEntry"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents an asset entry returned by the unified asset search endpoint."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssetEntry")
 public class AssetEntry implements Serializable {
@@ -647,4 +650,4 @@ public class AssetEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:696037818
+// LIFERAY-REST-BUILDER-HASH:-1359746

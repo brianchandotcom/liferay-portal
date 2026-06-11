@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Configuration for a single facet aggregation. Each entry describes a facet to compute alongside the search results. The processed facet term buckets appear in the response's `searchFacets` map, where each entry's key is the `aggregationName` you chose for that facet configuration and each value is an array of term-bucket objects with `displayName` (locale-dependent label), `term` (raw term value), and `frequency` (count of matching documents).",
 	value = "FacetConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Configuration for a single facet aggregation. Each entry describes a facet to compute alongside the search results. The processed facet term buckets appear in the response's `searchFacets` map, where each entry's key is the `aggregationName` you chose for that facet configuration and each value is an array of term-bucket objects with `displayName` (locale-dependent label), `term` (raw term value), and `frequency` (count of matching documents)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FacetConfiguration")
 public class FacetConfiguration implements Serializable {
@@ -544,4 +547,4 @@ public class FacetConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:942718580
+// LIFERAY-REST-BUILDER-HASH:-2001785453

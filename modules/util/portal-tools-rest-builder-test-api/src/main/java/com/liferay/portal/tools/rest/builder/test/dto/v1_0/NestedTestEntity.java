@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "https://www.schema.org/Folder", value = "NestedTestEntity"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/Folder"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NestedTestEntity")
 public class NestedTestEntity implements Serializable {
@@ -516,4 +519,4 @@ public class NestedTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1780541854
+// LIFERAY-REST-BUILDER-HASH:724088994

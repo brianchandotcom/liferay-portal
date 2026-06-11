@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Describes the content that is tied to a Display Page Template",
 	value = "ContentAssociation"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Describes the content that is tied to a Display Page Template"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentAssociation")
 public class ContentAssociation implements Serializable {
@@ -299,4 +302,4 @@ public class ContentAssociation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:765145820
+// LIFERAY-REST-BUILDER-HASH:-922530232

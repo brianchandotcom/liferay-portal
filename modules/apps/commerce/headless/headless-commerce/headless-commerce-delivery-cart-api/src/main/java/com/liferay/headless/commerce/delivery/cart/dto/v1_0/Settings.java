@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "Quantity constraints for a cart item. The minimum and maximum bound the orderable range; the multiple forces quantities to a fixed step; when the allowed-quantities list is set, it overrides the other constraints with an explicit allow-list.",
 	value = "Settings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Quantity constraints for a cart item. The minimum and maximum bound the orderable range; the multiple forces quantities to a fixed step; when the allowed-quantities list is set, it overrides the other constraints with an explicit allow-list."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Settings")
 public class Settings implements Serializable {
@@ -428,4 +431,4 @@ public class Settings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-538316220
+// LIFERAY-REST-BUILDER-HASH:1875144285

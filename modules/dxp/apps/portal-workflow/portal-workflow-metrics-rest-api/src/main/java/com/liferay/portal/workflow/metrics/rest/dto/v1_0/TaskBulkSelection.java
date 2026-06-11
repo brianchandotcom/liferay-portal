@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "https://schema.org/TaskBulkSelection",
 	value = "TaskBulkSelection"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://schema.org/TaskBulkSelection"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TaskBulkSelection")
 public class TaskBulkSelection implements Serializable {
@@ -490,4 +493,4 @@ public class TaskBulkSelection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1920872876
+// LIFERAY-REST-BUILDER-HASH:1563732398

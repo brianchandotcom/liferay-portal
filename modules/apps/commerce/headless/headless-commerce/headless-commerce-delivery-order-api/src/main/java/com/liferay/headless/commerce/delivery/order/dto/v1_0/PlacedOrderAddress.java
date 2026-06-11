@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Buyer-facing projection of the address snapshotted onto a placed order. Returned by the placed-order billing-address and shipping-address endpoints. Read-only.",
 	value = "PlacedOrderAddress"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Buyer-facing projection of the address snapshotted onto a placed order. Returned by the placed-order billing-address and shipping-address endpoints. Read-only."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PlacedOrderAddress")
 public class PlacedOrderAddress implements Serializable {
@@ -1380,4 +1383,4 @@ public class PlacedOrderAddress implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2041702129
+// LIFERAY-REST-BUILDER-HASH:87443281

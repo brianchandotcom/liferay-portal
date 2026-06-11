@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The parent category's `TaxonomyVocabulary`.",
 	value = "ParentTaxonomyVocabulary"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The parent category's `TaxonomyVocabulary`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentTaxonomyVocabulary")
 public class ParentTaxonomyVocabulary implements Serializable {
@@ -240,4 +243,4 @@ public class ParentTaxonomyVocabulary implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:424457820
+// LIFERAY-REST-BUILDER-HASH:306414404

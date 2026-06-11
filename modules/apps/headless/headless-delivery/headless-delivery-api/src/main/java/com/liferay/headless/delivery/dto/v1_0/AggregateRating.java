@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents the average rating. See [AggregateRating](https://www.schema.org/AggregateRating) for more information.",
 	value = "AggregateRating"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the average rating. See [AggregateRating](https://www.schema.org/AggregateRating) for more information."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AggregateRating")
 public class AggregateRating implements Serializable {
@@ -456,4 +459,4 @@ public class AggregateRating implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:262319719
+// LIFERAY-REST-BUILDER-HASH:1020695975

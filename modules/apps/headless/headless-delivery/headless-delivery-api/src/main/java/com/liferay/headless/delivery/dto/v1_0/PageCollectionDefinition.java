@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of a Page Collection.",
 	value = "PageCollectionDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of a Page Collection."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageCollectionDefinition")
 public class PageCollectionDefinition implements Serializable {
@@ -1291,4 +1294,4 @@ public class PageCollectionDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1723061768
+// LIFERAY-REST-BUILDER-HASH:313307132

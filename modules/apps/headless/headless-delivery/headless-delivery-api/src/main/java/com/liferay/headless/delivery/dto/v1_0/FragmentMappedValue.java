@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a fragment mapped value.",
 	value = "FragmentMappedValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a fragment mapped value."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentMappedValue")
 public class FragmentMappedValue implements Serializable {
@@ -359,4 +362,4 @@ public class FragmentMappedValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-316075236
+// LIFERAY-REST-BUILDER-HASH:-1342924992

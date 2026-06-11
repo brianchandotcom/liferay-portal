@@ -1255,4 +1255,4 @@ public class DocumentFolder implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:920213995
+// LIFERAY-REST-BUILDER-HASH:640956449

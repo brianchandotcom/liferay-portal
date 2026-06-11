@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Generic status snapshot returned alongside the structured order, payment, and workflow states. The code is the integer status code; the label is the canonical key; the localized label is the display string.",
 	value = "Status"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Generic status snapshot returned alongside the structured order, payment, and workflow states. The code is the integer status code; the label is the canonical key; the localized label is the display string."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
@@ -351,4 +354,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1395659224
+// LIFERAY-REST-BUILDER-HASH:1929433731

@@ -32,6 +32,9 @@ import java.util.Set;
 	description = "A page specification of an embedded page.",
 	value = "EmbeddedPageSpecification"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A page specification of an embedded page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "EmbeddedPageSpecification")
 public class EmbeddedPageSpecification
@@ -262,4 +265,4 @@ public class EmbeddedPageSpecification
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1098566642
+// LIFERAY-REST-BUILDER-HASH:-427482480

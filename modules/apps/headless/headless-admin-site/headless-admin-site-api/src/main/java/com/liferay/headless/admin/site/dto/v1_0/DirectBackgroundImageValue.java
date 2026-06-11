@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A background image value of type direct.",
 	value = "DirectBackgroundImageValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A background image value of type direct."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DirectBackgroundImageValue")
 public class DirectBackgroundImageValue
@@ -252,4 +255,4 @@ public class DirectBackgroundImageValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1239332478
+// LIFERAY-REST-BUILDER-HASH:1487868185

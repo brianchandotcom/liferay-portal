@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "File linked to a cart -- typically an invoice, signed quote, or spec sheet. Returned read-only on cart payloads; created through the by-base64 endpoint and removed through the matching delete endpoint.",
 	value = "Attachment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "File linked to a cart -- typically an invoice, signed quote, or spec sheet. Returned read-only on cart payloads; created through the by-base64 endpoint and removed through the matching delete endpoint."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Attachment")
 public class Attachment implements Serializable {
@@ -843,4 +846,4 @@ public class Attachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2086347725
+// LIFERAY-REST-BUILDER-HASH:-1537552923

@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "Fulfillment record that ships a single parcel for a source order. Carries the carrier, tracking identifiers, expected and shipping dates, the ship-to address, the picked items, and the workflow status that advances from processing through ready-to-be-shipped and shipped to delivered.",
 	value = "Shipment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Fulfillment record that ships a single parcel for a source order. Carries the carrier, tracking identifiers, expected and shipping dates, the ship-to address, the picked items, and the workflow status that advances from processing through ready-to-be-shipped and shipped to delivered."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Shipment")
 public class Shipment implements Serializable {
@@ -1486,4 +1489,4 @@ public class Shipment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1928946063
+// LIFERAY-REST-BUILDER-HASH:-423460081

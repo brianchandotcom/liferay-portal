@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Per-SKU override for digital-download settings of a virtual product; only meaningful when the parent product type is virtual.",
 	value = "SkuVirtualSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Per-SKU override for digital-download settings of a virtual product; only meaningful when the parent product type is virtual."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuVirtualSettings")
 public class SkuVirtualSettings implements Serializable {
@@ -1206,4 +1209,4 @@ public class SkuVirtualSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:398426289
+// LIFERAY-REST-BUILDER-HASH:208520003

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents a template made up of CSS, HTML, and JavaScript used to build Content Pages.",
 	value = "Fragment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a template made up of CSS, HTML, and JavaScript used to build Content Pages."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Fragment")
 public class Fragment implements Serializable {
@@ -411,4 +414,4 @@ public class Fragment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1992902697
+// LIFERAY-REST-BUILDER-HASH:552211267

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Named buyer wish list scoping a collection of wish-list items for the authenticated account within a commerce channel.",
 	value = "WishList"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Named buyer wish list scoping a collection of wish-list items for the authenticated account within a commerce channel."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WishList")
 public class WishList implements Serializable {
@@ -421,4 +424,4 @@ public class WishList implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:443819546
+// LIFERAY-REST-BUILDER-HASH:-2024165460

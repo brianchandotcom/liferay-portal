@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A customized experience for a given page specification.",
 	value = "PageExperience"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A customized experience for a given page specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageExperience")
 public class PageExperience implements Serializable {
@@ -666,4 +669,4 @@ public class PageExperience implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:207145047
+// LIFERAY-REST-BUILDER-HASH:705026574

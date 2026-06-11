@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "A list of hours when the organization is open. This follows the [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification) specification.",
 	value = "HoursAvailable"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A list of hours when the organization is open. This follows the [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "HoursAvailable")
 public class HoursAvailable implements Serializable {
@@ -358,4 +361,4 @@ public class HoursAvailable implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-961605920
+// LIFERAY-REST-BUILDER-HASH:561806566

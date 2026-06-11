@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "https://www.schema.org/ProcessMetric",
 	value = "ProcessMetric"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/ProcessMetric"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProcessMetric")
 public class ProcessMetric implements Serializable {
@@ -445,4 +448,4 @@ public class ProcessMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-190291250
+// LIFERAY-REST-BUILDER-HASH:726958759

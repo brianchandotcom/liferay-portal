@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "The form container page element definition form's container configuration.",
 	value = "FormContainerConfig"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The form container page element definition form's container configuration."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormContainerConfig")
 public class FormContainerConfig implements Serializable {
@@ -532,4 +535,4 @@ public class FormContainerConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-909634921
+// LIFERAY-REST-BUILDER-HASH:-1777751916

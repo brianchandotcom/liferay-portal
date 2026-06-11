@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents a Widget Instance.", value = "WidgetInstance"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a Widget Instance."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WidgetInstance")
 public class WidgetInstance implements Serializable {
@@ -418,4 +421,4 @@ public class WidgetInstance implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1497461679
+// LIFERAY-REST-BUILDER-HASH:647832768

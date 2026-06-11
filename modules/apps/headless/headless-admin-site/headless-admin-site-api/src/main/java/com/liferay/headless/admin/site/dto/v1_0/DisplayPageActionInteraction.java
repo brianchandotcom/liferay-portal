@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The definition of an action interaction of type display page.",
 	value = "DisplayPageActionInteraction"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of an action interaction of type display page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DisplayPageActionInteraction")
 public class DisplayPageActionInteraction
@@ -257,4 +260,4 @@ public class DisplayPageActionInteraction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:355109116
+// LIFERAY-REST-BUILDER-HASH:286235798

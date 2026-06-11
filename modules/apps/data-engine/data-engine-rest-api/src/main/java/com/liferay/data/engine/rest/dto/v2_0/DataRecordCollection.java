@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "https://www.schema.org/DataRecordCollection",
 	value = "DataRecordCollection"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/DataRecordCollection"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DataRecordCollection")
 public class DataRecordCollection implements Serializable {
@@ -505,4 +508,4 @@ public class DataRecordCollection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1836145412
+// LIFERAY-REST-BUILDER-HASH:667664769

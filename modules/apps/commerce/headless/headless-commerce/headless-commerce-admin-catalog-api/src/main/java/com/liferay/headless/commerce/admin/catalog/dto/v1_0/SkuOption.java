@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Selection of a single product option value for a SKU variant; links the SKU to one product option and one of that option's values.",
 	value = "SkuOption"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Selection of a single product option value for a SKU variant; links the SKU to one product option and one of that option's values."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuOption")
 public class SkuOption implements Serializable {
@@ -419,4 +422,4 @@ public class SkuOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1665548359
+// LIFERAY-REST-BUILDER-HASH:464773965

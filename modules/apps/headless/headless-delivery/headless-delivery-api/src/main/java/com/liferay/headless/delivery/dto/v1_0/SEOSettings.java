@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents settings related with SEO.", value = "SEOSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents settings related with SEO."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SEOSettings")
 public class SEOSettings implements Serializable {
@@ -838,4 +841,4 @@ public class SEOSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:482367743
+// LIFERAY-REST-BUILDER-HASH:-1464101833

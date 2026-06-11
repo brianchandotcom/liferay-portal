@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Quantity-based pricing breakpoint applied to a SKU; the unit price changes once the buyer's quantity reaches the breakpoint. Computed at response time.",
 	value = "TierPrice"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Quantity-based pricing breakpoint applied to a SKU; the unit price changes once the buyer's quantity reaches the breakpoint. Computed at response time."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TierPrice")
 public class TierPrice implements Serializable {
@@ -549,4 +552,4 @@ public class TierPrice implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1437367325
+// LIFERAY-REST-BUILDER-HASH:1706449766

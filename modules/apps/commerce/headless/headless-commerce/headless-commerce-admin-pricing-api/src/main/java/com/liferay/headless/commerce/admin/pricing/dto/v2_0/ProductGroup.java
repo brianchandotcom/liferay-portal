@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of a product group referenced by a discount or price-modifier product-group binding. Carries the product-group id and title.",
 	value = "ProductGroup"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of a product group referenced by a discount or price-modifier product-group binding. Carries the product-group id and title."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductGroup")
 public class ProductGroup implements Serializable {
@@ -353,4 +356,4 @@ public class ProductGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:284991899
+// LIFERAY-REST-BUILDER-HASH:-1633442006

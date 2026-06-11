@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "A value of a field of type URL.", value = "URLValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A value of a field of type URL."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -299,4 +302,4 @@ public abstract class URLValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-348013219
+// LIFERAY-REST-BUILDER-HASH:-696757177

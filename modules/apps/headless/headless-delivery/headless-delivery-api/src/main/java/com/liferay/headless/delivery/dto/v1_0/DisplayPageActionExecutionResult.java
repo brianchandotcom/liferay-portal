@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of an action execution of type display page.",
 	value = "DisplayPageActionExecutionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of an action execution of type display page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DisplayPageActionExecutionResult")
 public class DisplayPageActionExecutionResult implements Serializable {
@@ -241,4 +244,4 @@ public class DisplayPageActionExecutionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-524031765
+// LIFERAY-REST-BUILDER-HASH:-1254933958

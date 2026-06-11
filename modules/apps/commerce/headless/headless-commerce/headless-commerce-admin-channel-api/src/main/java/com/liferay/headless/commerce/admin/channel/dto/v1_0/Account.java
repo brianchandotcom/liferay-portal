@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Lightweight projection of a commerce account, returned by channel-relationship endpoints to identify the linked account; full account management is performed through the Account admin API.",
 	value = "Account"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Lightweight projection of a commerce account, returned by channel-relationship endpoints to identify the linked account; full account management is performed through the Account admin API."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Account")
 public class Account implements Serializable {
@@ -296,4 +299,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-674026929
+// LIFERAY-REST-BUILDER-HASH:486645020

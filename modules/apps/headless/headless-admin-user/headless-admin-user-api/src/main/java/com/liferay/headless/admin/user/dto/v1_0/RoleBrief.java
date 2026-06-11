@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a role's basic information, to be embedded with other resources. The ID of this resource can be used to query the role's complete information.",
 	value = "RoleBrief"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a role's basic information, to be embedded with other resources. The ID of this resource can be used to query the role's complete information."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RoleBrief")
 public class RoleBrief implements Serializable {
@@ -512,4 +515,4 @@ public class RoleBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2024623235
+// LIFERAY-REST-BUILDER-HASH:-1304875160

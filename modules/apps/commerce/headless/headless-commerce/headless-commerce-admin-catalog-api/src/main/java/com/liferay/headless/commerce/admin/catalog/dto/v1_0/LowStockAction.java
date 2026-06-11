@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Read-only descriptor of a registered low-stock activity used by SKU and product configuration endpoints to indicate which action runs when inventory falls below a threshold; entries are contributed by platform extensions and resolved from a registry.",
 	value = "LowStockAction"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only descriptor of a registered low-stock activity used by SKU and product configuration endpoints to indicate which action runs when inventory falls below a threshold; entries are contributed by platform extensions and resolved from a registry."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "LowStockAction")
 public class LowStockAction implements Serializable {
@@ -298,4 +301,4 @@ public class LowStockAction implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1088057629
+// LIFERAY-REST-BUILDER-HASH:547490821

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The organization's postal information (country and region).",
 	value = "Location"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The organization's postal information (country and region)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Location")
 public class Location implements Serializable {
@@ -663,4 +666,4 @@ public class Location implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:635659645
+// LIFERAY-REST-BUILDER-HASH:2068869734

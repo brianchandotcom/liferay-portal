@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The definition of a submission result of type stay in page.",
 	value = "StayInPageFormContainerSubmissionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of a submission result of type stay in page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "StayInPageFormContainerSubmissionResult")
 public class StayInPageFormContainerSubmissionResult
@@ -263,4 +266,4 @@ public class StayInPageFormContainerSubmissionResult
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1034246244
+// LIFERAY-REST-BUILDER-HASH:1140679023

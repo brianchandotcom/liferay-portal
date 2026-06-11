@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 	description = "Represents the log containing the workflow's activity history (e.g., transitions, assignees, etc.).",
 	value = "WorkflowLog"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the log containing the workflow's activity history (e.g., transitions, assignees, etc.)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WorkflowLog")
 public class WorkflowLog implements Serializable {
@@ -1093,4 +1096,4 @@ public class WorkflowLog implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1414434513
+// LIFERAY-REST-BUILDER-HASH:-158932117

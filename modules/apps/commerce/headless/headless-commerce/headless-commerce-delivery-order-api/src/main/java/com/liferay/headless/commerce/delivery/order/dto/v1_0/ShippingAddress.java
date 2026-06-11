@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Snapshot of the shipping address attached to a shipment row, returned in the shipment list. Sourced from the underlying commerce address at fulfillment time. Read-only.",
 	value = "ShippingAddress"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Snapshot of the shipping address attached to a shipment row, returned in the shipment list. Sourced from the underlying commerce address at fulfillment time. Read-only."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ShippingAddress")
 public class ShippingAddress implements Serializable {
@@ -1015,4 +1018,4 @@ public class ShippingAddress implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-297116163
+// LIFERAY-REST-BUILDER-HASH:1262391199

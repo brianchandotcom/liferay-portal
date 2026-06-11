@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "A fragment link value.", value = "FragmentLinkValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A fragment link value."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -306,4 +309,4 @@ public abstract class FragmentLinkValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1783233532
+// LIFERAY-REST-BUILDER-HASH:-646579024

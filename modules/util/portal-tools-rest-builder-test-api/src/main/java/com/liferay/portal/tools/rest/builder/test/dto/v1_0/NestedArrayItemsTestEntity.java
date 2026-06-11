@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Test Component to test the REST Builder support for nested array items",
 	value = "NestedArrayItemsTestEntity"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Test Component to test the REST Builder support for nested array items"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NestedArrayItemsTestEntity")
 public class NestedArrayItemsTestEntity implements Serializable {
@@ -302,4 +305,4 @@ public class NestedArrayItemsTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-18738108
+// LIFERAY-REST-BUILDER-HASH:-858901238

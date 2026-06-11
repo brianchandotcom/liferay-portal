@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents a site's basic information.", value = "SiteBrief"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a site's basic information."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SiteBrief")
 public class SiteBrief implements Serializable {
@@ -583,4 +586,4 @@ public class SiteBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:573897878
+// LIFERAY-REST-BUILDER-HASH:232003407

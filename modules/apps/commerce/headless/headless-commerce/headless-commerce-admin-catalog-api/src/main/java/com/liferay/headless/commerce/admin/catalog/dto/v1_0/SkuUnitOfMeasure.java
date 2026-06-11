@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Alternative unit in which the parent SKU can be sold, with its own conversion rate to the base unit, pricing, and ordering rules.",
 	value = "SkuUnitOfMeasure"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Alternative unit in which the parent SKU can be sold, with its own conversion rate to the base unit, pricing, and ordering rules."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuUnitOfMeasure")
 public class SkuUnitOfMeasure implements Serializable {
@@ -1070,4 +1073,4 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1590461845
+// LIFERAY-REST-BUILDER-HASH:-1227879928

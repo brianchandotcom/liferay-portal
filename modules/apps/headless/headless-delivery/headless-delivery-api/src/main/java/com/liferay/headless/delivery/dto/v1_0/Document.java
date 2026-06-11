@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 	description = "Represents a Document Library file, storing binary and metadata information. Properties follow the [MediaObject](https://schema.org/MediaObject) specification.",
 	value = "Document"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a Document Library file, storing binary and metadata information. Properties follow the [MediaObject](https://schema.org/MediaObject) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Document")
 public class Document implements Serializable {
@@ -2259,4 +2262,4 @@ public class Document implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1413270615
+// LIFERAY-REST-BUILDER-HASH:1455027600

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A commerce sales channel that groups products, prices, and orders. Channels carry a default currency and a type that classifies the storefront context.",
 	value = "Channel"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A commerce sales channel that groups products, prices, and orders. Channels carry a default currency and a type that classifies the storefront context."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Channel")
 public class Channel implements Serializable {
@@ -476,4 +479,4 @@ public class Channel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:125365587
+// LIFERAY-REST-BUILDER-HASH:-162417356

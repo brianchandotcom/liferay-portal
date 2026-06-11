@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "https://www.schema.org/FormFieldValidation",
 	value = "Validation"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/FormFieldValidation"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Validation")
 public class Validation implements Serializable {
@@ -399,4 +402,4 @@ public class Validation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:292012232
+// LIFERAY-REST-BUILDER-HASH:581530367

@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "The page collection's reference.",
 	value = "CollectionReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page collection's reference."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -316,4 +319,4 @@ public abstract class CollectionReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-221357757
+// LIFERAY-REST-BUILDER-HASH:1550373716

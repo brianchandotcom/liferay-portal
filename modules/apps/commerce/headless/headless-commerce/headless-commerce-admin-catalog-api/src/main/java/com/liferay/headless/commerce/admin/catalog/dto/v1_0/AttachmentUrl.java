@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "Input variant of an attachment used by the upload-by-URL endpoints; the file body is fetched server-side from the `src` URL rather than uploaded inline. Backed by the same attachment entity, with CDN mode disabled (the downloaded body is always materialized as a document-library file).",
 	value = "AttachmentUrl"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Input variant of an attachment used by the upload-by-URL endpoints; the file body is fetched server-side from the `src` URL rather than uploaded inline. Backed by the same attachment entity, with CDN mode disabled (the downloaded body is always materialized as a document-library file)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AttachmentUrl")
 public class AttachmentUrl implements Serializable {
@@ -1048,4 +1051,4 @@ public class AttachmentUrl implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:971566205
+// LIFERAY-REST-BUILDER-HASH:-554520436

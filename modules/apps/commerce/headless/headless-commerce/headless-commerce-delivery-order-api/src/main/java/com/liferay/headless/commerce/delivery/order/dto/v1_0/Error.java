@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Standard error envelope returned on non-2xx responses. Carries an HTTP status, an optional internal error code, a human-readable description, and the raw exception message.",
 	value = "Error"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Standard error envelope returned on non-2xx responses. Carries an HTTP status, an optional internal error code, a human-readable description, and the raw exception message."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Error")
 public class Error implements Serializable {
@@ -417,4 +420,4 @@ public class Error implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1579031361
+// LIFERAY-REST-BUILDER-HASH:835557454

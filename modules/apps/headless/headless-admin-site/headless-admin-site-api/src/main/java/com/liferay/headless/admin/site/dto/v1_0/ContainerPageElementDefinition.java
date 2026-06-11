@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "The page element definition of a container.",
 	value = "ContainerPageElementDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page element definition of a container."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContainerPageElementDefinition")
 public class ContainerPageElementDefinition
@@ -792,4 +795,4 @@ public class ContainerPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1675873410
+// LIFERAY-REST-BUILDER-HASH:1118448536

@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "The page element definition of a Collection Item.",
 	value = "CollectionItemPageElementDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page element definition of a Collection Item."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CollectionItemPageElementDefinition")
 public class CollectionItemPageElementDefinition
@@ -270,4 +273,4 @@ public class CollectionItemPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1557399202
+// LIFERAY-REST-BUILDER-HASH:-109903248

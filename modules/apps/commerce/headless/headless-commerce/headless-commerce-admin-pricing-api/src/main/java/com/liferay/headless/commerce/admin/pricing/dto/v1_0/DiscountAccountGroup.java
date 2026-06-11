@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Account-group binding that restricts a discount to a specific AccountGroup. Backed by discount account group link; one row per (discount, accountGroup) pair, the pair is enforced unique by the underlying service.",
 	value = "DiscountAccountGroup"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Account-group binding that restricts a discount to a specific AccountGroup. Backed by discount account group link; one row per (discount, accountGroup) pair, the pair is enforced unique by the underlying service."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DiscountAccountGroup")
 public class DiscountAccountGroup implements Serializable {
@@ -491,4 +494,4 @@ public class DiscountAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1238514973
+// LIFERAY-REST-BUILDER-HASH:-755364999

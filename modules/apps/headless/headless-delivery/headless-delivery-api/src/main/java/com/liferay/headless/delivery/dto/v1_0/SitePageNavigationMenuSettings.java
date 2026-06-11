@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Represents settings related with the site navigation menu of a page.",
 	value = "SitePageNavigationMenuSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents settings related with the site navigation menu of a page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SitePageNavigationMenuSettings")
 public class SitePageNavigationMenuSettings implements Serializable {
@@ -416,4 +419,4 @@ public class SitePageNavigationMenuSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1095120639
+// LIFERAY-REST-BUILDER-HASH:-465804850

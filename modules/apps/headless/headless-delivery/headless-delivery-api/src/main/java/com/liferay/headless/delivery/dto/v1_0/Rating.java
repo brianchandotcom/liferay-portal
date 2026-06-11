@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Represents a rating/score received by any kind of asset. Properties follow the [Rating](https://schema.org/Rating) specification.",
 	value = "Rating"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a rating/score received by any kind of asset. Properties follow the [Rating](https://schema.org/Rating) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Rating")
 public class Rating implements Serializable {
@@ -641,4 +644,4 @@ public class Rating implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1864313979
+// LIFERAY-REST-BUILDER-HASH:649834830

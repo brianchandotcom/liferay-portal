@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The collection display's template list style.",
 	value = "TemplateListStyle"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The collection display's template list style."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TemplateListStyle")
 public class TemplateListStyle
@@ -377,4 +380,4 @@ public class TemplateListStyle
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:623805134
+// LIFERAY-REST-BUILDER-HASH:97776880

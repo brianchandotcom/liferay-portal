@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents the site where the content is created. Properties follow the [WebSite](https://schema.org/WebSite) specification.",
 	value = "Site"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the site where the content is created. Properties follow the [WebSite](https://schema.org/WebSite) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Site")
 public class Site implements Serializable {
@@ -973,4 +976,4 @@ public class Site implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1015032185
+// LIFERAY-REST-BUILDER-HASH:-1145323349

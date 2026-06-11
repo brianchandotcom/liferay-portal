@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a document (binary data and metadata) associated with structured content. Properties follow the [Media Object](https://schema.org/MediaObject) specification.",
 	value = "ContentDocument"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a document (binary data and metadata) associated with structured content. Properties follow the [Media Object](https://schema.org/MediaObject) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentDocument")
 public class ContentDocument implements Serializable {
@@ -885,4 +888,4 @@ public class ContentDocument implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1204487394
+// LIFERAY-REST-BUILDER-HASH:-629665387

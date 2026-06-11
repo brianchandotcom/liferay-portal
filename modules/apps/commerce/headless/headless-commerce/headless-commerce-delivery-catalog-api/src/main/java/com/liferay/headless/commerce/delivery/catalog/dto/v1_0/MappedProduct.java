@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Shop-by-diagram payload that ties a region of a parent product's diagram image to a referenced product or SKU, together with the resolved availability and pricing for the buyer.",
 	value = "MappedProduct"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Shop-by-diagram payload that ties a region of a parent product's diagram image to a referenced product or SKU, together with the resolved availability and pricing for the buyer."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MappedProduct")
 public class MappedProduct implements Serializable {
@@ -1623,4 +1626,4 @@ public class MappedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1036522593
+// LIFERAY-REST-BUILDER-HASH:1508066375

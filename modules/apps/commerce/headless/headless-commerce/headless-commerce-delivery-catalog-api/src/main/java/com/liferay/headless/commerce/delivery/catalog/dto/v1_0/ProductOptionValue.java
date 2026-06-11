@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Selectable value of a product option with an optional price impact and link to a specific SKU variant.",
 	value = "ProductOptionValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Selectable value of a product option with an optional price impact and link to a specific SKU variant."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductOptionValue")
 public class ProductOptionValue implements Serializable {
@@ -1138,4 +1141,4 @@ public class ProductOptionValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-36564016
+// LIFERAY-REST-BUILDER-HASH:475634870

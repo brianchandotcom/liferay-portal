@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The StyleBook that is applied to the page.",
 	value = "StyleBook"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The StyleBook that is applied to the page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "StyleBook")
 public class StyleBook implements Serializable {
@@ -291,4 +294,4 @@ public class StyleBook implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1654711866
+// LIFERAY-REST-BUILDER-HASH:-161276480

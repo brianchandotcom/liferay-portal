@@ -1236,4 +1236,4 @@ public class Country implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:117224820
+// LIFERAY-REST-BUILDER-HASH:95761188

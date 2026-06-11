@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Configuration of the SAML provider's IDP capability.",
 	value = "Idp"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Configuration of the SAML provider's IDP capability."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Idp")
 public class Idp implements Serializable {
@@ -395,4 +398,4 @@ public class Idp implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1612834171
+// LIFERAY-REST-BUILDER-HASH:346944286

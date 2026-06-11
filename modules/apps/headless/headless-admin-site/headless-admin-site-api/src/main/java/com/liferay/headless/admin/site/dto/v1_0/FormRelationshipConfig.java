@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The form relationship page element definition's configuration.",
 	value = "FormRelationshipConfig"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The form relationship page element definition's configuration."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormRelationshipConfig")
 public class FormRelationshipConfig implements Serializable {
@@ -302,4 +305,4 @@ public class FormRelationshipConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1942865361
+// LIFERAY-REST-BUILDER-HASH:1607117656

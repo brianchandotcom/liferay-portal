@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents a user who belongs to a segment.",
 	value = "SegmentUser"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a user who belongs to a segment."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SegmentUser")
 public class SegmentUser implements Serializable {
@@ -344,4 +347,4 @@ public class SegmentUser implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-618957193
+// LIFERAY-REST-BUILDER-HASH:-1002999039

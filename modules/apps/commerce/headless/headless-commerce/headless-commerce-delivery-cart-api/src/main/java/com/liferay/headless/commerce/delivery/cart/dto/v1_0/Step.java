@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Checkout step descriptor. The id is the step key (cart, shipping, payment, confirmation); the state is its progress -- pending, active, or completed.",
 	value = "Step"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Checkout step descriptor. The id is the step key (cart, shipping, payment, confirmation); the state is its progress -- pending, active, or completed."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Step")
 public class Step implements Serializable {
@@ -358,4 +361,4 @@ public class Step implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1416425865
+// LIFERAY-REST-BUILDER-HASH:1609100111

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of a account referenced by a discount or price-list account binding. Carries the account id, optional logo id, and display name; the full record lives in headless-commerce-admin-account.",
 	value = "Account"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of a account referenced by a discount or price-list account binding. Carries the account id, optional logo id, and display name; the full record lives in headless-commerce-admin-account."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Account")
 public class Account implements Serializable {
@@ -350,4 +353,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1382939111
+// LIFERAY-REST-BUILDER-HASH:1260563708

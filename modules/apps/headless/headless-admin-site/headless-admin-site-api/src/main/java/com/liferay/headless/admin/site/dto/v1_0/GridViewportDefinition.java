@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "The definition of the grid viewport.",
 	value = "GridViewportDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of the grid viewport."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "GridViewportDefinition")
 public class GridViewportDefinition implements Serializable {
@@ -350,4 +353,4 @@ public class GridViewportDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-420208089
+// LIFERAY-REST-BUILDER-HASH:1461620617

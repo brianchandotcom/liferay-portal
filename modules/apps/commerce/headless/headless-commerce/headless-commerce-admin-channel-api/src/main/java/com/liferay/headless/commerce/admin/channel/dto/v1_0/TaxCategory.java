@@ -421,4 +421,4 @@ public class TaxCategory implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:943305872
+// LIFERAY-REST-BUILDER-HASH:1464080838

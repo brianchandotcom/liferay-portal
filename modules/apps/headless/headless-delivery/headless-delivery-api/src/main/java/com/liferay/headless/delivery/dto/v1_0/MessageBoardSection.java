@@ -1137,4 +1137,4 @@ public class MessageBoardSection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1046710971
+// LIFERAY-REST-BUILDER-HASH:-520188687

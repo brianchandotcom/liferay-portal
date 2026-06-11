@@ -41,6 +41,9 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "A page template set.", value = "PageTemplateSet")
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A page template set."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageTemplateSet")
 public class PageTemplateSet implements Serializable {
@@ -723,4 +726,4 @@ public class PageTemplateSet implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-707141211
+// LIFERAY-REST-BUILDER-HASH:1818251755

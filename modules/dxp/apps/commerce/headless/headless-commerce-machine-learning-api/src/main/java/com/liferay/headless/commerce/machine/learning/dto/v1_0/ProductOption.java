@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Wire shape for a product option attached to a product, uploaded to the analytics pipeline alongside its parent product.",
 	value = "ProductOption"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Wire shape for a product option attached to a product, uploaded to the analytics pipeline alongside its parent product."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductOption")
 public class ProductOption implements Serializable {
@@ -368,4 +371,4 @@ public class ProductOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-554880577
+// LIFERAY-REST-BUILDER-HASH:1726581543

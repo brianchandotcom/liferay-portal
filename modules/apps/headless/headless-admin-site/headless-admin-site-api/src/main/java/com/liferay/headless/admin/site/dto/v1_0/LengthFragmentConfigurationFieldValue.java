@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The value of a fragment configuration field of type length.",
 	value = "LengthFragmentConfigurationFieldValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The value of a fragment configuration field of type length."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "LengthFragmentConfigurationFieldValue")
 public class LengthFragmentConfigurationFieldValue
@@ -321,4 +324,4 @@ public class LengthFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2119841951
+// LIFERAY-REST-BUILDER-HASH:-109864166

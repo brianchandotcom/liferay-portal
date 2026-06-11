@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of an action execution result of type notification.",
 	value = "NotificationActionExecutionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of an action execution result of type notification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NotificationActionExecutionResult")
 public class NotificationActionExecutionResult implements Serializable {
@@ -298,4 +301,4 @@ public class NotificationActionExecutionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1807343799
+// LIFERAY-REST-BUILDER-HASH:1451490283

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Account-group binding that restricts a price list to a specific AccountGroup. Backed by price list account group link; the `order` integer controls the resolution priority when multiple account-group bindings match the buyer.",
 	value = "PriceListAccountGroup"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Account-group binding that restricts a price list to a specific AccountGroup. Backed by price list account group link; the `order` integer controls the resolution priority when multiple account-group bindings match the buyer."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PriceListAccountGroup")
 public class PriceListAccountGroup implements Serializable {
@@ -550,4 +553,4 @@ public class PriceListAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:603612710
+// LIFERAY-REST-BUILDER-HASH:-2037239285

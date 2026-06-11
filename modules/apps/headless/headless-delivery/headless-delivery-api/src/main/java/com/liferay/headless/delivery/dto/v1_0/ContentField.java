@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents the value of each field in structured content. Fields can contain different information types (e.g., documents, geolocation, etc.).",
 	value = "ContentField"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the value of each field in structured content. Fields can contain different information types (e.g., documents, geolocation, etc.)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentField")
 public class ContentField implements Serializable {
@@ -779,4 +782,4 @@ public class ContentField implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-223852192
+// LIFERAY-REST-BUILDER-HASH:1341032362

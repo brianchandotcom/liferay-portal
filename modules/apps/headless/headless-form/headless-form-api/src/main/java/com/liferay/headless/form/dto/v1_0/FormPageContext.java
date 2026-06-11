@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "https://www.schema.org/FormPageContext",
 	value = "FormPageContext"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/FormPageContext"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormPageContext")
 public class FormPageContext implements Serializable {
@@ -356,4 +359,4 @@ public class FormPageContext implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1479849755
+// LIFERAY-REST-BUILDER-HASH:-1565823081

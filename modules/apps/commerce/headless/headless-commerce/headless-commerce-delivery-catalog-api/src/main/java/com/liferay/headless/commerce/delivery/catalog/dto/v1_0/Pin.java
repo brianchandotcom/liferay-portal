@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Coordinates on a product-diagram image that locate a mapped product, used to render interactive shop-by-diagram views.",
 	value = "Pin"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Coordinates on a product-diagram image that locate a mapped product, used to render interactive shop-by-diagram views."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Pin")
 public class Pin implements Serializable {
@@ -467,4 +470,4 @@ public class Pin implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1509995215
+// LIFERAY-REST-BUILDER-HASH:-1449122822

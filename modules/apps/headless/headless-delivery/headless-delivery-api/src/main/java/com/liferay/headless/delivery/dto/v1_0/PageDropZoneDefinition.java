@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Represent a definition of a Page drop zone.",
 	value = "PageDropZoneDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represent a definition of a Page drop zone."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageDropZoneDefinition")
 public class PageDropZoneDefinition implements Serializable {
@@ -252,4 +255,4 @@ public class PageDropZoneDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1323761812
+// LIFERAY-REST-BUILDER-HASH:-1264248384

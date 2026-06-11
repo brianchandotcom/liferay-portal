@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Individual shipping option exposed by a ShippingMethod with its rate, ordering, and active flag. Read-only on this projection; full shipping-option management lives in the Shipment admin API.",
 	value = "ShippingOption"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Individual shipping option exposed by a ShippingMethod with its rate, ordering, and active flag. Read-only on this projection; full shipping-option management lives in the Shipment admin API."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ShippingOption")
 public class ShippingOption implements Serializable {
@@ -530,4 +533,4 @@ public class ShippingOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1266900454
+// LIFERAY-REST-BUILDER-HASH:689758098

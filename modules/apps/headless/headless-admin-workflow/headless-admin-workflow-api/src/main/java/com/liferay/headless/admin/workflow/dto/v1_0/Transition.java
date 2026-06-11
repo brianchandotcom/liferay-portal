@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents the transition to be launched by the task's workflow.",
 	value = "Transition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the transition to be launched by the task's workflow."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Transition")
 public class Transition implements Serializable {
@@ -403,4 +406,4 @@ public class Transition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1766951122
+// LIFERAY-REST-BUILDER-HASH:-1265220881

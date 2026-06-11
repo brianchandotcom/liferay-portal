@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Membership entry that links a product to a product group; admin catalog write view used to add or remove products from a product group.",
 	value = "ProductGroupProduct"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Membership entry that links a product to a product group; admin catalog write view used to add or remove products from a product group."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductGroupProduct")
 public class ProductGroupProduct implements Serializable {
@@ -608,4 +611,4 @@ public class ProductGroupProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-180711673
+// LIFERAY-REST-BUILDER-HASH:982726863

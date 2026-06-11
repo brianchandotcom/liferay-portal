@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Inventory and ordering constraints attached to a product or SKU; defines stock display, back-order policy, quantity bounds, and the inventory engine used to source stock.",
 	value = "ProductConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Inventory and ordering constraints attached to a product or SKU; defines stock display, back-order policy, quantity bounds, and the inventory engine used to source stock."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductConfiguration")
 public class ProductConfiguration implements Serializable {
@@ -911,4 +914,4 @@ public class ProductConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1210412590
+// LIFERAY-REST-BUILDER-HASH:-7226814

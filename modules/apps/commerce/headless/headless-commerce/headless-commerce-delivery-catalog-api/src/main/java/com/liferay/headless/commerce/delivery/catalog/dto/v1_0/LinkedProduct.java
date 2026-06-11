@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Lightweight reference linking a product to another product without inlining the linked product's full payload.",
 	value = "LinkedProduct"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Lightweight reference linking a product to another product without inlining the linked product's full payload."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "LinkedProduct")
 public class LinkedProduct implements Serializable {
@@ -364,4 +367,4 @@ public class LinkedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1087395379
+// LIFERAY-REST-BUILDER-HASH:74925231

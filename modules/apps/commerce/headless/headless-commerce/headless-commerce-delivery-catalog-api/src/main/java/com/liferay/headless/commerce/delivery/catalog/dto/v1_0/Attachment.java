@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "Media or document attached to a catalog product, used for images, downloadable resources, or gallery entries.",
 	value = "Attachment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Media or document attached to a catalog product, used for images, downloadable resources, or gallery entries."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Attachment")
 public class Attachment implements Serializable {
@@ -1230,4 +1233,4 @@ public class Attachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1602253605
+// LIFERAY-REST-BUILDER-HASH:-2136306795

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Request body for POST /search. Carries search context attributes (including blueprint selection and empty-search behavior) and any facet aggregations to be returned alongside the results.",
 	value = "SearchRequestBody"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Request body for POST /search. Carries search context attributes (including blueprint selection and empty-search behavior) and any facet aggregations to be returned alongside the results."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SearchRequestBody")
 public class SearchRequestBody implements Serializable {
@@ -309,4 +312,4 @@ public class SearchRequestBody implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1885673368
+// LIFERAY-REST-BUILDER-HASH:120806841

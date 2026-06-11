@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Single shipping option within a parent shipping method. Carries the option name, its localized label, the computed cost, and the currency-formatted display string.",
 	value = "ShippingOption"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Single shipping option within a parent shipping method. Carries the option name, its localized label, the computed cost, and the currency-formatted display string."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ShippingOption")
 public class ShippingOption implements Serializable {
@@ -413,4 +416,4 @@ public class ShippingOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1514473594
+// LIFERAY-REST-BUILDER-HASH:-1444752507

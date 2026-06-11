@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The folder's parent Knowledge Base folder, if it exists.",
 	value = "ParentKnowledgeBaseFolder"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The folder's parent Knowledge Base folder, if it exists."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentKnowledgeBaseFolder")
 public class ParentKnowledgeBaseFolder implements Serializable {
@@ -294,4 +297,4 @@ public class ParentKnowledgeBaseFolder implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:613839823
+// LIFERAY-REST-BUILDER-HASH:-1296881499

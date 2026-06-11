@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A widget instance's look and feel configuration.",
 	value = "WidgetLookAndFeelConfig"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A widget instance's look and feel configuration."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WidgetLookAndFeelConfig")
 public class WidgetLookAndFeelConfig implements Serializable {
@@ -519,4 +522,4 @@ public class WidgetLookAndFeelConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1612487455
+// LIFERAY-REST-BUILDER-HASH:-1749996483

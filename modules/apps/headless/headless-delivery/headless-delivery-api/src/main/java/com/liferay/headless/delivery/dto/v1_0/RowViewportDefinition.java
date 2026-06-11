@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The definition of the row viewport.",
 	value = "RowViewportDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of the row viewport."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RowViewportDefinition")
 public class RowViewportDefinition implements Serializable {
@@ -352,4 +355,4 @@ public class RowViewportDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:828484779
+// LIFERAY-REST-BUILDER-HASH:-13086113

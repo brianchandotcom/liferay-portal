@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "The value of a fragment configuration field of type target collection display.",
 	value = "TargetCollectionDisplayFragmentConfigurationFieldValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The value of a fragment configuration field of type target collection display."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TargetCollectionDisplayFragmentConfigurationFieldValue")
 public class TargetCollectionDisplayFragmentConfigurationFieldValue
@@ -347,4 +350,4 @@ public class TargetCollectionDisplayFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:895084079
+// LIFERAY-REST-BUILDER-HASH:917833155

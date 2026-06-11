@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents the settings of an asset library.",
 	value = "Settings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the settings of an asset library."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Settings")
 public class Settings implements Serializable {
@@ -691,4 +694,4 @@ public class Settings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:563786828
+// LIFERAY-REST-BUILDER-HASH:1975381868

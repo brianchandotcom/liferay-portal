@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Binding between an order rule and an account group. Identifies an account group the rule applies to.",
 	value = "OrderAccountGroup"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Binding between an order rule and an account group. Identifies an account group the rule applies to."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrderAccountGroup")
 public class OrderAccountGroup implements Serializable {
@@ -296,4 +299,4 @@ public class OrderAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:513448745
+// LIFERAY-REST-BUILDER-HASH:1664580398

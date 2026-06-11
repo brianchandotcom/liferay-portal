@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal, object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date range to the previous date range. Use `getWorkspaceGroupChannelAssetSummariesPage` to list these sets of metrics.",
 	value = "AssetSummaryMetric"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal, object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date range to the previous date range. Use `getWorkspaceGroupChannelAssetSummariesPage` to list these sets of metrics."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssetSummaryMetric")
 public class AssetSummaryMetric implements Serializable {
@@ -870,4 +873,4 @@ public class AssetSummaryMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-449896351
+// LIFERAY-REST-BUILDER-HASH:228994397

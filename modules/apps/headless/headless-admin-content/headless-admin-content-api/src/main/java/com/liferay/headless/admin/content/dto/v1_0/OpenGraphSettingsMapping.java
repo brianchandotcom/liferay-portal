@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Specific settings related to Open Graph",
 	value = "OpenGraphSettingsMapping"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Specific settings related to Open Graph"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OpenGraphSettingsMapping")
 public class OpenGraphSettingsMapping implements Serializable {
@@ -428,4 +431,4 @@ public class OpenGraphSettingsMapping implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1656302068
+// LIFERAY-REST-BUILDER-HASH:-1578657917

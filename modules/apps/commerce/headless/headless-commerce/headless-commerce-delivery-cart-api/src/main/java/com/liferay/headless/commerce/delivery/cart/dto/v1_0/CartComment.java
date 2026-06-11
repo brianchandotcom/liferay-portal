@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "Note attached to a cart. Restricted comments are visible only to staff with the manage-comments permission on the parent cart; unrestricted comments are buyer-visible.",
 	value = "CartComment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Note attached to a cart. Restricted comments are visible only to staff with the manage-comments permission on the parent cart; unrestricted comments are buyer-visible."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CartComment")
 public class CartComment implements Serializable {
@@ -786,4 +789,4 @@ public class CartComment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1729845085
+// LIFERAY-REST-BUILDER-HASH:1690104464

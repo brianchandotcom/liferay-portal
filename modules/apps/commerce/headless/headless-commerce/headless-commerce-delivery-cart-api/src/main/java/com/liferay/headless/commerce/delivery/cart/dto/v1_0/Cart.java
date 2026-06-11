@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "Shopping cart for a buyer flow while the order is still open. Aggregates line items, billing and shipping addresses, applied coupon, delivery and payment terms, order type, currency, computed totals, and the order, payment, and workflow status snapshots.",
 	value = "Cart"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Shopping cart for a buyer flow while the order is still open. Aggregates line items, billing and shipping addresses, applied coupon, delivery and payment terms, order type, currency, computed totals, and the order, payment, and workflow status snapshots."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Cart")
 public class Cart implements Serializable {
@@ -3351,4 +3354,4 @@ public class Cart implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-772923515
+// LIFERAY-REST-BUILDER-HASH:1825447673

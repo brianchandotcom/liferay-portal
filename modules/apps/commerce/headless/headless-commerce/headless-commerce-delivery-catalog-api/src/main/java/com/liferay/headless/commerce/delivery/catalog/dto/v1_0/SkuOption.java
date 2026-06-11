@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Resolved option selection captured for a specific SKU variant; carries the option key/value pair plus its price impact.",
 	value = "SkuOption"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Resolved option selection captured for a specific SKU variant; carries the option key/value pair plus its price impact."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuOption")
 public class SkuOption implements Serializable {
@@ -962,4 +965,4 @@ public class SkuOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1040825135
+// LIFERAY-REST-BUILDER-HASH:686075726

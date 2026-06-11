@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "A display page template folder.",
 	value = "DisplayPageTemplateFolder"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A display page template folder."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DisplayPageTemplateFolder")
 public class DisplayPageTemplateFolder implements Serializable {
@@ -872,4 +875,4 @@ public class DisplayPageTemplateFolder implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:250268746
+// LIFERAY-REST-BUILDER-HASH:-1446989376

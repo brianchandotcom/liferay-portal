@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The fragment's viewport style.",
 	value = "FragmentViewportStyle"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The fragment's viewport style."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentViewportStyle")
 public class FragmentViewportStyle implements Serializable {
@@ -1770,4 +1773,4 @@ public class FragmentViewportStyle implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2136383973
+// LIFERAY-REST-BUILDER-HASH:842574369

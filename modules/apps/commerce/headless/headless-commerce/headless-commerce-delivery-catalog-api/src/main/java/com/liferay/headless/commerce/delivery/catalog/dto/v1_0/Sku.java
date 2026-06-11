@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 	description = "Stock-keeping unit of a product; carries physical dimensions, pricing, availability, options, and units of measure for a single purchasable variant.",
 	value = "Sku"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Stock-keeping unit of a product; carries physical dimensions, pricing, availability, options, and units of measure for a single purchasable variant."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Sku")
 public class Sku implements Serializable {
@@ -2264,4 +2267,4 @@ public class Sku implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1897465310
+// LIFERAY-REST-BUILDER-HASH:190447730

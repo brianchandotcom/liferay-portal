@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "A value of a field of type navigation menu.",
 	value = "NavigationMenuValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A value of a field of type navigation menu."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -311,4 +314,4 @@ public abstract class NavigationMenuValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1250969232
+// LIFERAY-REST-BUILDER-HASH:-1577076112

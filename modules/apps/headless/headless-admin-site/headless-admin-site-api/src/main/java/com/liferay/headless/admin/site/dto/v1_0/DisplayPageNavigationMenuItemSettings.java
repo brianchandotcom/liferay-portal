@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Type-specific settings for \"Blogs Entry\", \"Document\", \"Knowledge Base Article\", \"Product\", \"Web Content\" navigation menu item types.",
 	value = "DisplayPageNavigationMenuItemSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Type-specific settings for \"Blogs Entry\", \"Document\", \"Knowledge Base Article\", \"Product\", \"Web Content\" navigation menu item types."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DisplayPageNavigationMenuItemSettings")
 public class DisplayPageNavigationMenuItemSettings implements Serializable {
@@ -491,4 +494,4 @@ public class DisplayPageNavigationMenuItemSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1551127187
+// LIFERAY-REST-BUILDER-HASH:313103366

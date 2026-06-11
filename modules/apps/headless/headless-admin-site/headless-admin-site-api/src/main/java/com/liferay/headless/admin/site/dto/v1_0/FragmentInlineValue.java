@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "A fragment inline value.", value = "FragmentInlineValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A fragment inline value."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentInlineValue")
 public class FragmentInlineValue implements Serializable {
@@ -236,4 +239,4 @@ public class FragmentInlineValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:769407672
+// LIFERAY-REST-BUILDER-HASH:-619976181

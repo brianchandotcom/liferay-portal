@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Payment status envelope. Exposes the integer status code together with the English label key and the label rendered in the request locale. Read-only.",
 	value = "Status"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Payment status envelope. Exposes the integer status code together with the English label key and the label rendered in the request locale. Read-only."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
@@ -357,4 +360,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1101655821
+// LIFERAY-REST-BUILDER-HASH:189513055

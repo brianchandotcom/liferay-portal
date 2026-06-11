@@ -40,6 +40,10 @@ import java.util.function.Supplier;
 	description = "Deprecated as of Athanasius (7.3.x), replaced by backgroundFragmentImage",
 	value = "BackgroundImage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	deprecated = true,
+	description = "Deprecated as of Athanasius (7.3.x), replaced by backgroundFragmentImage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BackgroundImage")
 public class BackgroundImage implements Serializable {
@@ -371,4 +375,4 @@ public class BackgroundImage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1228619100
+// LIFERAY-REST-BUILDER-HASH:1437613043

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of an action execution result of type none.",
 	value = "NoneActionExecutionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of an action execution result of type none."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NoneActionExecutionResult")
 public class NoneActionExecutionResult implements Serializable {
@@ -237,4 +240,4 @@ public class NoneActionExecutionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:634905022
+// LIFERAY-REST-BUILDER-HASH:-1363635427

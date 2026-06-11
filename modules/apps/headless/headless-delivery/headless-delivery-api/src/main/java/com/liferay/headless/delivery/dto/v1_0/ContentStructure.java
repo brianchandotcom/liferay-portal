@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Represents the content structure that backs structured content. This defines which form fields are available and the possible types and values.",
 	value = "ContentStructure"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the content structure that backs structured content. This defines which form fields are available and the possible types and values."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentStructure")
 public class ContentStructure implements Serializable {
@@ -906,4 +909,4 @@ public class ContentStructure implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1118038844
+// LIFERAY-REST-BUILDER-HASH:-1423507153

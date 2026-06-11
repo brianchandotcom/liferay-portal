@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents a connected site.", value = "ConnectedSite"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a connected site."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ConnectedSite")
 public class ConnectedSite implements Serializable {
@@ -843,4 +846,4 @@ public class ConnectedSite implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-460521873
+// LIFERAY-REST-BUILDER-HASH:-2114068135

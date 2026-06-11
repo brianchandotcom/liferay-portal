@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Represents the common navigation settings that can apply to a site page or to a widget page template.",
 	value = "NavigationSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the common navigation settings that can apply to a site page or to a widget page template."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NavigationSettings")
 public class NavigationSettings implements Serializable {
@@ -351,4 +354,4 @@ public class NavigationSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1396530518
+// LIFERAY-REST-BUILDER-HASH:1745692905

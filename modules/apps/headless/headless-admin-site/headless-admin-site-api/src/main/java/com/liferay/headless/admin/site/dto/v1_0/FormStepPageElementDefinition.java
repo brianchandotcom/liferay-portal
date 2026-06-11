@@ -32,6 +32,9 @@ import java.util.Set;
 	description = "The page element definition of a form step.",
 	value = "FormStepPageElementDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page element definition of a form step."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormStepPageElementDefinition")
 public class FormStepPageElementDefinition
@@ -191,4 +194,4 @@ public class FormStepPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1165289707
+// LIFERAY-REST-BUILDER-HASH:275337532

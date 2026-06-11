@@ -2100,4 +2100,4 @@ public class MessageBoardThread implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-287117730
+// LIFERAY-REST-BUILDER-HASH:-1398576542

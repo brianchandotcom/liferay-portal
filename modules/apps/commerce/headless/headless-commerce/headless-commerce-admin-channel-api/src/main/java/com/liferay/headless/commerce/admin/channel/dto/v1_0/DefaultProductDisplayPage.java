@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Channel-level setting that names the fallback Liferay site page used to render any product that has no explicit ProductDisplayPage mapping. Backed by the channel's group settings under the `productLayoutUuid` key; written through POST.",
 	value = "DefaultProductDisplayPage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Channel-level setting that names the fallback Liferay site page used to render any product that has no explicit ProductDisplayPage mapping. Backed by the channel's group settings under the `productLayoutUuid` key; written through POST."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DefaultProductDisplayPage")
 public class DefaultProductDisplayPage implements Serializable {
@@ -303,4 +306,4 @@ public class DefaultProductDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1750562797
+// LIFERAY-REST-BUILDER-HASH:-2074238804

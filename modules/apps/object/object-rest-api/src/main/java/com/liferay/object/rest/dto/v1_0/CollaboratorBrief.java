@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "Brief of the collaborator record for the user making the request, present only when this asset is shared with them.",
 	value = "CollaboratorBrief"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Brief of the collaborator record for the user making the request, present only when this asset is shared with them."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CollaboratorBrief")
 public class CollaboratorBrief implements Serializable {
@@ -373,4 +376,4 @@ public class CollaboratorBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-234510768
+// LIFERAY-REST-BUILDER-HASH:1543539649

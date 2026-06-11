@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Represents a fragment field with HTML.",
 	value = "FragmentFieldHTML"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a fragment field with HTML."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentFieldHTML")
 public class FragmentFieldHTML implements Serializable {
@@ -246,4 +249,4 @@ public class FragmentFieldHTML implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-354032235
+// LIFERAY-REST-BUILDER-HASH:-875669766

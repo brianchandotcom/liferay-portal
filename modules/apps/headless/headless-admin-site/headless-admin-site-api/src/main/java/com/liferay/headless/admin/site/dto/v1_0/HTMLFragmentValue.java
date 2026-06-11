@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "The value of a fragment HTML element.",
 	value = "HTMLFragmentValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The value of a fragment HTML element."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -304,4 +307,4 @@ public abstract class HTMLFragmentValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2023171485
+// LIFERAY-REST-BUILDER-HASH:1111146182

@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Per-product mapping that overrides the channel's default product site page, allowing a product to render through a different page (and optionally a page template) for SEO or merchandising purposes. Created on POST and removed on DELETE; the channel falls back to its DefaultProductDisplayPage when no mapping exists.",
 	value = "ProductDisplayPage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Per-product mapping that overrides the channel's default product site page, allowing a product to render through a different page (and optionally a page template) for SEO or merchandising purposes. Created on POST and removed on DELETE; the channel falls back to its DefaultProductDisplayPage when no mapping exists."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductDisplayPage")
 public class ProductDisplayPage implements Serializable {
@@ -543,4 +546,4 @@ public class ProductDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1638648590
+// LIFERAY-REST-BUILDER-HASH:-2124882423

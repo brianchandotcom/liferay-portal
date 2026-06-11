@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The definition of a submission result of type embedded message.",
 	value = "EmbeddedMessageFormContainerSubmissionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of a submission result of type embedded message."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "EmbeddedMessageFormContainerSubmissionResult")
 public class EmbeddedMessageFormContainerSubmissionResult
@@ -322,4 +325,4 @@ public class EmbeddedMessageFormContainerSubmissionResult
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-686023891
+// LIFERAY-REST-BUILDER-HASH:485033172

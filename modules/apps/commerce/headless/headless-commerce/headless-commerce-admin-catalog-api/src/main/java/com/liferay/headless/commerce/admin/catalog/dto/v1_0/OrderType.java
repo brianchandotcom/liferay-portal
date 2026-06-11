@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Read-only reference to a commerce order type, embedded by catalog resources to identify the order classification for a product configuration list scope; order type create, read, update, and delete operations live in a separate admin module.",
 	value = "OrderType"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only reference to a commerce order type, embedded by catalog resources to identify the order classification for a product configuration list scope; order type create, read, update, and delete operations live in a separate admin module."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrderType")
 public class OrderType implements Serializable {
@@ -296,4 +299,4 @@ public class OrderType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:18296313
+// LIFERAY-REST-BUILDER-HASH:-352986154

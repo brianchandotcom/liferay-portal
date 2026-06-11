@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents a binary file attached to a Knowledge Base article.",
 	value = "KnowledgeBaseAttachment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a binary file attached to a Knowledge Base article."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "KnowledgeBaseAttachment")
 public class KnowledgeBaseAttachment implements Serializable {
@@ -643,4 +646,4 @@ public class KnowledgeBaseAttachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:469835078
+// LIFERAY-REST-BUILDER-HASH:-1746054808

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Workflow status envelope attached to entities that participate in Liferay's workflow framework; read-only across the admin catalog API.",
 	value = "Status"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Workflow status envelope attached to entities that participate in Liferay's workflow framework; read-only across the admin catalog API."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
@@ -357,4 +360,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-270342970
+// LIFERAY-REST-BUILDER-HASH:-1742840172

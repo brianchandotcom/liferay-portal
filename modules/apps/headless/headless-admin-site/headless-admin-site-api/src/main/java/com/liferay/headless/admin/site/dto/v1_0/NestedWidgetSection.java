@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A section within a Nested Applications widget instance.",
 	value = "NestedWidgetSection"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A section within a Nested Applications widget instance."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NestedWidgetSection")
 public class NestedWidgetSection implements Serializable {
@@ -311,4 +314,4 @@ public class NestedWidgetSection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:725975492
+// LIFERAY-REST-BUILDER-HASH:-1026468357

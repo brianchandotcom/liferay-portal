@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Wire shape for a per-user product recommendation downloaded from the analytics pipeline. Given a user profiled by the categories they interact with, the model recommends products.",
 	value = "UserRecommendation"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Wire shape for a per-user product recommendation downloaded from the analytics pipeline. Given a user profiled by the categories they interact with, the model recommends products."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UserRecommendation")
 public class UserRecommendation implements Serializable {
@@ -607,4 +610,4 @@ public class UserRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1145894139
+// LIFERAY-REST-BUILDER-HASH:-181018639

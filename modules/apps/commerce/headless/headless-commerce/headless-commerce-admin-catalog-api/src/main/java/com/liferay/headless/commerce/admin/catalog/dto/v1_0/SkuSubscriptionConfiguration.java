@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Per-SKU subscription billing configuration; takes effect only when `overrideSubscriptionInfo` is true, otherwise the parent product's subscription configuration is used.",
 	value = "SkuSubscriptionConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Per-SKU subscription billing configuration; takes effect only when `overrideSubscriptionInfo` is true, otherwise the parent product's subscription configuration is used."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuSubscriptionConfiguration")
 public class SkuSubscriptionConfiguration implements Serializable {
@@ -967,4 +970,4 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-442379417
+// LIFERAY-REST-BUILDER-HASH:1041188573

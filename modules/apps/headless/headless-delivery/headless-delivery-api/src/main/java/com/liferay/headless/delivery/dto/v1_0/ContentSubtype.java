@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The display page template's content subtype.",
 	value = "ContentSubtype"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The display page template's content subtype."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentSubtype")
 public class ContentSubtype implements Serializable {
@@ -291,4 +294,4 @@ public class ContentSubtype implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-697514104
+// LIFERAY-REST-BUILDER-HASH:-109450723

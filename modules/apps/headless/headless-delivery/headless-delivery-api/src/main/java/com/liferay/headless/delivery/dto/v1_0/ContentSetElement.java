@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Represents each member of a content set and can contain different types of assets.",
 	value = "ContentSetElement"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents each member of a content set and can contain different types of assets."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentSetElement")
 public class ContentSetElement implements Serializable {
@@ -474,4 +477,4 @@ public class ContentSetElement implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:950470817
+// LIFERAY-REST-BUILDER-HASH:973023969

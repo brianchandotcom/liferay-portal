@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Buyer-facing projection of a committed (non-open) commerce order. Read via the placed-orders list or by id and ERC; PATCH applies JSON Merge Patch to a small set of buyer-editable fields (name, printedNote, purchaseOrderNumber). The open cart counterpart lives in headless-commerce-delivery-cart.",
 	value = "PlacedOrder"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Buyer-facing projection of a committed (non-open) commerce order. Read via the placed-orders list or by id and ERC; PATCH applies JSON Merge Patch to a small set of buyer-editable fields (name, printedNote, purchaseOrderNumber). The open cart counterpart lives in headless-commerce-delivery-cart."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PlacedOrder")
 public class PlacedOrder implements Serializable {
@@ -2931,4 +2934,4 @@ public class PlacedOrder implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1112746692
+// LIFERAY-REST-BUILDER-HASH:-1454679100

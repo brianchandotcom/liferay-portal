@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "A logical grouping of specifications used for display organization in the admin UI; categories are scoped per company and identified by a unique key.",
 	value = "OptionCategory"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A logical grouping of specifications used for display organization in the admin UI; categories are scoped per company and identified by a unique key."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OptionCategory")
 public class OptionCategory implements Serializable {
@@ -537,4 +540,4 @@ public class OptionCategory implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-46240874
+// LIFERAY-REST-BUILDER-HASH:628506045

@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Test Component to test the generation of getValue method on Entities when one or multiple JSON Maps are present.",
 	value = "JSONMapAttributeTestEntity"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Test Component to test the generation of getValue method on Entities when one or multiple JSON Maps are present."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "JSONMapAttributeTestEntity")
 public class JSONMapAttributeTestEntity implements Serializable {
@@ -565,4 +568,4 @@ public class JSONMapAttributeTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1388070878
+// LIFERAY-REST-BUILDER-HASH:534648921

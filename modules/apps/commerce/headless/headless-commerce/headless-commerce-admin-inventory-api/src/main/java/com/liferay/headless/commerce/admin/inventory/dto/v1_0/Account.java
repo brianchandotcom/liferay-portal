@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of the account referenced by a WarehouseAccount binding -- exposes only id, logoId, and name.",
 	value = "Account"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of the account referenced by a WarehouseAccount binding -- exposes only id, logoId, and name."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Account")
 public class Account implements Serializable {
@@ -355,4 +358,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-652200365
+// LIFERAY-REST-BUILDER-HASH:1510614020

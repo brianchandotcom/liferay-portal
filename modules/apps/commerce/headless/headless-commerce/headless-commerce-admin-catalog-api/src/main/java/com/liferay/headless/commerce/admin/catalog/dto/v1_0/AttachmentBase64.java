@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "Input variant of an attachment used by the upload-by-base64 endpoints; the file body must be supplied inline as Base64 in the `attachment` property. Backed by the same attachment entity, with CDN mode disabled (the body is always stored as a document-library file).",
 	value = "AttachmentBase64"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Input variant of an attachment used by the upload-by-base64 endpoints; the file body must be supplied inline as Base64 in the `attachment` property. Backed by the same attachment entity, with CDN mode disabled (the body is always stored as a document-library file)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AttachmentBase64")
 public class AttachmentBase64 implements Serializable {
@@ -1110,4 +1113,4 @@ public class AttachmentBase64 implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1192779667
+// LIFERAY-REST-BUILDER-HASH:-1895619627

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The page element definition of a Column.",
 	value = "ModulePageElementDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page element definition of a Column."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ModulePageElementDefinition")
 public class ModulePageElementDefinition
@@ -267,4 +270,4 @@ public class ModulePageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-417008052
+// LIFERAY-REST-BUILDER-HASH:-972674883

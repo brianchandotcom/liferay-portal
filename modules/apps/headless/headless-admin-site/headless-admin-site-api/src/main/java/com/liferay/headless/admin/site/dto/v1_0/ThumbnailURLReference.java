@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "A reference to a thumbnail file. On read, `externalReferenceCode` and `url` are populated from the underlying file entry; during a staging export, `url` is a `lar://` URL pointing at bytes embedded in the LAR archive. On write, the binary source is resolved by the precedence `externalReferenceCode` → `fileBase64` → `url`. An `externalReferenceCode` that resolves to an existing file binds it; otherwise a new file is materialized from `fileBase64` (or downloaded from `url` when `fileBase64` is absent), carrying the supplied or server-generated `externalReferenceCode`.",
 	value = "ThumbnailURLReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A reference to a thumbnail file. On read, `externalReferenceCode` and `url` are populated from the underlying file entry; during a staging export, `url` is a `lar://` URL pointing at bytes embedded in the LAR archive. On write, the binary source is resolved by the precedence `externalReferenceCode` → `fileBase64` → `url`. An `externalReferenceCode` that resolves to an existing file binds it; otherwise a new file is materialized from `fileBase64` (or downloaded from `url` when `fileBase64` is absent), carrying the supplied or server-generated `externalReferenceCode`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ThumbnailURLReference")
 public class ThumbnailURLReference implements Serializable {
@@ -360,4 +363,4 @@ public class ThumbnailURLReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:791786340
+// LIFERAY-REST-BUILDER-HASH:-1036211358

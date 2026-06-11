@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The value of a field of type color palette.",
 	value = "ColorPaletteValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The value of a field of type color palette."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ColorPaletteValue")
 public class ColorPaletteValue implements Serializable {
@@ -348,4 +351,4 @@ public class ColorPaletteValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:781600738
+// LIFERAY-REST-BUILDER-HASH:1740341701

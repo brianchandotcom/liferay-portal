@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Typed link from a product to a related product with an ordering priority.",
 	value = "RelatedProduct"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Typed link from a product to a related product with an ordering priority."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RelatedProduct")
 public class RelatedProduct implements Serializable {
@@ -479,4 +482,4 @@ public class RelatedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:21704468
+// LIFERAY-REST-BUILDER-HASH:518779423

@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Represents a Utility Page Template.",
 	value = "UtilityPageTemplate"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a Utility Page Template."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UtilityPageTemplate")
 public class UtilityPageTemplate implements Serializable {
@@ -467,4 +470,4 @@ public class UtilityPageTemplate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1733093220
+// LIFERAY-REST-BUILDER-HASH:-854140881

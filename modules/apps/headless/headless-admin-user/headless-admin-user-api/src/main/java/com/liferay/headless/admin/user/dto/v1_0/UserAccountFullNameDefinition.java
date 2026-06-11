@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents the definition of the user full name.",
 	value = "UserAccountFullNameDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the definition of the user full name."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UserAccountFullNameDefinition")
 public class UserAccountFullNameDefinition implements Serializable {
@@ -264,4 +267,4 @@ public class UserAccountFullNameDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-311331024
+// LIFERAY-REST-BUILDER-HASH:-455280894

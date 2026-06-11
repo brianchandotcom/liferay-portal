@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Link between an account and a Liferay organization. Used to mirror an organizational hierarchy into the commerce domain so that users tied to the organization inherit the account context.",
 	value = "AccountOrganization"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Link between an account and a Liferay organization. Used to mirror an organizational hierarchy into the commerce domain so that users tied to the organization inherit the account context."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountOrganization")
 public class AccountOrganization implements Serializable {
@@ -488,4 +491,4 @@ public class AccountOrganization implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1640055176
+// LIFERAY-REST-BUILDER-HASH:-846454472

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Channel-level setting that names the fallback Liferay site page used to render any product category that has no explicit CategoryDisplayPage mapping. Backed by the channel's group settings under the `assetCategoryLayoutUuid` key; written through POST.",
 	value = "DefaultCategoryDisplayPage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Channel-level setting that names the fallback Liferay site page used to render any product category that has no explicit CategoryDisplayPage mapping. Backed by the channel's group settings under the `assetCategoryLayoutUuid` key; written through POST."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DefaultCategoryDisplayPage")
 public class DefaultCategoryDisplayPage implements Serializable {
@@ -304,4 +307,4 @@ public class DefaultCategoryDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1998053838
+// LIFERAY-REST-BUILDER-HASH:-541925629

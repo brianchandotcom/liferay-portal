@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The value of a fragment configuration field of type checkbox.",
 	value = "CheckboxFragmentConfigurationFieldValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The value of a fragment configuration field of type checkbox."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CheckboxFragmentConfigurationFieldValue")
 public class CheckboxFragmentConfigurationFieldValue
@@ -317,4 +320,4 @@ public class CheckboxFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-561999319
+// LIFERAY-REST-BUILDER-HASH:-1860774529

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Read-only workflow status snapshot carried on every workflow-aware schema. Pairs the integer status code with the matching label (Approved, Pending, Draft, ...) and the user/date the last transition happened.",
 	value = "Status"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only workflow status snapshot carried on every workflow-aware schema. Pairs the integer status code with the matching label (Approved, Pending, Draft, ...) and the user/date the last transition happened."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
@@ -354,4 +357,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-931264311
+// LIFERAY-REST-BUILDER-HASH:41608296

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents a phone number. This follows the [telephone](https://schema.org/telephone) specification.",
 	value = "Phone"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a phone number. This follows the [telephone](https://schema.org/telephone) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Phone")
 public class Phone implements Serializable {
@@ -523,4 +526,4 @@ public class Phone implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:246778249
+// LIFERAY-REST-BUILDER-HASH:129683888

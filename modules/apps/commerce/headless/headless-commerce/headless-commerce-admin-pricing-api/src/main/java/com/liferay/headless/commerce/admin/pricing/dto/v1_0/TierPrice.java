@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Quantity-break override on a price entry. Backed by tier price; the DTO's `minimumQuantity` maps to the backend `minQuantity` BigDecimal threshold above which `price` (and optional `promoPrice`) supersede the parent price entry.",
 	value = "TierPrice"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Quantity-break override on a price entry. Backed by tier price; the DTO's `minimumQuantity` maps to the backend `minQuantity` BigDecimal threshold above which `price` (and optional `promoPrice`) supersede the parent price entry."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TierPrice")
 public class TierPrice implements Serializable {
@@ -665,4 +668,4 @@ public class TierPrice implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-824683202
+// LIFERAY-REST-BUILDER-HASH:-135545843

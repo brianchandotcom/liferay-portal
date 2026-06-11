@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "https://www.schema.org/FormContext", value = "FormContext"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/FormContext"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormContext")
 public class FormContext implements Serializable {
@@ -475,4 +478,4 @@ public class FormContext implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-596567754
+// LIFERAY-REST-BUILDER-HASH:-1582908023

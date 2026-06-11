@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Configurable product option attached to a product definition. The set of selectable values shapes the resolved SKU when the buyer configures the product.",
 	value = "ProductOption"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Configurable product option attached to a product definition. The set of selectable values shapes the resolved SKU when the buyer configures the product."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductOption")
 public class ProductOption implements Serializable {
@@ -907,4 +910,4 @@ public class ProductOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1276796489
+// LIFERAY-REST-BUILDER-HASH:-1796091439

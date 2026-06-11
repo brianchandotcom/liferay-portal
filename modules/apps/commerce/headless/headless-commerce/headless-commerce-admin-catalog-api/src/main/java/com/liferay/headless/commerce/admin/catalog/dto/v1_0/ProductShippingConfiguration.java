@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Physical shipping attributes (dimensions, weight, shippable flags, extra shipping cost) used by shipping engines to compute rates and labels; sourced from the product itself at the product level and from the configuration entry when embedded inside a product configuration.",
 	value = "ProductShippingConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Physical shipping attributes (dimensions, weight, shippable flags, extra shipping cost) used by shipping engines to compute rates and labels; sourced from the product itself at the product level and from the configuration entry when embedded inside a product configuration."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductShippingConfiguration")
 public class ProductShippingConfiguration implements Serializable {
@@ -661,4 +664,4 @@ public class ProductShippingConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1956682664
+// LIFERAY-REST-BUILDER-HASH:-196497596

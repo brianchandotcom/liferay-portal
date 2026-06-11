@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Monthly revenue forecast point for one account, produced by the analytics training pipeline and downloaded back into the portal by the analytics download executor.",
 	value = "AccountForecast"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Monthly revenue forecast point for one account, produced by the analytics training pipeline and downloaded back into the portal by the analytics download executor."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountForecast")
 public class AccountForecast implements Serializable {
@@ -602,4 +605,4 @@ public class AccountForecast implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1220609098
+// LIFERAY-REST-BUILDER-HASH:-791378943

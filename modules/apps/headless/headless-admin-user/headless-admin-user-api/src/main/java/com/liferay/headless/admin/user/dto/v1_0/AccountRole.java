@@ -36,6 +36,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "A role that belongs to an account", value = "AccountRole"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A role that belongs to an account"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountRole")
 public class AccountRole implements Serializable {
@@ -626,4 +629,4 @@ public class AccountRole implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2140644292
+// LIFERAY-REST-BUILDER-HASH:785272561

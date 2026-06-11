@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "The collection display's list style.",
 	value = "CollectionDisplayListStyle"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The collection display's list style."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -320,4 +323,4 @@ public abstract class CollectionDisplayListStyle implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-513922137
+// LIFERAY-REST-BUILDER-HASH:-1747515941

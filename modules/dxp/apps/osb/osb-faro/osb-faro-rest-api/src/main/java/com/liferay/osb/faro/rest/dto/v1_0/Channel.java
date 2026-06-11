@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "A logical grouping of data coming from configured data sources (e.g. a website, a CRM connection) under which asset metrics, events, individuals, and segments are scoped. Also known as property.",
 	value = "Channel"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A logical grouping of data coming from configured data sources (e.g. a website, a CRM connection) under which asset metrics, events, individuals, and segments are scoped. Also known as property."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Channel")
 public class Channel implements Serializable {
@@ -293,4 +296,4 @@ public class Channel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:9348270
+// LIFERAY-REST-BUILDER-HASH:1128866332

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A unique reference to a FragmentMappedValueItemReference of type FragmentMappedValueItemExternalReference which remains constant across environments.",
 	value = "FragmentMappedValueItemExternalReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A unique reference to a FragmentMappedValueItemReference of type FragmentMappedValueItemExternalReference which remains constant across environments."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentMappedValueItemExternalReference")
 public class FragmentMappedValueItemExternalReference
@@ -370,4 +373,4 @@ public class FragmentMappedValueItemExternalReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-473236050
+// LIFERAY-REST-BUILDER-HASH:-670463618

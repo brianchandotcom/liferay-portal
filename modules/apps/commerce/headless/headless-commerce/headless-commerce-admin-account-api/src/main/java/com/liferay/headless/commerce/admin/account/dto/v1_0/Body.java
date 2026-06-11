@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Multipart upload envelope for an account logo addressed by internal identifier. Contains a single binary file field named `logo` that replaces the current account logo.",
 	value = "Body"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Multipart upload envelope for an account logo addressed by internal identifier. Contains a single binary file field named `logo` that replaces the current account logo."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Body")
 public class Body implements Serializable {
@@ -236,4 +239,4 @@ public class Body implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:240578499
+// LIFERAY-REST-BUILDER-HASH:-1399196005

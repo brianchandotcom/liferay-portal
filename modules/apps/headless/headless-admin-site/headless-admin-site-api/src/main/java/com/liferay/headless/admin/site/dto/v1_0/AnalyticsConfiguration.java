@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Contains all analytics configuration properties.",
 	value = "AnalyticsConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Contains all analytics configuration properties."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AnalyticsConfiguration")
 public class AnalyticsConfiguration implements Serializable {
@@ -302,4 +305,4 @@ public class AnalyticsConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-838989622
+// LIFERAY-REST-BUILDER-HASH:-1796512423

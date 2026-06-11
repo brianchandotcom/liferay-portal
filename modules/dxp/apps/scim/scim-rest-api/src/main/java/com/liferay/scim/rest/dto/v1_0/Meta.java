@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "A complex attribute containing resource metadata.",
 	value = "Meta"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A complex attribute containing resource metadata."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Meta")
 public class Meta implements Serializable {
@@ -485,4 +488,4 @@ public class Meta implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-908793429
+// LIFERAY-REST-BUILDER-HASH:-1659118297

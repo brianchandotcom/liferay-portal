@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Reusable delivery or payment term assigned to a placed order. Returned by the placed-order delivery-term and payment-term endpoints. Read-only on this surface.",
 	value = "Term"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Reusable delivery or payment term assigned to a placed order. Returned by the placed-order delivery-term and payment-term endpoints. Read-only on this surface."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Term")
 public class Term implements Serializable {
@@ -413,4 +416,4 @@ public class Term implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-389742374
+// LIFERAY-REST-BUILDER-HASH:1259587404

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a parent object entry folder brief.",
 	value = "ParentObjectEntryFolderBrief"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a parent object entry folder brief."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentObjectEntryFolderBrief")
 public class ParentObjectEntryFolderBrief implements Serializable {
@@ -476,4 +479,4 @@ public class ParentObjectEntryFolderBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-84396635
+// LIFERAY-REST-BUILDER-HASH:441281170

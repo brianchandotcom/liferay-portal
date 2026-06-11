@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "The form container reference.",
 	value = "FormContainerReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The form container reference."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -312,4 +315,4 @@ public abstract class FormContainerReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-162141138
+// LIFERAY-REST-BUILDER-HASH:311111955

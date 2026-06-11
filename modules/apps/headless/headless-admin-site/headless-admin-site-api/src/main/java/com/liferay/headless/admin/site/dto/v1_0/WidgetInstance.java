@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A widget instance, containing the common properties of both a content page widget instance and a widget page widget instance.",
 	value = "WidgetInstance"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A widget instance, containing the common properties of both a content page widget instance and a widget page widget instance."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WidgetInstance")
 public class WidgetInstance implements Serializable {
@@ -423,4 +426,4 @@ public class WidgetInstance implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2079738478
+// LIFERAY-REST-BUILDER-HASH:1104885771

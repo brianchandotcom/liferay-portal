@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Checkout-progress step on a placed order (for example, cart, address, shipping, payment, confirmation). Returned in the steps array on PlacedOrder. Read-only.",
 	value = "Step"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Checkout-progress step on a placed order (for example, cart, address, shipping, payment, confirmation). Returned in the steps array on PlacedOrder. Read-only."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Step")
 public class Step implements Serializable {
@@ -361,4 +364,4 @@ public class Step implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:791691437
+// LIFERAY-REST-BUILDER-HASH:-691796557

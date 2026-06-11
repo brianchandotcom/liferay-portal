@@ -36,6 +36,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "The template's reference.", value = "TemplateReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The template's reference."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TemplateReference")
 public class TemplateReference implements Serializable {
@@ -294,4 +297,4 @@ public class TemplateReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:943721775
+// LIFERAY-REST-BUILDER-HASH:-2018456275

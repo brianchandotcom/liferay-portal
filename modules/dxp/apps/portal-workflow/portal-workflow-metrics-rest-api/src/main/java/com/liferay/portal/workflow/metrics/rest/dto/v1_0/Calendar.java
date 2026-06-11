@@ -36,6 +36,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "https://www.schema.org/Calendar", value = "Calendar"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/Calendar"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Calendar")
 public class Calendar implements Serializable {
@@ -341,4 +344,4 @@ public class Calendar implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1656555239
+// LIFERAY-REST-BUILDER-HASH:668950461

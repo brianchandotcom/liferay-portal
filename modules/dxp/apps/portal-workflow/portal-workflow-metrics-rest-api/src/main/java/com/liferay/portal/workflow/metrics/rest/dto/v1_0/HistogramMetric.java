@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "https://www.schema.org/HistogramMetric",
 	value = "HistogramMetric"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/HistogramMetric"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "HistogramMetric")
 public class HistogramMetric implements Serializable {
@@ -404,4 +407,4 @@ public class HistogramMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1870960835
+// LIFERAY-REST-BUILDER-HASH:2052185279

@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "A file attached to an order (image, document, virtual asset). Carries the file content on upload and file metadata, download URL, and a restricted flag for visibility control on retrieval.",
 	value = "Attachment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A file attached to an order (image, document, virtual asset). Carries the file content on upload and file metadata, download URL, and a restricted flag for visibility control on retrieval."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Attachment")
 public class Attachment implements Serializable {
@@ -971,4 +974,4 @@ public class Attachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1921653554
+// LIFERAY-REST-BUILDER-HASH:-508840963

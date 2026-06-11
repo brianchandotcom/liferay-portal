@@ -39,6 +39,10 @@ import java.util.function.Supplier;
 	description = "Deprecated -- per-account override of a channel-level commerce rule (currency, delivery or payment term, discount, payment method, price list, reserved billing or shipping address, or assigned user). The effective override type is derived from the endpoint path rather than from the payload. New integrations should use the per-account shipping option override or the nested account sub-resources.",
 	value = "AccountChannelEntry"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	deprecated = true,
+	description = "Deprecated -- per-account override of a channel-level commerce rule (currency, delivery or payment term, discount, payment method, price list, reserved billing or shipping address, or assigned user). The effective override type is derived from the endpoint path rather than from the payload. New integrations should use the per-account shipping option override or the nested account sub-resources."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountChannelEntry")
 public class AccountChannelEntry implements Serializable {
@@ -783,4 +787,4 @@ public class AccountChannelEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1322465951
+// LIFERAY-REST-BUILDER-HASH:1070820657

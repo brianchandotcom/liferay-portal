@@ -686,8 +686,8 @@
 	"preload": false,
 	"schemaVersion": 42,
 	"tags": [
-		"Liferay",
-		"Databases"
+		"Databases",
+		"Liferay"
 	],
 	"templating": {
 		"list": [

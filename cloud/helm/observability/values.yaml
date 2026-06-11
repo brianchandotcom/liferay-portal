@@ -29,14 +29,14 @@ alerting:
             expr: |
                 sum by (environment_id, project_id, database_id, data_plane) (
                     label_replace(
-                      label_replace(
                         label_replace(
-                          label_replace(
-                            liferay:_rds_vcpu,
-                            "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
-                          "project_id", "$1", "tag_ProjectId", "(.+)"),
-                        "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
-                      "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
+                            label_replace(
+                                label_replace(
+                                    liferay:_rds_vcpu,
+                                    "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
+                                "project_id", "$1", "tag_ProjectId", "(.+)"),
+                            "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
+                        "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
                 )
             record: liferay:db_cpu_reserved_cores
         db-cpu-reserved-cores-gcp:
@@ -44,10 +44,10 @@ alerting:
             expr: |
                 sum by (environment_id, database_id) (
                     label_replace(
-                      label_replace(
-                        cloudsql_googleapis_com:database_cpu_reserved_cores,
-                        "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                      "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                        label_replace(
+                            cloudsql_googleapis_com:database_cpu_reserved_cores,
+                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
+                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
                 )
             record: liferay:db_cpu_reserved_cores
         db-cpu-used-cores-aws:
@@ -55,16 +55,16 @@ alerting:
             expr: |
                 sum by (environment_id, project_id, database_id, data_plane) (
                     label_replace(
-                      label_replace(
                         label_replace(
-                          label_replace(
-                            liferay:_rds_vcpu
-                            * on(dbinstance_identifier) group_left()
-                            (rds_cpu_usage_percent_average{job="prometheus-rds-exporter"} / 100),
-                            "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
-                          "project_id", "$1", "tag_ProjectId", "(.+)"),
-                        "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
-                      "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
+                            label_replace(
+                                label_replace(
+                                    liferay:_rds_vcpu
+                                    * on(dbinstance_identifier) group_left()
+                                    (rds_cpu_usage_percent_average{job="prometheus-rds-exporter"} / 100),
+                                    "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
+                                "project_id", "$1", "tag_ProjectId", "(.+)"),
+                            "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
+                        "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
                 )
             record: liferay:db_cpu_used_cores
         db-cpu-used-cores-gcp:
@@ -72,10 +72,10 @@ alerting:
             expr: |
                 sum by (environment_id, database_id) (
                     label_replace(
-                      label_replace(
-                        rate(cloudsql_googleapis_com:database_cpu_usage_time[5m]),
-                        "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                      "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                        label_replace(
+                            rate(cloudsql_googleapis_com:database_cpu_usage_time[5m]),
+                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
+                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
                 )
             record: liferay:db_cpu_used_cores
         db-cpu-utilization-percent-aws:
@@ -83,17 +83,17 @@ alerting:
             expr: |
                 sum by (environment_id, project_id, database_id, data_plane, engine) (
                     label_replace(
-                      label_replace(
                         label_replace(
-                          label_replace(
                             label_replace(
-                              aws_rds_cpuutilization_average{job="cloudwatch-rds"}
-                              * on(dbinstance_identifier) group_left(tag_EnvironmentId, tag_ProjectId) liferay:_rds_meta,
-                              "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
-                            "project_id", "$1", "tag_ProjectId", "(.+)"),
-                          "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
-                        "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$"),
-                      "engine", "$1", "dimension_EngineName", "(.+)")
+                                label_replace(
+                                    label_replace(
+                                        aws_rds_cpuutilization_average{job="cloudwatch-rds"}
+                                        * on(dbinstance_identifier) group_left(tag_EnvironmentId, tag_ProjectId) liferay:_rds_meta,
+                                        "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
+                                    "project_id", "$1", "tag_ProjectId", "(.+)"),
+                                "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
+                            "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$"),
+                        "engine", "$1", "dimension_EngineName", "(.+)")
                 )
             record: liferay:db_cpu_utilization_percent
         db-cpu-utilization-percent-gcp:
@@ -101,14 +101,14 @@ alerting:
             expr: |
                 sum by (environment_id, database_id) (
                     label_replace(
-                      label_replace(
-                        rate(cloudsql_googleapis_com:database_cpu_usage_time[5m])
-                        /
-                        on(metadata_user_environment_id, metadata_system_name, db_name)
-                        cloudsql_googleapis_com:database_cpu_reserved_cores
-                        * 100,
-                        "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                      "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                        label_replace(
+                            rate(cloudsql_googleapis_com:database_cpu_usage_time[5m])
+                            /
+                            on(metadata_user_environment_id, metadata_system_name, db_name)
+                            cloudsql_googleapis_com:database_cpu_reserved_cores
+                            * 100,
+                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
+                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
                 )
             record: liferay:db_cpu_utilization_percent
         db-disk-total-bytes-aws:
@@ -116,15 +116,15 @@ alerting:
             expr: |
                 sum by (environment_id, project_id, database_id, data_plane, engine) (
                     label_replace(
-                      label_replace(
                         label_replace(
-                          label_replace(
-                            rds_allocated_storage_bytes{job="prometheus-rds-exporter"}
-                            * on(dbinstance_identifier) group_left(tag_EnvironmentId, tag_ProjectId) liferay:_rds_meta,
-                            "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
-                          "project_id", "$1", "tag_ProjectId", "(.+)"),
-                        "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
-                      "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
+                            label_replace(
+                                label_replace(
+                                    rds_allocated_storage_bytes{job="prometheus-rds-exporter"}
+                                    * on(dbinstance_identifier) group_left(tag_EnvironmentId, tag_ProjectId) liferay:_rds_meta,
+                                    "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
+                                "project_id", "$1", "tag_ProjectId", "(.+)"),
+                            "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
+                        "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
                 )
             record: liferay:db_disk_total_bytes
         db-disk-total-bytes-gcp:
@@ -132,10 +132,10 @@ alerting:
             expr: |
                 sum by (environment_id, database_id) (
                     label_replace(
-                      label_replace(
-                        cloudsql_googleapis_com:database_disk_quota,
-                        "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                      "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                        label_replace(
+                            cloudsql_googleapis_com:database_disk_quota,
+                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
+                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
                 )
             record: liferay:db_disk_total_bytes
         db-disk-used-bytes-aws:
@@ -143,16 +143,16 @@ alerting:
             expr: |
                 sum by (environment_id, project_id, database_id, data_plane) (
                     label_replace(
-                      label_replace(
                         label_replace(
-                          label_replace(
-                            (rds_allocated_storage_bytes{job="prometheus-rds-exporter"}
-                             - on(dbinstance_identifier) rds_free_storage_bytes{job="prometheus-rds-exporter"})
-                            * on(dbinstance_identifier) group_left(tag_EnvironmentId, tag_ProjectId) liferay:_rds_meta,
-                            "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
-                          "project_id", "$1", "tag_ProjectId", "(.+)"),
-                        "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
-                      "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
+                            label_replace(
+                                label_replace(
+                                    (rds_allocated_storage_bytes{job="prometheus-rds-exporter"}
+                                     - on(dbinstance_identifier) rds_free_storage_bytes{job="prometheus-rds-exporter"})
+                                    * on(dbinstance_identifier) group_left(tag_EnvironmentId, tag_ProjectId) liferay:_rds_meta,
+                                    "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
+                                "project_id", "$1", "tag_ProjectId", "(.+)"),
+                            "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
+                        "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
                 )
             record: liferay:db_disk_used_bytes
         db-disk-used-bytes-gcp:
@@ -160,10 +160,10 @@ alerting:
             expr: |
                 sum by (environment_id, database_id) (
                     label_replace(
-                      label_replace(
-                        cloudsql_googleapis_com:database_disk_bytes_used,
-                        "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                      "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                        label_replace(
+                            cloudsql_googleapis_com:database_disk_bytes_used,
+                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
+                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
                 )
             record: liferay:db_disk_used_bytes
         db-instance-state-aws:
@@ -171,15 +171,15 @@ alerting:
             expr: |
                 sum by (environment_id, project_id, database_id, data_plane, state) (
                     label_replace(
-                      label_replace(
                         label_replace(
-                          label_replace(
-                            label_replace(rds_instance_status{job="prometheus-rds-exporter"} == 1, "state", "RUNNING", "dbinstance_identifier", ".*")
-                            * on(dbinstance_identifier) group_left(tag_EnvironmentId, tag_ProjectId) liferay:_rds_meta,
-                            "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
-                          "project_id", "$1", "tag_ProjectId", "(.+)"),
-                        "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
-                      "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
+                            label_replace(
+                                label_replace(
+                                    label_replace(rds_instance_status{job="prometheus-rds-exporter"} == 1, "state", "RUNNING", "dbinstance_identifier", ".*")
+                                    * on(dbinstance_identifier) group_left(tag_EnvironmentId, tag_ProjectId) liferay:_rds_meta,
+                                    "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
+                                "project_id", "$1", "tag_ProjectId", "(.+)"),
+                            "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
+                        "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
                 )
             record: liferay:db_instance_state
         db-instance-state-gcp:
@@ -187,10 +187,10 @@ alerting:
             expr: |
                 sum by (environment_id, database_id, state) (
                     label_replace(
-                      label_replace(
-                        last_over_time(cloudsql_googleapis_com:database_instance_state[5m]) > 0,
-                        "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                      "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                        label_replace(
+                            last_over_time(cloudsql_googleapis_com:database_instance_state[5m]) > 0,
+                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
+                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
                 )
             record: liferay:db_instance_state
         db-memory-total-bytes-aws:
@@ -198,14 +198,14 @@ alerting:
             expr: |
                 sum by (environment_id, project_id, database_id, data_plane) (
                     label_replace(
-                      label_replace(
                         label_replace(
-                          label_replace(
-                            liferay:_rds_memory_bytes,
-                            "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
-                          "project_id", "$1", "tag_ProjectId", "(.+)"),
-                        "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
-                      "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
+                            label_replace(
+                                label_replace(
+                                    liferay:_rds_memory_bytes,
+                                    "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
+                                "project_id", "$1", "tag_ProjectId", "(.+)"),
+                            "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
+                        "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
                 )
             record: liferay:db_memory_total_bytes
         db-memory-total-bytes-gcp:
@@ -213,10 +213,10 @@ alerting:
             expr: |
                 sum by (environment_id, database_id) (
                     label_replace(
-                      label_replace(
-                        cloudsql_googleapis_com:database_memory_quota,
-                        "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                      "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                        label_replace(
+                            cloudsql_googleapis_com:database_memory_quota,
+                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
+                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
                 )
             record: liferay:db_memory_total_bytes
         db-memory-used-bytes-aws:
@@ -224,16 +224,16 @@ alerting:
             expr: |
                 sum by (environment_id, project_id, database_id, data_plane) (
                     label_replace(
-                      label_replace(
                         label_replace(
-                          label_replace(
-                            liferay:_rds_memory_bytes
-                            - on(dbinstance_identifier)
-                            rds_freeable_memory_bytes{job="prometheus-rds-exporter"},
-                            "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
-                          "project_id", "$1", "tag_ProjectId", "(.+)"),
-                        "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
-                      "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
+                            label_replace(
+                                label_replace(
+                                    liferay:_rds_memory_bytes
+                                    - on(dbinstance_identifier)
+                                    rds_freeable_memory_bytes{job="prometheus-rds-exporter"},
+                                    "environment_id", "$1", "tag_EnvironmentId", "(.+)"),
+                                "project_id", "$1", "tag_ProjectId", "(.+)"),
+                            "data_plane", "$1", "dbinstance_identifier", ".*-database-(blue|green)$"),
+                        "database_id", "$1", "dbinstance_identifier", "(.+?)-database-(?:blue|green)$")
                 )
             record: liferay:db_memory_used_bytes
         db-memory-used-bytes-gcp:
@@ -241,10 +241,10 @@ alerting:
             expr: |
                 sum by (environment_id, database_id) (
                     label_replace(
-                      label_replace(
-                        cloudsql_googleapis_com:database_memory_usage,
-                        "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                      "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                        label_replace(
+                            cloudsql_googleapis_com:database_memory_usage,
+                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
+                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
                 )
             record: liferay:db_memory_used_bytes
         rds-memory-bytes-aws:

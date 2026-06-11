@@ -111,13 +111,13 @@ public interface ProductResource {
 			String sortString)
 		throws Exception;
 
-	public void patchProduct(Long id, Product product) throws Exception;
+	public Product patchProduct(Long id, Product product) throws Exception;
 
 	public HttpInvoker.HttpResponse patchProductHttpResponse(
 			Long id, Product product)
 		throws Exception;
 
-	public void patchProductByExternalReferenceCode(
+	public Product patchProductByExternalReferenceCode(
 			String externalReferenceCode, Product product)
 		throws Exception;
 
@@ -1354,7 +1354,7 @@ public interface ProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchProduct(Long id, Product product) throws Exception {
+		public Product patchProduct(Long id, Product product) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = patchProductHttpResponse(
 				id, product);
 
@@ -1404,6 +1404,17 @@ public interface ProductResource {
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
 			}
+
+			try {
+				return ProductSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse patchProductHttpResponse(
@@ -1448,7 +1459,7 @@ public interface ProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchProductByExternalReferenceCode(
+		public Product patchProductByExternalReferenceCode(
 				String externalReferenceCode, Product product)
 			throws Exception {
 
@@ -1501,6 +1512,17 @@ public interface ProductResource {
 				_logger.fine(
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
+			}
+
+			try {
+				return ProductSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 
@@ -2224,4 +2246,4 @@ public interface ProductResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1070201665
+// LIFERAY-REST-BUILDER-HASH:764118699

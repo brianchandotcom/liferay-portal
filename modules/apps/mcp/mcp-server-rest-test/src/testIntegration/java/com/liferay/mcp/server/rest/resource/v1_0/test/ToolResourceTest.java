@@ -8,6 +8,7 @@ package com.liferay.mcp.server.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mcp.server.rest.client.dto.v1_0.Tool;
 import com.liferay.mcp.server.rest.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -41,6 +42,7 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 	@Test
 	public void testPostToolSetToolSetNameToolInvoke() throws Exception {
 		byte[] bytes = RandomTestUtil.randomBytes();
+		Base64.Encoder encoder = Base64.getEncoder();
 		String fileName =
 			"mcp-upload-" + RandomTestUtil.randomString() + ".txt";
 
@@ -52,11 +54,7 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 					JSONUtil.put(
 						"contentType", "text/plain"
 					).put(
-						"data",
-						Base64.getEncoder(
-						).encodeToString(
-							bytes
-						)
+						"data", encoder.encodeToString(bytes)
 					).put(
 						"filename", fileName
 					)
@@ -82,12 +80,13 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 					"toolSetName", "mcp-server-v1.0"
 				).toString());
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			httpResponse.getContent());
+
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
+
 		Assert.assertFalse(
-			JSONFactoryUtil.createJSONObject(
-				httpResponse.getContent()
-			).getJSONArray(
-				"items"
-			).getJSONObject(
+			jsonArray.getJSONObject(
 				0
 			).has(
 				"xClassName"

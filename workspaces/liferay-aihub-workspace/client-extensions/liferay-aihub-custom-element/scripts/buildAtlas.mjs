@@ -10,16 +10,6 @@ import {PurgeCSS} from 'purgecss';
 
 const require = createRequire(import.meta.url);
 
-// Atlas is Clay's stylesheet (Bootstrap based) and ships at ~800 KB. The widget
-// injects it into its shadow root, so shipping it whole would dominate the
-// bundle. This purges Atlas down to the rules the widget can actually use,
-// scanning both the widget source and the installed @clayui package JS (where
-// Clay's component class names live). The purge tracks the @clayui packages
-// that are installed, so the bundle grows only when a new Clay component is
-// adopted. Correctness of the purge (no over-purged Clay styles) is verified by
-// the browser tests; the safelist below covers classes Clay toggles at runtime
-// or builds dynamically that static scanning cannot see.
-
 const outDir = path.resolve('src/assets');
 const outFile = path.join(outDir, 'atlas.css');
 
@@ -50,18 +40,9 @@ const [purged] = await new PurgeCSS().purge({
 		`${clayDir}/**/lib/**/*.{js,mjs}`,
 	],
 	css: [{extension: 'css', raw: fs.readFileSync(atlasPath, 'utf8')}],
-
-	// Keep CSS custom properties (the :root variables Atlas defines and the
-	// widget re-homes onto :host) and animation keyframes.
-
 	fontFace: false,
 	keyframes: false,
 	safelist: {
-
-		// Clay builds some class names dynamically (e.g. ClayButton renders
-		// `btn-${displayType}`), so static scanning cannot see them; keep the
-		// button display-type variants and the icon classes.
-
 		greedy: [/lexicon-icon/, /^btn-/],
 		standard: [
 			/^:root$/,
@@ -91,9 +72,6 @@ const [purged] = await new PurgeCSS().purge({
 });
 
 fs.mkdirSync(outDir, {recursive: true});
-
-// The leading comment carries an @generated marker so the source formatter
-// skips this file; it is rewritten on every build and must not be hand-edited.
 
 fs.writeFileSync(
 	outFile,

@@ -42,12 +42,6 @@ if (!document.getElementById(CHATBOT_HOST_ID)) {
 
 		const shadowRoot = hostElement.attachShadow({mode: 'open'});
 
-		// Inject Atlas + widget CSS into the shadow root. A `<link>` in the host
-		// <head> (the cssURLs mechanism) cannot cross the shadow boundary, so the
-		// CSS travels in the JS bundle and is injected here. `:root` does not
-		// match inside a shadow tree, so re-home Clay's custom properties onto
-		// `:host`.
-
 		const styleElement = document.createElement('style');
 
 		styleElement.textContent =
@@ -55,16 +49,11 @@ if (!document.getElementById(CHATBOT_HOST_ID)) {
 
 		shadowRoot.appendChild(styleElement);
 
-		// React mounts here; the id carries the existing id-scoped widget CSS.
-
 		const mountNode = document.createElement('div');
 
 		mountNode.id = CHATBOT_WIDGET_ID;
 
 		shadowRoot.appendChild(mountNode);
-
-		// Container for Clay overlays (modal, dropdowns) so they portal into the
-		// shadow tree where Atlas applies, instead of escaping to document.body.
 
 		const portalNode = document.createElement('div');
 

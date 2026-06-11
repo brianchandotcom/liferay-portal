@@ -12,7 +12,7 @@ function main {
 		sed 's/^dxp-//' | \
 		head --lines 1)
 
-	if [[ -z "${latest_lts_dxp_version}" ]]
+	if [[ -z ${latest_lts_dxp_version} ]]
 	then
 		echo "Unable to determine the latest LTS DXP version" >&2
 
@@ -44,7 +44,7 @@ function _check_if_image_exists {
 		--write-out '%{http_code}' \
 		"https://hub.docker.com/v2/repositories/liferay/dxp/tags/${tag}")
 
-	if [[ "${http_code}" != "200" ]]
+	if [[ ${http_code} != 200 ]]
 	then
 		echo "Image liferay/dxp:${tag} does not exist on DockerHub" >&2
 

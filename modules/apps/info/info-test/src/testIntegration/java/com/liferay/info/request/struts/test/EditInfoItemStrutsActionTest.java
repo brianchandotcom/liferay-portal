@@ -737,11 +737,9 @@ public class EditInfoItemStrutsActionTest {
 			"classPK",
 			Collections.singletonList(
 				String.valueOf(objectEntry.getObjectEntryId())));
-		regularParameters.put(
-			"ObjectField_myLocalizedMultiselectPicklist_en_US",
-			Collections.emptyList());
-
 		regularParameters.remove("ObjectField_myBoolean");
+		regularParameters.remove(
+			"ObjectField_myLocalizedMultiselectPicklist_en_US");
 		regularParameters.remove("ObjectField_myMultiselectPicklist");
 
 		mockHttpServletResponse = new MockHttpServletResponse();
@@ -765,12 +763,12 @@ public class EditInfoItemStrutsActionTest {
 
 		Assert.assertEquals(
 			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
-		Assert.assertTrue(
-			Validator.isNull(
-				String.valueOf(values.get("myLocalizedMultiselectPicklist"))));
-		Assert.assertTrue(
-			Validator.isNull(
-				String.valueOf(values.get("myMultiselectPicklist"))));
+		Assert.assertEquals(
+			StringPool.BLANK,
+			String.valueOf(values.get("myLocalizedMultiselectPicklist")));
+		Assert.assertEquals(
+			StringPool.BLANK,
+			String.valueOf(values.get("myMultiselectPicklist")));
 	}
 
 	@Test

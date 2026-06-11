@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -33,7 +35,7 @@ function main {
 
 		local sanitized_terraform_module_name
 
-		sanitized_terraform_module_name="$(echo "${terraform_module}" | tr "/" "-")"
+		sanitized_terraform_module_name="$(echo "${terraform_module}" | tr '/' '-')"
 
 		terraform test \
 			-junit-xml="${terraform_dir}/test-results/${sanitized_terraform_module_name}.xml"

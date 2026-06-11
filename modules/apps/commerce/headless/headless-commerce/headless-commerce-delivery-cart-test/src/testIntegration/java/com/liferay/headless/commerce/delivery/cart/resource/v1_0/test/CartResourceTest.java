@@ -188,8 +188,8 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	@Override
 	@Test
 	public void testGetCartPaymentURL() throws Exception {
-		_testGetCartPaymentURLWithAccountOrder();
-		_testGetCartPaymentURLWithGuestOrder();
+		_testGetCartPaymentURLWithBusinessAccount();
+		_testGetCartPaymentURLWithGuestAccount();
 	}
 
 	@Override
@@ -527,7 +527,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		};
 	}
 
-	private void _testGetCartPaymentURLWithAccountOrder() throws Exception {
+	private void _testGetCartPaymentURLWithBusinessAccount() throws Exception {
 		Cart cart = _createCart();
 
 		String callbackURL = RandomTestUtil.randomString();
@@ -540,7 +540,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 			cartResource.getCartPaymentURL(cart.getId(), callbackURL));
 	}
 
-	private void _testGetCartPaymentURLWithGuestOrder() throws Exception {
+	private void _testGetCartPaymentURLWithGuestAccount() throws Exception {
 		AccountEntry accountEntry =
 			_accountEntryLocalService.getGuestAccountEntry(
 				testCompany.getCompanyId());

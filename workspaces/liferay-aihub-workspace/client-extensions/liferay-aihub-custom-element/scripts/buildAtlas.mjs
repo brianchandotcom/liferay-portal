@@ -57,7 +57,12 @@ const [purged] = await new PurgeCSS().purge({
 	fontFace: false,
 	keyframes: false,
 	safelist: {
-		greedy: [/lexicon-icon/],
+
+		// Clay builds some class names dynamically (e.g. ClayButton renders
+		// `btn-${displayType}`), so static scanning cannot see them; keep the
+		// button display-type variants and the icon classes.
+
+		greedy: [/lexicon-icon/, /^btn-/],
 		standard: [
 			/^:root$/,
 			/^:host$/,

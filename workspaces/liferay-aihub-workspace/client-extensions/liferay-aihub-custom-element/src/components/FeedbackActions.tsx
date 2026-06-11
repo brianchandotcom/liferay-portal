@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
-
-import {ThumbsDownIcon, ThumbsUpIcon} from './Icons';
 
 interface FeedbackActionsProps {
 	feedbackGiven?: boolean;
@@ -20,27 +19,25 @@ export default function FeedbackActions({
 }: FeedbackActionsProps) {
 	return (
 		<div className="aihub-feedback-actions">
-			<button
+			<ClayButtonWithIcon
 				aria-label="Good response"
 				className="aihub-feedback-btn"
 				disabled={feedbackGiven}
+				displayType="unstyled"
 				onClick={onThumbsUp}
+				symbol="thumbs-up"
 				title="Good response"
-				type="button"
-			>
-				<ThumbsUpIcon />
-			</button>
+			/>
 
-			<button
+			<ClayButtonWithIcon
 				aria-label="Report Bad Result"
 				className="aihub-feedback-btn"
 				disabled={feedbackGiven}
+				displayType="unstyled"
 				onClick={onThumbsDown}
+				symbol="thumbs-down"
 				title="Report Bad Result"
-				type="button"
-			>
-				<ThumbsDownIcon />
-			</button>
+			/>
 		</div>
 	);
 }

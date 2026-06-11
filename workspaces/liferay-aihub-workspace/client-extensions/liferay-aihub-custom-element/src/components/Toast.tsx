@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import React, {useEffect, useRef} from 'react';
-
-import {CheckCircleIcon} from './Icons';
 
 interface ToastProps {
 	message: string;
@@ -26,7 +25,7 @@ export default function Toast({message, onDismiss}: ToastProps) {
 	return (
 		<div className="aihub-toast" role="status">
 			<span className="aihub-toast-icon">
-				<CheckCircleIcon />
+				<ClayIcon symbol="check-circle-full" />
 			</span>
 
 			<span>{message}</span>

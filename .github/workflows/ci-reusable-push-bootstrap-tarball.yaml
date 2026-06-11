@@ -12,6 +12,7 @@ jobs:
                 with:
                     fetch-depth: 1
                     filter: tree:0
+                    show-progress: false
                     sparse-checkout: |
                         cloud/scripts
                         cloud/terraform/${{inputs.provider}}

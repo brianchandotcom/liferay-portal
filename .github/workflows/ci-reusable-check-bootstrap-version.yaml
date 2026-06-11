@@ -12,6 +12,7 @@ jobs:
                 with:
                     fetch-depth: 1
                     filter: tree:0
+                    show-progress: false
                     sparse-checkout: cloud/scripts
             -   id: auth_production
                 name: Authenticate to Google Cloud (Production)

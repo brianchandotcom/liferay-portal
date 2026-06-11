@@ -427,13 +427,7 @@ public class UpgradeLogProgressTrackerTest {
 				tasks.add(
 					() -> {
 						for (int j = 0; j < _ITERATIONS_PER_THREAD; j++) {
-							ResultSet resultSet = Mockito.mock(ResultSet.class);
-
-							Mockito.when(
-								resultSet.next()
-							).thenReturn(
-								true, false
-							);
+							ResultSet resultSet = _mockSingleRowResultSet();
 
 							ResultSet wrappedResultSet = _wrapResultSet(
 								resultSet, _UPGRADE_PROCESS_CLASS_NAME);
@@ -1694,6 +1688,18 @@ public class UpgradeLogProgressTrackerTest {
 			resultSet.next()
 		).thenReturn(
 			true
+		);
+
+		return resultSet;
+	}
+
+	private ResultSet _mockSingleRowResultSet() throws Exception {
+		ResultSet resultSet = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			resultSet.next()
+		).thenReturn(
+			true, false
 		);
 
 		return resultSet;

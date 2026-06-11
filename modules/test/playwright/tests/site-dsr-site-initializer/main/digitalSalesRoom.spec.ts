@@ -357,6 +357,8 @@ test(
 
 		await digitalSalesRoomsPage.goToRoomsPage();
 
+		await digitalSalesRoomsPage.archiveRoom(roomName);
+		await digitalSalesRoomsPage.showArchivedRooms();
 		await digitalSalesRoomsPage.clickRowActionsMenuItem(
 			roomName,
 			digitalSalesRoomsPage.deleteMenuItem
@@ -806,6 +808,115 @@ test(
 		await editDigitalSalesRoomPage.documentsMenuItem.click();
 
 		await expect(editDigitalSalesRoomPage.newButton).not.toBeVisible();
+
+		await performUserSwitch(page, 'test');
+	}
+);
+
+test(
+	'An invited non-owner cannot browse an archived room',
+	{tag: '@LPD-92367'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomUsersPage,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.shareMenuItem
+		);
+
+		await expect(
+			digitalSalesRoomUsersPage.userEmailAddressesInput
+		).toBeVisible();
+
+		await digitalSalesRoomUsersPage.userEmailAddressesInput.fill(
+			userAccount.emailAddress
+		);
+		await digitalSalesRoomUsersPage.userEmailAddressesInput.press('Enter');
+		await digitalSalesRoomUsersPage.inviteButton.click();
+
+		await waitForAlert(page, 'Success:User was invited successfully.');
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+					roomName,
+					0,
+					false
+				)
+			).click({timeout: 1000});
+		}).toPass();
+
+		await expect(digitalSalesRoomsPage.archiveMenuItem).toBeVisible();
+
+		await page.keyboard.press('Escape');
+
+		await digitalSalesRoomsPage.archiveRoom(roomName);
+		await digitalSalesRoomsPage.showArchivedRooms();
+
+		await (
+			await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+				roomName,
+				0,
+				false
+			)
+		).click();
+
+		await expect(digitalSalesRoomsPage.restoreMenuItem).toBeVisible();
+
+		await page.keyboard.press('Escape');
+
+		await performUserSwitch(page, userAccount.alternateName);
+
+		await page.goto(`/web/${roomName}`);
+
+		await expect(page).not.toHaveURL(new RegExp(roomName, 'i'));
+
+		await performUserSwitch(page, 'test');
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+		await digitalSalesRoomsPage.showArchivedRooms();
+		await digitalSalesRoomsPage.restoreRoom(roomName);
+
+		await performUserSwitch(page, userAccount.alternateName);
+
+		await page.goto(`/web/${roomName}`);
+
+		await expect(page).toHaveURL(new RegExp(roomName, 'i'));
 
 		await performUserSwitch(page, 'test');
 	}

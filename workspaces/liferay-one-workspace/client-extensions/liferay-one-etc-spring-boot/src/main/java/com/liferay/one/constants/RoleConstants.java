@@ -21,11 +21,11 @@ public interface RoleConstants {
 
 	public static final String NAME_REQUESTER = "Requester";
 
-	public static final String[] SUPPORT_ACCOUNT_ROLES = {
+	public static final String[] NAMES_SUPPORT_ACCOUNT = {
 		NAME_ACCOUNT_ADMINISTRATOR, NAME_ACCOUNT_MEMBER, NAME_REQUESTER
 	};
 
-	public static final String[] SUPPORT_ACCOUNT_TICKET_ROLES = {
+	public static final String[] NAMES_SUPPORT_ACCOUNT_TICKET = {
 		NAME_ACCOUNT_ADMINISTRATOR, NAME_REQUESTER
 	};
 

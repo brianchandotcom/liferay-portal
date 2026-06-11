@@ -16,18 +16,18 @@ import org.json.JSONObject;
 public class JiraAssetObjectConverter {
 
 	protected String getAttributeKey(
-		JSONObject jsonObject, String attributeId) {
+		String attributeId, JSONObject jsonObject) {
 
 		return _getAttributeKey(
 			_getAttributeValueJSONObject(
-				jsonObject.getJSONArray("attributes"), attributeId));
+				attributeId, jsonObject.getJSONArray("attributes")));
 	}
 
 	protected String getAttributeValue(
-		JSONObject jsonObject, String attributeId) {
+		String attributeId, JSONObject jsonObject) {
 
 		JSONObject attributeValueJSONObject = _getAttributeValueJSONObject(
-			jsonObject.getJSONArray("attributes"), attributeId);
+			attributeId, jsonObject.getJSONArray("attributes"));
 
 		return attributeValueJSONObject.optString(
 			"displayValue", _getAttributeKey(attributeValueJSONObject));
@@ -49,7 +49,7 @@ public class JiraAssetObjectConverter {
 	}
 
 	private JSONObject _getAttributeValueJSONObject(
-		JSONArray attributesJSONArray, String attributeId) {
+		String attributeId, JSONArray attributesJSONArray) {
 
 		for (int i = 0; i < attributesJSONArray.length(); i++) {
 			JSONObject attributeJSONObject = attributesJSONArray.getJSONObject(

@@ -22,10 +22,10 @@ public class BusinessEventVersionConverter extends JiraAssetObjectConverter {
 		JSONObject jiraAssetObjectJSONObject) {
 
 		return new BusinessEventVersion(
-			getAttributeValue(jiraAssetObjectJSONObject, _authorAttributeId),
-			getAttributeValue(jiraAssetObjectJSONObject, _changeAttributeId),
-			getAttributeValue(jiraAssetObjectJSONObject, _commentAttributeId),
-			getAttributeKey(jiraAssetObjectJSONObject, _createdAttributeId));
+			getAttributeValue(_authorAttributeId, jiraAssetObjectJSONObject),
+			getAttributeValue(_changeAttributeId, jiraAssetObjectJSONObject),
+			getAttributeValue(_commentAttributeId, jiraAssetObjectJSONObject),
+			getAttributeKey(_createdAttributeId, jiraAssetObjectJSONObject));
 	}
 
 	@Value(

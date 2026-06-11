@@ -45,11 +45,11 @@ public class JiraService extends BaseService {
 	public void createBusinessEvent(BusinessEvent businessEvent)
 		throws Exception {
 
-		_syncBusinessEvent(null, businessEvent);
+		_syncBusinessEvent(businessEvent, null);
 	}
 
 	public void deleteBusinessEvent(String id) throws Exception {
-		_deleteAssetObjectJSONObject(_jiraWorkspaceId, id);
+		_deleteAssetObjectJSONObject(id, _jiraWorkspaceId);
 	}
 
 	public String getAccountObjectKey(String externalKey) throws Exception {
@@ -66,7 +66,7 @@ public class JiraService extends BaseService {
 
 	public BusinessEvent getBusinessEvent(String id) throws Exception {
 		return _businessEventConverter.toBusinessEvent(
-			StringPool.BLANK, _getAssetObjectJSONObject(_jiraWorkspaceId, id));
+			StringPool.BLANK, _getAssetObjectJSONObject(id, _jiraWorkspaceId));
 	}
 
 	public List<BusinessEvent> getBusinessEvents(
@@ -81,7 +81,7 @@ public class JiraService extends BaseService {
 			accountExternalReferenceCode, "\"");
 
 		JSONArray assetsObjectsJSONArray = _searchAssetsObjectsJSONArray(
-			_jiraWorkspaceId, aql);
+			aql, _jiraWorkspaceId);
 
 		if (assetsObjectsJSONArray != null) {
 			for (int i = 0; i < assetsObjectsJSONArray.length(); i++) {
@@ -107,7 +107,7 @@ public class JiraService extends BaseService {
 			" ORDER BY Updated DESC");
 
 		JSONArray assetsObjectsJSONArray = _searchAssetsObjectsJSONArray(
-			_jiraWorkspaceId, aql);
+			aql, _jiraWorkspaceId);
 
 		if (assetsObjectsJSONArray != null) {
 			for (int i = 0; i < assetsObjectsJSONArray.length(); i++) {
@@ -198,18 +198,18 @@ public class JiraService extends BaseService {
 	}
 
 	public BusinessEvent updateBusinessEvent(
-			String id, BusinessEvent businessEvent)
+			BusinessEvent businessEvent, String id)
 		throws Exception {
 
-		_syncBusinessEvent(id, businessEvent);
+		_syncBusinessEvent(businessEvent, id);
 
 		return _businessEventConverter.toBusinessEvent(
-			StringPool.BLANK, _getAssetObjectJSONObject(_jiraWorkspaceId, id));
+			StringPool.BLANK, _getAssetObjectJSONObject(id, _jiraWorkspaceId));
 	}
 
 	private JSONObject _createAssetObjectJSONObject(
-			String workspaceId, String objectTypeId,
-			JSONObject attributesJSONObject)
+			JSONObject attributesJSONObject, String objectTypeId,
+			String workspaceId)
 		throws Exception {
 
 		JSONObject bodyJSONObject = new JSONObject(
@@ -237,7 +237,7 @@ public class JiraService extends BaseService {
 	}
 
 	private JSONObject _deleteAssetObjectJSONObject(
-			String workspaceId, String objectId)
+			String objectId, String workspaceId)
 		throws Exception {
 
 		String response = delete(
@@ -257,7 +257,7 @@ public class JiraService extends BaseService {
 	}
 
 	private JSONObject _getAssetObjectJSONObject(
-			String workspaceId, String objectId)
+			String objectId, String workspaceId)
 		throws Exception {
 
 		return new JSONObject(
@@ -310,7 +310,7 @@ public class JiraService extends BaseService {
 	}
 
 	private JSONArray _searchAssetsObjectsJSONArray(
-			String workspaceId, String aql)
+			String aql, String workspaceId)
 		throws Exception {
 
 		JSONArray itemsJSONArray = new JSONArray();
@@ -320,7 +320,7 @@ public class JiraService extends BaseService {
 
 		while (!last) {
 			JSONObject resultsJSONObject = _searchAssetsObjectsPageJSONObject(
-				workspaceId, aql, _MAX_RESULTS, startAt);
+				aql, _MAX_RESULTS, startAt, workspaceId);
 
 			JSONArray valuesJSONArray = resultsJSONObject.optJSONArray(
 				"values");
@@ -340,7 +340,7 @@ public class JiraService extends BaseService {
 	}
 
 	private JSONObject _searchAssetsObjectsPageJSONObject(
-			String workspaceId, String aql, int maxResults, int startAt)
+			String aql, int maxResults, int startAt, String workspaceId)
 		throws Exception {
 
 		String response = post(
@@ -406,23 +406,22 @@ public class JiraService extends BaseService {
 		return null;
 	}
 
-	private void _syncBusinessEvent(String id, BusinessEvent businessEvent)
+	private void _syncBusinessEvent(BusinessEvent businessEvent, String id)
 		throws Exception {
 
 		if (Validator.isNull(id)) {
-			String accountObjectKey = getAccountObjectKey(
-				businessEvent.getAccountExternalReferenceCode());
-
 			_createAssetObjectJSONObject(
-				_jiraWorkspaceId, _jiraBusinessEventAssetObjectTypeId,
 				_businessEventConverter.toAttributesJSONObject(
-					businessEvent, accountObjectKey));
+					getAccountObjectKey(
+						businessEvent.getAccountExternalReferenceCode()),
+					businessEvent),
+				_jiraBusinessEventAssetObjectTypeId, _jiraWorkspaceId);
 		}
 		else {
 			_updateAssetObjectJSONObject(
-				_jiraWorkspaceId, id,
 				_businessEventConverter.toAttributesJSONObject(
-					businessEvent, null));
+					null, businessEvent),
+				id, _jiraWorkspaceId);
 		}
 	}
 
@@ -454,8 +453,8 @@ public class JiraService extends BaseService {
 	}
 
 	private JSONObject _updateAssetObjectJSONObject(
-			String workspaceId, String objectId,
-			JSONObject attributesJSONObject)
+			JSONObject attributesJSONObject, String objectId,
+			String workspaceId)
 		throws Exception {
 
 		return new JSONObject(

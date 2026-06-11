@@ -23,7 +23,7 @@ export default function ResponsivePanel({
 
 	return (
 		<SidePanel
-			className="version-history__side-panel"
+			className="shadow-none version-history__side-panel"
 			containerRef={wrapperRef}
 			direction="left"
 			displayType="light"

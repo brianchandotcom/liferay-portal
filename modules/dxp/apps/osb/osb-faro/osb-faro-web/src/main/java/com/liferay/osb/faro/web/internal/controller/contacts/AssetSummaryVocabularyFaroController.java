@@ -38,7 +38,7 @@ public class AssetSummaryVocabularyFaroController extends BaseFaroController {
 				@QueryParam("page") int page,
 				@DefaultValue("20") @QueryParam("pageSize") int pageSize,
 				@QueryParam("rangeEnd") String rangeEnd,
-				@QueryParam("rangeKey") int rangeKey,
+				@DefaultValue("90") @QueryParam("rangeKey") int rangeKey,
 				@QueryParam("rangeStart") String rangeStart,
 				@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
 					sortString)

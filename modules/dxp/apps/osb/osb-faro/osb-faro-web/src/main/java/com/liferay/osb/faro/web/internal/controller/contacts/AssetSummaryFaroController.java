@@ -39,7 +39,7 @@ public class AssetSummaryFaroController extends BaseFaroController {
 				@QueryParam("objectType") String objectType,
 				@QueryParam("page") int page,
 				@DefaultValue("20") @QueryParam("pageSize") int pageSize,
-				@QueryParam("rangeKey") int rangeKey,
+				@DefaultValue("90") @QueryParam("rangeKey") int rangeKey,
 				@QueryParam("search") String search,
 				@QueryParam("selectedMetric") String selectedMetric,
 				@DefaultValue(StringPool.BLANK) @QueryParam("sort") String

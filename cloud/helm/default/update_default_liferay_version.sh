@@ -10,7 +10,7 @@ function main {
 	latest_lts_dxp_version=$(blade init --list | \
 		grep --extended-regexp 'dxp-.*-lts' | \
 		sed 's/^dxp-//' | \
-		head --lines=1)
+		head --lines 1)
 
 	if [[ -z "${latest_lts_dxp_version}" ]]
 	then

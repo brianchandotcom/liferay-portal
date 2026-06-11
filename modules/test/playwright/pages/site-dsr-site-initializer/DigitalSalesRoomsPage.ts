@@ -9,6 +9,9 @@ import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class DigitalSalesRoomsPage {
+	readonly archiveButton: Locator;
+	readonly archiveMenuItem: Locator;
+	readonly archivedStatusFilterRadio: Locator;
 	readonly deleteButton: Locator;
 	readonly deleteConfirmationModal: Locator;
 	readonly deleteMenuItem: Locator;
@@ -25,16 +28,24 @@ export class DigitalSalesRoomsPage {
 	readonly newDigitalSalesRoomButton: Locator;
 	readonly noResultsFoundMessage: Locator;
 	readonly page: Page;
+	readonly restoreMenuItem: Locator;
 	readonly roomsLink: Locator;
 	readonly saveAsTemplateMenuItem: Locator;
 	readonly shareMenuItem: Locator;
 	readonly settingsMenuItem: Locator;
+	readonly showResultsButton: Locator;
 	readonly startFromScratchButton: Locator;
 	readonly startFromTemplateButton: Locator;
+	readonly statusFilterButton: Locator;
 	readonly templatesLink: Locator;
 	readonly viewMenuItem: Locator;
 
 	constructor(page: Page) {
+		this.archiveButton = page.getByRole('button', {name: 'Archive'});
+		this.archiveMenuItem = page.getByRole('menuitem', {name: 'Archive'});
+		this.archivedStatusFilterRadio = page.getByRole('radio', {
+			name: 'Archived',
+		});
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.deleteConfirmationModal = page.getByRole('heading', {
 			name: 'Delete Digital Sales Room',
@@ -71,6 +82,7 @@ export class DigitalSalesRoomsPage {
 		);
 		this.noResultsFoundMessage = page.getByText('No Results Found');
 		this.page = page;
+		this.restoreMenuItem = page.getByRole('menuitem', {name: 'Restore'});
 		this.roomsLink = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Rooms',
@@ -80,17 +92,29 @@ export class DigitalSalesRoomsPage {
 		});
 		this.shareMenuItem = page.getByRole('menuitem', {name: 'Share'});
 		this.settingsMenuItem = page.getByRole('menuitem', {name: 'Settings'});
+		this.showResultsButton = page.getByRole('button', {
+			name: 'Show Results',
+		});
 		this.startFromScratchButton = page.getByRole('menuitem', {
 			name: 'Start from Scratch',
 		});
 		this.startFromTemplateButton = page.getByRole('menuitem', {
 			name: 'Start from Template',
 		});
+		this.statusFilterButton = page.getByRole('button', {name: 'Status:'});
 		this.templatesLink = page.getByRole('link', {
 			exact: true,
 			name: 'Templates',
 		});
 		this.viewMenuItem = page.getByRole('menuitem', {name: 'View'});
+	}
+
+	async archiveRoom(roomName: string) {
+		await this.clickRowActionsMenuItem(roomName, this.archiveMenuItem);
+
+		await this.archiveButton.click();
+
+		await expect(this.archiveButton).toBeHidden();
 	}
 
 	async clickRowActionsMenuItem(roomName: string, menuItem: Locator) {
@@ -103,10 +127,34 @@ export class DigitalSalesRoomsPage {
 		}).toPass({timeout: 10000});
 	}
 
+	async restoreRoom(roomName: string) {
+		await this.clickRowActionsMenuItem(roomName, this.restoreMenuItem);
+
+		await expect(
+			this.digitalSalesRoomsTable.cell(roomName, false)
+		).toBeHidden();
+	}
+
 	roomLink(roomName: string): Locator {
 		return this.digitalSalesRoomsTable
 			.cell(roomName, false)
 			.getByRole('link', {name: roomName});
+	}
+
+	async showArchivedRooms() {
+		await expect(async () => {
+			await this.statusFilterButton.click();
+
+			await expect(this.archivedStatusFilterRadio).toBeVisible({
+				timeout: 1000,
+			});
+		}).toPass({timeout: 10000});
+
+		await this.archivedStatusFilterRadio.click();
+
+		await this.showResultsButton.click();
+
+		await expect(this.statusFilterButton).toContainText('Archived');
 	}
 
 	async goToRoomsPage() {

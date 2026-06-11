@@ -22,38 +22,33 @@ import org.junit.Test;
 public class DefaultBuildDatabaseTest {
 
 	@Test
-	public void testRoundtrip() {
-		BuildDatabase stagedBuildDatabase =
+	public void testGetJSONObject() {
+		BuildDatabase buildDatabase =
 			BuildDatabaseTestUtil.addPortalAcceptancePR(
 				buildDatabaseArgs -> buildDatabaseArgs.addModifiedFile(
 					_MODIFIED_FILE),
 				buildDatabaseArgs -> buildDatabaseArgs.setProperty(
 					_PROPERTIES_KEY, _PROPERTY_NAME, _PROPERTY_VALUE));
 
-		File buildDatabaseFile = stagedBuildDatabase.getBuildDatabaseFile();
+		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
+			buildDatabase);
 
-		DefaultBuildDatabase reloadedBuildDatabase = new DefaultBuildDatabase(
-			buildDatabaseFile.getParentFile());
+		JSONObject jsonObject = buildDatabase.getJSONObject();
 
-		JSONObject stagedJSONObject = stagedBuildDatabase.getJSONObject();
 		JSONObject reloadedJSONObject = reloadedBuildDatabase.getJSONObject();
 
-		Assert.assertTrue(stagedJSONObject.similar(reloadedJSONObject));
+		Assert.assertTrue(jsonObject.similar(reloadedJSONObject));
+	}
 
-		Assert.assertTrue(reloadedBuildDatabase.hasJob(_JOB_KEY));
+	@Test
+	public void testGetProperties() {
+		BuildDatabase buildDatabase =
+			BuildDatabaseTestUtil.addPortalAcceptancePR(
+				buildDatabaseArgs -> buildDatabaseArgs.setProperty(
+					_PROPERTIES_KEY, _PROPERTY_NAME, _PROPERTY_VALUE));
 
-		JSONObject jobsJSONObject = reloadedJSONObject.getJSONObject("jobs");
-
-		JSONObject jobJSONObject = jobsJSONObject.getJSONObject(_JOB_KEY);
-
-		JSONObject branchJSONObject = jobJSONObject.getJSONObject("branch");
-
-		JSONArray modifiedFilesJSONArray = branchJSONObject.getJSONArray(
-			"modified_files");
-
-		Assert.assertEquals(1, modifiedFilesJSONArray.length());
-		Assert.assertEquals(
-			_MODIFIED_FILE, modifiedFilesJSONArray.getString(0));
+		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
+			buildDatabase);
 
 		Assert.assertTrue(reloadedBuildDatabase.hasProperties(_PROPERTIES_KEY));
 
@@ -62,8 +57,16 @@ public class DefaultBuildDatabaseTest {
 
 		Assert.assertEquals(
 			_PROPERTY_VALUE, properties.getProperty(_PROPERTY_NAME));
+	}
 
-		JSONObject pullRequestsJSONObject = reloadedJSONObject.getJSONObject(
+	@Test
+	public void testGetPullRequest() {
+		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
+			BuildDatabaseTestUtil.addPortalAcceptancePR());
+
+		JSONObject jsonObject = reloadedBuildDatabase.getJSONObject();
+
+		JSONObject pullRequestsJSONObject = jsonObject.getJSONObject(
 			"pull_requests");
 
 		Iterator<String> iterator = pullRequestsJSONObject.keys();
@@ -76,13 +79,57 @@ public class DefaultBuildDatabaseTest {
 			pullRequestURL);
 
 		Assert.assertEquals(pullRequestURL, pullRequest.getHtmlURL());
+	}
 
-		JSONObject workspacesJSONObject = reloadedJSONObject.getJSONObject(
+	@Test
+	public void testHasJob() {
+		BuildDatabase buildDatabase =
+			BuildDatabaseTestUtil.addPortalAcceptancePR(
+				buildDatabaseArgs -> buildDatabaseArgs.addModifiedFile(
+					_MODIFIED_FILE));
+
+		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
+			buildDatabase);
+
+		Assert.assertTrue(reloadedBuildDatabase.hasJob(_JOB_KEY));
+
+		JSONObject jsonObject = reloadedBuildDatabase.getJSONObject();
+
+		JSONObject jobsJSONObject = jsonObject.getJSONObject("jobs");
+
+		JSONObject jobJSONObject = jobsJSONObject.getJSONObject(_JOB_KEY);
+
+		JSONObject branchJSONObject = jobJSONObject.getJSONObject("branch");
+
+		JSONArray modifiedFilesJSONArray = branchJSONObject.getJSONArray(
+			"modified_files");
+
+		Assert.assertEquals(1, modifiedFilesJSONArray.length());
+		Assert.assertEquals(
+			_MODIFIED_FILE, modifiedFilesJSONArray.getString(0));
+	}
+
+	@Test
+	public void testHasWorkspace() {
+		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
+			BuildDatabaseTestUtil.addPortalAcceptancePR());
+
+		JSONObject jsonObject = reloadedBuildDatabase.getJSONObject();
+
+		JSONObject workspacesJSONObject = jsonObject.getJSONObject(
 			"workspaces");
 
-		for (String workspaceKey : workspacesJSONObject.keySet()) {
-			Assert.assertTrue(reloadedBuildDatabase.hasWorkspace(workspaceKey));
-		}
+		Iterator<String> iterator = workspacesJSONObject.keys();
+
+		Assert.assertTrue(reloadedBuildDatabase.hasWorkspace(iterator.next()));
+	}
+
+	private DefaultBuildDatabase _getReloadedBuildDatabase(
+		BuildDatabase buildDatabase) {
+
+		File buildDatabaseFile = buildDatabase.getBuildDatabaseFile();
+
+		return new DefaultBuildDatabase(buildDatabaseFile.getParentFile());
 	}
 
 	private static final String _JOB_KEY = "PortalAcceptancePullRequestJob";

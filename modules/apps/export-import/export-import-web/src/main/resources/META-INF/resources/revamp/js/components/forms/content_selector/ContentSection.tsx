@@ -18,10 +18,11 @@ import {
 } from '../../../types/portletDataHandler';
 import {
 	COMPACT_SECTION_NAMES,
-	CONTENT_SECTION_KEY,
 	HandlerSelection,
 	SCROLLABLE_SECTION_NAMES,
-	SITE_BUILDER_SECTION_KEY,
+	SECTION_KEY_CONTENT,
+	SECTION_KEY_CONTENT_AND_DATA,
+	SECTION_KEY_SITE_BUILDER,
 	getInitialSelections,
 	getSelectionSummary,
 	isSelected,
@@ -90,7 +91,7 @@ export default function ContentSection({
 	const syntheticPreviewPortletDataHandlers = [
 		{
 			applies:
-				lookAndFeelEnabled && section.name === SITE_BUILDER_SECTION_KEY,
+				lookAndFeelEnabled && section.name === SECTION_KEY_SITE_BUILDER,
 			previewPortletDataHandler: {
 				label: Liferay.Language.get('look-and-feel'),
 				name: 'lookAndFeel',
@@ -142,7 +143,8 @@ export default function ContentSection({
 		{
 			applies:
 				commentsAndRatingsEnabled &&
-				section.name === CONTENT_SECTION_KEY &&
+				(section.name === SECTION_KEY_CONTENT ||
+					section.name === SECTION_KEY_CONTENT_AND_DATA) &&
 				anySelected,
 			fields: [
 				{key: 'comments', label: Liferay.Language.get('comments')},

@@ -53,7 +53,7 @@ public class FaroProjectModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = faroProjectModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(faroProjectModelImpl, finderPath, original);
+			return _getValue(faroProjectModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class FaroProjectModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(faroProjectModelImpl, finderPath, original);
+			return _getValue(faroProjectModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -89,26 +89,21 @@ public class FaroProjectModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		FaroProjectModelImpl faroProjectModelImpl, FinderPath finderPath,
+		FaroProjectModelImpl faroProjectModelImpl, String[] columnNames,
 		boolean original) {
-
-		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
-			Object value;
-
 			if (original) {
-				value = faroProjectModelImpl.getColumnOriginalValue(columnName);
+				arguments[i] = faroProjectModelImpl.getColumnOriginalValue(
+					columnName);
 			}
 			else {
-				value = faroProjectModelImpl.getColumnValue(columnName);
+				arguments[i] = faroProjectModelImpl.getColumnValue(columnName);
 			}
-
-			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +113,4 @@ public class FaroProjectModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:564436373
+// LIFERAY-SERVICE-BUILDER-HASH:139978294

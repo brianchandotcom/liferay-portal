@@ -55,7 +55,7 @@ public class FaroProjectEmailDomainModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				faroProjectEmailDomainModelImpl, finderPath, original);
+				faroProjectEmailDomainModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -76,7 +76,7 @@ public class FaroProjectEmailDomainModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				faroProjectEmailDomainModelImpl, finderPath, original);
+				faroProjectEmailDomainModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -94,27 +94,22 @@ public class FaroProjectEmailDomainModelArgumentsResolver
 
 	private static Object[] _getValue(
 		FaroProjectEmailDomainModelImpl faroProjectEmailDomainModelImpl,
-		FinderPath finderPath, boolean original) {
-
-		String[] columnNames = finderPath.getColumnNames();
+		String[] columnNames, boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
-			Object value;
-
 			if (original) {
-				value = faroProjectEmailDomainModelImpl.getColumnOriginalValue(
-					columnName);
+				arguments[i] =
+					faroProjectEmailDomainModelImpl.getColumnOriginalValue(
+						columnName);
 			}
 			else {
-				value = faroProjectEmailDomainModelImpl.getColumnValue(
+				arguments[i] = faroProjectEmailDomainModelImpl.getColumnValue(
 					columnName);
 			}
-
-			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -124,4 +119,4 @@ public class FaroProjectEmailDomainModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:265434063
+// LIFERAY-SERVICE-BUILDER-HASH:-2097060966

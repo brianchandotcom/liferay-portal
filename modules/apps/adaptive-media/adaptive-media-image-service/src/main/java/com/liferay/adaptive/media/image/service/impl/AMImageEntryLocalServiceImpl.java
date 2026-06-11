@@ -16,13 +16,18 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
@@ -124,6 +129,8 @@ public class AMImageEntryLocalServiceImpl
 			companyId, amImageConfigurationEntry.getUUID());
 
 		_imageStorage.delete(companyId, amImageConfigurationEntry.getUUID());
+
+		_portalCache.removeAll();
 	}
 
 	/**
@@ -148,6 +155,11 @@ public class AMImageEntryLocalServiceImpl
 
 				_imageStorage.delete(
 					fileVersion, amImageEntry.getConfigurationUuid());
+
+				_portalCache.remove(
+					_getKey(
+						fileVersion.getFileVersionId(),
+						amImageEntry.getConfigurationUuid()));
 			}
 			catch (AMRuntimeException.IOException ioException) {
 				_log.error(ioException);
@@ -178,6 +190,8 @@ public class AMImageEntryLocalServiceImpl
 		amImageEntryPersistence.remove(amImageEntry);
 
 		_imageStorage.delete(fileVersion, amImageEntry.getConfigurationUuid());
+
+		_portalCache.remove(_getKey(fileVersionId, configurationUuid));
 	}
 
 	/**
@@ -307,12 +321,30 @@ public class AMImageEntryLocalServiceImpl
 	public boolean hasAMImageEntryContent(
 		String configurationUuid, FileVersion fileVersion) {
 
-		return _imageStorage.hasContent(fileVersion, configurationUuid);
+		String key = _getKey(fileVersion.getFileVersionId(), configurationUuid);
+
+		Boolean hasContent = (Boolean)_portalCache.get(key);
+
+		if (hasContent != null) {
+			return hasContent;
+		}
+
+		hasContent = _imageStorage.hasContent(fileVersion, configurationUuid);
+
+		if (hasContent) {
+			_portalCache.put(key, hasContent);
+		}
+
+		return hasContent;
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_imageStorage = new ImageStorage(_store);
+
+		_portalCache =
+			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
+				AMImageEntryLocalServiceImpl.class.getName());
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, AMImageCounter.class, "adaptive.media.key");
@@ -322,6 +354,11 @@ public class AMImageEntryLocalServiceImpl
 	@Override
 	protected void deactivate() {
 		super.deactivate();
+
+		_portalCache.removeAll();
+
+		_multiVMPool.removePortalCache(
+			AMImageEntryLocalServiceImpl.class.getName());
 
 		_serviceTrackerMap.close();
 	}
@@ -338,6 +375,11 @@ public class AMImageEntryLocalServiceImpl
 		}
 	}
 
+	private String _getKey(long fileVersionId, String configurationUuid) {
+		return StringBundler.concat(
+			fileVersionId, StringPool.POUND, configurationUuid);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMImageEntryLocalServiceImpl.class);
 
@@ -345,6 +387,11 @@ public class AMImageEntryLocalServiceImpl
 	private DLAppLocalService _dlAppLocalService;
 
 	private ImageStorage _imageStorage;
+
+	@Reference
+	private MultiVMPool _multiVMPool;
+
+	private PortalCache<String, Serializable> _portalCache;
 	private ServiceTrackerMap<String, AMImageCounter> _serviceTrackerMap;
 
 	@Reference(target = "(default=true)")

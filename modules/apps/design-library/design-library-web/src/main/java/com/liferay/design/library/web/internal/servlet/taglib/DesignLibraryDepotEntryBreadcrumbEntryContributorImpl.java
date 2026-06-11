@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -140,12 +141,13 @@ public class DesignLibraryDepotEntryBreadcrumbEntryContributorImpl
 
 		breadcrumbEntry.setTitle(
 			_language.get(httpServletRequest, "design-libraries"));
-		breadcrumbEntry.setURL(
-			_portal.getControlPanelPortletURL(
-				httpServletRequest, themeDisplay.getControlPanelGroup(),
-				DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN, 0, 0,
-				PortletRequest.RENDER_PHASE
-			).toString());
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, themeDisplay.getControlPanelGroup(),
+			DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN, 0, 0,
+			PortletRequest.RENDER_PHASE);
+
+		breadcrumbEntry.setURL(portletURL.toString());
 
 		return breadcrumbEntry;
 	}

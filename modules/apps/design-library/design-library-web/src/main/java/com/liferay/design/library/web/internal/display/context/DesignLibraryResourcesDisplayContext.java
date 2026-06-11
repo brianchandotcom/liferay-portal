@@ -69,9 +69,10 @@ public class DesignLibraryResourcesDisplayContext {
 	public Map<String, Object> getBreadcrumbProps(long designLibraryEntryId)
 		throws PortalException {
 
-		Group group = DepotEntryLocalServiceUtil.getDepotEntry(
-			designLibraryEntryId
-		).getGroup();
+		DepotEntry depotEntry = DepotEntryLocalServiceUtil.getDepotEntry(
+			designLibraryEntryId);
+
+		Group group = depotEntry.getGroup();
 
 		return HashMapBuilder.<String, Object>put(
 			"actionItems", _getActionItemsJSONArray(group, designLibraryEntryId)

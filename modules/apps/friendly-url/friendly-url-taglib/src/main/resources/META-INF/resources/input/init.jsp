@@ -18,3 +18,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.HttpComponentsUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %>
+
+<%@ page import="java.util.Locale" %><%@
+page import="java.util.Set" %>

@@ -45,6 +45,11 @@
 		<tag-class>com.liferay.friendly.url.taglib.servlet.taglib.InputTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>availableLocales</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>className</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

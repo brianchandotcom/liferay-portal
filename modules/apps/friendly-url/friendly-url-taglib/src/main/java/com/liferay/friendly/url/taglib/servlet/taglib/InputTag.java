@@ -32,12 +32,18 @@ import com.liferay.taglib.util.IncludeTag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.PageContext;
 
+import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Adolfo Pérez
  */
 public class InputTag extends IncludeTag {
+
+	public Set<Locale> getAvailableLocales() {
+		return _availableLocales;
+	}
 
 	public String getClassName() {
 		return _className;
@@ -81,6 +87,10 @@ public class InputTag extends IncludeTag {
 
 	public boolean isShowLabel() {
 		return _showLabel;
+	}
+
+	public void setAvailableLocales(Set<Locale> availableLocales) {
+		_availableLocales = availableLocales;
 	}
 
 	public void setClassName(String className) {
@@ -138,6 +148,7 @@ public class InputTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_availableLocales = null;
 		_className = null;
 		_classPK = 0;
 		_defaultLanguageId = null;
@@ -160,6 +171,9 @@ public class InputTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		super.setAttributes(httpServletRequest);
 
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:availableLocales",
+			getAvailableLocales());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:className", getClassName());
 		httpServletRequest.setAttribute(
@@ -322,6 +336,7 @@ public class InputTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(InputTag.class);
 
+	private Set<Locale> _availableLocales;
 	private String _className;
 	private long _classPK;
 	private String _defaultLanguageId;

@@ -1,7 +1,7 @@
 {{- $datasourceUid := include "observability.datasourceUid" . -}}
-{{- $namespace := include "observability.namespace" . -}}
-{{- $folder := .Values.alerting.folder -}}
 {{- $defaultInterval := .Values.alerting.interval -}}
+{{- $folder := .Values.alerting.folder -}}
+{{- $namespace := include "observability.namespace" . -}}
 {{- range $key, $rule := .Values.alerting.rules }}
 {{- if not (eq $rule.enabled false) }}
 {{- $title := $rule.title | default $key }}

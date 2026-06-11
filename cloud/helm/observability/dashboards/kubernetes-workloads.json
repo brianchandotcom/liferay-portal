@@ -1413,9 +1413,9 @@
 	"preload": false,
 	"schemaVersion": 42,
 	"tags": [
+		"Kubernetes",
 		"Liferay",
-		"Workloads",
-		"Kubernetes"
+		"Workloads"
 	],
 	"templating": {
 		"list": [

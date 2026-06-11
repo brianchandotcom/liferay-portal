@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 export class InputLocalizedPage {
 	readonly content: {
@@ -53,5 +53,34 @@ export class InputLocalizedPage {
 		this.spanishOption = page.locator('.dropdown-menu.show #es_ES');
 
 		this.page = page;
+	}
+
+	/**
+	 * Opens the editor's language dropdown, selects the given option, and
+	 * verifies the language button reflects the new locale. The whole flow is
+	 * retried as a unit: on slower environments the option click can register
+	 * as a highlight without committing the selection (the menu is still
+	 * rendering when the click lands), leaving the dropdown open and the locale
+	 * unchanged. Re-running open + click until the button text updates recovers
+	 * from that missed click instead of polling a value that never changes.
+	 */
+	async switchLanguage(
+		languageButton: Locator,
+		option: Locator,
+		expectedLanguageId: string
+	) {
+		await expect(async () => {
+			const expanded = await languageButton.getAttribute('aria-expanded');
+
+			if (expanded !== 'true') {
+				await languageButton.click({timeout: 1000});
+			}
+
+			await option.click({timeout: 1000});
+
+			await expect(languageButton).toContainText(expectedLanguageId, {
+				timeout: 1000,
+			});
+		}).toPass();
 	}
 }

@@ -15,6 +15,24 @@ A REST Builder feature lives in four sibling modules under `modules/apps/<area>`
 
 Every generated Java file is tagged `@Generated("")` — do not hand-edit anything carrying that annotation; `buildREST` rewrites it on each run. The same applies to the non-Java generated artifacts under `<name>-rest-impl/src/main/resources/OSGI-INF`.
 
+## Editing REST Builder Itself
+
+The generator's own source lives under `modules/util/portal-tools-rest-builder`. This covers the FreeMarker templates in `src/main/resources/com/liferay/portal/tools/rest/builder/dependencies` (such as `dto.ftl`) and the Java that drives them — the shared files that produce every generated module rather than the artifacts of any single bundle.
+
+`buildREST` reads these files from the local repository, not from the REST Builder artifact published to Maven. A change to a shared template or generator class therefore takes effect on the next `buildREST` run, with no need to rebuild or republish the tool.
+
+Because a shared file feeds every generated module, a change to one affects all of them. After editing any shared REST Builder file, regenerate every REST Builder module so the committed output stays consistent with the new generator. Run `<gradlew> buildREST` from each of these roots:
+
+1. `modules/apps`
+
+1. `modules/dxp/apps`
+
+1. `modules/util/portal-tools-rest-builder-test-impl`
+
+Keep the regenerated output in its own commit, separate from the generator edit that motivated it. Title that commit `<TICKET> BuildREST` (for example, `LPD-XXXXX BuildREST`) so the mechanical regeneration stays distinct from the hand-written change and reviewers can skip past it.
+
+Every generator change must be exercised by the dummy `portal-tools-rest-builder-test-impl` module, which acts as the generator's test bed: its `rest-openapi.yaml` is meant to cover each generator feature, so the regenerated Java becomes the visible record of what the change produces. After running `buildREST` over that module, confirm the regenerated output reflects the change. When the output shows no difference, the existing cases do not cover the new behavior — add a case to the module's `rest-openapi.yaml` that does (for example, a schema carrying a description but no required properties to cover description generation), then regenerate so the change is represented and committed.
+
 ## Creating a New API
 
 Use this workflow to scaffold a brand-new REST Builder module bundle from scratch.

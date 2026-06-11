@@ -94,3 +94,21 @@ export async function handleClickMenuItem(menuitem: string, page) {
 		}
 	}).toPass({timeout: 5000});
 }
+
+export async function updateSpaceExternalReferenceCode(
+	apiHelpers,
+	spaceName: string,
+	externalReferenceCode: string
+) {
+	const assetLibraries =
+		await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
+			`type eq 'Space'`
+		);
+
+	const assetLibrary = assetLibraries.find(({name}) => name === spaceName);
+
+	await apiHelpers.headlessAssetLibrary.patchAssetLibrary(
+		assetLibrary.externalReferenceCode,
+		{externalReferenceCode}
+	);
+}

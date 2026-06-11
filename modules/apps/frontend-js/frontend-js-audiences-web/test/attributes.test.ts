@@ -5,21 +5,21 @@
 
 import UAParser from 'ua-parser-js';
 
-import {getBrowserName} from '../src/main/resources/META-INF/resources/detection/attributes/browser_name';
-import {getBrowserVersion} from '../src/main/resources/META-INF/resources/detection/attributes/browser_version';
-import {getCookies} from '../src/main/resources/META-INF/resources/detection/attributes/cookies';
-import {getCustom} from '../src/main/resources/META-INF/resources/detection/attributes/custom';
-import {getHostname} from '../src/main/resources/META-INF/resources/detection/attributes/hostname';
-import {getLanguage} from '../src/main/resources/META-INF/resources/detection/attributes/language';
-import {getLocalDate} from '../src/main/resources/META-INF/resources/detection/attributes/local_date';
-import {getLocalHour} from '../src/main/resources/META-INF/resources/detection/attributes/local_hour';
-import {getPathname} from '../src/main/resources/META-INF/resources/detection/attributes/pathname';
-import {getReferrer} from '../src/main/resources/META-INF/resources/detection/attributes/referrer';
-import {getRequestParameters} from '../src/main/resources/META-INF/resources/detection/attributes/request_parameters';
-import {getSegments} from '../src/main/resources/META-INF/resources/detection/attributes/segments';
-import {getTimezone} from '../src/main/resources/META-INF/resources/detection/attributes/timezone';
-import {getUrl} from '../src/main/resources/META-INF/resources/detection/attributes/url';
-import {getUserAgent} from '../src/main/resources/META-INF/resources/detection/attributes/user_agent';
+import {getBrowserName} from '../src/main/resources/META-INF/resources/main/detection/attributes/browser_name';
+import {getBrowserVersion} from '../src/main/resources/META-INF/resources/main/detection/attributes/browser_version';
+import {getCookies} from '../src/main/resources/META-INF/resources/main/detection/attributes/cookies';
+import {getCustom} from '../src/main/resources/META-INF/resources/main/detection/attributes/custom';
+import {getHostname} from '../src/main/resources/META-INF/resources/main/detection/attributes/hostname';
+import {getLanguage} from '../src/main/resources/META-INF/resources/main/detection/attributes/language';
+import {getLocalDate} from '../src/main/resources/META-INF/resources/main/detection/attributes/local_date';
+import {getLocalHour} from '../src/main/resources/META-INF/resources/main/detection/attributes/local_hour';
+import {getPathname} from '../src/main/resources/META-INF/resources/main/detection/attributes/pathname';
+import {getReferrer} from '../src/main/resources/META-INF/resources/main/detection/attributes/referrer';
+import {getRequestParameters} from '../src/main/resources/META-INF/resources/main/detection/attributes/request_parameters';
+import {getSegments} from '../src/main/resources/META-INF/resources/main/detection/attributes/segments';
+import {getTimezone} from '../src/main/resources/META-INF/resources/main/detection/attributes/timezone';
+import {getUrl} from '../src/main/resources/META-INF/resources/main/detection/attributes/url';
+import {getUserAgent} from '../src/main/resources/META-INF/resources/main/detection/attributes/user_agent';
 
 describe('attributes', () => {
 	afterEach(() => {

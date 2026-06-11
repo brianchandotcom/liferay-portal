@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {check} from '../src/main/resources/META-INF/resources/detection/check';
+import {check} from '../src/main/resources/META-INF/resources/main/detection/check';
 
 function leafRule(overrides: {[key: string]: any} = {}): any {
 	return {

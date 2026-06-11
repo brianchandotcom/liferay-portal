@@ -5,7 +5,11 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayToolbar from '@clayui/toolbar';
-import React from 'react';
+import {ExperienceSelector} from '@liferay/layout-js-components-web';
+import React, {useState} from 'react';
+
+import {config} from '../config';
+import LocaleSelector from './LocaleSelector';
 
 interface Props {
 	isSidePanelOpen: boolean;
@@ -13,10 +17,21 @@ interface Props {
 }
 
 export default function Toolbar({isSidePanelOpen, openSidePanel}: Props) {
+	const {availableSegmentsExperiences} = config;
+
+	const [selectedExperienceId, setSelectedExperienceId] = useState<
+		React.Key | undefined
+	>(availableSegmentsExperiences[0]?.segmentsExperienceId);
+
+	const selectedExperience = availableSegmentsExperiences.find(
+		({segmentsExperienceId}) =>
+			segmentsExperienceId === selectedExperienceId
+	);
+
 	return (
 		<ClayToolbar className="bg-white px-3 version-history__toolbar">
-			{!isSidePanelOpen ? (
-				<ClayToolbar.Nav>
+			<ClayToolbar.Nav>
+				{!isSidePanelOpen ? (
 					<ClayToolbar.Item>
 						<ClayButtonWithIcon
 							displayType="secondary"
@@ -28,8 +43,27 @@ export default function Toolbar({isSidePanelOpen, openSidePanel}: Props) {
 							)}
 						/>
 					</ClayToolbar.Item>
-				</ClayToolbar.Nav>
-			) : null}
+				) : null}
+
+				{selectedExperience ? (
+					<ClayToolbar.Item className="align-items-center d-flex flex-row version-history__toolbar-experience">
+						<span className="font-weight-semi-bold mr-1 text-dark text-nowrap">
+							{Liferay.Language.get('experience')}
+						</span>
+
+						<ExperienceSelector
+							className="mb-0"
+							onChangeExperience={setSelectedExperienceId}
+							segmentsExperiences={availableSegmentsExperiences}
+							selectedSegmentsExperience={selectedExperience}
+						/>
+					</ClayToolbar.Item>
+				) : null}
+
+				<ClayToolbar.Item className="align-items-center d-flex">
+					<LocaleSelector />
+				</ClayToolbar.Item>
+			</ClayToolbar.Nav>
 		</ClayToolbar>
 	);
 }

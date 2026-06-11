@@ -93,9 +93,6 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
 		_objectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
@@ -127,6 +124,9 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Collections.singletonList(_objectField));
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			_objectDefinition.getPortletId(),
@@ -149,8 +149,6 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 
 		_dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(fileEntryId);
 
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -165,6 +163,8 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 			PermissionCheckerFactoryUtil.create(_user));
 
 		PrincipalThreadLocal.setName(_user.getUserId());
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
@@ -217,13 +217,13 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 		_testContains(
 			new String[] {ActionKeys.VIEW, attachmentDownloadActionKey}, true);
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(HttpMethod.GET, StringPool.BLANK);
 
 		mockHttpServletRequest.addParameter("download", "true");
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		serviceContext.setRequest(mockHttpServletRequest);
 

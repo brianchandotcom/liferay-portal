@@ -536,13 +536,6 @@
 						"type": "array",
 						"x-batch-unsupported-formats": "CSV"
 					},
-					"comments": {
-						"description": "Optional field with the comments associated with this object entry, can be embedded with nestedFields",
-						"items": {
-							"$ref": "#/components/schemas/Comment"
-						},
-						"type": "array"
-					},
 					"creator": {
 						"readOnly": true,
 						"type": "string",
@@ -1352,13 +1345,6 @@
 						"readOnly": true,
 						"type": "array",
 						"x-batch-unsupported-formats": "CSV"
-					},
-					"comments": {
-						"description": "Optional field with the comments associated with this object entry, can be embedded with nestedFields",
-						"items": {
-							"$ref": "#/components/schemas/Comment"
-						},
-						"type": "array"
 					},
 					"creator": {
 						"readOnly": true,

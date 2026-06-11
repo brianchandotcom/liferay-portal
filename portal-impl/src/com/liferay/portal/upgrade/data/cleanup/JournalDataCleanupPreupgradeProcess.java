@@ -47,20 +47,20 @@ public class JournalDataCleanupPreupgradeProcess
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null,
 				StringBundler.concat(
+					"[$SOURCE_TABLE_ALIAS$].name = ",
+					"'com.liferay.journal.model.JournalArticle' and ",
 					"[$SOURCE_TABLE_ALIAS$].scope = ",
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					" and [$SOURCE_TABLE_ALIAS$].name = ",
-					"'com.liferay.journal.model.JournalArticle'"),
+					ResourceConstants.SCOPE_INDIVIDUAL),
 				"primKeyId", "ResourcePermission", "resourcePrimKey",
 				"JournalArticle"));
 		upgrade(
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null,
 				StringBundler.concat(
+					"[$SOURCE_TABLE_ALIAS$].name = ",
+					"'com.liferay.journal.model.JournalFeed' and ",
 					"[$SOURCE_TABLE_ALIAS$].scope = ",
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					" and [$SOURCE_TABLE_ALIAS$].name = ",
-					"'com.liferay.journal.model.JournalFeed'"),
+					ResourceConstants.SCOPE_INDIVIDUAL),
 				"primKeyId", "ResourcePermission", "id_", "JournalFeed"));
 	}
 

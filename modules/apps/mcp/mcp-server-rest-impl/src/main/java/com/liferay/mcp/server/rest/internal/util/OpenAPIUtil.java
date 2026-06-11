@@ -553,20 +553,21 @@ public class OpenAPIUtil {
 					Map<String, Object> bodySchemaMap =
 						(Map<String, Object>)bodySchema;
 
-					Object schemaDescription = bodySchemaMap.get("description");
+					Object bodySchemaDescription = bodySchemaMap.get("description");
 
-					if (Validator.isNull(schemaDescription)) {
+					if (Validator.isNull(bodySchemaDescription)) {
 						bodySchemaMap.put(
 							"description", requestBodyDescription);
 					}
 					else if (!Objects.equals(
-								schemaDescription, requestBodyDescription)) {
+								bodySchemaDescription,
+								requestBodyDescription)) {
 
 						bodySchemaMap.put(
 							"description",
 							StringBundler.concat(
 								requestBodyDescription, StringPool.SPACE,
-								schemaDescription));
+								bodySchemaDescription));
 					}
 				}
 

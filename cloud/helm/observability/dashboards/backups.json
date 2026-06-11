@@ -583,7 +583,7 @@
 					"refId": "A"
 				}
 			],
-			"title": "Build Failure Rate",
+			"title": "Backup Failure Rate",
 			"type": "gauge"
 		}
 	],

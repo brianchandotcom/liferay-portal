@@ -92,8 +92,6 @@ public class ContactsCardTemplateModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_ContactsCardTemplate";
 
-	public static final String ENTITY_ALIAS = "contactsCardTemplate";
-
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY contactsCardTemplate.contactsCardTemplateId ASC";
 
@@ -904,4 +902,4 @@ public class ContactsCardTemplateModelImpl
 	private ContactsCardTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-930379370
+// LIFERAY-SERVICE-BUILDER-HASH:2035588880

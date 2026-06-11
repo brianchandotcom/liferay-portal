@@ -95,8 +95,6 @@ public class ContactsLayoutTemplateModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_ContactsLayoutTemplate";
 
-	public static final String ENTITY_ALIAS = "contactsLayoutTemplate";
-
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY contactsLayoutTemplate.contactsLayoutTemplateId ASC";
 
@@ -978,4 +976,4 @@ public class ContactsLayoutTemplateModelImpl
 	private ContactsLayoutTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-642664458
+// LIFERAY-SERVICE-BUILDER-HASH:-857219982

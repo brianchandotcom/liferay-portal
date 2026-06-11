@@ -121,7 +121,9 @@ export default function DataSetSelector({onChange, value}: IProps) {
 									views: FDS_VIEWS,
 								},
 								itemTypeLabel: dataSetLabel,
-								items: value.externalReferenceCode ? [value] : [],
+								items: value.externalReferenceCode
+									? [value]
+									: [],
 								onItemsChange: (items: IDataSet[]) => {
 									onChange({
 										additionalAPIURLParameters:

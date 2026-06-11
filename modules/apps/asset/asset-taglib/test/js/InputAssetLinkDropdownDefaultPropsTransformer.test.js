@@ -28,7 +28,7 @@ function openFilter(additionalProps = {}) {
 			...additionalProps,
 		},
 		portletNamespace: 'ns',
-	}).onClick({preventDefault() {}});
+	}).onClick({preventDefault: () => {}});
 
 	return decodeURIComponent(
 		openItemSelectorModal.mock.calls[0][0].apiURL.replace(/\+/g, '%20')

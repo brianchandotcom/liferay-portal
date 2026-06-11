@@ -54,7 +54,7 @@ public class FaroNotificationModelArgumentsResolver
 		long columnBitmask = faroNotificationModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(faroNotificationModelImpl, finderPath, original);
+			return _getValue(faroNotificationModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class FaroNotificationModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(faroNotificationModelImpl, finderPath, original);
+			return _getValue(faroNotificationModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -91,26 +91,21 @@ public class FaroNotificationModelArgumentsResolver
 
 	private static Object[] _getValue(
 		FaroNotificationModelImpl faroNotificationModelImpl,
-		FinderPath finderPath, boolean original) {
-
-		String[] columnNames = finderPath.getColumnNames();
+		String[] columnNames, boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
-			Object value;
-
 			if (original) {
-				value = faroNotificationModelImpl.getColumnOriginalValue(
+				arguments[i] = faroNotificationModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				value = faroNotificationModelImpl.getColumnValue(columnName);
+				arguments[i] = faroNotificationModelImpl.getColumnValue(
+					columnName);
 			}
-
-			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -120,4 +115,4 @@ public class FaroNotificationModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1961956743
+// LIFERAY-SERVICE-BUILDER-HASH:-499354462

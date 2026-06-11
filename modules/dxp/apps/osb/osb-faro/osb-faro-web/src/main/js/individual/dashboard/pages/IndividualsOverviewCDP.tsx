@@ -46,7 +46,7 @@ const renderIndividualsValue = (value?: number) => {
 };
 
 const renderTrendLabel = (percentageNode: React.ReactNode) =>
-	sub(Liferay.Language.get('x-vs-previous-30-days'), [percentageNode], false);
+	sub(Liferay.Language.get('x-vs-last-30-days'), [percentageNode], false);
 
 const IndividualsOverviewEmptyState: React.FC<
 	IIndividualsOverviewEmptyStateProps

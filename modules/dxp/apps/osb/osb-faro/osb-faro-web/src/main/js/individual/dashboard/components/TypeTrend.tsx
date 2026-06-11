@@ -38,7 +38,7 @@ export const TrendItem: React.FC<ITrendItemProps> = ({
 			{!!total && (
 				<div className='change description'>
 					{sub(
-						Liferay.Language.get('x-vs-previous-30-days'),
+						Liferay.Language.get('x-vs-last-30-days'),
 						[
 							<span
 								className={getCN({

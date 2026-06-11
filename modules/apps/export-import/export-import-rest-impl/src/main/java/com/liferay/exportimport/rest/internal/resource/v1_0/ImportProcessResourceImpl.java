@@ -16,7 +16,7 @@ import com.liferay.exportimport.rest.dto.v1_0.ImportProcess;
 import com.liferay.exportimport.rest.dto.v1_0.ImportProcessRequest;
 import com.liferay.exportimport.rest.dto.v1_0.ProcessProgress;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
-import com.liferay.exportimport.rest.internal.util.BackgroundTaskProgressUtil;
+import com.liferay.exportimport.rest.internal.util.BackgroundTaskUtil;
 import com.liferay.exportimport.rest.internal.util.ParameterMapUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ImportPreviewResource;
@@ -35,10 +35,8 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -153,7 +151,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		return new ProcessProgress() {
 			{
 				setPercentage(
-					() -> BackgroundTaskProgressUtil.getPercentage(
+					() -> BackgroundTaskUtil.getPercentage(
 						backgroundTask.getBackgroundTaskId()));
 			}
 		};
@@ -356,41 +354,6 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		return fileEntry;
 	}
 
-	private String _getName(BackgroundTask backgroundTask) {
-		if (!StringUtil.equals(
-				backgroundTask.getTaskExecutorClassName(),
-				BackgroundTaskExecutorNames.
-					PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR)) {
-
-			return backgroundTask.getName();
-		}
-
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				fetchExportImportConfiguration(
-					MapUtil.getLong(
-						backgroundTask.getTaskContextMap(),
-						"exportImportConfigurationId"));
-
-		if (exportImportConfiguration != null) {
-			String name = MapUtil.getString(
-				exportImportConfiguration.getSettingsMap(), "name");
-
-			if (!Validator.isBlank(name)) {
-				return name;
-			}
-		}
-
-		Portlet portlet = _portletLocalService.getPortletById(
-			backgroundTask.getName());
-
-		if (portlet == null) {
-			return backgroundTask.getName();
-		}
-
-		return portlet.getDisplayName();
-	}
-
 	private Group _getSiteGroup(String externalReferenceCode) {
 		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
@@ -566,7 +529,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 							"message", backgroundTask.getStatusMessage());
 					});
 				setId(backgroundTask::getBackgroundTaskId);
-				setName(() -> _getName(backgroundTask));
+				setName(() -> BackgroundTaskUtil.getName(backgroundTask));
 				setStatus(
 					() -> new Status() {
 						{
@@ -626,9 +589,6 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

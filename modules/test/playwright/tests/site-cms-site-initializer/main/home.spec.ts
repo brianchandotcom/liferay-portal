@@ -110,7 +110,7 @@ test.afterAll(async ({browser}) => {
 
 test(
 	'My Workflow Tasks full view preserves the back button when switching tabs',
-	{tag: '@LPD-78912'},
+	{tag: ['@LPD-78912', '@LPD-92859']},
 	async ({context, homePage, page}) => {
 		await homePage.goto();
 
@@ -125,8 +125,16 @@ test(
 
 		await fullViewPage.waitForLoadState();
 
-		const backButton = fullViewPage.getByRole('link', {
-			name: 'Return to Full Page',
+		const toolbar = fullViewPage.locator(
+			'.cms-control-menu.portlet-header'
+		);
+
+		await expect(
+			toolbar.getByRole('heading', {name: 'My Workflow Tasks'})
+		).toBeVisible();
+
+		const backButton = toolbar.getByRole('link', {
+			name: 'Back',
 		});
 
 		await expect(backButton).toBeVisible();

@@ -9,14 +9,17 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * @author Tancredi Covioli
@@ -25,13 +28,9 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 	implements ModelResourcePermission<ObjectEntry> {
 
 	public DSRDefaultPermissionObjectEntryModelResourcePermission(
-		ClassNameLocalService classNameLocalService,
-		GroupLocalService groupLocalService,
 		ModelResourcePermission<ObjectEntry> modelResourcePermission,
 		ObjectEntryLocalService objectEntryLocalService) {
 
-		_classNameLocalService = classNameLocalService;
-		_groupLocalService = groupLocalService;
 		_modelResourcePermission = modelResourcePermission;
 		_objectEntryLocalService = objectEntryLocalService;
 	}
@@ -84,6 +83,42 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
+		if (!_isInactive(objectEntry)) {
+			return _contains(permissionChecker, objectEntry, actionId);
+		}
+
+		if (permissionChecker.isCompanyAdmin()) {
+			return true;
+		}
+
+		long siteId = GetterUtil.getLong(
+			objectEntry.getValues(
+			).get(
+				"siteId"
+			));
+
+		if ((siteId > 0) && permissionChecker.isGroupOwner(siteId)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public String getModelName() {
+		return _modelResourcePermission.getModelName();
+	}
+
+	@Override
+	public PortletResourcePermission getPortletResourcePermission() {
+		return _modelResourcePermission.getPortletResourcePermission();
+	}
+
+	private boolean _contains(
+			PermissionChecker permissionChecker, ObjectEntry objectEntry,
+			String actionId)
+		throws PortalException {
+
 		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 
 		if (permissionChecker.hasOwnerPermission(
@@ -100,15 +135,13 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 		if (actionId.equals(ActionKeys.ADD_DISCUSSION) ||
 			actionId.equals(ActionKeys.VIEW)) {
 
-			Group group = _groupLocalService.fetchGroup(
-				objectEntry.getCompanyId(),
-				_classNameLocalService.getClassNameId(
-					objectDefinition.getClassName()),
-				objectEntry.getObjectEntryId());
+			long siteId = GetterUtil.getLong(
+				objectEntry.getValues(
+				).get(
+					"siteId"
+				));
 
-			if ((group != null) &&
-				permissionChecker.isGroupMember(group.getGroupId())) {
-
+			if ((siteId > 0) && permissionChecker.isGroupMember(siteId)) {
 				return true;
 			}
 		}
@@ -117,18 +150,18 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 			permissionChecker, objectEntry, actionId);
 	}
 
-	@Override
-	public String getModelName() {
-		return _modelResourcePermission.getModelName();
+	private boolean _isInactive(ObjectEntry objectEntry) {
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		if (GetterUtil.getInteger(values.get("roomStatus")) ==
+				WorkflowConstants.STATUS_INACTIVE) {
+
+			return true;
+		}
+
+		return false;
 	}
 
-	@Override
-	public PortletResourcePermission getPortletResourcePermission() {
-		return _modelResourcePermission.getPortletResourcePermission();
-	}
-
-	private final ClassNameLocalService _classNameLocalService;
-	private final GroupLocalService _groupLocalService;
 	private final ModelResourcePermission<ObjectEntry> _modelResourcePermission;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 

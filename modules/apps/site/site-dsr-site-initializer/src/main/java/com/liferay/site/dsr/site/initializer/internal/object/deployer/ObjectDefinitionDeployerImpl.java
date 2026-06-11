@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -94,7 +93,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				ModelResourcePermission.class,
 				new DSRDefaultPermissionObjectEntryModelResourcePermission(
-					_classNameLocalService, _groupLocalService,
 					modelResourcePermission, _objectEntryLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
@@ -265,9 +263,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectDefinitionDeployerImpl.class);
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

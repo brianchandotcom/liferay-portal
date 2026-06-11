@@ -65,12 +65,9 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(2);
 
-		sb.append("/o/search/v1.0/search?emptySearch=true&");
-		sb.append("filter=objectDefinitionId eq ");
-		sb.append(objectDefinition.getObjectDefinitionId());
-		sb.append("&nestedFields=embedded,r_accountToDSRRooms_accountEntryId");
+		sb.append("/o/digital-sales-room/rooms?nestedFields=creator");
 
 		if (isHomePage()) {
 			sb.append("&pageSize=5&sort=dateModified:desc");
@@ -112,7 +109,7 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 					() -> StringBundler.concat(
 						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 						DSRConstants.DSR_FRIENDLY_URL, "/view_room?siteId=",
-						"{embedded.siteId}")
+						"{siteId}")
 				).setIcon(
 					"view"
 				).setLabel(
@@ -126,7 +123,7 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 					() -> StringBundler.concat(
 						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 						DSRConstants.DSR_FRIENDLY_URL,
-						"/view_room?mode=edit&siteId={embedded.siteId}")
+						"/view_room?mode=edit&siteId={siteId}")
 				).setIcon(
 					"pencil"
 				).setLabel(
@@ -170,7 +167,7 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 					themeDisplay.getPathFriendlyURLPublic(),
 					DSRConstants.DSR_FRIENDLY_URL, "/e/room-settings/",
 					PortalUtil.getClassNameId(objectDefinition.getClassName()),
-					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent())
+					"/{id}?redirect=", themeDisplay.getURLCurrent())
 			).setIcon(
 				"cog"
 			).setLabel(
@@ -179,6 +176,28 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 				"update"
 			).build(
 				"settings"
+			),
+			FDSActionDropdownItemBuilder.setHref(
+				"#"
+			).setIcon(
+				"archive"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "archive")
+			).setPermissionKey(
+				"update"
+			).build(
+				"archive"
+			),
+			FDSActionDropdownItemBuilder.setHref(
+				"#"
+			).setIcon(
+				"restore"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "restore")
+			).setPermissionKey(
+				"update"
+			).build(
+				"restore"
 			),
 			FDSActionDropdownItemBuilder.setHref(
 				"#"

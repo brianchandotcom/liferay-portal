@@ -6,11 +6,14 @@
 package com.liferay.site.dsr.site.initializer.internal.struts;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -18,9 +21,11 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -77,6 +82,37 @@ public class ViewRoomStrutsAction implements StrutsAction {
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			group.getPublicLayoutSet(), themeDisplay, false, false);
 
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			group.getClassPK());
+
+		if (objectEntry != null) {
+			int roomStatus = MapUtil.getInteger(
+				objectEntry.getValues(), "roomStatus");
+
+			if (roomStatus == WorkflowConstants.STATUS_INACTIVE) {
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				if (permissionChecker.isCompanyAdmin() ||
+					permissionChecker.isGroupOwner(group.getGroupId())) {
+
+					httpServletResponse.sendRedirect(groupFriendlyURL);
+
+					return null;
+				}
+
+				SessionErrors.add(
+					httpServletRequest,
+					PrincipalException.MustHavePermission.class);
+
+				httpServletResponse.sendRedirect(
+					_portal.escapeRedirect(
+						httpServletRequest.getHeader(HttpHeaders.REFERER)));
+
+				return null;
+			}
+		}
+
 		if (Objects.equals(
 				ParamUtil.getString(httpServletRequest, "mode", "view"),
 				"edit")) {
@@ -98,6 +134,9 @@ public class ViewRoomStrutsAction implements StrutsAction {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private Portal _portal;

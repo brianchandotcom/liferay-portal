@@ -5,11 +5,14 @@
 
 package com.liferay.one.pubsub;
 
-import com.liferay.one.constants.CommerceCatalogConstants;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceList;
 import com.liferay.one.model.SalesforcePricebookEntry;
 import com.liferay.one.model.SalesforceProduct2;
-import com.liferay.one.service.CommerceCatalogService;
-import com.liferay.one.service.CommercePricingService;
+import com.liferay.one.service.CommercePriceEntryService;
+import com.liferay.one.service.CommercePriceListService;
+import com.liferay.one.service.CommerceProductService;
+import com.liferay.one.service.CommerceSkuService;
 import com.liferay.osb.spring.boot.client.pubsub.Message;
 import com.liferay.osb.spring.boot.client.pubsub.subscriber.BasePubsubSubscriber;
 
@@ -63,13 +66,13 @@ public class SalesforceObjectSubscriber extends BasePubsubSubscriber {
 			for (int i = 0; i < recordsJSONArray.length(); i++) {
 				JSONObject recordJSONObject = recordsJSONArray.getJSONObject(i);
 
-				if (Objects.equals(salesforceObjectName, "Product2")) {
-					_processProduct2(action, recordJSONObject);
-				}
-				else if (Objects.equals(
+				if (Objects.equals(
 							salesforceObjectName, "PricebookEntry")) {
 
 					_processPricebookEntry(action, recordJSONObject);
+				}
+				else if (Objects.equals(salesforceObjectName, "Product2")) {
+					_processProduct2(action, recordJSONObject);
 				}
 				else if (_log.isInfoEnabled()) {
 					_log.info(
@@ -93,49 +96,46 @@ public class SalesforceObjectSubscriber extends BasePubsubSubscriber {
 			new SalesforcePricebookEntry(recordJSONObject);
 
 		if (Objects.equals(action, "delete")) {
-			_commercePricingService.deletePriceEntry(
+			_commercePriceEntryService.deletePriceEntry(
 				salesforcePricebookEntry.getId());
 
 			return;
 		}
 
 		String priceListExternalReferenceCode =
-			CommerceCatalogConstants.priceListErc(
-				salesforcePricebookEntry.getCurrencyIsoCode());
+			"SALESFORCE_PRICE_LIST_" +
+				salesforcePricebookEntry.getCurrencyIsoCode();
 
-		Long priceListId = _commercePricingService.fetchPriceListId(
+		PriceList priceList = _commercePriceListService.fetchPriceList(
 			priceListExternalReferenceCode);
 
-		if (priceListId == null) {
+		if (priceList == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to find price list " +
-						priceListExternalReferenceCode +
-							" for a skipped Salesforce price entry");
+						priceListExternalReferenceCode);
 			}
 
 			return;
 		}
 
-		String skuExternalReferenceCode =
-			salesforcePricebookEntry.getProduct2Id();
+		Sku sku = _commerceSkuService.fetchSku(
+			salesforcePricebookEntry.getProduct2Id());
 
-		Long skuId = _commerceCatalogService.fetchSkuId(
-			skuExternalReferenceCode);
-
-		if (skuId == null) {
+		if (sku == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to find SKU for Salesforce product " +
-						skuExternalReferenceCode);
+						salesforcePricebookEntry.getProduct2Id());
 			}
 
 			return;
 		}
 
-		_commercePricingService.upsertPriceEntry(
+		_commercePriceEntryService.addOrUpdatePriceEntry(
 			salesforcePricebookEntry.getId(), priceListExternalReferenceCode,
-			priceListId, skuId, salesforcePricebookEntry.getUnitPrice(),
+			priceList.getId(), sku.getId(),
+			salesforcePricebookEntry.getUnitPrice(),
 			salesforcePricebookEntry.isActive());
 	}
 
@@ -146,11 +146,11 @@ public class SalesforceObjectSubscriber extends BasePubsubSubscriber {
 			recordJSONObject);
 
 		if (Objects.equals(action, "delete")) {
-			_commerceCatalogService.deactivateProduct(
+			_commerceProductService.deactivateProduct(
 				salesforceProduct2.getId());
 		}
 		else {
-			_commerceCatalogService.upsertProduct(
+			_commerceProductService.addOrUpdateProduct(
 				salesforceProduct2.getId(), salesforceProduct2.getName(),
 				salesforceProduct2.getDescription());
 		}
@@ -160,10 +160,16 @@ public class SalesforceObjectSubscriber extends BasePubsubSubscriber {
 		SalesforceObjectSubscriber.class);
 
 	@Autowired
-	private CommerceCatalogService _commerceCatalogService;
+	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Autowired
-	private CommercePricingService _commercePricingService;
+	private CommercePriceListService _commercePriceListService;
+
+	@Autowired
+	private CommerceProductService _commerceProductService;
+
+	@Autowired
+	private CommerceSkuService _commerceSkuService;
 
 	@Value("${liferay.one.pubsub.subscriber.salesforce.object.project.id}")
 	private String _projectId;

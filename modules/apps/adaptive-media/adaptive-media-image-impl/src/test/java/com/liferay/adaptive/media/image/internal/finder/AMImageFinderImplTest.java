@@ -149,7 +149,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry = _mockImage(800, 900, 1000L);
@@ -205,7 +205,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry = _mockImage(99, 199, 1000L);
@@ -284,7 +284,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry1 = _mockImage(99, 199, 1000L);
@@ -397,7 +397,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry1 = _mockImage(99, 199, 1000L);
@@ -537,7 +537,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry = _mockImage(800, 900, 1000L);
@@ -607,7 +607,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry = _mockImage(99, 1000, 1000L);
@@ -679,7 +679,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry1 = _mockImage(99, 199, 1000L);
@@ -766,7 +766,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry1 = _mockImage(99, 199, 1000L);
@@ -853,7 +853,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry1 = _mockImage(99, 199, 1000L);
@@ -940,7 +940,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry1 = _mockImage(99, 199, 1000L);
@@ -1039,7 +1039,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry1 = _mockImage(99, 199, 1000L);
@@ -1178,7 +1178,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry1 = _mockImage(100, 1000, 1000L);
@@ -1299,7 +1299,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry1 = _mockImage(99, 1000, 1000L);
@@ -1380,7 +1380,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry = _mockImage(800, 900, 1000L);
@@ -1525,7 +1525,7 @@ public class AMImageFinderImplTest {
 		Mockito.when(
 			_fileVersion.getMimeType()
 		).thenReturn(
-			"image/jpeg"
+			ContentTypes.IMAGE_JPEG
 		);
 
 		AMImageEntry amImageEntry = _mockImage(99, 99, 1000L);

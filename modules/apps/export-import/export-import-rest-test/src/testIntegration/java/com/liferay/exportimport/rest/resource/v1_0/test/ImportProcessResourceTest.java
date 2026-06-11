@@ -557,11 +557,11 @@ public class ImportProcessResourceTest
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfiguration(exportImportConfigurationId);
 
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
 		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)exportImportConfiguration.getSettingsMap(
-			).get(
-				"parameterMap"
-			);
+			(Map<String, String[]>)settingsMap.get("parameterMap");
 
 		Assert.assertEquals(
 			PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW,

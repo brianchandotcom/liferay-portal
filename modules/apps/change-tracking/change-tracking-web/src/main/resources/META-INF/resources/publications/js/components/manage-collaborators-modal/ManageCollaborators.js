@@ -80,6 +80,28 @@ const ManageCollaborators = ({
 		},
 	});
 
+	const handleClose = () => {
+		if (
+			!Object.keys(selectedItems).length &&
+			!Object.keys(updatedRoles).length
+		) {
+			onClose();
+			resetForm();
+
+			return;
+		}
+
+		openConfirmModal({
+			message: Liferay.Language.get('discard-unsaved-changes'),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					onClose();
+					resetForm();
+				}
+			},
+		});
+	};
+
 	const {refetch: collaboratorsRefetch, resource: collaboratorsResource} =
 		useResource({
 			fetchOptions: {
@@ -637,29 +659,7 @@ const ManageCollaborators = ({
 								<ClayButton
 									aria-label={Liferay.Language.get('cancel')}
 									displayType="secondary"
-									onClick={() => {
-										if (
-											!Object.keys(selectedItems)
-												.length &&
-											!Object.keys(updatedRoles).length
-										) {
-											onClose();
-											resetForm();
-										}
-										else {
-											openConfirmModal({
-												message: Liferay.Language.get(
-													'discard-unsaved-changes'
-												),
-												onConfirm: (isConfirmed) => {
-													if (isConfirmed) {
-														onClose();
-														resetForm();
-													}
-												},
-											});
-										}
-									}}
+									onClick={handleClose}
 								>
 									{Liferay.Language.get('cancel')}
 								</ClayButton>
@@ -709,14 +709,24 @@ const ManageCollaborators = ({
 		return (
 			<ClayModal
 				className="publications-invite-users-modal"
+				disableAutoClose
 				observer={observer}
 				size="lg"
 				spritemap={spritemap}
 			>
-				<ClayModal.Header
-					closeButtonAriaLabel={Liferay.Language.get('close')}
-				>
-					<div className="autofit-row">{headers}</div>
+				<ClayModal.Header withTitle={false}>
+					<ClayModal.Title>
+						<div className="autofit-row">{headers}</div>
+					</ClayModal.Title>
+
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('close')}
+						className="close"
+						displayType="unstyled"
+						onClick={handleClose}
+						spritemap={spritemap}
+						symbol="times"
+					/>
 				</ClayModal.Header>
 
 				{showShareLinkTab ? renderTabs() : ''}

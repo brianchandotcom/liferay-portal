@@ -137,7 +137,9 @@ $zIndexPanel: 1;
 				&:active,
 				&:focus,
 				&:hover {
-					background-color: unquote('hsl(from #{$white} h s l / 0.06)');
+					background-color: unquote(
+						'hsl(from #{$white} h s l / 0.06)'
+					);
 					color: $white;
 				}
 			}

@@ -26,6 +26,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEdit
 <p class="text-secondary"><liferay-ui:message key="the-friendly-url-may-be-modified-to-ensure-uniqueness" /></p>
 
 <liferay-friendly-url:input
+	availableLocales="<%= journalEditArticleDisplayContext.getAvailableLocales() %>"
 	className="<%= JournalArticle.class.getName() %>"
 	classPK="<%= (article == null) || (article.getPrimaryKey() == 0) ? 0 : article.getResourcePrimKey() %>"
 	defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"

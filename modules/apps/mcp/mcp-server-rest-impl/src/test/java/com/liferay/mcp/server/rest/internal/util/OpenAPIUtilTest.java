@@ -241,7 +241,7 @@ public class OpenAPIUtilTest {
 					JSONUtil.put(
 						"schema",
 						JSONUtil.put(
-							"description", "A Thing resource."
+							"description", _SCHEMA_DESCRIPTION
 						).put(
 							"type", "object"
 						)))
@@ -258,7 +258,7 @@ public class OpenAPIUtilTest {
 		Map<?, ?> bodySchema = (Map<?, ?>)properties.get("body");
 
 		Assert.assertEquals(
-			"The thing to create. A Thing resource.",
+			_REQUEST_BODY_DESCRIPTION + " " + _SCHEMA_DESCRIPTION,
 			bodySchema.get("description"));
 	}
 
@@ -405,10 +405,10 @@ public class OpenAPIUtilTest {
 			Assert.assertNull(body);
 		}
 		else {
-			Assert.assertEquals(
-				expectedContentType, options.getHeader("Content-Type"));
 			Assert.assertEquals(expectedBody, body.getContent());
 			Assert.assertEquals(expectedContentType, body.getContentType());
+			Assert.assertEquals(
+				expectedContentType, options.getHeader("Content-Type"));
 		}
 
 		Assert.assertNull(options.getFileParts());
@@ -438,6 +438,8 @@ public class OpenAPIUtilTest {
 
 	private static final String _REQUEST_BODY_DESCRIPTION =
 		"The thing to create.";
+
+	private static final String _SCHEMA_DESCRIPTION = "A Thing resource.";
 
 	private JSONObject _openAPIJSONObject;
 

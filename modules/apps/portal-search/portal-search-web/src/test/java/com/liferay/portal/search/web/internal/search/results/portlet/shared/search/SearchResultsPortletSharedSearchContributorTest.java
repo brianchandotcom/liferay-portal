@@ -38,36 +38,7 @@ public class SearchResultsPortletSharedSearchContributorTest {
 
 		int paginationDelta = PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA - 1;
 
-		_testContribute(
-			paginationDelta, String.valueOf(paginationDelta));
-	}
-
-	private void _testContribute(
-		int expectedPaginationDelta, String paginationDeltaParameterValue) {
-
-		SearchResultsPortletSharedSearchContributor
-			searchResultsPortletSharedSearchContributor =
-				new SearchResultsPortletSharedSearchContributor();
-
-		PortletSharedSearchSettings portletSharedSearchSettings =
-			_createPortletSharedSearchSettings(paginationDeltaParameterValue);
-
-		searchResultsPortletSharedSearchContributor.contribute(
-			portletSharedSearchSettings);
-
-		Mockito.verify(
-			portletSharedSearchSettings
-		).setPaginationDelta(
-			expectedPaginationDelta
-		);
-
-		SearchRequestBuilder searchRequestBuilder =
-			portletSharedSearchSettings.getFederatedSearchRequestBuilder(null);
-
-		SearchRequest searchRequest = searchRequestBuilder.build();
-
-		Assert.assertEquals(
-			Integer.valueOf(expectedPaginationDelta), searchRequest.getSize());
+		_testContribute(paginationDelta, String.valueOf(paginationDelta));
 	}
 
 	private PortletSharedSearchSettings _createPortletSharedSearchSettings(
@@ -102,6 +73,34 @@ public class SearchResultsPortletSharedSearchContributorTest {
 		).getPortletPreferences();
 
 		return portletSharedSearchSettings;
+	}
+
+	private void _testContribute(
+		int expectedPaginationDelta, String paginationDeltaParameterValue) {
+
+		SearchResultsPortletSharedSearchContributor
+			searchResultsPortletSharedSearchContributor =
+				new SearchResultsPortletSharedSearchContributor();
+
+		PortletSharedSearchSettings portletSharedSearchSettings =
+			_createPortletSharedSearchSettings(paginationDeltaParameterValue);
+
+		searchResultsPortletSharedSearchContributor.contribute(
+			portletSharedSearchSettings);
+
+		Mockito.verify(
+			portletSharedSearchSettings
+		).setPaginationDelta(
+			expectedPaginationDelta
+		);
+
+		SearchRequestBuilder searchRequestBuilder =
+			portletSharedSearchSettings.getFederatedSearchRequestBuilder(null);
+
+		SearchRequest searchRequest = searchRequestBuilder.build();
+
+		Assert.assertEquals(
+			Integer.valueOf(expectedPaginationDelta), searchRequest.getSize());
 	}
 
 }

@@ -169,8 +169,7 @@ public class LayoutContentVersionLocalServiceImpl
 		throws PortalException {
 
 		LayoutContentVersion layoutContentVersion =
-			layoutContentVersionPersistence.findByPrimaryKey(
-				layoutContentVersionId);
+			super.getLayoutContentVersion(layoutContentVersionId);
 
 		FeatureFlagManagerUtil.checkEnabled(
 			layoutContentVersion.getCompanyId(), "LPD-10622");
@@ -184,7 +183,7 @@ public class LayoutContentVersionLocalServiceImpl
 		throws PortalException {
 
 		LayoutContentVersion layoutContentVersion =
-			layoutContentVersionPersistence.findByERC_G(
+			super.getLayoutContentVersionByExternalReferenceCode(
 				externalReferenceCode, groupId);
 
 		FeatureFlagManagerUtil.checkEnabled(

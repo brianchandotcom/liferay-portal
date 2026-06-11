@@ -82,10 +82,16 @@ public class FDSApplication extends Application {
 		FDSDataProvider fdsDataProvider =
 			_fdsDataProviderRegistry.getFDSDataProvider(fdsDataProviderKey);
 
-		if ((fdsDataProvider == null) && _log.isDebugEnabled()) {
-			_log.debug(
-				"No frontend data set data provider is associated with " +
-					fdsDataProviderKey);
+		if (fdsDataProvider == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No frontend data set data provider is associated with " +
+						fdsDataProviderKey);
+			}
+
+			return Response.status(
+				Response.Status.NOT_FOUND
+			).build();
 		}
 
 		try {

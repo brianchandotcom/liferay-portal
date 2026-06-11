@@ -17,6 +17,15 @@ export default async function getOpenApiData({
 }) {
 	const response = await fetch(`/o${restApplication}/openapi.json`);
 
+	if (response.status === 404) {
+
+		// The REST application does not expose an OpenAPI schema (for example,
+		// taglib-based system data sets). This is an expected absence rather
+		// than a failure, so return without showing an error.
+
+		return null;
+	}
+
 	if (!response.ok) {
 		openDefaultFailureToast();
 

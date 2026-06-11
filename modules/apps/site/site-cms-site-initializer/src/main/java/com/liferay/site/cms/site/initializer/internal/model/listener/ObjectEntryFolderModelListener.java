@@ -16,19 +16,14 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
-import java.io.Serializable;
-
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -163,16 +158,8 @@ public class ObjectEntryFolderModelListener
 			return;
 		}
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
-			objectEntry.getExternalReferenceCode(),
-			objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
-			externalReferenceCode, objectEntryFolder.getModelClassName(),
-			_jsonFactory.createJSONObject(
-				GetterUtil.getString(values.get("defaultPermissions"), "{}")),
-			GetterUtil.getLong(values.get("depotGroupId")),
-			GetterUtil.getString(values.get("treePath")));
+		CMSDefaultPermissionUtil.updateClassExternalReferenceCode(
+			objectEntry, externalReferenceCode, objectEntryFolder.getUserId());
 	}
 
 	private void _updateCMSDefaultPermissions(
@@ -213,9 +200,6 @@ public class ObjectEntryFolderModelListener
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
 	)
 	private FilterFactory<Predicate> _filterFactory;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

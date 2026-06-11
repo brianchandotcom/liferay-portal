@@ -9,13 +9,14 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -23,13 +24,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 import com.liferay.trash.TrashHelper;
 
-import java.io.Serializable;
-
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -88,16 +85,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			return;
 		}
 
-		String externalReferenceCode = group.getExternalReferenceCode();
-		String originalExternalReferenceCode =
-			originalGroup.getExternalReferenceCode();
-
-		if (!Objects.equals(
-				externalReferenceCode, originalExternalReferenceCode)) {
-
-			_updateCMSDefaultPermissionObjectEntry(
-				externalReferenceCode, group, originalExternalReferenceCode);
-		}
+		_updateCMSDefaultPermissionExternalReferenceCode(originalGroup, group);
 
 		if (Objects.equals(
 				originalGroup.getTypeSettingsProperty("trashEnabled"),
@@ -123,30 +111,38 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
-	private void _updateCMSDefaultPermissionObjectEntry(
-			String externalReferenceCode, Group group,
-			String originalExternalReferenceCode)
+	private void _updateCMSDefaultPermissionExternalReferenceCode(
+			Group originalGroup, Group group)
 		throws Exception {
 
-		ObjectEntry objectEntry = CMSDefaultPermissionUtil.fetchObjectEntry(
-			group.getCompanyId(), group.getCreatorUserId(),
-			originalExternalReferenceCode, DepotEntry.class.getName(),
-			_filterFactory);
+		if (Objects.equals(
+				originalGroup.getExternalReferenceCode(),
+				group.getExternalReferenceCode())) {
+
+			return;
+		}
+
+		ObjectDefinition cmsDefaultPermissionObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_CMS_DEFAULT_PERMISSION", group.getCompanyId());
+
+		if (cmsDefaultPermissionObjectDefinition == null) {
+			return;
+		}
+
+		ObjectEntry objectEntry =
+			CMSDefaultPermissionUtil.fetchObjectEntryByDepotGroupId(
+				group.getCompanyId(), group.getCreatorUserId(),
+				group.getGroupId(), DepotEntry.class.getName(), _filterFactory);
 
 		if (objectEntry == null) {
 			return;
 		}
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
-			objectEntry.getExternalReferenceCode(), group.getCompanyId(),
-			group.getCreatorUserId(), externalReferenceCode,
-			DepotEntry.class.getName(),
-			_jsonFactory.createJSONObject(
-				GetterUtil.getString(values.get("defaultPermissions"), "{}")),
-			GetterUtil.getLong(values.get("depotGroupId")),
-			GetterUtil.getString(values.get("treePath")));
+		CMSDefaultPermissionUtil.updateClassExternalReferenceCode(
+			objectEntry, group.getExternalReferenceCode(),
+			group.getCreatorUserId());
 	}
 
 	private void _updateRecycleBinLayout(Group group, boolean hidden)
@@ -176,10 +172,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private TrashHelper _trashHelper;

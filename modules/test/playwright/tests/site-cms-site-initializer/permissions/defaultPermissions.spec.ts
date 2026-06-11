@@ -20,6 +20,7 @@ import {
 	getTableRowByText,
 	goToAllSpaces,
 	handleClickMenuItem,
+	updateSpaceExternalReferenceCode,
 } from './utils/permissions';
 
 const test = mergeTests(
@@ -1115,6 +1116,140 @@ test(
 				page,
 				permissions: permissionsByRole2,
 			});
+		}
+		finally {
+			await goToAllSpaces(page);
+
+			await deleteSpace(page, spaceName);
+		}
+	}
+);
+
+test(
+	'Space default permissions remain available after changing the Space ERC',
+	{tag: '@LPD-94507'},
+	async ({apiHelpers, defaultPermissionsPage, page}) => {
+		test.setTimeout(90000);
+
+		const spaceName = 'Space' + getRandomInt();
+
+		// Create a Space and configure its default permissions
+
+		await goToAllSpaces(page);
+
+		await createSpace(page, spaceName);
+
+		try {
+			await goToAllSpaces(page);
+
+			await clickMenuItem('Default Permissions', page, spaceName);
+
+			const permissions = [
+				{action: 'DELETE', checked: true, role: 'Power User'},
+				{action: 'PERMISSIONS', checked: true, role: 'User'},
+			];
+
+			await defaultPermissionsPage.checkPermissionsAndSave(permissions);
+
+			// Change the Space ERC from Space Settings
+
+			await updateSpaceExternalReferenceCode(
+				apiHelpers,
+				spaceName,
+				'erc-' + getRandomInt()
+			);
+
+			// LPP-64409: the previously configured default permissions are
+			// still visible after the change
+
+			await goToAllSpaces(page);
+
+			await verifyPermissions({
+				menuitem: 'Default Permissions',
+				objectName: spaceName,
+				page,
+				permissions,
+			});
+
+			// New default permissions can still be added without a system error
+
+			await clickMenuItem('Default Permissions', page, spaceName);
+
+			await defaultPermissionsPage.checkPermissionsAndSave([
+				{action: 'VIEW', role: 'User'},
+			]);
+		}
+		finally {
+			await goToAllSpaces(page);
+
+			await deleteSpace(page, spaceName);
+		}
+	}
+);
+
+test(
+	'Folder default permission management works after changing the Space ERC',
+	{tag: '@LPD-94507'},
+	async ({apiHelpers, defaultPermissionsPage, page, spaceSummaryPage}) => {
+		test.setTimeout(120000);
+
+		const spaceName = 'Space' + getRandomInt();
+
+		await goToAllSpaces(page);
+
+		await createSpace(page, spaceName);
+
+		try {
+
+			// Create a folder before the ERC change
+
+			await spaceSummaryPage.goto(spaceName);
+
+			const folderBefore = 'Folder' + getRandomInt();
+
+			await spaceSummaryPage.createContentFolder(folderBefore);
+
+			// Change the Space ERC from Space Settings
+
+			await updateSpaceExternalReferenceCode(
+				apiHelpers,
+				spaceName,
+				'erc-' + getRandomInt()
+			);
+
+			// Create a folder after the ERC change
+
+			await spaceSummaryPage.goto(spaceName);
+
+			const folderAfter = 'Folder' + getRandomInt();
+
+			await spaceSummaryPage.createContentFolder(folderAfter);
+
+			await spaceSummaryPage.viewAllContentLink.click();
+
+			// LPP-64362: folder Default Permissions and Edit and Propagate
+			// Default Permissions stay usable for folders created both before
+			// and after the ERC change
+
+			for (const folderName of [folderBefore, folderAfter]) {
+				await clickMenuItem('Default Permissions', page, folderName);
+
+				await defaultPermissionsPage.checkPermissionsAndSave([
+					{action: 'VIEW', role: 'User'},
+				]);
+
+				await clickMenuItem(
+					'Edit and Propagate Default Permissions',
+					page,
+					folderName
+				);
+
+				await defaultPermissionsPage.checkPermissionsAndSave(
+					[{action: 'UPDATE', role: 'Power User'}],
+					false,
+					true
+				);
+			}
 		}
 		finally {
 			await goToAllSpaces(page);

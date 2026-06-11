@@ -1,6 +1,6 @@
 import FilterAndOrder from '../FilterAndOrder';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
@@ -91,5 +91,31 @@ describe('FilterAndOrder', () => {
 		expect(
 			container.querySelector('[data-testid="filter-button"]')
 		).toBeTruthy();
+	});
+
+	it('renders radio inputs for a nested filter of type radio', () => {
+		const {getByTestId} = render(
+			<FilterAndOrder
+				filterByOptions={[
+					{
+						key: 'activeUsers',
+						label: 'Active Users',
+						type: 'radio',
+						values: [
+							{label: 'Last 7 days', value: '7'},
+							{label: 'Last 30 days', value: '30'}
+						]
+					}
+				]}
+			/>
+		);
+
+		fireEvent.click(getByTestId('filter-button'));
+		fireEvent.click(screen.getByText('Active Users'));
+
+		expect(
+			document.querySelectorAll('input[type="radio"]').length
+		).toBeGreaterThan(0);
+		expect(document.querySelector('input[type="checkbox"]')).toBeNull();
 	});
 });

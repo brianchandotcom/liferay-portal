@@ -14,6 +14,7 @@ import {sitesPageTest} from '../../../fixtures/sitesPageTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdminPagesTest';
+import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest';
 import createSiteTemplate from './utils/createSiteTemplate';
 
 export const test = mergeTests(
@@ -23,6 +24,7 @@ export const test = mergeTests(
 		'LPD-82107': {enabled: true},
 	}),
 	globalMenuPagesTest,
+	layoutSetPrototypePageTest,
 	loginTest(),
 	productMenuPageTest,
 	sitesAdminPagesTest,
@@ -32,7 +34,7 @@ export const test = mergeTests(
 test(
 	'Execute Site Template Sync action is hidden for inactive Site Templates',
 	{tag: '@LPD-87027'},
-	async ({apiHelpers, globalMenuPage, page}) => {
+	async ({apiHelpers, globalMenuPage, layoutSetPrototypePage}) => {
 
 		// Create an inactive Site Template
 
@@ -51,34 +53,24 @@ test(
 			type: 'layoutSetPrototype',
 		});
 
-		// Open the row Actions dropdown in the Site Templates list
-
 		await globalMenuPage.goToControlPanel('Site Templates');
 
-		// The sync action is hidden, and Activate is shown instead of Deactivate
+		// Inactive: Activate is shown and the sync action is hidden
 
 		await clickAndExpectToBeVisible({
-			target: page.getByRole('menuitem', {name: 'Activate'}),
-			trigger: page
-				.locator('tr', {hasText: siteTemplateName})
-				.getByLabel('Actions'),
+			target: layoutSetPrototypePage.activateMenuItem,
+			trigger: layoutSetPrototypePage.rowActions(siteTemplateName),
 		});
 
-		await expect(
-			page.getByRole('menuitem', {name: 'Execute Site Template Sync'})
-		).toBeHidden();
+		await expect(layoutSetPrototypePage.executeSyncMenuItem).toBeHidden();
 
 		// Activate the Site Template and verify the sync action is now visible
 
-		await page.getByRole('menuitem', {name: 'Activate'}).click();
+		await layoutSetPrototypePage.activateMenuItem.click();
 
 		await clickAndExpectToBeVisible({
-			target: page.getByRole('menuitem', {
-				name: 'Execute Site Template Sync',
-			}),
-			trigger: page
-				.locator('tr', {hasText: siteTemplateName})
-				.getByLabel('Actions'),
+			target: layoutSetPrototypePage.executeSyncMenuItem,
+			trigger: layoutSetPrototypePage.rowActions(siteTemplateName),
 		});
 	}
 );
@@ -89,6 +81,7 @@ test(
 	async ({
 		apiHelpers,
 		globalMenuPage,
+		layoutSetPrototypePage,
 		page,
 		productMenuPage,
 		sitesAdminPage,
@@ -140,47 +133,14 @@ test(
 			title: newPageName,
 		});
 
-		// Trigger the manual sync from the Site Templates list
+		// Trigger the manual sync from the Site Templates list and wait for the
+		// asynchronous completion notification
 
 		await globalMenuPage.goToControlPanel('Site Templates');
 
-		await clickAndExpectToBeVisible({
-			target: page.getByRole('menuitem', {
-				name: 'Execute Site Template Sync',
-			}),
-			trigger: page
-				.locator('tr', {hasText: siteTemplateName})
-				.getByLabel('Actions'),
-		});
-
-		page.once('dialog', (dialog) => dialog.accept());
-
-		await page
-			.getByRole('menuitem', {name: 'Execute Site Template Sync'})
-			.click();
-
-		await expect(
-			page.getByText(
-				`The sync of the site template ${siteTemplateName} started. You will receive a notification when the process is complete.`
-			)
-		).toBeVisible();
-
-		// Reload on each attempt so the bell reflects the latest server-side
-		// notification state instead of the dropdown rendered before the
-		// asynchronous sync notification arrived
-
-		await expect(async () => {
-			await page.reload();
-
-			await page.getByLabel('New Notification').click({timeout: 100});
-
-			await expect(
-				page.getByText(
-					`The sync of the site template ${siteTemplateName} finished successfully.`,
-					{exact: true}
-				)
-			).toBeVisible({timeout: 100});
-		}).toPass();
+		await layoutSetPrototypePage.executeSyncAndWaitForSuccess(
+			siteTemplateName
+		);
 
 		// The new page propagates to the linked Site
 

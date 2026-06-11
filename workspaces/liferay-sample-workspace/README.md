@@ -30,6 +30,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 ### List of Client Extensions
 
+- *liferay-sample-audiences-custom-attributes*
+
+	Add new custom attributes that can be used to detect a visitor's audiences.
+
 - *liferay-sample-batch*
 
 	...

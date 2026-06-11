@@ -2,8 +2,8 @@ assemble:
     -   from: assets
         hashify: custom-attributes.js
         into: static
-liferay-sample-audiences-custom-attributes-1:
-    name: Liferay Sample Audiences Custom Attributes 1
+liferay-sample-audiences-custom-attributes:
+    name: Liferay Sample Audiences Custom Attributes
     symbols:
         -   timeOfDay
         -   touchDevice

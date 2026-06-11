@@ -85,6 +85,7 @@ const TeamMembers = () => {
 				/>
 
 				<ManageProductUsers
+					hasPaaSExperience={hasPaaSExperience}
 					koroneikiAccount={koroneikiAccount}
 					loading={loading}
 				/>

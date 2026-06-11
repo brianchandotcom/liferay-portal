@@ -551,13 +551,13 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 				accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
 				0);
 
-		String paymentURL = cartResource.getCartPaymentURL(
-			commerceOrder.getCommerceOrderId(), RandomTestUtil.randomString());
-
 		String guestToken = URLCodec.encodeURL(
 			_encryptor.encrypt(
 				testCompany.getKeyObj(),
 				String.valueOf(commerceOrder.getCommerceOrderId())));
+
+		String paymentURL = cartResource.getCartPaymentURL(
+			commerceOrder.getCommerceOrderId(), RandomTestUtil.randomString());
 
 		Assert.assertTrue(paymentURL.contains("guestToken=" + guestToken));
 	}

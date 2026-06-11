@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.taxonomy.resource.v1_0;
 
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -42,6 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Javier Gamarra
  * @generated
  */
+@CTAware
 @Generated("")
 @ProviderType
 public interface TaxonomyCategoryResource {
@@ -302,4 +304,4 @@ public interface TaxonomyCategoryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1324297453
+// LIFERAY-REST-BUILDER-HASH:-461924647

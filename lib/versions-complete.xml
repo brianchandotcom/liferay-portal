@@ -28,6 +28,96 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!api-common.jar</file-name>
+				<version>2.43.0</version>
+				<project-name>API Common</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://github.com/googleapis/api-common-java/blob/main/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!commons-codec.jar</file-name>
+				<version>1.15</version>
+				<project-name>Apache Commons Codec</project-name>
+				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!failureaccess.jar</file-name>
+				<version>1.0.3</version>
+				<project-name>Guava InternalFutureFailureAccess and InternalFutures</project-name>
+				<project-url>https://github.com/google/guava/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!gax-grpc.jar</file-name>
+				<version>2.60.0</version>
+				<project-name>GAX (Google Api eXtensions) for Java (gRPC)</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://github.com/googleapis/gax-java/blob/master/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!gax-httpjson.jar</file-name>
+				<version>2.60.0</version>
+				<project-name>GAX (Google Api eXtensions) for Java (HTTP JSON)</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://github.com/googleapis/gax-java/blob/master/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!gax.jar</file-name>
+				<version>2.60.0</version>
+				<project-name>GAX (Google Api eXtensions) for Java (Core)</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://github.com/googleapis/gax-java/blob/master/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!google-auth-library-credentials.jar</file-name>
+				<version>1.31.0</version>
+				<project-name>Google Auth Library for Java - Credentials</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD New license</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!google-auth-library-oauth2-http.jar</file-name>
+				<version>1.31.0</version>
+				<project-name>Google Auth Library for Java - OAuth2 HTTP</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD New license</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.ai.hub.impl.jar!google-cloud-aiplatform.jar</file-name>
 				<version>3.69.0</version>
 				<project-name>Google Cloud Vertex AI</project-name>
@@ -52,6 +142,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!google-cloud-modelarmor.jar</file-name>
+				<version>0.23.0</version>
+				<project-name>Google Model Armor API</project-name>
+				<project-url>https://github.com/googleapis/google-cloud-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.ai.hub.impl.jar!google-cloud-vertexai.jar</file-name>
 				<version>1.27.0</version>
 				<project-name>Google VertexAI API</project-name>
@@ -60,6 +162,269 @@
 					<license>
 						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!google-http-client-gson.jar</file-name>
+				<version>1.45.3</version>
+				<project-name>GSON extensions to the Google HTTP Client Library for Java.</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!google-http-client.jar</file-name>
+				<version>1.45.3</version>
+				<project-name>Google HTTP Client Library for Java</project-name>
+				<project-url>https://www.google.com/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-alts.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-alts</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-api.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-api</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-auth.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-auth</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-context.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-context</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-core.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-core</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-googleapis.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-googleapis</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-grpclb.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-grpclb</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-inprocess.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-inprocess</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-netty-shaded.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-netty-shaded</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-protobuf-lite.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-protobuf-lite</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-protobuf.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-protobuf</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-services.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-services</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-stub.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-stub</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-util.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-util</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!grpc-xds.jar</file-name>
+				<version>1.75.0</version>
+				<project-name>io.grpc:grpc-xds</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!gson.jar</file-name>
+				<version>2.9.0</version>
+				<project-name>Gson</project-name>
+				<project-url>https://github.com/google/gson/gson</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!guava.jar</file-name>
+				<version>32.0.1-jre</version>
+				<project-name>Guava: Google Core Libraries for Java</project-name>
+				<project-url>https://github.com/google/guava/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!httpclient.jar</file-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!httpcore.jar</file-name>
+				<version>4.4.14</version>
+				<project-name>HttpComponents Apache HttpCore</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!j2objc-annotations.jar</file-name>
+				<version>3.1</version>
+				<project-name>J2ObjC Annotations</project-name>
+				<project-url>https://github.com/google/j2objc/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -148,6 +513,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!langchain4j-guardrails.jar</file-name>
+				<version>1.10.0-beta18</version>
+				<project-name>LangChain4j :: Guardrails</project-name>
+				<project-url>https://github.com/langchain4j/langchain4j/tree/main/langchain4j-guardrails</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.ai.hub.impl.jar!langchain4j-http-client.jar</file-name>
 				<version>1.10.0</version>
 				<project-name>LangChain4j :: HTTP Client</project-name>
@@ -208,6 +585,17 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!listenablefuture.jar</file-name>
+				<version>9999.0-empty-to-avoid-conflict-with-guava</version>
+				<project-name>Guava ListenableFuture only</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.ai.hub.impl.jar!okhttp-sse.jar</file-name>
 				<version>4.12.0</version>
 				<project-name>okhttp-sse</project-name>
@@ -244,6 +632,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!opencensus-api.jar</file-name>
+				<version>0.31.1</version>
+				<project-name>opencensus-api</project-name>
+				<project-url>https://github.com/census-instrumentation/opencensus-java</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!opencensus-contrib-http-util.jar</file-name>
+				<version>0.31.1</version>
+				<project-name>opencensus-contrib-http-util</project-name>
+				<project-url>https://github.com/census-instrumentation/opencensus-java</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.ai.hub.impl.jar!opennlp-tools.jar</file-name>
 				<version>2.5.4</version>
 				<project-name>Apache OpenNLP Tools</project-name>
@@ -255,9 +667,45 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!perfmark-api.jar</file-name>
+				<version>0.27.0</version>
+				<project-name>PerfMark (https://www.perfmark.io/)</project-name>
+				<project-url>https://github.com/perfmark/perfmark</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.ai.hub.impl.jar!proto-google-cloud-aiplatform-v1beta1.jar</file-name>
 				<version>0.81.0</version>
 				<project-name>proto-google-cloud-aiplatform-v1beta1</project-name>
+				<project-url>https://github.com/googleapis/google-cloud-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!proto-google-cloud-modelarmor-v1.jar</file-name>
+				<version>0.23.0</version>
+				<project-name>proto-google-cloud-modelarmor-v1</project-name>
+				<project-url>https://github.com/googleapis/google-cloud-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!proto-google-cloud-modelarmor-v1beta.jar</file-name>
+				<version>0.23.0</version>
+				<project-name>proto-google-cloud-modelarmor-v1beta</project-name>
 				<project-url>https://github.com/googleapis/google-cloud-java</project-url>
 				<licenses>
 					<license>
@@ -275,6 +723,78 @@
 					<license>
 						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!proto-google-common-protos.jar</file-name>
+				<version>2.51.0</version>
+				<project-name>proto-google-common-protos</project-name>
+				<project-url>https://github.com/googleapis/sdk-platform-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!proto-google-iam-v1.jar</file-name>
+				<version>1.46.0</version>
+				<project-name>proto-google-iam-v1</project-name>
+				<project-url>https://github.com/googleapis/sdk-platform-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!protobuf-java-util.jar</file-name>
+				<version>3.25.5</version>
+				<project-name>Protocol Buffers [Util]</project-name>
+				<project-url>https://developers.google.com/protocol-buffers/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!protobuf-java.jar</file-name>
+				<version>3.25.5</version>
+				<project-name>Protocol Buffers [Core]</project-name>
+				<project-url>https://developers.google.com/protocol-buffers/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!re2j.jar</file-name>
+				<version>1.8</version>
+				<project-name>RE2/J</project-name>
+				<project-url>http://github.com/google/re2j</project-url>
+				<licenses>
+					<license>
+						<license-name>Go License</license-name>
+						<license-url>https://golang.org/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.ai.hub.impl.jar!threetenbp.jar</file-name>
+				<version>1.7.0</version>
+				<project-name>ThreeTen backport</project-name>
+				<project-url>https://www.threeten.org/threetenbp</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://raw.githubusercontent.com/ThreeTen/threetenbp/main/LICENSE.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2026,7 +2546,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.mcp.server.jar!jackson-dataformat-yaml.jar</file-name>
+				<file-name>com.liferay.mcp.server.rest.impl.jar!jackson-dataformat-yaml.jar</file-name>
 				<version>2.18.2</version>
 				<project-name>Jackson-dataformat-YAML</project-name>
 				<project-url>https://github.com/FasterXML/jackson-dataformats-text</project-url>
@@ -2038,7 +2558,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.mcp.server.jar!json-schema-validator.jar</file-name>
+				<file-name>com.liferay.mcp.server.rest.impl.jar!json-schema-validator.jar</file-name>
 				<version>2.0.0</version>
 				<project-name>JsonSchemaValidator</project-name>
 				<project-url>https://github.com/networknt/json-schema-validator</project-url>
@@ -2050,7 +2570,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.mcp.server.jar!mcp-core.jar</file-name>
+				<file-name>com.liferay.mcp.server.rest.impl.jar!mcp-core.jar</file-name>
 				<version>1.0.1</version>
 				<project-name>Bundle io.modelcontextprotocol.sdk : mcp-core</project-name>
 				<project-url>https://github.com/modelcontextprotocol/java-sdk</project-url>
@@ -2062,7 +2582,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.mcp.server.jar!mcp-json-jackson2.jar</file-name>
+				<file-name>com.liferay.mcp.server.rest.impl.jar!mcp-json-jackson2.jar</file-name>
 				<version>1.0.1</version>
 				<project-name>Bundle io.modelcontextprotocol.sdk : mcp-json-jackson2</project-name>
 				<project-url>https://github.com/modelcontextprotocol/java-sdk</project-url>
@@ -2074,7 +2594,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.mcp.server.jar!reactor-core.jar</file-name>
+				<file-name>com.liferay.mcp.server.rest.impl.jar!reactor-core.jar</file-name>
 				<version>3.6.5</version>
 				<project-name>Non-Blocking Reactive Foundation for the JVM</project-name>
 				<project-url>https://github.com/reactor/reactor-core</project-url>
@@ -2086,7 +2606,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.mcp.server.jar!snakeyaml.jar</file-name>
+				<file-name>com.liferay.mcp.server.rest.impl.jar!snakeyaml.jar</file-name>
 				<version>2.3</version>
 				<project-name>SnakeYAML</project-name>
 				<project-url>https://bitbucket.org/snakeyaml/snakeyaml</project-url>
@@ -6536,7 +7056,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-buffer.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Buffer</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6548,7 +7068,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-codec-dns.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Codec/DNS</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6560,7 +7080,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-codec-http.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Codec/HTTP</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6572,7 +7092,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-codec-http2.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Codec/HTTP2</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6584,7 +7104,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-codec-socks.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Codec/Socks</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6596,7 +7116,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-codec.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Codec</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6608,7 +7128,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-common.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Common</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6620,7 +7140,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-handler-proxy.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Handler/Proxy</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6632,7 +7152,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-handler.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Handler</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6644,7 +7164,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-resolver-dns-classes-macos.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Resolver/DNS/Classes/MacOS</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6656,7 +7176,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-resolver-dns-native-macos.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Resolver/DNS/Native/MacOS</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6668,7 +7188,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-resolver-dns.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Resolver/DNS</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6680,7 +7200,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-resolver.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Resolver</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6716,7 +7236,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-transport-classes-epoll.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Transport/Classes/Epoll</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6728,7 +7248,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-transport-classes-kqueue.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Transport/Classes/KQueue</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6740,7 +7260,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-transport-native-epoll.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Transport/Native/Epoll</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6752,7 +7272,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-transport-native-kqueue.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Transport/Native/KQueue</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6764,7 +7284,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-transport-native-unix-common.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Transport/Native/Unix/Common</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -6776,7 +7296,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-transport.jar</file-name>
-				<version>4.1.133.Final</version>
+				<version>4.1.135.Final</version>
 				<project-name>Netty/Transport</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>

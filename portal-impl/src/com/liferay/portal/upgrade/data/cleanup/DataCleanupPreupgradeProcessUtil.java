@@ -43,14 +43,17 @@ public class DataCleanupPreupgradeProcessUtil {
 			Connection connection, DBInspector dbInspector, String tableName)
 		throws Exception {
 
-		String primaryKeyColumnName = _primaryKeyColumnNameCache.get(tableName);
+		if (DBInspector.isSchemaSnapshotEnabled()) {
+			String primaryKeyColumnName = _primaryKeyColumnNameCache.get(
+				tableName);
 
-		if (primaryKeyColumnName != null) {
-			if (primaryKeyColumnName.isEmpty()) {
-				return null;
+			if (primaryKeyColumnName != null) {
+				if (primaryKeyColumnName.isEmpty()) {
+					return null;
+				}
+
+				return primaryKeyColumnName;
 			}
-
-			return primaryKeyColumnName;
 		}
 
 		DB db = DBManagerUtil.getDB();
@@ -62,14 +65,19 @@ public class DataCleanupPreupgradeProcessUtil {
 			dbInspector.normalizeName("ctCollectionId"));
 
 		if (primaryKeyColumnNames.size() != 1) {
-			_primaryKeyColumnNameCache.putIfAbsent(tableName, _NOT_FOUND);
+			if (DBInspector.isSchemaSnapshotEnabled()) {
+				_primaryKeyColumnNameCache.putIfAbsent(tableName, _NOT_FOUND);
+			}
 
 			return null;
 		}
 
-		primaryKeyColumnName = primaryKeyColumnNames.get(0);
+		String primaryKeyColumnName = primaryKeyColumnNames.get(0);
 
-		_primaryKeyColumnNameCache.putIfAbsent(tableName, primaryKeyColumnName);
+		if (DBInspector.isSchemaSnapshotEnabled()) {
+			_primaryKeyColumnNameCache.putIfAbsent(
+				tableName, primaryKeyColumnName);
+		}
 
 		return primaryKeyColumnName;
 	}
@@ -79,20 +87,25 @@ public class DataCleanupPreupgradeProcessUtil {
 			String fullyQualifiedName)
 		throws Exception {
 
-		String tableName = _tableNameCache.get(fullyQualifiedName);
+		if (DBInspector.isSchemaSnapshotEnabled()) {
+			String tableName = _tableNameCache.get(fullyQualifiedName);
 
-		if (tableName != null) {
-			if (tableName.isEmpty()) {
-				return null;
+			if (tableName != null) {
+				if (tableName.isEmpty()) {
+					return null;
+				}
+
+				return tableName;
 			}
-
-			return tableName;
 		}
 
-		tableName = _computeTableName(connection, fullyQualifiedName);
+		String tableName = _computeTableName(connection, fullyQualifiedName);
 
-		_tableNameCache.putIfAbsent(
-			fullyQualifiedName, (tableName != null) ? tableName : _NOT_FOUND);
+		if (DBInspector.isSchemaSnapshotEnabled()) {
+			_tableNameCache.putIfAbsent(
+				fullyQualifiedName,
+				(tableName != null) ? tableName : _NOT_FOUND);
+		}
 
 		return tableName;
 	}

@@ -12530,6 +12530,16 @@ paths:
                             $ref: "#/components/schemas/Product"
                 required: true
             responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                    description:
+                        OK
                 202:
                     description:
                         Accepted - Async
@@ -15878,6 +15888,16 @@ paths:
                             $ref: "#/components/schemas/Product"
                 required: true
             responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Product"
+                    description:
+                        OK
                 202:
                     description:
                         Accepted - Async

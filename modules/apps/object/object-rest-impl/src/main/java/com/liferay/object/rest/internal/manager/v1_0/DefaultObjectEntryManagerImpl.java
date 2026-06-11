@@ -51,6 +51,7 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.rest.dto.v1_0.SystemProperties;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
@@ -2091,8 +2092,10 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		List<ObjectEntryComment> objectEntryComments = null;
+		SystemProperties systemProperties = objectEntry.getSystemProperties();
 
-		if ((objectEntry.getComments() != null) &&
+		if ((systemProperties != null) &&
+			(systemProperties.getComments() != null) &&
 			(Objects.equals(
 				objectDefinition.getScope(),
 				ObjectDefinitionConstants.SCOPE_SITE) ||
@@ -2100,7 +2103,7 @@ public class DefaultObjectEntryManagerImpl
 				 objectDefinition.getCompanyId(), "LPD-43996"))) {
 
 			objectEntryComments = TransformUtil.transformToList(
-				objectEntry.getComments(),
+				systemProperties.getComments(),
 				comment -> new ObjectEntryComment(
 					comment.getExternalReferenceCode(),
 					comment.getParentCommentExternalReferenceCode(),

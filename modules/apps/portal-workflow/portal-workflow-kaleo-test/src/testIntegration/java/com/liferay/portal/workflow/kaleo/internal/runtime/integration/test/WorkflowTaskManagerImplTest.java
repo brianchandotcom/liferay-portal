@@ -1490,6 +1490,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	public void testSearchWorkflowTasksWhenThereIsAnUnregisteredHandler()
 		throws Exception {
 
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
 		try (ServiceRegistrationHolder serviceRegistrationHolder =
 				registryWorkflowHandler()) {
 

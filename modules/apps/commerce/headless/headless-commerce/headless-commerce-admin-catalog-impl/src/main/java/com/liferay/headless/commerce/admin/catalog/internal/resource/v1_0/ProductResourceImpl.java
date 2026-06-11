@@ -142,7 +142,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
 
 import java.io.Serializable;
 
@@ -339,7 +338,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	}
 
 	@Override
-	public Response patchProduct(Long id, Product product) throws Exception {
+	public Product patchProduct(Long id, Product product) throws Exception {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.fetchCPDefinitionByCProductId(id, false);
 
@@ -348,15 +347,13 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				"Unable to find product with ID " + id);
 		}
 
-		_updateProduct(cpDefinition, product);
+		cpDefinition = _updateProduct(cpDefinition, product);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProduct(cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
-	public Response patchProductByExternalReferenceCode(
+	public Product patchProductByExternalReferenceCode(
 			String externalReferenceCode, Product product)
 		throws Exception {
 
@@ -382,11 +379,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
-		_updateProduct(cpDefinition, product);
+		cpDefinition = _updateProduct(cpDefinition, product);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProduct(cpDefinition.getCPDefinitionId());
 	}
 
 	@Override

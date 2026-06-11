@@ -5,9 +5,9 @@ import IndividualsList from '../IndividualsList';
 import React from 'react';
 import {createMemoryHistory} from 'history';
 import {createOrderIOMap, NAME} from 'shared/util/pagination';
+import {fireEvent, render, screen} from '@testing-library/react';
 import {Map, Set} from 'immutable';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {render} from '@testing-library/react';
 import {Router} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
@@ -228,5 +228,45 @@ describe('Individuals List', () => {
 		);
 
 		spy.mockRestore();
+	});
+
+	it('does not offer a profile type filter', async () => {
+		// @ts-ignore
+		API.individuals.search.mockReturnValue(
+			Promise.resolve({
+				items: [
+					{
+						accountName: 'Liferay Inc.',
+						id: '47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c1',
+						name: 'Test Test',
+						profileType: 'KNOWN',
+						properties: {
+							country: 'United States',
+							email: 'test@liferay.com'
+						}
+					}
+				],
+				total: 1
+			})
+		);
+
+		const history = createMemoryHistory();
+
+		const {getByTestId} = render(
+			<Router history={history}>
+				<IndividualsList />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		fireEvent.click(getByTestId('filter-button'));
+
+		expect(screen.getByText('Active Individuals')).toBeInTheDocument();
+
+		// "Profile Type" survives only as the table column header and the
+		// order-by option, never as a filter group.
+
+		expect(screen.queryAllByText('Profile Type')).toHaveLength(2);
 	});
 });

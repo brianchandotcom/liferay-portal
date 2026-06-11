@@ -16,7 +16,6 @@ import {
 } from 'shared/util/pagination';
 import {
 	Conjunctions,
-	ProfileTypes,
 	RelationalOperators
 } from 'segment/segment-editor/dynamic/utils/constants';
 import {FilterByType, FilterInputType, FilterOptionType} from 'shared/types';
@@ -93,20 +92,6 @@ const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
 				value: RangeKeyTimeRanges.LastYear
 			}
 		]
-	},
-	{
-		key: 'profileTypes',
-		label: Liferay.Language.get('profile-type'),
-		values: [
-			{
-				label: Liferay.Language.get('known'),
-				value: ProfileTypes.KNOWN
-			},
-			{
-				label: Liferay.Language.get('anonymous'),
-				value: ProfileTypes.ANONYMOUS
-			}
-		]
 	}
 ];
 
@@ -173,9 +158,7 @@ const IndividualsList: React.FC = () => {
 	const selectedFilters = {
 		filter: transformCountriesInQueryString(
 			paginationParams.filterBy.get('countries')?.toArray()
-		),
-		profileTypes:
-			paginationParams.filterBy.get('profileTypes')?.toArray() || []
+		)
 	};
 
 	const renderNoResults = () => (
@@ -235,9 +218,6 @@ const IndividualsList: React.FC = () => {
 							channelId,
 							filter: selectedFilters.filter,
 							groupId,
-							profileTypes: selectedFilters.profileTypes.length
-								? selectedFilters.profileTypes
-								: undefined,
 							rangeEnd: null,
 							rangeKey,
 							rangeStart: null

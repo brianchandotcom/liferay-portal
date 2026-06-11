@@ -38,7 +38,14 @@ function mockSmallScreen() {
 
 function renderComponent() {
 	return render(
-		<VersionHistory config={{pageSpecificationVersionsURL: 'url'}} />
+		<VersionHistory
+			config={{
+				availableLanguages: {},
+				availableSegmentsExperiences: [],
+				defaultLanguageId: 'en_US',
+				pageSpecificationVersionsURL: 'url',
+			}}
+		/>
 	);
 }
 

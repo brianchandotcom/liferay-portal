@@ -547,23 +547,33 @@ public class ImportProcessResourceTest
 			long groupId, String name, String taskExecutorClassName)
 		throws Exception {
 
-		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.addBackgroundTask(
-				TestPropsValues.getUserId(), groupId, name,
-				taskExecutorClassName,
-				HashMapBuilder.<String, Serializable>put(
-					"exportImportConfigurationId", RandomTestUtil.randomLong()
-				).build(),
-				null);
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.exportimport.internal.staging.StagingImpl",
+				LoggerTestUtil.WARN);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.WARN)) {
 
-		return new ImportProcess() {
-			{
-				setDateCreated(backgroundTask.getCreateDate());
-				setDateModified(backgroundTask.getModifiedDate());
-				setId(backgroundTask.getBackgroundTaskId());
-				setName(backgroundTask.getName());
-			}
-		};
+			BackgroundTask backgroundTask =
+				_backgroundTaskLocalService.addBackgroundTask(
+					TestPropsValues.getUserId(), groupId, name,
+					taskExecutorClassName,
+					HashMapBuilder.<String, Serializable>put(
+						"exportImportConfigurationId",
+						RandomTestUtil.randomLong()
+					).build(),
+					null);
+
+			return new ImportProcess() {
+				{
+					setDateCreated(backgroundTask.getCreateDate());
+					setDateModified(backgroundTask.getModifiedDate());
+					setId(backgroundTask.getBackgroundTaskId());
+					setName(backgroundTask.getName());
+				}
+			};
+		}
 	}
 
 	private void _deleteTempFileEntries(long groupId) throws Exception {

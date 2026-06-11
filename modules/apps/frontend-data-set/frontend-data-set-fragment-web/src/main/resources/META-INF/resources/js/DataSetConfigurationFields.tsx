@@ -386,6 +386,18 @@ export default function DataSetConfigurationFields({
 												entity
 											)
 										}
+										onEntityRemove={() =>
+											updateTokenMapping(
+												selectedTokenKey,
+												{
+													className: '',
+													classPK: '',
+													externalReferenceCode: '',
+													fieldId: '',
+													source: 'content',
+												}
+											)
+										}
 									/>
 								)}
 

@@ -40,6 +40,7 @@ export class DataTablePage {
 		strictEqual?: boolean
 	) => Promise<Locator>;
 	readonly clearButton: Locator;
+	readonly clickOrderMenuItem: (option: string) => Promise<void>;
 	readonly filterButton: Locator;
 	readonly filterMenuItem: (option: string) => Locator;
 	readonly firstRow: () => Promise<Locator>;
@@ -50,7 +51,6 @@ export class DataTablePage {
 		rowIndex: number
 	) => Locator;
 	readonly orderButton: Locator;
-	readonly orderMenuItem: (option: string) => Locator;
 	readonly page: Page | FrameLocator;
 	readonly row: (
 		colPosition: number,
@@ -104,6 +104,20 @@ export class DataTablePage {
 			return null;
 		};
 		this.clearButton = page.getByRole('button', {name: 'Clear'});
+		this.clickOrderMenuItem = async (option: string) => {
+			const menuItem = page.getByRole('menuitem', {
+				exact: true,
+				name: option,
+			});
+
+			if ((await menuItem.getAttribute('aria-selected')) === 'true') {
+				await menuItem.press('Escape');
+
+				return;
+			}
+
+			await menuItem.click({timeout: 500});
+		};
 		this.filterButton = page.getByLabel('Filter', {exact: true});
 		this.filterMenuItem = (option: string) => {
 			return page.getByRole('menuitem', {
@@ -131,12 +145,6 @@ export class DataTablePage {
 			return row.getByRole('cell').nth(columnIndex);
 		};
 		this.orderButton = page.getByRole('button', {name: 'Order'});
-		this.orderMenuItem = (option: string) => {
-			return page.getByRole('menuitem', {
-				exact: true,
-				name: option,
-			});
-		};
 		this.row = async (
 			colPosition: number,
 			value: string,

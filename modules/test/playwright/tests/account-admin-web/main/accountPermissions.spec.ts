@@ -1671,7 +1671,7 @@ test(
 		).toBeVisible();
 
 		await accountUsersPage.usersTable.orderButton.click();
-		await accountUsersPage.usersTable.orderMenuItem('First Name').click();
+		await accountUsersPage.usersTable.clickOrderMenuItem('First Name');
 
 		await expect(accountUsersPage.usersTable.searchInput).toBeEditable();
 		await expect(
@@ -1682,7 +1682,7 @@ test(
 		);
 
 		await accountUsersPage.usersTable.orderButton.click();
-		await accountUsersPage.usersTable.orderMenuItem('Last Name').click();
+		await accountUsersPage.usersTable.clickOrderMenuItem('Last Name');
 
 		await expect(accountUsersPage.usersTable.searchInput).toBeEditable();
 		await expect(
@@ -1693,9 +1693,7 @@ test(
 		);
 
 		await accountUsersPage.usersTable.orderButton.click();
-		await accountUsersPage.usersTable
-			.orderMenuItem('Email Address')
-			.click();
+		await accountUsersPage.usersTable.clickOrderMenuItem('Email Address');
 
 		await expect(accountUsersPage.usersTable.searchInput).toBeEditable();
 		await expect(

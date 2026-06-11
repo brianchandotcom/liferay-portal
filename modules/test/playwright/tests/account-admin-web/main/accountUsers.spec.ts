@@ -664,9 +664,9 @@ test(
 
 		await expect(async () => {
 			await accountUserSelectorPage.usersTable.orderButton.click();
-			await accountUserSelectorPage.usersTable
-				.orderMenuItem('First Name')
-				.click({timeout: 1000});
+			await accountUserSelectorPage.usersTable.clickOrderMenuItem(
+				'First Name'
+			);
 		}).toPass();
 
 		await expect(
@@ -681,9 +681,9 @@ test(
 
 		await expect(async () => {
 			await accountUserSelectorPage.usersTable.orderButton.click();
-			await accountUserSelectorPage.usersTable
-				.orderMenuItem('Last Name')
-				.click({timeout: 1000});
+			await accountUserSelectorPage.usersTable.clickOrderMenuItem(
+				'Last Name'
+			);
 		}).toPass();
 
 		await expect(
@@ -698,9 +698,9 @@ test(
 
 		await expect(async () => {
 			await accountUserSelectorPage.usersTable.orderButton.click();
-			await accountUserSelectorPage.usersTable
-				.orderMenuItem('Email Address')
-				.click({timeout: 1000});
+			await accountUserSelectorPage.usersTable.clickOrderMenuItem(
+				'Email Address'
+			);
 		}).toPass();
 
 		await expect(
@@ -715,9 +715,9 @@ test(
 
 		await expect(async () => {
 			await accountUserSelectorPage.usersTable.orderButton.click();
-			await accountUserSelectorPage.usersTable
-				.orderMenuItem('Last Name')
-				.click({timeout: 1000});
+			await accountUserSelectorPage.usersTable.clickOrderMenuItem(
+				'Last Name'
+			);
 		}).toPass();
 
 		await expect(

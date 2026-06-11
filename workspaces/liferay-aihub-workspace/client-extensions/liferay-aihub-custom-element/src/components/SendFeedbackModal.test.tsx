@@ -12,6 +12,35 @@ import SendFeedbackModal from './SendFeedbackModal';
 
 vi.mock('../api', () => ({postAIIssueReport: vi.fn()}));
 
+// ClayModal defers rendering its children until a CSS transition completes,
+// which never fires under jsdom. The open/close animation and dialog a11y are
+// Clay's concern (and are covered by the browser tests); here the modal is
+// mocked to a passthrough so the real form behavior renders synchronously and
+// can be exercised.
+
+vi.mock('@clayui/modal', () => {
+	const ClayModal = ({children}: {children: React.ReactNode}) => (
+		<div>{children}</div>
+	);
+
+	ClayModal.Header = ({children}: {children: React.ReactNode}) => (
+		<div>{children}</div>
+	);
+	ClayModal.Body = ({children}: {children: React.ReactNode}) => (
+		<div>{children}</div>
+	);
+	ClayModal.Footer = ({last}: {last: React.ReactNode}) => <div>{last}</div>;
+
+	return {
+		__esModule: true,
+		default: ClayModal,
+		useModal: ({onClose}: {onClose: () => void}) => ({
+			observer: {},
+			onClose,
+		}),
+	};
+});
+
 const mockedPost = vi.mocked(postAIIssueReport);
 
 function renderModal(
@@ -35,6 +64,29 @@ describe('SendFeedbackModal', () => {
 		mockedPost.mockReset();
 	});
 
+	it('closes the modal when Cancel is clicked', () => {
+		const {onClose} = renderModal();
+
+		fireEvent.click(screen.getByRole('button', {name: 'Cancel'}));
+
+		expect(onClose).toHaveBeenCalledTimes(1);
+	});
+
+	it('keeps Send disabled until a reason is chosen', () => {
+		renderModal();
+
+		const send = screen.getByRole('button', {name: 'Send'});
+
+		expect(send).toHaveAttribute('form', 'aihub-feedback-form');
+		expect(send).toBeDisabled();
+
+		fireEvent.change(screen.getByLabelText(/Reason/), {
+			target: {value: 'other'},
+		});
+
+		expect(send).toBeEnabled();
+	});
+
 	it('renders the title and every reason option', () => {
 		renderModal();
 
@@ -50,41 +102,23 @@ describe('SendFeedbackModal', () => {
 		).toBeInTheDocument();
 	});
 
-	it('labels the dialog with its title for assistive technology', () => {
-		renderModal();
+	it('shows an inline error and keeps the modal open on failure', async () => {
+		mockedPost.mockRejectedValue(new Error('nope'));
 
-		const dialog = screen.getByRole('dialog');
-
-		expect(dialog).toHaveAttribute(
-			'aria-labelledby',
-			'aihub-feedback-modal-title'
-		);
-		expect(screen.getByText('Send Feedback')).toHaveAttribute(
-			'id',
-			'aihub-feedback-modal-title'
-		);
-	});
-
-	it('closes the modal when Escape is pressed', () => {
-		const {onClose} = renderModal();
-
-		fireEvent.keyDown(window, {key: 'Escape'});
-
-		expect(onClose).toHaveBeenCalledTimes(1);
-	});
-
-	it('keeps Send disabled until a reason is chosen', () => {
-		renderModal();
-
-		const send = screen.getByRole('button', {name: 'Send'});
-
-		expect(send).toBeDisabled();
+		const {onSubmitted} = renderModal();
 
 		fireEvent.change(screen.getByLabelText(/Reason/), {
 			target: {value: 'other'},
 		});
+		fireEvent.submit(
+			document.getElementById('aihub-feedback-form') as HTMLFormElement
+		);
 
-		expect(send).toBeEnabled();
+		await waitFor(() =>
+			expect(screen.getByText('nope')).toBeInTheDocument()
+		);
+
+		expect(onSubmitted).not.toHaveBeenCalled();
 	});
 
 	it('submits and calls onSubmitted on success', async () => {
@@ -95,7 +129,9 @@ describe('SendFeedbackModal', () => {
 		fireEvent.change(screen.getByLabelText(/Reason/), {
 			target: {value: 'inaccurateResponse'},
 		});
-		fireEvent.click(screen.getByRole('button', {name: 'Send'}));
+		fireEvent.submit(
+			document.getElementById('aihub-feedback-form') as HTMLFormElement
+		);
 
 		await waitFor(() => expect(onSubmitted).toHaveBeenCalledTimes(1));
 
@@ -105,22 +141,5 @@ describe('SendFeedbackModal', () => {
 				surface: 'clickToChat',
 			})
 		);
-	});
-
-	it('shows an inline error and keeps the modal open on failure', async () => {
-		mockedPost.mockRejectedValue(new Error('nope'));
-
-		const {onSubmitted} = renderModal();
-
-		fireEvent.change(screen.getByLabelText(/Reason/), {
-			target: {value: 'other'},
-		});
-		fireEvent.click(screen.getByRole('button', {name: 'Send'}));
-
-		await waitFor(() =>
-			expect(screen.getByText('nope')).toBeInTheDocument()
-		);
-
-		expect(onSubmitted).not.toHaveBeenCalled();
 	});
 });

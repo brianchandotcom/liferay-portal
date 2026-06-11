@@ -134,6 +134,11 @@ public class HeapDumpCloudUploader {
 			CloudBucketUtil.uploadS3File(s3Key, gzippedFile);
 
 			CloudBucketUtil.uploadS3Object("", sentinelS3Path);
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"INFO: Heap dump uploaded. To download:\naws s3 cp ",
+					s3Key, " /tmp/", _slaveHostname, ".hprof.gz"));
 		}
 		catch (IOException ioException) {
 			System.out.println(

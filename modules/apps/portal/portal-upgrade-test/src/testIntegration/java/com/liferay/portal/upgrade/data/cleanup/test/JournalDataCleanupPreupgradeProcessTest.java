@@ -138,16 +138,13 @@ public class JournalDataCleanupPreupgradeProcessTest
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			Collections.emptyMap());
 
-		long companyId = TestPropsValues.getCompanyId();
-
-		Role role = RoleLocalServiceUtil.getRole(companyId, "Owner");
-
-		long roleId = role.getRoleId();
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), "Owner");
 
 		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			companyId, JournalArticle.class.getName(),
+			TestPropsValues.getCompanyId(), JournalArticle.class.getName(),
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			roleId, new String[] {ActionKeys.VIEW});
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
 
 		runSQL(
 			"delete from JournalArticle where articleId = '" +
@@ -159,16 +156,16 @@ public class JournalDataCleanupPreupgradeProcessTest
 
 		Assert.assertFalse(
 			_resourcePermissionLocalService.hasResourcePermission(
-				companyId, JournalArticle.class.getName(),
+				TestPropsValues.getCompanyId(), JournalArticle.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(journalArticle.getResourcePrimKey()),
-				roleId, ActionKeys.VIEW));
+				role.getRoleId(), ActionKeys.VIEW));
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
-				companyId, JournalArticle.class.getName(),
+				TestPropsValues.getCompanyId(), JournalArticle.class.getName(),
 				ResourceConstants.SCOPE_GROUP,
-				String.valueOf(_group.getGroupId()), roleId,
+				String.valueOf(_group.getGroupId()), role.getRoleId(),
 				ActionKeys.VIEW));
 
 		_ddmTemplateLocalService.deleteTemplate(

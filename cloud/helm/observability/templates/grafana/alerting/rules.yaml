@@ -69,6 +69,9 @@ data:
                         for: {{ $rule.for | default "0s" }}
                         annotations:
                             summary: {{ $title | quote }}
+                            {{- with $rule.annotations }}
+                            {{- toYaml . | nindent 28 }}
+                            {{- end }}
                         {{- with $rule.labels }}
                         labels:
                             {{- toYaml . | nindent 28 }}

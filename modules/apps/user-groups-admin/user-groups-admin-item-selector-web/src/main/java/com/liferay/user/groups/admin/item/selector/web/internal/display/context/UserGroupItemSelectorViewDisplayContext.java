@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
@@ -94,7 +95,10 @@ public class UserGroupItemSelectorViewDisplayContext {
 		String itemSelectedEventName = ParamUtil.getString(
 			_renderRequest, "itemSelectedEventName");
 
-		if (itemSelectedEventName.contains(UsersAdminPortletKeys.USERS_ADMIN)) {
+		if (itemSelectedEventName.startsWith(
+				PortalUtil.getPortletNamespace(
+					UsersAdminPortletKeys.USERS_ADMIN))) {
+
 			ctCollectionId =
 				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
 		}

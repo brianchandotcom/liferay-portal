@@ -81,7 +81,9 @@ public class MySitesItemSelectorViewDisplayContext
 		String itemSelectedEventName = getItemSelectedEventName();
 
 		if ((itemSelectedEventName != null) &&
-			itemSelectedEventName.contains(UsersAdminPortletKeys.USERS_ADMIN)) {
+			itemSelectedEventName.startsWith(
+				PortalUtil.getPortletNamespace(
+					UsersAdminPortletKeys.USERS_ADMIN))) {
 
 			ctCollectionId =
 				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;

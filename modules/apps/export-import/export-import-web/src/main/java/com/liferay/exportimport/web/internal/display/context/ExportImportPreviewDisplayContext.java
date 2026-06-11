@@ -125,9 +125,7 @@ public class ExportImportPreviewDisplayContext {
 	}
 
 	public Scope getScope() {
-		if (Validator.isNotNull(
-				ParamUtil.getString(_httpServletRequest, "portletResource"))) {
-
+		if (!Validator.isBlank(_getPortletId())) {
 			return Scope.PORTLET;
 		}
 
@@ -154,7 +152,8 @@ public class ExportImportPreviewDisplayContext {
 	}
 
 	public boolean isLookAndFeelEnabled() {
-		if (GroupCapabilityUtil.isSupportsPages(_group) &&
+		if ((getScope() != Scope.PORTLET) &&
+			GroupCapabilityUtil.isSupportsPages(_group) &&
 			!_group.isCompany() && !_group.isLayoutPrototype()) {
 
 			return true;
@@ -171,9 +170,12 @@ public class ExportImportPreviewDisplayContext {
 		return URLEncoder.encode(value, StandardCharsets.UTF_8);
 	}
 
+	private String _getPortletId() {
+		return ParamUtil.getString(_httpServletRequest, "portletId");
+	}
+
 	private String _getResourceAPIURL(String endpoint) {
-		String portletId = ParamUtil.getString(
-			_httpServletRequest, "portletId");
+		String portletId = _getPortletId();
 
 		if (!Validator.isBlank(portletId)) {
 			return StringBundler.concat(
@@ -201,8 +203,7 @@ public class ExportImportPreviewDisplayContext {
 	private String _getTitle(String key) {
 		String label = LanguageUtil.get(_httpServletRequest, key);
 
-		String portletId = ParamUtil.getString(
-			_httpServletRequest, "portletId");
+		String portletId = _getPortletId();
 
 		if (Validator.isBlank(portletId)) {
 			return label;

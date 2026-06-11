@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The page element definition of a widget instance.",
 	value = "WidgetInstancePageElementDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page element definition of a widget instance."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WidgetInstancePageElementDefinition")
 public class WidgetInstancePageElementDefinition
@@ -704,4 +707,4 @@ public class WidgetInstancePageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2139443078
+// LIFERAY-REST-BUILDER-HASH:-756567880

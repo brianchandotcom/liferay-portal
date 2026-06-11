@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "https://www.schema.org/FormStructure",
 	value = "FormStructure"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/FormStructure"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormStructure")
 public class FormStructure implements Serializable {
@@ -870,4 +873,4 @@ public class FormStructure implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:392067616
+// LIFERAY-REST-BUILDER-HASH:-1686564041

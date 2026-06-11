@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of a product link surfaced under a parent product; covers both grouped-product entries and shop-by-diagram entries; the `type` field discriminates which kind of link the row came from.",
 	value = "LinkedProduct"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of a product link surfaced under a parent product; covers both grouped-product entries and shop-by-diagram entries; the `type` field discriminates which kind of link the row came from."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "LinkedProduct")
 public class LinkedProduct implements Serializable {
@@ -362,4 +365,4 @@ public class LinkedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:481612131
+// LIFERAY-REST-BUILDER-HASH:-1702543700

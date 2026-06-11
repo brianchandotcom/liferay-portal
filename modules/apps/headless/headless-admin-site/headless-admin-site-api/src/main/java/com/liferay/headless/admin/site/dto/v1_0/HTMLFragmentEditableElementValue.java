@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A fragment editable element value of type HTML.",
 	value = "HTMLFragmentEditableElementValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A fragment editable element value of type HTML."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "HTMLFragmentEditableElementValue")
 public class HTMLFragmentEditableElementValue
@@ -257,4 +260,4 @@ public class HTMLFragmentEditableElementValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1258100768
+// LIFERAY-REST-BUILDER-HASH:1425515890

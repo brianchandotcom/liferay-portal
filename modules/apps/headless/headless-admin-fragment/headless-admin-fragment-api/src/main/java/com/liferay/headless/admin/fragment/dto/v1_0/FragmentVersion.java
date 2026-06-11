@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "A version of a fragment (draft or published).",
 	value = "FragmentVersion"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A version of a fragment (draft or published)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentVersion")
 public class FragmentVersion implements Serializable {
@@ -522,4 +525,4 @@ public class FragmentVersion implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:922348542
+// LIFERAY-REST-BUILDER-HASH:-2137017726

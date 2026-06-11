@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Site applications where the default rating system can be modified to a desired ratings type.",
 	value = "RatingsTypes"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Site applications where the default rating system can be modified to a desired ratings type."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RatingsTypes")
 public class RatingsTypes implements Serializable {
@@ -1171,4 +1174,4 @@ public class RatingsTypes implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1704258608
+// LIFERAY-REST-BUILDER-HASH:-1168140429

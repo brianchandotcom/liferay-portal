@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Tax classification for a product; pairs the tax category used by tax engines with a taxable flag; sourced from the product itself at the product level and from the configuration entry when embedded inside a product configuration.",
 	value = "ProductTaxConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Tax classification for a product; pairs the tax category used by tax engines with a taxable flag; sourced from the product itself at the product level and from the configuration entry when embedded inside a product configuration."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductTaxConfiguration")
 public class ProductTaxConfiguration implements Serializable {
@@ -358,4 +361,4 @@ public class ProductTaxConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-830704343
+// LIFERAY-REST-BUILDER-HASH:444399905

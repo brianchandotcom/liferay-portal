@@ -36,6 +36,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "A custom meta tag.", value = "CustomMetaTag")
+@io.swagger.v3.oas.annotations.media.Schema(description = "A custom meta tag.")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CustomMetaTag")
 public class CustomMetaTag implements Serializable {
@@ -290,4 +291,4 @@ public class CustomMetaTag implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1703196896
+// LIFERAY-REST-BUILDER-HASH:693302233

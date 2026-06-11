@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Detailed info of the creator.", value = "CreatorStatistics"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Detailed info of the creator."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CreatorStatistics")
 public class CreatorStatistics implements Serializable {
@@ -413,4 +416,4 @@ public class CreatorStatistics implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1762850738
+// LIFERAY-REST-BUILDER-HASH:-1838280210

@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "The settings of the page template.",
 	value = "PageTemplateSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The settings of the page template."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -307,4 +310,4 @@ public abstract class PageTemplateSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1669278090
+// LIFERAY-REST-BUILDER-HASH:204841519

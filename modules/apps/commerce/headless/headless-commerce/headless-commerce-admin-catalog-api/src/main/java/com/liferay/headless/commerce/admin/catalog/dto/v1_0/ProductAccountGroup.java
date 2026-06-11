@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Association between a product and an account group; admin catalog write view used to manage which account groups can see a product when `productAccountGroupFilter` is enabled on the parent product.",
 	value = "ProductAccountGroup"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Association between a product and an account group; admin catalog write view used to manage which account groups can see a product when `productAccountGroupFilter` is enabled on the parent product."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductAccountGroup")
 public class ProductAccountGroup implements Serializable {
@@ -418,4 +421,4 @@ public class ProductAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-482279082
+// LIFERAY-REST-BUILDER-HASH:-621011683

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Contains the configuration properties for Google Analytics (UA/GA3 and GA4).",
 	value = "GoogleAnalyticsConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Contains the configuration properties for Google Analytics (UA/GA3 and GA4)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "GoogleAnalyticsConfiguration")
 public class GoogleAnalyticsConfiguration implements Serializable {
@@ -500,4 +503,4 @@ public class GoogleAnalyticsConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1324979824
+// LIFERAY-REST-BUILDER-HASH:-96578489

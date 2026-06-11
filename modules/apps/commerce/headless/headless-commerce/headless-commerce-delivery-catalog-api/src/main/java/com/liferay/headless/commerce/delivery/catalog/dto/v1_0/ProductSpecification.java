@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Static product attribute (a specification option value) attached to a product, used for storefront filtering and product-detail rendering.",
 	value = "ProductSpecification"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Static product attribute (a specification option value) attached to a product, used for storefront filtering and product-detail rendering."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductSpecification")
 public class ProductSpecification implements Serializable {
@@ -844,4 +847,4 @@ public class ProductSpecification implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1926899313
+// LIFERAY-REST-BUILDER-HASH:1591721856

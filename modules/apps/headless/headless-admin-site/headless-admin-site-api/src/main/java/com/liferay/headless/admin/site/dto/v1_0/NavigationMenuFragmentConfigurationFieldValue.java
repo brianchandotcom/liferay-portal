@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The value of a fragment configuration field of type navigation menu.",
 	value = "NavigationMenuFragmentConfigurationFieldValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The value of a fragment configuration field of type navigation menu."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NavigationMenuFragmentConfigurationFieldValue")
 public class NavigationMenuFragmentConfigurationFieldValue
@@ -323,4 +326,4 @@ public class NavigationMenuFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1195928914
+// LIFERAY-REST-BUILDER-HASH:-1623338334

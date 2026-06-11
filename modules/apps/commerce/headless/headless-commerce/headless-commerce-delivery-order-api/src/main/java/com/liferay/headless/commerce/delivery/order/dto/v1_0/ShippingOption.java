@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Specific carrier service tier offered by a ShippingMethod (for example, Standard Delivery, Express). Read-only.",
 	value = "ShippingOption"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Specific carrier service tier offered by a ShippingMethod (for example, Standard Delivery, Express). Read-only."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ShippingOption")
 public class ShippingOption implements Serializable {
@@ -481,4 +484,4 @@ public class ShippingOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1664812887
+// LIFERAY-REST-BUILDER-HASH:11650164

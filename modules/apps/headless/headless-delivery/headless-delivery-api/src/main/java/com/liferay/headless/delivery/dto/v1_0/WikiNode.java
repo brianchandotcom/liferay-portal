@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 	description = "Represents a wiki node that can be used to organize wiki pages.",
 	value = "WikiNode"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a wiki node that can be used to organize wiki pages."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WikiNode")
 public class WikiNode implements Serializable {
@@ -933,4 +936,4 @@ public class WikiNode implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-658245108
+// LIFERAY-REST-BUILDER-HASH:-58667777

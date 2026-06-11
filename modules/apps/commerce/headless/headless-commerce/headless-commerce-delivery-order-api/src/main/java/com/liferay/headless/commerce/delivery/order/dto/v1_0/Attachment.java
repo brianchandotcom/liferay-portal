@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Buyer-visible file attached to a placed order (for example, an invoice PDF, a delivery note, or a customer-uploaded supporting document). Returned by the order attachment list endpoint and created via the upload-by-base64 endpoint.",
 	value = "Attachment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Buyer-visible file attached to a placed order (for example, an invoice PDF, a delivery note, or a customer-uploaded supporting document). Returned by the order attachment list endpoint and created via the upload-by-base64 endpoint."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Attachment")
 public class Attachment implements Serializable {
@@ -847,4 +850,4 @@ public class Attachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1356757411
+// LIFERAY-REST-BUILDER-HASH:-1696784207

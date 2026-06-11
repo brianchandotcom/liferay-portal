@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Type-specific settings for \"Category\" and \"Vocabulary\" navigation menu item types.",
 	value = "VocabularyNavigationMenuItemSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Type-specific settings for \"Category\" and \"Vocabulary\" navigation menu item types."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "VocabularyNavigationMenuItemSettings")
 public class VocabularyNavigationMenuItemSettings implements Serializable {
@@ -549,4 +552,4 @@ public class VocabularyNavigationMenuItemSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-448960334
+// LIFERAY-REST-BUILDER-HASH:-502665869

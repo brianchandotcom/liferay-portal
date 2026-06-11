@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A fragment image value of type direct.",
 	value = "DirectFragmentImageValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A fragment image value of type direct."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DirectFragmentImageValue")
 public class DirectFragmentImageValue
@@ -255,4 +258,4 @@ public class DirectFragmentImageValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1676294666
+// LIFERAY-REST-BUILDER-HASH:1926719769

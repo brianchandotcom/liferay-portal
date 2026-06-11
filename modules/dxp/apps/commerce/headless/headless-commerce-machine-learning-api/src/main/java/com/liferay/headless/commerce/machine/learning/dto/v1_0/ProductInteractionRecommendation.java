@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Wire shape for a collaborative-filtering product recommendation downloaded from the analytics pipeline. Given a source product, the model recommends products that users frequently interact with alongside it -- for example, co-view or co-purchase.",
 	value = "ProductInteractionRecommendation"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Wire shape for a collaborative-filtering product recommendation downloaded from the analytics pipeline. Given a source product, the model recommends products that users frequently interact with alongside it -- for example, co-view or co-purchase."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductInteractionRecommendation")
 public class ProductInteractionRecommendation implements Serializable {
@@ -543,4 +546,4 @@ public class ProductInteractionRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1501265160
+// LIFERAY-REST-BUILDER-HASH:-929236512

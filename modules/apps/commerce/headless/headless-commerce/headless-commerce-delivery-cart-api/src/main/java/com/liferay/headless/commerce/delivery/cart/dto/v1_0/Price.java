@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Computed unit price snapshot for a cart item. Carries the base price, the promotional price, the absolute and percentage discount levels, and the final price. The currency is inherited from the parent cart; the price-on-application flag indicates the price is negotiated and not displayed on the storefront. All monetary amounts are per unit and tax-exclusive -- cart-level tax is computed by the active tax engine and reported on the cart Summary (taxValue, total), not on this per-unit snapshot.",
 	value = "Price"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Computed unit price snapshot for a cart item. Carries the base price, the promotional price, the absolute and percentage discount levels, and the final price. The currency is inherited from the parent cart; the price-on-application flag indicates the price is negotiated and not displayed on the storefront. All monetary amounts are per unit and tax-exclusive -- cart-level tax is computed by the active tax engine and reported on the cart Summary (taxValue, total), not on this per-unit snapshot."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Price")
 public class Price implements Serializable {
@@ -1062,4 +1065,4 @@ public class Price implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:424180139
+// LIFERAY-REST-BUILDER-HASH:-672424668

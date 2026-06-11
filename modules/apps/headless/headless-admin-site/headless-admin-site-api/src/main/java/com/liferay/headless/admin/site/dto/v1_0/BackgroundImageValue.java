@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "The background image value.", value = "BackgroundImageValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The background image value."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -305,4 +308,4 @@ public abstract class BackgroundImageValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1461748088
+// LIFERAY-REST-BUILDER-HASH:676077915

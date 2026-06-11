@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A page specification of a widget page. A widget page contains always 1 page specification in published status.",
 	value = "WidgetPageSpecification"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A page specification of a widget page. A widget page contains always 1 page specification in published status."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WidgetPageSpecification")
 public class WidgetPageSpecification
@@ -389,4 +392,4 @@ public class WidgetPageSpecification
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1006386884
+// LIFERAY-REST-BUILDER-HASH:325452732

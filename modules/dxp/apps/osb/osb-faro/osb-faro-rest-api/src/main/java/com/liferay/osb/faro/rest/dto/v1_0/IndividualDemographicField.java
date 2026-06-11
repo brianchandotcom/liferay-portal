@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "A single demographic attribute attached to an individual (e.g. job title, age, country). Sourced from connected data sources. Multiple attributes can share a category in `Individual.demographics`.",
 	value = "IndividualDemographicField"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A single demographic attribute attached to an individual (e.g. job title, age, country). Sourced from connected data sources. Multiple attributes can share a category in `Individual.demographics`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "IndividualDemographicField")
 public class IndividualDemographicField implements Serializable {
@@ -475,4 +478,4 @@ public class IndividualDemographicField implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1161446615
+// LIFERAY-REST-BUILDER-HASH:-1435605684

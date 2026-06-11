@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of a submission result of type message.",
 	value = "MessageFormSubmissionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of a submission result of type message."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MessageFormSubmissionResult")
 public class MessageFormSubmissionResult implements Serializable {
@@ -470,4 +473,4 @@ public class MessageFormSubmissionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1599433390
+// LIFERAY-REST-BUILDER-HASH:-1927525870

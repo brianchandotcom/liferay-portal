@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Wire shape for an association-rule recommendation downloaded from the analytics pipeline. Given a set of antecedent products that make up a basket, the model recommends a consequent product.",
 	value = "FrequentPatternRecommendation"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Wire shape for an association-rule recommendation downloaded from the analytics pipeline. Given a set of antecedent products that make up a basket, the model recommends a consequent product."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FrequentPatternRecommendation")
 public class FrequentPatternRecommendation implements Serializable {
@@ -555,4 +558,4 @@ public class FrequentPatternRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-499010665
+// LIFERAY-REST-BUILDER-HASH:-2062585313

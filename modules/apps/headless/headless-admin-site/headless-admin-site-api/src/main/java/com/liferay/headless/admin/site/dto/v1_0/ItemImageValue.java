@@ -36,6 +36,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "A item image value.", value = "ItemImageValue")
+@io.swagger.v3.oas.annotations.media.Schema(description = "A item image value.")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ItemImageValue")
 public class ItemImageValue extends ImageValue implements Serializable {
@@ -248,4 +249,4 @@ public class ItemImageValue extends ImageValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-470597176
+// LIFERAY-REST-BUILDER-HASH:10842108

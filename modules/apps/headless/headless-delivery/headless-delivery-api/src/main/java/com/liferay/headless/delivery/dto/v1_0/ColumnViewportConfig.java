@@ -39,6 +39,10 @@ import java.util.function.Supplier;
 	description = "Deprecated as of Athanasius (7.3.x), replaced by columnViewports",
 	value = "ColumnViewportConfig"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	deprecated = true,
+	description = "Deprecated as of Athanasius (7.3.x), replaced by columnViewports"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ColumnViewportConfig")
 public class ColumnViewportConfig implements Serializable {
@@ -345,4 +349,4 @@ public class ColumnViewportConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1570496883
+// LIFERAY-REST-BUILDER-HASH:-1409547400

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a mailing address. This follows the [`PostalAddress`](https://www.schema.org/PostalAddress) specification.",
 	value = "PostalAddress"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a mailing address. This follows the [`PostalAddress`](https://www.schema.org/PostalAddress) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PostalAddress")
 public class PostalAddress implements Serializable {
@@ -1184,4 +1187,4 @@ public class PostalAddress implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-965440263
+// LIFERAY-REST-BUILDER-HASH:1282603279

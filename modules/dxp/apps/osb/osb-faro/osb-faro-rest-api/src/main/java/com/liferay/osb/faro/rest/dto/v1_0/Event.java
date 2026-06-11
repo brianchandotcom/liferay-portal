@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each event carries free-form `attributes` (a name-value map of contextual properties) plus any matching page metadata. Use `getWorkspaceGroupChannelEventsPage` to retrieve a list of analytics events.",
 	value = "Event"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each event carries free-form `attributes` (a name-value map of contextual properties) plus any matching page metadata. Use `getWorkspaceGroupChannelEventsPage` to retrieve a list of analytics events."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Event")
 public class Event implements Serializable {
@@ -904,4 +907,4 @@ public class Event implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-672434847
+// LIFERAY-REST-BUILDER-HASH:1710690303

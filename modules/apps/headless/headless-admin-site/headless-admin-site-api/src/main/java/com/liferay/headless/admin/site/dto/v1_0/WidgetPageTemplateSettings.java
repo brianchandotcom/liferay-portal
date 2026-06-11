@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The settings of a widget page template.",
 	value = "WidgetPageTemplateSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The settings of a widget page template."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WidgetPageTemplateSettings")
 public class WidgetPageTemplateSettings
@@ -316,4 +319,4 @@ public class WidgetPageTemplateSettings
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:562316183
+// LIFERAY-REST-BUILDER-HASH:1171761912

@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "The list of different possible values.", value = "Option"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The list of different possible values."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Option")
 public class Option implements Serializable {
@@ -353,4 +356,4 @@ public class Option implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-799936033
+// LIFERAY-REST-BUILDER-HASH:1081576779

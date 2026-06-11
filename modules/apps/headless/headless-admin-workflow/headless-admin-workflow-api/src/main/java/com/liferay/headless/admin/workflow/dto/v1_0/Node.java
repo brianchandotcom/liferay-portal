@@ -39,6 +39,9 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "Represents a node in a workflow.", value = "Node")
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a node in a workflow."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Node")
 public class Node implements Serializable {
@@ -400,4 +403,4 @@ public class Node implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1465728265
+// LIFERAY-REST-BUILDER-HASH:-1030322654

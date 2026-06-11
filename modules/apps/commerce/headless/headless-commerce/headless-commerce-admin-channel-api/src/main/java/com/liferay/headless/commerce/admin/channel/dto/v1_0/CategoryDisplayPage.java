@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Per-category mapping that overrides the channel's default category site page, allowing a category to render through a different page for SEO or merchandising purposes. Created on POST and removed on DELETE; the channel falls back to its DefaultCategoryDisplayPage when no mapping exists.",
 	value = "CategoryDisplayPage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Per-category mapping that overrides the channel's default category site page, allowing a category to render through a different page for SEO or merchandising purposes. Created on POST and removed on DELETE; the channel falls back to its DefaultCategoryDisplayPage when no mapping exists."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CategoryDisplayPage")
 public class CategoryDisplayPage implements Serializable {
@@ -549,4 +552,4 @@ public class CategoryDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-602387835
+// LIFERAY-REST-BUILDER-HASH:1895444007

@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 	description = "A saved audience definition that selects individuals matching a filter expression.",
 	value = "IndividualSegment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A saved audience definition that selects individuals matching a filter expression."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "IndividualSegment")
 public class IndividualSegment implements Serializable {
@@ -1213,4 +1216,4 @@ public class IndividualSegment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:716535836
+// LIFERAY-REST-BUILDER-HASH:-644975279

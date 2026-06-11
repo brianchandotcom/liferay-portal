@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The definition of an action interaction of type URL.",
 	value = "URLActionInteraction"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of an action interaction of type URL."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "URLActionInteraction")
 public class URLActionInteraction
@@ -255,4 +258,4 @@ public class URLActionInteraction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1092382635
+// LIFERAY-REST-BUILDER-HASH:-1766313179

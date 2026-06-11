@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Represents an organization. Organizations can contain other organizations (suborganizations). Properties follow the [Organization](https://schema.org/Organization) specification.",
 	value = "Organization"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents an organization. Organizations can contain other organizations (suborganizations). Properties follow the [Organization](https://schema.org/Organization) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Organization")
 public class Organization implements Serializable {
@@ -2051,4 +2054,4 @@ public class Organization implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1229440
+// LIFERAY-REST-BUILDER-HASH:1149041682

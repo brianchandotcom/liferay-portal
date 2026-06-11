@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Read-only reference to a Liferay account group used by catalog resources to target a set of accounts that share product configuration list visibility.",
 	value = "AccountGroup"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only reference to a Liferay account group used by catalog resources to target a set of accounts that share product configuration list visibility."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountGroup")
 public class AccountGroup implements Serializable {
@@ -294,4 +297,4 @@ public class AccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:605437756
+// LIFERAY-REST-BUILDER-HASH:1847997197

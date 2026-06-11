@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 	description = "A single individual's membership in an individual segment. Captures when the Individual entered the segment and (if applicable) when they exited.",
 	value = "IndividualSegmentMembership"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A single individual's membership in an individual segment. Captures when the Individual entered the segment and (if applicable) when they exited."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "IndividualSegmentMembership")
 public class IndividualSegmentMembership implements Serializable {
@@ -545,4 +548,4 @@ public class IndividualSegmentMembership implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1250347377
+// LIFERAY-REST-BUILDER-HASH:-162119290

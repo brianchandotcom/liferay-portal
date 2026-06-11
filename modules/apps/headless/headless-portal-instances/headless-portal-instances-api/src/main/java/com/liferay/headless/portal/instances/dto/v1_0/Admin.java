@@ -34,6 +34,9 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "Administrator information.", value = "Admin")
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Administrator information."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Admin")
 public class Admin implements Serializable {
@@ -351,4 +354,4 @@ public class Admin implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:863631075
+// LIFERAY-REST-BUILDER-HASH:1266765906

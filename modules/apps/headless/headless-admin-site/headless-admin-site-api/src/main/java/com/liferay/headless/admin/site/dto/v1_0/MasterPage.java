@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "A page with common elements (header, footer, ...) used for all or several pages of a site.",
 	value = "MasterPage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A page with common elements (header, footer, ...) used for all or several pages of a site."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MasterPage")
 public class MasterPage implements Serializable {
@@ -1057,4 +1060,4 @@ public class MasterPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1558124051
+// LIFERAY-REST-BUILDER-HASH:1095193005

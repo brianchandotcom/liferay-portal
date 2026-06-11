@@ -1657,4 +1657,4 @@ public class ObjectEntryFolder implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:246424981
+// LIFERAY-REST-BUILDER-HASH:999481035

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Each SCIM resource (Users, Groups, etc.) includes the following common attributes.",
 	value = "BaseScim"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Each SCIM resource (Users, Groups, etc.) includes the following common attributes."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BaseScim")
 public class BaseScim implements Serializable {
@@ -422,4 +425,4 @@ public class BaseScim implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-355815799
+// LIFERAY-REST-BUILDER-HASH:1606714988

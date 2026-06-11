@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "The page section's html properties", value = "HtmlProperties"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page section's html properties"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "HtmlProperties")
 public class HtmlProperties implements Serializable {
@@ -288,4 +291,4 @@ public class HtmlProperties implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:396431103
+// LIFERAY-REST-BUILDER-HASH:1146603888

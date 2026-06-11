@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "The form container success form container submission result.",
 	value = "SuccessFormContainerSubmissionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The form container success form container submission result."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -328,4 +331,4 @@ public abstract class SuccessFormContainerSubmissionResult
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1984759344
+// LIFERAY-REST-BUILDER-HASH:1225343015

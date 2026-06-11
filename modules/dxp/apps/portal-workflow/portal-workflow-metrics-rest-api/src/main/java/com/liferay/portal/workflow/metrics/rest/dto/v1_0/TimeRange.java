@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "https://www.schema.org/TimeRange", value = "TimeRange"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/TimeRange"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TimeRange")
 public class TimeRange implements Serializable {
@@ -456,4 +459,4 @@ public class TimeRange implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-18729964
+// LIFERAY-REST-BUILDER-HASH:-573112228

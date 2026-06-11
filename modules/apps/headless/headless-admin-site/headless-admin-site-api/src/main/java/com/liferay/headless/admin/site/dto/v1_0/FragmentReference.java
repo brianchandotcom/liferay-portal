@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "The reference to the fragment.", value = "FragmentReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The reference to the fragment."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -316,4 +319,4 @@ public abstract class FragmentReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1015199358
+// LIFERAY-REST-BUILDER-HASH:-1826719558

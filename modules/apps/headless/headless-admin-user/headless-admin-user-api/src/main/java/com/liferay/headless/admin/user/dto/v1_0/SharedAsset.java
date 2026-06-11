@@ -40,6 +40,9 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "Represents a shared asset.", value = "SharedAsset")
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a shared asset."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SharedAsset")
 public class SharedAsset implements Serializable {
@@ -1172,4 +1175,4 @@ public class SharedAsset implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2105014474
+// LIFERAY-REST-BUILDER-HASH:2085798069

@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Represents a comment. See [Comment](https://www.schema.org/Comment) for more details.",
 	value = "Comment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a comment. See [Comment](https://www.schema.org/Comment) for more details."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Comment")
 public class Comment implements Serializable {
@@ -763,4 +766,4 @@ public class Comment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1889898590
+// LIFERAY-REST-BUILDER-HASH:1119321101

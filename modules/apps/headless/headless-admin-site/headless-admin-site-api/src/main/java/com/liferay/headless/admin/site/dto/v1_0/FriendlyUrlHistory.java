@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Represents the history of previously used URLs for a page to prevent broken links and provide an easy way to revert changes.",
 	value = "FriendlyUrlHistory"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the history of previously used URLs for a page to prevent broken links and provide an easy way to revert changes."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FriendlyUrlHistory")
 public class FriendlyUrlHistory implements Serializable {
@@ -250,4 +253,4 @@ public class FriendlyUrlHistory implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1848541336
+// LIFERAY-REST-BUILDER-HASH:1675986508

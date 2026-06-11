@@ -36,6 +36,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "https://www.schema.org/GenericError", value = "GenericError"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/GenericError"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "GenericError")
 public class GenericError implements Serializable {
@@ -290,4 +293,4 @@ public class GenericError implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1745358387
+// LIFERAY-REST-BUILDER-HASH:-90870474

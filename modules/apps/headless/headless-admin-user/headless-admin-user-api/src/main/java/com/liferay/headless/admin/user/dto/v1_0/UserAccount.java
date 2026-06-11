@@ -43,6 +43,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "Represents a user.", value = "UserAccount")
+@io.swagger.v3.oas.annotations.media.Schema(description = "Represents a user.")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UserAccount")
 public class UserAccount implements Serializable {
@@ -2787,4 +2788,4 @@ public class UserAccount implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-782683171
+// LIFERAY-REST-BUILDER-HASH:-420082092

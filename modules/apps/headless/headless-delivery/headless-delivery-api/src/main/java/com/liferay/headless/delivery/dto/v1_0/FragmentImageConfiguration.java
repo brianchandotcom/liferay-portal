@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents the Adaptive Media fragment image configuration for different viewports.",
 	value = "FragmentImageConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the Adaptive Media fragment image configuration for different viewports."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentImageConfiguration")
 public class FragmentImageConfiguration implements Serializable {
@@ -364,4 +367,4 @@ public class FragmentImageConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1408429657
+// LIFERAY-REST-BUILDER-HASH:438502363

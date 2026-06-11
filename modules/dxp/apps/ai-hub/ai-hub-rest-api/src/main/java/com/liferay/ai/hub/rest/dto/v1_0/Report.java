@@ -779,4 +779,4 @@ public class Report implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:208239394
+// LIFERAY-REST-BUILDER-HASH:1128998822

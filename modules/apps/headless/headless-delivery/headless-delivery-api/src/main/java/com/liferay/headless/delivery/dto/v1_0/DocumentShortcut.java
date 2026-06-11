@@ -45,6 +45,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents a document shortcut.", value = "DocumentShortcut"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a document shortcut."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DocumentShortcut")
 public class DocumentShortcut implements Serializable {
@@ -882,4 +885,4 @@ public class DocumentShortcut implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-398379363
+// LIFERAY-REST-BUILDER-HASH:338814802

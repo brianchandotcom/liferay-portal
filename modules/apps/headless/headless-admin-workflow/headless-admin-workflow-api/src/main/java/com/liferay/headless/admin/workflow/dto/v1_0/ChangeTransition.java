@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents a write-only schema to update a workflow's transition.",
 	value = "ChangeTransition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a write-only schema to update a workflow's transition."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ChangeTransition")
 public class ChangeTransition implements Serializable {
@@ -344,4 +347,4 @@ public class ChangeTransition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2102928355
+// LIFERAY-REST-BUILDER-HASH:-757183279

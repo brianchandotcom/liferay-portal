@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "An array of images in several resolutions and sizes, created by the Adaptive Media framework.",
 	value = "AdaptedImage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "An array of images in several resolutions and sizes, created by the Adaptive Media framework."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AdaptedImage")
 public class AdaptedImage implements Serializable {
@@ -523,4 +526,4 @@ public class AdaptedImage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1384176327
+// LIFERAY-REST-BUILDER-HASH:2094891361

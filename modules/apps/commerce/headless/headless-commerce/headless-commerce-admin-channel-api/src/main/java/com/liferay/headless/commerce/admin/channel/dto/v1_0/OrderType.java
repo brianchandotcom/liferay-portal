@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Order classification referenced by orders to drive downstream processing such as payment-method eligibility and shipping rules. Read-only on this projection; created and updated through the Order admin API.",
 	value = "OrderType"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Order classification referenced by orders to drive downstream processing such as payment-method eligibility and shipping rules. Read-only on this projection; created and updated through the Order admin API."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrderType")
 public class OrderType implements Serializable {
@@ -296,4 +299,4 @@ public class OrderType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:263910253
+// LIFERAY-REST-BUILDER-HASH:-1670776259

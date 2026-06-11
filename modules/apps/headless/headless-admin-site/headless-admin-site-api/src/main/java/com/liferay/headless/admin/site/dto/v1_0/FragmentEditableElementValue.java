@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "The fragment editable element value.",
 	value = "FragmentEditableElementValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The fragment editable element value."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -329,4 +332,4 @@ public abstract class FragmentEditableElementValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-159428927
+// LIFERAY-REST-BUILDER-HASH:1857094795

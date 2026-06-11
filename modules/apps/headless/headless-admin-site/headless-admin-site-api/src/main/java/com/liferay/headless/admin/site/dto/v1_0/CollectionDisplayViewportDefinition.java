@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "The definition of the collection display viewport.",
 	value = "CollectionDisplayViewportDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of the collection display viewport."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CollectionDisplayViewportDefinition")
 public class CollectionDisplayViewportDefinition implements Serializable {
@@ -619,4 +622,4 @@ public class CollectionDisplayViewportDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1955343768
+// LIFERAY-REST-BUILDER-HASH:1952635652

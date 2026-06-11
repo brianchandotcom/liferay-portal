@@ -39,6 +39,9 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "The page section's layout.", value = "Layout")
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page section's layout."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Layout")
 public class Layout implements Serializable {
@@ -1691,4 +1694,4 @@ public class Layout implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1504135525
+// LIFERAY-REST-BUILDER-HASH:1848876808

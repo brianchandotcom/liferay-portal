@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Search term metrics. Use `getWorkspaceGroupChannelSearchTermsPage` to list these metrics for a workspace.",
 	value = "SearchTerm"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Search term metrics. Use `getWorkspaceGroupChannelSearchTermsPage` to list these metrics for a workspace."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SearchTerm")
 public class SearchTerm implements Serializable {
@@ -287,4 +290,4 @@ public class SearchTerm implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:364050776
+// LIFERAY-REST-BUILDER-HASH:-2102052459

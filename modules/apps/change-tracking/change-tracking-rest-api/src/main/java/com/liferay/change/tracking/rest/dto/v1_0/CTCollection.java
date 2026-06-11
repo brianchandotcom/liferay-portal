@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Represents a set of changes tracked for a publication.",
 	value = "CTCollection"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a set of changes tracked for a publication."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CTCollection")
 public class CTCollection implements Serializable {
@@ -816,4 +819,4 @@ public class CTCollection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1293571585
+// LIFERAY-REST-BUILDER-HASH:-448164901

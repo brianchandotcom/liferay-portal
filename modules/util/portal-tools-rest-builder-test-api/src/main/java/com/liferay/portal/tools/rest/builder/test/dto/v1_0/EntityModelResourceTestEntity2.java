@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "A EntityModelResource test entity (`implements EntityModelResource` in the EntityModelResourceTestEntity2ResourceImpl class) with filterable fields.",
 	value = "EntityModelResourceTestEntity2"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A EntityModelResource test entity (`implements EntityModelResource` in the EntityModelResourceTestEntity2ResourceImpl class) with filterable fields."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "EntityModelResourceTestEntity2")
 public class EntityModelResourceTestEntity2 implements Serializable {
@@ -287,4 +290,4 @@ public class EntityModelResourceTestEntity2 implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1463202969
+// LIFERAY-REST-BUILDER-HASH:1615816186

@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "Aggregated pricing summary of a placed order. Carries item counts, subtotals, shipping, tax, and discount breakdowns formatted in the order's currency. Tax inclusion depends on the channel's price-display configuration. Read-only.",
 	value = "Summary"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Aggregated pricing summary of a placed order. Carries item counts, subtotals, shipping, tax, and discount breakdowns formatted in the order's currency. Tax inclusion depends on the channel's price-display configuration. Read-only."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Summary")
 public class Summary implements Serializable {
@@ -1570,4 +1573,4 @@ public class Summary implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:120912255
+// LIFERAY-REST-BUILDER-HASH:-1438891120

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The value of a fragment configuration field of type color palette.",
 	value = "ColorPaletteFragmentConfigurationFieldValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The value of a fragment configuration field of type color palette."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ColorPaletteFragmentConfigurationFieldValue")
 public class ColorPaletteFragmentConfigurationFieldValue
@@ -320,4 +323,4 @@ public class ColorPaletteFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1859997224
+// LIFERAY-REST-BUILDER-HASH:-1405827765

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represent a page element definition of a drop zone.",
 	value = "DropZonePageElementDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represent a page element definition of a drop zone."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DropZonePageElementDefinition")
 public class DropZonePageElementDefinition
@@ -327,4 +330,4 @@ public class DropZonePageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1369960700
+// LIFERAY-REST-BUILDER-HASH:-1082318482

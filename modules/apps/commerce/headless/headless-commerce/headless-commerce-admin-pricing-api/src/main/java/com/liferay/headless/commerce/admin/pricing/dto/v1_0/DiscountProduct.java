@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Product binding that restricts a discount to a specific product. Backed by discount link where classNameId resolves to product; honoured only when the parent discount's `target` is `products`.",
 	value = "DiscountProduct"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Product binding that restricts a discount to a specific product. Backed by discount link where classNameId resolves to product; honoured only when the parent discount's `target` is `products`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DiscountProduct")
 public class DiscountProduct implements Serializable {
@@ -487,4 +490,4 @@ public class DiscountProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1240155682
+// LIFERAY-REST-BUILDER-HASH:-1238252359

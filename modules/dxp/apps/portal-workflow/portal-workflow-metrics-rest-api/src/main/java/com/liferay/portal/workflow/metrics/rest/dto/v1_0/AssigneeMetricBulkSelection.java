@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "https://schema.org/AssigneeMetricBulkSelection",
 	value = "AssigneeMetricBulkSelection"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://schema.org/AssigneeMetricBulkSelection"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssigneeMetricBulkSelection")
 public class AssigneeMetricBulkSelection implements Serializable {
@@ -605,4 +608,4 @@ public class AssigneeMetricBulkSelection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:521790851
+// LIFERAY-REST-BUILDER-HASH:1198338871

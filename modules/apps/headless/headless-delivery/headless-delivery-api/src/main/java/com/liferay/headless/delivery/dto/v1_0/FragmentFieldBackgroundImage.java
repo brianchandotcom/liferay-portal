@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a fragment field with a background image.",
 	value = "FragmentFieldBackgroundImage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a fragment field with a background image."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentFieldBackgroundImage")
 public class FragmentFieldBackgroundImage implements Serializable {
@@ -303,4 +306,4 @@ public class FragmentFieldBackgroundImage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1434892898
+// LIFERAY-REST-BUILDER-HASH:-1285489606

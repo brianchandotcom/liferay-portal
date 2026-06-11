@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "A shop-by-diagram setting that turns a product into an interactive image with clickable pins. Created and updated by the admin catalog write surface, which first uploads the diagram image as a diagram-type attachment and then persists the diagram setting.",
 	value = "Diagram"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A shop-by-diagram setting that turns a product into an interactive image with clickable pins. Created and updated by the admin catalog write surface, which first uploads the diagram image as a diagram-type attachment and then persists the diagram setting."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Diagram")
 public class Diagram implements Serializable {
@@ -718,4 +721,4 @@ public class Diagram implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1285464076
+// LIFERAY-REST-BUILDER-HASH:750917333

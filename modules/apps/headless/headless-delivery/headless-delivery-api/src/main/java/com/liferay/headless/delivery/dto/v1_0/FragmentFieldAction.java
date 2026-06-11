@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Represents a fragment field with an action.",
 	value = "FragmentFieldAction"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a fragment field with an action."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentFieldAction")
 public class FragmentFieldAction implements Serializable {
@@ -431,4 +434,4 @@ public class FragmentFieldAction implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1367468567
+// LIFERAY-REST-BUILDER-HASH:-1354900560

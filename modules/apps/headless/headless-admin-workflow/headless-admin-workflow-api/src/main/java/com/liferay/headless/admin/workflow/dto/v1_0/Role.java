@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Represents a relationship between a user and a company or site. This follows the [`Role`](https://www.schema.org/Role) specification.",
 	value = "Role"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a relationship between a user and a company or site. This follows the [`Role`](https://www.schema.org/Role) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Role")
 public class Role implements Serializable {
@@ -769,4 +772,4 @@ public class Role implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1600305602
+// LIFERAY-REST-BUILDER-HASH:-1551562628

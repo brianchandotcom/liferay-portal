@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Status descriptor that pairs the integer status code with its canonical label and the localized label resolved in the request locale. Used by orderStatusInfo, paymentStatusInfo, workflowStatusInfo on PlacedOrder, and by status on Shipment and PlacedOrderItemShipment.",
 	value = "Status"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Status descriptor that pairs the integer status code with its canonical label and the localized label resolved in the request locale. Used by orderStatusInfo, paymentStatusInfo, workflowStatusInfo on PlacedOrder, and by status on Shipment and PlacedOrderItemShipment."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
@@ -357,4 +360,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-451583427
+// LIFERAY-REST-BUILDER-HASH:272964053

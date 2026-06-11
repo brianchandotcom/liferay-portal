@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Resolved price snapshot for a SKU in the active channel and currency, including discounts, promotional prices, and tier breakpoints. Tax inclusion follows the channel display setting; values are computed at response time and never persisted on the SKU.",
 	value = "Price"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Resolved price snapshot for a SKU in the active channel and currency, including discounts, promotional prices, and tier breakpoints. Tax inclusion follows the channel display setting; values are computed at response time and never persisted on the SKU."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Price")
 public class Price implements Serializable {
@@ -1040,4 +1043,4 @@ public class Price implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1695159502
+// LIFERAY-REST-BUILDER-HASH:1406024726

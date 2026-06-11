@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "https://schema.org/AssigneeMetric", value = "AssigneeMetric"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://schema.org/AssigneeMetric"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssigneeMetric")
 public class AssigneeMetric implements Serializable {
@@ -444,4 +447,4 @@ public class AssigneeMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1537978387
+// LIFERAY-REST-BUILDER-HASH:125206303

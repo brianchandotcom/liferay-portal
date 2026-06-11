@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A unique reference to a FormContainerReference of type FormContainerClassSubtypeReference which remains constant across environments.",
 	value = "FormContainerClassSubtypeReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A unique reference to a FormContainerReference of type FormContainerClassSubtypeReference which remains constant across environments."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormContainerClassSubtypeReference")
 public class FormContainerClassSubtypeReference
@@ -313,4 +316,4 @@ public class FormContainerClassSubtypeReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1817847720
+// LIFERAY-REST-BUILDER-HASH:1920042755

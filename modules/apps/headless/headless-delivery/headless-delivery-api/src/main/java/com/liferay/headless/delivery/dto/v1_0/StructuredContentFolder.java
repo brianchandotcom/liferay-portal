@@ -1207,4 +1207,4 @@ public class StructuredContentFolder implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1078007417
+// LIFERAY-REST-BUILDER-HASH:701733507

@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 	description = "Represents a message on a message board. Properties follow the [Discussion Forum Posting](https://schema.org/DiscussionForumPosting) specification.",
 	value = "MessageBoardMessage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a message on a message board. Properties follow the [Discussion Forum Posting](https://schema.org/DiscussionForumPosting) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MessageBoardMessage")
 public class MessageBoardMessage implements Serializable {
@@ -1897,4 +1900,4 @@ public class MessageBoardMessage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-862165310
+// LIFERAY-REST-BUILDER-HASH:-1888481528

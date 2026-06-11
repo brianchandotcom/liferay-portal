@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The settings of a link to URL page.",
 	value = "LinkToURLPageSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The settings of a link to URL page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "LinkToURLPageSettings")
 public class LinkToURLPageSettings
@@ -289,4 +292,4 @@ public class LinkToURLPageSettings
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:950444679
+// LIFERAY-REST-BUILDER-HASH:1019112214

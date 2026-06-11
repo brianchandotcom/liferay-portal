@@ -45,6 +45,9 @@ import java.util.function.Supplier;
 	description = "Buyer-facing projection of a single line item on a placed order. Carries the priced SKU, quantity, options, child items, and the shipments that fulfill the line.",
 	value = "PlacedOrderItem"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Buyer-facing projection of a single line item on a placed order. Carries the priced SKU, quantity, options, child items, and the shipments that fulfill the line."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PlacedOrderItem")
 public class PlacedOrderItem implements Serializable {
@@ -2035,4 +2038,4 @@ public class PlacedOrderItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:508542579
+// LIFERAY-REST-BUILDER-HASH:-310038118

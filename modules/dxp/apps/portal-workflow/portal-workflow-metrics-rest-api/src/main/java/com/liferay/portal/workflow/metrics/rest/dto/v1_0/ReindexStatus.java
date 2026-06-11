@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "https://www.schema.org/ReindexStatus",
 	value = "ReindexStatus"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/ReindexStatus"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ReindexStatus")
 public class ReindexStatus implements Serializable {
@@ -285,4 +288,4 @@ public class ReindexStatus implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1238214577
+// LIFERAY-REST-BUILDER-HASH:-650763992

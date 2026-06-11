@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Workflow or order-status transition available on the cart. Each entry names the transition (a workflow task name or one of request-quote, submit, quick-checkout, checkout), its localized label, whether the transition is currently allowed, and an optional comment captured when the transition is fired.",
 	value = "CartTransition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Workflow or order-status transition available on the cart. Each entry names the transition (a workflow task name or one of request-quote, submit, quick-checkout, checkout), its localized label, whether the transition is currently allowed, and an optional comment captured when the transition is fired."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CartTransition")
 public class CartTransition implements Serializable {
@@ -591,4 +594,4 @@ public class CartTransition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1138143671
+// LIFERAY-REST-BUILDER-HASH:-1087191377

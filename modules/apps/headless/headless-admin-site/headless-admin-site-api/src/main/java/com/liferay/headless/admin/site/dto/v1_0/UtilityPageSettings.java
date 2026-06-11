@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The settings of a utility page.",
 	value = "UtilityPageSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The settings of a utility page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UtilityPageSettings")
 public class UtilityPageSettings implements Serializable {
@@ -237,4 +240,4 @@ public class UtilityPageSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-6633747
+// LIFERAY-REST-BUILDER-HASH:107490376

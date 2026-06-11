@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "An inline value of a fragment HTML element.",
 	value = "HTMLFragmentInlineValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "An inline value of a fragment HTML element."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "HTMLFragmentInlineValue")
 public class HTMLFragmentInlineValue
@@ -255,4 +258,4 @@ public class HTMLFragmentInlineValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2094319192
+// LIFERAY-REST-BUILDER-HASH:1615243852

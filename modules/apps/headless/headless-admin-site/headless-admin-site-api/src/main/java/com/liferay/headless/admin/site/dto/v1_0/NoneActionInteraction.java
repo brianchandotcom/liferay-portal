@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The definition of an action interaction of type none.",
 	value = "NoneActionInteraction"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of an action interaction of type none."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NoneActionInteraction")
 public class NoneActionInteraction
@@ -251,4 +254,4 @@ public class NoneActionInteraction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1286348484
+// LIFERAY-REST-BUILDER-HASH:1190407313

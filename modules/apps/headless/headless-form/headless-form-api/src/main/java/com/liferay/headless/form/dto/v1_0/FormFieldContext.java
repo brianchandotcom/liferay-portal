@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "https://www.schema.org/FormFieldContext",
 	value = "FormFieldContext"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/FormFieldContext"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormFieldContext")
 public class FormFieldContext implements Serializable {
@@ -674,4 +677,4 @@ public class FormFieldContext implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1291055531
+// LIFERAY-REST-BUILDER-HASH:82527384

@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 	description = "Wire shape for an order line uploaded alongside its parent order to the analytics pipeline. Carries product, SKU, quantity, and price information per line.",
 	value = "OrderItem"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Wire shape for an order line uploaded alongside its parent order to the analytics pipeline. Carries product, SKU, quantity, and price information per line."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrderItem")
 public class OrderItem implements Serializable {
@@ -1203,4 +1206,4 @@ public class OrderItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1810767700
+// LIFERAY-REST-BUILDER-HASH:348729903

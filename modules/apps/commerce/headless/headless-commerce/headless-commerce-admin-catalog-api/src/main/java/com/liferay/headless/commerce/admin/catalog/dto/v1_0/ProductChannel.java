@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Association between a product and a commerce channel; admin catalog write view used to manage which commerce channels expose the product when `productChannelFilter` is enabled on the parent product.",
 	value = "ProductChannel"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Association between a product and a commerce channel; admin catalog write view used to manage which commerce channels expose the product when `productChannelFilter` is enabled on the parent product."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductChannel")
 public class ProductChannel implements Serializable {
@@ -539,4 +542,4 @@ public class ProductChannel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1312999912
+// LIFERAY-REST-BUILDER-HASH:2131108687

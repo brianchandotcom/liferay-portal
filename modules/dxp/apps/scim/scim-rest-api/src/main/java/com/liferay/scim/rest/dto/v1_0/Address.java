@@ -36,6 +36,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "A physical mailing address for this user.", value = "Address"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A physical mailing address for this user."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Address")
 public class Address implements Serializable {
@@ -648,4 +651,4 @@ public class Address implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1303833492
+// LIFERAY-REST-BUILDER-HASH:1367834833

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The author's user groups information.",
 	value = "UserGroupBrief"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The author's user groups information."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UserGroupBrief")
 public class UserGroupBrief implements Serializable {
@@ -287,4 +290,4 @@ public class UserGroupBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-832766642
+// LIFERAY-REST-BUILDER-HASH:2045694429

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Describes a specific language in the platform.",
 	value = "Language"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Describes a specific language in the platform."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Language")
 public class Language implements Serializable {
@@ -523,4 +526,4 @@ public class Language implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1732921458
+// LIFERAY-REST-BUILDER-HASH:-375351726

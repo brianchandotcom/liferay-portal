@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The page element definition of a form relationship.",
 	value = "FormRelationshipPageElementDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page element definition of a form relationship."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormRelationshipPageElementDefinition")
 public class FormRelationshipPageElementDefinition
@@ -631,4 +634,4 @@ public class FormRelationshipPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1093601385
+// LIFERAY-REST-BUILDER-HASH:-515966370

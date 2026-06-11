@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Reusable list-type definition attached to a product specification option to constrain the values a product specification can take; within this module the resource only supports listing definitions attached to a specification, creating one and attaching it, attaching an existing definition, and detaching one, while the definition itself is persisted through a separate list-type module.",
 	value = "ListTypeDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Reusable list-type definition attached to a product specification option to constrain the values a product specification can take; within this module the resource only supports listing definitions attached to a specification, creating one and attaching it, attaching an existing definition, and detaching one, while the definition itself is persisted through a separate list-type module."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ListTypeDefinition")
 public class ListTypeDefinition implements Serializable {
@@ -665,4 +668,4 @@ public class ListTypeDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-904079571
+// LIFERAY-REST-BUILDER-HASH:-241856599

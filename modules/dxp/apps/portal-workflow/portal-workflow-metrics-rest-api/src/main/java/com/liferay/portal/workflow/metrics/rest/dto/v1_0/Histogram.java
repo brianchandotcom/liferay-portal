@@ -36,6 +36,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "https://www.schema.org/Histogram", value = "Histogram"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/Histogram"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Histogram")
 public class Histogram implements Serializable {
@@ -284,4 +287,4 @@ public class Histogram implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:207940889
+// LIFERAY-REST-BUILDER-HASH:-800396347

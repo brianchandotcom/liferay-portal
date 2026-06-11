@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "A fragment set (also known as fragment collection).",
 	value = "FragmentSet"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A fragment set (also known as fragment collection)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentSet")
 public class FragmentSet implements Serializable {
@@ -650,4 +653,4 @@ public class FragmentSet implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-937721149
+// LIFERAY-REST-BUILDER-HASH:-1489593151

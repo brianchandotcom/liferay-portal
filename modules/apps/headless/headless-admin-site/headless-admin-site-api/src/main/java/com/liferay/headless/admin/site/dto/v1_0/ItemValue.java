@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "A value of a field of type item.", value = "ItemValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A value of a field of type item."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ItemValue")
 public class ItemValue implements Serializable {
@@ -291,4 +294,4 @@ public class ItemValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1718191042
+// LIFERAY-REST-BUILDER-HASH:203283846

@@ -39,6 +39,10 @@ import java.util.function.Supplier;
 	description = "Deprecated as of Athanasius (7.3.x), replaced by defaultFragmentInlineValue",
 	value = "DefaultValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	deprecated = true,
+	description = "Deprecated as of Athanasius (7.3.x), replaced by defaultFragmentInlineValue"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DefaultValue")
 public class DefaultValue implements Serializable {
@@ -291,4 +295,4 @@ public class DefaultValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:786120550
+// LIFERAY-REST-BUILDER-HASH:-268539947

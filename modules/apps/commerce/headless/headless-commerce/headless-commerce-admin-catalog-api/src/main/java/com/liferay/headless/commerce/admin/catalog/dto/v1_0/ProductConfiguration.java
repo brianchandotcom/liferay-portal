@@ -45,6 +45,9 @@ import java.util.function.Supplier;
 	description = "Inventory, ordering, and fulfillment configuration for a single product or for a reusable configuration template; bundles inventory engine selection, order quantity rules, low-stock behavior, shipping dimensions, and tax classification under one configuration list entry.",
 	value = "ProductConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Inventory, ordering, and fulfillment configuration for a single product or for a reusable configuration template; bundles inventory engine selection, order quantity rules, low-stock behavior, shipping dimensions, and tax classification under one configuration list entry."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductConfiguration")
 public class ProductConfiguration implements Serializable {
@@ -1638,4 +1641,4 @@ public class ProductConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:307733337
+// LIFERAY-REST-BUILDER-HASH:-628158605

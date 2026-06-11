@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "A note attached to an order. Carries free-text content and a restricted flag that hides internal-only notes from the storefront.",
 	value = "OrderNote"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A note attached to an order. Carries free-text content and a restricted flag that hides internal-only notes from the storefront."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrderNote")
 public class OrderNote implements Serializable {
@@ -788,4 +791,4 @@ public class OrderNote implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1759474204
+// LIFERAY-REST-BUILDER-HASH:-1496046118

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of an AssetCategory referenced by a discount, price-modifier, or product category binding. Carries the category id, name, path, and the vocabulary the category belongs to.",
 	value = "Category"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of an AssetCategory referenced by a discount, price-modifier, or product category binding. Carries the category id, name, path, and the vocabulary the category belongs to."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Category")
 public class Category implements Serializable {
@@ -413,4 +416,4 @@ public class Category implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:958425045
+// LIFERAY-REST-BUILDER-HASH:-772723840

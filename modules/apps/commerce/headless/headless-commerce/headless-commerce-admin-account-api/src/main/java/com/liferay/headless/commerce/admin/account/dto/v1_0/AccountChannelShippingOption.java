@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Per-account override of a shipping option on a commerce channel. Pairs the owning account, the channel, a shipping method engine key, and a specific fixed option key; an override is unique per account, channel, shipping method, and option key.",
 	value = "AccountChannelShippingOption"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Per-account override of a shipping option on a commerce channel. Pairs the owning account, the channel, a shipping method engine key, and a specific fixed option key; an override is unique per account, channel, shipping method, and option key."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountChannelShippingOption")
 public class AccountChannelShippingOption implements Serializable {
@@ -791,4 +794,4 @@ public class AccountChannelShippingOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-214040911
+// LIFERAY-REST-BUILDER-HASH:1010758435

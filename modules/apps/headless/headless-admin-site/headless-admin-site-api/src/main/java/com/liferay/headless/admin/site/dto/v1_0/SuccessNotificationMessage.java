@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The success notification message.",
 	value = "SuccessNotificationMessage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The success notification message."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SuccessNotificationMessage")
 public class SuccessNotificationMessage implements Serializable {
@@ -292,4 +295,4 @@ public class SuccessNotificationMessage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1923996734
+// LIFERAY-REST-BUILDER-HASH:1435126734

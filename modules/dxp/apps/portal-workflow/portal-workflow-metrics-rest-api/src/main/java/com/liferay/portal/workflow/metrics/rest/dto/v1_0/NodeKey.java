@@ -34,6 +34,9 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "https://www.schema.org/NodeKey", value = "NodeKey")
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/NodeKey"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NodeKey")
 public class NodeKey implements Serializable {
@@ -286,4 +289,4 @@ public class NodeKey implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:953519549
+// LIFERAY-REST-BUILDER-HASH:213515906

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents a fragment field.", value = "FragmentField"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a fragment field."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentField")
 public class FragmentField implements Serializable {
@@ -302,4 +305,4 @@ public class FragmentField implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1902725995
+// LIFERAY-REST-BUILDER-HASH:113941121

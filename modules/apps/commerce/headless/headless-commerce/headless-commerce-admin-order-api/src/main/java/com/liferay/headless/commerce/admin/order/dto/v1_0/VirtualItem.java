@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "A virtual or downloadable asset associated with an order item, such as a license URL with usage limits.",
 	value = "VirtualItem"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A virtual or downloadable asset associated with an order item, such as a license URL with usage limits."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "VirtualItem")
 public class VirtualItem implements Serializable {
@@ -354,4 +357,4 @@ public class VirtualItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-205948776
+// LIFERAY-REST-BUILDER-HASH:-1850991898

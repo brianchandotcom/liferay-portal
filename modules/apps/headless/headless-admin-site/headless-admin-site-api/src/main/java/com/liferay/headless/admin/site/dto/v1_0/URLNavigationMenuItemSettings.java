@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Type-specific settings for a \"URL\" navigation menu item type.",
 	value = "URLNavigationMenuItemSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Type-specific settings for a \"URL\" navigation menu item type."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "URLNavigationMenuItemSettings")
 public class URLNavigationMenuItemSettings implements Serializable {
@@ -297,4 +300,4 @@ public class URLNavigationMenuItemSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-960698024
+// LIFERAY-REST-BUILDER-HASH:-1886312991

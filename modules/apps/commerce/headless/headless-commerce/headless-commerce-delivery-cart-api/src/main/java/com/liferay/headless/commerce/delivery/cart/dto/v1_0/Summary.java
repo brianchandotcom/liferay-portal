@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "Computed totals for a cart. Carries the subtotal, the shipping and tax components, the absolute and percentage discounts at each level (subtotal, shipping, total), and the final total. The currency is inherited from the parent cart.",
 	value = "Summary"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Computed totals for a cart. Carries the subtotal, the shipping and tax components, the absolute and percentage discounts at each level (subtotal, shipping, total), and the final total. The currency is inherited from the parent cart."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Summary")
 public class Summary implements Serializable {
@@ -1534,4 +1537,4 @@ public class Summary implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1347825819
+// LIFERAY-REST-BUILDER-HASH:-1653595025

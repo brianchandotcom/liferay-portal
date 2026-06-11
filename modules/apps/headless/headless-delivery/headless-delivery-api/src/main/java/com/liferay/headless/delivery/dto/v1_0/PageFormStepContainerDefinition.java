@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of a Page form step container.",
 	value = "PageFormStepContainerDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of a Page form step container."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageFormStepContainerDefinition")
 public class PageFormStepContainerDefinition implements Serializable {
@@ -562,4 +565,4 @@ public class PageFormStepContainerDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1015032793
+// LIFERAY-REST-BUILDER-HASH:-1793683704

@@ -34,6 +34,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "A URL image value.", value = "URLImageValue")
+@io.swagger.v3.oas.annotations.media.Schema(description = "A URL image value.")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "URLImageValue")
 public class URLImageValue extends ImageValue implements Serializable {
@@ -243,4 +244,4 @@ public class URLImageValue extends ImageValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-595752885
+// LIFERAY-REST-BUILDER-HASH:-754471145

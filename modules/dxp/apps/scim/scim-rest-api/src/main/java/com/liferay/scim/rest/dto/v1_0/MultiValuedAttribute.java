@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Multi-valued attributes contain a list of elements using the JSON array format.",
 	value = "MultiValuedAttribute"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Multi-valued attributes contain a list of elements using the JSON array format."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MultiValuedAttribute")
 public class MultiValuedAttribute implements Serializable {
@@ -476,4 +479,4 @@ public class MultiValuedAttribute implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2103876577
+// LIFERAY-REST-BUILDER-HASH:2008852651

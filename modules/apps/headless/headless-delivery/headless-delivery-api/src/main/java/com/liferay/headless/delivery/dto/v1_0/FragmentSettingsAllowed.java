@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents the settings of allowed fragments in a page dropzone.",
 	value = "FragmentSettingsAllowed"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the settings of allowed fragments in a page dropzone."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentSettingsAllowed")
 public class FragmentSettingsAllowed implements Serializable {
@@ -247,4 +250,4 @@ public class FragmentSettingsAllowed implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-270185513
+// LIFERAY-REST-BUILDER-HASH:1123338950

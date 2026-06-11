@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Logical grouping of products used by pricing and promotion rules; admin catalog write view; the `products` collection is managed through the product-group-product sub-resource and is reflected in `productsCount`.",
 	value = "ProductGroup"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Logical grouping of products used by pricing and promotion rules; admin catalog write view; the `products` collection is managed through the product-group-product sub-resource and is reflected in `productsCount`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductGroup")
 public class ProductGroup implements Serializable {
@@ -601,4 +604,4 @@ public class ProductGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-62161979
+// LIFERAY-REST-BUILDER-HASH:135243892

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Payment method qualified for a cart. The entries returned for a given cart depend on the billing address country, the order type qualifiers, the buyer's view permission, and subscription eligibility.",
 	value = "PaymentMethod"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Payment method qualified for a cart. The entries returned for a given cart depend on the billing address country, the order type qualifiers, the buyer's view permission, and subscription eligibility."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PaymentMethod")
 public class PaymentMethod implements Serializable {
@@ -357,4 +360,4 @@ public class PaymentMethod implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1590936518
+// LIFERAY-REST-BUILDER-HASH:1761115152

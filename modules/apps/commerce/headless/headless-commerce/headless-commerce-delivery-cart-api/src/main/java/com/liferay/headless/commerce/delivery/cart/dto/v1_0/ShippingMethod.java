@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Shipping method qualified for a cart. The nested shipping options are computed by the active shipping engine against the cart's shipping address country.",
 	value = "ShippingMethod"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Shipping method qualified for a cart. The nested shipping options are computed by the active shipping engine against the cart's shipping address country."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ShippingMethod")
 public class ShippingMethod implements Serializable {
@@ -486,4 +489,4 @@ public class ShippingMethod implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:777884516
+// LIFERAY-REST-BUILDER-HASH:1968982040

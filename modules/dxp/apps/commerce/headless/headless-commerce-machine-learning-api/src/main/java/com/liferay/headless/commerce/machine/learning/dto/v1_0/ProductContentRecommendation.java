@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Wire shape for a content-based product recommendation downloaded from the analytics pipeline. Given a source product, the model recommends similar products based on product metadata such as name, description, and categorisation.",
 	value = "ProductContentRecommendation"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Wire shape for a content-based product recommendation downloaded from the analytics pipeline. Given a source product, the model recommends similar products based on product metadata such as name, description, and categorisation."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductContentRecommendation")
 public class ProductContentRecommendation implements Serializable {
@@ -543,4 +546,4 @@ public class ProductContentRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1955417048
+// LIFERAY-REST-BUILDER-HASH:-875611446

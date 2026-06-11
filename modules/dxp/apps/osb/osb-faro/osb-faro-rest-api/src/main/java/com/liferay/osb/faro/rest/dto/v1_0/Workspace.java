@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "An Analytics Cloud workspace synced from a Liferay site. Each workspace owns its own channels, individuals, accounts, segments, and asset analytics. Workspaces are scoped to the Liferay group identified by `groupId`.",
 	value = "Workspace"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "An Analytics Cloud workspace synced from a Liferay site. Each workspace owns its own channels, individuals, accounts, segments, and asset analytics. Workspaces are scoped to the Liferay group identified by `groupId`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Workspace")
 public class Workspace implements Serializable {
@@ -291,4 +294,4 @@ public class Workspace implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:22774996
+// LIFERAY-REST-BUILDER-HASH:2015321320

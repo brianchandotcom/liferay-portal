@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Replacement SKU surfaced when the primary SKU is discontinued. Exposes the swap target's identifiers, price, and options so the storefront can offer the buyer a continuation path.",
 	value = "ReplacementSku"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Replacement SKU surfaced when the primary SKU is discontinued. Exposes the swap target's identifiers, price, and options so the storefront can offer the buyer a continuation path."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ReplacementSku")
 public class ReplacementSku implements Serializable {
@@ -665,4 +668,4 @@ public class ReplacementSku implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1402199997
+// LIFERAY-REST-BUILDER-HASH:-1333853314

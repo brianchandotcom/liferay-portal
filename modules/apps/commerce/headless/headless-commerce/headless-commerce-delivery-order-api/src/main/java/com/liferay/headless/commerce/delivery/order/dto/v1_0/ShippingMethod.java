@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Shipping method available on the order's channel. Carries the localized name, description, ERC, and the selected shipping option (carrier service tier).",
 	value = "ShippingMethod"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Shipping method available on the order's channel. Carries the localized name, description, ERC, and the selected shipping option (carrier service tier)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ShippingMethod")
 public class ShippingMethod implements Serializable {
@@ -472,4 +475,4 @@ public class ShippingMethod implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1058481892
+// LIFERAY-REST-BUILDER-HASH:-872579023

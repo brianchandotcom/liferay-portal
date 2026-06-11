@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "https://www.schema.org/FormSuccessPage",
 	value = "FormSuccessPage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "https://www.schema.org/FormSuccessPage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormSuccessPage")
 public class FormSuccessPage implements Serializable {
@@ -454,4 +457,4 @@ public class FormSuccessPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:431871076
+// LIFERAY-REST-BUILDER-HASH:2098890490

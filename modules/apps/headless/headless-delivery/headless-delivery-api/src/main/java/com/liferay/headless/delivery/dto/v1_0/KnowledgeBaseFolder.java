@@ -1149,4 +1149,4 @@ public class KnowledgeBaseFolder implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1274367826
+// LIFERAY-REST-BUILDER-HASH:182864520

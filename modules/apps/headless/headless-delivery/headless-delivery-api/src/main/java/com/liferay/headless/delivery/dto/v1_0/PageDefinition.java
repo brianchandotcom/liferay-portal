@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represent a definition of a Page.", value = "PageDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represent a definition of a Page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageDefinition")
 public class PageDefinition implements Serializable {
@@ -413,4 +416,4 @@ public class PageDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-382716430
+// LIFERAY-REST-BUILDER-HASH:-103556665

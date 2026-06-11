@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A unique reference to a collection which remains constant across environments.",
 	value = "CollectionItemExternalReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A unique reference to a collection which remains constant across environments."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CollectionItemExternalReference")
 public class CollectionItemExternalReference
@@ -367,4 +370,4 @@ public class CollectionItemExternalReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-844735351
+// LIFERAY-REST-BUILDER-HASH:-193849211

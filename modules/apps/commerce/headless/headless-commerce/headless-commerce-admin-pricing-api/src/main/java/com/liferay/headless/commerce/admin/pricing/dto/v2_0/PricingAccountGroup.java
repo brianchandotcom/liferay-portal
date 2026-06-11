@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of a account group referenced by a discount or price-list account-group binding. Carries the account-group id and display name.",
 	value = "PricingAccountGroup"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of a account group referenced by a discount or price-list account-group binding. Carries the account-group id and display name."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PricingAccountGroup")
 public class PricingAccountGroup implements Serializable {
@@ -295,4 +298,4 @@ public class PricingAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-71217904
+// LIFERAY-REST-BUILDER-HASH:862590569

@@ -47,6 +47,9 @@ import java.util.function.Supplier;
 	description = "A page on a site, which can be of type content, embedded, link to page, link to URL, page set or widget.",
 	value = "SitePage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A page on a site, which can be of type content, embedded, link to page, link to URL, page set or widget."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SitePage")
 public class SitePage implements Serializable {
@@ -1418,4 +1421,4 @@ public class SitePage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1685986652
+// LIFERAY-REST-BUILDER-HASH:1375409829

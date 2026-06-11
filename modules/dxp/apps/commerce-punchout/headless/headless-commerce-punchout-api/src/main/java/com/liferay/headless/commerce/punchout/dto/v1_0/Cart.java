@@ -1756,4 +1756,4 @@ public class Cart implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-559147673
+// LIFERAY-REST-BUILDER-HASH:-1130126591

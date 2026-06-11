@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of a channel referenced by a discount or price-list channel binding. Carries the channel id, name, ERC, type, default currencyCode, and the underlying siteGroupId.",
 	value = "Channel"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of a channel referenced by a discount or price-list channel binding. Carries the channel id, name, ERC, type, default currencyCode, and the underlying siteGroupId."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Channel")
 public class Channel implements Serializable {
@@ -532,4 +535,4 @@ public class Channel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-112205621
+// LIFERAY-REST-BUILDER-HASH:-168416209

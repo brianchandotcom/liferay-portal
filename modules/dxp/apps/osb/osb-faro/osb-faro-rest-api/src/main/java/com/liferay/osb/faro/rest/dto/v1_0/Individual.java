@@ -47,6 +47,9 @@ import java.util.function.Supplier;
 	description = "A single individual synced to Analytics Cloud. Individuals are aggregated from data sources configured to sync to Analytics Cloud, and may be either 'known' (identified by email) or 'anonymous' (browser-tracked only).",
 	value = "Individual"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A single individual synced to Analytics Cloud. Individuals are aggregated from data sources configured to sync to Analytics Cloud, and may be either 'known' (identified by email) or 'anonymous' (browser-tracked only)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Individual")
 public class Individual implements Serializable {
@@ -851,4 +854,4 @@ public class Individual implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1604303267
+// LIFERAY-REST-BUILDER-HASH:2135023284

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of a Page Rule Action.",
 	value = "PageRuleAction"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of a Page Rule Action."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageRuleAction")
 public class PageRuleAction implements Serializable {
@@ -350,4 +353,4 @@ public class PageRuleAction implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1620747396
+// LIFERAY-REST-BUILDER-HASH:-1377949196

@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of the order type referenced by a WarehouseOrderType binding -- exposes only id and the localized name map.",
 	value = "OrderType"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of the order type referenced by a WarehouseOrderType binding -- exposes only id and the localized name map."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrderType")
 public class OrderType implements Serializable {
@@ -296,4 +299,4 @@ public class OrderType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:987814883
+// LIFERAY-REST-BUILDER-HASH:838336522

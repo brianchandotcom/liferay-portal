@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The widget instance's permissions.",
 	value = "WidgetPermission"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The widget instance's permissions."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WidgetPermission")
 public class WidgetPermission implements Serializable {
@@ -307,4 +310,4 @@ public class WidgetPermission implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:223991570
+// LIFERAY-REST-BUILDER-HASH:-1533182104

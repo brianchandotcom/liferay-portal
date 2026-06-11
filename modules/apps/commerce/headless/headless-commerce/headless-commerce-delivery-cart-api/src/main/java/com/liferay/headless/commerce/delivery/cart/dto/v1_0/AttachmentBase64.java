@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Request payload for uploading a cart attachment as a base64-encoded file. Used by the /attachments/by-base64 endpoint to create a single attachment under a cart.",
 	value = "AttachmentBase64"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Request payload for uploading a cart attachment as a base64-encoded file. Used by the /attachments/by-base64 endpoint to create a single attachment under a cart."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AttachmentBase64")
 public class AttachmentBase64 implements Serializable {
@@ -539,4 +542,4 @@ public class AttachmentBase64 implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1510179244
+// LIFERAY-REST-BUILDER-HASH:416847561

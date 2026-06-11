@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Commerce term (delivery, payment, or warranty condition) that can be attached to orders, payment methods, or shipping options. Read-only on this projection; full term management lives in the Payment and Site Setting admin APIs.",
 	value = "Term"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Commerce term (delivery, payment, or warranty condition) that can be attached to orders, payment methods, or shipping options. Read-only on this projection; full term management lives in the Payment and Site Setting admin APIs."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Term")
 public class Term implements Serializable {
@@ -296,4 +299,4 @@ public class Term implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-416591512
+// LIFERAY-REST-BUILDER-HASH:1421425670

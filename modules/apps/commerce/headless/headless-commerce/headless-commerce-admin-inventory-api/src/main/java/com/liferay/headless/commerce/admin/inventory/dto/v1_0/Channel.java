@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Read-only projection of the channel referenced by a WarehouseChannel binding -- exposes only id, externalReferenceCode, name, currencyCode, siteGroupId, and channel type.",
 	value = "Channel"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only projection of the channel referenced by a WarehouseChannel binding -- exposes only id, externalReferenceCode, name, currencyCode, siteGroupId, and channel type."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Channel")
 public class Channel implements Serializable {
@@ -535,4 +538,4 @@ public class Channel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-203600084
+// LIFERAY-REST-BUILDER-HASH:1818748356

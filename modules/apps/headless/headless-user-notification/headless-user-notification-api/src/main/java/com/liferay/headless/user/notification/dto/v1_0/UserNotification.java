@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Represents the current user notification.",
 	value = "UserNotification"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the current user notification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UserNotification")
 public class UserNotification implements Serializable {
@@ -524,4 +527,4 @@ public class UserNotification implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:270834084
+// LIFERAY-REST-BUILDER-HASH:-2002886917

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification.",
 	value = "Service"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Service")
 public class Service implements Serializable {
@@ -309,4 +312,4 @@ public class Service implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1268860687
+// LIFERAY-REST-BUILDER-HASH:1211172570

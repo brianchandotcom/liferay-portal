@@ -45,6 +45,9 @@ import java.util.function.Supplier;
 	description = "Planned restock event for a SKU at a warehouse. Records the expected quantity (strictly positive) and the date it becomes available; on create the underlying warehouse item identified by warehouseId and sku must already exist.",
 	value = "ReplenishmentItem"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Planned restock event for a SKU at a warehouse. Records the expected quantity (strictly positive) and the date it becomes available; on create the underlying warehouse item identified by warehouseId and sku must already exist."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ReplenishmentItem")
 public class ReplenishmentItem implements Serializable {
@@ -607,4 +610,4 @@ public class ReplenishmentItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:651281351
+// LIFERAY-REST-BUILDER-HASH:-117012390

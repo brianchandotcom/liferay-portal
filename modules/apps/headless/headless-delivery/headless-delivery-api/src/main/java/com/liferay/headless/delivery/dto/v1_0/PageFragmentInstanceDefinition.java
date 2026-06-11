@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of a Page Fragment Instance.",
 	value = "PageFragmentInstanceDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of a Page Fragment Instance."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageFragmentInstanceDefinition")
 public class PageFragmentInstanceDefinition implements Serializable {
@@ -874,4 +877,4 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:334106802
+// LIFERAY-REST-BUILDER-HASH:2050402295

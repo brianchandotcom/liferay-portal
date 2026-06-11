@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "Container that groups product configuration entries under a single inventory, shipping, and tax template; each catalog has one master configuration list used as the catalog-level default, and additional sub-templates can inherit from a parent and be qualified by account, account group, channel, or order type.",
 	value = "ProductConfigurationList"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Container that groups product configuration entries under a single inventory, shipping, and tax template; each catalog has one master configuration list used as the catalog-level default, and additional sub-templates can inherit from a parent and be qualified by account, account group, channel, or order type."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductConfigurationList")
 public class ProductConfigurationList implements Serializable {
@@ -1125,4 +1128,4 @@ public class ProductConfigurationList implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1362019932
+// LIFERAY-REST-BUILDER-HASH:1031735922

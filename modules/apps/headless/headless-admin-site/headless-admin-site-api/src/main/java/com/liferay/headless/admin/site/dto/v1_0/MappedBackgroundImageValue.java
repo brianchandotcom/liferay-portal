@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A mapped background image value.",
 	value = "MappedBackgroundImageValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A mapped background image value."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MappedBackgroundImageValue")
 public class MappedBackgroundImageValue
@@ -255,4 +258,4 @@ public class MappedBackgroundImageValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1514744969
+// LIFERAY-REST-BUILDER-HASH:-1346047785

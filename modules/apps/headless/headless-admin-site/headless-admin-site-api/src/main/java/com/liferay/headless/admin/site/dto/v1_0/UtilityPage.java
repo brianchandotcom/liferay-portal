@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "The definition of a Utility Page.", value = "UtilityPage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of a Utility Page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UtilityPage")
 public class UtilityPage implements Serializable {
@@ -1144,4 +1147,4 @@ public class UtilityPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:498090572
+// LIFERAY-REST-BUILDER-HASH:-915653785

@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Represents an instance to be executed in a workflow.",
 	value = "WorkflowInstance"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents an instance to be executed in a workflow."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WorkflowInstance")
 public class WorkflowInstance implements Serializable {
@@ -772,4 +775,4 @@ public class WorkflowInstance implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1967816714
+// LIFERAY-REST-BUILDER-HASH:-141038043

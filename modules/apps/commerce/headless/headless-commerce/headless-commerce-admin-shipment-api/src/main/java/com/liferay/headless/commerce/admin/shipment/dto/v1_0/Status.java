@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Workflow envelope describing the integer code and human-readable label of a shipment's current state. Used by the Shipment.status property; the value follows the shipment lifecycle and is not editable directly on the parent resource.",
 	value = "Status"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Workflow envelope describing the integer code and human-readable label of a shipment's current state. Used by the Shipment.status property; the value follows the shipment lifecycle and is not editable directly on the parent resource."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
@@ -357,4 +360,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-677892406
+// LIFERAY-REST-BUILDER-HASH:97173082

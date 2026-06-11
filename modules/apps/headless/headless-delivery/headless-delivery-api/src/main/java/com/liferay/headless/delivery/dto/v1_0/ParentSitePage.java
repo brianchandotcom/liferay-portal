@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The parent page or null if it is a top level page.",
 	value = "ParentSitePage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The parent page or null if it is a top level page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentSitePage")
 public class ParentSitePage implements Serializable {
@@ -236,4 +239,4 @@ public class ParentSitePage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:747512289
+// LIFERAY-REST-BUILDER-HASH:-1648434346

@@ -32,6 +32,9 @@ import java.util.Set;
 	description = "A basic (non nested applications) widget instance in a widget page.",
 	value = "BasicWidgetPageWidgetInstance"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A basic (non nested applications) widget instance in a widget page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BasicWidgetPageWidgetInstance")
 public class BasicWidgetPageWidgetInstance
@@ -331,4 +334,4 @@ public class BasicWidgetPageWidgetInstance
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:961649060
+// LIFERAY-REST-BUILDER-HASH:749363857

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "The settings of an embedded page.",
 	value = "EmbeddedPageSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The settings of an embedded page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "EmbeddedPageSettings")
 public class EmbeddedPageSettings extends PageSettings implements Serializable {
@@ -288,4 +291,4 @@ public class EmbeddedPageSettings extends PageSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1223572333
+// LIFERAY-REST-BUILDER-HASH:-85642756

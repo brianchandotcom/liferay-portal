@@ -482,4 +482,4 @@ public class ProductChannel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-994526504
+// LIFERAY-REST-BUILDER-HASH:-988371646

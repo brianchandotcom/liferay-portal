@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "A fragment mapped value item reference.",
 	value = "FragmentMappedValueItemReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A fragment mapped value item reference."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -313,4 +316,4 @@ public abstract class FragmentMappedValueItemReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1117344967
+// LIFERAY-REST-BUILDER-HASH:-1854776508

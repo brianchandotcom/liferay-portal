@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "An account synced to Analytics Cloud. Accounts aggregate individuals (or contacts) employed by or associated with a single organization.",
 	value = "Account"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "An account synced to Analytics Cloud. Accounts aggregate individuals (or contacts) employed by or associated with a single organization."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Account")
 public class Account implements Serializable {
@@ -662,4 +665,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1232253832
+// LIFERAY-REST-BUILDER-HASH:-100888627

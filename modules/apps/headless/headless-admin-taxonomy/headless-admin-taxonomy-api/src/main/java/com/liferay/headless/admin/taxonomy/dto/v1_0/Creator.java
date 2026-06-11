@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents the user who created the content. Properties follow the [creator](https://schema.org/creator) specification.",
 	value = "Creator"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the user who created the content. Properties follow the [creator](https://schema.org/creator) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Creator")
 public class Creator implements Serializable {
@@ -700,4 +703,4 @@ public class Creator implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1906771746
+// LIFERAY-REST-BUILDER-HASH:-1040766673

@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Note (comment) recorded against a placed order. Returned by the order comments list and the by-id and by-ERC read endpoints. Corresponds to the standard Liferay Commerce Order Note; the PlacedOrderComment name is preserved for client compatibility.",
 	value = "PlacedOrderComment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Note (comment) recorded against a placed order. Returned by the order comments list and the by-id and by-ERC read endpoints. Corresponds to the standard Liferay Commerce Order Note; the PlacedOrderComment name is preserved for client compatibility."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PlacedOrderComment")
 public class PlacedOrderComment implements Serializable {
@@ -533,4 +536,4 @@ public class PlacedOrderComment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:50504071
+// LIFERAY-REST-BUILDER-HASH:-989432668

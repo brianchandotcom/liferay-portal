@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`.",
 	value = "OrganizationContactInformation"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrganizationContactInformation")
 public class OrganizationContactInformation implements Serializable {
@@ -457,4 +460,4 @@ public class OrganizationContactInformation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1892693908
+// LIFERAY-REST-BUILDER-HASH:-693912715

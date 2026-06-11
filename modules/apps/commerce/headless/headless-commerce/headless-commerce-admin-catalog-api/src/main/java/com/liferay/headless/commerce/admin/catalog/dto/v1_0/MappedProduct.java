@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "A mapping that links a product (and optionally a SKU) to a diagram pin sequence within a parent product. Created and updated by the admin catalog write surface; the pair of parent product and sequence is unique, and duplicates are rejected.",
 	value = "MappedProduct"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A mapping that links a product (and optionally a SKU) to a diagram pin sequence within a parent product. Created and updated by the admin catalog write surface; the pair of parent product and sequence is unique, and duplicates are rejected."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MappedProduct")
 public class MappedProduct implements Serializable {
@@ -970,4 +973,4 @@ public class MappedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-137235684
+// LIFERAY-REST-BUILDER-HASH:-1911830730

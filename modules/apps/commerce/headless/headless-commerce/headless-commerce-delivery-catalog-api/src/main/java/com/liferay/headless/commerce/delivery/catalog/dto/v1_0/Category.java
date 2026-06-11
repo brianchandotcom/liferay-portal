@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Asset-vocabulary category tagged on a catalog product, used for storefront browsing and filtering.",
 	value = "Category"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Asset-vocabulary category tagged on a catalog product, used for storefront browsing and filtering."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Category")
 public class Category implements Serializable {
@@ -478,4 +481,4 @@ public class Category implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1799331487
+// LIFERAY-REST-BUILDER-HASH:-2109353002

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The page element definition of a row.",
 	value = "GridPageElementDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page element definition of a row."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "GridPageElementDefinition")
 public class GridPageElementDefinition
@@ -678,4 +681,4 @@ public class GridPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1988841757
+// LIFERAY-REST-BUILDER-HASH:-554664304

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represent a definition of a Page form.",
 	value = "PageFormDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represent a definition of a Page form."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageFormDefinition")
 public class PageFormDefinition implements Serializable {
@@ -727,4 +730,4 @@ public class PageFormDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:923499886
+// LIFERAY-REST-BUILDER-HASH:-377281335

@@ -41,6 +41,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "The image value.", value = "ImageValue")
+@io.swagger.v3.oas.annotations.media.Schema(description = "The image value.")
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -297,4 +298,4 @@ public abstract class ImageValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1735944253
+// LIFERAY-REST-BUILDER-HASH:-594757166

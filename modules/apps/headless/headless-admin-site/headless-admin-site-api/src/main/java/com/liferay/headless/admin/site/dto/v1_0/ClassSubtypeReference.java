@@ -302,4 +302,4 @@ public class ClassSubtypeReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1485855974
+// LIFERAY-REST-BUILDER-HASH:-285434758

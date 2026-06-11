@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents a relationship between two resources, internally modeled as AssetLink.",
 	value = "RelatedContent"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a relationship between two resources, internally modeled as AssetLink."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RelatedContent")
 public class RelatedContent implements Serializable {
@@ -348,4 +351,4 @@ public class RelatedContent implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1250611066
+// LIFERAY-REST-BUILDER-HASH:386647677

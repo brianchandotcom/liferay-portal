@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Read-only reference to a sales channel, embedded by catalog resources to identify the storefront or B2B portal scope of a product configuration list; channel create, read, update, and delete operations live in a separate admin module.",
 	value = "Channel"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Read-only reference to a sales channel, embedded by catalog resources to identify the storefront or B2B portal scope of a product configuration list; channel create, read, update, and delete operations live in a separate admin module."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Channel")
 public class Channel implements Serializable {
@@ -533,4 +536,4 @@ public class Channel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1438824743
+// LIFERAY-REST-BUILDER-HASH:-642372518

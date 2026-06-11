@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Pricing breakdown of a single placed-order line item, computed from the unit price, promotional price, discount levels, and final priced amount. Tax inclusion depends on the channel's price-display configuration. Read-only.",
 	value = "Price"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Pricing breakdown of a single placed-order line item, computed from the unit price, promotional price, discount levels, and final priced amount. Tax inclusion depends on the channel's price-display configuration. Read-only."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Price")
 public class Price implements Serializable {
@@ -1017,4 +1020,4 @@ public class Price implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-380695491
+// LIFERAY-REST-BUILDER-HASH:-1179489123

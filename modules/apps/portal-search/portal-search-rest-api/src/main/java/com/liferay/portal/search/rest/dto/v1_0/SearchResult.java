@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "A single search hit returned by GET /search and POST /search. The properties below appear on every result; the embedded property carries asset-specific payload and so its shape varies by entryClassName.",
 	value = "SearchResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A single search hit returned by GET /search and POST /search. The properties below appear on every result; the embedded property carries asset-specific payload and so its shape varies by entryClassName."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SearchResult")
 public class SearchResult implements Serializable {
@@ -794,4 +797,4 @@ public class SearchResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:734633468
+// LIFERAY-REST-BUILDER-HASH:973703993

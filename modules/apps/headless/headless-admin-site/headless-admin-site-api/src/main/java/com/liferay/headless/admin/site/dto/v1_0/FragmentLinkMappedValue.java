@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A unique reference to a FragmentLinkValue of type FragmentMappedValue which remains constant across environments.",
 	value = "FragmentLinkMappedValue"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A unique reference to a FragmentLinkValue of type FragmentMappedValue which remains constant across environments."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentLinkMappedValue")
 public class FragmentLinkMappedValue
@@ -252,4 +255,4 @@ public class FragmentLinkMappedValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:991463918
+// LIFERAY-REST-BUILDER-HASH:2130293150

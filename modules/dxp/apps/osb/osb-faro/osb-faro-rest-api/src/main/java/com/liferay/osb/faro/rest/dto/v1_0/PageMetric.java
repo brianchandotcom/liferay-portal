@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Analytics metrics for a single tracked page over the selected date range. Use `getWorkspaceGroupChannelPagesPage` to list these metrics for a site.",
 	value = "PageMetric"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Analytics metrics for a single tracked page over the selected date range. Use `getWorkspaceGroupChannelPagesPage` to list these metrics for a site."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageMetric")
 public class PageMetric implements Serializable {
@@ -1000,4 +1003,4 @@ public class PageMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1783256004
+// LIFERAY-REST-BUILDER-HASH:-1783942022

@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A unique reference to a FavIcon of type ItemExternalReference which remains constant across environments.",
 	value = "FavIconItemExternalReference"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A unique reference to a FavIcon of type ItemExternalReference which remains constant across environments."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FavIconItemExternalReference")
 public class FavIconItemExternalReference
@@ -367,4 +370,4 @@ public class FavIconItemExternalReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1408390570
+// LIFERAY-REST-BUILDER-HASH:1347165212

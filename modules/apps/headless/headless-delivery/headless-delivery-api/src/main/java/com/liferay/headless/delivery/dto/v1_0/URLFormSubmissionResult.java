@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of a submission result of type URL.",
 	value = "URLFormSubmissionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of a submission result of type URL."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "URLFormSubmissionResult")
 public class URLFormSubmissionResult implements Serializable {
@@ -237,4 +240,4 @@ public class URLFormSubmissionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-941344287
+// LIFERAY-REST-BUILDER-HASH:539500181

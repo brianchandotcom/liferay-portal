@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The definition of an action interaction of type page.",
 	value = "PageActionInteraction"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of an action interaction of type page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageActionInteraction")
 public class PageActionInteraction
@@ -256,4 +259,4 @@ public class PageActionInteraction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1916632451
+// LIFERAY-REST-BUILDER-HASH:2092881385

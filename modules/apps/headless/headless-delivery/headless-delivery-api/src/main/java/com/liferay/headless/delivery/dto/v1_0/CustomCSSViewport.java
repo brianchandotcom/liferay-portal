@@ -301,4 +301,4 @@ public class CustomCSSViewport implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:253976634
+// LIFERAY-REST-BUILDER-HASH:-947934004

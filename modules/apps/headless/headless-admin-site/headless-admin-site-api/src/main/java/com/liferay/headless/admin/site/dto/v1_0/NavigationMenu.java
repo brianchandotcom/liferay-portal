@@ -46,6 +46,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents a navigation menu.", value = "NavigationMenu"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a navigation menu."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NavigationMenu")
 public class NavigationMenu implements Serializable {
@@ -965,4 +968,4 @@ public class NavigationMenu implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:717037662
+// LIFERAY-REST-BUILDER-HASH:-350143967

@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Recurring billing and recurring delivery settings for a product; subscription fields control how the product is rebilled and delivery-subscription fields control an independent delivery schedule; cadence values use the keys `daily`, `weekly`, `monthly`, and `yearly`.",
 	value = "ProductSubscriptionConfiguration"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Recurring billing and recurring delivery settings for a product; subscription fields control how the product is rebilled and delivery-subscription fields control an independent delivery schedule; cadence values use the keys `daily`, `weekly`, `monthly`, and `yearly`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductSubscriptionConfiguration")
 public class ProductSubscriptionConfiguration implements Serializable {
@@ -908,4 +911,4 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1041803791
+// LIFERAY-REST-BUILDER-HASH:-1285980217

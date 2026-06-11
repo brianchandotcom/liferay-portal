@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The definition of an action interaction of type notification.",
 	value = "NotificationActionInteraction"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of an action interaction of type notification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NotificationActionInteraction")
 public class NotificationActionInteraction
@@ -316,4 +319,4 @@ public class NotificationActionInteraction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-418203169
+// LIFERAY-REST-BUILDER-HASH:-962328553

@@ -306,4 +306,4 @@ public class CollectionViewport implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2001319254
+// LIFERAY-REST-BUILDER-HASH:-594204944

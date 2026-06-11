@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents the asset type associated with a `TaxonomyCategory`.",
 	value = "AssetType"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the asset type associated with a `TaxonomyCategory`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssetType")
 public class AssetType implements Serializable {
@@ -405,4 +408,4 @@ public class AssetType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1675490534
+// LIFERAY-REST-BUILDER-HASH:-366812844

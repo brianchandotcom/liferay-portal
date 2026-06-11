@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A page specification of a content page. A content page will contain 1 page specification for its draft layout and 1 page specification for its published layout.",
 	value = "ContentPageSpecification"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A page specification of a content page. A content page will contain 1 page specification for its draft layout and 1 page specification for its published layout."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentPageSpecification")
 public class ContentPageSpecification
@@ -461,4 +464,4 @@ public class ContentPageSpecification
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-724315329
+// LIFERAY-REST-BUILDER-HASH:-128295457

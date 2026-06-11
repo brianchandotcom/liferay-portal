@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents the resource modified by the current workflow.",
 	value = "ObjectReviewed"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the resource modified by the current workflow."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ObjectReviewed")
 public class ObjectReviewed implements Serializable {
@@ -403,4 +406,4 @@ public class ObjectReviewed implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1635859275
+// LIFERAY-REST-BUILDER-HASH:-1578898016

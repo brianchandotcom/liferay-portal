@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Status pair returned for workflow- and payment-style integer codes. Carries the numeric code and its human-readable label.",
 	value = "Status"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Status pair returned for workflow- and payment-style integer codes. Carries the numeric code and its human-readable label."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
@@ -352,4 +355,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1330275238
+// LIFERAY-REST-BUILDER-HASH:1880857944

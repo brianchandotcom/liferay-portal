@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Single entry in a wish list referencing a product or SKU together with snapshot display fields the storefront uses to render the saved item.",
 	value = "WishListItem"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Single entry in a wish list referencing a product or SKU together with snapshot display fields the storefront uses to render the saved item."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WishListItem")
 public class WishListItem implements Serializable {
@@ -593,4 +596,4 @@ public class WishListItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2035598686
+// LIFERAY-REST-BUILDER-HASH:1160655999

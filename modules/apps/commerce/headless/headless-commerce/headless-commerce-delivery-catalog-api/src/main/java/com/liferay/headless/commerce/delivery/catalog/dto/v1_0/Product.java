@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "Catalog product exposed to storefront callers; includes media, options, specifications, SKUs, and SEO metadata. Read-only on this API; product lifecycle is managed through the admin catalog API.",
 	value = "Product"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Catalog product exposed to storefront callers; includes media, options, specifications, SKUs, and SEO metadata. Read-only on this API; product lifecycle is managed through the admin catalog API."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Product")
 public class Product implements Serializable {
@@ -2029,4 +2032,4 @@ public class Product implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1910103054
+// LIFERAY-REST-BUILDER-HASH:585237291

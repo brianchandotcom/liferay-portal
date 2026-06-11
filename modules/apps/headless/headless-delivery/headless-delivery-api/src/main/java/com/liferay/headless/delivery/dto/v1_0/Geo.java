@@ -36,6 +36,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "A point determined by latitude and longitude.", value = "Geo"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A point determined by latitude and longitude."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Geo")
 public class Geo implements Serializable {
@@ -286,4 +289,4 @@ public class Geo implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1374652120
+// LIFERAY-REST-BUILDER-HASH:-844380829

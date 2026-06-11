@@ -1870,4 +1870,4 @@ public class PriceEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1861292992
+// LIFERAY-REST-BUILDER-HASH:40568668

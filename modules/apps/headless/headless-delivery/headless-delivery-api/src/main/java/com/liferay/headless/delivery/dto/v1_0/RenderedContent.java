@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Rendered content, which results from using a template or display page to process the content and return HTML.",
 	value = "RenderedContent"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Rendered content, which results from using a template or display page to process the content and return HTML."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RenderedContent")
 public class RenderedContent implements Serializable {
@@ -540,4 +543,4 @@ public class RenderedContent implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1966418921
+// LIFERAY-REST-BUILDER-HASH:1977221881

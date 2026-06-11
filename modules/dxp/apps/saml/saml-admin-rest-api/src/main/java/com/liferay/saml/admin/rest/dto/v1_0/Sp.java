@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Configuration of the SAML provider's SP capability.",
 	value = "Sp"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Configuration of the SAML provider's SP capability."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Sp")
 public class Sp implements Serializable {
@@ -513,4 +516,4 @@ public class Sp implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1094559045
+// LIFERAY-REST-BUILDER-HASH:1459901018

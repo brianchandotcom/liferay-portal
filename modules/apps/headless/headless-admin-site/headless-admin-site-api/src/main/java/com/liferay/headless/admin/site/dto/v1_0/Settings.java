@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents the settings of a page specification.",
 	value = "Settings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the settings of a page specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Settings")
 public class Settings implements Serializable {
@@ -979,4 +982,4 @@ public class Settings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1792327023
+// LIFERAY-REST-BUILDER-HASH:1355994504

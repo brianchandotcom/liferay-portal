@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The definition of a submission result of type page.",
 	value = "SitePageFormContainerSubmissionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The definition of a submission result of type page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SitePageFormContainerSubmissionResult")
 public class SitePageFormContainerSubmissionResult
@@ -325,4 +328,4 @@ public class SitePageFormContainerSubmissionResult
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-283936022
+// LIFERAY-REST-BUILDER-HASH:421200069

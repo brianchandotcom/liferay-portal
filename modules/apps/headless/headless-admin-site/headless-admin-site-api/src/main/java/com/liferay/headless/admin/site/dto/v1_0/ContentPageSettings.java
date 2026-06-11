@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The settings of a content page.",
 	value = "ContentPageSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The settings of a content page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentPageSettings")
 public class ContentPageSettings extends PageSettings implements Serializable {
@@ -476,4 +479,4 @@ public class ContentPageSettings extends PageSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1502679958
+// LIFERAY-REST-BUILDER-HASH:-1512311790

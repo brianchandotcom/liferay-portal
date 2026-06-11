@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Specific settings related to SEO",
 	value = "SEOSettingsMapping"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Specific settings related to SEO"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SEOSettingsMapping")
 public class SEOSettingsMapping implements Serializable {
@@ -426,4 +429,4 @@ public class SEOSettingsMapping implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1009028536
+// LIFERAY-REST-BUILDER-HASH:433048802

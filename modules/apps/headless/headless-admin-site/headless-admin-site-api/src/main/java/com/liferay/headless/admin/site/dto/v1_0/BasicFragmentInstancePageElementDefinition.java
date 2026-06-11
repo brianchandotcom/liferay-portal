@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "The page element definition of a basic fragment instance.",
 	value = "BasicFragmentInstancePageElementDefinition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page element definition of a basic fragment instance."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BasicFragmentInstancePageElementDefinition")
 public class BasicFragmentInstancePageElementDefinition
@@ -262,4 +265,4 @@ public class BasicFragmentInstancePageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-404281327
+// LIFERAY-REST-BUILDER-HASH:-1140572081

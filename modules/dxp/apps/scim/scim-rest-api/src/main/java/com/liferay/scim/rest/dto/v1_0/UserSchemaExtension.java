@@ -41,6 +41,9 @@ import java.util.function.Supplier;
 	description = "Liferay's User Schema Extension.",
 	value = "UserSchemaExtension"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Liferay's User Schema Extension."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UserSchemaExtension")
 public class UserSchemaExtension implements Serializable {
@@ -293,4 +296,4 @@ public class UserSchemaExtension implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:857139980
+// LIFERAY-REST-BUILDER-HASH:-987330957

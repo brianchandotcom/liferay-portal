@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "The interaction of a success action.",
 	value = "ActionInteraction"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The interaction of a success action."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -308,4 +311,4 @@ public abstract class ActionInteraction implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-782676321
+// LIFERAY-REST-BUILDER-HASH:-1813681227

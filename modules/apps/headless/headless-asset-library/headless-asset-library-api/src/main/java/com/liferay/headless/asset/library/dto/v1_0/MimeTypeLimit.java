@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents the maximum size of an asset library's associated mime type.",
 	value = "MimeTypeLimit"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents the maximum size of an asset library's associated mime type."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MimeTypeLimit")
 public class MimeTypeLimit implements Serializable {
@@ -287,4 +290,4 @@ public class MimeTypeLimit implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1345333037
+// LIFERAY-REST-BUILDER-HASH:190071685

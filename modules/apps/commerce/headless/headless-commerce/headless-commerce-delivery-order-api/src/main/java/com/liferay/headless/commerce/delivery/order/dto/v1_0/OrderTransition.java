@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Workflow or storefront transition available to the buyer on a placed order (for example, cancel a pending order, process a quote, or reorder). Returned by the transition list endpoint and consumed by the POST transition endpoint to trigger the action.",
 	value = "OrderTransition"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Workflow or storefront transition available to the buyer on a placed order (for example, cancel a pending order, process a quote, or reorder). Returned by the transition list endpoint and consumed by the POST transition endpoint to trigger the action."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrderTransition")
 public class OrderTransition implements Serializable {
@@ -535,4 +538,4 @@ public class OrderTransition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:478522147
+// LIFERAY-REST-BUILDER-HASH:-298826265

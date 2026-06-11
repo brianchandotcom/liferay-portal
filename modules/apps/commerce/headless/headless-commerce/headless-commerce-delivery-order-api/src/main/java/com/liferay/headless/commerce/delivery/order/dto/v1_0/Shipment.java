@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "Buyer-facing projection of a shipment dispatched against a placed order. Returned by the placed-order shipments list; carries the carrier, tracking, status, item count, and shipping address summary.",
 	value = "Shipment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Buyer-facing projection of a shipment dispatched against a placed order. Returned by the placed-order shipments list; carries the carrier, tracking, status, item count, and shipping address summary."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Shipment")
 public class Shipment implements Serializable {
@@ -1395,4 +1398,4 @@ public class Shipment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-975569511
+// LIFERAY-REST-BUILDER-HASH:-1427303591

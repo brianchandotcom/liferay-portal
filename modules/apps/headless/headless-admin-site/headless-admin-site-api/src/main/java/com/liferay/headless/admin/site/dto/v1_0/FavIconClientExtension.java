@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A unique reference to a FavIcon of type ClientExtension which remains constant across environments.",
 	value = "FavIconClientExtension"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A unique reference to a FavIcon of type ClientExtension which remains constant across environments."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FavIconClientExtension")
 public class FavIconClientExtension extends FavIcon implements Serializable {
@@ -317,4 +320,4 @@ public class FavIconClientExtension extends FavIcon implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1583524261
+// LIFERAY-REST-BUILDER-HASH:1171128158

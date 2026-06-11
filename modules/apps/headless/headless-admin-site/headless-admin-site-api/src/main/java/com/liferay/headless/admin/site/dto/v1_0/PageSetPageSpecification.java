@@ -32,6 +32,9 @@ import java.util.Set;
 	description = "A page specification of a page set page.",
 	value = "PageSetPageSpecification"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A page specification of a page set page."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageSetPageSpecification")
 public class PageSetPageSpecification
@@ -261,4 +264,4 @@ public class PageSetPageSpecification
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-861601075
+// LIFERAY-REST-BUILDER-HASH:1888606576

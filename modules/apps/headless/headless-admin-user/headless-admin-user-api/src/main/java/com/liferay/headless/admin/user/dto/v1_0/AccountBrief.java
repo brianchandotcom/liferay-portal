@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents an account's basic information, to be embedded in other resources. This resource's ID can be used to query the account's complete information.",
 	value = "AccountBrief"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents an account's basic information, to be embedded in other resources. This resource's ID can be used to query the account's complete information."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AccountBrief")
 public class AccountBrief implements Serializable {
@@ -471,4 +474,4 @@ public class AccountBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-685156930
+// LIFERAY-REST-BUILDER-HASH:-2107932822

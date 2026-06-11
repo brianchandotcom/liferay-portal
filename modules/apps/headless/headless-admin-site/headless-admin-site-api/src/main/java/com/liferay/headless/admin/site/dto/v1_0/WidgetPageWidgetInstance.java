@@ -45,6 +45,9 @@ import java.util.function.Supplier;
 	description = "A widget instance in a widget page.",
 	value = "WidgetPageWidgetInstance"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A widget instance in a widget page."
+)
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
@@ -863,4 +866,4 @@ public abstract class WidgetPageWidgetInstance implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1489756496
+// LIFERAY-REST-BUILDER-HASH:-1201859215

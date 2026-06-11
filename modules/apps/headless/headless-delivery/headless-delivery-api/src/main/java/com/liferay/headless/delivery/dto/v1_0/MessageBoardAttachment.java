@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "A binary file attached to a message on a message board (`MessageBoardMessage`).",
 	value = "MessageBoardAttachment"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A binary file attached to a message on a message board (`MessageBoardMessage`)."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MessageBoardAttachment")
 public class MessageBoardAttachment implements Serializable {
@@ -704,4 +707,4 @@ public class MessageBoardAttachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2147228568
+// LIFERAY-REST-BUILDER-HASH:1454353807

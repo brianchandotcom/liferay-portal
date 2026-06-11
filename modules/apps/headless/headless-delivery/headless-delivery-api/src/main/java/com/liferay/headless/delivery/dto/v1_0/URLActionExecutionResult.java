@@ -39,6 +39,9 @@ import java.util.function.Supplier;
 	description = "Represents a definition of an action execution result of type URL.",
 	value = "URLActionExecutionResult"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a definition of an action execution result of type URL."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "URLActionExecutionResult")
 public class URLActionExecutionResult implements Serializable {
@@ -239,4 +242,4 @@ public class URLActionExecutionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1913595527
+// LIFERAY-REST-BUILDER-HASH:1897221681

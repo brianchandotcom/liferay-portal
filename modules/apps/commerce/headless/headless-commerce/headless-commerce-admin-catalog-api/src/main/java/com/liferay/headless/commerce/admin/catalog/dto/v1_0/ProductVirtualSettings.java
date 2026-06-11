@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Digital download configuration for a virtual product; controls the download URL, sample file, terms of use, activation gating, and usage and duration limits; returned as null when the product is not virtual or has no virtual settings.",
 	value = "ProductVirtualSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Digital download configuration for a virtual product; controls the download URL, sample file, terms of use, activation gating, and usage and duration limits; returned as null when the product is not virtual or has no virtual settings."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductVirtualSettings")
 public class ProductVirtualSettings implements Serializable {
@@ -1152,4 +1155,4 @@ public class ProductVirtualSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-241539127
+// LIFERAY-REST-BUILDER-HASH:-865403875

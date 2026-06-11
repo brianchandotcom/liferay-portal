@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Request payload for applying a coupon to a cart. Carries the coupon code string the discount engine resolves against the active promotion rules.",
 	value = "CouponCode"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Request payload for applying a coupon to a cart. Carries the coupon code string the discount engine resolves against the active promotion rules."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CouponCode")
 public class CouponCode implements Serializable {
@@ -237,4 +240,4 @@ public class CouponCode implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:353688367
+// LIFERAY-REST-BUILDER-HASH:-1335043027

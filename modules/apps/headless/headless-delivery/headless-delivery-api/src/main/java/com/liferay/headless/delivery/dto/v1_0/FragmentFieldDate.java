@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Represents a fragment field with a date.",
 	value = "FragmentFieldDate"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a fragment field with a date."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FragmentFieldDate")
 public class FragmentFieldDate implements Serializable {
@@ -311,4 +314,4 @@ public class FragmentFieldDate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:975997544
+// LIFERAY-REST-BUILDER-HASH:-783222011

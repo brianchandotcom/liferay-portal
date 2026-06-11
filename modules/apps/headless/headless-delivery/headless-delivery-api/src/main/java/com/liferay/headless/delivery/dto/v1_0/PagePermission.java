@@ -34,6 +34,9 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(description = "The page's permissions.", value = "PagePermission")
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The page's permissions."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PagePermission")
 public class PagePermission implements Serializable {
@@ -302,4 +305,4 @@ public class PagePermission implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2103185008
+// LIFERAY-REST-BUILDER-HASH:-1395622282

@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Represents publications that have been published.",
 	value = "CTProcess"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents publications that have been published."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CTProcess")
 public class CTProcess implements Serializable {
@@ -629,4 +632,4 @@ public class CTProcess implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-467622137
+// LIFERAY-REST-BUILDER-HASH:-747743536

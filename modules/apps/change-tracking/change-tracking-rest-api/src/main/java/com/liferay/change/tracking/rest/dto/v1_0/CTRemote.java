@@ -43,6 +43,9 @@ import java.util.function.Supplier;
 	description = "Another server to create and publish publications.",
 	value = "CTRemote"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Another server to create and publish publications."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CTRemote")
 public class CTRemote implements Serializable {
@@ -752,4 +755,4 @@ public class CTRemote implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1686143516
+// LIFERAY-REST-BUILDER-HASH:-829624244

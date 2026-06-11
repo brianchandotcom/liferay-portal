@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "The complete configuration of this SAML Provider.",
 	value = "SamlProvider"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The complete configuration of this SAML Provider."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SamlProvider")
 public class SamlProvider implements Serializable {
@@ -667,4 +670,4 @@ public class SamlProvider implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:908521445
+// LIFERAY-REST-BUILDER-HASH:-1910032452

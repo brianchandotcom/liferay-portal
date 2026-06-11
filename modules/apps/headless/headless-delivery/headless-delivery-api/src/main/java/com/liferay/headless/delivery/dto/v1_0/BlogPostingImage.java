@@ -42,6 +42,9 @@ import java.util.function.Supplier;
 	description = "Represents a blog post's image. Properties follow the [image](https://schema.org/image) specification.",
 	value = "BlogPostingImage"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a blog post's image. Properties follow the [image](https://schema.org/image) specification."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BlogPostingImage")
 public class BlogPostingImage implements Serializable {
@@ -758,4 +761,4 @@ public class BlogPostingImage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1688376150
+// LIFERAY-REST-BUILDER-HASH:-1786493385

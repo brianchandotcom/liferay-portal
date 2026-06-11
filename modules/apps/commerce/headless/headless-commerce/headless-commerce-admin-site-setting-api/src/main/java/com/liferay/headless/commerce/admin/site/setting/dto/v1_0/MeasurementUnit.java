@@ -720,4 +720,4 @@ public class MeasurementUnit implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:798320779
+// LIFERAY-REST-BUILDER-HASH:631189789

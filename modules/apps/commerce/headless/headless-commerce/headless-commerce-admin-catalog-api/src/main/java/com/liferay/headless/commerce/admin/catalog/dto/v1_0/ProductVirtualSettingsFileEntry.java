@@ -40,6 +40,9 @@ import java.util.function.Supplier;
 	description = "Single downloadable artifact attached to a product's virtual settings; links one Document Library file (or an external URL) and a version label to the virtual settings record.",
 	value = "ProductVirtualSettingsFileEntry"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Single downloadable artifact attached to a product's virtual settings; links one Document Library file (or an external URL) and a version label to the virtual settings record."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductVirtualSettingsFileEntry")
 public class ProductVirtualSettingsFileEntry implements Serializable {
@@ -544,4 +547,4 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1813056324
+// LIFERAY-REST-BUILDER-HASH:-1614031809

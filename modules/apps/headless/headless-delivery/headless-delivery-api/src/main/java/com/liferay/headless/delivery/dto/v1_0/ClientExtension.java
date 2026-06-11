@@ -38,6 +38,9 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents a client extension", value = "ClientExtension"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a client extension"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ClientExtension")
 public class ClientExtension implements Serializable {
@@ -353,4 +356,4 @@ public class ClientExtension implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2008504879
+// LIFERAY-REST-BUILDER-HASH:-932018063

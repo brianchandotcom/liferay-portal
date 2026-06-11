@@ -32,6 +32,9 @@ import java.util.Set;
 	description = "The settings of a content page template.",
 	value = "ContentPageTemplateSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "The settings of a content page template."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentPageTemplateSettings")
 public class ContentPageTemplateSettings
@@ -191,4 +194,4 @@ public class ContentPageTemplateSettings
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-57463822
+// LIFERAY-REST-BUILDER-HASH:1025938100

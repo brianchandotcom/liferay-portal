@@ -44,6 +44,9 @@ import java.util.function.Supplier;
 	description = "Represents settings related with the site map.",
 	value = "SiteMapSettings"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents settings related with the site map."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SiteMapSettings")
 public class SiteMapSettings implements Serializable {
@@ -468,4 +471,4 @@ public class SiteMapSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1898541337
+// LIFERAY-REST-BUILDER-HASH:1570560576

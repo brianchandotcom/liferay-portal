@@ -37,6 +37,9 @@ import java.util.function.Supplier;
 	description = "Represents a URL to an external site. This is modeled internally as a `WebSite`.",
 	value = "WebUrl"
 )
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a URL to an external site. This is modeled internally as a `WebSite`."
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WebUrl")
 public class WebUrl implements Serializable {
@@ -459,4 +462,4 @@ public class WebUrl implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-534763690
+// LIFERAY-REST-BUILDER-HASH:715096181

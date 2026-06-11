@@ -150,16 +150,16 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
-		BooleanQuery nestedBooleanQuery = new BooleanQuery();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		nestedBooleanQuery.add(
+		booleanQuery.add(
 			new TermQuery("nestedFieldArray.fieldName", propertyName),
 			BooleanClauseOccur.MUST);
-		nestedBooleanQuery.add(
+		booleanQuery.add(
 			_toQuery(_getSubfield(locale, objectField), value),
 			BooleanClauseOccur.MUST);
 
-		return new NestedQuery("nestedFieldArray", nestedBooleanQuery);
+		return new NestedQuery("nestedFieldArray", booleanQuery);
 	}
 
 	private static Query _toQuery(String subfield, String value) {

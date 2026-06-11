@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 public class CommerceProductService extends OneBaseService {
 
 	public void addOrUpdateProduct(
-			String externalReferenceCode, String name, String description)
+			String description, String externalReferenceCode, String name)
 		throws Exception {
 
 		ProductResource productResource = _buildProductResource();
@@ -60,7 +60,7 @@ public class CommerceProductService extends OneBaseService {
 		ProductResource productResource = _buildProductResource();
 
 		Product existingProduct = _fetchProduct(
-			productResource, externalReferenceCode);
+			externalReferenceCode, productResource);
 
 		if (existingProduct == null) {
 			return;
@@ -85,7 +85,7 @@ public class CommerceProductService extends OneBaseService {
 	}
 
 	private Product _fetchProduct(
-			ProductResource productResource, String externalReferenceCode)
+			String externalReferenceCode, ProductResource productResource)
 		throws Exception {
 
 		try {

@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
 public class CommercePriceEntryService extends OneBaseService {
 
 	public void addOrUpdatePriceEntry(
-			String externalReferenceCode, String priceListExternalReferenceCode,
-			long priceListId, long skuId, double price, boolean active)
+			boolean active, String externalReferenceCode, double price,
+			String priceListExternalReferenceCode, long priceListId, long skuId)
 		throws Exception {
 
 		PriceEntryResource priceEntryResource = _buildPriceEntryResource();
 
 		PriceEntry existingPriceEntry = _fetchPriceEntry(
-			priceEntryResource, externalReferenceCode);
+			externalReferenceCode, priceEntryResource);
 
 		PriceEntry priceEntry = new PriceEntry();
 
@@ -52,7 +52,7 @@ public class CommercePriceEntryService extends OneBaseService {
 		PriceEntryResource priceEntryResource = _buildPriceEntryResource();
 
 		PriceEntry priceEntry = _fetchPriceEntry(
-			priceEntryResource, externalReferenceCode);
+			externalReferenceCode, priceEntryResource);
 
 		if (priceEntry == null) {
 			return;
@@ -72,7 +72,7 @@ public class CommercePriceEntryService extends OneBaseService {
 	}
 
 	private PriceEntry _fetchPriceEntry(
-			PriceEntryResource priceEntryResource, String externalReferenceCode)
+			String externalReferenceCode, PriceEntryResource priceEntryResource)
 		throws Exception {
 
 		try {

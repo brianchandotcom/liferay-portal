@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class BusinessEventConverter extends JiraAssetObjectConverter {
 
 	public JSONObject toAttributesJSONObject(
-		BusinessEvent businessEvent, String accountObjectKey) {
+		String accountObjectKey, BusinessEvent businessEvent) {
 
 		JSONObject attributesJSONObject = new JSONObject();
 
@@ -70,36 +70,36 @@ public class BusinessEventConverter extends JiraAssetObjectConverter {
 		return new BusinessEvent(
 			accountExternalReferenceCode,
 			getAttributeKey(
-				jiraAssetObjectJSONObject, _actualEventDateAttributeId),
+				_actualEventDateAttributeId, jiraAssetObjectJSONObject),
 			getAttributeValue(
-				jiraAssetObjectJSONObject, _associatedTicketsAttributeId),
-			getAttributeValue(jiraAssetObjectJSONObject, _authorAttributeId),
+				_associatedTicketsAttributeId, jiraAssetObjectJSONObject),
+			getAttributeValue(_authorAttributeId, jiraAssetObjectJSONObject),
 			jiraAssetObjectJSONObject.optString("id"),
 			getAttributeKey(
-				jiraAssetObjectJSONObject, _currentVersionAttributeId),
+				_currentVersionAttributeId, jiraAssetObjectJSONObject),
 			getAttributeValue(
-				jiraAssetObjectJSONObject, _currentVersionAttributeId),
+				_currentVersionAttributeId, jiraAssetObjectJSONObject),
 			getAttributeValue(
-				jiraAssetObjectJSONObject, _descriptionAttributeId),
+				_descriptionAttributeId, jiraAssetObjectJSONObject),
 			getAttributeValue(
-				jiraAssetObjectJSONObject, _eventStatusAttributeId),
-			getAttributeValue(jiraAssetObjectJSONObject, _eventTypeAttributeId),
+				_eventStatusAttributeId, jiraAssetObjectJSONObject),
+			getAttributeValue(_eventTypeAttributeId, jiraAssetObjectJSONObject),
 			getAttributeValue(
-				jiraAssetObjectJSONObject, _lastCommentAttributeId),
+				_lastCommentAttributeId, jiraAssetObjectJSONObject),
 			getAttributeValue(
-				jiraAssetObjectJSONObject, _lastUpdatedAuthorAttributeId),
-			getAttributeValue(jiraAssetObjectJSONObject, _nameAttributeId),
-			getAttributeKey(jiraAssetObjectJSONObject, _newVersionAttributeId),
+				_lastUpdatedAuthorAttributeId, jiraAssetObjectJSONObject),
+			getAttributeValue(_nameAttributeId, jiraAssetObjectJSONObject),
+			getAttributeKey(_newVersionAttributeId, jiraAssetObjectJSONObject),
 			getAttributeValue(
-				jiraAssetObjectJSONObject, _newVersionAttributeId),
+				_newVersionAttributeId, jiraAssetObjectJSONObject),
 			getAttributeKey(
-				jiraAssetObjectJSONObject, _plannedEventDateAttributeId),
-			getAttributeValue(jiraAssetObjectJSONObject, _timeZoneAttributeId));
+				_plannedEventDateAttributeId, jiraAssetObjectJSONObject),
+			getAttributeValue(_timeZoneAttributeId, jiraAssetObjectJSONObject));
 	}
 
 	public BusinessEvent toBusinessEvent(
-		String accountExternalReferenceCode, String authorEmailAddress,
-		String attributesJSON) {
+		String accountExternalReferenceCode, String attributesJSON,
+		String authorEmailAddress) {
 
 		JSONObject attributesJSONObject = new JSONObject(attributesJSON);
 

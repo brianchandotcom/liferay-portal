@@ -43,7 +43,7 @@ const TriggerLabel = React.forwardRef(
 			<button
 				{...otherProps}
 				className={classNames(
-					'btn btn-block btn-sm c-ml-1 c-py-1 form-control-select layout__experience-selector',
+					'btn btn-block btn-sm c-ml-1 c-py-2 form-control-select layout__experience-selector',
 					{'btn-secondary': displayType === 'light'}
 				)}
 				ref={ref}

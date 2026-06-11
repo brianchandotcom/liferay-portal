@@ -29,8 +29,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -138,10 +137,10 @@ public class JournalDataCleanupPreupgradeProcessTest
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			Collections.emptyMap());
 
-		Role ownerRole = RoleLocalServiceUtil.getRole(
+		Role ownerRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), "Owner");
 
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+		_resourcePermissionLocalService.setResourcePermissions(
 			TestPropsValues.getCompanyId(), JournalArticle.class.getName(),
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ownerRole.getRoleId(), new String[] {ActionKeys.VIEW});
@@ -212,5 +211,8 @@ public class JournalDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

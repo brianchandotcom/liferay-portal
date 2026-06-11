@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
@@ -102,7 +103,9 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null,
 				StringBundler.concat(
-					"[$SOURCE_TABLE_ALIAS$].name = '",
+					"[$SOURCE_TABLE_ALIAS$].scope = ",
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					" and [$SOURCE_TABLE_ALIAS$].name = '",
 					DLFileEntry.class.getName(), "'"),
 				"primKeyId", "ResourcePermission", "fileEntryId",
 				"DLFileEntry"));
@@ -209,7 +212,9 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 			new TableOrphanReferencesDataCleanupPreupgradeProcess(
 				null,
 				StringBundler.concat(
-					"[$SOURCE_TABLE_ALIAS$].name = '",
+					"[$SOURCE_TABLE_ALIAS$].scope = ",
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					" and [$SOURCE_TABLE_ALIAS$].name = '",
 					DLFileShortcut.class.getName(), "'"),
 				"primKeyId", "ResourcePermission", "fileShortcutId",
 				"DLFileShortcut"));

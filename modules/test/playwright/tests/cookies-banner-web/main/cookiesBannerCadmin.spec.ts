@@ -21,6 +21,13 @@ export const test = mergeTests(
 );
 
 test.afterEach(async ({systemSettingsPage}) => {
+	await test.step('Deactivate Consent Manager', async () => {
+		await updateConsentManagerConfiguration(systemSettingsPage.page, {
+			active: false,
+			forceReload: true,
+		});
+	});
+
 	await test.step('Reset Consent Manager Configuration', async () => {
 		await resetConsentManagerConfiguration(systemSettingsPage);
 	});
@@ -60,3 +67,42 @@ test('LPD-25440 Cookie Banner Cadmin', async ({page}) => {
 		await expect(modalBody).not.toHaveClass(/cadmin/);
 	});
 });
+
+test(
+	'Cookie Banner renders with a solid background and drop shadow',
+	{tag: '@LPD-94502'},
+	async ({page}) => {
+		await test.step('Enable Third Party Cookies', async () => {
+			await updateConsentManagerConfiguration(page, {
+				enabled: true,
+				forceReload: true,
+			});
+		});
+
+		await test.step('Render the banner on the configuration page', async () => {
+			await page.reload();
+
+			await page.locator('.cookies-banner').waitFor({state: 'visible'});
+		});
+
+		await test.step('Verify the banner card is not transparent and has a shadow', async () => {
+			const banner = page.locator('.cookies-banner');
+
+			await expect(banner).not.toHaveCSS(
+				'background-color',
+				'rgba(0, 0, 0, 0)'
+			);
+
+			await expect(banner).not.toHaveCSS('box-shadow', 'none');
+		});
+
+		await test.step('Verify the banner card adapts to dark mode', async () => {
+			await page.emulateMedia({colorScheme: 'dark'});
+
+			await expect(page.locator('.cookies-banner')).not.toHaveCSS(
+				'background-color',
+				'rgb(255, 255, 255)'
+			);
+		});
+	}
+);

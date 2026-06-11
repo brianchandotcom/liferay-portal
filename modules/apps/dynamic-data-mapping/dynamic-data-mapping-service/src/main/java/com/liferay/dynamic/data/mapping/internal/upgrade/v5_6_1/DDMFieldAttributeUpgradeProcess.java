@@ -64,6 +64,9 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
+		long classNameId = _classNameLocalService.getClassNameId(
+			"com.liferay.journal.model.JournalArticle");
+
 		try (SafeCloseable safeCloseable = db.addTemporaryIndex(
 				connection, "DDMFieldAttribute", false, "ctCollectionId",
 				"fieldId")) {
@@ -88,9 +91,6 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 				"update DDMFieldAttribute set largeAttributeValue = ?, " +
 					"smallAttributeValue = ? where ctCollectionId = ? and " +
 						"fieldAttributeId = ?";
-
-			long classNameId = _classNameLocalService.getClassNameId(
-				"com.liferay.journal.model.JournalArticle");
 
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(selectSQL);

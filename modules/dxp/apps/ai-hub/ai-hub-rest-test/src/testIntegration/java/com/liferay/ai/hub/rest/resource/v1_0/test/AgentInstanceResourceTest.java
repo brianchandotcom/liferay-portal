@@ -1123,19 +1123,22 @@ public class AgentInstanceResourceTest
 				setMaliciousUriFilterEnabled(
 					GetterUtil.getBoolean(
 						values.get("maliciousUriFilterEnabled")));
+				setPiAndJailbreakConfidenceLevel(
+					() -> {
+						String piAndJailbreakConfidenceLevel =
+							GetterUtil.getString(
+								values.get("piAndJailbreakConfidenceLevel"));
+
+						if (Validator.isNull(piAndJailbreakConfidenceLevel)) {
+							return null;
+						}
+
+						return Guardrail.PiAndJailbreakConfidenceLevel.create(
+							piAndJailbreakConfidenceLevel);
+					});
 				setPiAndJailbreakFilterEnabled(
 					GetterUtil.getBoolean(
 						values.get("piAndJailbreakFilterEnabled")));
-
-				String piAndJailbreakConfidenceLevel = GetterUtil.getString(
-					values.get("piAndJailbreakConfidenceLevel"));
-
-				if (Validator.isNotNull(piAndJailbreakConfidenceLevel)) {
-					setPiAndJailbreakConfidenceLevel(
-						Guardrail.PiAndJailbreakConfidenceLevel.create(
-							piAndJailbreakConfidenceLevel));
-				}
-
 				setTitle_i18n(RandomTestUtil.randomLanguageIdStringMap());
 			}
 		};

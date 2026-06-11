@@ -1,0 +1,291 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.headless.data.masking.internal.masking.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.Serializable;
+
+import java.util.Arrays;
+
+import org.hamcrest.CoreMatchers;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Jose Luis Navarro
+ */
+@RunWith(Arquillian.class)
+public class DataMaskingEngineTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
+	@Test
+	public void testRedactionAppliesAllSystemMasks() throws Exception {
+		String redactedText = _dataMaskingService.redact(
+			TestPropsValues.getCompanyId(),
+			Arrays.asList(
+				"L_DATA_MASK_IBAN", "L_DATA_MASK_CREDIT_CARD_NUMBER",
+				"L_DATA_MASK_EMAIL_ADDRESS", "L_DATA_MASK_IPV4",
+				"L_DATA_MASK_IPV6", "L_DATA_MASK_NATIONAL_ID_BSN",
+				"L_DATA_MASK_NATIONAL_ID_DNI_NIF",
+				"L_DATA_MASK_NATIONAL_ID_SSN", "L_DATA_MASK_PHONE_NUMBER"),
+			StringBundler.concat(
+				"Credit card: ", _SAMPLE_CREDIT_CARD, ". Email: ",
+				_SAMPLE_EMAIL_ALT, ". IBAN: ", _SAMPLE_IBAN, ". IPv4: ",
+				_SAMPLE_IPV4, ". IPv6: ", _SAMPLE_IPV6, ". BSN: ", _SAMPLE_BSN,
+				". DNI: ", _SAMPLE_DNI, ". SSN: ", _SAMPLE_SSN, ". Phone: ",
+				_SAMPLE_PHONE_INTL, "."));
+
+		Assert.assertThat(
+			redactedText, CoreMatchers.containsString("[BANK_ACCOUNT_NUMBER]"));
+		Assert.assertThat(
+			redactedText, CoreMatchers.containsString("[CREDIT_CARD_NUMBER]"));
+		Assert.assertThat(
+			redactedText, CoreMatchers.containsString("[EMAIL_ADDRESS]"));
+		Assert.assertThat(
+			redactedText, CoreMatchers.containsString("[NATIONAL_ID]"));
+		Assert.assertThat(
+			redactedText, CoreMatchers.containsString("[PHONE_NUMBER]"));
+		Assert.assertThat(
+			redactedText, CoreMatchers.containsString("192.168.1.0/24"));
+		Assert.assertThat(
+			redactedText, CoreMatchers.containsString("2001:0db8:85a3::/48"));
+
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_BSN)));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_CREDIT_CARD)));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_DNI)));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_EMAIL_ALT)));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_IBAN)));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_IPV4)));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_IPV6)));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_PHONE_INTL)));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_SSN)));
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
+	@Test
+	public void testRedactionAppliesMasksInListOrder() throws Exception {
+		ObjectEntry domainMaskObjectEntry = _addCustomMask(
+			RandomTestUtil.randomString(), "example\\.com", "[DOMAIN]");
+
+		String redactedText = _dataMaskingService.redact(
+			TestPropsValues.getCompanyId(),
+			Arrays.asList(
+				domainMaskObjectEntry.getExternalReferenceCode(),
+				"L_DATA_MASK_EMAIL_ADDRESS"),
+			"Contact: contact@example.com");
+
+		Assert.assertEquals("Contact: contact@[DOMAIN]", redactedText);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
+	@Test
+	public void testRedactionContinuesWhenOneMaskThrows() throws Exception {
+		ObjectEntry badMaskObjectEntry = _addCustomMask(
+			RandomTestUtil.randomString(), "Contact", "$5-no-such-group");
+
+		String redactedText = _dataMaskingService.redact(
+			TestPropsValues.getCompanyId(),
+			Arrays.asList(
+				badMaskObjectEntry.getExternalReferenceCode(),
+				"L_DATA_MASK_EMAIL_ADDRESS"),
+			"Contact: " + _SAMPLE_EMAIL);
+
+		Assert.assertThat(
+			redactedText, CoreMatchers.containsString("[EMAIL_ADDRESS]"));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_EMAIL)));
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
+	@Test
+	public void testRedactionIsSkippedForUnknownMask() throws Exception {
+		String text = "Contact: " + _SAMPLE_EMAIL;
+
+		String redactedText = _dataMaskingService.redact(
+			TestPropsValues.getCompanyId(),
+			Arrays.asList("L_UNKNOWN_DATA_MASK"), text);
+
+		Assert.assertEquals(text, redactedText);
+	}
+
+	@FeatureFlags(
+		featureFlags = @FeatureFlag(enable = false, value = "LPD-90204")
+	)
+	@Test
+	public void testRedactionIsSkippedWhenFeatureFlagIsOff() throws Exception {
+		String text = "Contact: " + _SAMPLE_EMAIL;
+
+		String redactedText = _dataMaskingService.redact(
+			TestPropsValues.getCompanyId(),
+			Arrays.asList("L_DATA_MASK_EMAIL_ADDRESS"), text);
+
+		Assert.assertEquals(text, redactedText);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
+	@Test
+	public void testRedactsCreditCardAcrossFormats() throws Exception {
+		String redactedText = _dataMaskingService.redact(
+			TestPropsValues.getCompanyId(),
+			Arrays.asList("L_DATA_MASK_CREDIT_CARD_NUMBER"),
+			"Cards: 4111111111111111, 4111 1111 1111 1111, " +
+				"4111-1111-1111-1111.");
+
+		Assert.assertEquals(
+			"Cards: [CREDIT_CARD_NUMBER], [CREDIT_CARD_NUMBER], " +
+				"[CREDIT_CARD_NUMBER].",
+			redactedText);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
+	@Test
+	public void testRedactsEmailAcrossFormats() throws Exception {
+		String redactedText = _dataMaskingService.redact(
+			TestPropsValues.getCompanyId(),
+			Arrays.asList("L_DATA_MASK_EMAIL_ADDRESS"),
+			"Emails: a.b+tag@sub.example.co.uk and USER@EXAMPLE.COM.");
+
+		Assert.assertEquals(
+			"Emails: [EMAIL_ADDRESS] and [EMAIL_ADDRESS].", redactedText);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
+	@Test
+	public void testRedactsIBANAcrossFormats() throws Exception {
+		String redactedText = _dataMaskingService.redact(
+			TestPropsValues.getCompanyId(), Arrays.asList("L_DATA_MASK_IBAN"),
+			"IBANs: DE89 3704 0044 0532 0130 00, NL91ABNA0417164300, " +
+				"GB29NWBK60161331926819.");
+
+		Assert.assertEquals(
+			"IBANs: [BANK_ACCOUNT_NUMBER], [BANK_ACCOUNT_NUMBER], " +
+				"[BANK_ACCOUNT_NUMBER].",
+			redactedText);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
+	@Test
+	public void testRedactsPhoneAcrossFormats() throws Exception {
+		String redactedText = _dataMaskingService.redact(
+			TestPropsValues.getCompanyId(),
+			Arrays.asList("L_DATA_MASK_PHONE_NUMBER"),
+			"Phones: +1 (202) 555-0199, +34600123456 and +44 20 7946 0958.");
+
+		Assert.assertThat(
+			redactedText, CoreMatchers.containsString("[PHONE_NUMBER]"));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString("0199")));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString("34600123456")));
+		Assert.assertThat(
+			redactedText,
+			CoreMatchers.not(CoreMatchers.containsString("0958")));
+	}
+
+	private ObjectEntry _addCustomMask(
+			String name, String detectionRegex, String replacementValue)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DATA_MASK", TestPropsValues.getCompanyId());
+
+		return _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"detectionRegex", detectionRegex
+			).put(
+				"maskType", "custom"
+			).put(
+				"name", name
+			).put(
+				"replacementValue", replacementValue
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private static final String _SAMPLE_BSN = "123456789";
+
+	private static final String _SAMPLE_CREDIT_CARD = "4111-1111-1111-1111";
+
+	private static final String _SAMPLE_DNI = "12345678A";
+
+	private static final String _SAMPLE_EMAIL = "contact@example.com";
+
+	private static final String _SAMPLE_EMAIL_ALT = "alice@example.com";
+
+	private static final String _SAMPLE_IBAN = "DE89370400440532013000";
+
+	private static final String _SAMPLE_IPV4 = "192.168.1.42";
+
+	private static final String _SAMPLE_IPV6 =
+		"2001:0db8:85a3:0000:0000:8a2e:0370:7334";
+
+	private static final String _SAMPLE_PHONE_INTL = "+34-600-123-456";
+
+	private static final String _SAMPLE_SSN = "123-45-6789";
+
+	@Inject
+	private DataMaskingService _dataMaskingService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+}

@@ -149,8 +149,6 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 
 		_dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(fileEntryId);
 
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -165,6 +163,8 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 			PermissionCheckerFactoryUtil.create(_user));
 
 		PrincipalThreadLocal.setName(_user.getUserId());
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(

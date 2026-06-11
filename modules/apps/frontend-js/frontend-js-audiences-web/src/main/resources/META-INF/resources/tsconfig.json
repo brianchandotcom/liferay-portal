@@ -1,5 +1,5 @@
 {
-	"@generated": "536263cbbba8e5f07d71f58a50827cc51a763797",
+	"@generated": "af87afe48a2da8e377c31e18e85bc70ed7e350f8",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,6 +11,9 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/frontend-js-audiences-web/custom-attributes": [
+				"./custom-attributes/index.ts"
+			]
 		},
 		"rootDir": "../../../../../../../..",
 		"skipLibCheck": true,

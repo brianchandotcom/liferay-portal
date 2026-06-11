@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
+
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 
 export class TermsAndConditionDetailsPage {
 	readonly activeToggle: Locator;
@@ -42,15 +44,23 @@ export class TermsAndConditionDetailsPage {
 	}
 
 	async changeNameInputLocale(locale: string) {
-		await expect(async () => {
-			await this.nameInputLocaleSelector.click();
+		const localeOption = this.nameInputLocaleOption(locale);
 
-			await expect(this.nameInputLocaleOption(locale)).toBeVisible({
-				timeout: 500,
-			});
-		}).toPass({timeout: 5000});
+		await clickAndExpectToBeVisible({
+			target: localeOption,
+			trigger: this.nameInputLocaleSelector,
+		});
 
-		await this.nameInputLocaleOption(locale).click();
+		if (
+			await localeOption.evaluate((node) =>
+				node.classList.contains('active')
+			)
+		) {
+			await this.page.keyboard.press('Escape');
+		}
+		else {
+			await localeOption.click();
+		}
 	}
 
 	async setActive(active: boolean) {

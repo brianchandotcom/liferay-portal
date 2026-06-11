@@ -128,7 +128,7 @@ export default function DataSetConfigurationFields({
 	const currentTokenMapping: TokenMapping = useMemo(
 		() =>
 			apiURLTokenMappings[selectedTokenKey] ??
-			(isCurrentTokenBackendResolvable ? {source: 'backend'} : ''),
+			(isCurrentTokenBackendResolvable ? {source: 'backend-resolved'} : ''),
 		[apiURLTokenMappings, isCurrentTokenBackendResolvable, selectedTokenKey]
 	);
 
@@ -192,7 +192,7 @@ export default function DataSetConfigurationFields({
 			}
 
 			if (mappingMode === 'backend') {
-				updateTokenMapping(selectedTokenKey, {source: 'backend'});
+				updateTokenMapping(selectedTokenKey, {source: 'backend-resolved'});
 
 				return;
 			}

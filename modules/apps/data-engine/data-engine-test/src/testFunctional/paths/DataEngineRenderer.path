@@ -107,12 +107,12 @@
 </tr>
 <tr>
 	<td>REPEATABLE_FIELD_ADD_BUTTON_INDEXED</td>
-	<td>xpath=(//*[name()='label' or name()='legend'][normalize-space(text())='${key_fieldLabel}']/ancestor::div[contains(@class,'form-group')]//div[contains(@class,'repeatable-toolbar')]//button[contains(@class,'repeatable-add-button')])[${index}]</td>
+	<td>xpath=(//*[name()='label' or name()='legend'][normalize-space(text())='${key_fieldLabel}']/ancestor::div[contains(@class,'form-group')]//button[contains(@class,'repeatable-add-button')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPEATABLE_FIELD_DELETE_BUTTON_INDEXED</td>
-	<td>xpath=(//*[name()='label' or name()='legend'][normalize-space(text())='${key_fieldLabel}']/ancestor::div[contains(@class,'form-group')]//div[contains(@class,'repeatable-toolbar')]//button[contains(@class,'repeatable-delete-button')])[${index}]</td>
+	<td>xpath=(//*[name()='label' or name()='legend'][normalize-space(text())='${key_fieldLabel}']/ancestor::div[contains(@class,'form-group')]//button[contains(@class,'repeatable-delete-button')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

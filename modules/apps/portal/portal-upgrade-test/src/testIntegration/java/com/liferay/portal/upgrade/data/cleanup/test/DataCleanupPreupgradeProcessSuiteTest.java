@@ -115,18 +115,14 @@ public class DataCleanupPreupgradeProcessSuiteTest
 					_createDataCleanupPreupgradeProcess(
 						() ->
 							snapshotEnabledDuringUpgrade[0] =
-								ReflectionTestUtil.getFieldValue(
-									DBInspector.class,
-									"_schemaSnapshotEnabled")),
+								DBInspector.isSchemaSnapshotEnabled()),
 					DataCleanupPreupgradeProcess.dependsOn()
 				).build());
 
 		cleanUp();
 
 		Assert.assertTrue(snapshotEnabledDuringUpgrade[0]);
-		Assert.assertFalse(
-			(boolean)ReflectionTestUtil.getFieldValue(
-				DBInspector.class, "_schemaSnapshotEnabled"));
+		Assert.assertFalse(DBInspector.isSchemaSnapshotEnabled());
 
 		ReflectionTestUtil.setFieldValue(
 			this, "_dataCleanupPreupgradeProcessesMap",
@@ -150,9 +146,7 @@ public class DataCleanupPreupgradeProcessSuiteTest
 				exception instanceof DataCleanupPreupgradeException);
 		}
 
-		Assert.assertFalse(
-			(boolean)ReflectionTestUtil.getFieldValue(
-				DBInspector.class, "_schemaSnapshotEnabled"));
+		Assert.assertFalse(DBInspector.isSchemaSnapshotEnabled());
 	}
 
 	@Test

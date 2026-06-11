@@ -46,7 +46,7 @@ public class DataCleanupPreupgradeProcessUtil {
 		String primaryKeyColumnName = _primaryKeyColumnNameCache.get(tableName);
 
 		if (primaryKeyColumnName != null) {
-			if (primaryKeyColumnName == _NOT_FOUND) {
+			if (primaryKeyColumnName.isEmpty()) {
 				return null;
 			}
 
@@ -82,7 +82,7 @@ public class DataCleanupPreupgradeProcessUtil {
 		String tableName = _tableNameCache.get(fullyQualifiedName);
 
 		if (tableName != null) {
-			if (tableName == _NOT_FOUND) {
+			if (tableName.isEmpty()) {
 				return null;
 			}
 
@@ -151,7 +151,7 @@ public class DataCleanupPreupgradeProcessUtil {
 		return null;
 	}
 
-	private static final String _NOT_FOUND = new String("");
+	private static final String _NOT_FOUND = "";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataCleanupPreupgradeProcessUtil.class);

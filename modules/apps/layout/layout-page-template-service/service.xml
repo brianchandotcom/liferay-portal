@@ -330,7 +330,7 @@
 
 		<!-- PK fields -->
 
-		<column db-name="lPTStructureElementVariationId" name="layoutPageTemplateStructureRelElementVariationId" primary="true" type="long" />
+		<column db-name="lptStructureElementVariationId" name="layoutPageTemplateStructureRelElementVariationId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

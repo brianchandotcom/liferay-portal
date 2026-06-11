@@ -114,7 +114,8 @@ export default function EntitySelectorRow({
 		? entity.title ||
 			(entity.fieldId === 'externalReferenceCode'
 				? entity.externalReferenceCode
-				: entity.classPK)
+				: entity.classPK) ||
+			''
 		: '';
 
 	const handleSelectButton = () => {

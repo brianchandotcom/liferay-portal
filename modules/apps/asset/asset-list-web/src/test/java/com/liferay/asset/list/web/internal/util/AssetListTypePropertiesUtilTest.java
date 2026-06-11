@@ -94,12 +94,12 @@ public class AssetListTypePropertiesUtilTest {
 
 	@Test
 	public void testGetTypePropertiesJSONArrayEmitsOneGroupPerPair() {
-		_stubObjectDefinition(
+		_setUpObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
 			Collections.singletonList(
 				_mockObjectField(
 					"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT, false)));
-		_stubObjectDefinition(
+		_setUpObjectDefinition(
 			_CLASS_NAME_ID_2, _CLASS_TYPE_ID_2, _LABEL_2,
 			Arrays.asList(
 				_mockObjectField(
@@ -162,7 +162,7 @@ public class AssetListTypePropertiesUtilTest {
 
 	@Test
 	public void testGetTypePropertiesJSONArrayEmitsTypeGroupWithEmptyItemsWhenNoFieldsFilterable() {
-		_stubObjectDefinition(
+		_setUpObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
 			Collections.singletonList(
 				_mockObjectField(
@@ -188,7 +188,7 @@ public class AssetListTypePropertiesUtilTest {
 
 	@Test
 	public void testGetTypePropertiesJSONArrayExcludesMetadataFieldsFromTypeGroup() {
-		_stubObjectDefinition(
+		_setUpObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
 			Arrays.asList(
 				_mockObjectField(
@@ -225,7 +225,7 @@ public class AssetListTypePropertiesUtilTest {
 
 	@Test
 	public void testGetTypePropertiesJSONArrayIncludesOneTypeGroup() {
-		_stubObjectDefinition(
+		_setUpObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
 			Collections.singletonList(
 				_mockObjectField(
@@ -270,7 +270,7 @@ public class AssetListTypePropertiesUtilTest {
 			listTypeDefinitionId
 		);
 
-		_stubObjectDefinition(
+		_setUpObjectDefinition(
 			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1, _LABEL_1,
 			Collections.singletonList(objectField));
 
@@ -433,7 +433,7 @@ public class AssetListTypePropertiesUtilTest {
 		languageUtil.setLanguage(language);
 	}
 
-	private void _stubObjectDefinition(
+	private void _setUpObjectDefinition(
 		long classNameId, long objectDefinitionId, String label,
 		List<ObjectField> objectFields) {
 

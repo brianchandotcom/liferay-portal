@@ -450,7 +450,7 @@ grafana:
         dashboards:
             default_home_dashboard_path: /tmp/dashboards/Liferay/central-hub.json
         feature_toggles:
-            enable: accessControlOnCall,idForwarding,externalServiceAccounts
+            enable: accessControlOnCall,externalServiceAccounts,idForwarding
         log:
             filters: plugins:error
             level: error

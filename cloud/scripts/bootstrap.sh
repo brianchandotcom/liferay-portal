@@ -151,6 +151,28 @@ function _download_and_extract_files {
 		--show-error \
 		"${download_base_url}/${output_path}"
 
+	local checksum_file="${output_file}.sha256"
+
+	if [ -e "${checksum_file}" ]
+	then
+		rm "${checksum_file}"
+	fi
+
+	if ! curl \
+		--fail \
+		--location \
+		--output "${checksum_file}" \
+		--silent \
+		--show-error \
+		"${download_base_url}/${output_path}.sha256"
+	then
+		echo "Unable to download checksum from ${download_base_url}/${output_path}.sha256." >&2
+
+		exit 1
+	fi
+
+	_verify_checksum "${output_file}" "${checksum_file}"
+
 	local output_dir="${output_file%.tar.gz}"
 
 	if [ ! -d "${output_dir}" ]
@@ -236,6 +258,49 @@ function _get_version {
 	fi
 
 	echo "${version}"
+}
+
+function _sha256 {
+	if command -v sha256sum > /dev/null 2>&1
+	then
+		sha256sum "${@}"
+	elif command -v shasum > /dev/null 2>&1
+	then
+		shasum --algorithm 256 "${@}"
+	else
+		echo "Neither sha256sum nor shasum is installed." >&2
+
+		exit 1
+	fi
+}
+
+function _verify_checksum {
+	local checksum_file="${2}"
+	local output_file="${1}"
+
+	local expected_digest
+
+	read -r expected_digest _ < "${checksum_file}"
+
+	if [[ ! "${expected_digest}" =~ ^[0-9a-fA-F]{64}$ ]]
+	then
+		echo "Invalid expected checksum format in ${checksum_file}." >&2
+
+		exit 1
+	fi
+
+	local sha256_output
+
+	sha256_output=$(_sha256 "${output_file}") || exit 1
+
+	local actual_digest="${sha256_output%% *}"
+
+	if [ "${expected_digest}" != "${actual_digest}" ]
+	then
+		echo "Checksum verification failed for ${output_file}." >&2
+
+		exit 1
+	fi
 }
 
 main ${1+"$@"}

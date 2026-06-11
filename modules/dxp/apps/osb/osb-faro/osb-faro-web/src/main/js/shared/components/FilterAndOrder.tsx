@@ -89,7 +89,7 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 	onChange
 }) => (
 	<ClayDropDown.Group header={Liferay.Language.get('filter-by')}>
-		{filterByOptions.map(({key, label, values}) =>
+		{filterByOptions.map(({key, label, type = 'checkbox', values}) =>
 			values.length > 1 ? (
 				<ClayDropDown
 					alignmentPosition={Align.RightCenter}
@@ -112,7 +112,7 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 							key={value}
 							label={itemLabel}
 							onChange={onChange}
-							type='checkbox'
+							type={type}
 							value={value}
 						/>
 					))}
@@ -124,7 +124,7 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 					key={key}
 					label={get(values, ['0', 'label'])}
 					onChange={onChange}
-					type='checkbox'
+					type={type}
 					value={get(values, ['0', 'value'])}
 				/>
 			)

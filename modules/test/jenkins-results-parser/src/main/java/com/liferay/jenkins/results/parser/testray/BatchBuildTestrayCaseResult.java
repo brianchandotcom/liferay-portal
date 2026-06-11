@@ -254,7 +254,7 @@ public class BatchBuildTestrayCaseResult
 		testrayAttachments.add(_getGradlePluginsAttachment());
 		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
 		testrayAttachments.add(getParentTestrayCaseResultTestrayAttachment());
-		testrayAttachments.add(_getWarningsTestrayAttachment());
+		testrayAttachments.add(getWarningsTestrayAttachment());
 
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
 
@@ -317,7 +317,7 @@ public class BatchBuildTestrayCaseResult
 
 	@Override
 	public String[] getWarnings() {
-		TestrayAttachment testrayAttachment = _getWarningsTestrayAttachment();
+		TestrayAttachment testrayAttachment = getWarningsTestrayAttachment();
 
 		if (testrayAttachment == null) {
 			return null;
@@ -614,6 +614,11 @@ public class BatchBuildTestrayCaseResult
 		return _topLevelStandaloneBuildTestrayCaseResult;
 	}
 
+	protected TestrayAttachment getWarningsTestrayAttachment() {
+		return getTestrayAttachment(
+			getBuildReport(), "Warnings", getAxisName() + "/warnings.html.gz");
+	}
+
 	@Override
 	protected void initBuildReport() {
 		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
@@ -801,11 +806,6 @@ public class BatchBuildTestrayCaseResult
 		}
 
 		return testrayAttachments;
-	}
-
-	private TestrayAttachment _getWarningsTestrayAttachment() {
-		return getTestrayAttachment(
-			getBuildReport(), "Warnings", getAxisName() + "/warnings.html.gz");
 	}
 
 	private String _upperCaseFirstLetterOfEachWord(String string) {

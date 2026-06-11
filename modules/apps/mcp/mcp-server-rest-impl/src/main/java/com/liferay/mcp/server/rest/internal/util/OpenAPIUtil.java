@@ -894,18 +894,19 @@ public class OpenAPIUtil {
 					"into the input map."));
 		}
 
-		Object bodyValue = inputJSONObject.get("body");
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 
 		String body = StringPool.BLANK;
 
-		if (bodyValue instanceof JSONObject) {
-			body = bodyValue.toString();
+		Object bodyObject = inputJSONObject.get("body");
+
+		if (bodyObject instanceof JSONObject) {
+			body = bodyObject.toString();
 		}
-		else if (bodyValue != null) {
-			body = String.valueOf(bodyValue);
+		else if (bodyObject != null) {
+			body = String.valueOf(bodyObject);
 		}
 
-		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 	}
 

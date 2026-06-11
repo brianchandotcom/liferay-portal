@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.data.set.fragment.web.internal.fragment.renderer;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -25,6 +26,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -212,6 +214,10 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					externalReferenceCode, httpServletRequest);
 
 			if (fragmentRendererContext.isEditMode() && hasTokens) {
+				_writeBackendResolvableTokens(
+					fragmentEntryLink, externalReferenceCode,
+					httpServletRequest);
+
 				printWriter.write(
 					_getAPIURLResolutionHTML(
 						tokenResolutionsJSONObject, externalReferenceCode,
@@ -384,9 +390,15 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			return apiURLTokenMappingsJSONObject.getString(tokenName);
 		}
 
+		String source = mappingJSONObject.getString("source");
+
+		if (Objects.equals(source, "backend")) {
+			return null;
+		}
+
 		String fieldId = mappingJSONObject.getString("fieldId");
 
-		if (Objects.equals(mappingJSONObject.getString("source"), "context")) {
+		if (Objects.equals(source, "context")) {
 			return _resolveContextValue(httpServletRequest, fieldId);
 		}
 
@@ -450,6 +462,49 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 
 		return null;
+	}
+
+	private void _writeBackendResolvableTokens(
+		FragmentEntryLink fragmentEntryLink, String externalReferenceCode,
+		HttpServletRequest httpServletRequest) {
+
+		Set<String> tokenNames = _getTokenNames(
+			externalReferenceCode, httpServletRequest);
+
+		String backendResolvedFDSAPIURL = _fdsRenderer.getFDSAPIURL(
+			externalReferenceCode, httpServletRequest, true, null);
+
+		Matcher matcher = _pattern.matcher(backendResolvedFDSAPIURL);
+
+		while (matcher.find()) {
+			tokenNames.remove(matcher.group(1));
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (String token : tokenNames) {
+			jsonArray.put(token);
+		}
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject configurationJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (configurationJSONObject == null) {
+			configurationJSONObject = _jsonFactory.createJSONObject();
+
+			editableValuesJSONObject.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				configurationJSONObject);
+		}
+
+		configurationJSONObject.put(
+			"backendResolvableTokens", jsonArray.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

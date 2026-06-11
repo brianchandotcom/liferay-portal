@@ -5,7 +5,7 @@
 
 export type IdentifierField = 'classPK' | 'externalReferenceCode';
 
-export type MappingMode = 'literal' | 'content' | 'context';
+export type MappingMode = 'literal' | 'content' | 'context' | 'backend';
 
 export interface IContentMappedTokenValue {
 	className: string;
@@ -21,7 +21,12 @@ export interface IContextMappedTokenValue {
 	source: 'context';
 }
 
+export interface IBackendMappedTokenValue {
+	source: 'backend';
+}
+
 export type IMappedTokenValue =
+	| IBackendMappedTokenValue
 	| IContentMappedTokenValue
 	| IContextMappedTokenValue;
 
@@ -39,9 +44,19 @@ export function isContextMapped(
 	return value.source === 'context';
 }
 
+export function isBackendMapped(
+	value: IMappedTokenValue
+): value is IBackendMappedTokenValue {
+	return value.source === 'backend';
+}
+
 export function getMappingMode(value: TokenMapping): MappingMode {
 	if (!isMappedTokenValue(value)) {
 		return 'literal';
+	}
+
+	if (isBackendMapped(value)) {
+		return 'backend';
 	}
 
 	return isContextMapped(value) ? 'context' : 'content';

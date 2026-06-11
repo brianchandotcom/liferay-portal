@@ -237,7 +237,7 @@ async function main() {
 
 	// Initial sync of input value into local number + country
 
-	syncFromValue(input.value);
+	syncFromValue(input.value === 'null' ? '' : input.value);
 
 	// Autofocus on backend error
 

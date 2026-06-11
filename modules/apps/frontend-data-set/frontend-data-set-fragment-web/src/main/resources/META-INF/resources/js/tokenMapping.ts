@@ -22,7 +22,7 @@ export interface IContextMappedTokenValue {
 }
 
 export interface IBackendMappedTokenValue {
-	source: 'backend';
+	source: 'backend-resolved';
 }
 
 export type IMappedTokenValue =
@@ -47,7 +47,7 @@ export function isContextMapped(
 export function isBackendMapped(
 	value: IMappedTokenValue
 ): value is IBackendMappedTokenValue {
-	return value.source === 'backend';
+	return value.source === 'backend-resolved';
 }
 
 export function getMappingMode(value: TokenMapping): MappingMode {

@@ -73,7 +73,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
-		{"lPTStructureElementVariationId", Types.BIGINT},
+		{"lptStructureElementVariationId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -91,7 +91,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("lPTStructureElementVariationId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("lptStructureElementVariationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -109,7 +109,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LPTStructureElementVariation (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,lPTStructureElementVariationId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,audienceEntryERC VARCHAR(75) null,hide STRING null,html STRING null,js STRING null,name VARCHAR(75) null,plid LONG,segmentsExperienceERC VARCHAR(75) null,targetElement VARCHAR(75) null,primary key (lPTStructureElementVariationId, ctCollectionId))";
+		"create table LPTStructureElementVariation (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,lptStructureElementVariationId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,audienceEntryERC VARCHAR(75) null,hide STRING null,html STRING null,js STRING null,name VARCHAR(75) null,plid LONG,segmentsExperienceERC VARCHAR(75) null,targetElement VARCHAR(75) null,primary key (lptStructureElementVariationId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LPTStructureElementVariation";
@@ -121,7 +121,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		" ORDER BY layoutPageTemplateStructureRelElementVariation.layoutPageTemplateStructureRelElementVariationId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY LPTStructureElementVariation.lPTStructureElementVariationId ASC";
+		" ORDER BY LPTStructureElementVariation.lptStructureElementVariationId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -1404,7 +1404,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		layoutPageTemplateStructureRelElementVariationImpl.
 			setLayoutPageTemplateStructureRelElementVariationId(
 				this.<Long>getColumnOriginalValue(
-					"lPTStructureElementVariationId"));
+					"lptStructureElementVariationId"));
 		layoutPageTemplateStructureRelElementVariationImpl.setGroupId(
 			this.<Long>getColumnOriginalValue("groupId"));
 		layoutPageTemplateStructureRelElementVariationImpl.setCompanyId(
@@ -1814,7 +1814,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put(
-			"lPTStructureElementVariationId",
+			"lptStructureElementVariationId",
 			_layoutPageTemplateStructureRelElementVariationId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1840,7 +1840,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 
 		attributeNames.put("uuid_", "uuid");
 		attributeNames.put(
-			"lPTStructureElementVariationId",
+			"lptStructureElementVariationId",
 			"layoutPageTemplateStructureRelElementVariationId");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
@@ -1865,7 +1865,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 
 		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("lPTStructureElementVariationId", 16L);
+		columnBitmasks.put("lptStructureElementVariationId", 16L);
 
 		columnBitmasks.put("groupId", 32L);
 
@@ -1902,4 +1902,4 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	private LayoutPageTemplateStructureRelElementVariation _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2089370169
+// LIFERAY-SERVICE-BUILDER-HASH:45207097

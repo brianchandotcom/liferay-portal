@@ -3,7 +3,7 @@ create table LPTStructureElementVariation (
 	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	lPTStructureElementVariationId LONG not null,
+	lptStructureElementVariationId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -18,7 +18,7 @@ create table LPTStructureElementVariation (
 	plid LONG,
 	segmentsExperienceERC VARCHAR(75) null,
 	targetElement VARCHAR(75) null,
-	primary key (lPTStructureElementVariationId, ctCollectionId)
+	primary key (lptStructureElementVariationId, ctCollectionId)
 );
 
 create table LayoutPageTemplateCollection (

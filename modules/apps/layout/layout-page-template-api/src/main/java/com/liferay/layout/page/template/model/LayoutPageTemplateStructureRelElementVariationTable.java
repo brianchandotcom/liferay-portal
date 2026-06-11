@@ -46,7 +46,7 @@ public class LayoutPageTemplateStructureRelElementVariationTable
 	public final Column
 		<LayoutPageTemplateStructureRelElementVariationTable, Long>
 			layoutPageTemplateStructureRelElementVariationId = createColumn(
-				"lPTStructureElementVariationId", Long.class, Types.BIGINT,
+				"lptStructureElementVariationId", Long.class, Types.BIGINT,
 				Column.FLAG_PRIMARY);
 	public final Column
 		<LayoutPageTemplateStructureRelElementVariationTable, Long> groupId =
@@ -115,4 +115,4 @@ public class LayoutPageTemplateStructureRelElementVariationTable
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1723426437
+// LIFERAY-SERVICE-BUILDER-HASH:1748724357

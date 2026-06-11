@@ -214,7 +214,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					externalReferenceCode, httpServletRequest);
 
 			if (fragmentRendererContext.isEditMode() && hasTokens) {
-				_writeBackendResolvableTokens(
+				_writeBackendResolvedTokens(
 					fragmentEntryLink, externalReferenceCode,
 					httpServletRequest);
 
@@ -464,7 +464,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return null;
 	}
 
-	private void _writeBackendResolvableTokens(
+	private void _writeBackendResolvedTokens(
 		FragmentEntryLink fragmentEntryLink, String externalReferenceCode,
 		HttpServletRequest httpServletRequest) {
 
@@ -504,7 +504,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 
 		configurationJSONObject.put(
-			"backendResolvableTokens", jsonArray.toString());
+			"backendResolvedTokens", jsonArray.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -222,6 +222,10 @@ export class EditCategoryPage {
 	async handleEditConfirmationModal(clickSave: boolean) {
 		await expect(this.editConfirmationModal).toBeVisible();
 
+		await expect(
+			this.page.locator('.liferay-modal .modal-dialog')
+		).toHaveClass(/modal-dialog-centered/);
+
 		clickSave
 			? await this.editConfirmationModal
 					.getByRole('button', {name: 'Save'})

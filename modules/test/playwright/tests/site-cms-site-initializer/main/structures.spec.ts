@@ -87,6 +87,10 @@ test(
 			filter: structureName,
 		});
 
+		await expect(page.locator('.liferay-modal .modal-dialog')).toHaveClass(
+			/modal-dialog-centered/
+		);
+
 		await page
 			.getByPlaceholder('Confirm Content Structure Name')
 			.fill(structureName);
@@ -139,6 +143,10 @@ test(
 		await expect(
 			page.getByRole('heading', {name: 'Deletion Not Allowed'})
 		).toBeVisible();
+
+		await expect(page.locator('.liferay-modal .modal-dialog')).toHaveClass(
+			/modal-dialog-centered/
+		);
 
 		await clickAndExpectToBeHidden({
 			target: page.getByRole('button', {name: 'OK'}),

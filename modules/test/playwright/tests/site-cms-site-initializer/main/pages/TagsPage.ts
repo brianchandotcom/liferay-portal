@@ -80,6 +80,10 @@ export class TagsPage {
 			this.page.getByRole('heading', {name: `Delete Tag`})
 		).toBeVisible();
 
+		await expect(
+			this.page.locator('.liferay-modal .modal-dialog')
+		).toHaveClass(/modal-dialog-centered/);
+
 		await clickAndExpectToBeVisible({
 			target: this.page.getByText(
 				`Success:${name} was deleted successfully.`

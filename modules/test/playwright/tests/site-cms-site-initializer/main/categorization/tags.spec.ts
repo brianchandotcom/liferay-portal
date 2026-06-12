@@ -206,6 +206,14 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 		trigger: tagsPage.saveButton,
 	});
 
+	await expect(
+		page
+			.locator('.liferay-modal', {
+				hasText: 'Please choose at least 2 tags.',
+			})
+			.locator('.modal-dialog')
+	).toHaveClass(/modal-dialog-centered/);
+
 	await page.getByRole('button', {name: 'OK'}).click();
 
 	await page.getByLabel('Select', {exact: true}).click();
@@ -318,6 +326,14 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 		target: page.getByRole('heading', {name: 'Confirm Merge Tags'}),
 		trigger: tagsPage.saveButton,
 	});
+
+	await expect(
+		page
+			.locator('.liferay-modal', {
+				has: page.getByRole('heading', {name: 'Confirm Merge Tags'}),
+			})
+			.locator('.modal-dialog')
+	).toHaveClass(/modal-dialog-centered/);
 
 	await clickAndExpectToBeVisible({
 		target: page.getByText(

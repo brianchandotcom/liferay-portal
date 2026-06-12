@@ -27,6 +27,7 @@ import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import com.liferay.portal.workflow.kaleo.definition.Fork;
+import com.liferay.portal.workflow.kaleo.definition.HTTPCallNode;
 import com.liferay.portal.workflow.kaleo.definition.Join;
 import com.liferay.portal.workflow.kaleo.definition.JoinXor;
 import com.liferay.portal.workflow.kaleo.definition.LLM;
@@ -40,6 +41,7 @@ import com.liferay.portal.workflow.kaleo.definition.RoleRecipient;
 import com.liferay.portal.workflow.kaleo.definition.ScriptAction;
 import com.liferay.portal.workflow.kaleo.definition.ScriptAssignment;
 import com.liferay.portal.workflow.kaleo.definition.ScriptRecipient;
+import com.liferay.portal.workflow.kaleo.definition.ServiceNode;
 import com.liferay.portal.workflow.kaleo.definition.Setting;
 import com.liferay.portal.workflow.kaleo.definition.State;
 import com.liferay.portal.workflow.kaleo.definition.Task;
@@ -139,6 +141,12 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			definition.addNode(_parseFork(forkElement));
 		}
 
+		List<Element> httpCallElements = rootElement.elements("http-call");
+
+		for (Element httpCallElement : httpCallElements) {
+			definition.addNode(_parseHTTPCallNode(httpCallElement));
+		}
+
 		List<Element> joinElements = rootElement.elements("join");
 
 		for (Element joinElement : joinElements) {
@@ -157,6 +165,12 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			definition.addNode(_parseLLM(llmElement));
 		}
 
+		List<Element> serviceElements = rootElement.elements("service");
+
+		for (Element serviceElement : serviceElements) {
+			definition.addNode(_parseServiceNode(serviceElement));
+		}
+
 		List<Element> stateElements = rootElement.elements("state");
 
 		for (Element stateElement : stateElements) {
@@ -171,8 +185,8 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		_parseTransitions(
 			definition, aiDecisionElements, conditionElements, forkElements,
-			joinElements, joinXorElements, llmElements, stateElements,
-			taskElements);
+			httpCallElements, joinElements, joinXorElements, llmElements,
+			serviceElements, stateElements, taskElements);
 
 		return definition;
 	}
@@ -453,6 +467,53 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		return fork;
 	}
 
+	private HTTPCallNode _parseHTTPCallNode(Element httpCallElement) {
+		HTTPCallNode httpCallNode = new HTTPCallNode(
+			StringUtil.trim(httpCallElement.elementText("description")),
+			httpCallElement.elementTextTrim("name"));
+
+		httpCallNode.setLabelMap(
+			_parseLabels(httpCallElement.element("labels")));
+
+		httpCallNode.setMetadata(httpCallElement.elementTextTrim("metadata"));
+
+		Set<Setting> settings = new HashSet<>();
+
+		String httpMethod = httpCallElement.elementTextTrim("http-method");
+
+		if (httpMethod != null) {
+			settings.add(new Setting("httpMethod", httpMethod));
+		}
+
+		String inputVariables = httpCallElement.elementTextTrim(
+			"input-variables");
+
+		if (inputVariables != null) {
+			settings.add(new Setting("inputVariables", inputVariables));
+		}
+
+		String outputVariables = httpCallElement.elementTextTrim(
+			"output-variables");
+
+		if (outputVariables != null) {
+			settings.add(new Setting("outputVariables", outputVariables));
+		}
+
+		String requestBody = httpCallElement.elementText("request-body");
+
+		if (requestBody != null) {
+			settings.add(
+				new Setting("requestBody", StringUtil.trim(requestBody)));
+		}
+
+		settings.add(
+			new Setting("url", httpCallElement.elementTextTrim("url")));
+
+		httpCallNode.setSettings(settings);
+
+		return httpCallNode;
+	}
+
 	private Join _parseJoin(Element joinElement) throws Exception {
 		String name = joinElement.elementTextTrim("name");
 		String description = StringUtil.trim(
@@ -720,6 +781,41 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 			notification.addRecipients(userRecipient);
 		}
+	}
+
+	private ServiceNode _parseServiceNode(Element serviceElement) {
+		ServiceNode serviceNode = new ServiceNode(
+			StringUtil.trim(serviceElement.elementText("description")),
+			serviceElement.elementTextTrim("name"));
+
+		serviceNode.setLabelMap(_parseLabels(serviceElement.element("labels")));
+
+		serviceNode.setMetadata(serviceElement.elementTextTrim("metadata"));
+
+		Set<Setting> settings = new HashSet<>();
+
+		String inputVariables = serviceElement.elementTextTrim(
+			"input-variables");
+
+		if (inputVariables != null) {
+			settings.add(new Setting("inputVariables", inputVariables));
+		}
+
+		settings.add(
+			new Setting(
+				"javaDelegate",
+				serviceElement.elementTextTrim("java-delegate")));
+
+		String outputVariables = serviceElement.elementTextTrim(
+			"output-variables");
+
+		if (outputVariables != null) {
+			settings.add(new Setting("outputVariables", outputVariables));
+		}
+
+		serviceNode.setSettings(settings);
+
+		return serviceNode;
 	}
 
 	private State _parseState(Element stateElement) throws Exception {
@@ -994,8 +1090,9 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 	private void _parseTransitions(
 			Definition definition, List<Element> aiDecisionElements,
 			List<Element> conditionElements, List<Element> forkElements,
-			List<Element> joinElements, List<Element> joinXorElements,
-			List<Element> llmElements, List<Element> stateElements,
+			List<Element> httpCallElements, List<Element> joinElements,
+			List<Element> joinXorElements, List<Element> llmElements,
+			List<Element> serviceElements, List<Element> stateElements,
 			List<Element> taskElements)
 		throws Exception {
 
@@ -1011,6 +1108,10 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			_parseTransition(definition, forkElement);
 		}
 
+		for (Element httpCallElement : httpCallElements) {
+			_parseTransition(definition, httpCallElement);
+		}
+
 		for (Element joinElement : joinElements) {
 			_parseTransition(definition, joinElement);
 		}
@@ -1021,6 +1122,10 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		for (Element llmElement : llmElements) {
 			_parseTransition(definition, llmElement);
+		}
+
+		for (Element serviceElement : serviceElements) {
+			_parseTransition(definition, serviceElement);
 		}
 
 		for (Element stateElement : stateElements) {

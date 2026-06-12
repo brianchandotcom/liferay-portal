@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>Service Node Multiple Transitions</name>
+	<version>1</version>
+	<state>
+		<name>start</name>
+		<initial>true</initial>
+		<transitions>
+			<transition>
+				<name>convert</name>
+				<target>convert</target>
+			</transition>
+		</transitions>
+	</state>
+	<service>
+		<name>convert</name>
+		<java-delegate>com.example.Converter#convert</java-delegate>
+		<transitions>
+			<transition>
+				<name>end</name>
+				<target>end</target>
+			</transition>
+			<transition>
+				<name>other</name>
+				<target>other</target>
+			</transition>
+		</transitions>
+	</service>
+	<state>
+		<name>end</name>
+	</state>
+	<state>
+		<name>other</name>
+	</state>
+</workflow-definition>

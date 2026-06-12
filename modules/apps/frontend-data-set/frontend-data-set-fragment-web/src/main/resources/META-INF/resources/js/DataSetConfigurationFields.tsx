@@ -34,7 +34,7 @@ interface IConfigurationField {
 	onValueSelect: (name: string, value: any) => void;
 	values: {
 		apiURLTokenMappings: string;
-		backendResolvedTokens: string;
+		backendResolvableTokenNames: string;
 		itemSelector: IDataSet;
 	};
 }
@@ -79,20 +79,23 @@ export default function DataSetConfigurationFields({
 		}
 	}, [tokenKeys, selectedTokenKey]);
 
-	const backendResolvedTokens = useMemo(
-		() => new Set<string>(JSON.parse(values.backendResolvedTokens || '[]')),
-		[values.backendResolvedTokens]
+	const backendResolvableTokenNames = useMemo(
+		() =>
+			new Set<string>(
+				JSON.parse(values.backendResolvableTokenNames || '[]')
+			),
+		[values.backendResolvableTokenNames]
 	);
 
 	const isCurrentTokenBackendResolvable =
-		backendResolvedTokens.has(selectedTokenKey);
+		backendResolvableTokenNames.has(selectedTokenKey);
 
 	const isTokenMapped = useCallback(
 		(tokenKey: string): boolean => {
 			const mapping = apiURLTokenMappings[tokenKey];
 
 			if (mapping === undefined) {
-				return backendResolvedTokens.has(tokenKey);
+				return backendResolvableTokenNames.has(tokenKey);
 			}
 
 			if (typeof mapping === 'string') {
@@ -115,7 +118,7 @@ export default function DataSetConfigurationFields({
 				? !!mapping.externalReferenceCode
 				: !!mapping.classPK;
 		},
-		[apiURLTokenMappings, backendResolvedTokens]
+		[apiURLTokenMappings, backendResolvableTokenNames]
 	);
 
 	const isCompleted = useMemo(
@@ -128,7 +131,9 @@ export default function DataSetConfigurationFields({
 	const currentTokenMapping: TokenMapping = useMemo(
 		() =>
 			apiURLTokenMappings[selectedTokenKey] ??
-			(isCurrentTokenBackendResolvable ? {source: 'backend-resolved'} : ''),
+			(isCurrentTokenBackendResolvable
+				? {source: 'backend-resolved'}
+				: ''),
 		[apiURLTokenMappings, isCurrentTokenBackendResolvable, selectedTokenKey]
 	);
 
@@ -192,7 +197,9 @@ export default function DataSetConfigurationFields({
 			}
 
 			if (mappingMode === 'backend') {
-				updateTokenMapping(selectedTokenKey, {source: 'backend-resolved'});
+				updateTokenMapping(selectedTokenKey, {
+					source: 'backend-resolved',
+				});
 
 				return;
 			}

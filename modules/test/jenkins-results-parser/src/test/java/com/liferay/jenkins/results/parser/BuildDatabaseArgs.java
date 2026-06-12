@@ -37,7 +37,8 @@ public class BuildDatabaseArgs {
 		};
 	}
 
-	public String jobKey = "PortalAcceptancePullRequestJob";
+	public String jobKey =
+		"dxp_test-portal-acceptance-pullrequest(master)_default";
 	public String[] modifiedFiles = {};
 	public Map<String, Map<String, String>> properties = new LinkedHashMap<>();
 

@@ -84,6 +84,7 @@ public class DefaultBuildDatabaseTest {
 	public void testHasJob() {
 		BuildDatabase buildDatabase =
 			BuildDatabaseTestUtil.addPortalAcceptancePullRequest(
+				BuildDatabaseArgs.withJobKey(_JOB_KEY),
 				BuildDatabaseArgs.withModifiedFiles(_MODIFIED_FILE));
 
 		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
@@ -130,7 +131,8 @@ public class DefaultBuildDatabaseTest {
 		return new DefaultBuildDatabase(buildDatabaseFile.getParentFile());
 	}
 
-	private static final String _JOB_KEY = "PortalAcceptancePullRequestJob";
+	private static final String _JOB_KEY =
+		"dxp_test-portal-acceptance-pullrequest(master)_default";
 
 	private static final String _MODIFIED_FILE = "modules/apps/foo/Bar.java";
 

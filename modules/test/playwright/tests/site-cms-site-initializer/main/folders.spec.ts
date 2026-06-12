@@ -44,7 +44,11 @@ test(
 
 		const newFolderTitle = getRandomString();
 
-		await page.getByLabel('Name').fill(newFolderTitle);
+		const nameInput = page.getByLabel('Name');
+
+		await expect(nameInput).toHaveValue(folderTitle);
+
+		await nameInput.fill(newFolderTitle);
 		await page.getByLabel('Description').fill('folder description');
 		await page.getByRole('button', {name: 'Save'}).click();
 

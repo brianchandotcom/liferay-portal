@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
@@ -118,7 +119,14 @@ public class JakartaTransformGradleCheck extends BaseJakartaTransformCheck {
 		}
 
 		for (String line : StringUtil.splitLines(content)) {
-			String[] parts = line.split("=");
+			String[] parts = line.split("=", 2);
+
+			if (parts.length < 2) {
+				throw new IOException(
+					StringBundler.concat(
+						"Invalid line \"", line, "\" in ",
+						jakartaTransformDependenciesFilePath));
+			}
 
 			_jakartaTransformDependenciesMap.put(parts[0], parts[1]);
 		}

@@ -273,6 +273,27 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
+	public String generateStyleBookEntryName(long groupId, String name) {
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.fetchByG_N_First(groupId, name, null);
+
+		if (styleBookEntry == null) {
+			return name;
+		}
+
+		for (int count = 1;; count++) {
+			String newName = StringUtil.appendParentheticalSuffix(name, count);
+
+			styleBookEntry = styleBookEntryPersistence.fetchByG_N_First(
+				groupId, newName, null);
+
+			if (styleBookEntry == null) {
+				return newName;
+			}
+		}
+	}
+
+	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 

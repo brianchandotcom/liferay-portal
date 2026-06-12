@@ -39,6 +39,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>AudienceEntryJSON</exception>
 		<exception>AudienceEntryName</exception>
 	</exceptions>
 </service-builder>

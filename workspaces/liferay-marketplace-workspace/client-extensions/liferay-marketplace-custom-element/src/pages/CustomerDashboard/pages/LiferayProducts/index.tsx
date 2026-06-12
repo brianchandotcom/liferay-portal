@@ -11,14 +11,15 @@ import Page from '../../../../components/Page';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {
 	OrderTypes,
-	PaymentStatus,
+	OrderWorkflowStatusCode,
 	orderTypeDocumentationURL,
 } from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import {getSiteURL} from '../../../../utils/site';
 import {safeJSONParse} from '../../../../utils/util';
-import PaymentStatusBadge from '../../../FinanceDashboard/components/PaymentStatus/PaymentStatusBadge';
+import {useProductPurchaseOutletContext} from '../../../ProductPurchase/ProductPurchaseOutlet';
+import {ProductPurchaseAIHubToken} from '../../../ProductPurchase/services/ProductPurchaseAIHubToken';
 import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
 
 const searchParams = new URLSearchParams({
@@ -39,8 +40,17 @@ const getViewDetailsPath = (placedOrder: PlacedOrder) => {
 
 const LiferayProductsListView = () => {
 	const {selectedAccount} = useCustomerDashboardOutletContext();
-
+	const {handlePurchase, product} = useProductPurchaseOutletContext();
 	const navigate = useNavigate();
+
+	const onClickBuyLiferayTokens = () => {
+		const productPurchase = new ProductPurchaseAIHubToken(
+			selectedAccount,
+			product
+		);
+
+		handlePurchase(productPurchase);
+	};
 
 	return (
 		<Page
@@ -104,6 +114,26 @@ const LiferayProductsListView = () => {
 									Liferay.Util.navigate(
 										`${getSiteURL()}/product-feedback?orderId=${row.id}`
 									),
+							},
+							{
+								hidden: (placedOrder: PlacedOrder) => {
+									const {
+										orderStatusInfo,
+										orderTypeExternalReferenceCode,
+									} = placedOrder;
+
+									const isNotAIHub =
+										orderTypeExternalReferenceCode !==
+										OrderTypes.AI_HUB;
+
+									const isNotActive =
+										orderStatusInfo?.code !==
+										OrderWorkflowStatusCode.COMPLETED;
+
+									return isNotAIHub || isNotActive;
+								},
+								name: i18n.translate('buy-liferay-tokens'),
+								onClick: onClickBuyLiferayTokens,
 							},
 						],
 						columns: [
@@ -195,19 +225,6 @@ const LiferayProductsListView = () => {
 								id: 'orderStatusInfo',
 								name: 'Status',
 								render: (_, item) => {
-									if (
-										item.paymentStatus ===
-										PaymentStatus.PENDING
-									) {
-										return (
-											<PaymentStatusBadge
-												paymentStatus={
-													PaymentStatus.PENDING
-												}
-											/>
-										);
-									}
-
 									return <OrderStatus placedOrder={item} />;
 								},
 							},

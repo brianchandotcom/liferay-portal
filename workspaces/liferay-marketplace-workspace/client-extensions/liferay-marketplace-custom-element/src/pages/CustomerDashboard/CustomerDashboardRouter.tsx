@@ -20,7 +20,9 @@ import CreateLicense from './pages/Apps/App/Licenses/CreateLicense';
 import Licenses from './pages/Apps/App/Licenses/Licenses';
 import Support from './pages/Apps/App/Support/Support';
 import Connections from './pages/Connections';
+import AiHubRedirect from './pages/LiferayProducts/AIHubRedirect';
 import LiferayProductsBundles from './pages/LiferayProducts/Bundles/Bundles';
+import BuyLiferayTokens from './pages/LiferayProducts/BuyLiferayTokens';
 import LiferayProduct from './pages/LiferayProducts/LiferayProduct';
 import LiferayProductsOutlet from './pages/LiferayProducts/LiferayProductsOutlet';
 import DSRWorkspace from './pages/LiferayProducts/Workspace/DSRWorkspace';
@@ -65,6 +67,11 @@ const CustomerDashboardRouter = () => {
 						path="bundles"
 					/>
 
+					<Route
+						element={<BuyLiferayTokens />}
+						path="buy-liferay-tokens"
+					/>
+
 					<Route element={<DSRWorkspace />} path="workspace" />
 				</Route>
 
@@ -92,6 +99,11 @@ const CustomerDashboardRouter = () => {
 					path="installation"
 				/>
 			</Route>
+
+			<Route
+				element={<AiHubRedirect />}
+				path="/:accountErc/ai-hub/:tokens?"
+			/>
 		</Routes>
 	);
 };

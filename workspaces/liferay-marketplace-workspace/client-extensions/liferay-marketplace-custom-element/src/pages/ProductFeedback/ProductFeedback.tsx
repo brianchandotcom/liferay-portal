@@ -13,7 +13,6 @@ import ProductPurchaseFeedback from '../../components/ProductPurchase/Feedback';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import withProviders from '../../hoc/withProviders';
 import useGetProductByOrderId from '../../hooks/useGetProductByOrderId';
-import useProductPurchaseCart from '../../hooks/useProductPurchaseCart';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
 import zodSchema from '../../schema/zod';
@@ -21,7 +20,6 @@ import HeadlessProductFeedback from '../../services/rest/HeadlessProductFeedback
 import {getSiteURL} from '../../utils/site';
 import ProductPurchasePrice from '../ProductPurchase/ProductPurchasePrice';
 import useAccounts from '../ProductPurchase/hooks/useAccounts';
-import ProductPurchaseApp from '../ProductPurchase/services/ProductPurchaseApp';
 import ProductFeedbackForm from './ProductFeedbackForm';
 
 export function ProductFeedback() {
@@ -37,14 +35,6 @@ export function ProductFeedback() {
 
 	const order = data?.placedOrder;
 	const product = data?.product;
-
-	const productPurchaseCart = useProductPurchaseCart(
-		selectedAccount?.id,
-		product,
-		product
-			? ProductPurchaseApp.getOrderTypeExternalReferenceCode(product)
-			: ''
-	);
 
 	const onSubmit = async (
 		form: z.infer<typeof zodSchema.productFeedback>
@@ -121,12 +111,7 @@ export function ProductFeedback() {
 		<ProductPurchase className="my-7">
 			<ProductPurchase.Header
 				product={data?.product}
-				rightNode={
-					<ProductPurchasePrice
-						product={product}
-						productPurchaseCart={productPurchaseCart}
-					/>
-				}
+				rightNode={<ProductPurchasePrice product={product} />}
 			/>
 
 			<ProductFeedbackForm

@@ -5,11 +5,14 @@
 
 package com.liferay.audience.service.impl;
 
+import com.liferay.audience.exception.AudienceEntryJSONException;
 import com.liferay.audience.exception.AudienceEntryNameException;
 import com.liferay.audience.model.AudienceEntry;
 import com.liferay.audience.service.base.AudienceEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.json.validator.JSONValidator;
+import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -39,7 +42,7 @@ public class AudienceEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(name);
+		_validate(json, name);
 
 		AudienceEntry audienceEntry = audienceEntryPersistence.create(
 			counterLocalService.increment());
@@ -106,7 +109,7 @@ public class AudienceEntryLocalServiceImpl
 			long audienceEntryId, String json, String name)
 		throws PortalException {
 
-		_validate(name);
+		_validate(json, name);
 
 		AudienceEntry audienceEntry = audienceEntryPersistence.findByPrimaryKey(
 			audienceEntryId);
@@ -117,11 +120,24 @@ public class AudienceEntryLocalServiceImpl
 		return audienceEntryPersistence.update(audienceEntry);
 	}
 
-	private void _validate(String name) throws PortalException {
+	private void _validate(String json, String name) throws PortalException {
+		try {
+			_criteriaJSONValidator.validate(json);
+		}
+		catch (JSONValidatorException jsonValidatorException) {
+			throw new AudienceEntryJSONException(
+				jsonValidatorException.getMessage(), jsonValidatorException);
+		}
+
 		if (Validator.isNull(name)) {
 			throw new AudienceEntryNameException();
 		}
 	}
+
+	private static final JSONValidator _criteriaJSONValidator =
+		new JSONValidator(
+			AudienceEntryLocalServiceImpl.class.getResource(
+				"dependencies/criteria-json-schema.json"));
 
 	@Reference
 	private CustomSQL _customSQL;

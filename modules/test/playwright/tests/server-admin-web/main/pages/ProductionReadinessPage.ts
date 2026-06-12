@@ -174,10 +174,6 @@ export class ProductionReadinessPage {
 	}
 
 	async unignoreRule(ruleKey: string) {
-
-		// Navigate from scratch so the cleanup works no matter which state an
-		// earlier failure left the page in
-
 		await this.goto();
 
 		await this.selectFilter('Ignored');

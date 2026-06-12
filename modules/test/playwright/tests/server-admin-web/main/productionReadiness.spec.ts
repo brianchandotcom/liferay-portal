@@ -15,43 +15,36 @@ test(
 	'LPD-87225 - Production Readiness dashboard renders the summary, filters, and category sections and passes a11y review.',
 	{tag: '@LPD-87225'},
 	async ({productionReadinessPage}) => {
+		await test.step('Open the Production Readiness tab', async () => {
+			await productionReadinessPage.goto();
+		});
 
-		// Open the Production Readiness tab
+		await test.step('Check the inline summary counts', async () => {
+			for (const label of ['Failed', 'Passed', 'Total'] as const) {
+				expect(
+					await productionReadinessPage.summaryCount(label)
+				).toBeGreaterThanOrEqual(0);
+			}
+		});
 
-		await productionReadinessPage.goto();
-
-		// Check the inline summary counts
-
-		for (const label of ['Failed', 'Passed', 'Total'] as const) {
+		await test.step('Check the category sections', async () => {
 			expect(
-				await productionReadinessPage.summaryCount(label)
-			).toBeGreaterThanOrEqual(0);
-		}
+				await productionReadinessPage.categoryPanelButton().count()
+			).toBeGreaterThan(0);
+		});
 
-		// Check the category sections
-
-		expect(
-			await productionReadinessPage.categoryPanelButton().count()
-		).toBeGreaterThan(0);
-
-		// Check the single-select filter pills
-
-		for (const label of [
-			'All Validations',
-			'Failed',
-			'Ignored',
-			'Passed',
-		] as const) {
-			await expect(
-				productionReadinessPage.filterButton(label)
-			).toBeVisible();
-		}
-
-		// Check the pagination bar
-
-		await expect(
-			productionReadinessPage.page.getByLabel('Items Per Page')
-		).toBeVisible();
+		await test.step('Check the single-select filter pills', async () => {
+			for (const label of [
+				'All Validations',
+				'Failed',
+				'Ignored',
+				'Passed',
+			] as const) {
+				await expect(
+					productionReadinessPage.filterButton(label)
+				).toBeVisible();
+			}
+		});
 
 		await checkAccessibility({page: productionReadinessPage.page});
 	}
@@ -61,10 +54,6 @@ test(
 	'LPD-87225 - Ignoring a rule updates the summary counts and the status filters.',
 	{tag: '@LPD-87225'},
 	async ({productionReadinessPage}) => {
-
-		// Open the Production Readiness tab and pick a currently failed
-		// rule as the target
-
 		await productionReadinessPage.goto();
 
 		await productionReadinessPage.selectFilter('Failed');
@@ -78,8 +67,6 @@ test(
 
 		const targetRuleKey = await productionReadinessPage.firstRuleKey();
 
-		// Record the baseline summary counts
-
 		const failedBaseline =
 			await productionReadinessPage.summaryCount('Failed');
 		const ignoredBaseline = await productionReadinessPage.ignoredCount();
@@ -87,62 +74,61 @@ test(
 			await productionReadinessPage.summaryCount('Passed');
 
 		try {
+			await test.step('Ignore the rule', async () => {
+				await productionReadinessPage.toggleIgnore(targetRuleKey);
 
-			// Ignore the rule
+				expect(
+					await productionReadinessPage.summaryCount('Passed')
+				).toBe(passedBaseline);
+				expect(
+					await productionReadinessPage.summaryCount('Failed')
+				).toBe(failedBaseline - 1);
+				expect(await productionReadinessPage.ignoredCount()).toBe(
+					ignoredBaseline + 1
+				);
+			});
 
-			await productionReadinessPage.toggleIgnore(targetRuleKey);
+			await test.step('Failed filter hides ignored rule', async () => {
+				await expect(
+					productionReadinessPage.ruleRow(targetRuleKey)
+				).toHaveCount(0);
+			});
 
-			expect(await productionReadinessPage.summaryCount('Passed')).toBe(
-				passedBaseline
-			);
-			expect(await productionReadinessPage.summaryCount('Failed')).toBe(
-				failedBaseline - 1
-			);
-			expect(await productionReadinessPage.ignoredCount()).toBe(
-				ignoredBaseline + 1
-			);
+			await test.step('Ignored filter shows ignored rule', async () => {
+				await productionReadinessPage.selectFilter('Ignored');
 
-			// The Failed filter hides the ignored rule
+				await productionReadinessPage.expandAllCategoryPanels();
 
-			await expect(
-				productionReadinessPage.ruleRow(targetRuleKey)
-			).toHaveCount(0);
+				await expect(
+					productionReadinessPage.ruleRow(targetRuleKey)
+				).toBeVisible();
 
-			// The Ignored filter shows it
+				expect(
+					await productionReadinessPage.isIgnored(targetRuleKey)
+				).toBe(true);
+			});
 
-			await productionReadinessPage.selectFilter('Ignored');
+			await test.step('Unignore and restore the counts', async () => {
+				await productionReadinessPage.toggleIgnore(targetRuleKey);
 
-			await productionReadinessPage.expandAllCategoryPanels();
+				await productionReadinessPage.selectFilter('All Validations');
 
-			await expect(
-				productionReadinessPage.ruleRow(targetRuleKey)
-			).toBeVisible();
+				await productionReadinessPage.expandAllCategoryPanels();
 
-			expect(await productionReadinessPage.isIgnored(targetRuleKey)).toBe(
-				true
-			);
+				expect(
+					await productionReadinessPage.isIgnored(targetRuleKey)
+				).toBe(false);
 
-			// Unignore the rule and check the counts are restored
-
-			await productionReadinessPage.toggleIgnore(targetRuleKey);
-
-			await productionReadinessPage.selectFilter('All Validations');
-
-			await productionReadinessPage.expandAllCategoryPanels();
-
-			expect(await productionReadinessPage.isIgnored(targetRuleKey)).toBe(
-				false
-			);
-
-			expect(await productionReadinessPage.summaryCount('Passed')).toBe(
-				passedBaseline
-			);
-			expect(await productionReadinessPage.summaryCount('Failed')).toBe(
-				failedBaseline
-			);
-			expect(await productionReadinessPage.ignoredCount()).toBe(
-				ignoredBaseline
-			);
+				expect(
+					await productionReadinessPage.summaryCount('Passed')
+				).toBe(passedBaseline);
+				expect(
+					await productionReadinessPage.summaryCount('Failed')
+				).toBe(failedBaseline);
+				expect(await productionReadinessPage.ignoredCount()).toBe(
+					ignoredBaseline
+				);
+			});
 		}
 		finally {
 

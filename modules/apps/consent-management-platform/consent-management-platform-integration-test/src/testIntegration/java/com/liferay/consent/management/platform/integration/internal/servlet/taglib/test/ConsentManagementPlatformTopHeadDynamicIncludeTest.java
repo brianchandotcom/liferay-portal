@@ -53,7 +53,7 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companyId", TestPropsValues.getCompanyId()
 			).put(
-				"consentMappingScript", _CONSENT_MAPPING_SCRIPT
+				"consentMappingScript", _SCRIPT_CONSENT_MAPPING
 			).put(
 				"enabled", true
 			).put(
@@ -69,20 +69,23 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 			_createMockHttpServletRequest(null), mockHttpServletResponse,
 			StringPool.BLANK);
 
-		String body = mockHttpServletResponse.getContentAsString();
+		String content = mockHttpServletResponse.getContentAsString();
 
-		int scriptTagIndex = body.indexOf(_SCRIPT_TAG);
-		int consentMappingScriptIndex = body.indexOf(_CONSENT_MAPPING_SCRIPT);
+		int scriptTagIndex = content.indexOf(_SCRIPT_TAG);
 
 		Assert.assertTrue(scriptTagIndex >= 0);
+
+		int consentMappingScriptIndex = content.indexOf(
+			_SCRIPT_CONSENT_MAPPING);
+
 		Assert.assertTrue(consentMappingScriptIndex >= 0);
 		Assert.assertTrue(scriptTagIndex < consentMappingScriptIndex);
 
-		Assert.assertEquals(0, StringUtil.count(body, "nonce=\""));
-
-		String nonce = RandomTestUtil.randomString();
+		Assert.assertEquals(0, StringUtil.count(content, "nonce=\""));
 
 		mockHttpServletResponse = new MockHttpServletResponse();
+
+		String nonce = RandomTestUtil.randomString();
 
 		_dynamicInclude.include(
 			_createMockHttpServletRequest(nonce), mockHttpServletResponse,
@@ -118,7 +121,7 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 		return mockHttpServletRequest;
 	}
 
-	private static final String _CONSENT_MAPPING_SCRIPT =
+	private static final String _SCRIPT_CONSENT_MAPPING =
 		"<SCRIPT id=\"liferay-cmp-consent-mapping\">/* mapping */</SCRIPT>";
 
 	private static final String _SCRIPT_TAG =

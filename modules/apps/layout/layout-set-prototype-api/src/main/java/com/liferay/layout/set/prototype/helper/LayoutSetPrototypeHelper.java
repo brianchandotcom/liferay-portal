@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -35,6 +36,9 @@ public interface LayoutSetPrototypeHelper {
 	public List<Long> getDuplicatedFriendlyURLPlids(
 			LayoutSetPrototype layoutSetPrototype)
 		throws PortalException;
+
+	public Map<String, String[]> getLayoutSetPrototypeParameters(
+		boolean importData);
 
 	public boolean hasDuplicatedFriendlyURLs(
 			String layoutUuid, long groupId, boolean privateLayout,

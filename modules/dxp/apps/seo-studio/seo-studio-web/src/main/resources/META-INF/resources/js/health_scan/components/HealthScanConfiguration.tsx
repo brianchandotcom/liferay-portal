@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {openToast} from 'frontend-js-components-web';
+import {openConfirmModal, openToast} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
 import {buildInitialConfig} from '../constants';
@@ -71,8 +71,29 @@ export default function HealthScanConfiguration({
 		setConfig((current) => ({...current, schedule: nextSchedule}));
 	}
 
-	function handleCancel() {
-		setConfig(savedConfig);
+	async function save() {
+		const response = await Liferay.Util.fetch(
+			`/o/seo-studio/domains/${domainId}`,
+			{
+				body: JSON.stringify({
+					autoScanEnabled: config.schedule.autoScanEnabled,
+					scanConfig: JSON.stringify({engines: config.engines}),
+					scanDayOfMonth: config.schedule.scanDayOfMonth,
+					scanDayOfWeek: config.schedule.scanDayOfWeek,
+					scanFrequency: config.schedule.scanFrequency,
+					scanTime: config.schedule.scanTime || '00:00',
+					scanTimeZone: config.schedule.scanTimeZone,
+				}),
+				headers: {'Content-Type': 'application/json'},
+				method: 'PATCH',
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error();
+		}
+
+		setSavedConfig(config);
 	}
 
 	async function handleSave() {
@@ -83,41 +104,14 @@ export default function HealthScanConfiguration({
 		setSaving(true);
 
 		try {
-			const response = await Liferay.Util.fetch(
-				`/o/seo-studio/domains/${domainId}`,
-				{
-					body: JSON.stringify({
-						autoScanEnabled: config.schedule.autoScanEnabled,
-						scanConfig: JSON.stringify({engines: config.engines}),
-						scanDayOfMonth: config.schedule.scanDayOfMonth,
-						scanDayOfWeek: config.schedule.scanDayOfWeek,
-						scanFrequency: config.schedule.scanFrequency,
-						scanTime: config.schedule.scanTime || '00:00',
-						scanTimeZone: config.schedule.scanTimeZone,
-					}),
-					headers: {'Content-Type': 'application/json'},
-					method: 'PATCH',
-				}
-			);
+			await save();
 
-			if (response.ok) {
-				setSavedConfig(config);
-
-				openToast({
-					message: Liferay.Language.get(
-						'your-request-completed-successfully'
-					),
-					type: 'success',
-				});
-			}
-			else {
-				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
-					type: 'danger',
-				});
-			}
+			openToast({
+				message: Liferay.Language.get(
+					'your-request-completed-successfully'
+				),
+				type: 'success',
+			});
 		}
 		catch {
 			openToast({
@@ -127,6 +121,57 @@ export default function HealthScanConfiguration({
 		}
 
 		setSaving(false);
+	}
+
+	function handleSaveAndScanNow() {
+		if (!domainId) {
+			return;
+		}
+
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'do-you-want-to-run-a-scan-now-with-these-configurations'
+			),
+			onConfirm: async (isConfirmed) => {
+				if (!isConfirmed) {
+					return;
+				}
+
+				setSaving(true);
+
+				try {
+					await save();
+
+					const response = await Liferay.Util.fetch(
+						`/o/seo-studio/domains/${domainId}/object-actions/createScans`,
+						{method: 'PUT'}
+					);
+
+					if (!response.ok) {
+						throw new Error();
+					}
+
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						type: 'success',
+					});
+				}
+				catch {
+					openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						type: 'danger',
+					});
+				}
+
+				setSaving(false);
+			},
+			status: 'info',
+			title: Liferay.Language.get('scan-confirmation'),
+		});
 	}
 
 	return (
@@ -150,23 +195,21 @@ export default function HealthScanConfiguration({
 				/>
 
 				<div className="sheet-footer">
-					<ClayButton.Group spaced>
-						<ClayButton
-							disabled={!valid || !domainId || saving}
-							displayType="primary"
-							onClick={handleSave}
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
+					<ClayButton
+						disabled={!valid || !domainId || saving}
+						displayType="primary"
+						onClick={handleSave}
+					>
+						{Liferay.Language.get('save')}
+					</ClayButton>
 
-						<ClayButton
-							disabled={saving}
-							displayType="secondary"
-							onClick={handleCancel}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-					</ClayButton.Group>
+					<ClayButton
+						disabled={!valid || !domainId || saving}
+						displayType="secondary"
+						onClick={handleSaveAndScanNow}
+					>
+						{Liferay.Language.get('save-and-scan-now')}
+					</ClayButton>
 				</div>
 			</div>
 		</div>

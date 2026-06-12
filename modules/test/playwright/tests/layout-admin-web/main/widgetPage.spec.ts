@@ -228,6 +228,101 @@ test.describe('Content tab add panel', () => {
 			page.locator('.portlet-journal-content').getByText(webContentTitle)
 		).toBeVisible();
 	});
+
+	test(
+		'Content item stacks the subtitle below the title and centers the add button on the right',
+		{
+			tag: '@LPD-94654',
+		},
+		async ({apiHelpers, page, site, widgetPagePage}) => {
+
+			// Add required web content
+
+			const webContentTitle = getRandomString();
+
+			const contentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			await addApprovedStructuredContent({
+				apiHelpers,
+				contentStructureId,
+				siteId: site.id,
+				title: webContentTitle,
+			});
+
+			// Create page, go to view mode and open the Content panel
+
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			await widgetPagePage.openAddPanel();
+
+			await widgetPagePage.contentTab.click();
+
+			// Wait for the content item to render
+
+			const item = page
+				.locator('.sidebar-body__add-panel__tab-item')
+				.filter({hasText: webContentTitle})
+				.first();
+
+			await expect(item).toBeVisible();
+
+			// Measure the content item layout, retrying until it settles
+
+			await expect(async () => {
+				await item.hover({timeout: 2000});
+
+				const itemBox = await item.boundingBox({timeout: 2000});
+				const titleBox = await item
+					.locator('.title')
+					.boundingBox({timeout: 2000});
+				const subtitleBox = await item
+					.locator('.subtitle')
+					.boundingBox({timeout: 2000});
+				const addButtonBox = await item
+					.getByRole('button', {name: 'Add Content'})
+					.boundingBox({timeout: 2000});
+
+				if (!itemBox || !titleBox || !subtitleBox || !addButtonBox) {
+					throw new Error(
+						'Expected the content item layout to be measurable'
+					);
+				}
+
+				// The subtitle sits below the title and is left-aligned with it
+
+				expect(subtitleBox.y).toBeGreaterThanOrEqual(
+					titleBox.y + titleBox.height - 2
+				);
+				expect(
+					Math.abs(subtitleBox.x - titleBox.x)
+				).toBeLessThanOrEqual(2);
+
+				// The add button is vertically centered within the row
+
+				expect(
+					Math.abs(
+						addButtonBox.y +
+							addButtonBox.height / 2 -
+							(itemBox.y + itemBox.height / 2)
+					)
+				).toBeLessThanOrEqual(3);
+
+				// The add button is anchored to the right edge of the row
+
+				expect(
+					itemBox.x +
+						itemBox.width -
+						(addButtonBox.x + addButtonBox.width)
+				).toBeLessThanOrEqual(12);
+			}).toPass({timeout: 10000});
+		}
+	);
 });
 
 test.describe('Customization settings', () => {

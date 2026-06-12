@@ -19,8 +19,6 @@ import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -126,12 +124,12 @@ public class LayoutContentVersionLocalServiceTest {
 			layoutContentVersion1.getLayoutContentVersionId(),
 			layoutContentVersion2.getLayoutContentVersionId());
 
-		String otherData = RandomTestUtil.randomString();
+		data = RandomTestUtil.randomString();
 
 		LayoutContentVersion layoutContentVersion3 =
 			_layoutContentVersionLocalService.addOrUpdateLayoutContentVersion(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				otherData, RandomTestUtil.randomLocaleStringMap(),
+				data, RandomTestUtil.randomLocaleStringMap(),
 				_draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertNotEquals(
@@ -241,9 +239,8 @@ public class LayoutContentVersionLocalServiceTest {
 		catch (LayoutContentVersionExternalReferenceCodeException
 					layoutContentVersionExternalReferenceCodeException) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(layoutContentVersionExternalReferenceCodeException);
-			}
+			Assert.assertNotNull(
+				layoutContentVersionExternalReferenceCodeException);
 		}
 	}
 
@@ -329,9 +326,8 @@ public class LayoutContentVersionLocalServiceTest {
 		catch (UnsupportedLayoutLayoutContentVersionException
 					unsupportedLayoutLayoutContentVersionException) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(unsupportedLayoutLayoutContentVersionException);
-			}
+			Assert.assertNotNull(
+				unsupportedLayoutLayoutContentVersionException);
 		}
 	}
 
@@ -355,9 +351,7 @@ public class LayoutContentVersionLocalServiceTest {
 		catch (LayoutContentVersionNameException
 					layoutContentVersionNameException) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(layoutContentVersionNameException);
-			}
+			Assert.assertNotNull(layoutContentVersionNameException);
 		}
 	}
 
@@ -380,14 +374,9 @@ public class LayoutContentVersionLocalServiceTest {
 		catch (LayoutContentVersionNameException
 					layoutContentVersionNameException) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(layoutContentVersionNameException);
-			}
+			Assert.assertNotNull(layoutContentVersionNameException);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutContentVersionLocalServiceTest.class);
 
 	private Layout _draftLayout;
 

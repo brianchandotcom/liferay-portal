@@ -7,9 +7,12 @@ package com.liferay.source.formatter.processor;
 
 import com.liferay.source.formatter.SourceFormatterArgs;
 
+import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -43,6 +46,29 @@ public class JakartaTransformSourceProcessorTest
 			"/jakarta-transform-dependencies-does-not-exist.txt";
 
 		test("jakartatransform/JakartaTransform.testgradle");
+
+		_jakartaTransformDependenciesFilePath =
+			"src/test/resources/com/liferay/source/formatter/dependencies" +
+				"/jakartatransform/jakarta-transform-dependencies-invalid.txt";
+
+		try {
+			test("jakartatransform/JakartaTransform.testgradle");
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Throwable throwable = exception;
+
+			while (throwable.getCause() != null) {
+				throwable = throwable.getCause();
+			}
+
+			Assert.assertTrue(throwable instanceof IOException);
+
+			String message = throwable.getMessage();
+
+			Assert.assertTrue(message.contains("Invalid line"));
+		}
 	}
 
 	@Test

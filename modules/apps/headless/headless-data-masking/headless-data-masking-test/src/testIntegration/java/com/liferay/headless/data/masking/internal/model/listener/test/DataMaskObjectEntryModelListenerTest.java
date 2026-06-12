@@ -209,7 +209,7 @@ public class DataMaskObjectEntryModelListenerTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
-			Assert.fail("Creating a system data mask should have thrown");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertThat(
@@ -229,7 +229,7 @@ public class DataMaskObjectEntryModelListenerTest {
 			_objectEntryLocalService.deleteObjectEntry(
 				emailMaskObjectEntry.getObjectEntryId());
 
-			Assert.fail("Deleting a system data mask should have thrown");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertThat(
@@ -260,7 +260,7 @@ public class DataMaskObjectEntryModelListenerTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
-			Assert.fail("Updating a system data mask should have thrown");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertThat(
@@ -302,8 +302,7 @@ public class DataMaskObjectEntryModelListenerTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
-			Assert.fail(
-				"A foreign batch import should not update a system data mask");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertThat(

@@ -278,8 +278,8 @@ public class Node implements Serializable {
 
 		AI_DECISION("AI_DECISION"), CONDITION("CONDITION"), FORK("FORK"),
 		HTTP_CALL("HTTP_CALL"), INITIAL_STATE("INITIAL_STATE"), JOIN("JOIN"),
-		JOIN_XOR("JOIN_XOR"), LLM("LLM"), SERVICE("SERVICE"), STATE("STATE"),
-		TASK("TASK"), TERMINAL_STATE("TERMINAL_STATE");
+		JOIN_XOR("JOIN_XOR"), LLM("LLM"), STATE("STATE"), TASK("TASK"),
+		TERMINAL_STATE("TERMINAL_STATE");
 
 		@JsonCreator
 		public static Type create(String value) {
@@ -403,4 +403,4 @@ public class Node implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1220602400
+// LIFERAY-REST-BUILDER-HASH:1829141107

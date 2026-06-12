@@ -111,7 +111,7 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 			}
 
 			String requestBody = VariablesUtil.applyInputVariables(
-				executionContext, "requestBody", kaleoNodeSettingValues);
+				executionContext, "requestBody", kaleoNodeSettingValues, true);
 
 			if (Validator.isNotNull(requestBody)) {
 				options.addHeader(

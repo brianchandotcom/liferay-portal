@@ -203,6 +203,21 @@ describe('request', () => {
 		});
 	});
 
+	it('should reject with a generic error on a 500 with a non-JSON body', () => {
+		fetch.mockReturnValue(
+			Promise.resolve(
+				new Response('<html><body>500</body></html>', {
+					status: 500,
+				})
+			)
+		);
+
+		return request({}).catch((error) => {
+			expect(error instanceof SyntaxError).toBe(false);
+			expect(error.message).toBe('Request Error');
+		});
+	});
+
 	it('should call reloadPage on an xhr status equal to 401', () => {
 		fetch.mockReturnValue(
 			Promise.resolve(

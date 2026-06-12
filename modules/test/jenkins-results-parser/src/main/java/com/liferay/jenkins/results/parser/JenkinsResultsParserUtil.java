@@ -2670,6 +2670,16 @@ public class JenkinsResultsParserUtil {
 		return (Properties)_jenkinsProperties;
 	}
 
+	public static File getJenkinsRepositoryDir() {
+		String cacheDirPath = Environment.get("CACHE_DIR");
+
+		if (cacheDirPath == null) {
+			cacheDirPath = "/opt/dev/projects/github";
+		}
+
+		return new File(cacheDirPath, JENKINS_REPOSITORY_NAME);
+	}
+
 	public static String getJenkinsTempMapURL() {
 		try {
 			String jenkinsOSBJenkinsWebURL = getBuildProperty(
@@ -6698,17 +6708,13 @@ public class JenkinsResultsParserUtil {
 			return _cacheURL;
 		}
 
-		String cacheDirPath = Environment.get("CACHE_DIR");
+		File cacheRepositoryDir = getJenkinsRepositoryDir();
 
-		if (cacheDirPath == null) {
-			cacheDirPath = "/opt/dev/projects/github";
-		}
-
-		File cacheDir = new File(cacheDirPath);
-
-		File cacheRepositoryDir = new File(cacheDir, JENKINS_REPOSITORY_NAME);
+		File cacheDir = cacheRepositoryDir.getParentFile();
 
 		if (cacheDir.exists() && cacheRepositoryDir.exists()) {
+			String cacheDirPath = cacheDir.getPath();
+
 			System.out.println("Using " + cacheDirPath + " for cached files");
 
 			_cacheURL = "file://" + cacheDirPath;

@@ -1116,7 +1116,7 @@ test.describe('Categorization Panel', () => {
 	);
 
 	test(
-		'Prevent publish, open Categorization panel and preserve tags when a required vocabulary has no selected category',
+		'Prevent publish and preserve tags when a required vocabulary has no selected category, then publish once a category is selected',
 		{tag: '@LPD-89784'},
 		async ({
 			apiHelpers,
@@ -1184,6 +1184,29 @@ test.describe('Categorization Panel', () => {
 				await expect(
 					page.getByPlaceholder('New Basic Web Content')
 				).toHaveValue(title);
+
+				// Select the required category and publish again
+
+				await selectCategory({categoryName, page});
+
+				await expect(
+					page.locator('.label-item', {hasText: categoryName})
+				).toBeAttached();
+
+				await expect(
+					page.locator('.form-group.has-error')
+				).toBeHidden();
+
+				await contentsPage.publishButton.click();
+
+				await expect(
+					page.locator('.table-list-title a', {hasText: title})
+				).toBeVisible();
+
+				// Delete content
+
+				await contentsPage.goto();
+				await contentsPage.deleteContent(title);
 			}
 			finally {
 
@@ -1199,77 +1222,6 @@ test.describe('Categorization Panel', () => {
 				await vocabulariesPage.goto();
 				await vocabulariesPage.deleteVocabulary(vocabularyName);
 			}
-		}
-	);
-
-	test(
-		'Publish proceeds and the categories error clears once a required vocabulary has a selected category',
-		{tag: '@LPD-89784'},
-		async ({apiHelpers, contentsPage, page}) => {
-			const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
-
-			const categoryName = getRandomString();
-
-			await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
-				{
-					name: categoryName,
-					vocabularyId: (
-						await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary(
-							{
-								assetLibraries: [{id: -1}],
-								assetTypes: [
-									{
-										required: true,
-										subtype: 'AllAssetSubtypes',
-										type: 'AllAssetTypes',
-									},
-								],
-								name: getRandomString(),
-								siteId: site.id,
-								visibilityType: 'PUBLIC',
-							}
-						)
-					).id,
-				}
-			);
-
-			await contentsPage.goto();
-			await contentsPage.createContent('Basic Web Content');
-
-			const title = getRandomString();
-
-			await page.getByPlaceholder('New Basic Web Content').fill(title);
-
-			await contentsPage.openSidePanel('Categorization');
-
-			await contentsPage.publishButton.click();
-
-			const categoriesInput = page
-				.locator('.form-group.has-error')
-				.getByPlaceholder('Add category');
-
-			await expect(categoriesInput).toBeFocused();
-
-			await categoriesInput.fill(categoryName);
-
-			const categoryOption = page.getByRole('option', {
-				name: categoryName,
-			});
-
-			await categoryOption.waitFor();
-			await categoryOption.click();
-
-			await expect(
-				page.locator('.label-item', {hasText: categoryName})
-			).toBeAttached();
-
-			await expect(page.locator('.form-group.has-error')).toBeHidden();
-
-			await contentsPage.publishButton.click();
-
-			await expect(
-				page.locator('.table-list-title a', {hasText: title})
-			).toBeVisible();
 		}
 	);
 });

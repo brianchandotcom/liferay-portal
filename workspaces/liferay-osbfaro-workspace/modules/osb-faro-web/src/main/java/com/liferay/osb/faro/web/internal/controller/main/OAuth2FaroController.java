@@ -166,8 +166,8 @@ public class OAuth2FaroController extends BaseFaroController {
 				"Unable to revoke OAuth2 authorization with token " + token);
 		}
 
-		_oAuth2AuthorizationService.revokeOAuth2Authorization(
-			oAuth2Authorization.getOAuth2AuthorizationId());
+		_oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
+			oAuth2Authorization);
 	}
 
 	private boolean _filterOAuth2Authorization(
@@ -234,7 +234,7 @@ public class OAuth2FaroController extends BaseFaroController {
 		throws Exception {
 
 		return TransformUtil.transform(
-			_oAuth2AuthorizationService.getApplicationOAuth2Authorizations(
+			_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
 				oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null),
 			oAuth2Authorization -> {

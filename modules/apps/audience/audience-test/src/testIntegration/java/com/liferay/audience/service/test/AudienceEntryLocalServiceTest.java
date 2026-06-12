@@ -6,6 +6,7 @@
 package com.liferay.audience.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.audience.exception.AudienceEntryJSONException;
 import com.liferay.audience.exception.AudienceEntryNameException;
 import com.liferay.audience.model.AudienceEntry;
 import com.liferay.audience.service.AudienceEntryLocalService;
@@ -51,13 +52,22 @@ public class AudienceEntryLocalServiceTest {
 	public void testAddAudienceEntry() throws Exception {
 		String name = RandomTestUtil.randomString();
 
-		AudienceEntry audienceEntry = _addAudienceEntry(name);
+		AudienceEntry audienceEntry = _addAudienceEntry(
+			"{\"conjunction\": \"AND\", \"rules\": [{\"attribute\": \"url\", " +
+				"\"operator\": \"eq\", \"value\": \"/pricing\"}]}",
+			name);
 
+		Assert.assertNotNull(audienceEntry.getJSON());
 		Assert.assertEquals(name, audienceEntry.getName());
 
 		AssertUtils.assertFailure(
 			AudienceEntryNameException.class, null,
 			() -> _addAudienceEntry(StringPool.BLANK));
+		AssertUtils.assertFailure(
+			AudienceEntryJSONException.class, null,
+			() -> _addAudienceEntry(
+				"{\"conjunction\": \"INVALID\", \"rules\": []}",
+				RandomTestUtil.randomString()));
 	}
 
 	@Test
@@ -94,12 +104,23 @@ public class AudienceEntryLocalServiceTest {
 			() -> _audienceEntryLocalService.updateAudienceEntry(
 				updatedAudienceEntry.getAudienceEntryId(),
 				updatedAudienceEntry.getJSON(), StringPool.BLANK));
+		AssertUtils.assertFailure(
+			AudienceEntryJSONException.class, null,
+			() -> _audienceEntryLocalService.updateAudienceEntry(
+				updatedAudienceEntry.getAudienceEntryId(), StringPool.BLANK,
+				updatedAudienceEntry.getName()));
 	}
 
 	private AudienceEntry _addAudienceEntry(String name) throws Exception {
+		return _addAudienceEntry(StringPool.BLANK, name);
+	}
+
+	private AudienceEntry _addAudienceEntry(String json, String name)
+		throws Exception {
+
 		AudienceEntry audienceEntry =
 			_audienceEntryLocalService.addAudienceEntry(
-				null, RandomTestUtil.randomString(), name, _serviceContext);
+				null, json, name, _serviceContext);
 
 		_audienceEntries.add(audienceEntry);
 

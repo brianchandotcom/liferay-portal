@@ -13,7 +13,8 @@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set"
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.audience.exception.AudienceEntryNameException" %><%@
+<%@ page import="com.liferay.audience.exception.AudienceEntryJSONException" %><%@
+page import="com.liferay.audience.exception.AudienceEntryNameException" %><%@
 page import="com.liferay.audience.exception.NoSuchAudienceEntryException" %><%@
 page import="com.liferay.audience.web.internal.constants.AudienceFDSNames" %><%@
 page import="com.liferay.audience.web.internal.display.context.AudienceDisplayContext" %><%@

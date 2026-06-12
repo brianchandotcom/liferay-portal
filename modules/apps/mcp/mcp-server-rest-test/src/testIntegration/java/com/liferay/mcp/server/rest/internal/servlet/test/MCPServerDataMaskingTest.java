@@ -7,24 +7,21 @@ package com.liferay.mcp.server.rest.internal.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.mcp.server.rest.test.util.MCPServerDataMaskTestUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -71,7 +68,7 @@ public class MCPServerDataMaskingTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_updateMCPServerConfiguration(true);
+		MCPServerDataMaskTestUtil.updateMCPServerConfiguration(true);
 
 		String prefix = ".com.liferay.mcp.server.rest.internal.batch.";
 
@@ -86,7 +83,7 @@ public class MCPServerDataMaskingTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_updateMCPServerConfiguration(false);
+		MCPServerDataMaskTestUtil.updateMCPServerConfiguration(false);
 	}
 
 	@FeatureFlags(
@@ -96,16 +93,18 @@ public class MCPServerDataMaskingTest {
 	public void testCustomMaskCanBeDeletedWhileAttachedToProfile()
 		throws Exception {
 
-		ObjectEntry profileObjectEntry = _addProfile(
+		ObjectEntry profileObjectEntry = MCPServerDataMaskTestUtil.addProfile(
 			RandomTestUtil.randomString(), "no PII here",
 			"mcp-server-profiles getMCPServerProfilesPage");
 
-		ObjectEntry customMaskObjectEntry = _addCustomMask(
-			RandomTestUtil.randomString(), "\\d{4}", "[REDACTED]");
+		ObjectEntry customMaskObjectEntry =
+			MCPServerDataMaskTestUtil.addCustomMask(
+				RandomTestUtil.randomString(), "\\d{4}", "[REDACTED]");
 
-		ObjectEntry profileDataMaskObjectEntry = _addProfileDataMask(
-			profileObjectEntry.getObjectEntryId(),
-			customMaskObjectEntry.getObjectEntryId(), 1);
+		ObjectEntry profileDataMaskObjectEntry =
+			MCPServerDataMaskTestUtil.addProfileDataMask(
+				profileObjectEntry.getObjectEntryId(),
+				customMaskObjectEntry.getObjectEntryId(), 1);
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -140,7 +139,7 @@ public class MCPServerDataMaskingTest {
 
 		String profileName = RandomTestUtil.randomString();
 
-		ObjectEntry profileObjectEntry = _addProfile(
+		ObjectEntry profileObjectEntry = MCPServerDataMaskTestUtil.addProfile(
 			profileName, "Contact: " + _SAMPLE_EMAIL,
 			"mcp-server-profiles getMCPServerProfilesPage");
 
@@ -150,7 +149,7 @@ public class MCPServerDataMaskingTest {
 			profileObjectEntry.getObjectEntryId(),
 			emailMaskObjectEntry.getObjectEntryId());
 
-		_removeProfileDataMask(
+		MCPServerDataMaskTestUtil.removeProfileDataMask(
 			emailProfileDataMaskObjectEntry, "Removed by test.");
 
 		String responseText = _callListProfilesTool(profileName);
@@ -169,13 +168,13 @@ public class MCPServerDataMaskingTest {
 	public void testEmailIsRedactedInProfileResponse() throws Exception {
 		String profileName = RandomTestUtil.randomString();
 
-		ObjectEntry profileObjectEntry = _addProfile(
+		ObjectEntry profileObjectEntry = MCPServerDataMaskTestUtil.addProfile(
 			profileName, "Contact: " + _SAMPLE_EMAIL,
 			"mcp-server-profiles getMCPServerProfilesPage");
 
 		ObjectEntry emailMaskObjectEntry = _findSystemMask("Email Address");
 
-		_addProfileDataMask(
+		MCPServerDataMaskTestUtil.addProfileDataMask(
 			profileObjectEntry.getObjectEntryId(),
 			emailMaskObjectEntry.getObjectEntryId(), 1);
 
@@ -195,13 +194,13 @@ public class MCPServerDataMaskingTest {
 	public void testErrorResponseIsRedacted() throws Exception {
 		String profileName = RandomTestUtil.randomString();
 
-		ObjectEntry profileObjectEntry = _addProfile(
+		ObjectEntry profileObjectEntry = MCPServerDataMaskTestUtil.addProfile(
 			profileName, RandomTestUtil.randomString(),
 			"mcp-server-profiles getMCPServerProfilesPage");
 
 		ObjectEntry emailMaskObjectEntry = _findSystemMask("Email Address");
 
-		_addProfileDataMask(
+		MCPServerDataMaskTestUtil.addProfileDataMask(
 			profileObjectEntry.getObjectEntryId(),
 			emailMaskObjectEntry.getObjectEntryId(), 1);
 
@@ -234,7 +233,7 @@ public class MCPServerDataMaskingTest {
 	public void testIPv4IsRedactedOnceInProfileResponse() throws Exception {
 		String profileName = RandomTestUtil.randomString();
 
-		_addProfile(
+		MCPServerDataMaskTestUtil.addProfile(
 			profileName, "Server at 192.168.1.42",
 			"mcp-server-profiles getMCPServerProfilesPage");
 
@@ -257,15 +256,16 @@ public class MCPServerDataMaskingTest {
 	public void testProfileDataMaskCannotBeRemovedWithoutDeleteReason()
 		throws Exception {
 
-		ObjectEntry profileObjectEntry = _addProfile(
+		ObjectEntry profileObjectEntry = MCPServerDataMaskTestUtil.addProfile(
 			RandomTestUtil.randomString(), "no PII here",
 			"mcp-server-profiles getMCPServerProfilesPage");
 
 		ObjectEntry emailMaskObjectEntry = _findSystemMask("Email Address");
 
-		ObjectEntry profileDataMaskObjectEntry = _addProfileDataMask(
-			profileObjectEntry.getObjectEntryId(),
-			emailMaskObjectEntry.getObjectEntryId(), 1);
+		ObjectEntry profileDataMaskObjectEntry =
+			MCPServerDataMaskTestUtil.addProfileDataMask(
+				profileObjectEntry.getObjectEntryId(),
+				emailMaskObjectEntry.getObjectEntryId(), 1);
 
 		try {
 			_objectEntryLocalService.deleteObjectEntry(
@@ -285,7 +285,7 @@ public class MCPServerDataMaskingTest {
 			_objectEntryLocalService.fetchObjectEntry(
 				profileDataMaskObjectEntry.getObjectEntryId()));
 
-		_removeProfileDataMask(
+		MCPServerDataMaskTestUtil.removeProfileDataMask(
 			profileDataMaskObjectEntry, "Not required for this profile.");
 
 		Assert.assertNull(
@@ -302,7 +302,7 @@ public class MCPServerDataMaskingTest {
 
 		String profileName = RandomTestUtil.randomString();
 
-		ObjectEntry profileObjectEntry = _addProfile(
+		ObjectEntry profileObjectEntry = MCPServerDataMaskTestUtil.addProfile(
 			profileName, "Contact: " + _SAMPLE_EMAIL,
 			"mcp-server-profiles getMCPServerProfilesPage");
 
@@ -335,7 +335,7 @@ public class MCPServerDataMaskingTest {
 	public void testRestApiInvokeAppliesMasksWhenDataMasksHeaderSet()
 		throws Exception {
 
-		_addProfile(
+		MCPServerDataMaskTestUtil.addProfile(
 			RandomTestUtil.randomString(), "Contact: " + _SAMPLE_EMAIL,
 			"mcp-server-profiles getMCPServerProfilesPage");
 
@@ -356,7 +356,7 @@ public class MCPServerDataMaskingTest {
 	)
 	@Test
 	public void testRestApiInvokeRespectsSelectedMasksOnly() throws Exception {
-		_addProfile(
+		MCPServerDataMaskTestUtil.addProfile(
 			RandomTestUtil.randomString(),
 			StringBundler.concat(
 				"Contact: ", _SAMPLE_EMAIL, " ", _SAMPLE_PHONE),
@@ -383,7 +383,7 @@ public class MCPServerDataMaskingTest {
 	public void testRestApiInvokeSkipsRedactionWhenDataMasksHeaderIsUnknown()
 		throws Exception {
 
-		_addProfile(
+		MCPServerDataMaskTestUtil.addProfile(
 			RandomTestUtil.randomString(), "Contact: " + _SAMPLE_EMAIL,
 			"mcp-server-profiles getMCPServerProfilesPage");
 
@@ -406,7 +406,7 @@ public class MCPServerDataMaskingTest {
 	public void testRestApiInvokeSkipsRedactionWhenNoDataMasksHeader()
 		throws Exception {
 
-		_addProfile(
+		MCPServerDataMaskTestUtil.addProfile(
 			RandomTestUtil.randomString(), "Contact: " + _SAMPLE_EMAIL,
 			"mcp-server-profiles getMCPServerProfilesPage");
 
@@ -427,7 +427,7 @@ public class MCPServerDataMaskingTest {
 	public void testSystemMasksAreAutoAttachedOnProfileCreate()
 		throws Exception {
 
-		ObjectEntry profileObjectEntry = _addProfile(
+		ObjectEntry profileObjectEntry = MCPServerDataMaskTestUtil.addProfile(
 			RandomTestUtil.randomString(), "no PII here",
 			"mcp-server-profiles getMCPServerProfilesPage");
 
@@ -448,85 +448,6 @@ public class MCPServerDataMaskingTest {
 			_SYSTEM_MASK_COUNT,
 			_countProfileDataMasks(
 				defaultProfileObjectEntry.getObjectEntryId()));
-	}
-
-	private ObjectEntry _addCustomMask(
-			String name, String detectionRegex, String replacementValue)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DATA_MASK", TestPropsValues.getCompanyId());
-
-		return _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"detectionRegex", detectionRegex
-			).put(
-				"maskType", "custom"
-			).put(
-				"name", name
-			).put(
-				"replacementValue", replacementValue
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private ObjectEntry _addProfile(
-			String name, String description, String... tools)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_MCP_SERVER_PROFILE", TestPropsValues.getCompanyId());
-
-		return _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"description", description
-			).put(
-				"name", name
-			).put(
-				"tools", String.join("\n", tools)
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private ObjectEntry _addProfileDataMask(
-			long profileObjectEntryId, long maskObjectEntryId,
-			int executionOrder)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_MCP_SERVER_PROFILE_DATA_MASK",
-					TestPropsValues.getCompanyId());
-
-		return _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"dataMaskExternalReferenceCode",
-				_objectEntryLocalService.fetchObjectEntry(
-					maskObjectEntryId
-				).getExternalReferenceCode()
-			).put(
-				"executionOrder", executionOrder
-			).put(
-				"mcpServerProfileId", profileObjectEntryId
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private String _callListProfilesTool(String profileName) throws Exception {
@@ -742,36 +663,6 @@ public class MCPServerDataMaskingTest {
 		options.setMethod(Http.Method.POST);
 
 		return _http.URLtoString(options);
-	}
-
-	private void _removeProfileDataMask(
-			ObjectEntry objectEntry, String deleteReason)
-		throws Exception {
-
-		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(), 0,
-			HashMapBuilder.<String, Serializable>putAll(
-				objectEntry.getValues()
-			).put(
-				"deleteReason", deleteReason
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_objectEntryLocalService.deleteObjectEntry(
-			objectEntry.getObjectEntryId());
-	}
-
-	private void _updateMCPServerConfiguration(boolean enabled)
-		throws Exception {
-
-		ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.mcp.server.rest.internal.configuration." +
-				"MCPServerConfiguration.scoped",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"enabled", enabled
-			).build());
 	}
 
 	private static final String _SAMPLE_EMAIL = "contact@example.com";

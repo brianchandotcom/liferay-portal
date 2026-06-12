@@ -7,23 +7,16 @@ package com.liferay.headless.data.masking.internal.masking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.model.ObjectDefinition;
+import com.liferay.headless.data.masking.test.util.DataMaskTestUtil;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.io.Serializable;
 
 import java.util.Arrays;
 
@@ -111,7 +104,7 @@ public class DataMaskingEngineTest {
 	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
 	@Test
 	public void testRedactionAppliesMasksInListOrder() throws Exception {
-		ObjectEntry domainMaskObjectEntry = _addCustomMask(
+		ObjectEntry domainMaskObjectEntry = DataMaskTestUtil.addCustomMask(
 			RandomTestUtil.randomString(), "example\\.com", "[DOMAIN]");
 
 		String redactedText = _dataMaskingService.redact(
@@ -127,7 +120,7 @@ public class DataMaskingEngineTest {
 	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
 	@Test
 	public void testRedactionContinuesWhenOneMaskThrows() throws Exception {
-		ObjectEntry badMaskObjectEntry = _addCustomMask(
+		ObjectEntry badMaskObjectEntry = DataMaskTestUtil.addCustomMask(
 			RandomTestUtil.randomString(), "Contact", "$5-no-such-group");
 
 		String redactedText = _dataMaskingService.redact(
@@ -232,32 +225,6 @@ public class DataMaskingEngineTest {
 			CoreMatchers.not(CoreMatchers.containsString("0958")));
 	}
 
-	private ObjectEntry _addCustomMask(
-			String name, String detectionRegex, String replacementValue)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DATA_MASK", TestPropsValues.getCompanyId());
-
-		return _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"detectionRegex", detectionRegex
-			).put(
-				"maskType", "custom"
-			).put(
-				"name", name
-			).put(
-				"replacementValue", replacementValue
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-	}
-
 	private static final String _SAMPLE_BSN = "123456789";
 
 	private static final String _SAMPLE_CREDIT_CARD = "4111-1111-1111-1111";
@@ -281,11 +248,5 @@ public class DataMaskingEngineTest {
 
 	@Inject
 	private DataMaskingService _dataMaskingService;
-
-	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

@@ -7,6 +7,7 @@ package com.liferay.headless.data.masking.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
+import com.liferay.headless.data.masking.test.util.DataMaskTestUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -52,7 +53,7 @@ public class DataMaskObjectEntryModelListenerTest {
 	)
 	@Test
 	public void testCustomMaskCanBeUpdatedAndDeleted() throws Exception {
-		ObjectEntry customMaskObjectEntry = _addCustomMask(
+		ObjectEntry customMaskObjectEntry = DataMaskTestUtil.addCustomMask(
 			RandomTestUtil.randomString(), "\\d{4}", "[REDACTED]");
 
 		ObjectEntry updatedObjectEntry =
@@ -323,32 +324,6 @@ public class DataMaskObjectEntryModelListenerTest {
 			).get(
 				"replacementValue"
 			));
-	}
-
-	private ObjectEntry _addCustomMask(
-			String name, String detectionRegex, String replacementValue)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DATA_MASK", TestPropsValues.getCompanyId());
-
-		return _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"detectionRegex", detectionRegex
-			).put(
-				"maskType", "custom"
-			).put(
-				"name", name
-			).put(
-				"replacementValue", replacementValue
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private ObjectEntry _findSystemMask(String name) throws Exception {

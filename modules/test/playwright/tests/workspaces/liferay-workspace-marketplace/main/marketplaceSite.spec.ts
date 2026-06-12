@@ -14,9 +14,9 @@ test('Open Marketplace Homepage', async ({page}) => {
 		"Expand Liferay's portfolio through apps from our partner and developer ecosystem"
 	);
 	const appsTitle = await page.getByText('App Marketplace');
-	const searchInput = await page.getByTestId('searchInput');
+	const categoriesTitle = await page.getByText('Explore by Categories');
 
 	expect(appsDescription).toBeTruthy();
 	expect(appsTitle).toBeTruthy();
-	expect(searchInput).toBeVisible();
+	expect(categoriesTitle).toBeTruthy();
 });

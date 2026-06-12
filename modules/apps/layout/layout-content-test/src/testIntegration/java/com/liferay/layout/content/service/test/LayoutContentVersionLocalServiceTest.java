@@ -176,9 +176,7 @@ public class LayoutContentVersionLocalServiceTest {
 		catch (RequiredLayoutContentVersionException
 					requiredLayoutContentVersionException) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(requiredLayoutContentVersionException);
-			}
+			Assert.assertNotNull(requiredLayoutContentVersionException);
 		}
 
 		Assert.assertNotNull(

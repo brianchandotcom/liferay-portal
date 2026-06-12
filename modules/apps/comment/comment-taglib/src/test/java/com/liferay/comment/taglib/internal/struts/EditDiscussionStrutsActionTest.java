@@ -152,10 +152,10 @@ public class EditDiscussionStrutsActionTest {
 		_editDiscussionStrutsAction.execute(
 			mockHttpServletRequest, mockHttpServletResponse);
 
+		Assert.assertEquals("{}", mockHttpServletResponse.getContentAsString());
 		Assert.assertEquals(
 			ContentTypes.APPLICATION_JSON,
 			mockHttpServletResponse.getContentType());
-		Assert.assertEquals("{}", mockHttpServletResponse.getContentAsString());
 
 		Mockito.verify(
 			_commentManager, Mockito.times(1)

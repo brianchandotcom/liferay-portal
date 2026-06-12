@@ -14,8 +14,6 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -53,7 +51,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
@@ -77,8 +74,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -94,8 +89,6 @@ import jakarta.portlet.PortletPreferences;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -357,150 +350,6 @@ public class LayoutSetPrototypePropagationTest
 			fragmentEntry.getTypeOptions(), fragmentEntry.getStatus());
 
 		propagateChanges(group);
-	}
-
-	@Test
-	public void testLayoutPropagationWithFriendlyURLConflict()
-		throws Exception {
-
-		LayoutSet layoutSet = group.getPublicLayoutSet();
-
-		List<Layout> initialMergeFailFriendlyURLLayouts =
-			layoutSet.getMergeFailFriendlyURLLayouts();
-
-		setLinkEnabled(true);
-
-		LayoutTestUtil.addTypePortletLayout(group.getGroupId(), "test", false);
-		LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), "test", true);
-
-		propagateChanges(group);
-
-		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layoutSet.getLayoutSetId());
-
-		List<Layout> mergeFailFriendlyURLLayouts =
-			layoutSet.getMergeFailFriendlyURLLayouts();
-
-		Assert.assertEquals(
-			mergeFailFriendlyURLLayouts.toString(),
-			initialMergeFailFriendlyURLLayouts.size() + 1,
-			mergeFailFriendlyURLLayouts.size());
-	}
-
-	@Test
-	public void testLayoutPropagationWithFriendlyURLConflictResolvedByDelete()
-		throws Exception {
-
-		LayoutSet layoutSet = group.getPublicLayoutSet();
-
-		List<Layout> initialMergeFailFriendlyURLLayouts =
-			layoutSet.getMergeFailFriendlyURLLayouts();
-
-		setLinkEnabled(true);
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			group.getGroupId(), "test", false);
-
-		LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), "test", true);
-
-		propagateChanges(group);
-
-		LayoutLocalServiceUtil.deleteLayout(layout);
-
-		propagateChanges(group);
-
-		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layoutSet.getLayoutSetId());
-
-		List<Layout> mergeFailFriendlyURLLayouts =
-			layoutSet.getMergeFailFriendlyURLLayouts();
-
-		Assert.assertEquals(
-			mergeFailFriendlyURLLayouts.toString(),
-			initialMergeFailFriendlyURLLayouts.size(),
-			mergeFailFriendlyURLLayouts.size());
-	}
-
-	@Test
-	@TestInfo("LPD-31491")
-	public void testLayoutPropagationWithFriendlyUrlConflictWithParentLayout()
-		throws Exception {
-
-		Layout prototypeLayout1 = LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), true);
-
-		Locale locale = _portal.getSiteDefaultLocale(_layoutSetPrototypeGroup);
-
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		prototypeLayout1 = _layoutLocalService.updateFriendlyURL(
-			TestPropsValues.getUserId(), prototypeLayout1.getPlid(), "/page-a",
-			languageId);
-
-		_propagateChanges(0, 1);
-
-		Assert.assertNotNull(
-			_layoutLocalService.getLayoutByFriendlyURL(
-				group.getGroupId(), false, "/page-a"));
-
-		prototypeLayout1 = _layoutLocalService.updateFriendlyURL(
-			TestPropsValues.getUserId(), prototypeLayout1.getPlid(), "/page-a0",
-			languageId);
-
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
-				_layoutSetPrototypeGroup.getGroupId(),
-				_portal.getClassNameId(
-					ResourceActionsUtil.getCompositeModelName(
-						Layout.class.getName(),
-						String.valueOf(prototypeLayout1.isPrivateLayout()))),
-				"/page-a");
-
-		_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
-			friendlyURLEntryLocalization.getFriendlyURLEntryId(),
-			friendlyURLEntryLocalization.getLanguageId());
-
-		Layout prototypeLayout2 = LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), true);
-
-		prototypeLayout2 = _layoutLocalService.updateFriendlyURL(
-			TestPropsValues.getUserId(), prototypeLayout2.getPlid(), "/page-a",
-			languageId);
-
-		prototypeLayout1 = _layoutLocalService.updateParentLayoutId(
-			prototypeLayout1.getPlid(), prototypeLayout2.getPlid());
-
-		_propagateChanges(1, 1);
-
-		Layout layout1 = _layoutLocalService.getLayoutByFriendlyURL(
-			group.getGroupId(), false, "/page-a0");
-
-		Assert.assertEquals(0, layout1.getParentPlid());
-
-		Assert.assertNull(
-			_layoutLocalService.fetchLayoutByFriendlyURL(
-				group.getGroupId(), false, "/page-a"));
-
-		_layoutLocalService.updateFriendlyURL(
-			TestPropsValues.getUserId(), prototypeLayout1.getPlid(),
-			prototypeLayout1.getFriendlyURL(locale), languageId);
-		_layoutLocalService.updateFriendlyURL(
-			TestPropsValues.getUserId(), prototypeLayout2.getPlid(),
-			prototypeLayout2.getFriendlyURL(locale), languageId);
-
-		_sites.removeMergeFailFriendlyURLLayouts(group.getPublicLayoutSet());
-
-		_propagateChanges(0, 2);
-
-		Layout layout2 = _layoutLocalService.getLayoutByFriendlyURL(
-			group.getGroupId(), false, "/page-a");
-
-		layout1 = _layoutLocalService.getLayoutByFriendlyURL(
-			group.getGroupId(), false, "/page-a0");
-
-		Assert.assertEquals(layout2.getPlid(), layout1.getParentPlid());
 	}
 
 	@Test
@@ -831,94 +680,6 @@ public class LayoutSetPrototypePropagationTest
 		finally {
 			portlet.setPreferencesUniquePerLayout(preferencesUniquePerLayout);
 		}
-	}
-
-	@Test
-	public void testResetLayoutTemplate() throws Exception {
-		_layoutSetPrototypeHelper.resetPrototype(layout);
-		_layoutSetPrototypeHelper.resetPrototype(_layout);
-
-		propagateChanges(group);
-
-		setLinkEnabled(true);
-
-		layout = LayoutTestUtil.updateLayoutTemplateId(layout, "1_column");
-
-		Assert.assertTrue(_sites.isLayoutModifiedSinceLastMerge(layout));
-
-		Assert.assertFalse(_sites.isLayoutModifiedSinceLastMerge(_layout));
-
-		_layout = LayoutTestUtil.updateLayoutTemplateId(_layout, "1_column");
-
-		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
-
-		_layoutSetPrototypeHelper.resetPrototype(layout);
-
-		layout = propagateChanges(layout);
-
-		Assert.assertFalse(_sites.isLayoutModifiedSinceLastMerge(layout));
-		Assert.assertEquals(
-			initialLayoutTemplateId,
-			LayoutTestUtil.getLayoutTemplateId(layout));
-
-		_layout = propagateChanges(_layout);
-
-		Assert.assertTrue(_sites.isLayoutModifiedSinceLastMerge(_layout));
-		Assert.assertEquals(
-			"1_column", LayoutTestUtil.getLayoutTemplateId(_layout));
-	}
-
-	@Test
-	public void testResetPortletPreferences() throws Exception {
-		LayoutTestUtil.updateLayoutPortletPreference(
-			prototypeLayout, portletId, "showAvailableLocales",
-			Boolean.FALSE.toString());
-
-		_layoutSetPrototypeHelper.resetPrototype(layout);
-		_layoutSetPrototypeHelper.resetPrototype(_layout);
-
-		propagateChanges(group);
-
-		setLinkEnabled(true);
-
-		layout = LayoutTestUtil.updateLayoutPortletPreference(
-			layout, portletId, "showAvailableLocales", Boolean.TRUE.toString());
-
-		Assert.assertTrue(_sites.isLayoutModifiedSinceLastMerge(layout));
-
-		Assert.assertFalse(_sites.isLayoutModifiedSinceLastMerge(_layout));
-
-		_layout = LayoutTestUtil.updateLayoutPortletPreference(
-			_layout, _portletId, "showAvailableLocales",
-			Boolean.TRUE.toString());
-
-		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
-
-		_layoutSetPrototypeHelper.resetPrototype(layout);
-
-		layout = propagateChanges(layout);
-
-		Assert.assertFalse(_sites.isLayoutModifiedSinceLastMerge(layout));
-
-		PortletPreferences layoutPortletPreferences =
-			LayoutTestUtil.getPortletPreferences(layout, portletId);
-
-		Assert.assertEquals(
-			Boolean.FALSE.toString(),
-			layoutPortletPreferences.getValue(
-				"showAvailableLocales", StringPool.BLANK));
-
-		_layout = propagateChanges(_layout);
-
-		Assert.assertTrue(_sites.isLayoutModifiedSinceLastMerge(_layout));
-
-		layoutPortletPreferences = LayoutTestUtil.getPortletPreferences(
-			_layout, _portletId);
-
-		Assert.assertEquals(
-			Boolean.TRUE.toString(),
-			layoutPortletPreferences.getValue(
-				"showAvailableLocales", StringPool.BLANK));
 	}
 
 	@FeatureFlag(enable = false, value = "LPD-38869")
@@ -1585,31 +1346,6 @@ public class LayoutSetPrototypePropagationTest
 			propagatedLayout.getLayoutSetPrototypeLayoutERC());
 	}
 
-	private void _propagateChanges(int failCount, int layoutCount)
-		throws Exception {
-
-		LayoutSet layoutSet = group.getPublicLayoutSet();
-
-		List<Layout> initialMergeFailFriendlyURLLayouts =
-			layoutSet.getMergeFailFriendlyURLLayouts();
-
-		propagateChanges(group);
-
-		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layoutSet.getLayoutSetId());
-
-		List<Layout> mergeFailFriendlyURLLayouts =
-			layoutSet.getMergeFailFriendlyURLLayouts();
-
-		Assert.assertEquals(
-			mergeFailFriendlyURLLayouts.toString(),
-			initialMergeFailFriendlyURLLayouts.size() + failCount,
-			mergeFailFriendlyURLLayouts.size());
-
-		Assert.assertEquals(
-			_initialLayoutCount + layoutCount, getGroupLayoutCount());
-	}
-
 	private void _registerTestPortlet(String portletName) {
 		Bundle bundle = FrameworkUtil.getBundle(
 			LayoutSetPrototypePropagationTest.class);
@@ -1665,9 +1401,6 @@ public class LayoutSetPrototypePropagationTest
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
-	@Inject
-	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
 	private int _initialLayoutCount;
 	private int _initialPrototypeLayoutsCount;
 
@@ -1691,9 +1424,6 @@ public class LayoutSetPrototypePropagationTest
 
 	@DeleteAfterTestRun
 	private Layout _layoutSetPrototypeLayout;
-
-	@Inject
-	private Portal _portal;
 
 	private String _portletId;
 

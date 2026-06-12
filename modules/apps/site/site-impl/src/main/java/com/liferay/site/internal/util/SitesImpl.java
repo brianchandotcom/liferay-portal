@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -76,7 +75,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ScopeUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -384,34 +382,6 @@ public class SitesImpl implements Sites {
 		}
 	}
 
-	@Override
-	public boolean isLayoutModifiedSinceLastMerge(Layout layout) {
-		if ((layout == null) ||
-			Validator.isNull(layout.getLayoutSetPrototypeLayoutERC()) ||
-			layout.isPortletLayoutPageTemplateEntryLinkActive() ||
-			(layout instanceof VirtualLayout) || !layout.isLayoutUpdateable()) {
-
-			return false;
-		}
-
-		long lastMergeTime = GetterUtil.getLong(
-			layout.getTypeSettingsProperty(LAST_MERGE_TIME));
-
-		if (lastMergeTime == 0) {
-			return false;
-		}
-
-		Date existingLayoutModifiedDate = layout.getModifiedDate();
-
-		if ((existingLayoutModifiedDate != null) &&
-			(existingLayoutModifiedDate.getTime() > lastMergeTime)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	/**
 	 * Returns <code>true</code> if the linked site template can be merged into
 	 * the layout set. This method checks the current number of merge fail
@@ -497,22 +467,6 @@ public class SitesImpl implements Sites {
 
 		mergeLayoutSetPrototypeLayoutsInBackground(
 			layoutSetPrototype, layoutSet);
-	}
-
-	@Override
-	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
-		throws PortalException {
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		if (settingsUnicodeProperties.containsKey(
-				MERGE_FAIL_FRIENDLY_URL_LAYOUTS)) {
-
-			settingsUnicodeProperties.remove(MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
-
-			_layoutSetLocalService.updateLayoutSet(layoutSet);
-		}
 	}
 
 	@Override
@@ -929,8 +883,6 @@ public class SitesImpl implements Sites {
 			return;
 		}
 
-		removeMergeFailFriendlyURLLayouts(layoutSet);
-
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildImportLayoutSettingsMap(
@@ -946,37 +898,6 @@ public class SitesImpl implements Sites {
 
 		_exportImportLocalService.importLayoutSetPrototypeInBackground(
 			user.getUserId(), exportImportConfiguration, file);
-	}
-
-	protected boolean isAnyFailedLayoutModifiedSinceLastMerge(
-		LayoutSet layoutSet) {
-
-		UnicodeProperties unicodeProperties = layoutSet.getSettingsProperties();
-
-		String uuids = unicodeProperties.getProperty(
-			MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
-
-		if (Validator.isNotNull(uuids)) {
-			for (String uuid : StringUtil.split(uuids)) {
-				Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-					uuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout());
-
-				if (layout == null) {
-					return true;
-				}
-
-				Date modifiedDate = layout.getModifiedDate();
-
-				long lastMergeTime = GetterUtil.getLong(
-					unicodeProperties.getProperty(LAST_MERGE_TIME));
-
-				if (modifiedDate.getTime() > lastMergeTime) {
-					return true;
-				}
-			}
-		}
-
-		return false;
 	}
 
 	protected boolean isLayoutSetPrototypeMergeBackgroundTaskExists(
@@ -1076,12 +997,6 @@ public class SitesImpl implements Sites {
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
 			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
-		parameterMap.put(
-			"anyFailedLayoutModifiedSinceLastMerge",
-			new String[] {
-				String.valueOf(
-					isAnyFailedLayoutModifiedSinceLastMerge(layoutSet))
-			});
 		parameterMap.put(
 			"importData", new String[] {String.valueOf(importData)});
 		parameterMap.put(

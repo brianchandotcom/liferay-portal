@@ -36,7 +36,7 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	editObjectDefinitionPagesTest,
 	featureFlagsTest({
-		'LPD-70673': {enabled: true}, // Email field type
+		'LPD-70673': {enabled: true}, // Email Address field type
 		'LPD-83570': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
@@ -512,7 +512,11 @@ test.describe('Localized object entries are saved correctly', () => {
 		await expect(dateTimeInput).toHaveValue('20/02/2025 22:00');
 	});
 
-	test('Email fields', async ({apiHelpers, page, viewObjectEntriesPage}) => {
+	test('Email Address fields', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 

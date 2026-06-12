@@ -234,7 +234,7 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
+			DepotConstants.TYPE_SPACE, _serviceContext);
 	}
 
 	@DeleteAfterTestRun

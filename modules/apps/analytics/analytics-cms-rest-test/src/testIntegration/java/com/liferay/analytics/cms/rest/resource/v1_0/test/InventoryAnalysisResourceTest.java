@@ -187,7 +187,7 @@ public class InventoryAnalysisResourceTest
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
+			DepotConstants.TYPE_SPACE, _serviceContext);
 
 		_webContentDefinition =
 			_objectDefinitionLocalService.

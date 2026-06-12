@@ -461,6 +461,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                system:
+                    description:
+                        Whether this is a system vocabulary, which cannot be renamed or deleted.
+                    type: boolean
                 uuid:
                     description:
                         The UUID of the vocabulary.

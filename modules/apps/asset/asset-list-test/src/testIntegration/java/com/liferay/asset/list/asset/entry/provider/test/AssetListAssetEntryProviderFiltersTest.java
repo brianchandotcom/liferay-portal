@@ -109,7 +109,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 				).put(
 					"classTypeId", _objectDefinition.getObjectDefinitionId()
 				).put(
-					"operatorName", "contains"
+					"operatorName", RandomTestUtil.randomString()
 				).put(
 					"propertyName", "title"
 				).put(
@@ -121,11 +121,11 @@ public class AssetListAssetEntryProviderFiltersTest {
 				).put(
 					"classTypeId", _objectDefinition.getObjectDefinitionId()
 				).put(
-					"operatorName", "eq"
+					"operatorName", RandomTestUtil.randomString()
 				).put(
-					"propertyName", "priority"
+					"propertyName", RandomTestUtil.randomString()
 				).put(
-					"value", "1"
+					"value", RandomTestUtil.randomString()
 				)
 			).toString());
 

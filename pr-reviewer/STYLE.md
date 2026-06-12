@@ -13,10 +13,14 @@ When the existing code is not consistent — two or more forms for the same kind
 Five principles run through everything:
 
 1. **Reduce the chaos factor.** Arbitrary order, naming, and layout raise the entropy of the codebase. Impose one predictable form — sorted, named by a fixed convention, laid out the same way every time — so any reader can find and understand a thing at a glance.
-2. **Be relentlessly consistent.** Match the surrounding code, the sibling method, and the established convention. Do not introduce a second way to do something the codebase already does one way. When in doubt, mirror what is next to you.
-3. **Remove everything that does not earn its place.** Delete redundant assertions, constants and methods used once, narrating comments, guards for cases that cannot happen, throwaway temporary collections, and verbose messages. Let the code speak.
-4. **Declare and order things by use.** A reader should meet each value where it is used, in the order the method actually runs.
-5. **Prefer the platform.** Reach for the existing Liferay utility before writing the operation by hand or with a raw JDK call. The platform method is null safe, tested, and consistent with the rest of the code.
+
+1. **Be relentlessly consistent.** Match the surrounding code, the sibling method, and the established convention. Do not introduce a second way to do something the codebase already does one way. When in doubt, mirror what is next to you.
+
+1. **Remove everything that does not earn its place.** Delete redundant assertions, constants and methods used once, narrating comments, guards for cases that cannot happen, throwaway temporary collections, and verbose messages. Let the code speak.
+
+1. **Declare and order things by use.** A reader should meet each value where it is used, in the order the method actually runs.
+
+1. **Prefer the platform.** Reach for the existing Liferay utility before writing the operation by hand or with a raw JDK call. The platform method is null safe, tested, and consistent with the rest of the code.
 
 ## Naming
 

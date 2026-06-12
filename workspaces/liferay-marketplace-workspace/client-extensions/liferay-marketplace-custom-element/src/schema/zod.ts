@@ -47,7 +47,7 @@ const billingAddress = z.object({
 	country: z.string().min(1),
 	countryISOCode: z.string().optional(),
 	name: z.string().min(1),
-	phoneNumber: z.string().min(1),
+	phoneNumber: z.string().optional(),
 	regionISOCode: z.string().optional(),
 	street1: z.string().min(1),
 	street2: z.string().optional(),
@@ -203,8 +203,6 @@ const zodSchema = {
 			.string()
 			.email('Please fill in valid email'),
 		aiHubAccountName: z.string().min(3, 'AI Hub Account Name is required'),
-		termsAndConditions: z.boolean().refine((value) => value === true),
-		userAgreement: z.boolean().refine((value) => value === true),
 	}),
 	analyticsProvisioning: z.object({
 		_refAllowedEmailDomains: z.array(z.any()),

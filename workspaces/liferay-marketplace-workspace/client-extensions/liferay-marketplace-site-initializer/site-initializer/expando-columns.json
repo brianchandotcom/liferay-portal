@@ -114,6 +114,20 @@
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.product.model.CPInstance",
+		"name": "description",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPInstance",
 		"name": "Download Count",
 		"properties": {
 			"hidden": false,
@@ -157,6 +171,20 @@
 		"dataType": 15,
 		"modelResource": "com.liferay.account.model.AccountEntry",
 		"name": "Homepage URL",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPInstance",
+		"name": "icon-url",
 		"properties": {
 			"hidden": false,
 			"indexType": 2,
@@ -341,6 +369,20 @@
 		"dataType": 3,
 		"modelResource": "com.liferay.commerce.product.model.CPInstance",
 		"name": "Release Date",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPInstance",
+		"name": "salesforce-account-key",
 		"properties": {
 			"hidden": false,
 			"indexType": 2,

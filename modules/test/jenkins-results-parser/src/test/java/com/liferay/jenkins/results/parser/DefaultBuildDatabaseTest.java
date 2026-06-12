@@ -25,9 +25,8 @@ public class DefaultBuildDatabaseTest {
 	public void testGetJSONObject() {
 		BuildDatabase buildDatabase =
 			BuildDatabaseTestUtil.addPortalAcceptancePR(
-				buildDatabaseArgs -> buildDatabaseArgs.addModifiedFile(
-					_MODIFIED_FILE),
-				buildDatabaseArgs -> buildDatabaseArgs.setProperty(
+				BuildDatabaseArgs.withModifiedFiles(_MODIFIED_FILE),
+				BuildDatabaseArgs.withProperty(
 					_PROPERTIES_KEY, _PROPERTY_NAME, _PROPERTY_VALUE));
 
 		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
@@ -44,7 +43,7 @@ public class DefaultBuildDatabaseTest {
 	public void testGetProperties() {
 		BuildDatabase buildDatabase =
 			BuildDatabaseTestUtil.addPortalAcceptancePR(
-				buildDatabaseArgs -> buildDatabaseArgs.setProperty(
+				BuildDatabaseArgs.withProperty(
 					_PROPERTIES_KEY, _PROPERTY_NAME, _PROPERTY_VALUE));
 
 		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
@@ -85,8 +84,7 @@ public class DefaultBuildDatabaseTest {
 	public void testHasJob() {
 		BuildDatabase buildDatabase =
 			BuildDatabaseTestUtil.addPortalAcceptancePR(
-				buildDatabaseArgs -> buildDatabaseArgs.addModifiedFile(
-					_MODIFIED_FILE));
+				BuildDatabaseArgs.withModifiedFiles(_MODIFIED_FILE));
 
 		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
 			buildDatabase);

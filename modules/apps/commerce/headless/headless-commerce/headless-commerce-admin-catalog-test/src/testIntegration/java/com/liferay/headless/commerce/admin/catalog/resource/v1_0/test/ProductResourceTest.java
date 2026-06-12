@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
@@ -43,6 +44,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -62,6 +65,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -204,6 +208,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		_testGetProductsPage();
 		_testGetProductsPageWithSearch();
 		_testGetProductsPageWithFilter();
+		_testGetProductsPageWithChannelFilter();
 	}
 
 	@Ignore
@@ -479,6 +484,25 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		return productResource.postProduct(product);
 	}
 
+	private Product _randomProductWithChannel(CommerceChannel commerceChannel)
+		throws Exception {
+
+		Product product = randomProduct();
+
+		product.setProductChannelFilter(true);
+		product.setProductChannels(
+			new ProductChannel[] {
+				new ProductChannel() {
+					{
+						externalReferenceCode =
+							commerceChannel.getExternalReferenceCode();
+					}
+				}
+			});
+
+		return product;
+	}
+
 	private Product _randomProductWithProductConfiguration() {
 		return new Product() {
 			{
@@ -636,6 +660,32 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		productResource.deleteProduct(product2.getProductId());
 	}
 
+	private void _testGetProductsPageWithChannelFilter() throws Exception {
+		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
+			testGroup.getGroupId(), _commerceChannel.getCommerceCurrencyCode());
+
+		_commerceChannels.add(commerceChannel);
+
+		Product product1 = testGetProductsPage_addProduct(
+			_randomProductWithChannel(_commerceChannel));
+		Product product2 = testGetProductsPage_addProduct(
+			_randomProductWithChannel(commerceChannel));
+
+		Page<Product> page = productResource.getProductsPage(
+			null,
+			String.format(
+				"(channelId/any(x:(x eq %s)))",
+				_commerceChannel.getCommerceChannelId()),
+			Pagination.of(1, 10), null);
+
+		assertEquals(
+			Collections.singletonList(product1),
+			(List<Product>)page.getItems());
+
+		productResource.deleteProduct(product1.getProductId());
+		productResource.deleteProduct(product2.getProductId());
+	}
+
 	private void _testGetProductsPageWithFilter() throws Exception {
 		Page<Product> page = productResource.getProductsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -701,6 +751,59 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		assertContains(product2, (List<Product>)page.getItems());
 		assertValid(page, testGetProductsPage_getExpectedActions());
+
+		page = productResource.getProductsPage(
+			null,
+			String.format(
+				"(catalogId eq %s)", _commerceCatalog.getCommerceCatalogId()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertContains(product1, (List<Product>)page.getItems());
+		assertContains(product2, (List<Product>)page.getItems());
+
+		page = productResource.getProductsPage(
+			null,
+			String.format("(productType eq '%s')", SimpleCPTypeConstants.NAME),
+			Pagination.of(1, 10), null);
+
+		assertContains(product1, (List<Product>)page.getItems());
+
+		page = productResource.getProductsPage(
+			null,
+			String.format(
+				"(productType eq '%s')", RandomTestUtil.randomString()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				product1.getProductId(), false);
+
+		AssetCategory assetCategory = CPTestUtil.addCategoryToCPDefinitions(
+			testGroup.getGroupId(), cpDefinition.getCPDefinitionId());
+
+		cpDefinition = _cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+			product1.getProductId(), false);
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
+		page = productResource.getProductsPage(
+			null,
+			String.format(
+				"(categoryIds/any(x:(x eq '%s')))",
+				assetCategory.getCategoryId()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertContains(product1, (List<Product>)page.getItems());
 
 		productResource.deleteProduct(product1.getProductId());
 		productResource.deleteProduct(product2.getProductId());
@@ -1054,6 +1157,9 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
+
+	@DeleteAfterTestRun
+	private List<CommerceChannel> _commerceChannels = new ArrayList<>();
 
 	@Inject
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

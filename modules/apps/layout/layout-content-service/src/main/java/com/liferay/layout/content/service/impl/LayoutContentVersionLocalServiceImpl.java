@@ -238,7 +238,6 @@ public class LayoutContentVersionLocalServiceImpl
 			throw new LayoutContentVersionNameException("Name is null");
 		}
 
-		layoutContentVersion.setModifiedDate(new Date());
 		layoutContentVersion.setNameMap(nameMap);
 
 		return layoutContentVersionPersistence.update(layoutContentVersion);

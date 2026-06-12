@@ -60,14 +60,16 @@ public class LazyBlobEntryModelImpl
 	public static final String TABLE_NAME = "LazyBlobEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"lazyBlobEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"blob1", Types.BLOB}, {"blob2", Types.BLOB}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"lazyBlobEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"blob1", Types.BLOB}, {"blob2", Types.BLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lazyBlobEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -76,7 +78,7 @@ public class LazyBlobEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LazyBlobEntry (uuid_ VARCHAR(75) null,lazyBlobEntryId LONG not null primary key,groupId LONG,blob1 BLOB,blob2 BLOB)";
+		"create table LazyBlobEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,lazyBlobEntryId LONG not null primary key,groupId LONG,blob1 BLOB,blob2 BLOB)";
 
 	public static final String TABLE_SQL_DROP = "drop table LazyBlobEntry";
 
@@ -232,6 +234,8 @@ public class LazyBlobEntryModelImpl
 					new LinkedHashMap
 						<String, Function<LazyBlobEntry, Object>>();
 
+			attributeGetterFunctions.put(
+				"mvccVersion", LazyBlobEntry::getMvccVersion);
 			attributeGetterFunctions.put("uuid", LazyBlobEntry::getUuid);
 			attributeGetterFunctions.put(
 				"lazyBlobEntryId", LazyBlobEntry::getLazyBlobEntryId);
@@ -256,6 +260,9 @@ public class LazyBlobEntryModelImpl
 					new LinkedHashMap<String, BiConsumer<LazyBlobEntry, ?>>();
 
 			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<LazyBlobEntry, Long>)LazyBlobEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<LazyBlobEntry, String>)LazyBlobEntry::setUuid);
 			attributeSetterBiConsumers.put(
@@ -276,6 +283,21 @@ public class LazyBlobEntryModelImpl
 				(Map)attributeSetterBiConsumers);
 		}
 
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -476,6 +498,7 @@ public class LazyBlobEntryModelImpl
 	public Object clone() {
 		LazyBlobEntryImpl lazyBlobEntryImpl = new LazyBlobEntryImpl();
 
+		lazyBlobEntryImpl.setMvccVersion(getMvccVersion());
 		lazyBlobEntryImpl.setUuid(getUuid());
 		lazyBlobEntryImpl.setLazyBlobEntryId(getLazyBlobEntryId());
 		lazyBlobEntryImpl.setGroupId(getGroupId());
@@ -489,6 +512,8 @@ public class LazyBlobEntryModelImpl
 	public LazyBlobEntry cloneWithOriginalValues() {
 		LazyBlobEntryImpl lazyBlobEntryImpl = new LazyBlobEntryImpl();
 
+		lazyBlobEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		lazyBlobEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		lazyBlobEntryImpl.setLazyBlobEntryId(
 			this.<Long>getColumnOriginalValue("lazyBlobEntryId"));
@@ -574,6 +599,8 @@ public class LazyBlobEntryModelImpl
 		LazyBlobEntryCacheModel lazyBlobEntryCacheModel =
 			new LazyBlobEntryCacheModel();
 
+		lazyBlobEntryCacheModel.mvccVersion = getMvccVersion();
+
 		lazyBlobEntryCacheModel.uuid = getUuid();
 
 		String uuid = lazyBlobEntryCacheModel.uuid;
@@ -591,9 +618,13 @@ public class LazyBlobEntryModelImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{\"uuid\": ");
+		sb.append("{\"mvccVersion\": ");
+
+		sb.append(getMvccVersion());
+
+		sb.append(", \"uuid\": ");
 
 		sb.append("\"" + getUuid() + "\"");
 
@@ -617,6 +648,7 @@ public class LazyBlobEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _lazyBlobEntryId;
 	private long _groupId;
@@ -653,6 +685,7 @@ public class LazyBlobEntryModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("lazyBlobEntryId", _lazyBlobEntryId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -679,15 +712,17 @@ public class LazyBlobEntryModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("lazyBlobEntryId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("lazyBlobEntryId", 4L);
 
-		columnBitmasks.put("blob1", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("blob2", 16L);
+		columnBitmasks.put("blob1", 16L);
+
+		columnBitmasks.put("blob2", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
@@ -696,4 +731,4 @@ public class LazyBlobEntryModelImpl
 	private LazyBlobEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1639051513
+// LIFERAY-SERVICE-BUILDER-HASH:-1945536068

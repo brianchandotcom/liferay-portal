@@ -197,6 +197,7 @@ create table LVEntryVersion (
 );
 
 create table LazyBlobEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	lazyBlobEntryId LONG not null primary key,
 	groupId LONG,

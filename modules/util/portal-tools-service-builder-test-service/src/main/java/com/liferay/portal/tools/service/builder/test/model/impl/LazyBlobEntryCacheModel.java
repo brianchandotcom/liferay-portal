@@ -8,6 +8,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
 
 import java.io.Externalizable;
@@ -22,7 +23,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class LazyBlobEntryCacheModel
-	implements CacheModel<LazyBlobEntry>, Externalizable {
+	implements CacheModel<LazyBlobEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -37,7 +38,9 @@ public class LazyBlobEntryCacheModel
 		LazyBlobEntryCacheModel lazyBlobEntryCacheModel =
 			(LazyBlobEntryCacheModel)object;
 
-		if (lazyBlobEntryId == lazyBlobEntryCacheModel.lazyBlobEntryId) {
+		if ((lazyBlobEntryId == lazyBlobEntryCacheModel.lazyBlobEntryId) &&
+			(mvccVersion == lazyBlobEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -46,14 +49,28 @@ public class LazyBlobEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, lazyBlobEntryId);
+		int hashCode = HashUtil.hash(0, lazyBlobEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", lazyBlobEntryId=");
 		sb.append(lazyBlobEntryId);
@@ -66,6 +83,8 @@ public class LazyBlobEntryCacheModel
 	@Override
 	public LazyBlobEntry toEntityModel() {
 		LazyBlobEntryImpl lazyBlobEntryImpl = new LazyBlobEntryImpl();
+
+		lazyBlobEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			lazyBlobEntryImpl.setUuid("");
@@ -84,6 +103,7 @@ public class LazyBlobEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		lazyBlobEntryId = objectInput.readLong();
@@ -93,6 +113,8 @@ public class LazyBlobEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -105,9 +127,10 @@ public class LazyBlobEntryCacheModel
 		objectOutput.writeLong(groupId);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long lazyBlobEntryId;
 	public long groupId;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1065765453
+// LIFERAY-SERVICE-BUILDER-HASH:560821198

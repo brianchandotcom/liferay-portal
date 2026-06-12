@@ -121,6 +121,7 @@
 		<field name="portletId" type="String" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="lazyBlobEntryId" type="long" />
 		<field name="groupId" type="long" />

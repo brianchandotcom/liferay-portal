@@ -7,6 +7,7 @@ package com.liferay.portal.tools.service.builder.test.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.sql.Blob;
 
@@ -24,7 +25,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface LazyBlobEntryModel extends BaseModel<LazyBlobEntry> {
+public interface LazyBlobEntryModel
+	extends BaseModel<LazyBlobEntry>, MVCCModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -45,6 +47,22 @@ public interface LazyBlobEntryModel extends BaseModel<LazyBlobEntry> {
 	 * @param primaryKey the primary key of this lazy blob entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this lazy blob entry.
+	 *
+	 * @return the mvcc version of this lazy blob entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this lazy blob entry.
+	 *
+	 * @param mvccVersion the mvcc version of this lazy blob entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this lazy blob entry.
@@ -125,4 +143,4 @@ public interface LazyBlobEntryModel extends BaseModel<LazyBlobEntry> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1188720790
+// LIFERAY-SERVICE-BUILDER-HASH:-1380217747

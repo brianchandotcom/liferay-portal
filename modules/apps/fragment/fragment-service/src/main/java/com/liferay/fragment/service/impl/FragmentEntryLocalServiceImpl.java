@@ -13,6 +13,7 @@ import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
+import com.liferay.fragment.internal.util.FragmentEntryVersionCleanupUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -164,6 +165,21 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return updatedDraftFragmentEntry;
+	}
+
+	@Override
+	public void cleanUpFragmentEntryVersions(long companyId) {
+		try {
+			runSQL(FragmentEntryVersionCleanupUtil.getCleanupSQL(companyId));
+
+			fragmentEntryVersionPersistence.clearCache();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to clean up fragment entry versions", exception);
+			}
+		}
 	}
 
 	@Override

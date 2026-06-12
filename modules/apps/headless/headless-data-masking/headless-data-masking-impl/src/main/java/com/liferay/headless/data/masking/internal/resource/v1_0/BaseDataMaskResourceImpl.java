@@ -48,7 +48,8 @@ public abstract class BaseDataMaskResourceImpl implements DataMaskResource {
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-data-masking/v1.0/data-masks/preview' -d $'{"detectionRegex": ___, "replacementRegex": ___, "replacementValue": ___, "sampleText": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Compile a candidate data mask and apply it to sample text, returning a preview of the redacted output and any compile/apply error. Used by the admin UI preview card so the regex is evaluated by the same java.util.regex.Pattern engine that runs in production &mdash; eliminating JavaScript-vs-Java regex divergence as a source of false-positive validation."
+		description = "Compile a candidate data mask and apply it to sample text, returning a preview of the redacted output and any compile/apply error. Used by the admin UI preview card so the regex is evaluated by the same java.util.regex.Pattern engine that runs in production &mdash; eliminating JavaScript-vs-Java regex divergence as a source of false-positive validation.",
+		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DataMaskPreviewRequest.class)), description = "The candidate detection + replacement plus the sample input.")
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DataMask")}
@@ -510,4 +511,4 @@ public abstract class BaseDataMaskResourceImpl implements DataMaskResource {
 		LogFactoryUtil.getLog(BaseDataMaskResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1219208371
+// LIFERAY-REST-BUILDER-HASH:-1551638128

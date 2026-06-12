@@ -327,6 +327,10 @@ public class StyleBookEntryLocalServiceUtil {
 		return getService().generateStyleBookEntryKey(groupId, name);
 	}
 
+	public static String generateStyleBookEntryName(long groupId, String name) {
+		return getService().generateStyleBookEntryName(groupId, name);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -604,4 +608,4 @@ public class StyleBookEntryLocalServiceUtil {
 			StyleBookEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1836037820
+// LIFERAY-SERVICE-BUILDER-HASH:-168808778

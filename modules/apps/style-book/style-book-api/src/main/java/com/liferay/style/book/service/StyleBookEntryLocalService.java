@@ -290,6 +290,8 @@ public interface StyleBookEntryLocalService
 
 	public String generateStyleBookEntryKey(long groupId, String name);
 
+	public String generateStyleBookEntryName(long groupId, String name);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -495,4 +497,4 @@ public interface StyleBookEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-913531733
+// LIFERAY-SERVICE-BUILDER-HASH:-763499819

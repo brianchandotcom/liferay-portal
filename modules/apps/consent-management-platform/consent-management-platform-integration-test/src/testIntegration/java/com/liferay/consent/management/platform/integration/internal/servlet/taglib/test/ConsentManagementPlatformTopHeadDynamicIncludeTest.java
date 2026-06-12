@@ -69,20 +69,23 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 			_createMockHttpServletRequest(null), mockHttpServletResponse,
 			StringPool.BLANK);
 
-		String body = mockHttpServletResponse.getContentAsString();
+		String content = mockHttpServletResponse.getContentAsString();
 
-		int scriptTagIndex = body.indexOf(_SCRIPT_TAG);
-		int consentMappingScriptIndex = body.indexOf(_CONSENT_MAPPING_SCRIPT);
+		int scriptTagIndex = content.indexOf(_SCRIPT_TAG);
 
 		Assert.assertTrue(scriptTagIndex >= 0);
+
+		int consentMappingScriptIndex = content.indexOf(
+			_CONSENT_MAPPING_SCRIPT);
+
 		Assert.assertTrue(consentMappingScriptIndex >= 0);
 		Assert.assertTrue(scriptTagIndex < consentMappingScriptIndex);
 
-		Assert.assertEquals(0, StringUtil.count(body, "nonce=\""));
-
-		String nonce = RandomTestUtil.randomString();
+		Assert.assertEquals(0, StringUtil.count(content, "nonce=\""));
 
 		mockHttpServletResponse = new MockHttpServletResponse();
+
+		String nonce = RandomTestUtil.randomString();
 
 		_dynamicInclude.include(
 			_createMockHttpServletRequest(nonce), mockHttpServletResponse,

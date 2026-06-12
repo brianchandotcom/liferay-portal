@@ -39,8 +39,7 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 
 				_commercePricingClassCPDefinitionRelLocalService.
 					deleteCommercePricingClassCPDefinitionRel(
-						commercePricingClassCPDefinitionRel.
-							getCommercePricingClassCPDefinitionRelId());
+						commercePricingClassCPDefinitionRel);
 			}
 		}
 		catch (PortalException portalException) {

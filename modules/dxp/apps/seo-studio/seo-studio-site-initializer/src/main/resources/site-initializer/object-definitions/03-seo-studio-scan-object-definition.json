@@ -11,6 +11,30 @@
 	},
 	"modifiable": true,
 	"name": "SEOStudioScan",
+	"objectActions": [
+		{
+			"active": true,
+			"description": "",
+			"errorMessage": {
+				"en_US": "Crawl failed. Please try again later or contact support."
+			},
+			"label": {
+				"en_US": "Trigger SEO Crawl"
+			},
+			"name": "triggerCrawlSource",
+			"objectActionExecutorKey": "function#liferay-seostudio-crawler-trigger",
+			"objectActionTriggerKey": "standalone",
+			"parameters": {
+				"objectDefinitionExternalReferenceCode": "SEO_CRAWL_SOURCE_TRIGGER"
+			},
+			"status": {
+				"code": 1,
+				"label": "success",
+				"label_i18n": "Success"
+			},
+			"system": false
+		}
+	],
 	"objectFields": [
 		{
 			"DBType": "Clob",
@@ -35,6 +59,19 @@
 			"name": "errorMessage",
 			"system": true,
 			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "EXECUTION_ID",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Execution ID"
+			},
+			"name": "executionId",
+			"system": true,
+			"type": "String"
 		},
 		{
 			"DBType": "String",

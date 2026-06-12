@@ -14,15 +14,15 @@
 			"system": true
 		},
 		{
-			"externalReferenceCode": "CRAWLABILITY",
-			"key": "crawlability",
-			"name": "Crawlability",
-			"system": true
-		},
-		{
 			"externalReferenceCode": "IMAGES",
 			"key": "images",
 			"name": "Images",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "LINKS_AND_URLS",
+			"key": "linksAndURLs",
+			"name": "Links and URLs",
 			"system": true
 		},
 		{
@@ -41,12 +41,6 @@
 			"externalReferenceCode": "STRUCTURED_DATA",
 			"key": "structuredData",
 			"name": "Structured Data",
-			"system": true
-		},
-		{
-			"externalReferenceCode": "URLS",
-			"key": "urls",
-			"name": "URLs",
 			"system": true
 		}
 	],

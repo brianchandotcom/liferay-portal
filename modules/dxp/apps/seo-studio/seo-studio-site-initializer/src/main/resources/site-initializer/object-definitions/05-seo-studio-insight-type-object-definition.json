@@ -54,13 +54,14 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Text",
+			"businessType": "Picklist",
 			"externalReferenceCode": "NAME",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Name"
 			},
+			"listTypeDefinitionExternalReferenceCode": "L_SEO_STUDIO_INSIGHT_TYPE_NAMES",
 			"name": "name",
 			"required": true,
 			"system": true,

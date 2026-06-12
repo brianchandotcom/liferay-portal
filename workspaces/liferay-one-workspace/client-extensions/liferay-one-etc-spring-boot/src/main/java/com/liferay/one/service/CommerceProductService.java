@@ -10,6 +10,7 @@ import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.problem.Problem;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.one.constants.CommerceCatalogConstants;
+import com.liferay.one.constants.CommerceProductConstants;
 
 import java.util.Collections;
 
@@ -39,8 +40,7 @@ public class CommerceProductService extends OneBaseService {
 			() -> Collections.singletonMap("en_US", description));
 		product.setExternalReferenceCode(() -> externalReferenceCode);
 		product.setName(() -> Collections.singletonMap("en_US", name));
-		product.setProductType(
-			() -> CommerceCatalogConstants.PRODUCT_TYPE_SIMPLE);
+		product.setProductType(() -> CommerceProductConstants.TYPE_SIMPLE);
 
 		Sku sku = new Sku();
 

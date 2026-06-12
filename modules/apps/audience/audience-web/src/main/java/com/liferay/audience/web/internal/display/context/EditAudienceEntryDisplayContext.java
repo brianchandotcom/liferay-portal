@@ -5,17 +5,26 @@
 
 package com.liferay.audience.web.internal.display.context;
 
+import com.liferay.audience.criteria.AudienceCriteria;
+import com.liferay.audience.criteria.AudienceCriteriaProvider;
 import com.liferay.audience.model.AudienceEntry;
 import com.liferay.audience.service.AudienceEntryServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -23,8 +32,10 @@ import jakarta.servlet.http.HttpServletRequest;
 public class EditAudienceEntryDisplayContext {
 
 	public EditAudienceEntryDisplayContext(
+		AudienceCriteriaProvider audienceCriteriaProvider,
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
+		_audienceCriteriaProvider = audienceCriteriaProvider;
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 	}
@@ -60,6 +71,51 @@ public class EditAudienceEntryDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "audiences");
+	}
+
+	public Map<String, Object> getData() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return HashMapBuilder.<String, Object>put(
+			"audienceCriteriaTypes",
+			TransformUtil.transform(
+				_audienceCriteriaProvider.getAudienceCriteriaTypes(
+					themeDisplay.getCompanyId(), themeDisplay.getLocale()),
+				audienceCriteriaType -> HashMapBuilder.<String, Object>put(
+					"audienceCriterias",
+					TransformUtil.transform(
+						audienceCriteriaType.getAudienceCriterias(),
+						audienceCriteria -> HashMapBuilder.<String, Object>put(
+							"icon", audienceCriteria.getIcon()
+						).put(
+							"key", audienceCriteria.getKey()
+						).put(
+							"label", audienceCriteria.getLabel()
+						).put(
+							"operators",
+							TransformUtil.transform(
+								audienceCriteria.getOperators(),
+								AudienceCriteria.Operator::getValue)
+						).put(
+							"options",
+							TransformUtil.transform(
+								audienceCriteria.getOptions(),
+								option -> HashMapBuilder.<String, Object>put(
+									"label", option.getLabel()
+								).put(
+									"value", option.getValue()
+								).build())
+						).put(
+							"type",
+							StringUtil.toLowerCase(
+								String.valueOf(audienceCriteria.getType()))
+						).build())
+				).put(
+					"label", audienceCriteriaType.getLabel()
+				).build())
+		).build();
 	}
 
 	public String getRedirect() {
@@ -112,6 +168,7 @@ public class EditAudienceEntryDisplayContext {
 		return null;
 	}
 
+	private final AudienceCriteriaProvider _audienceCriteriaProvider;
 	private AudienceEntry _audienceEntry;
 	private Long _audienceEntryId;
 	private String _backURL;

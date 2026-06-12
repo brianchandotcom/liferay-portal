@@ -5,28 +5,33 @@
 
 export type IdentifierField = 'classPK' | 'externalReferenceCode';
 
-export type MappingMode = 'auto' | 'content' | 'context' | 'literal';
+export enum EMappingMode {
+	AUTO_RESOLVED = 'auto-resolved',
+	CONTENT = 'content',
+	CONTEXT = 'context',
+	LITERAL = 'literal',
+}
 
 export interface IContentMappedTokenValue {
 	className: string;
 	classPK: string;
 	externalReferenceCode: string;
 	fieldId: IdentifierField | '';
-	source?: 'content';
+	mappingMode: EMappingMode.CONTENT;
 	title?: string;
 }
 
 export interface IContextMappedTokenValue {
 	fieldId: IdentifierField | '';
-	source: 'context';
+	mappingMode: EMappingMode.CONTEXT;
 }
 
-export interface IBackendMappedTokenValue {
-	source: 'backend-resolved';
+export interface IAutoResolvedTokenValue {
+	mappingMode: EMappingMode.AUTO_RESOLVED;
 }
 
 export type IMappedTokenValue =
-	| IBackendMappedTokenValue
+	| IAutoResolvedTokenValue
 	| IContentMappedTokenValue
 	| IContextMappedTokenValue;
 
@@ -38,26 +43,35 @@ export function isMappedTokenValue(
 	return typeof value === 'object' && value !== null;
 }
 
+export function isAutoResolved(
+	value: TokenMapping
+): value is IAutoResolvedTokenValue {
+	return (
+		isMappedTokenValue(value) &&
+		value.mappingMode === EMappingMode.AUTO_RESOLVED
+	);
+}
+
+export function isContentMapped(
+	value: TokenMapping
+): value is IContentMappedTokenValue {
+	return (
+		isMappedTokenValue(value) && value.mappingMode === EMappingMode.CONTENT
+	);
+}
+
 export function isContextMapped(
-	value: IMappedTokenValue
+	value: TokenMapping
 ): value is IContextMappedTokenValue {
-	return value.source === 'context';
+	return (
+		isMappedTokenValue(value) && value.mappingMode === EMappingMode.CONTEXT
+	);
 }
 
-export function isBackendMapped(
-	value: IMappedTokenValue
-): value is IBackendMappedTokenValue {
-	return value.source === 'backend-resolved';
-}
-
-export function getMappingMode(value: TokenMapping): MappingMode {
+export function getMappingMode(value: TokenMapping): EMappingMode {
 	if (!isMappedTokenValue(value)) {
-		return 'literal';
+		return EMappingMode.LITERAL;
 	}
 
-	if (isBackendMapped(value)) {
-		return 'auto';
-	}
-
-	return isContextMapped(value) ? 'context' : 'content';
+	return value.mappingMode;
 }

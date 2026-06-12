@@ -188,31 +188,52 @@ public class VirtualHostFilterTest {
 	}
 
 	@Test
-	public void testProcessFilterRedirectToHomeURL() throws Exception {
+	public void testProcessFilterSetsGroupOnRequestWhenLayoutSetMatches()
+		throws Exception {
+
+		String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
+
+		MockHttpServletRequest mockHttpServletRequest = _processFilter(
+			_publicLayoutSet,
+			groupFriendlyURL + StringPool.SLASH +
+				RandomTestUtil.randomString());
+
+		Group group = (Group)mockHttpServletRequest.getAttribute(
+			WebKeys.FRIENDLY_URL_GROUP);
+
+		Assert.assertEquals(_publicLayoutSet.getGroupId(), group.getGroupId());
+
+		Assert.assertEquals(
+			groupFriendlyURL,
+			mockHttpServletRequest.getAttribute(WebKeys.GROUP_FRIENDLY_URL));
+	}
+
+	@Test
+	public void testProcessFilterSetsGroupOnRequestWhenPathForwards()
+		throws Exception {
+
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"VIRTUAL_HOSTS_DEFAULT_SITE_NAME", StringPool.BLANK)) {
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
 
-			MockHttpServletRequest mockHttpServletRequest =
-				_getMockHttpServletRequest(null, StringPool.SLASH);
+			String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
 
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
+			MockHttpServletRequest mockHttpServletRequest = _processFilter(
+				null,
+				groupFriendlyURL + StringPool.SLASH +
+					RandomTestUtil.randomString());
 
-			_virtualHostFilter.init(new MockFilterConfig());
-
-			ReflectionTestUtil.invoke(
-				_virtualHostFilter, "processFilter",
-				new Class<?>[] {
-					HttpServletRequest.class, HttpServletResponse.class,
-					FilterChain.class
-				},
-				mockHttpServletRequest, mockHttpServletResponse,
-				new MockFilterChain());
+			Group group = (Group)mockHttpServletRequest.getAttribute(
+				WebKeys.FRIENDLY_URL_GROUP);
 
 			Assert.assertEquals(
-				_portalUtil.getHomeURL(mockHttpServletRequest),
-				mockHttpServletResponse.getRedirectedUrl());
+				_publicLayoutSet.getGroupId(), group.getGroupId());
+
+			Assert.assertEquals(
+				groupFriendlyURL,
+				mockHttpServletRequest.getAttribute(
+					WebKeys.GROUP_FRIENDLY_URL));
 		}
 	}
 

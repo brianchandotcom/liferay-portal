@@ -5353,6 +5353,14 @@
 		"to": "updateFileEntryAndCheckIn(param#0#, param#1#, param#2#, param#3#, null, param#4#, param#5#, param#6#, param#7#, param#8#, null, null, null, param#9#)"
 	},
 	{
+		"classNames": [
+			"PropsKeys"
+		],
+		"from": "COMPANY_SECURITY_AUTH_REQUIRES_HTTPS",
+		"hasMessage": true,
+		"issueKey": "LPD-58508"
+	},
+	{
 		"ClassNames": [
 			"UserLocalService",
 			"UserLocalServiceUtil"

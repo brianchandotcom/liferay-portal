@@ -410,6 +410,48 @@ public class OpenAPIResourceTest {
 			"expected_openapi_actions_object_action.json", _objectDefinition);
 	}
 
+	@FeatureFlag("LPD-43996")
+	@Test
+	public void testGetOpenAPIWithComments() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(),
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"field", "field", false)),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		objectDefinition.setEnableComments(true);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		_objectDefinitions.add(objectDefinition);
+
+		JSONObject openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		JSONObject componentsJSONObject = openAPIJSONObject.getJSONObject(
+			"components");
+
+		JSONObject schemasJSONObject = componentsJSONObject.getJSONObject(
+			"schemas");
+
+		JSONObject systemPropertiesJSONObject = schemasJSONObject.getJSONObject(
+			"SystemProperties");
+
+		Assert.assertNotNull(systemPropertiesJSONObject);
+
+		JSONObject propertiesJSONObject =
+			systemPropertiesJSONObject.getJSONObject("properties");
+
+		Assert.assertNotNull(propertiesJSONObject.opt("comments"));
+		Assert.assertNull(propertiesJSONObject.opt("version"));
+	}
+
 	@Test
 	public void testGetOpenAPIWithSystemObjectRelationship() throws Exception {
 		_user = TestPropsValues.getUser();

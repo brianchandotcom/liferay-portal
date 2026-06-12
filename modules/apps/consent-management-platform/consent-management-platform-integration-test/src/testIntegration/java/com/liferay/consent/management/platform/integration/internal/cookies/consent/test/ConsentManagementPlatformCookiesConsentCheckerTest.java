@@ -10,6 +10,7 @@ import com.liferay.cookies.consent.CookiesConsentChecker;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -51,7 +52,9 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 			_createMockHttpServletRequest();
 
 		mockHttpServletRequest.setCookies(
-			new Cookie(CookiesConstants.NAME_CONSENT_STATE, "%%%notjson"));
+			new Cookie(
+				CookiesConstants.NAME_CONSENT_STATE,
+				"%%%" + RandomTestUtil.randomString()));
 
 		Assert.assertTrue(
 			_cookiesConsentChecker.hasConsent(

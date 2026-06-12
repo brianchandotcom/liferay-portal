@@ -6,42 +6,28 @@
 package com.liferay.depot.internal.upgrade.v2_4_0;
 
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Alicia García
  */
 public class TrashEntriesMaxAgeUpgradeProcess extends UpgradeProcess {
 
-	public TrashEntriesMaxAgeUpgradeProcess(
-		CompanyLocalService companyLocalService,
-		DepotEntryLocalService depotEntryLocalService,
-		GroupLocalService groupLocalService) {
-
-		_companyLocalService = companyLocalService;
-		_depotEntryLocalService = depotEntryLocalService;
-		_groupLocalService = groupLocalService;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
-		_companyLocalService.forEachCompanyId(
+		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
 				int trashEntriesMaxAge = PrefsPropsUtil.getInteger(
 					companyId, PropsKeys.TRASH_ENTRIES_MAX_AGE,
@@ -51,62 +37,66 @@ public class TrashEntriesMaxAgeUpgradeProcess extends UpgradeProcess {
 					return;
 				}
 
-				ActionableDynamicQuery actionableDynamicQuery =
-					_depotEntryLocalService.getActionableDynamicQuery();
-
-				Property property = PropertyFactoryUtil.forName("type");
-
-				actionableDynamicQuery.setAddCriteriaMethod(
-					dynamicQuery -> dynamicQuery.add(
-						property.eq(DepotConstants.TYPE_SPACE)));
-
-				actionableDynamicQuery.setCompanyId(companyId);
-				actionableDynamicQuery.setPerformActionMethod(
-					(DepotEntry depotEntry) -> {
-						Group group = _groupLocalService.fetchGroup(
-							depotEntry.getGroupId());
-
-						if (group == null) {
-							return;
-						}
-
-						_updateTrashEntriesMaxAge(group, trashEntriesMaxAge);
-					});
-
-				actionableDynamicQuery.performActions();
+				_updateTrashEntriesMaxAge(companyId, trashEntriesMaxAge);
 			});
 	}
 
-	private void _updateTrashEntriesMaxAge(Group group, int trashEntriesMaxAge)
-		throws PortalException {
+	private void _updateTrashEntriesMaxAge(
+			long companyId, int trashEntriesMaxAge)
+		throws Exception {
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			group.getTypeSettingsProperties();
+		String selectSQL = StringBundler.concat(
+			"select Group_.ctCollectionId, Group_.groupId, ",
+			"Group_.typeSettings from DepotEntry inner join Group_ on ",
+			"DepotEntry.groupId = Group_.groupId and ",
+			"DepotEntry.ctCollectionId = Group_.ctCollectionId where ",
+			"DepotEntry.companyId = ? and DepotEntry.type_ = ?");
 
-		int currentTrashEntriesMaxAge = GetterUtil.getInteger(
-			typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"));
+		try (PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(selectSQL);
+			PreparedStatement updatePreparedStatement =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update Group_ set typeSettings = ? where ctCollectionId " +
+						"= ? and groupId = ?")) {
 
-		if (currentTrashEntriesMaxAge > 0) {
-			return;
-		}
+			selectPreparedStatement.setLong(1, companyId);
+			selectPreparedStatement.setInt(2, DepotConstants.TYPE_SPACE);
 
-		typeSettingsUnicodeProperties.setProperty(
-			"trashEntriesMaxAge", String.valueOf(trashEntriesMaxAge));
+			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					UnicodeProperties typeSettingsUnicodeProperties =
+						UnicodePropertiesBuilder.create(
+							true
+						).fastLoad(
+							resultSet.getString("typeSettings")
+						).build();
 
-		_groupLocalService.updateGroup(
-			group.getGroupId(), typeSettingsUnicodeProperties.toString());
+					int currentTrashEntriesMaxAge = GetterUtil.getInteger(
+						typeSettingsUnicodeProperties.getProperty(
+							"trashEntriesMaxAge"));
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Update trash entries max age for group " + group.getGroupId());
+					if (currentTrashEntriesMaxAge > 0) {
+						continue;
+					}
+
+					typeSettingsUnicodeProperties.setProperty(
+						"trashEntriesMaxAge",
+						String.valueOf(trashEntriesMaxAge));
+
+					updatePreparedStatement.setString(
+						1, typeSettingsUnicodeProperties.toString());
+					updatePreparedStatement.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("groupId"));
+
+					updatePreparedStatement.addBatch();
+				}
+
+				updatePreparedStatement.executeBatch();
+			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TrashEntriesMaxAgeUpgradeProcess.class);
-
-	private final CompanyLocalService _companyLocalService;
-	private final DepotEntryLocalService _depotEntryLocalService;
-	private final GroupLocalService _groupLocalService;
 
 }

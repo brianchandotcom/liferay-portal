@@ -142,7 +142,7 @@ export default function DataSetConfigurationFields({
 	const displayPageTemplate = isOnDisplayPageTemplate();
 
 	const mappingOptions = [
-		{label: Liferay.Language.get('type-value'), value: 'literal'},
+		{label: Liferay.Language.get('input-token-value'), value: 'literal'},
 		{
 			label: Liferay.Language.get('map-to-selected-entity'),
 			value: 'content',
@@ -150,7 +150,9 @@ export default function DataSetConfigurationFields({
 		...(displayPageTemplate
 			? [
 					{
-						label: Liferay.Language.get('map-to-context-entity'),
+						label: Liferay.Language.get(
+							'map-to-page-context-entity'
+						),
 						value: 'context',
 					},
 				]
@@ -158,10 +160,8 @@ export default function DataSetConfigurationFields({
 		...(isCurrentTokenBackendResolvable
 			? [
 					{
-						label: Liferay.Language.get(
-							'use-backend-provided-value'
-						),
-						value: 'backend',
+						label: Liferay.Language.get('resolve-automatically'),
+						value: 'auto',
 					},
 				]
 			: []),
@@ -196,7 +196,7 @@ export default function DataSetConfigurationFields({
 				return;
 			}
 
-			if (mappingMode === 'backend') {
+			if (mappingMode === 'auto') {
 				updateTokenMapping(selectedTokenKey, {
 					source: 'backend-resolved',
 				});
@@ -408,7 +408,7 @@ export default function DataSetConfigurationFields({
 									/>
 								)}
 
-							{currentMappingMode !== 'backend' && (
+							{currentMappingMode !== 'auto' && (
 								<ClayForm.Group>
 									<label htmlFor={fieldInputId}>
 										{currentMappingMode === 'literal'

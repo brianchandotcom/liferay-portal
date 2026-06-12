@@ -171,6 +171,31 @@ public class CartComment implements Cloneable, Serializable {
 
 	protected Date modifiedDate;
 
+	public String getOrderExternalReferenceCode() {
+		return orderExternalReferenceCode;
+	}
+
+	public void setOrderExternalReferenceCode(
+		String orderExternalReferenceCode) {
+
+		this.orderExternalReferenceCode = orderExternalReferenceCode;
+	}
+
+	public void setOrderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			orderExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			orderExternalReferenceCode =
+				orderExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String orderExternalReferenceCode;
+
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -245,4 +270,4 @@ public class CartComment implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:177722289
+// LIFERAY-REST-BUILDER-HASH:-481946981

@@ -143,6 +143,20 @@ public class CartCommentSerDes {
 			sb.append("\"");
 		}
 
+		if (cartComment.getOrderExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cartComment.getOrderExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (cartComment.getOrderId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -240,6 +254,15 @@ public class CartCommentSerDes {
 				liferayToJSONDateFormat.format(cartComment.getModifiedDate()));
 		}
 
+		if (cartComment.getOrderExternalReferenceCode() == null) {
+			map.put("orderExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"orderExternalReferenceCode",
+				String.valueOf(cartComment.getOrderExternalReferenceCode()));
+		}
+
 		if (cartComment.getOrderId() == null) {
 			map.put("orderId", null);
 		}
@@ -293,6 +316,11 @@ public class CartCommentSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "orderExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderId")) {
@@ -350,6 +378,14 @@ public class CartCommentSerDes {
 				if (jsonParserFieldValue != null) {
 					cartComment.setModifiedDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "orderExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					cartComment.setOrderExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderId")) {
@@ -444,4 +480,4 @@ public class CartCommentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1073968774
+// LIFERAY-REST-BUILDER-HASH:752418461

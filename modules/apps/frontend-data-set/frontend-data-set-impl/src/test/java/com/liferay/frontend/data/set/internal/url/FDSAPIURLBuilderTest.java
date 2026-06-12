@@ -12,6 +12,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -172,6 +173,50 @@ public class FDSAPIURLBuilderTest {
 				"param4", "value4"
 			).addQueryString(
 				"param5=value5"
+			).build());
+
+		// Nullified tokens
+
+		Assert.assertEquals(
+			"/o/app/{foo}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{foo}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("foo", JSONFactoryUtil.createJSONObject())
+			).build());
+		Assert.assertEquals(
+			"/o/app/{siteId}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{siteId}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("siteId", JSONFactoryUtil.createJSONObject())
+			).build());
+		Assert.assertEquals(
+			"/o/app/{userId}/{userExternalReferenceCode}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{userId}/{userExternalReferenceCode}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put(
+					"userExternalReferenceCode",
+					JSONFactoryUtil.createJSONObject()
+				).put(
+					"userId", JSONFactoryUtil.createJSONObject()
+				)
+			).build());
+		Assert.assertEquals(
+			"/o/app/{siteId}/bar/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{siteId}/{foo}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put(
+					"foo", "bar"
+				).put(
+					"siteId", JSONFactoryUtil.createJSONObject()
+				)
 			).build());
 
 		// One resolver, one token

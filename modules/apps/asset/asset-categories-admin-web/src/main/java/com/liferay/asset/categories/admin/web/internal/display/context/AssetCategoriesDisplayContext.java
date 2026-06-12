@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -635,6 +636,16 @@ public class AssetCategoriesDisplayContext {
 									"for-internal-use-only")));
 					}
 
+					if (isSystemVocabulary(vocabulary)) {
+						verticalNavItem.addIcon(
+							IconItem.of(
+								"lock",
+								LanguageUtil.get(
+									_themeDisplay.getLocale(),
+									"this-is-a-system-vocabulary-and-cannot-" +
+										"be-renamed-or-deleted")));
+					}
+
 					if (vocabulary.getVisibilityType() ==
 							AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY) {
 
@@ -963,6 +974,17 @@ public class AssetCategoriesDisplayContext {
 		_showSelectAssetDisplayPage = showSelectAssetDisplayPage;
 
 		return _showSelectAssetDisplayPage;
+	}
+
+	public boolean isSystemVocabulary(AssetVocabulary vocabulary) {
+		if ((vocabulary == null) ||
+			!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-86291")) {
+
+			return false;
+		}
+
+		return vocabulary.isSystem();
 	}
 
 	public boolean isVisibilityTypeDisabled(AssetVocabulary vocabulary) {

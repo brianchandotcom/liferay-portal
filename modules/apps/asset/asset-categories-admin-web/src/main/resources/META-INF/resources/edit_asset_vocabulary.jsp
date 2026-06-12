@@ -25,6 +25,8 @@ portletDisplay.setURLBack(redirect);
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vocabulary") : vocabulary.getTitle(locale));
+
+boolean systemVocabulary = assetCategoriesDisplayContext.isSystemVocabulary(vocabulary);
 %>
 
 <portlet:actionURL name="/asset_categories_admin/edit_asset_vocabulary" var="editVocabularyURL">
@@ -51,9 +53,9 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 			collapsible="<%= true %>"
 			label="details"
 		>
-			<aui:input label="name" name="title" placeholder="name" />
+			<aui:input disabled="<%= systemVocabulary %>" label="name" name="title" placeholder="name" />
 
-			<aui:input label="external-reference-code" name="externalReferenceCode" placeholder="external-reference-code" />
+			<aui:input disabled="<%= systemVocabulary %>" label="external-reference-code" name="externalReferenceCode" placeholder="external-reference-code" />
 
 			<aui:input name="description" placeholder="description" />
 
@@ -76,7 +78,9 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 			</div>
 		</liferay-frontend:fieldset>
 
-		<%@ include file="/edit_vocabulary_settings.jspf" %>
+		<c:if test="<%= !systemVocabulary %>">
+			<%@ include file="/edit_vocabulary_settings.jspf" %>
+		</c:if>
 
 		<c:if test="<%= vocabulary == null %>">
 			<liferay-frontend:fieldset

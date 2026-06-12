@@ -40,13 +40,12 @@ public class ConsentManagementPlatformCookiesConsentChecker
 		}
 
 		String cookieValue = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_LIFERAY_CONSENT_STATE, httpServletRequest);
+			CookiesConstants.NAME_CONSENT_STATE, httpServletRequest);
 
 		if (Validator.isNull(cookieValue)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					CookiesConstants.NAME_LIFERAY_CONSENT_STATE +
-						" cookie is absent");
+					CookiesConstants.NAME_CONSENT_STATE + " cookie is absent");
 			}
 
 			return true;
@@ -54,8 +53,8 @@ public class ConsentManagementPlatformCookiesConsentChecker
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				CookiesConstants.NAME_LIFERAY_CONSENT_STATE +
-					" cookie value: " + cookieValue);
+				CookiesConstants.NAME_CONSENT_STATE + " cookie value: " +
+					cookieValue);
 		}
 
 		String consentTypeName = CookiesConstants.getConsentTypeName(
@@ -79,8 +78,7 @@ public class ConsentManagementPlatformCookiesConsentChecker
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to parse ",
-						CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+						"Unable to parse ", CookiesConstants.NAME_CONSENT_STATE,
 						" cookie value: ", exception.getMessage()));
 			}
 

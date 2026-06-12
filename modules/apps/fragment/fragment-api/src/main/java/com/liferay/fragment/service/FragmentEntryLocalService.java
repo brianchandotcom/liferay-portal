@@ -98,6 +98,8 @@ public interface FragmentEntryLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
+	public void cleanUpFragmentEntryVersions(long companyId);
+
 	public FragmentEntry copyFragmentEntry(
 			long userId, long groupId, long sourceFragmentEntryId,
 			long fragmentCollectionId, ServiceContext serviceContext)
@@ -513,4 +515,4 @@ public interface FragmentEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-895421038
+// LIFERAY-SERVICE-BUILDER-HASH:-645796491

@@ -137,6 +137,18 @@ public class FDSAPIURLBuilder {
 		}
 	}
 
+	private String _interpolateDefaultToken(
+		String text, String tokenName, String value) {
+
+		if ((_tokenResolutionsJSONObject != null) &&
+			_tokenResolutionsJSONObject.has(tokenName)) {
+
+			return text;
+		}
+
+		return StringUtil.replace(text, "{" + tokenName + "}", value);
+	}
+
 	private String _interpolateTokens(String text) {
 
 		// Interpolate using provided resolved tokens
@@ -182,8 +194,7 @@ public class FDSAPIURLBuilder {
 		User user = themeDisplay.getUser();
 
 		text = _interpolateDefaultToken(
-			text, "userExternalReferenceCode",
-			user.getExternalReferenceCode());
+			text, "userExternalReferenceCode", user.getExternalReferenceCode());
 		text = _interpolateDefaultToken(
 			text, "userId", String.valueOf(user.getUserId()));
 
@@ -192,18 +203,6 @@ public class FDSAPIURLBuilder {
 		}
 
 		return text;
-	}
-
-	private String _interpolateDefaultToken(
-		String text, String tokenName, String value) {
-
-		if ((_tokenResolutionsJSONObject != null) &&
-			_tokenResolutionsJSONObject.has(tokenName)) {
-
-			return text;
-		}
-
-		return StringUtil.replace(text, "{" + tokenName + "}", value);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

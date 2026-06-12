@@ -14,6 +14,7 @@ import com.liferay.fragment.internal.upgrade.v2_1_0.SchemaUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_4_0.FragmentEntryLinkUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v3_0_1.BrowserSnifferFragmentEntryTemplateUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v3_0_2.FragmentEntryHTMLUpgradeProcess;
+import com.liferay.fragment.internal.util.FragmentEntryVersionCleanUpUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -276,6 +277,11 @@ public class FragmentServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.0.1", "3.0.2", new FragmentEntryHTMLUpgradeProcess());
+
+		registry.register(
+			"3.0.2", "3.0.3",
+			UpgradeProcessFactory.runSQL(
+				FragmentEntryVersionCleanUpUtil.getCleanUpSQL()));
 	}
 
 	@Reference

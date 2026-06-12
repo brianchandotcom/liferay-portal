@@ -5,3 +5,4 @@
 
 export {default as FDSFragmentItemSelector} from '../item/selector/FDSFragmentItemSelector';
 export {default as DataSetConfigurationFields} from './DataSetConfigurationFields';
+export {default as UnresolvedDataSetPreview} from './UnresolvedDataSetPreview';

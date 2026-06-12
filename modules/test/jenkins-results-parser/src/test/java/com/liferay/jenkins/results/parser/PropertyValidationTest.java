@@ -21,7 +21,7 @@ public class PropertyValidationTest
 	@Test
 	public void testPropertyConsumption() throws Exception {
 		File jenkinsRepositoryDir =
-			PropertyValidationUtil.resolveJenkinsEEDir();
+			JenkinsResultsParserUtil.getJenkinsRepositoryDir();
 
 		File commandsDir = new File(jenkinsRepositoryDir, "commands");
 

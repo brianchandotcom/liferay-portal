@@ -435,6 +435,59 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 	}
 
 	@Test
+	public void testDeployWorkflowDefinitionWithServiceNode() throws Exception {
+		AssertUtils.assertFailure(
+			KaleoDefinitionValidationException.
+				MustNotSetMultipleOutgoingTransitions.class,
+			"The convert node cannot have multiple outgoing transitions",
+			() -> {
+				InputStream inputStream = getResourceInputStream(
+					"service-node-multiple-transitions-workflow-" +
+						"definition.xml");
+
+				_workflowDefinitionManager.deployWorkflowDefinition(
+					FileUtil.getBytes(inputStream),
+					TestPropsValues.getCompanyId(),
+					RandomTestUtil.randomString(),
+					"Service Node Multiple Transitions Workflow Definition",
+					RandomTestUtil.randomString(), TestPropsValues.getUserId());
+			});
+
+		InputStream inputStream = getResourceInputStream(
+			"service-node-workflow-definition.xml");
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				FileUtil.getBytes(inputStream), TestPropsValues.getCompanyId(),
+				RandomTestUtil.randomString(),
+				"Service Node Workflow Definition",
+				RandomTestUtil.randomString(), TestPropsValues.getUserId());
+
+		List<WorkflowNode> workflowNodes =
+			workflowDefinition.getWorkflowNodes();
+
+		WorkflowNode workflowNode = workflowNodes.get(2);
+
+		Assert.assertEquals(WorkflowNode.Type.SERVICE, workflowNode.getType());
+
+		_assertEquals(
+			List.of(
+				_createWorkflowNodeSetting(
+					"inputVariables",
+					JSONUtil.put(
+						JSONUtil.put("name", "input")
+					).toString()),
+				_createWorkflowNodeSetting(
+					"javaDelegate", "com.example.Converter#convert"),
+				_createWorkflowNodeSetting(
+					"outputVariables",
+					JSONUtil.put(
+						JSONUtil.put("name", "output")
+					).toString())),
+			workflowNode.getWorkflowNodeSettings());
+	}
+
+	@Test
 	public void testDeployWorkflowDraftDefinition() throws Exception {
 		WorkflowDefinition workflowDefinition = _saveWorkflowDefinition();
 

@@ -89,7 +89,7 @@ export class EditOrganizationPage {
 		this.categoryOption = (categoryName: string) =>
 			page.getByRole('option', {name: categoryName});
 		this.categoryInput = (vocabularyName: string) =>
-			page.getByLabel(vocabularyName, {exact: true});
+			page.getByRole('combobox', {exact: true, name: vocabularyName});
 		this.contactInformationLink = page.getByRole('link', {
 			exact: true,
 			name: 'Contact Information',

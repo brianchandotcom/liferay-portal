@@ -82,11 +82,11 @@ html#{$cadmin-selector} {
 				.title {
 					font-size: 12px;
 					font-weight: 600;
+					min-width: 0;
 				}
 
 				.subtitle {
 					color: $cadmin-gray-600;
-					flex-basis: 100%;
 					font-size: 12px;
 				}
 			}

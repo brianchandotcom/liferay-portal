@@ -7,6 +7,7 @@ set -o pipefail
 function main {
 	local fail=0
 	local pass=0
+
 	local scripts_dir
 
 	scripts_dir=$(cd "$(dirname "${0}")/.." && pwd)
@@ -133,8 +134,9 @@ function _run_setup_test {
 
 function _run_test {
 	local script="${1}"
-	local script_name
 	local test_function="${2}"
+
+	local script_name
 
 	script_name=$(basename "${script}")
 

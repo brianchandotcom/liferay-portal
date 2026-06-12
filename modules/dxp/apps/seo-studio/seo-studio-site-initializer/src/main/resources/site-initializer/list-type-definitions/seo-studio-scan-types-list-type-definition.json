@@ -2,6 +2,12 @@
 	"externalReferenceCode": "L_SEO_STUDIO_SCAN_TYPES",
 	"listTypeEntries": [
 		{
+			"externalReferenceCode": "AI_GENERATED",
+			"key": "aiGenerated",
+			"name": "AI Generated",
+			"system": true
+		},
+		{
 			"externalReferenceCode": "CRAWLER",
 			"key": "crawler",
 			"name": "Crawler",

@@ -78,6 +78,7 @@ type DeliverySKU = {
 type DeliverySKUOption = {
 	skuOptionKey: string;
 	skuOptionValueKey: string;
+	skuOptionValueNames: string;
 };
 
 type OptionCategory = {

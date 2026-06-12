@@ -32,9 +32,16 @@ export enum ProductLicenseTier {
 }
 
 export enum ProductLicenseType {
+	MONTHLY = 'Monthly',
 	PERPETUAL = 'Perpetual',
 	SUBSCRIPTION = 'Subscription',
 }
+
+export const ProductLicenseFriendlyName = {
+	[ProductLicenseType.MONTHLY]: 'Monthly',
+	[ProductLicenseType.PERPETUAL]: 'One-Time',
+	[ProductLicenseType.SUBSCRIPTION]: 'Yearly',
+};
 
 export enum ProductOfferingTypes {
 	LIFERAY_PAAS = 'Liferay PaaS',
@@ -51,6 +58,7 @@ export enum ProductSpecificationKey {
 	APP_BETA = 'app-beta',
 	APP_BUILD_NUMBER_OF_CPUS = 'cpu',
 	APP_BUILD_RAM_IN_GBS = 'ram',
+	APP_DEFAULT_SKU_REF = 'default-sku-ref',
 	APP_DEVELOPER_NAME = 'developer-name',
 	APP_ENTRY_UUID = 'app-entry-uuid',
 	APP_LICENSING_TYPE = 'license-type',

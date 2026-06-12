@@ -16,6 +16,22 @@ import {
 import i18n from '../i18n';
 import {getValueFromDeliverySpecifications} from './util';
 
+export function getAiHubTokenSKUs(product: DeliveryProduct) {
+	return product.skus
+		.filter(
+			({purchasable, skuOptions}) =>
+				purchasable &&
+				skuOptions.some((skuOption) =>
+					skuOption.skuOptionValueKey.includes('tokens')
+				)
+		)
+		.sort(
+			(a, b) =>
+				parseInt(a?.sku?.replace(/[^\d]/g, ''), 10) -
+				parseInt(b?.sku?.replace(/[^\d]/g, ''), 10)
+		);
+}
+
 export function getProductFallback(): DeliveryProduct {
 	return {
 		attachments: [],

@@ -46,7 +46,9 @@ export default {
 	'ai-hub': 'AI Hub',
 	'ai-hub-account-details': 'AI Hub Account Details',
 	'ai-hub-account-name': 'AI Hub Account Name',
+	'ai-hub-details': 'AI Hub Details',
 	'ai-hub-information': 'AI Hub Information',
+	'ai-hub-url': 'AI Hub URL',
 	'all-orders': 'All Orders',
 	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the app will be lost. Do you still want to exit?',
@@ -125,6 +127,7 @@ export default {
 	'business-account': 'Business Account',
 	'business-address': 'Business Address',
 	'business-email-address': 'Business Email Address',
+	'buy-liferay-tokens': 'Buy Liferay Tokens',
 	'by-requesting-a-publisher-account-you-agree-to-the':
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
@@ -216,6 +219,7 @@ export default {
 		'Customize Storefront Solution Details',
 	'dashboard': 'Dashboard',
 	'data-center-location': 'Data Center Location',
+	'date': 'Date',
 	'date-created': 'Date Created',
 	'deactivate': 'Deactivate',
 	'deactivated': 'Deactivated',
@@ -250,6 +254,7 @@ export default {
 	'done': 'Done',
 	'download': 'Download',
 	'download-app': 'Download App',
+	'download-invoice': 'Download Invoice',
 	'download-key': 'Download Key',
 	'download-your-activation-key-file-below-and-upload-it-to-the-dedicated-portal-within-your-dxp-environment-to-get-started':
 		'Download your activation key file below and upload it to the dedicated portal within your DXP environment to get started.',
@@ -353,6 +358,7 @@ export default {
 	'go-to-dashboard': 'Go to Dashboard',
 	'go-to-download': 'Go to Download',
 	'go-to-dxp': 'Go to DXP',
+	'go-to-liferay-data-platform': 'Go to Liferay Data Platform',
 	'go-to-marketplace': 'Go to Marketplace',
 	'go-to-my-apps': 'Go to My Apps',
 	'go-to-ssa-trial-listing': 'Go to SSA Trial Listing',
@@ -449,6 +455,8 @@ export default {
 	'liferay-s-privacy-policy': 'Liferay’s Privacy Policy',
 	'liferay-saas': 'Liferay SaaS',
 	'liferay-self-hosted': 'Liferay Self-Hosted',
+	'liferay-tokens-was-purchased-successfully':
+		'Liferay Tokens was purchased successfully',
 	'liferay-version': 'Liferay Version',
 	'limit-reached': 'Limit Reached',
 	'list-with-latest-published-apps': 'List with latest published apps',
@@ -487,6 +495,7 @@ export default {
 	'module-based-apps-delivered-as-lpkg-files-that-the-user-can-install-to-modify-native-liferay-behavior':
 		'Module-based apps delivered as .lpkg files that the user can install to modify native Liferay behavior.',
 	'monetize-your-apps-and-solutions': 'Monetize Your Apps and Solutions',
+	'monthly': 'Monthly',
 	'monthly-increase': 'Monthly Increase',
 	'more-actions': 'More Actions',
 	'more-info': 'More Info',
@@ -552,6 +561,7 @@ export default {
 	'order-received': 'Order Received',
 	'order-received-awaiting-signature': 'Order Received: Awaiting Signature',
 	'order-status': 'Order Status',
+	'order-summary': 'Order Summary',
 	'orders': 'Orders',
 	'other': 'Other',
 	'overall-experience': 'Overall Experience',
@@ -575,6 +585,8 @@ export default {
 	'personal-information-purpose': 'Personal Information & Purpose',
 	'phone': 'Phone',
 	'phone-number': 'Phone Number',
+	'pick-one-of-the-following-three-options-to-immediately-obtain-extra-tokens-to-foster-your-ai-hub-capabilities':
+		'Pick one of the following three options to immediately obtain extra tokens to foster your AI Hub capabilities.',
 	'please-be-aware-that-since-you-are-adding-a-new-version-of-the-app-the-only-section-visible-is-the-build':
 		'Please be aware that since you are adding a new version of the app, the only section visible is the "Build".',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
@@ -633,6 +645,7 @@ export default {
 	'publisher-website': 'Publisher Website',
 	'publisher-website-url': 'Publisher Website URL',
 	'publishers': 'Publishers',
+	'purchase': 'Purchase',
 	'purchase-and-install-new-apps-and-they-will-show-up-here':
 		'Purchase and install new apps and they will show up here.',
 	'purchase-app': 'Purchase App',
@@ -701,6 +714,7 @@ export default {
 	'select-categories': 'Select Categories',
 	'select-category': 'Select Category',
 	'select-compatible-versions': 'Select Compatible Versions',
+	'select-desired-amount-of-tokens': 'Select Desired Amount of Tokens',
 	'select-licensing-terms': 'Select Licensing Terms',
 	'select-purpose': 'Select Purpose',
 	'select-tags': 'Select Tags',
@@ -839,8 +853,11 @@ export default {
 		'To generate your unique activation key file, please provide the technical specifications required below. These details are used exclusively to configure the software for your environment and ensure hardware compatibility.',
 	'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace':
 		'To join an existing business account, please contact your administrator, who can add you. Once added, you will automatically become part of that account and will be able to manage it and make purchases on Markeplace.',
+	'token-monthly-allowance': 'Token Monthly Allowance',
+	'token-past-purchases': 'Token Past Purchases',
 	'token-unavailable': 'Token Unavailable',
 	'tokens': 'Tokens',
+	'tokens-amount': 'Tokens Amount',
 	'total': 'Total',
 	'transaction-details': 'Transaction Details',
 	'transaction-id': 'Transaction ID',

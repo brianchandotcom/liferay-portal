@@ -96,12 +96,8 @@ public class LayoutContentVersionLocalServiceImpl
 		layoutContentVersion.setDataHash(
 			DigesterUtil.digestHex(
 				DigesterUtil.SHA_256, GetterUtil.getString(data)));
-
-		if (MapUtil.isEmpty(nameMap)) {
-			nameMap = layout.getNameMap();
-		}
-
-		layoutContentVersion.setNameMap(nameMap);
+		layoutContentVersion.setNameMap(
+			MapUtil.isEmpty(nameMap) ? layout.getNameMap() : nameMap);
 		layoutContentVersion.setPlid(plid);
 		layoutContentVersion.setSpecSchemaVersion("v1.0");
 		layoutContentVersion.setVersion(version);

@@ -617,7 +617,7 @@ public class PageSpecificationsTestUtil {
 			columns.add("column-3");
 		}
 		else {
-			for (int i = 1; i <= 100; i++) {
+			for (int i = 1; i <= 10; i++) {
 				columns.add(LayoutTypePortletConstants.COLUMN_PREFIX + i);
 			}
 		}

@@ -49,13 +49,17 @@ public class CPDefinitionModelListenerTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testRemoveCommercePricingClassCPDefinitionRel()
-		throws Exception {
-
+	public void testOnBeforeRemove() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		CommercePricingClass commercePricingClass =
+			_commercePricingClassLocalService.addCommercePricingClass(
+				TestPropsValues.getUserId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), serviceContext);
 
 		CommerceCatalog commerceCatalog =
 			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
@@ -66,18 +70,10 @@ public class CPDefinitionModelListenerTest {
 		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
 			commerceCatalog.getGroupId(), "simple", true, false);
 
-		CommercePricingClass commercePricingClass =
-			_commercePricingClassLocalService.addCommercePricingClass(
-				TestPropsValues.getUserId(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(), serviceContext);
-
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel =
-				_commercePricingClassCPDefinitionRelLocalService.
-					addCommercePricingClassCPDefinitionRel(
-						commercePricingClass.getCommercePricingClassId(),
-						cpDefinition1.getCPDefinitionId(), serviceContext);
+		_commercePricingClassCPDefinitionRelLocalService.
+			addCommercePricingClassCPDefinitionRel(
+				commercePricingClass.getCommercePricingClassId(),
+				cpDefinition1.getCPDefinitionId(), serviceContext);
 
 		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinitionFromCatalog(
 			commerceCatalog.getGroupId(), "simple", true, false);
@@ -111,9 +107,8 @@ public class CPDefinitionModelListenerTest {
 				commercePricingClassCPDefinitionRels.get(0);
 
 		Assert.assertEquals(
-			commercePricingClassCPDefinitionRel.getCommercePricingClassId(),
-			actualCommercePricingClassCPDefinitionRel.
-				getCommercePricingClassId());
+			cpDefinition1.getCPDefinitionId(),
+			actualCommercePricingClassCPDefinitionRel.getCPDefinitionId());
 	}
 
 	@Inject

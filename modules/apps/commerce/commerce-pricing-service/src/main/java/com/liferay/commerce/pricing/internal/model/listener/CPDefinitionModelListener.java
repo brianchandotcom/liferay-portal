@@ -26,24 +26,30 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 
 	@Override
 	public void onBeforeRemove(CPDefinition cpDefinition) {
+		try {
+			_onBeforeRemove(cpDefinition);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+	}
+
+	private void _onBeforeRemove(CPDefinition cpDefinition)
+		throws PortalException {
+
 		List<CommercePricingClassCPDefinitionRel>
 			commercePricingClassCPDefinitionRels =
 				_commercePricingClassCPDefinitionRelLocalService.
 					getCommercePricingClassByCPDefinitionId(
 						cpDefinition.getCPDefinitionId());
 
-		try {
-			for (CommercePricingClassCPDefinitionRel
-					commercePricingClassCPDefinitionRel :
-						commercePricingClassCPDefinitionRels) {
+		for (CommercePricingClassCPDefinitionRel
+				commercePricingClassCPDefinitionRel :
+					commercePricingClassCPDefinitionRels) {
 
-				_commercePricingClassCPDefinitionRelLocalService.
-					deleteCommercePricingClassCPDefinitionRel(
-						commercePricingClassCPDefinitionRel);
-			}
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
+			_commercePricingClassCPDefinitionRelLocalService.
+				deleteCommercePricingClassCPDefinitionRel(
+					commercePricingClassCPDefinitionRel);
 		}
 	}
 

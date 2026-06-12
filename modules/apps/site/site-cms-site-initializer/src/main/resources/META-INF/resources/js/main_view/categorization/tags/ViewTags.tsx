@@ -152,6 +152,7 @@ export default function ViewTags({
 					},
 				},
 			],
+			center: true,
 			status: 'danger',
 			title: sub(
 				Liferay.Language.get('delete-x'),

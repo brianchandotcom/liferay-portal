@@ -54,6 +54,7 @@ export default function confirmAndDeleteEntryAction({
 				},
 			},
 		],
+		center: true,
 		role: 'alert',
 		status: 'danger',
 		title,

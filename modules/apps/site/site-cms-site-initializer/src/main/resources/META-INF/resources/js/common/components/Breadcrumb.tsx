@@ -181,6 +181,7 @@ function ActionDropdownItem({
 						},
 					},
 				],
+				center: true,
 				role: 'alertdialog',
 				status: 'danger',
 				title: confirmationTitle || Liferay.Language.get('delete'),

@@ -194,6 +194,7 @@ export default function SpaceGeneralSettings({
 						},
 					},
 				],
+				center: true,
 				role: 'alertdialog',
 				status: 'warning',
 				title: Liferay.Language.get('save-custom-friendly-url'),

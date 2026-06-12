@@ -147,6 +147,7 @@ export default function MergeTagsModalContent({
 							type: 'cancel',
 						},
 					],
+					center: true,
 					onClose: () => {
 						mergeModel?.removeAttribute('hidden');
 					},
@@ -176,6 +177,7 @@ export default function MergeTagsModalContent({
 						},
 					},
 				],
+				center: true,
 				onClose: () => {
 					mergeModel?.removeAttribute('hidden');
 				},

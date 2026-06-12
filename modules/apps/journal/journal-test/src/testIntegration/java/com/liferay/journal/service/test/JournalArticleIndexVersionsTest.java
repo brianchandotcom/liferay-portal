@@ -111,14 +111,14 @@ public class JournalArticleIndexVersionsTest {
 
 		assertSearchCount(1, true);
 
-		JournalArticle updateArticle = JournalTestUtil.updateArticle(
+		JournalArticle updatedArticle = JournalTestUtil.updateArticle(
 			article, article.getTitleMap(), article.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
 		assertSearchCount(1, true);
 
 		_journalArticleLocalService.deleteArticle(
-			_group.getGroupId(), updateArticle.getArticleId(),
+			_group.getGroupId(), updatedArticle.getArticleId(),
 			ServiceContextTestUtil.getServiceContext());
 
 		assertSearchCount(0, true);
@@ -137,14 +137,14 @@ public class JournalArticleIndexVersionsTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		JournalArticle updateArticle = JournalTestUtil.updateArticle(
+		JournalArticle updatedArticle = JournalTestUtil.updateArticle(
 			article, article.getTitleMap(), article.getContent(), true, true,
 			serviceContext);
 
 		assertSearchCount(1, true);
 
 		_journalArticleLocalService.deleteArticle(
-			updateArticle, updateArticle.getUrlTitle(), serviceContext);
+			updatedArticle, updatedArticle.getUrlTitle(), serviceContext);
 
 		assertSearchArticle(1, article);
 	}
@@ -161,13 +161,13 @@ public class JournalArticleIndexVersionsTest {
 
 		assertSearchCount(1, true);
 
-		JournalArticle updateArticle = JournalTestUtil.updateArticle(
+		JournalArticle updatedArticle = JournalTestUtil.updateArticle(
 			article, article.getTitleMap(), article.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
 		assertSearchCount(1, true);
 
-		JournalTestUtil.expireArticle(_group.getGroupId(), updateArticle);
+		JournalTestUtil.expireArticle(_group.getGroupId(), updatedArticle);
 
 		assertSearchCount(0, true);
 		assertSearchCount(1, false);
@@ -260,14 +260,14 @@ public class JournalArticleIndexVersionsTest {
 
 		assertSearchCount(1, true);
 
-		JournalArticle updateArticle = JournalTestUtil.updateArticle(
+		JournalArticle updatedArticle = JournalTestUtil.updateArticle(
 			article, article.getTitleMap(), article.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
 		assertSearchCount(1, true);
 
 		JournalTestUtil.expireArticle(
-			_group.getGroupId(), updateArticle, updateArticle.getVersion());
+			_group.getGroupId(), updatedArticle, updatedArticle.getVersion());
 
 		assertSearchArticle(1, article);
 	}

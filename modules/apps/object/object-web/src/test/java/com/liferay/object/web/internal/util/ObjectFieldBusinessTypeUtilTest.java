@@ -40,53 +40,30 @@ public class ObjectFieldBusinessTypeUtilTest {
 			ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
 				LocaleUtil.US, objectFieldBusinessTypes);
 
+		Map<String, String> objectFieldBusinessTypeMap0 =
+			objectFieldBusinessTypeMaps.get(0);
+		Map<String, String> objectFieldBusinessTypeMap1 =
+			objectFieldBusinessTypeMaps.get(1);
+		Map<String, String> objectFieldBusinessTypeMap2 =
+			objectFieldBusinessTypeMaps.get(2);
+
+		Assert.assertEquals("Apple", objectFieldBusinessTypeMap0.get("label"));
+		Assert.assertEquals("Banana", objectFieldBusinessTypeMap1.get("label"));
 		Assert.assertEquals(
-			"Apple",
-			objectFieldBusinessTypeMaps.get(
-				0
-			).get(
-				"label"
-			));
-		Assert.assertEquals(
-			"Banana",
-			objectFieldBusinessTypeMaps.get(
-				1
-			).get(
-				"label"
-			));
-		Assert.assertEquals(
-			"Pineapple",
-			objectFieldBusinessTypeMaps.get(
-				2
-			).get(
-				"label"
-			));
+			"Pineapple", objectFieldBusinessTypeMap2.get("label"));
 
 		objectFieldBusinessTypeMaps =
 			ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
 				LocaleUtil.BRAZIL, objectFieldBusinessTypes);
 
+		objectFieldBusinessTypeMap0 = objectFieldBusinessTypeMaps.get(0);
+		objectFieldBusinessTypeMap1 = objectFieldBusinessTypeMaps.get(1);
+		objectFieldBusinessTypeMap2 = objectFieldBusinessTypeMaps.get(2);
+
 		Assert.assertEquals(
-			"Abacaxi",
-			objectFieldBusinessTypeMaps.get(
-				0
-			).get(
-				"label"
-			));
-		Assert.assertEquals(
-			"Banana",
-			objectFieldBusinessTypeMaps.get(
-				1
-			).get(
-				"label"
-			));
-		Assert.assertEquals(
-			"Maca",
-			objectFieldBusinessTypeMaps.get(
-				2
-			).get(
-				"label"
-			));
+			"Abacaxi", objectFieldBusinessTypeMap0.get("label"));
+		Assert.assertEquals("Banana", objectFieldBusinessTypeMap1.get("label"));
+		Assert.assertEquals("Maca", objectFieldBusinessTypeMap2.get("label"));
 	}
 
 	private ObjectFieldBusinessType _mockObjectFieldBusinessType(

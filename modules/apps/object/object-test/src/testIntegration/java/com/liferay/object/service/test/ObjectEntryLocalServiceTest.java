@@ -1968,6 +1968,9 @@ public class ObjectEntryLocalServiceTest {
 	public void testAddObjectEntryWithEmailAddressObjectField()
 		throws Exception {
 
+		String blockedDomain = "@blocked.com";
+		String emailPrefix = RandomTestUtil.randomString();
+
 		String objectFieldName = "a" + RandomTestUtil.randomString();
 
 		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
@@ -1981,28 +1984,6 @@ public class ObjectEntryLocalServiceTest {
 				).userId(
 					TestPropsValues.getUserId()
 				).build()));
-
-		String emailPrefix = RandomTestUtil.randomString();
-
-		AssertUtils.assertFailure(
-			ObjectEntryValuesException.InvalidEmailAddress.class,
-			StringBundler.concat(
-				"The email address \"", emailPrefix,
-				"\" is invalid for object field \"", objectFieldName, "\""),
-			() -> _addObjectEntry(
-				objectDefinition,
-				HashMapBuilder.<String, Serializable>put(
-					objectFieldName, emailPrefix
-				).build(),
-				ServiceContextTestUtil.getServiceContext()));
-
-		_testAddObjectEntry("", objectFieldName, objectDefinition, "");
-
-		_testAddObjectEntry(
-			StringUtil.toLowerCase(emailPrefix) + "@example.com",
-			objectFieldName, objectDefinition, emailPrefix + "@EXAMPLE.COM");
-
-		String blockedDomain = "@blocked.com";
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new EmailAddressObjectFieldBuilder(
@@ -2024,7 +2005,7 @@ public class ObjectEntryLocalServiceTest {
 					).name(
 						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
 					).value(
-						Boolean.TRUE.toString()
+						StringPool.TRUE
 					).build())
 			).userId(
 				TestPropsValues.getUserId()
@@ -2040,6 +2021,18 @@ public class ObjectEntryLocalServiceTest {
 				objectDefinition,
 				HashMapBuilder.<String, Serializable>put(
 					objectField.getName(), "user" + blockedDomain
+				).build(),
+				ServiceContextTestUtil.getServiceContext()));
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidEmailAddress.class,
+			StringBundler.concat(
+				"The email address \"", emailPrefix,
+				"\" is invalid for object field \"", objectFieldName, "\""),
+			() -> _addObjectEntry(
+				objectDefinition,
+				HashMapBuilder.<String, Serializable>put(
+					objectFieldName, emailPrefix
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
 
@@ -2062,6 +2055,12 @@ public class ObjectEntryLocalServiceTest {
 					objectField.getName(), "User@Example.com"
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
+
+		_testAddObjectEntry("", objectFieldName, objectDefinition, "");
+
+		_testAddObjectEntry(
+			StringUtil.toLowerCase(emailPrefix) + "@example.com",
+			objectFieldName, objectDefinition, emailPrefix + "@EXAMPLE.COM");
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

@@ -182,7 +182,7 @@ public class EmailAddressObjectFieldBusinessType
 					ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED),
 				StringPool.TRUE)) {
 
-			_validateEmailDomains(
+			_validateEmailAddressDomains(
 				objectField.getName(),
 				ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS,
 				objectFieldSettingsValues);
@@ -194,7 +194,7 @@ public class EmailAddressObjectFieldBusinessType
 				objectField.getName(), objectFieldSettingsValues);
 		}
 
-		_validateEmailDomains(
+		_validateEmailAddressDomains(
 			objectField.getName(),
 			ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS,
 			objectFieldSettingsValues);
@@ -263,7 +263,7 @@ public class EmailAddressObjectFieldBusinessType
 		return null;
 	}
 
-	private void _validateEmailDomains(
+	private void _validateEmailAddressDomains(
 			String objectFieldName, String objectFieldSettingName,
 			Map<String, String> objectFieldSettingsValues)
 		throws PortalException {

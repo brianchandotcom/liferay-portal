@@ -9,14 +9,14 @@ import React from 'react';
 interface Props {
 	disabled?: boolean;
 	ignored: boolean;
-	onToggle: (next: boolean) => void;
+	onClick: () => void;
 	ruleKey: string;
 }
 
 const IgnoreButton: React.FC<Props> = ({
 	disabled,
 	ignored,
-	onToggle,
+	onClick,
 	ruleKey,
 }) => {
 	const label = ignored
@@ -29,7 +29,7 @@ const IgnoreButton: React.FC<Props> = ({
 			className="ml-2"
 			disabled={disabled}
 			displayType="unstyled"
-			onClick={() => onToggle(!ignored)}
+			onClick={onClick}
 			small
 			symbol={ignored ? 'hidden' : 'view'}
 			title={label}

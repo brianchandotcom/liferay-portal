@@ -142,4 +142,4 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 		java.util.NavigableMap<String, String> virtualHostnames);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2100142105
+// LIFERAY-SERVICE-BUILDER-HASH:-1156401688

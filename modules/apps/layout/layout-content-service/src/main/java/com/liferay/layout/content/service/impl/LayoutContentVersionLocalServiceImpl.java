@@ -235,8 +235,7 @@ public class LayoutContentVersionLocalServiceImpl
 			_layoutLocalService.getLayout(layoutContentVersion.getPlid()));
 
 		if (MapUtil.isEmpty(nameMap)) {
-			throw new LayoutContentVersionNameException(
-				"Name must not be null");
+			throw new LayoutContentVersionNameException("Name is null");
 		}
 
 		layoutContentVersion.setModifiedDate(new Date());

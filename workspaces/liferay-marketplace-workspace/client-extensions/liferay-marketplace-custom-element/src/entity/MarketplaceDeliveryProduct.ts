@@ -5,6 +5,7 @@
 
 import {
 	ProductLicense,
+	ProductLicenseFriendlyName,
 	ProductLicenseType,
 	ProductPriceModel,
 	ProductSpecificationKey,
@@ -117,16 +118,22 @@ export class MarketplaceDeliveryProduct {
 		return output;
 	}
 
-	public getPrice() {
+	public getPrice(skuRef?: null | string) {
 		const priceModel = this.getPriceModel();
 
 		if (priceModel.toLowerCase() === ProductPriceModel.FREE.toLowerCase()) {
 			return ProductPriceModel.FREE;
 		}
 
-		const [purchasableSKU] = this.getPurchasableSKUs();
+		const purchasableSKUs = this.getPurchasableSKUs();
 
-		return purchasableSKU?.price?.priceFormatted;
+		if (skuRef) {
+			return purchasableSKUs.find(
+				({externalReferenceCode}) => skuRef === externalReferenceCode
+			)?.price?.priceFormatted;
+		}
+
+		return purchasableSKUs[0]?.price?.priceFormatted;
 	}
 
 	public getPriceModel() {
@@ -238,15 +245,12 @@ export class MarketplaceDeliveryProduct {
 	}
 
 	public getLicenseTagText() {
-		if (!this.specificationValues.APP_LICENSING_TYPE) {
-			return '';
-		}
-
-		if (this.isPerpetualLicense) {
-			return 'One-Time';
-		}
-
-		return 'Anually';
+		return (
+			ProductLicenseFriendlyName[
+				this.specificationValues
+					.APP_LICENSING_TYPE as ProductLicenseType
+			] ?? ''
+		);
 	}
 
 	protected getCategories(vocabulary: string) {

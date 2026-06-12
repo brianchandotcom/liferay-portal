@@ -7,7 +7,6 @@ import {z} from 'zod';
 
 import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
 import zodSchema from '../../../schema/zod';
-import HeadlessAIHubBetaRequestAccess from '../../../services/rest/HeadlessAIHubBetaRequestAccess';
 import {getSiteURL} from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
 
@@ -45,11 +44,6 @@ export class ProductPurchaseAIHub extends ProductPurchase {
 		const cart = this.getCart();
 
 		const order = await super.createOrder(cart);
-
-		await HeadlessAIHubBetaRequestAccess.createAIHubBetaRequestAccess({
-			...this.form,
-			r_orderToAIHubBetaPrivateAccessRequest_commerceOrderId: order?.id,
-		});
 
 		return order;
 	}

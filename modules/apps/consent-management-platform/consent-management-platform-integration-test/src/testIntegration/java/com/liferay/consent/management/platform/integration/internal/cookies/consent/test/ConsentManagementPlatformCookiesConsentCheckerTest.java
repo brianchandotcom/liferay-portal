@@ -79,7 +79,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 		mockHttpServletRequest.setCookies(
 			new Cookie(
 				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeConsentState(
+				_encodeCookieValue(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, true
 					).put(
@@ -112,7 +112,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 		mockHttpServletRequest.setCookies(
 			new Cookie(
 				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeConsentState(
+				_encodeCookieValue(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
 					).put(
@@ -146,7 +146,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 		mockHttpServletRequest.setCookies(
 			new Cookie(
 				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeConsentState(
+				_encodeCookieValue(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, true
 					).put(
@@ -175,7 +175,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 		mockHttpServletRequest.setCookies(
 			new Cookie(
 				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeConsentState(
+				_encodeCookieValue(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
 					).put(
@@ -199,7 +199,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 		mockHttpServletRequest.setCookies(
 			new Cookie(
 				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeConsentState(
+				_encodeCookieValue(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"
 					).put(
@@ -233,9 +233,8 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 		return mockHttpServletRequest;
 	}
 
-	private String _encodeConsentState(JSONObject consentStateJSONObject) {
-		return URLEncoder.encode(
-			consentStateJSONObject.toString(), StandardCharsets.UTF_8);
+	private String _encodeCookieValue(JSONObject jsonObject) {
+		return URLEncoder.encode(jsonObject.toString(), StandardCharsets.UTF_8);
 	}
 
 	@Inject(

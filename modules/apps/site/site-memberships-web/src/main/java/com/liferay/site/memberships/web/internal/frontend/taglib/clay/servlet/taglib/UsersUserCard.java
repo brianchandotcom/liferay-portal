@@ -7,10 +7,14 @@ package com.liferay.site.memberships.web.internal.frontend.taglib.clay.servlet.t
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseUserCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.memberships.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider;
 import com.liferay.taglib.util.LexiconUtil;
 
@@ -25,11 +29,12 @@ import java.util.List;
 public class UsersUserCard extends BaseUserCard {
 
 	public UsersUserCard(
-		User user, RenderRequest renderRequest, RenderResponse renderResponse,
-		RowChecker rowChecker) {
+		boolean inherited, RenderRequest renderRequest,
+		RenderResponse renderResponse, RowChecker rowChecker, User user) {
 
 		super(user, renderRequest, rowChecker);
 
+		_inherited = inherited;
 		_renderResponse = renderResponse;
 	}
 
@@ -52,12 +57,28 @@ public class UsersUserCard extends BaseUserCard {
 	}
 
 	@Override
+	public String getSubtitle() {
+		String subtitle = super.getSubtitle();
+
+		if (!_inherited) {
+			return subtitle;
+		}
+
+		return StringBundler.concat(
+			subtitle, " (",
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(renderRequest), "inherited"),
+			StringPool.CLOSE_PARENTHESIS);
+	}
+
+	@Override
 	public String getUserColorClass() {
 		return "sticker-user-icon " + LexiconUtil.getUserColorCssClass(user);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UsersUserCard.class);
 
+	private final boolean _inherited;
 	private final RenderResponse _renderResponse;
 
 }

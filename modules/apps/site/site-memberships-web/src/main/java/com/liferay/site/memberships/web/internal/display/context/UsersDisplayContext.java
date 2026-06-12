@@ -5,26 +5,32 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -39,8 +45,12 @@ import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -96,6 +106,40 @@ public class UsersDisplayContext {
 		_keywords = ParamUtil.getString(_renderRequest, "keywords");
 
 		return _keywords;
+	}
+
+	public String getMembershipLabel(long userId) {
+		List<String> inheritanceLabels = new ArrayList<>();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		for (Organization organization : _getGroupOrganizations()) {
+			if (UserLocalServiceUtil.hasOrganizationUser(
+					organization.getOrganizationId(), userId)) {
+
+				inheritanceLabels.add(
+					LanguageUtil.format(
+						locale, "inherited-from-organization-x",
+						organization.getName()));
+			}
+		}
+
+		for (UserGroup userGroup : _getGroupUserGroups()) {
+			if (UserLocalServiceUtil.hasUserGroupUser(
+					userGroup.getUserGroupId(), userId)) {
+
+				inheritanceLabels.add(
+					LanguageUtil.format(
+						locale, "inherited-from-user-group-x",
+						userGroup.getName()));
+			}
+		}
+
+		return StringUtil.merge(inheritanceLabels, StringPool.COMMA_AND_SPACE);
 	}
 
 	public String getNavigation() {
@@ -334,15 +378,59 @@ public class UsersDisplayContext {
 			userSearch.setResultsAndTotal(Collections::emptyList, 0);
 		}
 
-		userSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));
+		userSearch.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse) {
+
+				@Override
+				public boolean isDisabled(Object object) {
+					User user = (User)object;
+
+					return isInheritedMember(user.getUserId());
+				}
+
+			});
 
 		_userSearch = userSearch;
 
 		return _userSearch;
 	}
 
+	public boolean isInheritedMember(long userId) {
+		if (_directUserIds == null) {
+			_directUserIds = SetUtil.fromArray(
+				UserLocalServiceUtil.getGroupUserIds(getGroupId()));
+		}
+
+		return !_directUserIds.contains(userId);
+	}
+
+	private List<Organization> _getGroupOrganizations() {
+		if (_groupOrganizations != null) {
+			return _groupOrganizations;
+		}
+
+		_groupOrganizations =
+			OrganizationLocalServiceUtil.getGroupOrganizations(getGroupId());
+
+		return _groupOrganizations;
+	}
+
+	private List<UserGroup> _getGroupUserGroups() {
+		if (_groupUserGroups != null) {
+			return _groupUserGroups;
+		}
+
+		_groupUserGroups = UserGroupLocalServiceUtil.getGroupUserGroups(
+			getGroupId());
+
+		return _groupUserGroups;
+	}
+
+	private Set<Long> _directUserIds;
 	private String _displayStyle;
 	private Long _groupId;
+	private List<Organization> _groupOrganizations;
+	private List<UserGroup> _groupUserGroups;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _navigation;

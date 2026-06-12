@@ -82,14 +82,14 @@ public class CookiesConsentCheckerResolverImplTest {
 
 			mockHttpServletRequest.setCookies(
 				new Cookie(
-					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"),
-				new Cookie(
-					CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+					CookiesConstants.NAME_CONSENT_STATE,
 					URLEncoder.encode(
 						JSONUtil.put(
 							CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
 						).toString(),
-						StandardCharsets.UTF_8)));
+						StandardCharsets.UTF_8)),
+				new Cookie(
+					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"));
 
 			Assert.assertTrue(
 				cookiesConsentChecker.hasConsent(

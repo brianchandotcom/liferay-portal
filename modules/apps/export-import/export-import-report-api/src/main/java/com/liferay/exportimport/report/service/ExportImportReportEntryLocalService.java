@@ -87,6 +87,13 @@ public interface ExportImportReportEntryLocalService
 		long classNameId, long exportImportConfigurationId,
 		String modelNameLanguageKey);
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ExportImportReportEntry addWarningExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long classPK, long exportImportConfigurationId,
+		String warningMessage, String modelNameLanguageKey);
+
 	/**
 	 * Creates a new export import report entry with the primary key. Does not add the export import report entry to the database.
 	 *
@@ -285,6 +292,12 @@ public interface ExportImportReportEntryLocalService
 			long classNameId, long exportImportConfigurationId,
 			String modelNameLanguageKey);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportImportReportEntry getOrAddWarningExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long classPK, long exportImportConfigurationId,
+		String warningMessage, String modelNameLanguageKey);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -320,4 +333,4 @@ public interface ExportImportReportEntryLocalService
 		ExportImportReportEntry exportImportReportEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:810897473
+// LIFERAY-SERVICE-BUILDER-HASH:-1682521227

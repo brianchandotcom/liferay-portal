@@ -13,13 +13,16 @@ interface Props {
 
 const SummaryHeader: React.FC<Props> = ({failed, passed, total}) => {
 	return (
-		<div className="production-readiness-summary">
+		<div data-testid="production-readiness-summary">
 			<div className="small text-secondary text-uppercase">
 				{Liferay.Language.get('summary')}
 			</div>
 
 			<div className="align-items-baseline d-flex">
-				<span className="h2 mb-0 mr-1 production-readiness-count-total">
+				<span
+					className="h2 mb-0 mr-1"
+					data-testid="production-readiness-count-total"
+				>
 					{total}
 				</span>
 
@@ -27,7 +30,10 @@ const SummaryHeader: React.FC<Props> = ({failed, passed, total}) => {
 					{Liferay.Language.get('validations')}
 				</span>
 
-				<span className="h2 mb-0 mr-1 production-readiness-count-passed text-success">
+				<span
+					className="h2 mb-0 mr-1 text-success"
+					data-testid="production-readiness-count-passed"
+				>
 					{passed}
 				</span>
 
@@ -35,7 +41,10 @@ const SummaryHeader: React.FC<Props> = ({failed, passed, total}) => {
 					{Liferay.Language.get('passed')}
 				</span>
 
-				<span className="h2 mb-0 mr-1 production-readiness-count-failed text-danger">
+				<span
+					className="h2 mb-0 mr-1 text-danger"
+					data-testid="production-readiness-count-failed"
+				>
 					{failed}
 				</span>
 

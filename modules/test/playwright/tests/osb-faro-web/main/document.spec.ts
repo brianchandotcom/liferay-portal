@@ -299,3 +299,57 @@ test(
 		await expect(page.getByText('33.33%')).toBeVisible();
 	}
 );
+
+test(
+	'Document downloads are tracked on the Documents and Media asset',
+	{
+		tag: ['@LRAC-10671', '@LRAC-10672', '@LRAC-10673'],
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const date = new Date();
+
+		const documentDownloadedEvent = {
+			applicationId: 'Document',
+			assetId: '1',
+			assetTitle: 'DM AC Title',
+			canonicalUrl:
+				'/web/site-name/ac-page/-/document_library/view_file/1',
+			channelId: channel.id,
+			eventDate: date.toISOString(),
+			eventId: 'documentDownloaded',
+			title: 'DM AC Title',
+			userId: '1',
+		};
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			documentDownloadedEvent,
+			documentDownloadedEvent,
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.assetDocumentsAndMediaPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Last 24 hours'}),
+			trigger: page.getByRole('button', {name: 'Last 30 days'}),
+		});
+
+		await page
+			.getByRole('link', {exact: true, name: 'DM AC Title'})
+			.click();
+
+		// The Visitors Behavior card reflects the two downloads
+
+		await expect(
+			page
+				.locator('.analytics-metrics-tabs .card-tab')
+				.filter({hasText: 'Downloads'})
+				.locator('.metric-value')
+		).toHaveText('2');
+	}
+);

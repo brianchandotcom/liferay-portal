@@ -87,11 +87,12 @@ public class ConsentManagementPlatformTopHeadDynamicInclude
 				consentManagementPlatformConfiguration.scriptTag(),
 				nonceAttribute));
 
-		String bridgeScript =
-			consentManagementPlatformConfiguration.bridgeScript();
+		String consentMappingScript =
+			consentManagementPlatformConfiguration.consentMappingScript();
 
-		if (Validator.isNotNull(bridgeScript)) {
-			printWriter.println(_addNonce(bridgeScript, nonceAttribute));
+		if (Validator.isNotNull(consentMappingScript)) {
+			printWriter.println(
+				_addNonce(consentMappingScript, nonceAttribute));
 		}
 	}
 

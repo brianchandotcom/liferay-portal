@@ -214,7 +214,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					externalReferenceCode, httpServletRequest);
 
 			if (fragmentRendererContext.isEditMode() && hasTokens) {
-				_writeBackendResolvedTokens(
+				_writeBackendResolvableTokenNames(
 					fragmentEntryLink, externalReferenceCode,
 					httpServletRequest);
 
@@ -303,7 +303,10 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					String tokenValue = tokenResolutionsJSONObject.getString(
 						tokenName);
 
-					if (Validator.isNull(tokenValue)) {
+					if (Validator.isNull(tokenValue) ||
+						(tokenResolutionsJSONObject.getJSONObject(tokenName) !=
+							null)) {
+
 						tokenValue = "{" + tokenName + "}";
 					}
 
@@ -338,6 +341,23 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return null;
 	}
 
+	private Set<String> _getBackendResolvableTokenNames(
+		String externalReferenceCode, HttpServletRequest httpServletRequest) {
+
+		Set<String> backendResolvableTokenNames = _getTokenNames(
+			externalReferenceCode, httpServletRequest);
+
+		Matcher matcher = _pattern.matcher(
+			_fdsRenderer.getFDSAPIURL(
+				externalReferenceCode, httpServletRequest, true, null));
+
+		while (matcher.find()) {
+			backendResolvableTokenNames.remove(matcher.group(1));
+		}
+
+		return backendResolvableTokenNames;
+	}
+
 	private Set<String> _getTokenNames(
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
 
@@ -358,6 +378,9 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		JSONObject apiURLTokenMappingsJSONObject, String externalReferenceCode,
 		HttpServletRequest httpServletRequest) {
 
+		Set<String> backendResolvableTokenNames =
+			_getBackendResolvableTokenNames(
+				externalReferenceCode, httpServletRequest);
 		Set<String> tokenNames = _getTokenNames(
 			externalReferenceCode, httpServletRequest);
 
@@ -370,6 +393,17 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			if (Validator.isNotNull(tokenValue)) {
 				tokenResolutionsJSONObject.put(
 					tokenName, HtmlUtil.escape(tokenValue));
+			}
+			else if (backendResolvableTokenNames.contains(tokenName) &&
+					 _hasExplicitNonbackendResolvedMapping(
+						 apiURLTokenMappingsJSONObject, tokenName)) {
+
+				// The user picked a non-backend mapping and left it empty. Mark
+				// the token with an empty JSON object so the URL builder leaves
+				// it unresolved instead of applying the backend/OOTB default.
+
+				tokenResolutionsJSONObject.put(
+					tokenName, _jsonFactory.createJSONObject());
 			}
 			else {
 				tokenResolutionsJSONObject.remove(tokenName);
@@ -411,6 +445,24 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 
 		return mappingJSONObject.getString("classPK");
+	}
+
+	private boolean _hasExplicitNonbackendResolvedMapping(
+		JSONObject apiURLTokenMappingsJSONObject, String tokenName) {
+
+		if (!apiURLTokenMappingsJSONObject.has(tokenName)) {
+			return false;
+		}
+
+		JSONObject mappingJSONObject =
+			apiURLTokenMappingsJSONObject.getJSONObject(tokenName);
+
+		if (mappingJSONObject == null) {
+			return true;
+		}
+
+		return !Objects.equals(
+			mappingJSONObject.getString("source"), "backend-resolved");
 	}
 
 	private boolean _hasTokens(
@@ -468,26 +520,18 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return null;
 	}
 
-	private void _writeBackendResolvedTokens(
+	private void _writeBackendResolvableTokenNames(
 		FragmentEntryLink fragmentEntryLink, String externalReferenceCode,
 		HttpServletRequest httpServletRequest) {
 
-		Set<String> tokenNames = _getTokenNames(
-			externalReferenceCode, httpServletRequest);
-
-		String backendResolvedFDSAPIURL = _fdsRenderer.getFDSAPIURL(
-			externalReferenceCode, httpServletRequest, true, null);
-
-		Matcher matcher = _pattern.matcher(backendResolvedFDSAPIURL);
-
-		while (matcher.find()) {
-			tokenNames.remove(matcher.group(1));
-		}
+		Set<String> backendResolvableTokenNames =
+			_getBackendResolvableTokenNames(
+				externalReferenceCode, httpServletRequest);
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (String token : tokenNames) {
-			jsonArray.put(token);
+		for (String backendResolvableTokenName : backendResolvableTokenNames) {
+			jsonArray.put(backendResolvableTokenName);
 		}
 
 		JSONObject editableValuesJSONObject =
@@ -508,7 +552,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 
 		configurationJSONObject.put(
-			"backendResolvedTokens", jsonArray.toString());
+			"backendResolvableTokenNames", jsonArray.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

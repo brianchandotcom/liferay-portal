@@ -17,11 +17,12 @@ import DataSetSelector from './components/DataSetSelector';
 import EntitySelectorRow from './components/EntitySelectorRow';
 import LiteralInput from './components/LiteralInput';
 import {
+	EMappingMode,
 	IdentifierField,
-	MappingMode,
 	TokenMapping,
 	getMappingMode,
-	isBackendMapped,
+	isAutoResolved,
+	isContentMapped,
 	isContextMapped,
 	isMappedTokenValue,
 } from './tokenMapping';
@@ -34,7 +35,7 @@ interface IConfigurationField {
 	onValueSelect: (name: string, value: any) => void;
 	values: {
 		apiURLTokenMappings: string;
-		backendResolvableTokenNames: string;
+		autoResolvableTokenNames: string;
 		itemSelector: IDataSet;
 	};
 }
@@ -79,30 +80,30 @@ export default function DataSetConfigurationFields({
 		}
 	}, [tokenKeys, selectedTokenKey]);
 
-	const backendResolvableTokenNames = useMemo(
+	const autoResolvableTokenNames = useMemo(
 		() =>
 			new Set<string>(
-				JSON.parse(values.backendResolvableTokenNames || '[]')
+				JSON.parse(values.autoResolvableTokenNames || '[]')
 			),
-		[values.backendResolvableTokenNames]
+		[values.autoResolvableTokenNames]
 	);
 
-	const isCurrentTokenBackendResolvable =
-		backendResolvableTokenNames.has(selectedTokenKey);
+	const isCurrentTokenAutoResolvable =
+		autoResolvableTokenNames.has(selectedTokenKey);
 
 	const isTokenMapped = useCallback(
 		(tokenKey: string): boolean => {
 			const mapping = apiURLTokenMappings[tokenKey];
 
 			if (mapping === undefined) {
-				return backendResolvableTokenNames.has(tokenKey);
+				return autoResolvableTokenNames.has(tokenKey);
 			}
 
 			if (typeof mapping === 'string') {
 				return !!mapping.trim().length;
 			}
 
-			if (isBackendMapped(mapping)) {
+			if (isAutoResolved(mapping)) {
 				return true;
 			}
 
@@ -118,7 +119,7 @@ export default function DataSetConfigurationFields({
 				? !!mapping.externalReferenceCode
 				: !!mapping.classPK;
 		},
-		[apiURLTokenMappings, backendResolvableTokenNames]
+		[apiURLTokenMappings, autoResolvableTokenNames]
 	);
 
 	const isCompleted = useMemo(
@@ -131,10 +132,10 @@ export default function DataSetConfigurationFields({
 	const currentTokenMapping: TokenMapping = useMemo(
 		() =>
 			apiURLTokenMappings[selectedTokenKey] ??
-			(isCurrentTokenBackendResolvable
-				? {source: 'backend-resolved'}
+			(isCurrentTokenAutoResolvable
+				? {mappingMode: EMappingMode.AUTO_RESOLVED}
 				: ''),
-		[apiURLTokenMappings, isCurrentTokenBackendResolvable, selectedTokenKey]
+		[apiURLTokenMappings, isCurrentTokenAutoResolvable, selectedTokenKey]
 	);
 
 	const currentMappingMode = getMappingMode(currentTokenMapping);
@@ -142,10 +143,13 @@ export default function DataSetConfigurationFields({
 	const displayPageTemplate = isOnDisplayPageTemplate();
 
 	const mappingOptions = [
-		{label: Liferay.Language.get('input-token-value'), value: 'literal'},
+		{
+			label: Liferay.Language.get('input-token-value'),
+			value: EMappingMode.LITERAL,
+		},
 		{
 			label: Liferay.Language.get('map-to-selected-entity'),
-			value: 'content',
+			value: EMappingMode.CONTENT,
 		},
 		...(displayPageTemplate
 			? [
@@ -153,15 +157,15 @@ export default function DataSetConfigurationFields({
 						label: Liferay.Language.get(
 							'map-to-page-context-entity'
 						),
-						value: 'context',
+						value: EMappingMode.CONTEXT,
 					},
 				]
 			: []),
-		...(isCurrentTokenBackendResolvable
+		...(isCurrentTokenAutoResolvable
 			? [
 					{
 						label: Liferay.Language.get('resolve-automatically'),
-						value: 'auto',
+						value: EMappingMode.AUTO_RESOLVED,
 					},
 				]
 			: []),
@@ -185,20 +189,20 @@ export default function DataSetConfigurationFields({
 	);
 
 	const changeMappingMode = useCallback(
-		(mappingMode: MappingMode) => {
+		(mappingMode: EMappingMode) => {
 			if (mappingMode === currentMappingMode) {
 				return;
 			}
 
-			if (mappingMode === 'literal') {
+			if (mappingMode === EMappingMode.LITERAL) {
 				updateTokenMapping(selectedTokenKey, '');
 
 				return;
 			}
 
-			if (mappingMode === 'auto') {
+			if (mappingMode === EMappingMode.AUTO_RESOLVED) {
 				updateTokenMapping(selectedTokenKey, {
-					source: 'backend-resolved',
+					mappingMode: EMappingMode.AUTO_RESOLVED,
 				});
 
 				return;
@@ -206,14 +210,14 @@ export default function DataSetConfigurationFields({
 
 			const existingFieldId =
 				isMappedTokenValue(currentTokenMapping) &&
-				!isBackendMapped(currentTokenMapping)
+				!isAutoResolved(currentTokenMapping)
 					? currentTokenMapping.fieldId
 					: '';
 
-			if (mappingMode === 'context') {
+			if (mappingMode === EMappingMode.CONTEXT) {
 				updateTokenMapping(selectedTokenKey, {
 					fieldId: existingFieldId,
-					source: 'context',
+					mappingMode: EMappingMode.CONTEXT,
 				});
 
 				return;
@@ -224,7 +228,7 @@ export default function DataSetConfigurationFields({
 				classPK: '',
 				externalReferenceCode: '',
 				fieldId: '',
-				source: 'content',
+				mappingMode: EMappingMode.CONTENT,
 			});
 		},
 		[
@@ -372,7 +376,7 @@ export default function DataSetConfigurationFields({
 									id={mappingSelectId}
 									onChange={(event) =>
 										changeMappingMode(
-											event.target.value as MappingMode
+											event.target.value as EMappingMode
 										)
 									}
 									options={mappingOptions}
@@ -381,44 +385,41 @@ export default function DataSetConfigurationFields({
 								/>
 							</ClayForm.Group>
 
-							{currentMappingMode === 'content' &&
-								isMappedTokenValue(currentTokenMapping) &&
-								!isContextMapped(currentTokenMapping) &&
-								!isBackendMapped(currentTokenMapping) && (
-									<EntitySelectorRow
-										entity={currentTokenMapping}
-										onEntityChange={(entity) =>
-											updateTokenMapping(
-												selectedTokenKey,
-												entity
-											)
-										}
-										onEntityRemove={() =>
-											updateTokenMapping(
-												selectedTokenKey,
-												{
-													className: '',
-													classPK: '',
-													externalReferenceCode: '',
-													fieldId: '',
-													source: 'content',
-												}
-											)
-										}
-									/>
-								)}
+							{isContentMapped(currentTokenMapping) && (
+								<EntitySelectorRow
+									entity={currentTokenMapping}
+									onEntityChange={(entity) =>
+										updateTokenMapping(
+											selectedTokenKey,
+											entity
+										)
+									}
+									onEntityRemove={() =>
+										updateTokenMapping(selectedTokenKey, {
+											className: '',
+											classPK: '',
+											externalReferenceCode: '',
+											fieldId: '',
+											mappingMode: EMappingMode.CONTENT,
+										})
+									}
+								/>
+							)}
 
-							{currentMappingMode !== 'auto' && (
+							{currentMappingMode !==
+								EMappingMode.AUTO_RESOLVED && (
 								<ClayForm.Group>
 									<label htmlFor={fieldInputId}>
-										{currentMappingMode === 'literal'
+										{currentMappingMode ===
+										EMappingMode.LITERAL
 											? Liferay.Language.get(
 													'token-value'
 												)
 											: Liferay.Language.get('field')}
 									</label>
 
-									{currentMappingMode === 'literal' ? (
+									{currentMappingMode ===
+									EMappingMode.LITERAL ? (
 										<LiteralInput
 											inputId={fieldInputId}
 											onCommit={(value) =>
@@ -437,15 +438,7 @@ export default function DataSetConfigurationFields({
 									) : (
 										<ClaySelectWithOption
 											disabled={
-												currentMappingMode ===
-													'content' &&
-												isMappedTokenValue(
-													currentTokenMapping
-												) &&
-												!isBackendMapped(
-													currentTokenMapping
-												) &&
-												!isContextMapped(
+												isContentMapped(
 													currentTokenMapping
 												) &&
 												!currentTokenMapping.className
@@ -456,7 +449,7 @@ export default function DataSetConfigurationFields({
 													!isMappedTokenValue(
 														currentTokenMapping
 													) ||
-													isBackendMapped(
+													isAutoResolved(
 														currentTokenMapping
 													)
 												) {
@@ -499,13 +492,11 @@ export default function DataSetConfigurationFields({
 												isMappedTokenValue(
 													currentTokenMapping
 												) &&
-												!isBackendMapped(
+												!isAutoResolved(
 													currentTokenMapping
 												) &&
 												!(
-													currentMappingMode ===
-														'content' &&
-													!isContextMapped(
+													isContentMapped(
 														currentTokenMapping
 													) &&
 													!currentTokenMapping.className

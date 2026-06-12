@@ -167,7 +167,7 @@ public class AssetListTypePropertiesUtilTest {
 			Collections.singletonList(
 				_mockObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, false,
-					"attachment")));
+					RandomTestUtil.randomString())));
 
 		JSONArray jsonArray =
 			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
@@ -193,9 +193,10 @@ public class AssetListTypePropertiesUtilTest {
 			Arrays.asList(
 				_mockObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, false,
-					"attachment"),
+					RandomTestUtil.randomString()),
 				_mockObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT, true, "creator"),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, true,
+					RandomTestUtil.randomString()),
 				_mockObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT, false, "title")));
 
@@ -262,7 +263,8 @@ public class AssetListTypePropertiesUtilTest {
 		long listTypeDefinitionId = RandomTestUtil.randomLong();
 
 		ObjectField objectField = _mockObjectField(
-			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, false, "status");
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, false,
+			RandomTestUtil.randomString());
 
 		Mockito.when(
 			objectField.getListTypeDefinitionId()
@@ -293,13 +295,13 @@ public class AssetListTypePropertiesUtilTest {
 		Mockito.when(
 			draftListTypeEntry.getKey()
 		).thenReturn(
-			"draft"
+			RandomTestUtil.randomString()
 		);
 
 		Mockito.when(
 			draftListTypeEntry.getName(LocaleUtil.US, true)
 		).thenReturn(
-			"Draft"
+			RandomTestUtil.randomString()
 		);
 
 		_listTypeEntryLocalServiceUtilMockedStatic.when(
@@ -399,13 +401,13 @@ public class AssetListTypePropertiesUtilTest {
 		);
 
 		Mockito.when(
-			objectField.getName()
+			objectField.getLabel(LocaleUtil.US, true)
 		).thenReturn(
 			name
 		);
 
 		Mockito.when(
-			objectField.getLabel(LocaleUtil.US, true)
+			objectField.getName()
 		).thenReturn(
 			name
 		);
@@ -475,19 +477,19 @@ public class AssetListTypePropertiesUtilTest {
 		);
 	}
 
-	private static final long _CLASS_NAME_ID_1 = 30601L;
+	private static final long _CLASS_NAME_ID_1 = RandomTestUtil.randomLong();
 
-	private static final long _CLASS_NAME_ID_2 = 30602L;
+	private static final long _CLASS_NAME_ID_2 = RandomTestUtil.randomLong();
 
-	private static final long _CLASS_TYPE_ID_1 = 42L;
+	private static final long _CLASS_TYPE_ID_1 = RandomTestUtil.randomLong();
 
-	private static final long _CLASS_TYPE_ID_2 = 99L;
+	private static final long _CLASS_TYPE_ID_2 = RandomTestUtil.randomLong();
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
-	private static final String _LABEL_1 = "Task";
+	private static final String _LABEL_1 = RandomTestUtil.randomString();
 
-	private static final String _LABEL_2 = "Project";
+	private static final String _LABEL_2 = RandomTestUtil.randomString();
 
 	private static MockedStatic<FeatureFlagManagerUtil>
 		_featureFlagManagerUtilMockedStatic;

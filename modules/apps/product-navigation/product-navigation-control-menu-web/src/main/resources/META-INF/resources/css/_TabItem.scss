@@ -21,7 +21,8 @@ html#{$cadmin-selector} {
 				.sidebar-body__add-panel__tab-item-add {
 					position: absolute;
 					right: 4px;
-					top: 0;
+					top: 50%;
+					transform: translateY(-50%);
 				}
 			}
 
@@ -128,6 +129,8 @@ html#{$cadmin-selector} {
 
 				.sidebar-body__add-panel__tab-item-add {
 					right: 0;
+					top: 0;
+					transform: none;
 				}
 			}
 		}

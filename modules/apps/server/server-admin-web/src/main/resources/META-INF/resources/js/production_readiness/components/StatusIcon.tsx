@@ -13,26 +13,27 @@ interface Props {
 	status: RuleStatus;
 }
 
-const StatusIcon: React.FC<Props> = ({ignored, status}) => {
+function statusIcon(
+	status: RuleStatus,
+	ignored: boolean
+): {className: string; symbol: string} {
 	if (ignored) {
-		return (
-			<span className="text-secondary">
-				<ClayIcon symbol="simple-circle" />
-			</span>
-		);
+		return {className: 'text-secondary', symbol: 'simple-circle'};
 	}
 
 	if (status === 'PASS') {
-		return (
-			<span className="text-success">
-				<ClayIcon symbol="check-circle-full" />
-			</span>
-		);
+		return {className: 'text-success', symbol: 'check-circle-full'};
 	}
 
+	return {className: 'text-danger', symbol: 'exclamation-circle'};
+}
+
+const StatusIcon: React.FC<Props> = ({ignored, status}) => {
+	const {className, symbol} = statusIcon(status, ignored);
+
 	return (
-		<span className="text-danger">
-			<ClayIcon symbol="exclamation-circle" />
+		<span aria-hidden="true" className={className}>
+			<ClayIcon symbol={symbol} />
 		</span>
 	);
 };

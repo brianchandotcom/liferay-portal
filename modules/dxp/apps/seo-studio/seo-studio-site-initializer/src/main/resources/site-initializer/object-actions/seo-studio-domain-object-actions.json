@@ -1,0 +1,20 @@
+{
+	"object-actions": [
+		{
+			"active": true,
+			"errorMessage": {
+				"en_US": "Unable to create the scans. Please try again later or contact support."
+			},
+			"externalReferenceCode": "L_SEO_STUDIO_DOMAIN_CREATE_SCANS",
+			"label": {
+				"en_US": "Create Scans"
+			},
+			"name": "createScans",
+			"objectActionExecutorKey": "create-seo-studio-scans",
+			"objectActionTriggerKey": "standalone",
+			"parameters": {
+			}
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:SEOStudioDomain$]"
+}

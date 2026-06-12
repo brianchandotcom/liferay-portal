@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -153,9 +154,13 @@ public class FDSAPIURLBuilder {
 
 		// Interpolate using provided resolved tokens
 
+		List<String> nullifiedTokenNames = new ArrayList<>();
+
 		if (_tokenResolutionsJSONObject != null) {
 			for (String key : _tokenResolutionsJSONObject.keySet()) {
 				if (_tokenResolutionsJSONObject.getJSONObject(key) != null) {
+					nullifiedTokenNames.add(key);
+
 					continue;
 				}
 
@@ -165,18 +170,34 @@ public class FDSAPIURLBuilder {
 			}
 		}
 
-		// Interpolate using registered resolvers
+		// Interpolate using registered resolvers. Resolvers offer no way to
+		// skip a token, so nullified tokens are masked while the resolver
+		// runs and restored afterwards
 
 		FDSAPIURLResolver fdsAPIURLResolver =
 			_fdsAPIURLResolverRegistry.getFDSAPIURLResolver(
 				_restApplication, _restSchema);
 
 		if (fdsAPIURLResolver != null) {
+			for (String nullifiedTokenName : nullifiedTokenNames) {
+				text = StringUtil.replace(
+					text, "{" + nullifiedTokenName + "}",
+					StringUtil.quote(
+						nullifiedTokenName, _TOKEN_MASK_DELIMITER));
+			}
+
 			try {
 				text = fdsAPIURLResolver.resolve(text, _httpServletRequest);
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException);
+			}
+
+			for (String nullifiedTokenName : nullifiedTokenNames) {
+				text = StringUtil.replace(
+					text,
+					StringUtil.quote(nullifiedTokenName, _TOKEN_MASK_DELIMITER),
+					"{" + nullifiedTokenName + "}");
 			}
 		}
 
@@ -204,6 +225,8 @@ public class FDSAPIURLBuilder {
 
 		return text;
 	}
+
+	private static final String _TOKEN_MASK_DELIMITER = "\u0001";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FDSAPIURLBuilder.class);

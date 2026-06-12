@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<request />
+	<dynamic-element index-type="keyword" name="RichText" repeatable="true" type="html">
+		<dynamic-content language-id="en_US"><![CDATA[Value A]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" name="RichText" repeatable="true" type="html">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" name="RichText" repeatable="true" type="html">
+		<dynamic-content language-id="en_US"><![CDATA[Value C]]></dynamic-content>
+	</dynamic-element>
+</root>

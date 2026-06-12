@@ -440,6 +440,27 @@ public class TaxonomyVocabulary implements Cloneable, Serializable {
 
 	protected Long siteId;
 
+	public Boolean getSystem() {
+		return system;
+	}
+
+	public void setSystem(Boolean system) {
+		this.system = system;
+	}
+
+	public void setSystem(
+		UnsafeSupplier<Boolean, Exception> systemUnsafeSupplier) {
+
+		try {
+			system = systemUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean system;
+
 	public String getUuid() {
 		return uuid;
 	}
@@ -616,4 +637,4 @@ public class TaxonomyVocabulary implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:421988602
+// LIFERAY-REST-BUILDER-HASH:-1591625654

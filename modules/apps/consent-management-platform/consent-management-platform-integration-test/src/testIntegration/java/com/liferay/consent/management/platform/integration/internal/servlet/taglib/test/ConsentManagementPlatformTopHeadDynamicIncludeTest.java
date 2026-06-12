@@ -47,7 +47,7 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testIncludeScripts() throws Exception {
+	public void testInclude() throws Exception {
 		ConfigurationTestUtil.saveConfiguration(
 			ConsentManagementPlatformConfiguration.class.getName(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -66,7 +66,7 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 			new MockHttpServletResponse();
 
 		_dynamicInclude.include(
-			_getMockHttpServletRequest(null), mockHttpServletResponse,
+			_createMockHttpServletRequest(null), mockHttpServletResponse,
 			StringPool.BLANK);
 
 		String body = mockHttpServletResponse.getContentAsString();
@@ -85,7 +85,7 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 		mockHttpServletResponse = new MockHttpServletResponse();
 
 		_dynamicInclude.include(
-			_getMockHttpServletRequest(nonce), mockHttpServletResponse,
+			_createMockHttpServletRequest(nonce), mockHttpServletResponse,
 			StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -95,7 +95,7 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 				"nonce=\"" + nonce + "\""));
 	}
 
-	private MockHttpServletRequest _getMockHttpServletRequest(String nonce)
+	private MockHttpServletRequest _createMockHttpServletRequest(String nonce)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =

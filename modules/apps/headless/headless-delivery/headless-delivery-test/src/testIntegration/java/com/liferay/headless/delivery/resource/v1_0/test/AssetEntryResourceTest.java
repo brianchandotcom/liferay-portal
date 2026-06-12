@@ -189,6 +189,7 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 		Long groupId = testGroup.getGroupId();
 
 		BlogsEntry approvedBlogsEntry = _addBlogsEntry(groupId);
+
 		BlogsEntry draftBlogsEntry = _addBlogsEntry(groupId);
 
 		BlogsEntryLocalServiceUtil.updateStatus(

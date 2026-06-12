@@ -64,7 +64,7 @@ const RuleRow: React.FC<Props> = ({onToggleIgnore, result, toggling}) => {
 				<IgnoreButton
 					disabled={toggling}
 					ignored={result.ignored}
-					onToggle={() => onToggleIgnore(result)}
+					onClick={() => onToggleIgnore(result)}
 					ruleKey={result.ruleKey}
 				/>
 			</div>

@@ -55,6 +55,28 @@ export class DataSetFragmentPage {
 	readonly userViewsSelectorButton: Locator;
 	readonly userViewsSaveModal: Locator;
 
+	// URL Token Mapping panel
+
+	readonly tokenMappingEntityInput: Locator;
+	readonly tokenMappingFieldSelect: Locator;
+	readonly tokenMappingMappingSelect: Locator;
+	readonly tokenMappingPanel: Locator;
+	readonly tokenMappingRemoveEntityButton: Locator;
+	readonly tokenMappingSelectEntityButton: Locator;
+	readonly tokenMappingStatusLabel: Locator;
+	readonly tokenMappingTokenSelectorTrigger: Locator;
+	readonly tokenMappingTokenStatusLabel: Locator;
+	readonly tokenMappingValueInput: Locator;
+
+	// Unresolved API URL preview rendered by the fragment in edit mode
+
+	readonly unresolvedPreview: {
+		alert: Locator;
+		container: Locator;
+		skeletonBars: Locator;
+		urlBox: Locator;
+	};
+
 	constructor(page: Page) {
 		this.activeViewSelector = page.getByLabel(/View Selected/);
 		this.addFilterButton = page.getByRole('button', {
@@ -122,6 +144,59 @@ export class DataSetFragmentPage {
 		});
 		this.sidePanel = page.locator('.fds-side-panel');
 		this.sidePanelFrame = this.sidePanel.frameLocator('iframe');
+
+		this.tokenMappingPanel = page
+			.locator('.panel.w-100')
+			.filter({hasText: 'URL Token Mapping'});
+
+		this.tokenMappingEntityInput =
+			this.tokenMappingPanel.getByPlaceholder('No Entity Selected');
+		this.tokenMappingFieldSelect = this.tokenMappingPanel.getByLabel(
+			'Field',
+			{exact: true}
+		);
+		this.tokenMappingMappingSelect = this.tokenMappingPanel.getByLabel(
+			'Mapping',
+			{exact: true}
+		);
+		this.tokenMappingRemoveEntityButton = this.tokenMappingPanel.getByRole(
+			'button',
+			{
+				name: 'Remove Entity',
+			}
+		);
+		this.tokenMappingSelectEntityButton = this.tokenMappingPanel.getByRole(
+			'button',
+			{name: /Select Entity|Change Entity/}
+		);
+		this.tokenMappingStatusLabel = this.tokenMappingPanel
+			.locator('.form-group')
+			.filter({hasText: 'Status'})
+			.locator('.label');
+		this.tokenMappingTokenSelectorTrigger =
+			this.tokenMappingPanel.getByRole('button', {
+				exact: true,
+				name: 'Token',
+			});
+		this.tokenMappingTokenStatusLabel =
+			this.tokenMappingTokenSelectorTrigger.locator('.label');
+		this.tokenMappingValueInput = this.tokenMappingPanel.getByLabel(
+			'Token Value',
+			{exact: true}
+		);
+
+		const unresolvedPreviewContainer = page.locator(
+			'.unresolved-data-set-preview'
+		);
+
+		this.unresolvedPreview = {
+			alert: unresolvedPreviewContainer.locator('.alert-info'),
+			container: unresolvedPreviewContainer,
+			skeletonBars: unresolvedPreviewContainer.locator(
+				'.data-set-skeleton-bar'
+			),
+			urlBox: unresolvedPreviewContainer.locator('.text-break'),
+		};
 
 		const tableContainer = page.locator('.fds table');
 
@@ -257,6 +332,38 @@ export class DataSetFragmentPage {
 		await expect(this.fragmentSelectionArea).toBeVisible();
 
 		await this.fragmentSelectionArea.click();
+	}
+
+	async fillTokenValue(value: string) {
+		await this.tokenMappingValueInput.fill(value);
+
+		await this.tokenMappingValueInput.blur();
+	}
+
+	async selectEntity(entryTitle: string) {
+		await this.tokenMappingSelectEntityButton.click();
+
+		const iframe = this.page.frameLocator(
+			'iframe[title="Select an Entity"]'
+		);
+
+		await iframe.getByRole('menuitem', {name: 'Web Content'}).click();
+
+		await iframe.getByText(entryTitle).first().click();
+
+		await expect(this.tokenMappingEntityInput).toHaveValue(entryTitle);
+	}
+
+	async selectMappingMode(label: string) {
+		await this.tokenMappingMappingSelect.selectOption({label});
+	}
+
+	async selectToken(tokenName: string) {
+		await this.tokenMappingTokenSelectorTrigger.click();
+
+		await this.page.getByRole('menuitem', {name: `{${tokenName}}`}).click();
+
+		await expect(this.tokenMappingMappingSelect).toBeVisible();
 	}
 
 	async sortBy(columnName: string) {

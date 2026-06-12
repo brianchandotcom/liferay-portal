@@ -141,7 +141,8 @@ public class LayoutContentVersionLocalServiceImpl
 
 		latestLayoutContentVersion.setUserName(user.getFullName());
 
-		return layoutContentVersionPersistence.update(latestLayoutContentVersion);
+		return layoutContentVersionPersistence.update(
+			latestLayoutContentVersion);
 	}
 
 	@Override

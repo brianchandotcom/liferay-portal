@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Outlet, useOutletContext} from 'react-router-dom';
+import {useEffect} from 'react';
+import {Outlet, useNavigate, useOutletContext} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {PageRenderer} from '../../components/Page';
@@ -37,6 +38,26 @@ const navigationItems = [
 
 const CustomerDashboardOutlet = () => {
 	const {data: selectedAccount, error, isLoading} = useAccount();
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const searchParams = new URLSearchParams(window.location.search);
+
+		const redirectTo = searchParams.get('redirectTo');
+
+		if (!redirectTo) {
+			return;
+		}
+
+		const url = new URL(window.location.href);
+
+		url.searchParams.delete('redirectTo');
+
+		window.history.replaceState({}, '', url);
+
+		navigate(redirectTo, {replace: true});
+	}, [navigate]);
 
 	return (
 		<PageRenderer error={error} isLoading={isLoading}>

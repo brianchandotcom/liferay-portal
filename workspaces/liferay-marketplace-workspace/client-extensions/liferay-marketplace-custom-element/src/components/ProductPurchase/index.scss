@@ -15,3 +15,14 @@
 		}
 	}
 }
+
+.price-text {
+	&-label {
+		font-size: 13px;
+	}
+
+	&-value {
+		font-size: 16px;
+		font-weight: 600;
+	}
+}

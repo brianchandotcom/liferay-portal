@@ -6,6 +6,7 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
+import com.liferay.configuration.admin.category.ConfigurationCategoryShowFilter;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
@@ -14,6 +15,8 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -201,6 +204,10 @@ public class ConfigurationEntryRetrieverImpl
 					emitter.emit(configurationCategory.getCategoryKey());
 				});
 
+		_configurationCategoryShowFilterServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, ConfigurationCategoryShowFilter.class);
+
 		_configurationScreenServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ConfigurationScreen.class, null,
@@ -224,6 +231,7 @@ public class ConfigurationEntryRetrieverImpl
 	@Deactivate
 	protected void deactivate() {
 		_configurationCategoryServiceTrackerMap.close();
+		_configurationCategoryShowFilterServiceTrackerList.close();
 		_configurationScreenServiceTrackerMap.close();
 		_configurationScreensServiceTrackerMap.close();
 
@@ -246,6 +254,20 @@ public class ConfigurationEntryRetrieverImpl
 		return true;
 	}
 
+	private boolean _isShow(ConfigurationCategory configurationCategory) {
+		for (ConfigurationCategoryShowFilter configurationCategoryShowFilter :
+				_configurationCategoryShowFilterServiceTrackerList) {
+
+			if (!configurationCategoryShowFilter.isShow(
+					configurationCategory)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private void _populateConfigurationCategorySectionDisplay(
 		Map<String, ConfigurationCategorySectionDisplay>
 			configurationCategorySectionDisplaysMap,
@@ -263,7 +285,8 @@ public class ConfigurationEntryRetrieverImpl
 		}
 
 		if (!_isCategorySectionEnabled(
-				curConfigurationCategory.getCategorySection())) {
+				curConfigurationCategory.getCategorySection()) ||
+			!_isShow(curConfigurationCategory)) {
 
 			return;
 		}
@@ -305,6 +328,8 @@ public class ConfigurationEntryRetrieverImpl
 		_configurationCategoryServiceRegistrations = new HashSet<>();
 	private ServiceTrackerMap<String, ConfigurationCategory>
 		_configurationCategoryServiceTrackerMap;
+	private ServiceTrackerList<ConfigurationCategoryShowFilter>
+		_configurationCategoryShowFilterServiceTrackerList;
 
 	@Reference(target = "(filter.visibility=true)")
 	private ConfigurationModelRetriever _configurationModelRetriever;

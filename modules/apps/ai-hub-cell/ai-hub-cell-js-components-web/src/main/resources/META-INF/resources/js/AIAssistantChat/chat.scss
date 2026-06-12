@@ -1,6 +1,20 @@
 @import 'atlas-variables';
 
-.ai-assistant-chat__dropdown-container {
+.ai-assistant-chat__embedded {
+	height: 100%;
+
+	.ai-assistant-chat__messages-container {
+		min-height: 200px;
+	}
+
+	.ai-assistant-chat__quick-actions-title {
+		display: block;
+		margin-bottom: 0.5rem;
+	}
+}
+
+.ai-assistant-chat__dropdown-container,
+.ai-assistant-chat__embedded {
 	height: 100%;
 	width: 100%;
 

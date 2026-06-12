@@ -51,9 +51,9 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 		ConfigurationTestUtil.saveConfiguration(
 			ConsentManagementPlatformConfiguration.class.getName(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"bridgeScript", _BRIDGE_SCRIPT
-			).put(
 				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"consentMappingScript", _CONSENT_MAPPING_SCRIPT
 			).put(
 				"enabled", true
 			).put(
@@ -72,11 +72,11 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 		String body = mockHttpServletResponse.getContentAsString();
 
 		int scriptTagIndex = body.indexOf(_SCRIPT_TAG);
-		int bridgeScriptIndex = body.indexOf(_BRIDGE_SCRIPT);
+		int consentMappingScriptIndex = body.indexOf(_CONSENT_MAPPING_SCRIPT);
 
 		Assert.assertTrue(scriptTagIndex >= 0);
-		Assert.assertTrue(bridgeScriptIndex >= 0);
-		Assert.assertTrue(scriptTagIndex < bridgeScriptIndex);
+		Assert.assertTrue(consentMappingScriptIndex >= 0);
+		Assert.assertTrue(scriptTagIndex < consentMappingScriptIndex);
 
 		Assert.assertEquals(0, StringUtil.count(body, "nonce=\""));
 
@@ -118,8 +118,8 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 		return mockHttpServletRequest;
 	}
 
-	private static final String _BRIDGE_SCRIPT =
-		"<SCRIPT id=\"liferay-cmp-bridge\">/* bridge */</SCRIPT>";
+	private static final String _CONSENT_MAPPING_SCRIPT =
+		"<SCRIPT id=\"liferay-cmp-consent-mapping\">/* mapping */</SCRIPT>";
 
 	private static final String _SCRIPT_TAG =
 		"<script data-cbid=\"000000\" id=\"Cookiebot\" " +

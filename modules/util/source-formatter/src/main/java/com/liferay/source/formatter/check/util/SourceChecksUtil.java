@@ -231,6 +231,7 @@ public class SourceChecksUtil {
 		attributesJSONObject = SourceFormatterCheckUtil.addPropertiesAttributes(
 			attributesJSONObject, propertiesMap,
 			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH,
+			SourceFormatterUtil.JAKARTA_TRANSFORM_DEPENDENCIES_FILE_PATH,
 			SourceFormatterUtil.JAKARTA_USED_BRANCH,
 			SourceFormatterUtil.UPGRADE_FROM_VERSION,
 			SourceFormatterUtil.UPGRADE_TO_LIFERAY_VERSION,

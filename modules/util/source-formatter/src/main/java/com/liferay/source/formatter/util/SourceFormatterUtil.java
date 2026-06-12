@@ -63,6 +63,9 @@ public class SourceFormatterUtil {
 	public static final String GIT_LIFERAY_PORTAL_URL =
 		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
+	public static final String JAKARTA_TRANSFORM_DEPENDENCIES_FILE_PATH =
+		"jakarta.transform.dependencies.file.path";
+
 	public static final String JAKARTA_USED_BRANCH = "jakarta.used.branch";
 
 	public static final String SOURCE_FORMATTER_TEST_PATH =

@@ -1,0 +1,1 @@
+javax.portlet:portlet-api=com.example.jakarta.portlet:com.example.jakarta.portlet-api:9.9.9

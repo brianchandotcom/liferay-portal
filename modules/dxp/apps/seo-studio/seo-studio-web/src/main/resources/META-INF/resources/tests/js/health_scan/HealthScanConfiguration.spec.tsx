@@ -5,21 +5,22 @@
 
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
-import {openToast} from 'frontend-js-components-web';
+import {openConfirmModal, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import HealthScanConfiguration from '../../../js/health_scan/components/HealthScanConfiguration';
 
 jest.mock('frontend-js-components-web', () => ({
+	openConfirmModal: jest.fn(),
 	openToast: jest.fn(),
 }));
 
-function getSaveButton() {
-	return screen.getByRole('button', {name: 'save'});
+function getSaveAndScanNowButton() {
+	return screen.getByRole('button', {name: 'save-and-scan-now'});
 }
 
-function getCancelButton() {
-	return screen.getByRole('button', {name: 'cancel'});
+function getSaveButton() {
+	return screen.getByRole('button', {name: 'save'});
 }
 
 function toggleCrawler() {
@@ -52,6 +53,7 @@ function renderConfiguration(props: Partial<ConfigurationProps> = {}) {
 
 describe('HealthScanConfiguration', () => {
 	beforeEach(() => {
+		(openConfirmModal as jest.Mock).mockClear();
 		(openToast as jest.Mock).mockClear();
 
 		(Liferay.Util as unknown) = {
@@ -249,26 +251,71 @@ describe('HealthScanConfiguration', () => {
 		});
 	});
 
-	describe('save and cancel', () => {
-		it('keeps Save and Cancel enabled when no change has been made', () => {
+	describe('save and scan now', () => {
+		it('keeps both buttons enabled when no change has been made', () => {
 			renderConfiguration();
 
+			expect(getSaveAndScanNowButton()).toBeEnabled();
 			expect(getSaveButton()).toBeEnabled();
-			expect(getCancelButton()).toBeEnabled();
 		});
 
-		it('reverts unsaved changes on Cancel', () => {
-			renderConfiguration();
+		it('saves and then creates scans once the action is confirmed', async () => {
+			const fetchMock = Liferay.Util.fetch as jest.Mock;
 
-			toggleCrawler();
+			(openConfirmModal as jest.Mock).mockImplementation(({onConfirm}) =>
+				onConfirm(true)
+			);
 
-			expect(screen.getAllByLabelText('scope')).toHaveLength(1);
+			renderConfiguration({domainId: 42});
 
-			fireEvent.click(getCancelButton());
+			fireEvent.click(getSaveAndScanNowButton());
 
-			expect(screen.queryAllByLabelText('scope')).toHaveLength(0);
-			expect(getSaveButton()).toBeEnabled();
-			expect(getCancelButton()).toBeEnabled();
+			await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
+
+			expect(fetchMock.mock.calls[0][0]).toBe('/o/seo-studio/domains/42');
+			expect(fetchMock.mock.calls[0][1].method).toBe('PATCH');
+			expect(fetchMock.mock.calls[1][0]).toBe(
+				'/o/seo-studio/domains/42/object-actions/createScans'
+			);
+			expect(fetchMock.mock.calls[1][1].method).toBe('PUT');
+		});
+
+		it('shows an error toast when the scan request fails', async () => {
+			const fetchMock = Liferay.Util.fetch as jest.Mock;
+
+			fetchMock
+				.mockResolvedValueOnce({ok: true})
+				.mockResolvedValueOnce({ok: false});
+
+			(openConfirmModal as jest.Mock).mockImplementation(({onConfirm}) =>
+				onConfirm(true)
+			);
+
+			renderConfiguration({domainId: 42});
+
+			fireEvent.click(getSaveAndScanNowButton());
+
+			await waitFor(() =>
+				expect(openToast).toHaveBeenCalledWith(
+					expect.objectContaining({type: 'danger'})
+				)
+			);
+		});
+
+		it('does nothing when the scan confirmation is dismissed', async () => {
+			const fetchMock = Liferay.Util.fetch as jest.Mock;
+
+			(openConfirmModal as jest.Mock).mockImplementation(({onConfirm}) =>
+				onConfirm(false)
+			);
+
+			renderConfiguration({domainId: 42});
+
+			fireEvent.click(getSaveAndScanNowButton());
+
+			await waitFor(() => expect(openConfirmModal).toHaveBeenCalled());
+
+			expect(fetchMock).not.toHaveBeenCalled();
 		});
 	});
 

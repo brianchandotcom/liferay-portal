@@ -889,6 +889,42 @@ test.describe('Schedule Panel', () => {
 });
 
 test.describe('Categorization Panel', () => {
+	const selectCategory = async ({
+		categoryName,
+		page,
+	}: {
+		categoryName: string;
+		page: Page;
+	}) => {
+		const categoriesAutocomplete = page.getByPlaceholder('Add category');
+
+		await categoriesAutocomplete.fill(categoryName);
+
+		const option = page.getByRole('option', {name: categoryName});
+
+		await option.waitFor();
+		await option.click();
+	};
+
+	const selectTag = async ({
+		page,
+		tagName,
+	}: {
+		page: Page;
+		tagName: string;
+	}) => {
+		const tagsAutocomplete = page.getByPlaceholder('Add tag');
+
+		await tagsAutocomplete.fill(tagName);
+
+		const newTagOption = page.getByRole('option', {
+			name: 'Create New Tag:',
+		});
+
+		await newTagOption.waitFor();
+		await newTagOption.click();
+	};
+
 	test(
 		'Add categories and tags to the content',
 		{tag: ['@LPD-62047', '@LPD-69196']},
@@ -899,30 +935,6 @@ test.describe('Categorization Panel', () => {
 			tagsPage,
 			vocabulariesPage,
 		}) => {
-			const selectCategory = async (categoryName: string) => {
-				const categoriesAutocomplete =
-					page.getByPlaceholder('Add category');
-
-				await categoriesAutocomplete.fill(categoryName);
-
-				const option = page.getByRole('option', {name: categoryName});
-
-				await option.waitFor();
-				await option.click();
-			};
-
-			const selectTag = async (tagName: string) => {
-				const tagsAutocomplete = page.getByPlaceholder('Add tag');
-
-				await tagsAutocomplete.fill(tagName);
-
-				const newTagOption = page.getByRole('option', {
-					name: 'Create New Tag:',
-				});
-
-				await newTagOption.waitFor();
-				await newTagOption.click();
-			};
 
 			// Create space
 
@@ -957,135 +969,169 @@ test.describe('Categorization Panel', () => {
 				vocabularyName,
 			});
 
-			// Create a content and publish it
-
-			await contentsPage.goto();
-
-			await contentsPage.createContent('Basic Web Content');
-
 			const title = getRandomString();
 
-			await page.getByPlaceholder('New Basic Web Content').fill(title);
+			const tagNames: string[] = [];
 
-			await contentsPage.publishButton.click();
+			try {
 
-			// Edit the content to set a categorization
+				// Create a content and publish it
 
-			const content = page.locator('.table-list-title a', {
-				hasText: title,
-			});
+				await contentsPage.goto();
 
-			await content.waitFor();
-			await content.click();
+				await contentsPage.createContent('Basic Web Content');
 
-			await contentsPage.openSidePanel('Categorization');
+				await page
+					.getByPlaceholder('New Basic Web Content')
+					.fill(title);
 
-			// Assert that a tag shared with a specific space is only visible to that space
+				await contentsPage.publishButton.click();
 
-			const tagsAutocomplete = page.getByPlaceholder('Add tag');
+				// Edit the content to set a categorization
 
-			await tagsAutocomplete.click();
+				const content = page.locator('.table-list-title a', {
+					hasText: title,
+				});
 
-			const tagsDropdownMenuEntry = page.locator(
-				'.dropdown-menu > ul > li > button'
-			);
+				await content.waitFor();
+				await content.click();
 
-			await expect(
-				tagsDropdownMenuEntry.getByText(allSpacesTagName)
-			).toBeVisible();
-			await expect(
-				tagsDropdownMenuEntry.getByText(defaultSpaceTagName)
-			).toBeVisible();
-			await expect(
-				tagsDropdownMenuEntry.getByText(spaceTagName)
-			).toBeHidden();
+				await contentsPage.openSidePanel('Categorization');
 
-			// Add a category to the content
+				// Assert that a tag shared with a specific space is only visible to that space
 
-			await selectCategory(categoryName);
+				const tagsAutocomplete = page.getByPlaceholder('Add tag');
 
-			const categoryLabel = page.locator('.label-item', {
-				hasText: categoryName,
-			});
+				await tagsAutocomplete.click();
 
-			await expect(categoryLabel).toBeAttached();
+				const tagsDropdownMenuEntry = page.locator(
+					'.dropdown-menu > ul > li > button'
+				);
 
-			// Add a tag to the content
+				await expect(
+					tagsDropdownMenuEntry.getByText(allSpacesTagName)
+				).toBeVisible();
+				await expect(
+					tagsDropdownMenuEntry.getByText(defaultSpaceTagName)
+				).toBeVisible();
+				await expect(
+					tagsDropdownMenuEntry.getByText(spaceTagName)
+				).toBeHidden();
 
-			let tagName = getRandomString();
+				// Add a category to the content
 
-			await selectTag(tagName);
+				await selectCategory({categoryName, page});
 
-			let tagLabel = page.locator('.label-item', {hasText: tagName});
+				const categoryLabel = page.locator('.label-item', {
+					hasText: categoryName,
+				});
 
-			await expect(tagLabel).toBeAttached();
+				await expect(categoryLabel).toBeAttached();
 
-			// Cancel the content and edit it again to check that nothing has been saved
+				// Add a tag to the content
 
-			await page.getByLabel('Cancel', {exact: true}).click();
+				const firstTagName = getRandomString();
 
-			await content.waitFor();
-			await content.click();
+				tagNames.push(firstTagName);
 
-			await contentsPage.openSidePanel('Categorization');
+				await selectTag({page, tagName: firstTagName});
 
-			await expect(categoryLabel).not.toBeAttached();
-			await expect(tagLabel).not.toBeAttached();
+				let tagLabel = page.locator('.label-item', {
+					hasText: firstTagName,
+				});
 
-			// Select again the category and the tag and publish it
+				await expect(tagLabel).toBeAttached();
 
-			await selectCategory(categoryName);
+				// Cancel the content and edit it again to check that nothing has been saved
 
-			tagName = getRandomString();
-			tagLabel = page.locator('.label-item', {hasText: tagName});
+				await page.getByLabel('Cancel', {exact: true}).click();
 
-			await selectTag(tagName);
+				await content.waitFor();
+				await content.click();
 
-			await expect(categoryLabel).toBeAttached();
-			await expect(tagLabel).toBeAttached();
+				await contentsPage.openSidePanel('Categorization');
 
-			await contentsPage.publishButton.click();
+				await expect(categoryLabel).not.toBeAttached();
+				await expect(tagLabel).not.toBeAttached();
 
-			// Edit the content and check that the categorization is still there
+				// Select again the category and the tag and publish it
 
-			await content.click();
+				await selectCategory({categoryName, page});
 
-			await contentsPage.openSidePanel('Categorization');
+				const secondTagName = getRandomString();
 
-			await expect(tagLabel).toBeAttached();
-			await expect(categoryLabel).toBeAttached();
+				tagNames.push(secondTagName);
 
-			// Delete content
+				tagLabel = page.locator('.label-item', {
+					hasText: secondTagName,
+				});
 
-			await contentsPage.goto();
-			await contentsPage.deleteContent(title);
+				await selectTag({page, tagName: secondTagName});
 
-			// Delete tag
+				await expect(categoryLabel).toBeAttached();
+				await expect(tagLabel).toBeAttached();
 
-			await tagsPage.goto();
-			await tagsPage.deleteTag(tagName);
-			await tagsPage.deleteTag(allSpacesTagName);
-			await tagsPage.deleteTag(defaultSpaceTagName);
-			await tagsPage.deleteTag(spaceTagName);
+				await contentsPage.publishButton.click();
 
-			// Delete vocabulary
+				// Edit the content and check that the categorization is still there
 
-			await vocabulariesPage.goto();
-			await vocabulariesPage.deleteVocabulary(vocabularyName);
+				await content.click();
 
-			// Delete space
+				await contentsPage.openSidePanel('Categorization');
 
-			await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(spaceId);
+				await expect(tagLabel).toBeAttached();
+				await expect(categoryLabel).toBeAttached();
+
+				// Delete content
+
+				await contentsPage.goto();
+				await contentsPage.deleteContent(title);
+			}
+			finally {
+
+				// Delete tags
+
+				await tagsPage.goto();
+
+				for (const tagName of tagNames) {
+					await tagsPage.deleteTag(tagName);
+				}
+
+				await tagsPage.deleteTag(allSpacesTagName);
+				await tagsPage.deleteTag(defaultSpaceTagName);
+				await tagsPage.deleteTag(spaceTagName);
+
+				// Delete vocabulary and its categories
+
+				await vocabulariesPage.goto();
+				await vocabulariesPage.deleteVocabulary(vocabularyName);
+
+				// Delete space
+
+				await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(
+					spaceId
+				);
+			}
 		}
 	);
 
 	test(
 		'Prevent publish, open Categorization panel and preserve tags when a required vocabulary has no selected category',
 		{tag: '@LPD-89784'},
-		async ({apiHelpers, contentsPage, page}) => {
+		async ({
+			apiHelpers,
+			contentsPage,
+			page,
+			tagsPage,
+			vocabulariesPage,
+		}) => {
 			const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
 
-			await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+			const categoryName = getRandomString();
+			const vocabularyName = getRandomString();
+
+			await createCategories({
+				apiHelpers,
 				assetLibraries: [{id: -1}],
 				assetTypes: [
 					{
@@ -1094,54 +1140,65 @@ test.describe('Categorization Panel', () => {
 						type: 'AllAssetTypes',
 					},
 				],
-				name: getRandomString(),
+				categoryNames: [{name: categoryName}],
 				siteId: site.id,
-				visibilityType: 'PUBLIC',
+				vocabularyName,
 			});
 
-			await contentsPage.goto();
-			await contentsPage.createContent('Basic Web Content');
+			let tagName;
 
-			const title = getRandomString();
+			try {
+				await contentsPage.goto();
+				await contentsPage.createContent('Basic Web Content');
 
-			await page.getByPlaceholder('New Basic Web Content').fill(title);
+				const title = getRandomString();
 
-			await contentsPage.openSidePanel('Categorization');
+				await page
+					.getByPlaceholder('New Basic Web Content')
+					.fill(title);
 
-			const tagName = getRandomString();
+				await contentsPage.openSidePanel('Categorization');
 
-			const tagsAutocomplete = page.getByPlaceholder('Add tag');
+				tagName = getRandomString();
 
-			await tagsAutocomplete.fill(tagName);
+				await selectTag({page, tagName});
 
-			const newTagOption = page.getByRole('option', {
-				name: 'Create New Tag:',
-			});
+				await contentsPage.publishButton.click();
 
-			await newTagOption.waitFor();
-			await newTagOption.click();
+				await expect(
+					page
+						.locator('.content-editor__side-panel .sidebar-header')
+						.filter({hasText: 'Categorization'})
+				).toBeVisible();
 
-			await contentsPage.publishButton.click();
+				await expect(
+					page
+						.locator('.form-group.has-error')
+						.getByPlaceholder('Add category')
+				).toBeFocused();
 
-			await expect(
-				page
-					.locator('.content-editor__side-panel .sidebar-header')
-					.filter({hasText: 'Categorization'})
-			).toBeVisible();
+				await expect(
+					page.locator('.label-item', {hasText: tagName})
+				).toBeAttached();
 
-			await expect(
-				page
-					.locator('.form-group.has-error')
-					.getByPlaceholder('Add category')
-			).toBeFocused();
+				await expect(
+					page.getByPlaceholder('New Basic Web Content')
+				).toHaveValue(title);
+			}
+			finally {
 
-			await expect(
-				page.locator('.label-item', {hasText: tagName})
-			).toBeAttached();
+				// Delete tags
 
-			await expect(
-				page.getByPlaceholder('New Basic Web Content')
-			).toHaveValue(title);
+				if (tagName) {
+					await tagsPage.goto();
+					await tagsPage.deleteTag(tagName);
+				}
+
+				// Delete vocabulary and its categories
+
+				await vocabulariesPage.goto();
+				await vocabulariesPage.deleteVocabulary(vocabularyName);
+			}
 		}
 	);
 

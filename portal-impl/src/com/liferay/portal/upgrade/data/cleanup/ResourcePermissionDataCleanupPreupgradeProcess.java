@@ -41,10 +41,10 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 			return;
 		}
 
+		Map<String, List<String>> namesMap = new TreeMap<>();
+
 		Set<String> liferayTableNames = DBResourceUtil.getLiferayTableNames(
 			connection);
-
-		Map<String, List<String>> namesMap = new TreeMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select distinct name from ResourcePermission where name " +

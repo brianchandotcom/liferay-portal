@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 import {FilterValue} from '../types';
@@ -14,7 +15,7 @@ interface Props {
 }
 
 interface Pill {
-	dot?: 'failed' | 'ignored' | 'passed';
+	dot?: 'danger' | 'secondary' | 'success';
 	label: string;
 	value: FilterValue;
 }
@@ -26,17 +27,17 @@ const FilterPills: React.FC<Props> = ({onChange, value}) => {
 			value: 'all',
 		},
 		{
-			dot: 'passed',
+			dot: 'success',
 			label: Liferay.Language.get('passed'),
 			value: 'passed',
 		},
 		{
-			dot: 'failed',
+			dot: 'danger',
 			label: Liferay.Language.get('failed'),
 			value: 'failed',
 		},
 		{
-			dot: 'ignored',
+			dot: 'secondary',
 			label: Liferay.Language.get('ignored'),
 			value: 'ignored',
 		},
@@ -53,26 +54,31 @@ const FilterPills: React.FC<Props> = ({onChange, value}) => {
 				className="align-items-center d-flex"
 				role="group"
 			>
-				{pills.map((pill) => (
-					<ClayButton
-						aria-pressed={value === pill.value}
-						className="ml-2"
-						displayType={
-							value === pill.value ? 'secondary' : 'unstyled'
-						}
-						key={pill.value}
-						onClick={() => onChange(pill.value)}
-						small
-					>
-						{pill.dot && (
-							<span
-								className={`production-readiness-dot production-readiness-dot-${pill.dot} mr-2`}
-							/>
-						)}
+				{pills.map((pill) => {
+					const pressed = value === pill.value;
 
-						{pill.label}
-					</ClayButton>
-				))}
+					return (
+						<ClayButton
+							aria-pressed={pressed}
+							className="ml-2"
+							displayType={pressed ? 'secondary' : 'unstyled'}
+							key={pill.value}
+							onClick={() => onChange(pill.value)}
+							small
+						>
+							{pill.dot && (
+								<span
+									aria-hidden="true"
+									className={`mr-2 text-${pill.dot}`}
+								>
+									<ClayIcon symbol="simple-circle" />
+								</span>
+							)}
+
+							{pill.label}
+						</ClayButton>
+					);
+				})}
 			</div>
 		</div>
 	);

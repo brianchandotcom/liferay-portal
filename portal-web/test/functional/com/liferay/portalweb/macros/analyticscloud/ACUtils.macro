@@ -1113,23 +1113,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro tearDownABTest() {
-		ACUtils.launchDXP();
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ABTest.openABTestPanel();
-
-		if (IsElementPresent(key_text = "Terminate Test", locator1 = "Button#ANY")) {
-			ABTest.terminateTest();
-		}
-
-		if (IsElementNotPresent(locator1 = "ABTest#IMAGE_EMPTY_STATE")) {
-			ABTest.deleteABTest();
-		}
-	}
-
-	@summary = "Default summary"
 	macro tearDownAC() {
 
 		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created

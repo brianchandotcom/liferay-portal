@@ -354,7 +354,7 @@ public abstract class BaseOrderNoteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/{id}' -d $'{"author": ___, "content": ___, "externalReferenceCode": ___, "id": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/{id}' -d $'{"content": ___, "externalReferenceCode": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Partial update of an order note. Returns 200 OK (note: returns Response, not OrderNote). Throws NoSuchOrderNoteException (404) if not found."
@@ -392,7 +392,7 @@ public abstract class BaseOrderNoteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/by-externalReferenceCode/{externalReferenceCode}' -d $'{"author": ___, "content": ___, "externalReferenceCode": ___, "id": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/by-externalReferenceCode/{externalReferenceCode}' -d $'{"content": ___, "externalReferenceCode": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Partial update of an order note by externalReferenceCode. Returns 200 OK. Throws NoSuchOrderNoteException (404) if not found."
@@ -432,7 +432,7 @@ public abstract class BaseOrderNoteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/orderNotes' -d $'{"author": ___, "content": ___, "externalReferenceCode": ___, "id": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/orderNotes' -d $'{"content": ___, "externalReferenceCode": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Create an order note for an order accessed by externalReferenceCode. Delegates to _addOrUpdateOrderNote(). Throws NoSuchOrderException (404) if order not found."
@@ -470,7 +470,7 @@ public abstract class BaseOrderNoteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/orderNotes' -d $'{"author": ___, "content": ___, "externalReferenceCode": ___, "id": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/orderNotes' -d $'{"content": ___, "externalReferenceCode": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Create an order note for an order accessed by order ID. Delegates to _addOrUpdateOrderNote()."
@@ -1316,4 +1316,4 @@ public abstract class BaseOrderNoteResourceImpl
 		LogFactoryUtil.getLog(BaseOrderNoteResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:554085092
+// LIFERAY-REST-BUILDER-HASH:1371977764

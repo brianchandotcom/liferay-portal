@@ -24,6 +24,10 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -91,11 +95,101 @@ public class OrderNote implements Serializable {
 	@GraphQLField(
 		description = "Display name of the user who authored the note. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String author;
 
 	@JsonIgnore
 	private Supplier<String> _authorSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the user who authored the note (FK identifier). Read-only.",
+		example = "20078"
+	)
+	public Long getAuthorId() {
+		if (_authorIdSupplier != null) {
+			authorId = _authorIdSupplier.get();
+
+			_authorIdSupplier = null;
+		}
+
+		return authorId;
+	}
+
+	public void setAuthorId(Long authorId) {
+		this.authorId = authorId;
+
+		_authorIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAuthorId(
+		UnsafeSupplier<Long, Exception> authorIdUnsafeSupplier) {
+
+		_authorIdSupplier = () -> {
+			try {
+				return authorIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Reference to the user who authored the note (FK identifier). Read-only."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long authorId;
+
+	@JsonIgnore
+	private Supplier<Long> _authorIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Avatar URL of the note author. Read-only.",
+		example = "https://example.com/portrait.png"
+	)
+	public String getAuthorPortraitURL() {
+		if (_authorPortraitURLSupplier != null) {
+			authorPortraitURL = _authorPortraitURLSupplier.get();
+
+			_authorPortraitURLSupplier = null;
+		}
+
+		return authorPortraitURL;
+	}
+
+	public void setAuthorPortraitURL(String authorPortraitURL) {
+		this.authorPortraitURL = authorPortraitURL;
+
+		_authorPortraitURLSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAuthorPortraitURL(
+		UnsafeSupplier<String, Exception> authorPortraitURLUnsafeSupplier) {
+
+		_authorPortraitURLSupplier = () -> {
+			try {
+				return authorPortraitURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "Avatar URL of the note author. Read-only.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String authorPortraitURL;
+
+	@JsonIgnore
+	private Supplier<String> _authorPortraitURLSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Free-text content of the note.",
@@ -226,11 +320,57 @@ public class OrderNote implements Serializable {
 	@GraphQLField(
 		description = "Reference to the order note (FK identifier). Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Last modification timestamp in ISO 8601. Read-only.",
+		example = "2017-07-21"
+	)
+	public Date getModifiedDate() {
+		if (_modifiedDateSupplier != null) {
+			modifiedDate = _modifiedDateSupplier.get();
+
+			_modifiedDateSupplier = null;
+		}
+
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+
+		_modifiedDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setModifiedDate(
+		UnsafeSupplier<Date, Exception> modifiedDateUnsafeSupplier) {
+
+		_modifiedDateSupplier = () -> {
+			try {
+				return modifiedDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Last modification timestamp in ISO 8601. Read-only."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date modifiedDate;
+
+	@JsonIgnore
+	private Supplier<Date> _modifiedDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "External reference code of the parent order.",
@@ -400,6 +540,9 @@ public class OrderNote implements Serializable {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
 		String author = getAuthor();
 
 		if (author != null) {
@@ -412,6 +555,34 @@ public class OrderNote implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(author));
+
+			sb.append("\"");
+		}
+
+		Long authorId = getAuthorId();
+
+		if (authorId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"authorId\": ");
+
+			sb.append(authorId);
+		}
+
+		String authorPortraitURL = getAuthorPortraitURL();
+
+		if (authorPortraitURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"authorPortraitURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(authorPortraitURL));
 
 			sb.append("\"");
 		}
@@ -458,6 +629,22 @@ public class OrderNote implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(modifiedDate));
+
+			sb.append("\"");
 		}
 
 		String orderExternalReferenceCode = getOrderExternalReferenceCode();
@@ -601,4 +788,4 @@ public class OrderNote implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1860396753
+// LIFERAY-REST-BUILDER-HASH:-1759474204

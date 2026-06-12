@@ -217,6 +217,7 @@ public abstract class BaseCartCommentResourceTestCase {
 		cartComment.setAuthorPortraitURL(regex);
 		cartComment.setContent(regex);
 		cartComment.setExternalReferenceCode(regex);
+		cartComment.setOrderExternalReferenceCode(regex);
 
 		String json = CartCommentSerDes.toJSON(cartComment);
 
@@ -228,6 +229,7 @@ public abstract class BaseCartCommentResourceTestCase {
 		Assert.assertEquals(regex, cartComment.getAuthorPortraitURL());
 		Assert.assertEquals(regex, cartComment.getContent());
 		Assert.assertEquals(regex, cartComment.getExternalReferenceCode());
+		Assert.assertEquals(regex, cartComment.getOrderExternalReferenceCode());
 	}
 
 	@Test
@@ -1861,6 +1863,16 @@ public abstract class BaseCartCommentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"orderExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (cartComment.getOrderExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("orderId", additionalAssertFieldName)) {
 				if (cartComment.getOrderId() == null) {
 					valid = false;
@@ -2071,6 +2083,19 @@ public abstract class BaseCartCommentResourceTestCase {
 				if (!Objects.deepEquals(
 						cartComment1.getModifiedDate(),
 						cartComment2.getModifiedDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"orderExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cartComment1.getOrderExternalReferenceCode(),
+						cartComment2.getOrderExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2429,6 +2454,52 @@ public abstract class BaseCartCommentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("orderExternalReferenceCode")) {
+			Object object = cartComment.getOrderExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("orderId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2495,6 +2566,8 @@ public abstract class BaseCartCommentResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
+				orderExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				orderId = RandomTestUtil.randomLong();
 				restricted = RandomTestUtil.randomBoolean();
 			}
@@ -2766,4 +2839,4 @@ public abstract class BaseCartCommentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:972701390
+// LIFERAY-REST-BUILDER-HASH:2134701644

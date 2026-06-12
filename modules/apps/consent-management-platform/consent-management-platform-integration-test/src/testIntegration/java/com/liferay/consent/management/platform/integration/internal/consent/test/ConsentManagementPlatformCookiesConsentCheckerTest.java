@@ -51,8 +51,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 			_createMockHttpServletRequest();
 
 		mockHttpServletRequest.setCookies(
-			new Cookie(
-				CookiesConstants.NAME_LIFERAY_CONSENT_STATE, "%%%notjson"));
+			new Cookie(CookiesConstants.NAME_CONSENT_STATE, "%%%notjson"));
 
 		Assert.assertTrue(
 			_cookiesConsentChecker.hasConsent(
@@ -63,7 +62,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 
 		mockHttpServletRequest.setCookies(
 			new Cookie(
-				CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+				CookiesConstants.NAME_CONSENT_STATE,
 				URLEncoder.encode("not-json", StandardCharsets.UTF_8)));
 
 		Assert.assertTrue(
@@ -75,7 +74,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 
 		mockHttpServletRequest.setCookies(
 			new Cookie(
-				CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+				CookiesConstants.NAME_CONSENT_STATE,
 				_encodeConsentState(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, true
@@ -108,7 +107,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 
 		mockHttpServletRequest.setCookies(
 			new Cookie(
-				CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+				CookiesConstants.NAME_CONSENT_STATE,
 				_encodeConsentState(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
@@ -142,7 +141,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 
 		mockHttpServletRequest.setCookies(
 			new Cookie(
-				CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+				CookiesConstants.NAME_CONSENT_STATE,
 				_encodeConsentState(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, true
@@ -171,7 +170,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 
 		mockHttpServletRequest.setCookies(
 			new Cookie(
-				CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+				CookiesConstants.NAME_CONSENT_STATE,
 				_encodeConsentState(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
@@ -195,7 +194,7 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 
 		mockHttpServletRequest.setCookies(
 			new Cookie(
-				CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+				CookiesConstants.NAME_CONSENT_STATE,
 				_encodeConsentState(
 					JSONUtil.put(
 						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"

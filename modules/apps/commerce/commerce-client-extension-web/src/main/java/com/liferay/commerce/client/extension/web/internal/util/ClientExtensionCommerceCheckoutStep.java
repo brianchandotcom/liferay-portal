@@ -150,9 +150,7 @@ public class ClientExtensionCommerceCheckoutStep
 					commerceOrder, Http.Method.GET, jsonObject, "/ready",
 					response, currentUser));
 
-			if (!_isSuccess(response) ||
-				!Objects.equals(status, "READY")) {
-
+			if (!_isSuccess(response) || !Objects.equals(status, "READY")) {
 				return false;
 			}
 

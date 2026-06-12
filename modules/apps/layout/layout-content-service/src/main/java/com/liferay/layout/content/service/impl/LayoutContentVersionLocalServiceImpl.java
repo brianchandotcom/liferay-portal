@@ -141,8 +141,6 @@ public class LayoutContentVersionLocalServiceImpl
 
 		lastLayoutContentVersion.setUserName(user.getFullName());
 
-		lastLayoutContentVersion.setModifiedDate(new Date());
-
 		return layoutContentVersionPersistence.update(lastLayoutContentVersion);
 	}
 

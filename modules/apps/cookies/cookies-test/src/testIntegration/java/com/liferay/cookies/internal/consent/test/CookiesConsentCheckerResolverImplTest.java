@@ -84,7 +84,7 @@ public class CookiesConsentCheckerResolverImplTest {
 				new Cookie(
 					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"),
 				new Cookie(
-					CookiesConstants.NAME_LIFERAY_CONSENT_STATE,
+					CookiesConstants.NAME_CONSENT_STATE,
 					URLEncoder.encode(
 						JSONUtil.put(
 							CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false

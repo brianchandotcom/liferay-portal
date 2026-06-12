@@ -24,6 +24,8 @@ public class CookiesConstants {
 
 	public static final String NAME_COMPANY_ID = "COMPANY_ID";
 
+	public static final String NAME_CONSENT_STATE = "CONSENT_STATE";
+
 	public static final String NAME_CONSENT_TYPE_FUNCTIONAL =
 		"CONSENT_TYPE_FUNCTIONAL";
 
@@ -43,9 +45,6 @@ public class CookiesConstants {
 	public static final String NAME_ID = "ID";
 
 	public static final String NAME_JSESSIONID = "JSESSIONID";
-
-	public static final String NAME_LIFERAY_CONSENT_STATE =
-		"LIFERAY_CONSENT_STATE";
 
 	public static final String NAME_LOGIN = "LOGIN";
 

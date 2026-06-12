@@ -255,13 +255,6 @@ public class AssetListTypePropertiesUtil {
 			return "integer";
 		}
 
-		if (businessType.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
-			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-			return "picklist";
-		}
-
 		if (businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) ||
 			businessType.equals(
 				ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER) ||
@@ -269,6 +262,13 @@ public class AssetListTypePropertiesUtil {
 			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
 
 			return "text";
+		}
+
+		if (businessType.equals(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
+			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			return "picklist";
 		}
 
 		return null;

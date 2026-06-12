@@ -92,6 +92,12 @@ public class AssetListFiltersUtil {
 
 		String dbType = objectField.getDBType();
 
+		if (ObjectFieldConstants.DB_TYPE_BIG_DECIMAL.equals(dbType) ||
+			ObjectFieldConstants.DB_TYPE_DOUBLE.equals(dbType)) {
+
+			return "nestedFieldArray.value_double";
+		}
+
 		if (ObjectFieldConstants.DB_TYPE_BOOLEAN.equals(dbType)) {
 			return "nestedFieldArray.value_boolean";
 		}
@@ -100,12 +106,6 @@ public class AssetListFiltersUtil {
 			ObjectFieldConstants.DB_TYPE_DATE_TIME.equals(dbType)) {
 
 			return "nestedFieldArray.value_date";
-		}
-
-		if (ObjectFieldConstants.DB_TYPE_BIG_DECIMAL.equals(dbType) ||
-			ObjectFieldConstants.DB_TYPE_DOUBLE.equals(dbType)) {
-
-			return "nestedFieldArray.value_double";
 		}
 
 		if (ObjectFieldConstants.DB_TYPE_INTEGER.equals(dbType)) {

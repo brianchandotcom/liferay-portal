@@ -22,6 +22,8 @@ public class LazyBlobEntryTable extends BaseTable<LazyBlobEntryTable> {
 
 	public static final LazyBlobEntryTable INSTANCE = new LazyBlobEntryTable();
 
+	public final Column<LazyBlobEntryTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<LazyBlobEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LazyBlobEntryTable, Long> lazyBlobEntryId =
@@ -39,4 +41,4 @@ public class LazyBlobEntryTable extends BaseTable<LazyBlobEntryTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:730878264
+// LIFERAY-SERVICE-BUILDER-HASH:126862767

@@ -8,6 +8,7 @@ package com.liferay.object.web.internal.util;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -42,25 +43,13 @@ public class ObjectFieldBusinessTypeUtilTest {
 
 		Assert.assertEquals(
 			"Apple",
-			objectFieldBusinessTypeMaps.get(
-				0
-			).get(
-				"label"
-			));
+			MapUtil.getString(objectFieldBusinessTypeMaps.get(0), "label"));
 		Assert.assertEquals(
 			"Banana",
-			objectFieldBusinessTypeMaps.get(
-				1
-			).get(
-				"label"
-			));
+			MapUtil.getString(objectFieldBusinessTypeMaps.get(1), "label"));
 		Assert.assertEquals(
 			"Pineapple",
-			objectFieldBusinessTypeMaps.get(
-				2
-			).get(
-				"label"
-			));
+			MapUtil.getString(objectFieldBusinessTypeMaps.get(2), "label"));
 
 		objectFieldBusinessTypeMaps =
 			ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
@@ -68,25 +57,13 @@ public class ObjectFieldBusinessTypeUtilTest {
 
 		Assert.assertEquals(
 			"Abacaxi",
-			objectFieldBusinessTypeMaps.get(
-				0
-			).get(
-				"label"
-			));
+			MapUtil.getString(objectFieldBusinessTypeMaps.get(0), "label"));
 		Assert.assertEquals(
 			"Banana",
-			objectFieldBusinessTypeMaps.get(
-				1
-			).get(
-				"label"
-			));
+			MapUtil.getString(objectFieldBusinessTypeMaps.get(1), "label"));
 		Assert.assertEquals(
 			"Maca",
-			objectFieldBusinessTypeMaps.get(
-				2
-			).get(
-				"label"
-			));
+			MapUtil.getString(objectFieldBusinessTypeMaps.get(2), "label"));
 	}
 
 	private ObjectFieldBusinessType _mockObjectFieldBusinessType(

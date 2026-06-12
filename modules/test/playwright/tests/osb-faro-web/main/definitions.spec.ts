@@ -575,3 +575,30 @@ test(
 		}
 	}
 );
+
+test(
+	'Certain default events are hidden by default',
+	{tag: '@LRAC-10222'},
+	async ({page, project}) => {
+		await page.goto(
+			`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/definitions/events/default`
+		);
+
+		// Events that ship hidden expose a "Set to Show" toggle
+
+		for (const defaultEventName of [
+			'assetDepthReached',
+			'blogDepthReached',
+		]) {
+			const row = page
+				.locator('tbody tr')
+				.filter({hasText: defaultEventName});
+
+			await row.hover();
+
+			await expect(
+				row.getByRole('button', {name: 'Set to Show'})
+			).toBeVisible();
+		}
+	}
+);

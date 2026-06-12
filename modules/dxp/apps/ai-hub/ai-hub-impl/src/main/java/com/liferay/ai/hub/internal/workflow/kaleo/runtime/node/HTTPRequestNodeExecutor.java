@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -139,19 +140,10 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 						"\" failed with response code ", responseCode));
 			}
 
-			JSONArray outputVariablesJSONArray =
+			_applyOutputVariables(
 				VariablesUtil.getVariablesJSONArray(
-					"outputVariables", kaleoNodeSettingValues);
-
-			if ((outputVariablesJSONArray != null) &&
-				(outputVariablesJSONArray.length() > 0)) {
-
-				JSONObject outputJSONObject =
-					outputVariablesJSONArray.getJSONObject(0);
-
-				workflowContext.put(
-					outputJSONObject.getString("name"), responseBody);
-			}
+					"outputVariables", kaleoNodeSettingValues),
+				responseBody, workflowContext);
 
 			String sseEventSinkKey = GetterUtil.getString(
 				workflowContext.get("sseEventSinkKey"));
@@ -190,6 +182,50 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 		List<PathElement> remainingPathElements) {
 	}
 
+	private void _applyOutputVariables(
+			JSONArray outputVariablesJSONArray, String responseBody,
+			Map<String, Serializable> workflowContext)
+		throws Exception {
+
+		if ((outputVariablesJSONArray == null) ||
+			(outputVariablesJSONArray.length() == 0)) {
+
+			return;
+		}
+
+		JSONObject responseJSONObject = null;
+
+		for (int i = 0; i < outputVariablesJSONArray.length(); i++) {
+			JSONObject outputVariableJSONObject =
+				outputVariablesJSONArray.getJSONObject(i);
+
+			String name = outputVariableJSONObject.getString("name");
+
+			String path = outputVariableJSONObject.getString("path");
+
+			if (Validator.isNull(path)) {
+				workflowContext.put(name, responseBody);
+
+				continue;
+			}
+
+			if (responseJSONObject == null) {
+				responseJSONObject = _jsonFactory.createJSONObject(
+					responseBody);
+			}
+
+			if (path.startsWith("output.")) {
+				path = path.substring("output.".length());
+			}
+
+			Object value = responseJSONObject.get(path);
+
+			if (value != null) {
+				workflowContext.put(name, String.valueOf(value));
+			}
+		}
+	}
+
 	private String _decryptUserToken(long companyId, String encryptedUserToken)
 		throws Exception {
 
@@ -207,6 +243,9 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;

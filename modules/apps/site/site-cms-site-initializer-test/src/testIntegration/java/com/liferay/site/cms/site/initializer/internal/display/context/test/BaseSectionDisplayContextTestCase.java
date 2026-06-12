@@ -724,7 +724,7 @@ public abstract class BaseSectionDisplayContextTestCase
 			appendStatus(appendGroupIds(getFilterString())),
 			"&nestedFields=embedded,embeddedTaxonomyCategory,",
 			"file.metadata,file.previewURL,file.thumbnailURL,",
-			"numberOfObjectEntries,numberOfObjectEntryFolders,",
+			"modifiedBy,numberOfObjectEntries,numberOfObjectEntryFolders,",
 			"systemProperties.collaboratorBrief,",
 			"systemProperties.objectDefinitionBrief&sort=dateModified:desc");
 	}

@@ -99,7 +99,7 @@ test('Data set selection modal shows a "No results found" message when there are
 test(
 	'Assign a data set to the "Data Set" fragment, change and delete assignment',
 	{
-		tag: ['@LPS-172403', '@LPS-190724'],
+		tag: ['@LPD-93809', '@LPS-172403', '@LPS-190724'],
 	},
 	async ({
 		apiHelpers,
@@ -220,17 +220,8 @@ test(
 			);
 
 			await expect(
-				page.getByText('Resolved', {exact: true})
-			).toBeVisible();
-
-			await expect(
-				page.getByText(
-					autoResolvedTokenDataSetConfig.restEndpoint.replace(
-						'{siteId}',
-						siteId
-					)
-				)
-			).toBeVisible();
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Completed');
 		});
 
 		await test.step('Assert that the data set is displayed', async () => {
@@ -275,25 +266,20 @@ test(
 			);
 
 			await expect(
-				page.getByText('Not Resolved', {exact: true})
-			).toBeVisible();
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Incomplete');
 
-			await page
-				.getByRole('textbox', {name: '{currentExternalReferenceCode}'})
-				.fill(manuallyResolvedTokenDataSetConfig.erc);
+			await dataSetFragmentPage.selectToken(
+				'currentExternalReferenceCode'
+			);
+
+			await dataSetFragmentPage.fillTokenValue(
+				manuallyResolvedTokenDataSetConfig.erc
+			);
 
 			await expect(
-				page.getByText('Resolved', {exact: true})
-			).toBeVisible();
-
-			await expect(
-				page.getByText(
-					manuallyResolvedTokenDataSetConfig.restEndpoint.replace(
-						'{currentExternalReferenceCode}',
-						manuallyResolvedTokenDataSetConfig.erc
-					)
-				)
-			).toBeVisible();
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Completed');
 		});
 
 		await test.step('Assert that the data set is displayed', async () => {

@@ -1,0 +1,526 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataSetManagerApiHelpersTest} from '../../../fixtures/dataSetManagerApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForFDS} from '../../../utils/waitFor';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
+
+export const test = mergeTests(
+	apiHelpersTest,
+	dataSetManagerApiHelpersTest,
+	displayPageTemplatesPagesTest,
+	featureFlagsTest({
+		'LPD-38564': {enabled: true},
+		'LPS-164563': {enabled: true},
+	}),
+	isolatedLayoutTest({publish: false}),
+	isolatedSiteTest,
+	loginTest(),
+	dataSetFragmentPageTest,
+	pageEditorPagesTest
+);
+
+const MAPPING_MODE = {
+	AUTO_RESOLVED: 'Resolve Automatically',
+	CONTENT: 'Map to Selected Entity',
+	CONTEXT: 'Map to Page Context Entity',
+	LITERAL: 'Input Token Value',
+};
+
+const UNMAPPED_URL_HELP =
+	'The URL is incomplete. Please map all unmapped tokens in the fragment panel to display the data set.';
+
+const dataSetERCs: string[] = [];
+let article: any;
+let articleSiteId: string;
+
+test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
+	for (const erc of dataSetERCs) {
+		await dataSetManagerApiHelpers.deleteDataSet({
+			erc,
+		});
+	}
+
+	dataSetERCs.length = 0;
+
+	if (article) {
+		await apiHelpers.jsonWebServicesJournal.moveArticleToTrash(
+			articleSiteId,
+			article.articleId
+		);
+
+		article = null;
+	}
+});
+
+/**
+ * The data set points to an endpoint with two tokens:
+ *
+ * - `{siteId}` is automatically resolvable: the backend provides its value.
+ * - `{path}` comes from the additional API URL parameters (a `filter`
+ *   expression on `friendlyUrlPath`) and must be mapped manually, which also
+ *   makes the resolved value observable in the displayed rows.
+ */
+async function createTokenizedDataSet({dataSetManagerApiHelpers}: any) {
+	const dataSet = {
+		erc: getRandomString(),
+		label: getRandomString(),
+	};
+
+	dataSetERCs.push(dataSet.erc);
+
+	await dataSetManagerApiHelpers.createDataSet({
+		additionalAPIURLParameters: "filter=contains(friendlyUrlPath,'{path}')",
+		erc: dataSet.erc,
+		label: dataSet.label,
+		restApplication: '/headless-delivery/v1.0',
+		restEndpoint: '/v1.0/sites/{siteId}/structured-contents',
+		restSchema: 'StructuredContent',
+	});
+
+	await dataSetManagerApiHelpers.createDataSetTableSection({
+		dataSetERC: dataSet.erc,
+		fieldName: 'title',
+		label_i18n: {en_US: 'Title'},
+		sortable: false,
+		type: 'string',
+	});
+
+	return dataSet;
+}
+
+async function createArticle({apiHelpers, siteId}: any) {
+	const title = getRandomString().toLowerCase();
+
+	articleSiteId = siteId;
+
+	article = await apiHelpers.jsonWebServicesJournal.addWebContent({
+		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+		groupId: siteId,
+		titleMap: {en_US: title},
+	});
+
+	return title;
+}
+
+test(
+	'URL token mapping panel shows the initial state for a data set with unmapped tokens',
+	{tag: '@LPD-93809'},
+	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout, page}) => {
+		const dataSet =
+			await test.step('Create a data set with tokens in its API URL', async () =>
+				createTokenizedDataSet({
+					dataSetManagerApiHelpers,
+				}));
+
+		await test.step('Add the fragment and assign the data set', async () => {
+			await dataSetFragmentPage.addDataSetFragment(layout);
+
+			await dataSetFragmentPage.selectDataSetButton.click();
+
+			await dataSetFragmentPage.selectDataSet(dataSet.label);
+		});
+
+		await test.step('Assert that the panel starts incomplete with no token preselected', async () => {
+			await expect(dataSetFragmentPage.tokenMappingPanel).toBeVisible();
+
+			await expect(
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Incomplete');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenSelectorTrigger
+			).toContainText('Select an Option');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingMappingSelect
+			).toBeHidden();
+		});
+
+		await test.step('Assert that the token dropdown reflects per-token mapping state', async () => {
+			await dataSetFragmentPage.tokenMappingTokenSelectorTrigger.click();
+
+			await expect(
+				page.getByRole('menuitem', {name: '{siteId} Mapped'})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('menuitem', {name: '{path} Unmapped'})
+			).toBeVisible();
+
+			await dataSetFragmentPage.tokenMappingTokenSelectorTrigger.click();
+		});
+
+		await test.step('Assert that the fragment renders the help alert, the URL and the skeleton', async () => {
+			await expect(
+				dataSetFragmentPage.unresolvedPreview.alert
+			).toContainText(UNMAPPED_URL_HELP);
+
+			await expect(
+				dataSetFragmentPage.unresolvedPreview.urlBox
+			).toContainText('{path}');
+
+			await expect(
+				dataSetFragmentPage.unresolvedPreview.skeletonBars.first()
+			).toBeVisible();
+
+			await expect(dataSetFragmentPage.table.container).toBeHidden();
+		});
+
+		await test.step('Assert that the page context mapping mode is not offered on a content page', async () => {
+			await dataSetFragmentPage.selectToken('path');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingMappingSelect.getByRole(
+					'option',
+					{
+						name: MAPPING_MODE.CONTEXT,
+					}
+				)
+			).toHaveCount(0);
+		});
+	}
+);
+
+test(
+	'Inputting a token value completes the mapping and renders the data set',
+	{tag: '@LPD-93809'},
+	async ({
+		apiHelpers,
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		layout,
+		page,
+	}) => {
+		const dataSet =
+			await test.step('Create a data set with tokens in its API URL', async () =>
+				createTokenizedDataSet({
+					dataSetManagerApiHelpers,
+				}));
+
+		await dataSetFragmentPage.addDataSetFragment(layout);
+
+		const articleTitle =
+			await test.step('Create an article matching the token filter', async () =>
+				createArticle({
+					apiHelpers,
+					siteId: await page.evaluate(() =>
+						String(Liferay.ThemeDisplay.getSiteGroupId())
+					),
+				}));
+
+		await test.step('Assign the data set', async () => {
+			await dataSetFragmentPage.selectDataSetButton.click();
+
+			await dataSetFragmentPage.selectDataSet(dataSet.label);
+		});
+
+		await test.step('Map {path} with a literal value matching the article friendly URL', async () => {
+			await dataSetFragmentPage.selectToken('path');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingMappingSelect
+			).toHaveValue('literal');
+
+			await dataSetFragmentPage.fillTokenValue(articleTitle);
+		});
+
+		await test.step('Assert that the token and the whole mapping become complete', async () => {
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenStatusLabel
+			).toHaveText('Mapped');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Completed');
+		});
+
+		await test.step('Assert that the data set replaces the preview, showing the filtered article', async () => {
+			await expect(
+				dataSetFragmentPage.unresolvedPreview.container
+			).toBeHidden();
+
+			await waitForFDS({page});
+
+			await expect(
+				dataSetFragmentPage.table.bodyRows.getByText(articleTitle)
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Changing the mapping mode of a backend resolved token unmaps it and restoring it renders the data set',
+	{tag: '@LPD-93809'},
+	async ({
+		apiHelpers,
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		layout,
+		page,
+	}) => {
+		const dataSet =
+			await test.step('Create a data set with tokens in its API URL', async () =>
+				createTokenizedDataSet({
+					dataSetManagerApiHelpers,
+				}));
+
+		await dataSetFragmentPage.addDataSetFragment(layout);
+
+		const articleTitle =
+			await test.step('Create an article matching the token filter', async () =>
+				createArticle({
+					apiHelpers,
+					siteId: await page.evaluate(() =>
+						String(Liferay.ThemeDisplay.getSiteGroupId())
+					),
+				}));
+
+		await test.step('Assign the data set', async () => {
+			await dataSetFragmentPage.selectDataSetButton.click();
+
+			await dataSetFragmentPage.selectDataSet(dataSet.label);
+		});
+
+		await test.step('Complete the mapping: {path} literal, {siteId} resolves automatically', async () => {
+			await dataSetFragmentPage.selectToken('path');
+
+			await dataSetFragmentPage.fillTokenValue(articleTitle);
+
+			await expect(
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Completed');
+
+			await waitForFDS({page});
+		});
+
+		await test.step('Assert that {siteId} is preselected as automatically resolved', async () => {
+			await dataSetFragmentPage.selectToken('siteId');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingMappingSelect
+			).toHaveValue('auto-resolved');
+		});
+
+		await test.step('Assert that changing the mapping mode unmaps the token and brings the skeleton back', async () => {
+			await dataSetFragmentPage.selectMappingMode(MAPPING_MODE.LITERAL);
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenStatusLabel
+			).toHaveText('Unmapped');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Incomplete');
+
+			await expect(
+				dataSetFragmentPage.unresolvedPreview.skeletonBars.first()
+			).toBeVisible();
+
+			await expect(dataSetFragmentPage.table.container).toBeHidden();
+		});
+
+		await test.step('Assert that restoring automatic resolution renders the data set again', async () => {
+			await dataSetFragmentPage.selectMappingMode(
+				MAPPING_MODE.AUTO_RESOLVED
+			);
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenStatusLabel
+			).toHaveText('Mapped');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Completed');
+
+			await waitForFDS({page});
+
+			await expect(
+				dataSetFragmentPage.table.bodyRows.getByText(articleTitle)
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Mapping a token to a selected entity requires an entity and an identifier field',
+	{tag: '@LPD-93809'},
+	async ({
+		apiHelpers,
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		layout,
+		page,
+	}) => {
+		const dataSet =
+			await test.step('Create a data set with tokens in its API URL', async () =>
+				createTokenizedDataSet({
+					dataSetManagerApiHelpers,
+				}));
+
+		await dataSetFragmentPage.addDataSetFragment(layout);
+
+		const articleTitle =
+			await test.step('Create an article to select as entity', async () =>
+				createArticle({
+					apiHelpers,
+					siteId: await page.evaluate(() =>
+						String(Liferay.ThemeDisplay.getSiteGroupId())
+					),
+				}));
+
+		await test.step('Assign the data set and choose the entity mapping mode for {path}', async () => {
+			await dataSetFragmentPage.selectDataSetButton.click();
+
+			await dataSetFragmentPage.selectDataSet(dataSet.label);
+
+			await dataSetFragmentPage.selectToken('path');
+
+			await dataSetFragmentPage.selectMappingMode(MAPPING_MODE.CONTENT);
+		});
+
+		await test.step('Assert that the field selector stays disabled until an entity is selected', async () => {
+			await expect(
+				dataSetFragmentPage.tokenMappingFieldSelect
+			).toBeDisabled();
+
+			await dataSetFragmentPage.selectEntity(articleTitle);
+		});
+
+		await test.step('Assert that the entity alone does not map the token: a field must be chosen', async () => {
+			await expect(
+				dataSetFragmentPage.tokenMappingFieldSelect
+			).toBeEnabled();
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenStatusLabel
+			).toHaveText('Unmapped');
+
+			await dataSetFragmentPage.tokenMappingFieldSelect.selectOption({
+				label: 'ID',
+			});
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenStatusLabel
+			).toHaveText('Mapped');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Completed');
+		});
+
+		await test.step('Assert that the data set renders: the entity ID matches no friendly URL path', async () => {
+			await waitForFDS({empty: true, page});
+		});
+
+		await test.step('Assert that removing the entity unmaps the token again', async () => {
+			await dataSetFragmentPage.tokenMappingRemoveEntityButton.click();
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenStatusLabel
+			).toHaveText('Unmapped');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Incomplete');
+
+			await expect(
+				dataSetFragmentPage.unresolvedPreview.skeletonBars.first()
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Mapping a token to the page context entity is offered on display page templates',
+	{tag: '@LPD-93809'},
+	async ({
+		apiHelpers,
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		displayPageTemplatesPage,
+		pageEditorPage,
+		site,
+	}) => {
+		const dataSet =
+			await test.step('Create a data set with tokens in its API URL', async () =>
+				createTokenizedDataSet({
+					dataSetManagerApiHelpers,
+				}));
+
+		await test.step('Create a display page template for basic web content', async () => {
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					'com.liferay.journal.model.JournalArticle'
+				);
+
+			const displayPageTemplateName = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					classTypeKey: 'BASIC-WEB-CONTENT',
+					groupId: site.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+		});
+
+		await test.step('Add the fragment and assign the data set', async () => {
+			await pageEditorPage.addFragment('Content Display', 'Data Set');
+
+			await dataSetFragmentPage.fragmentSelectionArea.click();
+
+			await dataSetFragmentPage.selectDataSetButton.click();
+
+			await dataSetFragmentPage.selectDataSet(dataSet.label);
+		});
+
+		await test.step('Map {path} to the page context entity through an identifier field', async () => {
+			await dataSetFragmentPage.selectToken('path');
+
+			await dataSetFragmentPage.selectMappingMode(MAPPING_MODE.CONTEXT);
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenStatusLabel
+			).toHaveText('Unmapped');
+
+			await dataSetFragmentPage.tokenMappingFieldSelect.selectOption({
+				label: 'External Reference Code',
+			});
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenStatusLabel
+			).toHaveText('Mapped');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingStatusLabel
+			).toHaveText('Completed');
+		});
+
+		await test.step('Assert that the fragment keeps showing the preview: without a page context entity in the editor the value cannot be resolved yet', async () => {
+			await expect(
+				dataSetFragmentPage.unresolvedPreview.skeletonBars.first()
+			).toBeVisible();
+		});
+	}
+);

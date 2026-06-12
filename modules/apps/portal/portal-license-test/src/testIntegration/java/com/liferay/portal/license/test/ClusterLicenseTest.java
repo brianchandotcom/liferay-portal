@@ -88,7 +88,9 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		while (iterator.hasNext()) {
 			TomcatNode tomcatNode = iterator.next();
 
-			if (tomcatNode == _backgroundTomcatNode1 || tomcatNode == _backgroundTomcatNode2) {
+			if ((tomcatNode == _backgroundTomcatNode1) ||
+				(tomcatNode == _backgroundTomcatNode2)) {
+
 				continue;
 			}
 
@@ -215,38 +217,6 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		_testConsoleMessageListener.assertMessageListened(messageFuture3);
 	}
 
-	private Serializable _assertPortalLicenseRegistered() throws Exception {
-		assertPortalLicenseRegistered();
-
-		return null;
-	}
-
-	private Serializable _deployEnterpriseLicense() throws Exception {
-		deployEnterprisePortalLicense(Time.HOUR);
-
-		return null;
-	}
-
-	private TomcatNode.ClusterExecutable<Serializable> _getClusterExecutable(
-		long timestamp) {
-
-		return () -> {
-			Field field = findField("grace.period.end.field");
-
-			field.setAccessible(true);
-
-			field.setLong(null, timestamp + (5L * Time.MINUTE));
-
-			return null;
-		};
-	}
-
-	private long _getTimeStamp() throws Exception {
-		Method method = findMethod("timestamp.method");
-
-		return (long)method.invoke(null);
-	}
-
 	@SafeVarargs
 	private static TomcatNode _startTomcatNode(
 			TomcatNode.ClusterExecutable<Serializable>...
@@ -282,6 +252,38 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		}
 
 		return tomcatNode;
+	}
+
+	private Serializable _assertPortalLicenseRegistered() throws Exception {
+		assertPortalLicenseRegistered();
+
+		return null;
+	}
+
+	private Serializable _deployEnterpriseLicense() throws Exception {
+		deployEnterprisePortalLicense(Time.HOUR);
+
+		return null;
+	}
+
+	private TomcatNode.ClusterExecutable<Serializable> _getClusterExecutable(
+		long timestamp) {
+
+		return () -> {
+			Field field = findField("grace.period.end.field");
+
+			field.setAccessible(true);
+
+			field.setLong(null, timestamp + (5L * Time.MINUTE));
+
+			return null;
+		};
+	}
+
+	private long _getTimeStamp() throws Exception {
+		Method method = findMethod("timestamp.method");
+
+		return (long)method.invoke(null);
 	}
 
 	private Serializable _testFreeTierLicense() throws Exception {
@@ -321,13 +323,12 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 	private static final String _PAGE_KEY_EXCEEDED_LIMIT =
 		"You have exceeded the developer mode connection limit";
 
+	private static TomcatNode _backgroundTomcatNode1;
+	private static TomcatNode _backgroundTomcatNode2;
 	private static PrintStream _originalSystemErrPrintStream;
 	private static PrintStream _originalSystemOutPrintStream;
 	private static final TestConsoleMessageListener
 		_testConsoleMessageListener = new TestConsoleMessageListener();
-
-	private static TomcatNode _backgroundTomcatNode1;
-	private static TomcatNode _backgroundTomcatNode2;
 
 	private static class TestConsoleMessageListener {
 

@@ -461,10 +461,13 @@ definition {
 
 		Portlet.expandTree();
 
-		AssertClick.assertPartialTextClickAt(
+		AssertElementPresent(
 			key_nodeName = ${linkToPageContent},
-			locator1 = "Treeview#NODE_UNSELECTED",
-			value1 = ${linkToPageContent});
+			locator1 = "Treeview#NODE_UNSELECTED_TREEITEM");
+
+		Click(
+			key_nodeName = ${linkToPageContent},
+			locator1 = "Treeview#NODE_UNSELECTED_TREEITEM");
 
 		SelectFrameTop();
 	}

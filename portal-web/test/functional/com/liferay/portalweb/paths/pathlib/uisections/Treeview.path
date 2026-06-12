@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_UNSELECTED_TREEITEM</td>
+	<td>//div[contains(@role,'treeitem') and not(contains(@class,'active'))][.//*[contains(@class,'component-text') or contains(@class,'flex-grow')][normalize-space(text())='${key_nodeName}']]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_LIST</td>
 	<td>//*[@role='tree'] | //ul[contains(@class,'tree-pages')] | //div[contains(@class,'navigation-menu-items-tree')]</td>
 	<td></td>

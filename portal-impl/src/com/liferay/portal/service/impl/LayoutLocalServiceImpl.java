@@ -1870,16 +1870,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				groupId, privateLayout);
 
-			if (layoutSet.isLayoutSetPrototypeLinkActive() &&
-				!_mergeLayouts(
-					group, layoutSet, groupId, privateLayout, parentLayoutId,
-					start, end, orderByComparator)) {
-
-				return layoutPersistence.findByG_P_P(
-					groupId, privateLayout, parentLayoutId, start, end,
-					orderByComparator);
-			}
-
 			List<Layout> layouts = layoutPersistence.findByG_P_P(
 				groupId, privateLayout, parentLayoutId, start, end,
 				orderByComparator);
@@ -4326,16 +4316,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Group group = _groupPersistence.findByPrimaryKey(
 				layoutSet.getGroupId());
 
-			if (layoutSet.isLayoutSetPrototypeLinkActive() &&
-				!_mergeLayouts(
-					group, layoutSet, layoutSet.getGroupId(),
-					layoutSet.isPrivateLayout(), parentLayoutIds)) {
-
-				return layoutPersistence.findByG_P_P(
-					layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-					parentLayoutIds);
-			}
-
 			List<Layout> layouts = layoutPersistence.findByG_P_P(
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				parentLayoutIds);
@@ -4593,15 +4573,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return false;
 		}
 
-		if (Validator.isNull(layout.getPortletLayoutPageTemplateEntryERC()) &&
-			Validator.isNull(layout.getLayoutSetPrototypeLayoutERC())) {
+		if (Validator.isNull(layout.getPortletLayoutPageTemplateEntryERC()) ||
+			Validator.isNotNull(layout.getLayoutSetPrototypeLayoutERC())) {
 
 			return false;
 		}
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-		LayoutSet layoutSet = layout.getLayoutSet();
 
 		try {
 			WorkflowThreadLocal.setEnabled(false);
@@ -4609,10 +4587,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Sites sites = _sitesSnapshot.get();
 
 			sites.mergeLayoutPrototypeLayout(group, layout);
-
-			if (Validator.isNotNull(layout.getLayoutSetPrototypeLayoutERC())) {
-				sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
-			}
 		}
 		catch (CTTransactionException | PortalException exception) {
 			throw exception;
@@ -4623,46 +4597,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		finally {
 			MergeLayoutPrototypesThreadLocal.setMergeComplete(
 				"getLayout", arguments);
-			WorkflowThreadLocal.setEnabled(workflowEnabled);
-		}
-
-		return true;
-	}
-
-	private boolean _mergeLayouts(
-		Group group, LayoutSet layoutSet, Object... arguments) {
-
-		arguments = ArrayUtil.append(
-			arguments, CTCollectionThreadLocal.getCTCollectionId());
-
-		if ((MergeLayoutPrototypesThreadLocal.isMergeComplete(
-				"getLayouts", arguments) &&
-			 !group.isUser()) ||
-			StartupHelperUtil.isUpgrading()) {
-
-			return false;
-		}
-
-		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-		try {
-			Sites sites = _sitesSnapshot.get();
-
-			if (sites.isLayoutSetMergeable(group, layoutSet)) {
-				WorkflowThreadLocal.setEnabled(false);
-
-				sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to merge layouts for site template", exception);
-			}
-		}
-		finally {
-			MergeLayoutPrototypesThreadLocal.setMergeComplete(
-				"getLayouts", arguments);
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
 

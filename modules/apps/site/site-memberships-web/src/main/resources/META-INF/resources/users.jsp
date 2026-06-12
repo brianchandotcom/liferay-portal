@@ -45,6 +45,12 @@ Team team = usersDisplayContext.getTeam();
 
 	<liferay-site:membership-policy-error />
 
+	<clay:alert
+		dismissible="<%= true %>"
+		displayType="info"
+		message="inherited-memberships-from-an-organization-or-a-user-group-are-managed-at-their-source-and-cannot-be-removed-here"
+	/>
+
 	<liferay-ui:search-container
 		id="users"
 		searchContainer="<%= usersDisplayContext.getUserSearchContainer() %>"
@@ -71,7 +77,7 @@ Team team = usersDisplayContext.getTeam();
 					<liferay-ui:search-container-column-text>
 						<clay:user-card
 							propsTransformer="{UserCardPropsTransformer} from site-memberships-web"
-							userCard="<%= new UsersUserCard(user2, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+							userCard="<%= new UsersUserCard(usersDisplayContext.isInheritedMember(user2.getUserId()), renderRequest, renderResponse, searchContainer.getRowChecker(), user2) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -128,11 +134,34 @@ Team team = usersDisplayContext.getTeam();
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
-								<div class="h5"><%= user2.getFullName() %></div>
+								<div class="h5">
+									<%= user2.getFullName() %>
+								</div>
 
 								<div class="h6 text-default">
 									<span><%= user2.getScreenName() %></span>
 								</div>
+
+								<c:choose>
+									<c:when test="<%= usersDisplayContext.isInheritedMember(user2.getUserId()) %>">
+										<div>
+											<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(usersDisplayContext.getMembershipLabel(user2.getUserId())) %>">
+												<clay:label
+													displayType="info"
+													label='<%= LanguageUtil.get(request, "inherited") %>'
+												/>
+											</span>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div>
+											<clay:label
+												displayType="secondary"
+												label='<%= LanguageUtil.get(request, "direct") %>'
+											/>
+										</div>
+									</c:otherwise>
+								</c:choose>
 
 								<%
 								roles.addAll(teams);
@@ -180,6 +209,28 @@ Team team = usersDisplayContext.getTeam();
 								name="teams"
 								value="<%= HtmlUtil.escape(StringUtil.merge(teams, StringPool.COMMA_AND_SPACE)) %>"
 							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand table-cell-minw-200 text-center"
+								name="membership"
+							>
+								<c:choose>
+									<c:when test="<%= usersDisplayContext.isInheritedMember(user2.getUserId()) %>">
+										<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(usersDisplayContext.getMembershipLabel(user2.getUserId())) %>">
+											<clay:label
+												displayType="info"
+												label='<%= LanguageUtil.get(request, "inherited") %>'
+											/>
+										</span>
+									</c:when>
+									<c:otherwise>
+										<clay:label
+											displayType="secondary"
+											label='<%= LanguageUtil.get(request, "direct") %>'
+										/>
+									</c:otherwise>
+								</c:choose>
+							</liferay-ui:search-container-column-text>
 
 							<%
 							UserActionDropdownItemsProvider userActionDropdownItemsProvider = new UserActionDropdownItemsProvider(user2, renderRequest, renderResponse);

@@ -337,11 +337,6 @@ public class LayoutSetWrapper
 		return model.getLogoId();
 	}
 
-	@Override
-	public java.util.List<Layout> getMergeFailFriendlyURLLayouts() {
-		return model.getMergeFailFriendlyURLLayouts();
-	}
-
 	/**
 	 * Returns the modified date of this layout set.
 	 *
@@ -719,4 +714,4 @@ public class LayoutSetWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-781548281
+// LIFERAY-SERVICE-BUILDER-HASH:-458109925

@@ -96,6 +96,10 @@ test(
 			page.getByRole('heading', {name: `Delete "${name}"`})
 		).toBeVisible();
 
+		await expect(page.locator('.liferay-modal .modal-dialog')).toHaveClass(
+			/modal-dialog-centered/
+		);
+
 		await clickAndExpectToBeVisible({
 			target: page.getByText(
 				'Success:Your request completed successfully.'

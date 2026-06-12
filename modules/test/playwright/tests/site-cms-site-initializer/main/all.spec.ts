@@ -79,6 +79,10 @@ test(
 				page.getByText('You are about to delete the asset')
 			).toBeVisible();
 
+			await expect(
+				page.locator('.liferay-modal .modal-dialog')
+			).toHaveClass(/modal-dialog-centered/);
+
 			await page.getByRole('button', {name: 'Delete'}).click();
 
 			await waitForAlert(page, `${file1Title} was successfully deleted.`);

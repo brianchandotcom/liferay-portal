@@ -75,6 +75,10 @@ async function resetPermissions(page, folderName?: string) {
 	await expect(async () => {
 		await clickMenuItem('Reset to Default Permissions', page, folderName);
 
+		await expect(page.locator('.liferay-modal .modal-dialog')).toHaveClass(
+			/modal-dialog-centered/
+		);
+
 		await page.getByRole('button', {name: 'Confirm'}).click();
 	}).toPass({timeout: 5000});
 

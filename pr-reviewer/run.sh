@@ -204,7 +204,9 @@ function _check_pr {
 		echo ""
 		echo "Closing unmergeable ${pr_number}:"
 
-		local base_ref=$(echo "${pr_json}" | jq --raw-output ".base.ref")
+		local base_ref
+
+		base_ref=$(echo "${pr_json}" | jq --raw-output ".base.ref")
 
 		_fetch_pr || true
 
@@ -251,8 +253,12 @@ function _check_pr {
 	fi
 
 	local index
-	local max_chance=$(echo "${automatic_code_review_json}" | jq "map(.chance) | max")
-	local models_count=$(echo "${automatic_code_review_json}" | jq "length")
+
+	local max_chance
+	local models_count
+
+	max_chance=$(echo "${automatic_code_review_json}" | jq "map(.chance) | max")
+	models_count=$(echo "${automatic_code_review_json}" | jq "length")
 
 	local usernames
 
@@ -265,7 +271,9 @@ function _check_pr {
 		} | grep --invert-match liferay-continuous-integration | sort --unique | tr "[:upper:]" "[:lower:]"
 	) || true
 
-	local at_usernames=$(echo "${usernames}" | sed "s/^/@/" | tr "\n" " " | sed "s/ *$//")
+	local at_usernames
+
+	at_usernames=$(echo "${usernames}" | sed "s/^/@/" | tr "\n" " " | sed "s/ *$//")
 
 	if [ ${models_count} -eq 0 ]
 	then
@@ -289,22 +297,32 @@ function _check_pr {
 		return 0
 	fi
 
-	local body="${at_usernames}"$'\n\n'"There is $(_get_indefinite_article_for_number "${max_chance}") ${max_chance}% chance that Brian will reject this PR."
+	local body
+
+	body="${at_usernames}"$'\n\n'"There is $(_get_indefinite_article_for_number "${max_chance}") ${max_chance}% chance that Brian will reject this PR."
 
 	for ((index = 0; index < models_count; index++))
 	do
-		local chance=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].chance")
+		local chance
+
+		chance=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].chance")
 
 		if [ ${chance} -eq 0 ]
 		then
 			continue
 		fi
 
-		local input_tokens=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].input_tokens // 0")
-		local model=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].model")
-		local output_tokens=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].output_tokens // 0")
-		local seconds=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].seconds // 0")
-		local violations=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].violations[]" | sed "s/^/- /")
+		local input_tokens
+		local model
+		local output_tokens
+		local seconds
+		local violations
+
+		input_tokens=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].input_tokens // 0")
+		model=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].model")
+		output_tokens=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].output_tokens // 0")
+		seconds=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].seconds // 0")
+		violations=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].violations[]" | sed "s/^/- /")
 
 		if [[ -n ${body} ]]
 		then
@@ -518,7 +536,9 @@ function _get_automatic_code_review_json {
 
 	local diff_range=refs/pr-reviewer/${pr_number}..refs/pr-reviewer/${pr_number}
 
-	local from_commit=$(git merge-base master refs/pr-reviewer/${pr_number} 2> /dev/null)
+	local from_commit
+
+	from_commit=$(git merge-base master refs/pr-reviewer/${pr_number} 2> /dev/null)
 
 	if [[ -n ${from_commit} ]]
 	then
@@ -613,7 +633,9 @@ function _get_automatic_code_review_json {
 
 	for model in "${_MODELS[@]}"
 	do
-		local model_json=$(cat ${pr_dir}/${model}.json 2> /dev/null) || model_json=""
+		local model_json
+
+		model_json=$(cat ${pr_dir}/${model}.json 2> /dev/null) || model_json=""
 
 		if [[ -z ${model_json} ]] || ! echo "${model_json}" | jq . > /dev/null 2>&1
 		then
@@ -641,7 +663,9 @@ function _is_older_than {
 	local file=${1}
 	local seconds=${2}
 
-	local modified_time=$(stat --format=%Y ${file} 2> /dev/null)
+	local modified_time
+
+	modified_time=$(stat --format=%Y ${file} 2> /dev/null)
 
 	[ $(($(date +%s) - ${modified_time:-0})) -gt ${seconds} ]
 }
@@ -726,7 +750,9 @@ function _update_points {
 
 	for username in ${usernames}
 	do
-		local current_points=$(grep "^${username}=" points.properties 2> /dev/null | cut --delimiter== --fields=2)
+		local current_points
+
+		current_points=$(grep "^${username}=" points.properties 2> /dev/null | cut --delimiter== --fields=2)
 
 		if [[ -z ${current_points} ]]
 		then
@@ -770,7 +796,10 @@ Output ONLY valid JSON, with no Markdown code fence and no surrounding prose: {"
 	local output_tokens=0
 	local raw
 	local response
-	local seconds=$(date +%s)
+
+	local seconds
+
+	seconds=$(date +%s)
 
 	if [ ${model} = sonnet-4.6 ]
 	then
@@ -811,7 +840,9 @@ Output ONLY valid JSON, with no Markdown code fence and no surrounding prose: {"
 
 	echo "${raw}" > "${pr_dir}/${model}.raw"
 
-	local model_json=$(echo "${response}" | _extract_last_json_block)
+	local model_json
+
+	model_json=$(echo "${response}" | _extract_last_json_block)
 
 	if model_json=$(echo "${model_json}" | jq \
 		--argjson input_tokens "${input_tokens}" \

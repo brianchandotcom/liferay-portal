@@ -24,7 +24,6 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -213,22 +214,25 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 							"apiURLTokenMappings")),
 					externalReferenceCode, httpServletRequest);
 
+			boolean resolved = _isResolved(
+				tokenResolutionsJSONObject, externalReferenceCode,
+				httpServletRequest);
+
 			if (fragmentRendererContext.isEditMode() && hasTokens) {
 				_writeAutoResolvableTokenNames(
 					fragmentEntryLink, externalReferenceCode,
 					httpServletRequest);
 
-				printWriter.write(
-					_getAPIURLResolutionHTML(
-						tokenResolutionsJSONObject, externalReferenceCode,
-						httpServletRequest,
-						fragmentRendererContext.getLocale()));
+				if (!resolved) {
+					printWriter.write(
+						_getUnresolvedAPIURLHTML(
+							tokenResolutionsJSONObject, externalReferenceCode,
+							httpServletRequest,
+							fragmentRendererContext.getLocale()));
+				}
 			}
 
-			if (_isResolved(
-					tokenResolutionsJSONObject, externalReferenceCode,
-					httpServletRequest)) {
-
+			if (resolved) {
 				printWriter.write("<div>");
 
 				_fdsRenderer.render(
@@ -262,64 +266,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		finally {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
 		}
-	}
-
-	private String _getAPIURLResolutionHTML(
-		JSONObject tokenResolutionsJSONObject, String externalReferenceCode,
-		HttpServletRequest httpServletRequest, Locale locale) {
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("<div class=\"p-2\"><span class=\"workflow-status\">");
-		sb.append("<strong class=\"label ml-2 text-uppercase ");
-
-		if (_isResolved(
-				tokenResolutionsJSONObject, externalReferenceCode,
-				httpServletRequest)) {
-
-			sb.append("label-success\">");
-			sb.append(_language.get(locale, "resolved"));
-		}
-		else {
-			sb.append("label-info\">");
-			sb.append(_language.get(locale, "not-resolved"));
-		}
-
-		sb.append("</strong></span> ");
-		sb.append(_language.get(locale, "api-url"));
-		sb.append(StringPool.COLON);
-		sb.append(StringPool.SPACE);
-
-		Matcher matcher = _pattern.matcher(
-			_fdsRenderer.getFDSAPIURL(
-				externalReferenceCode, httpServletRequest, true,
-				tokenResolutionsJSONObject));
-
-		sb.append(
-			matcher.replaceAll(
-				match -> {
-					String tokenName = match.group(1);
-
-					String tokenValue = tokenResolutionsJSONObject.getString(
-						tokenName);
-
-					if (Validator.isNull(tokenValue) ||
-						(tokenResolutionsJSONObject.getJSONObject(tokenName) !=
-							null)) {
-
-						tokenValue = "{" + tokenName + "}";
-					}
-
-					String tokenHTML =
-						"<span><strong>" + HtmlUtil.escape(tokenValue) +
-							"</strong></span>";
-
-					return Matcher.quoteReplacement(tokenHTML);
-				}));
-
-		sb.append("</div>");
-
-		return sb.toString();
 	}
 
 	private JSONObject _getAPIURLTokenMappingsJSONObject(String value) {
@@ -445,6 +391,54 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 
 		return mappingJSONObject.getString("classPK");
+	}
+
+	private String _getUnresolvedAPIURLHTML(
+		JSONObject tokenResolutionsJSONObject, String externalReferenceCode,
+		HttpServletRequest httpServletRequest, Locale locale) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("<div class=\"alert alert-info\" role=\"alert\">");
+		sb.append("<span class=\"alert-indicator\">");
+		sb.append("<svg class=\"lexicon-icon lexicon-icon-info-circle\">");
+		sb.append("<use href=\"");
+		sb.append(themeDisplay.getPathThemeImages());
+		sb.append("/clay/icons.svg#info-circle\" /></svg>&nbsp;</span>");
+		sb.append(_language.get(locale, "unmapped-url-help"));
+		sb.append("</div><div class=\"border p-3 rounded text-break\">");
+
+		Matcher matcher = _pattern.matcher(
+			_fdsRenderer.getFDSAPIURL(
+				externalReferenceCode, httpServletRequest, true,
+				tokenResolutionsJSONObject));
+
+		sb.append(
+			matcher.replaceAll(
+				match -> {
+					String tokenName = match.group(1);
+
+					String tokenValue = tokenResolutionsJSONObject.getString(
+						tokenName);
+
+					if (Validator.isNull(tokenValue) ||
+						(tokenResolutionsJSONObject.getJSONObject(tokenName) !=
+							null)) {
+
+						tokenValue = "{" + tokenName + "}";
+					}
+
+					return Matcher.quoteReplacement(
+						"<strong>" + HtmlUtil.escape(tokenValue) + "</strong>");
+				}));
+
+		sb.append("</div>");
+
+		return sb.toString();
 	}
 
 	private boolean _hasManualMapping(

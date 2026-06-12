@@ -219,6 +219,31 @@ public class FDSAPIURLBuilderTest {
 				)
 			).build());
 
+		// Nullified tokens, resolver
+
+		serviceRegistration1 = _registerFDSAPIURLResolver(
+			"/app", "schema", new String[] {"{foo}", "{userId}"},
+			new String[] {"bar", "54321"});
+
+		Assert.assertEquals(
+			"/o/app/{foo}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{foo}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("foo", JSONFactoryUtil.createJSONObject())
+			).build());
+		Assert.assertEquals(
+			"/o/app/bar/{userId}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{foo}/{userId}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("userId", JSONFactoryUtil.createJSONObject())
+			).build());
+
+		serviceRegistration1.unregister();
+
 		// One resolver, one token
 
 		serviceRegistration1 = _registerFDSAPIURLResolver(

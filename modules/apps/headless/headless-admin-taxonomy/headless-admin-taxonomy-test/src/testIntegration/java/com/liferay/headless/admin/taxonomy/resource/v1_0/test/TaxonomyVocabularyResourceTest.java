@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -102,6 +103,15 @@ public class TaxonomyVocabularyResourceTest
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 			Assert.assertNull(problem.getTitle());
 		}
+	}
+
+	@FeatureFlag("LPD-86291")
+	@Override
+	@Test
+	public void testDeleteTaxonomyVocabulary() throws Exception {
+		super.testDeleteTaxonomyVocabulary();
+
+		_testDeleteSystemTaxonomyVocabulary();
 	}
 
 	@Override
@@ -265,6 +275,15 @@ public class TaxonomyVocabularyResourceTest
 		_testGetTaxonomyVocabularyWithoutPermissionsAction();
 	}
 
+	@FeatureFlag("LPD-86291")
+	@Override
+	@Test
+	public void testPatchTaxonomyVocabulary() throws Exception {
+		super.testPatchTaxonomyVocabulary();
+
+		_testPatchSystemTaxonomyVocabularyRename();
+	}
+
 	@Test
 	public void testPostSiteTaxonomyVocabulary() throws Exception {
 		super.testPostSiteTaxonomyVocabulary();
@@ -292,6 +311,7 @@ public class TaxonomyVocabularyResourceTest
 		super.testPutTaxonomyVocabulary();
 
 		_testPutTaxonomyVocabularyUpdatesEmptyVocabulary();
+		_testPutTaxonomyVocabularyWithoutDescription();
 	}
 
 	@Override
@@ -398,6 +418,30 @@ public class TaxonomyVocabularyResourceTest
 				name = depotEntryGroup.getName(LocaleUtil.getDefault());
 			}
 		};
+	}
+
+	private void _testDeleteSystemTaxonomyVocabulary() throws Exception {
+		TaxonomyVocabulary taxonomyVocabulary = randomTaxonomyVocabulary();
+
+		taxonomyVocabulary.setSystem(true);
+
+		taxonomyVocabulary =
+			taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+				testGroup.getGroupId(), taxonomyVocabulary);
+
+		Assert.assertTrue(taxonomyVocabulary.getSystem());
+
+		try {
+			taxonomyVocabularyResource.deleteTaxonomyVocabulary(
+				taxonomyVocabulary.getId());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("FORBIDDEN", problem.getStatus());
+		}
 	}
 
 	private void _testGetSiteTaxonomyVocabulariesPage() throws Exception {
@@ -601,6 +645,30 @@ public class TaxonomyVocabularyResourceTest
 				postTaxonomyVocabulary.getId());
 
 		Assert.assertNull(getTaxonomyVocabulary.getPermissions());
+	}
+
+	private void _testPatchSystemTaxonomyVocabularyRename() throws Exception {
+		TaxonomyVocabulary taxonomyVocabulary = randomTaxonomyVocabulary();
+
+		taxonomyVocabulary.setSystem(true);
+
+		TaxonomyVocabulary postedTaxonomyVocabulary =
+			taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+				testGroup.getGroupId(), taxonomyVocabulary);
+
+		postedTaxonomyVocabulary.setName(RandomTestUtil.randomString());
+
+		try {
+			taxonomyVocabularyResource.patchTaxonomyVocabulary(
+				postedTaxonomyVocabulary.getId(), postedTaxonomyVocabulary);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("FORBIDDEN", problem.getStatus());
+		}
 	}
 
 	private void _testPostSiteTaxonomyVocabulary() throws Exception {
@@ -840,6 +908,32 @@ public class TaxonomyVocabularyResourceTest
 		Assert.assertEquals(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
 			assetVocabulary.getVisibilityType());
+	}
+
+	private void _testPutTaxonomyVocabularyWithoutDescription()
+		throws Exception {
+
+		TaxonomyVocabulary taxonomyVocabulary = randomTaxonomyVocabulary();
+
+		taxonomyVocabulary.setDescription((String)null);
+
+		TaxonomyVocabulary postedTaxonomyVocabulary =
+			taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+				testGroup.getGroupId(), taxonomyVocabulary);
+
+		Assert.assertTrue(
+			Validator.isNull(postedTaxonomyVocabulary.getDescription()));
+		Assert.assertNull(postedTaxonomyVocabulary.getDescription_i18n());
+
+		postedTaxonomyVocabulary.setDescription(StringPool.BLANK);
+
+		TaxonomyVocabulary updatedTaxonomyVocabulary =
+			taxonomyVocabularyResource.putTaxonomyVocabulary(
+				postedTaxonomyVocabulary.getId(), postedTaxonomyVocabulary);
+
+		Assert.assertTrue(
+			Validator.isNull(updatedTaxonomyVocabulary.getDescription()));
+		Assert.assertNull(updatedTaxonomyVocabulary.getDescription_i18n());
 	}
 
 	private static final String _LOG_NAME =

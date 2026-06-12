@@ -111,9 +111,7 @@ public class SamlSpMessagePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SamlSpMessage newSamlSpMessage = _persistence.create(pk);
+		SamlSpMessage newSamlSpMessage = addSamlSpMessage();
 
 		newSamlSpMessage.setCompanyId(RandomTestUtil.nextLong());
 
@@ -498,4 +496,4 @@ public class SamlSpMessagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1433317054
+// LIFERAY-SERVICE-BUILDER-HASH:-529848748

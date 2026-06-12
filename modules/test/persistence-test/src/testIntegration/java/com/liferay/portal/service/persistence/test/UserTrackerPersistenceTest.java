@@ -108,11 +108,7 @@ public class UserTrackerPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		UserTracker newUserTracker = _persistence.create(pk);
-
-		newUserTracker.setMvccVersion(RandomTestUtil.nextLong());
+		UserTracker newUserTracker = addUserTracker();
 
 		newUserTracker.setCompanyId(RandomTestUtil.nextLong());
 
@@ -426,8 +422,6 @@ public class UserTrackerPersistenceTest {
 
 		UserTracker userTracker = _persistence.create(pk);
 
-		userTracker.setMvccVersion(RandomTestUtil.nextLong());
-
 		userTracker.setCompanyId(RandomTestUtil.nextLong());
 
 		userTracker.setUserId(RandomTestUtil.nextLong());
@@ -452,4 +446,4 @@ public class UserTrackerPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-216751989
+// LIFERAY-SERVICE-BUILDER-HASH:565581973

@@ -111,11 +111,7 @@ public class CSDiagramPinPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CSDiagramPin newCSDiagramPin = _persistence.create(pk);
-
-		newCSDiagramPin.setMvccVersion(RandomTestUtil.nextLong());
+		CSDiagramPin newCSDiagramPin = addCSDiagramPin();
 
 		newCSDiagramPin.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -434,8 +430,6 @@ public class CSDiagramPinPersistenceTest {
 
 		CSDiagramPin csDiagramPin = _persistence.create(pk);
 
-		csDiagramPin.setMvccVersion(RandomTestUtil.nextLong());
-
 		csDiagramPin.setCtCollectionId(RandomTestUtil.nextLong());
 
 		csDiagramPin.setCompanyId(RandomTestUtil.nextLong());
@@ -466,4 +460,4 @@ public class CSDiagramPinPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1017997871
+// LIFERAY-SERVICE-BUILDER-HASH:544705412

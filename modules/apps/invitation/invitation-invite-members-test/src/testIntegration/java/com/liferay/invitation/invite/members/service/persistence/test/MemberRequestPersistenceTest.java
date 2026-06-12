@@ -112,9 +112,7 @@ public class MemberRequestPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		MemberRequest newMemberRequest = _persistence.create(pk);
+		MemberRequest newMemberRequest = addMemberRequest();
 
 		newMemberRequest.setGroupId(RandomTestUtil.nextLong());
 
@@ -566,4 +564,4 @@ public class MemberRequestPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2046677665
+// LIFERAY-SERVICE-BUILDER-HASH:986230565

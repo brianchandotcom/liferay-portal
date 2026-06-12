@@ -113,9 +113,7 @@ public class ChangesetCollectionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ChangesetCollection newChangesetCollection = _persistence.create(pk);
+		ChangesetCollection newChangesetCollection = addChangesetCollection();
 
 		newChangesetCollection.setGroupId(RandomTestUtil.nextLong());
 
@@ -566,4 +564,4 @@ public class ChangesetCollectionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1778609057
+// LIFERAY-SERVICE-BUILDER-HASH:-880122624

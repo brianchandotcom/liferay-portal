@@ -111,11 +111,7 @@ public class ListTypeEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ListTypeEntry newListTypeEntry = _persistence.create(pk);
-
-		newListTypeEntry.setMvccVersion(RandomTestUtil.nextLong());
+		ListTypeEntry newListTypeEntry = addListTypeEntry();
 
 		newListTypeEntry.setUuid(RandomTestUtil.randomString());
 
@@ -589,8 +585,6 @@ public class ListTypeEntryPersistenceTest {
 
 		ListTypeEntry listTypeEntry = _persistence.create(pk);
 
-		listTypeEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		listTypeEntry.setUuid(RandomTestUtil.randomString());
 
 		listTypeEntry.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -628,4 +622,4 @@ public class ListTypeEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-480643054
+// LIFERAY-SERVICE-BUILDER-HASH:-1233956051

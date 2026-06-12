@@ -111,11 +111,7 @@ public class LayoutSEOSitePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		LayoutSEOSite newLayoutSEOSite = _persistence.create(pk);
-
-		newLayoutSEOSite.setMvccVersion(RandomTestUtil.nextLong());
+		LayoutSEOSite newLayoutSEOSite = addLayoutSEOSite();
 
 		newLayoutSEOSite.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -536,8 +532,6 @@ public class LayoutSEOSitePersistenceTest {
 
 		LayoutSEOSite layoutSEOSite = _persistence.create(pk);
 
-		layoutSEOSite.setMvccVersion(RandomTestUtil.nextLong());
-
 		layoutSEOSite.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layoutSEOSite.setUuid(RandomTestUtil.randomString());
@@ -571,4 +565,4 @@ public class LayoutSEOSitePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1892112252
+// LIFERAY-SERVICE-BUILDER-HASH:-1684684861

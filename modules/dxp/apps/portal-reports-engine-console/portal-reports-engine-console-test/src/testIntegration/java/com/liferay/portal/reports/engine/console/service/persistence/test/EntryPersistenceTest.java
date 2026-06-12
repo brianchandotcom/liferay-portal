@@ -110,9 +110,7 @@ public class EntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		Entry newEntry = _persistence.create(pk);
+		Entry newEntry = addEntry();
 
 		newEntry.setGroupId(RandomTestUtil.nextLong());
 
@@ -490,4 +488,4 @@ public class EntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-850678212
+// LIFERAY-SERVICE-BUILDER-HASH:1351570719

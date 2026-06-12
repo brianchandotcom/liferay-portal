@@ -111,11 +111,7 @@ public class ObjectStateFlowPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ObjectStateFlow newObjectStateFlow = _persistence.create(pk);
-
-		newObjectStateFlow.setMvccVersion(RandomTestUtil.nextLong());
+		ObjectStateFlow newObjectStateFlow = addObjectStateFlow();
 
 		newObjectStateFlow.setUuid(RandomTestUtil.randomString());
 
@@ -499,8 +495,6 @@ public class ObjectStateFlowPersistenceTest {
 
 		ObjectStateFlow objectStateFlow = _persistence.create(pk);
 
-		objectStateFlow.setMvccVersion(RandomTestUtil.nextLong());
-
 		objectStateFlow.setUuid(RandomTestUtil.randomString());
 
 		objectStateFlow.setCompanyId(RandomTestUtil.nextLong());
@@ -526,4 +520,4 @@ public class ObjectStateFlowPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:891176380
+// LIFERAY-SERVICE-BUILDER-HASH:-2003534547

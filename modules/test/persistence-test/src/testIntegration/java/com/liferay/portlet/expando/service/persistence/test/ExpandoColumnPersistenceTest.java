@@ -110,11 +110,7 @@ public class ExpandoColumnPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ExpandoColumn newExpandoColumn = _persistence.create(pk);
-
-		newExpandoColumn.setMvccVersion(RandomTestUtil.nextLong());
+		ExpandoColumn newExpandoColumn = addExpandoColumn();
 
 		newExpandoColumn.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -498,8 +494,6 @@ public class ExpandoColumnPersistenceTest {
 
 		ExpandoColumn expandoColumn = _persistence.create(pk);
 
-		expandoColumn.setMvccVersion(RandomTestUtil.nextLong());
-
 		expandoColumn.setCtCollectionId(RandomTestUtil.nextLong());
 
 		expandoColumn.setCompanyId(RandomTestUtil.nextLong());
@@ -527,4 +521,4 @@ public class ExpandoColumnPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:542569674
+// LIFERAY-SERVICE-BUILDER-HASH:1507663156

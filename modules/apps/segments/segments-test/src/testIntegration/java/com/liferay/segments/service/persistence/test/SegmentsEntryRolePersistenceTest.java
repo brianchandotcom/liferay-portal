@@ -112,11 +112,7 @@ public class SegmentsEntryRolePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SegmentsEntryRole newSegmentsEntryRole = _persistence.create(pk);
-
-		newSegmentsEntryRole.setMvccVersion(RandomTestUtil.nextLong());
+		SegmentsEntryRole newSegmentsEntryRole = addSegmentsEntryRole();
 
 		newSegmentsEntryRole.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -514,8 +510,6 @@ public class SegmentsEntryRolePersistenceTest {
 
 		SegmentsEntryRole segmentsEntryRole = _persistence.create(pk);
 
-		segmentsEntryRole.setMvccVersion(RandomTestUtil.nextLong());
-
 		segmentsEntryRole.setCtCollectionId(RandomTestUtil.nextLong());
 
 		segmentsEntryRole.setCompanyId(RandomTestUtil.nextLong());
@@ -543,4 +537,4 @@ public class SegmentsEntryRolePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1386926308
+// LIFERAY-SERVICE-BUILDER-HASH:753778487

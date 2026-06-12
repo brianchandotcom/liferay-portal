@@ -116,10 +116,8 @@ public class DefinedDefaultOrderEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		DefinedDefaultOrderEntry newDefinedDefaultOrderEntry =
-			_persistence.create(pk);
+			addDefinedDefaultOrderEntry();
 
 		newDefinedDefaultOrderEntry.setModifiedDate(RandomTestUtil.nextDate());
 
@@ -523,4 +521,4 @@ public class DefinedDefaultOrderEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1356629846
+// LIFERAY-SERVICE-BUILDER-HASH:1769265507

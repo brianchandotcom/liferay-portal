@@ -110,11 +110,7 @@ public class JSONStorageEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		JSONStorageEntry newJSONStorageEntry = _persistence.create(pk);
-
-		newJSONStorageEntry.setMvccVersion(RandomTestUtil.nextLong());
+		JSONStorageEntry newJSONStorageEntry = addJSONStorageEntry();
 
 		newJSONStorageEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -550,8 +546,6 @@ public class JSONStorageEntryPersistenceTest {
 
 		JSONStorageEntry jsonStorageEntry = _persistence.create(pk);
 
-		jsonStorageEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		jsonStorageEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		jsonStorageEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -583,4 +577,4 @@ public class JSONStorageEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-572783507
+// LIFERAY-SERVICE-BUILDER-HASH:-721895333

@@ -118,12 +118,8 @@ public class CommerceTierPriceEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CommerceTierPriceEntry newCommerceTierPriceEntry = _persistence.create(
-			pk);
-
-		newCommerceTierPriceEntry.setMvccVersion(RandomTestUtil.nextLong());
+		CommerceTierPriceEntry newCommerceTierPriceEntry =
+			addCommerceTierPriceEntry();
 
 		newCommerceTierPriceEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -757,8 +753,6 @@ public class CommerceTierPriceEntryPersistenceTest {
 
 		CommerceTierPriceEntry commerceTierPriceEntry = _persistence.create(pk);
 
-		commerceTierPriceEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		commerceTierPriceEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		commerceTierPriceEntry.setUuid(RandomTestUtil.randomString());
@@ -830,4 +824,4 @@ public class CommerceTierPriceEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-185038837
+// LIFERAY-SERVICE-BUILDER-HASH:1948479434

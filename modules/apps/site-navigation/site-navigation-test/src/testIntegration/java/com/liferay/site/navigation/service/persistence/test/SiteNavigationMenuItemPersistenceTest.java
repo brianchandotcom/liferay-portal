@@ -115,12 +115,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SiteNavigationMenuItem newSiteNavigationMenuItem = _persistence.create(
-			pk);
-
-		newSiteNavigationMenuItem.setMvccVersion(RandomTestUtil.nextLong());
+		SiteNavigationMenuItem newSiteNavigationMenuItem =
+			addSiteNavigationMenuItem();
 
 		newSiteNavigationMenuItem.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -696,8 +692,6 @@ public class SiteNavigationMenuItemPersistenceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem = _persistence.create(pk);
 
-		siteNavigationMenuItem.setMvccVersion(RandomTestUtil.nextLong());
-
 		siteNavigationMenuItem.setCtCollectionId(RandomTestUtil.nextLong());
 
 		siteNavigationMenuItem.setUuid(RandomTestUtil.randomString());
@@ -745,4 +739,4 @@ public class SiteNavigationMenuItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-185872142
+// LIFERAY-SERVICE-BUILDER-HASH:484801794

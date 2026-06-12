@@ -110,12 +110,8 @@ public class CTermEntryLocalizationPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CTermEntryLocalization newCTermEntryLocalization = _persistence.create(
-			pk);
-
-		newCTermEntryLocalization.setMvccVersion(RandomTestUtil.nextLong());
+		CTermEntryLocalization newCTermEntryLocalization =
+			addCTermEntryLocalization();
 
 		newCTermEntryLocalization.setCompanyId(RandomTestUtil.nextLong());
 
@@ -493,8 +489,6 @@ public class CTermEntryLocalizationPersistenceTest {
 
 		CTermEntryLocalization cTermEntryLocalization = _persistence.create(pk);
 
-		cTermEntryLocalization.setMvccVersion(RandomTestUtil.nextLong());
-
 		cTermEntryLocalization.setCompanyId(RandomTestUtil.nextLong());
 
 		cTermEntryLocalization.setCommerceTermEntryId(
@@ -518,4 +512,4 @@ public class CTermEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:62480043
+// LIFERAY-SERVICE-BUILDER-HASH:1814043332

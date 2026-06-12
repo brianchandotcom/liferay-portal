@@ -114,12 +114,8 @@ public class NotificationRecipientPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		NotificationRecipient newNotificationRecipient = _persistence.create(
-			pk);
-
-		newNotificationRecipient.setMvccVersion(RandomTestUtil.nextLong());
+		NotificationRecipient newNotificationRecipient =
+			addNotificationRecipient();
 
 		newNotificationRecipient.setUuid(RandomTestUtil.randomString());
 
@@ -544,8 +540,6 @@ public class NotificationRecipientPersistenceTest {
 
 		NotificationRecipient notificationRecipient = _persistence.create(pk);
 
-		notificationRecipient.setMvccVersion(RandomTestUtil.nextLong());
-
 		notificationRecipient.setUuid(RandomTestUtil.randomString());
 
 		notificationRecipient.setCompanyId(RandomTestUtil.nextLong());
@@ -573,4 +567,4 @@ public class NotificationRecipientPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:792618093
+// LIFERAY-SERVICE-BUILDER-HASH:1207131998

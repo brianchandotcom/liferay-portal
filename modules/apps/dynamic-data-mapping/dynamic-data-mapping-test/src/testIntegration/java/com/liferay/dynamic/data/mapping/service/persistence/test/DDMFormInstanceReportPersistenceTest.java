@@ -115,12 +115,8 @@ public class DDMFormInstanceReportPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DDMFormInstanceReport newDDMFormInstanceReport = _persistence.create(
-			pk);
-
-		newDDMFormInstanceReport.setMvccVersion(RandomTestUtil.nextLong());
+		DDMFormInstanceReport newDDMFormInstanceReport =
+			addDDMFormInstanceReport();
 
 		newDDMFormInstanceReport.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -522,8 +518,6 @@ public class DDMFormInstanceReportPersistenceTest {
 
 		DDMFormInstanceReport ddmFormInstanceReport = _persistence.create(pk);
 
-		ddmFormInstanceReport.setMvccVersion(RandomTestUtil.nextLong());
-
 		ddmFormInstanceReport.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmFormInstanceReport.setGroupId(RandomTestUtil.nextLong());
@@ -549,4 +543,4 @@ public class DDMFormInstanceReportPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:516183157
+// LIFERAY-SERVICE-BUILDER-HASH:1990519248

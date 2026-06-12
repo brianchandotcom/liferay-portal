@@ -109,11 +109,7 @@ public class CTCommentPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CTComment newCTComment = _persistence.create(pk);
-
-		newCTComment.setMvccVersion(RandomTestUtil.nextLong());
+		CTComment newCTComment = addCTComment();
 
 		newCTComment.setCompanyId(RandomTestUtil.nextLong());
 
@@ -415,8 +411,6 @@ public class CTCommentPersistenceTest {
 
 		CTComment ctComment = _persistence.create(pk);
 
-		ctComment.setMvccVersion(RandomTestUtil.nextLong());
-
 		ctComment.setCompanyId(RandomTestUtil.nextLong());
 
 		ctComment.setUserId(RandomTestUtil.nextLong());
@@ -441,4 +435,4 @@ public class CTCommentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:991432249
+// LIFERAY-SERVICE-BUILDER-HASH:1097213148

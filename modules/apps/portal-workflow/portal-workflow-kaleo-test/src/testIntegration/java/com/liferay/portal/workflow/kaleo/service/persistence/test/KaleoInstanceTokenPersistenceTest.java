@@ -111,11 +111,7 @@ public class KaleoInstanceTokenPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		KaleoInstanceToken newKaleoInstanceToken = _persistence.create(pk);
-
-		newKaleoInstanceToken.setMvccVersion(RandomTestUtil.nextLong());
+		KaleoInstanceToken newKaleoInstanceToken = addKaleoInstanceToken();
 
 		newKaleoInstanceToken.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -523,8 +519,6 @@ public class KaleoInstanceTokenPersistenceTest {
 
 		KaleoInstanceToken kaleoInstanceToken = _persistence.create(pk);
 
-		kaleoInstanceToken.setMvccVersion(RandomTestUtil.nextLong());
-
 		kaleoInstanceToken.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoInstanceToken.setGroupId(RandomTestUtil.nextLong());
@@ -573,4 +567,4 @@ public class KaleoInstanceTokenPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:332309118
+// LIFERAY-SERVICE-BUILDER-HASH:478906127

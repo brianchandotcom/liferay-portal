@@ -110,12 +110,8 @@ public class UserNotificationEventPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		UserNotificationEvent newUserNotificationEvent = _persistence.create(
-			pk);
-
-		newUserNotificationEvent.setMvccVersion(RandomTestUtil.nextLong());
+		UserNotificationEvent newUserNotificationEvent =
+			addUserNotificationEvent();
 
 		newUserNotificationEvent.setUuid(RandomTestUtil.randomString());
 
@@ -668,8 +664,6 @@ public class UserNotificationEventPersistenceTest {
 
 		UserNotificationEvent userNotificationEvent = _persistence.create(pk);
 
-		userNotificationEvent.setMvccVersion(RandomTestUtil.nextLong());
-
 		userNotificationEvent.setUuid(RandomTestUtil.randomString());
 
 		userNotificationEvent.setCompanyId(RandomTestUtil.nextLong());
@@ -703,4 +697,4 @@ public class UserNotificationEventPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1889956228
+// LIFERAY-SERVICE-BUILDER-HASH:-1542298135

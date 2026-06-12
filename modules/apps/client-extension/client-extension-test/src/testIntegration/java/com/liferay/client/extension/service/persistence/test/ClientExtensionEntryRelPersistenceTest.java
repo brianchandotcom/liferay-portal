@@ -116,12 +116,8 @@ public class ClientExtensionEntryRelPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		ClientExtensionEntryRel newClientExtensionEntryRel =
-			_persistence.create(pk);
-
-		newClientExtensionEntryRel.setMvccVersion(RandomTestUtil.nextLong());
+			addClientExtensionEntryRel();
 
 		newClientExtensionEntryRel.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -683,8 +679,6 @@ public class ClientExtensionEntryRelPersistenceTest {
 		ClientExtensionEntryRel clientExtensionEntryRel = _persistence.create(
 			pk);
 
-		clientExtensionEntryRel.setMvccVersion(RandomTestUtil.nextLong());
-
 		clientExtensionEntryRel.setCtCollectionId(RandomTestUtil.nextLong());
 
 		clientExtensionEntryRel.setUuid(RandomTestUtil.randomString());
@@ -729,4 +723,4 @@ public class ClientExtensionEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2022384022
+// LIFERAY-SERVICE-BUILDER-HASH:527959896

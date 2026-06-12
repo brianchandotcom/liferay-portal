@@ -115,11 +115,7 @@ public class AssetCategoryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		AssetCategory newAssetCategory = _persistence.create(pk);
-
-		newAssetCategory.setMvccVersion(RandomTestUtil.nextLong());
+		AssetCategory newAssetCategory = addAssetCategory();
 
 		newAssetCategory.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -752,8 +748,6 @@ public class AssetCategoryPersistenceTest {
 
 		AssetCategory assetCategory = _persistence.create(pk);
 
-		assetCategory.setMvccVersion(RandomTestUtil.nextLong());
-
 		assetCategory.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetCategory.setUuid(RandomTestUtil.randomString());
@@ -799,4 +793,4 @@ public class AssetCategoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1076172252
+// LIFERAY-SERVICE-BUILDER-HASH:1092293275

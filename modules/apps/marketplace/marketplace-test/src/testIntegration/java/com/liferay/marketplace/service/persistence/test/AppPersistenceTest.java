@@ -111,9 +111,7 @@ public class AppPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		App newApp = _persistence.create(pk);
+		App newApp = addApp();
 
 		newApp.setUuid(RandomTestUtil.randomString());
 
@@ -534,4 +532,4 @@ public class AppPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1649087409
+// LIFERAY-SERVICE-BUILDER-HASH:-1110166851

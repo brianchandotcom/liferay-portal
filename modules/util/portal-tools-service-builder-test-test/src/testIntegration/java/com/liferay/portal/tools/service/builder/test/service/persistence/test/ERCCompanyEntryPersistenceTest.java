@@ -112,9 +112,7 @@ public class ERCCompanyEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ERCCompanyEntry newERCCompanyEntry = _persistence.create(pk);
+		ERCCompanyEntry newERCCompanyEntry = addERCCompanyEntry();
 
 		newERCCompanyEntry.setUuid(RandomTestUtil.randomString());
 
@@ -542,4 +540,4 @@ public class ERCCompanyEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1236063282
+// LIFERAY-SERVICE-BUILDER-HASH:1306570582

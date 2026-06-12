@@ -116,12 +116,8 @@ public class CPDefinitionInventoryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CPDefinitionInventory newCPDefinitionInventory = _persistence.create(
-			pk);
-
-		newCPDefinitionInventory.setMvccVersion(RandomTestUtil.nextLong());
+		CPDefinitionInventory newCPDefinitionInventory =
+			addCPDefinitionInventory();
 
 		newCPDefinitionInventory.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -635,8 +631,6 @@ public class CPDefinitionInventoryPersistenceTest {
 
 		CPDefinitionInventory cpDefinitionInventory = _persistence.create(pk);
 
-		cpDefinitionInventory.setMvccVersion(RandomTestUtil.nextLong());
-
 		cpDefinitionInventory.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpDefinitionInventory.setUuid(RandomTestUtil.randomString());
@@ -696,4 +690,4 @@ public class CPDefinitionInventoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:668321345
+// LIFERAY-SERVICE-BUILDER-HASH:-1775726870

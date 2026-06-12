@@ -109,11 +109,7 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		VirtualHost newVirtualHost = _persistence.create(pk);
-
-		newVirtualHost.setMvccVersion(RandomTestUtil.nextLong());
+		VirtualHost newVirtualHost = addVirtualHost();
 
 		newVirtualHost.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -500,8 +496,6 @@ public class VirtualHostPersistenceTest {
 
 		VirtualHost virtualHost = _persistence.create(pk);
 
-		virtualHost.setMvccVersion(RandomTestUtil.nextLong());
-
 		virtualHost.setCtCollectionId(RandomTestUtil.nextLong());
 
 		virtualHost.setCompanyId(RandomTestUtil.nextLong());
@@ -524,4 +518,4 @@ public class VirtualHostPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-35242195
+// LIFERAY-SERVICE-BUILDER-HASH:704810919

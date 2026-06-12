@@ -109,11 +109,7 @@ public class ObjectFilterPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ObjectFilter newObjectFilter = _persistence.create(pk);
-
-		newObjectFilter.setMvccVersion(RandomTestUtil.nextLong());
+		ObjectFilter newObjectFilter = addObjectFilter();
 
 		newObjectFilter.setUuid(RandomTestUtil.randomString());
 
@@ -447,8 +443,6 @@ public class ObjectFilterPersistenceTest {
 
 		ObjectFilter objectFilter = _persistence.create(pk);
 
-		objectFilter.setMvccVersion(RandomTestUtil.nextLong());
-
 		objectFilter.setUuid(RandomTestUtil.randomString());
 
 		objectFilter.setCompanyId(RandomTestUtil.nextLong());
@@ -479,4 +473,4 @@ public class ObjectFilterPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2023186224
+// LIFERAY-SERVICE-BUILDER-HASH:1627630330

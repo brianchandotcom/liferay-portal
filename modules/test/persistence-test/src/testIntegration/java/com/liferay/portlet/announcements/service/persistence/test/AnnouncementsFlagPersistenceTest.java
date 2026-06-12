@@ -111,11 +111,7 @@ public class AnnouncementsFlagPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		AnnouncementsFlag newAnnouncementsFlag = _persistence.create(pk);
-
-		newAnnouncementsFlag.setMvccVersion(RandomTestUtil.nextLong());
+		AnnouncementsFlag newAnnouncementsFlag = addAnnouncementsFlag();
 
 		newAnnouncementsFlag.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -499,8 +495,6 @@ public class AnnouncementsFlagPersistenceTest {
 
 		AnnouncementsFlag announcementsFlag = _persistence.create(pk);
 
-		announcementsFlag.setMvccVersion(RandomTestUtil.nextLong());
-
 		announcementsFlag.setCtCollectionId(RandomTestUtil.nextLong());
 
 		announcementsFlag.setCompanyId(RandomTestUtil.nextLong());
@@ -524,4 +518,4 @@ public class AnnouncementsFlagPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1174176683
+// LIFERAY-SERVICE-BUILDER-HASH:459064112

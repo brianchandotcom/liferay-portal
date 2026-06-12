@@ -108,11 +108,7 @@ public class ImagePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		Image newImage = _persistence.create(pk);
-
-		newImage.setMvccVersion(RandomTestUtil.nextLong());
+		Image newImage = addImage();
 
 		newImage.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -389,8 +385,6 @@ public class ImagePersistenceTest {
 
 		Image image = _persistence.create(pk);
 
-		image.setMvccVersion(RandomTestUtil.nextLong());
-
 		image.setCtCollectionId(RandomTestUtil.nextLong());
 
 		image.setCompanyId(RandomTestUtil.nextLong());
@@ -415,4 +409,4 @@ public class ImagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:696285711
+// LIFERAY-SERVICE-BUILDER-HASH:-42450143

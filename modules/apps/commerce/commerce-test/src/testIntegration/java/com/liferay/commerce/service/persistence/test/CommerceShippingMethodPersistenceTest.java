@@ -115,12 +115,8 @@ public class CommerceShippingMethodPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CommerceShippingMethod newCommerceShippingMethod = _persistence.create(
-			pk);
-
-		newCommerceShippingMethod.setMvccVersion(RandomTestUtil.nextLong());
+		CommerceShippingMethod newCommerceShippingMethod =
+			addCommerceShippingMethod();
 
 		newCommerceShippingMethod.setGroupId(RandomTestUtil.nextLong());
 
@@ -583,8 +579,6 @@ public class CommerceShippingMethodPersistenceTest {
 
 		CommerceShippingMethod commerceShippingMethod = _persistence.create(pk);
 
-		commerceShippingMethod.setMvccVersion(RandomTestUtil.nextLong());
-
 		commerceShippingMethod.setGroupId(RandomTestUtil.nextLong());
 
 		commerceShippingMethod.setCompanyId(RandomTestUtil.nextLong());
@@ -625,4 +619,4 @@ public class CommerceShippingMethodPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:562401485
+// LIFERAY-SERVICE-BUILDER-HASH:-968831448

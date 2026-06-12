@@ -119,13 +119,9 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		WorkflowMetricsSLADefinitionVersion
-			newWorkflowMetricsSLADefinitionVersion = _persistence.create(pk);
-
-		newWorkflowMetricsSLADefinitionVersion.setMvccVersion(
-			RandomTestUtil.nextLong());
+			newWorkflowMetricsSLADefinitionVersion =
+				addWorkflowMetricsSLADefinitionVersion();
 
 		newWorkflowMetricsSLADefinitionVersion.setUuid(
 			RandomTestUtil.randomString());
@@ -742,9 +738,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion = _persistence.create(pk);
 
-		workflowMetricsSLADefinitionVersion.setMvccVersion(
-			RandomTestUtil.nextLong());
-
 		workflowMetricsSLADefinitionVersion.setUuid(
 			RandomTestUtil.randomString());
 
@@ -826,4 +819,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1259975171
+// LIFERAY-SERVICE-BUILDER-HASH:-705606509

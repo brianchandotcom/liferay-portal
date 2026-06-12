@@ -112,9 +112,7 @@ public class SharingEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SharingEntry newSharingEntry = _persistence.create(pk);
+		SharingEntry newSharingEntry = addSharingEntry();
 
 		newSharingEntry.setUuid(RandomTestUtil.randomString());
 
@@ -732,4 +730,4 @@ public class SharingEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1087120718
+// LIFERAY-SERVICE-BUILDER-HASH:-69881419

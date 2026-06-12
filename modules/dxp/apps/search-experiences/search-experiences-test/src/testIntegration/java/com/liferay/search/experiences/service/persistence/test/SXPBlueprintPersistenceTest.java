@@ -113,11 +113,7 @@ public class SXPBlueprintPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SXPBlueprint newSXPBlueprint = _persistence.create(pk);
-
-		newSXPBlueprint.setMvccVersion(RandomTestUtil.nextLong());
+		SXPBlueprint newSXPBlueprint = addSXPBlueprint();
 
 		newSXPBlueprint.setUuid(RandomTestUtil.randomString());
 
@@ -579,8 +575,6 @@ public class SXPBlueprintPersistenceTest {
 
 		SXPBlueprint sxpBlueprint = _persistence.create(pk);
 
-		sxpBlueprint.setMvccVersion(RandomTestUtil.nextLong());
-
 		sxpBlueprint.setUuid(RandomTestUtil.randomString());
 
 		sxpBlueprint.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -625,4 +619,4 @@ public class SXPBlueprintPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1216472529
+// LIFERAY-SERVICE-BUILDER-HASH:923323422

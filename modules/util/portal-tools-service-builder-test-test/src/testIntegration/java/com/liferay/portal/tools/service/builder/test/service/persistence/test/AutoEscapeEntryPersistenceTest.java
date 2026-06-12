@@ -106,9 +106,7 @@ public class AutoEscapeEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		AutoEscapeEntry newAutoEscapeEntry = _persistence.create(pk);
+		AutoEscapeEntry newAutoEscapeEntry = addAutoEscapeEntry();
 
 		newAutoEscapeEntry.setAutoEscapeDisabledColumn(
 			RandomTestUtil.randomString());
@@ -374,4 +372,4 @@ public class AutoEscapeEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1529780548
+// LIFERAY-SERVICE-BUILDER-HASH:323932151

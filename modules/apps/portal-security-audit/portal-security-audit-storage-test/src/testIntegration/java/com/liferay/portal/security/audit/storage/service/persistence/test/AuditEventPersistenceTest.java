@@ -110,9 +110,7 @@ public class AuditEventPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		AuditEvent newAuditEvent = _persistence.create(pk);
+		AuditEvent newAuditEvent = addAuditEvent();
 
 		newAuditEvent.setGroupId(RandomTestUtil.nextLong());
 
@@ -494,4 +492,4 @@ public class AuditEventPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1831983958
+// LIFERAY-SERVICE-BUILDER-HASH:-1141355602

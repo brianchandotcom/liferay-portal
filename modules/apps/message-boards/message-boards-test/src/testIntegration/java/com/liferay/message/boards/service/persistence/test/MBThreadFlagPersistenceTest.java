@@ -111,11 +111,7 @@ public class MBThreadFlagPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		MBThreadFlag newMBThreadFlag = _persistence.create(pk);
-
-		newMBThreadFlag.setMvccVersion(RandomTestUtil.nextLong());
+		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
 
 		newMBThreadFlag.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -547,8 +543,6 @@ public class MBThreadFlagPersistenceTest {
 
 		MBThreadFlag mbThreadFlag = _persistence.create(pk);
 
-		mbThreadFlag.setMvccVersion(RandomTestUtil.nextLong());
-
 		mbThreadFlag.setCtCollectionId(RandomTestUtil.nextLong());
 
 		mbThreadFlag.setUuid(RandomTestUtil.randomString());
@@ -579,4 +573,4 @@ public class MBThreadFlagPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1488639558
+// LIFERAY-SERVICE-BUILDER-HASH:-336038264

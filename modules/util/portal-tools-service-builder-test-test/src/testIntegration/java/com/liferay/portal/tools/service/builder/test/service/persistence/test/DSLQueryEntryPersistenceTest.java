@@ -109,9 +109,7 @@ public class DSLQueryEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DSLQueryEntry newDSLQueryEntry = _persistence.create(pk);
+		DSLQueryEntry newDSLQueryEntry = addDSLQueryEntry();
 
 		newDSLQueryEntry.setName(RandomTestUtil.randomString());
 
@@ -386,4 +384,4 @@ public class DSLQueryEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-428995770
+// LIFERAY-SERVICE-BUILDER-HASH:974729198

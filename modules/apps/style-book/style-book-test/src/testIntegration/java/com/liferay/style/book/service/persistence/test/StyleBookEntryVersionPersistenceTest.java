@@ -116,8 +116,6 @@ public class StyleBookEntryVersionPersistenceTest {
 		StyleBookEntryVersion newStyleBookEntryVersion = _persistence.create(
 			pk);
 
-		newStyleBookEntryVersion.setMvccVersion(RandomTestUtil.nextLong());
-
 		newStyleBookEntryVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		newStyleBookEntryVersion.setVersion(RandomTestUtil.nextInt());
@@ -782,8 +780,6 @@ public class StyleBookEntryVersionPersistenceTest {
 
 		StyleBookEntryVersion styleBookEntryVersion = _persistence.create(pk);
 
-		styleBookEntryVersion.setMvccVersion(RandomTestUtil.nextLong());
-
 		styleBookEntryVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		styleBookEntryVersion.setVersion(RandomTestUtil.nextInt());
@@ -833,4 +829,4 @@ public class StyleBookEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1424479075
+// LIFERAY-SERVICE-BUILDER-HASH:621762665

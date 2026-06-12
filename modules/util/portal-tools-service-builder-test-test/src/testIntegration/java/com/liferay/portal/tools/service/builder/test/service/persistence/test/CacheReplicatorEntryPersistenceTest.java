@@ -114,9 +114,8 @@ public class CacheReplicatorEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CacheReplicatorEntry newCacheReplicatorEntry = _persistence.create(pk);
+		CacheReplicatorEntry newCacheReplicatorEntry =
+			addCacheReplicatorEntry();
 
 		newCacheReplicatorEntry.setCompanyId(RandomTestUtil.nextLong());
 
@@ -508,4 +507,4 @@ public class CacheReplicatorEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1321425904
+// LIFERAY-SERVICE-BUILDER-HASH:-1117330332

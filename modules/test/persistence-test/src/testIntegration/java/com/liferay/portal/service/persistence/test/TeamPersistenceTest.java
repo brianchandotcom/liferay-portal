@@ -114,11 +114,7 @@ public class TeamPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		Team newTeam = _persistence.create(pk);
-
-		newTeam.setMvccVersion(RandomTestUtil.nextLong());
+		Team newTeam = addTeam();
 
 		newTeam.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -552,8 +548,6 @@ public class TeamPersistenceTest {
 
 		Team team = _persistence.create(pk);
 
-		team.setMvccVersion(RandomTestUtil.nextLong());
-
 		team.setCtCollectionId(RandomTestUtil.nextLong());
 
 		team.setUuid(RandomTestUtil.randomString());
@@ -586,4 +580,4 @@ public class TeamPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1005507279
+// LIFERAY-SERVICE-BUILDER-HASH:378161091

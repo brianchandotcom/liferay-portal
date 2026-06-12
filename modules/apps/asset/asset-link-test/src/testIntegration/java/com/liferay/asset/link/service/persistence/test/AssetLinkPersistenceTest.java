@@ -111,11 +111,7 @@ public class AssetLinkPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		AssetLink newAssetLink = _persistence.create(pk);
-
-		newAssetLink.setMvccVersion(RandomTestUtil.nextLong());
+		AssetLink newAssetLink = addAssetLink();
 
 		newAssetLink.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -520,8 +516,6 @@ public class AssetLinkPersistenceTest {
 
 		AssetLink assetLink = _persistence.create(pk);
 
-		assetLink.setMvccVersion(RandomTestUtil.nextLong());
-
 		assetLink.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetLink.setCompanyId(RandomTestUtil.nextLong());
@@ -550,4 +544,4 @@ public class AssetLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1401532296
+// LIFERAY-SERVICE-BUILDER-HASH:-1631290713

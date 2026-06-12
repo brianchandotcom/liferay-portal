@@ -110,9 +110,7 @@ public class DataLimitEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DataLimitEntry newDataLimitEntry = _persistence.create(pk);
+		DataLimitEntry newDataLimitEntry = addDataLimitEntry();
 
 		newDataLimitEntry.setCompanyId(RandomTestUtil.nextLong());
 
@@ -418,4 +416,4 @@ public class DataLimitEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-830118962
+// LIFERAY-SERVICE-BUILDER-HASH:-864464582

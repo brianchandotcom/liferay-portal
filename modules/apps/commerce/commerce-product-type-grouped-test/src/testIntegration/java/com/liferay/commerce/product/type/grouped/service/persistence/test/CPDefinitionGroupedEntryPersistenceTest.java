@@ -117,12 +117,8 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		CPDefinitionGroupedEntry newCPDefinitionGroupedEntry =
-			_persistence.create(pk);
-
-		newCPDefinitionGroupedEntry.setMvccVersion(RandomTestUtil.nextLong());
+			addCPDefinitionGroupedEntry();
 
 		newCPDefinitionGroupedEntry.setUuid(RandomTestUtil.randomString());
 
@@ -612,8 +608,6 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = _persistence.create(
 			pk);
 
-		cpDefinitionGroupedEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		cpDefinitionGroupedEntry.setUuid(RandomTestUtil.randomString());
 
 		cpDefinitionGroupedEntry.setGroupId(RandomTestUtil.nextLong());
@@ -648,4 +642,4 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2075938881
+// LIFERAY-SERVICE-BUILDER-HASH:-1330224768

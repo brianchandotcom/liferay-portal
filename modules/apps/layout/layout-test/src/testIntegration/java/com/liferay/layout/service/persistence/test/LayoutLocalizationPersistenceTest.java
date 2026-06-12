@@ -112,11 +112,7 @@ public class LayoutLocalizationPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		LayoutLocalization newLayoutLocalization = _persistence.create(pk);
-
-		newLayoutLocalization.setMvccVersion(RandomTestUtil.nextLong());
+		LayoutLocalization newLayoutLocalization = addLayoutLocalization();
 
 		newLayoutLocalization.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -589,8 +585,6 @@ public class LayoutLocalizationPersistenceTest {
 
 		LayoutLocalization layoutLocalization = _persistence.create(pk);
 
-		layoutLocalization.setMvccVersion(RandomTestUtil.nextLong());
-
 		layoutLocalization.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layoutLocalization.setUuid(RandomTestUtil.randomString());
@@ -622,4 +616,4 @@ public class LayoutLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2108930677
+// LIFERAY-SERVICE-BUILDER-HASH:1461656693

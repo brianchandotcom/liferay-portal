@@ -113,11 +113,7 @@ public class OAuthClientEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		OAuthClientEntry newOAuthClientEntry = _persistence.create(pk);
-
-		newOAuthClientEntry.setMvccVersion(RandomTestUtil.nextLong());
+		OAuthClientEntry newOAuthClientEntry = addOAuthClientEntry();
 
 		newOAuthClientEntry.setUuid(RandomTestUtil.randomString());
 
@@ -633,8 +629,6 @@ public class OAuthClientEntryPersistenceTest {
 
 		OAuthClientEntry oAuthClientEntry = _persistence.create(pk);
 
-		oAuthClientEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		oAuthClientEntry.setUuid(RandomTestUtil.randomString());
 
 		oAuthClientEntry.setExternalReferenceCode(
@@ -683,4 +677,4 @@ public class OAuthClientEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1432047800
+// LIFERAY-SERVICE-BUILDER-HASH:-1126482045

@@ -110,9 +110,7 @@ public class ModulePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		Module newModule = _persistence.create(pk);
+		Module newModule = addModule();
 
 		newModule.setUuid(RandomTestUtil.randomString());
 
@@ -530,4 +528,4 @@ public class ModulePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1040776441
+// LIFERAY-SERVICE-BUILDER-HASH:489448110

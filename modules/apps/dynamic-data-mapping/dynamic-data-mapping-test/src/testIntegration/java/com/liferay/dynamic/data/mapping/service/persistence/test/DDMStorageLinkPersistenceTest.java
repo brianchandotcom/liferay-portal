@@ -111,11 +111,7 @@ public class DDMStorageLinkPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DDMStorageLink newDDMStorageLink = _persistence.create(pk);
-
-		newDDMStorageLink.setMvccVersion(RandomTestUtil.nextLong());
+		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
 
 		newDDMStorageLink.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -517,8 +513,6 @@ public class DDMStorageLinkPersistenceTest {
 
 		DDMStorageLink ddmStorageLink = _persistence.create(pk);
 
-		ddmStorageLink.setMvccVersion(RandomTestUtil.nextLong());
-
 		ddmStorageLink.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmStorageLink.setUuid(RandomTestUtil.randomString());
@@ -544,4 +538,4 @@ public class DDMStorageLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1063625697
+// LIFERAY-SERVICE-BUILDER-HASH:-554063572

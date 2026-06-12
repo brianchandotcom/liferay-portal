@@ -111,11 +111,7 @@ public class EmailAddressPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		EmailAddress newEmailAddress = _persistence.create(pk);
-
-		newEmailAddress.setMvccVersion(RandomTestUtil.nextLong());
+		EmailAddress newEmailAddress = addEmailAddress();
 
 		newEmailAddress.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -589,8 +585,6 @@ public class EmailAddressPersistenceTest {
 
 		EmailAddress emailAddress = _persistence.create(pk);
 
-		emailAddress.setMvccVersion(RandomTestUtil.nextLong());
-
 		emailAddress.setCtCollectionId(RandomTestUtil.nextLong());
 
 		emailAddress.setUuid(RandomTestUtil.randomString());
@@ -627,4 +621,4 @@ public class EmailAddressPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:353884812
+// LIFERAY-SERVICE-BUILDER-HASH:-1198575697

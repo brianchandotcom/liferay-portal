@@ -109,9 +109,7 @@ public class ManyColumnsEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ManyColumnsEntry newManyColumnsEntry = _persistence.create(pk);
+		ManyColumnsEntry newManyColumnsEntry = addManyColumnsEntry();
 
 		newManyColumnsEntry.setColumn1(RandomTestUtil.nextInt());
 
@@ -850,4 +848,4 @@ public class ManyColumnsEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:446199874
+// LIFERAY-SERVICE-BUILDER-HASH:-1995720371

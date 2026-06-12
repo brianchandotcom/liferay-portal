@@ -122,13 +122,9 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		CommerceInventoryReplenishmentItem
-			newCommerceInventoryReplenishmentItem = _persistence.create(pk);
-
-		newCommerceInventoryReplenishmentItem.setMvccVersion(
-			RandomTestUtil.nextLong());
+			newCommerceInventoryReplenishmentItem =
+				addCommerceInventoryReplenishmentItem();
 
 		newCommerceInventoryReplenishmentItem.setUuid(
 			RandomTestUtil.randomString());
@@ -711,9 +707,6 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
 			_persistence.create(pk);
 
-		commerceInventoryReplenishmentItem.setMvccVersion(
-			RandomTestUtil.nextLong());
-
 		commerceInventoryReplenishmentItem.setUuid(
 			RandomTestUtil.randomString());
 
@@ -762,4 +755,4 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-110160535
+// LIFERAY-SERVICE-BUILDER-HASH:877313816

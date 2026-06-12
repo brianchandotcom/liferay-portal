@@ -112,9 +112,7 @@ public class SAPEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SAPEntry newSAPEntry = _persistence.create(pk);
+		SAPEntry newSAPEntry = addSAPEntry();
 
 		newSAPEntry.setUuid(RandomTestUtil.randomString());
 
@@ -551,4 +549,4 @@ public class SAPEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1575880768
+// LIFERAY-SERVICE-BUILDER-HASH:1954610735

@@ -114,11 +114,7 @@ public class CommerceDiscountPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CommerceDiscount newCommerceDiscount = _persistence.create(pk);
-
-		newCommerceDiscount.setMvccVersion(RandomTestUtil.nextLong());
+		CommerceDiscount newCommerceDiscount = addCommerceDiscount();
 
 		newCommerceDiscount.setUuid(RandomTestUtil.randomString());
 
@@ -742,8 +738,6 @@ public class CommerceDiscountPersistenceTest {
 
 		CommerceDiscount commerceDiscount = _persistence.create(pk);
 
-		commerceDiscount.setMvccVersion(RandomTestUtil.nextLong());
-
 		commerceDiscount.setUuid(RandomTestUtil.randomString());
 
 		commerceDiscount.setExternalReferenceCode(
@@ -819,4 +813,4 @@ public class CommerceDiscountPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:682121288
+// LIFERAY-SERVICE-BUILDER-HASH:1060095329

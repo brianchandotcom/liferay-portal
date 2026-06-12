@@ -112,12 +112,8 @@ public class ExportImportConfigurationPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		ExportImportConfiguration newExportImportConfiguration =
-			_persistence.create(pk);
-
-		newExportImportConfiguration.setMvccVersion(RandomTestUtil.nextLong());
+			addExportImportConfiguration();
 
 		newExportImportConfiguration.setGroupId(RandomTestUtil.nextLong());
 
@@ -542,8 +538,6 @@ public class ExportImportConfigurationPersistenceTest {
 		ExportImportConfiguration exportImportConfiguration =
 			_persistence.create(pk);
 
-		exportImportConfiguration.setMvccVersion(RandomTestUtil.nextLong());
-
 		exportImportConfiguration.setGroupId(RandomTestUtil.nextLong());
 
 		exportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
@@ -585,4 +579,4 @@ public class ExportImportConfigurationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2052638975
+// LIFERAY-SERVICE-BUILDER-HASH:1076931003

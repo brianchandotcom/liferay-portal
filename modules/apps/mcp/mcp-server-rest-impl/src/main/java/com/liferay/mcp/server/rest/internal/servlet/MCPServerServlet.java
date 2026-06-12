@@ -250,9 +250,6 @@ public class MCPServerServlet extends HttpServlet {
 			(HttpServletRequest)mcpTransportContext.get("httpServletRequest");
 
 		try {
-			List<String> maskExternalReferenceCodes = _resolveDataMaskERCs(
-				companyId, profileObjectEntryId);
-
 			Response response = ToolSetUtil.invokeTool(
 				httpServletRequest, inputObject, toolName, toolSetName);
 
@@ -261,6 +258,9 @@ public class MCPServerServlet extends HttpServlet {
 			String content = (String)response.getEntity();
 
 			if (content != null) {
+				List<String> maskExternalReferenceCodes = _getDataMaskERCs(
+					companyId, profileObjectEntryId);
+
 				content = _dataMaskingService.redact(
 					companyId, maskExternalReferenceCodes, content);
 			}
@@ -304,6 +304,68 @@ public class MCPServerServlet extends HttpServlet {
 		if (servlet != null) {
 			servlet.destroy();
 		}
+	}
+
+	private List<String> _getDataMaskERCs(
+		long companyId, long profileObjectEntryId) {
+
+		ObjectDefinition profileDataMaskObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					MCPServerConstants.
+						EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROFILE_DATA_MASK,
+					companyId);
+
+		if (profileDataMaskObjectDefinition == null) {
+			return Collections.emptyList();
+		}
+
+		List<ObjectEntry> profileDataMaskObjectEntries = new ArrayList<>();
+
+		for (ObjectEntry profileDataMaskObjectEntry :
+				_objectEntryLocalService.getObjectEntries(
+					0, profileDataMaskObjectDefinition.getObjectDefinitionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			Map<String, Serializable> values =
+				profileDataMaskObjectEntry.getValues();
+
+			long profileId = GetterUtil.getLong(
+				values.get("mcpServerProfileId"));
+
+			if (profileId != profileObjectEntryId) {
+				continue;
+			}
+
+			profileDataMaskObjectEntries.add(profileDataMaskObjectEntry);
+		}
+
+		profileDataMaskObjectEntries.sort(
+			Comparator.comparing(
+				objectEntry -> GetterUtil.getInteger(
+					objectEntry.getValues(
+					).get(
+						"executionOrder"
+					),
+					Integer.MAX_VALUE)));
+
+		List<String> maskExternalReferenceCodes = new ArrayList<>();
+
+		for (ObjectEntry profileDataMaskObjectEntry :
+				profileDataMaskObjectEntries) {
+
+			String externalReferenceCode =
+				(String)profileDataMaskObjectEntry.getValues(
+				).get(
+					"dataMaskExternalReferenceCode"
+				);
+
+			if (Validator.isNotNull(externalReferenceCode)) {
+				maskExternalReferenceCodes.add(externalReferenceCode);
+			}
+		}
+
+		return maskExternalReferenceCodes;
 	}
 
 	private String _getMCPServerProfileName(
@@ -457,68 +519,6 @@ public class MCPServerServlet extends HttpServlet {
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);
 		}
-	}
-
-	private List<String> _resolveDataMaskERCs(
-		long companyId, long profileObjectEntryId) {
-
-		ObjectDefinition profileDataMaskObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					MCPServerConstants.
-						EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROFILE_DATA_MASK,
-					companyId);
-
-		if (profileDataMaskObjectDefinition == null) {
-			return Collections.emptyList();
-		}
-
-		List<ObjectEntry> profileDataMaskObjectEntries = new ArrayList<>();
-
-		for (ObjectEntry profileDataMaskObjectEntry :
-				_objectEntryLocalService.getObjectEntries(
-					0, profileDataMaskObjectDefinition.getObjectDefinitionId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-			Map<String, Serializable> values =
-				profileDataMaskObjectEntry.getValues();
-
-			long profileId = GetterUtil.getLong(
-				values.get("mcpServerProfileId"));
-
-			if (profileId != profileObjectEntryId) {
-				continue;
-			}
-
-			profileDataMaskObjectEntries.add(profileDataMaskObjectEntry);
-		}
-
-		profileDataMaskObjectEntries.sort(
-			Comparator.comparing(
-				objectEntry -> GetterUtil.getInteger(
-					objectEntry.getValues(
-					).get(
-						"executionOrder"
-					),
-					Integer.MAX_VALUE)));
-
-		List<String> maskExternalReferenceCodes = new ArrayList<>();
-
-		for (ObjectEntry profileDataMaskObjectEntry :
-				profileDataMaskObjectEntries) {
-
-			String externalReferenceCode =
-				(String)profileDataMaskObjectEntry.getValues(
-				).get(
-					"dataMaskExternalReferenceCode"
-				);
-
-			if (Validator.isNotNull(externalReferenceCode)) {
-				maskExternalReferenceCodes.add(externalReferenceCode);
-			}
-		}
-
-		return maskExternalReferenceCodes;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

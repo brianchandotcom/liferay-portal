@@ -492,7 +492,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
 
-			header = "\r\n--" + boundary + "--\r\n";
+			header = StringBundler.concat("\r\n--", boundary, "--\r\n");
 
 			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
 		}
@@ -820,13 +820,13 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		httpClientBuilder.useSystemProperties();
 
-		RequestConfig.Builder requestConfig = RequestConfig.custom();
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
-		requestConfig.setConnectTimeout(30_000);
-		requestConfig.setConnectionRequestTimeout(60_000);
-		requestConfig.setSocketTimeout(600_000);
+		requestConfigBuilder.setConnectTimeout(30_000);
+		requestConfigBuilder.setConnectionRequestTimeout(60_000);
+		requestConfigBuilder.setSocketTimeout(600_000);
 
-		httpClientBuilder.setDefaultRequestConfig(requestConfig.build());
+		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
 
 		httpClientBuilder.setRetryHandler(
 			new DefaultHttpRequestRetryHandler(3, true));
@@ -1038,8 +1038,9 @@ public class AnalyticsBatchExportImportManagerImpl
 					HttpHeaders.CONTENT_ENCODING, contentEncoding);
 				httpPost.setHeader(
 					HttpHeaders.CONTENT_TYPE,
-					ContentTypes.MULTIPART_FORM_DATA + "; boundary=" +
-						boundary);
+					StringBundler.concat(
+						ContentTypes.MULTIPART_FORM_DATA, "; boundary=",
+						boundary));
 
 				httpPost.setEntity(new FileEntity(multipartFile));
 

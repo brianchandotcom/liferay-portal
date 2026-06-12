@@ -10,7 +10,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteSelectedUsers = () => {
 		openConfirmModal({
 			message: Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-this'
+				'only-direct-memberships-will-be-removed'
 			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
-import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -230,20 +229,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	/**
-	 * Checks the permissions necessary for resetting the layout set. If
-	 * sufficient, the layout set is reset by calling {@link
-	 * #_resetPrototype(LayoutSet)}.
-	 *
-	 * @param layoutSet the site being checked for sufficient permissions
-	 */
-	@Override
-	public void resetPrototype(LayoutSet layoutSet) throws PortalException {
-		_checkResetPrototypePermissions(layoutSet.getGroup(), null);
-
-		_resetPrototype(layoutSet);
-	}
-
-	/**
 	 * Sets the number of failed merge attempts for the layout prototype to a
 	 * new value.
 	 *
@@ -285,51 +270,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				layoutPrototypeLayout.isPrivateLayout(),
 				layoutPrototypeLayout.getLayoutId(),
 				layoutPrototypeLayout.getTypeSettings());
-		}
-	}
-
-	/**
-	 * Sets the number of failed merge attempts for the layout set prototype to
-	 * a new value.
-	 *
-	 * @param layoutSetPrototype the site template of the counter being updated
-	 * @param newMergeFailCount the new value of the counter
-	 */
-	@Override
-	public void setMergeFailCount(
-			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
-		throws PortalException {
-
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
-
-		boolean updateLayoutSetPrototypeLayoutSet = false;
-
-		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
-			layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-		if (newMergeFailCount == 0) {
-			if (layoutSetPrototypeSettingsUnicodeProperties.containsKey(
-					Sites.MERGE_FAIL_COUNT)) {
-
-				layoutSetPrototypeSettingsUnicodeProperties.remove(
-					Sites.MERGE_FAIL_COUNT);
-
-				updateLayoutSetPrototypeLayoutSet = true;
-			}
-		}
-		else {
-			layoutSetPrototypeSettingsUnicodeProperties.setProperty(
-				Sites.MERGE_FAIL_COUNT, String.valueOf(newMergeFailCount));
-
-			updateLayoutSetPrototypeLayoutSet = true;
-		}
-
-		if (updateLayoutSetPrototypeLayoutSet) {
-			_layoutSetService.updateSettings(
-				layoutSetPrototypeLayoutSet.getGroupId(),
-				layoutSetPrototypeLayoutSet.isPrivateLayout(),
-				layoutSetPrototypeLayoutSet.getSettings());
 		}
 	}
 
@@ -625,8 +565,5 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
-
-	@Reference
-	private LayoutSetService _layoutSetService;
 
 }

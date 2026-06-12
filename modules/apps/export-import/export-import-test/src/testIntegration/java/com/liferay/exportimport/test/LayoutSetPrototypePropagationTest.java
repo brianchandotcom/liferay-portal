@@ -51,13 +51,9 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
@@ -74,7 +70,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -924,67 +919,6 @@ public class LayoutSetPrototypePropagationTest
 			Boolean.TRUE.toString(),
 			layoutPortletPreferences.getValue(
 				"showAvailableLocales", StringPool.BLANK));
-	}
-
-	@Test
-	public void testResetPrototypeWithoutPermissions() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user1));
-
-		Group userGroup = GroupLocalServiceUtil.getUserGroup(
-			_user2.getCompanyId(), _user2.getUserId());
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			userGroup.getGroupId(), true);
-
-		try {
-			_layoutSetPrototypeHelper.resetPrototype(layoutSet);
-
-			Assert.fail(
-				"The user should not be able to reset another user's " +
-					"dashboard");
-		}
-		catch (PrincipalException principalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(principalException);
-			}
-		}
-	}
-
-	@Test
-	public void testResetPrototypeWithPermissions() throws Exception {
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		RoleLocalServiceUtil.addUserRole(_user1.getUserId(), role);
-
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			_user1.getCompanyId(), Group.class.getName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(_user1.getCompanyId()), role.getRoleId(),
-			ActionKeys.UPDATE);
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user1));
-
-		Group userGroup = GroupLocalServiceUtil.getUserGroup(
-			_user2.getCompanyId(), _user2.getUserId());
-
-		_layoutSetPrototypeHelper.resetPrototype(
-			LayoutSetLocalServiceUtil.getLayoutSet(
-				userGroup.getGroupId(), true));
-	}
-
-	@Test
-	public void testResetUserPrototypeWithoutPermissions() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user1));
-
-		Group userGroup = GroupLocalServiceUtil.getUserGroup(
-			_user1.getCompanyId(), _user1.getUserId());
-
-		_layoutSetPrototypeHelper.resetPrototype(
-			LayoutSetLocalServiceUtil.getLayoutSet(
-				userGroup.getGroupId(), true));
 	}
 
 	@FeatureFlag(enable = false, value = "LPD-38869")

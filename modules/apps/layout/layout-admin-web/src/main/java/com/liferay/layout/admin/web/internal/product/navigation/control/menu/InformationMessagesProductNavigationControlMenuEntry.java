@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.sites.kernel.util.Sites;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,20 +50,9 @@ public class InformationMessagesProductNavigationControlMenuEntry
 	public static final String INFORMATION_MESSAGES_LINKED_LAYOUT =
 		"INFORMATION_MESSAGES_LINKED_LAYOUT";
 
-	public static final String INFORMATION_MESSAGES_MODIFIED_LAYOUT =
-		"INFORMATION_MESSAGES_MODIFIED_LAYOUT";
-
 	@Override
 	public String getIconJspPath() {
 		return "/dynamic_include/information_messages.jsp";
-	}
-
-	public boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			ActionKeys.UPDATE);
 	}
 
 	@Override
@@ -82,9 +69,6 @@ public class InformationMessagesProductNavigationControlMenuEntry
 			httpServletRequest.setAttribute(
 				INFORMATION_MESSAGES_LINKED_LAYOUT,
 				_isLinkedLayout(themeDisplay));
-			httpServletRequest.setAttribute(
-				INFORMATION_MESSAGES_MODIFIED_LAYOUT,
-				_isModifiedLayout(themeDisplay));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -135,8 +119,7 @@ public class InformationMessagesProductNavigationControlMenuEntry
 				fetchLayoutUtilityPageEntryByPlid(layout.getClassPK());
 
 		if ((layoutUtilityPageEntry != null) ||
-			(!_isLinkedLayout(themeDisplay) &&
-			 !_isModifiedLayout(themeDisplay))) {
+			!_isLinkedLayout(themeDisplay)) {
 
 			return false;
 		}
@@ -168,23 +151,6 @@ public class InformationMessagesProductNavigationControlMenuEntry
 		return false;
 	}
 
-	private boolean _isModifiedLayout(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Layout layout = themeDisplay.getLayout();
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		if (!layoutSet.isLayoutSetPrototypeLinkActive() ||
-			!_sites.isLayoutModifiedSinceLastMerge(layout) ||
-			!hasUpdateLayoutPermission(themeDisplay)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		InformationMessagesProductNavigationControlMenuEntry.class);
 
@@ -198,8 +164,5 @@ public class InformationMessagesProductNavigationControlMenuEntry
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
 	private ServletContext _servletContext;
-
-	@Reference
-	private Sites _sites;
 
 }

@@ -28,7 +28,7 @@ public class CommerceChannelSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
-		return FDSEntityFieldTypes.COLLECTION;
+		return FDSEntityFieldTypes.COLLECTION_INTEGER;
 	}
 
 	@Override

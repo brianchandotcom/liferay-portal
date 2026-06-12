@@ -561,6 +561,9 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/get_info_item_one_to_many_relationships")
 			).put(
+				"getLayoutDataURL",
+				_getResourceURL("/layout_content_page_editor/get_layout_data")
+			).put(
 				"getLayoutFriendlyURL",
 				_getResourceURL(
 					"/layout_content_page_editor/get_layout_friendly_url")
@@ -614,6 +617,14 @@ public class ContentPageEditorDisplayContext {
 				"layoutConversionWarningMessages",
 				MultiSessionMessages.get(
 					portletRequest, "layoutConversionWarningMessages")
+			).put(
+				"layoutExternalReferenceCode",
+				() -> {
+					Layout layout = themeDisplay.getLayout();
+
+					return GetterUtil.getString(
+						layout.getExternalReferenceCode());
+				}
 			).put(
 				"layoutItemSelectorURL", _getLayoutItemSelectorURL()
 			).put(
@@ -719,6 +730,14 @@ public class ContentPageEditorDisplayContext {
 				_getSegmentsCompanyConfigurationURL()
 			).put(
 				"sidebarPanels", getSidebarPanels()
+			).put(
+				"siteExternalReferenceCode",
+				() -> {
+					Group group = themeDisplay.getScopeGroup();
+
+					return GetterUtil.getString(
+						group.getExternalReferenceCode());
+				}
 			).put(
 				"siteNavigationMenuItemSelectorURL",
 				_getSiteNavigationMenuItemSelectorURL()

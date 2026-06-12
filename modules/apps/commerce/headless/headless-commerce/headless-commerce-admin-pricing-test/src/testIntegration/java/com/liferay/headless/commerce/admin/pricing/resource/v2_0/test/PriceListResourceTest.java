@@ -11,16 +11,22 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceListAccount;
+import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
+import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.PriceListResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -31,8 +37,11 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -78,6 +87,14 @@ public class PriceListResourceTest extends BasePriceListResourceTestCase {
 		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId(), _commerceCurrency.getCode());
+	}
+
+	@Override
+	@Test
+	public void testGetPriceListsPage() throws Exception {
+		super.testGetPriceListsPage();
+
+		_testGetPriceListsPageWithChannelFilter();
 	}
 
 	@Ignore
@@ -284,6 +301,41 @@ public class PriceListResourceTest extends BasePriceListResourceTestCase {
 		};
 	}
 
+	private void _testGetPriceListsPageWithChannelFilter() throws Exception {
+		CommerceChannel commerceChannel1 = CommerceTestUtil.addCommerceChannel(
+			testGroup.getGroupId(), _commerceCurrency.getCode());
+		CommerceChannel commerceChannel2 = CommerceTestUtil.addCommerceChannel(
+			testGroup.getGroupId(), _commerceCurrency.getCode());
+
+		_commerceChannels.add(commerceChannel1);
+		_commerceChannels.add(commerceChannel2);
+
+		CommercePriceList commercePriceList1 =
+			CommercePriceListTestUtil.addChannelPriceList(
+				testGroup.getGroupId(), commerceChannel1.getCommerceChannelId(),
+				CommercePriceListConstants.TYPE_PRICE_LIST);
+		CommercePriceList commercePriceList2 =
+			CommercePriceListTestUtil.addChannelPriceList(
+				testGroup.getGroupId(), commerceChannel2.getCommerceChannelId(),
+				CommercePriceListConstants.TYPE_PRICE_LIST);
+
+		_commercePriceLists.add(commercePriceList1);
+		_commercePriceLists.add(commercePriceList2);
+
+		Page<PriceList> page = priceListResource.getPriceListsPage(
+			null,
+			String.format(
+				"(channelId/any(x:(x eq %s)))",
+				commerceChannel1.getCommerceChannelId()),
+			Pagination.of(1, 10), null);
+
+		assertEquals(
+			Collections.singletonList(
+				priceListResource.getPriceList(
+					commercePriceList1.getCommercePriceListId())),
+			(List<PriceList>)page.getItems());
+	}
+
 	private void _testPatchPriceListWithSameAccount() throws Exception {
 		User omniadminUser = UserTestUtil.addOmniadminUser();
 		String password = RandomTestUtil.randomString();
@@ -424,7 +476,15 @@ public class PriceListResourceTest extends BasePriceListResourceTestCase {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	private CommerceCatalog _commerceCatalog;
+
+	@DeleteAfterTestRun
+	private List<CommerceChannel> _commerceChannels = new ArrayList<>();
+
 	private CommerceCurrency _commerceCurrency;
+
+	@DeleteAfterTestRun
+	private List<CommercePriceList> _commercePriceLists = new ArrayList<>();
+
 	private ServiceContext _serviceContext;
 	private User _user;
 

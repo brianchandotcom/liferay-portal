@@ -187,6 +187,7 @@ export default function EditGeneralInfo({
 
 						<ClayInput
 							aria-label={Liferay.Language.get('name')}
+							disabled={vocabulary.system}
 							onBlur={handleNameBlur}
 							onChange={({target: {value}}) =>
 								onChangeName(value)
@@ -220,6 +221,7 @@ export default function EditGeneralInfo({
 							aria-label={Liferay.Language.get(
 								'external-reference-code'
 							)}
+							disabled={vocabulary.system}
 							onChange={({target: {value}}) => {
 								if (
 									value.length >
@@ -264,6 +266,7 @@ export default function EditGeneralInfo({
 						<ClayInput
 							aria-label={Liferay.Language.get('description')}
 							component="textarea"
+							disabled={vocabulary.system}
 							onChange={({target: {value}}) =>
 								onChangeDescription(value)
 							}
@@ -352,6 +355,7 @@ export default function EditGeneralInfo({
 					<CategorizationSpaces
 						assetLibraries={assetLibraries}
 						checkboxText="vocabulary"
+						disabled={vocabulary.system}
 						setSelectedSpaces={onChangeSelectedSpaces}
 						setSpaceChange={setSpaceChange}
 						setSpaceInputError={setSpaceInputError}

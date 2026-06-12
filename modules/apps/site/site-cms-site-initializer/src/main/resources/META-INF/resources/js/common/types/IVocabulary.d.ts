@@ -20,5 +20,6 @@ export interface IVocabulary {
 	};
 	numberOfCategories?: number;
 	siteId?: number;
+	system?: boolean;
 	visibilityType: 'PUBLIC' | 'INTERNAL';
 }

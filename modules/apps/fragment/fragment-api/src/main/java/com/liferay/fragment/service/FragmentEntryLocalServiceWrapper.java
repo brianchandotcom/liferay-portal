@@ -75,6 +75,11 @@ public class FragmentEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void cleanUpFragmentEntryVersions(long companyId) {
+		_fragmentEntryLocalService.cleanUpFragmentEntryVersions(companyId);
+	}
+
+	@Override
 	public FragmentEntry copyFragmentEntry(
 			long userId, long groupId, long sourceFragmentEntryId,
 			long fragmentCollectionId,
@@ -760,4 +765,4 @@ public class FragmentEntryLocalServiceWrapper
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1282295569
+// LIFERAY-SERVICE-BUILDER-HASH:-641285732

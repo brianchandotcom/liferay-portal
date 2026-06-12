@@ -96,6 +96,8 @@ public interface FragmentEntryLocalService
 			FragmentEntry publishedFragmentEntry, int version)
 		throws PortalException;
 
+	public void cleanUpFragmentEntryVersions(long companyId);
+
 	public FragmentEntry copyFragmentEntry(
 			long userId, long groupId, long sourceFragmentEntryId,
 			long fragmentCollectionId, ServiceContext serviceContext)
@@ -505,4 +507,4 @@ public interface FragmentEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1870565390
+// LIFERAY-SERVICE-BUILDER-HASH:2000710867

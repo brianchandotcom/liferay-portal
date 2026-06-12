@@ -1,0 +1,2 @@
+com.fasterxml.jackson.jaxrs:jackson-jaxrs-base=com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-base:2.18.2
+invalid-line-without-equals

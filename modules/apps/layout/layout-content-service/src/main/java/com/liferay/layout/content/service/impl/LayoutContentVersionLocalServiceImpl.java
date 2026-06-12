@@ -67,7 +67,7 @@ public class LayoutContentVersionLocalServiceImpl
 				counterLocalService.increment(
 					LayoutContentVersion.class.getName()));
 
-		int version = _generateVersion(plid);
+		int version = _getNextVersion(plid);
 
 		if (Validator.isNull(externalReferenceCode)) {
 			String defaultExternalReferenceCode =
@@ -251,7 +251,7 @@ public class LayoutContentVersionLocalServiceImpl
 		return layoutContentVersionPersistence.update(layoutContentVersion);
 	}
 
-	private int _generateVersion(long plid) {
+	private int _getNextVersion(long plid) {
 		LayoutContentVersion layoutContentVersion =
 			layoutContentVersionPersistence.fetchByPlid_First(
 				plid, LayoutContentVersionVersionComparator.getInstance(false));

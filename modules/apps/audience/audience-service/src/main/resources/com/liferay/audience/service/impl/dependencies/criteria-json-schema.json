@@ -1,0 +1,160 @@
+{
+	"$ref": "#/definitions/group",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"group": {
+			"additionalProperties": false,
+			"properties": {
+				"conjunction": {
+					"enum": [
+						"AND",
+						"OR"
+					]
+				},
+				"rules": {
+					"items": {
+						"$ref": "#/definitions/rule"
+					},
+					"type": "array"
+				}
+			},
+			"required": [
+				"conjunction",
+				"rules"
+			],
+			"type": "object"
+		},
+		"leafRule": {
+			"additionalProperties": false,
+			"allOf": [
+				{
+					"if": {
+						"properties": {
+							"operator": {
+								"enum": [
+									"includes",
+									"not_includes"
+								]
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"value": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"operator": {
+								"enum": [
+									"gt",
+									"gte",
+									"lt",
+									"lte"
+								]
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"value": {
+								"type": [
+									"number",
+									"string"
+								]
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"operator": {
+								"enum": [
+									"eq",
+									"not_eq"
+								]
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"value": {
+								"type": [
+									"boolean",
+									"number",
+									"string"
+								]
+							}
+						}
+					}
+				}
+			],
+			"properties": {
+				"attribute": {
+					"anyOf": [
+						{
+							"enum": [
+								"browser_name",
+								"browser_version",
+								"cookies",
+								"device_type",
+								"geolocation",
+								"hostname",
+								"language",
+								"local_date",
+								"local_hour",
+								"pathname",
+								"referrer",
+								"request_parameters",
+								"segments",
+								"timezone",
+								"url",
+								"user_agent"
+							]
+						},
+						{
+							"pattern": "^custom:.+",
+							"type": "string"
+						}
+					]
+				},
+				"operator": {
+					"enum": [
+						"eq",
+						"gt",
+						"gte",
+						"includes",
+						"lt",
+						"lte",
+						"not_eq",
+						"not_includes"
+					]
+				},
+				"value": {
+				}
+			},
+			"required": [
+				"attribute",
+				"operator",
+				"value"
+			],
+			"type": "object"
+		},
+		"rule": {
+			"oneOf": [
+				{
+					"$ref": "#/definitions/group"
+				},
+				{
+					"$ref": "#/definitions/leafRule"
+				}
+			]
+		}
+	},
+	"type": "object"
+}

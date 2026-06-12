@@ -116,33 +116,33 @@ describe('ProductionReadinessDashboard', () => {
 		);
 
 		const summary = document.querySelector(
-			'.production-readiness-summary'
+			'[data-testid="production-readiness-summary"]'
 		) as HTMLElement;
 
 		expect(
 			within(summary).getByText('3', {
-				selector: '.production-readiness-count-total',
+				selector: '[data-testid="production-readiness-count-total"]',
 			})
 		).toBeInTheDocument();
 		expect(
 			within(summary).getByText('1', {
-				selector: '.production-readiness-count-passed',
+				selector: '[data-testid="production-readiness-count-passed"]',
 			})
 		).toBeInTheDocument();
 		expect(
 			within(summary).getByText('1', {
-				selector: '.production-readiness-count-failed',
+				selector: '[data-testid="production-readiness-count-failed"]',
 			})
 		).toBeInTheDocument();
 
 		expect(
 			screen.getByText('Security', {
-				selector: '.panel-title',
+				selector: '.panel-header .text-uppercase',
 			})
 		).toBeInTheDocument();
 		expect(
 			screen.getByText('Performance', {
-				selector: '.panel-title',
+				selector: '.panel-header .text-uppercase',
 			})
 		).toBeInTheDocument();
 		expect(screen.getByText('Password Encryption')).toBeInTheDocument();
@@ -247,7 +247,7 @@ describe('ProductionReadinessDashboard', () => {
 		expect(ignoreCall[1]).toMatchObject({method: 'POST'});
 	});
 
-	it('paginates rules beyond the default delta', async () => {
+	it('renders every rule without pagination', async () => {
 		mockFetchOnce(buildLargePayload(12));
 
 		render(<ProductionReadinessDashboard baseResourceURL={BASE_URL} />);
@@ -256,16 +256,10 @@ describe('ProductionReadinessDashboard', () => {
 			expect(screen.getByText('Rule 00')).toBeInTheDocument()
 		);
 
+		expect(document.querySelectorAll('[data-rule-key]')).toHaveLength(12);
+
 		expect(
-			document.querySelectorAll('.production-readiness-rule')
-		).toHaveLength(10);
-
-		await userEvent.click(screen.getByLabelText('Go to page, 2'));
-
-		await waitFor(() =>
-			expect(
-				document.querySelectorAll('.production-readiness-rule')
-			).toHaveLength(2)
-		);
+			screen.queryByLabelText('Go to page, 2')
+		).not.toBeInTheDocument();
 	});
 });

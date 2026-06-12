@@ -24,10 +24,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ConsentManagementPlatformConfiguration {
 
 	@Meta.AD(
-		description = "consent-management-platform-bridge-script-help",
-		name = "consent-management-platform-bridge-script", required = false
+		description = "consent-management-platform-consent-mapping-script-help",
+		name = "consent-management-platform-consent-mapping-script",
+		required = false
 	)
-	public String bridgeScript();
+	public String consentMappingScript();
 
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();

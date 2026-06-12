@@ -117,7 +117,7 @@ public class ConsentManagementPlatformConfigurationUpgradeProcessTest {
 					dictionaryString.getBytes(StringPool.UTF8)));
 
 			Assert.assertEquals(
-				StringPool.BLANK, dictionary.get("bridgeScript"));
+				StringPool.BLANK, dictionary.get("consentMappingScript"));
 		}
 	}
 

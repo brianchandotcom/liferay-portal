@@ -83,15 +83,16 @@ public class ConsentManagementPlatformTopHeadDynamicInclude
 				httpServletRequest);
 
 		printWriter.println(
-			_addNonce(
+			_addNonceAttribute(
 				consentManagementPlatformConfiguration.scriptTag(),
 				nonceAttribute));
 
-		String bridgeScript =
-			consentManagementPlatformConfiguration.bridgeScript();
+		String consentMappingScript =
+			consentManagementPlatformConfiguration.consentMappingScript();
 
-		if (Validator.isNotNull(bridgeScript)) {
-			printWriter.println(_addNonce(bridgeScript, nonceAttribute));
+		if (Validator.isNotNull(consentMappingScript)) {
+			printWriter.println(
+				_addNonceAttribute(consentMappingScript, nonceAttribute));
 		}
 	}
 
@@ -101,7 +102,7 @@ public class ConsentManagementPlatformTopHeadDynamicInclude
 			"/html/common/themes/top_head.jsp#consent_management_platform");
 	}
 
-	private String _addNonce(String html, String nonceAttribute) {
+	private String _addNonceAttribute(String html, String nonceAttribute) {
 		if (Validator.isNull(nonceAttribute)) {
 			return html;
 		}

@@ -15,7 +15,7 @@ export type ScanScope =
 	| 'allPublishedPages'
 	| 'excludedPathsOnly'
 	| 'includedPathsOnly'
-	| 'sitemapOnly';
+	| 'publicSitemapPages';
 
 export interface EngineConfig {
 	enabled: boolean;

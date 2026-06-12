@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -1097,9 +1098,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).put(
 				"type", "FOLDER"
 			).build());
+
+		ClassedModel classedModel = objectEntryFolder;
+
 		bulkActionItem.setClassExternalReferenceCode(
 			objectEntryFolder::getExternalReferenceCode);
-		bulkActionItem.setClassName(objectEntryFolder::getModelClassName);
+		bulkActionItem.setClassName(classedModel::getModelClassName);
 		bulkActionItem.setClassPK(objectEntryFolder::getObjectEntryFolderId);
 		bulkActionItem.setName(objectEntryFolder::getName);
 

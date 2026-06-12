@@ -62,7 +62,7 @@ export const SCOPE_OPTIONS: SelectOption[] = [
 	},
 	{
 		label: Liferay.Language.get('public-sitemap-pages'),
-		value: 'sitemapOnly',
+		value: 'publicSitemapPages',
 	},
 	{
 		label: Liferay.Language.get('included-path-only'),

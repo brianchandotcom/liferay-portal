@@ -111,11 +111,7 @@ public class UserPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		User newUser = _persistence.create(pk);
-
-		newUser.setMvccVersion(RandomTestUtil.nextLong());
+		User newUser = addUser();
 
 		newUser.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -811,8 +807,6 @@ public class UserPersistenceTest {
 
 		User user = _persistence.create(pk);
 
-		user.setMvccVersion(RandomTestUtil.nextLong());
-
 		user.setCtCollectionId(RandomTestUtil.nextLong());
 
 		user.setUuid(RandomTestUtil.randomString());
@@ -907,4 +901,4 @@ public class UserPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1750387226
+// LIFERAY-SERVICE-BUILDER-HASH:-1662105256

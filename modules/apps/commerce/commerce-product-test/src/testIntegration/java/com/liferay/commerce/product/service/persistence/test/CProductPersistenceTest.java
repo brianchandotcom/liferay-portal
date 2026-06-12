@@ -112,11 +112,7 @@ public class CProductPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CProduct newCProduct = _persistence.create(pk);
-
-		newCProduct.setMvccVersion(RandomTestUtil.nextLong());
+		CProduct newCProduct = addCProduct();
 
 		newCProduct.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -558,8 +554,6 @@ public class CProductPersistenceTest {
 
 		CProduct cProduct = _persistence.create(pk);
 
-		cProduct.setMvccVersion(RandomTestUtil.nextLong());
-
 		cProduct.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cProduct.setUuid(RandomTestUtil.randomString());
@@ -592,4 +586,4 @@ public class CProductPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-113177212
+// LIFERAY-SERVICE-BUILDER-HASH:-594503603

@@ -112,11 +112,7 @@ public class PLOEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		PLOEntry newPLOEntry = _persistence.create(pk);
-
-		newPLOEntry.setMvccVersion(RandomTestUtil.nextLong());
+		PLOEntry newPLOEntry = addPLOEntry();
 
 		newPLOEntry.setCompanyId(RandomTestUtil.nextLong());
 
@@ -501,8 +497,6 @@ public class PLOEntryPersistenceTest {
 
 		PLOEntry ploEntry = _persistence.create(pk);
 
-		ploEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		ploEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		ploEntry.setUserId(RandomTestUtil.nextLong());
@@ -527,4 +521,4 @@ public class PLOEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:474201644
+// LIFERAY-SERVICE-BUILDER-HASH:11038434

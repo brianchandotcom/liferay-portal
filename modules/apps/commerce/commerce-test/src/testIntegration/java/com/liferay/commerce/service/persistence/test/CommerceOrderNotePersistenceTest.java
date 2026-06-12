@@ -113,11 +113,7 @@ public class CommerceOrderNotePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CommerceOrderNote newCommerceOrderNote = _persistence.create(pk);
-
-		newCommerceOrderNote.setMvccVersion(RandomTestUtil.nextLong());
+		CommerceOrderNote newCommerceOrderNote = addCommerceOrderNote();
 
 		newCommerceOrderNote.setUuid(RandomTestUtil.randomString());
 
@@ -594,8 +590,6 @@ public class CommerceOrderNotePersistenceTest {
 
 		CommerceOrderNote commerceOrderNote = _persistence.create(pk);
 
-		commerceOrderNote.setMvccVersion(RandomTestUtil.nextLong());
-
 		commerceOrderNote.setUuid(RandomTestUtil.randomString());
 
 		commerceOrderNote.setExternalReferenceCode(
@@ -630,4 +624,4 @@ public class CommerceOrderNotePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-243713532
+// LIFERAY-SERVICE-BUILDER-HASH:14966380

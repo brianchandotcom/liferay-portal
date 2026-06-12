@@ -116,11 +116,7 @@ public class WikiNodePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		WikiNode newWikiNode = _persistence.create(pk);
-
-		newWikiNode.setMvccVersion(RandomTestUtil.nextLong());
+		WikiNode newWikiNode = addWikiNode();
 
 		newWikiNode.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -651,8 +647,6 @@ public class WikiNodePersistenceTest {
 
 		WikiNode wikiNode = _persistence.create(pk);
 
-		wikiNode.setMvccVersion(RandomTestUtil.nextLong());
-
 		wikiNode.setCtCollectionId(RandomTestUtil.nextLong());
 
 		wikiNode.setUuid(RandomTestUtil.randomString());
@@ -697,4 +691,4 @@ public class WikiNodePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-909512508
+// LIFERAY-SERVICE-BUILDER-HASH:-67456849

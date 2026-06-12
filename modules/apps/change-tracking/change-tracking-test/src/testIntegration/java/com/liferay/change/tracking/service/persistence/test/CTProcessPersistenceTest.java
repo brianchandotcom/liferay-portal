@@ -109,11 +109,7 @@ public class CTProcessPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CTProcess newCTProcess = _persistence.create(pk);
-
-		newCTProcess.setMvccVersion(RandomTestUtil.nextLong());
+		CTProcess newCTProcess = addCTProcess();
 
 		newCTProcess.setCompanyId(RandomTestUtil.nextLong());
 
@@ -419,8 +415,6 @@ public class CTProcessPersistenceTest {
 
 		CTProcess ctProcess = _persistence.create(pk);
 
-		ctProcess.setMvccVersion(RandomTestUtil.nextLong());
-
 		ctProcess.setCompanyId(RandomTestUtil.nextLong());
 
 		ctProcess.setUserId(RandomTestUtil.nextLong());
@@ -443,4 +437,4 @@ public class CTProcessPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2110478552
+// LIFERAY-SERVICE-BUILDER-HASH:-1688814695

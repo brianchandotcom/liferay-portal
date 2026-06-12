@@ -111,9 +111,7 @@ public class KaleoProcessLinkPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		KaleoProcessLink newKaleoProcessLink = _persistence.create(pk);
+		KaleoProcessLink newKaleoProcessLink = addKaleoProcessLink();
 
 		newKaleoProcessLink.setCompanyId(RandomTestUtil.nextLong());
 
@@ -496,4 +494,4 @@ public class KaleoProcessLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2134925305
+// LIFERAY-SERVICE-BUILDER-HASH:1847896201

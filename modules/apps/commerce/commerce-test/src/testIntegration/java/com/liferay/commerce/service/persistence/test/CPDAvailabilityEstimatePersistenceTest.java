@@ -115,12 +115,8 @@ public class CPDAvailabilityEstimatePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		CPDAvailabilityEstimate newCPDAvailabilityEstimate =
-			_persistence.create(pk);
-
-		newCPDAvailabilityEstimate.setMvccVersion(RandomTestUtil.nextLong());
+			addCPDAvailabilityEstimate();
 
 		newCPDAvailabilityEstimate.setUuid(RandomTestUtil.randomString());
 
@@ -567,8 +563,6 @@ public class CPDAvailabilityEstimatePersistenceTest {
 		CPDAvailabilityEstimate cpdAvailabilityEstimate = _persistence.create(
 			pk);
 
-		cpdAvailabilityEstimate.setMvccVersion(RandomTestUtil.nextLong());
-
 		cpdAvailabilityEstimate.setUuid(RandomTestUtil.randomString());
 
 		cpdAvailabilityEstimate.setCompanyId(RandomTestUtil.nextLong());
@@ -600,4 +594,4 @@ public class CPDAvailabilityEstimatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:884071683
+// LIFERAY-SERVICE-BUILDER-HASH:-1940216050

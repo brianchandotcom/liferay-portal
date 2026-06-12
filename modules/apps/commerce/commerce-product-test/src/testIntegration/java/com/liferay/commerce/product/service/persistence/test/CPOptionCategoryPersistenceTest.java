@@ -113,11 +113,7 @@ public class CPOptionCategoryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CPOptionCategory newCPOptionCategory = _persistence.create(pk);
-
-		newCPOptionCategory.setMvccVersion(RandomTestUtil.nextLong());
+		CPOptionCategory newCPOptionCategory = addCPOptionCategory();
 
 		newCPOptionCategory.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -592,8 +588,6 @@ public class CPOptionCategoryPersistenceTest {
 
 		CPOptionCategory cpOptionCategory = _persistence.create(pk);
 
-		cpOptionCategory.setMvccVersion(RandomTestUtil.nextLong());
-
 		cpOptionCategory.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpOptionCategory.setUuid(RandomTestUtil.randomString());
@@ -632,4 +626,4 @@ public class CPOptionCategoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1795567093
+// LIFERAY-SERVICE-BUILDER-HASH:-1058488032

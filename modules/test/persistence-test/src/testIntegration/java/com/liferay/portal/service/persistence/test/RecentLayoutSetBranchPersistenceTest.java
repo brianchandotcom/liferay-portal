@@ -112,12 +112,8 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		RecentLayoutSetBranch newRecentLayoutSetBranch = _persistence.create(
-			pk);
-
-		newRecentLayoutSetBranch.setMvccVersion(RandomTestUtil.nextLong());
+		RecentLayoutSetBranch newRecentLayoutSetBranch =
+			addRecentLayoutSetBranch();
 
 		newRecentLayoutSetBranch.setGroupId(RandomTestUtil.nextLong());
 
@@ -534,8 +530,6 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 		RecentLayoutSetBranch recentLayoutSetBranch = _persistence.create(pk);
 
-		recentLayoutSetBranch.setMvccVersion(RandomTestUtil.nextLong());
-
 		recentLayoutSetBranch.setGroupId(RandomTestUtil.nextLong());
 
 		recentLayoutSetBranch.setCompanyId(RandomTestUtil.nextLong());
@@ -557,4 +551,4 @@ public class RecentLayoutSetBranchPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-742109097
+// LIFERAY-SERVICE-BUILDER-HASH:-29352895

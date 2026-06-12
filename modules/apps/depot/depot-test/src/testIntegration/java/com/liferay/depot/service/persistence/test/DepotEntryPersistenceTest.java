@@ -111,11 +111,7 @@ public class DepotEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DepotEntry newDepotEntry = _persistence.create(pk);
-
-		newDepotEntry.setMvccVersion(RandomTestUtil.nextLong());
+		DepotEntry newDepotEntry = addDepotEntry();
 
 		newDepotEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -525,8 +521,6 @@ public class DepotEntryPersistenceTest {
 
 		DepotEntry depotEntry = _persistence.create(pk);
 
-		depotEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		depotEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		depotEntry.setUuid(RandomTestUtil.randomString());
@@ -555,4 +549,4 @@ public class DepotEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1977394338
+// LIFERAY-SERVICE-BUILDER-HASH:-170172425

@@ -109,11 +109,7 @@ public class ObjectViewPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ObjectView newObjectView = _persistence.create(pk);
-
-		newObjectView.setMvccVersion(RandomTestUtil.nextLong());
+		ObjectView newObjectView = addObjectView();
 
 		newObjectView.setUuid(RandomTestUtil.randomString());
 
@@ -446,8 +442,6 @@ public class ObjectViewPersistenceTest {
 
 		ObjectView objectView = _persistence.create(pk);
 
-		objectView.setMvccVersion(RandomTestUtil.nextLong());
-
 		objectView.setUuid(RandomTestUtil.randomString());
 
 		objectView.setCompanyId(RandomTestUtil.nextLong());
@@ -476,4 +470,4 @@ public class ObjectViewPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1795112684
+// LIFERAY-SERVICE-BUILDER-HASH:33270107

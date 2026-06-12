@@ -115,11 +115,7 @@ public class AssetVocabularyPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		AssetVocabulary newAssetVocabulary = _persistence.create(pk);
-
-		newAssetVocabulary.setMvccVersion(RandomTestUtil.nextLong());
+		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
 
 		newAssetVocabulary.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -684,8 +680,6 @@ public class AssetVocabularyPersistenceTest {
 
 		AssetVocabulary assetVocabulary = _persistence.create(pk);
 
-		assetVocabulary.setMvccVersion(RandomTestUtil.nextLong());
-
 		assetVocabulary.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetVocabulary.setUuid(RandomTestUtil.randomString());
@@ -729,4 +723,4 @@ public class AssetVocabularyPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1821146987
+// LIFERAY-SERVICE-BUILDER-HASH:1602756632

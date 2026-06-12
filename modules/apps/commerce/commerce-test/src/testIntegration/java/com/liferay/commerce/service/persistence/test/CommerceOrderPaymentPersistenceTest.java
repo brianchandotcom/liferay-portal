@@ -112,11 +112,8 @@ public class CommerceOrderPaymentPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CommerceOrderPayment newCommerceOrderPayment = _persistence.create(pk);
-
-		newCommerceOrderPayment.setMvccVersion(RandomTestUtil.nextLong());
+		CommerceOrderPayment newCommerceOrderPayment =
+			addCommerceOrderPayment();
 
 		newCommerceOrderPayment.setGroupId(RandomTestUtil.nextLong());
 
@@ -467,8 +464,6 @@ public class CommerceOrderPaymentPersistenceTest {
 
 		CommerceOrderPayment commerceOrderPayment = _persistence.create(pk);
 
-		commerceOrderPayment.setMvccVersion(RandomTestUtil.nextLong());
-
 		commerceOrderPayment.setGroupId(RandomTestUtil.nextLong());
 
 		commerceOrderPayment.setCompanyId(RandomTestUtil.nextLong());
@@ -501,4 +496,4 @@ public class CommerceOrderPaymentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1280332903
+// LIFERAY-SERVICE-BUILDER-HASH:-659364403

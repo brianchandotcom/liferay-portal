@@ -110,11 +110,7 @@ public class PasswordPolicyPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		PasswordPolicy newPasswordPolicy = _persistence.create(pk);
-
-		newPasswordPolicy.setMvccVersion(RandomTestUtil.nextLong());
+		PasswordPolicy newPasswordPolicy = addPasswordPolicy();
 
 		newPasswordPolicy.setUuid(RandomTestUtil.randomString());
 
@@ -643,8 +639,6 @@ public class PasswordPolicyPersistenceTest {
 
 		PasswordPolicy passwordPolicy = _persistence.create(pk);
 
-		passwordPolicy.setMvccVersion(RandomTestUtil.nextLong());
-
 		passwordPolicy.setUuid(RandomTestUtil.randomString());
 
 		passwordPolicy.setCompanyId(RandomTestUtil.nextLong());
@@ -722,4 +716,4 @@ public class PasswordPolicyPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1342683907
+// LIFERAY-SERVICE-BUILDER-HASH:1526058145

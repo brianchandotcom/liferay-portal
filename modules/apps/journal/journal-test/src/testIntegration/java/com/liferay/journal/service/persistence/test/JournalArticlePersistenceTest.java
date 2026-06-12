@@ -116,11 +116,7 @@ public class JournalArticlePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		JournalArticle newJournalArticle = _persistence.create(pk);
-
-		newJournalArticle.setMvccVersion(RandomTestUtil.nextLong());
+		JournalArticle newJournalArticle = addJournalArticle();
 
 		newJournalArticle.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -1097,8 +1093,6 @@ public class JournalArticlePersistenceTest {
 
 		JournalArticle journalArticle = _persistence.create(pk);
 
-		journalArticle.setMvccVersion(RandomTestUtil.nextLong());
-
 		journalArticle.setCtCollectionId(RandomTestUtil.nextLong());
 
 		journalArticle.setUuid(RandomTestUtil.randomString());
@@ -1178,4 +1172,4 @@ public class JournalArticlePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:117535308
+// LIFERAY-SERVICE-BUILDER-HASH:-1731830790

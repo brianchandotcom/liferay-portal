@@ -109,11 +109,8 @@ public class CTAutoResolutionInfoPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CTAutoResolutionInfo newCTAutoResolutionInfo = _persistence.create(pk);
-
-		newCTAutoResolutionInfo.setMvccVersion(RandomTestUtil.nextLong());
+		CTAutoResolutionInfo newCTAutoResolutionInfo =
+			addCTAutoResolutionInfo();
 
 		newCTAutoResolutionInfo.setCompanyId(RandomTestUtil.nextLong());
 
@@ -439,8 +436,6 @@ public class CTAutoResolutionInfoPersistenceTest {
 
 		CTAutoResolutionInfo ctAutoResolutionInfo = _persistence.create(pk);
 
-		ctAutoResolutionInfo.setMvccVersion(RandomTestUtil.nextLong());
-
 		ctAutoResolutionInfo.setCompanyId(RandomTestUtil.nextLong());
 
 		ctAutoResolutionInfo.setCreateDate(RandomTestUtil.nextDate());
@@ -467,4 +462,4 @@ public class CTAutoResolutionInfoPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1373127370
+// LIFERAY-SERVICE-BUILDER-HASH:-1488977261

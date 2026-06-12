@@ -108,11 +108,7 @@ public class CountryLocalizationPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CountryLocalization newCountryLocalization = _persistence.create(pk);
-
-		newCountryLocalization.setMvccVersion(RandomTestUtil.nextLong());
+		CountryLocalization newCountryLocalization = addCountryLocalization();
 
 		newCountryLocalization.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -471,8 +467,6 @@ public class CountryLocalizationPersistenceTest {
 
 		CountryLocalization countryLocalization = _persistence.create(pk);
 
-		countryLocalization.setMvccVersion(RandomTestUtil.nextLong());
-
 		countryLocalization.setCtCollectionId(RandomTestUtil.nextLong());
 
 		countryLocalization.setCompanyId(RandomTestUtil.nextLong());
@@ -494,4 +488,4 @@ public class CountryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:641884474
+// LIFERAY-SERVICE-BUILDER-HASH:1241633222

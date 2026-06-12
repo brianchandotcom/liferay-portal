@@ -111,11 +111,7 @@ public class SiteFriendlyURLPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SiteFriendlyURL newSiteFriendlyURL = _persistence.create(pk);
-
-		newSiteFriendlyURL.setMvccVersion(RandomTestUtil.nextLong());
+		SiteFriendlyURL newSiteFriendlyURL = addSiteFriendlyURL();
 
 		newSiteFriendlyURL.setUuid(RandomTestUtil.randomString());
 
@@ -602,8 +598,6 @@ public class SiteFriendlyURLPersistenceTest {
 
 		SiteFriendlyURL siteFriendlyURL = _persistence.create(pk);
 
-		siteFriendlyURL.setMvccVersion(RandomTestUtil.nextLong());
-
 		siteFriendlyURL.setUuid(RandomTestUtil.randomString());
 
 		siteFriendlyURL.setGroupId(RandomTestUtil.nextLong());
@@ -635,4 +629,4 @@ public class SiteFriendlyURLPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:920918371
+// LIFERAY-SERVICE-BUILDER-HASH:1652987541

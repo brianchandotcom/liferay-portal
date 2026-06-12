@@ -116,11 +116,7 @@ public class DLContentPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DLContent newDLContent = _persistence.create(pk);
-
-		newDLContent.setMvccVersion(RandomTestUtil.nextLong());
+		DLContent newDLContent = addDLContent();
 
 		newDLContent.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -529,8 +525,6 @@ public class DLContentPersistenceTest {
 
 		DLContent dlContent = _persistence.create(pk);
 
-		dlContent.setMvccVersion(RandomTestUtil.nextLong());
-
 		dlContent.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlContent.setGroupId(RandomTestUtil.nextLong());
@@ -563,4 +557,4 @@ public class DLContentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1694078217
+// LIFERAY-SERVICE-BUILDER-HASH:220111309

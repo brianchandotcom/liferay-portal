@@ -117,8 +117,6 @@ public class ERCVersionedEntryPersistenceTest {
 
 		ERCVersionedEntry newERCVersionedEntry = _persistence.create(pk);
 
-		newERCVersionedEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		newERCVersionedEntry.setUuid(RandomTestUtil.randomString());
 
 		newERCVersionedEntry.setExternalReferenceCode(
@@ -166,8 +164,6 @@ public class ERCVersionedEntryPersistenceTest {
 
 		ERCVersionedEntry draftERCVersionedEntry = _persistence.create(pk);
 
-		draftERCVersionedEntry.setMvccVersion(
-			ercVersionedEntry.getMvccVersion());
 		draftERCVersionedEntry.setUuid(ercVersionedEntry.getUuid());
 		draftERCVersionedEntry.setExternalReferenceCode(
 			ercVersionedEntry.getExternalReferenceCode());
@@ -206,8 +202,6 @@ public class ERCVersionedEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		ERCVersionedEntry ercVersionedEntry2 = _persistence.create(pk);
-
-		ercVersionedEntry2.setMvccVersion(RandomTestUtil.nextLong());
 
 		ercVersionedEntry2.setUuid(RandomTestUtil.randomString());
 
@@ -671,8 +665,6 @@ public class ERCVersionedEntryPersistenceTest {
 
 		ERCVersionedEntry ercVersionedEntry = _persistence.create(pk);
 
-		ercVersionedEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		ercVersionedEntry.setUuid(RandomTestUtil.randomString());
 
 		ercVersionedEntry.setExternalReferenceCode(
@@ -695,4 +687,4 @@ public class ERCVersionedEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:696240845
+// LIFERAY-SERVICE-BUILDER-HASH:1601488419

@@ -117,11 +117,8 @@ public class CommerceShipmentItemPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CommerceShipmentItem newCommerceShipmentItem = _persistence.create(pk);
-
-		newCommerceShipmentItem.setMvccVersion(RandomTestUtil.nextLong());
+		CommerceShipmentItem newCommerceShipmentItem =
+			addCommerceShipmentItem();
 
 		newCommerceShipmentItem.setUuid(RandomTestUtil.randomString());
 
@@ -691,8 +688,6 @@ public class CommerceShipmentItemPersistenceTest {
 
 		CommerceShipmentItem commerceShipmentItem = _persistence.create(pk);
 
-		commerceShipmentItem.setMvccVersion(RandomTestUtil.nextLong());
-
 		commerceShipmentItem.setUuid(RandomTestUtil.randomString());
 
 		commerceShipmentItem.setExternalReferenceCode(
@@ -733,4 +728,4 @@ public class CommerceShipmentItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1764767124
+// LIFERAY-SERVICE-BUILDER-HASH:-1351901119

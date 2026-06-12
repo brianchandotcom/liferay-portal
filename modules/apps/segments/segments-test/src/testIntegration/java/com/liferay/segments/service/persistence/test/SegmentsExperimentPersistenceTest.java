@@ -116,11 +116,7 @@ public class SegmentsExperimentPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SegmentsExperiment newSegmentsExperiment = _persistence.create(pk);
-
-		newSegmentsExperiment.setMvccVersion(RandomTestUtil.nextLong());
+		SegmentsExperiment newSegmentsExperiment = addSegmentsExperiment();
 
 		newSegmentsExperiment.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -658,8 +654,6 @@ public class SegmentsExperimentPersistenceTest {
 
 		SegmentsExperiment segmentsExperiment = _persistence.create(pk);
 
-		segmentsExperiment.setMvccVersion(RandomTestUtil.nextLong());
-
 		segmentsExperiment.setCtCollectionId(RandomTestUtil.nextLong());
 
 		segmentsExperiment.setUuid(RandomTestUtil.randomString());
@@ -704,4 +698,4 @@ public class SegmentsExperimentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1623145184
+// LIFERAY-SERVICE-BUILDER-HASH:475662220

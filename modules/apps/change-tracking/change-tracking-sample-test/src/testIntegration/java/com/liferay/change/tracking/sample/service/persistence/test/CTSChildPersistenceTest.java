@@ -109,11 +109,7 @@ public class CTSChildPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CTSChild newCTSChild = _persistence.create(pk);
-
-		newCTSChild.setMvccVersion(RandomTestUtil.nextLong());
+		CTSChild newCTSChild = addCTSChild();
 
 		newCTSChild.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -418,8 +414,6 @@ public class CTSChildPersistenceTest {
 
 		CTSChild ctsChild = _persistence.create(pk);
 
-		ctsChild.setMvccVersion(RandomTestUtil.nextLong());
-
 		ctsChild.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ctsChild.setCompanyId(RandomTestUtil.nextLong());
@@ -442,4 +436,4 @@ public class CTSChildPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1713794830
+// LIFERAY-SERVICE-BUILDER-HASH:498185963

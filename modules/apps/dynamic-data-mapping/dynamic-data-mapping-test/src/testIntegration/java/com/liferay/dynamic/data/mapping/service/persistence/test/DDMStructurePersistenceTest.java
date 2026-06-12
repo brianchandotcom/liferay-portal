@@ -116,11 +116,7 @@ public class DDMStructurePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DDMStructure newDDMStructure = _persistence.create(pk);
-
-		newDDMStructure.setMvccVersion(RandomTestUtil.nextLong());
+		DDMStructure newDDMStructure = addDDMStructure();
 
 		newDDMStructure.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -737,8 +733,6 @@ public class DDMStructurePersistenceTest {
 
 		DDMStructure ddmStructure = _persistence.create(pk);
 
-		ddmStructure.setMvccVersion(RandomTestUtil.nextLong());
-
 		ddmStructure.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmStructure.setUuid(RandomTestUtil.randomString());
@@ -791,4 +785,4 @@ public class DDMStructurePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:723632896
+// LIFERAY-SERVICE-BUILDER-HASH:-1020970209

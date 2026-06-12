@@ -110,11 +110,7 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		Ticket newTicket = _persistence.create(pk);
-
-		newTicket.setMvccVersion(RandomTestUtil.nextLong());
+		Ticket newTicket = addTicket();
 
 		newTicket.setCompanyId(RandomTestUtil.nextLong());
 
@@ -500,8 +496,6 @@ public class TicketPersistenceTest {
 
 		Ticket ticket = _persistence.create(pk);
 
-		ticket.setMvccVersion(RandomTestUtil.nextLong());
-
 		ticket.setCompanyId(RandomTestUtil.nextLong());
 
 		ticket.setCreateDate(RandomTestUtil.nextDate());
@@ -530,4 +524,4 @@ public class TicketPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:852277907
+// LIFERAY-SERVICE-BUILDER-HASH:845844700

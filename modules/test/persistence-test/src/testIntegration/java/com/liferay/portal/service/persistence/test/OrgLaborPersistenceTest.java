@@ -107,11 +107,7 @@ public class OrgLaborPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		OrgLabor newOrgLabor = _persistence.create(pk);
-
-		newOrgLabor.setMvccVersion(RandomTestUtil.nextLong());
+		OrgLabor newOrgLabor = addOrgLabor();
 
 		newOrgLabor.setCompanyId(RandomTestUtil.nextLong());
 
@@ -445,8 +441,6 @@ public class OrgLaborPersistenceTest {
 
 		OrgLabor orgLabor = _persistence.create(pk);
 
-		orgLabor.setMvccVersion(RandomTestUtil.nextLong());
-
 		orgLabor.setCompanyId(RandomTestUtil.nextLong());
 
 		orgLabor.setOrganizationId(RandomTestUtil.nextLong());
@@ -491,4 +485,4 @@ public class OrgLaborPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2015083101
+// LIFERAY-SERVICE-BUILDER-HASH:219133126

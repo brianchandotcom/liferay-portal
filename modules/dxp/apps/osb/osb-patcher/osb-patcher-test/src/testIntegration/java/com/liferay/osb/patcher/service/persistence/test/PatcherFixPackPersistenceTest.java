@@ -111,11 +111,7 @@ public class PatcherFixPackPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		PatcherFixPack newPatcherFixPack = _persistence.create(pk);
-
-		newPatcherFixPack.setMvccVersion(RandomTestUtil.nextLong());
+		PatcherFixPack newPatcherFixPack = addPatcherFixPack();
 
 		newPatcherFixPack.setCompanyId(RandomTestUtil.nextLong());
 
@@ -617,8 +613,6 @@ public class PatcherFixPackPersistenceTest {
 
 		PatcherFixPack patcherFixPack = _persistence.create(pk);
 
-		patcherFixPack.setMvccVersion(RandomTestUtil.nextLong());
-
 		patcherFixPack.setCompanyId(RandomTestUtil.nextLong());
 
 		patcherFixPack.setUserId(RandomTestUtil.nextLong());
@@ -656,4 +650,4 @@ public class PatcherFixPackPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-521471329
+// LIFERAY-SERVICE-BUILDER-HASH:1597246823

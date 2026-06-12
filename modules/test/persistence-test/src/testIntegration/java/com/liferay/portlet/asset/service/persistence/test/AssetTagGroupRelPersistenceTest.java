@@ -109,11 +109,7 @@ public class AssetTagGroupRelPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		AssetTagGroupRel newAssetTagGroupRel = _persistence.create(pk);
-
-		newAssetTagGroupRel.setMvccVersion(RandomTestUtil.nextLong());
+		AssetTagGroupRel newAssetTagGroupRel = addAssetTagGroupRel();
 
 		newAssetTagGroupRel.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -528,8 +524,6 @@ public class AssetTagGroupRelPersistenceTest {
 
 		AssetTagGroupRel assetTagGroupRel = _persistence.create(pk);
 
-		assetTagGroupRel.setMvccVersion(RandomTestUtil.nextLong());
-
 		assetTagGroupRel.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetTagGroupRel.setUuid(RandomTestUtil.randomString());
@@ -551,4 +545,4 @@ public class AssetTagGroupRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-692552286
+// LIFERAY-SERVICE-BUILDER-HASH:442770993

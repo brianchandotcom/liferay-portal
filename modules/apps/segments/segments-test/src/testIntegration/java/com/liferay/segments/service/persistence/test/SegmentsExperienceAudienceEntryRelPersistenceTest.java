@@ -118,13 +118,9 @@ public class SegmentsExperienceAudienceEntryRelPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		SegmentsExperienceAudienceEntryRel
-			newSegmentsExperienceAudienceEntryRel = _persistence.create(pk);
-
-		newSegmentsExperienceAudienceEntryRel.setMvccVersion(
-			RandomTestUtil.nextLong());
+			newSegmentsExperienceAudienceEntryRel =
+				addSegmentsExperienceAudienceEntryRel();
 
 		newSegmentsExperienceAudienceEntryRel.setCtCollectionId(
 			RandomTestUtil.nextLong());
@@ -654,9 +650,6 @@ public class SegmentsExperienceAudienceEntryRelPersistenceTest {
 		SegmentsExperienceAudienceEntryRel segmentsExperienceAudienceEntryRel =
 			_persistence.create(pk);
 
-		segmentsExperienceAudienceEntryRel.setMvccVersion(
-			RandomTestUtil.nextLong());
-
 		segmentsExperienceAudienceEntryRel.setCtCollectionId(
 			RandomTestUtil.nextLong());
 
@@ -702,4 +695,4 @@ public class SegmentsExperienceAudienceEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-198677730
+// LIFERAY-SERVICE-BUILDER-HASH:-1160698662

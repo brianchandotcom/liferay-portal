@@ -109,11 +109,7 @@ public class ClassNamePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ClassName newClassName = _persistence.create(pk);
-
-		newClassName.setMvccVersion(RandomTestUtil.nextLong());
+		ClassName newClassName = addClassName();
 
 		newClassName.setValue(RandomTestUtil.randomString());
 
@@ -440,8 +436,6 @@ public class ClassNamePersistenceTest {
 
 		ClassName className = _persistence.create(pk);
 
-		className.setMvccVersion(RandomTestUtil.nextLong());
-
 		className.setValue(RandomTestUtil.randomString());
 
 		_classNames.add(_persistence.update(className));
@@ -454,4 +448,4 @@ public class ClassNamePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-176859445
+// LIFERAY-SERVICE-BUILDER-HASH:1146046931

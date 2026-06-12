@@ -111,11 +111,7 @@ public class MBMailingListPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		MBMailingList newMBMailingList = _persistence.create(pk);
-
-		newMBMailingList.setMvccVersion(RandomTestUtil.nextLong());
+		MBMailingList newMBMailingList = addMBMailingList();
 
 		newMBMailingList.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -626,8 +622,6 @@ public class MBMailingListPersistenceTest {
 
 		MBMailingList mbMailingList = _persistence.create(pk);
 
-		mbMailingList.setMvccVersion(RandomTestUtil.nextLong());
-
 		mbMailingList.setCtCollectionId(RandomTestUtil.nextLong());
 
 		mbMailingList.setUuid(RandomTestUtil.randomString());
@@ -691,4 +685,4 @@ public class MBMailingListPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:527015549
+// LIFERAY-SERVICE-BUILDER-HASH:-1829980528

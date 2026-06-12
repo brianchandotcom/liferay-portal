@@ -111,11 +111,7 @@ public class KaleoNotificationPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		KaleoNotification newKaleoNotification = _persistence.create(pk);
-
-		newKaleoNotification.setMvccVersion(RandomTestUtil.nextLong());
+		KaleoNotification newKaleoNotification = addKaleoNotification();
 
 		newKaleoNotification.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -514,8 +510,6 @@ public class KaleoNotificationPersistenceTest {
 
 		KaleoNotification kaleoNotification = _persistence.create(pk);
 
-		kaleoNotification.setMvccVersion(RandomTestUtil.nextLong());
-
 		kaleoNotification.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoNotification.setGroupId(RandomTestUtil.nextLong());
@@ -564,4 +558,4 @@ public class KaleoNotificationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-409862158
+// LIFERAY-SERVICE-BUILDER-HASH:-1303351294

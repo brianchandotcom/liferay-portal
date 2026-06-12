@@ -116,12 +116,8 @@ public class CommerceTaxCategoryMappingPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		CommerceTaxCategoryMapping newCommerceTaxCategoryMapping =
-			_persistence.create(pk);
-
-		newCommerceTaxCategoryMapping.setMvccVersion(RandomTestUtil.nextLong());
+			addCommerceTaxCategoryMapping();
 
 		newCommerceTaxCategoryMapping.setUuid(RandomTestUtil.randomString());
 
@@ -657,8 +653,6 @@ public class CommerceTaxCategoryMappingPersistenceTest {
 		CommerceTaxCategoryMapping commerceTaxCategoryMapping =
 			_persistence.create(pk);
 
-		commerceTaxCategoryMapping.setMvccVersion(RandomTestUtil.nextLong());
-
 		commerceTaxCategoryMapping.setUuid(RandomTestUtil.randomString());
 
 		commerceTaxCategoryMapping.setExternalReferenceCode(
@@ -694,4 +688,4 @@ public class CommerceTaxCategoryMappingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:276521967
+// LIFERAY-SERVICE-BUILDER-HASH:-953409804

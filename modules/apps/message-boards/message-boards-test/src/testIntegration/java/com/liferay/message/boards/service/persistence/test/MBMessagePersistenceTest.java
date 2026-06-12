@@ -117,11 +117,7 @@ public class MBMessagePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		MBMessage newMBMessage = _persistence.create(pk);
-
-		newMBMessage.setMvccVersion(RandomTestUtil.nextLong());
+		MBMessage newMBMessage = addMBMessage();
 
 		newMBMessage.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -917,8 +913,6 @@ public class MBMessagePersistenceTest {
 
 		MBMessage mbMessage = _persistence.create(pk);
 
-		mbMessage.setMvccVersion(RandomTestUtil.nextLong());
-
 		mbMessage.setCtCollectionId(RandomTestUtil.nextLong());
 
 		mbMessage.setUuid(RandomTestUtil.randomString());
@@ -987,4 +981,4 @@ public class MBMessagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-361392601
+// LIFERAY-SERVICE-BUILDER-HASH:662127088

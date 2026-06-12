@@ -116,11 +116,7 @@ public class BlogsEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		BlogsEntry newBlogsEntry = _persistence.create(pk);
-
-		newBlogsEntry.setMvccVersion(RandomTestUtil.nextLong());
+		BlogsEntry newBlogsEntry = addBlogsEntry();
 
 		newBlogsEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -894,8 +890,6 @@ public class BlogsEntryPersistenceTest {
 
 		BlogsEntry blogsEntry = _persistence.create(pk);
 
-		blogsEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		blogsEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		blogsEntry.setUuid(RandomTestUtil.randomString());
@@ -966,4 +960,4 @@ public class BlogsEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1975118783
+// LIFERAY-SERVICE-BUILDER-HASH:-1681858075

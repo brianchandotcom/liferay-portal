@@ -111,11 +111,7 @@ public class LockPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		Lock newLock = _persistence.create(pk);
-
-		newLock.setMvccVersion(RandomTestUtil.nextLong());
+		Lock newLock = addLock();
 
 		newLock.setUuid(RandomTestUtil.randomString());
 
@@ -521,8 +517,6 @@ public class LockPersistenceTest {
 
 		Lock lock = _persistence.create(pk);
 
-		lock.setMvccVersion(RandomTestUtil.nextLong());
-
 		lock.setUuid(RandomTestUtil.randomString());
 
 		lock.setCompanyId(RandomTestUtil.nextLong());
@@ -553,4 +547,4 @@ public class LockPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-303921001
+// LIFERAY-SERVICE-BUILDER-HASH:-1149602251

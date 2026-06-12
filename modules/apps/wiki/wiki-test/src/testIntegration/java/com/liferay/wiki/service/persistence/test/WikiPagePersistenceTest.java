@@ -112,11 +112,7 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		WikiPage newWikiPage = _persistence.create(pk);
-
-		newWikiPage.setMvccVersion(RandomTestUtil.nextLong());
+		WikiPage newWikiPage = addWikiPage();
 
 		newWikiPage.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -945,8 +941,6 @@ public class WikiPagePersistenceTest {
 
 		WikiPage wikiPage = _persistence.create(pk);
 
-		wikiPage.setMvccVersion(RandomTestUtil.nextLong());
-
 		wikiPage.setCtCollectionId(RandomTestUtil.nextLong());
 
 		wikiPage.setUuid(RandomTestUtil.randomString());
@@ -1007,4 +1001,4 @@ public class WikiPagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1203981382
+// LIFERAY-SERVICE-BUILDER-HASH:-297660656

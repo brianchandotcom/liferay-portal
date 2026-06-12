@@ -113,11 +113,7 @@ public class DDMTemplateVersionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DDMTemplateVersion newDDMTemplateVersion = _persistence.create(pk);
-
-		newDDMTemplateVersion.setMvccVersion(RandomTestUtil.nextLong());
+		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
 
 		newDDMTemplateVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -572,8 +568,6 @@ public class DDMTemplateVersionPersistenceTest {
 
 		DDMTemplateVersion ddmTemplateVersion = _persistence.create(pk);
 
-		ddmTemplateVersion.setMvccVersion(RandomTestUtil.nextLong());
-
 		ddmTemplateVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmTemplateVersion.setGroupId(RandomTestUtil.nextLong());
@@ -621,4 +615,4 @@ public class DDMTemplateVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1089550963
+// LIFERAY-SERVICE-BUILDER-HASH:-676193987

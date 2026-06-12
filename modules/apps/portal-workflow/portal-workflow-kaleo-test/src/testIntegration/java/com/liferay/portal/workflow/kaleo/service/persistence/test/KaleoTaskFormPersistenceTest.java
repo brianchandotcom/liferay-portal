@@ -112,11 +112,7 @@ public class KaleoTaskFormPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		KaleoTaskForm newKaleoTaskForm = _persistence.create(pk);
-
-		newKaleoTaskForm.setMvccVersion(RandomTestUtil.nextLong());
+		KaleoTaskForm newKaleoTaskForm = addKaleoTaskForm();
 
 		newKaleoTaskForm.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -586,8 +582,6 @@ public class KaleoTaskFormPersistenceTest {
 
 		KaleoTaskForm kaleoTaskForm = _persistence.create(pk);
 
-		kaleoTaskForm.setMvccVersion(RandomTestUtil.nextLong());
-
 		kaleoTaskForm.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoTaskForm.setGroupId(RandomTestUtil.nextLong());
@@ -641,4 +635,4 @@ public class KaleoTaskFormPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-665552080
+// LIFERAY-SERVICE-BUILDER-HASH:671668718

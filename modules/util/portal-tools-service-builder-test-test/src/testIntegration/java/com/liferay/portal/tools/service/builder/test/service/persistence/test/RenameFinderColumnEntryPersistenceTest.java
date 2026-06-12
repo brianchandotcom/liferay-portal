@@ -115,10 +115,8 @@ public class RenameFinderColumnEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		RenameFinderColumnEntry newRenameFinderColumnEntry =
-			_persistence.create(pk);
+			addRenameFinderColumnEntry();
 
 		newRenameFinderColumnEntry.setGroupId(RandomTestUtil.nextLong());
 
@@ -511,4 +509,4 @@ public class RenameFinderColumnEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:881872030
+// LIFERAY-SERVICE-BUILDER-HASH:-221558425

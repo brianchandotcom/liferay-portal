@@ -112,11 +112,8 @@ public class CTCollectionTemplatePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CTCollectionTemplate newCTCollectionTemplate = _persistence.create(pk);
-
-		newCTCollectionTemplate.setMvccVersion(RandomTestUtil.nextLong());
+		CTCollectionTemplate newCTCollectionTemplate =
+			addCTCollectionTemplate();
 
 		newCTCollectionTemplate.setCompanyId(RandomTestUtil.nextLong());
 
@@ -445,8 +442,6 @@ public class CTCollectionTemplatePersistenceTest {
 
 		CTCollectionTemplate ctCollectionTemplate = _persistence.create(pk);
 
-		ctCollectionTemplate.setMvccVersion(RandomTestUtil.nextLong());
-
 		ctCollectionTemplate.setCompanyId(RandomTestUtil.nextLong());
 
 		ctCollectionTemplate.setUserId(RandomTestUtil.nextLong());
@@ -470,4 +465,4 @@ public class CTCollectionTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1387700558
+// LIFERAY-SERVICE-BUILDER-HASH:1974366682

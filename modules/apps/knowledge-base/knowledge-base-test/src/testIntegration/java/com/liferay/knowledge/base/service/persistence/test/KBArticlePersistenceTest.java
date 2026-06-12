@@ -112,11 +112,7 @@ public class KBArticlePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		KBArticle newKBArticle = _persistence.create(pk);
-
-		newKBArticle.setMvccVersion(RandomTestUtil.nextLong());
+		KBArticle newKBArticle = addKBArticle();
 
 		newKBArticle.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -1355,8 +1351,6 @@ public class KBArticlePersistenceTest {
 
 		KBArticle kbArticle = _persistence.create(pk);
 
-		kbArticle.setMvccVersion(RandomTestUtil.nextLong());
-
 		kbArticle.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kbArticle.setUuid(RandomTestUtil.randomString());
@@ -1431,4 +1425,4 @@ public class KBArticlePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:376693266
+// LIFERAY-SERVICE-BUILDER-HASH:27657254

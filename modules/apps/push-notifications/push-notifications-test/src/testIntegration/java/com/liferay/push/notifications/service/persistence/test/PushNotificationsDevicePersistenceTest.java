@@ -116,10 +116,8 @@ public class PushNotificationsDevicePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		PushNotificationsDevice newPushNotificationsDevice =
-			_persistence.create(pk);
+			addPushNotificationsDevice();
 
 		newPushNotificationsDevice.setCompanyId(RandomTestUtil.nextLong());
 
@@ -549,4 +547,4 @@ public class PushNotificationsDevicePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1017126256
+// LIFERAY-SERVICE-BUILDER-HASH:1648983621

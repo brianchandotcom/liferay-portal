@@ -112,11 +112,7 @@ public class ObjectDefinitionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ObjectDefinition newObjectDefinition = _persistence.create(pk);
-
-		newObjectDefinition.setMvccVersion(RandomTestUtil.nextLong());
+		ObjectDefinition newObjectDefinition = addObjectDefinition();
 
 		newObjectDefinition.setUuid(RandomTestUtil.randomString());
 
@@ -888,8 +884,6 @@ public class ObjectDefinitionPersistenceTest {
 
 		ObjectDefinition objectDefinition = _persistence.create(pk);
 
-		objectDefinition.setMvccVersion(RandomTestUtil.nextLong());
-
 		objectDefinition.setUuid(RandomTestUtil.randomString());
 
 		objectDefinition.setExternalReferenceCode(
@@ -992,4 +986,4 @@ public class ObjectDefinitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1183751314
+// LIFERAY-SERVICE-BUILDER-HASH:-794946629

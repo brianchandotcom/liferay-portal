@@ -116,9 +116,7 @@ public class KaleoProcessPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		KaleoProcess newKaleoProcess = _persistence.create(pk);
+		KaleoProcess newKaleoProcess = addKaleoProcess();
 
 		newKaleoProcess.setUuid(RandomTestUtil.randomString());
 
@@ -598,4 +596,4 @@ public class KaleoProcessPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1447641047
+// LIFERAY-SERVICE-BUILDER-HASH:1247289255

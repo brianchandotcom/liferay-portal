@@ -116,9 +116,7 @@ public class DefinitionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		Definition newDefinition = _persistence.create(pk);
+		Definition newDefinition = addDefinition();
 
 		newDefinition.setUuid(RandomTestUtil.randomString());
 
@@ -597,4 +595,4 @@ public class DefinitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:782111515
+// LIFERAY-SERVICE-BUILDER-HASH:1815942517

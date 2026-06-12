@@ -115,11 +115,7 @@ public class RedirectEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		RedirectEntry newRedirectEntry = _persistence.create(pk);
-
-		newRedirectEntry.setMvccVersion(RandomTestUtil.nextLong());
+		RedirectEntry newRedirectEntry = addRedirectEntry();
 
 		newRedirectEntry.setUuid(RandomTestUtil.randomString());
 
@@ -593,8 +589,6 @@ public class RedirectEntryPersistenceTest {
 
 		RedirectEntry redirectEntry = _persistence.create(pk);
 
-		redirectEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		redirectEntry.setUuid(RandomTestUtil.randomString());
 
 		redirectEntry.setGroupId(RandomTestUtil.nextLong());
@@ -630,4 +624,4 @@ public class RedirectEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1654164858
+// LIFERAY-SERVICE-BUILDER-HASH:-891073831

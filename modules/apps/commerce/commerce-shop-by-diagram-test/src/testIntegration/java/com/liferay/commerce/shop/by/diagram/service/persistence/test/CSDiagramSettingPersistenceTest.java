@@ -113,11 +113,7 @@ public class CSDiagramSettingPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CSDiagramSetting newCSDiagramSetting = _persistence.create(pk);
-
-		newCSDiagramSetting.setMvccVersion(RandomTestUtil.nextLong());
+		CSDiagramSetting newCSDiagramSetting = addCSDiagramSetting();
 
 		newCSDiagramSetting.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -530,8 +526,6 @@ public class CSDiagramSettingPersistenceTest {
 
 		CSDiagramSetting csDiagramSetting = _persistence.create(pk);
 
-		csDiagramSetting.setMvccVersion(RandomTestUtil.nextLong());
-
 		csDiagramSetting.setCtCollectionId(RandomTestUtil.nextLong());
 
 		csDiagramSetting.setUuid(RandomTestUtil.randomString());
@@ -567,4 +561,4 @@ public class CSDiagramSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:251821636
+// LIFERAY-SERVICE-BUILDER-HASH:-1085767864

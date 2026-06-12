@@ -116,11 +116,7 @@ public class LazyBlobEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		LazyBlobEntry newLazyBlobEntry = _persistence.create(pk);
-
-		newLazyBlobEntry.setMvccVersion(RandomTestUtil.nextLong());
+		LazyBlobEntry newLazyBlobEntry = addLazyBlobEntry();
 
 		newLazyBlobEntry.setUuid(RandomTestUtil.randomString());
 
@@ -499,8 +495,6 @@ public class LazyBlobEntryPersistenceTest {
 
 		LazyBlobEntry lazyBlobEntry = _persistence.create(pk);
 
-		lazyBlobEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		lazyBlobEntry.setUuid(RandomTestUtil.randomString());
 
 		lazyBlobEntry.setGroupId(RandomTestUtil.nextLong());
@@ -532,4 +526,4 @@ public class LazyBlobEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-291285554
+// LIFERAY-SERVICE-BUILDER-HASH:-428178084

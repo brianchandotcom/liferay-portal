@@ -113,9 +113,7 @@ public class CacheDisabledEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CacheDisabledEntry newCacheDisabledEntry = _persistence.create(pk);
+		CacheDisabledEntry newCacheDisabledEntry = addCacheDisabledEntry();
 
 		newCacheDisabledEntry.setName(RandomTestUtil.randomString());
 
@@ -472,4 +470,4 @@ public class CacheDisabledEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1478855935
+// LIFERAY-SERVICE-BUILDER-HASH:-1767181964

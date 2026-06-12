@@ -113,11 +113,7 @@ public class KaleoDefinitionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		KaleoDefinition newKaleoDefinition = _persistence.create(pk);
-
-		newKaleoDefinition.setMvccVersion(RandomTestUtil.nextLong());
+		KaleoDefinition newKaleoDefinition = addKaleoDefinition();
 
 		newKaleoDefinition.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -717,8 +713,6 @@ public class KaleoDefinitionPersistenceTest {
 
 		KaleoDefinition kaleoDefinition = _persistence.create(pk);
 
-		kaleoDefinition.setMvccVersion(RandomTestUtil.nextLong());
-
 		kaleoDefinition.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoDefinition.setUuid(RandomTestUtil.randomString());
@@ -764,4 +758,4 @@ public class KaleoDefinitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2138383363
+// LIFERAY-SERVICE-BUILDER-HASH:-1227469039

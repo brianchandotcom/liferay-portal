@@ -115,11 +115,7 @@ public class DLFolderPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DLFolder newDLFolder = _persistence.create(pk);
-
-		newDLFolder.setMvccVersion(RandomTestUtil.nextLong());
+		DLFolder newDLFolder = addDLFolder();
 
 		newDLFolder.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -821,8 +817,6 @@ public class DLFolderPersistenceTest {
 
 		DLFolder dlFolder = _persistence.create(pk);
 
-		dlFolder.setMvccVersion(RandomTestUtil.nextLong());
-
 		dlFolder.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFolder.setUuid(RandomTestUtil.randomString());
@@ -881,4 +875,4 @@ public class DLFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-638564196
+// LIFERAY-SERVICE-BUILDER-HASH:381315565

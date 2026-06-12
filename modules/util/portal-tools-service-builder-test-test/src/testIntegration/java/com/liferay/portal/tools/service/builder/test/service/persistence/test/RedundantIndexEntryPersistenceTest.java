@@ -113,9 +113,7 @@ public class RedundantIndexEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		RedundantIndexEntry newRedundantIndexEntry = _persistence.create(pk);
+		RedundantIndexEntry newRedundantIndexEntry = addRedundantIndexEntry();
 
 		newRedundantIndexEntry.setCompanyId(RandomTestUtil.nextLong());
 
@@ -490,4 +488,4 @@ public class RedundantIndexEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2127768194
+// LIFERAY-SERVICE-BUILDER-HASH:-1729841088

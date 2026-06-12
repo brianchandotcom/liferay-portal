@@ -112,11 +112,7 @@ public class CPDefinitionLinkPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CPDefinitionLink newCPDefinitionLink = _persistence.create(pk);
-
-		newCPDefinitionLink.setMvccVersion(RandomTestUtil.nextLong());
+		CPDefinitionLink newCPDefinitionLink = addCPDefinitionLink();
 
 		newCPDefinitionLink.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -684,8 +680,6 @@ public class CPDefinitionLinkPersistenceTest {
 
 		CPDefinitionLink cpDefinitionLink = _persistence.create(pk);
 
-		cpDefinitionLink.setMvccVersion(RandomTestUtil.nextLong());
-
 		cpDefinitionLink.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpDefinitionLink.setUuid(RandomTestUtil.randomString());
@@ -735,4 +729,4 @@ public class CPDefinitionLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:138413576
+// LIFERAY-SERVICE-BUILDER-HASH:842658885

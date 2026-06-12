@@ -108,11 +108,7 @@ public class PatcherFixRelPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		PatcherFixRel newPatcherFixRel = _persistence.create(pk);
-
-		newPatcherFixRel.setMvccVersion(RandomTestUtil.nextLong());
+		PatcherFixRel newPatcherFixRel = addPatcherFixRel();
 
 		newPatcherFixRel.setCompanyId(RandomTestUtil.nextLong());
 
@@ -404,8 +400,6 @@ public class PatcherFixRelPersistenceTest {
 
 		PatcherFixRel patcherFixRel = _persistence.create(pk);
 
-		patcherFixRel.setMvccVersion(RandomTestUtil.nextLong());
-
 		patcherFixRel.setCompanyId(RandomTestUtil.nextLong());
 
 		patcherFixRel.setChildPatcherFixId(RandomTestUtil.nextLong());
@@ -423,4 +417,4 @@ public class PatcherFixRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-865763028
+// LIFERAY-SERVICE-BUILDER-HASH:1059481946

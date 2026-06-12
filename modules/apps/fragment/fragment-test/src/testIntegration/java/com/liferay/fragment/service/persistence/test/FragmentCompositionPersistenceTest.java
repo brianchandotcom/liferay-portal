@@ -114,11 +114,7 @@ public class FragmentCompositionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		FragmentComposition newFragmentComposition = _persistence.create(pk);
-
-		newFragmentComposition.setMvccVersion(RandomTestUtil.nextLong());
+		FragmentComposition newFragmentComposition = addFragmentComposition();
 
 		newFragmentComposition.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -722,8 +718,6 @@ public class FragmentCompositionPersistenceTest {
 
 		FragmentComposition fragmentComposition = _persistence.create(pk);
 
-		fragmentComposition.setMvccVersion(RandomTestUtil.nextLong());
-
 		fragmentComposition.setCtCollectionId(RandomTestUtil.nextLong());
 
 		fragmentComposition.setUuid(RandomTestUtil.randomString());
@@ -779,4 +773,4 @@ public class FragmentCompositionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:892455236
+// LIFERAY-SERVICE-BUILDER-HASH:1065141667

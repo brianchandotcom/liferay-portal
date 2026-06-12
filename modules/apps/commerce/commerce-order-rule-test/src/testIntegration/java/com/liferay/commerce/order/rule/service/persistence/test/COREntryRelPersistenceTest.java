@@ -112,11 +112,7 @@ public class COREntryRelPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		COREntryRel newCOREntryRel = _persistence.create(pk);
-
-		newCOREntryRel.setMvccVersion(RandomTestUtil.nextLong());
+		COREntryRel newCOREntryRel = addCOREntryRel();
 
 		newCOREntryRel.setCompanyId(RandomTestUtil.nextLong());
 
@@ -504,8 +500,6 @@ public class COREntryRelPersistenceTest {
 
 		COREntryRel corEntryRel = _persistence.create(pk);
 
-		corEntryRel.setMvccVersion(RandomTestUtil.nextLong());
-
 		corEntryRel.setCompanyId(RandomTestUtil.nextLong());
 
 		corEntryRel.setUserId(RandomTestUtil.nextLong());
@@ -532,4 +526,4 @@ public class COREntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-803479901
+// LIFERAY-SERVICE-BUILDER-HASH:693830459

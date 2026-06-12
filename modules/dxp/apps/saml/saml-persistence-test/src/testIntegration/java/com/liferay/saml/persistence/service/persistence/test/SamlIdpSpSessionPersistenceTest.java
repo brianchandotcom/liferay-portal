@@ -109,9 +109,7 @@ public class SamlIdpSpSessionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SamlIdpSpSession newSamlIdpSpSession = _persistence.create(pk);
+		SamlIdpSpSession newSamlIdpSpSession = addSamlIdpSpSession();
 
 		newSamlIdpSpSession.setCompanyId(RandomTestUtil.nextLong());
 
@@ -450,4 +448,4 @@ public class SamlIdpSpSessionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-832716217
+// LIFERAY-SERVICE-BUILDER-HASH:-1105273311

@@ -113,9 +113,7 @@ public class UniqueFinderEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		UniqueFinderEntry newUniqueFinderEntry = _persistence.create(pk);
+		UniqueFinderEntry newUniqueFinderEntry = addUniqueFinderEntry();
 
 		newUniqueFinderEntry.setModifiedDate(RandomTestUtil.nextDate());
 
@@ -475,4 +473,4 @@ public class UniqueFinderEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-887673415
+// LIFERAY-SERVICE-BUILDER-HASH:206529581

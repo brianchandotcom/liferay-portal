@@ -110,11 +110,7 @@ public class ListTypePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ListType newListType = _persistence.create(pk);
-
-		newListType.setMvccVersion(RandomTestUtil.nextLong());
+		ListType newListType = addListType();
 
 		newListType.setUuid(RandomTestUtil.randomString());
 
@@ -510,8 +506,6 @@ public class ListTypePersistenceTest {
 
 		ListType listType = _persistence.create(pk);
 
-		listType.setMvccVersion(RandomTestUtil.nextLong());
-
 		listType.setUuid(RandomTestUtil.randomString());
 
 		listType.setCompanyId(RandomTestUtil.nextLong());
@@ -538,4 +532,4 @@ public class ListTypePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1129794038
+// LIFERAY-SERVICE-BUILDER-HASH:118657379

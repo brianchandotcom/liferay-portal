@@ -111,11 +111,7 @@ public class GroupPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		Group newGroup = _persistence.create(pk);
-
-		newGroup.setMvccVersion(RandomTestUtil.nextLong());
+		Group newGroup = addGroup();
 
 		newGroup.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -890,8 +886,6 @@ public class GroupPersistenceTest {
 
 		Group group = _persistence.create(pk);
 
-		group.setMvccVersion(RandomTestUtil.nextLong());
-
 		group.setCtCollectionId(RandomTestUtil.nextLong());
 
 		group.setUuid(RandomTestUtil.randomString());
@@ -948,4 +942,4 @@ public class GroupPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2007031751
+// LIFERAY-SERVICE-BUILDER-HASH:1579496523

@@ -115,8 +115,6 @@ public class FragmentEntryVersionPersistenceTest {
 
 		FragmentEntryVersion newFragmentEntryVersion = _persistence.create(pk);
 
-		newFragmentEntryVersion.setMvccVersion(RandomTestUtil.nextLong());
-
 		newFragmentEntryVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		newFragmentEntryVersion.setVersion(RandomTestUtil.nextInt());
@@ -895,8 +893,6 @@ public class FragmentEntryVersionPersistenceTest {
 
 		FragmentEntryVersion fragmentEntryVersion = _persistence.create(pk);
 
-		fragmentEntryVersion.setMvccVersion(RandomTestUtil.nextLong());
-
 		fragmentEntryVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		fragmentEntryVersion.setVersion(RandomTestUtil.nextInt());
@@ -969,4 +965,4 @@ public class FragmentEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-641699090
+// LIFERAY-SERVICE-BUILDER-HASH:-121370568

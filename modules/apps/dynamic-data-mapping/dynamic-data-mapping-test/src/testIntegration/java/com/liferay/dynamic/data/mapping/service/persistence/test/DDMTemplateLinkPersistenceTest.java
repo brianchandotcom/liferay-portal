@@ -111,11 +111,7 @@ public class DDMTemplateLinkPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DDMTemplateLink newDDMTemplateLink = _persistence.create(pk);
-
-		newDDMTemplateLink.setMvccVersion(RandomTestUtil.nextLong());
+		DDMTemplateLink newDDMTemplateLink = addDDMTemplateLink();
 
 		newDDMTemplateLink.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -482,8 +478,6 @@ public class DDMTemplateLinkPersistenceTest {
 
 		DDMTemplateLink ddmTemplateLink = _persistence.create(pk);
 
-		ddmTemplateLink.setMvccVersion(RandomTestUtil.nextLong());
-
 		ddmTemplateLink.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmTemplateLink.setCompanyId(RandomTestUtil.nextLong());
@@ -505,4 +499,4 @@ public class DDMTemplateLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1024394795
+// LIFERAY-SERVICE-BUILDER-HASH:787213417

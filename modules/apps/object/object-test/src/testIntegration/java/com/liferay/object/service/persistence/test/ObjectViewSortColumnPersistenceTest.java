@@ -109,11 +109,8 @@ public class ObjectViewSortColumnPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ObjectViewSortColumn newObjectViewSortColumn = _persistence.create(pk);
-
-		newObjectViewSortColumn.setMvccVersion(RandomTestUtil.nextLong());
+		ObjectViewSortColumn newObjectViewSortColumn =
+			addObjectViewSortColumn();
 
 		newObjectViewSortColumn.setUuid(RandomTestUtil.randomString());
 
@@ -464,8 +461,6 @@ public class ObjectViewSortColumnPersistenceTest {
 
 		ObjectViewSortColumn objectViewSortColumn = _persistence.create(pk);
 
-		objectViewSortColumn.setMvccVersion(RandomTestUtil.nextLong());
-
 		objectViewSortColumn.setUuid(RandomTestUtil.randomString());
 
 		objectViewSortColumn.setCompanyId(RandomTestUtil.nextLong());
@@ -497,4 +492,4 @@ public class ObjectViewSortColumnPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-6660269
+// LIFERAY-SERVICE-BUILDER-HASH:27500422

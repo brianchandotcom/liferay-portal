@@ -110,11 +110,7 @@ public class ResourcePermissionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		ResourcePermission newResourcePermission = _persistence.create(pk);
-
-		newResourcePermission.setMvccVersion(RandomTestUtil.nextLong());
+		ResourcePermission newResourcePermission = addResourcePermission();
 
 		newResourcePermission.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -649,8 +645,6 @@ public class ResourcePermissionPersistenceTest {
 
 		ResourcePermission resourcePermission = _persistence.create(pk);
 
-		resourcePermission.setMvccVersion(RandomTestUtil.nextLong());
-
 		resourcePermission.setCtCollectionId(RandomTestUtil.nextLong());
 
 		resourcePermission.setCompanyId(RandomTestUtil.nextLong());
@@ -682,4 +676,4 @@ public class ResourcePermissionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1539273040
+// LIFERAY-SERVICE-BUILDER-HASH:-684360868

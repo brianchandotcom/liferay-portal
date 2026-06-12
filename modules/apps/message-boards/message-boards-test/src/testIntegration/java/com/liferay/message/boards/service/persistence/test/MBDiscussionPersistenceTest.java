@@ -111,11 +111,7 @@ public class MBDiscussionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		MBDiscussion newMBDiscussion = _persistence.create(pk);
-
-		newMBDiscussion.setMvccVersion(RandomTestUtil.nextLong());
+		MBDiscussion newMBDiscussion = addMBDiscussion();
 
 		newMBDiscussion.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -556,8 +552,6 @@ public class MBDiscussionPersistenceTest {
 
 		MBDiscussion mbDiscussion = _persistence.create(pk);
 
-		mbDiscussion.setMvccVersion(RandomTestUtil.nextLong());
-
 		mbDiscussion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		mbDiscussion.setUuid(RandomTestUtil.randomString());
@@ -592,4 +586,4 @@ public class MBDiscussionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1826027859
+// LIFERAY-SERVICE-BUILDER-HASH:-952029459

@@ -115,11 +115,7 @@ public class DLFileEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DLFileEntry newDLFileEntry = _persistence.create(pk);
-
-		newDLFileEntry.setMvccVersion(RandomTestUtil.nextLong());
+		DLFileEntry newDLFileEntry = addDLFileEntry();
 
 		newDLFileEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -927,8 +923,6 @@ public class DLFileEntryPersistenceTest {
 
 		DLFileEntry dlFileEntry = _persistence.create(pk);
 
-		dlFileEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		dlFileEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFileEntry.setUuid(RandomTestUtil.randomString());
@@ -1005,4 +999,4 @@ public class DLFileEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1848297266
+// LIFERAY-SERVICE-BUILDER-HASH:1990051859

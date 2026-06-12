@@ -116,13 +116,8 @@ public class LayoutPageTemplateStructurePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		LayoutPageTemplateStructure newLayoutPageTemplateStructure =
-			_persistence.create(pk);
-
-		newLayoutPageTemplateStructure.setMvccVersion(
-			RandomTestUtil.nextLong());
+			addLayoutPageTemplateStructure();
 
 		newLayoutPageTemplateStructure.setCtCollectionId(
 			RandomTestUtil.nextLong());
@@ -608,8 +603,6 @@ public class LayoutPageTemplateStructurePersistenceTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_persistence.create(pk);
 
-		layoutPageTemplateStructure.setMvccVersion(RandomTestUtil.nextLong());
-
 		layoutPageTemplateStructure.setCtCollectionId(
 			RandomTestUtil.nextLong());
 
@@ -641,4 +634,4 @@ public class LayoutPageTemplateStructurePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1815507470
+// LIFERAY-SERVICE-BUILDER-HASH:855393349

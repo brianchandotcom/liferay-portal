@@ -116,11 +116,8 @@ public class CommerceTaxFixedRatePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CommerceTaxFixedRate newCommerceTaxFixedRate = _persistence.create(pk);
-
-		newCommerceTaxFixedRate.setMvccVersion(RandomTestUtil.nextLong());
+		CommerceTaxFixedRate newCommerceTaxFixedRate =
+			addCommerceTaxFixedRate();
 
 		newCommerceTaxFixedRate.setGroupId(RandomTestUtil.nextLong());
 
@@ -550,8 +547,6 @@ public class CommerceTaxFixedRatePersistenceTest {
 
 		CommerceTaxFixedRate commerceTaxFixedRate = _persistence.create(pk);
 
-		commerceTaxFixedRate.setMvccVersion(RandomTestUtil.nextLong());
-
 		commerceTaxFixedRate.setGroupId(RandomTestUtil.nextLong());
 
 		commerceTaxFixedRate.setCompanyId(RandomTestUtil.nextLong());
@@ -581,4 +576,4 @@ public class CommerceTaxFixedRatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1035003197
+// LIFERAY-SERVICE-BUILDER-HASH:-504764818

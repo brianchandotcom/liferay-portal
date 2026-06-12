@@ -111,11 +111,7 @@ public class TrashEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		TrashEntry newTrashEntry = _persistence.create(pk);
-
-		newTrashEntry.setMvccVersion(RandomTestUtil.nextLong());
+		TrashEntry newTrashEntry = addTrashEntry();
 
 		newTrashEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -526,8 +522,6 @@ public class TrashEntryPersistenceTest {
 
 		TrashEntry trashEntry = _persistence.create(pk);
 
-		trashEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		trashEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		trashEntry.setGroupId(RandomTestUtil.nextLong());
@@ -560,4 +554,4 @@ public class TrashEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:242075505
+// LIFERAY-SERVICE-BUILDER-HASH:-194174156

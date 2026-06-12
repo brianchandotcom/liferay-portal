@@ -112,11 +112,7 @@ public class CalendarBookingPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CalendarBooking newCalendarBooking = _persistence.create(pk);
-
-		newCalendarBooking.setMvccVersion(RandomTestUtil.nextLong());
+		CalendarBooking newCalendarBooking = addCalendarBooking();
 
 		newCalendarBooking.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -764,8 +760,6 @@ public class CalendarBookingPersistenceTest {
 
 		CalendarBooking calendarBooking = _persistence.create(pk);
 
-		calendarBooking.setMvccVersion(RandomTestUtil.nextLong());
-
 		calendarBooking.setCtCollectionId(RandomTestUtil.nextLong());
 
 		calendarBooking.setUuid(RandomTestUtil.randomString());
@@ -838,4 +832,4 @@ public class CalendarBookingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-911885977
+// LIFERAY-SERVICE-BUILDER-HASH:429243781

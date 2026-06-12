@@ -111,9 +111,7 @@ public class DLSyncEventPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DLSyncEvent newDLSyncEvent = _persistence.create(pk);
+		DLSyncEvent newDLSyncEvent = addDLSyncEvent();
 
 		newDLSyncEvent.setCompanyId(RandomTestUtil.nextLong());
 
@@ -481,4 +479,4 @@ public class DLSyncEventPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-22418608
+// LIFERAY-SERVICE-BUILDER-HASH:161736360

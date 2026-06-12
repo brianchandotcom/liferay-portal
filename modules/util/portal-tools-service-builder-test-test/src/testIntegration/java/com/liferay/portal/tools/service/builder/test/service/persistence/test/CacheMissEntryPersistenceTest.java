@@ -109,11 +109,7 @@ public class CacheMissEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		CacheMissEntry newCacheMissEntry = _persistence.create(pk);
-
-		newCacheMissEntry.setMvccVersion(RandomTestUtil.nextLong());
+		CacheMissEntry newCacheMissEntry = addCacheMissEntry();
 
 		newCacheMissEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -381,8 +377,6 @@ public class CacheMissEntryPersistenceTest {
 
 		CacheMissEntry cacheMissEntry = _persistence.create(pk);
 
-		cacheMissEntry.setMvccVersion(RandomTestUtil.nextLong());
-
 		cacheMissEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		_cacheMissEntries.add(_persistence.update(cacheMissEntry));
@@ -396,4 +390,4 @@ public class CacheMissEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:755990661
+// LIFERAY-SERVICE-BUILDER-HASH:1734332678

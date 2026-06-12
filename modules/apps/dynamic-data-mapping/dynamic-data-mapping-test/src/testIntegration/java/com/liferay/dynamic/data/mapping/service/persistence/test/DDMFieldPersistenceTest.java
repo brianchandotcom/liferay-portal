@@ -111,11 +111,7 @@ public class DDMFieldPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		DDMField newDDMField = _persistence.create(pk);
-
-		newDDMField.setMvccVersion(RandomTestUtil.nextLong());
+		DDMField newDDMField = addDDMField();
 
 		newDDMField.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -511,8 +507,6 @@ public class DDMFieldPersistenceTest {
 
 		DDMField ddmField = _persistence.create(pk);
 
-		ddmField.setMvccVersion(RandomTestUtil.nextLong());
-
 		ddmField.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmField.setCompanyId(RandomTestUtil.nextLong());
@@ -543,4 +537,4 @@ public class DDMFieldPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-802592699
+// LIFERAY-SERVICE-BUILDER-HASH:-15222539

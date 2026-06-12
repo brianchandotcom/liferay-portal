@@ -108,11 +108,7 @@ public class SocialActivitySetPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
-		SocialActivitySet newSocialActivitySet = _persistence.create(pk);
-
-		newSocialActivitySet.setMvccVersion(RandomTestUtil.nextLong());
+		SocialActivitySet newSocialActivitySet = addSocialActivitySet();
 
 		newSocialActivitySet.setCtCollectionId(RandomTestUtil.nextLong());
 
@@ -485,8 +481,6 @@ public class SocialActivitySetPersistenceTest {
 
 		SocialActivitySet socialActivitySet = _persistence.create(pk);
 
-		socialActivitySet.setMvccVersion(RandomTestUtil.nextLong());
-
 		socialActivitySet.setCtCollectionId(RandomTestUtil.nextLong());
 
 		socialActivitySet.setGroupId(RandomTestUtil.nextLong());
@@ -520,4 +514,4 @@ public class SocialActivitySetPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:449885524
+// LIFERAY-SERVICE-BUILDER-HASH:1300858535

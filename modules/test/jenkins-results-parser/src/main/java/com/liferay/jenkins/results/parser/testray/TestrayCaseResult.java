@@ -658,8 +658,10 @@ public class TestrayCaseResult {
 							"/o/c/caseresults", requestJSONObject.toString()));
 
 					URL testrayCaseResultURL = new URL(
-						testrayBuild.getURL() + "/case-result/" +
-							responseJSONObject.getLong("id"));
+						JenkinsResultsParserUtil.combine(
+							String.valueOf(testrayBuild.getURL()),
+							"/case-result/",
+							String.valueOf(responseJSONObject.getLong("id"))));
 
 					long end = JenkinsResultsParserUtil.getCurrentTimeMillis();
 

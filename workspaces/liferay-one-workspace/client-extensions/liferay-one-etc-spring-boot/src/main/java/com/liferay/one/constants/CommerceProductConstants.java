@@ -8,9 +8,8 @@ package com.liferay.one.constants;
 /**
  * @author Kyle Bischof
  */
-public class CommerceCatalogConstants {
+public class CommerceProductConstants {
 
-	public static final String EXTERNAL_REFERENCE_CODE_SALESFORCE_CATALOG =
-		"SALESFORCE_CATALOG";
+	public static final String TYPE_SIMPLE = "simple";
 
 }

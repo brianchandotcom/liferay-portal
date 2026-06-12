@@ -10,6 +10,11 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -33,8 +38,11 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -43,20 +51,25 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.dsr.site.initializer.constants.DSRFolderConstants;
 import com.liferay.site.dsr.site.initializer.test.util.DSRLayoutTestUtil;
 import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
+import com.liferay.site.dsr.site.initializer.thread.local.DSRRoomThreadLocal;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.After;
@@ -125,6 +138,7 @@ public class ObjectEntryModelListenerTest {
 	@Test
 	public void testOnAfterCreate() throws Exception {
 		_testOnAfterCreate();
+		_testOnAfterCreateWithDSRRoomThreadLocal();
 		_testOnAfterCreateWithDSRSellerRole();
 	}
 
@@ -157,6 +171,34 @@ public class ObjectEntryModelListenerTest {
 				_classNameLocalService.getClassNameId(
 					_objectDefinition.getClassName()),
 				objectEntry.getObjectEntryId()));
+	}
+
+	private DLFileEntry _addFileEntry(long folderId, Group group)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			return _dlFileEntryLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				group.getGroupId(), folderId, RandomTestUtil.randomString(),
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, null,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+				null, null,
+				new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+				TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
+				serviceContext);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private void _assertHasResourcePermission(
@@ -260,6 +302,99 @@ public class ObjectEntryModelListenerTest {
 		}
 	}
 
+	private void _testOnAfterCreateWithDSRRoomThreadLocal() throws Exception {
+		ObjectEntry sourceObjectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), 0, null,
+			HashMapBuilder.<String, Serializable>put(
+				"name",
+				StringUtil.toLowerCase("A" + RandomTestUtil.randomString())
+			).put(
+				"r_accountToDSRRooms_accountEntryId",
+				_accountEntry.getAccountEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Group sourceGroup = _groupLocalService.fetchGroup(
+			TestPropsValues.getCompanyId(),
+			_classNameLocalService.getClassNameId(
+				_objectDefinition.getClassName()),
+			sourceObjectEntry.getObjectEntryId());
+
+		DLFolder sourceDLFolder =
+			_dlFolderLocalService.getDLFolderByExternalReferenceCode(
+				DSRFolderConstants.EXTERNAL_REFERENCE_CODE_DSR_DOCUMENTS,
+				sourceGroup.getGroupId());
+
+		DLFileEntry dlFileEntry1 = _addFileEntry(
+			sourceDLFolder.getFolderId(), sourceGroup);
+		DLFileEntry dlFileEntry2 = _addFileEntry(
+			sourceDLFolder.getFolderId(), sourceGroup);
+
+		ObjectEntry objectEntry;
+
+		DSRRoomThreadLocal.setFileEntryIds(
+			new long[] {dlFileEntry1.getFileEntryId()});
+		DSRRoomThreadLocal.setObjectEntryId(
+			sourceObjectEntry.getObjectEntryId());
+
+		try {
+			objectEntry = _objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), 0, null,
+				HashMapBuilder.<String, Serializable>put(
+					"name",
+					StringUtil.toLowerCase("A" + RandomTestUtil.randomString())
+				).put(
+					"r_accountToDSRRooms_accountEntryId",
+					_accountEntry.getAccountEntryId()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+		finally {
+			DSRRoomThreadLocal.setFileEntryIds(new long[0]);
+			DSRRoomThreadLocal.setObjectEntryId(0);
+		}
+
+		Group group = _groupLocalService.fetchGroup(
+			TestPropsValues.getCompanyId(),
+			_classNameLocalService.getClassNameId(
+				_objectDefinition.getClassName()),
+			objectEntry.getObjectEntryId());
+
+		Assert.assertTrue(
+			_userGroupRoleLocalService.hasUserGroupRole(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				RoleConstants.SITE_OWNER));
+		Assert.assertNotEquals(sourceGroup.getGroupId(), group.getGroupId());
+
+		DSRLayoutTestUtil.assertLayouts(
+			group.getGroupId(),
+			new String[] {"Documents", "Login", "Onboarding"}, false);
+
+		DLFolder dlFolder =
+			_dlFolderLocalService.getDLFolderByExternalReferenceCode(
+				DSRFolderConstants.EXTERNAL_REFERENCE_CODE_DSR_DOCUMENTS,
+				group.getGroupId());
+
+		List<DLFileEntry> fileEntries = _dlFileEntryLocalService.getFileEntries(
+			group.getGroupId(), dlFolder.getFolderId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				fileEntries,
+				dlFileEntry ->
+					(dlFileEntry.getFileEntryId() !=
+						dlFileEntry1.getFileEntryId()) &&
+					Objects.equals(
+						dlFileEntry.getTitle(), dlFileEntry1.getTitle())));
+		Assert.assertFalse(
+			ListUtil.exists(
+				fileEntries,
+				dlFileEntry -> Objects.equals(
+					dlFileEntry.getTitle(), dlFileEntry2.getTitle())));
+	}
+
 	private void _testOnAfterCreateWithDSRSellerRole() throws Exception {
 		User user = UserTestUtil.addUser();
 
@@ -333,6 +468,12 @@ public class ObjectEntryModelListenerTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
 
 	private Group _group;
 

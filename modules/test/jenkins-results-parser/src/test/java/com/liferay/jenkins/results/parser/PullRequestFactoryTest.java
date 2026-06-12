@@ -26,7 +26,7 @@ public class PullRequestFactoryTest {
 	@Test
 	public void testNewPullRequest() {
 		BuildDatabase buildDatabase =
-			BuildDatabaseTestUtil.addPortalAcceptancePR();
+			BuildDatabaseTestUtil.addPortalAcceptancePullRequest();
 
 		BuildDatabaseUtil.setBuildDatabase(buildDatabase);
 

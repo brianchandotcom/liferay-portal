@@ -24,7 +24,7 @@ public class DefaultBuildDatabaseTest {
 	@Test
 	public void testGetJSONObject() {
 		BuildDatabase buildDatabase =
-			BuildDatabaseTestUtil.addPortalAcceptancePR(
+			BuildDatabaseTestUtil.addPortalAcceptancePullRequest(
 				BuildDatabaseArgs.withModifiedFiles(_MODIFIED_FILE),
 				BuildDatabaseArgs.withProperty(
 					_PROPERTIES_KEY, _PROPERTY_NAME, _PROPERTY_VALUE));
@@ -42,7 +42,7 @@ public class DefaultBuildDatabaseTest {
 	@Test
 	public void testGetProperties() {
 		BuildDatabase buildDatabase =
-			BuildDatabaseTestUtil.addPortalAcceptancePR(
+			BuildDatabaseTestUtil.addPortalAcceptancePullRequest(
 				BuildDatabaseArgs.withProperty(
 					_PROPERTIES_KEY, _PROPERTY_NAME, _PROPERTY_VALUE));
 
@@ -61,7 +61,7 @@ public class DefaultBuildDatabaseTest {
 	@Test
 	public void testGetPullRequest() {
 		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
-			BuildDatabaseTestUtil.addPortalAcceptancePR());
+			BuildDatabaseTestUtil.addPortalAcceptancePullRequest());
 
 		JSONObject jsonObject = reloadedBuildDatabase.getJSONObject();
 
@@ -83,7 +83,7 @@ public class DefaultBuildDatabaseTest {
 	@Test
 	public void testHasJob() {
 		BuildDatabase buildDatabase =
-			BuildDatabaseTestUtil.addPortalAcceptancePR(
+			BuildDatabaseTestUtil.addPortalAcceptancePullRequest(
 				BuildDatabaseArgs.withModifiedFiles(_MODIFIED_FILE));
 
 		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
@@ -110,7 +110,7 @@ public class DefaultBuildDatabaseTest {
 	@Test
 	public void testHasWorkspace() {
 		DefaultBuildDatabase reloadedBuildDatabase = _getReloadedBuildDatabase(
-			BuildDatabaseTestUtil.addPortalAcceptancePR());
+			BuildDatabaseTestUtil.addPortalAcceptancePullRequest());
 
 		JSONObject jsonObject = reloadedBuildDatabase.getJSONObject();
 

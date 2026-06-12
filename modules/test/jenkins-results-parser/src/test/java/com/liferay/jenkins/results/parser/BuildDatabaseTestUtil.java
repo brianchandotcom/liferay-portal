@@ -21,7 +21,7 @@ import org.json.JSONObject;
  */
 public class BuildDatabaseTestUtil {
 
-	public static BuildDatabase addPortalAcceptancePR(
+	public static BuildDatabase addPortalAcceptancePullRequest(
 		BuildDatabaseArgs.Consumer... consumers) {
 
 		BuildDatabaseArgs buildDatabaseArgs = new BuildDatabaseArgs();

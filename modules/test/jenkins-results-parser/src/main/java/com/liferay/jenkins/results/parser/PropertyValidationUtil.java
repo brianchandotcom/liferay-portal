@@ -32,7 +32,8 @@ public class PropertyValidationUtil {
 			jenkinsRepositoryDir = new File(args[0]);
 		}
 		else {
-			jenkinsRepositoryDir = resolveJenkinsEEDir();
+			jenkinsRepositoryDir =
+				JenkinsResultsParserUtil.getJenkinsRepositoryDir();
 		}
 
 		File jenkinsResultsParserSourceDir = null;
@@ -64,18 +65,6 @@ public class PropertyValidationUtil {
 		if (propertyValidationResult.hasConsumptionFailures()) {
 			System.exit(1);
 		}
-	}
-
-	public static File resolveJenkinsEEDir() {
-		String cacheDirPath = Environment.get("CACHE_DIR");
-
-		if (cacheDirPath == null) {
-			cacheDirPath = _CACHE_DIR_DEFAULT;
-		}
-
-		return new File(
-			new File(cacheDirPath),
-			JenkinsResultsParserUtil.JENKINS_REPOSITORY_NAME);
 	}
 
 	public static PropertyValidationResult validate(
@@ -387,8 +376,6 @@ public class PropertyValidationUtil {
 
 		return false;
 	}
-
-	private static final String _CACHE_DIR_DEFAULT = "/opt/dev/projects/github";
 
 	private static final Pattern _antReferencePattern = Pattern.compile(
 		"\\$\\{([^${}@]+?)\\}");

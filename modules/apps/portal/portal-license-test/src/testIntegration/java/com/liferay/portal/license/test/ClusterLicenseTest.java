@@ -103,32 +103,32 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 	@Test
 	public void testEnterpriseLicense() throws Exception {
-		TomcatNode tomcatNode3 = _startTomcatNode();
+		TomcatNode tomcatNode1 = _startTomcatNode();
 
-		tomcatNode3.syncExecute(this::_testFreeTierLicense);
+		tomcatNode1.syncExecute(this::_testFreeTierLicense);
 
-		Future<String> messageFuture3 = _testConsoleMessageListener.register(
-			tomcatNode3.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
+		Future<String> messageFuture1 = _testConsoleMessageListener.register(
+			tomcatNode1.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
-		TomcatNode tomcatNode4 = _startTomcatNode(
+		TomcatNode tomcatNode2 = _startTomcatNode(
 			_getClusterExecutable(
-				tomcatNode3.syncExecute(this::_getTimeStamp)));
+				tomcatNode1.syncExecute(this::_getTimeStamp)));
 
-		Future<String> messageFuture4 = _testConsoleMessageListener.register(
-			tomcatNode4.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
+		Future<String> messageFuture2 = _testConsoleMessageListener.register(
+			tomcatNode2.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
-		tomcatNode4.syncExecute(this::_testFreeTierLicense);
+		tomcatNode2.syncExecute(this::_testFreeTierLicense);
 
-		_testConsoleMessageListener.assertMessageListened(messageFuture3);
-		_testConsoleMessageListener.assertMessageListened(messageFuture4);
+		_testConsoleMessageListener.assertMessageListened(messageFuture1);
+		_testConsoleMessageListener.assertMessageListened(messageFuture2);
 
-		tomcatNode3.syncExecute(this::_deployEnterpriseLicense);
-		tomcatNode4.syncExecute(this::_deployEnterpriseLicense);
+		tomcatNode1.syncExecute(this::_deployEnterpriseLicense);
+		tomcatNode2.syncExecute(this::_deployEnterpriseLicense);
 
 		try {
-			tomcatNode4.wait(6L, TimeUnit.MINUTES);
+			tomcatNode2.wait(6L, TimeUnit.MINUTES);
 
 			Assert.fail();
 		}
@@ -136,31 +136,47 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			Assert.assertTrue(exception instanceof TimeoutException);
 		}
 
-		tomcatNode3.syncExecute(this::_assertPortalLicenseRegistered);
-		tomcatNode4.syncExecute(this::_assertPortalLicenseRegistered);
+		tomcatNode1.syncExecute(this::_assertPortalLicenseRegistered);
+		tomcatNode2.syncExecute(this::_assertPortalLicenseRegistered);
 	}
 
 	@Test
 	public void testFreeTierLicense() throws Exception {
-		TomcatNode tomcatNode3 = _startTomcatNode();
+		TomcatNode tomcatNode1 = _startTomcatNode();
 
-		tomcatNode3.syncExecute(this::_testFreeTierLicense);
+		tomcatNode1.syncExecute(this::_testFreeTierLicense);
 
-		Future<String> messageFuture3 = _testConsoleMessageListener.register(
-			tomcatNode3.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
+		Future<String> messageFuture1 = _testConsoleMessageListener.register(
+			tomcatNode1.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
 		TomcatNode.ClusterExecutable<Serializable> clusterExecutable =
-			_getClusterExecutable(tomcatNode3.syncExecute(this::_getTimeStamp));
+			_getClusterExecutable(tomcatNode1.syncExecute(this::_getTimeStamp));
 
+		TomcatNode tomcatNode2 = _startTomcatNode(clusterExecutable);
+		TomcatNode tomcatNode3 = _startTomcatNode(clusterExecutable);
 		TomcatNode tomcatNode4 = _startTomcatNode(clusterExecutable);
-		TomcatNode tomcatNode5 = _startTomcatNode(clusterExecutable);
-		TomcatNode tomcatNode6 = _startTomcatNode(clusterExecutable);
+
+		_testConsoleMessageListener.assertMessageListened(messageFuture1);
+
+		messageFuture1 = _testConsoleMessageListener.register(
+			tomcatNode1.getNodeId(), _CONSOLE_KEY_FINISHED_SHUTDOWN);
+
+		Future<String> messageFuture2 = _testConsoleMessageListener.register(
+			tomcatNode2.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
+			_CONSOLE_KEY_NODE_EXCEEDED);
+
+		tomcatNode2.syncExecute(this::_testFreeTierLicense);
+
+		_testConsoleMessageListener.assertMessageListened(messageFuture2);
+
+		Future<String> messageFuture3 = _testConsoleMessageListener.register(
+			tomcatNode3.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
+			_CONSOLE_KEY_NODE_EXCEEDED);
+
+		tomcatNode3.syncExecute(this::_testFreeTierLicense);
 
 		_testConsoleMessageListener.assertMessageListened(messageFuture3);
-
-		messageFuture3 = _testConsoleMessageListener.register(
-			tomcatNode3.getNodeId(), _CONSOLE_KEY_FINISHED_SHUTDOWN);
 
 		Future<String> messageFuture4 = _testConsoleMessageListener.register(
 			tomcatNode4.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
@@ -170,29 +186,13 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 		_testConsoleMessageListener.assertMessageListened(messageFuture4);
 
+		TomcatNode tomcatNode5 = _startTomcatNode(clusterExecutable);
+
 		Future<String> messageFuture5 = _testConsoleMessageListener.register(
-			tomcatNode5.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
+			tomcatNode5.getNodeId(), _CONSOLE_KEY_BEYOND_TEMPORARY_NODE,
 			_CONSOLE_KEY_NODE_EXCEEDED);
 
-		tomcatNode5.syncExecute(this::_testFreeTierLicense);
-
-		_testConsoleMessageListener.assertMessageListened(messageFuture5);
-
-		Future<String> messageFuture6 = _testConsoleMessageListener.register(
-			tomcatNode6.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE,
-			_CONSOLE_KEY_NODE_EXCEEDED);
-
-		tomcatNode6.syncExecute(this::_testFreeTierLicense);
-
-		_testConsoleMessageListener.assertMessageListened(messageFuture6);
-
-		TomcatNode tomcatNode7 = _startTomcatNode(clusterExecutable);
-
-		Future<String> messageFuture7 = _testConsoleMessageListener.register(
-			tomcatNode7.getNodeId(), _CONSOLE_KEY_BEYOND_TEMPORARY_NODE,
-			_CONSOLE_KEY_NODE_EXCEEDED);
-
-		tomcatNode7.syncExecute(
+		tomcatNode5.syncExecute(
 			() -> {
 				assertLicensePropertiesNotExisted(getPortalProductId());
 
@@ -207,14 +207,14 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 				return null;
 			});
 
-		_testConsoleMessageListener.assertMessageListened(messageFuture7);
+		_testConsoleMessageListener.assertMessageListened(messageFuture5);
 
+		tomcatNode2.wait(6L, TimeUnit.MINUTES);
+		tomcatNode3.wait(6L, TimeUnit.MINUTES);
 		tomcatNode4.wait(6L, TimeUnit.MINUTES);
 		tomcatNode5.wait(6L, TimeUnit.MINUTES);
-		tomcatNode6.wait(6L, TimeUnit.MINUTES);
-		tomcatNode7.wait(6L, TimeUnit.MINUTES);
 
-		_testConsoleMessageListener.assertMessageListened(messageFuture3);
+		_testConsoleMessageListener.assertMessageListened(messageFuture1);
 	}
 
 	@SafeVarargs

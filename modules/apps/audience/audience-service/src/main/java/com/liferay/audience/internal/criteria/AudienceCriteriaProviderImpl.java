@@ -9,9 +9,16 @@ import com.liferay.audience.constants.AudienceCriteriaKeys;
 import com.liferay.audience.criteria.AudienceCriteria;
 import com.liferay.audience.criteria.AudienceCriteriaProvider;
 import com.liferay.audience.criteria.AudienceCriteriaType;
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +38,19 @@ public class AudienceCriteriaProviderImpl implements AudienceCriteriaProvider {
 	public List<AudienceCriteriaType> getAudienceCriteriaTypes(
 		long companyId, Locale locale) {
 
-		return ListUtil.fromArray(
+		List<AudienceCriteriaType> audienceCriteriaTypes = new ArrayList<>();
+
+		audienceCriteriaTypes.add(
 			_getBrowserAttributesAudienceCriteriaType(locale));
+
+		AudienceCriteriaType customAudienceCriteriaType =
+			_getCustomAudienceCriteriaType(companyId, locale);
+
+		if (customAudienceCriteriaType != null) {
+			audienceCriteriaTypes.add(customAudienceCriteriaType);
+		}
+
+		return audienceCriteriaTypes;
 	}
 
 	private AudienceCriteriaType _getBrowserAttributesAudienceCriteriaType(
@@ -102,6 +120,37 @@ public class AudienceCriteriaProviderImpl implements AudienceCriteriaProvider {
 			_language.get(locale, "browser-attributes"));
 	}
 
+	private AudienceCriteriaType _getCustomAudienceCriteriaType(
+		long companyId, Locale locale) {
+
+		try {
+			List<CET> cets = _cetManager.getCETs(
+				companyId, null,
+				ClientExtensionEntryConstants.TYPE_AUDIENCES_CUSTOM_ATTRIBUTES,
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null);
+
+			if (cets.isEmpty()) {
+				return null;
+			}
+
+			return new AudienceCriteriaType(
+				TransformUtil.transform(
+					cets,
+					cet -> new AudienceCriteria(
+						"custom:" + cet.getExternalReferenceCode(),
+						cet.getName(locale), "cog",
+						AudienceCriteria.Type.STRING)),
+				_language.get(locale, "custom"));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
+	}
+
 	private List<AudienceCriteria.Option> _getLanguageOptions(Locale locale) {
 		return TransformUtil.transform(
 			_language.getAvailableLocales(),
@@ -121,6 +170,12 @@ public class AudienceCriteriaProviderImpl implements AudienceCriteriaProvider {
 
 		return options;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AudienceCriteriaProviderImpl.class);
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private Language _language;

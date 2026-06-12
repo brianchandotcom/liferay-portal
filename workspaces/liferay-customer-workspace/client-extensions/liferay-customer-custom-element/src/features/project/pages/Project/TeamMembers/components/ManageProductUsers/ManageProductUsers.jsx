@@ -49,7 +49,7 @@ const ManageProductUsers = ({hasPaaSExperience, koroneikiAccount, loading}) => {
 		return accountSubscriptionGroups?.filter(
 			({activationProductName}) =>
 				!activationProductName
-					.split(',')
+					?.split(',')
 					.includes(PRODUCT_TYPES.dxpCloud)
 		);
 	}, [accountSubscriptionGroups, hasPaaSExperience]);

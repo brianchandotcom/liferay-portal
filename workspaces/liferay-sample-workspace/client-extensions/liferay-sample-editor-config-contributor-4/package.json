@@ -1,0 +1,19 @@
+{
+	"dependencies": {
+		"@liferay/js-api": "link:../../../../../liferay-frontend-projects/projects/js-toolkit/packages/js-api"
+	},
+	"description": "Liferay Sample Editor Config Contributor CKEditor 5 Style",
+	"devDependencies": {
+		"serve": "^14.2.0",
+		"typescript": "^5.0.4"
+	},
+	"main": "./src/index.ts",
+	"name": "@liferay/liferay-sample-editor-config-contributor-4",
+	"scripts": {
+		"build": "esbuild src/index.ts --outdir=build --bundle --format=esm",
+		"start": "PORT=3003 serve --cors",
+		"watch": "tsc --watch"
+	},
+	"type": "module",
+	"version": "0.0.0"
+}

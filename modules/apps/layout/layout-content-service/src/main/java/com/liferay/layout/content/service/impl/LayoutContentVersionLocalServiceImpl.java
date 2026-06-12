@@ -58,9 +58,9 @@ public class LayoutContentVersionLocalServiceImpl
 
 		FeatureFlagManagerUtil.checkEnabled(layout.getCompanyId(), "LPD-10622");
 
-		_validateLayout(layout);
 		_validateExternalReferenceCode(
 			externalReferenceCode, layout.getGroupId());
+		_validateLayout(layout);
 
 		LayoutContentVersion layoutContentVersion =
 			layoutContentVersionPersistence.create(

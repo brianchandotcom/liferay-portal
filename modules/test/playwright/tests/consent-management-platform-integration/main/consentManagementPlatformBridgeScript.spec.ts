@@ -177,13 +177,13 @@ async function signInWithConsentState(
 ) {
 	await performLogout(page);
 
-	await page.context().clearCookies({name: 'LIFERAY_CONSENT_STATE'});
+	await page.context().clearCookies({name: 'CONSENT_STATE'});
 
 	if (consentState !== null) {
 		await page.context().addCookies([
 			{
 				domain: new URL(page.url()).hostname,
-				name: 'LIFERAY_CONSENT_STATE',
+				name: 'CONSENT_STATE',
 				path: '/',
 				value:
 					typeof consentState === 'string'

@@ -12,6 +12,7 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -33,7 +34,7 @@ public class AssetListFiltersUtil {
 	public static BooleanClause[] getFiltersBooleanClauses(
 		long companyId, JSONArray filtersJSONArray, Locale locale) {
 
-		if ((filtersJSONArray == null) || (filtersJSONArray.length() == 0)) {
+		if (JSONUtil.isEmpty(filtersJSONArray)) {
 			return new BooleanClause[0];
 		}
 
@@ -92,6 +93,12 @@ public class AssetListFiltersUtil {
 
 		String dbType = objectField.getDBType();
 
+		if (ObjectFieldConstants.DB_TYPE_BIG_DECIMAL.equals(dbType) ||
+			ObjectFieldConstants.DB_TYPE_DOUBLE.equals(dbType)) {
+
+			return "nestedFieldArray.value_double";
+		}
+
 		if (ObjectFieldConstants.DB_TYPE_BOOLEAN.equals(dbType)) {
 			return "nestedFieldArray.value_boolean";
 		}
@@ -100,12 +107,6 @@ public class AssetListFiltersUtil {
 			ObjectFieldConstants.DB_TYPE_DATE_TIME.equals(dbType)) {
 
 			return "nestedFieldArray.value_date";
-		}
-
-		if (ObjectFieldConstants.DB_TYPE_BIG_DECIMAL.equals(dbType) ||
-			ObjectFieldConstants.DB_TYPE_DOUBLE.equals(dbType)) {
-
-			return "nestedFieldArray.value_double";
 		}
 
 		if (ObjectFieldConstants.DB_TYPE_INTEGER.equals(dbType)) {
@@ -130,21 +131,21 @@ public class AssetListFiltersUtil {
 	}
 
 	private static NestedQuery _toNestedQuery(
-		long companyId, JSONObject filterJSONObject, Locale locale) {
+		long companyId, JSONObject jsonObject, Locale locale) {
 
-		if (filterJSONObject == null) {
+		if (jsonObject == null) {
 			return null;
 		}
 
-		String propertyName = filterJSONObject.getString("propertyName");
-		String value = filterJSONObject.getString("value");
+		String propertyName = jsonObject.getString("propertyName");
+		String value = jsonObject.getString("value");
 
 		if (Validator.isNull(propertyName) || Validator.isNull(value)) {
 			return null;
 		}
 
 		ObjectField objectField = _fetchObjectField(
-			filterJSONObject.getLong("classNameId"), companyId, propertyName);
+			jsonObject.getLong("classNameId"), companyId, propertyName);
 
 		if (objectField == null) {
 			return null;

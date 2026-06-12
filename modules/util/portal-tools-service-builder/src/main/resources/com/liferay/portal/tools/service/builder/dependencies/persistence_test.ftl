@@ -263,7 +263,7 @@ public class ${entity.name}PersistenceTest {
 		<#assign hasEagerBlob = false />
 
 		<#list entity.regularEntityColumns as entityColumn>
-			<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
+			<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name)) && !(serviceBuilder.isVersionGTE_7_4_0() && stringUtil.equals(entityColumn.name, "mvccVersion"))>
 				<#if stringUtil.equals(entityColumn.type, "Blob")>
 					String new${entityColumn.methodName}String = RandomTestUtil.randomString();
 
@@ -366,7 +366,7 @@ public class ${entity.name}PersistenceTest {
 				${entity.name} draft${entity.name} = _persistence.create(pk);
 
 				<#list entity.regularEntityColumns as entityColumn>
-					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
+					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name)) && !(serviceBuilder.isVersionGTE_7_4_0() && stringUtil.equals(entityColumn.name, "mvccVersion"))>
 						draft${entity.name}.set${entityColumn.methodName}(
 
 						<#if stringUtil.equals(entityColumn.name, "headId")>
@@ -433,7 +433,7 @@ public class ${entity.name}PersistenceTest {
 				${entity.name} ${entity.variableName}2 = _persistence.create(pk);
 
 				<#list entity.regularEntityColumns as entityColumn>
-					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
+					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name)) && !(serviceBuilder.isVersionGTE_7_4_0() && stringUtil.equals(entityColumn.name, "mvccVersion"))>
 						<#if stringUtil.equals(entityColumn.type, "Blob")>
 							String ${entityColumn.name}String = RandomTestUtil.randomString();
 
@@ -1342,7 +1342,7 @@ public class ${entity.name}PersistenceTest {
 		${entity.name} ${entity.variableName} = _persistence.create(pk);
 
 		<#list entity.regularEntityColumns as entityColumn>
-			<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
+			<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name)) && !(serviceBuilder.isVersionGTE_7_4_0() && stringUtil.equals(entityColumn.name, "mvccVersion"))>
 				<#if stringUtil.equals(entityColumn.type, "Blob")>
 					String ${entityColumn.name}String = RandomTestUtil.randomString();
 
@@ -1608,7 +1608,7 @@ public class ${entity.name}PersistenceTest {
 			${entity.name} ${entity.variableName} = _persistence.create(pk);
 
 			<#list entity.regularEntityColumns as entityColumn>
-				<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
+				<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name)) && !(serviceBuilder.isVersionGTE_7_4_0() && stringUtil.equals(entityColumn.name, "mvccVersion"))>
 					<#if entityColumn.name ="${scopeEntityColumn.name}">
 						${entity.variableName}.set${entityColumn.methodName}(${scopeEntityColumn.name});
 					<#else>

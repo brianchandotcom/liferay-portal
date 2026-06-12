@@ -81,6 +81,9 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
+		String sseEventSinkKey = GetterUtil.getString(
+			workflowContext.get("sseEventSinkKey"));
+
 		try {
 			String url = VariablesUtil.applyInputVariables(
 				executionContext, "url", kaleoNodeSettingValues);
@@ -148,19 +151,23 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 					"outputVariables", kaleoNodeSettingValues),
 				responseBody, workflowContext);
 
-			String sseEventSinkKey = GetterUtil.getString(
-				workflowContext.get("sseEventSinkKey"));
-
 			if (Validator.isNotNull(sseEventSinkKey)) {
 				SseUtil.send(
 					currentKaleoNode.getName(), "Node Completed", null,
 					sseEventSinkKey);
 			}
 		}
-		catch (PortalException portalException) {
-			throw portalException;
-		}
 		catch (Exception exception) {
+			if (Validator.isNotNull(sseEventSinkKey)) {
+				SseUtil.send(
+					currentKaleoNode.getName(), "Node Failed", null,
+					sseEventSinkKey);
+			}
+
+			if (exception instanceof PortalException) {
+				throw (PortalException)exception;
+			}
+
 			throw new PortalException(
 				StringBundler.concat(
 					"Unable to execute HTTP call node \"",
@@ -223,7 +230,13 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 
 			Object value = responseJSONObject.get(path);
 
-			if (value != null) {
+			if (value instanceof JSONArray || value instanceof JSONObject) {
+				workflowContext.put(name, value.toString());
+			}
+			else if (value instanceof Serializable) {
+				workflowContext.put(name, (Serializable)value);
+			}
+			else if (value != null) {
 				workflowContext.put(name, String.valueOf(value));
 			}
 		}

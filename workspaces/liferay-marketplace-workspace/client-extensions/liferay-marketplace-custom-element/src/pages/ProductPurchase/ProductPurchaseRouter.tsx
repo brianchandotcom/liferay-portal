@@ -33,10 +33,14 @@ import OrderSummary from './pages/App/PaymentMethod/OrderSummary/OrderSummary';
 import AIHubForm from './pages/LiferayProduct/AIHub/AIHubForm';
 import AIHubOpenBetaForm from './pages/LiferayProduct/AIHub/AIHubOpenBetaForm';
 import AIHubOrderSummary from './pages/LiferayProduct/AIHub/AIHubOrderSummary';
+import AIHubPaymentMethod from './pages/LiferayProduct/AIHub/AIHubPaymentMethod';
+import AIHubTokenOrderSummary from './pages/LiferayProduct/AIHub/AIHubTokenOrderSummary';
+import AIHubTokenSelection from './pages/LiferayProduct/AIHub/AIHubTokenSelection';
 import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm';
 import DSRLicenseKeyForm from './pages/LiferayProduct/DSRLicenseKeyForm';
 import LDPAccountSelection from './pages/LiferayProduct/LDP/LDPAccountSelection';
 import LDPProvisioning from './pages/LiferayProduct/LDP/LDPProvisioningForm';
+import ProjectSelection from './pages/LiferayProduct/Project';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
 
@@ -117,9 +121,21 @@ export const productTypeRoutes = {
 			if (solutionType === SolutionTypes.AI_HUB_OPEN_BETA) {
 				if (searchParams.has('aiHubTokens')) {
 					return [
-
-						// placeholder
-
+						{
+							element: AIHubTokenSelection,
+							index: true,
+							title: i18n.translate('tokens-amount'),
+						},
+						{
+							element: AIHubPaymentMethod,
+							path: 'payment-method',
+							title: i18n.translate('payment-method'),
+						},
+						{
+							element: AIHubTokenOrderSummary,
+							path: 'summary',
+							title: i18n.translate('summary'),
+						},
 					];
 				}
 
@@ -128,6 +144,11 @@ export const productTypeRoutes = {
 						element: ProductPurchaseAccountSelection,
 						index: true,
 						title: i18n.translate('account'),
+					},
+					{
+						element: ProjectSelection,
+						path: 'project',
+						title: i18n.translate('project'),
 					},
 					{
 						element: AIHubOpenBetaForm,

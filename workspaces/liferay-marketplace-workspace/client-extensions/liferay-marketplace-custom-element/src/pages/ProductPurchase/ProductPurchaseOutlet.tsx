@@ -17,6 +17,7 @@ import {
 import Loading from '../../components/Loading';
 import ProductPurchase from '../../components/ProductPurchase';
 import {MarketplaceDeliveryProduct} from '../../entity/MarketplaceDeliveryProduct';
+import {OrderTypes} from '../../enums/Order';
 import {SolutionTypes} from '../../enums/Product';
 import useProductPurchaseCart from '../../hooks/useProductPurchaseCart';
 import i18n from '../../i18n';
@@ -59,6 +60,7 @@ export type ProductPurchaseOutletContext = {
 	productTypeRoute: ProductPurchaseOutletProps['productTypeRoute'];
 	setAlert: React.Dispatch<ReactNode>;
 	setForm: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
+	skuRef?: null | string;
 	solutionTypeSpecificationValue: SolutionTypes;
 } & Omit<ReturnType<typeof useAccounts>, 'myUserAccount'>;
 
@@ -75,23 +77,44 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	const {pathname} = useLocation();
 	const navigate = useNavigate();
 
+	const marketplaceDeliveryProduct = useMemo(() => {
+		return new MarketplaceDeliveryProduct(product);
+	}, [product]);
+
+	const searchParams = useMemo(
+		() => new URLSearchParams(window.location.search),
+		[]
+	);
+
+	const skuRef =
+		searchParams.get('skuRef') ??
+		marketplaceDeliveryProduct.specificationValues.APP_DEFAULT_SKU_REF;
+
+	const orderTypeExternalReferenceCode = useMemo(() => {
+		if (searchParams.has('aiHubTokens')) {
+			return OrderTypes.AI_HUB_TOKEN;
+		}
+
+		if (
+			solutionTypeSpecificationValue === SolutionTypes.AI_HUB ||
+			solutionTypeSpecificationValue === SolutionTypes.AI_HUB_OPEN_BETA
+		) {
+			return OrderTypes.AI_HUB;
+		}
+
+		return ProductPurchaseApp.getOrderTypeExternalReferenceCode(product);
+	}, [searchParams, solutionTypeSpecificationValue, product]);
+
 	const productPurchaseCart = useProductPurchaseCart(
 		selectedAccount?.id,
 		product,
-
-		// Currently only the App Purchase uses the cart hook
-
-		ProductPurchaseApp.getOrderTypeExternalReferenceCode(product)
+		orderTypeExternalReferenceCode
 	);
 
 	const licenseType = useSelector(
 		productPurchaseStore,
 		(state) => state.context.licenseType
 	);
-
-	const marketplaceDeliveryProduct = useMemo(() => {
-		return new MarketplaceDeliveryProduct(product);
-	}, [product]);
 
 	const {metadata, routes = []} = productTypeRoute || {};
 
@@ -136,7 +159,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 
 			const orderId = order?.id || cart?.id;
 
-			if (licenseType === 'PAID') {
+			if (licenseType === 'PAID' && _productPurchase.calculateTax) {
 				await marketplaceOAuth2
 					.taxCalculate(orderId)
 					.catch(console.error);
@@ -186,16 +209,15 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		setAlert,
 		setForm,
 		setSelectedAccount,
+		skuRef,
 		solutionTypeSpecificationValue,
 	};
 
 	useEffect(() => {
-		if (selectedAccount?.taxId) {
-			productPurchaseStore.send({
-				taxId: selectedAccount.taxId,
-				type: 'setAccountTaxId',
-			});
-		}
+		productPurchaseStore.send({
+			taxId: selectedAccount?.taxId || '',
+			type: 'setAccountTaxId',
+		});
 	}, [selectedAccount?.taxId]);
 
 	return (
@@ -210,10 +232,10 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			<ProductPurchase.Header
 				product={product}
 				rightNode={
-					metadata.useCart ? (
+					metadata.useCart && !searchParams.has('aiHubTokens') ? (
 						<ProductPurchasePrice
 							product={product}
-							productPurchaseCart={productPurchaseCart}
+							skuRef={skuRef}
 						/>
 					) : null
 				}

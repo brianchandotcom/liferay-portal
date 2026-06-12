@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.test.rule.LazyReferencing;
@@ -28,13 +29,17 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -53,8 +58,11 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LanguageIds;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.io.File;
@@ -68,7 +76,6 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -92,18 +99,10 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 	@ClassRule
 	@Rule
-	public static final LazyReferencingTestRule lazyReferencingTestRule =
-		LazyReferencingTestRule.INSTANCE;
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-	}
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			LazyReferencingTestRule.INSTANCE, new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@After
 	@Override
@@ -129,8 +128,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 			_groupLocalService.deleteGroup(group);
 		}
-
-		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Override
@@ -170,6 +167,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	public void testGetSiteSiteInitializer() throws Exception {
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testGetSitesPage() throws Exception {
@@ -178,12 +176,22 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testGetSitesPageWithActiveAndInactiveSites();
 		_testGetSitesPageWithActiveOrSiteGroups(false, true);
 		_testGetSitesPageWithActiveOrSiteGroups(true, false);
+		_testGetSitesPageWithAssetLibraryMember();
 		_testGetSitesPageWithDepotEntry();
 		_testGetSitesPageWithExcludedExternalReferenceCodes();
 		_testGetSitesPageWithInactiveSites();
+		_testGetSitesPageWithoutAuthentication();
 		_testGetSitesPageWithoutSiteMembership();
 		_testGetSitesPageWithSearch();
-		_testGetSitesPageWithoutAuthentication();
+		_testGetSitesPageWithUser(
+			_addUserWithDepotRole(
+				_addDepotEntry(),
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR));
+		_testGetSitesPageWithUser(
+			_addUserWithDepotRole(
+				_addDepotEntry(), DepotRolesConstants.ASSET_LIBRARY_OWNER));
+		_testGetSitesPageWithUser(
+			_addUserWithRegularRole(RoleConstants.CMS_ADMINISTRATOR));
 	}
 
 	@LazyReferencing
@@ -402,6 +410,46 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		}
 	}
 
+	private DepotEntry _addDepotEntry() throws Exception {
+		return _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private User _addUserWithDepotRole(DepotEntry depotEntry, String roleName)
+		throws Exception {
+
+		User user = UserTestUtil.addUser(
+			testCompany, RandomTestUtil.randomString());
+
+		Role role = _roleLocalService.getRole(
+			testCompany.getCompanyId(), roleName);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			user.getUserId(), depotEntry.getGroupId(),
+			new long[] {role.getRoleId()});
+
+		return user;
+	}
+
+	private User _addUserWithRegularRole(String roleName) throws Exception {
+		User user = UserTestUtil.addUser(
+			testCompany, RandomTestUtil.randomString());
+
+		Role role = _roleLocalService.getRole(
+			testCompany.getCompanyId(), roleName);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
+
+		return user;
+	}
+
 	private void _assertEquals(Group group, Site site) throws Exception {
 		Assert.assertEquals(site.getActive(), group.isActive());
 		Assert.assertEquals(
@@ -429,6 +477,18 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Assert.assertEquals(
 			site.getName(), group.getName(LocaleUtil.getDefault()));
+	}
+
+	private SiteResource _getSiteResource(User user) {
+		return SiteResource.builder(
+		).authentication(
+			user.getEmailAddress(), user.getPasswordUnencrypted()
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	private void _testGetSitesPageWithActiveAndInactiveSites()
@@ -477,6 +537,24 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Assert.assertEquals(originalItems, existingItems);
 	}
 
+	private void _testGetSitesPageWithAssetLibraryMember() throws Exception {
+		SiteResource siteResource = _getSiteResource(
+			_addUserWithDepotRole(
+				_addDepotEntry(), DepotRolesConstants.ASSET_LIBRARY_MEMBER));
+
+		Page<Site> sitesPage1 = siteResource.getSitesPage(
+			null, null, null, Pagination.of(1, 1));
+
+		long totalCount = sitesPage1.getTotalCount();
+
+		_testPostSite_addSite(randomSite());
+
+		Page<Site> sitesPage2 = siteResource.getSitesPage(
+			null, null, null, Pagination.of(1, 1));
+
+		Assert.assertEquals(totalCount, sitesPage2.getTotalCount());
+	}
+
 	private void _testGetSitesPageWithDepotEntry() throws Exception {
 		Page<Site> sitesPage = siteResource.getSitesPage(
 			true, null, null, Pagination.of(1, 100));
@@ -484,8 +562,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		List<Site> originalItems = (List<Site>)sitesPage.getItems();
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
 			null, DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
@@ -624,6 +703,17 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Assert.assertEquals(items.toString(), 1, items.size());
 
 		assertEquals(postSite, items.get(0));
+	}
+
+	private void _testGetSitesPageWithUser(User user) throws Exception {
+		Site site = _testPostSite_addSite(randomSite());
+
+		SiteResource siteResource = _getSiteResource(user);
+
+		Page<Site> sitesPage = siteResource.getSitesPage(
+			null, null, null, Pagination.of(1, 500));
+
+		assertContains(site, (List<Site>)sitesPage.getItems());
 	}
 
 	private void _testGetSiteWithDollar() throws Exception {
@@ -1685,8 +1775,13 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
-	private String _originalName;
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	private final List<Site> _sites = new ArrayList<>();
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

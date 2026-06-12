@@ -297,19 +297,6 @@ public class LayoutSetPrototypeWrapper
 	}
 
 	/**
-	 * Returns the number of failed merge attempts for the layout set prototype
-	 * since its last reset or update.
-	 *
-	 * @return the number of failed merge attempts for the layout set prototype
-	 */
-	@Override
-	public int getMergeFailCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getMergeFailCount();
-	}
-
-	/**
 	 * Returns the modified date of this layout set prototype.
 	 *
 	 * @return the modified date of this layout set prototype
@@ -812,4 +799,4 @@ public class LayoutSetPrototypeWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1757389064
+// LIFERAY-SERVICE-BUILDER-HASH:-1928970414

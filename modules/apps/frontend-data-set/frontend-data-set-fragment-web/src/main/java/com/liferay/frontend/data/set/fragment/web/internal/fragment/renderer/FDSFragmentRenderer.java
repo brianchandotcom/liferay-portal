@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -40,7 +39,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.react.renderer.ComponentDescriptor;
+import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -224,11 +224,18 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					httpServletRequest);
 
 				if (!resolved) {
-					printWriter.write(
-						_getUnresolvedAPIURLHTML(
-							tokenResolutionsJSONObject, externalReferenceCode,
-							httpServletRequest,
-							fragmentRendererContext.getLocale()));
+					_reactRenderer.renderReact(
+						new ComponentDescriptor(
+							"{UnresolvedDataSetPreview} from " +
+								"frontend-data-set-fragment-web",
+							null, null, true),
+						HashMapBuilder.<String, Object>put(
+							"apiURL",
+							_fdsRenderer.getFDSAPIURL(
+								externalReferenceCode, httpServletRequest, true,
+								tokenResolutionsJSONObject)
+						).build(),
+						httpServletRequest, printWriter);
 				}
 			}
 
@@ -393,54 +400,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return mappingJSONObject.getString("classPK");
 	}
 
-	private String _getUnresolvedAPIURLHTML(
-		JSONObject tokenResolutionsJSONObject, String externalReferenceCode,
-		HttpServletRequest httpServletRequest, Locale locale) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("<div class=\"alert alert-info\" role=\"alert\">");
-		sb.append("<span class=\"alert-indicator\">");
-		sb.append("<svg class=\"lexicon-icon lexicon-icon-info-circle\">");
-		sb.append("<use href=\"");
-		sb.append(themeDisplay.getPathThemeImages());
-		sb.append("/clay/icons.svg#info-circle\" /></svg>&nbsp;</span>");
-		sb.append(_language.get(locale, "unmapped-url-help"));
-		sb.append("</div><div class=\"border p-3 rounded text-break\">");
-
-		Matcher matcher = _pattern.matcher(
-			_fdsRenderer.getFDSAPIURL(
-				externalReferenceCode, httpServletRequest, true,
-				tokenResolutionsJSONObject));
-
-		sb.append(
-			matcher.replaceAll(
-				match -> {
-					String tokenName = match.group(1);
-
-					String tokenValue = tokenResolutionsJSONObject.getString(
-						tokenName);
-
-					if (Validator.isNull(tokenValue) ||
-						(tokenResolutionsJSONObject.getJSONObject(tokenName) !=
-							null)) {
-
-						tokenValue = "{" + tokenName + "}";
-					}
-
-					return Matcher.quoteReplacement(
-						"<strong>" + HtmlUtil.escape(tokenValue) + "</strong>");
-				}));
-
-		sb.append("</div>");
-
-		return sb.toString();
-	}
-
 	private boolean _hasManualMapping(
 		JSONObject apiURLTokenMappingsJSONObject, String tokenName) {
 
@@ -578,5 +537,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ReactRenderer _reactRenderer;
 
 }

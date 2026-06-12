@@ -25,6 +25,7 @@ type Space = {
 export default function CategorizationSpaces({
 	assetLibraries,
 	checkboxText,
+	disabled = false,
 	setSelectedSpaces,
 	setSpaceChange,
 	setSpaceInputError,
@@ -32,6 +33,7 @@ export default function CategorizationSpaces({
 }: {
 	assetLibraries?: any;
 	checkboxText: string;
+	disabled?: boolean;
 	setSelectedSpaces: (value: any) => void;
 	setSpaceChange?: (value: boolean) => void;
 	setSpaceInputError: (value: string) => void;
@@ -168,7 +170,7 @@ export default function CategorizationSpaces({
 			>
 				<ClayMultiSelect
 					aria-label={Liferay.Language.get('space-selector')}
-					disabled={checkbox}
+					disabled={checkbox || disabled}
 					id="multiSelect"
 					items={selectedItems}
 					key={availableSpacesKey}
@@ -206,6 +208,7 @@ export default function CategorizationSpaces({
 			<div className="mt-2">
 				<ClayCheckbox
 					checked={checkbox}
+					disabled={disabled}
 					label={
 						checkboxText === 'tag'
 							? Liferay.Language.get(

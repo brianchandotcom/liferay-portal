@@ -4,10 +4,12 @@
  */
 
 import {IInternalRenderer, IItemsActions} from '@liferay/frontend-data-set-web';
+import React from 'react';
 
 import {IVocabulary} from '../../common/types/IVocabulary';
 import {openGenericFDSDeleteConfirmationModal} from '../../common/utils/genericOpenModalUtil';
 import MultipleSpacesRenderer from './cell_renderers/MultipleSpacesRenderer';
+import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import VocabularyRenderer from './cell_renderers/VocabularyRenderer';
 
 export default function VocabularyFDSPropsTransformer({
@@ -29,6 +31,21 @@ export default function VocabularyFDSPropsTransformer({
 				{
 					component: MultipleSpacesRenderer,
 					name: 'spaceTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: ({actions, itemData, options, value}) => (
+						<SimpleActionLinkRenderer
+							actions={actions}
+							itemData={itemData}
+							options={options}
+							systemIconLabel={Liferay.Language.get(
+								'system-vocabulary'
+							)}
+							value={value}
+						/>
+					),
+					name: 'simpleActionLinkTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 			],

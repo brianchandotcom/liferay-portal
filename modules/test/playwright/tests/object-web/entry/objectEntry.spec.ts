@@ -2820,7 +2820,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				);
 			});
 
-			await test.step('Fill the email field and save the entry', async () => {
+			await test.step('Fill the email address field and save the entry', async () => {
 				await page.getByLabel(objectFields[0].label.en_US).fill(email);
 
 				await viewObjectEntriesPage.saveObjectEntryButton.click();
@@ -2830,7 +2830,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				).toBeVisible();
 			});
 
-			await test.step('Verify the email field value is saved', async () => {
+			await test.step('Verify the email address field value is saved', async () => {
 				await viewObjectEntriesPage.backButton.click();
 
 				await viewObjectEntriesPage.frontendDatasetItems

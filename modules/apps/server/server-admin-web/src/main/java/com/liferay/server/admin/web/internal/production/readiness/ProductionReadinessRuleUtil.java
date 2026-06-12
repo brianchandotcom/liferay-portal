@@ -653,7 +653,8 @@ public class ProductionReadinessRuleUtil {
 			int maxThreads = 0;
 
 			for (ObjectName name : objectNames) {
-				int threads = (int)mBeanServer.getAttribute(name, "maxThreads");
+				int threads = GetterUtil.getInteger(
+					mBeanServer.getAttribute(name, "maxThreads"));
 
 				if (threads > maxThreads) {
 					maxThreads = threads;
@@ -749,7 +750,7 @@ public class ProductionReadinessRuleUtil {
 			return -1;
 		}
 
-		sizeStr = StringUtil.toLowerCase(sizeStr);
+		sizeStr = StringUtil.toLowerCase(sizeStr.trim());
 
 		long multiplier = 1;
 

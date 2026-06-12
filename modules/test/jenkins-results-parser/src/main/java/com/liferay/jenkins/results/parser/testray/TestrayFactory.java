@@ -302,7 +302,9 @@ public class TestrayFactory {
 				Set<JSONObject> entityJSONObjects =
 					testrayServer.requestGraphQL(
 						"builds", TestrayBuild.FIELD_NAMES,
-						"id eq '" + id + "'", null, 1, 1);
+						JenkinsResultsParserUtil.combine(
+							"id eq '", String.valueOf(id), "'"),
+						null, 1, 1);
 
 				for (JSONObject entityJSONObject : entityJSONObjects) {
 					testrayBuild = new TestrayBuild(

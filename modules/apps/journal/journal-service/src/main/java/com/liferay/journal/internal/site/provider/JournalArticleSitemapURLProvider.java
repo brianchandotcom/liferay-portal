@@ -74,7 +74,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public Date getLastModifiedDate(long companyId, long groupId)
+	public Date getModifiedDate(long companyId, long groupId)
 		throws PortalException {
 
 		List<Date> modifiedDates = _journalArticleLocalService.dslQuery(

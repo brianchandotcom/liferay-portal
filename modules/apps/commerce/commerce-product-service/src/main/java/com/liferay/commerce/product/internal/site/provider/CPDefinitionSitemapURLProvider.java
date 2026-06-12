@@ -54,7 +54,7 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public Date getLastModifiedDate(long companyId, long groupId)
+	public Date getModifiedDate(long companyId, long groupId)
 		throws PortalException {
 
 		long commerceChannelGroupId =

@@ -421,7 +421,7 @@ public class SitemapManagerImpl implements SitemapManager {
 		return document;
 	}
 
-	private Date _getAssetTypeGroupLastModifiedDate(
+	private Date _getAssetTypeGroupModifiedDate(
 			String className, long companyId, long groupId)
 		throws PortalException {
 
@@ -432,7 +432,7 @@ public class SitemapManagerImpl implements SitemapManager {
 			return null;
 		}
 
-		return sitemapURLProvider.getLastModifiedDate(companyId, groupId);
+		return sitemapURLProvider.getModifiedDate(companyId, groupId);
 	}
 
 	private int _getAssetTypePageCount(
@@ -576,19 +576,19 @@ public class SitemapManagerImpl implements SitemapManager {
 				int pageCount = _getAssetTypePageCount(
 					companyId, groupId, assetTypeKey);
 
-				Date lastModifiedDate = _getAssetTypeGroupLastModifiedDate(
+				Date modifiedDate = _getAssetTypeGroupModifiedDate(
 					className, companyId, groupId);
 
 				if (pageCount <= 1) {
 					_addSitemapElement(
-						rootElement, assetTypeKey, portalURL, lastModifiedDate,
+						rootElement, assetTypeKey, portalURL, modifiedDate,
 						groupId, 0, privateLayout);
 				}
 				else {
 					for (int page = 1; page <= pageCount; page++) {
 						_addSitemapElement(
-							rootElement, assetTypeKey, portalURL,
-							lastModifiedDate, groupId, page, privateLayout);
+							rootElement, assetTypeKey, portalURL, modifiedDate,
+							groupId, page, privateLayout);
 					}
 				}
 			}

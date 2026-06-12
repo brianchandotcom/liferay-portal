@@ -52,7 +52,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public Date getLastModifiedDate(long companyId, long groupId)
+	public Date getModifiedDate(long companyId, long groupId)
 		throws PortalException {
 
 		List<String> sitemapableLayoutTypes = new ArrayList<>();

@@ -20,8 +20,8 @@
 			"system": true
 		},
 		{
-			"externalReferenceCode": "SITEMAP_ONLY",
-			"key": "sitemapOnly",
+			"externalReferenceCode": "PUBLIC_SITEMAP_PAGES",
+			"key": "publicSitemapPages",
 			"name": "Public Sitemap Pages",
 			"system": true
 		}

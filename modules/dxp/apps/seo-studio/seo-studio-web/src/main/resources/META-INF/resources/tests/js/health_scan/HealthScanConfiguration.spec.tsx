@@ -167,7 +167,7 @@ describe('HealthScanConfiguration', () => {
 			toggleCrawler();
 
 			fireEvent.change(screen.getAllByLabelText('scope')[0], {
-				target: {value: 'sitemapOnly'},
+				target: {value: 'publicSitemapPages'},
 			});
 
 			expect(

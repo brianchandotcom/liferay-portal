@@ -62,11 +62,12 @@ public class AssetListAssetEntryProviderFiltersTest {
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "Title", "title"),
+					ObjectFieldConstants.DB_TYPE_STRING,
+					RandomTestUtil.randomString(), "title"),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-					ObjectFieldConstants.DB_TYPE_INTEGER, "Priority",
-					"priority")));
+					ObjectFieldConstants.DB_TYPE_INTEGER,
+					RandomTestUtil.randomString(), "priority")));
 	}
 
 	@FeatureFlag(enable = false, value = "LPD-74731")
@@ -155,7 +156,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 		throws Exception {
 
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			"not-a-json-array");
+			RandomTestUtil.randomString());
 
 		AssetEntryQuery assetEntryQuery =
 			_assetListAssetEntryProvider.getAssetEntryQuery(

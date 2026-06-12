@@ -62,21 +62,11 @@ export default function DataSetConfigurationFields({
 		return matches.map((token) => token.replaceAll(/[{}]/g, ''));
 	}, [apiURL]);
 
-	const [selectedTokenKey, setSelectedTokenKey] = useState(
-		tokenKeys[0] ?? ''
-	);
+	const [selectedTokenKey, setSelectedTokenKey] = useState('');
 
 	useEffect(() => {
-		if (!tokenKeys.length) {
-			if (selectedTokenKey !== '') {
-				setSelectedTokenKey('');
-			}
-
-			return;
-		}
-
-		if (!tokenKeys.includes(selectedTokenKey)) {
-			setSelectedTokenKey(tokenKeys[0]);
+		if (selectedTokenKey && !tokenKeys.includes(selectedTokenKey)) {
+			setSelectedTokenKey('');
 		}
 	}, [tokenKeys, selectedTokenKey]);
 
@@ -246,271 +236,291 @@ export default function DataSetConfigurationFields({
 				value={values.itemSelector}
 			/>
 
-			{Liferay.FeatureFlags['LPD-38564'] &&
-				!!tokenKeys.length &&
-				selectedTokenKey && (
-					<ClayPanel
-						className="w-100"
-						collapsable
-						defaultExpanded
-						displayTitle={Liferay.Language.get('url-token-mapping')}
-						displayType="unstyled"
-						showCollapseIcon
-					>
-						<ClayPanel.Body>
-							<ClayForm.Group className="align-items-center d-flex justify-content-between">
-								<label className="mb-0">
-									{Liferay.Language.get('status')}
-								</label>
+			{Liferay.FeatureFlags['LPD-38564'] && !!tokenKeys.length && (
+				<ClayPanel
+					className="w-100"
+					collapsable
+					defaultExpanded
+					displayTitle={Liferay.Language.get('url-token-mapping')}
+					displayType="unstyled"
+					showCollapseIcon
+				>
+					<ClayPanel.Body>
+						<ClayForm.Group className="align-items-center d-flex justify-content-between">
+							<label className="mb-0">
+								{Liferay.Language.get('status')}
+							</label>
 
-								<ClayLabel
-									className="text-uppercase"
-									displayType={
-										isCompleted ? 'success' : 'warning'
-									}
-								>
-									{isCompleted
-										? Liferay.Language.get('completed')
-										: Liferay.Language.get('incomplete')}
-								</ClayLabel>
-							</ClayForm.Group>
+							<ClayLabel
+								className="text-uppercase"
+								displayType={
+									isCompleted ? 'success' : 'warning'
+								}
+							>
+								{isCompleted
+									? Liferay.Language.get('completed')
+									: Liferay.Language.get('incomplete')}
+							</ClayLabel>
+						</ClayForm.Group>
 
-							<ClayForm.Group>
-								<label htmlFor={tokenSelectId}>
-									{Liferay.Language.get('token')}
-								</label>
+						<ClayForm.Group>
+							<label htmlFor={tokenSelectId}>
+								{Liferay.Language.get('token')}
+							</label>
 
-								<ClayDropDown
-									active={isTokenDropdownActive}
-									onActiveChange={setIsTokenDropdownActive}
-									trigger={
-										<ClayButton
-											className="align-items-center btn-sm d-flex justify-content-between w-100"
-											displayType="secondary"
-											id={tokenSelectId}
-										>
-											<span>{`{${selectedTokenKey}}`}</span>
+							<ClayDropDown
+								active={isTokenDropdownActive}
+								onActiveChange={setIsTokenDropdownActive}
+								trigger={
+									<ClayButton
+										className="align-items-center btn-sm d-flex justify-content-between w-100"
+										displayType="secondary"
+										id={tokenSelectId}
+									>
+										{selectedTokenKey ? (
+											<>
+												<span>{`{${selectedTokenKey}}`}</span>
 
-											<span className="align-items-center d-flex">
-												<ClayLabel
-													className="text-uppercase"
-													displayType={
-														isTokenMapped(
+												<span className="align-items-center d-flex">
+													<ClayLabel
+														className="text-uppercase"
+														displayType={
+															isTokenMapped(
+																selectedTokenKey
+															)
+																? 'success'
+																: 'info'
+														}
+													>
+														{isTokenMapped(
 															selectedTokenKey
 														)
-															? 'success'
-															: 'info'
-													}
-												>
-													{isTokenMapped(
-														selectedTokenKey
-													)
-														? Liferay.Language.get(
-																'mapped'
-															)
-														: Liferay.Language.get(
-																'unmapped'
-															)}
-												</ClayLabel>
+															? Liferay.Language.get(
+																	'mapped'
+																)
+															: Liferay.Language.get(
+																	'unmapped'
+																)}
+													</ClayLabel>
 
-												<ClayIcon
-													className="ml-2"
-													symbol="caret-bottom"
-												/>
-											</span>
-										</ClayButton>
-									}
-								>
-									<ClayDropDown.ItemList>
-										{tokenKeys.map((key) => {
-											const mapped = isTokenMapped(key);
+													<ClayIcon
+														className="ml-2"
+														symbol="caret-bottom"
+													/>
+												</span>
+											</>
+										) : (
+											<>
+												<span>
+													{Liferay.Language.get(
+														'select-an-option'
+													)}
+												</span>
 
-											return (
-												<ClayDropDown.Item
-													active={
-														key === selectedTokenKey
-													}
-													key={key}
-													onClick={() => {
-														setSelectedTokenKey(
-															key
-														);
-														setIsTokenDropdownActive(
-															false
-														);
-													}}
-												>
-													<span className="align-items-center d-flex justify-content-between">
-														<span>{`{${key}}`}</span>
+												<ClayIcon symbol="caret-bottom" />
+											</>
+										)}
+									</ClayButton>
+								}
+							>
+								<ClayDropDown.ItemList>
+									{tokenKeys.map((key) => {
+										const mapped = isTokenMapped(key);
 
-														<ClayLabel
-															className="ml-2 text-uppercase"
-															displayType={
-																mapped
-																	? 'success'
-																	: 'info'
-															}
-														>
-															{mapped
-																? Liferay.Language.get(
-																		'mapped'
-																	)
-																: Liferay.Language.get(
-																		'unmapped'
-																	)}
-														</ClayLabel>
-													</span>
-												</ClayDropDown.Item>
-											);
-										})}
-									</ClayDropDown.ItemList>
-								</ClayDropDown>
-							</ClayForm.Group>
+										return (
+											<ClayDropDown.Item
+												active={
+													key === selectedTokenKey
+												}
+												key={key}
+												onClick={() => {
+													setSelectedTokenKey(key);
+													setIsTokenDropdownActive(
+														false
+													);
+												}}
+											>
+												<span className="align-items-center d-flex justify-content-between">
+													<span>{`{${key}}`}</span>
 
-							<ClayForm.Group>
-								<label htmlFor={mappingSelectId}>
-									{Liferay.Language.get('mapping')}
-								</label>
+													<ClayLabel
+														className="ml-2 text-uppercase"
+														displayType={
+															mapped
+																? 'success'
+																: 'info'
+														}
+													>
+														{mapped
+															? Liferay.Language.get(
+																	'mapped'
+																)
+															: Liferay.Language.get(
+																	'unmapped'
+																)}
+													</ClayLabel>
+												</span>
+											</ClayDropDown.Item>
+										);
+									})}
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+						</ClayForm.Group>
 
-								<ClaySelectWithOption
-									id={mappingSelectId}
-									onChange={(event) =>
-										changeMappingMode(
-											event.target.value as EMappingMode
-										)
-									}
-									options={mappingOptions}
-									sizing="sm"
-									value={currentMappingMode}
-								/>
-							</ClayForm.Group>
-
-							{isContentMapped(currentTokenMapping) && (
-								<EntitySelectorRow
-									entity={currentTokenMapping}
-									onEntityChange={(entity) =>
-										updateTokenMapping(
-											selectedTokenKey,
-											entity
-										)
-									}
-									onEntityRemove={() =>
-										updateTokenMapping(selectedTokenKey, {
-											className: '',
-											classPK: '',
-											externalReferenceCode: '',
-											fieldId: '',
-											mappingMode: EMappingMode.CONTENT,
-										})
-									}
-								/>
-							)}
-
-							{currentMappingMode !==
-								EMappingMode.AUTO_RESOLVED && (
+						{selectedTokenKey && (
+							<>
 								<ClayForm.Group>
-									<label htmlFor={fieldInputId}>
-										{currentMappingMode ===
-										EMappingMode.LITERAL
-											? Liferay.Language.get(
-													'token-value'
-												)
-											: Liferay.Language.get('field')}
+									<label htmlFor={mappingSelectId}>
+										{Liferay.Language.get('mapping')}
 									</label>
 
-									{currentMappingMode ===
-									EMappingMode.LITERAL ? (
-										<LiteralInput
-											inputId={fieldInputId}
-											onCommit={(value) =>
-												updateTokenMapping(
-													selectedTokenKey,
-													value
-												)
-											}
-											value={
-												typeof currentTokenMapping ===
-												'string'
-													? currentTokenMapping
-													: ''
-											}
-										/>
-									) : (
-										<ClaySelectWithOption
-											disabled={
-												isContentMapped(
-													currentTokenMapping
-												) &&
-												!currentTokenMapping.className
-											}
-											id={fieldInputId}
-											onChange={(event) => {
-												if (
-													!isMappedTokenValue(
-														currentTokenMapping
-													) ||
-													isAutoResolved(
-														currentTokenMapping
-													)
-												) {
-													return;
-												}
+									<ClaySelectWithOption
+										id={mappingSelectId}
+										onChange={(event) =>
+											changeMappingMode(
+												event.target
+													.value as EMappingMode
+											)
+										}
+										options={mappingOptions}
+										sizing="sm"
+										value={currentMappingMode}
+									/>
+								</ClayForm.Group>
 
-												updateTokenMapping(
-													selectedTokenKey,
-													{
-														...currentTokenMapping,
-														fieldId: event.target
-															.value as
-															| IdentifierField
-															| '',
-													}
-												);
-											}}
-											options={[
+								{isContentMapped(currentTokenMapping) && (
+									<EntitySelectorRow
+										entity={currentTokenMapping}
+										onEntityChange={(entity) =>
+											updateTokenMapping(
+												selectedTokenKey,
+												entity
+											)
+										}
+										onEntityRemove={() =>
+											updateTokenMapping(
+												selectedTokenKey,
 												{
-													label: `-- ${Liferay.Language.get(
-														'unmapped'
-													)} --`,
-													value: '',
-												},
-												{
-													label: Liferay.Language.get(
-														'id'
-													),
-													value: 'classPK',
-												},
-												{
-													label: Liferay.Language.get(
-														'external-reference-code'
-													),
-													value: 'externalReferenceCode',
-												},
-											]}
-											sizing="sm"
-											value={
-												isMappedTokenValue(
-													currentTokenMapping
-												) &&
-												!isAutoResolved(
-													currentTokenMapping
-												) &&
-												!(
+													className: '',
+													classPK: '',
+													externalReferenceCode: '',
+													fieldId: '',
+													mappingMode:
+														EMappingMode.CONTENT,
+												}
+											)
+										}
+									/>
+								)}
+
+								{currentMappingMode !==
+									EMappingMode.AUTO_RESOLVED && (
+									<ClayForm.Group>
+										<label htmlFor={fieldInputId}>
+											{currentMappingMode ===
+											EMappingMode.LITERAL
+												? Liferay.Language.get(
+														'token-value'
+													)
+												: Liferay.Language.get('field')}
+										</label>
+
+										{currentMappingMode ===
+										EMappingMode.LITERAL ? (
+											<LiteralInput
+												inputId={fieldInputId}
+												onCommit={(value) =>
+													updateTokenMapping(
+														selectedTokenKey,
+														value
+													)
+												}
+												value={
+													typeof currentTokenMapping ===
+													'string'
+														? currentTokenMapping
+														: ''
+												}
+											/>
+										) : (
+											<ClaySelectWithOption
+												disabled={
 													isContentMapped(
 														currentTokenMapping
 													) &&
 													!currentTokenMapping.className
-												)
-													? currentTokenMapping.fieldId
-													: ''
-											}
-										/>
-									)}
-								</ClayForm.Group>
-							)}
-						</ClayPanel.Body>
-					</ClayPanel>
-				)}
+												}
+												id={fieldInputId}
+												onChange={(event) => {
+													if (
+														!isMappedTokenValue(
+															currentTokenMapping
+														) ||
+														isAutoResolved(
+															currentTokenMapping
+														)
+													) {
+														return;
+													}
+
+													updateTokenMapping(
+														selectedTokenKey,
+														{
+															...currentTokenMapping,
+															fieldId: event
+																.target
+																.value as
+																| IdentifierField
+																| '',
+														}
+													);
+												}}
+												options={[
+													{
+														label: `-- ${Liferay.Language.get(
+															'unmapped'
+														)} --`,
+														value: '',
+													},
+													{
+														label: Liferay.Language.get(
+															'id'
+														),
+														value: 'classPK',
+													},
+													{
+														label: Liferay.Language.get(
+															'external-reference-code'
+														),
+														value: 'externalReferenceCode',
+													},
+												]}
+												sizing="sm"
+												value={
+													isMappedTokenValue(
+														currentTokenMapping
+													) &&
+													!isAutoResolved(
+														currentTokenMapping
+													) &&
+													!(
+														isContentMapped(
+															currentTokenMapping
+														) &&
+														!currentTokenMapping.className
+													)
+														? currentTokenMapping.fieldId
+														: ''
+												}
+											/>
+										)}
+									</ClayForm.Group>
+								)}
+							</>
+						)}
+					</ClayPanel.Body>
+				</ClayPanel>
+			)}
 		</>
 	);
 }

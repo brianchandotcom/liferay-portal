@@ -75,6 +75,10 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().checkout(publishedFragmentEntry, version);
 	}
 
+	public static void cleanUpFragmentEntryVersions(long companyId) {
+		getService().cleanUpFragmentEntryVersions(companyId);
+	}
+
 	public static FragmentEntry copyFragmentEntry(
 			long userId, long groupId, long sourceFragmentEntryId,
 			long fragmentCollectionId,
@@ -632,4 +636,4 @@ public class FragmentEntryLocalServiceUtil {
 			FragmentEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1358558076
+// LIFERAY-SERVICE-BUILDER-HASH:2133405135

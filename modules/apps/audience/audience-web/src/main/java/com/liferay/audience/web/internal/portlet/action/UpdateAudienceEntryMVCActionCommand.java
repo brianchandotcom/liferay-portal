@@ -6,6 +6,7 @@
 package com.liferay.audience.web.internal.portlet.action;
 
 import com.liferay.audience.constants.AudiencePortletKeys;
+import com.liferay.audience.exception.AudienceEntryJSONException;
 import com.liferay.audience.exception.AudienceEntryNameException;
 import com.liferay.audience.exception.NoSuchAudienceEntryException;
 import com.liferay.audience.model.AudienceEntry;
@@ -95,7 +96,9 @@ public class UpdateAudienceEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (exception instanceof AudienceEntryNameException) {
+			else if (exception instanceof AudienceEntryJSONException ||
+					 exception instanceof AudienceEntryNameException) {
+
 				SessionErrors.add(
 					actionRequest, exception.getClass(), exception);
 

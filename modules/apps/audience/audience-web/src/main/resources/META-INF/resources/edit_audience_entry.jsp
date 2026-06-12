@@ -21,6 +21,7 @@ if (Validator.isNotNull(backURL)) {
 renderResponse.setTitle(editAudienceEntryDisplayContext.getTitle());
 %>
 
+<liferay-ui:error embed="<%= false %>" exception="<%= AudienceEntryJSONException.class %>" message="you-have-entered-invalid-json" />
 <liferay-ui:error embed="<%= false %>" exception="<%= AudienceEntryNameException.class %>" message="please-enter-a-valid-name" />
 
 <portlet:actionURL name="/audience/update_audience_entry" var="updateAudienceEntryActionURL" />

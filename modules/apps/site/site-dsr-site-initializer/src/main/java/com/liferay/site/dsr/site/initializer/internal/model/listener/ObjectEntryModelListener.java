@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -118,11 +119,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private void _copyFileEntries(long[] fileEntryIds, Group group)
 		throws Exception {
 
-		if (fileEntryIds.length == 0) {
+		if (ArrayUtil.isEmpty(fileEntryIds)) {
 			return;
 		}
-
-		long folderId;
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -133,6 +132,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			_dlFolderLocalService.fetchDLFolderByExternalReferenceCode(
 				DSRFolderConstants.EXTERNAL_REFERENCE_CODE_DSR_DOCUMENTS,
 				group.getGroupId());
+
+		long folderId;
 
 		if (dlFolder == null) {
 			Folder folder = _dlAppService.addFolder(
@@ -290,7 +291,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		long[] layoutIds = _exportImportHelper.getAllLayoutIds(
 			sourceGroup.getGroupId(), privateLayout);
 
-		if (layoutIds.length == 0) {
+		if (ArrayUtil.isEmpty(layoutIds)) {
 			return;
 		}
 
@@ -396,7 +397,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			long sourceObjectEntryId = DSRRoomThreadLocal.getObjectEntryId();
 
-			if (sourceObjectEntryId <= 0) {
+			if (sourceObjectEntryId == 0) {
 				_sites.updateLayoutSetPrototypesLinks(
 					group, layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 					false, false);
@@ -408,7 +409,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					if (sourceObjectEntryId > 0) {
+					if (sourceObjectEntryId != 0) {
 						try (AutoCloseable autoCloseable2 =
 								_layoutServiceContextHelper.
 									getServiceContextAutoCloseable(

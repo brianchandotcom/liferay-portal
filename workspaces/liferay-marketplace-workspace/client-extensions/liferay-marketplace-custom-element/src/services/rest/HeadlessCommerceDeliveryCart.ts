@@ -31,7 +31,7 @@ export default class HeadlessCommerceDeliveryCart {
 		channelId: string
 	) {
 		return fetcher<APIResponse<Cart>>(
-			`o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/account/${accountId}/carts`
+			`o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/account/${accountId}/carts?nestedFields=cartItems`
 		);
 	}
 

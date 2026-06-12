@@ -7,11 +7,11 @@ import {z} from 'zod';
 
 import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
 import zodSchema from '../../../schema/zod';
-import HeadlessAIHubBetaRequestAccess from '../../../services/rest/HeadlessAIHubBetaRequestAccess';
-import {getSiteURL} from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
 
-type AIHubOpenBetaForm = z.infer<typeof zodSchema.aiHubOpenBetaForm>;
+type AIHubOpenBetaForm = z.infer<typeof zodSchema.aiHubOpenBetaForm> & {
+	salesforceProjectId: string;
+};
 
 export class ProductPurchaseAIHubOpenBeta extends ProductPurchase {
 	private form?: AIHubOpenBetaForm;
@@ -22,43 +22,32 @@ export class ProductPurchaseAIHubOpenBeta extends ProductPurchase {
 	}
 
 	protected getCart() {
-		const baseCart = super.getCart();
-		const cartItems = super.getCartItems();
-
 		return {
-			...baseCart,
-			cartItems,
+			accountId: this.account?.id,
 			customFields: {
-				...baseCart?.customFields,
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
 					aiHubForm: this.form,
+					salesforceProjectId: this.form?.salesforceProjectId,
 				}),
 			},
 		} as Cart;
 	}
 
-	public async createOrder() {
+	public async createOrder(cart: Cart, cartOptions: any) {
 		if (!this.form) {
 			throw new Error('Form is missing.');
 		}
 
-		const cart = this.getCart();
-
-		const order = await super.createOrder(cart);
-
-		await HeadlessAIHubBetaRequestAccess.createAIHubBetaRequestAccess({
-			...this.form,
-			r_orderToAIHubBetaPrivateAccessRequest_commerceOrderId: order?.id,
-		}).catch(console.error);
-
-		return order;
+		return super.createOrder(
+			{
+				...cart,
+				...this.getCart(),
+			},
+			cartOptions
+		);
 	}
 
 	public async getNextStepsLink(cart: Cart) {
-		if (cart.orderTypeExternalReferenceCode !== OrderTypes.AI_HUB) {
-			return super.getNextStepsLink(cart);
-		}
-
-		return `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
+		return super.getPaymentNextStepsLink(cart);
 	}
 }

@@ -8,6 +8,7 @@ import {OrderTypes} from '../../../enums/Order';
 import {Liferay} from '../../../liferay/liferay';
 import CommerceSelectAccount from '../../../services/rest/CommerceSelectAccount';
 import HeadlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
+import {getSiteURL} from '../../../utils/site';
 
 export default class ProductPurchase {
 	protected orderTypeExternalReferenceCode?: OrderTypes;
@@ -31,6 +32,17 @@ export default class ProductPurchase {
 		return `/next-steps?orderId=${cart.id}`;
 	}
 
+	public async getPaymentNextStepsLink(cart: Cart) {
+		const callback = `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
+
+		const url = await HeadlessCommerceDeliveryCart.getPaymentMethodURL(
+			cart.id,
+			callback
+		);
+
+		return url || callback;
+	}
+
 	protected getCartItems(skuId = this.product.skus[0]?.id) {
 		return [
 			{
@@ -46,6 +58,10 @@ export default class ProductPurchase {
 				skuId,
 			},
 		];
+	}
+
+	public get calculateTax() {
+		return false;
 	}
 
 	protected analyticsTrack() {

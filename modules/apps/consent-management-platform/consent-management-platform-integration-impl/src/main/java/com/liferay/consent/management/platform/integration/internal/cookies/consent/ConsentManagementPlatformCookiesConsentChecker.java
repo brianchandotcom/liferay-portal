@@ -65,14 +65,14 @@ public class ConsentManagementPlatformCookiesConsentChecker
 		}
 
 		try {
-			JSONObject cookieValueJSONObject = _jsonFactory.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				URLDecoder.decode(cookieValue, StandardCharsets.UTF_8));
 
-			if (!cookieValueJSONObject.has(consentTypeName)) {
+			if (!jsonObject.has(consentTypeName)) {
 				return true;
 			}
 
-			return cookieValueJSONObject.getBoolean(consentTypeName);
+			return jsonObject.getBoolean(consentTypeName);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

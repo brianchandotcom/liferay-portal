@@ -64,17 +64,19 @@ const TabItem = ({item}) => {
 					<ClayIcon symbol={item.icon} />
 				</div>
 
-				<div className="align-items-center d-flex text">
-					<div className="mr-1 text-truncate title">{item.label}</div>
+				<div className="text">
+					<div className="align-items-center d-flex">
+						<div className="text-truncate title">{item.label}</div>
 
-					{item.data.deprecated && (
-						<div className="flex-shrink-0 ml-1">
-							<FeatureIndicator type="deprecated" />
-						</div>
-					)}
+						{item.data.deprecated && (
+							<div className="flex-shrink-0 ml-1">
+								<FeatureIndicator type="deprecated" />
+							</div>
+						)}
+					</div>
 
 					{isContent && (
-						<div className="subtitle text-break">
+						<div className="subtitle text-truncate">
 							{item.category}
 						</div>
 					)}

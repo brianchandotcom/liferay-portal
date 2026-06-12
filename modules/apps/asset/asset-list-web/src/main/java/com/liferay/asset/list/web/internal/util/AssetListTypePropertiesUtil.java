@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -60,31 +61,14 @@ public class AssetListTypePropertiesUtil {
 				continue;
 			}
 
-			JSONArray itemsJSONArray = JSONFactoryUtil.createJSONArray();
-
-			for (ObjectField objectField :
-					ObjectFieldLocalServiceUtil.getObjectFields(
-						objectDefinition.getObjectDefinitionId())) {
-
-				if (objectField.isMetadata()) {
-					continue;
-				}
-
-				String type = _toType(objectField.getBusinessType());
-
-				if (type == null) {
-					continue;
-				}
-
-				itemsJSONArray.put(
-					_toPropertyJSONObject(
-						classNameIds[i], classTypeId, locale, objectField,
-						type));
-			}
-
 			jsonArray.put(
 				JSONUtil.put(
-					"items", itemsJSONArray
+					"items",
+					_getItemsJSONArray(
+						classNameIds[i], classTypeId,
+						ObjectFieldLocalServiceUtil.getObjectFields(
+							objectDefinition.getObjectDefinitionId()),
+						locale)
 				).put(
 					"label", objectDefinition.getLabel(locale, true)
 				));
@@ -193,6 +177,29 @@ public class AssetListTypePropertiesUtil {
 			));
 	}
 
+	private static JSONArray _getItemsJSONArray(
+		long classNameId, long classTypeId, List<ObjectField> objectFields,
+		Locale locale) {
+
+		return JSONUtil.toJSONArray(
+			objectFields,
+			objectField -> {
+				if (objectField.isMetadata()) {
+					return null;
+				}
+
+				String type = _toType(objectField.getBusinessType());
+
+				if (type == null) {
+					return null;
+				}
+
+				return _toPropertyJSONObject(
+					classNameId, classTypeId, locale, objectField, type);
+			},
+			_log);
+	}
+
 	private static JSONObject _toPropertyJSONObject(
 		long classNameId, long classTypeId, Locale locale,
 		ObjectField objectField, String type) {
@@ -255,13 +262,6 @@ public class AssetListTypePropertiesUtil {
 			return "integer";
 		}
 
-		if (businessType.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
-			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-			return "picklist";
-		}
-
 		if (businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) ||
 			businessType.equals(
 				ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER) ||
@@ -269,6 +269,13 @@ public class AssetListTypePropertiesUtil {
 			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
 
 			return "text";
+		}
+
+		if (businessType.equals(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
+			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			return "picklist";
 		}
 
 		return null;

@@ -105,16 +105,9 @@ public class LayoutTypePortletImplStaticPortletsTest
 	}
 
 	private LayoutTypePortlet _reloadLayoutTypePortlet() throws Exception {
-		Class<? extends LayoutTypePortlet> clazz =
-			(Class<LayoutTypePortlet>)layoutTypePortlet.getClass();
+		Class<?> clazz = layoutTypePortlet.getClass();
 
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Class<?> anonymousInnerClass = classLoader.loadClass(
-			clazz.getName() + "$1");
-
-		ClassLoader reloadURLClassLoader = new ReloadURLClassLoader(
-			clazz, anonymousInnerClass);
+		ClassLoader reloadURLClassLoader = new ReloadURLClassLoader(clazz);
 
 		Class<? extends LayoutTypePortlet> reloadedClass =
 			(Class<? extends LayoutTypePortlet>)reloadURLClassLoader.loadClass(

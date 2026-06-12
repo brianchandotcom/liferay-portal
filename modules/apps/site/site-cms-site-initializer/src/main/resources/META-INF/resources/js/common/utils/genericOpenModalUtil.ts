@@ -60,6 +60,7 @@ const openGenericFDSDeleteConfirmationModal = (
 				},
 			},
 		],
+		center: true,
 		status: 'danger',
 		title: sub(Liferay.Language.get('delete-x'), '"' + itemName + '"'),
 	});

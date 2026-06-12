@@ -97,6 +97,7 @@ export default async function deleteStructureAction({
 					},
 				},
 			],
+			center: true,
 			size: 'md',
 			status: 'warning',
 			title: Liferay.Language.get('deletion-not-allowed'),
@@ -106,6 +107,7 @@ export default async function deleteStructureAction({
 	}
 
 	openCMSModal({
+		center: true,
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			DeleteStructureModalContent({
 				closeModal,

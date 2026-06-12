@@ -274,21 +274,21 @@ public abstract class BaseLicenseTestCase implements Serializable {
 			_ENTERPRISE_PRODUCT_NAME, _ENTERPRISE_LICENSE_TYPE);
 	}
 
-	public File deployFreeTierPortalLicense(long validityPeriod)
+	public static File deployFreeTierPortalLicense(long validityPeriod)
 		throws Exception {
 
 		return deployFreeTierPortalLicense(
 			_FREE_TIER_DOMAIN, StringPool.BLANK, validityPeriod);
 	}
 
-	public File deployFreeTierPortalLicense(String domain, long validityPeriod)
+	public static File deployFreeTierPortalLicense(String domain, long validityPeriod)
 		throws Exception {
 
 		return deployFreeTierPortalLicense(
 			domain, StringPool.BLANK, validityPeriod);
 	}
 
-	public File deployFreeTierPortalLicense(
+	public static File deployFreeTierPortalLicense(
 			String domain, String key, long validityPeriod)
 		throws Exception {
 
@@ -564,7 +564,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return localPort;
 	}
 
-	protected String getPortalProductId() {
+	protected static String getPortalProductId() {
 		return getProperty("product.id.portal");
 	}
 
@@ -613,7 +613,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		);
 	}
 
-	private File _buildBinaryFile(
+	private static File _buildBinaryFile(
 		String productId, String accountName, String productEntryName,
 		String licenseType) {
 
@@ -644,7 +644,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		return bundleSymbolicNames;
 	}
 
-	private void _registerLicense(String licenseXML) throws Exception {
+	private static void _registerLicense(String licenseXML) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_licensePackageName, LoggerTestUtil.ALL)) {
 
@@ -655,7 +655,7 @@ public abstract class BaseLicenseTestCase implements Serializable {
 		}
 	}
 
-	private void _throwLogEntriesException(
+	private static void _throwLogEntriesException(
 			LogCapture logCapture, String payload, String priority)
 		throws LogEntriesException {
 

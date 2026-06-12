@@ -31,12 +31,16 @@ const CategorySection: React.FC<Props> = ({
 			className="production-readiness-section"
 			collapsable
 			defaultExpanded
-			displayTitle={categoryLabel}
+			displayTitle={
+				<span className="font-weight-semi-bold small text-uppercase">
+					{categoryLabel}
+				</span>
+			}
 			displayType="unstyled"
 			showCollapseIcon
 		>
 			<ClayPanel.Body>
-				<ul className="list-unstyled mb-0">
+				<ul className="list-group list-group-flush mb-0">
 					{results.map((result) => (
 						<RuleRow
 							key={result.ruleKey}

@@ -6,6 +6,7 @@
 		"@clayui/label": "^3.164.0",
 		"@clayui/loading-indicator": "^3.164.0",
 		"@clayui/panel": "^3.164.0",
+		"classnames": "2.3.1",
 		"frontend-js-web": "*",
 		"react": "18.2.0",
 		"react-dom": "18.2.0"

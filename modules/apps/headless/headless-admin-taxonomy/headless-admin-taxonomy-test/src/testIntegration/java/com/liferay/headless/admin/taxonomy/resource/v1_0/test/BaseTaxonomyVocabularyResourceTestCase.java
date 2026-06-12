@@ -3978,6 +3978,14 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (taxonomyVocabulary.getSystem() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("uuid", additionalAssertFieldName)) {
 				if (taxonomyVocabulary.getUuid() == null) {
 					valid = false;
@@ -4317,6 +4325,17 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				if (!Objects.deepEquals(
 						taxonomyVocabulary1.getSiteExternalReferenceCode(),
 						taxonomyVocabulary2.getSiteExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						taxonomyVocabulary1.getSystem(),
+						taxonomyVocabulary2.getSystem())) {
 
 					return false;
 				}
@@ -4816,6 +4835,11 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("system")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("uuid")) {
 			Object object = taxonomyVocabulary.getUuid();
 
@@ -4934,6 +4958,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				siteExternalReferenceCode =
 					testGroup.getExternalReferenceCode();
 				siteId = testGroup.getGroupId();
+				system = RandomTestUtil.randomBoolean();
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -5245,4 +5270,4 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-728772649
+// LIFERAY-REST-BUILDER-HASH:-262560552

@@ -2042,11 +2042,13 @@ test(
 			'webp',
 		];
 
+		const filePrefix = getRandomString();
+
 		const allowedFileNames = allowedFileExtensions.map(
-			(extension) => `sample.${extension}`
+			(extension) => `${filePrefix}.${extension}`
 		);
 
-		const fileNames = [...allowedFileNames, 'sample.pdf'];
+		const fileNames = [...allowedFileNames, `${filePrefix}.pdf`];
 
 		for (const fileName of fileNames) {
 			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
@@ -2083,6 +2085,16 @@ test(
 			visualizationMode: EFDSVisualizationMode.CARDS,
 		});
 
+		const searchInput = page.getByRole('searchbox', {name: 'Search'});
+
+		await searchInput.fill(filePrefix);
+		await searchInput.press('Enter');
+
+		await waitForFDS({
+			page,
+			visualizationMode: EFDSVisualizationMode.CARDS,
+		});
+
 		for (const fileName of allowedFileNames) {
 			await expect(
 				page.getByLabel(fileName, {exact: true})
@@ -2090,7 +2102,7 @@ test(
 		}
 
 		await expect(
-			page.getByLabel('sample.pdf', {exact: true})
+			page.getByLabel(`${filePrefix}.pdf`, {exact: true})
 		).not.toBeVisible();
 	}
 );

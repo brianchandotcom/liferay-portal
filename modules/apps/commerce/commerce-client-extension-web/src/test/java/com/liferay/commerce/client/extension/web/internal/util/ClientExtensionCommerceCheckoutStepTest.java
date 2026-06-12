@@ -69,61 +69,10 @@ public class ClientExtensionCommerceCheckoutStepTest {
 
 	@Test
 	public void testIsActive() throws Exception {
-		_setUpHttp(HttpURLConnection.HTTP_OK, HttpURLConnection.HTTP_OK);
-
-		Assert.assertTrue(
-			_clientExtensionCommerceCheckoutStep.isActive(
-				_getHttpServletRequest(),
-				Mockito.mock(HttpServletResponse.class)));
-	}
-
-	@Test
-	public void testIsActiveWithErrorActiveResponseCode() throws Exception {
-		_setUpHttp(
-			HttpURLConnection.HTTP_BAD_REQUEST, HttpURLConnection.HTTP_OK);
-
-		Assert.assertFalse(
-			_clientExtensionCommerceCheckoutStep.isActive(
-				_getHttpServletRequest(),
-				Mockito.mock(HttpServletResponse.class)));
-	}
-
-	@Test
-	public void testIsActiveWithErrorReadyResponseCode() throws Exception {
-		_setUpHttp(
-			HttpURLConnection.HTTP_OK, HttpURLConnection.HTTP_INTERNAL_ERROR);
-
-		Assert.assertFalse(
-			_clientExtensionCommerceCheckoutStep.isActive(
-				_getHttpServletRequest(),
-				Mockito.mock(HttpServletResponse.class)));
-	}
-
-	@Test
-	public void testIsActiveWithInactiveCommerceCheckoutStepCET()
-		throws Exception {
-
-		Mockito.when(
-			_commerceCheckoutStepCET.getActive()
-		).thenReturn(
-			false
-		);
-
-		ClientExtensionCommerceCheckoutStep
-			clientExtensionCommerceCheckoutStep =
-				new ClientExtensionCommerceCheckoutStep(
-					_commerceCheckoutStepCET,
-					_commercePaymentMethodGroupRelLocalService, _http,
-					_jsonFactory, _jspRenderer, _localOAuthClient,
-					_oAuth2ApplicationLocalService, _portalCatapult,
-					_servletContext, _userService);
-
-		Assert.assertFalse(
-			clientExtensionCommerceCheckoutStep.isActive(
-				_getHttpServletRequest(),
-				Mockito.mock(HttpServletResponse.class)));
-
-		Mockito.verifyNoInteractions(_http);
+		_testIsActive();
+		_testIsActiveWithErrorActiveResponseCode();
+		_testIsActiveWithErrorReadyResponseCode();
+		_testIsActiveWithInactiveCommerceCheckoutStepCET();
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {
@@ -218,6 +167,63 @@ public class ClientExtensionCommerceCheckoutStepTest {
 		).thenReturn(
 			Mockito.mock(User.class)
 		);
+	}
+
+	private void _testIsActive() throws Exception {
+		_setUpHttp(HttpURLConnection.HTTP_OK, HttpURLConnection.HTTP_OK);
+
+		Assert.assertTrue(
+			_clientExtensionCommerceCheckoutStep.isActive(
+				_getHttpServletRequest(),
+				Mockito.mock(HttpServletResponse.class)));
+	}
+
+	private void _testIsActiveWithErrorActiveResponseCode() throws Exception {
+		_setUpHttp(
+			HttpURLConnection.HTTP_BAD_REQUEST, HttpURLConnection.HTTP_OK);
+
+		Assert.assertFalse(
+			_clientExtensionCommerceCheckoutStep.isActive(
+				_getHttpServletRequest(),
+				Mockito.mock(HttpServletResponse.class)));
+	}
+
+	private void _testIsActiveWithErrorReadyResponseCode() throws Exception {
+		_setUpHttp(
+			HttpURLConnection.HTTP_OK, HttpURLConnection.HTTP_INTERNAL_ERROR);
+
+		Assert.assertFalse(
+			_clientExtensionCommerceCheckoutStep.isActive(
+				_getHttpServletRequest(),
+				Mockito.mock(HttpServletResponse.class)));
+	}
+
+	private void _testIsActiveWithInactiveCommerceCheckoutStepCET()
+		throws Exception {
+
+		Mockito.when(
+			_commerceCheckoutStepCET.getActive()
+		).thenReturn(
+			false
+		);
+
+		Http http = Mockito.mock(Http.class);
+
+		ClientExtensionCommerceCheckoutStep
+			clientExtensionCommerceCheckoutStep =
+				new ClientExtensionCommerceCheckoutStep(
+					_commerceCheckoutStepCET,
+					_commercePaymentMethodGroupRelLocalService, http,
+					_jsonFactory, _jspRenderer, _localOAuthClient,
+					_oAuth2ApplicationLocalService, _portalCatapult,
+					_servletContext, _userService);
+
+		Assert.assertFalse(
+			clientExtensionCommerceCheckoutStep.isActive(
+				_getHttpServletRequest(),
+				Mockito.mock(HttpServletResponse.class)));
+
+		Mockito.verifyNoInteractions(http);
 	}
 
 	private ClientExtensionCommerceCheckoutStep

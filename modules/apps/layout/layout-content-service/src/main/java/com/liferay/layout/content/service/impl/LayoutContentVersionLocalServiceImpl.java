@@ -121,27 +121,27 @@ public class LayoutContentVersionLocalServiceImpl
 
 		_validateLayout(layout);
 
-		LayoutContentVersion lastLayoutContentVersion =
+		LayoutContentVersion latestLayoutContentVersion =
 			layoutContentVersionPersistence.fetchByPlid_First(
 				plid, LayoutContentVersionVersionComparator.getInstance(false));
 
 		String dataHash = DigesterUtil.digestHex(
 			DigesterUtil.SHA_256, GetterUtil.getString(data));
 
-		if ((lastLayoutContentVersion == null) ||
-			!dataHash.equals(lastLayoutContentVersion.getDataHash())) {
+		if ((latestLayoutContentVersion == null) ||
+			!dataHash.equals(latestLayoutContentVersion.getDataHash())) {
 
 			return addLayoutContentVersion(
 				externalReferenceCode, userId, data, nameMap, plid, status);
 		}
 
-		lastLayoutContentVersion.setUserId(userId);
+		latestLayoutContentVersion.setUserId(userId);
 
 		User user = _userLocalService.getUser(userId);
 
-		lastLayoutContentVersion.setUserName(user.getFullName());
+		latestLayoutContentVersion.setUserName(user.getFullName());
 
-		return layoutContentVersionPersistence.update(lastLayoutContentVersion);
+		return layoutContentVersionPersistence.update(latestLayoutContentVersion);
 	}
 
 	@Override

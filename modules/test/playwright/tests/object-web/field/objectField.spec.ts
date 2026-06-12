@@ -3634,7 +3634,7 @@ test.describe('Manage object fields default value properties', () => {
 		'normalizes email address default value to lowercase',
 		{tag: ['@LPD-70673']},
 		async ({apiHelpers, objectFieldsPage}) => {
-			const objectFieldLabel = `emailField${getRandomInt()}`;
+			const objectFieldLabel = `emailAddressField${getRandomInt()}`;
 
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({

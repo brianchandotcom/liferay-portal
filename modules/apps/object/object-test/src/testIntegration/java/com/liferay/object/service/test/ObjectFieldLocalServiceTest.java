@@ -2524,7 +2524,7 @@ public class ObjectFieldLocalServiceTest {
 				"date", "2025-12-01"
 			).build());
 
-		// Business type email
+		// Business type email address
 
 		defaultValue = "USER@LIFERAY.COM";
 

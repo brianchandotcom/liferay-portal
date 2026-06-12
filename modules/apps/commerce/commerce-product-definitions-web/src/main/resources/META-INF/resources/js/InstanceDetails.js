@@ -98,7 +98,7 @@ function handlePublish({WORKFLOW_ACTION_PUBLISH, namespace}) {
 				workflowActionInput.value = WORKFLOW_ACTION_PUBLISH;
 			}
 
-			submitForm(form);
+			form.requestSubmit();
 		};
 
 		const skuInput = document.getElementById(`${namespace}sku`);

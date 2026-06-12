@@ -234,7 +234,9 @@ public class TaxonomyVocabularyResourceImpl
 			_getSettings(
 				assetTypes, assetVocabulary.getGroupId(),
 				GetterUtil.getBoolean(
-					taxonomyVocabulary.getMultiValued(), true)),
+					taxonomyVocabulary.getMultiValued(),
+					assetVocabulary.isMultiValued()),
+				assetVocabulary.isSystem()),
 			_getVisibilityType(taxonomyVocabulary.getVisibilityType()),
 			ServiceContextBuilder.create(
 				assetVocabulary.getGroupId(), contextHttpServletRequest,
@@ -514,7 +516,8 @@ public class TaxonomyVocabularyResourceImpl
 			_getSettings(
 				taxonomyVocabulary.getAssetTypes(), siteId,
 				GetterUtil.getBoolean(
-					taxonomyVocabulary.getMultiValued(), true)),
+					taxonomyVocabulary.getMultiValued(), true),
+				GetterUtil.getBoolean(taxonomyVocabulary.getSystem())),
 			_getVisibilityType(taxonomyVocabulary.getVisibilityType()),
 			_getServiceContext(siteId, taxonomyVocabulary));
 
@@ -532,6 +535,24 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		return assetVocabulary;
+	}
+
+	private Map<String, Map<String, String>> _getActions(
+		AssetVocabulary assetVocabulary) {
+
+		Map<String, Map<String, String>> actions = new HashMap<>(
+			_dtoActionProvider.getActions(
+				assetVocabulary.getGroupId(), assetVocabulary.getVocabularyId(),
+				contextUriInfo, contextUser.getUserId()));
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				assetVocabulary.getCompanyId(), "LPD-86291") &&
+			assetVocabulary.isSystem()) {
+
+			actions.remove("delete");
+		}
+
+		return actions;
 	}
 
 	private AssetLibrary[] _getAssetLibraries(AssetVocabulary assetVocabulary) {
@@ -834,10 +855,14 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private String _getSettings(
-		AssetType[] assetTypes, long groupId, boolean multiValued) {
+		AssetType[] assetTypes, long groupId, boolean multiValued,
+		boolean system) {
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
+
+		assetVocabularySettingsHelper.setMultiValued(multiValued);
+		assetVocabularySettingsHelper.setSystem(system);
 
 		if (ArrayUtil.isEmpty(assetTypes)) {
 			return assetVocabularySettingsHelper.toString();
@@ -875,8 +900,6 @@ public class TaxonomyVocabularyResourceImpl
 
 		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			classNameIds, classTypePKs, requiredClassNameIds);
-
-		assetVocabularySettingsHelper.setMultiValued(multiValued);
 
 		return assetVocabularySettingsHelper.toString();
 	}
@@ -963,11 +986,7 @@ public class TaxonomyVocabularyResourceImpl
 
 		return new TaxonomyVocabulary() {
 			{
-				setActions(
-					() -> _dtoActionProvider.getActions(
-						assetVocabulary.getGroupId(),
-						assetVocabulary.getVocabularyId(), contextUriInfo,
-						contextUser.getUserId()));
+				setActions(() -> _getActions(assetVocabulary));
 				setAssetLibraries(() -> _getAssetLibraries(assetVocabulary));
 				setAssetLibraryKey(
 					() -> {
@@ -1029,6 +1048,7 @@ public class TaxonomyVocabularyResourceImpl
 
 						return GroupUtil.getSiteId(group);
 					});
+				setSystem(assetVocabulary::isSystem);
 				setUuid(assetVocabulary::getUuid);
 				setVisibilityType(
 					() -> {
@@ -1098,7 +1118,10 @@ public class TaxonomyVocabularyResourceImpl
 			_getSettings(
 				taxonomyVocabulary.getAssetTypes(),
 				assetVocabulary.getGroupId(),
-				taxonomyVocabulary.getMultiValued()),
+				GetterUtil.getBoolean(
+					taxonomyVocabulary.getMultiValued(),
+					assetVocabulary.isMultiValued()),
+				assetVocabulary.isSystem()),
 			_getVisibilityType(taxonomyVocabulary.getVisibilityType()),
 			ServiceContextBuilder.create(
 				assetVocabulary.getGroupId(), contextHttpServletRequest,

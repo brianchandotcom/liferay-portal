@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Site DSR Site Initializer API
 Bundle-SymbolicName: com.liferay.site.dsr.site.initializer.api
-Bundle-Version: 2.2.1
-Export-Package: com.liferay.site.dsr.site.initializer.constants
+Bundle-Version: 2.3.0
+Export-Package:\
+	com.liferay.site.dsr.site.initializer.constants,\
+	com.liferay.site.dsr.site.initializer.thread.local

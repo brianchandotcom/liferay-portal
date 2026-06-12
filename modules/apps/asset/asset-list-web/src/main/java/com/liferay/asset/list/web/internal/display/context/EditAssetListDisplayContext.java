@@ -1083,14 +1083,14 @@ public class EditAssetListDisplayContext {
 	}
 
 	public JSONArray getTypePropertiesJSONArray() {
-		long[] classNameIds = new long[0];
-		long[] classTypeIds = new long[0];
-
 		boolean anyAssetType = GetterUtil.getBoolean(
 			_unicodeProperties.getProperty(
 				"anyAssetType", Boolean.TRUE.toString()));
 		String selectionStyle = _unicodeProperties.getProperty(
 			"selectionStyle", "dynamic");
+
+		long[] classNameIds = new long[0];
+		long[] classTypeIds = new long[0];
 
 		if (!anyAssetType && !selectionStyle.equals("manual")) {
 			classNameIds = getClassNameIds();

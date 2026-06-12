@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,14 +31,29 @@ public class VariablesUtil {
 		ExecutionContext executionContext, String kaleoNodeSettingName,
 		Map<String, String> kaleoNodeSettingValues) {
 
+		return applyInputVariables(
+			executionContext, kaleoNodeSettingName, kaleoNodeSettingValues,
+			false);
+	}
+
+	public static String applyInputVariables(
+		ExecutionContext executionContext, String kaleoNodeSettingName,
+		Map<String, String> kaleoNodeSettingValues, boolean escapeJSON) {
+
 		Map<String, String> inputVariables = _getInputVariables(
 			kaleoNodeSettingValues, executionContext.getWorkflowContext());
 
 		String value = kaleoNodeSettingValues.get(kaleoNodeSettingName);
 
 		for (Map.Entry<String, String> entry : inputVariables.entrySet()) {
+			String variableValue = entry.getValue();
+
+			if (escapeJSON) {
+				variableValue = _escapeJSON(variableValue);
+			}
+
 			value = StringUtil.replace(
-				value, "{{" + entry.getKey() + "}}", entry.getValue());
+				value, "{{" + entry.getKey() + "}}", variableValue);
 		}
 
 		return value;
@@ -63,6 +79,18 @@ public class VariablesUtil {
 
 			return null;
 		}
+	}
+
+	private static String _escapeJSON(String value) {
+		return StringUtil.replace(
+			value,
+			new String[] {
+				StringPool.BACK_SLASH, StringPool.QUOTE, StringPool.NEW_LINE,
+				StringPool.RETURN, StringPool.TAB
+			},
+			new String[] {
+				StringPool.DOUBLE_BACK_SLASH, "\\\"", "\\n", "\\r", "\\t"
+			});
 	}
 
 	private static Map<String, String> _getInputVariables(

@@ -100,7 +100,6 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
@@ -195,40 +194,44 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		StreamUtil.cleanUp(gzipOutputStream);
 
-		if (!skipUpload) {
-			_notify(
-				"Uploading resources " + resourceName,
-				notificationUnsafeConsumer);
+		try {
+			if (!skipUpload) {
+				_notify(
+					"Uploading resources " + resourceName,
+					notificationUnsafeConsumer);
 
-			_upload(
-				companyId, "gzip", tempFile, resourceLastModifiedDate,
-				resourceName);
+				_upload(
+					companyId, "gzip", tempFile, resourceLastModifiedDate,
+					resourceName);
 
-			_notify(
-				"Completed uploading resources " + resourceName,
-				notificationUnsafeConsumer);
-		}
-		else {
-			_notify(
-				"Skip uploading resource " + resourceName,
-				notificationUnsafeConsumer);
-		}
-
-		for (BatchEngineExportTask batchEngineExportTask :
-				batchEngineExportTasks) {
-
-			_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
-				batchEngineExportTask);
-		}
-
-		boolean deleted = tempFile.delete();
-
-		if (_log.isDebugEnabled()) {
-			if (deleted) {
-				_log.debug("Deleted temp file: " + tempFile.getName());
+				_notify(
+					"Completed uploading resources " + resourceName,
+					notificationUnsafeConsumer);
 			}
 			else {
-				_log.debug("Unable to delete temp file: " + tempFile.getName());
+				_notify(
+					"Skip uploading resource " + resourceName,
+					notificationUnsafeConsumer);
+			}
+
+			for (BatchEngineExportTask batchEngineExportTask :
+					batchEngineExportTasks) {
+
+				_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
+					batchEngineExportTask);
+			}
+		}
+		finally {
+			boolean deleted = tempFile.delete();
+
+			if (_log.isDebugEnabled()) {
+				if (deleted) {
+					_log.debug("Deleted temp file: " + tempFile.getName());
+				}
+				else {
+					_log.debug(
+						"Unable to delete temp file: " + tempFile.getName());
+				}
 			}
 		}
 	}
@@ -306,33 +309,39 @@ public class AnalyticsBatchExportImportManagerImpl
 
 			File tempFile = FileUtil.createTempFile();
 
-			try (GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
-					new FileOutputStream(tempFile));
-				ZipInputStream zipInputStream = new ZipInputStream(
-					_batchEngineExportTaskLocalService.openContentInputStream(
-						batchEngineExportTask.getBatchEngineExportTaskId()))) {
+			try {
+				try (GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
+						new FileOutputStream(tempFile));
+					ZipInputStream zipInputStream = new ZipInputStream(
+						_batchEngineExportTaskLocalService.
+							openContentInputStream(
+								batchEngineExportTask.
+									getBatchEngineExportTaskId()))) {
 
-				zipInputStream.getNextEntry();
+					zipInputStream.getNextEntry();
 
-				StreamUtil.transfer(zipInputStream, gzipOutputStream, false);
-			}
-
-			_upload(
-				companyId, "gzip", tempFile, resourceLastModifiedDate,
-				resourceName);
-
-			_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
-				batchEngineExportTask);
-
-			boolean deleted = tempFile.delete();
-
-			if (_log.isDebugEnabled()) {
-				if (deleted) {
-					_log.debug("Deleted temp file " + tempFile.getName());
+					StreamUtil.transfer(
+						zipInputStream, gzipOutputStream, false);
 				}
-				else {
-					_log.debug(
-						"Unable to delete temp file " + tempFile.getName());
+
+				_upload(
+					companyId, "gzip", tempFile, resourceLastModifiedDate,
+					resourceName);
+
+				_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
+					batchEngineExportTask);
+			}
+			finally {
+				boolean deleted = tempFile.delete();
+
+				if (_log.isDebugEnabled()) {
+					if (deleted) {
+						_log.debug("Deleted temp file " + tempFile.getName());
+					}
+					else {
+						_log.debug(
+							"Unable to delete temp file " + tempFile.getName());
+					}
 				}
 			}
 
@@ -492,9 +501,14 @@ public class AnalyticsBatchExportImportManagerImpl
 
 			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
 
-			header = "\r\n--" + boundary + "--\r\n";
+			header = StringBundler.concat("\r\n--", boundary, "--\r\n");
 
 			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
+		}
+		catch (Exception exception) {
+			tempFile.delete();
+
+			throw exception;
 		}
 
 		return tempFile;
@@ -820,16 +834,15 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		httpClientBuilder.useSystemProperties();
 
-		RequestConfig.Builder requestConfig = RequestConfig.custom();
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
-		requestConfig.setConnectTimeout(30_000);
-		requestConfig.setConnectionRequestTimeout(60_000);
-		requestConfig.setSocketTimeout(600_000);
+		requestConfigBuilder.setConnectionRequestTimeout(60000);
+		requestConfigBuilder.setConnectTimeout(30000);
+		requestConfigBuilder.setSocketTimeout(600000);
 
-		httpClientBuilder.setDefaultRequestConfig(requestConfig.build());
+		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
 
-		httpClientBuilder.setRetryHandler(
-			new DefaultHttpRequestRetryHandler(3, true));
+		httpClientBuilder.disableAutomaticRetries();
 
 		return httpClientBuilder.build();
 	}
@@ -856,16 +869,6 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 
 		return true;
-	}
-
-	private boolean _isRetryableStatus(int statusCode) {
-		if ((statusCode >= 500) || (statusCode == 400) || (statusCode == 408) ||
-			(statusCode == 429)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _notify(
@@ -986,18 +989,23 @@ public class AnalyticsBatchExportImportManagerImpl
 				companyId);
 
 		int lastStatusCode = -1;
+		int retryCount = 3;
+		long[] retryDelays = {5000, 15000};
 
-		for (int attempt = 0; attempt < _RETRY_COUNT; attempt++) {
+		for (int attempt = 0; attempt < retryCount; attempt++) {
 			if (attempt > 0) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
 							"Retrying upload of ", resourceName, " (attempt ",
-							attempt + 1, "/", _RETRY_COUNT, ")"));
+							attempt + 1, "/", retryCount, ")"));
 				}
 
+				int retryDelayIndex = Math.min(
+					attempt - 1, retryDelays.length - 1);
+
 				try {
-					Thread.sleep(_RETRY_DELAYS[attempt]);
+					Thread.sleep(retryDelays[retryDelayIndex]);
 				}
 				catch (InterruptedException interruptedException) {
 					Thread thread = Thread.currentThread();
@@ -1025,6 +1033,13 @@ public class AnalyticsBatchExportImportManagerImpl
 						"/dxp-batch-entities");
 
 				httpPost.setHeader(
+					HttpHeaders.CONTENT_ENCODING, contentEncoding);
+				httpPost.setHeader(
+					HttpHeaders.CONTENT_TYPE,
+					StringBundler.concat(
+						ContentTypes.MULTIPART_FORM_DATA, "; boundary=",
+						boundary));
+				httpPost.setHeader(
 					"OSB-Asah-Data-Source-ID",
 					analyticsConfiguration.liferayAnalyticsDataSourceId());
 				httpPost.setHeader(
@@ -1034,12 +1049,6 @@ public class AnalyticsBatchExportImportManagerImpl
 				httpPost.setHeader(
 					"OSB-Asah-Project-ID",
 					analyticsConfiguration.liferayAnalyticsProjectId());
-				httpPost.setHeader(
-					HttpHeaders.CONTENT_ENCODING, contentEncoding);
-				httpPost.setHeader(
-					HttpHeaders.CONTENT_TYPE,
-					ContentTypes.MULTIPART_FORM_DATA + "; boundary=" +
-						boundary);
 
 				httpPost.setEntity(new FileEntity(multipartFile));
 
@@ -1103,7 +1112,9 @@ public class AnalyticsBatchExportImportManagerImpl
 								responseBody));
 					}
 
-					if (!_isRetryableStatus(statusCode)) {
+					if ((statusCode != 400) && (statusCode != 408) &&
+						(statusCode != 429) && (statusCode < 500)) {
+
 						throw new RuntimeException(
 							"Upload failed with HTTP response code: " +
 								statusCode);
@@ -1111,6 +1122,13 @@ public class AnalyticsBatchExportImportManagerImpl
 				}
 			}
 			catch (IOException ioException) {
+				if (attempt == (retryCount - 1)) {
+					throw new RuntimeException(
+						StringBundler.concat(
+							"Upload failed after ", retryCount, " attempts"),
+						ioException);
+				}
+
 				_log.error(
 					StringBundler.concat(
 						"Transport failure on upload attempt ", attempt + 1,
@@ -1131,13 +1149,9 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		throw new RuntimeException(
 			StringBundler.concat(
-				"Upload failed after ", _RETRY_COUNT,
+				"Upload failed after ", retryCount,
 				" attempts with HTTP response code: ", lastStatusCode));
 	}
-
-	private static final int _RETRY_COUNT = 3;
-
-	private static final long[] _RETRY_DELAYS = {0, 5_000, 15_000};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsBatchExportImportManagerImpl.class);

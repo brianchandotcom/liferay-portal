@@ -8232,7 +8232,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="true" name="delete.liferay.home" />
 		<attribute default="" name="testable.portal.started.marker.file" />
 		<attribute default="false" name="skip.wait.server.startup" />
-		<attribute default="false" name="skip.wait.server.startup.url" />
 
 		<sequential>
 			<lstopwatch action="start" name="start.app.server.@{app.server.bundle.index}" />
@@ -8241,7 +8240,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				app.server.bundle.index="@{app.server.bundle.index}"
 				delete.liferay.home="@{delete.liferay.home}"
 				skip.wait.server.startup="@{skip.wait.server.startup}"
-				skip.wait.server.startup.url="@{skip.wait.server.startup.url}"
 				test.docker.environment="${test.docker.environment}"
 				testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 			/>
@@ -8267,7 +8265,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="true" name="delete.liferay.home" />
 		<attribute default="host" name="docker.network.name" />
 		<attribute default="false" name="skip.wait.server.startup" />
-		<attribute default="false" name="skip.wait.server.startup.url" />
 		<attribute default="false" name="test.docker.environment" />
 		<attribute default="" name="testable.portal.started.marker.file" />
 
@@ -8337,7 +8334,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						<if>
 							<equals arg1="@{skip.wait.server.startup}" arg2="false" />
 							<then>
-								<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" skip.wait.server.startup.url="@{skip.wait.server.startup.url}" />
+								<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
 							</then>
 						</if>
 
@@ -9977,72 +9974,66 @@ war.path=${app.server.portal.dir}/</echo>
 	<macrodef name="wait-for-app-server">
 		<attribute name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
-		<attribute default="false" name="skip.wait.server.startup.url" />
 
 		<sequential>
 			<wait-for-app-server-log />
 
+			<local name="app.server.waiting.url" />
+
+			<get-operating-system-property property.name="operating.system.docker.image" />
+
+			<get-testcase-property property.name="portal.context" />
+			<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
+
+			<get-testcase-property property.name="portal.proxy.path" />
+			<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
+
 			<if>
-				<equals arg1="@{skip.wait.server.startup.url}" arg2="false" />
+				<isset property="portal.context" />
 				<then>
-					<local name="app.server.waiting.url" />
+					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
+				</then>
+				<elseif>
+					<isset property="portal.proxy.path" />
+					<then>
+						<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/${portal.proxy.path}/web/guest" />
+					</then>
+				</elseif>
+				<elseif>
+					<isset property="operating.system.docker.image" />
+					<then>
+						<get-operating-system-property property.name="operating.system.host" />
 
-					<get-operating-system-property property.name="operating.system.docker.image" />
+						<property name="app.server.waiting.url" value="http://${operating.system.host}:${test.app.server.leading.port.number}080/web/guest" />
+					</then>
+				</elseif>
+				<else>
+					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+				</else>
+			</if>
 
-					<get-testcase-property property.name="portal.context" />
-					<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
+			<local name="app.server.waiting.timeout" />
 
-					<get-testcase-property property.name="portal.proxy.path" />
-					<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
+			<echo>Waiting for ${app.server.waiting.url} to load</echo>
 
-					<if>
-						<isset property="portal.context" />
-						<then>
-							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
-						</then>
-						<elseif>
-							<isset property="portal.proxy.path" />
-							<then>
-								<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/${portal.proxy.path}/web/guest" />
-							</then>
-						</elseif>
-						<elseif>
-							<isset property="operating.system.docker.image" />
-							<then>
-								<get-operating-system-property property.name="operating.system.host" />
+			<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second" timeoutproperty="app.server.waiting.timeout">
+				<http url="${app.server.waiting.url}" />
+			</waitfor>
 
-								<property name="app.server.waiting.url" value="http://${operating.system.host}:${test.app.server.leading.port.number}080/web/guest" />
-							</then>
-						</elseif>
-						<else>
-							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
-						</else>
-					</if>
+			<if>
+				<isset property="app.server.waiting.timeout" />
+				<then>
+					<antcall target="print-jstack-logs">
+						<param name="process.name" value="Bootstrap" />
+					</antcall>
 
-					<local name="app.server.waiting.timeout" />
+					<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
 
-					<echo>Waiting for ${app.server.waiting.url} to load</echo>
-
-					<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second" timeoutproperty="app.server.waiting.timeout">
-						<http url="${app.server.waiting.url}" />
-					</waitfor>
-
-					<if>
-						<isset property="app.server.waiting.timeout" />
-						<then>
-							<antcall target="print-jstack-logs">
-								<param name="process.name" value="Bootstrap" />
-							</antcall>
-
-							<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
-
-							<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}" />
-						</then>
-					</if>
-
-					<echo>${app.server.waiting.url} has loaded</echo>
+					<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}" />
 				</then>
 			</if>
+
+			<echo>${app.server.waiting.url} has loaded</echo>
 
 			<if>
 				<and>
@@ -17731,19 +17722,9 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 			</then>
 		</if>
 
-		<if>
-			<not>
-				<isset property="skip.wait.server.startup.url" />
-			</not>
-			<then>
-				<var name="skip.wait.server.startup.url" value="false" />
-			</then>
-		</if>
-
 		<start-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
 			skip.wait.server.startup="${skip.wait.server.startup}"
-			skip.wait.server.startup.url="${skip.wait.server.startup.url}"
 			testable.portal.started.marker.file="${testable.portal.started.marker.file}"
 		/>
 	</target>

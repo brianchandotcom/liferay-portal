@@ -122,11 +122,11 @@ public class SitemapManagerImpl implements SitemapManager {
 		locElement.addText(encodeXML(url));
 
 		if (modifiedDate != null) {
-			Element modifiedDateElement = urlElement.addElement("lastmod");
+			Element lastmodElement = urlElement.addElement("lastmod");
 
 			DateFormat iso8601DateFormat = DateUtil.getISO8601Format();
 
-			modifiedDateElement.addText(iso8601DateFormat.format(modifiedDate));
+			lastmodElement.addText(iso8601DateFormat.format(modifiedDate));
 		}
 
 		if (typeSettingsUnicodeProperties == null) {
@@ -206,7 +206,7 @@ public class SitemapManagerImpl implements SitemapManager {
 			alternateURLElement.addAttribute("href", canonicalURL);
 		}
 
-		if (element.attributeValue(_ATTRIBUTE_PAGINATION_PAGE) == null) {
+		if (element.attributeValue(_ATTRIBUTE_CURRENT_PAGE) == null) {
 			_removeOldestElement(element, urlElement);
 
 			return;
@@ -260,25 +260,26 @@ public class SitemapManagerImpl implements SitemapManager {
 
 	@Override
 	public String getSitemap(
-			String assetType, String layoutUuid, long groupId,
+			String assetTypeClassName, String layoutUuid, long groupId,
 			boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		return getSitemap(
-			assetType, layoutUuid, groupId, 1, privateLayout, themeDisplay);
+			assetTypeClassName, layoutUuid, groupId, 1, privateLayout,
+			themeDisplay);
 	}
 
 	@Override
 	public String getSitemap(
-			String assetType, String layoutUuid, long groupId, int page,
-			boolean privateLayout, ThemeDisplay themeDisplay)
+			String assetTypeClassName, String layoutUuid, long groupId,
+			int page, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		if (Validator.isNotNull(assetType)) {
+		if (Validator.isNotNull(assetTypeClassName)) {
 			long companyId = themeDisplay.getCompanyId();
 
 			SitemapURLProvider sitemapURLProvider =
-				_serviceTrackerMap.getService(assetType);
+				_serviceTrackerMap.getService(assetTypeClassName);
 
 			if ((sitemapURLProvider == null) ||
 				!_sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
@@ -292,7 +293,7 @@ public class SitemapManagerImpl implements SitemapManager {
 			}
 
 			return _getAssetTypeSitemap(
-				assetType, groupId, page, privateLayout, themeDisplay);
+				assetTypeClassName, groupId, page, privateLayout, themeDisplay);
 		}
 
 		if (Validator.isNull(layoutUuid) &&
@@ -392,11 +393,11 @@ public class SitemapManagerImpl implements SitemapManager {
 		locElement.addText(sb.toString());
 
 		if (modifiedDate != null) {
-			Element modifiedDateElement = sitemapElement.addElement("lastmod");
+			Element lastmodElement = sitemapElement.addElement("lastmod");
 
 			DateFormat iso8601DateFormat = DateUtil.getISO8601Format();
 
-			modifiedDateElement.addText(iso8601DateFormat.format(modifiedDate));
+			lastmodElement.addText(iso8601DateFormat.format(modifiedDate));
 		}
 	}
 
@@ -421,7 +422,7 @@ public class SitemapManagerImpl implements SitemapManager {
 		return document;
 	}
 
-	private Date _getAssetTypeGroupLastModifiedDate(
+	private Date _getAssetTypeModifiedDate(
 			String className, long companyId, long groupId)
 		throws PortalException {
 
@@ -432,7 +433,7 @@ public class SitemapManagerImpl implements SitemapManager {
 			return null;
 		}
 
-		return sitemapURLProvider.getLastModifiedDate(companyId, groupId);
+		return sitemapURLProvider.getModifiedDate(companyId, groupId);
 	}
 
 	private int _getAssetTypePageCount(
@@ -573,22 +574,23 @@ public class SitemapManagerImpl implements SitemapManager {
 						className, groupId, privateLayout, themeDisplay);
 				}
 
-				Date lastModifiedDate = _getAssetTypeGroupLastModifiedDate(
+				Date assetTypeModifiedDate = _getAssetTypeModifiedDate(
 					className, companyId, groupId);
 
-				int pageCount = _getAssetTypePageCount(
+				int assetTypePageCount = _getAssetTypePageCount(
 					companyId, groupId, assetTypeKey);
 
-				if (pageCount <= 1) {
+				if (assetTypePageCount <= 1) {
 					_addSitemapElement(
-						rootElement, assetTypeKey, portalURL, lastModifiedDate,
-						groupId, 0, privateLayout);
+						rootElement, assetTypeKey, portalURL,
+						assetTypeModifiedDate, groupId, 0, privateLayout);
 				}
 				else {
-					for (int page = 1; page <= pageCount; page++) {
+					for (int page = 1; page <= assetTypePageCount; page++) {
 						_addSitemapElement(
 							rootElement, assetTypeKey, portalURL,
-							lastModifiedDate, groupId, page, privateLayout);
+							assetTypeModifiedDate, groupId, page,
+							privateLayout);
 					}
 				}
 			}
@@ -754,14 +756,14 @@ public class SitemapManagerImpl implements SitemapManager {
 		rootElement.remove(newElement);
 
 		String assetTypeKey = rootElement.attributeValue(
-			_ATTRIBUTE_PAGINATION_ASSET_TYPE_KEY);
+			_ATTRIBUTE_ASSET_TYPE_KEY);
 
 		long companyId = GetterUtil.getLong(
-			rootElement.attributeValue(_ATTRIBUTE_PAGINATION_COMPANY_ID));
+			rootElement.attributeValue(_ATTRIBUTE_COMPANY_ID));
 		int currentPage = GetterUtil.getInteger(
-			rootElement.attributeValue(_ATTRIBUTE_PAGINATION_PAGE));
+			rootElement.attributeValue(_ATTRIBUTE_CURRENT_PAGE));
 		long groupId = GetterUtil.getLong(
-			rootElement.attributeValue(_ATTRIBUTE_PAGINATION_GROUP_ID));
+			rootElement.attributeValue(_ATTRIBUTE_GROUP_ID));
 
 		_storeCurrentPage(
 			rootElement, companyId, groupId, assetTypeKey, currentPage);
@@ -769,11 +771,10 @@ public class SitemapManagerImpl implements SitemapManager {
 		rootElement.clearContent();
 
 		_initEntriesAndSize(rootElement);
-		_initPaginationAttributes(
-			rootElement, companyId, groupId, assetTypeKey);
+		_initPagination(rootElement, companyId, groupId, assetTypeKey);
 
 		rootElement.addAttribute(
-			_ATTRIBUTE_PAGINATION_PAGE, String.valueOf(currentPage + 1));
+			_ATTRIBUTE_CURRENT_PAGE, String.valueOf(currentPage + 1));
 
 		rootElement.add(newElement);
 
@@ -793,17 +794,15 @@ public class SitemapManagerImpl implements SitemapManager {
 		rootElement.addAttribute("size", String.valueOf(size));
 	}
 
-	private void _initPaginationAttributes(
+	private void _initPagination(
 		Element rootElement, long companyId, long groupId,
 		String assetTypeKey) {
 
+		rootElement.addAttribute(_ATTRIBUTE_ASSET_TYPE_KEY, assetTypeKey);
 		rootElement.addAttribute(
-			_ATTRIBUTE_PAGINATION_ASSET_TYPE_KEY, assetTypeKey);
-		rootElement.addAttribute(
-			_ATTRIBUTE_PAGINATION_COMPANY_ID, String.valueOf(companyId));
-		rootElement.addAttribute(
-			_ATTRIBUTE_PAGINATION_GROUP_ID, String.valueOf(groupId));
-		rootElement.addAttribute(_ATTRIBUTE_PAGINATION_PAGE, "1");
+			_ATTRIBUTE_COMPANY_ID, String.valueOf(companyId));
+		rootElement.addAttribute(_ATTRIBUTE_GROUP_ID, String.valueOf(groupId));
+		rootElement.addAttribute(_ATTRIBUTE_CURRENT_PAGE, "1");
 	}
 
 	private boolean _isCompanyVirtualHostname(ThemeDisplay themeDisplay) {
@@ -844,8 +843,7 @@ public class SitemapManagerImpl implements SitemapManager {
 			}
 		}
 
-		_initPaginationAttributes(
-			rootElement, companyId, groupId, assetTypeKey);
+		_initPagination(rootElement, companyId, groupId, assetTypeKey);
 
 		SitemapURLProvider sitemapURLProvider = _serviceTrackerMap.getService(
 			assetType);
@@ -860,7 +858,7 @@ public class SitemapManagerImpl implements SitemapManager {
 		_storeCurrentPage(
 			rootElement, companyId, groupId, assetTypeKey,
 			GetterUtil.getInteger(
-				rootElement.attributeValue(_ATTRIBUTE_PAGINATION_PAGE)));
+				rootElement.attributeValue(_ATTRIBUTE_CURRENT_PAGE)));
 	}
 
 	private void _removeAttribute(Element rootElement, String name) {
@@ -930,10 +928,10 @@ public class SitemapManagerImpl implements SitemapManager {
 	}
 
 	private void _removePaginationAttributes(Element rootElement) {
-		_removeAttribute(rootElement, _ATTRIBUTE_PAGINATION_ASSET_TYPE_KEY);
-		_removeAttribute(rootElement, _ATTRIBUTE_PAGINATION_COMPANY_ID);
-		_removeAttribute(rootElement, _ATTRIBUTE_PAGINATION_GROUP_ID);
-		_removeAttribute(rootElement, _ATTRIBUTE_PAGINATION_PAGE);
+		_removeAttribute(rootElement, _ATTRIBUTE_ASSET_TYPE_KEY);
+		_removeAttribute(rootElement, _ATTRIBUTE_COMPANY_ID);
+		_removeAttribute(rootElement, _ATTRIBUTE_GROUP_ID);
+		_removeAttribute(rootElement, _ATTRIBUTE_CURRENT_PAGE);
 	}
 
 	private void _storeCurrentPage(
@@ -1049,16 +1047,13 @@ public class SitemapManagerImpl implements SitemapManager {
 		}
 	}
 
-	private static final String _ATTRIBUTE_PAGINATION_ASSET_TYPE_KEY =
-		"_paginationAssetTypeKey";
+	private static final String _ATTRIBUTE_ASSET_TYPE_KEY = "_assetTypeKey";
 
-	private static final String _ATTRIBUTE_PAGINATION_COMPANY_ID =
-		"_paginationCompanyId";
+	private static final String _ATTRIBUTE_COMPANY_ID = "_companyId";
 
-	private static final String _ATTRIBUTE_PAGINATION_GROUP_ID =
-		"_paginationGroupId";
+	private static final String _ATTRIBUTE_CURRENT_PAGE = "_currentPage";
 
-	private static final String _ATTRIBUTE_PAGINATION_PAGE = "_paginationPage";
+	private static final String _ATTRIBUTE_GROUP_ID = "_groupId";
 
 	private static final byte[] _ATTRIBUTE_XHTML =
 		" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"".getBytes();

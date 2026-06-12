@@ -62,13 +62,13 @@ public interface SitemapManager {
 		throws PortalException;
 
 	public String getSitemap(
-			String assetType, String layoutUuid, long groupId,
+			String assetTypeClassName, String layoutUuid, long groupId,
 			boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	public String getSitemap(
-			String assetType, String layoutUuid, long groupId, int page,
-			boolean privateLayout, ThemeDisplay themeDisplay)
+			String assetTypeClassName, String layoutUuid, long groupId,
+			int page, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	public InputStream getSitemapInputStream(

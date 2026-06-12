@@ -80,7 +80,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public Date getLastModifiedDate(long companyId, long groupId)
+	public Date getModifiedDate(long companyId, long groupId)
 		throws PortalException {
 
 		List<Date> modifiedDates = _journalArticleLocalService.dslQuery(
@@ -133,12 +133,12 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		}
 
 		if (layout.isTypeAssetDisplay()) {
-			visitArticles(
+			_visitArticles(
 				element, layout, layoutSet, themeDisplay,
-				getDisplayPageTemplateArticles(layout), false);
+				_getDisplayPageTemplateArticles(layout), false);
 		}
 		else {
-			visitArticles(
+			_visitArticles(
 				element, null, layoutSet, themeDisplay,
 				_getDisplayPageArticles(layoutSet.getGroupId(), layoutUuid),
 				true);
@@ -171,7 +171,47 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected List<JournalArticle> getDisplayPageTemplateArticles(Layout layout)
+	private Set<Locale> _getAvailableLocales(
+		JournalArticle journalArticle, Set<Locale> siteAvailableLocales) {
+
+		Set<Locale> availableLocales = new HashSet<>();
+
+		if (SetUtil.isEmpty(siteAvailableLocales)) {
+			return availableLocales;
+		}
+
+		for (String availableLanguageId :
+				journalArticle.getAvailableLanguageIds()) {
+
+			Locale locale = LocaleUtil.fromLanguageId(availableLanguageId);
+
+			if (siteAvailableLocales.contains(locale)) {
+				availableLocales.add(locale);
+			}
+		}
+
+		return availableLocales;
+	}
+
+	private List<JournalArticle> _getDisplayPageArticles(
+		long groupId, String layoutUuid) {
+
+		int start = QueryUtil.ALL_POS;
+		int end = QueryUtil.ALL_POS;
+
+		int count = _journalArticleService.getArticlesByLayoutUuidCount(
+			groupId, layoutUuid);
+
+		if (count > SitemapManager.MAXIMUM_ENTRIES) {
+			start = count - SitemapManager.MAXIMUM_ENTRIES;
+			end = count;
+		}
+
+		return _journalArticleService.getArticlesByLayoutUuid(
+			groupId, layoutUuid, start, end);
+	}
+
+	private List<JournalArticle> _getDisplayPageTemplateArticles(Layout layout)
 		throws PortalException {
 
 		List<JournalArticle> journalArticles = new ArrayList<>();
@@ -183,14 +223,12 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		DynamicQuery assetDisplayPageEntryDynamicQuery =
 			_assetDisplayPageEntryLocalService.dynamicQuery();
 
-		long classNameId = _portal.getClassNameId(
-			JournalArticle.class.getName());
-
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
 
 		assetDisplayPageEntryDynamicQuery.add(
-			classNameIdProperty.eq(classNameId));
+			classNameIdProperty.eq(
+				_portal.getClassNameId(JournalArticle.class.getName())));
 
 		Property layoutPageTemplateEntryIdProperty =
 			PropertyFactoryUtil.forName("layoutPageTemplateEntryId");
@@ -261,7 +299,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		return journalArticles;
 	}
 
-	protected Layout getDisplayPageTemplateLayout(
+	private Layout _getDisplayPageTemplateLayout(
 		long groupId, long journalArticleResourcePrimKey,
 		DDMStructure ddmStructure) {
 
@@ -292,72 +330,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			return null;
 		}
 
-		long assetDisplayPageEntryPlid = assetDisplayPageEntry.getPlid();
-
-		return _layoutLocalService.fetchLayout(assetDisplayPageEntryPlid);
-	}
-
-	protected void visitArticles(
-			Element element, Layout layout, LayoutSet layoutSet,
-			ThemeDisplay themeDisplay, List<JournalArticle> journalArticles,
-			boolean headCheck)
-		throws PortalException {
-
-		if (journalArticles.isEmpty()) {
-			return;
-		}
-
-		String portalURL = _portal.getPortalURL(layoutSet, themeDisplay);
-		Set<String> processedArticleIds = new HashSet<>();
-		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
-			themeDisplay.getScopeGroupId());
-
-		for (JournalArticle journalArticle : journalArticles) {
-			_visitArticle(
-				element, headCheck, journalArticle, layout, layoutSet,
-				portalURL, processedArticleIds, siteAvailableLocales,
-				themeDisplay);
-		}
-	}
-
-	private Set<Locale> _getAvailableLocales(
-		JournalArticle journalArticle, Set<Locale> siteAvailableLocales) {
-
-		Set<Locale> availableLocales = new HashSet<>();
-
-		if (SetUtil.isEmpty(siteAvailableLocales)) {
-			return availableLocales;
-		}
-
-		for (String availableLanguageId :
-				journalArticle.getAvailableLanguageIds()) {
-
-			Locale locale = LocaleUtil.fromLanguageId(availableLanguageId);
-
-			if (siteAvailableLocales.contains(locale)) {
-				availableLocales.add(locale);
-			}
-		}
-
-		return availableLocales;
-	}
-
-	private List<JournalArticle> _getDisplayPageArticles(
-		long groupId, String layoutUuid) {
-
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		int count = _journalArticleService.getArticlesByLayoutUuidCount(
-			groupId, layoutUuid);
-
-		if (count > SitemapManager.MAXIMUM_ENTRIES) {
-			start = count - SitemapManager.MAXIMUM_ENTRIES;
-			end = count;
-		}
-
-		return _journalArticleService.getArticlesByLayoutUuid(
-			groupId, layoutUuid, start, end);
+		return _layoutLocalService.fetchLayout(assetDisplayPageEntry.getPlid());
 	}
 
 	private String _getFriendlyURLSeparator() {
@@ -397,23 +370,24 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			return;
 		}
 
-			Layout articleLayout = layout;
+		Layout journalArticleLayout = layout;
 
-			if ((articleLayout == null) &&
+		if ((journalArticleLayout == null) &&
 			Validator.isNotNull(journalArticle.getLayoutUuid())) {
 
-				articleLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-				journalArticle.getLayoutUuid(), layoutSet.getGroupId(),
-				layoutSet.isPrivateLayout());
+			journalArticleLayout =
+				_layoutLocalService.fetchLayoutByUuidAndGroupId(
+					journalArticle.getLayoutUuid(), layoutSet.getGroupId(),
+					layoutSet.isPrivateLayout());
 		}
-			else if (articleLayout == null) {
-				articleLayout = getDisplayPageTemplateLayout(
+		else if (journalArticleLayout == null) {
+			journalArticleLayout = _getDisplayPageTemplateLayout(
 				layoutSet.getGroupId(), journalArticle.getResourcePrimKey(),
 				journalArticle.getDDMStructure());
 		}
 
 		if (_sitemapURLProviderHelper.isExcludeLayoutFromSitemap(
-					articleLayout)) {
+				journalArticleLayout)) {
 
 			return;
 		}
@@ -440,20 +414,43 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 		sb.append(journalArticle.getUrlTitle());
 
-			String articleURL = _portal.getCanonicalURL(
-				sb.toString(), themeDisplay, articleLayout);
+		String canonicalURL = _portal.getCanonicalURL(
+			sb.toString(), themeDisplay, journalArticleLayout);
 
 		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
-				articleURL, themeDisplay, articleLayout,
+			canonicalURL, themeDisplay, journalArticleLayout,
 			_getAvailableLocales(journalArticle, siteAvailableLocales));
 
 		for (String alternateURL : alternateURLs.values()) {
 			_sitemapManager.addURLElement(
 				element, alternateURL, null, journalArticle.getModifiedDate(),
-				articleURL, alternateURLs, articleLayout.getGroupId());
+				canonicalURL, alternateURLs, journalArticleLayout.getGroupId());
 		}
 
 		processedArticleIds.add(journalArticle.getArticleId());
+	}
+
+	private void _visitArticles(
+			Element element, Layout layout, LayoutSet layoutSet,
+			ThemeDisplay themeDisplay, List<JournalArticle> journalArticles,
+			boolean headCheck)
+		throws PortalException {
+
+		if (journalArticles.isEmpty()) {
+			return;
+		}
+
+		String portalURL = _portal.getPortalURL(layoutSet, themeDisplay);
+		Set<String> processedArticleIds = new HashSet<>();
+		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
+			themeDisplay.getScopeGroupId());
+
+		for (JournalArticle journalArticle : journalArticles) {
+			_visitArticle(
+				element, headCheck, journalArticle, layout, layoutSet,
+				portalURL, processedArticleIds, siteAvailableLocales,
+				themeDisplay);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

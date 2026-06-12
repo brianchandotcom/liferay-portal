@@ -62,10 +62,10 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public Date getLastModifiedDate(long companyId, long groupId)
+	public Date getModifiedDate(long companyId, long groupId)
 		throws PortalException {
 
-		Date lastModifiedDate = null;
+		Date modifiedDate = null;
 
 		List<Long> companyObjectDefinitionIds = new ArrayList<>();
 		List<Long> siteObjectDefinitionIds = new ArrayList<>();
@@ -97,7 +97,7 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 		}
 
 		if (!siteObjectDefinitionIds.isEmpty()) {
-			lastModifiedDate = _getLatestModifiedDate(
+			modifiedDate = _getLatestModifiedDate(
 				groupId, siteObjectDefinitionIds.toArray(new Long[0]));
 		}
 
@@ -107,14 +107,13 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 				companyObjectDefinitionIds.toArray(new Long[0]));
 
 			if ((companyDate != null) &&
-				((lastModifiedDate == null) ||
-				 companyDate.after(lastModifiedDate))) {
+				((modifiedDate == null) || companyDate.after(modifiedDate))) {
 
-				lastModifiedDate = companyDate;
+				modifiedDate = companyDate;
 			}
 		}
 
-		return lastModifiedDate;
+		return modifiedDate;
 	}
 
 	@Override

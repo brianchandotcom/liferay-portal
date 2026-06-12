@@ -35,7 +35,6 @@ import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -58,25 +57,25 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public Date getLastModifiedDate(long companyId, long groupId)
+	public Date getModifiedDate(long companyId, long groupId)
 		throws PortalException {
-
-		List<String> sitemapableLayoutTypes = new ArrayList<>();
 
 		Map<String, LayoutTypeController> layoutTypeControllers =
 			LayoutTypeControllerTracker.getLayoutTypeControllers();
 
-		for (Map.Entry<String, LayoutTypeController> entry :
-				layoutTypeControllers.entrySet()) {
+		List<String> layoutTypes = TransformUtil.transform(
+			layoutTypeControllers.entrySet(),
+			entry -> {
+				LayoutTypeController layoutTypeController = entry.getValue();
 
-			LayoutTypeController layoutTypeController = entry.getValue();
+				if (layoutTypeController.isSitemapable()) {
+					return entry.getKey();
+				}
 
-			if (layoutTypeController.isSitemapable()) {
-				sitemapableLayoutTypes.add(entry.getKey());
-			}
-		}
+				return null;
+			});
 
-		if (sitemapableLayoutTypes.isEmpty()) {
+		if (layoutTypes.isEmpty()) {
 			return null;
 		}
 
@@ -92,7 +91,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 					LayoutTable.INSTANCE.privateLayout.eq(false)
 				).and(
 					LayoutTable.INSTANCE.type.in(
-						sitemapableLayoutTypes.toArray(new String[0]))
+						layoutTypes.toArray(new String[0]))
 				).and(
 					LayoutTable.INSTANCE.modifiedDate.isNotNull()
 				)
@@ -141,16 +140,19 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		Map<String, LayoutTypeController> layoutTypeControllers =
 			LayoutTypeControllerTracker.getLayoutTypeControllers();
 
-		List<String> sitemapableTypes = TransformUtil.transform(
+		List<String> layoutTypes = TransformUtil.transform(
 			layoutTypeControllers.entrySet(),
 			entry -> {
 				LayoutTypeController layoutTypeController = entry.getValue();
 
-				return layoutTypeController.isSitemapable() ? entry.getKey() :
-					null;
+				if (layoutTypeController.isSitemapable()) {
+					return entry.getKey();
+				}
+
+				return null;
 			});
 
-		if (sitemapableTypes.isEmpty()) {
+		if (layoutTypes.isEmpty()) {
 			return;
 		}
 
@@ -168,7 +170,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 				Property typeProperty = PropertyFactoryUtil.forName("type");
 
 				dynamicQuery.add(
-					typeProperty.in(sitemapableTypes.toArray(new String[0])));
+					typeProperty.in(layoutTypes.toArray(new String[0])));
 			});
 		actionableDynamicQuery.setGroupId(layoutSet.getGroupId());
 		actionableDynamicQuery.setPerformActionMethod(

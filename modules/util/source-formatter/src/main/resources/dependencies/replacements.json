@@ -5460,6 +5460,14 @@
 	},
 	{
 		"classNames": [
+			"PortletSharedSearchSettings"
+		],
+		"from": "getParameterValues71",
+		"issueKey": "LPD-60899",
+		"to": "getParameterValues"
+	},
+	{
+		"classNames": [
 			"CPCompareHelperUtil"
 		],
 		"from": "addCompareProduct(long paramName, long paramName, long paramName, HttpSession paramName)",

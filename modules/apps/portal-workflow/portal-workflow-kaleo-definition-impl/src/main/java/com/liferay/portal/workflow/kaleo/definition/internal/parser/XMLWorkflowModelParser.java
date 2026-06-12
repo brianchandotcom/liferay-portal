@@ -501,6 +501,12 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 				new Setting("requestBody", StringUtil.trim(requestBody)));
 		}
 
+		String timeout = httpRequestElement.elementTextTrim("timeout");
+
+		if (timeout != null) {
+			settings.add(new Setting("timeout", timeout));
+		}
+
 		settings.add(
 			new Setting("url", httpRequestElement.elementTextTrim("url")));
 

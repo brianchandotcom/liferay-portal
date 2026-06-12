@@ -126,6 +126,9 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 					StringUtil.toUpperCase(
 						GetterUtil.getString(
 							kaleoNodeSettingValues.get("httpMethod"), "GET"))));
+			options.setTimeout(
+				GetterUtil.getInteger(
+					kaleoNodeSettingValues.get("timeout"), 10000));
 
 			String responseBody = _http.URLtoString(options);
 

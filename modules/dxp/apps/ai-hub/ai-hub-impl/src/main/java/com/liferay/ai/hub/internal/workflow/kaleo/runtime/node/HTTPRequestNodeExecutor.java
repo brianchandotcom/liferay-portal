@@ -10,9 +10,6 @@ import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -146,7 +143,7 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 						"\" failed with response code ", responseCode));
 			}
 
-			_applyOutputVariables(
+			VariablesUtil.applyOutputVariables(
 				VariablesUtil.getVariablesJSONArray(
 					"outputVariables", kaleoNodeSettingValues),
 				responseBody, workflowContext);
@@ -192,56 +189,6 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 		List<PathElement> remainingPathElements) {
 	}
 
-	private void _applyOutputVariables(
-			JSONArray outputVariablesJSONArray, String responseBody,
-			Map<String, Serializable> workflowContext)
-		throws Exception {
-
-		if ((outputVariablesJSONArray == null) ||
-			(outputVariablesJSONArray.length() == 0)) {
-
-			return;
-		}
-
-		JSONObject responseJSONObject = null;
-
-		for (int i = 0; i < outputVariablesJSONArray.length(); i++) {
-			JSONObject outputVariableJSONObject =
-				outputVariablesJSONArray.getJSONObject(i);
-
-			String name = outputVariableJSONObject.getString("name");
-
-			String path = outputVariableJSONObject.getString("path");
-
-			if (Validator.isNull(path)) {
-				workflowContext.put(name, responseBody);
-
-				continue;
-			}
-
-			if (responseJSONObject == null) {
-				responseJSONObject = _jsonFactory.createJSONObject(
-					responseBody);
-			}
-
-			if (path.startsWith("output.")) {
-				path = path.substring("output.".length());
-			}
-
-			Object value = responseJSONObject.get(path);
-
-			if (value instanceof JSONArray || value instanceof JSONObject) {
-				workflowContext.put(name, value.toString());
-			}
-			else if (value instanceof Serializable) {
-				workflowContext.put(name, (Serializable)value);
-			}
-			else if (value != null) {
-				workflowContext.put(name, String.valueOf(value));
-			}
-		}
-	}
-
 	private String _decryptUserToken(long companyId, String encryptedUserToken)
 		throws Exception {
 
@@ -259,9 +206,6 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private Http _http;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;

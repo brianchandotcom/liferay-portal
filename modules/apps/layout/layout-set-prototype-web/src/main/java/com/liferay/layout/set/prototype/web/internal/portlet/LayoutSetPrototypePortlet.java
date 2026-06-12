@@ -9,7 +9,6 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
-import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.exception.RequiredLayoutSetPrototypeException;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -140,19 +139,6 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		}
 	}
 
-	public void resetMergeFailCount(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long layoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "layoutSetPrototypeId");
-
-		layoutSetPrototypeHelper.setMergeFailCount(
-			layoutSetPrototypeService.getLayoutSetPrototype(
-				layoutSetPrototypeId),
-			0);
-	}
-
 	public void updateLayoutSetPrototype(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -276,9 +262,6 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 	@Reference
 	protected LayoutSetLocalService layoutSetLocalService;
-
-	@Reference
-	protected LayoutSetPrototypeHelper layoutSetPrototypeHelper;
 
 	@Reference
 	protected LayoutSetPrototypeService layoutSetPrototypeService;

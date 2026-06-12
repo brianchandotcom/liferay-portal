@@ -377,12 +377,13 @@ public class ObjectEntryModelListenerTest {
 				DSRFolderConstants.EXTERNAL_REFERENCE_CODE_DSR_DOCUMENTS,
 				group.getGroupId());
 
-		List<DLFileEntry> fileEntries = _dlFileEntryLocalService.getFileEntries(
-			group.getGroupId(), dlFolder.getFolderId());
+		List<DLFileEntry> dlFileEntries =
+			_dlFileEntryLocalService.getFileEntries(
+				group.getGroupId(), dlFolder.getFolderId());
 
 		Assert.assertTrue(
 			ListUtil.exists(
-				fileEntries,
+				dlFileEntries,
 				dlFileEntry ->
 					(dlFileEntry.getFileEntryId() !=
 						dlFileEntry1.getFileEntryId()) &&
@@ -390,7 +391,7 @@ public class ObjectEntryModelListenerTest {
 						dlFileEntry.getTitle(), dlFileEntry1.getTitle())));
 		Assert.assertFalse(
 			ListUtil.exists(
-				fileEntries,
+				dlFileEntries,
 				dlFileEntry -> Objects.equals(
 					dlFileEntry.getTitle(), dlFileEntry2.getTitle())));
 	}

@@ -11406,6 +11406,36 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
+	@FeatureFlag("LPD-43996")
+	@Test
+	public void testPostObjectEntryWithObjectFieldNamedComments()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"comments", "comments", false)),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_enableComments(objectDefinition);
+
+		String value = RandomTestUtil.randomString();
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"comments", value
+			).toString(),
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
+
+		Assert.assertEquals(value, jsonObject.getString("comments"));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+	}
+
 	@Test
 	public void testPostObjectEntryWithTaxonomyCategories() throws Exception {
 		Company company = _companyLocalService.getCompany(

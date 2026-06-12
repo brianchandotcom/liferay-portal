@@ -150,7 +150,7 @@ public class CookiesConsentCheckerResolverImplTest {
 	}
 
 	@Inject(
-		filter = "component.name=com.liferay.consent.management.platform.integration.internal.consent.ConsentManagementPlatformCookiesConsentChecker"
+		filter = "component.name=com.liferay.consent.management.platform.integration.internal.cookies.consent.ConsentManagementPlatformCookiesConsentChecker"
 	)
 	private CookiesConsentChecker
 		_consentManagementPlatformCookiesConsentChecker;

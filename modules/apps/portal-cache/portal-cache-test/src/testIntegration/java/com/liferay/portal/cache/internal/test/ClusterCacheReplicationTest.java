@@ -6,16 +6,15 @@
 package com.liferay.portal.cache.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.cache.internal.test.util.PortalCacheReplicationTestUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
@@ -27,8 +26,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Function;
 
@@ -111,7 +108,8 @@ public class ClusterCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePuts", false);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePuts", false);
 
 					return portalCache.get(testKey);
 				}));
@@ -125,7 +123,8 @@ public class ClusterCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePuts", false);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePuts", false);
 
 					portalCache.registerPortalCacheListener(
 						new TestPortalCacheListener());
@@ -399,7 +398,8 @@ public class ClusterCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePutsViaCopy", true);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePutsViaCopy", true);
 
 					return portalCache.get(testKey);
 				}));
@@ -413,7 +413,8 @@ public class ClusterCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePutsViaCopy", true);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePutsViaCopy", true);
 
 					portalCache.registerPortalCacheListener(
 						new TestPortalCacheListener());
@@ -502,7 +503,8 @@ public class ClusterCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePutsViaCopy", false);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePutsViaCopy", false);
 
 					return portalCache.get(testKey);
 				}));
@@ -516,7 +518,8 @@ public class ClusterCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePutsViaCopy", false);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePutsViaCopy", false);
 
 					portalCache.registerPortalCacheListener(
 						new TestPortalCacheListener());
@@ -604,8 +607,9 @@ public class ClusterCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePutsViaCopy", true);
-					_setFieldValue(
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePutsViaCopy", true);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
 						portalCache, "_replicateUpdatesViaCopy", true);
 
 					return portalCache.get(testKey);
@@ -620,8 +624,9 @@ public class ClusterCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePutsViaCopy", true);
-					_setFieldValue(
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePutsViaCopy", true);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
 						portalCache, "_replicateUpdatesViaCopy", true);
 
 					portalCache.registerPortalCacheListener(
@@ -705,8 +710,9 @@ public class ClusterCacheReplicationTest implements Serializable {
 			throws InterruptedException {
 
 			TestPortalCacheListener testPortalCacheListener =
-				(TestPortalCacheListener)_getPortalCacheListener(
-					TestPortalCacheListener.class.getName(), portalCache);
+				(TestPortalCacheListener)
+					PortalCacheReplicationTestUtil.getPortalCacheListener(
+						TestPortalCacheListener.class.getName(), portalCache);
 
 			CountDownLatch countDownLatch = function.apply(
 				testPortalCacheListener);
@@ -795,47 +801,6 @@ public class ClusterCacheReplicationTest implements Serializable {
 		private final CountDownLatch _updatedCountDownLatch;
 
 	}
-
-	private static PortalCacheListener<?, ?> _getPortalCacheListener(
-		String className, PortalCache<?, ?> portalCache) {
-
-		portalCache = ReflectionTestUtil.getFieldValue(
-			portalCache, "_portalCache");
-
-		Object aggregatedPortalCacheListener = ReflectionTestUtil.getFieldValue(
-			portalCache, "aggregatedPortalCacheListener");
-
-		ConcurrentMap<PortalCacheListener<?, ?>, PortalCacheListenerScope>
-			portalCacheListeners = ReflectionTestUtil.getFieldValue(
-				aggregatedPortalCacheListener, "_portalCacheListeners");
-
-		for (PortalCacheListener<?, ?> portalCacheListener :
-				portalCacheListeners.keySet()) {
-
-			Class<?> clazz = portalCacheListener.getClass();
-
-			if (Objects.equals(clazz.getName(), className)) {
-				return portalCacheListener;
-			}
-		}
-
-		throw new IllegalStateException(className + " does not exist");
-	}
-
-	private void _setFieldValue(
-		PortalCache<?, ?> portalCache, String fieldName, boolean fieldValue) {
-
-		ReflectionTestUtil.setFieldValue(
-			(Object)ReflectionTestUtil.getFieldValue(
-				_getPortalCacheListener(
-					_CLASS_NAME_EHCACHE_PORTAL_CACHE_REPLICATOR, portalCache),
-				"_portalCacheReplicator"),
-			fieldName, fieldValue);
-	}
-
-	private static final String _CLASS_NAME_EHCACHE_PORTAL_CACHE_REPLICATOR =
-		"com.liferay.portal.cache.ehcache.internal.events." +
-			"EhcachePortalCacheReplicatorUtil$EhcachePortalCacheReplicator";
 
 	private static transient TomcatNode _tomcatNode1;
 	private static transient TomcatNode _tomcatNode2;

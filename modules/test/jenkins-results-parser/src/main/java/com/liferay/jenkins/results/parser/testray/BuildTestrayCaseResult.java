@@ -88,8 +88,15 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			return null;
 		}
 
+		URL parentTestrayCaseResultURL =
+			parentTestrayCaseResult.getTestrayCaseResultURL();
+
+		if (parentTestrayCaseResultURL == null) {
+			return null;
+		}
+
 		String testrayCaseResultURL = String.valueOf(
-			parentTestrayCaseResult.getTestrayCaseResultURL());
+			parentTestrayCaseResultURL);
 
 		TestrayServer testrayServer = getTestrayServer();
 
@@ -97,7 +104,7 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			this, parentTestrayCaseResult.getName(),
 			testrayCaseResultURL.replace(
 				String.valueOf(testrayServer.getURL()), ""),
-			parentTestrayCaseResult.getTestrayCaseResultURL());
+			parentTestrayCaseResultURL);
 	}
 
 	protected TestrayAttachment getTestrayAttachment(

@@ -5,7 +5,6 @@
 
 import ClayEmptyState from '@clayui/empty-state';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {fetchResults, ignoreRule, unignoreRule} from './api';
@@ -18,8 +17,6 @@ import {
 	ResultsPayload,
 	RuleResult,
 } from './types';
-
-const DELTAS = [{label: 10}, {label: 20}, {label: 30}, {label: 50}];
 
 function applyFilter(
 	results: RuleResult[],
@@ -80,8 +77,6 @@ export function ProductionReadinessDashboard(
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [filterValue, setFilterValue] = useState<FilterValue>('all');
-	const [activePage, setActivePage] = useState(1);
-	const [delta, setDelta] = useState(10);
 	const [togglingRuleKeys, setTogglingRuleKeys] = useState<Set<string>>(
 		new Set()
 	);
@@ -104,16 +99,6 @@ export function ProductionReadinessDashboard(
 	useEffect(() => {
 		load();
 	}, [load]);
-
-	const onFilterChange = useCallback((value: FilterValue) => {
-		setFilterValue(value);
-		setActivePage(1);
-	}, []);
-
-	const onDeltaChange = useCallback((value: number) => {
-		setDelta(value);
-		setActivePage(1);
-	}, []);
 
 	const onToggleIgnore = useCallback(
 		async (result: RuleResult) => {
@@ -156,33 +141,17 @@ export function ProductionReadinessDashboard(
 		[load, props.baseResourceURL]
 	);
 
-	const {grouped, totalItems} = useMemo(() => {
+	const grouped = useMemo(() => {
 		if (!payload) {
-			return {grouped: [], totalItems: 0};
+			return [];
 		}
 
 		const sorted = [...applyFilter(payload.results, filterValue)].sort(
 			(a, b) => a.category.localeCompare(b.category)
 		);
 
-		const pageResults = sorted.slice(
-			(activePage - 1) * delta,
-			activePage * delta
-		);
-
-		return {
-			grouped: groupByCategory(pageResults),
-			totalItems: sorted.length,
-		};
-	}, [activePage, delta, filterValue, payload]);
-
-	useEffect(() => {
-		const lastPage = Math.max(1, Math.ceil(totalItems / delta));
-
-		if (activePage > lastPage) {
-			setActivePage(lastPage);
-		}
-	}, [activePage, delta, totalItems]);
+		return groupByCategory(sorted);
+	}, [filterValue, payload]);
 
 	if (loading) {
 		return <ClayLoadingIndicator />;
@@ -219,7 +188,7 @@ export function ProductionReadinessDashboard(
 					total={failed + ignored + passed}
 				/>
 
-				<FilterPills onChange={onFilterChange} value={filterValue} />
+				<FilterPills onChange={setFilterValue} value={filterValue} />
 			</div>
 
 			<div className="production-readiness-sections">
@@ -233,18 +202,6 @@ export function ProductionReadinessDashboard(
 					/>
 				))}
 			</div>
-
-			{totalItems > 0 && (
-				<ClayPaginationBarWithBasicItems
-					activeDelta={delta}
-					activePage={activePage}
-					deltas={DELTAS}
-					ellipsisBuffer={3}
-					onDeltaChange={onDeltaChange}
-					onPageChange={setActivePage}
-					totalItems={totalItems}
-				/>
-			)}
 		</div>
 	);
 }

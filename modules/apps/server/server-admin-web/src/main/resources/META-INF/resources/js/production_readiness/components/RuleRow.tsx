@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
 import {RuleResult} from '../types';
@@ -21,9 +22,12 @@ const RuleRow: React.FC<Props> = ({onToggleIgnore, result, toggling}) => {
 
 	return (
 		<li
-			className={`align-items-start d-flex production-readiness-rule py-3${
-				result.ignored ? ' text-muted' : ''
-			}`}
+			className={classNames(
+				'align-items-start d-flex list-group-item py-3',
+				{
+					'text-muted': result.ignored,
+				}
+			)}
 			data-rule-key={result.ruleKey}
 		>
 			<StatusIcon ignored={result.ignored} status={result.status} />

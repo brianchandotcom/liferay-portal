@@ -9,7 +9,7 @@ import {openSelectionModal} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 import React from 'react';
 
-import {IContentMappedTokenValue} from '../tokenMapping';
+import {EMappingMode, IContentMappedTokenValue} from '../tokenMapping';
 
 const EDITOR_PORTLET_ID =
 	'com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet';
@@ -125,7 +125,7 @@ export default function EntitySelectorRow({
 				classPK: String(selected.classPK ?? ''),
 				externalReferenceCode: selected.externalReferenceCode ?? '',
 				fieldId: entity.fieldId,
-				source: 'content',
+				mappingMode: EMappingMode.CONTENT,
 				title: selected.title,
 			});
 		});

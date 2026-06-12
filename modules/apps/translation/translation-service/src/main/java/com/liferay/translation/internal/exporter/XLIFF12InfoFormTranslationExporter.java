@@ -182,10 +182,9 @@ public class XLIFF12InfoFormTranslationExporter
 			}
 		}
 
-		return new ByteArrayInputStream(
-			document.asXML(
-			).getBytes(
-				StandardCharsets.UTF_8));
+		String xml = document.asXML();
+
+		return new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@Override

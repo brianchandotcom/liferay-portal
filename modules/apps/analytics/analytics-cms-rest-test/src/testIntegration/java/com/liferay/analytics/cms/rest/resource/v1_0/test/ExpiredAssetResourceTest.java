@@ -217,7 +217,7 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
+			null, DepotConstants.TYPE_SPACE, _serviceContext);
 
 		_themeDisplay = _getThemeDisplay();
 	}

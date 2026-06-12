@@ -29,6 +29,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -218,6 +219,8 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
+		_importPostProcessArticleUuids(entityTypeElements, portletDataContext);
+
 		String[] portletResourceNames = _getPortletResourceNames(
 			portletDataContext);
 
@@ -357,6 +360,37 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getParameterMap();
 
 		return parameterMap.getOrDefault("portletResourceNames", new String[0]);
+	}
+
+	private void _importPostProcessArticleUuids(
+			List<Element> entityTypeElements,
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		Map<String, String> postProcessArticleUuids =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class + ".postProcessArticleUuid");
+
+		if (postProcessArticleUuids.isEmpty()) {
+			return;
+		}
+
+		for (String articleModelPath : postProcessArticleUuids.values()) {
+			portletDataContext.removePrimaryKey(articleModelPath);
+		}
+
+		for (Element entityTypeElement : entityTypeElements) {
+			List<Element> entityElements = entityTypeElement.elements();
+
+			for (Element entityElement : entityElements) {
+				String uuid = entityElement.attributeValue("uuid");
+
+				if (postProcessArticleUuids.remove(uuid) != null) {
+					StagedModelDataHandlerUtil.importStagedModel(
+						portletDataContext, entityElement);
+				}
+			}
+		}
 	}
 
 	private boolean _isExportModel(

@@ -84,6 +84,8 @@ public class HTTPRequestNodeWorkflowDefinitionTest {
 		Assert.assertEquals(
 			"{{sitePlan}}", _getSettingValue(kaleoNodeSettings, "requestBody"));
 		Assert.assertEquals(
+			"10000", _getSettingValue(kaleoNodeSettings, "timeout"));
+		Assert.assertEquals(
 			"/o/headless-admin-site/v1.0/sites",
 			_getSettingValue(kaleoNodeSettings, "url"));
 	}

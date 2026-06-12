@@ -12,9 +12,7 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -114,16 +112,9 @@ public class JakartaTransformGradleCheck extends BaseJakartaTransformCheck {
 		if (Validator.isNull(content)) {
 			Class<?> clazz = getClass();
 
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			InputStream inputStream = classLoader.getResourceAsStream(
+			content = StringUtil.read(
+				clazz.getClassLoader(),
 				"dependencies/jakarta-transform-dependencies.txt");
-
-			if (inputStream == null) {
-				return Collections.emptyMap();
-			}
-
-			content = StringUtil.read(inputStream);
 		}
 
 		for (String line : StringUtil.splitLines(content)) {

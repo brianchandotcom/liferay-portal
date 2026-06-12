@@ -61,7 +61,7 @@ public class ConsentManagementPlatformConfigurationUpgradeProcess
 						new UnsyncByteArrayInputStream(
 							dictionaryString.getBytes(StringPool.UTF8)));
 
-				dictionary.put("bridgeScript", StringPool.BLANK);
+				dictionary.put("consentMappingScript", StringPool.BLANK);
 
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();

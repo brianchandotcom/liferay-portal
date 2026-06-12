@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfi
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
-import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -58,9 +57,9 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -118,11 +117,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private void _copyFileEntries(long[] fileEntryIds, Group group)
 		throws Exception {
 
-		if (fileEntryIds.length == 0) {
+		if (ArrayUtil.isEmpty(fileEntryIds)) {
 			return;
 		}
-
-		long folderId;
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -133,6 +130,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			_dlFolderLocalService.fetchDLFolderByExternalReferenceCode(
 				DSRFolderConstants.EXTERNAL_REFERENCE_CODE_DSR_DOCUMENTS,
 				group.getGroupId());
+
+		long folderId;
 
 		if (dlFolder == null) {
 			Folder folder = _dlAppService.addFolder(
@@ -155,8 +154,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	private void _duplicateGroup(
-			long[] fileEntryIds, Group group, ObjectDefinition objectDefinition,
-			long objectEntryId, User user)
+			Company company, long[] fileEntryIds, Group group,
+			ObjectDefinition objectDefinition, long objectEntryId, User user)
 		throws Exception {
 
 		Group sourceGroup = _groupLocalService.fetchGroup(
@@ -169,9 +168,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			return;
 		}
 
-		_copyFileEntries(fileEntryIds, group);
-
-		Map<String, String[]> parameterMap = LinkedHashMapBuilder.put(
+		Map<String, String[]> parameterMap = HashMapBuilder.put(
 			PortletDataHandlerKeys.COMMENTS,
 			new String[] {Boolean.FALSE.toString()}
 		).put(
@@ -232,8 +229,17 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			new String[] {UserIdStrategy.CURRENT_USER_ID}
 		).build();
 
-		_importLayouts(parameterMap, false, sourceGroup, group, user);
-		_importLayouts(parameterMap, true, sourceGroup, group, user);
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					company, user)) {
+
+			_copyFileEntries(fileEntryIds, group);
+
+			_importLayouts(parameterMap, false, sourceGroup, group, user);
+			_importLayouts(parameterMap, true, sourceGroup, group, user);
+
+			_updateFragmentEntryLink(group);
+		}
 	}
 
 	private User _getAdministratorUser(long companyId) throws Exception {
@@ -290,14 +296,14 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		long[] layoutIds = _exportImportHelper.getAllLayoutIds(
 			sourceGroup.getGroupId(), privateLayout);
 
-		if (layoutIds.length == 0) {
+		if (ArrayUtil.isEmpty(layoutIds)) {
 			return;
 		}
 
 		File file = null;
 
 		try {
-			ExportImportConfiguration exportImportConfiguration =
+			file = _exportImportLocalService.exportLayoutsAsFile(
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						user.getUserId(),
@@ -305,10 +311,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 						ExportImportConfigurationSettingsMapFactoryUtil.
 							buildExportLayoutSettingsMap(
 								user, sourceGroup.getGroupId(), privateLayout,
-								layoutIds, parameterMap));
-
-			file = _exportImportLocalService.exportLayoutsAsFile(
-				exportImportConfiguration);
+								layoutIds, parameterMap)));
 
 			_exportImportLocalService.importLayouts(
 				_exportImportConfigurationLocalService.
@@ -343,7 +346,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		LayoutSetPrototype layoutSetPrototype = null;
 		User user = _userLocalService.getUser(objectEntry.getUserId());
 
-		try (AutoCloseable autoCloseable1 =
+		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					company, user)) {
 
@@ -396,7 +399,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			long sourceObjectEntryId = DSRRoomThreadLocal.getObjectEntryId();
 
-			if (sourceObjectEntryId <= 0) {
+			if (sourceObjectEntryId == 0) {
 				_sites.updateLayoutSetPrototypesLinks(
 					group, layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 					false, false);
@@ -408,18 +411,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					if (sourceObjectEntryId > 0) {
-						try (AutoCloseable autoCloseable2 =
-								_layoutServiceContextHelper.
-									getServiceContextAutoCloseable(
-										company, administratorUser)) {
-
-							_duplicateGroup(
-								fileEntryIds, group, objectDefinition,
-								sourceObjectEntryId, administratorUser);
-
-							_updateFragmentEntryLink(group);
-						}
+					if (sourceObjectEntryId != 0) {
+						_duplicateGroup(
+							company, fileEntryIds, group, objectDefinition,
+							sourceObjectEntryId, administratorUser);
 					}
 
 					_objectEntryLocalService.partialUpdateObjectEntry(

@@ -6,6 +6,7 @@
 package com.liferay.audience.web.internal.portlet.action;
 
 import com.liferay.audience.constants.AudiencePortletKeys;
+import com.liferay.audience.criteria.AudienceCriteriaProvider;
 import com.liferay.audience.web.internal.display.context.EditAudienceEntryDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
@@ -37,10 +38,14 @@ public class EditAudienceEntryMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			EditAudienceEntryDisplayContext.class.getName(),
 			new EditAudienceEntryDisplayContext(
+				_audienceCriteriaProvider,
 				_portal.getHttpServletRequest(renderRequest), renderResponse));
 
 		return "/edit_audience_entry.jsp";
 	}
+
+	@Reference
+	private AudienceCriteriaProvider _audienceCriteriaProvider;
 
 	@Reference
 	private Portal _portal;

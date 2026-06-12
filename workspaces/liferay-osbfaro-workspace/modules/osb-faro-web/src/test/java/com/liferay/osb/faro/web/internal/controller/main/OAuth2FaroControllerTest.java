@@ -11,7 +11,6 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
 import com.liferay.osb.faro.web.internal.model.display.main.TokenDisplay;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,9 +50,6 @@ public class OAuth2FaroControllerTest {
 		ReflectionTestUtil.setFieldValue(
 			_oAuth2FaroController, "_oAuth2AuthorizationLocalService",
 			_oAuth2AuthorizationLocalService);
-		ReflectionTestUtil.setFieldValue(
-			_oAuth2FaroController, "_oAuth2AuthorizationService",
-			_oAuth2AuthorizationService);
 
 		_setUpPermissionChecker();
 	}
@@ -115,14 +111,6 @@ public class OAuth2FaroControllerTest {
 		OAuth2Authorization oAuth2Authorization = Mockito.mock(
 			OAuth2Authorization.class);
 
-		long oAuth2AuthorizationId = 123;
-
-		Mockito.when(
-			oAuth2Authorization.getOAuth2AuthorizationId()
-		).thenReturn(
-			oAuth2AuthorizationId
-		);
-
 		Mockito.when(
 			_oAuth2AuthorizationLocalService.
 				fetchOAuth2AuthorizationByAccessTokenContent("abc")
@@ -133,9 +121,9 @@ public class OAuth2FaroControllerTest {
 		_oAuth2FaroController.revokeToken(1, "abc");
 
 		Mockito.verify(
-			_oAuth2AuthorizationService
-		).revokeOAuth2Authorization(
-			oAuth2AuthorizationId
+			_oAuth2AuthorizationLocalService
+		).deleteOAuth2Authorization(
+			oAuth2Authorization
 		);
 	}
 
@@ -203,8 +191,6 @@ public class OAuth2FaroControllerTest {
 	private final OAuth2AuthorizationLocalService
 		_oAuth2AuthorizationLocalService = Mockito.mock(
 			OAuth2AuthorizationLocalService.class);
-	private final OAuth2AuthorizationService _oAuth2AuthorizationService =
-		Mockito.mock(OAuth2AuthorizationService.class);
 	private final OAuth2FaroController _oAuth2FaroController =
 		new OAuth2FaroController();
 

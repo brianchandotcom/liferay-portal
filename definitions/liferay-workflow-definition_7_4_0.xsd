@@ -316,6 +316,21 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="service">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="abstract-workflow-node-complex-type">
+					<xs:sequence>
+						<xs:element minOccurs="0" ref="labels" />
+						<xs:element minOccurs="0" name="input-variables" type="xs:string" />
+						<xs:element name="java-delegate" type="xs:string" />
+						<xs:element minOccurs="0" name="output-variables" type="xs:string" />
+						<xs:element ref="transitions" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="state">
 		<xs:complexType>
 			<xs:complexContent>
@@ -450,6 +465,7 @@
 			<xs:element ref="join" />
 			<xs:element ref="join-xor" />
 			<xs:element ref="llm" />
+			<xs:element ref="service" />
 			<xs:element ref="state" />
 			<xs:element ref="task" />
 		</xs:choice>

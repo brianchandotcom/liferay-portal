@@ -10,6 +10,7 @@ package com.liferay.portal.workflow.kaleo.definition;
  */
 public enum NodeType {
 
-	AI_DECISION, CONDITION, FORK, HTTP_REQUEST, JOIN, JOIN_XOR, LLM, STATE, TASK
+	AI_DECISION, CONDITION, FORK, HTTP_REQUEST, JOIN, JOIN_XOR, LLM, SERVICE,
+	STATE, TASK
 
 }

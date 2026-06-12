@@ -2,6 +2,23 @@
 	"object-actions": [
 		{
 			"active": true,
+			"conditionExpression": "scanType == 'crawler'",
+			"errorMessage": {
+				"en_US": "Crawler failed. Please try again later or contact support."
+			},
+			"externalReferenceCode": "L_SEO_STUDIO_SCAN_CRAWLER",
+			"label": {
+				"en_US": "Crawler"
+			},
+			"name": "crawler",
+			"objectActionExecutorKey": "function#liferay-seostudio-etc-spring-boot-crawler-object-action-crawler",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+			}
+		},
+		{
+			"active": true,
+			"conditionExpression": "scanType == 'pageSpeed'",
 			"errorMessage": {
 				"en_US": "PageSpeed scan failed. Please try again later or contact support."
 			},

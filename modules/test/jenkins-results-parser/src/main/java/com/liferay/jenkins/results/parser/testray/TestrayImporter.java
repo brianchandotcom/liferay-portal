@@ -996,32 +996,15 @@ public class TestrayImporter {
 			final TestrayCaseResult topLevelTestrayCaseResult =
 				_recordTopLevelTestrayCaseResult(job, testBaseDir);
 
-			TestrayCaseResult asahAppServerTestrayCaseResult =
-				_recordAppServerTestrayCaseResult(
-					job, PersistentResource.Type.ASAH_BUNDLE, testBaseDir);
-
-			if (asahAppServerTestrayCaseResult != null) {
-				asahAppServerTestrayCaseResult.setParentTestrayCaseResult(
-					topLevelTestrayCaseResult);
-			}
-
-			TestrayCaseResult faroAppServerTestrayCaseResult =
-				_recordAppServerTestrayCaseResult(
-					job, PersistentResource.Type.FARO_BUNDLE, testBaseDir);
-
-			if (faroAppServerTestrayCaseResult != null) {
-				faroAppServerTestrayCaseResult.setParentTestrayCaseResult(
-					topLevelTestrayCaseResult);
-			}
-
-			TestrayCaseResult portalAppServerTestrayCaseResult =
-				_recordAppServerTestrayCaseResult(
-					job, PersistentResource.Type.PORTAL_BUNDLE, testBaseDir);
-
-			if (portalAppServerTestrayCaseResult != null) {
-				portalAppServerTestrayCaseResult.setParentTestrayCaseResult(
-					topLevelTestrayCaseResult);
-			}
+			_recordAppServerTestrayCaseResult(
+				job, PersistentResource.Type.ASAH_BUNDLE, testBaseDir,
+				topLevelTestrayCaseResult);
+			_recordAppServerTestrayCaseResult(
+				job, PersistentResource.Type.FARO_BUNDLE, testBaseDir,
+				topLevelTestrayCaseResult);
+			_recordAppServerTestrayCaseResult(
+				job, PersistentResource.Type.PORTAL_BUNDLE, testBaseDir,
+				topLevelTestrayCaseResult);
 
 			for (final AxisTestClassGroup axisTestClassGroup :
 					axisTestClassGroups) {
@@ -1423,7 +1406,7 @@ public class TestrayImporter {
 
 	private TestrayCaseResult _recordAppServerTestrayCaseResult(
 		Job job, PersistentResource.Type persistentResourceType,
-		File testBaseDir) {
+		File testBaseDir, TestrayCaseResult topLevelTestrayCaseResult) {
 
 		TestrayBuild testrayBuild = getTestrayBuild(testBaseDir);
 
@@ -1439,6 +1422,9 @@ public class TestrayImporter {
 		if (buildReport == null) {
 			return null;
 		}
+
+		appServerBundleStandaloneBuildTestrayCaseResult.
+			setParentTestrayCaseResult(topLevelTestrayCaseResult);
 
 		appServerBundleStandaloneBuildTestrayCaseResult.recordTestrayCaseResult(
 			job);

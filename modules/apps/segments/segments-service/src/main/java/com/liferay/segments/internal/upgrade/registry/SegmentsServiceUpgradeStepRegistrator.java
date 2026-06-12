@@ -17,6 +17,7 @@ import com.liferay.segments.internal.upgrade.v2_0_0.SchemaUpgradeProcess;
 import com.liferay.segments.internal.upgrade.v2_0_0.SegmentsExperienceUpgradeProcess;
 import com.liferay.segments.internal.upgrade.v2_8_1.SegmentsExperimentUpgradeProcess;
 import com.liferay.segments.internal.upgrade.v3_1_1.SegmentsEntryUpgradeProcess;
+import com.liferay.segments.internal.upgrade.v4_1_0.util.SegmentsExperienceAudienceEntryRelTable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -131,6 +132,9 @@ public class SegmentsServiceUpgradeStepRegistrator
 			"3.3.0", "4.0.0",
 			new com.liferay.segments.internal.upgrade.v4_0_0.
 				SegmentsExperienceUpgradeProcess());
+
+		registry.register(
+			"4.0.0", "4.1.0", SegmentsExperienceAudienceEntryRelTable.create());
 	}
 
 	@Reference

@@ -7,15 +7,14 @@ package com.liferay.portal.cache.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.portal.cache.internal.test.util.PortalCacheReplicationTestUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log4j.Log4JUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,8 +28,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.Constructor;
 
-import java.util.Objects;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
@@ -95,7 +92,8 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePutsViaCopy", true);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePutsViaCopy", true);
 
 					return portalCache.get(testKey);
 				}));
@@ -107,7 +105,8 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					_setFieldValue(portalCache, "_replicatePutsViaCopy", true);
+					PortalCacheReplicationTestUtil.setReplicatorFieldValue(
+						portalCache, "_replicatePutsViaCopy", true);
 
 					portalCache.registerPortalCacheListener(
 						new TestPortalCacheListener());
@@ -141,9 +140,11 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
 					TestPortalCacheListener testPortalCacheListener =
-						(TestPortalCacheListener)_getPortalCacheListener(
-							TestPortalCacheListener.class.getName(),
-							portalCache);
+						(TestPortalCacheListener)
+							PortalCacheReplicationTestUtil.
+								getPortalCacheListener(
+									TestPortalCacheListener.class.getName(),
+									portalCache);
 
 					CountDownLatch putCountDownLatch =
 						testPortalCacheListener.getPutCountDownLatch();
@@ -180,9 +181,11 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
 					TestPortalCacheListener testPortalCacheListener =
-						(TestPortalCacheListener)_getPortalCacheListener(
-							TestPortalCacheListener.class.getName(),
-							portalCache);
+						(TestPortalCacheListener)
+							PortalCacheReplicationTestUtil.
+								getPortalCacheListener(
+									TestPortalCacheListener.class.getName(),
+									portalCache);
 
 					CountDownLatch putCountDownLatch =
 						testPortalCacheListener.getPutCountDownLatch();
@@ -312,32 +315,6 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 		return classWriter.toByteArray();
 	}
 
-	private PortalCacheListener<?, ?> _getPortalCacheListener(
-		String className, PortalCache<?, ?> portalCache) {
-
-		portalCache = ReflectionTestUtil.getFieldValue(
-			portalCache, "_portalCache");
-
-		Object aggregatedPortalCacheListener = ReflectionTestUtil.getFieldValue(
-			portalCache, "aggregatedPortalCacheListener");
-
-		ConcurrentMap<PortalCacheListener<?, ?>, PortalCacheListenerScope>
-			portalCacheListeners = ReflectionTestUtil.getFieldValue(
-				aggregatedPortalCacheListener, "_portalCacheListeners");
-
-		for (PortalCacheListener<?, ?> portalCacheListener :
-				portalCacheListeners.keySet()) {
-
-			Class<?> clazz = portalCacheListener.getClass();
-
-			if (Objects.equals(clazz.getName(), className)) {
-				return portalCacheListener;
-			}
-		}
-
-		throw new IllegalStateException(className + " does not exist");
-	}
-
 	private void _installSampleBundle(TomcatNode tomcatNode) throws Exception {
 		Manifest manifest = new Manifest();
 
@@ -394,21 +371,6 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 
 		return (Serializable)constructor.newInstance(value);
 	}
-
-	private void _setFieldValue(
-		PortalCache<?, ?> portalCache, String fieldName, boolean fieldValue) {
-
-		ReflectionTestUtil.setFieldValue(
-			(Object)ReflectionTestUtil.getFieldValue(
-				_getPortalCacheListener(
-					_CLASS_NAME_EHCACHE_PORTAL_CACHE_REPLICATOR, portalCache),
-				"_portalCacheReplicator"),
-			fieldName, fieldValue);
-	}
-
-	private static final String _CLASS_NAME_EHCACHE_PORTAL_CACHE_REPLICATOR =
-		"com.liferay.portal.cache.ehcache.internal.events." +
-			"EhcachePortalCacheReplicatorUtil$EhcachePortalCacheReplicator";
 
 	private static final String _SAMPLE_BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.portal.cluster.multiple.sample.web";

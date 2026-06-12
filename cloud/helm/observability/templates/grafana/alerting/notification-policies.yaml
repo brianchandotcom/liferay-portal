@@ -15,17 +15,17 @@ data:
                     {{- range $key, $channel := .Values.alerting.notificationChannels }}
                     {{- range $kind, $route := $channel.notificationTypes }}
                     {{- if not (eq $route.enabled false) }}
-                    -   name: {{ printf "%s-%s" $key $kind }}
-                        receiver: {{ $key }}
+                    -   continue: {{ if hasKey $route "continue" }}{{ index $route "continue" }}{{ else }}false{{ end }}
                         group_by: {{ $route.group_by | default (list "alertname" "grafana_folder") | toYaml | nindent 28 }}
-                        object_matchers:
-                            -   {{ list "channel" "=" $key | toJson }}
-                            -   {{ list "type" "=" $kind | toJson }}
-                        continue: {{ if hasKey $route "continue" }}{{ index $route "continue" }}{{ else }}false{{ end }}
-                        group_wait: {{ default "1m" $route.group_wait }}
                         {{- with $route.group_interval }}
                         group_interval: {{ . }}
                         {{- end }}
+                        group_wait: {{ default "1m" $route.group_wait }}
+                        name: {{ printf "%s-%s" $key $kind }}
+                        object_matchers:
+                            -   {{ list "channel" "=" $key | toJson }}
+                            -   {{ list "type" "=" $kind | toJson }}
+                        receiver: {{ $key }}
                         {{- with $route.repeat_interval }}
                         repeat_interval: {{ . }}
                         {{- end }}

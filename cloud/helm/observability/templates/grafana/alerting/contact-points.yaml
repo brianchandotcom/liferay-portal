@@ -8,13 +8,13 @@ data:
             {{- if not (eq $channel.enabled false) }}
             -   name: {{ $key }}
                 receivers:
-                    -   uid: {{ $key }}
-                        type: {{ $channel.type | default "email" }}
-                        disableResolveMessage: {{ if hasKey $channel "disableResolveMessage" }}{{ index $channel "disableResolveMessage" }}{{ else }}true{{ end }}
+                    -   disableResolveMessage: {{ if hasKey $channel "disableResolveMessage" }}{{ index $channel "disableResolveMessage" }}{{ else }}true{{ end }}
                         {{- with $channel.settings }}
                         settings:
                             {{- toYaml . | nindent 28 }}
                         {{- end }}
+                        type: {{ $channel.type | default "email" }}
+                        uid: {{ $key }}
             {{- end }}
             {{- end }}
 kind: ConfigMap

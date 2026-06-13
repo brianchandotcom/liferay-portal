@@ -556,17 +556,9 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(),
+			FragmentEntryTestUtil.addFragmentEntryByStatus(
 				_fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
-				false, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
+				WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry draftFragmentEntry = _fragmentEntryLocalService.getDraft(
 			fragmentEntry.getFragmentEntryId());
@@ -589,17 +581,9 @@ public class FragmentEntryLocalServiceTest {
 		throws Exception {
 
 		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(),
+			FragmentEntryTestUtil.addFragmentEntryByStatus(
 				_fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
-				false, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_DRAFT,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
+				WorkflowConstants.STATUS_DRAFT);
 
 		_fragmentEntryLocalService.deleteFragmentEntry(
 			fragmentEntry.getExternalReferenceCode(),

@@ -402,7 +402,7 @@ public class PropertyValidator {
 	private static final Pattern _propertiesGetPropertyPattern =
 		Pattern.compile("(?<!System)\\.getProperty\\(\\s*\"([^\"]+)\"");
 	private static final Pattern _propertyKeyLiteralPattern = Pattern.compile(
-		"\"([a-z][a-z0-9]*(?:[.-][a-z0-9]+)+(?:\\[[^\"]*\\])*\\[?)\"");
+		"\"([a-z][a-z0-9]*(?:[.-][a-z0-9]+)+(?:\\[[^\"]*\\])*[.\\[]?)\"");
 	private static final List<PropertyScanner> _propertyScanners =
 		Arrays.asList(
 			new AntPropertyValueScanner(), new CommandsXMLScanner(),

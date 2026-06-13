@@ -13,7 +13,7 @@ import {
 export const DXP_APPLICATION_IDS = [
 	Analytics.ApplicationId.Blog,
 	Analytics.ApplicationId.Custom,
-	Analytics.ApplicationId,
+	Analytics.ApplicationId.Document,
 	Analytics.ApplicationId.Form,
 	Analytics.ApplicationId.Page,
 	Analytics.ApplicationId.WebContent,

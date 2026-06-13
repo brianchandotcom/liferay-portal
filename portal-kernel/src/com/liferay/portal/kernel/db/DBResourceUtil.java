@@ -52,7 +52,8 @@ public class DBResourceUtil {
 
 	public static void clearLiferayTableNamesCache() {
 		_liferayTableNames = null;
-		_moduleTableNames = null;
+
+		_moduleTableNamesDCLSingleton.destroy(null);
 	}
 
 	public static Set<String> getLiferayTableNames(Connection connection)
@@ -94,24 +95,12 @@ public class DBResourceUtil {
 
 	public static Set<String> getModuleTableNames() {
 		if (DBInspector.isSchemaSnapshotEnabled()) {
-			Set<String> moduleTableNames = _moduleTableNames;
-
-			if (moduleTableNames == null) {
-				synchronized (DBResourceUtil.class) {
-					moduleTableNames = _moduleTableNames;
-
-					if (moduleTableNames == null) {
-						moduleTableNames = _buildModuleTableNames();
-
-						_moduleTableNames = moduleTableNames;
-					}
-				}
-			}
-
 			Set<String> tableNames = new TreeSet<>(
 				String.CASE_INSENSITIVE_ORDER);
 
-			tableNames.addAll(moduleTableNames);
+			tableNames.addAll(
+				_moduleTableNamesDCLSingleton.getSingleton(
+					DBResourceUtil::_buildModuleTableNames));
 
 			return tableNames;
 		}
@@ -176,24 +165,11 @@ public class DBResourceUtil {
 	}
 
 	public static Set<String> getPortalTableNames() {
-		Set<String> portalTableNames = _portalTableNames;
-
-		if (portalTableNames == null) {
-			synchronized (DBResourceUtil.class) {
-				portalTableNames = _portalTableNames;
-
-				if (portalTableNames == null) {
-					portalTableNames = parseCreateTableSQL(
-						getPortalTablesSQL());
-
-					_portalTableNames = portalTableNames;
-				}
-			}
-		}
-
 		Set<String> tableNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
-		tableNames.addAll(portalTableNames);
+		tableNames.addAll(
+			_portalTableNamesDCLSingleton.getSingleton(
+				() -> parseCreateTableSQL(getPortalTablesSQL())));
 
 		return tableNames;
 	}
@@ -460,8 +436,10 @@ public class DBResourceUtil {
 			"(?:\\s+\\w+)*\\s+primary key\\b",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 	private static volatile Set<String> _liferayTableNames;
-	private static volatile Set<String> _moduleTableNames;
-	private static volatile Set<String> _portalTableNames;
+	private static final DCLSingleton<Set<String>>
+		_moduleTableNamesDCLSingleton = new DCLSingleton<>();
+	private static final DCLSingleton<Set<String>>
+		_portalTableNamesDCLSingleton = new DCLSingleton<>();
 	private static final DCLSingleton<ServiceTrackerList<DBResourceProvider>>
 		_serviceTrackerListDCLSingleton = new DCLSingleton<>();
 

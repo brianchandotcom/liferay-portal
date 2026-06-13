@@ -48,10 +48,10 @@ public class FragmentDTOConverter
 	public Fragment toDTO(
 		DTOConverterContext dtoConverterContext, FragmentEntry fragmentEntry) {
 
-		FragmentEntry draftOnlyOrPublishedFragmentEntry =
-			_fetchDraftOnlyOrPublishedFragmentEntry(fragmentEntry);
+		FragmentEntry headListableFragmentEntry =
+			_fetchHeadListableFragmentEntry(fragmentEntry);
 
-		if (draftOnlyOrPublishedFragmentEntry == null) {
+		if (headListableFragmentEntry == null) {
 			throw new IllegalStateException(
 				StringBundler.concat(
 					"Fragment entry draft with ID ",
@@ -59,10 +59,10 @@ public class FragmentDTOConverter
 					fragmentEntry.getHeadId(), " that no longer exists"));
 		}
 
-		return _toFragment(draftOnlyOrPublishedFragmentEntry);
+		return _toFragment(headListableFragmentEntry);
 	}
 
-	private FragmentEntry _fetchDraftOnlyOrPublishedFragmentEntry(
+	private FragmentEntry _fetchHeadListableFragmentEntry(
 		FragmentEntry fragmentEntry) {
 
 		if (fragmentEntry.isHead()) {

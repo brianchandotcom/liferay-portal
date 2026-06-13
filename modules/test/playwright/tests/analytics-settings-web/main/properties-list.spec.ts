@@ -9,10 +9,25 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {acceptsCookiesBanner} from '../../osb-faro-web/main/utils/portal';
 import {getDefaultProject} from '../../osb-faro-web/main/utils/project';
+import {
+	connectToAnalyticsCloud,
+	disconnectFromAnalyticsCloud,
+	goToAnalyticsCloudInstanceSettings,
+} from './utils/analytics-settings';
 
 const test = mergeTests(apiHelpersTest, loginAnalyticsCloudTest(), loginTest());
+
+// Disconnect any leftover connection so every test starts from a clean wizard
+
+test.beforeEach(async ({page}) => {
+	await goToAnalyticsCloudInstanceSettings(page);
+
+	await acceptsCookiesBanner(page);
+
+	await disconnectFromAnalyticsCloud(page);
+});
 
 test(
 	'Deleted AC properties do not appear in the DXP Properties wizard step',
@@ -45,12 +60,8 @@ test(
 				project.groupId
 			);
 
-		await apiHelpers.analyticsSettingsRest.postDataSource(connectionToken);
-
 		try {
-			await page.goto(PORTLET_URLS.analyticsCloudConnection);
-
-			await page.getByRole('button', {exact: true, name: 'Next'}).click();
+			await connectToAnalyticsCloud(page, {token: connectionToken});
 
 			const searchBar = page.locator('.management-bar').filter({
 				has: page.locator(
@@ -113,12 +124,8 @@ test(
 				project.groupId
 			);
 
-		await apiHelpers.analyticsSettingsRest.postDataSource(connectionToken);
-
 		try {
-			await page.goto(PORTLET_URLS.analyticsCloudConnection);
-
-			await page.getByRole('button', {exact: true, name: 'Next'}).click();
+			await connectToAnalyticsCloud(page, {token: connectionToken});
 
 			const searchBar = page.locator('.management-bar').filter({
 				has: page.locator(
@@ -155,6 +162,83 @@ test(
 			await expect(
 				page.getByText('No properties were found.')
 			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+
+			for (const channel of channels) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
+	'AC properties can be sorted by create date in the DXP Properties wizard step',
+	{tag: '@LRAC-12586'},
+	async ({apiHelpers, page}) => {
+		const project = await getDefaultProject(apiHelpers);
+
+		const token = getRandomString();
+
+		// Create the properties out of alphabetical order so a create-date sort
+		// is distinguishable from a name sort
+
+		const names = [
+			`Zulu Sort ${token}`,
+			`Alfa Sort ${token}`,
+			`Mike Sort ${token}`,
+		];
+
+		const channels = [];
+
+		for (const name of names) {
+			channels.push(
+				await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+					name,
+					project.groupId
+				)
+			);
+		}
+
+		const connectionToken =
+			await apiHelpers.jsonWebServicesOSBFaro.fetchDataSourceConnectionToken(
+				project.groupId
+			);
+
+		try {
+			await connectToAnalyticsCloud(page, {token: connectionToken});
+
+			const searchBar = page.locator('.management-bar').filter({
+				has: page.locator(
+					'input[placeholder="Search"]:not([disabled])'
+				),
+			});
+
+			await searchBar.getByPlaceholder('Search').fill(`Sort ${token}`);
+
+			await searchBar.getByRole('button', {name: 'Search'}).click();
+
+			// The list defaults to create date descending (newest first)
+
+			await expect(page.getByRole('cell', {name: token})).toHaveText([
+				`Mike Sort ${token}`,
+				`Alfa Sort ${token}`,
+				`Zulu Sort ${token}`,
+			]);
+
+			// Reverse to ascending (oldest first matches creation order)
+
+			await page.getByRole('button', {name: 'sort'}).click();
+
+			await expect(page.getByRole('cell', {name: token})).toHaveText([
+				`Zulu Sort ${token}`,
+				`Alfa Sort ${token}`,
+				`Mike Sort ${token}`,
+			]);
 		}
 		finally {
 			await apiHelpers.analyticsSettingsRest.deleteDataSource();

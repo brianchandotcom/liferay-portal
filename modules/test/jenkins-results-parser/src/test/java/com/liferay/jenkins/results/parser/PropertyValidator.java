@@ -71,56 +71,22 @@ public class PropertyValidator {
 
 		TreeSet<String> definedKeys = _getDefinedKeys(jenkinsRepositoryDir);
 
-		Set<String> consumedKeys = new TreeSet<>();
-		List<String> consumedPrefixes = new ArrayList<>();
-		List<ConsumedKeyFailure> consumedKeyFailures = new ArrayList<>();
+		List<ConsumedKey> consumedKeys = new ArrayList<>();
 
 		for (PropertyScanner propertyScanner : _propertyScanners) {
 			for (File file :
 					propertyScanner.findFiles(
 						jenkinsRepositoryDir, jenkinsResultsParserSourceDir)) {
 
-				String content = JenkinsResultsParserUtil.read(file);
-
-				for (ConsumedKey consumedKey :
-						propertyScanner.getConsumedKeys(content, file)) {
-
-					String key = consumedKey.getKey();
-
-					if (consumedKey.isPrefix()) {
-						consumedPrefixes.add(key);
-					}
-					else {
-						consumedKeys.add(key);
-
-						int index = key.indexOf('[');
-
-						if (index != -1) {
-							consumedPrefixes.add(key.substring(0, index + 1));
-						}
-					}
-
-					if (consumedKey.isStrict() && !consumedKey.isPrefix() &&
-						!_isDefined(definedKeys, key)) {
-
-						consumedKeyFailures.add(
-							new ConsumedKeyFailure(consumedKey));
-					}
-				}
+				consumedKeys.addAll(
+					propertyScanner.getConsumedKeys(
+						JenkinsResultsParserUtil.read(file), file));
 			}
 		}
 
-		List<String> unconsumedKeys = new ArrayList<>();
-
-		for (String definedKey : definedKeys) {
-			if (!_isConsumed(consumedKeys, consumedPrefixes, definedKey)) {
-				unconsumedKeys.add(definedKey);
-			}
-		}
-
-		Collections.sort(unconsumedKeys);
-
-		return new ValidationResult(consumedKeyFailures, unconsumedKeys);
+		return new ValidationResult(
+			_getConsumedKeyFailures(consumedKeys, definedKeys),
+			_getUnconsumedKeys(consumedKeys, definedKeys));
 	}
 
 	public static class ConsumedKey {
@@ -219,6 +185,22 @@ public class PropertyValidator {
 
 	}
 
+	private static List<ConsumedKeyFailure> _getConsumedKeyFailures(
+		List<ConsumedKey> consumedKeys, TreeSet<String> definedKeys) {
+
+		List<ConsumedKeyFailure> consumedKeyFailures = new ArrayList<>();
+
+		for (ConsumedKey consumedKey : consumedKeys) {
+			if (consumedKey.isStrict() && !consumedKey.isPrefix() &&
+				!_isDefined(definedKeys, consumedKey.getKey())) {
+
+				consumedKeyFailures.add(new ConsumedKeyFailure(consumedKey));
+			}
+		}
+
+		return consumedKeyFailures;
+	}
+
 	private static List<ConsumedKey> _getConsumedKeys(
 		List<int[]> beanshellBlocks, String content, File file, Pattern pattern,
 		boolean strict, String surface) {
@@ -288,6 +270,43 @@ public class PropertyValidator {
 		}
 
 		return lineNumber;
+	}
+
+	private static List<String> _getUnconsumedKeys(
+		List<ConsumedKey> consumedKeys, TreeSet<String> definedKeys) {
+
+		Set<String> consumedKeyNames = new TreeSet<>();
+		List<String> consumedPrefixes = new ArrayList<>();
+
+		for (ConsumedKey consumedKey : consumedKeys) {
+			String key = consumedKey.getKey();
+
+			if (consumedKey.isPrefix()) {
+				consumedPrefixes.add(key);
+
+				continue;
+			}
+
+			consumedKeyNames.add(key);
+
+			int index = key.indexOf('[');
+
+			if (index != -1) {
+				consumedPrefixes.add(key.substring(0, index + 1));
+			}
+		}
+
+		List<String> unconsumedKeys = new ArrayList<>();
+
+		for (String definedKey : definedKeys) {
+			if (!_isConsumed(consumedKeyNames, consumedPrefixes, definedKey)) {
+				unconsumedKeys.add(definedKey);
+			}
+		}
+
+		Collections.sort(unconsumedKeys);
+
+		return unconsumedKeys;
 	}
 
 	private static boolean _isBasePropertyNameDefined(

@@ -7,8 +7,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.List;
-
 import org.junit.Assume;
 import org.junit.Test;
 
@@ -34,20 +32,11 @@ public class PropertyValidatorTest
 			PropertyValidator.validate(
 				jenkinsRepositoryDir, new File("src/main/java"));
 
-		List<PropertyValidator.ConsumptionFailure> consumptionFailures =
-			validationResult.getConsumptionFailures();
-		List<String> unconsumedKeys = validationResult.getUnconsumedKeys();
-
 		for (PropertyValidator.ConsumptionFailure consumptionFailure :
-				consumptionFailures) {
+				validationResult.getConsumptionFailures()) {
 
 			errorCollector.addError(
 				new Throwable(consumptionFailure.getMessage()));
-		}
-
-		for (String unconsumedKey : unconsumedKeys) {
-			System.out.println(
-				"WARNING: Unconsumed build property \"" + unconsumedKey + "\"");
 		}
 	}
 

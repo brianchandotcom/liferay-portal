@@ -12,8 +12,8 @@ import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
-import {changeTimeFilter} from './utils/time-filter';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -30,109 +30,139 @@ export const test = mergeTests(
 
 const pageTitle = 'My Page';
 
-test('Forms visitor behavior card shows expected amount of views', async ({
-	analyticsChannel: channel,
-	apiHelpers,
-	page,
-	project,
-}) => {
-	await test.step('Create form events to appear within the Last 24 hours period in AC', async () => {
-		const date1 = new Date();
+test(
+	'Form overview shows submissions, views, appears-on, and technology metrics',
+	{
+		tag: ['@LRAC-8121', '@LRAC-8429', '@LRAC-8433'],
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const formTitle = 'My Form 1';
+		const canonicalUrl = '/web/site-name';
+
+		// Seed three views and three submissions from a Chrome desktop on one
+		// page, within the Last 24 hours period
+
+		const date = new Date();
+
+		const formEvent = (eventId: string, userId: string) => ({
+			applicationId: 'Form',
+			assetId: '1',
+			assetTitle: formTitle,
+			browserName: 'Chrome',
+			canonicalUrl,
+			channelId: channel.id,
+			deviceType: 'Desktop',
+			eventDate: date.toISOString(),
+			eventId,
+			title: pageTitle,
+			userId,
+		});
 
 		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
-			{
-				applicationId: 'Form',
-				assetId: '1',
-				assetTitle: 'My Form 1',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				eventDate: date1.toISOString(),
-				eventId: 'formViewed',
-				title: pageTitle,
-				userId: '1',
-			},
-			{
-				applicationId: 'Form',
-				assetId: '1',
-				assetTitle: 'My Form 1',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				eventDate: date1.toISOString(),
-				eventId: 'formViewed',
-				title: pageTitle,
-				userId: '1',
-			},
-			{
-				applicationId: 'Form',
-				assetId: '1',
-				assetTitle: 'My Form 1',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				eventDate: date1.toISOString(),
-				eventId: 'formViewed',
-				title: pageTitle,
-				userId: '1',
-			},
-			{
-				applicationId: 'Form',
-				assetId: '1',
-				assetTitle: 'My Form 1',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				eventDate: date1.toISOString(),
-				eventId: 'formViewed',
-				title: pageTitle,
-				userId: '1',
-			},
+			formEvent('formViewed', '1'),
+			formEvent('formViewed', '2'),
+			formEvent('formViewed', '3'),
+			formEvent('formSubmitted', '1'),
+			formEvent('formSubmitted', '2'),
+			formEvent('formSubmitted', '3'),
 		]);
 
-		await test.step('Go to Analytics Cloud asset page', async () => {
-			await navigateToACPageViaURL({
-				acPage: ACPage.assetPage,
-				channelID: channel.id,
-				page,
-				projectID: project.groupId,
-			});
+		await navigateToACPageViaURL({
+			acPage: ACPage.assetPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
 		});
 
-		await test.step('Go to Forms session', async () => {
-			await page.locator('.navbar-collapse').getByText('Forms').click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Last 24 hours'}),
+			trigger: page.getByRole('button', {name: 'Last 30 days'}),
 		});
 
-		await test.step('Change the time filter to Last 24 hours', async () => {
-			await changeTimeFilter({
-				page,
-				timeFilterPeriod: 'Last 24 hours',
-			});
-		});
+		// Open the form overview from the asset list
 
-		let formTitles;
+		await page.getByRole('link', {exact: true, name: formTitle}).click();
 
-		await test.step('Assert the form is appearing in the list', async () => {
-			formTitles = await page.locator('.forms-root .table-title').all();
+		// Visitors Behavior reflects the seeded submissions and views
 
-			expect(formTitles.length).toBe(1);
-		});
+		await expect(page.getByText('Visitors Behavior')).toBeVisible();
 
-		await test.step('Go into form Visitors Behavior metrics', async () => {
-			await formTitles[0].click();
-
-			await expect(page.getByText('Visitors Behavior')).toBeVisible();
-
-			await page
+		await expect(
+			page
 				.locator('.analytics-metrics-tabs .card-tab')
-				.getByText('Views')
-				.click();
+				.filter({hasText: 'Submissions'})
+				.locator('.metric-value')
+		).toHaveText('3');
 
-			const metricTabs = await page
+		await expect(
+			page
 				.locator('.analytics-metrics-tabs .card-tab')
-				.all();
+				.filter({hasText: 'Views'})
+				.locator('.metric-value')
+		).toHaveText('3');
 
-			const viewMetricTab = metricTabs[1];
+		// Asset Appears On lists the page where the form was submitted
 
-			expect(
-				await viewMetricTab.locator('.metric-value').textContent()
-			).toBe('4');
+		await expect(
+			page.getByRole('cell', {name: canonicalUrl})
+		).toBeVisible();
+
+		// Submissions by Technology surfaces the Chrome browser
+
+		const technologyCard = page
+			.locator('.card-root')
+			.filter({hasText: 'Submissions by Technology'});
+
+		await technologyCard.getByText('Browsers').click();
+
+		await expect(technologyCard.getByText('Chrome')).toBeVisible();
+	}
+);
+
+test(
+	'Forms list shows all of the forms in the asset list',
+	{
+		tag: '@LRAC-8120',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const formTitles = ['AC Form 1', 'AC Form 2', 'AC Form 3', 'AC Form 4'];
+
+		// Seed a view for each form within the Last 24 hours period
+
+		const date = new Date();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+			formTitles.map((formTitle, index) => ({
+				applicationId: 'Form',
+				assetId: String(index + 1),
+				assetTitle: formTitle,
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'formViewed',
+				title: pageTitle,
+				userId: '1',
+			}))
+		);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.assetPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
 		});
-	});
-});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Last 24 hours'}),
+			trigger: page.getByRole('button', {name: 'Last 30 days'}),
+		});
+
+		for (const formTitle of formTitles) {
+			await expect(
+				page.getByRole('link', {exact: true, name: formTitle})
+			).toBeVisible();
+		}
+	}
+);

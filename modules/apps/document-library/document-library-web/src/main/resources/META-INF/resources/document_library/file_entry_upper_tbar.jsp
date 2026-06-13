@@ -66,6 +66,7 @@ FileVersion fileVersion = dlViewFileEntryDisplayContext.getFileVersion();
 			<c:if test="<%= dlViewFileEntryDisplayContext.isDownloadLinkVisible() %>">
 				<li class="d-none d-sm-flex tbar-item">
 					<clay:link
+						data-analytics-external-reference-code="<%= fileEntry.getExternalReferenceCode() %>"
 						data-analytics-file-entry-id="<%= fileEntry.getFileEntryId() %>"
 						data-analytics-file-entry-title="<%= fileEntry.getTitle() %>"
 						data-analytics-file-entry-version="<%= fileEntry.getVersion() %>"

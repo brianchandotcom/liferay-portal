@@ -357,6 +357,9 @@ public class UIItemsBuilder {
 
 		return DropdownItemBuilder.setData(
 			HashMapBuilder.<String, Object>put(
+				"analytics-external-reference-code",
+				_fileEntry.getExternalReferenceCode()
+			).put(
 				"analytics-file-entry-id", _fileEntry.getFileEntryId()
 			).put(
 				"analytics-file-entry-title", _fileEntry.getTitle()

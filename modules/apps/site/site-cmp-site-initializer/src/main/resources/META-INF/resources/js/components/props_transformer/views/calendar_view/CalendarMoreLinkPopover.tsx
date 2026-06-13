@@ -27,7 +27,7 @@ function isTaskOverdue(task: ITaskObjectEntry): boolean {
 	return (
 		Boolean(task.dueDate) &&
 		task.state?.key !== 'done' &&
-		Date.parse(task.dueDate) < Date.now()
+		task.dueDate.slice(0, 10) < new Date().toISOString().slice(0, 10)
 	);
 }
 

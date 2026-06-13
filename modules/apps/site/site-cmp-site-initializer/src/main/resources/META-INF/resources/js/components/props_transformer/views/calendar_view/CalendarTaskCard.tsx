@@ -24,7 +24,7 @@ export default function CalendarTaskCard({task}: CalendarTaskCardProps) {
 	const isOverdue =
 		Boolean(dueDate) &&
 		state?.key !== 'done' &&
-		Date.parse(dueDate) < Date.now();
+		dueDate.slice(0, 10) < new Date().toISOString().slice(0, 10);
 
 	return (
 		<div

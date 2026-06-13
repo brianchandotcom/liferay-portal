@@ -75,7 +75,10 @@ export default function CalendarMoreLinkPopover({
 						className="lfr__cmp-calendar-more-link-popover-task"
 						key={task.id}
 					>
-						<span className="lfr__cmp-calendar-more-link-popover-task-title">
+						<span
+							className="lfr__cmp-calendar-more-link-popover-task-title"
+							data-testid="calendarMoreLinkPopoverTaskTitle"
+						>
 							{task.title}
 						</span>
 

@@ -11,6 +11,13 @@ function test {
 	local variable5='Do not $(ls) this'
 	local variable6="/tmp/$(date +%Y)"
 	local variable7=$((1 + 1))
+	local variable8='Review the PR diff thoroughly. For any naming, ordering, or convention question, run `git grep --cached <pattern>` against /review/liferay-portal before deciding — never short circuit by returning empty after only reading the diff. Always pass --cached: plain `git grep` hangs the VM (a wrapper auto rewrites it, but pass --cached yourself).
+
+For any claim about where a line sits in the diff (between X and Y, after X, before Y, at line N), name X and Y exactly as they appear on the lines immediately above and below the `+` line in the diff. Re-read the diff before writing the claim; do not name neighbors from memory or paraphrase. Position claims that misname the neighbors are hallucinations — the alphabetical reasoning can be right while the position is fabricated, and that combination reads as well supported when it is not.
+
+Flag every rule violation you find. When confidence in a flag is partial, still include it and append `verify against <source>` so the human can confirm — do not drop the catch.
+
+Output ONLY valid JSON, with no Markdown code fence and no surrounding prose: {"chance": <0-100>, "violations": ["one description per violation"]} where chance is your confidence that Brian Chan would close this PR for these violations.'
 }
 
 test

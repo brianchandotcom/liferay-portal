@@ -1,0 +1,60 @@
+@import 'atlas-variables';
+
+.lfr__cmp-calendar-task-card {
+	align-items: center;
+	border: 1px solid $border-color;
+	border-radius: 0.5rem;
+	color: $body-color;
+	display: flex;
+	gap: 0.25rem;
+	height: 2rem;
+	padding: 0.25rem 0.5rem;
+	width: 100%;
+
+	&-assignee {
+		flex-shrink: 0;
+	}
+
+	&-blocked {
+		background-color: $danger-l2;
+	}
+
+	&-done {
+		background-color: $success-l2;
+	}
+
+	&-icon {
+		flex-shrink: 0;
+		font-size: 1rem;
+		margin-top: 0;
+	}
+
+	&-icon-blocked {
+		color: $danger;
+	}
+
+	&-icon-overdue {
+		color: $warning;
+	}
+
+	&-inProgress {
+		background-color: $info-l2;
+	}
+
+	&-notStarted {
+		background-color: $secondary-l2;
+	}
+
+	&-overdue {
+		background-color: $warning-l2;
+	}
+
+	&-title {
+		flex-grow: 1;
+		font-size: map-get($font-scale, 2);
+		font-weight: $font-weight-normal;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}

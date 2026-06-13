@@ -402,7 +402,7 @@ public class PropertyValidator {
 	private static final Pattern _propertiesGetPropertyPattern =
 		Pattern.compile("(?<!System)\\.getProperty\\(\\s*\"([^\"]+)\"");
 	private static final Pattern _propertyKeyLiteralPattern = Pattern.compile(
-		"\"([a-z][a-z0-9]*(?:\\.[a-z0-9]+)+(?:\\[[^\"]*\\])*\\[?)\"");
+		"\"([a-z][a-z0-9]*(?:[.-][a-z0-9]+)+(?:\\[[^\"]*\\])*\\[?)\"");
 	private static final List<PropertyScanner> _propertyScanners =
 		Arrays.asList(
 			new AntPropertyValueScanner(), new CommandsXMLScanner(),
@@ -437,8 +437,21 @@ public class PropertyValidator {
 		public List<File> findFiles(
 			File jenkinsRepositoryDir, File jenkinsResultsParserSourceDir) {
 
-			return JenkinsResultsParserUtil.findFiles(
-				new File(jenkinsRepositoryDir, "commands"), ".*\\.xml");
+			List<File> files = new ArrayList<>();
+
+			for (File file :
+					JenkinsResultsParserUtil.findFiles(
+						new File(jenkinsRepositoryDir, "commands"),
+						".*\\.xml")) {
+
+				String fileName = file.getName();
+
+				if (!fileName.equals("build-properties.xml")) {
+					files.add(file);
+				}
+			}
+
+			return files;
 		}
 
 		@Override

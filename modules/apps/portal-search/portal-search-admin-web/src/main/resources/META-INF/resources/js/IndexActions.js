@@ -87,6 +87,14 @@ function IndexerListItem({
 	);
 }
 
+function getFailedReindexBackgroundTasksCount(htmlDocument, portletNamespace) {
+	const failedReindexBackgroundTasksCount = htmlDocument.documentElement
+		.querySelector(`#${portletNamespace}failedReindexBackgroundTasksCount`)
+		?.innerHTML?.trim();
+
+	return parseInt(failedReindexBackgroundTasksCount, 10) || 0;
+}
+
 function IndexActions({
 	controlMenuCategoryKey,
 	indexersMap = {},
@@ -118,6 +126,10 @@ function IndexActions({
 	);
 
 	const [state, dispatch] = useContext(ClayModalContext);
+
+	const failedReindexBackgroundTasksCountRef = useRef(
+		getFailedReindexBackgroundTasksCount(document, portletNamespace)
+	);
 
 	const intervalRef = useRef(null);
 
@@ -232,12 +244,35 @@ function IndexActions({
 
 							_handleSyncIconRemove();
 
-							openToast({
-								message: Liferay.Language.get(
-									'reindexing-finished-successfully'
-								),
-								type: 'success',
-							});
+							const failedReindexBackgroundTasksCount =
+								getFailedReindexBackgroundTasksCount(
+									htmlDocument,
+									portletNamespace
+								);
+
+							if (
+								failedReindexBackgroundTasksCount >
+								failedReindexBackgroundTasksCountRef.current
+							) {
+								openToast({
+									message:
+										Liferay.Language.get(
+											'reindexing-failed'
+										),
+									type: 'danger',
+								});
+							}
+							else {
+								openToast({
+									message: Liferay.Language.get(
+										'reindexing-finished-successfully'
+									),
+									type: 'success',
+								});
+							}
+
+							failedReindexBackgroundTasksCountRef.current =
+								failedReindexBackgroundTasksCount;
 						}
 					})
 					.catch(() => {

@@ -20,6 +20,8 @@ export class TasksPage {
 	readonly assignTaskToDialog: Locator;
 	readonly calendarView: {
 		datePickerMenu: Locator;
+		moreLinkButton: Locator;
+		moreLinkPopover: Locator;
 		nextMonthButton: Locator;
 		previousMonthButton: Locator;
 		title: Locator;
@@ -60,6 +62,8 @@ export class TasksPage {
 		});
 		this.calendarView = {
 			datePickerMenu: page.getByRole('dialog', {name: 'Choose date'}),
+			moreLinkButton: page.getByRole('button', {name: /\d+ More/}),
+			moreLinkPopover: page.getByTestId('calendarMoreLinkPopover'),
 			nextMonthButton: page.getByRole('button', {name: 'Next Month'}),
 			previousMonthButton: page.getByRole('button', {
 				name: 'Previous Month',

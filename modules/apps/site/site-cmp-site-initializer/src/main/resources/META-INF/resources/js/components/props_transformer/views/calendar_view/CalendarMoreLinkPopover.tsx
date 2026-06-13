@@ -67,6 +67,7 @@ export default function CalendarMoreLinkPopover({
 			active
 			alignElementRef={{current: alignElement}}
 			className="lfr__cmp-calendar-more-link-popover"
+			data-testid="calendarMoreLinkPopover"
 			onActiveChange={onClose}
 		>
 			<div className="lfr__cmp-calendar-more-link-popover-tasks">

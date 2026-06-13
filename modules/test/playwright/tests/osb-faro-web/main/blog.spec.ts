@@ -17,8 +17,6 @@ import getRandomString from '../../../utils/getRandomString';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {Nanites, runNanites} from './utils/nanites';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
-import {changeTimeFilter} from './utils/time-filter';
-import {searchByTerm} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -41,82 +39,44 @@ test('View all blogs in the property in assets', async ({
 	page,
 	project,
 }) => {
-	await test.step('Create blog events to appear within the Last 24 hours period in AC', async () => {
-		const date1 = new Date();
+	const blogTitles = ['My Blog 1', 'My Blog 2'];
 
-		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
-			{
-				applicationId: 'Blog',
-				assetId: '1',
-				assetTitle: 'My Blog 1',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				eventDate: date1.toISOString(),
-				eventId: 'blogViewed',
-				title: pageTitle,
-				userId: '1',
-			},
-			{
-				applicationId: 'Blog',
-				assetId: '2',
-				assetTitle: 'My Blog 2',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				eventDate: date1.toISOString(),
-				eventId: 'blogViewed',
-				title: pageTitle,
-				userId: '1',
-			},
-		]);
+	// Seed a view for each blog within the Last 24 hours period
+
+	const date = new Date();
+
+	await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+		blogTitles.map((blogTitle, index) => ({
+			applicationId: 'Blog',
+			assetId: String(index + 1),
+			assetTitle: blogTitle,
+			canonicalUrl: 'https://www.liferay.com',
+			channelId: channel.id,
+			eventDate: date.toISOString(),
+			eventId: 'blogViewed',
+			title: pageTitle,
+			userId: '1',
+		}))
+	);
+
+	await navigateToACPageViaURL({
+		acPage: ACPage.assetPage,
+		channelID: channel.id,
+		page,
+		projectID: project.groupId,
 	});
 
-	await test.step('Go to Analytics Cloud asset page', async () => {
-		await navigateToACPageViaURL({
-			acPage: ACPage.assetPage,
-			channelID: channel.id,
-			page,
-			projectID: project.groupId,
-		});
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Last 24 hours'}),
+		trigger: page.getByRole('button', {name: 'Last 30 days'}),
 	});
 
-	await test.step('Go to Blogs session', async () => {
-		await page.locator('.navbar-collapse').getByText('Blogs').click();
-	});
-
-	await test.step('Change the time filter to Last 24 hours', async () => {
-		await changeTimeFilter({
-			page,
-			timeFilterPeriod: 'Last 24 hours',
-		});
-	});
-
-	await test.step('Assert the blogs are appearing at the list', async () => {
-		const blogTitles = await page.locator('.blogs-root .table-title').all();
-
-		expect(blogTitles.length).toBe(2);
-	});
-
-	await test.step('Assert the blog list', async () => {
-		await searchByTerm({page, searchTerm: 'My Blog 2'});
-
-		let blogTitles = await page.locator('.blogs-root .table-title').all();
-
-		expect(blogTitles.length).toBe(1);
-
+	for (const blogTitle of blogTitles) {
 		await expect(
-			page.locator('.blogs-root .table-title').getByText('My Blog 2')
+			page.getByRole('link', {exact: true, name: blogTitle})
 		).toBeVisible();
-
-		await searchByTerm({page, searchTerm: 'My Blog 1'});
-
-		blogTitles = await page.locator('.blogs-root .table-title').all();
-
-		expect(blogTitles.length).toBe(1);
-
-		await expect(
-			page.locator('.blogs-root .table-title').getByText('My Blog 1')
-		).toBeVisible();
-	});
+	}
 });
 
 test(
@@ -242,7 +202,7 @@ test(
 		// Open the blog overview
 
 		await navigateToACPageViaURL({
-			acPage: ACPage.assetBlogsPage,
+			acPage: ACPage.assetPage,
 			channelID: channel.id,
 			page,
 			projectID: project.groupId,

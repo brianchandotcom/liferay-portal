@@ -252,3 +252,39 @@ test(
 		}
 	}
 );
+
+test(
+	'A property is created automatically after connecting to Analytics Cloud',
+	{tag: '@LRAC-12570'},
+	async ({apiHelpers, page}) => {
+
+		// Start from a brand-new project with no properties
+
+		const project = await apiHelpers.jsonWebServicesOSBFaro.createProject(
+			'Auto Property Project ' + getRandomString()
+		);
+
+		const connectionToken =
+			await apiHelpers.jsonWebServicesOSBFaro.fetchDataSourceConnectionToken(
+				project.groupId
+			);
+
+		try {
+			await connectToAnalyticsCloud(page, {token: connectionToken});
+
+			// Connecting auto-creates exactly one property, shown as a single
+			// assignable row in the Properties wizard step
+
+			await expect(
+				page.getByRole('button', {name: 'Assign'})
+			).toHaveCount(1);
+		}
+		finally {
+			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+
+			await apiHelpers.jsonWebServicesOSBFaro.deleteProject(
+				Number(project.groupId)
+			);
+		}
+	}
+);

@@ -11,6 +11,7 @@ import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {addSpaceUser} from '../../../utils/addSpaceUser';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -558,18 +559,25 @@ test(
 
 		const dueDate = toDateString(tomorrow);
 
-		const taskTitle = getRandomString();
+		const taskTitleBase = getRandomString();
 
-		await test.step('Create a task with a due date', async () => {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					dueDate: `${dueDate}T00:00:00Z`,
-					r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
-					title: taskTitle,
-				},
-				cmpTask,
-				project.scopeKey
-			);
+		const taskTitles = Array.from(
+			{length: 3},
+			(_, index) => `${taskTitleBase}-${index}`
+		);
+
+		await test.step('Create three tasks on the same due date', async () => {
+			for (const title of taskTitles) {
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						dueDate: `${dueDate}T00:00:00Z`,
+						r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+						title,
+					},
+					cmpTask,
+					project.scopeKey
+				);
+			}
 		});
 
 		const {calendarView} = tasksPage;
@@ -638,11 +646,40 @@ test(
 			);
 		});
 
-		await test.step('The task appears on its due date', async () => {
+		await test.step('The tasks appear on their due date', async () => {
 			await expect(
 				page
 					.locator(`[data-date="${dueDate}"]`)
-					.getByText(taskTitle, {exact: true})
+					.getByText(taskTitles[0], {exact: true})
+			).toBeVisible();
+		});
+
+		await test.step('A More link reveals the tasks hidden in a dense day', async () => {
+			const dayCell = page.locator(`[data-date="${dueDate}"]`);
+
+			await expect(
+				dayCell.getByText(taskTitles[1], {exact: true})
+			).toBeHidden();
+			await expect(
+				dayCell.getByText(taskTitles[2], {exact: true})
+			).toBeHidden();
+
+			await expect(calendarView.moreLinkButton).toBeVisible();
+
+			await clickAndExpectToBeVisible({
+				target: calendarView.moreLinkPopover,
+				trigger: calendarView.moreLinkButton,
+			});
+
+			await expect(
+				calendarView.moreLinkPopover.getByText(taskTitles[1], {
+					exact: true,
+				})
+			).toBeVisible();
+			await expect(
+				calendarView.moreLinkPopover.getByText(taskTitles[2], {
+					exact: true,
+				})
 			).toBeVisible();
 		});
 	}

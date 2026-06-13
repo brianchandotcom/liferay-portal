@@ -15,12 +15,25 @@
 
 	// Override the global ".fds a" rule that underlines event links
 
-	.fc-daygrid-event:not(.btn):not(.component-action):not(.page-link) {
+	.fc-daygrid-event:not(.btn):not(.component-action):not(.page-link),
+	.fc-daygrid-more-link:not(.btn):not(.component-action):not(.page-link) {
 		text-decoration: none;
 	}
 
 	.fc-daygrid-block-event .fc-event-main {
 		padding: 0;
+	}
+
+	.fc-daygrid-more-link.fc-more-link {
+		padding: 0;
+
+		.btn {
+			font-size: map-get($font-scale, 2);
+		}
+
+		&:hover {
+			background-color: transparent;
+		}
 	}
 
 	.fc-direction-ltr .fc-daygrid-event.fc-event-end,

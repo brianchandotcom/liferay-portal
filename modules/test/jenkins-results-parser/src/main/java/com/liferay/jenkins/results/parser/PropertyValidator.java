@@ -405,33 +405,14 @@ public class PropertyValidator {
 		"\"([a-z][a-z0-9]*(?:[.-][a-z0-9]+)+(?:\\[[^\"]*\\])*[.\\[]?)\"");
 	private static final List<PropertyScanner> _propertyScanners =
 		Arrays.asList(
-			new AntPropertyValueScanner(), new CommandsXMLScanner(),
-			new JenkinsResultsParserJavaScanner(), new PortalScanner(),
-			new ShellScanner());
+			new CommandsXMLPropertyScanner(),
+			new JenkinsResultsParserJavaPropertyScanner(),
+			new PortalPropertyScanner(), new PropertiesFilePropertyScanner(),
+			new ShellPropertyScanner());
 	private static final Pattern _shellGetBuildPropertyPattern =
 		Pattern.compile("get_build_property(?:_value)?\\s+\"([^\"$]+)");
 
-	private static class AntPropertyValueScanner implements PropertyScanner {
-
-		@Override
-		public List<File> findFiles(
-			File jenkinsRepositoryDir, File jenkinsResultsParserSourceDir) {
-
-			return JenkinsResultsParserUtil.findFiles(
-				new File(jenkinsRepositoryDir, "commands"),
-				"build-.+\\.properties");
-		}
-
-		@Override
-		public List<ConsumedKey> getConsumedKeys(String content, File file) {
-			return _getConsumedKeys(
-				null, content, file, _antReferencePattern, false,
-				"ANT_PROPERTY_VALUE");
-		}
-
-	}
-
-	private static class CommandsXMLScanner implements PropertyScanner {
+	private static class CommandsXMLPropertyScanner implements PropertyScanner {
 
 		@Override
 		public List<File> findFiles(
@@ -498,7 +479,7 @@ public class PropertyValidator {
 
 	}
 
-	private static class JenkinsResultsParserJavaScanner
+	private static class JenkinsResultsParserJavaPropertyScanner
 		implements PropertyScanner {
 
 		@Override
@@ -534,7 +515,7 @@ public class PropertyValidator {
 
 	}
 
-	private static class PortalScanner implements PropertyScanner {
+	private static class PortalPropertyScanner implements PropertyScanner {
 
 		@Override
 		public List<File> findFiles(
@@ -604,7 +585,28 @@ public class PropertyValidator {
 
 	}
 
-	private static class ShellScanner implements PropertyScanner {
+	private static class PropertiesFilePropertyScanner
+		implements PropertyScanner {
+
+		@Override
+		public List<File> findFiles(
+			File jenkinsRepositoryDir, File jenkinsResultsParserSourceDir) {
+
+			return JenkinsResultsParserUtil.findFiles(
+				new File(jenkinsRepositoryDir, "commands"),
+				"build-.+\\.properties");
+		}
+
+		@Override
+		public List<ConsumedKey> getConsumedKeys(String content, File file) {
+			return _getConsumedKeys(
+				null, content, file, _antReferencePattern, false,
+				"ANT_PROPERTY_VALUE");
+		}
+
+	}
+
+	private static class ShellPropertyScanner implements PropertyScanner {
 
 		@Override
 		public List<File> findFiles(

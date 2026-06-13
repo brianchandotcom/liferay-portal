@@ -9,6 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -151,6 +154,41 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	@Test
+	public void testUpgradeDoesNotMoveMixedFieldMappingsToDefaultValue()
+		throws Exception {
+
+		_assertUpgradeField(
+			JSONUtil.put(
+				"fieldMappings",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"label", RandomTestUtil.randomString()
+					).put(
+						"value", "pdf"
+					),
+					JSONUtil.put(
+						"field", "title"
+					).put(
+						"label", RandomTestUtil.randomString()
+					))
+			).put(
+				"name", "file_extensions"
+			).put(
+				"type", "multiselect"
+			),
+			JSONUtil.put(
+				"fieldMappings",
+				JSONUtil.putAll(
+					JSONUtil.put("value", "pdf"),
+					JSONUtil.put("field", "title"))
+			).put(
+				"name", "file_extensions"
+			).put(
+				"type", "multiselect"
+			));
+	}
+
+	@Test
 	public void testUpgradeHandlesLegacyFieldMappingLabel() throws Exception {
 		String elementDefinitionJSON = _readJSON(
 			"legacyFieldMappingLabelElementDefinition");
@@ -209,6 +247,67 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	@Test
+	public void testUpgradeLeavesFieldMappingListUnchanged() throws Exception {
+		JSONObject fieldJSONObject = JSONUtil.put(
+			"fieldMappings",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"boost", RandomTestUtil.randomInt()
+				).put(
+					"field", RandomTestUtil.randomString()
+				).put(
+					"locale", RandomTestUtil.randomString()
+				),
+				JSONUtil.put(
+					"boost", RandomTestUtil.randomInt()
+				).put(
+					"field", RandomTestUtil.randomString()
+				).put(
+					"locale", StringPool.BLANK
+				))
+		).put(
+			"name", "fields"
+		).put(
+			"type", "fieldMappingList"
+		);
+
+		_assertUpgradeField(fieldJSONObject, fieldJSONObject);
+	}
+
+	@Test
+	public void testUpgradeMovesLegacyMultiselectFieldMappingsToDefaultValue()
+		throws Exception {
+
+		JSONArray fieldMappingsJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"label", "pdf"
+			).put(
+				"value", "pdf"
+			),
+			JSONUtil.put(
+				"label", "docx"
+			).put(
+				"value", "docx"
+			));
+
+		_assertUpgradeField(
+			JSONUtil.put(
+				"fieldMappings", fieldMappingsJSONArray
+			).put(
+				"name", "file_extensions"
+			).put(
+				"type", "multiselect"
+			),
+			JSONUtil.put(
+				"defaultValue", fieldMappingsJSONArray
+			).put(
+				"name", "file_extensions"
+			).put(
+				"type", "multiselect"
+			));
+	}
+
+	@Test
 	public void testUpgradeSXPBlueprintWithUnknownLegacyField()
 		throws Exception {
 
@@ -247,6 +346,75 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			JSONCompareMode.STRICT);
 	}
 
+	private void _assertUpgradeField(
+			JSONObject fieldJSONObject, JSONObject expectedFieldJSONObject)
+		throws Exception {
+
+		String elementInstancesJSON = _toElementInstancesJSON(fieldJSONObject);
+
+		Assert.assertNotNull(
+			ElementInstanceUtil.toElementInstances(elementInstancesJSON));
+
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			null, TestPropsValues.getUserId(), StringPool.BLANK,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			StringPool.BLANK, SXPBlueprintConstants.SCHEMA_VERSION,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			ServiceContextTestUtil.getServiceContext(
+				_group1, TestPropsValues.getUserId()));
+
+		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
+
+		sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
+			sxpBlueprint);
+
+		SXPElement sxpElement = _sxpElementLocalService.addSXPElement(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+			_getElementDefinitionJSON(elementInstancesJSON), StringPool.BLANK,
+			StringPool.BLANK, true, StringPool.BLANK,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			0,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				TestPropsValues.getUserId()));
+
+		_runUpgrade();
+
+		String expectedElementInstancesJSON = _toElementInstancesJSON(
+			expectedFieldJSONObject);
+
+		sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
+			sxpBlueprint.getSXPBlueprintId());
+
+		JSONAssert.assertEquals(
+			expectedElementInstancesJSON,
+			sxpBlueprint.getElementInstancesJSON(), JSONCompareMode.STRICT);
+
+		sxpElement = _sxpElementLocalService.fetchSXPElement(
+			sxpElement.getSXPElementId());
+
+		JSONAssert.assertEquals(
+			_getElementDefinitionJSON(expectedElementInstancesJSON),
+			sxpElement.getElementDefinitionJSON(), JSONCompareMode.STRICT);
+	}
+
+	private String _getElementDefinitionJSON(String elementInstancesJSON)
+		throws Exception {
+
+		JSONArray elementInstancesJSONArray = _jsonFactory.createJSONArray(
+			elementInstancesJSON);
+
+		JSONObject elementDefinitionJSONObject = JSONUtil.getValueAsJSONObject(
+			elementInstancesJSONArray.getJSONObject(0), "JSONObject/sxpElement",
+			"JSONObject/elementDefinition");
+
+		return elementDefinitionJSONObject.toString();
+	}
+
 	private String _readJSON(String name) {
 		return StringUtil.read(
 			_clazz,
@@ -266,6 +434,25 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		_multiVMPool.clear();
 	}
 
+	private String _toElementInstancesJSON(JSONObject fieldJSONObject) {
+		return JSONUtil.put(
+			JSONUtil.put(
+				"sxpElement",
+				JSONUtil.put(
+					"elementDefinition",
+					JSONUtil.put(
+						"uiConfiguration",
+						JSONUtil.put(
+							"fieldSets",
+							JSONUtil.put(
+								JSONUtil.put(
+									"fields", JSONUtil.put(fieldJSONObject)))))
+				).put(
+					"externalReferenceCode", "CUSTOM_ELEMENT"
+				))
+		).toString();
+	}
+
 	private final Class<?> _clazz = getClass();
 
 	@DeleteAfterTestRun
@@ -273,6 +460,9 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@DeleteAfterTestRun
 	private Group _group2;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

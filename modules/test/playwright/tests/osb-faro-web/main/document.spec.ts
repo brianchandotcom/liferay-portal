@@ -353,3 +353,78 @@ test(
 		).toHaveText('2');
 	}
 );
+
+test(
+	'Document rating is shown on the Documents and Media asset',
+	{
+		tag: ['@LRAC-11450', '@LRAC-11509'],
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const documentTitle = 'DM AC Title';
+		const canonicalUrl =
+			'/web/site-name/ac-page/-/document_library/view_file/1';
+
+		const date = new Date();
+
+		// Seed a download so the document asset appears in the list, plus a
+		// four-star (8.00/10) rating vote on the same document
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Document',
+				assetId: '1',
+				assetTitle: documentTitle,
+				canonicalUrl,
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'documentDownloaded',
+				title: documentTitle,
+				userId: '1',
+			},
+			{
+				applicationId: 'Ratings',
+				assetId: '1',
+				canonicalUrl,
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'VOTE',
+				properties: [
+					{
+						name: 'className',
+						value: 'com.liferay.document.library.kernel.model.DLFileEntry',
+					},
+					{name: 'ratingType', value: 'stars'},
+					{name: 'score', value: '0.8'},
+				],
+				title: documentTitle,
+				userId: '1',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.assetDocumentsAndMediaPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Last 24 hours'}),
+			trigger: page.getByRole('button', {name: 'Last 30 days'}),
+		});
+
+		await page
+			.getByRole('link', {exact: true, name: documentTitle})
+			.click();
+
+		// The Visitors Behavior Rating metric reflects the four-star vote
+
+		await expect(
+			page
+				.locator('.analytics-metrics-tabs .card-tab')
+				.filter({hasText: 'Rating'})
+				.locator('.metric-value')
+		).toContainText('8.00');
+	}
+);

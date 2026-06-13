@@ -219,6 +219,15 @@ public class UpgradePortletPreferencesTest {
 			).build());
 	}
 
+	@Test
+	public void testUpgradePortletPreferencesWithoutArticle() throws Exception {
+		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
+			"showAvailableLocales", "true"
+		).build();
+
+		_assertUpgrade(portletPreferencesMap, portletPreferencesMap);
+	}
+
 	private void _assertPortletPreferences(
 			String portletId, Map<String, String> portletPreferencesMap)
 		throws Exception {

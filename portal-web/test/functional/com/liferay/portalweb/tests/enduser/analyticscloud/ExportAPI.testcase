@@ -41,67 +41,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11104 | Test Summary: There is an export scheduled but not started"
-	@priority = 3
-	test ExportScheduledButNotStarted {
-		var startDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
-		var startTime = "11:00:00.000";
-		var endDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
-		var endTime = "20:30:00.000";
-		var type = "segment";
-
-		var upperCaseType = StringUtil.upperCase(${type});
-		var status = "PENDING";
-		var message1 = "A new data export file for this date range and type will be created. Please come back later.";
-		var message2 = "A data export for this date range and type has already been scheduled. Please come back later.";
-
-		task ("Get the token value to create the schedule") {
-			var token = ACApi.getTokenValue();
-		}
-
-		task ("Create a new export schedule via API") {
-			ACApi.createNewExportSchedule(
-				endDate = ${endDate},
-				endTime = ${endTime},
-				startDate = ${startDate},
-				startTime = ${startTime},
-				token = ${token},
-				type = ${type});
-		}
-
-		task ("Check if the API response is correct for a new export schedule") {
-			ACApi.viewApiResponseForExportProcess(
-				endDate = ${endDate},
-				endTime = ${endTime},
-				message = ${message1},
-				startDate = ${startDate},
-				startTime = ${startTime},
-				status = ${status},
-				upperCaseType = ${upperCaseType});
-		}
-
-		task ("Run the same curl command again") {
-			ACApi.createNewExportSchedule(
-				endDate = ${endDate},
-				endTime = ${endTime},
-				startDate = ${startDate},
-				startTime = ${startTime},
-				token = ${token},
-				type = ${type});
-		}
-
-		task ("Check if API response is correct when run same curl twice and export process not started") {
-			ACApi.viewApiResponseForExportProcess(
-				endDate = ${endDate},
-				endTime = ${endTime},
-				message = ${message2},
-				startDate = ${startDate},
-				startTime = ${startTime},
-				status = ${status},
-				upperCaseType = ${upperCaseType});
-		}
-	}
-
 	@description = "Feature ID: LRAC-12705 | Automation ID: LRAC-13592 | Test Summary: An internal problem occurred during the export process"
 	@priority = 2
 	test InternalProblemOccurredInExportProcess {

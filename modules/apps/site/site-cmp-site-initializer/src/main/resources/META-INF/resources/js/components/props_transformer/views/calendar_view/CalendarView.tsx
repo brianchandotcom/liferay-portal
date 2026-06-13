@@ -14,6 +14,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {ITask} from '../../../../utils/types';
 import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
+import CalendarTaskCard from './CalendarTaskCard';
 
 import './CalendarView.scss';
 
@@ -36,12 +37,16 @@ export default function CalendarView({items}: CalendarViewProps) {
 				.filter((item) => item.embedded?.dueDate)
 				.map((item) => ({
 					allDay: true,
+					extendedProps: {task: item.embedded},
 					id: String(item.embedded.id),
 					start: item.embedded.dueDate.slice(0, 10),
 					title: item.embedded.title,
 				})),
 		[items]
 	);
+
+	const currentYear = new Date().getFullYear();
+	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
 	useEffect(() => {
 		Liferay.fire(UPDATE_TASKS_QUICK_FILTER_VISIBILITY, {visible: false});
@@ -50,9 +55,6 @@ export default function CalendarView({items}: CalendarViewProps) {
 			Liferay.fire(UPDATE_TASKS_QUICK_FILTER_VISIBILITY, {visible: true});
 		};
 	}, []);
-
-	const currentYear = new Date().getFullYear();
-	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
 	return (
 		<div className="lfr__calendar-view">
@@ -159,6 +161,9 @@ export default function CalendarView({items}: CalendarViewProps) {
 			<FullCalendar
 				datesSet={({view}) => setTitle(view.title)}
 				dayHeaderFormat={{weekday: 'long'}}
+				eventContent={(arg) => (
+					<CalendarTaskCard task={arg.event.extendedProps.task} />
+				)}
 				events={events}
 				headerToolbar={false}
 				initialView="dayGridMonth"

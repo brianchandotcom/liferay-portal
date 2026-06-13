@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -335,23 +334,16 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 
 		return SearchUtil.search(
 			Collections.emptyMap(),
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				booleanFilter.addRequiredTerm(
-					FragmentEntryField.HEAD_LISTABLE, true);
-
-				if (fragmentCollectionId > 0) {
-					booleanFilter.addRequiredTerm(
-						FragmentEntryField.FRAGMENT_COLLECTION_ID,
-						fragmentCollectionId);
-				}
-			},
-			filter, FragmentEntry.class.getName(), null, pagination,
+			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			FragmentEntry.class.getName(), null, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.setAttribute(
+					FragmentEntryField.FRAGMENT_COLLECTION_ID,
+					fragmentCollectionId);
+				searchContext.setAttribute(
+					FragmentEntryField.HEAD_LISTABLE, Boolean.TRUE);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {groupId});
 			},

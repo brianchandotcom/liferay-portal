@@ -69,13 +69,15 @@ public class FragmentEntryIndexerReindexTest {
 			WorkflowConstants.STATUS_DRAFT);
 
 		_assertFieldValues(
-			true, fragmentEntry.isMarketplace(), fragmentEntry.getName());
+			fragmentEntry.isHead(), true, fragmentEntry.isMarketplace(),
+			fragmentEntry.getName());
 
 		fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), RandomTestUtil.randomString());
 
 		_assertFieldValues(
-			true, fragmentEntry.isMarketplace(), fragmentEntry.getName());
+			fragmentEntry.isHead(), true, fragmentEntry.isMarketplace(),
+			fragmentEntry.getName());
 
 		_deleteDocument(
 			fragmentEntry.getCompanyId(), uidFactory.getUID(fragmentEntry));
@@ -85,12 +87,14 @@ public class FragmentEntryIndexerReindexTest {
 		_reindex(fragmentEntry);
 
 		_assertFieldValues(
-			true, fragmentEntry.isMarketplace(), fragmentEntry.getName());
+			fragmentEntry.isHead(), true, fragmentEntry.isMarketplace(),
+			fragmentEntry.getName());
 
 		_reindex();
 
 		_assertFieldValues(
-			true, fragmentEntry.isMarketplace(), fragmentEntry.getName());
+			fragmentEntry.isHead(), true, fragmentEntry.isMarketplace(),
+			fragmentEntry.getName());
 
 		_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
 
@@ -99,7 +103,8 @@ public class FragmentEntryIndexerReindexTest {
 		fragmentEntry = _addFragmentEntry(WorkflowConstants.STATUS_APPROVED);
 
 		_assertFieldValues(
-			true, fragmentEntry.isMarketplace(), fragmentEntry.getName());
+			fragmentEntry.isHead(), true, fragmentEntry.isMarketplace(),
+			fragmentEntry.getName());
 
 		FragmentEntry draftFragmentEntry = _fragmentEntryLocalService.getDraft(
 			fragmentEntry.getFragmentEntryId());
@@ -109,10 +114,11 @@ public class FragmentEntryIndexerReindexTest {
 			RandomTestUtil.randomString());
 
 		_assertFieldValues(
-			true, fragmentEntry.isMarketplace(), fragmentEntry.getName());
+			fragmentEntry.isHead(), true, fragmentEntry.isMarketplace(),
+			fragmentEntry.getName());
 		_assertFieldValues(
-			false, draftFragmentEntry.isMarketplace(),
-			draftFragmentEntry.getName());
+			draftFragmentEntry.isHead(), false,
+			draftFragmentEntry.isMarketplace(), draftFragmentEntry.getName());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -171,7 +177,8 @@ public class FragmentEntryIndexerReindexTest {
 	}
 
 	private void _assertFieldValues(
-			boolean headListable, boolean marketplace, String name)
+			boolean head, boolean headListable, boolean marketplace,
+			String name)
 		throws Exception {
 
 		_assertFieldValue(Field.NAME, name, name);
@@ -179,6 +186,7 @@ public class FragmentEntryIndexerReindexTest {
 			FragmentEntryField.FRAGMENT_COLLECTION_ID,
 			String.valueOf(_fragmentCollection.getFragmentCollectionId()),
 			name);
+		_assertFieldValue(FragmentEntryField.HEAD, String.valueOf(head), name);
 		_assertFieldValue(
 			FragmentEntryField.HEAD_LISTABLE, String.valueOf(headListable),
 			name);
@@ -216,6 +224,9 @@ public class FragmentEntryIndexerReindexTest {
 				FragmentEntry.class
 			).queryString(
 				queryString
+			).withSearchContext(
+				searchContext -> searchContext.setAttribute(
+					FragmentEntryField.HEAD, Boolean.FALSE)
 			).build());
 	}
 

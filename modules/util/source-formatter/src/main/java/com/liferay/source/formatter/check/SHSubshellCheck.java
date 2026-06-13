@@ -123,13 +123,13 @@ public class SHSubshellCheck extends BaseFileCheck {
 		int count = 0;
 
 		for (int i = 0; i < line.length(); i++) {
-			if (line.charAt(i) == c) {
-				if ((i > 0) && (line.charAt(i - 1) == '\\')) {
-					continue;
-				}
+			if ((line.charAt(i) != c) ||
+				((i > 0) && (line.charAt(i - 1) == '\\'))) {
 
-				count++;
+				continue;
 			}
+
+			count++;
 		}
 
 		if ((count % 2) != 0) {

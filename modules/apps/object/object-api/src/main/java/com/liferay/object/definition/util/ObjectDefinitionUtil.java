@@ -285,6 +285,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"SEOStudioDomain", "/seo-studio/domains"
 		).put(
+			"SEOStudioGSCCredentials", "/seo-studio/gsc-credentials"
+		).put(
 			"SEOStudioInsightType", "/seo-studio/insight-types"
 		).put(
 			"SEOStudioInstance", "/seo-studio/instances"

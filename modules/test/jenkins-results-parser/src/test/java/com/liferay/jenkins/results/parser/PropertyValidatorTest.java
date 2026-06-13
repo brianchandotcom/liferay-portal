@@ -26,20 +26,17 @@ public class PropertyValidatorTest
 		File commandsDir = new File(jenkinsRepositoryDir, "commands");
 
 		Assume.assumeTrue(
-			JenkinsResultsParserUtil.combine(
-				"Skip property validation because ",
-				JenkinsResultsParserUtil.getCanonicalPath(jenkinsRepositoryDir),
-				" does not exist."),
+			JenkinsResultsParserUtil.getCanonicalPath(commandsDir) +
+				" does not exist",
 			commandsDir.isDirectory());
 
-		PropertyValidator.ValidationResult
-			validationResult = PropertyValidator.validate(
+		PropertyValidator.ValidationResult validationResult =
+			PropertyValidator.validate(
 				jenkinsRepositoryDir, new File("src/main/java"));
 
 		List<PropertyValidator.ConsumptionFailure> consumptionFailures =
 			validationResult.getConsumptionFailures();
-		List<String> unconsumedKeys =
-			validationResult.getUnconsumedKeys();
+		List<String> unconsumedKeys = validationResult.getUnconsumedKeys();
 
 		for (PropertyValidator.ConsumptionFailure consumptionFailure :
 				consumptionFailures) {
@@ -50,15 +47,8 @@ public class PropertyValidatorTest
 
 		for (String unconsumedKey : unconsumedKeys) {
 			System.out.println(
-				"WARNING: defined but never consumed: " + unconsumedKey);
+				"WARNING: Unconsumed build property \"" + unconsumedKey + "\"");
 		}
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Property validation found ",
-				String.valueOf(consumptionFailures.size()), " failure(s) and ",
-				String.valueOf(unconsumedKeys.size()),
-				" unconsumed-key warning(s)."));
 	}
 
 }

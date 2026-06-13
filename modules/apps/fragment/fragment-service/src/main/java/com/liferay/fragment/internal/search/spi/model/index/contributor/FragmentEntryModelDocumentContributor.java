@@ -29,6 +29,7 @@ public class FragmentEntryModelDocumentContributor
 		document.addKeyword(
 			FragmentEntryField.FRAGMENT_COLLECTION_ID,
 			fragmentEntry.getFragmentCollectionId());
+		document.addKeyword(FragmentEntryField.HEAD, fragmentEntry.isHead());
 		document.addKeyword(
 			FragmentEntryField.HEAD_LISTABLE,
 			fragmentEntry.isHead() ||

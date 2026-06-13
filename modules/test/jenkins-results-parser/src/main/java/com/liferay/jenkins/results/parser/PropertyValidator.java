@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 /**
  * @author Brittney Nguyen
  */
-public class PropertyValidationUtil {
+public class PropertyValidator {
 
 	public static void main(String[] args) throws IOException {
 		File jenkinsRepositoryDir = null;
@@ -46,28 +46,28 @@ public class PropertyValidationUtil {
 				"modules/test/jenkins-results-parser/src/main/java");
 		}
 
-		PropertyValidationResult propertyValidationResult = validate(
+		ValidationResult validationResult = validate(
 			jenkinsRepositoryDir, jenkinsResultsParserSourceDir);
 
 		for (String unconsumedKey :
-				propertyValidationResult.getUnconsumedKeys()) {
+				validationResult.getUnconsumedKeys()) {
 
 			System.out.println(
 				"WARNING: defined but never consumed: " + unconsumedKey);
 		}
 
 		for (ConsumptionFailure consumptionFailure :
-				propertyValidationResult.getConsumptionFailures()) {
+				validationResult.getConsumptionFailures()) {
 
 			System.err.println(consumptionFailure.getMessage());
 		}
 
-		if (propertyValidationResult.hasConsumptionFailures()) {
+		if (validationResult.hasConsumptionFailures()) {
 			System.exit(1);
 		}
 	}
 
-	public static PropertyValidationResult validate(
+	public static ValidationResult validate(
 			File jenkinsRepositoryDir, File jenkinsResultsParserSourceDir)
 		throws IOException {
 
@@ -122,7 +122,7 @@ public class PropertyValidationUtil {
 
 		Collections.sort(unconsumedKeys);
 
-		return new PropertyValidationResult(
+		return new ValidationResult(
 			consumptionFailures, unconsumedKeys);
 	}
 
@@ -191,16 +191,16 @@ public class PropertyValidationUtil {
 				":", String.valueOf(_consumedKey.getLineNumber()),
 				"\n  Define it in liferay-jenkins-ee/commands/",
 				"build-*.properties, or add it to ",
-				"PropertyValidationUtil._documentedDefaultPropertyNames.");
+				"PropertyValidator._documentedDefaultPropertyNames.");
 		}
 
 		private final ConsumedKey _consumedKey;
 
 	}
 
-	public static class PropertyValidationResult {
+	public static class ValidationResult {
 
-		public PropertyValidationResult(
+		public ValidationResult(
 			List<ConsumptionFailure> consumptionFailures,
 			List<String> unconsumedKeys) {
 

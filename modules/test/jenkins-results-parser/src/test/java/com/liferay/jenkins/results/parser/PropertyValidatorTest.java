@@ -15,11 +15,11 @@ import org.junit.Test;
 /**
  * @author Brittney Nguyen
  */
-public class PropertyValidationTest
+public class PropertyValidatorTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
-	public void testPropertyConsumption() throws Exception {
+	public void testValidate() throws Exception {
 		File jenkinsRepositoryDir =
 			JenkinsResultsParserUtil.getJenkinsRepositoryDir();
 
@@ -32,16 +32,16 @@ public class PropertyValidationTest
 				" does not exist."),
 			commandsDir.isDirectory());
 
-		PropertyValidationUtil.PropertyValidationResult
-			propertyValidationResult = PropertyValidationUtil.validate(
+		PropertyValidator.ValidationResult
+			validationResult = PropertyValidator.validate(
 				jenkinsRepositoryDir, new File("src/main/java"));
 
-		List<PropertyValidationUtil.ConsumptionFailure> consumptionFailures =
-			propertyValidationResult.getConsumptionFailures();
+		List<PropertyValidator.ConsumptionFailure> consumptionFailures =
+			validationResult.getConsumptionFailures();
 		List<String> unconsumedKeys =
-			propertyValidationResult.getUnconsumedKeys();
+			validationResult.getUnconsumedKeys();
 
-		for (PropertyValidationUtil.ConsumptionFailure consumptionFailure :
+		for (PropertyValidator.ConsumptionFailure consumptionFailure :
 				consumptionFailures) {
 
 			errorCollector.addError(

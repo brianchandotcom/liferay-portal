@@ -49,11 +49,9 @@ public class PropertyValidator {
 		ValidationResult validationResult = validate(
 			jenkinsRepositoryDir, jenkinsResultsParserSourceDir);
 
-		for (String unconsumedKey :
-				validationResult.getUnconsumedKeys()) {
-
+		for (String unconsumedKey : validationResult.getUnconsumedKeys()) {
 			System.out.println(
-				"WARNING: defined but never consumed: " + unconsumedKey);
+				"WARNING: Unconsumed build property \"" + unconsumedKey + "\"");
 		}
 
 		for (ConsumptionFailure consumptionFailure :
@@ -73,9 +71,9 @@ public class PropertyValidator {
 
 		TreeSet<String> definedKeys = _getDefinedKeys(jenkinsRepositoryDir);
 
-		List<ConsumptionFailure> consumptionFailures = new ArrayList<>();
 		Set<String> consumedKeys = new TreeSet<>();
 		List<String> consumedPrefixes = new ArrayList<>();
+		List<ConsumptionFailure> consumptionFailures = new ArrayList<>();
 
 		for (PropertyScanner propertyScanner : _propertyScanners) {
 			for (File file :
@@ -122,8 +120,7 @@ public class PropertyValidator {
 
 		Collections.sort(unconsumedKeys);
 
-		return new ValidationResult(
-			consumptionFailures, unconsumedKeys);
+		return new ValidationResult(consumptionFailures, unconsumedKeys);
 	}
 
 	public static class ConsumedKey {
@@ -185,13 +182,10 @@ public class PropertyValidator {
 		public String getMessage() {
 			return JenkinsResultsParserUtil.combine(
 				"[", _consumedKey.getSurface(), "] Undefined build property \"",
-				_consumedKey.getKey(), "\" consumed at\n  ",
+				_consumedKey.getKey(), "\" consumed at ",
 				JenkinsResultsParserUtil.getCanonicalPath(
 					_consumedKey.getSourceFile()),
-				":", String.valueOf(_consumedKey.getLineNumber()),
-				"\n  Define it in liferay-jenkins-ee/commands/",
-				"build-*.properties, or add it to ",
-				"PropertyValidator._documentedDefaultPropertyNames.");
+				":", String.valueOf(_consumedKey.getLineNumber()));
 		}
 
 		private final ConsumedKey _consumedKey;
@@ -287,9 +281,7 @@ public class PropertyValidator {
 	private static int _getLineNumber(String content, int offset) {
 		int lineNumber = 1;
 
-		int end = Math.min(offset, content.length());
-
-		for (int i = 0; i < end; i++) {
+		for (int i = 0; i < offset; i++) {
 			if (content.charAt(i) == '\n') {
 				lineNumber++;
 			}

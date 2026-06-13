@@ -136,8 +136,8 @@ public class PropertyValidator {
 			_surface = surface;
 
 			_prefix =
-				key.endsWith("[") || key.endsWith("(") || key.endsWith(".") ||
-				key.endsWith("/");
+				key.endsWith("(") || key.endsWith(".") || key.endsWith("/") ||
+				key.endsWith("[");
 		}
 
 		public String getKey() {
@@ -290,12 +290,30 @@ public class PropertyValidator {
 		return lineNumber;
 	}
 
+	private static boolean _isBasePropertyNameDefined(
+		String basePropertyName, TreeSet<String> definedKeys) {
+
+		if (definedKeys.contains(basePropertyName)) {
+			return true;
+		}
+
+		String prefix = basePropertyName + "[";
+
+		String ceilingKey = definedKeys.ceiling(prefix);
+
+		if ((ceilingKey != null) && ceilingKey.startsWith(prefix)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static boolean _isConsumed(
 		Set<String> consumedKeys, List<String> consumedPrefixes,
 		String definedKey) {
 
 		for (String consumedKey : consumedKeys) {
-			if (_keysMatch(definedKey, consumedKey)) {
+			if (_isMatchingKey(definedKey, consumedKey)) {
 				return true;
 			}
 		}
@@ -310,7 +328,7 @@ public class PropertyValidator {
 	}
 
 	private static boolean _isDefined(TreeSet<String> definedKeys, String key) {
-		if (_matchesBasePropertyName(key, definedKeys)) {
+		if (_isBasePropertyNameDefined(key, definedKeys)) {
 			return true;
 		}
 
@@ -319,12 +337,22 @@ public class PropertyValidator {
 		if (index != -1) {
 			String baseKey = key.substring(0, index);
 
-			if (_matchesBasePropertyName(baseKey, definedKeys)) {
+			if (_isBasePropertyNameDefined(baseKey, definedKeys)) {
 				return true;
 			}
 		}
 
 		return _documentedDefaultPropertyNames.contains(key);
+	}
+
+	private static boolean _isMatchingKey(String key1, String key2) {
+		if (key1.equals(key2) || key1.startsWith(key2 + "[") ||
+			key2.startsWith(key1 + "[")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _isWithinBeanshellRegions(
@@ -336,34 +364,6 @@ public class PropertyValidator {
 
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	private static boolean _keysMatch(String key1, String key2) {
-		if (key1.equals(key2) || key1.startsWith(key2 + "[") ||
-			key2.startsWith(key1 + "[")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private static boolean _matchesBasePropertyName(
-		String basePropertyName, TreeSet<String> definedKeys) {
-
-		if (definedKeys.contains(basePropertyName)) {
-			return true;
-		}
-
-		String prefix = basePropertyName + "[";
-
-		String ceilingKey = definedKeys.ceiling(prefix);
-
-		if ((ceilingKey != null) && ceilingKey.startsWith(prefix)) {
-			return true;
 		}
 
 		return false;
@@ -456,11 +456,12 @@ public class PropertyValidator {
 
 		@Override
 		public List<ConsumedKey> getConsumedKeys(String content, File file) {
-			List<ConsumedKey> consumedKeys = new ArrayList<>(
+			List<ConsumedKey> consumedKeys = new ArrayList<>();
+
+			consumedKeys.addAll(
 				_getConsumedKeys(
 					null, content, file, _antReferencePattern, false,
 					"ANT_XML"));
-
 			consumedKeys.addAll(
 				_getConsumedKeys(
 					null, content, file, _propertyKeyLiteralPattern, false,
@@ -557,10 +558,16 @@ public class PropertyValidator {
 
 			List<File> files = new ArrayList<>();
 
-			for (File file : portalDir.listFiles()) {
+			File[] portalFiles = portalDir.listFiles();
+
+			if (portalFiles == null) {
+				return files;
+			}
+
+			for (File file : portalFiles) {
 				String fileName = file.getName();
 
-				if (fileName.matches("build.*\\.xml|.*\\.properties")) {
+				if (fileName.matches(".*\\.properties|build.*\\.xml")) {
 					files.add(file);
 				}
 			}

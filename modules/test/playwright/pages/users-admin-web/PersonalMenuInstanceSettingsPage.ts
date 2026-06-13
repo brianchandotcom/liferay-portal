@@ -17,9 +17,12 @@ export class PersonalMenuInstanceSettingsPage {
 	constructor(page: Page) {
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.page = page;
-		this.personalApplicationsLookAndFeelSelect = page.getByRole('combobox', {
-			name: 'Personal Applications Look and Feel',
-		});
+		this.personalApplicationsLookAndFeelSelect = page.getByRole(
+			'combobox',
+			{
+				name: 'Personal Applications Look and Feel',
+			}
+		);
 		this.showInControlMenuCheckbox = page.getByLabel(
 			'Show in Control Menu'
 		);

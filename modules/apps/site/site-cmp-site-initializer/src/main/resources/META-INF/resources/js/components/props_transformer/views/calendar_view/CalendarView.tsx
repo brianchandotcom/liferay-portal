@@ -5,6 +5,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
@@ -12,7 +13,7 @@ import classNames from 'classnames';
 import {dateUtils} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
-import {ITask} from '../../../../utils/types';
+import {ITask, ITaskObjectEntry} from '../../../../utils/types';
 import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
 import CalendarTaskCard from './CalendarTaskCard';
 
@@ -24,11 +25,19 @@ interface CalendarViewProps {
 	items: ITask[];
 }
 
+interface MoreLinkPopover {
+	alignElement: HTMLElement;
+	date: Date;
+	tasks: ITaskObjectEntry[];
+}
+
 export default function CalendarView({items}: CalendarViewProps) {
 	const calendarRef = useRef<FullCalendar>(null);
 
 	const [datePickerExpanded, setDatePickerExpanded] = useState(false);
 	const [datePickerValue, setDatePickerValue] = useState('');
+	const [moreLinkPopover, setMoreLinkPopover] =
+		useState<MoreLinkPopover | null>(null);
 	const [title, setTitle] = useState('');
 
 	const events = useMemo(
@@ -37,6 +46,11 @@ export default function CalendarView({items}: CalendarViewProps) {
 				.filter((item) => item.embedded?.dueDate)
 				.map((item) => ({
 					allDay: true,
+
+					// Attach the full task entry to the event so the custom
+					// renderers (eventContent and the "more" popover) can read
+					// it back through event.extendedProps.
+
 					extendedProps: {task: item.embedded},
 					id: String(item.embedded.id),
 					start: item.embedded.dueDate.slice(0, 10),
@@ -161,15 +175,59 @@ export default function CalendarView({items}: CalendarViewProps) {
 			<FullCalendar
 				datesSet={({view}) => setTitle(view.title)}
 				dayHeaderFormat={{weekday: 'long'}}
+				dayMaxEvents
 				eventContent={(arg) => (
 					<CalendarTaskCard task={arg.event.extendedProps.task} />
 				)}
 				events={events}
 				headerToolbar={false}
 				initialView="dayGridMonth"
+				moreLinkClick={(arg) => {
+					setMoreLinkPopover({
+						alignElement: arg.jsEvent.currentTarget as HTMLElement,
+						date: arg.date,
+						tasks: arg.hiddenSegs.map(
+							(seg) => seg.event.extendedProps.task
+						),
+					});
+
+					// Prevent FullCalendar's built-in popover from opening.
+					// It stays closed only when the handler returns a truthy
+					// value other than "popover". The return type is
+					// "string | void", which rejects a boolean, so "true" is
+					// force-cast to void for the compiler; at runtime the
+					// value is still true.
+
+					return true as unknown as void;
+				}}
+				moreLinkContent={(arg) => (
+					<ClayButton borderless displayType="secondary" size="sm">
+						{`${arg.num} ${Liferay.Language.get('more')}`}
+
+						<span className="inline-item inline-item-after">
+							<ClayIcon symbol="caret-bottom" />
+						</span>
+					</ClayButton>
+				)}
 				plugins={[dayGridPlugin]}
 				ref={calendarRef}
 			/>
+
+			{moreLinkPopover && (
+				<ClayDropDown.Menu
+					active
+					alignElementRef={{current: moreLinkPopover.alignElement}}
+					onActiveChange={() => setMoreLinkPopover(null)}
+				>
+					<ClayDropDown.ItemList>
+						{moreLinkPopover.tasks.map((task) => (
+							<ClayDropDown.Item key={task.id}>
+								{task.title}
+							</ClayDropDown.Item>
+						))}
+					</ClayDropDown.ItemList>
+				</ClayDropDown.Menu>
+			)}
 		</div>
 	);
 }

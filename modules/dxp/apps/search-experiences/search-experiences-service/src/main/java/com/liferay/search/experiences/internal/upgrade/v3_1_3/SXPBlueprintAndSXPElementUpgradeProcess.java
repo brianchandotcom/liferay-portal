@@ -146,86 +146,31 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		return false;
 	}
 
-	private boolean _removeLegacyFieldMappingLabels(
-		JSONArray elementInstanceJSONArray) {
+	private boolean _isLegacyMultiselectFieldMappings(
+		JSONArray fieldMappingsJSONArray) {
 
-		boolean changed = false;
+		boolean legacyMultiselectFieldMappings = false;
 
-		for (int i = 0; i < elementInstanceJSONArray.length(); i++) {
-			JSONObject elementDefinitionJSONObject =
-				JSONUtil.getValueAsJSONObject(
-					elementInstanceJSONArray.getJSONObject(i),
-					"JSONObject/sxpElement", "JSONObject/elementDefinition");
+		for (int i = 0; i < fieldMappingsJSONArray.length(); i++) {
+			JSONObject fieldMappingJSONObject =
+				fieldMappingsJSONArray.getJSONObject(i);
 
-			if (elementDefinitionJSONObject == null) {
+			if (fieldMappingJSONObject == null) {
 				continue;
 			}
 
-			if (_removeLegacyFieldMappingLabels(elementDefinitionJSONObject)) {
-				changed = true;
+			if (fieldMappingJSONObject.has("field")) {
+				return false;
+			}
+
+			if (fieldMappingJSONObject.has("label") ||
+				fieldMappingJSONObject.has("value")) {
+
+				legacyMultiselectFieldMappings = true;
 			}
 		}
 
-		return changed;
-	}
-
-	private boolean _removeLegacyFieldMappingLabels(
-		JSONObject elementDefinitionJSONObject) {
-
-		JSONArray fieldSetsJSONArray = JSONUtil.getValueAsJSONArray(
-			elementDefinitionJSONObject, "JSONObject/uiConfiguration",
-			"JSONArray/fieldSets");
-
-		if (fieldSetsJSONArray == null) {
-			return false;
-		}
-
-		boolean changed = false;
-
-		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
-			JSONObject fieldSetJSONObject = fieldSetsJSONArray.getJSONObject(i);
-
-			if (fieldSetJSONObject == null) {
-				continue;
-			}
-
-			JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
-				"fields");
-
-			if (fieldsJSONArray == null) {
-				continue;
-			}
-
-			for (int j = 0; j < fieldsJSONArray.length(); j++) {
-				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
-
-				if (fieldJSONObject == null) {
-					continue;
-				}
-
-				JSONArray fieldMappingsJSONArray = fieldJSONObject.getJSONArray(
-					"fieldMappings");
-
-				if (fieldMappingsJSONArray == null) {
-					continue;
-				}
-
-				for (int k = 0; k < fieldMappingsJSONArray.length(); k++) {
-					JSONObject fieldMappingJSONObject =
-						fieldMappingsJSONArray.getJSONObject(k);
-
-					if ((fieldMappingJSONObject != null) &&
-						fieldMappingJSONObject.has("label")) {
-
-						fieldMappingJSONObject.remove("label");
-
-						changed = true;
-					}
-				}
-			}
-		}
-
-		return changed;
+		return legacyMultiselectFieldMappings;
 	}
 
 	private void _upgradeConfigurationEntry(
@@ -303,6 +248,100 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private boolean _upgradeLegacyFieldMappings(
+		JSONArray elementInstanceJSONArray) {
+
+		boolean changed = false;
+
+		for (int i = 0; i < elementInstanceJSONArray.length(); i++) {
+			JSONObject elementDefinitionJSONObject =
+				JSONUtil.getValueAsJSONObject(
+					elementInstanceJSONArray.getJSONObject(i),
+					"JSONObject/sxpElement", "JSONObject/elementDefinition");
+
+			if (elementDefinitionJSONObject == null) {
+				continue;
+			}
+
+			if (_upgradeLegacyFieldMappings(elementDefinitionJSONObject)) {
+				changed = true;
+			}
+		}
+
+		return changed;
+	}
+
+	private boolean _upgradeLegacyFieldMappings(
+		JSONObject elementDefinitionJSONObject) {
+
+		JSONArray fieldSetsJSONArray = JSONUtil.getValueAsJSONArray(
+			elementDefinitionJSONObject, "JSONObject/uiConfiguration",
+			"JSONArray/fieldSets");
+
+		if (fieldSetsJSONArray == null) {
+			return false;
+		}
+
+		boolean changed = false;
+
+		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
+			JSONObject fieldSetJSONObject = fieldSetsJSONArray.getJSONObject(i);
+
+			if (fieldSetJSONObject == null) {
+				continue;
+			}
+
+			JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
+				"fields");
+
+			if (fieldsJSONArray == null) {
+				continue;
+			}
+
+			for (int j = 0; j < fieldsJSONArray.length(); j++) {
+				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
+
+				if (fieldJSONObject == null) {
+					continue;
+				}
+
+				JSONArray fieldMappingsJSONArray = fieldJSONObject.getJSONArray(
+					"fieldMappings");
+
+				if (fieldMappingsJSONArray == null) {
+					continue;
+				}
+
+				if (_isLegacyMultiselectFieldMappings(fieldMappingsJSONArray)) {
+					fieldJSONObject.put(
+						"defaultValue", fieldMappingsJSONArray
+					).remove(
+						"fieldMappings"
+					);
+
+					changed = true;
+
+					continue;
+				}
+
+				for (int k = 0; k < fieldMappingsJSONArray.length(); k++) {
+					JSONObject fieldMappingJSONObject =
+						fieldMappingsJSONArray.getJSONObject(k);
+
+					if ((fieldMappingJSONObject != null) &&
+						fieldMappingJSONObject.has("label")) {
+
+						fieldMappingJSONObject.remove("label");
+
+						changed = true;
+					}
+				}
+			}
+		}
+
+		return changed;
+	}
+
 	private void _upgradeSXPBlueprint(
 			PreparedStatement preparedStatement2, ResultSet resultSet)
 		throws SQLException {
@@ -320,7 +359,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONArray elementInstanceJSONArray = _jsonFactory.createJSONArray(
 				elementInstancesJSON);
 
-			boolean changed = _removeLegacyFieldMappingLabels(
+			boolean changed = _upgradeLegacyFieldMappings(
 				elementInstanceJSONArray);
 
 			if (_hasLimitSearchToTheseSites(elementInstanceJSONArray)) {
@@ -368,7 +407,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONObject elementDefinitionJSONObject =
 				_jsonFactory.createJSONObject(elementDefinitionJSON);
 
-			if (!_removeLegacyFieldMappingLabels(elementDefinitionJSONObject)) {
+			if (!_upgradeLegacyFieldMappings(elementDefinitionJSONObject)) {
 				return;
 			}
 

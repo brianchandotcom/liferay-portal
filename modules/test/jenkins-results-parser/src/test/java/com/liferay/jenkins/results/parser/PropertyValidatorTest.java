@@ -32,11 +32,11 @@ public class PropertyValidatorTest
 			PropertyValidator.validate(
 				jenkinsRepositoryDir, new File("src/main/java"));
 
-		for (PropertyValidator.ConsumptionFailure consumptionFailure :
-				validationResult.getConsumptionFailures()) {
+		for (PropertyValidator.ConsumedKeyFailure consumedKeyFailure :
+				validationResult.getConsumedKeyFailures()) {
 
 			errorCollector.addError(
-				new Throwable(consumptionFailure.getMessage()));
+				new Throwable(consumedKeyFailure.getMessage()));
 		}
 	}
 

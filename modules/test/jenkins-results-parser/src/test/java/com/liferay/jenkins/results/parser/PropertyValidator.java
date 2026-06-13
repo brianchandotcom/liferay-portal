@@ -54,13 +54,13 @@ public class PropertyValidator {
 				"WARNING: Unconsumed build property \"" + unconsumedKey + "\"");
 		}
 
-		for (ConsumptionFailure consumptionFailure :
-				validationResult.getConsumptionFailures()) {
+		for (ConsumedKeyFailure consumedKeyFailure :
+				validationResult.getConsumedKeyFailures()) {
 
-			System.err.println(consumptionFailure.getMessage());
+			System.err.println(consumedKeyFailure.getMessage());
 		}
 
-		if (validationResult.hasConsumptionFailures()) {
+		if (validationResult.hasConsumedKeyFailures()) {
 			System.exit(1);
 		}
 	}
@@ -73,7 +73,7 @@ public class PropertyValidator {
 
 		Set<String> consumedKeys = new TreeSet<>();
 		List<String> consumedPrefixes = new ArrayList<>();
-		List<ConsumptionFailure> consumptionFailures = new ArrayList<>();
+		List<ConsumedKeyFailure> consumedKeyFailures = new ArrayList<>();
 
 		for (PropertyScanner propertyScanner : _propertyScanners) {
 			for (File file :
@@ -103,8 +103,8 @@ public class PropertyValidator {
 					if (consumedKey.isStrict() && !consumedKey.isPrefix() &&
 						!_isDefined(definedKeys, key)) {
 
-						consumptionFailures.add(
-							new ConsumptionFailure(consumedKey));
+						consumedKeyFailures.add(
+							new ConsumedKeyFailure(consumedKey));
 					}
 				}
 			}
@@ -120,7 +120,7 @@ public class PropertyValidator {
 
 		Collections.sort(unconsumedKeys);
 
-		return new ValidationResult(consumptionFailures, unconsumedKeys);
+		return new ValidationResult(consumedKeyFailures, unconsumedKeys);
 	}
 
 	public static class ConsumedKey {
@@ -173,9 +173,9 @@ public class PropertyValidator {
 
 	}
 
-	public static class ConsumptionFailure {
+	public static class ConsumedKeyFailure {
 
-		public ConsumptionFailure(ConsumedKey consumedKey) {
+		public ConsumedKeyFailure(ConsumedKey consumedKey) {
 			_consumedKey = consumedKey;
 		}
 
@@ -195,41 +195,41 @@ public class PropertyValidator {
 	public static class ValidationResult {
 
 		public ValidationResult(
-			List<ConsumptionFailure> consumptionFailures,
+			List<ConsumedKeyFailure> consumedKeyFailures,
 			List<String> unconsumedKeys) {
 
-			_consumptionFailures = consumptionFailures;
+			_consumedKeyFailures = consumedKeyFailures;
 			_unconsumedKeys = unconsumedKeys;
 		}
 
-		public List<ConsumptionFailure> getConsumptionFailures() {
-			return _consumptionFailures;
+		public List<ConsumedKeyFailure> getConsumedKeyFailures() {
+			return _consumedKeyFailures;
 		}
 
 		public List<String> getUnconsumedKeys() {
 			return _unconsumedKeys;
 		}
 
-		public boolean hasConsumptionFailures() {
-			return !_consumptionFailures.isEmpty();
+		public boolean hasConsumedKeyFailures() {
+			return !_consumedKeyFailures.isEmpty();
 		}
 
-		private final List<ConsumptionFailure> _consumptionFailures;
+		private final List<ConsumedKeyFailure> _consumedKeyFailures;
 		private final List<String> _unconsumedKeys;
 
 	}
 
 	private static List<ConsumedKey> _getConsumedKeys(
-		List<int[]> beanshellRegions, String content, File file,
-		Pattern pattern, boolean strict, String surface) {
+		List<int[]> beanshellBlocks, String content, File file, Pattern pattern,
+		boolean strict, String surface) {
 
 		List<ConsumedKey> consumedKeys = new ArrayList<>();
 
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
-			if ((beanshellRegions != null) &&
-				!_isWithinBeanshellRegions(beanshellRegions, matcher.start())) {
+			if ((beanshellBlocks != null) &&
+				!_isWithinBeanshellBlock(beanshellBlocks, matcher.start())) {
 
 				continue;
 			}
@@ -355,13 +355,11 @@ public class PropertyValidator {
 		return false;
 	}
 
-	private static boolean _isWithinBeanshellRegions(
-		List<int[]> beanshellRegions, int offset) {
+	private static boolean _isWithinBeanshellBlock(
+		List<int[]> beanshellBlocks, int offset) {
 
-		for (int[] beanshellRegion : beanshellRegions) {
-			if ((offset >= beanshellRegion[0]) &&
-				(offset < beanshellRegion[1])) {
-
+		for (int[] beanshellBlock : beanshellBlocks) {
+			if ((offset >= beanshellBlock[0]) && (offset < beanshellBlock[1])) {
 				return true;
 			}
 		}
@@ -448,30 +446,29 @@ public class PropertyValidator {
 					null, content, file, _propertyKeyLiteralPattern, false,
 					"ANT_XML"));
 
-			List<int[]> beanshellRegions = new ArrayList<>();
+			List<int[]> beanshellBlocks = new ArrayList<>();
 
 			Matcher matcher = _beanshellBlockPattern.matcher(content);
 
 			while (matcher.find()) {
-				beanshellRegions.add(
-					new int[] {matcher.start(), matcher.end()});
+				beanshellBlocks.add(new int[] {matcher.start(), matcher.end()});
 			}
 
-			if (beanshellRegions.isEmpty()) {
+			if (beanshellBlocks.isEmpty()) {
 				return consumedKeys;
 			}
 
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					beanshellRegions, content, file, _getBuildPropertyPattern,
+					beanshellBlocks, content, file, _getBuildPropertyPattern,
 					true, "BEANSHELL"));
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					beanshellRegions, content, file, _getPropertyPattern, true,
+					beanshellBlocks, content, file, _getPropertyPattern, true,
 					"BEANSHELL"));
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					beanshellRegions, content, file, _projectGetPropertyPattern,
+					beanshellBlocks, content, file, _projectGetPropertyPattern,
 					false, "BEANSHELL_PROJECT"));
 
 			return consumedKeys;

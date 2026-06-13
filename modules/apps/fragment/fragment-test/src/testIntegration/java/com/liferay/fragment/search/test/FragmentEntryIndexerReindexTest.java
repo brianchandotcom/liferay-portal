@@ -171,16 +171,16 @@ public class FragmentEntryIndexerReindexTest {
 	}
 
 	private void _assertFieldValues(
-			boolean draftOnlyOrPublished, boolean marketplace, String name)
+			boolean headListable, boolean marketplace, String name)
 		throws Exception {
 
 		_assertFieldValue(Field.NAME, name, name);
 		_assertFieldValue(
-			FragmentEntryField.DRAFT_ONLY_OR_PUBLISHED,
-			String.valueOf(draftOnlyOrPublished), name);
-		_assertFieldValue(
 			FragmentEntryField.FRAGMENT_COLLECTION_ID,
 			String.valueOf(_fragmentCollection.getFragmentCollectionId()),
+			name);
+		_assertFieldValue(
+			FragmentEntryField.HEAD_LISTABLE, String.valueOf(headListable),
 			name);
 		_assertFieldValue(
 			FragmentEntryField.MARKETPLACE, String.valueOf(marketplace), name);

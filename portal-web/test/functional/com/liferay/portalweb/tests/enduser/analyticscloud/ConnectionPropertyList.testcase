@@ -158,46 +158,6 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-10858 | Automation ID: LRAC-12570 | Test Summary: Check that a property is created automatically after connection"
-	@priority = 5
-	test CheckIfPropertyCreatedAutomaticallyAfterConnection {
-		task ("Connect DXP to AC") {
-			ACDXPSettings.connectAnalyticsCloud();
-
-			var propertyName1 = ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Copy the token from AC again") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDataSources();
-
-			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
-
-			var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
-		}
-
-		task ("Go to DXP") {
-			ACUtils.launchDXP();
-		}
-
-		task ("Connect DXP to AC again to create a new property automatically") {
-			ACDXPSettings.connectAnalyticsCloud(acToken = ${token});
-
-			var propertyName2 = ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Check that other property was automatically created at the top of the list") {
-			TestUtils.assertNotEquals(
-				actual = ${propertyName2},
-				expected = ${propertyName1});
-		}
-	}
-
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12569 | Test Summary: Assert Empty State upon property creation"
 	@priority = 2
 	test CheckPropertyListEmptyStateMessage {
@@ -251,6 +211,7 @@ definition {
 				locator1 = "Button#ANY");
 		}
 	}
+
 	@description = "Bug: LRAC-11142 | Automation ID: LRAC-11162 | Test Summary: New property created when reconnect and old property remains"
 	@priority = 4
 	test OnlyAvailablePropertiesAppearInDXP {

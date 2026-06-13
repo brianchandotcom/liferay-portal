@@ -340,7 +340,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 					booleanQuery.getPreBooleanFilter();
 
 				booleanFilter.addRequiredTerm(
-					FragmentEntryField.DRAFT_ONLY_OR_PUBLISHED, true);
+					FragmentEntryField.HEAD_LISTABLE, true);
 
 				if (fragmentCollectionId > 0) {
 					booleanFilter.addRequiredTerm(

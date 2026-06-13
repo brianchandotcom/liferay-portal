@@ -10,9 +10,9 @@ package com.liferay.fragment.constants;
  */
 public class FragmentEntryField {
 
-	public static final String DRAFT_ONLY_OR_PUBLISHED = "draftOnlyOrPublished";
-
 	public static final String FRAGMENT_COLLECTION_ID = "fragmentCollectionId";
+
+	public static final String HEAD_LISTABLE = "headListable";
 
 	public static final String MARKETPLACE = "marketplace";
 

@@ -92,18 +92,22 @@ public class PropertyValidator {
 	public static class ConsumedKey {
 
 		public ConsumedKey(
-			String key, int lineNumber, File sourceFile, boolean strict,
-			String surface) {
+			String consumerType, String key, int lineNumber, File sourceFile,
+			boolean strict) {
 
+			_consumerType = consumerType;
 			_key = key;
 			_lineNumber = lineNumber;
 			_sourceFile = sourceFile;
 			_strict = strict;
-			_surface = surface;
 
 			_prefix =
 				key.endsWith("(") || key.endsWith(".") || key.endsWith("/") ||
 				key.endsWith("[");
+		}
+
+		public String getConsumerType() {
+			return _consumerType;
 		}
 
 		public String getKey() {
@@ -118,10 +122,6 @@ public class PropertyValidator {
 			return _sourceFile;
 		}
 
-		public String getSurface() {
-			return _surface;
-		}
-
 		public boolean isPrefix() {
 			return _prefix;
 		}
@@ -130,12 +130,12 @@ public class PropertyValidator {
 			return _strict;
 		}
 
+		private final String _consumerType;
 		private final String _key;
 		private final int _lineNumber;
 		private final boolean _prefix;
 		private final File _sourceFile;
 		private final boolean _strict;
-		private final String _surface;
 
 	}
 
@@ -147,8 +147,9 @@ public class PropertyValidator {
 
 		public String getMessage() {
 			return JenkinsResultsParserUtil.combine(
-				"[", _consumedKey.getSurface(), "] Undefined build property \"",
-				_consumedKey.getKey(), "\" consumed at ",
+				"[", _consumedKey.getConsumerType(),
+				"] Undefined build property \"", _consumedKey.getKey(),
+				"\" consumed at ",
 				JenkinsResultsParserUtil.getCanonicalPath(
 					_consumedKey.getSourceFile()),
 				":", String.valueOf(_consumedKey.getLineNumber()));
@@ -202,8 +203,8 @@ public class PropertyValidator {
 	}
 
 	private static List<ConsumedKey> _getConsumedKeys(
-		List<int[]> beanshellBlocks, String content, File file, Pattern pattern,
-		boolean strict, String surface) {
+		List<int[]> beanshellBlocks, String consumerType, String content,
+		File file, Pattern pattern, boolean strict) {
 
 		List<ConsumedKey> consumedKeys = new ArrayList<>();
 
@@ -232,8 +233,8 @@ public class PropertyValidator {
 
 			consumedKeys.add(
 				new ConsumedKey(
-					key, _getLineNumber(content, matcher.start()), file, strict,
-					surface));
+					consumerType, key, _getLineNumber(content, matcher.start()),
+					file, strict));
 		}
 
 		return consumedKeys;
@@ -458,12 +459,12 @@ public class PropertyValidator {
 
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					null, content, file, _antReferencePattern, false,
-					"ANT_XML"));
+					null, "ANT_XML", content, file, _antReferencePattern,
+					false));
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					null, content, file, _propertyKeyLiteralPattern, false,
-					"ANT_XML"));
+					null, "ANT_XML", content, file, _propertyKeyLiteralPattern,
+					false));
 
 			List<int[]> beanshellBlocks = new ArrayList<>();
 
@@ -479,16 +480,16 @@ public class PropertyValidator {
 
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					beanshellBlocks, content, file, _getBuildPropertyPattern,
-					true, "BEANSHELL"));
+					beanshellBlocks, "BEANSHELL", content, file,
+					_getBuildPropertyPattern, true));
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					beanshellBlocks, content, file, _getPropertyPattern, true,
-					"BEANSHELL"));
+					beanshellBlocks, "BEANSHELL", content, file,
+					_getPropertyPattern, true));
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					beanshellBlocks, content, file, _projectGetPropertyPattern,
-					false, "BEANSHELL_PROJECT"));
+					beanshellBlocks, "BEANSHELL_PROJECT", content, file,
+					_projectGetPropertyPattern, false));
 
 			return consumedKeys;
 		}
@@ -512,19 +513,19 @@ public class PropertyValidator {
 
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					null, content, file, _getBuildPropertyPattern, true,
-					"JAVA"));
+					null, "JAVA", content, file, _getBuildPropertyPattern,
+					true));
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					null, content, file, _getPropertyPattern, true, "JAVA"));
+					null, "JAVA", content, file, _getPropertyPattern, true));
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					null, content, file, _propertiesGetPropertyPattern, false,
-					"JAVA_PROPERTIES"));
+					null, "JAVA_PROPERTIES", content, file,
+					_propertiesGetPropertyPattern, false));
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					null, content, file, _propertyKeyLiteralPattern, false,
-					"JAVA_STRING"));
+					null, "JAVA_STRING", content, file,
+					_propertyKeyLiteralPattern, false));
 
 			return consumedKeys;
 		}
@@ -578,22 +579,22 @@ public class PropertyValidator {
 
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					null, content, file, _antReferencePattern, false,
-					"PORTAL"));
+					null, "PORTAL", content, file, _antReferencePattern,
+					false));
 
 			String fileName = file.getName();
 
 			if (fileName.endsWith(".properties")) {
 				consumedKeys.addAll(
 					_getConsumedKeys(
-						null, content, file, _propertiesFileKeyPattern, false,
-						"PORTAL"));
+						null, "PORTAL", content, file,
+						_propertiesFileKeyPattern, false));
 			}
 			else {
 				consumedKeys.addAll(
 					_getConsumedKeys(
-						null, content, file, _propertyKeyLiteralPattern, false,
-						"PORTAL"));
+						null, "PORTAL", content, file,
+						_propertyKeyLiteralPattern, false));
 			}
 
 			return consumedKeys;
@@ -616,8 +617,8 @@ public class PropertyValidator {
 		@Override
 		public List<ConsumedKey> getConsumedKeys(String content, File file) {
 			return _getConsumedKeys(
-				null, content, file, _antReferencePattern, false,
-				"ANT_PROPERTY_VALUE");
+				null, "ANT_PROPERTY_VALUE", content, file, _antReferencePattern,
+				false);
 		}
 
 	}
@@ -638,12 +639,12 @@ public class PropertyValidator {
 
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					null, content, file, _buildPropertyGetterPattern, false,
-					"SHELL"));
+					null, "SHELL", content, file, _buildPropertyGetterPattern,
+					false));
 			consumedKeys.addAll(
 				_getConsumedKeys(
-					null, content, file, _shellGetBuildPropertyPattern, false,
-					"SHELL"));
+					null, "SHELL", content, file, _shellGetBuildPropertyPattern,
+					false));
 
 			return consumedKeys;
 		}

@@ -27,12 +27,12 @@ public class FragmentEntryModelDocumentContributor
 	public void contribute(Document document, FragmentEntry fragmentEntry) {
 		document.addText(Field.NAME, fragmentEntry.getName());
 		document.addKeyword(
-			FragmentEntryField.DRAFT_ONLY_OR_PUBLISHED,
-			fragmentEntry.isHead() ||
-			(fragmentEntry.getHeadId() == fragmentEntry.getFragmentEntryId()));
-		document.addKeyword(
 			FragmentEntryField.FRAGMENT_COLLECTION_ID,
 			fragmentEntry.getFragmentCollectionId());
+		document.addKeyword(
+			FragmentEntryField.HEAD_LISTABLE,
+			fragmentEntry.isHead() ||
+			(fragmentEntry.getHeadId() == fragmentEntry.getFragmentEntryId()));
 		document.addKeyword(
 			FragmentEntryField.MARKETPLACE, fragmentEntry.isMarketplace());
 	}

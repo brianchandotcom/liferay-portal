@@ -5,7 +5,6 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
-import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
@@ -15,6 +14,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {ITask, ITaskObjectEntry} from '../../../../utils/types';
 import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
+import CalendarMoreLinkPopover from './CalendarMoreLinkPopover';
 import CalendarTaskCard from './CalendarTaskCard';
 
 import './CalendarView.scss';
@@ -214,19 +214,11 @@ export default function CalendarView({items}: CalendarViewProps) {
 			/>
 
 			{moreLinkPopover && (
-				<ClayDropDown.Menu
-					active
-					alignElementRef={{current: moreLinkPopover.alignElement}}
-					onActiveChange={() => setMoreLinkPopover(null)}
-				>
-					<ClayDropDown.ItemList>
-						{moreLinkPopover.tasks.map((task) => (
-							<ClayDropDown.Item key={task.id}>
-								{task.title}
-							</ClayDropDown.Item>
-						))}
-					</ClayDropDown.ItemList>
-				</ClayDropDown.Menu>
+				<CalendarMoreLinkPopover
+					alignElement={moreLinkPopover.alignElement}
+					onClose={() => setMoreLinkPopover(null)}
+					tasks={moreLinkPopover.tasks}
+				/>
 			)}
 		</div>
 	);

@@ -1,0 +1,31 @@
+@import 'atlas-variables';
+
+.lfr__cmp-calendar-more-link-popover {
+	max-height: 20rem;
+	overflow-y: auto;
+	width: 16rem;
+
+	&-task {
+		align-items: center;
+		display: flex;
+		gap: 0.5rem;
+		padding: 0.25rem 1rem;
+
+		&-assignee {
+			flex-shrink: 0;
+		}
+
+		&-state {
+			flex-shrink: 0;
+		}
+
+		&-title {
+			color: $secondary;
+			flex-grow: 1;
+			min-width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+}

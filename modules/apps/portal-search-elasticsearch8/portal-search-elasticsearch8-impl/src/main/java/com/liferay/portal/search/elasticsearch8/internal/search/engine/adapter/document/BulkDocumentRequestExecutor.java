@@ -33,6 +33,8 @@ import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
+import java.util.List;
+
 /**
  * @author Michael C. Han
  */
@@ -55,10 +57,21 @@ public class BulkDocumentRequestExecutor {
 
 		JsonpUtil.logBulkResponse(bulkResponse, _log);
 
+		return createBulkDocumentResponse(bulkResponse);
+	}
+
+	protected BulkDocumentResponse createBulkDocumentResponse(
+		BulkResponse bulkResponse) {
+
+		String failureMessage = null;
+		int rejectedItemsCount = 0;
+
 		BulkDocumentResponse bulkDocumentResponse = new BulkDocumentResponse(
 			bulkResponse.took());
 
-		for (BulkResponseItem bulkResponseItem : bulkResponse.items()) {
+		List<BulkResponseItem> bulkResponseItems = bulkResponse.items();
+
+		for (BulkResponseItem bulkResponseItem : bulkResponseItems) {
 			BulkDocumentItemResponse bulkDocumentItemResponse =
 				new BulkDocumentItemResponse();
 
@@ -93,8 +106,27 @@ public class BulkDocumentRequestExecutor {
 				bulkDocumentResponse.setErrors(true);
 			}
 
+			if (bulkResponseItem.status() == 429) {
+				rejectedItemsCount++;
+
+				if ((failureMessage == null) && (errorCause != null)) {
+					failureMessage = errorCause.reason();
+				}
+			}
+
 			bulkDocumentResponse.addBulkDocumentItemResponse(
 				bulkDocumentItemResponse);
+		}
+
+		if (rejectedItemsCount > 0) {
+			if (failureMessage == null) {
+				failureMessage = "Unidentified cause";
+			}
+
+			throw new RuntimeException(
+				StringBundler.concat(
+					"Unable to index ", rejectedItemsCount, "/",
+					bulkResponseItems.size(), " bulk items: ", failureMessage));
 		}
 
 		return bulkDocumentResponse;

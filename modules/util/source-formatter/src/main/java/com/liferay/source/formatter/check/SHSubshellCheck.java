@@ -117,15 +117,11 @@ public class SHSubshellCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private boolean _updateQuotesState(
-		String line, char c, boolean insideQuotes) {
-
+	private boolean _updateQuotesState(String s, char c, boolean insideQuotes) {
 		int count = 0;
 
-		for (int i = 0; i < line.length(); i++) {
-			if ((line.charAt(i) != c) ||
-				((i > 0) && (line.charAt(i - 1) == '\\'))) {
-
+		for (int i = 0; i < s.length(); i++) {
+			if ((s.charAt(i) != c) || ((i > 0) && (s.charAt(i - 1) == '\\'))) {
 				continue;
 			}
 

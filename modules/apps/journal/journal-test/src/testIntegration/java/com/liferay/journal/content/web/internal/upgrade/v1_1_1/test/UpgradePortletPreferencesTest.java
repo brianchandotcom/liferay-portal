@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -217,6 +218,15 @@ public class UpgradePortletPreferencesTest {
 			).put(
 				"groupExternalReferenceCode", _group.getExternalReferenceCode()
 			).build());
+	}
+
+	@Test
+	public void testUpgradePortletPreferencesWithoutArticle() throws Exception {
+		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		).build();
+
+		_assertUpgrade(portletPreferencesMap, portletPreferencesMap);
 	}
 
 	private void _assertPortletPreferences(

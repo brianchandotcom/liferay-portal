@@ -10,11 +10,7 @@ import {waitForLoading} from './loading';
 
 export enum ACPage {
 	apisTokensPage = 'apis/tokens',
-	assetBlogsPage = 'assets/blogs',
-	assetDocumentsAndMediaPage = 'assets/documents-and-media',
-	assetFormsPage = 'assets/forms',
 	assetPage = 'assets',
-	assetWebContentPage = 'assets/web-content',
 	dataSourcePage = 'data-source?field=name&page=1&sortOrder=DESC',
 	dataPrivacyRequestLogPage = 'data-privacy/request-log',
 	dataPrivacySupressedUsersPage = 'data-privacy/suppressed-users',

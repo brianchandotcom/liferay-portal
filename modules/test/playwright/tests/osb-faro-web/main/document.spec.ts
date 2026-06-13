@@ -16,8 +16,6 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import getRandomString from '../../../utils/getRandomString';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
-import {changeTimeFilter} from './utils/time-filter';
-import {searchByTerm} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -102,76 +100,38 @@ test('Documents visitor behavior card shows expected amount of views', async ({
 		]);
 	});
 
-	await test.step('Go to Analytics Cloud asset page', async () => {
-		await navigateToACPageViaURL({
-			acPage: ACPage.assetPage,
-			channelID: channel.id,
-			page,
-			projectID: project.groupId,
-		});
+	await navigateToACPageViaURL({
+		acPage: ACPage.assetPage,
+		channelID: channel.id,
+		page,
+		projectID: project.groupId,
 	});
 
-	await test.step('Go to Documents and Media session', async () => {
-		await page
-			.locator('.navbar-collapse')
-			.getByText('Documents and Media')
-			.click();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Last 24 hours'}),
+		trigger: page.getByRole('button', {name: 'Last 30 days'}),
 	});
 
-	await test.step('Change the time filter to Last 24 hours', async () => {
-		await changeTimeFilter({
-			page,
-			timeFilterPeriod: 'Last 24 hours',
-		});
-	});
+	// Open the document overview from the asset list
 
-	await test.step('Assert the document is appearing at the list', async () => {
-		const documentTitles = await page
-			.locator('.documents-and-media-root .table-title')
-			.all();
+	await page.getByRole('link', {exact: true, name: 'My Document 1'}).click();
 
-		expect(documentTitles.length).toBe(1);
-	});
+	await expect(page.getByText('Visitors Behavior')).toBeVisible();
 
-	let documentTitles;
-
-	await test.step('Assert the document list', async () => {
-		await searchByTerm({page, searchTerm: 'My Document 1'});
-
-		documentTitles = await page
-			.locator('.documents-and-media-root .table-title')
-			.all();
-
-		expect(documentTitles.length).toBe(1);
-
-		await expect(
-			page
-				.locator('.documents-and-media-root .table-title')
-				.getByText('My Document 1')
-		).toBeVisible();
-	});
-
-	await test.step('Go into document and check Visitors Behavior metrics', async () => {
-		await documentTitles[0].click();
-
-		await expect(await page.getByText('Visitors Behavior')).toBeVisible();
-
-		const metricTabs = await page
+	await expect(
+		page
 			.locator('.analytics-metrics-tabs .card-tab')
-			.all();
+			.filter({hasText: 'Downloads'})
+			.locator('.metric-value')
+	).toHaveText('3');
 
-		const downloadsMetricTab = metricTabs[0];
-
-		expect(
-			await downloadsMetricTab.locator('.metric-value').textContent()
-		).toBe('3');
-
-		const impressionsMetricTab = metricTabs[1];
-
-		expect(
-			await impressionsMetricTab.locator('.metric-value').textContent()
-		).toBe('2');
-	});
+	await expect(
+		page
+			.locator('.analytics-metrics-tabs .card-tab')
+			.filter({hasText: 'Impressions'})
+			.locator('.metric-value')
+	).toHaveText('2');
 });
 
 test(
@@ -251,7 +211,7 @@ test(
 		// Open the document overview
 
 		await navigateToACPageViaURL({
-			acPage: ACPage.assetDocumentsAndMediaPage,
+			acPage: ACPage.assetPage,
 			channelID: channel.id,
 			page,
 			projectID: project.groupId,
@@ -327,7 +287,7 @@ test(
 		]);
 
 		await navigateToACPageViaURL({
-			acPage: ACPage.assetDocumentsAndMediaPage,
+			acPage: ACPage.assetPage,
 			channelID: channel.id,
 			page,
 			projectID: project.groupId,
@@ -402,7 +362,7 @@ test(
 		]);
 
 		await navigateToACPageViaURL({
-			acPage: ACPage.assetDocumentsAndMediaPage,
+			acPage: ACPage.assetPage,
 			channelID: channel.id,
 			page,
 			projectID: project.groupId,

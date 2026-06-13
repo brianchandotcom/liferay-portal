@@ -119,7 +119,7 @@ test(
 		// AC asset blog overview reflects the 8.00/10 rating
 
 		await navigateToACPageViaURL({
-			acPage: ACPage.assetBlogsPage,
+			acPage: ACPage.assetPage,
 			channelID: channel.id,
 			page,
 			projectID: project.groupId,
@@ -162,7 +162,7 @@ test(
 		await page.waitForTimeout(30000);
 
 		await navigateToACPageViaURL({
-			acPage: ACPage.assetBlogsPage,
+			acPage: ACPage.assetPage,
 			channelID: channel.id,
 			page,
 			projectID: project.groupId,

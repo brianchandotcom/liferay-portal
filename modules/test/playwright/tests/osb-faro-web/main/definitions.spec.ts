@@ -602,3 +602,45 @@ test(
 		}
 	}
 );
+
+test(
+	'A custom event display name cannot be renamed to an existing display name',
+	{tag: '@LRAC-10006'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const existingEventName = 'event' + getRandomString();
+		const renamedEventName = 'event' + getRandomString();
+
+		await createCustomEvent({
+			apiHelpers,
+			channelId: channel.id,
+			eventName: existingEventName,
+		});
+
+		await createCustomEvent({
+			apiHelpers,
+			channelId: channel.id,
+			eventName: renamedEventName,
+		});
+
+		await openCustomEventEditor({
+			eventName: renamedEventName,
+			page,
+			projectGroupId: project.groupId,
+		});
+
+		// Renaming the display name to one that already exists is rejected
+
+		await page.getByLabel('Display Name').fill(existingEventName);
+
+		const [response] = await Promise.all([
+			page.waitForResponse((response) =>
+				response.url().includes('opname=UpdateEventDefinition')
+			),
+			page.getByRole('button', {name: 'Save'}).click(),
+		]);
+
+		expect(await response.text()).toContain(
+			`Display name ${existingEventName} is already used`
+		);
+	}
+);

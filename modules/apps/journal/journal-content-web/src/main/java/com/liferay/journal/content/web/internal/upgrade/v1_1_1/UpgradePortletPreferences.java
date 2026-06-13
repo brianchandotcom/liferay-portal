@@ -56,6 +56,10 @@ public class UpgradePortletPreferences
 			String portletId, String xml)
 		throws Exception {
 
+		if (!xml.contains("<name>articleId</name>")) {
+			return xml;
+		}
+
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
@@ -65,20 +69,20 @@ public class UpgradePortletPreferences
 			portletPreferences.getValue("groupId", null));
 
 		if (Validator.isNull(articleId) || (groupId == 0)) {
-			return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+			return xml;
 		}
 
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		if (group == null) {
-			return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+			return xml;
 		}
 
 		JournalArticle journalArticle =
 			_journalArticleLocalService.fetchArticle(groupId, articleId);
 
 		if (journalArticle == null) {
-			return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+			return xml;
 		}
 
 		portletPreferences.reset("articleId");

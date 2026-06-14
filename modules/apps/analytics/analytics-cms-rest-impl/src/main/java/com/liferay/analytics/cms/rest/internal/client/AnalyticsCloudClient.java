@@ -80,7 +80,7 @@ public class AnalyticsCloudClient {
 			}
 
 			options.setLocation(
-				_getUrl(
+				_getLocation(
 					analyticsConfiguration.liferayAnalyticsDataSourceId(),
 					externalReferenceCode, groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
@@ -141,7 +141,7 @@ public class AnalyticsCloudClient {
 			}
 
 			options.setLocation(
-				_getUrl(
+				_getLocation(
 					analyticsConfiguration.liferayAnalyticsDataSourceId(),
 					externalReferenceCode, groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
@@ -205,7 +205,7 @@ public class AnalyticsCloudClient {
 			}
 
 			options.setLocation(
-				_getUrl(
+				_getLocation(
 					analyticsConfiguration.liferayAnalyticsDataSourceId(),
 					externalReferenceCode, groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
@@ -268,7 +268,7 @@ public class AnalyticsCloudClient {
 			}
 
 			options.setLocation(
-				_getUrl(
+				_getLocation(
 					analyticsConfiguration.liferayAnalyticsDataSourceId(),
 					externalReferenceCode, groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
@@ -327,7 +327,7 @@ public class AnalyticsCloudClient {
 			Http.Options options = _getOptions(analyticsConfiguration);
 
 			options.setLocation(
-				_getUrl(
+				_getLocation(
 					categoryId,
 					analyticsConfiguration.liferayAnalyticsDataSourceId(), null,
 					groupBy, groupIds,
@@ -395,7 +395,7 @@ public class AnalyticsCloudClient {
 			Http.Options options = _getOptions(analyticsConfiguration);
 
 			options.setLocation(
-				_getUrl(
+				_getLocation(
 					analyticsConfiguration.liferayAnalyticsDataSourceId(), null,
 					groupIds,
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
@@ -486,7 +486,7 @@ public class AnalyticsCloudClient {
 		return performanceOverviewMetric;
 	}
 
-	private String _getUrl(
+	private String _getLocation(
 		Long categoryId, String dataSourceId, String externalReferenceCode,
 		String groupBy, List<Long> groupIds,
 		String liferayAnalyticsFaroBackendURL, String metricType,
@@ -561,12 +561,12 @@ public class AnalyticsCloudClient {
 		return url;
 	}
 
-	private String _getUrl(
+	private String _getLocation(
 		String dataSourceId, String externalReferenceCode, List<Long> groupIds,
 		String liferayAnalyticsFaroBackendURL, String path, Integer rangeKey,
 		String[] selectedMetrics) {
 
-		return _getUrl(
+		return _getLocation(
 			null, dataSourceId, externalReferenceCode, null, groupIds,
 			liferayAnalyticsFaroBackendURL, null, null, null, path, rangeKey,
 			selectedMetrics, null, null, null);

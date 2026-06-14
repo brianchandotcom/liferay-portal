@@ -835,7 +835,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		String pageHTML = sitePageResource.getSiteSitePageRenderedPage(
 			testGroup.getGroupId(), friendlyURL.substring(1));
 
-		Assert.assertNotNull(pageHTML, pageHTML);
 		Assert.assertTrue(pageHTML, pageHTML.contains("<html"));
 		Assert.assertTrue(pageHTML, pageHTML.contains("<head>"));
 		Assert.assertTrue(pageHTML, pageHTML.contains("<title>"));

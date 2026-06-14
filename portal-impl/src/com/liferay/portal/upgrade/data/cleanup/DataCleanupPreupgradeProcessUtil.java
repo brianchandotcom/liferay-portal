@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -34,16 +35,28 @@ import org.osgi.framework.BundleContext;
  */
 public class DataCleanupPreupgradeProcessUtil {
 
-	public static void clearCache() {
+	public static void disableCache() {
+		_cacheEnabled = false;
+
 		_primaryKeyColumnNames.clear();
 		_tableNames.clear();
+
+		DBInspector.disableCache();
+		DBResourceUtil.disableCache();
+	}
+
+	public static void enableCache() {
+		_cacheEnabled = true;
+
+		DBInspector.enableCache();
+		DBResourceUtil.enableCache();
 	}
 
 	public static String getPrimaryKeyColumnName(
 			Connection connection, DBInspector dbInspector, String tableName)
 		throws Exception {
 
-		if (DBInspector.isSchemaSnapshotEnabled()) {
+		if (_cacheEnabled) {
 			String primaryKeyColumnName = _primaryKeyColumnNames.get(
 				tableName);
 
@@ -65,7 +78,7 @@ public class DataCleanupPreupgradeProcessUtil {
 			dbInspector.normalizeName("ctCollectionId"));
 
 		if (primaryKeyColumnNames.size() != 1) {
-			if (DBInspector.isSchemaSnapshotEnabled()) {
+			if (_cacheEnabled) {
 				_primaryKeyColumnNames.putIfAbsent(tableName, _NOT_FOUND);
 			}
 
@@ -74,7 +87,7 @@ public class DataCleanupPreupgradeProcessUtil {
 
 		String primaryKeyColumnName = primaryKeyColumnNames.get(0);
 
-		if (DBInspector.isSchemaSnapshotEnabled()) {
+		if (_cacheEnabled) {
 			_primaryKeyColumnNames.putIfAbsent(
 				tableName, primaryKeyColumnName);
 		}
@@ -87,7 +100,7 @@ public class DataCleanupPreupgradeProcessUtil {
 			String fullyQualifiedName)
 		throws Exception {
 
-		if (DBInspector.isSchemaSnapshotEnabled()) {
+		if (_cacheEnabled) {
 			String tableName = _tableNames.get(fullyQualifiedName);
 
 			if (tableName != null) {
@@ -101,7 +114,7 @@ public class DataCleanupPreupgradeProcessUtil {
 
 		String tableName = _getTableName(connection, fullyQualifiedName);
 
-		if (DBInspector.isSchemaSnapshotEnabled()) {
+		if (_cacheEnabled) {
 			_tableNames.putIfAbsent(
 				fullyQualifiedName,
 				(tableName != null) ? tableName : _NOT_FOUND);
@@ -169,6 +182,7 @@ public class DataCleanupPreupgradeProcessUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataCleanupPreupgradeProcessUtil.class);
 
+	private static volatile boolean _cacheEnabled;
 	private static final Map<String, String> _primaryKeyColumnNames =
 		new ConcurrentHashMap<>();
 	private static final Map<String, String> _tableNames =

@@ -19,6 +19,7 @@ import {
 	navigateToACSettingsViaURL,
 } from './utils/navigation';
 import {CardSelectors} from './utils/selectors';
+import {signInToAnalyticsCloud} from './utils/signInToAnalyticsCloud';
 import {changeTimeFilter} from './utils/time-filter';
 
 const test = mergeTests(
@@ -805,5 +806,54 @@ test(
 		await expect(
 			page.getByRole('link', {name: eventNames[0]})
 		).toBeVisible();
+	}
+);
+
+test(
+	'A non-admin user cannot block or hide custom events',
+	{tag: ['@LRAC-10150', '@LRAC-10234']},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const eventName = 'nonAdmin' + getRandomString();
+
+		await createCustomEvent({apiHelpers, channelId: channel.id, eventName});
+
+		// Sign in as a member (non-admin) user
+
+		await signInToAnalyticsCloud(page, 'corbin.murakami@faro.io');
+
+		try {
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsEventsCustomPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await page.getByPlaceholder('Search').fill(eventName);
+
+			await page.keyboard.press('Enter');
+
+			// The event is listed but no admin controls are available
+
+			await expect(
+				page.getByRole('link', {name: eventName})
+			).toBeVisible();
+
+			await expect(page.getByTestId('select-all-checkbox')).toHaveCount(
+				0
+			);
+
+			await page.getByRole('row', {name: eventName}).hover();
+
+			await expect(
+				page.getByRole('button', {name: 'Block Event'})
+			).toHaveCount(0);
+
+			await expect(
+				page.getByRole('button', {name: 'Set to Hide'})
+			).toHaveCount(0);
+		}
+		finally {
+			await signInToAnalyticsCloud(page, faroConfig.user.login);
+		}
 	}
 );

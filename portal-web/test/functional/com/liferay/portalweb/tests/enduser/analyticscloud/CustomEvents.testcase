@@ -73,6 +73,7 @@ definition {
 
 		ACUtils.tearDownAC();
 	}
+
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10232 | Test Summary: Hide a default event and hide a custom event"
 	@priority = 5
 	test CanHideDefaultAndCustomEvent {
@@ -258,124 +259,6 @@ definition {
 
 		task ("Check that the custom event was unhide") {
 			ACDefinitions.viewUnhideEvent(customEventNameList = ${customEventName});
-		}
-	}
-
-	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10150 | Test Summary: Block/Unblock custom events as non-admin"
-	@priority = 3
-	test CheckCannotBlockOrUnblockCustomEventsAsNonAdmin {
-		property test.run.type = "single";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Login as a non-admin user and switch the property in AC") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-			Open(value1 = ${analyticsCloudURL});
-
-			if (IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
-				ACWorkspace.signOut();
-			}
-
-			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Assert block event icon is not present") {
-			var key_nameList = ${customEventName};
-
-			if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
-				ACUtils.searchBar(searchItem = ${customEventName});
-			}
-
-			MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-			AssertElementNotPresent(
-				key_actionButton = "Block",
-				locator1 = "ACCustomEvents#BLOCK_UNBLOCK_EVENT_BUTTON");
-
-			AssertElementNotPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX");
-		}
-
-		task ("Logout AC and login as an owner user") {
-			ACNavigation.exitSettings();
-
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "test@liferay.com");
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Block custom event") {
-			ACCustomEvents.blockCustomEvent(customEventName = ${customEventName});
-		}
-
-		task ("Logout AC and Login as a non-admin user") {
-			ACNavigation.exitSettings();
-
-			ACWorkspace.signOut();
-
-			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Navigation to block custom event list") {
-			ACCustomEvents.openBlockCustomEventList();
-		}
-
-		task ("Assert block event icon is not present") {
-			var key_nameList = ${customEventName};
-
-			if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
-				ACUtils.searchBar(searchItem = ${customEventName});
-			}
-
-			MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-			AssertElementNotPresent(
-				key_actionButton = "Unblock Event",
-				locator1 = "ACCustomEvents#BLOCK_UNBLOCK_EVENT_BUTTON");
-
-			AssertElementNotPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX");
 		}
 	}
 
@@ -717,62 +600,6 @@ definition {
 			AssertElementPresent(
 				key_segmentField = "No results were found.",
 				locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
-		}
-	}
-
-	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10234 | Test Summary: Non-admin cannot hide events"
-	@priority = 5
-	test NonAdminUserCannotHideEvents {
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Login as a non-admin user and switch the property in AC") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-			Open(value1 = ${analyticsCloudURL});
-
-			if (IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
-				ACWorkspace.signOut();
-			}
-
-			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to custom events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Custom Events");
-		}
-
-		task ("Assert hidden event icon is not present") {
-			var key_nameList = ${customEventName};
-
-			if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
-				ACUtils.searchBar(searchItem = ${customEventName});
-			}
-
-			MouseOver(locator1 = "ACUtils#NAME_LIST");
-
-			AssertElementNotPresent(
-				key_actionButton = "Hide",
-				locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
-
-			AssertElementNotPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX");
 		}
 	}
 

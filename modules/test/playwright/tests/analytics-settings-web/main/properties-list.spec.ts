@@ -288,3 +288,90 @@ test(
 		}
 	}
 );
+
+test(
+	'Reconnecting to Analytics Cloud keeps the existing properties available',
+	{tag: '@LRAC-11162'},
+	async ({apiHelpers, page}) => {
+		const project = await getDefaultProject(apiHelpers);
+
+		const token = getRandomString();
+
+		const firstName = `Reconnect Property 1 ${token}`;
+		const secondName = `Reconnect Property 2 ${token}`;
+
+		const channels = [];
+
+		for (const name of [firstName, secondName]) {
+			channels.push(
+				await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+					name,
+					project.groupId
+				)
+			);
+		}
+
+		const searchBar = page.locator('.management-bar').filter({
+			has: page.locator('input[placeholder="Search"]:not([disabled])'),
+		});
+
+		try {
+
+			// First connection lists both properties
+
+			await connectToAnalyticsCloud(page, {
+				token: await apiHelpers.jsonWebServicesOSBFaro.fetchDataSourceConnectionToken(
+					project.groupId
+				),
+			});
+
+			await searchBar.getByPlaceholder('Search').fill(token);
+
+			await searchBar.getByRole('button', {name: 'Search'}).click();
+
+			await expect(
+				page.getByRole('cell', {name: firstName})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('cell', {name: secondName})
+			).toBeVisible();
+
+			// Disconnect and reconnect
+
+			await goToAnalyticsCloudInstanceSettings(page);
+
+			await disconnectFromAnalyticsCloud(page);
+
+			await connectToAnalyticsCloud(page, {
+				token: await apiHelpers.jsonWebServicesOSBFaro.fetchDataSourceConnectionToken(
+					project.groupId
+				),
+			});
+
+			// Both original properties remain, each exactly once
+
+			await searchBar.getByPlaceholder('Search').fill(token);
+
+			await searchBar.getByRole('button', {name: 'Search'}).click();
+
+			await expect(page.getByRole('cell', {name: firstName})).toHaveCount(
+				1
+			);
+
+			await expect(
+				page.getByRole('cell', {name: secondName})
+			).toHaveCount(1);
+		}
+		finally {
+			await apiHelpers.analyticsSettingsRest.deleteDataSource();
+
+			for (const channel of channels) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);

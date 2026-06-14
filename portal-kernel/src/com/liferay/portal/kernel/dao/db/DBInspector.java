@@ -39,19 +39,19 @@ import java.util.regex.Pattern;
  */
 public class DBInspector {
 
-	public static void beginSchemaSnapshot() {
-		_schemaSnapshotEnabled = true;
-	}
-
-	public static void clearSchemaSnapshot() {
-		_schemaSnapshotEnabled = false;
+	public static void disableCache() {
+		_cacheEnabled = false;
 
 		_columnTypeCache.clear();
 		_tableNamesCache.clear();
 	}
 
-	public static boolean isSchemaSnapshotEnabled() {
-		return _schemaSnapshotEnabled;
+	public static void enableCache() {
+		_cacheEnabled = true;
+	}
+
+	public static boolean isCacheEnabled() {
+		return _cacheEnabled;
 	}
 
 	public DBInspector(Connection connection) {
@@ -82,7 +82,7 @@ public class DBInspector {
 	public List<String> getTableNames(String tableNamePattern)
 		throws SQLException {
 
-		if (_schemaSnapshotEnabled && (tableNamePattern == null)) {
+		if (_cacheEnabled && (tableNamePattern == null)) {
 			String cacheKey = _getSchemaCacheKey();
 
 			Set<String> tableNames = _tableNamesCache.get(cacheKey);
@@ -93,14 +93,14 @@ public class DBInspector {
 
 			List<String> names = _getNames(null, "TABLE");
 
-			Set<String> tableNamesSnapshot = new TreeSet<>(
+			Set<String> schemaTableNames = new TreeSet<>(
 				String.CASE_INSENSITIVE_ORDER);
 
-			tableNamesSnapshot.addAll(names);
+			schemaTableNames.addAll(names);
 
-			_tableNamesCache.putIfAbsent(cacheKey, tableNamesSnapshot);
+			_tableNamesCache.putIfAbsent(cacheKey, schemaTableNames);
 
-			return new ArrayList<>(tableNamesSnapshot);
+			return new ArrayList<>(schemaTableNames);
 		}
 
 		return _getNames(tableNamePattern, "TABLE");
@@ -119,7 +119,7 @@ public class DBInspector {
 			return false;
 		}
 
-		if (_schemaSnapshotEnabled) {
+		if (_cacheEnabled) {
 			if (_getColumnType(tableName, columnName) != _NO_COLUMN) {
 				return true;
 			}
@@ -277,7 +277,7 @@ public class DBInspector {
 	}
 
 	public boolean hasTable(String tableName) throws Exception {
-		if (_schemaSnapshotEnabled) {
+		if (_cacheEnabled) {
 			String cacheKey = _getSchemaCacheKey();
 
 			Set<String> tableNames = _tableNamesCache.get(cacheKey);
@@ -348,7 +348,7 @@ public class DBInspector {
 			return false;
 		}
 
-		if (_schemaSnapshotEnabled) {
+		if (_cacheEnabled) {
 			return _isNumericType(_getColumnType(tableName, columnName));
 		}
 
@@ -599,6 +599,7 @@ public class DBInspector {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBInspector.class);
 
+	private static volatile boolean _cacheEnabled;
 	private static final Pattern _columnDefaultClausePattern = Pattern.compile(
 		".*DEFAULT ((?:'[^']+')|(?:\\S+)) NOT NULL", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _columnSizePattern = Pattern.compile(
@@ -612,7 +613,6 @@ public class DBInspector {
 			"company", "release_", "servicecomponent", "virtualhost"));
 	private static final Set<String> _partitionedControlTableNames =
 		new HashSet<>(Arrays.asList("classname_", "counter", "resourceaction"));
-	private static volatile boolean _schemaSnapshotEnabled;
 	private static final Map<String, Set<String>> _tableNamesCache =
 		new ConcurrentHashMap<>();
 

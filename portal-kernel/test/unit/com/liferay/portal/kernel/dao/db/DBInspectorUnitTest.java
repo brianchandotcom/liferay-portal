@@ -29,7 +29,7 @@ public class DBInspectorUnitTest {
 
 	@After
 	public void tearDown() {
-		DBInspector.clearSchemaSnapshot();
+		DBInspector.disableCache();
 	}
 
 	@Test
@@ -57,7 +57,7 @@ public class DBInspectorUnitTest {
 	}
 
 	@Test
-	public void testBeginSchemaSnapshot() throws Exception {
+	public void testDisableCache() throws Exception {
 		_mockTableWithColumn(_TABLE_NAME, _COLUMN_NAME);
 
 		Mockito.when(
@@ -68,13 +68,14 @@ public class DBInspectorUnitTest {
 
 		DBInspector dbInspector = new DBInspector(_connection);
 
-		DBInspector.beginSchemaSnapshot();
+		DBInspector.enableCache();
+		DBInspector.disableCache();
 
 		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
 		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
 
 		Mockito.verify(
-			_databaseMetaData, Mockito.times(1)
+			_databaseMetaData, Mockito.times(2)
 		).getColumns(
 			Mockito.nullable(String.class), Mockito.nullable(String.class),
 			Mockito.anyString(), Mockito.anyString()
@@ -82,7 +83,7 @@ public class DBInspectorUnitTest {
 	}
 
 	@Test
-	public void testClearSchemaSnapshot() throws Exception {
+	public void testEnableCache() throws Exception {
 		_mockTableWithColumn(_TABLE_NAME, _COLUMN_NAME);
 
 		Mockito.when(
@@ -93,14 +94,13 @@ public class DBInspectorUnitTest {
 
 		DBInspector dbInspector = new DBInspector(_connection);
 
-		DBInspector.beginSchemaSnapshot();
-		DBInspector.clearSchemaSnapshot();
+		DBInspector.enableCache();
 
 		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
 		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
 
 		Mockito.verify(
-			_databaseMetaData, Mockito.times(2)
+			_databaseMetaData, Mockito.times(1)
 		).getColumns(
 			Mockito.nullable(String.class), Mockito.nullable(String.class),
 			Mockito.anyString(), Mockito.anyString()
@@ -250,7 +250,7 @@ public class DBInspectorUnitTest {
 
 		DBInspector dbInspector = new DBInspector(_connection);
 
-		DBInspector.beginSchemaSnapshot();
+		DBInspector.enableCache();
 
 		dbInspector.getTableNames(null);
 

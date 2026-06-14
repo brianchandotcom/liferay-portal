@@ -83,9 +83,7 @@ public class DBInspector {
 		throws SQLException {
 
 		if (_schemaSnapshotEnabled && (tableNamePattern == null)) {
-			String cacheKey = StringBundler.concat(
-				Objects.toString(getCatalog(), StringPool.BLANK), ".",
-				Objects.toString(getSchema(), StringPool.BLANK));
+			String cacheKey = _getSchemaCacheKey();
 
 			Set<String> tableNames = _tableNamesCache.get(cacheKey);
 
@@ -280,9 +278,7 @@ public class DBInspector {
 
 	public boolean hasTable(String tableName) throws Exception {
 		if (_schemaSnapshotEnabled) {
-			String cacheKey = StringBundler.concat(
-				Objects.toString(getCatalog(), StringPool.BLANK), ".",
-				Objects.toString(getSchema(), StringPool.BLANK));
+			String cacheKey = _getSchemaCacheKey();
 
 			Set<String> tableNames = _tableNamesCache.get(cacheKey);
 
@@ -506,9 +502,8 @@ public class DBInspector {
 		String normalizedTableName = normalizeName(tableName, databaseMetaData);
 
 		String cacheKey = StringBundler.concat(
-			Objects.toString(getCatalog(), StringPool.BLANK), ".",
-			Objects.toString(getSchema(), StringPool.BLANK), ".",
-			normalizedTableName, ".", normalizedColumnName);
+			_getSchemaCacheKey(), ".", normalizedTableName, ".",
+			normalizedColumnName);
 
 		Integer columnType = _columnTypeCache.get(cacheKey);
 
@@ -548,6 +543,12 @@ public class DBInspector {
 		}
 
 		return names;
+	}
+
+	private String _getSchemaCacheKey() throws SQLException {
+		return StringBundler.concat(
+			Objects.toString(getCatalog(), StringPool.BLANK), ".",
+			Objects.toString(getSchema(), StringPool.BLANK));
 	}
 
 	private boolean _hasElement(String elementName, String elementType)

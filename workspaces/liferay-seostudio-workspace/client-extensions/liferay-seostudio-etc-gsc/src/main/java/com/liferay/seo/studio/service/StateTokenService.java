@@ -57,8 +57,9 @@ public class StateTokenService {
 	private void _initialize() {
 		if (_stateSecret.startsWith("${") || (_stateSecret.length() < 32)) {
 			throw new IllegalArgumentException(
-				"\"liferay.seostudio.gsc.state.secret\" must be set to a " +
-					"value of at least 32 characters");
+				"The application property \"liferay.seostudio.gsc.state." +
+					"secret\" must be set to a value of at least 32 " +
+						"characters");
 		}
 
 		_secretKey = Keys.hmacShaKeyFor(

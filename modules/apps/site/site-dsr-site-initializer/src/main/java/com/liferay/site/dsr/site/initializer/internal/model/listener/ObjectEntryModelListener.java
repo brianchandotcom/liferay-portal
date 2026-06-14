@@ -121,17 +121,17 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			return;
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(group.getCompanyId());
-		serviceContext.setScopeGroupId(group.getGroupId());
+		long folderId = 0;
 
 		DLFolder dlFolder =
 			_dlFolderLocalService.fetchDLFolderByExternalReferenceCode(
 				DSRFolderConstants.EXTERNAL_REFERENCE_CODE_DSR_DOCUMENTS,
 				group.getGroupId());
 
-		long folderId;
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(group.getCompanyId());
+		serviceContext.setScopeGroupId(group.getGroupId());
 
 		if (dlFolder == null) {
 			Folder folder = _dlAppService.addFolder(

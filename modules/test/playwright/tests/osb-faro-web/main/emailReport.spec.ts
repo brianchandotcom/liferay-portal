@@ -11,6 +11,7 @@ import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest
 import {loginTest} from '../../../fixtures/loginTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {faroConfig} from './faro.config';
+import {signInToAnalyticsCloud} from './utils/signInToAnalyticsCloud';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -18,6 +19,21 @@ const test = mergeTests(
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
+
+async function enableEmailReport(page, frequency: string) {
+	await page.getByRole('button', {name: 'Configure Email Reports'}).click();
+
+	await page.locator('.toggle-switch-bar').click();
+
+	await page.locator('select[name="frequency"]').selectOption(frequency);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await waitForAlert(page, 'Changes to email reports saved', {
+		autoClose: false,
+		first: true,
+	});
+}
 
 test(
 	'Cancel after configuring email reports leaves them disabled',
@@ -88,5 +104,110 @@ test(
 				.getByRole('button', {name: 'Configure Email Reports'})
 				.click();
 		}
+	}
+);
+
+test(
+	'Email reports widget appears disabled by default for every user',
+	{tag: '@LRAC-11835'},
+	async ({analyticsChannel, page, project}) => {
+		const propertyUrl = `${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/properties/${analyticsChannel.id}`;
+
+		for (const emailAddress of [
+			'bryan.cheung@faro.io',
+			'michelle.hoshi@faro.io',
+			'corbin.murakami@faro.io',
+		]) {
+			await signInToAnalyticsCloud(page, emailAddress);
+
+			await page.goto(propertyUrl);
+
+			await expect(
+				page.getByText('Email Reports: Disabled')
+			).toBeVisible();
+
+			await enableEmailReport(page, 'daily');
+
+			await expect(
+				page.getByText('Email Reports: Enabled')
+			).toBeVisible();
+		}
+
+		// Restore the default session for the next test
+
+		await signInToAnalyticsCloud(page, faroConfig.user.login);
+	}
+);
+
+test(
+	'Email report settings of one user do not affect other users',
+	{tag: '@LRAC-11847'},
+	async ({analyticsChannel, page, project}) => {
+		const propertyUrl = `${faroConfig.environment.baseUrl}/workspace/${project.groupId}/settings/properties/${analyticsChannel.id}`;
+
+		// The default user enables daily reports
+
+		await page.goto(propertyUrl);
+
+		await enableEmailReport(page, 'daily');
+
+		await expect(page.getByText('Email Reports: Enabled')).toBeVisible();
+
+		// A different user still sees the property disabled and enables monthly
+
+		await signInToAnalyticsCloud(page, 'corbin.murakami@faro.io');
+
+		await page.goto(propertyUrl);
+
+		await expect(page.getByText('Email Reports: Disabled')).toBeVisible();
+
+		await enableEmailReport(page, 'monthly');
+
+		await expect(page.getByText('Email Reports: Enabled')).toBeVisible();
+
+		// Back to the default user: daily persists, then disable it
+
+		await signInToAnalyticsCloud(page, faroConfig.user.login);
+
+		await page.goto(propertyUrl);
+
+		await page
+			.getByRole('button', {name: 'Configure Email Reports'})
+			.click();
+
+		await expect(page.locator('select[name="frequency"]')).toHaveValue(
+			'daily'
+		);
+
+		await page.locator('.toggle-switch-bar').click();
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Changes to email reports saved', {
+			autoClose: false,
+			first: true,
+		});
+
+		await expect(page.getByText('Email Reports: Disabled')).toBeVisible();
+
+		// The other user keeps its own monthly setting
+
+		await signInToAnalyticsCloud(page, 'corbin.murakami@faro.io');
+
+		await page.goto(propertyUrl);
+
+		await expect(page.getByText('Email Reports: Enabled')).toBeVisible();
+
+		await page
+			.getByRole('button', {name: 'Configure Email Reports'})
+			.click();
+
+		await expect(page.locator('select[name="frequency"]')).toHaveValue(
+			'monthly'
+		);
+
+		// Restore the default session for the next test
+
+		await signInToAnalyticsCloud(page, faroConfig.user.login);
 	}
 );

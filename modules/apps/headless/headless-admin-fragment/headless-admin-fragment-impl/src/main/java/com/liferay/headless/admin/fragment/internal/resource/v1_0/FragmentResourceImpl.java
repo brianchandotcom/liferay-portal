@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,13 +45,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.MultivaluedMap;
 
-import java.io.Serializable;
-
 import java.util.Collections;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -233,28 +228,6 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				_getOrAddFragmentCollection(fragment.getFragmentSet(), groupId),
 				groupId);
 		}
-	}
-
-	@Override
-	public Page<Fragment> read(
-			Filter filter, Pagination pagination, Sort[] sorts,
-			Map<String, Serializable> parameters, String search)
-		throws Exception {
-
-		EnabledUtil.checkEnabled(contextCompany);
-
-		if (!parameters.containsKey("siteExternalReferenceCode")) {
-			throw new NotSupportedException(
-				"One of the following parameters must be specified: " +
-					"[siteExternalReferenceCode]");
-		}
-
-		return _getFragmentsPage(
-			filter, 0,
-			GroupUtil.getGroupId(
-				true, true, contextCompany.getCompanyId(),
-				(String)parameters.get("siteExternalReferenceCode")),
-			pagination);
 	}
 
 	private Fragment _addFragmentEntry(

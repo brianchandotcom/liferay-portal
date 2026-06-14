@@ -9,7 +9,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.rest.dto.v1_0.Report;
 import com.liferay.ai.hub.rest.manager.v1_0.ReportManager;
 import com.liferay.ai.hub.util.AccountEntryUtil;
-import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -87,16 +86,10 @@ public class ReportManagerImpl implements ReportManager {
 			for (String agentDefinitionExternalReferenceCode :
 					report.getAgentDefinitionExternalReferenceCodes()) {
 
-				com.liferay.object.model.ObjectEntry
-					serviceBuilderObjectEntry =
-						_objectEntryLocalService.fetchObjectEntry(
-							agentDefinitionExternalReferenceCode, 0L,
-							objectDefinition.getObjectDefinitionId());
-
-				if (serviceBuilderObjectEntry == null) {
-					throw new NoSuchObjectEntryException(
-						agentDefinitionExternalReferenceCode);
-				}
+				com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						agentDefinitionExternalReferenceCode, 0L,
+						objectDefinition.getObjectDefinitionId());
 
 				_objectRelationshipLocalService.
 					addObjectRelationshipMappingTableValues(

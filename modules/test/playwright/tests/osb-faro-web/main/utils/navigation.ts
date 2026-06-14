@@ -18,6 +18,7 @@ export enum ACPage {
 	definitionsEventAttributesGlobalPage = 'definitions/event-attributes/global',
 	definitionsEventsCustomPage = 'definitions/events/custom',
 	definitionsEventsBlockListPage = 'definitions/events/block-list',
+	definitionsEventsDefaultPage = 'definitions/events/default',
 	definitionsSearchPage = 'definitions/search',
 	eventAnalysisPage = 'event-analysis',
 	eventAttributesPage = 'definitions/event-attributes/global',

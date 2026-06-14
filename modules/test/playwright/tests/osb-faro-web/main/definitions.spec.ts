@@ -644,3 +644,37 @@ test(
 		);
 	}
 );
+
+test(
+	'A hidden default event can still be opened and shows its attributes',
+	{tag: '@LRAC-10223'},
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsEventsDefaultPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		// The default event is hidden (exposes a Set to Show quick action)
+
+		await page.getByRole('row', {name: 'assetDepthReached'}).hover();
+
+		await expect(
+			page
+				.getByRole('row', {name: 'assetDepthReached'})
+				.getByRole('button', {name: 'Set to Show'})
+		).toBeVisible();
+
+		// The hidden event can still be opened and shows its attribute list
+
+		await page.getByRole('link', {name: 'assetDepthReached'}).click();
+
+		await expect(
+			page.getByRole('heading', {name: 'assetDepthReached'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {exact: true, name: 'canonicalUrl'})
+		).toBeVisible();
+	}
+);

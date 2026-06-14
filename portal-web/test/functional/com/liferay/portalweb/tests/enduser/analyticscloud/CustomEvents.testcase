@@ -74,47 +74,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10223 | Test Summary: Able to access hidden event"
-	@priority = 4
-	test CanAccessHiddenEvent {
-		property test.run.type = "single";
-
-		var defaultEventName = "assetDepthReached";
-		var attributeList = "assetId,canonicalUrl,category,depth,pageDescription,pageKeywords,pageTitle,referrer,sessionId,title,url";
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to default events tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEvents();
-
-			ACNavigation.openItem(itemName = "Default Events");
-		}
-
-		task ("Check that the default event was hidden") {
-			ACDefinitions.viewHiddenEvents(customEventNameList = ${defaultEventName});
-		}
-
-		task ("Navigation to assetDepthReached") {
-			ACNavigation.openItem(itemName = ${defaultEventName});
-		}
-
-		task ("Check the attribute appears") {
-			ACCustomEvents.viewDataAttribute(attributeValueList = ${defaultEventName});
-		}
-	}
-
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10147 | Test Summary: Block single custom event and block custom events in bulk"
 	@priority = 5
 	test CanBlockAndUnblockCustomEvent {

@@ -94,6 +94,7 @@ class GoogleMapsSearch extends EventEmitter {
 						lat: geolocation.lat(),
 						lng: geolocation.lng(),
 					},
+					viewport: place.geometry.viewport || null,
 				},
 			});
 		}

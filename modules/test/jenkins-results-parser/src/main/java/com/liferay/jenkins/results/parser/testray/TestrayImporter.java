@@ -993,7 +993,7 @@ public class TestrayImporter {
 				testBaseDir = axisTestClassGroup.getTestBaseDir();
 			}
 
-			final TestrayCaseResult topLevelTestrayCaseResult =
+			TestrayCaseResult topLevelTestrayCaseResult =
 				_recordTopLevelTestrayCaseResult(job, testBaseDir);
 
 			_recordAppServerTestrayCaseResult(
@@ -1006,9 +1006,7 @@ public class TestrayImporter {
 				job, PersistentResource.Type.PORTAL_BUNDLE, testBaseDir,
 				topLevelTestrayCaseResult);
 
-			for (final AxisTestClassGroup axisTestClassGroup :
-					axisTestClassGroups) {
-
+			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
 				callables.add(
 					new Callable<Void>() {
 

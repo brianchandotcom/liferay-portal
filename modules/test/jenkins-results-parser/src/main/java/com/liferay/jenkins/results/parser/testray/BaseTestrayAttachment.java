@@ -22,17 +22,14 @@ public abstract class BaseTestrayAttachment implements TestrayAttachment {
 
 	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put(
+		return new JSONObject(
+		).put(
 			"name", getName()
 		).put(
 			"url", String.valueOf(getURL())
 		).put(
 			"value", getKey()
 		);
-
-		return jsonObject;
 	}
 
 	@Override

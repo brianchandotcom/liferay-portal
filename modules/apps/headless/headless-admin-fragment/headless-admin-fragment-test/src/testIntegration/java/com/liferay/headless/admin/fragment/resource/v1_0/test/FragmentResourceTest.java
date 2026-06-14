@@ -925,7 +925,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		return fragmentSet;
 	}
 
-	private Fragment _randomMarketPlaceFragment() throws Exception {
+	private Fragment _randomMarketplaceFragment() throws Exception {
 		Fragment fragment = randomFragment();
 
 		fragment.setMarketplace(true);
@@ -1085,7 +1085,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	}
 
 	private void _testGetSiteFragmentsPageWithFilter() throws Exception {
-		Fragment marketplaceFragment = _randomMarketPlaceFragment();
+		Fragment marketplaceFragment = _randomMarketplaceFragment();
 
 		marketplaceFragment = testGetSiteFragmentsPage_addFragment(
 			testGroup.getExternalReferenceCode(), marketplaceFragment);
@@ -1353,7 +1353,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	private void _testPostSiteFragmentBatchWithLazyReferencingEnabled()
 		throws Exception {
 
-		Fragment marketplaceFragment = _randomMarketPlaceFragment();
+		Fragment marketplaceFragment = _randomMarketplaceFragment();
 
 		marketplaceFragment = _postSiteFragmentSetFragment(marketplaceFragment);
 
@@ -1474,7 +1474,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	}
 
 	private void _testPostSiteFragmentMarketplace() throws Exception {
-		Fragment fragment = _randomMarketPlaceFragment();
+		Fragment fragment = _randomMarketplaceFragment();
 
 		Fragment postFragment = _postSiteFragmentSetFragment(fragment);
 

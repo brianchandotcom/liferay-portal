@@ -108,8 +108,8 @@ public class GoogleOAuth2Service {
 
 		int statusCode = httpResponse.statusCode();
 
-		if ((statusCode != HttpStatusCodes.STATUS_CODE_OK) &&
-			(statusCode != HttpStatusCodes.STATUS_CODE_BAD_REQUEST)) {
+		if ((statusCode != HttpStatusCodes.STATUS_CODE_BAD_REQUEST) &&
+			(statusCode != HttpStatusCodes.STATUS_CODE_OK)) {
 
 			throw new IOException("Unable to revoke token, HTTP " + statusCode);
 		}

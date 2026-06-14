@@ -192,7 +192,7 @@ public class JournalArticleIndexVersionsTest {
 			updatedArticle.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
-		AtomicInteger documentBuildCount = new AtomicInteger();
+		AtomicInteger postProcessDocumentCount = new AtomicInteger();
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			JournalArticleIndexVersionsTest.class);
@@ -211,7 +211,7 @@ public class JournalArticleIndexVersionsTest {
 					public void postProcessDocument(
 						Document document, Object object) {
 
-						documentBuildCount.incrementAndGet();
+						postProcessDocumentCount.incrementAndGet();
 					}
 
 				},
@@ -225,7 +225,7 @@ public class JournalArticleIndexVersionsTest {
 			serviceRegistration.unregister();
 		}
 
-		Assert.assertEquals(3, documentBuildCount.get());
+		Assert.assertEquals(3, postProcessDocumentCount.get());
 	}
 
 	@Test

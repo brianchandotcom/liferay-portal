@@ -18,7 +18,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -71,33 +70,29 @@ public class ReportManagerImpl implements ReportManager {
 			},
 			null);
 
-		if (ArrayUtil.isNotEmpty(
-				report.getAgentDefinitionExternalReferenceCodes())) {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				company.getCompanyId(), "AIHubAgentDefinition");
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					company.getCompanyId(), "AIHubAgentDefinition");
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectDefinition.getObjectDefinitionId(),
+				"aiHubAgentDefinitionsToAIHubReports");
 
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.getObjectRelationship(
-					objectDefinition.getObjectDefinitionId(),
-					"aiHubAgentDefinitionsToAIHubReports");
+		for (String agentDefinitionExternalReferenceCode :
+				report.getAgentDefinitionExternalReferenceCodes()) {
 
-			for (String agentDefinitionExternalReferenceCode :
-					report.getAgentDefinitionExternalReferenceCodes()) {
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+				_objectEntryLocalService.getObjectEntry(
+					agentDefinitionExternalReferenceCode, 0L,
+					objectDefinition.getObjectDefinitionId());
 
-				com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						agentDefinitionExternalReferenceCode, 0L,
-						objectDefinition.getObjectDefinitionId());
-
-				_objectRelationshipLocalService.
-					addObjectRelationshipMappingTableValues(
-						dtoConverterContext.getUserId(),
-						objectRelationship.getObjectRelationshipId(),
-						serviceBuilderObjectEntry.getObjectEntryId(),
-						objectEntry.getId(), new ServiceContext());
-			}
+			_objectRelationshipLocalService.
+				addObjectRelationshipMappingTableValues(
+					dtoConverterContext.getUserId(),
+					objectRelationship.getObjectRelationshipId(),
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					objectEntry.getId(), new ServiceContext());
 		}
 
 		return new Report() {

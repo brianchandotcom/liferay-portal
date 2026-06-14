@@ -422,7 +422,7 @@ public class LearnRestController extends BaseRestController {
 			get(
 				_getAuthorization(),
 				UriComponentsBuilder.fromPath(
-					"/o/c/p2s3quizes/" + quizId + "/quizBadge"
+					"/o/c/p2s3quizes/" + quizId + "/p2s3QuizToP2S3Badges"
 				).queryParam(
 					"fields", "id"
 				).build(
@@ -445,8 +445,8 @@ public class LearnRestController extends BaseRestController {
 				).queryParam(
 					"filter",
 					StringBundler.concat(
-						"userId eq '", userId, "' and badgeId eq ",
-						badgeJSONObject.getLong("id"))
+						"r_lUserToP2S3UserBadges_userId eq '", userId,
+						"' and badgeId eq ", badgeJSONObject.getLong("id"))
 				).build(
 				).toUri()));
 

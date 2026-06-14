@@ -138,6 +138,20 @@ public class FragmentEntryIndexerReindexTest {
 			FragmentEntryField.FRAGMENT_COLLECTION_ID,
 			String.valueOf(fragmentCollection.getFragmentCollectionId()),
 			fragmentEntry.getName());
+
+		fragmentEntry = _addFragmentEntry(WorkflowConstants.STATUS_APPROVED);
+
+		FragmentEntry copyFragmentEntry =
+			_fragmentEntryLocalService.copyFragmentEntry(
+				serviceContext.getUserId(), TestPropsValues.getGroupId(),
+				fragmentEntry.getFragmentEntryId(),
+				_fragmentCollection.getFragmentCollectionId(), serviceContext);
+
+		_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
+
+		_assertFieldValues(
+			copyFragmentEntry.isHead(), true, copyFragmentEntry.isMarketplace(),
+			copyFragmentEntry.getName());
 	}
 
 	@Rule

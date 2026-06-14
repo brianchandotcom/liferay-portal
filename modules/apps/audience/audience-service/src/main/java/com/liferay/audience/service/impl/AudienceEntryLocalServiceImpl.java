@@ -39,8 +39,6 @@ public class AudienceEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Audience entry
-
 		_validate(name);
 
 		AudienceEntry audienceEntry = audienceEntryPersistence.create(
@@ -107,8 +105,6 @@ public class AudienceEntryLocalServiceImpl
 	public AudienceEntry updateAudienceEntry(
 			long audienceEntryId, String json, String name)
 		throws PortalException {
-
-		// Audience entry
 
 		_validate(name);
 

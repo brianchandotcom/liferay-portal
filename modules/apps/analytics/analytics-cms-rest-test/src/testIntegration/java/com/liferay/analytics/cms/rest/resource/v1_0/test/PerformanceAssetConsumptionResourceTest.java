@@ -129,13 +129,10 @@ public class PerformanceAssetConsumptionResourceTest
 							"http://" + RandomTestUtil.randomString()
 						).build())) {
 
-			_assertGetPerformanceAssetConsumptionGroupByStructure();
-
-			_assertGetPerformanceAssetConsumptionResponse();
-
-			_assertGetPerformanceAssetConsumptionURL(dataSourceId);
-
-			_assertGetPerformanceAssetConsumptionWithInvalidGroupBy();
+			_testGetPerformanceAssetConsumptionGroupByStructure();
+			_testGetPerformanceAssetConsumptionResponse();
+			_testGetPerformanceAssetConsumptionURL(dataSourceId);
+			_testGetPerformanceAssetConsumptionWithInvalidGroupBy();
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -160,7 +157,7 @@ public class PerformanceAssetConsumptionResourceTest
 		return depotEntry;
 	}
 
-	private void _assertGetPerformanceAssetConsumptionGroupByStructure()
+	private void _testGetPerformanceAssetConsumptionGroupByStructure()
 		throws Exception {
 
 		CMSTestUtil.getOrAddGroup(
@@ -236,7 +233,7 @@ public class PerformanceAssetConsumptionResourceTest
 			50L, (long)performanceAssetConsumption.getTotalCount());
 	}
 
-	private void _assertGetPerformanceAssetConsumptionResponse()
+	private void _testGetPerformanceAssetConsumptionResponse()
 		throws Exception {
 
 		String key1 = RandomTestUtil.randomString();
@@ -299,7 +296,7 @@ public class PerformanceAssetConsumptionResourceTest
 			30L, (long)performanceAssetConsumption.getTotalCount());
 	}
 
-	private void _assertGetPerformanceAssetConsumptionURL(long dataSourceId)
+	private void _testGetPerformanceAssetConsumptionURL(long dataSourceId)
 		throws Exception {
 
 		RecordingMockHttp recordingMockHttp = _setUpMockHttp("{}");
@@ -346,7 +343,7 @@ public class PerformanceAssetConsumptionResourceTest
 			String.valueOf(vocabularyId), "vocabularyId", location);
 	}
 
-	private void _assertGetPerformanceAssetConsumptionWithInvalidGroupBy() {
+	private void _testGetPerformanceAssetConsumptionWithInvalidGroupBy() {
 		Assert.assertThrows(
 			BadRequestException.class,
 			() ->

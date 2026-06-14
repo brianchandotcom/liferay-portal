@@ -639,27 +639,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
-	private void _testGetSiteSitePageRenderedPageInRequestedLocale(
-			String expectedTitle, String friendlyURL, Locale locale)
-		throws Exception {
-
-		SitePageResource sitePageResource = SitePageResource.builder(
-		).authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).locale(
-			locale
-		).build();
-
-		String pageHTML = sitePageResource.getSiteSitePageRenderedPage(
-			testGroup.getGroupId(), friendlyURL);
-
-		Assert.assertTrue(
-			pageHTML,
-			pageHTML.contains(
-				" lang=\"" + LocaleUtil.toW3cLanguageId(locale) + "\""));
-		Assert.assertTrue(pageHTML, pageHTML.contains(expectedTitle));
-	}
-
 	private String _getRandomFriendlyURL() {
 		String urlTitle = StringUtil.toLowerCase(
 			RandomTestUtil.randomString(
@@ -885,8 +864,31 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		String friendlyURL = layout.getFriendlyURL();
 
-		_testGetSiteSitePageRenderedPageInRequestedLocale(esName, friendlyURL.substring(1), LocaleUtil.SPAIN);
-		_testGetSiteSitePageRenderedPageInRequestedLocale(usName, friendlyURL.substring(1), LocaleUtil.US);
+		_testGetSiteSitePageRenderedPageInRequestedLocale(
+			esName, friendlyURL.substring(1), LocaleUtil.SPAIN);
+		_testGetSiteSitePageRenderedPageInRequestedLocale(
+			usName, friendlyURL.substring(1), LocaleUtil.US);
+	}
+
+	private void _testGetSiteSitePageRenderedPageInRequestedLocale(
+			String expectedTitle, String friendlyURL, Locale locale)
+		throws Exception {
+
+		SitePageResource sitePageResource = SitePageResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			locale
+		).build();
+
+		String pageHTML = sitePageResource.getSiteSitePageRenderedPage(
+			testGroup.getGroupId(), friendlyURL);
+
+		Assert.assertTrue(
+			pageHTML,
+			pageHTML.contains(
+				" lang=\"" + LocaleUtil.toW3cLanguageId(locale) + "\""));
+		Assert.assertTrue(pageHTML, pageHTML.contains(expectedTitle));
 	}
 
 	private void _testGetSiteSitePagesPagePageSet() throws Exception {

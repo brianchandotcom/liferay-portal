@@ -3315,3 +3315,146 @@ test(
 		await addEventFromTab('customEvent', 'Custom');
 	}
 );
+
+async function sendSortCustomEvents({apiHelpers, channelId}) {
+	const date = new Date().toISOString();
+
+	// Counts are chosen so the event-count order differs from the alphabetical
+	// order of the page titles
+
+	const countsByPageTitle = {'AAA Sort': 2, 'BBB Sort': 3, 'CCC Sort': 1};
+
+	const events = [];
+
+	let userId = 1;
+
+	for (const [pageTitle, count] of Object.entries(countsByPageTitle)) {
+		for (let i = 0; i < count; i++) {
+			events.push({
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId,
+				eventDate: date,
+				eventId: 'customEvent',
+				properties: [{name: 'pageTitle', value: pageTitle}],
+				title: 'Liferay',
+				userId: String(userId++),
+			});
+		}
+	}
+
+	await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
+
+	await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+		{
+			applicationId: 'CustomEvent',
+			displayName: 'customEvent',
+			eventAttributeDefinitions: [
+				{
+					dataType: 'STRING',
+					displayName: 'pageTitle',
+					name: 'pageTitle',
+					type: 'LOCAL',
+				},
+			],
+			name: 'customEvent',
+			type: 'CUSTOM',
+		},
+	]);
+}
+
+test(
+	'Attribute breakdowns are sorted by the highest event count by default',
+	{
+		tag: '@LRAC-10269',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendSortCustomEvents({apiHelpers, channelId: channel.id});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		// The breakdown rows default to highest event count first
+
+		await expect(page.getByRole('cell', {name: 'Sort'})).toHaveText([
+			'bbb sort',
+			'aaa sort',
+			'ccc sort',
+		]);
+	}
+);
+
+test(
+	'The analysis result can be sorted ascending and descending',
+	{
+		tag: '@LRAC-10270',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendSortCustomEvents({apiHelpers, channelId: channel.id});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		// Default is event count descending
+
+		await expect(page.getByRole('cell', {name: 'Sort'})).toHaveText([
+			'bbb sort',
+			'aaa sort',
+			'ccc sort',
+		]);
+
+		// Toggle to ascending
+
+		await page.locator('.table-head-title button.component-action').click();
+
+		await expect(page.getByRole('cell', {name: 'Sort'})).toHaveText([
+			'ccc sort',
+			'aaa sort',
+			'bbb sort',
+		]);
+
+		// Toggle back to descending
+
+		await page.locator('.table-head-title button.component-action').click();
+
+		await expect(page.getByRole('cell', {name: 'Sort'})).toHaveText([
+			'bbb sort',
+			'aaa sort',
+			'ccc sort',
+		]);
+	}
+);

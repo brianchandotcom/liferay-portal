@@ -88,12 +88,12 @@ public class ReportManagerImpl implements ReportManager {
 					report.getAgentDefinitionExternalReferenceCodes()) {
 
 				com.liferay.object.model.ObjectEntry
-					agentDefinitionObjectEntry =
+					serviceBuilderObjectEntry =
 						_objectEntryLocalService.fetchObjectEntry(
 							agentDefinitionExternalReferenceCode, 0L,
 							objectDefinition.getObjectDefinitionId());
 
-				if (agentDefinitionObjectEntry == null) {
+				if (serviceBuilderObjectEntry == null) {
 					throw new NoSuchObjectEntryException(
 						agentDefinitionExternalReferenceCode);
 				}
@@ -102,7 +102,7 @@ public class ReportManagerImpl implements ReportManager {
 					addObjectRelationshipMappingTableValues(
 						dtoConverterContext.getUserId(),
 						objectRelationship.getObjectRelationshipId(),
-						agentDefinitionObjectEntry.getObjectEntryId(),
+						serviceBuilderObjectEntry.getObjectEntryId(),
 						objectEntry.getId(), new ServiceContext());
 			}
 		}

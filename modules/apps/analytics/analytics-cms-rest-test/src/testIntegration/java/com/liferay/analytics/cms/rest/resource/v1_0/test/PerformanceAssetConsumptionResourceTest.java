@@ -172,7 +172,7 @@ public class PerformanceAssetConsumptionResourceTest
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BLOG", testCompany.getCompanyId());
 
-		_setUpMockHttp(
+		_setUpRecordingMockHttp(
 			JSONUtil.put(
 				"metrics",
 				JSONUtil.putAll(
@@ -241,7 +241,7 @@ public class PerformanceAssetConsumptionResourceTest
 		String title1 = RandomTestUtil.randomString();
 		String title2 = RandomTestUtil.randomString();
 
-		_setUpMockHttp(
+		_setUpRecordingMockHttp(
 			JSONUtil.put(
 				"metrics",
 				JSONUtil.putAll(
@@ -299,7 +299,7 @@ public class PerformanceAssetConsumptionResourceTest
 	private void _testGetPerformanceAssetConsumptionURL(long dataSourceId)
 		throws Exception {
 
-		RecordingMockHttp recordingMockHttp = _setUpMockHttp("{}");
+		RecordingMockHttp recordingMockHttp = _setUpRecordingMockHttp("{}");
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
@@ -363,7 +363,7 @@ public class PerformanceAssetConsumptionResourceTest
 				HttpComponentsUtil.getParameter(url, name, false)));
 	}
 
-	private RecordingMockHttp _setUpMockHttp(String json) {
+	private RecordingMockHttp _setUpRecordingMockHttp(String json) {
 		RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
 			Collections.singletonMap(
 				"/api/1.0/asset-metric/objectEntry/asset-consumption",

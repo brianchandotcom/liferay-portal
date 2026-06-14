@@ -60,3 +60,153 @@ test(
 		expect(event.dataSourceId).toBeTruthy();
 	}
 );
+
+test(
+	'Events carry a distinct channel id for each synced site',
+	{
+		tag: '@LRAC-12154',
+	},
+	async ({
+		analyticsChannel: firstChannel,
+		apiHelpers,
+		page,
+		project,
+		site: firstSite,
+	}) => {
+		const firstLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: firstSite.id,
+			title: getRandomString(),
+		});
+
+		await syncAnalyticsCloudViaAPI({
+			apiHelpers,
+			channel: firstChannel,
+			project,
+			siteId: Number(firstSite.id),
+		});
+
+		let secondChannel;
+
+		try {
+			secondChannel =
+				await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+					'My Property - ' + getRandomString(),
+					project.groupId
+				);
+
+			const secondSite = await apiHelpers.headlessAdminSite.postSite({
+				name: 'AC Site ' + getRandomString(),
+			});
+
+			const secondLayout =
+				await apiHelpers.jsonWebServicesLayout.addLayout({
+					groupId: secondSite.id,
+					title: getRandomString(),
+				});
+
+			await syncAnalyticsCloudViaAPI({
+				apiHelpers,
+				channel: secondChannel,
+				project,
+				siteId: Number(secondSite.id),
+			});
+
+			const capturedEvents = captureAnalyticsEvents(page);
+
+			// Interact with the first site
+
+			await page.goto(
+				`/web${firstSite.friendlyUrlPath}${firstLayout.friendlyURL}`
+			);
+
+			await expect
+				.poll(
+					() =>
+						capturedEvents.find(
+							(event) => event.channelId === firstChannel.id
+						),
+					{timeout: 30000}
+				)
+				.toBeTruthy();
+
+			// Interact with the second site
+
+			await page.goto(
+				`/web${secondSite.friendlyUrlPath}${secondLayout.friendlyURL}`
+			);
+
+			await expect
+				.poll(
+					() =>
+						capturedEvents.find(
+							(event) => event.channelId === secondChannel.id
+						),
+					{timeout: 30000}
+				)
+				.toBeTruthy();
+
+			expect(firstChannel.id).not.toBe(secondChannel.id);
+		}
+		finally {
+			if (secondChannel?.id) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${secondChannel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
+	'Identity sends a hashed email address for a logged-in user',
+	{
+		tag: '@LRAC-12153',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await syncAnalyticsCloudViaAPI({
+			apiHelpers,
+			channel,
+			project,
+			siteId: Number(site.id),
+		});
+
+		let emailAddressHashed: string | undefined;
+
+		page.on('request', (request) => {
+			if (request.method() !== 'POST') {
+				return;
+			}
+
+			const postData = request.postData();
+
+			if (!postData || !postData.includes('"emailAddressHashed"')) {
+				return;
+			}
+
+			try {
+				const eventBucket = JSON.parse(postData);
+
+				if (eventBucket.emailAddressHashed) {
+					emailAddressHashed = eventBucket.emailAddressHashed;
+				}
+			}
+			catch {
+
+				// Ignore non-JSON bodies; only analytics POSTs are valid here.
+
+			}
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect
+			.poll(() => emailAddressHashed, {timeout: 30000})
+			.toBeTruthy();
+	}
+);

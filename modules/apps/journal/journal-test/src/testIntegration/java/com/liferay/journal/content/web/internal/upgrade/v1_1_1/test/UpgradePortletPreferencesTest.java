@@ -221,7 +221,9 @@ public class UpgradePortletPreferencesTest {
 	}
 
 	@Test
-	public void testUpgradePortletPreferencesWithoutArticle() throws Exception {
+	public void testUpgradePortletPreferencesWithoutJournalArticle()
+		throws Exception {
+
 		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString()
 		).build();

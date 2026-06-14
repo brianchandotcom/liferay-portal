@@ -53,7 +53,7 @@ public class ReportFaroControllerTest {
 	}
 
 	@Test
-	public void testInternalProblemOccurredInExportProcess() throws Exception {
+	public void testGetWithInternalProblemInExportProcess() throws Exception {
 		GroupInfo groupInfo = Mockito.mock(GroupInfo.class);
 
 		Mockito.when(
@@ -88,7 +88,7 @@ public class ReportFaroControllerTest {
 	}
 
 	@Test
-	public void testRequestCommandHasInvalidType() throws Exception {
+	public void testGetWithInvalidType() throws Exception {
 		Response response = (Response)_reportFaroController.get(
 			"2020-01-01T12:00:00.000Z", null, "2020-01-31T12:00:00.000Z",
 			"accounts");
@@ -108,7 +108,7 @@ public class ReportFaroControllerTest {
 	}
 
 	@Test
-	public void testRequestCommandHasWrongDateFormat() throws Exception {
+	public void testGetWithWrongDateFormat() throws Exception {
 		Response response = (Response)_reportFaroController.get(
 			"2022-02-01", null, "2022-05-16", "page");
 

@@ -639,7 +639,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
-	private void _assertRenderedPage(
+	private void _testGetSiteSitePageRenderedPageInRequestedLocale(
 			String expectedTitle, String friendlyURL, Locale locale)
 		throws Exception {
 
@@ -885,8 +885,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		String friendlyURL = layout.getFriendlyURL();
 
-		_assertRenderedPage(esName, friendlyURL.substring(1), LocaleUtil.SPAIN);
-		_assertRenderedPage(usName, friendlyURL.substring(1), LocaleUtil.US);
+		_testGetSiteSitePageRenderedPageInRequestedLocale(esName, friendlyURL.substring(1), LocaleUtil.SPAIN);
+		_testGetSiteSitePageRenderedPageInRequestedLocale(usName, friendlyURL.substring(1), LocaleUtil.US);
 	}
 
 	private void _testGetSiteSitePagesPagePageSet() throws Exception {

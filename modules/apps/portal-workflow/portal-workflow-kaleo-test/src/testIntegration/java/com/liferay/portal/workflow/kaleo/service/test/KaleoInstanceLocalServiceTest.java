@@ -70,9 +70,9 @@ public class KaleoInstanceLocalServiceTest
 
 	@Test
 	public void testUpdateKaleoInstance() throws Exception {
-		int threadCount = 5;
+		int parties = 5;
 
-		CyclicBarrier cyclicBarrier = new CyclicBarrier(threadCount);
+		CyclicBarrier cyclicBarrier = new CyclicBarrier(parties);
 
 		List<FutureTask<KaleoInstance>> futureTasks = new ArrayList<>();
 
@@ -80,7 +80,7 @@ public class KaleoInstanceLocalServiceTest
 
 		long kaleoInstanceId = kaleoInstance.getKaleoInstanceId();
 
-		for (int i = 0; i < threadCount; i++) {
+		for (int i = 0; i < parties; i++) {
 			FutureTask<KaleoInstance> futureTask = new FutureTask<>(
 				new CompanyInheritableThreadLocalCallable<>(
 					() -> {
@@ -116,13 +116,12 @@ public class KaleoInstanceLocalServiceTest
 			}
 		}
 
-		long mvccVersion = kaleoInstance.getMvccVersion();
-
 		kaleoInstance = _kaleoInstanceLocalService.getKaleoInstance(
 			kaleoInstanceId);
 
 		Assert.assertEquals(
-			mvccVersion + threadCount, kaleoInstance.getMvccVersion());
+			kaleoInstance.getMvccVersion() + parties,
+			kaleoInstance.getMvccVersion());
 	}
 
 	@Inject

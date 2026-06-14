@@ -11,6 +11,7 @@ import com.liferay.audience.model.AudienceEntry;
 import com.liferay.audience.service.AudienceEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -53,11 +54,10 @@ public class AudienceEntryLocalServiceTest {
 		AudienceEntry audienceEntry = _addAudienceEntry(name);
 
 		Assert.assertEquals(name, audienceEntry.getName());
-	}
 
-	@Test(expected = AudienceEntryNameException.class)
-	public void testAddAudienceEntryWithoutName() throws Exception {
-		_addAudienceEntry(StringPool.BLANK);
+		AssertUtils.assertFailure(
+			AudienceEntryNameException.class, null,
+			() -> _addAudienceEntry(StringPool.BLANK));
 	}
 
 	@Test
@@ -86,16 +86,14 @@ public class AudienceEntryLocalServiceTest {
 			audienceEntry.getAudienceEntryId(), audienceEntry.getJSON(), name);
 
 		Assert.assertEquals(name, audienceEntry.getName());
-	}
 
-	@Test(expected = AudienceEntryNameException.class)
-	public void testUpdateAudienceEntryWithoutName() throws Exception {
-		AudienceEntry audienceEntry = _addAudienceEntry(
-			RandomTestUtil.randomString());
+		AudienceEntry updatedAudienceEntry = audienceEntry;
 
-		_audienceEntryLocalService.updateAudienceEntry(
-			audienceEntry.getAudienceEntryId(), audienceEntry.getJSON(),
-			StringPool.BLANK);
+		AssertUtils.assertFailure(
+			AudienceEntryNameException.class, null,
+			() -> _audienceEntryLocalService.updateAudienceEntry(
+				updatedAudienceEntry.getAudienceEntryId(),
+				updatedAudienceEntry.getJSON(), StringPool.BLANK));
 	}
 
 	private AudienceEntry _addAudienceEntry(String name) throws Exception {

@@ -85,8 +85,7 @@ public class ReportManagerImpl implements ReportManager {
 					"aiHubAgentDefinitionsToAIHubReports");
 
 			for (String agentDefinitionExternalReferenceCode :
-					ArrayUtil.distinct(
-						report.getAgentDefinitionExternalReferenceCodes())) {
+					report.getAgentDefinitionExternalReferenceCodes()) {
 
 				com.liferay.object.model.ObjectEntry
 					agentDefinitionObjectEntry =

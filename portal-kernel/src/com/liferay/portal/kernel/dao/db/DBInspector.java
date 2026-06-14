@@ -46,8 +46,7 @@ public class DBInspector {
 	public static void clearSchemaSnapshot() {
 		_schemaSnapshotEnabled = false;
 
-		_columnExistsCache.clear();
-		_columnNumericCache.clear();
+		_columnTypeCache.clear();
 		_tableNamesCache.clear();
 	}
 
@@ -123,35 +122,11 @@ public class DBInspector {
 		}
 
 		if (_schemaSnapshotEnabled) {
-			DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-			String normalizedColumnName = normalizeName(
-				columnName, databaseMetaData);
-			String normalizedTableName = normalizeName(
-				tableName, databaseMetaData);
-
-			String cacheKey = StringBundler.concat(
-				Objects.toString(getCatalog(), StringPool.BLANK), ".",
-				Objects.toString(getSchema(), StringPool.BLANK), ".",
-				normalizedTableName, ".", normalizedColumnName);
-
-			Boolean cached = _columnExistsCache.get(cacheKey);
-
-			if (cached != null) {
-				return cached;
+			if (_getColumnType(tableName, columnName) != _NO_COLUMN) {
+				return true;
 			}
 
-			boolean exists = false;
-
-			try (ResultSet resultSet = _getColumnsResultSet(
-					normalizedTableName, normalizedColumnName)) {
-
-				exists = resultSet.next();
-			}
-
-			_columnExistsCache.put(cacheKey, exists);
-
-			return exists;
+			return false;
 		}
 
 		try (ResultSet resultSet = _getColumnsResultSet(
@@ -378,37 +353,7 @@ public class DBInspector {
 		}
 
 		if (_schemaSnapshotEnabled) {
-			DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-			String normalizedColumnName = normalizeName(
-				columnName, databaseMetaData);
-			String normalizedTableName = normalizeName(
-				tableName, databaseMetaData);
-
-			String cacheKey = StringBundler.concat(
-				Objects.toString(getCatalog(), StringPool.BLANK), ".",
-				Objects.toString(getSchema(), StringPool.BLANK), ".",
-				normalizedTableName, ".", normalizedColumnName);
-
-			Boolean cached = _columnNumericCache.get(cacheKey);
-
-			if (cached != null) {
-				return cached;
-			}
-
-			boolean numeric = false;
-
-			try (ResultSet resultSet = _getColumnsResultSet(
-					normalizedTableName, normalizedColumnName)) {
-
-				if (resultSet.next()) {
-					numeric = _isNumericType(resultSet.getInt("DATA_TYPE"));
-				}
-			}
-
-			_columnNumericCache.put(cacheKey, numeric);
-
-			return numeric;
+			return _isNumericType(_getColumnType(tableName, columnName));
 		}
 
 		try (ResultSet resultSet = _getColumnsResultSet(
@@ -551,6 +496,41 @@ public class DBInspector {
 			normalizeName(tableName, databaseMetaData), columnName);
 	}
 
+	private int _getColumnType(String tableName, String columnName)
+		throws Exception {
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		String normalizedColumnName = normalizeName(
+			columnName, databaseMetaData);
+		String normalizedTableName = normalizeName(tableName, databaseMetaData);
+
+		String cacheKey = StringBundler.concat(
+			Objects.toString(getCatalog(), StringPool.BLANK), ".",
+			Objects.toString(getSchema(), StringPool.BLANK), ".",
+			normalizedTableName, ".", normalizedColumnName);
+
+		Integer columnType = _columnTypeCache.get(cacheKey);
+
+		if (columnType != null) {
+			return columnType;
+		}
+
+		columnType = _NO_COLUMN;
+
+		try (ResultSet resultSet = _getColumnsResultSet(
+				normalizedTableName, normalizedColumnName)) {
+
+			if (resultSet.next()) {
+				columnType = resultSet.getInt("DATA_TYPE");
+			}
+		}
+
+		_columnTypeCache.put(cacheKey, columnType);
+
+		return columnType;
+	}
+
 	private List<String> _getNames(String namePattern, String elementType)
 		throws SQLException {
 
@@ -614,16 +594,16 @@ public class DBInspector {
 		return false;
 	}
 
+	private static final int _NO_COLUMN = Integer.MIN_VALUE;
+
 	private static final Log _log = LogFactoryUtil.getLog(DBInspector.class);
 
 	private static final Pattern _columnDefaultClausePattern = Pattern.compile(
 		".*DEFAULT ((?:'[^']+')|(?:\\S+)) NOT NULL", Pattern.CASE_INSENSITIVE);
-	private static final Map<String, Boolean> _columnExistsCache =
-		new ConcurrentHashMap<>();
-	private static final Map<String, Boolean> _columnNumericCache =
-		new ConcurrentHashMap<>();
 	private static final Pattern _columnSizePattern = Pattern.compile(
 		"^\\w+(?:\\((\\d+)\\))?.*", Pattern.CASE_INSENSITIVE);
+	private static final Map<String, Integer> _columnTypeCache =
+		new ConcurrentHashMap<>();
 	private static final Pattern _columnTypePattern = Pattern.compile(
 		"(^\\w+)", Pattern.CASE_INSENSITIVE);
 	private static final Set<String> _controlTableNames = new HashSet<>(

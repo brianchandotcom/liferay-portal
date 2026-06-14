@@ -25,7 +25,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 /**
  * @author Eudaldo Alonso
  */
-public class OAuth2ControllerTest {
+public class OAuth2FaroControllerTest {
 
 	@ClassRule
 	@Rule
@@ -35,7 +35,7 @@ public class OAuth2ControllerTest {
 	@Before
 	public void setUp() {
 		ReflectionTestUtils.setField(
-			_oAuth2Controller, "_oAuth2AuthorizationService",
+			_oAuth2FaroController, "_oAuth2AuthorizationService",
 			_oAuth2AuthorizationService);
 	}
 
@@ -67,7 +67,7 @@ public class OAuth2ControllerTest {
 			Arrays.asList(oAuth2Authorization)
 		);
 
-		_oAuth2Controller.revokeToken(1, accessToken);
+		_oAuth2FaroController.revokeToken(1, accessToken);
 
 		Mockito.verify(
 			_oAuth2AuthorizationService
@@ -85,11 +85,12 @@ public class OAuth2ControllerTest {
 			Collections.emptyList()
 		);
 
-		_oAuth2Controller.revokeToken(1, "nonexistent");
+		_oAuth2FaroController.revokeToken(1, "nonexistent");
 	}
 
 	private final OAuth2AuthorizationService _oAuth2AuthorizationService =
 		Mockito.mock(OAuth2AuthorizationService.class);
-	private final OAuth2Controller _oAuth2Controller = new OAuth2Controller();
+	private final OAuth2FaroController _oAuth2FaroController =
+		new OAuth2FaroController();
 
 }

@@ -3458,3 +3458,41 @@ test(
 		]);
 	}
 );
+
+test(
+	'The Total, Unique and Average tabs each show the breakdown chart data',
+	{
+		tag: '@LRAC-10307',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendSortCustomEvents({apiHelpers, channelId: channel.id});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		// Each metric tab shows the three breakdown rows
+
+		for (const tab of ['Total', 'Unique', 'Average']) {
+			await page.getByRole('button', {exact: true, name: tab}).click();
+
+			await expect(page.getByRole('cell', {name: 'Sort'})).toHaveCount(3);
+		}
+	}
+);

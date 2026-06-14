@@ -690,8 +690,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				endpoint, "&filter=", URLCodec.encodeURL(filterString));
 		}
 
-		JSONObject exportTaskJSONObject = _waitForExportFinish(
-			"COMPLETED",
+		JSONObject exportTaskJSONObject = _waitForFinish(
+			"COMPLETED", false,
 			HTTPTestUtil.invokeToJSONObject(null, endpoint, Http.Method.POST));
 
 		try (InputStream inputStream = HTTPTestUtil.invokeToInputStream(
@@ -2451,20 +2451,19 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		};
 	}
 
-	private JSONObject _waitForExportFinish(
-			String expectedExecuteStatus, JSONObject jsonObject)
+	private JSONObject _waitForFinish(
+			String expectedExecuteStatus, boolean importTask,
+			JSONObject jsonObject)
 		throws Exception {
 
-		String externalReferenceCode = jsonObject.getString(
-			"externalReferenceCode");
-
-		long time = System.currentTimeMillis() + _EXPORT_TIMEOUT;
+		String endpoint = StringBundler.concat(
+			"headless-batch-engine/v1.0/",
+			importTask ? "import-task" : "export-task",
+			"/by-external-reference-code/");
 
 		while (true) {
 			jsonObject = HTTPTestUtil.invokeToJSONObject(
-				null,
-				"headless-batch-engine/v1.0/export-task" +
-					"/by-external-reference-code/" + externalReferenceCode,
+				null, endpoint + jsonObject.getString("externalReferenceCode"),
 				Http.Method.GET);
 
 			String executeStatus = jsonObject.getString("executeStatus");
@@ -2476,21 +2475,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 				return jsonObject;
 			}
-
-			if (System.currentTimeMillis() > time) {
-				throw new AssertionError(
-					StringBundler.concat(
-						"Export task ", externalReferenceCode,
-						" did not finish within ", _EXPORT_TIMEOUT, " ms"));
-			}
-
-			Thread.sleep(_EXPORT_POLL_INTERVAL);
 		}
 	}
-
-	private static final long _EXPORT_POLL_INTERVAL = 500;
-
-	private static final long _EXPORT_TIMEOUT = 60000;
 
 	private static HttpServer _httpServer;
 	private static String _thumbnail1Base64;

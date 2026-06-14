@@ -7,9 +7,7 @@ package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.portal.db.index.PrimaryKeyUpdaterUtil;
 import com.liferay.portal.events.StartupHelperUtil;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
@@ -42,7 +40,7 @@ public class DataCleanupPreupgradeProcessSuite {
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			DBInspector.beginSchemaSnapshot();
+			DataCleanupPreupgradeProcessUtil.enableCache();
 
 			try {
 				List<DataCleanupPreupgradeProcess>
@@ -72,9 +70,7 @@ public class DataCleanupPreupgradeProcessSuite {
 				}
 			}
 			finally {
-				DataCleanupPreupgradeProcessUtil.clearCache();
-				DBInspector.clearSchemaSnapshot();
-				DBResourceUtil.clearLiferayTableNamesCache();
+				DataCleanupPreupgradeProcessUtil.disableCache();
 			}
 		}
 	}

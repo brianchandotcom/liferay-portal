@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {MapOpenStreetMap} from '@liferay/map-openstreetmap';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
@@ -60,6 +61,8 @@ jest.mock('@liferay/map-openstreetmap', () => ({
 			}),
 			on: jest.fn((eventName, callback) => {
 				mockInstance._listeners[eventName] = callback;
+
+				return {removeListener: jest.fn()};
 			}),
 			removeAllListeners: jest.fn(),
 			setCenter: jest.fn(),
@@ -132,5 +135,40 @@ describe('Geolocation', () => {
 
 		expect(await screen.findAllByText('pt_BR Address')).toBeTruthy();
 		expect(screen.queryAllByText('en_US Address')).toHaveLength(0);
+	});
+
+	it('removes only the listener held in useGeolocation and not any other listeners', () => {
+		const renderGeolocation = () => (
+			<ConfigProvider value={{defaultLanguageId: 'en_US'}}>
+				<FormProvider
+					initialState={{
+						editingLanguageId: 'en_US',
+						pages: [],
+					}}
+					reducers={[languageReducer]}
+				>
+					<PageProvider value={{pageIndex: 0}}>
+						<GeolocationWrapper />
+					</PageProvider>
+				</FormProvider>
+			</ConfigProvider>
+		);
+
+		const {rerender} = render(renderGeolocation());
+
+		const {results} = MapOpenStreetMap.mock;
+
+		const mapInstance = results[results.length - 1].value;
+
+		const {results: onResults} = mapInstance.on.mock;
+
+		const previousListener = onResults[onResults.length - 1].value;
+
+		rerender(renderGeolocation());
+
+		const currentListener = onResults[onResults.length - 1].value;
+
+		expect(previousListener.removeListener).toHaveBeenCalledTimes(1);
+		expect(currentListener.removeListener).not.toHaveBeenCalled();
 	});
 });

@@ -230,6 +230,8 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 		_quotaManager.checkTokensUsage(
 			agentContext.getCompanyId(), agentContext.getUserId());
 
+		String[] agentDefinitionExternalReferenceCodes = null;
+
 		dev.langchain4j.agentic.supervisor.SupervisorAgent supervisorAgent =
 			AgenticServices.supervisorBuilder(
 			).chatMemoryProvider(
@@ -252,8 +254,6 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 				MapUtil.getString(agentContext.getInput(), "message"));
 
 		AgenticScope agenticScope = resultWithAgenticScope.agenticScope();
-
-		String[] agentDefinitionExternalReferenceCodes = null;
 
 		if ((agenticScope != null) &&
 			(agenticScope.agentInvocations() != null)) {

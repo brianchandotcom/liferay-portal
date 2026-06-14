@@ -71,10 +71,8 @@ public class HealthScanConfigurationFragmentRenderer
 				getDTOConverterContext(objectDefinition), null,
 				Pagination.of(1, 1), null, null);
 
-			if (page != null) {
-				for (ObjectEntry objectEntry : page.getItems()) {
-					return objectEntry;
-				}
+			for (ObjectEntry objectEntry : page.getItems()) {
+				return objectEntry;
 			}
 
 			return null;

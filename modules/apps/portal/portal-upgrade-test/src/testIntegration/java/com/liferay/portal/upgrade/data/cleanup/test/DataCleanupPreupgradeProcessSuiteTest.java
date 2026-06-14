@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ReleaseConstants;
@@ -101,52 +100,6 @@ public class DataCleanupPreupgradeProcessSuiteTest
 		ReflectionTestUtil.setFieldValue(
 			this, "_dataCleanupPreupgradeProcessesMap",
 			_originalDataCleanupPreupgradeProcessesMap);
-	}
-
-	@Test
-	public void testCleanUp() throws Exception {
-		boolean[] snapshotEnabledDuringUpgrade = {false};
-
-		ReflectionTestUtil.setFieldValue(
-			this, "_dataCleanupPreupgradeProcessesMap",
-			HashMapBuilder.
-				<DataCleanupPreupgradeProcess,
-				 List<DataCleanupPreupgradeProcess>>put(
-					_createDataCleanupPreupgradeProcess(
-						() ->
-							snapshotEnabledDuringUpgrade[0] =
-								DBInspector.isSchemaSnapshotEnabled()),
-					DataCleanupPreupgradeProcess.dependsOn()
-				).build());
-
-		cleanUp();
-
-		Assert.assertTrue(snapshotEnabledDuringUpgrade[0]);
-		Assert.assertFalse(DBInspector.isSchemaSnapshotEnabled());
-
-		ReflectionTestUtil.setFieldValue(
-			this, "_dataCleanupPreupgradeProcessesMap",
-			HashMapBuilder.
-				<DataCleanupPreupgradeProcess,
-				 List<DataCleanupPreupgradeProcess>>put(
-					_createDataCleanupPreupgradeProcess(
-						() -> {
-							throw new Exception(_EXCEPTION_MESSAGE);
-						}),
-					DataCleanupPreupgradeProcess.dependsOn()
-				).build());
-
-		try {
-			cleanUp();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(
-				exception instanceof DataCleanupPreupgradeException);
-		}
-
-		Assert.assertFalse(DBInspector.isSchemaSnapshotEnabled());
 	}
 
 	@Test

@@ -283,22 +283,6 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_testPutSiteFragmentUpdateThumbnailURLReferenceURL();
 	}
 
-	protected void assertNotContains(
-		Fragment fragment, List<Fragment> fragments) {
-
-		boolean contains = false;
-
-		for (Fragment curFragment : fragments) {
-			if (equals(fragment, curFragment)) {
-				contains = true;
-
-				break;
-			}
-		}
-
-		Assert.assertFalse(fragments + " contains " + fragment, contains);
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
@@ -578,7 +562,23 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		List<Fragment> fragments = (List<Fragment>)page.getItems();
 
 		assertContains(expectedFragment, fragments);
-		assertNotContains(notExpectedFragment, fragments);
+		_assertNotContains(notExpectedFragment, fragments);
+	}
+
+	private void _assertNotContains(
+		Fragment fragment, List<Fragment> fragments) {
+
+		boolean contains = false;
+
+		for (Fragment curFragment : fragments) {
+			if (equals(fragment, curFragment)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertFalse(fragments + " contains " + fragment, contains);
 	}
 
 	private void _assertProblemException(

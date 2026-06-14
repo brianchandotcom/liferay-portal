@@ -678,3 +678,132 @@ test(
 		).toBeVisible();
 	}
 );
+
+async function searchCustomEventList(page: Page, query: string) {
+	await page.getByPlaceholder('Search').fill(query);
+
+	await page.keyboard.press('Enter');
+}
+
+test(
+	'Custom events can be blocked and unblocked individually and in bulk',
+	{tag: '@LRAC-10147'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const eventNames = [
+			'blockA' + getRandomString(),
+			'blockB' + getRandomString(),
+			'blockC' + getRandomString(),
+		];
+
+		for (const eventName of eventNames) {
+			await createCustomEvent({
+				apiHelpers,
+				channelId: channel.id,
+				eventName,
+			});
+		}
+
+		const goToCustomEvents = () =>
+			navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsEventsCustomPage,
+				page,
+				projectID: project.groupId,
+			});
+
+		const goToBlockList = () =>
+			navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsEventsBlockListPage,
+				page,
+				projectID: project.groupId,
+			});
+
+		// Block the first event individually
+
+		await goToCustomEvents();
+
+		await searchCustomEventList(page, eventNames[0]);
+
+		await page.getByRole('row', {name: eventNames[0]}).hover();
+
+		await page
+			.getByRole('row', {name: eventNames[0]})
+			.getByRole('button', {name: 'Block Event'})
+			.click();
+
+		await page
+			.locator('.confirmation-modal-root')
+			.getByRole('button', {name: 'Block'})
+			.click();
+
+		// It leaves the custom events list
+
+		await searchCustomEventList(page, eventNames[0]);
+
+		await expect(page.getByRole('link', {name: eventNames[0]})).toHaveCount(
+			0
+		);
+
+		// It appears in the block list
+
+		await goToBlockList();
+
+		await searchCustomEventList(page, eventNames[0]);
+
+		await expect(
+			page.getByRole('cell', {name: eventNames[0]})
+		).toBeVisible();
+
+		// Block the other two events in bulk by selecting their rows
+
+		await goToCustomEvents();
+
+		for (const eventName of [eventNames[1], eventNames[2]]) {
+			await searchCustomEventList(page, eventName);
+
+			await page
+				.getByRole('row', {name: eventName})
+				.getByRole('checkbox')
+				.check();
+		}
+
+		await searchCustomEventList(page, 'block');
+
+		await page.getByRole('button', {name: 'Block Events'}).click();
+
+		await page
+			.locator('.confirmation-modal-root')
+			.getByRole('button', {name: 'Block'})
+			.click();
+
+		// Both bulk-blocked events appear in the block list
+
+		await goToBlockList();
+
+		for (const eventName of [eventNames[1], eventNames[2]]) {
+			await searchCustomEventList(page, eventName);
+
+			await expect(
+				page.getByRole('cell', {name: eventName})
+			).toBeVisible();
+		}
+
+		// Unblock the first event and confirm it returns to the custom list
+
+		await searchCustomEventList(page, eventNames[0]);
+
+		await page.getByRole('row', {name: eventNames[0]}).hover();
+
+		await page
+			.getByRole('row', {name: eventNames[0]})
+			.getByRole('button', {name: 'Unblock Event'})
+			.click();
+
+		await goToCustomEvents();
+
+		await searchCustomEventList(page, eventNames[0]);
+
+		await expect(
+			page.getByRole('link', {name: eventNames[0]})
+		).toBeVisible();
+	}
+);

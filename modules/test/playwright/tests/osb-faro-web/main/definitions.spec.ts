@@ -857,3 +857,65 @@ test(
 		}
 	}
 );
+
+test(
+	'The blocked events list can be sorted by Event Name and Last Seen',
+	{tag: '@LRAC-10360'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const prefix = 'sortBlocked' + getRandomString();
+
+		const eventNames = [prefix + 'C', prefix + 'A', prefix + 'B'];
+
+		for (const eventName of eventNames) {
+			await createCustomEvent({
+				apiHelpers,
+				channelId: channel.id,
+				eventName,
+			});
+		}
+
+		// Block each seeded event individually
+
+		for (const eventName of eventNames) {
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsEventsCustomPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await page.getByPlaceholder('Search').fill(eventName);
+
+			await page.keyboard.press('Enter');
+
+			await page.getByRole('row', {name: eventName}).hover();
+
+			await page
+				.getByRole('row', {name: eventName})
+				.getByRole('button', {name: 'Block Event'})
+				.click();
+
+			await page
+				.locator('.confirmation-modal-root')
+				.getByRole('button', {name: 'Block'})
+				.click();
+		}
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsEventsBlockListPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Sorting by either column keeps the three blocked events listed
+
+		for (const columnName of ['Event Name', 'Last Seen']) {
+			await page.getByPlaceholder('Search').fill(prefix);
+
+			await page.keyboard.press('Enter');
+
+			await page.getByText(columnName, {exact: true}).click();
+
+			await expect(page.getByRole('cell', {name: prefix})).toHaveCount(3);
+		}
+	}
+);

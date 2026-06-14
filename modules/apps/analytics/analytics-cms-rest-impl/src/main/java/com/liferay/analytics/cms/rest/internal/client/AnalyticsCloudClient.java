@@ -443,49 +443,6 @@ public class AnalyticsCloudClient {
 		}
 	}
 
-	private Http.Options _getOptions(
-			AnalyticsConfiguration analyticsConfiguration)
-		throws Exception {
-
-		Http.Options options = new Http.Options();
-
-		options.addHeader(
-			"OSB-Asah-Faro-Backend-Security-Signature",
-			analyticsConfiguration.
-				liferayAnalyticsFaroBackendSecuritySignature());
-		options.addHeader(
-			"OSB-Asah-Project-ID",
-			analyticsConfiguration.liferayAnalyticsProjectId());
-
-		return options;
-	}
-
-	private PerformanceOverviewMetric _getPerformanceOverviewMetric(
-		List<Metric> metrics) {
-
-		PerformanceOverviewMetric performanceOverviewMetric =
-			new PerformanceOverviewMetric();
-
-		for (Metric metric : metrics) {
-			String metricType = metric.getMetricType();
-
-			if (StringUtil.equals(metricType, "downloadsMetric")) {
-				performanceOverviewMetric.setDownloadsMetric(() -> metric);
-			}
-			else if (StringUtil.equals(metricType, "impressionsMetric")) {
-				performanceOverviewMetric.setImpressionsMetric(() -> metric);
-			}
-			else if (StringUtil.equals(metricType, "readsMetric")) {
-				performanceOverviewMetric.setReadsMetric(() -> metric);
-			}
-			else if (StringUtil.equals(metricType, "viewsMetric")) {
-				performanceOverviewMetric.setViewsMetric(() -> metric);
-			}
-		}
-
-		return performanceOverviewMetric;
-	}
-
 	private String _getLocation(
 		Long categoryId, String dataSourceId, String externalReferenceCode,
 		String groupBy, List<Long> groupIds,
@@ -570,6 +527,49 @@ public class AnalyticsCloudClient {
 			null, dataSourceId, externalReferenceCode, null, groupIds,
 			liferayAnalyticsFaroBackendURL, null, null, null, path, rangeKey,
 			selectedMetrics, null, null, null);
+	}
+
+	private Http.Options _getOptions(
+			AnalyticsConfiguration analyticsConfiguration)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			"OSB-Asah-Faro-Backend-Security-Signature",
+			analyticsConfiguration.
+				liferayAnalyticsFaroBackendSecuritySignature());
+		options.addHeader(
+			"OSB-Asah-Project-ID",
+			analyticsConfiguration.liferayAnalyticsProjectId());
+
+		return options;
+	}
+
+	private PerformanceOverviewMetric _getPerformanceOverviewMetric(
+		List<Metric> metrics) {
+
+		PerformanceOverviewMetric performanceOverviewMetric =
+			new PerformanceOverviewMetric();
+
+		for (Metric metric : metrics) {
+			String metricType = metric.getMetricType();
+
+			if (StringUtil.equals(metricType, "downloadsMetric")) {
+				performanceOverviewMetric.setDownloadsMetric(() -> metric);
+			}
+			else if (StringUtil.equals(metricType, "impressionsMetric")) {
+				performanceOverviewMetric.setImpressionsMetric(() -> metric);
+			}
+			else if (StringUtil.equals(metricType, "readsMetric")) {
+				performanceOverviewMetric.setReadsMetric(() -> metric);
+			}
+			else if (StringUtil.equals(metricType, "viewsMetric")) {
+				performanceOverviewMetric.setViewsMetric(() -> metric);
+			}
+		}
+
+		return performanceOverviewMetric;
 	}
 
 	private void _renameKey(JsonNode jsonNode, String newKey, String oldKey) {

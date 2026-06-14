@@ -157,6 +157,27 @@ public class PerformanceAssetConsumptionResourceTest
 		return depotEntry;
 	}
 
+	private void _assertParameter(
+		String expectedValue, String name, String url) {
+
+		Assert.assertEquals(
+			expectedValue,
+			URLCodec.decodeURL(
+				HttpComponentsUtil.getParameter(url, name, false)));
+	}
+
+	private RecordingMockHttp _setUpRecordingMockHttp(String json) {
+		RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
+			Collections.singletonMap(
+				"/api/1.0/asset-metric/objectEntry/asset-consumption",
+				() -> json));
+
+		ReflectionTestUtil.setFieldValue(
+			_performanceAssetConsumptionResource, "_http", recordingMockHttp);
+
+		return recordingMockHttp;
+	}
+
 	private void _testGetPerformanceAssetConsumptionGroupByStructure()
 		throws Exception {
 
@@ -352,27 +373,6 @@ public class PerformanceAssetConsumptionResourceTest
 						null, null, RandomTestUtil.randomString(),
 						RandomTestUtil.nextInt(), null, null, null,
 						Pagination.of(1, 10)));
-	}
-
-	private void _assertParameter(
-		String expectedValue, String name, String url) {
-
-		Assert.assertEquals(
-			expectedValue,
-			URLCodec.decodeURL(
-				HttpComponentsUtil.getParameter(url, name, false)));
-	}
-
-	private RecordingMockHttp _setUpRecordingMockHttp(String json) {
-		RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
-			Collections.singletonMap(
-				"/api/1.0/asset-metric/objectEntry/asset-consumption",
-				() -> json));
-
-		ReflectionTestUtil.setFieldValue(
-			_performanceAssetConsumptionResource, "_http", recordingMockHttp);
-
-		return recordingMockHttp;
 	}
 
 	@DeleteAfterTestRun

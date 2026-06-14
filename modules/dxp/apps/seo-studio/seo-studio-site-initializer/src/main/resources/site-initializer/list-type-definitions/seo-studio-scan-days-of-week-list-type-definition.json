@@ -2,33 +2,15 @@
 	"externalReferenceCode": "L_SEO_STUDIO_SCAN_DAYS_OF_WEEK",
 	"listTypeEntries": [
 		{
-			"externalReferenceCode": "FRIDAY",
-			"key": "FR",
-			"name": "Friday",
-			"system": true
-		},
-		{
-			"externalReferenceCode": "MONDAY",
-			"key": "MO",
-			"name": "Monday",
-			"system": true
-		},
-		{
-			"externalReferenceCode": "SATURDAY",
-			"key": "SA",
-			"name": "Saturday",
-			"system": true
-		},
-		{
 			"externalReferenceCode": "SUNDAY",
 			"key": "SU",
 			"name": "Sunday",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "THURSDAY",
-			"key": "TH",
-			"name": "Thursday",
+			"externalReferenceCode": "MONDAY",
+			"key": "MO",
+			"name": "Monday",
 			"system": true
 		},
 		{
@@ -41,6 +23,24 @@
 			"externalReferenceCode": "WEDNESDAY",
 			"key": "WE",
 			"name": "Wednesday",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "THURSDAY",
+			"key": "TH",
+			"name": "Thursday",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "FRIDAY",
+			"key": "FR",
+			"name": "Friday",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SATURDAY",
+			"key": "SA",
+			"name": "Saturday",
 			"system": true
 		}
 	],

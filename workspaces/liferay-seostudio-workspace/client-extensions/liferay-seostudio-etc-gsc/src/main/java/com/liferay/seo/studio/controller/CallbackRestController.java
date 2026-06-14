@@ -102,20 +102,18 @@ public class CallbackRestController extends BaseRestController {
 					credentials.getClientId(), credentials.getClientSecret(),
 					code);
 
-			Long expiresInSeconds = googleTokenResponse.getExpiresInSeconds();
-
 			Instant accessTokenExpirationTime = null;
 
-			if (expiresInSeconds != null) {
+			if (googleTokenResponse.getExpiresInSeconds() != null) {
 				accessTokenExpirationTime = Instant.now(
 				).plusSeconds(
-					expiresInSeconds
+					googleTokenResponse.getExpiresInSeconds()
 				);
 			}
 
 			_gscCredentialsService.updateTokens(
 				googleTokenResponse.getAccessToken(), accessTokenExpirationTime,
-				_googleOAuth2Service.getUserEmail(
+				_googleOAuth2Service.getUserEmailAddress(
 					googleTokenResponse.getAccessToken()),
 				credentials.getId(), googleTokenResponse.getRefreshToken());
 

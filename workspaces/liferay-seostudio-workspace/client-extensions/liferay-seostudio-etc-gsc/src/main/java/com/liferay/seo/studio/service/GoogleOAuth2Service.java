@@ -66,7 +66,7 @@ public class GoogleOAuth2Service {
 		return googleAuthorizationCodeTokenRequest.execute();
 	}
 
-	public String getUserEmail(String accessToken)
+	public String getUserEmailAddress(String accessToken)
 		throws InterruptedException, IOException {
 
 		HttpResponse<String> httpResponse = _httpClient.send(

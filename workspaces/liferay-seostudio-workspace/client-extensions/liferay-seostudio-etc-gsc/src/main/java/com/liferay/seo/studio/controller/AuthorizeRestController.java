@@ -44,7 +44,7 @@ public class AuthorizeRestController extends BaseRestController {
 		HttpServletRequest httpServletRequest, @RequestParam String redirectURL,
 		@RequestParam long seoStudioDomainId) {
 
-		URI redirectURI;
+		URI redirectURI = null;
 
 		try {
 			redirectURI = URI.create(redirectURL);

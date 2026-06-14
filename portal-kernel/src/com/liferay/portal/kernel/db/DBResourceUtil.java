@@ -11,7 +11,6 @@ import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,16 +49,22 @@ import org.osgi.framework.BundleContext;
  */
 public class DBResourceUtil {
 
-	public static void clearLiferayTableNamesCache() {
+	public static void disableCache() {
+		_cacheEnabled = false;
+
 		_liferayTableNames = null;
 
 		_moduleTableNamesDCLSingleton.destroy(null);
 	}
 
+	public static void enableCache() {
+		_cacheEnabled = true;
+	}
+
 	public static Set<String> getLiferayTableNames(Connection connection)
 		throws Exception {
 
-		if (DBInspector.isSchemaSnapshotEnabled()) {
+		if (_cacheEnabled) {
 			Set<String> liferayTableNames = _liferayTableNames;
 
 			if (liferayTableNames == null) {
@@ -94,7 +99,7 @@ public class DBResourceUtil {
 	}
 
 	public static Set<String> getModuleTableNames() {
-		if (DBInspector.isSchemaSnapshotEnabled()) {
+		if (_cacheEnabled) {
 			Set<String> tableNames = new TreeSet<>(
 				String.CASE_INSENSITIVE_ORDER);
 
@@ -426,6 +431,7 @@ public class DBResourceUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBResourceUtil.class);
 
+	private static volatile boolean _cacheEnabled;
 	private static final Pattern _composedPrimaryKeyPattern = Pattern.compile(
 		"create table\\s+(\\w+)\\s*\\((?:[^;]*?)?primary key\\s*\\(([^)]+)\\)",
 		Pattern.DOTALL);

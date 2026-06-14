@@ -38,7 +38,6 @@ Five principles run through everything:
 - Sort a grouped block of independent variable assignments alphabetically; place a derived assignment after the variables it depends on, near its use. [201]
 - Sort every other sortable sequence the same way — method calls on one object, a method's parameters, sibling declarations, and literal lists. Variable, field, and method names sort case insensitively in natural order (per the source formatter's `JavaTermComparator`, so `_criterions` precedes `_criterionType`); literal strings sort case sensitively in ASCII order, with `null` last. Setter calls on a generated model mirror the defining schema instead — `service.xml` columns for a ServiceBuilder entity, `rest-openapi.yaml` fields for a REST DTO. Constructor body assignments follow the parameter order with derived assignments after (see `JavaConstructorParametersCheck`), and a vararg parameter is forced to the end of a parameter list. [202]
 - Declare each local immediately before its first use ("as used"). A wrapping object is the exception — the value the method returns, or a local whose sole purpose is to absorb another local through a setter — declared first and closed with the return statement or the setter, so it wraps the variables that build it ("burrito"). [203]
-- In a declarative HCL file (Terraform), sort every member of a block — arguments and nested blocks together, meta arguments such as `count` and `lifecycle` taking their alphabetical slot rather than being hoisted — into one absolute alphabetical order, and sort a derived `local` in that same order rather than after the values it reads. This overrides rule 201's derived assignment caveat, because Terraform evaluates through a dependency graph and physical order means nothing. [204]
 
 ## Prefer Liferay utilities
 
@@ -101,4 +100,3 @@ Simplicity never outranks safety: when the two trade off, choose the safer form.
 - In shell commands, use long form flags in alphabetical order [903], and put each argument of a multiline command on its own line [904].
 - In a shell script, define public functions like `main` before private underscore prefixed ones, sorted alphabetically within each group. [907]
 - Begin an inline comment with a capital letter and surround it with a blank line before and after. [905]
-- Indent Terraform with tabs and put no space around an argument's `=`, matching the source formatter style rather than the `terraform fmt` default; never run `terraform fmt`. [909]

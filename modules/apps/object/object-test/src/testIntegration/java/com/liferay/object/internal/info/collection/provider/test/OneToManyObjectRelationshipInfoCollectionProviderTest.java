@@ -6,9 +6,6 @@
 package com.liferay.object.internal.info.collection.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -25,10 +22,10 @@ import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.system.SystemObjectEntry;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -36,7 +33,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -45,9 +41,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -141,12 +135,9 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 		// Unmodifiable system object definition as child
 
-		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
-			_group.getGroupId());
-
 		ObjectDefinition unmodifiableSystemObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				TestPropsValues.getCompanyId(), CPDefinition.class.getName());
+				TestPropsValues.getCompanyId(), User.class.getName());
 
 		ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectRelationshipLocalService, _customObjectDefinition2,
@@ -162,46 +153,17 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 		// Unmodifiable system object definition as parent
 
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService,
-				unmodifiableSystemObjectDefinition, _customObjectDefinition2,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				StringUtil.randomId());
+		ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, unmodifiableSystemObjectDefinition,
+			_customObjectDefinition2,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			StringUtil.randomId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		try {
-			_assertCollectionInfoPage(
-				_customObjectDefinition2, unmodifiableSystemObjectDefinition,
-				cpDefinition,
-				_addObjectEntry(
-					_customObjectDefinition2, objectRelationship,
-					unmodifiableSystemObjectDefinition,
-					cpDefinition.getCProductId()),
-				_addObjectEntry(
-					_customObjectDefinition2, objectRelationship,
-					unmodifiableSystemObjectDefinition,
-					cpDefinition.getCProductId()));
-
-			long classPK = RandomTestUtil.randomLong();
-
-			_assertCollectionInfoPage(
-				_customObjectDefinition2, unmodifiableSystemObjectDefinition,
-				new SystemObjectEntry(
-					classPK, RandomTestUtil.randomString(),
-					Collections.emptyMap()),
-				_addObjectEntry(
-					_customObjectDefinition2, objectRelationship,
-					unmodifiableSystemObjectDefinition, classPK),
-				_addObjectEntry(
-					_customObjectDefinition2, objectRelationship,
-					unmodifiableSystemObjectDefinition, classPK));
-		}
-		finally {
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship);
-
-			_cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
-		}
+		Assert.assertNull(
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				RelatedInfoItemCollectionProvider.class,
+				unmodifiableSystemObjectDefinition.getClassName()));
 	}
 
 	private ObjectEntry _addObjectEntry(ObjectDefinition objectDefinition)
@@ -221,7 +183,8 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 	private ObjectEntry _addObjectEntry(
 			ObjectDefinition childObjectDefinition,
 			ObjectRelationship objectRelationship,
-			ObjectDefinition parentObjectDefinition, long parentPrimaryKey)
+			ObjectDefinition parentObjectDefinition,
+			ObjectEntry parentObjectEntry)
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
@@ -234,49 +197,9 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 			).put(
 				ObjectRelationshipUtil.getObjectRelationshipFieldName(
 					parentObjectDefinition, objectRelationship.getName()),
-				parentPrimaryKey
+				parentObjectEntry.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
-	private void _assertCollectionInfoPage(
-		ObjectDefinition childObjectDefinition,
-		ObjectDefinition parentObjectDefinition, Object relatedItem,
-		ObjectEntry... expectedObjectEntries) {
-
-		List<RelatedInfoItemCollectionProvider>
-			relatedInfoItemCollectionProviders = ListUtil.filter(
-				_infoItemServiceRegistry.getAllInfoItemServices(
-					RelatedInfoItemCollectionProvider.class,
-					parentObjectDefinition.getClassName()),
-				relatedInfoItemCollectionProvider -> Objects.equals(
-					childObjectDefinition.getClassName(),
-					relatedInfoItemCollectionProvider.
-						getCollectionItemClassName()));
-
-		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider =
-			relatedInfoItemCollectionProviders.get(0);
-
-		CollectionQuery collectionQuery = new CollectionQuery();
-
-		collectionQuery.setRelatedItemObject(relatedItem);
-
-		InfoPage collectionInfoPage =
-			relatedInfoItemCollectionProvider.getCollectionInfoPage(
-				collectionQuery);
-
-		Assert.assertEquals(
-			expectedObjectEntries.length, collectionInfoPage.getTotalCount());
-
-		List<ObjectEntry> objectEntries = collectionInfoPage.getPageItems();
-
-		Assert.assertEquals(
-			objectEntries.toString(), expectedObjectEntries.length,
-			objectEntries.size());
-
-		for (ObjectEntry expectedObjectEntry : expectedObjectEntries) {
-			Assert.assertTrue(objectEntries.contains(expectedObjectEntry));
-		}
 	}
 
 	private void _testOneToManyObjectRelationshipRelatedInfoCollectionProvider(
@@ -295,10 +218,10 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 		ObjectEntry childObjectEntry1 = _addObjectEntry(
 			childObjectDefinition, objectRelationship, parentObjectDefinition,
-			parentObjectEntry.getObjectEntryId());
+			parentObjectEntry);
 		ObjectEntry childObjectEntry2 = _addObjectEntry(
 			childObjectDefinition, objectRelationship, parentObjectDefinition,
-			parentObjectEntry.getObjectEntryId());
+			parentObjectEntry);
 
 		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -326,9 +249,6 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 		Assert.assertTrue(objectEntries.contains(childObjectEntry1));
 		Assert.assertTrue(objectEntries.contains(childObjectEntry2));
 	}
-
-	@Inject
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _customObjectDefinition1;

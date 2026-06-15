@@ -8,11 +8,10 @@ package com.liferay.layout.internal.search.spi.model.query.contributor;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.spi.model.query.contributor.HighlightFieldNamesQueryConfigContributor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,8 +29,7 @@ public class LayoutHighlightFieldNamesQueryConfigContributor
 
 	@Override
 	public String[] getHighlightFieldNames(SearchContext searchContext) {
-		List<String> prefixes = new ArrayList<>(
-			Arrays.asList(Field.NAME, Field.TITLE));
+		List<String> prefixes = ListUtil.fromArray(Field.TITLE);
 
 		if (!GetterUtil.getBoolean(
 				searchContext.getAttribute("searchOnlyByTitle"))) {

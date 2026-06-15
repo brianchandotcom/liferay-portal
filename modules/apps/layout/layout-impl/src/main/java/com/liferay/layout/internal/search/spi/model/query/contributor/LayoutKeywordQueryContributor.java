@@ -41,8 +41,6 @@ public class LayoutKeywordQueryContributor implements KeywordQueryContributor {
 				booleanQuery, searchContext, Field.CONTENT, false);
 		}
 
-		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, Field.NAME, false);
 		_queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.TITLE, false);
 

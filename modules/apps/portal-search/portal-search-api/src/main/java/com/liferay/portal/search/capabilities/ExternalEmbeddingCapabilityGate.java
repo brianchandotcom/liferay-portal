@@ -8,17 +8,6 @@ package com.liferay.portal.search.capabilities;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Evaluates whether the External Embedding capability required by Bring Your
- * Own LLM is available in the current runtime.
- *
- * <p>
- * Consumers should call {@link #check()} once per decision point and inspect
- * the returned {@link ExternalEmbeddingEligibility}. The eligibility carries
- * both the boolean availability and, when unavailable, the i18n key for the
- * first failed precondition, so callers can render the reason to the user
- * without re-running the underlying checks.
- * </p>
- *
  * @author Rodrigo Guedes de Souza
  */
 @ProviderType

@@ -17,6 +17,10 @@
 
 		&-state {
 			flex-shrink: 0;
+
+			label {
+				margin-right: 0;
+			}
 		}
 
 		&-title {

@@ -201,7 +201,7 @@ export default function CalendarView({items}: CalendarViewProps) {
 					return true as unknown as void;
 				}}
 				moreLinkContent={(arg) => (
-					<ClayButton borderless displayType="secondary" size="sm">
+					<ClayButton borderless displayType="secondary" size="xs">
 						{`${arg.num} ${Liferay.Language.get('more')}`}
 
 						<span className="inline-item inline-item-after">

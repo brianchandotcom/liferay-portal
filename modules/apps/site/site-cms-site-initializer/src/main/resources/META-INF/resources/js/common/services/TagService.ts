@@ -52,6 +52,12 @@ async function createTag({
 	return ApiHelper.post<Tag>(url, requestBody);
 }
 
+async function getTags(siteId: number | string) {
+	return ApiHelper.get<{
+		items: {assetLibraries: {id: number}[]; id: string; name: string}[];
+	}>(`/o/headless-admin-taxonomy/v1.0/sites/${siteId}/keywords`);
+}
+
 async function getCommonTags(selectedData: IBulkActionFDSData) {
 	return await ApiHelper.post<any>(
 		`/o/bulk/v1.0/keywords/common`,
@@ -66,4 +72,5 @@ async function getCommonTags(selectedData: IBulkActionFDSData) {
 export default {
 	createTag,
 	getCommonTags,
+	getTags,
 };

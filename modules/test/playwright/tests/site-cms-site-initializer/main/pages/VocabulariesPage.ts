@@ -29,6 +29,10 @@ export class VocabulariesPage {
 		return this.dataSetFragmentPage.getRow(filter);
 	}
 
+	getLockIcon(name: string) {
+		return this.getItem(name).getByLabel('System vocabulary');
+	}
+
 	async clickCategoriesLink(name: string) {
 		await this.getItem(name).locator('a[href*="view-categories"]').click();
 	}
@@ -56,6 +60,16 @@ export class VocabulariesPage {
 			action,
 			filter,
 		});
+	}
+
+	async expectItemActionHidden({
+		action,
+		filter,
+	}: {
+		action: string;
+		filter: string;
+	}) {
+		await this.dataSetFragmentPage.expectItemActionHidden({action, filter});
 	}
 
 	async search(value: string) {

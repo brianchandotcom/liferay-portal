@@ -501,13 +501,9 @@
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] .lfr-nav-item {\n\tline-height: 1.5;\n\tposition: relative;\n}\n\n.[$FRAGMENT_CLASS$] .lfr-nav-item > a {\n\tcolor: var(--gray-600) !important;\n\tfont-size: revert;\n\tfont-weight: var(--font-weight-semi-bold, 600);\n\tmargin-bottom: calc(((3rem - 0.0625rem - 0px) - 2rem) * 0.5);\n\tmargin-top: calc(((3rem - 0.0625rem - 0px) - 2rem) * 0.5);\n\tpadding-left: 1rem;\n\tpadding-right: 1rem;\n}\n\n.[$FRAGMENT_CLASS$] .lfr-nav-item.selected::after {\n\tbackground-color: #80acff;\n\tbottom: 0px;\n\tcontent: '';\n\theight: 4px;\n\tleft: 0;\n\tposition: absolute;\n\twidth: 100%;\n}\n\n.[$FRAGMENT_CLASS$] .lfr-nav-item:hover > a,\n.[$FRAGMENT_CLASS$] .lfr-nav-item.selected > a {\n\tcolor: var(--gray-900) !important;\n\tfont-family: var(--font-family-sans-serif);\n}\n\n.[$FRAGMENT_CLASS$] .lfr-nav-item.dropdown .child-menu .selected > a {\n\tbackground-color: var(--gray-200);\n\tfont-weight: var(--font-weight-semi-bold, 600);\n}\n\n.[$FRAGMENT_CLASS$] .lfr-nav-item.dropdown .child-menu .selected > a:hover {\n\tbackground-color: #f0f5ff;\n\tfont-weight: var(--font-weight-semi-bold, 600);\n}",
 													"fragment": {
-														"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+														"key": "com.liferay.commerce.order.content.web.internal.fragment.renderer.CommerceClassicNavigationFragmentRenderer"
 													},
 													"fragmentConfig": {
-														"displayStyle": "horizontal",
-														"hoveredItemColor": "",
-														"selectedItemColor": "",
-														"sublevels": "-1"
 													},
 													"fragmentFields": [
 													],

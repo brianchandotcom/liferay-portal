@@ -71,25 +71,20 @@ public class SHSubshellCheck extends BaseFileCheck {
 					startLineNumber = lineNumber;
 
 					sb.append(matcher.group(2));
-					sb.append(StringPool.NEW_LINE);
-
-					insideSingleQuotes = _updateQuotesState(
-						matcher.group(2), '\'', insideSingleQuotes);
-					insideDoubleQuotes = _updateQuotesState(
-						matcher.group(2), '"', insideDoubleQuotes);
 				}
 				else {
 					sb.append(line);
-					sb.append(StringPool.NEW_LINE);
-
-					insideSingleQuotes = _updateQuotesState(
-						line, '\'', insideSingleQuotes);
-					insideDoubleQuotes = _updateQuotesState(
-						line, '"', insideDoubleQuotes);
 				}
+
+				insideSingleQuotes = _updateQuotesState(
+					line, '\'', insideSingleQuotes);
+				insideDoubleQuotes = _updateQuotesState(
+					line, '"', insideDoubleQuotes);
 
 				if (insideSingleQuotes || insideDoubleQuotes ||
 					trimmedLine.endsWith("\\")) {
+
+					sb.append(StringPool.NEW_LINE);
 
 					continue;
 				}

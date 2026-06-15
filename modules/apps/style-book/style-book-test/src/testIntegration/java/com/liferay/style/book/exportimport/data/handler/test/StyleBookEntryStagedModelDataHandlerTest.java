@@ -6,9 +6,13 @@
 package com.liferay.style.book.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -77,6 +81,152 @@ public class StyleBookEntryStagedModelDataHandlerTest
 			importedStyleBookEntry.getModifiedDate());
 	}
 
+	@Test
+	public void testExportImportResolvesExternalReferenceCodeConflict()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_styleBookEntryLocalService.addStyleBookEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			liveGroup.getGroupId(), false, StringPool.BLANK,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				liveGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				stagingGroup.getGroupId(), false, StringPool.BLANK,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		exportImportStagedModel(styleBookEntry);
+
+		StyleBookEntry importedStyleBookEntry = (StyleBookEntry)getStagedModel(
+			styleBookEntry.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStyleBookEntry);
+		Assert.assertNotEquals(
+			externalReferenceCode,
+			importedStyleBookEntry.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testExportImportResolvesNameConflictWithUniqueName()
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+
+		StyleBookEntry liveStyleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				null, TestPropsValues.getUserId(), liveGroup.getGroupId(),
+				false, StringPool.BLANK, name, StringPool.BLANK,
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				false, StringPool.BLANK, name, StringPool.BLANK,
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		exportImportStagedModel(styleBookEntry);
+
+		StyleBookEntry importedStyleBookEntry = (StyleBookEntry)getStagedModel(
+			styleBookEntry.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStyleBookEntry);
+		Assert.assertEquals(
+			styleBookEntry.getUuid(), importedStyleBookEntry.getUuid());
+		Assert.assertNotEquals(name, importedStyleBookEntry.getName());
+		Assert.assertNotEquals(
+			liveStyleBookEntry.getStyleBookEntryKey(),
+			importedStyleBookEntry.getStyleBookEntryKey());
+	}
+
+	@Test
+	public void testExportImportWarnsWhenThemeIsNotDeployed() throws Exception {
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				false, StringPool.BLANK, RandomTestUtil.randomString(),
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		exportImportStagedModel(styleBookEntry);
+
+		StyleBookEntry importedStyleBookEntry = (StyleBookEntry)getStagedModel(
+			styleBookEntry.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStyleBookEntry);
+
+		ExportImportReportEntry exportImportReportEntry =
+			_getWarningExportImportReportEntry(liveGroup.getGroupId());
+
+		Assert.assertTrue(
+			exportImportReportEntry.getErrorMessage(
+			).contains(
+				"is not deployed"
+			));
+	}
+
+	@Test
+	public void testExportImportWarnsWhenTokenIsMissing() throws Exception {
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				false,
+				JSONUtil.put(
+					"this-token-does-not-exist",
+					JSONUtil.put("value", "#000000")
+				).toString(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				"classic_WAR_classictheme",
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		exportImportStagedModel(styleBookEntry);
+
+		StyleBookEntry importedStyleBookEntry = (StyleBookEntry)getStagedModel(
+			styleBookEntry.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStyleBookEntry);
+
+		ExportImportReportEntry exportImportReportEntry =
+			_getWarningExportImportReportEntry(liveGroup.getGroupId());
+
+		Assert.assertTrue(
+			exportImportReportEntry.getErrorMessage(
+			).contains(
+				"do not exist"
+			));
+	}
+
+	@Test
+	public void testExportImportWithoutConflictPreservesName()
+		throws Exception {
+
+		StyleBookEntry styleBookEntry = (StyleBookEntry)addStagedModel(
+			stagingGroup, new HashMap<>());
+
+		exportImportStagedModel(styleBookEntry);
+
+		StyleBookEntry importedStyleBookEntry = (StyleBookEntry)getStagedModel(
+			styleBookEntry.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStyleBookEntry);
+		Assert.assertEquals(
+			styleBookEntry.getName(), importedStyleBookEntry.getName());
+	}
+
 	@Override
 	protected StagedModel addStagedModel(
 			Group group,
@@ -138,6 +288,32 @@ public class StyleBookEntryStagedModelDataHandlerTest
 			clazz.getResourceAsStream("dependencies/thumbnail.png"),
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
 	}
+
+	private ExportImportReportEntry _getWarningExportImportReportEntry(
+			long groupId)
+		throws Exception {
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				TestPropsValues.getCompanyId(), 0);
+
+		for (ExportImportReportEntry exportImportReportEntry :
+				exportImportReportEntries) {
+
+			if ((exportImportReportEntry.getGroupId() == groupId) &&
+				(exportImportReportEntry.getType() ==
+					ExportImportReportEntryConstants.TYPE_WARNING)) {
+
+				return exportImportReportEntry;
+			}
+		}
+
+		return null;
+	}
+
+	@Inject
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

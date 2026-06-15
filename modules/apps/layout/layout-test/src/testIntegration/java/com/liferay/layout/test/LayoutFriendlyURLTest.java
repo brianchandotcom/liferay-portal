@@ -11,6 +11,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -619,7 +620,7 @@ public class LayoutFriendlyURLTest {
 			Group group, LayoutSet layoutSet, Layout layoutSetPrototypeLayout)
 		throws Exception {
 
-		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
 
 		Layout groupLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutSetPrototypeLayout.getUuid(), group.getGroupId(),
@@ -658,6 +659,9 @@ public class LayoutFriendlyURLTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private Sites _sites;

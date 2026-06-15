@@ -12,6 +12,7 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -100,7 +101,7 @@ public class LayoutSetPrototypePropagationCTTest {
 
 		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
-		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
 
 		Thread.sleep(2000);
 
@@ -220,6 +221,9 @@ public class LayoutSetPrototypePropagationCTTest {
 
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private Sites _sites;

@@ -39,6 +39,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.model.Group;
@@ -292,8 +293,7 @@ public class ExportImportPerformanceTest {
 		try (Closeable closeable = new PerformanceTimer(_logFilePath, 1000)) {
 			MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
-			_sites.mergeLayoutSetPrototypeLayouts(
-				_group, _group.getPublicLayoutSet());
+			_layoutSetPrototypeHelper.executeLayoutSetSync(_group.getPublicLayoutSet());
 		}
 	}
 
@@ -620,6 +620,9 @@ public class ExportImportPerformanceTest {
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private Sites _sites;

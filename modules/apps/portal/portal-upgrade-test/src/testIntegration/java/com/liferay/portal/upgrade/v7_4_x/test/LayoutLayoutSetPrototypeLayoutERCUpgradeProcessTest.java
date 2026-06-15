@@ -10,6 +10,7 @@ import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
@@ -177,7 +178,7 @@ public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
 
 		layoutSet = _layoutSetLocalService.updateLayoutSet(layoutSet);
 
-		_sites.mergeLayoutSetPrototypeLayouts(_group, layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
 	}
 
 	@Inject
@@ -200,6 +201,9 @@ public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private Sites _sites;

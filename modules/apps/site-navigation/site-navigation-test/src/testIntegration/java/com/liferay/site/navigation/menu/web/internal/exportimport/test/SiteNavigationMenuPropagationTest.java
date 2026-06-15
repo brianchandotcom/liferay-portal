@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -247,7 +248,7 @@ public class SiteNavigationMenuPropagationTest {
 
 		layoutSet = _layoutSetLocalService.updateLayoutSet(layoutSet);
 
-		_sites.mergeLayoutSetPrototypeLayouts(_group, layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
 	}
 
 	@Inject
@@ -274,6 +275,9 @@ public class SiteNavigationMenuPropagationTest {
 
 	@Inject
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private Sites _sites;

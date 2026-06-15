@@ -22,6 +22,7 @@ resource "google_project_service" "apis" {
 			"gkehub.googleapis.com",
 			"iam.googleapis.com",
 			"iamcredentials.googleapis.com",
+			"monitoring.googleapis.com",
 			"secretmanager.googleapis.com",
 			"servicecontrol.googleapis.com",
 			"servicemanagement.googleapis.com",

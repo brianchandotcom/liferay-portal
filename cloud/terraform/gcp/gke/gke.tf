@@ -43,6 +43,12 @@ resource "google_container_cluster" "primary" {
 			for_each=var.master_authorized_networks
 		}
 	}
+	monitoring_config {
+		enable_components=["SYSTEM_COMPONENTS"]
+		managed_prometheus {
+			enabled=true
+		}
+	}
 	name=local.cluster_name
 	network=google_compute_network.vpc.id
 	networking_mode="VPC_NATIVE"

@@ -8,15 +8,6 @@ package com.liferay.portal.search.capabilities;
 import com.liferay.petra.string.StringPool;
 
 /**
- * Represents the immutable result of an external embedding capability gate
- * evaluation.
- *
- * <p>
- * When {@link #isAvailable()} is {@code true}, {@link #getReason()} returns an
- * empty string. When the capability is unavailable, {@link #getReason()}
- * returns the i18n key identifying the first failed precondition.
- * </p>
- *
  * @author Rodrigo Guedes de Souza
  */
 public final class ExternalEmbeddingEligibility {

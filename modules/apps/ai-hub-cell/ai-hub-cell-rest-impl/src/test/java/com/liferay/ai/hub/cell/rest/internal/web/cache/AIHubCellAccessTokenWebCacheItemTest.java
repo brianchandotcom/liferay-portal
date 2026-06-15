@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.jose.JWSAlgorithm;
@@ -50,18 +52,9 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 		long expirationTime =
 			((startTime + Time.HOUR) / Time.SECOND) * Time.SECOND;
 
-		SignedJWT signedJWT = new SignedJWT(
-			new JWSHeader(JWSAlgorithm.HS256),
-			new JWTClaimsSet.Builder(
-			).expirationTime(
-				new Date(expirationTime)
-			).build());
-
-		signedJWT.sign(new MACSigner(new byte[32]));
-
 		try (MockedStatic<HttpUtil> httpUtilMockedStatic = _mockHttpUtil(
 				JSONUtil.put(
-					"access_token", signedJWT.serialize()
+					"access_token", _createAccessToken(expirationTime)
 				).put(
 					"expires_in", RandomTestUtil.randomLong()
 				).toString())) {
@@ -70,12 +63,7 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 				new AIHubCellAccessTokenWebCacheItem(
 					_getAIHubCellConfiguration());
 
-			JSONObject jsonObject =
-				(JSONObject)aiHubCellAccessTokenWebCacheItem.convert(
-					StringPool.BLANK);
-
-			Assert.assertEquals(
-				expirationTime, jsonObject.getLong("expirationTime"));
+			aiHubCellAccessTokenWebCacheItem.convert(StringPool.BLANK);
 
 			long refreshTime =
 				aiHubCellAccessTokenWebCacheItem.getRefreshTime();
@@ -97,53 +85,50 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 				new AIHubCellAccessTokenWebCacheItem(
 					_getAIHubCellConfiguration());
 
-			Assert.assertNull(
-				aiHubCellAccessTokenWebCacheItem.convert(StringPool.BLANK));
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					AIHubCellAccessTokenWebCacheItem.class.getName(),
+					LoggerTestUtil.OFF)) {
+
+				Assert.assertNull(
+					aiHubCellAccessTokenWebCacheItem.convert(StringPool.BLANK));
+			}
 		}
 	}
 
 	@Test
 	public void testConvertWhenAccessTokenIsOpaque() throws Exception {
-		long startTime = System.currentTimeMillis();
-
 		try (MockedStatic<HttpUtil> httpUtilMockedStatic = _mockHttpUtil(
 				JSONUtil.put(
 					"access_token", RandomTestUtil.randomString()
 				).put(
-					"expires_in", _EXPIRES_IN
+					"expires_in", RandomTestUtil.randomLong()
 				).toString())) {
 
 			AIHubCellAccessTokenWebCacheItem aiHubCellAccessTokenWebCacheItem =
 				new AIHubCellAccessTokenWebCacheItem(
 					_getAIHubCellConfiguration());
 
-			JSONObject jsonObject =
-				(JSONObject)aiHubCellAccessTokenWebCacheItem.convert(
-					StringPool.BLANK);
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					AIHubCellAccessTokenWebCacheItem.class.getName(),
+					LoggerTestUtil.OFF)) {
 
-			long expirationTime = jsonObject.getLong("expirationTime");
-
-			Assert.assertTrue(
-				expirationTime >= (startTime + (_EXPIRES_IN * Time.SECOND)));
-
-			long refreshTime =
-				aiHubCellAccessTokenWebCacheItem.getRefreshTime();
-
-			Assert.assertTrue(refreshTime > 0);
-			Assert.assertTrue(
-				refreshTime <= (long)(_EXPIRES_IN * Time.SECOND * 0.8));
+				Assert.assertNull(
+					aiHubCellAccessTokenWebCacheItem.convert(StringPool.BLANK));
+			}
 		}
 	}
 
 	@Test
-	public void testGetWhenCachedAccessTokenIsExpired() {
+	public void testGetWhenCachedAccessTokenIsExpired() throws Exception {
 		try (MockedStatic<WebCachePoolUtil> webCachePoolUtilMockedStatic =
 				Mockito.mockStatic(WebCachePoolUtil.class)) {
 
 			JSONObject expiredJSONObject = JSONUtil.put(
-				"expirationTime", System.currentTimeMillis() - Time.MINUTE);
+				"access_token",
+				_createAccessToken(System.currentTimeMillis() - Time.MINUTE));
 			JSONObject freshJSONObject = JSONUtil.put(
-				"expirationTime", System.currentTimeMillis() + Time.HOUR);
+				"access_token",
+				_createAccessToken(System.currentTimeMillis() + Time.HOUR));
 
 			webCachePoolUtilMockedStatic.when(
 				() -> WebCachePoolUtil.get(
@@ -163,12 +148,13 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 	}
 
 	@Test
-	public void testGetWhenCachedAccessTokenIsNotExpired() {
+	public void testGetWhenCachedAccessTokenIsNotExpired() throws Exception {
 		try (MockedStatic<WebCachePoolUtil> webCachePoolUtilMockedStatic =
 				Mockito.mockStatic(WebCachePoolUtil.class)) {
 
 			JSONObject freshJSONObject = JSONUtil.put(
-				"expirationTime", System.currentTimeMillis() + Time.HOUR);
+				"access_token",
+				_createAccessToken(System.currentTimeMillis() + Time.HOUR));
 
 			webCachePoolUtilMockedStatic.when(
 				() -> WebCachePoolUtil.get(
@@ -186,6 +172,19 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 				() -> WebCachePoolUtil.remove(Mockito.anyString()),
 				Mockito.never());
 		}
+	}
+
+	private String _createAccessToken(long expirationTime) throws Exception {
+		SignedJWT signedJWT = new SignedJWT(
+			new JWSHeader(JWSAlgorithm.HS256),
+			new JWTClaimsSet.Builder(
+			).expirationTime(
+				new Date(expirationTime)
+			).build());
+
+		signedJWT.sign(new MACSigner(new byte[32]));
+
+		return signedJWT.serialize();
 	}
 
 	private AIHubCellConfiguration _getAIHubCellConfiguration() {
@@ -235,7 +234,5 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 
 		return httpUtilMockedStatic;
 	}
-
-	private static final long _EXPIRES_IN = 600;
 
 }

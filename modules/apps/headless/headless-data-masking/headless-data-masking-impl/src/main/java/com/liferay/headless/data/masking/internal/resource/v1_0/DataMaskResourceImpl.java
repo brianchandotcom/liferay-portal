@@ -68,9 +68,7 @@ public class DataMaskResourceImpl extends BaseDataMaskResourceImpl {
 				"preview", detectionPattern, replacementPattern,
 				replacementValue);
 
-			String finalOutput = dataMask.apply(sampleText);
-
-			dataMaskPreviewResult.setOutput(() -> finalOutput);
+			dataMaskPreviewResult.setOutput(() -> dataMask.apply(sampleText));
 		}
 		catch (PatternSyntaxException patternSyntaxException) {
 			dataMaskPreviewResult.setError(patternSyntaxException::getMessage);

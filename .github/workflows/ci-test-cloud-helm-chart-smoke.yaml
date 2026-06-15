@@ -1,22 +1,12 @@
-defaults:
-    run:
-        shell: bash
 jobs:
     test-cloud-helm-chart-smoke:
         if: ${{github.repository == 'cloudnative-team/liferay-portal'}}
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout code
-                uses: actions/checkout@v4
-            -   name: Create kind cluster
-                uses: helm/kind-action@v1
-            -   name: Install Helm
-                uses: azure/setup-helm@v4
-            -   name: Validate Helm chart
-                run: helm install liferay . --dry-run=server
-                working-directory: ./cloud/helm/default
+        permissions:
+            contents: read
+        uses: ./.github/workflows/ci-reusable-test-cloud-helm-chart-smoke.yaml
 on:
     pull_request:
         paths:
+            -   .github/workflows/ci-reusable-test-cloud-helm-chart-smoke.yaml
             -   .github/workflows/ci-test-cloud-helm-chart-smoke.yaml
             -   cloud/helm/default/**

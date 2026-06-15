@@ -1,0 +1,65 @@
+defaults:
+    run:
+        shell: bash
+jobs:
+    test-cloud-terraform:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   name: Set up Terraform
+                uses: hashicorp/setup-terraform@v3
+                with:
+                    terraform_version: 1.12.2
+            -   name: Set up TFLint
+                uses: terraform-linters/setup-tflint@v4
+                with:
+                    github_token: ${{secrets.GITHUB_TOKEN}}
+            -   name: Initialize Terraform
+                run: terraform init -backend=false -input=false
+                working-directory: ./cloud/terraform/${{matrix.stack}}
+            -   name: Validate Terraform
+                run: terraform validate
+                working-directory: ./cloud/terraform/${{matrix.stack}}
+            -   name: Run TFLint
+                run: cloud/scripts/tests/run_tflint.sh "${{matrix.stack}}"
+            -   name: Run Terraform unit tests
+                run: cloud/scripts/tests/run_terraform_tests.sh "${{matrix.stack}}"
+            -   if: ${{!cancelled() && hashFiles('cloud/terraform/test-results/*.xml') != ''}}
+                name: Publish test report
+                uses: dorny/test-reporter@v2
+                with:
+                    fail-on-error: true
+                    list-tests: all
+                    name: Terraform unit tests (${{matrix.stack}})
+                    path: cloud/terraform/test-results/*.xml
+                    reporter: java-junit
+            -   if: ${{!cancelled() && hashFiles('cloud/terraform/test-results/*.xml') != ''}}
+                name: Upload test results
+                uses: actions/upload-artifact@v4
+                with:
+                    if-no-files-found: ignore
+                    path: cloud/terraform/test-results/*.xml
+            -   name: Run Checkov
+                uses: bridgecrewio/checkov-action@v12
+                with:
+                    directory: ./cloud/terraform/${{matrix.stack}}
+                    framework: terraform
+                    soft_fail: false
+        strategy:
+            fail-fast: false
+            matrix:
+                stack:
+                    -   aws/dependencies
+                    -   aws/ecr
+                    -   aws/eks
+                    -   aws/gitops/platform
+                    -   aws/gitops/resources
+                    -   gcp/gitops/platform
+                    -   gcp/gitops/resources
+                    -   gcp/gke
+on:
+    workflow_call:
+permissions:
+    checks: write
+    contents: read

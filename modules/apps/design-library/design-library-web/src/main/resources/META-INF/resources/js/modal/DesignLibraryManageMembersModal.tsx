@@ -140,19 +140,33 @@ export default function DesignLibraryManageMembersModal({
 							{Liferay.Language.get('who-has-access')}
 						</h2>
 
-						<ul
-							aria-labelledby={listLabelId}
-							className="list-unstyled mb-0"
-						>
-							{members.map((member) => (
-								<li
-									className="c-py-2 text-3"
-									key={`${member.type}-${member.externalReferenceCode}`}
-								>
-									{member.name}
-								</li>
-							))}
-						</ul>
+						{members.length ? (
+							<ul
+								aria-labelledby={listLabelId}
+								className="list-unstyled mb-0"
+							>
+								{members.map((member) => (
+									<li
+										className="c-py-2 text-3"
+										key={`${member.type}-${member.externalReferenceCode}`}
+									>
+										{member.name}
+									</li>
+								))}
+							</ul>
+						) : (
+							<div className="border-top c-ml-n4 c-mr-n4 c-p-4 c-pb-0 text-center">
+								<p className="c-mb-1 c-mt-2 font-weight-semi-bold text-4">
+									{Liferay.Language.get('no-members-yet')}
+								</p>
+
+								<p className="c-m-0 text-3 text-secondary">
+									{Liferay.Language.get(
+										'add-members-to-this-space'
+									)}
+								</p>
+							</div>
+						)}
 					</>
 				)}
 			</ClayModal.Body>

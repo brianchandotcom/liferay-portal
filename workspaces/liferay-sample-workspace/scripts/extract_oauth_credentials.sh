@@ -14,6 +14,12 @@ function main {
 		exit 1
 	fi
 
+	cd ..
+
+	touch .env
+
+	sed --in-place --regexp-extended "/^OAUTH_CLIENT_(ID|SECRET)=/d" .env
+
 	local client_id
 
 	client_id=$(docker exec liferay cat "/opt/liferay/routes/default/${oauth_application_name}/${oauth_application_name}.oauth2.headless.server.client.id")
@@ -21,12 +27,6 @@ function main {
 	local client_secret
 
 	client_secret=$(docker exec liferay cat "/opt/liferay/routes/default/${oauth_application_name}/${oauth_application_name}.oauth2.headless.server.client.secret")
-
-	cd ..
-
-	touch .env
-
-	sed --in-place --regexp-extended "/^OAUTH_CLIENT_(ID|SECRET)=/d" .env
 
 	{
 		echo "OAUTH_CLIENT_ID=${client_id}"

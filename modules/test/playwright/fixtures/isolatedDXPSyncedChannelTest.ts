@@ -12,7 +12,7 @@ import {isolatedSiteTest} from './isolatedSiteTest';
 const test = mergeTests(isolatedSiteTest, isolatedChannelTest);
 
 const isolatedDXPSyncedChannelTest = test.extend<{
-	dxpSyncedAnalyticsChannel: void;
+	dxpSyncedAnalyticsChannel: {dataSourceId: string};
 }>({
 	dxpSyncedAnalyticsChannel: [
 		async ({analyticsChannel, backendPage, project, site}, use) => {
@@ -28,12 +28,15 @@ const isolatedDXPSyncedChannelTest = test.extend<{
 					connectionToken
 				);
 
-				await apiHelpers.analyticsSettingsRest.syncSitesToChannel(
-					analyticsChannel.id,
-					[Number(site.id)]
-				);
+				const syncedChannel =
+					await apiHelpers.analyticsSettingsRest.syncSitesToChannel(
+						analyticsChannel.id,
+						[Number(site.id)]
+					);
 
-				await use();
+				await use({
+					dataSourceId: syncedChannel.dataSources[0].dataSourceId,
+				});
 			}
 			finally {
 				try {

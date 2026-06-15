@@ -8,9 +8,11 @@ import {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
+import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useId, useMemo, useState} from 'react';
 
+import MemberService from '../../services/MemberService';
 import {AutocompleteItem, Member, MemberType} from '../../types';
 
 const ENDPOINTS: Record<MemberType, string> = {
@@ -19,11 +21,13 @@ const ENDPOINTS: Record<MemberType, string> = {
 };
 
 export default function MemberInvite({
-	invite,
+	externalReferenceCode,
 	members,
+	onMemberAdded,
 }: {
-	invite: (type: MemberType, item: AutocompleteItem) => Promise<void>;
+	externalReferenceCode: string;
 	members: Member[];
+	onMemberAdded: (member: Member) => void;
 }) {
 	const [type, setType] = useState<MemberType>('user');
 	const [selectedItems, setSelectedItems] = useState<AutocompleteItem[]>([]);
@@ -66,16 +70,47 @@ export default function MemberInvite({
 		}
 
 		try {
-			await invite(type, selectedItem);
+			if (type === 'user') {
+				await MemberService.addUser(
+					externalReferenceCode,
+					selectedItem.externalReferenceCode
+				);
+			}
+			else {
+				await MemberService.addUserGroup(
+					externalReferenceCode,
+					selectedItem.externalReferenceCode
+				);
+			}
+
+			onMemberAdded({
+				externalReferenceCode: selectedItem.externalReferenceCode,
+				id: selectedItem.id,
+				image: selectedItem.image,
+				name: selectedItem.name,
+				numberOfUserAccounts: selectedItem.usersCount,
+				roles: [],
+				type,
+			});
+
+			openToast({
+				message: sub(
+					Liferay.Language.get('x-was-successfully-added'),
+					`<strong>${Liferay.Util.escapeHTML(selectedItem.name)}</strong>`
+				),
+				type: 'success',
+			});
 
 			setSelectedItems([]);
 		}
-		catch (error) {
-
-			// The parent component handles showing the error message. Keep the
-			// selection so the user does not have to search for the member
-			// again.
-
+		catch (error: any) {
+			openToast({
+				message:
+					error?.title ??
+					error?.message ??
+					Liferay.Language.get('unable-to-add-member'),
+				type: 'danger',
+			});
 		}
 	};
 

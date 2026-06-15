@@ -6,24 +6,16 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {openToast} from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
 import {MemberInvite} from '../components/members';
 import MemberService from '../services/MemberService';
-import {AutocompleteItem, Member, MemberType} from '../types';
+import {Member} from '../types';
 
 const showErrorMessage = (message: string) => {
 	openToast({
 		message,
 		type: 'danger',
-	});
-};
-
-const showSuccessMessage = (message: string) => {
-	openToast({
-		message,
-		type: 'success',
 	});
 };
 
@@ -73,52 +65,6 @@ export default function DesignLibraryManageMembersModal({
 		fetchMembers();
 	}, [externalReferenceCode]);
 
-	const invite = async (type: MemberType, item: AutocompleteItem) => {
-		try {
-			if (type === 'user') {
-				await MemberService.addUser(
-					externalReferenceCode,
-					item.externalReferenceCode
-				);
-			}
-			else {
-				await MemberService.addUserGroup(
-					externalReferenceCode,
-					item.externalReferenceCode
-				);
-			}
-
-			setMembers((currentMembers) => [
-				...currentMembers,
-				{
-					externalReferenceCode: item.externalReferenceCode,
-					id: item.id,
-					image: item.image,
-					name: item.name,
-					numberOfUserAccounts: item.usersCount,
-					roles: [],
-					type,
-				},
-			]);
-
-			showSuccessMessage(
-				sub(
-					Liferay.Language.get('x-was-successfully-added'),
-					`<strong>${Liferay.Util.escapeHTML(item.name)}</strong>`
-				)
-			);
-		}
-		catch (error: any) {
-			showErrorMessage(
-				error?.title ??
-					error?.message ??
-					Liferay.Language.get('unable-to-add-member')
-			);
-
-			throw error;
-		}
-	};
-
 	return (
 		<>
 			<ClayModal.Header
@@ -128,7 +74,16 @@ export default function DesignLibraryManageMembersModal({
 			</ClayModal.Header>
 
 			<ClayModal.Item>
-				<MemberInvite invite={invite} members={members} />
+				<MemberInvite
+					externalReferenceCode={externalReferenceCode}
+					members={members}
+					onMemberAdded={(member) =>
+						setMembers((currentMembers) => [
+							...currentMembers,
+							member,
+						])
+					}
+				/>
 			</ClayModal.Item>
 
 			<ClayModal.Body>

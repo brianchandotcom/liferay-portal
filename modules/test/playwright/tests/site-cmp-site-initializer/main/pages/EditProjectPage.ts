@@ -5,6 +5,15 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+
+type VocabularyField = 'Funnel Stages' | 'Personas';
+
+const PLACEHOLDERS: Record<VocabularyField, string> = {
+	'Funnel Stages': 'Add Stages',
+	'Personas': 'Add Personas',
+};
+
 export class EditProjectPage {
 	readonly page: Page;
 	readonly saveButton: Locator;
@@ -16,5 +25,40 @@ export class EditProjectPage {
 			name: 'Save',
 		});
 		this.titleInput = page.getByPlaceholder('Untitled Project');
+	}
+
+	getCategoryChip(field: VocabularyField, categoryName: string): Locator {
+		return this.getVocabularyMultiSelect(field)
+			.locator('.lfr-cmp__vocabulary-multi-select-selected')
+			.getByText(categoryName, {exact: true});
+	}
+
+	getVocabularyMultiSelect(field: VocabularyField): Locator {
+		return this.page
+			.locator('.lfr-cmp__vocabulary-multi-select')
+			.filter({has: this.page.getByText(field, {exact: true})});
+	}
+
+	async removeCategory(field: VocabularyField, categoryName: string) {
+		await this.getVocabularyMultiSelect(field)
+			.locator('.label', {hasText: categoryName})
+			.getByRole('button', {name: 'Remove'})
+			.click();
+	}
+
+	async selectCategory(field: VocabularyField, categoryName: string) {
+		const option = this.page.getByRole('option', {
+			exact: true,
+			name: categoryName,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: option,
+			trigger: this.getVocabularyMultiSelect(field).getByPlaceholder(
+				PLACEHOLDERS[field]
+			),
+		});
+
+		await option.click();
 	}
 }

@@ -58,17 +58,17 @@ public class DataMaskResourceImpl extends BaseDataMaskResourceImpl {
 			String replacementRegex =
 				dataMaskPreviewRequest.getReplacementRegex();
 
-			Pattern replacementPattern = null;
+			Pattern replacementPattern = Validator.isNotNull(replacementRegex) ?
+				Pattern.compile(replacementRegex) : null;
 
-			if (Validator.isNotNull(replacementRegex)) {
-				replacementPattern = Pattern.compile(replacementRegex);
-			}
+			dataMaskPreviewResult.setOutput(
+				() -> {
+					DataMask dataMask = new DataMask(
+						"preview", detectionPattern, replacementPattern,
+						replacementValue);
 
-			DataMask dataMask = new DataMask(
-				"preview", detectionPattern, replacementPattern,
-				replacementValue);
-
-			dataMaskPreviewResult.setOutput(() -> dataMask.apply(sampleText));
+					return dataMask.apply(sampleText);
+				});
 		}
 		catch (PatternSyntaxException patternSyntaxException) {
 			dataMaskPreviewResult.setError(patternSyntaxException::getMessage);

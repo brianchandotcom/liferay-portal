@@ -116,7 +116,8 @@ public abstract class BaseFDSSerializer {
 					"items", _toJSONArray(ownedObjectEntries)
 				).put(
 					"label",
-					language.get(httpServletRequest.getLocale(), "owned")
+					language.get(
+						PortalUtil.getLocale(httpServletRequest), "owned")
 				));
 
 			if (!sharedObjectEntries.isEmpty()) {
@@ -128,7 +129,8 @@ public abstract class BaseFDSSerializer {
 					).put(
 						"label",
 						language.get(
-							httpServletRequest.getLocale(), "shared-with-me")
+							PortalUtil.getLocale(httpServletRequest),
+							"shared-with-me")
 					));
 			}
 

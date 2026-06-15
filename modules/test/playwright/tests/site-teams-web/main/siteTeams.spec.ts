@@ -1173,3 +1173,154 @@ test(
 		await expect(usersPage.usersTable.cell(user2.name)).toHaveCount(0);
 	}
 );
+
+test(
+	'Inherited team members are labeled and removal affects only direct memberships',
+	{tag: ['@LPD-87301']},
+	async ({
+		apiHelpers,
+		page,
+		selectUserGroupPage,
+		site,
+		teamsPage,
+		userGroupsPage,
+		usersPage,
+	}) => {
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await apiHelpers.jsonWebServicesUserGroup.assignUserGroupsToGroup(
+			site.id,
+			String(userGroup.id)
+		);
+
+		const directUser = await apiHelpers.headlessAdminUser.postUserAccount();
+		const inheritedUser =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+			userGroup.id,
+			[inheritedUser.id]
+		);
+
+		const newTeam = {
+			teamDescription: getRandomString(),
+			teamName: getRandomString(),
+		};
+
+		await teamsPage.goTo(site.friendlyUrlPath);
+
+		await teamsPage.newTeamButton.click();
+		await teamsPage.newTeam(newTeam);
+
+		await expect(
+			await teamsPage.teamsTable.cellLink(newTeam.teamName)
+		).toBeVisible();
+
+		const team = await apiHelpers.jsonWebServicesTeam.getTeam(
+			site.id,
+			newTeam.teamName
+		);
+
+		await apiHelpers.jsonWebServicesUser.addTeamUsers(team.teamId, [
+			directUser.id,
+		]);
+
+		await (await teamsPage.teamsTable.cellLink(newTeam.teamName)).click();
+		await teamsPage.userGroupTab.click();
+
+		await expect(userGroupsPage.userGroupsTable.searchInput).toBeEnabled();
+
+		await userGroupsPage.userGroupsTable.changeView('Table');
+
+		await expect(userGroupsPage.noUserGroupsMessage).toBeVisible();
+
+		await expect(async () => {
+			await userGroupsPage.newButton.click();
+
+			await expect(selectUserGroupPage.addButton).toBeVisible({
+				timeout: 2000,
+			});
+		}).toPass({timeout: 5000});
+
+		await selectUserGroupPage.userGroupsTable.changeView('Table');
+
+		await (
+			await selectUserGroupPage.userGroupsTable.rowCheckbox(
+				userGroup.name
+			)
+		).click();
+		await selectUserGroupPage.addButton.click();
+
+		await expect(
+			userGroupsPage.userGroupsTable.cell(userGroup.name)
+		).toBeVisible();
+
+		await teamsPage.usersTab.click();
+
+		await expect(usersPage.usersTable.searchInput).toBeEnabled();
+
+		await usersPage.usersTable.changeView('Table');
+
+		await expect(usersPage.usersTable.cell(directUser.name)).toBeVisible();
+		await expect(
+			usersPage.usersTable.cell(inheritedUser.name)
+		).toBeVisible();
+
+		await expect(
+			page.getByText(
+				'Inherited memberships from an organization or a user ' +
+					'group are managed at their source and cannot be ' +
+					'removed here'
+			)
+		).toBeVisible();
+
+		const directRow = await usersPage.usersTable.row(
+			1,
+			directUser.name,
+			true
+		);
+
+		await expect(
+			directRow.row.getByText('Direct', {exact: true})
+		).toBeVisible();
+
+		const inheritedRow = await usersPage.usersTable.row(
+			1,
+			inheritedUser.name,
+			true
+		);
+
+		await expect(
+			inheritedRow.row.getByText('Inherited', {exact: true})
+		).toBeVisible();
+
+		let confirmationMessage = '';
+
+		page.once('dialog', (dialog) => {
+			confirmationMessage = dialog.message();
+
+			dialog.accept();
+		});
+
+		await expect(async () => {
+			await (
+				await usersPage.usersTable.rowActions(directUser.name)
+			).click();
+
+			await expect(usersPage.deleteButton).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersPage.deleteButton.click();
+
+		await waitForAlert(page);
+
+		expect(confirmationMessage).toContain(
+			'Only direct memberships will be removed'
+		);
+
+		await expect(usersPage.usersTable.cell(directUser.name)).toHaveCount(0);
+		await expect(
+			usersPage.usersTable.cell(inheritedUser.name)
+		).toBeVisible();
+	}
+);

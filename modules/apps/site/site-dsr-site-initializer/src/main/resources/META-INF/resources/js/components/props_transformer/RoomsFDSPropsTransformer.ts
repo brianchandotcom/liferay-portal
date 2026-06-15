@@ -8,6 +8,7 @@ import {openModal} from 'frontend-js-components-web';
 
 import {openFDSDeleteConfirmationModal} from '../../common/utils/openModalUtil';
 import {IRoom} from '../../common/utils/types';
+import DuplicateRoom from '../DuplicateRoom';
 import RoomInitializer from '../RoomInitializer';
 import RoomShare from '../RoomShare';
 import RoomNameRenderer from './cell_renderers/RoomNameRenderer';
@@ -117,6 +118,28 @@ export default function RoomsFDSPropsTransformer({
 						'delete-digital-sales-room-confirmation-title'
 					),
 					url: itemData.actions?.delete?.href,
+				});
+			}
+			else if (action.data.id === 'duplicate') {
+				event?.preventDefault();
+
+				openModal({
+					containerProps: {
+						className: '',
+					},
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						DuplicateRoom({
+							closeModal,
+							loadData,
+							name: itemData.embedded.name,
+							roomId: itemData.embedded.id,
+							siteId: itemData.embedded.siteId,
+						}),
+					size: 'lg',
 				});
 			}
 			else if (action.data.id === 'share') {

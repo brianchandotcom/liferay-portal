@@ -22,6 +22,14 @@ export interface IAccounts {
 	totalCount: number;
 }
 
+export interface IDuplicateRoomProps {
+	closeModal: () => void;
+	loadData: () => void;
+	name: string;
+	roomId: number;
+	siteId: number;
+}
+
 export interface IEngagementChartItem {
 	date: string;
 	numberOfVisits: number;

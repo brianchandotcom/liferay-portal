@@ -98,6 +98,25 @@ async function deleteRoomUserAccount(
 	}
 }
 
+async function duplicateRoom(
+	roomId: number,
+	{fileEntryIds, name}: {fileEntryIds: number[]; name: string}
+): Promise<IRoomObjectEntry> {
+	const {data, error} = await ApiHelper.post<IRoomObjectEntry>(
+		`${DSR_PATH}/${roomId}/duplicate`,
+		{
+			fileEntryIds,
+			name,
+		}
+	);
+
+	if (data) {
+		return data;
+	}
+
+	throw new Error(error);
+}
+
 async function getAccounts(
 	accountName?: string
 ): Promise<{items: Array<IAccount>}> {
@@ -111,6 +130,22 @@ async function getAccounts(
 
 	if (data) {
 		return data || {items: []};
+	}
+
+	throw new Error(error);
+}
+
+async function getDocumentsFolderId(
+	siteId: number,
+	folderExternalReferenceCode: string
+): Promise<number> {
+	const {data, error} = await ApiHelper.get<{id: number}>(
+		`/o/headless-delivery/v1.0/sites/${siteId}` +
+			`/documents-folder/by-external-reference-code/${folderExternalReferenceCode}`
+	);
+
+	if (data) {
+		return data.id;
 	}
 
 	throw new Error(error);
@@ -228,7 +263,9 @@ export default {
 	checkSitePages,
 	deleteRoomInvitedMember,
 	deleteRoomUserAccount,
+	duplicateRoom,
 	getAccounts,
+	getDocumentsFolderId,
 	getRoom,
 	getRoomInvitedMembers,
 	getRoomUserAccounts,

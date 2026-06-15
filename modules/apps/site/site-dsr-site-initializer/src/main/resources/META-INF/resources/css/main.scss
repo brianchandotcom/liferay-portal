@@ -74,6 +74,17 @@
 	}
 }
 
+.dsr-duplicate-room-documents {
+	min-height: 30rem;
+
+	.cell-actions,
+	.cell-item-actions,
+	.cell-select,
+	.cell-select-item {
+		width: 1% !important;
+	}
+}
+
 .dsr-section:empty {
 	padding: 0 !important;
 }

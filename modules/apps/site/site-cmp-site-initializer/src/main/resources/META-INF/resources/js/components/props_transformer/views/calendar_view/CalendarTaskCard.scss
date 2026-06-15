@@ -15,14 +15,6 @@
 		flex-shrink: 0;
 	}
 
-	&-blocked {
-		background-color: $danger-l2;
-	}
-
-	&-done {
-		background-color: $success-l2;
-	}
-
 	&-icon {
 		flex-shrink: 0;
 		font-size: 1rem;
@@ -37,15 +29,23 @@
 		color: $warning;
 	}
 
-	&-inProgress {
+	&-state-blocked {
+		background-color: $danger-l2;
+	}
+
+	&-state-done {
+		background-color: $success-l2;
+	}
+
+	&-state-inProgress {
 		background-color: $info-l2;
 	}
 
-	&-notStarted {
-		background-color: $secondary-l2;
+	&-state-notStarted {
+		background-color: $white;
 	}
 
-	&-overdue {
+	&-state-overdue {
 		background-color: $warning-l2;
 	}
 

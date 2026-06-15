@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceAddressConstants;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -48,7 +49,9 @@ import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalSe
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodLocalServiceUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
@@ -58,6 +61,7 @@ import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.math.BigDecimal;
@@ -624,6 +628,31 @@ public class CommerceTestUtil {
 			commerceShippingFixedOption.getNameCurrentValue());
 
 		return CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
+	}
+
+	public static void runWithGuestCheckoutDisabledOnB2BChannel(
+			long groupId, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper1 =
+					new GroupConfigurationTemporarySwapper(
+						groupId,
+						CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"commerceSiteType",
+							CommerceChannelConstants.SITE_TYPE_B2B
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper2 =
+					new GroupConfigurationTemporarySwapper(
+						groupId, CommerceConstants.SERVICE_NAME_COMMERCE_ORDER,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"guestCheckoutEnabled", false
+						).build())) {
+
+			unsafeRunnable.run();
+		}
 	}
 
 	public static CPDefinitionInventory updateBackOrderCPDefinitionInventory(

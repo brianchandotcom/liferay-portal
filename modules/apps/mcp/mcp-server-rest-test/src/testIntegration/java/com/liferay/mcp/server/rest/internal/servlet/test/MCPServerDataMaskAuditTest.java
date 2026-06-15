@@ -215,6 +215,10 @@ public class MCPServerDataMaskAuditTest {
 			PermissionChecker originalPermissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
+			_objectEntryLocalService.getObjectEntries(
+				0, profileDataMaskObjectEntry.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 			try {
 				PermissionThreadLocal.setPermissionChecker(
 					PermissionCheckerFactoryUtil.create(
@@ -275,6 +279,10 @@ public class MCPServerDataMaskAuditTest {
 
 			PermissionChecker originalPermissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
+
+			_objectEntryLocalService.getObjectEntries(
+				0, profileDataMaskObjectEntry.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			try {
 				PermissionThreadLocal.setPermissionChecker(

@@ -329,11 +329,11 @@ public class PropertyValidator {
 	}
 
 	private static boolean _isConsumed(
-		Set<String> consumedKeys, List<String> consumedPrefixes,
+		Set<String> consumedKeyNames, List<String> consumedPrefixes,
 		String definedKey) {
 
-		for (String consumedKey : consumedKeys) {
-			if (_isMatchingKey(definedKey, consumedKey)) {
+		for (String consumedKeyName : consumedKeyNames) {
+			if (_isMatchingKey(definedKey, consumedKeyName)) {
 				return true;
 			}
 		}

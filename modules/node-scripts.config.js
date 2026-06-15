@@ -91,7 +91,7 @@ module.exports = {
 		'@liferay/frontend-data-set-fragment-web': [],
 		'@liferay/frontend-data-set-sample-web': [],
 		'@liferay/frontend-data-set-taglib': [],
-		'@liferay/frontend-data-set-web': [],
+		'@liferay/frontend-data-set-web': ['./api'],
 		'@liferay/frontend-editor-ckeditor4-sample-web': [],
 		'@liferay/frontend-editor-ckeditor5-sample-web': [],
 		'@liferay/frontend-icons-web': [],

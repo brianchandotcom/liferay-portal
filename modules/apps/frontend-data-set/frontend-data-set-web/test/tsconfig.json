@@ -1,5 +1,5 @@
 {
-	"@generated": "85c4b3406d087fd7cee1675f52f48fa2184fa7a0",
+	"@generated": "c8ddc6841d85a23234ac9339053a64cc0aab02f6",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,6 +11,9 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/frontend-data-set-web/api": [
+				"./../src/main/resources/META-INF/resources/api/FDSConnection.ts"
+			],
 			"@liferay/frontend-js-react-web": [
 				"../../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
 			],

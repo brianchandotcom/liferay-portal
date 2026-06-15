@@ -613,7 +613,7 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 							setCode(backgroundTask::getStatus);
 							setLabel(
 								() -> _language.get(
-									contextAcceptLanguage.getPreferredLocale(),
+									contextUser.getLocale(),
 									BackgroundTaskConstants.getStatusLabel(
 										backgroundTask.getStatus())));
 						}

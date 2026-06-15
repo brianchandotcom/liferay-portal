@@ -7,12 +7,14 @@ package com.liferay.mcp.server.rest.internal.util;
 
 import com.liferay.mcp.server.rest.dto.v1_0.Tool;
 import com.liferay.mcp.server.rest.dto.v1_0.ToolSummary;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -110,14 +112,17 @@ public class OpenAPIUtil {
 					continue;
 				}
 
-				ToolSummary toolSummary = new ToolSummary();
-
-				toolSummary.setDescription(
-					() -> _getDescription(method, operationJSONObject, path));
-				toolSummary.setName(
-					() -> operationJSONObject.getString("operationId"));
-
-				toolSummaries.add(toolSummary);
+				toolSummaries.add(
+					new ToolSummary() {
+						{
+							setDescription(
+								() -> _getDescription(
+									method, operationJSONObject, path));
+							setName(
+								() -> operationJSONObject.getString(
+									"operationId"));
+						}
+					});
 			}
 		}
 
@@ -126,76 +131,71 @@ public class OpenAPIUtil {
 
 	private static void _addMultipartParts(
 		JSONObject operationJSONObject, Map<String, Object> properties,
-		List<Object> required, JSONObject openAPIJSONObject) {
+		List<String> requiredPropertyNames, JSONObject openAPIJSONObject) {
 
-		Map<String, Object> bodySchemaMap = (Map<String, Object>)_resolveRefs(
-			openAPIJSONObject, _getBodySchemaJSONObject(operationJSONObject),
-			new HashSet<>());
+		Map<String, Object> bodySchemaMap =
+			(Map<String, Object>)_getSchemaObject(
+				openAPIJSONObject,
+				_getBodySchemaJSONObject(operationJSONObject), new HashSet<>());
 
-		Map<String, Object> partProperties =
+		Map<String, Object> bodyProperties =
 			(Map<String, Object>)bodySchemaMap.get("properties");
 
-		if (partProperties == null) {
+		if (bodyProperties == null) {
 			return;
 		}
 
-		for (Map.Entry<String, Object> entry : partProperties.entrySet()) {
-			String partName = entry.getKey();
-			Map<String, Object> partSchema =
+		for (Map.Entry<String, Object> entry : bodyProperties.entrySet()) {
+			Map<String, Object> propertySchemaMap =
 				(Map<String, Object>)entry.getValue();
 
-			if (_isBinaryPartSchema(partSchema)) {
-				properties.put(partName, _buildBinaryPartEnvelope(partSchema));
-			}
-			else {
-				properties.put(partName, partSchema);
-			}
+			properties.put(
+				entry.getKey(),
+				_isBinary(propertySchemaMap) ?
+					_getBinarySchemaMap(propertySchemaMap) : propertySchemaMap);
 		}
 
-		List<Object> bodySchemaRequired = (List<Object>)bodySchemaMap.get(
-			"required");
-
-		if (bodySchemaRequired != null) {
-			required.addAll(bodySchemaRequired);
-		}
+		requiredPropertyNames.addAll(
+			TransformUtil.transform(
+				(List<Object>)bodySchemaMap.get("required"), String::valueOf));
 	}
 
 	private static void _addParameter(
-		JSONObject parameterJSONObject, Set<String> processedParameterNames,
-		Map<String, Object> properties, List<Object> required) {
+		JSONObject parameterJSONObject, Map<String, Object> properties,
+		List<String> requiredPropertyNames, Set<String> visitedParameterNames) {
 
 		String name = parameterJSONObject.getString("name");
 
 		if (_vulcanFieldSelectionParameterNames.contains(name) ||
-			!processedParameterNames.add(name)) {
+			!visitedParameterNames.add(name)) {
 
 			return;
 		}
 
-		Map<String, Object> property = new LinkedHashMap<>();
+		Map<String, Object> parameterProperties = new LinkedHashMap<>();
 
 		JSONObject parameterSchemaJSONObject =
 			parameterJSONObject.getJSONObject("schema");
 
 		for (String key : parameterSchemaJSONObject.keySet()) {
-			property.put(key, parameterSchemaJSONObject.get(key));
+			parameterProperties.put(key, parameterSchemaJSONObject.get(key));
 		}
 
 		if (parameterJSONObject.has("description")) {
-			property.put(
+			parameterProperties.put(
 				"description", parameterJSONObject.getString("description"));
 		}
 
-		properties.put(name, property);
+		properties.put(name, parameterProperties);
 
 		if (Objects.equals(parameterJSONObject.getString("in"), "path")) {
-			required.add(name);
+			requiredPropertyNames.add(name);
 		}
 	}
 
 	private static void _addParameters(
-		JSONArray parametersJSONArray, Set<String> processedParameterNames,
-		Map<String, Object> properties, List<Object> required) {
+		JSONArray parametersJSONArray, Map<String, Object> properties,
+		List<String> requiredPropertyNames, Set<String> visitedParameterNames) {
 
 		if (parametersJSONArray == null) {
 			return;
@@ -203,13 +203,13 @@ public class OpenAPIUtil {
 
 		for (int i = 0; i < parametersJSONArray.length(); i++) {
 			_addParameter(
-				parametersJSONArray.getJSONObject(i), processedParameterNames,
-				properties, required);
+				parametersJSONArray.getJSONObject(i), properties,
+				requiredPropertyNames, visitedParameterNames);
 		}
 	}
 
 	private static void _appendQueryParameter(
-		String name, StringBundler queryStringSB, Object value) {
+		String name, StringBundler sb, Object value) {
 
 		if (value == null) {
 			return;
@@ -221,30 +221,106 @@ public class OpenAPIUtil {
 			return;
 		}
 
-		if (queryStringSB.length() > 0) {
-			queryStringSB.append(CharPool.AMPERSAND);
+		if (sb.length() > 0) {
+			sb.append(CharPool.AMPERSAND);
 		}
 
-		queryStringSB.append(URLCodec.encodeURL(name));
-		queryStringSB.append(CharPool.EQUAL);
-		queryStringSB.append(URLCodec.encodeURL(stringValue));
+		sb.append(URLCodec.encodeURL(name));
+		sb.append(CharPool.EQUAL);
+		sb.append(URLCodec.encodeURL(stringValue));
 	}
 
-	private static Map<String, Object> _buildBinaryPartEnvelope(
-		Map<String, Object> partSchema) {
+	private static Map<String, Object> _getAllOfSchemaMap(
+		JSONObject jsonObject, JSONObject openAPIJSONObject,
+		Set<String> visitedRefs) {
 
-		String description = (String)partSchema.get("description");
+		Map<String, Object> allOfSchemaMap = new LinkedHashMap<>();
+		Map<String, Object> properties = new LinkedHashMap<>();
+		Set<String> requiredPropertyNames = new HashSet<>();
 
-		String envelopeDescription =
-			"Provide as an object with `data` (base64-encoded bytes), and " +
-				"optional `filename` and `contentType`.";
+		for (String key : jsonObject.keySet()) {
+			if (key.equals("allOf") || _excludedSchemaKeys.contains(key) ||
+				key.startsWith("x-")) {
 
-		if (Validator.isNotNull(description)) {
-			envelopeDescription = description + ". " + envelopeDescription;
+				continue;
+			}
+
+			allOfSchemaMap.put(
+				key,
+				_getSchemaObject(
+					openAPIJSONObject, jsonObject.get(key), visitedRefs));
 		}
 
+		JSONArray allOfJSONArray = jsonObject.getJSONArray("allOf");
+
+		for (int i = 0; i < allOfJSONArray.length(); i++) {
+			Object schemaObject = _getSchemaObject(
+				openAPIJSONObject, allOfJSONArray.getJSONObject(i),
+				visitedRefs);
+
+			if (!(schemaObject instanceof Map)) {
+				continue;
+			}
+
+			Map<String, Object> schemaMap = (Map<String, Object>)schemaObject;
+
+			Map<String, Object> schemaProperties =
+				(Map<String, Object>)schemaMap.get("properties");
+
+			if (schemaProperties != null) {
+				properties.putAll(schemaProperties);
+			}
+
+			requiredPropertyNames.addAll(
+				TransformUtil.transform(
+					(List<Object>)schemaMap.get("required"), String::valueOf));
+
+			for (Map.Entry<String, Object> entry : schemaMap.entrySet()) {
+				String key = entry.getKey();
+
+				if (allOfSchemaMap.containsKey(key) ||
+					key.equals("properties") || key.equals("required")) {
+
+					continue;
+				}
+
+				allOfSchemaMap.put(key, entry.getValue());
+			}
+		}
+
+		if (!properties.isEmpty()) {
+			allOfSchemaMap.put("properties", properties);
+		}
+
+		if (!requiredPropertyNames.isEmpty()) {
+			allOfSchemaMap.put("required", List.copyOf(requiredPropertyNames));
+		}
+
+		if (!allOfSchemaMap.containsKey("type")) {
+			allOfSchemaMap.put("type", "object");
+		}
+
+		return allOfSchemaMap;
+	}
+
+	private static Map<String, Object> _getBinarySchemaMap(
+		Map<String, Object> schemaMap) {
+
 		return HashMapBuilder.<String, Object>put(
-			"description", envelopeDescription
+			"description",
+			() -> {
+				String extraDescription =
+					"Provide as an object with `data` (base64-encoded bytes)" +
+						", and optional `filename` and `contentType`.";
+
+				String description = (String)schemaMap.get("description");
+
+				if (Validator.isNotNull(description)) {
+					return description + ". " + extraDescription;
+				}
+
+				return extraDescription;
+			}
 		).put(
 			"properties",
 			HashMapBuilder.<String, Object>put(
@@ -273,136 +349,6 @@ public class OpenAPIUtil {
 			"required", Arrays.asList("data")
 		).put(
 			"type", "object"
-		).build();
-	}
-
-	private static Map<String, Object> _collectMatchingParameters(
-		JSONObject inputJSONObject, Operation operation, String filterIn) {
-
-		Map<String, Object> matchingParameters = new LinkedHashMap<>();
-
-		for (JSONArray parametersJSONArray :
-				Arrays.asList(
-					operation._operationJSONObject.getJSONArray("parameters"),
-					operation._pathParametersJSONArray)) {
-
-			if (parametersJSONArray == null) {
-				continue;
-			}
-
-			for (int i = 0; i < parametersJSONArray.length(); i++) {
-				JSONObject parameterJSONObject =
-					parametersJSONArray.getJSONObject(i);
-
-				if (!Objects.equals(
-						parameterJSONObject.getString("in"), filterIn)) {
-
-					continue;
-				}
-
-				String name = parameterJSONObject.getString("name");
-
-				if (matchingParameters.containsKey(name) ||
-					!inputJSONObject.has(name)) {
-
-					continue;
-				}
-
-				Object value = inputJSONObject.get(name);
-
-				if (value == null) {
-					continue;
-				}
-
-				matchingParameters.put(name, value);
-			}
-		}
-
-		return matchingParameters;
-	}
-
-	private static Map<String, Object> _expandDiscriminator(
-		JSONObject baseJSONObject, String baseRef, JSONObject openAPIJSONObject,
-		Set<String> visitedRefs) {
-
-		List<Object> oneOfList = new ArrayList<>();
-
-		JSONObject componentsJSONObject = openAPIJSONObject.getJSONObject(
-			"components");
-
-		JSONObject schemasJSONObject = (componentsJSONObject != null) ?
-			componentsJSONObject.getJSONObject("schemas") : null;
-
-		if (schemasJSONObject != null) {
-			for (String schemaName : schemasJSONObject.keySet()) {
-				JSONObject candidateJSONObject =
-					schemasJSONObject.getJSONObject(schemaName);
-
-				JSONArray allOfJSONArray = candidateJSONObject.getJSONArray(
-					"allOf");
-
-				if (allOfJSONArray == null) {
-					continue;
-				}
-
-				boolean extendsBase = false;
-
-				for (int i = 0; i < allOfJSONArray.length(); i++) {
-					JSONObject memberJSONObject = allOfJSONArray.getJSONObject(
-						i);
-
-					if (memberJSONObject == null) {
-						continue;
-					}
-
-					if (baseRef.equals(memberJSONObject.getString("$ref"))) {
-						extendsBase = true;
-
-						break;
-					}
-				}
-
-				if (!extendsBase) {
-					continue;
-				}
-
-				String subtypeRef = "#/components/schemas/" + schemaName;
-
-				if (visitedRefs.contains(subtypeRef)) {
-					continue;
-				}
-
-				Set<String> subtypeVisitedRefs = new HashSet<>(visitedRefs);
-
-				subtypeVisitedRefs.add(subtypeRef);
-
-				oneOfList.add(
-					_resolveRefs(
-						openAPIJSONObject, candidateJSONObject,
-						subtypeVisitedRefs));
-			}
-		}
-
-		if (oneOfList.isEmpty()) {
-			Map<String, Object> resolvedMap = new LinkedHashMap<>();
-
-			for (String key : baseJSONObject.keySet()) {
-				if (_excludedSchemaKeys.contains(key) || key.startsWith("x-")) {
-					continue;
-				}
-
-				resolvedMap.put(
-					key,
-					_resolveRefs(
-						openAPIJSONObject, baseJSONObject.get(key),
-						visitedRefs));
-			}
-
-			return resolvedMap;
-		}
-
-		return LinkedHashMapBuilder.<String, Object>put(
-			"oneOf", oneOfList
 		).build();
 	}
 
@@ -474,41 +420,41 @@ public class OpenAPIUtil {
 	private static Http.FilePart _getFilePart(String name, Object value) {
 		String fileName = name;
 		String contentType = ContentTypes.APPLICATION_OCTET_STREAM;
-		String base64Data;
+		String data;
 
-		JSONObject envelopeJSONObject = null;
+		JSONObject jsonObject = null;
 
 		if (value instanceof JSONObject) {
-			envelopeJSONObject = (JSONObject)value;
+			jsonObject = (JSONObject)value;
 		}
 		else if (value instanceof Map) {
-			envelopeJSONObject = JSONFactoryUtil.createJSONObject(
+			jsonObject = JSONFactoryUtil.createJSONObject(
 				(Map<String, ?>)value);
 		}
 
-		if (envelopeJSONObject != null) {
-			if (envelopeJSONObject.has("filename")) {
-				fileName = envelopeJSONObject.getString("filename");
+		if (jsonObject != null) {
+			if (jsonObject.has("filename")) {
+				fileName = jsonObject.getString("filename");
 			}
 
-			if (envelopeJSONObject.has("contentType")) {
-				contentType = envelopeJSONObject.getString("contentType");
+			if (jsonObject.has("contentType")) {
+				contentType = jsonObject.getString("contentType");
 			}
 
-			base64Data = envelopeJSONObject.getString("data");
+			data = jsonObject.getString("data");
 		}
 		else {
-			base64Data = String.valueOf(value);
+			data = String.valueOf(value);
 		}
 
-		if (Validator.isNull(base64Data)) {
+		if (Validator.isNull(data)) {
 			throw new IllegalArgumentException(
 				"Multipart part \"" + name + "\" has no \"data\"");
 		}
 
 		Base64.Decoder decoder = Base64.getDecoder();
 
-		byte[] bytes = decoder.decode(base64Data);
+		byte[] bytes = decoder.decode(data);
 
 		return new Http.FilePart(
 			name, fileName, bytes, contentType, StringPool.UTF8);
@@ -519,12 +465,12 @@ public class OpenAPIUtil {
 		JSONArray pathParametersJSONArray) {
 
 		Map<String, Object> properties = new LinkedHashMap<>();
-		List<Object> required = new ArrayList<>();
+		List<String> requiredPropertyNames = new ArrayList<>();
 
 		if (operationJSONObject.has("requestBody")) {
 			if (_isMultipartRequest(operationJSONObject)) {
 				_addMultipartParts(
-					operationJSONObject, properties, required,
+					operationJSONObject, properties, requiredPropertyNames,
 					openAPIJSONObject);
 			}
 			else {
@@ -534,13 +480,13 @@ public class OpenAPIUtil {
 				Map<String, Object> bodySchemaMap = null;
 
 				if (requestBodyJSONObject.getJSONObject("content") != null) {
-					Object resolvedObject = _resolveRefs(
+					Object bodySchemaObject = _getSchemaObject(
 						openAPIJSONObject,
 						_getBodySchemaJSONObject(operationJSONObject),
 						new HashSet<>());
 
-					if (resolvedObject instanceof Map) {
-						bodySchemaMap = (Map<String, Object>)resolvedObject;
+					if (bodySchemaObject instanceof Map) {
+						bodySchemaMap = (Map<String, Object>)bodySchemaObject;
 					}
 				}
 
@@ -554,46 +500,125 @@ public class OpenAPIUtil {
 					"description");
 
 				if (Validator.isNotNull(requestBodyDescription)) {
-					Object bodySchemaDescription = bodySchemaMap.get(
-						"description");
+					Object bodyDescription = bodySchemaMap.get("description");
 
-					if (Validator.isNull(bodySchemaDescription)) {
+					if (Validator.isNull(bodyDescription)) {
 						bodySchemaMap.put(
 							"description", requestBodyDescription);
 					}
 					else if (!Objects.equals(
-								bodySchemaDescription,
-								requestBodyDescription)) {
+								bodyDescription, requestBodyDescription)) {
 
 						bodySchemaMap.put(
 							"description",
 							StringBundler.concat(
 								requestBodyDescription, StringPool.SPACE,
-								bodySchemaDescription));
+								bodyDescription));
 					}
 				}
 
 				properties.put("body", bodySchemaMap);
 
-				required.add("body");
+				requiredPropertyNames.add("body");
 			}
 		}
 
-		Set<String> processedParameterNames = new HashSet<>();
+		Set<String> visitedParameterNames = new HashSet<>();
 
 		_addParameters(
-			operationJSONObject.getJSONArray("parameters"),
-			processedParameterNames, properties, required);
+			operationJSONObject.getJSONArray("parameters"), properties,
+			requiredPropertyNames, visitedParameterNames);
 		_addParameters(
-			pathParametersJSONArray, processedParameterNames, properties,
-			required);
+			pathParametersJSONArray, properties, requiredPropertyNames,
+			visitedParameterNames);
 
 		return LinkedHashMapBuilder.<String, Object>put(
 			"properties", properties
 		).put(
-			"required", required
+			"required", requiredPropertyNames
 		).put(
 			"type", "object"
+		).build();
+	}
+
+	private static Map<String, Object> _getOneOfSchemaMap(
+		JSONObject jsonObject, JSONObject openAPIJSONObject, String ref,
+		Set<String> visitedRefs) {
+
+		List<Object> oneOfSchemaObjects = new ArrayList<>();
+
+		JSONObject schemasJSONObject = JSONUtil.getValueAsJSONObject(
+			openAPIJSONObject, "JSONObject/components", "JSONObject/schemas");
+
+		if (schemasJSONObject != null) {
+			for (String schemaName : schemasJSONObject.keySet()) {
+				JSONObject schemaJSONObject = schemasJSONObject.getJSONObject(
+					schemaName);
+
+				JSONArray allOfJSONArray = schemaJSONObject.getJSONArray(
+					"allOf");
+
+				if (allOfJSONArray == null) {
+					continue;
+				}
+
+				boolean extendsBase = false;
+
+				for (int i = 0; i < allOfJSONArray.length(); i++) {
+					JSONObject memberJSONObject = allOfJSONArray.getJSONObject(
+						i);
+
+					if (memberJSONObject == null) {
+						continue;
+					}
+
+					if (ref.equals(memberJSONObject.getString("$ref"))) {
+						extendsBase = true;
+
+						break;
+					}
+				}
+
+				if (!extendsBase) {
+					continue;
+				}
+
+				String subtypeRef = "#/components/schemas/" + schemaName;
+
+				if (visitedRefs.contains(subtypeRef)) {
+					continue;
+				}
+
+				Set<String> subtypeVisitedRefs = new HashSet<>(visitedRefs);
+
+				subtypeVisitedRefs.add(subtypeRef);
+
+				oneOfSchemaObjects.add(
+					_getSchemaObject(
+						openAPIJSONObject, schemaJSONObject,
+						subtypeVisitedRefs));
+			}
+		}
+
+		if (oneOfSchemaObjects.isEmpty()) {
+			Map<String, Object> schemaMap = new LinkedHashMap<>();
+
+			for (String key : jsonObject.keySet()) {
+				if (_excludedSchemaKeys.contains(key) || key.startsWith("x-")) {
+					continue;
+				}
+
+				schemaMap.put(
+					key,
+					_getSchemaObject(
+						openAPIJSONObject, jsonObject.get(key), visitedRefs));
+			}
+
+			return schemaMap;
+		}
+
+		return LinkedHashMapBuilder.<String, Object>put(
+			"oneOf", oneOfSchemaObjects
 		).build();
 	}
 
@@ -608,11 +633,11 @@ public class OpenAPIUtil {
 		}
 
 		for (String path : pathsJSONObject.keySet()) {
-			JSONObject pathItemJSONObject = pathsJSONObject.getJSONObject(path);
+			JSONObject pathJSONObject = pathsJSONObject.getJSONObject(path);
 
 			for (String method : _METHODS) {
-				JSONObject operationJSONObject =
-					pathItemJSONObject.getJSONObject(method);
+				JSONObject operationJSONObject = pathJSONObject.getJSONObject(
+					method);
 
 				if ((operationJSONObject == null) ||
 					!toolName.equals(
@@ -623,12 +648,55 @@ public class OpenAPIUtil {
 
 				return new Operation(
 					method, operationJSONObject, path,
-					pathItemJSONObject.getJSONArray("parameters"));
+					pathJSONObject.getJSONArray("parameters"));
 			}
 		}
 
 		throw new IllegalArgumentException(
 			"OpenAPI document has no tool with name \"" + toolName + "\"");
+	}
+
+	private static Map<String, Object> _getParameterSchemaObjects(
+		String in, JSONObject inputJSONObject, Operation operation) {
+
+		Map<String, Object> parameterSchemaObjects = new LinkedHashMap<>();
+
+		for (JSONArray parametersJSONArray :
+				Arrays.asList(
+					operation._operationJSONObject.getJSONArray("parameters"),
+					operation._pathParametersJSONArray)) {
+
+			if (parametersJSONArray == null) {
+				continue;
+			}
+
+			for (int i = 0; i < parametersJSONArray.length(); i++) {
+				JSONObject parameterJSONObject =
+					parametersJSONArray.getJSONObject(i);
+
+				if (!Objects.equals(parameterJSONObject.getString("in"), in)) {
+					continue;
+				}
+
+				String name = parameterJSONObject.getString("name");
+
+				if (parameterSchemaObjects.containsKey(name) ||
+					!inputJSONObject.has(name)) {
+
+					continue;
+				}
+
+				Object value = inputJSONObject.get(name);
+
+				if (value == null) {
+					continue;
+				}
+
+				parameterSchemaObjects.put(name, value);
+			}
+		}
+
+		return parameterSchemaObjects;
 	}
 
 	private static String _getPart(Object value) {
@@ -654,12 +722,14 @@ public class OpenAPIUtil {
 	private static String _getPath(
 		JSONObject inputJSONObject, Operation operation) {
 
-		Map<String, Object> pathParameters = _collectMatchingParameters(
-			inputJSONObject, operation, "path");
+		Map<String, Object> parameterSchemaObjects = _getParameterSchemaObjects(
+			"path", inputJSONObject, operation);
 
 		String path = operation._path;
 
-		for (Map.Entry<String, Object> entry : pathParameters.entrySet()) {
+		for (Map.Entry<String, Object> entry :
+				parameterSchemaObjects.entrySet()) {
+
 			path = StringUtil.replace(
 				path, "{" + entry.getKey() + "}",
 				URLCodec.encodeURL(String.valueOf(entry.getValue())));
@@ -673,10 +743,12 @@ public class OpenAPIUtil {
 
 		StringBundler sb = new StringBundler();
 
-		Map<String, Object> queryParameters = _collectMatchingParameters(
-			inputJSONObject, operation, "query");
+		Map<String, Object> parameterSchemaObjects = _getParameterSchemaObjects(
+			"query", inputJSONObject, operation);
 
-		for (Map.Entry<String, Object> entry : queryParameters.entrySet()) {
+		for (Map.Entry<String, Object> entry :
+				parameterSchemaObjects.entrySet()) {
+
 			String name = entry.getKey();
 
 			if (_vulcanFieldSelectionParameterNames.contains(name)) {
@@ -693,128 +765,19 @@ public class OpenAPIUtil {
 		return sb.toString();
 	}
 
-	private static boolean _isBinaryPartSchema(Map<String, Object> partSchema) {
-		if (partSchema == null) {
-			return false;
-		}
-
-		return Objects.equals(partSchema.get("format"), "binary");
-	}
-
-	private static boolean _isMultipartRequest(JSONObject operationJSONObject) {
-		JSONObject requestBodyJSONObject = operationJSONObject.getJSONObject(
-			"requestBody");
-
-		if (requestBodyJSONObject == null) {
-			return false;
-		}
-
-		JSONObject contentJSONObject = requestBodyJSONObject.getJSONObject(
-			"content");
-
-		if ((contentJSONObject == null) ||
-			contentJSONObject.has("application/json")) {
-
-			return false;
-		}
-
-		return contentJSONObject.has("multipart/form-data");
-	}
-
-	private static Map<String, Object> _mergeAllOf(
-		JSONObject jsonObject, JSONObject openAPIJSONObject,
-		Set<String> visitedRefs) {
-
-		Map<String, Object> mergedMap = new LinkedHashMap<>();
-		Map<String, Object> mergedProperties = new LinkedHashMap<>();
-		List<Object> mergedRequired = new ArrayList<>();
-		Set<String> mergedRequiredSet = new HashSet<>();
-
-		for (String key : jsonObject.keySet()) {
-			if (key.equals("allOf") || _excludedSchemaKeys.contains(key) ||
-				key.startsWith("x-")) {
-
-				continue;
-			}
-
-			mergedMap.put(
-				key,
-				_resolveRefs(
-					openAPIJSONObject, jsonObject.get(key), visitedRefs));
-		}
-
-		JSONArray allOfJSONArray = jsonObject.getJSONArray("allOf");
-
-		for (int i = 0; i < allOfJSONArray.length(); i++) {
-			Object resolvedObject = _resolveRefs(
-				openAPIJSONObject, allOfJSONArray.getJSONObject(i),
-				visitedRefs);
-
-			if (!(resolvedObject instanceof Map)) {
-				continue;
-			}
-
-			Map<String, Object> memberMap = (Map<String, Object>)resolvedObject;
-
-			Map<String, Object> memberProperties =
-				(Map<String, Object>)memberMap.get("properties");
-
-			if (memberProperties != null) {
-				mergedProperties.putAll(memberProperties);
-			}
-
-			List<Object> memberRequired = (List<Object>)memberMap.get(
-				"required");
-
-			if (memberRequired != null) {
-				for (Object name : memberRequired) {
-					if (mergedRequiredSet.add(String.valueOf(name))) {
-						mergedRequired.add(name);
-					}
-				}
-			}
-
-			for (Map.Entry<String, Object> entry : memberMap.entrySet()) {
-				String key = entry.getKey();
-
-				if (mergedMap.containsKey(key) || key.equals("properties") ||
-					key.equals("required")) {
-
-					continue;
-				}
-
-				mergedMap.put(key, entry.getValue());
-			}
-		}
-
-		if (!mergedProperties.isEmpty()) {
-			mergedMap.put("properties", mergedProperties);
-		}
-
-		if (!mergedRequired.isEmpty()) {
-			mergedMap.put("required", mergedRequired);
-		}
-
-		if (!mergedMap.containsKey("type")) {
-			mergedMap.put("type", "object");
-		}
-
-		return mergedMap;
-	}
-
-	private static JSONObject _resolveRef(
+	private static JSONObject _getRefJSONObject(
 		String ref, JSONObject openAPIJSONObject) {
 
-		JSONObject currentJSONObject = openAPIJSONObject;
+		JSONObject refJSONObject = openAPIJSONObject;
 
 		for (String part : StringUtil.split(ref.substring(2), CharPool.SLASH)) {
-			currentJSONObject = currentJSONObject.getJSONObject(part);
+			refJSONObject = refJSONObject.getJSONObject(part);
 		}
 
-		return currentJSONObject;
+		return refJSONObject;
 	}
 
-	private static Object _resolveRefs(
+	private static Object _getSchemaObject(
 		JSONObject openAPIJSONObject, Object value, Set<String> visitedRefs) {
 
 		if (value instanceof JSONObject) {
@@ -829,59 +792,74 @@ public class OpenAPIUtil {
 					).build();
 				}
 
-				JSONObject referencedJSONObject = _resolveRef(
+				JSONObject refJSONObject = _getRefJSONObject(
 					ref, openAPIJSONObject);
 
 				Set<String> currentVisitedRefs = new HashSet<>(visitedRefs);
 
 				currentVisitedRefs.add(ref);
 
-				if (referencedJSONObject.has("discriminator")) {
-					return _expandDiscriminator(
-						referencedJSONObject, ref, openAPIJSONObject,
+				if (refJSONObject.has("discriminator")) {
+					return _getOneOfSchemaMap(
+						refJSONObject, openAPIJSONObject, ref,
 						currentVisitedRefs);
 				}
 
-				return _resolveRefs(
-					openAPIJSONObject, referencedJSONObject,
-					currentVisitedRefs);
+				return _getSchemaObject(
+					openAPIJSONObject, refJSONObject, currentVisitedRefs);
 			}
 
 			if (jsonObject.has("allOf")) {
-				return _mergeAllOf(jsonObject, openAPIJSONObject, visitedRefs);
+				return _getAllOfSchemaMap(
+					jsonObject, openAPIJSONObject, visitedRefs);
 			}
 
-			Map<String, Object> resolvedMap = new LinkedHashMap<>();
+			Map<String, Object> schemaMap = new LinkedHashMap<>();
 
 			for (String key : jsonObject.keySet()) {
 				if (_excludedSchemaKeys.contains(key) || key.startsWith("x-")) {
 					continue;
 				}
 
-				resolvedMap.put(
+				schemaMap.put(
 					key,
-					_resolveRefs(
+					_getSchemaObject(
 						openAPIJSONObject, jsonObject.get(key), visitedRefs));
 			}
 
-			return resolvedMap;
+			return schemaMap;
 		}
 
-		if (value instanceof JSONArray) {
-			JSONArray jsonArray = (JSONArray)value;
-
-			List<Object> resolvedList = new ArrayList<>();
-
-			for (int i = 0; i < jsonArray.length(); i++) {
-				resolvedList.add(
-					_resolveRefs(
-						openAPIJSONObject, jsonArray.get(i), visitedRefs));
-			}
-
-			return resolvedList;
+		if (value instanceof JSONArray jsonArray) {
+			return TransformUtil.transform(
+				JSONUtil.toObjectList(jsonArray),
+				object -> _getSchemaObject(
+					openAPIJSONObject, object, visitedRefs));
 		}
 
 		return value;
+	}
+
+	private static boolean _isBinary(Map<String, Object> schemaMap) {
+		if (schemaMap == null) {
+			return false;
+		}
+
+		return Objects.equals(schemaMap.get("format"), "binary");
+	}
+
+	private static boolean _isMultipartRequest(JSONObject operationJSONObject) {
+		JSONObject contentJSONObject = JSONUtil.getValueAsJSONObject(
+			operationJSONObject, "JSONObject/requestBody",
+			"JSONObject/content");
+
+		if ((contentJSONObject == null) ||
+			contentJSONObject.has("application/json")) {
+
+			return false;
+		}
+
+		return contentJSONObject.has("multipart/form-data");
 	}
 
 	private static void _setBody(
@@ -917,10 +895,11 @@ public class OpenAPIUtil {
 		JSONObject inputJSONObject, JSONObject openAPIJSONObject,
 		Operation operation, Http.Options options) {
 
-		Map<String, Object> bodySchemaMap = (Map<String, Object>)_resolveRefs(
-			openAPIJSONObject,
-			_getBodySchemaJSONObject(operation._operationJSONObject),
-			new HashSet<>());
+		Map<String, Object> bodySchemaMap =
+			(Map<String, Object>)_getSchemaObject(
+				openAPIJSONObject,
+				_getBodySchemaJSONObject(operation._operationJSONObject),
+				new HashSet<>());
 
 		Map<String, Object> partProperties =
 			(Map<String, Object>)bodySchemaMap.get("properties");

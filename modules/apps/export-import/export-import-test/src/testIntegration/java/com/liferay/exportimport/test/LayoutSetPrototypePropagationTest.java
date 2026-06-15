@@ -239,8 +239,6 @@ public class LayoutSetPrototypePropagationTest
 		Assert.assertEquals(
 			_initialPrototypeLayoutsCount, getGroupLayoutCount());
 
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
 		LayoutServiceUtil.getLayouts(
 			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -724,8 +722,6 @@ public class LayoutSetPrototypePropagationTest
 				testGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(),
 				false, true);
 
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
 			_layoutSetPrototypeHelper.executeLayoutSetSync(testGroup.getPrivateLayoutSet());
 
 			LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
@@ -792,8 +788,6 @@ public class LayoutSetPrototypePropagationTest
 			setLinkEnabled(
 				testGroup, layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 				true, false);
-
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 			_layoutSetPrototypeHelper.executeLayoutSetSync(testGroup.getPublicLayoutSet());
 
@@ -1129,8 +1123,6 @@ public class LayoutSetPrototypePropagationTest
 		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
 
 		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
 

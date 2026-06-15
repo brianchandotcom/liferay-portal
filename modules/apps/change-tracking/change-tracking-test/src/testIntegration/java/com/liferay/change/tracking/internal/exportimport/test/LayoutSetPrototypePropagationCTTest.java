@@ -99,8 +99,6 @@ public class LayoutSetPrototypePropagationCTTest {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			group.getGroupId(), false);
 
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
 		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
 
 		Thread.sleep(2000);

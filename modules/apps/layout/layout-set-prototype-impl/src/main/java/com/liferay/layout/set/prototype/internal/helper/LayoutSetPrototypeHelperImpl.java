@@ -15,7 +15,6 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -105,14 +104,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	@Override
 	public void executeLayoutSetSync(LayoutSet layoutSet) throws Exception {
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
-		if (MergeLayoutPrototypesThreadLocal.isSkipMerge()) {
-			return;
-		}
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(true);
-
 		Group group = layoutSet.getGroup();
 
 		layoutSet = _layoutSetLocalService.fetchLayoutSet(

@@ -33,7 +33,7 @@ export default function UnresolvedDataSetPreview({
 			)}
 
 			<div className="border p-2 pl-3 rounded text-break">
-				{apiURL
+				{(apiURL || '')
 					.split(/(\{[^}]*\})/)
 					.map((part, index) =>
 						index % 2 ? (

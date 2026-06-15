@@ -3,7 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: 1px solid var(--gray-300);\nposition: sticky;\n  top: calc(var(--control-menu-container-height, 0px) + 7.75rem);\n  z-index: 899;\n}\n\n.commerce-main header {\ntop: calc(var(--control-menu-container-height) - var(--commerce-header-user-height, 0));\n}\n\n.commerce-header-user {\nposition: sticky;\ntop: calc(-1 * var(--commerce-header-user-height));\n}",
+					"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: 1px solid var(--gray-300);\nposition: sticky;\n  top: calc(var(--control-menu-container-height, 0px) + 7.75rem);\n  z-index: 899;\n}\n\n.signed-out .[$FRAGMENT_CLASS$] {\n  top: calc(var(--control-menu-container-height, 0px) + 7.0625rem);\n}\n\n.commerce-main header {\ntop: calc(var(--control-menu-container-height) - var(--commerce-header-user-height, 0));\n}\n\n.signed-out .commerce-main header {\ntop: var(--control-menu-container-height, 0px);\n}\n\n.commerce-header-user {\nposition: sticky;\ntop: calc(-1 * var(--commerce-header-user-height));\n}",
 					"fragmentStyle": {
 						"backgroundColor": "whiteColor",
 						"fontFamily": "fontFamilyBase",

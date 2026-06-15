@@ -153,7 +153,7 @@ public class SitePageResourceImpl
 
 			@Override
 			public String getLabelLanguageKey() {
-				return "site-pages";
+				return "static-pages";
 			}
 
 			@Override

@@ -282,9 +282,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Map<Long, List<ObjectRelationship>> objectRelationshipsMap) {
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
-			_registerObjectRelationshipsRelatedInfoCollectionProviders(
-				objectDefinition, objectRelationshipsMap);
-
 			return Collections.emptyList();
 		}
 
@@ -540,8 +537,18 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition, objectLayout.getObjectLayoutTabs());
 		}
 
-		_registerObjectRelationshipsRelatedInfoCollectionProviders(
-			objectDefinition, objectRelationshipsMap);
+		List<ObjectRelationship> objectRelationships = null;
+
+		if (objectRelationshipsMap != null) {
+			objectRelationships = objectRelationshipsMap.getOrDefault(
+				objectDefinition.getObjectDefinitionId(),
+				Collections.emptyList());
+		}
+
+		_objectRelationshipLocalService.
+			registerObjectRelationshipsRelatedInfoCollectionProviders(
+				objectDefinition, _objectDefinitionLocalService,
+				objectRelationships);
 
 		try {
 			if (ArrayUtil.isNotEmpty(
@@ -573,24 +580,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return StringBundler.concat(
 			serviceRegistrationKey, StringPool.POUND,
 			objectRelationship.getObjectRelationshipId());
-	}
-
-	private void _registerObjectRelationshipsRelatedInfoCollectionProviders(
-		ObjectDefinition objectDefinition,
-		Map<Long, List<ObjectRelationship>> objectRelationshipsMap) {
-
-		List<ObjectRelationship> objectRelationships = null;
-
-		if (objectRelationshipsMap != null) {
-			objectRelationships = objectRelationshipsMap.getOrDefault(
-				objectDefinition.getObjectDefinitionId(),
-				Collections.emptyList());
-		}
-
-		_objectRelationshipLocalService.
-			registerObjectRelationshipsRelatedInfoCollectionProviders(
-				objectDefinition, _objectDefinitionLocalService,
-				objectRelationships);
 	}
 
 	private void _registerRootObjectLayoutTabScreenNavigationCategories(

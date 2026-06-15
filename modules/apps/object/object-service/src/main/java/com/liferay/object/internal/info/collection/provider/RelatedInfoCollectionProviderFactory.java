@@ -30,7 +30,9 @@ public class RelatedInfoCollectionProviderFactory {
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
-		if (objectDefinition2.isUnmodifiableSystemObject()) {
+		if (objectDefinition1.isUnmodifiableSystemObject() ||
+			objectDefinition2.isUnmodifiableSystemObject()) {
+
 			return null;
 		}
 

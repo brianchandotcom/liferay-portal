@@ -13,21 +13,16 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.system.SystemObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collections;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Feliphe Marinho
@@ -52,56 +47,23 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	public InfoPage<ObjectEntry> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Pagination pagination = collectionQuery.getPagination();
+		Object relatedItem = collectionQuery.getRelatedItem();
+
+		if (!(relatedItem instanceof ObjectEntry)) {
+			return InfoPage.of(
+				Collections.emptyList(), collectionQuery.getPagination(), 0);
+		}
 
 		try {
-			Object relatedItem = collectionQuery.getRelatedItem();
-
-			if (relatedItem instanceof ObjectEntry) {
-				ObjectEntry objectEntry = (ObjectEntry)relatedItem;
-
-				return getCollectionInfoPage(
-					objectEntry.getGroupId(), pagination,
-					objectEntry.getObjectEntryId());
-			}
-
-			if (relatedItem instanceof SystemObjectEntry) {
-				SystemObjectEntry systemObjectEntry =
-					(SystemObjectEntry)relatedItem;
-
-				return getCollectionInfoPage(
-					systemObjectEntry.getGroupId(), pagination,
-					systemObjectEntry.getClassPK());
-			}
-
-			if (_objectDefinition1.isUnmodifiableSystemObject() &&
-				(relatedItem instanceof BaseModel)) {
-
-				BaseModel<?> baseModel = (BaseModel<?>)relatedItem;
-
-				long groupId = 0;
-
-				if (relatedItem instanceof GroupedModel) {
-					GroupedModel groupedModel = (GroupedModel)relatedItem;
-
-					groupId = groupedModel.getGroupId();
-				}
-
-				Map<String, Object> modelAttributes =
-					baseModel.getModelAttributes();
-
-				return getCollectionInfoPage(
-					groupId, pagination,
-					GetterUtil.getLong(
-						modelAttributes.get(
-							_objectDefinition1.getPKObjectFieldName())));
-			}
+			return getCollectionInfoPage(
+				(ObjectEntry)relatedItem, collectionQuery.getPagination());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
 		}
 
-		return InfoPage.of(Collections.emptyList(), pagination, 0);
+		return InfoPage.of(
+			Collections.emptyList(), collectionQuery.getPagination(), 0);
 	}
 
 	@Override
@@ -148,7 +110,7 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	}
 
 	protected InfoPage<ObjectEntry> getCollectionInfoPage(
-			long groupId, Pagination pagination, long primaryKey)
+			ObjectEntry objectEntry, Pagination pagination)
 		throws PortalException {
 
 		return null;

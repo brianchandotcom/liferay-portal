@@ -111,12 +111,15 @@ test(
 		const fileTitle = `title ${getRandomString()}`;
 		const spaceName = `Space ${getRandomString()}`;
 
+		let assetLibrary;
+
 		await test.step('Create a new Space', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: spaceName,
-				settings: {},
-				type: 'Space',
-			});
+			assetLibrary =
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: spaceName,
+					settings: {},
+					type: 'Space',
+				});
 		});
 
 		await test.step('Create a file entry via UI', async () => {
@@ -156,13 +159,15 @@ test(
 				surname: user.familyName,
 			};
 
-			await spaceSummaryPage.goto(spaceName);
+			await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+				assetLibrary.externalReferenceCode,
+				user.externalReferenceCode
+			);
 
-			await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
-
-			await spaceSummaryPage.addRoleToSpaceMember(
-				'Space Administrator',
-				user.name
+			await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+				assetLibrary.externalReferenceCode,
+				user.externalReferenceCode,
+				['Asset Library Administrator']
 			);
 
 			await performLogout(page);

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.MatchAllQuery;
 import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.NestedQuery;
 import com.liferay.portal.kernel.search.Query;
@@ -27,7 +28,9 @@ import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -37,7 +40,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Joshua Cords
@@ -54,14 +59,16 @@ public class AssetListFiltersUtil {
 		BooleanQuery booleanQuery = new BooleanQuery();
 
 		for (int i = 0; i < filtersJSONArray.length(); i++) {
-			NestedQuery nestedQuery = _toNestedQuery(
+			BooleanClause<Query> booleanClause = _toClause(
 				companyId, filtersJSONArray.getJSONObject(i), locale);
 
-			if (nestedQuery == null) {
+			if (booleanClause == null) {
 				continue;
 			}
 
-			booleanQuery.add(nestedQuery, BooleanClauseOccur.MUST);
+			booleanQuery.add(
+				booleanClause.getClause(),
+				booleanClause.getBooleanClauseOccur());
 		}
 
 		if (!booleanQuery.hasClauses()) {
@@ -107,6 +114,24 @@ public class AssetListFiltersUtil {
 			objectDefinition.getObjectDefinitionId(), name);
 	}
 
+	private static String _getCommonFieldName(
+		String propertyName, Locale locale) {
+
+		if (!_commonFieldTypes.containsKey(propertyName)) {
+			return null;
+		}
+
+		if (_localizedCommonFieldNames.contains(propertyName)) {
+			return Field.getLocalizedName(locale, "localized_" + propertyName);
+		}
+
+		return propertyName;
+	}
+
+	private static String _getCommonFieldType(String propertyName) {
+		return _commonFieldTypes.get(propertyName);
+	}
+
 	private static String _getSubfield(Locale locale, ObjectField objectField) {
 		if (objectField.isIndexedAsKeyword()) {
 			return "nestedFieldArray.value_keyword";
@@ -149,6 +174,16 @@ public class AssetListFiltersUtil {
 		}
 
 		return "nestedFieldArray.value_text";
+	}
+
+	private static boolean _isCommonFieldRow(JSONObject jsonObject) {
+		if ((jsonObject.getLong("classNameId") <= 0) &&
+			(jsonObject.getLong("classTypeId") <= 0)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _isNegatedOperator(String operatorName) {
@@ -223,24 +258,194 @@ public class AssetListFiltersUtil {
 		return _format.format(calendar.getTime());
 	}
 
-	private static NestedQuery _toNestedQuery(
+	private static BooleanClause<Query> _toClause(
 		long companyId, JSONObject jsonObject, Locale locale) {
 
 		if (jsonObject == null) {
 			return null;
 		}
 
+		if (_isCommonFieldRow(jsonObject)) {
+			return _toCommonFieldClause(
+				jsonObject, jsonObject.getString("propertyName"), locale);
+		}
+
+		ObjectField objectField = _fetchObjectField(
+			jsonObject.getLong("classNameId"), companyId,
+			jsonObject.getString("propertyName"));
+
+		if (objectField == null) {
+			return null;
+		}
+
+		NestedQuery nestedQuery = _toNestedQuery(
+			jsonObject, objectField, locale);
+
+		if (nestedQuery == null) {
+			return null;
+		}
+
+		return new BooleanClause<>(nestedQuery, BooleanClauseOccur.MUST);
+	}
+
+	private static BooleanClause<Query> _toCommonFieldClause(
+		JSONObject jsonObject, String propertyName, Locale locale) {
+
+		if (Validator.isNull(propertyName)) {
+			return null;
+		}
+
+		String field = _getCommonFieldName(propertyName, locale);
+		String type = _getCommonFieldType(propertyName);
+
+		if ((field == null) || (type == null)) {
+			return null;
+		}
+
+		String operatorName = GetterUtil.getString(
+			jsonObject.getString("operatorName"), "contains");
+
+		Query valueQuery = _toCommonFieldValueQuery(
+			jsonObject, field, operatorName, type,
+			_localizedCommonFieldNames.contains(propertyName));
+
+		if (valueQuery == null) {
+			return null;
+		}
+
+		if (_isNegatedOperator(operatorName)) {
+
+			// A standalone MUST_NOT clause matches no documents, so anchor
+			// the negation with a positive MatchAllQuery. The nested path does
+			// not need this because its negation lives inside a positive
+			// NestedQuery.
+
+			BooleanQuery booleanQuery = new BooleanQuery();
+
+			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+			booleanQuery.add(valueQuery, BooleanClauseOccur.MUST_NOT);
+
+			return new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST);
+		}
+
+		return new BooleanClause<>(valueQuery, BooleanClauseOccur.MUST);
+	}
+
+	private static Query _toCommonFieldRangeQuery(
+		JSONObject jsonObject, String field, String operatorName, String type) {
+
+		boolean dateType = type.equals("date");
+
+		if (operatorName.equals("between")) {
+			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
+
+			if ((valueJSONArray == null) || (valueJSONArray.length() < 2)) {
+				return null;
+			}
+
+			String lowerTerm = _emptyToNull(valueJSONArray.getString(0));
+			String upperTerm = _emptyToNull(valueJSONArray.getString(1));
+
+			if (dateType) {
+				lowerTerm = _normalizeDateValue(lowerTerm, false, false);
+				upperTerm = _normalizeDateValue(upperTerm, false, true);
+			}
+
+			return new TermRangeQuery(field, lowerTerm, upperTerm, true, true);
+		}
+
+		String value = jsonObject.getString("value");
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		if (operatorName.equals("ge")) {
+			String lowerTerm =
+				dateType ? _normalizeDateValue(value, false, false) : value;
+
+			return new TermRangeQuery(field, lowerTerm, null, true, false);
+		}
+
+		if (operatorName.equals("gt")) {
+			String lowerTerm =
+				dateType ? _normalizeDateValue(value, false, true) : value;
+
+			return new TermRangeQuery(field, lowerTerm, null, false, false);
+		}
+
+		if (operatorName.equals("le")) {
+			String upperTerm =
+				dateType ? _normalizeDateValue(value, false, true) : value;
+
+			return new TermRangeQuery(field, null, upperTerm, false, true);
+		}
+
+		if (operatorName.equals("lt")) {
+			String upperTerm =
+				dateType ? _normalizeDateValue(value, false, false) : value;
+
+			return new TermRangeQuery(field, null, upperTerm, false, false);
+		}
+
+		return null;
+	}
+
+	private static Query _toCommonFieldValueQuery(
+		JSONObject jsonObject, String field, String operatorName, String type,
+		boolean localized) {
+
+		if (operatorName.equals("between") || operatorName.equals("ge") ||
+			operatorName.equals("gt") || operatorName.equals("le") ||
+			operatorName.equals("lt")) {
+
+			return _toCommonFieldRangeQuery(
+				jsonObject, field, operatorName, type);
+		}
+
+		String value = jsonObject.getString("value");
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		if (type.equals("date") &&
+			(operatorName.equals("eq") || operatorName.equals("not-eq"))) {
+
+			return new TermRangeQuery(
+				field, _normalizeDateValue(value, false, false),
+				_normalizeDateValue(value, false, true), true, true);
+		}
+
+		if (type.equals("decimal") || type.equals("integer")) {
+			return new TermQuery(field, value);
+		}
+
+		// Localized fields (title) are indexed as analyzed text, so match them
+		// through the analyzer. Other text fields (userName,
+		// externalReferenceCode) are keywords matched exactly or by substring.
+
+		if (localized) {
+			return new MatchQuery(field, value);
+		}
+
+		if (operatorName.equals("contains") ||
+			operatorName.equals("not-contains")) {
+
+			return new WildcardQuery(
+				field, StringPool.STAR + value + StringPool.STAR);
+		}
+
+		return new TermQuery(field, value);
+	}
+
+	private static NestedQuery _toNestedQuery(
+		JSONObject jsonObject, ObjectField objectField, Locale locale) {
+
 		String propertyName = jsonObject.getString("propertyName");
 		String value = jsonObject.getString("value");
 
 		if (Validator.isNull(propertyName) || Validator.isNull(value)) {
-			return null;
-		}
-
-		ObjectField objectField = _fetchObjectField(
-			jsonObject.getLong("classNameId"), companyId, propertyName);
-
-		if (objectField == null) {
 			return null;
 		}
 
@@ -434,8 +639,42 @@ public class AssetListFiltersUtil {
 		return new MatchQuery(subfield, value);
 	}
 
+	// Common Fields are indexed at the document root by
+	// AssetEntryDocumentContributor, not under nestedFieldArray. Keep this
+	// registry in sync with the group emitted by
+	// AssetListTypePropertiesUtil#_getCommonFieldsItemsJSONArray.
+
+	private static final Map<String, String> _commonFieldTypes =
+		HashMapBuilder.put(
+			Field.CREATE_DATE, "date"
+		).put(
+			Field.DISPLAY_DATE, "date"
+		).put(
+			Field.EXPIRATION_DATE, "date"
+		).put(
+			Field.MODIFIED_DATE, "date"
+		).put(
+			Field.PRIORITY, "decimal"
+		).put(
+			Field.PUBLISH_DATE, "date"
+		).put(
+			Field.REVIEW_DATE, "date"
+		).put(
+			Field.STATUS, "integer"
+		).put(
+			Field.TITLE, "text"
+		).put(
+			Field.USER_NAME, "text"
+		).put(
+			"externalReferenceCode", "text"
+		).put(
+			"viewCount", "integer"
+		).build();
+
 	private static final Format _format =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
+	private static final Set<String> _localizedCommonFieldNames =
+		SetUtil.fromArray(Field.TITLE);
 	private static final List<String> _relativeDateValues = Arrays.asList(
 		"last-year", "next-month", "now", "past-24-hours", "past-day",
 		"past-month", "past-week", "past-year");

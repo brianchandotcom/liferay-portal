@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+
 type BreadcrumbActions = 'Edit' | 'Watch Project' | 'Delete';
 
 export class ProjectPage {
@@ -36,6 +38,15 @@ export class ProjectPage {
 		this.tasksTab = page.getByRole('tab', {
 			name: 'Tasks',
 		});
+	}
+
+	async editProject() {
+		await clickAndExpectToBeVisible({
+			target: this.getBreadcrumbAction('Edit'),
+			trigger: this.moreActionsButton,
+		});
+
+		await this.getBreadcrumbAction('Edit').click();
 	}
 
 	getBreadcrumbAction(filter: BreadcrumbActions) {

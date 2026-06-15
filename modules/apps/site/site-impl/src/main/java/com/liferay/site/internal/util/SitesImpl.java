@@ -372,19 +372,6 @@ public class SitesImpl implements Sites {
 		}
 	}
 
-	/**
-	 * Returns <code>true</code> if the linked site template can be merged into
-	 * the layout set. This method checks the current number of merge fail
-	 * attempts stored for the linked site template and, if greater than the
-	 * merge fail threshold, will return <code>false</code>.
-	 *
-	 * @param  group the site template's group, which is about to be merged into
-	 *         the layout set
-	 * @param  layoutSet the site in which the site template is attempting to
-	 *         merge into
-	 * @return <code>true</code> if the linked site template can be merged into
-	 *         the layout set; <code>false</code> otherwise
-	 */
 	@Override
 	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception {
 		String layoutSetPrototypeLayoutERC =

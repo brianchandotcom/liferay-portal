@@ -10,7 +10,7 @@ const modifiedDate = new Date().toISOString();
 
 export type Individual = {
 	birthDate?: string;
-	dataSourceId?: number;
+	dataSourceId?: number | string;
 	familyName?: string;
 	id: string;
 	jobTitle?: string;
@@ -34,6 +34,8 @@ export async function createIndividuals({
 			name,
 		}) => ({
 			birthday: birthDate,
+			dataSourceId,
+			dataSourceIds: [dataSourceId],
 			emailAddress: `${name}@liferay.com`,
 			fields: [
 				{

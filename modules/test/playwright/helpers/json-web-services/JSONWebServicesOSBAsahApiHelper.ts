@@ -45,7 +45,7 @@ type Event = {
 	browserName?: string;
 	canonicalUrl: string;
 	channelId: string;
-	dataSourceId?: number;
+	dataSourceId?: number | string;
 	deviceType?: string;
 	eventDate: string;
 	eventId: string;
@@ -94,7 +94,7 @@ type JournalDaily = {
 };
 
 type Field = {
-	dataSourceId: number;
+	dataSourceId: number | string;
 	name: string;
 	value: string;
 };

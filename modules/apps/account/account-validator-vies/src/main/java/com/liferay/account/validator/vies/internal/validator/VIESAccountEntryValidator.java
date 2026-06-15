@@ -92,7 +92,7 @@ public class VIESAccountEntryValidator implements AccountEntryValidator {
 			jsonObject.getLong("billingAddressId", 0));
 
 		if ((address == null) ||
-			Objects.equals(
+			!Objects.equals(
 				AccountEntry.class.getName(), address.getClassName()) ||
 			(address.getClassPK() != accountEntry.getAccountEntryId())) {
 

@@ -337,7 +337,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		throws PortalException {
 
 		try {
-			JSONObject jsonObject = JSONUtil.put(
+			return JSONUtil.put(
 				"authorization_servers",
 				JSONUtil.putAll((Object[])authorizationServers)
 			).put(
@@ -347,15 +347,16 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 				"resource", protectedResourceURI
 			).put(
 				"resource_name", resourceName
-			);
+			).put(
+				"scopes_supported",
+				() -> {
+					if (ArrayUtil.isEmpty(scopesSupported)) {
+						return null;
+					}
 
-			if (ArrayUtil.isNotEmpty(scopesSupported)) {
-				jsonObject.put(
-					"scopes_supported",
-					JSONUtil.putAll((Object[])scopesSupported));
-			}
-
-			return jsonObject.toString();
+					return JSONUtil.putAll((Object[])scopesSupported);
+				}
+			).toString();
 		}
 		catch (Exception exception) {
 			throw new OAuthClientPRLocalMetadataMetadataJSONException(

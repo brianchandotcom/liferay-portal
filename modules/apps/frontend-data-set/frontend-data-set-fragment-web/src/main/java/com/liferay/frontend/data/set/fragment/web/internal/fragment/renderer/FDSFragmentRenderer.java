@@ -490,6 +490,13 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		JSONObject editableValuesJSONObject =
 			fragmentEntryLink.getEditableValuesJSONObject();
 
+		if (editableValuesJSONObject == null) {
+			editableValuesJSONObject = _jsonFactory.createJSONObject();
+
+			fragmentEntryLink.setEditableValues(
+				editableValuesJSONObject.toString());
+		}
+
 		JSONObject configurationJSONObject =
 			editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.

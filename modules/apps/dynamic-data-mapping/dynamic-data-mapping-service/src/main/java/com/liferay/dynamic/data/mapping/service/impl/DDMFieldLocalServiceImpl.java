@@ -36,6 +36,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -187,6 +188,9 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 						DDMFieldAttributeTable.INSTANCE,
 						DDMFieldTable.INSTANCE.fieldId.eq(
 							DDMFieldAttributeTable.INSTANCE.fieldId)
+					).where(
+						DDMFieldAttributeTable.INSTANCE.ctCollectionId.eq(
+							CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION)
 					);
 
 					List<Runnable> runnables = new ArrayList<>();

@@ -3,48 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
-import ClayIcon from '@clayui/icon';
 import React, {useContext, useEffect, useState} from 'react';
 
 import SpaceService from '../../../common/services/SpaceService';
 import {ViewDashboardContext, initialSpace} from '../ViewDashboardContext';
+import PickerTrigger from './PickerTrigger';
 
 type SpaceOption = {
 	externalReferenceCode?: string;
 	label: string;
 	value: string;
 };
-
-const Trigger = React.forwardRef<HTMLButtonElement, any>(
-	(
-		{
-			children,
-			'className': _className,
-			triggerClassName,
-			triggerIcon,
-			...otherProps
-		},
-		ref
-	) => (
-		<ClayButton
-			{...otherProps}
-			className={triggerClassName}
-			displayType="secondary"
-			ref={ref}
-			size="sm"
-		>
-			{triggerIcon && <ClayIcon className="mr-2" symbol={triggerIcon} />}
-
-			{children}
-
-			<ClayIcon className="ml-2" symbol="caret-bottom" />
-		</ClayButton>
-	)
-);
-
-Trigger.displayName = 'Trigger';
 
 const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	className,
@@ -76,7 +46,7 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	return (
 		<Picker
 			aria-label={Liferay.Language.get('filter-by-spaces')}
-			as={Trigger}
+			as={PickerTrigger}
 			filterKey="label"
 			items={spaces}
 			messages={{

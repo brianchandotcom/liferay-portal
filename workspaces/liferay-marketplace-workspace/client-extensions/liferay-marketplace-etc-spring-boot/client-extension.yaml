@@ -27,10 +27,10 @@ liferay-marketplace-etc-spring-boot-oaua:
     scopes:
         -   Liferay.Headless.Admin.User.everything
     type: oAuthApplicationUserAgent
-liferay-marketplace-etc-spring-boot-object-action-ai-hub-provisioning:
-    name: Liferay Marketplace Etc Spring Boot Object Action AI Hub Provisioning
+liferay-marketplace-etc-spring-boot-object-action-ai-hub-tokens:
+    name: Liferay Marketplace Etc Spring Boot Object Action AI Hub Tokens
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua
-    resourcePath: /object/action/ai/hub/provisioning
+    resourcePath: /object/action/ai/hub/tokens
     type: objectAction
 liferay-marketplace-etc-spring-boot-object-action-email-dispatch:
     name: Liferay Marketplace Etc Spring Boot Object Action Email Dispatch

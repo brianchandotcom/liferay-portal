@@ -1,0 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Regisson Aguiar
+ */
+public class LPD_70233 {
+
+	public void method(PageContext pageContext, String key) {
+		LanguageUtil.get(null, key);
+		LanguageUtil.get(pageContext, key);
+		_language.get(pageContext, key);
+	}
+
+	@Reference
+	private Language _language;
+
+}

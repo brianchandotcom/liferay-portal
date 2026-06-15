@@ -1,0 +1,50 @@
+defaults:
+    run:
+        shell: bash
+jobs:
+    test-cloud-helm-chart:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   name: Install Helm
+                uses: azure/setup-helm@v4
+            -   name: Install helm-unittest plugin
+                run: helm plugin install --verify=false --version 1.0.3 https://github.com/helm-unittest/helm-unittest
+            -   name: Set up Kubeconform
+                uses: bmuschko/setup-kubeconform@v1
+                with:
+                    kubeconform-version: 0.7.0
+            -   name: Lint chart
+                run: helm lint "cloud/helm/${{matrix.chart}}"
+            -   name: Render and validate manifests
+                run: cloud/scripts/tests/render_helm_manifests.sh
+            -   name: Run unit tests
+                run: cloud/scripts/tests/run_helm_tests.sh
+            -   if: ${{!cancelled() && hashFiles(format('cloud/scripts/tests/test-reports/helm-unittest-{0}.xml', matrix.chart)) != ''}}
+                name: Upload test reports
+                uses: actions/upload-artifact@v4
+                with:
+                    name: helm-test-reports-${{matrix.chart}}
+                    path: cloud/scripts/tests/test-reports/helm-unittest-${{matrix.chart}}.xml
+            -   if: ${{!cancelled() && hashFiles(format('cloud/scripts/tests/test-reports/helm-unittest-{0}.xml', matrix.chart)) != ''}}
+                name: Publish test report
+                uses: dorny/test-reporter@v2
+                with:
+                    name: Helm unit tests (${{matrix.chart}})
+                    path: cloud/scripts/tests/test-reports/helm-unittest-${{matrix.chart}}.xml
+                    reporter: java-junit
+        strategy:
+            fail-fast: false
+            matrix:
+                chart:
+                    -   aws
+                    -   aws-infrastructure
+                    -   aws-infrastructure-provider
+                    -   aws-marketplace
+                    -   default
+                    -   gcp
+                    -   gcp-infrastructure
+                    -   gcp-infrastructure-provider
+on:
+    workflow_call:

@@ -1,74 +1,14 @@
-defaults:
-    run:
-        shell: bash
 jobs:
     test-cloud-terraform:
-        if: ${{(github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal') || (github.event_name == 'push' && github.repository == 'liferay/liferay-portal')}}
+        if: ${{github.repository == 'cloudnative-team/liferay-portal'}}
         permissions:
             checks: write
             contents: read
             pull-requests: write
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout code
-                uses: actions/checkout@v4
-            -   name: Set up Terraform
-                uses: hashicorp/setup-terraform@v3
-                with:
-                    terraform_version: 1.12.2
-            -   name: Set up TFLint
-                uses: terraform-linters/setup-tflint@v4
-                with:
-                    github_token: ${{secrets.GITHUB_TOKEN}}
-            -   name: Initialize Terraform
-                run: terraform init -backend=false -input=false
-                working-directory: ./cloud/terraform/${{matrix.stack}}
-            -   name: Validate Terraform
-                run: terraform validate
-                working-directory: ./cloud/terraform/${{matrix.stack}}
-            -   name: Run Terraform unit tests
-                run: cloud/scripts/tests/run_terraform_tests.sh "${{matrix.stack}}"
-            -   name: Publish test report
-                uses: dorny/test-reporter@v2
-                with:
-                    fail-on-error: true
-                    list-tests: all
-                    name: Terraform unit tests (${{matrix.stack}})
-                    path: cloud/terraform/test-results/*.xml
-                    reporter: java-junit
-            -   name: Upload test results
-                uses: actions/upload-artifact@v4
-                with:
-                    if-no-files-found: ignore
-                    path: cloud/terraform/test-results/*.xml
-            -   name: Run TFLint
-                run: cloud/scripts/tests/run_tflint.sh "${{matrix.stack}}"
-            -   name: Run Checkov
-                uses: bridgecrewio/checkov-action@v12
-                with:
-                    directory: ./cloud/terraform/${{matrix.stack}}
-                    framework: terraform
-                    soft_fail: false
-        strategy:
-            fail-fast: false
-            matrix:
-                stack:
-                    -   aws/dependencies
-                    -   aws/ecr
-                    -   aws/eks
-                    -   aws/gitops/platform
-                    -   aws/gitops/resources
-                    -   gcp/gitops/platform
-                    -   gcp/gitops/resources
-                    -   gcp/gke
+        uses: ./.github/workflows/ci-reusable-test-cloud-terraform.yaml
 on:
     pull_request:
         paths:
-            -   .github/workflows/ci-test-cloud-terraform.yaml
-            -   cloud/terraform/**
-    push:
-        branches:
-            -   master
-        paths:
+            -   .github/workflows/ci-reusable-test-cloud-terraform.yaml
             -   .github/workflows/ci-test-cloud-terraform.yaml
             -   cloud/terraform/**

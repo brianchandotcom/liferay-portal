@@ -50,6 +50,7 @@ public class UpdateAudienceEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		long audienceEntryId = ParamUtil.getLong(
 			actionRequest, "audienceEntryId");
+
 		String json = ParamUtil.getString(actionRequest, "json");
 		String name = ParamUtil.getString(actionRequest, "name");
 

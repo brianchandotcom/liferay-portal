@@ -2,7 +2,6 @@ import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayButton from '@clayui/button';
-import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -13,8 +12,8 @@ import React, {useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import {getMimeType} from 'assets/components/mime-type';
 import {ITopAsset, TopAssetMetric, TopAssetObjectType} from 'shared/api/assets';
+import {Option, Picker, Text} from '@clayui/core';
 import {Routes, toRoute} from 'shared/util/router';
-import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
 import {useHistory, useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
@@ -62,6 +61,25 @@ const ASSET_ROUTE_MAP = {
 const getAssetRoute = (assetType?: string) =>
 	ASSET_ROUTE_MAP[assetType as keyof typeof ASSET_ROUTE_MAP] ??
 	Routes.ASSETS_OBJECT_ENTRY_OVERVIEW;
+
+const GroupByTrigger = React.forwardRef<
+	HTMLButtonElement,
+	React.ButtonHTMLAttributes<HTMLButtonElement> & {label?: string}
+>(({label, ...rest}, ref) => (
+	<ClayButton
+		{...rest}
+		className='rounded-lg'
+		displayType='secondary'
+		ref={ref}
+		size='sm'
+	>
+		{label}
+		<ClayIcon
+			className='inline-item inline-item-after'
+			symbol='caret-bottom'
+		/>
+	</ClayButton>
+));
 
 interface ITopAssetsTabContentProps {
 	assets: ITopAsset[];
@@ -120,48 +138,26 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 				/>
 			</StatesRenderer.Empty>
 			<StatesRenderer.Success>
-				<ClayDropDown
-					alignmentPosition={Align.BottomRight}
-					closeOnClick
-					trigger={
-						<ClayButton
-							borderless
-							className='align-items-baseline d-inline-flex'
-							displayType='unstyled'
-							size='sm'
-						>
-							<div className='font-weight-semi-bold mr-3'>
-								<Text size={3}>
-									{Liferay.Language.get('group-by')}
-								</Text>
-							</div>
+				<div className='align-items-center d-flex'>
+					<div className='font-weight-semi-bold mr-2'>
+						<Text size={3}>{Liferay.Language.get('group-by')}</Text>
+					</div>
 
-							<div className='font-weight-semi-bold text-secondary'>
-								<Text size={3}>
-									{groupByLabel}
-									<ClayIcon
-										className='ml-1'
-										symbol='caret-bottom'
-									/>
-								</Text>
-							</div>
-						</ClayButton>
-					}
-				>
-					<ClayDropDown.ItemList>
-						{metrics.map(key => (
-							<ClayDropDown.Item
-								key={key}
-								onClick={() => setGroupBy(key)}
-								symbolRight={
-									groupBy === key ? 'check' : undefined
-								}
-							>
-								{groupByLabels[key]}
-							</ClayDropDown.Item>
-						))}
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
+					<Picker
+						aria-label={Liferay.Language.get('group-by')}
+						as={GroupByTrigger}
+						items={metrics}
+						label={groupByLabel}
+						onSelectionChange={key =>
+							setGroupBy(key as GroupByMetric)
+						}
+						selectedKey={groupBy}
+					>
+						{(key: GroupByMetric) => (
+							<Option key={key}>{groupByLabels[key]}</Option>
+						)}
+					</Picker>
+				</div>
 
 				<ClayTable className='mt-3'>
 					<ClayTable.Head>

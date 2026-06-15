@@ -139,7 +139,7 @@ describe('TopCategoriesAndTags', () => {
 			expect(screen.getByRole('tab', {name: 'Tag'})).toBeInTheDocument();
 		});
 
-		it('should render the Group By dropdown with the default metric (Impressions)', () => {
+		it('should render the Group By picker with the default metric (Impressions)', () => {
 			render(<TopCategoriesAndTags />);
 
 			expect(screen.getAllByText('Group By').length).toBeGreaterThan(0);
@@ -233,17 +233,15 @@ describe('TopCategoriesAndTags', () => {
 		});
 	});
 
-	describe('group by dropdown', () => {
+	describe('group by picker', () => {
 		it('should refetch with viewsMetric when the user picks Views', () => {
 			render(<TopCategoriesAndTags />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group By/})[0]
+				screen.getAllByRole('combobox', {name: 'Group By'})[0]
 			);
 
-			fireEvent.click(
-				screen.getAllByRole('menuitem', {name: 'Views'})[0]
-			);
+			fireEvent.click(screen.getAllByRole('option', {name: 'Views'})[0]);
 
 			const lastCall =
 				mockedUseRequest.mock.calls[
@@ -257,11 +255,11 @@ describe('TopCategoriesAndTags', () => {
 			render(<TopCategoriesAndTags />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group By/})[0]
+				screen.getAllByRole('combobox', {name: 'Group By'})[0]
 			);
 
 			fireEvent.click(
-				screen.getAllByRole('menuitem', {name: 'Downloads'})[0]
+				screen.getAllByRole('option', {name: 'Downloads'})[0]
 			);
 
 			const lastCall =

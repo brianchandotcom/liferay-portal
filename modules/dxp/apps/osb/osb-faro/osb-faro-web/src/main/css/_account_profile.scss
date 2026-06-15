@@ -16,6 +16,8 @@
 
 .top-assets,
 .top-categories-and-tags {
+	overflow: hidden;
+
 	.tab-content,
 	.tab-pane.active {
 		display: flex;

@@ -28,11 +28,11 @@ export const RANGE_OPTIONS = [
 	},
 ];
 
-export const HOURS_BY_LAST_RANGE: Record<LastRange, number> = {
-	[LastRange.H12]: 12,
-	[LastRange.H24]: 24,
-	[LastRange.H48]: 48,
-	[LastRange.D7]: 24 * 7,
+const MILLISECONDS_BY_LAST_RANGE: Record<LastRange, number> = {
+	[LastRange.H12]: 12 * 60 * 60 * 1000,
+	[LastRange.H24]: 24 * 60 * 60 * 1000,
+	[LastRange.H48]: 48 * 60 * 60 * 1000,
+	[LastRange.D7]: 7 * 24 * 60 * 60 * 1000,
 };
 
 export const LAST_RANGE_OPTIONS = [
@@ -58,21 +58,24 @@ export function normalizeDateFilter(
 	dateFilter: DateFilterValues
 ): NormalizedDateFilter {
 	if (dateFilter.range === Range.Last) {
+		const now = Date.now();
+
 		return {
-			last: HOURS_BY_LAST_RANGE[dateFilter.last],
-			range: Range.Last,
+			endDate: new Date(now).toISOString(),
+			startDate: new Date(
+				now - MILLISECONDS_BY_LAST_RANGE[dateFilter.last]
+			).toISOString(),
 		};
 	}
 
 	if (dateFilter.range === Range.DateRange) {
 		return {
 			endDate: new Date(dateFilter.endDate).toISOString(),
-			range: Range.DateRange,
 			startDate: new Date(dateFilter.startDate).toISOString(),
 		};
 	}
 
-	return {range: Range.All};
+	return {};
 }
 
 export function editingToDateFilter(editing: EditingState): DateFilterValues {

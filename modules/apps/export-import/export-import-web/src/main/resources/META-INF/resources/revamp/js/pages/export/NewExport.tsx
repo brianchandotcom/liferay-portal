@@ -12,6 +12,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Footer from '../../components/Footer';
 import {
 	DateFilterValues,
+	NormalizedDateFilter,
 	Range,
 	normalizeDateFilter,
 } from '../../components/date_filter';
@@ -51,6 +52,7 @@ export function NewExport({
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(!exportPreview);
 	const initialPreviewRef = useRef<ExportPreview | undefined>(exportPreview);
+	const appliedDateFilterRef = useRef<NormalizedDateFilter>({});
 
 	const getPreview = useCallback(
 		(exportPreviewParams: ExportPreviewParams) => {
@@ -90,6 +92,8 @@ export function NewExport({
 	const sections = preview?.previewPortletDataHandlerSections ?? [];
 
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
+		appliedDateFilterRef.current = normalizeDateFilter(filterValues);
+
 		if (filterValues.range === Range.All && initialPreviewRef.current) {
 			setPreview(initialPreviewRef.current);
 
@@ -97,7 +101,7 @@ export function NewExport({
 		}
 
 		getPreview({
-			query: normalizeDateFilter(filterValues),
+			query: appliedDateFilterRef.current,
 			url: exportPreviewAPIURL,
 		});
 	};
@@ -118,7 +122,7 @@ export function NewExport({
 
 				const result = await postExportProcess({
 					exportProcessRequest: {
-						...normalizeDateFilter(values.dateFilter),
+						...appliedDateFilterRef.current,
 						...toProcessRequestFlags(contentSelection),
 						deletions: !!values.deletions,
 						name: values.name,

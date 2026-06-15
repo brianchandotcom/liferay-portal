@@ -45,6 +45,13 @@
 
 .production-readiness-dashboard {
 	.production-readiness-section {
+		.list-group-item {
+			.flex-grow-1 {
+				min-width: 0;
+				overflow-wrap: anywhere;
+			}
+		}
+
 		.panel-header {
 			background-color: $light;
 			width: 100%;

@@ -4,9 +4,11 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {sub} from 'frontend-js-web';
 
 import StatusLabel from '../../common/components/StatusLabel';
 import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
+import confirmAndDeleteEntryAction from './actions/confirmAndDeleteEntryAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
 import TypeRenderer from './cell_renderers/TypeRenderer';
@@ -48,5 +50,38 @@ export default function StructureUsagesFDSPropsTransformer({
 			],
 		},
 		hideManagementBarInEmptyState: true,
+		onActionDropdownItemClick({
+			action,
+			event,
+			itemData,
+			loadData,
+		}: {
+			action: {data: {id: string}};
+			event: Event;
+			itemData: {
+				embedded: {
+					actions: {delete: {href: string; method: string}};
+				};
+				title: string;
+			};
+			loadData: () => void;
+		}) {
+			if (action?.data?.id === 'delete') {
+				event?.preventDefault();
+
+				confirmAndDeleteEntryAction({
+					bodyHTML: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-this-entry'
+					),
+					deleteAction: itemData.embedded.actions.delete,
+					loadData,
+					successMessage: sub(
+						Liferay.Language.get('x-was-successfully-deleted'),
+						`<strong>${Liferay.Util.escapeHTML(itemData.title)}</strong>`
+					),
+					title: Liferay.Language.get('delete-entry'),
+				});
+			}
+		},
 	};
 }

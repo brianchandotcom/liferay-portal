@@ -221,9 +221,18 @@ public class OpenAPIUtilTest {
 			"POST /v1.0/binaries", "post_test_v1.0_binaries.json",
 			"postBinary");
 		_testGetTool(
+			"POST /v1.0/described", "post_test_v1.0_described.json",
+			"postDescribed");
+		_testGetTool(
 			"POST /v1.0/items", "post_test_v1.0_items.json", "postItem");
 		_testGetTool(
+			"POST /v1.0/no-content", "post_test_v1.0_no-content.json",
+			"postNoContent");
+		_testGetTool(
 			"POST /v1.0/parents", "post_test_v1.0_parents.json", "postParent");
+		_testGetTool(
+			"POST /v1.0/undescribed", "post_test_v1.0_undescribed.json",
+			"postUndescribed");
 		_testGetTool(
 			"POST /v1.0/uploads", "post_test_v1.0_uploads.json", "postUpload");
 		_testGetTool(
@@ -232,110 +241,41 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
-	public void testGetToolMergesRequestBodyAndSchemaDescriptions() {
-		JSONObject openAPIJSONObject = _createOpenAPIJSONObject(
-			JSONUtil.put(
-				"content",
-				JSONUtil.put(
-					"application/json",
-					JSONUtil.put(
-						"schema",
-						JSONUtil.put(
-							"description", _SCHEMA_DESCRIPTION
-						).put(
-							"type", "object"
-						)))
-			).put(
-				"description", _REQUEST_BODY_DESCRIPTION
-			));
-
-		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, "postThing");
-
-		Map<String, ?> inputSchema = tool.getInputSchema();
-
-		Map<?, ?> properties = (Map<?, ?>)inputSchema.get("properties");
-
-		Map<?, ?> bodySchema = (Map<?, ?>)properties.get("body");
-
-		Assert.assertEquals(
-			_REQUEST_BODY_DESCRIPTION + " " + _SCHEMA_DESCRIPTION,
-			bodySchema.get("description"));
-	}
-
-	@Test
-	public void testGetToolRequestBodyDescriptionIsSurfaced() {
-		JSONObject openAPIJSONObject = _createOpenAPIJSONObject(
-			JSONUtil.put(
-				"content",
-				JSONUtil.put(
-					"application/json",
-					JSONUtil.put("schema", JSONUtil.put("type", "object")))
-			).put(
-				"description", _REQUEST_BODY_DESCRIPTION
-			));
-
-		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, "postThing");
-
-		Map<String, ?> inputSchema = tool.getInputSchema();
-
-		Map<?, ?> properties = (Map<?, ?>)inputSchema.get("properties");
-
-		Map<?, ?> bodySchema = (Map<?, ?>)properties.get("body");
-
-		Assert.assertEquals(
-			_REQUEST_BODY_DESCRIPTION, bodySchema.get("description"));
-	}
-
-	@Test
-	public void testGetToolRequestBodyWithoutContentDoesNotFail() {
-		JSONObject openAPIJSONObject = _createOpenAPIJSONObject(
-			JSONUtil.put("description", _REQUEST_BODY_DESCRIPTION));
-
-		Tool tool = OpenAPIUtil.getTool(openAPIJSONObject, "postThing");
-
-		Map<String, ?> inputSchema = tool.getInputSchema();
-
-		Map<?, ?> properties = (Map<?, ?>)inputSchema.get("properties");
-
-		Map<?, ?> bodySchema = (Map<?, ?>)properties.get("body");
-
-		Assert.assertEquals(
-			_REQUEST_BODY_DESCRIPTION, bodySchema.get("description"));
-		Assert.assertEquals("object", bodySchema.get("type"));
-	}
-
-	@Test
 	public void testGetToolSummaries() {
 		List<ToolSummary> toolSummaries = OpenAPIUtil.getToolSummaries(
 			_openAPIJSONObject);
 
-		Assert.assertEquals(toolSummaries.toString(), 12, toolSummaries.size());
+		Assert.assertEquals(toolSummaries.toString(), 14, toolSummaries.size());
 		_assertToolSummary(
-			"This is the description", "getItem", toolSummaries.get(0));
+			"POST /v1.0/described", "postDescribed", toolSummaries.get(0));
 		_assertToolSummary(
-			"PATCH /v1.0/items/{itemId}", "patchItem", toolSummaries.get(1));
+			"POST /v1.0/undescribed", "postUndescribed", toolSummaries.get(1));
 		_assertToolSummary(
-			"PUT /v1.0/items/{itemId}", "putItem", toolSummaries.get(2));
+			"This is the description", "getItem", toolSummaries.get(2));
 		_assertToolSummary(
-			"POST /v1.0/binaries", "postBinary", toolSummaries.get(3));
+			"PATCH /v1.0/items/{itemId}", "patchItem", toolSummaries.get(3));
+		_assertToolSummary(
+			"PUT /v1.0/items/{itemId}", "putItem", toolSummaries.get(4));
+		_assertToolSummary(
+			"POST /v1.0/binaries", "postBinary", toolSummaries.get(5));
 		_assertToolSummary(
 			"POST /v1.0/empty-content", "postEmptyContent",
-			toolSummaries.get(4));
+			toolSummaries.get(6));
 		_assertToolSummary(
-			"POST /v1.0/no-content", "postNoContent", toolSummaries.get(5));
+			"POST /v1.0/no-content", "postNoContent", toolSummaries.get(7));
 		_assertToolSummary(
-			"POST /v1.0/parents", "postParent", toolSummaries.get(6));
+			"POST /v1.0/parents", "postParent", toolSummaries.get(8));
 		_assertToolSummary(
-			"POST /v1.0/uploads", "postUpload", toolSummaries.get(7));
+			"POST /v1.0/uploads", "postUpload", toolSummaries.get(9));
 		_assertToolSummary(
 			"This is the summary. This is the description", "getItems",
-			toolSummaries.get(8));
+			toolSummaries.get(10));
 		_assertToolSummary(
-			"POST /v1.0/items", "postItem", toolSummaries.get(9));
+			"POST /v1.0/items", "postItem", toolSummaries.get(11));
 		_assertToolSummary(
-			"POST /v1.0/no-schema", "postNoSchema", toolSummaries.get(10));
+			"POST /v1.0/no-schema", "postNoSchema", toolSummaries.get(12));
 		_assertToolSummary(
-			"This is the summary", "getItemsPage", toolSummaries.get(11));
+			"This is the summary", "getItemsPage", toolSummaries.get(13));
 
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
@@ -359,22 +299,6 @@ public class OpenAPIUtilTest {
 
 		Assert.assertEquals(expectedDescription, toolSummary.getDescription());
 		Assert.assertEquals(expectedName, toolSummary.getName());
-	}
-
-	private JSONObject _createOpenAPIJSONObject(
-		JSONObject requestBodyJSONObject) {
-
-		return JSONUtil.put(
-			"paths",
-			JSONUtil.put(
-				"/things",
-				JSONUtil.put(
-					"post",
-					JSONUtil.put(
-						"operationId", "postThing"
-					).put(
-						"requestBody", requestBodyJSONObject
-					))));
 	}
 
 	private Map<String, ?> _getInputSchema(
@@ -435,11 +359,6 @@ public class OpenAPIUtilTest {
 			),
 			true);
 	}
-
-	private static final String _REQUEST_BODY_DESCRIPTION =
-		"The thing to create.";
-
-	private static final String _SCHEMA_DESCRIPTION = "A Thing resource.";
 
 	private JSONObject _openAPIJSONObject;
 

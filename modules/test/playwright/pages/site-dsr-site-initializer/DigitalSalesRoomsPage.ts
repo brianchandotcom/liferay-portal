@@ -13,6 +13,12 @@ export class DigitalSalesRoomsPage {
 	readonly deleteConfirmationModal: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly digitalSalesRoomsTable: DataTablePage;
+	readonly documentRow: (documentName: string) => Locator;
+	readonly documentRowCheckbox: (documentName: string) => Locator;
+	readonly duplicateButton: Locator;
+	readonly duplicateMenuItem: Locator;
+	readonly duplicateModal: Locator;
+	readonly duplicateModalHeading: Locator;
 	readonly editMenuItem: Locator;
 	readonly globalMenuPage: GlobalMenuPage;
 	readonly homeLink: Locator;
@@ -40,6 +46,20 @@ export class DigitalSalesRoomsPage {
 				'[class*="site-dsr-site-initializer-internal-fragment-renderer-viewrooms"]'
 			)
 		);
+		this.documentRow = (documentName: string) =>
+			this.duplicateModal.locator('tr', {hasText: documentName});
+		this.documentRowCheckbox = (documentName: string) =>
+			this.documentRow(documentName).getByRole('checkbox');
+		this.duplicateButton = page
+			.getByRole('dialog')
+			.getByRole('button', {name: 'Duplicate'});
+		this.duplicateMenuItem = page.getByRole('menuitem', {
+			name: 'Duplicate',
+		});
+		this.duplicateModal = page.getByRole('dialog');
+		this.duplicateModalHeading = page
+			.getByRole('dialog')
+			.getByRole('heading', {name: 'Duplicate Digital Sales Room'});
 		this.editMenuItem = page.getByRole('menuitem', {name: 'Edit'});
 		this.globalMenuPage = new GlobalMenuPage(page);
 		this.homeLink = page.locator('css=.sidebar').getByRole('menuitem', {
@@ -92,6 +112,11 @@ export class DigitalSalesRoomsPage {
 	async goToRoomsPage() {
 		await this.globalMenuPage.goToHome();
 		await this.globalMenuPage.goToCommerce('Digital Sales Room Management');
+		await this.roomsLink.click();
+	}
+
+	async goToRoomsPageAsSeller() {
+		await this.page.goto('/web/dsr/home');
 		await this.roomsLink.click();
 	}
 

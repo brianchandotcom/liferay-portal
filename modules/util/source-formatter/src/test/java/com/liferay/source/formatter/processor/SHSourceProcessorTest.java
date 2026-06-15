@@ -20,19 +20,7 @@ public class SHSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"LocalVariablesAssignedViaSubshells.testsh"
 			).addExpectedMessage(
-				StringBundler.concat(
-					"Do not declare and assign \"local\" variables using ",
-					"subshell outputs in a single line, extract \"local\" ",
-					"variable declaration and assignment via subshell into ",
-					"two separate lines"),
-				8
-			).addExpectedMessage(
-				StringBundler.concat(
-					"Do not declare and assign \"local\" variables using ",
-					"subshell outputs in a single line, extract \"local\" ",
-					"variable declaration and assignment via subshell into ",
-					"two separate lines"),
-				9
+				"Use \"$()\" for subshells instead of legacy backticks", 9
 			).addExpectedMessage(
 				StringBundler.concat(
 					"Do not declare and assign \"local\" variables using ",
@@ -40,13 +28,6 @@ public class SHSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"variable declaration and assignment via subshell into ",
 					"two separate lines"),
 				10
-			).addExpectedMessage(
-				StringBundler.concat(
-					"Do not declare and assign \"local\" variables using ",
-					"subshell outputs in a single line, extract \"local\" ",
-					"variable declaration and assignment via subshell into ",
-					"two separate lines"),
-				12
 			));
 	}
 

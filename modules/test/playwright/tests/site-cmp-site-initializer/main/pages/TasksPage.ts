@@ -62,7 +62,7 @@ export class TasksPage {
 		});
 		this.calendarView = {
 			datePickerMenu: page.getByRole('dialog', {name: 'Select Date'}),
-			moreLinkButton: page.getByRole('link', {name: /\d+ More/}),
+			moreLinkButton: page.getByText(/\d+ More/),
 			moreLinkPopover: page.getByTestId('calendarMoreLinkPopover'),
 			nextMonthButton: page.getByRole('button', {name: 'Next Month'}),
 			previousMonthButton: page.getByRole('button', {

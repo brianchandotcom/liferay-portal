@@ -73,6 +73,13 @@ public class ViewRoomsSectionDisplayContextTest {
 
 		_languageUtilMockedStatic.when(
 			() -> LanguageUtil.get(
+				Mockito.any(HttpServletRequest.class), Mockito.eq("duplicate"))
+		).thenReturn(
+			"Duplicate"
+		);
+
+		_languageUtilMockedStatic.when(
+			() -> LanguageUtil.get(
 				Mockito.any(HttpServletRequest.class), Mockito.eq("edit"))
 		).thenReturn(
 			"Edit"
@@ -344,6 +351,31 @@ public class ViewRoomsSectionDisplayContextTest {
 		_assertFDSActionDropdownItem(
 			"#", "trash", "delete", "Delete", "delete", "delete", null,
 			fdsActionDropdownItems.get(3));
+
+		ObjectEntryService objectEntryService = Mockito.mock(
+			ObjectEntryService.class);
+
+		Mockito.when(
+			objectEntryService.hasPortletResourcePermission(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		viewRoomsSectionDisplayContext = new ViewRoomsSectionDisplayContext(
+			new HashMap<>(), _getMockHttpServletRequest(), _objectDefinition,
+			objectEntryService);
+
+		fdsActionDropdownItems =
+			viewRoomsSectionDisplayContext.getFDSActionDropdownItems();
+
+		Assert.assertEquals(
+			fdsActionDropdownItems.toString(), 5,
+			fdsActionDropdownItems.size());
+
+		_assertFDSActionDropdownItem(
+			"#", "copy", "duplicate", "Duplicate", null, "update", null,
+			fdsActionDropdownItems.get(2));
 	}
 
 	@Test

@@ -59,9 +59,9 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 	@TestInfo("LPD-91035")
 	public void testUpgrade() throws Exception {
 		_testUpgradeWithAssetLibraryDepotEntry();
-		_testUpgradeWithCustomMaxAge();
-		_testUpgradeWithMissingMaxAge();
-		_testUpgradeWithZeroMaxAge();
+		_testUpgradeWithCustomTrashEntriesMaxAge();
+		_testUpgradeWithMissingTrashEntriesMaxAge();
+		_testUpgradeWithZeroTrashEntriesMaxAge();
 	}
 
 	private DepotEntry _addDepotEntry(int type) throws Exception {
@@ -132,7 +132,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 		Assert.assertEquals("0", _getTrashEntriesMaxAgeGroup(depotEntry));
 	}
 
-	private void _testUpgradeWithCustomMaxAge() throws Exception {
+	private void _testUpgradeWithCustomTrashEntriesMaxAge() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
 
 		_setGroupTrashEntriesMaxAge(depotEntry, "1440");
@@ -142,7 +142,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 		Assert.assertEquals("1440", _getTrashEntriesMaxAgeGroup(depotEntry));
 	}
 
-	private void _testUpgradeWithMissingMaxAge() throws Exception {
+	private void _testUpgradeWithMissingTrashEntriesMaxAge() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
 
 		_runUpgradeProcess();
@@ -152,7 +152,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 			_getTrashEntriesMaxAgeGroup(depotEntry));
 	}
 
-	private void _testUpgradeWithZeroMaxAge() throws Exception {
+	private void _testUpgradeWithZeroTrashEntriesMaxAge() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
 
 		_setGroupTrashEntriesMaxAge(depotEntry, "0");

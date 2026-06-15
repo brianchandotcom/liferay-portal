@@ -134,8 +134,6 @@ public class GetProductionReadinessResultsMVCResourceCommand
 		).put(
 			"ruleKey", productionReadinessResult.getKey()
 		).put(
-			"severity", String.valueOf(productionReadinessResult.getSeverity())
-		).put(
 			"status", productionReadinessResult.isPass() ? "PASS" : "FAIL"
 		);
 	}

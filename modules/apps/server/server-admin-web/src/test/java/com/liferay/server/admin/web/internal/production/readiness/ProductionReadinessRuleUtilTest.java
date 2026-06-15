@@ -142,7 +142,6 @@ public class ProductionReadinessRuleUtilTest {
 
 				Assert.assertNotNull(productionReadinessResult.getCategory());
 				Assert.assertNotNull(productionReadinessResult.getKey());
-				Assert.assertNotNull(productionReadinessResult.getSeverity());
 			}
 		}
 	}
@@ -961,9 +960,6 @@ public class ProductionReadinessRuleUtilTest {
 			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"jsp-reloading", productionReadinessResult.getKey());
-			Assert.assertEquals(
-				ProductionReadinessResult.Severity.MEDIUM,
-				productionReadinessResult.getSeverity());
 		}
 	}
 
@@ -1006,12 +1002,7 @@ public class ProductionReadinessRuleUtilTest {
 
 	@Test
 	public void testCheckPasswordEncryptionPBKDF2WeakFail() {
-		ProductionReadinessResult productionReadinessResult =
-			_assertPasswordEncryption("PBKDF2WithHmacSHA1/160/1000", false);
-
-		Assert.assertEquals(
-			ProductionReadinessResult.Severity.HIGH,
-			productionReadinessResult.getSeverity());
+		_assertPasswordEncryption("PBKDF2WithHmacSHA1/160/1000", false);
 	}
 
 	@Test
@@ -1034,9 +1025,6 @@ public class ProductionReadinessRuleUtilTest {
 			Assert.assertEquals(
 				"portal-developer-properties",
 				productionReadinessResult.getKey());
-			Assert.assertEquals(
-				ProductionReadinessResult.Severity.MEDIUM,
-				productionReadinessResult.getSeverity());
 		}
 	}
 
@@ -1121,9 +1109,6 @@ public class ProductionReadinessRuleUtilTest {
 			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"sidecar-detection", productionReadinessResult.getKey());
-			Assert.assertEquals(
-				ProductionReadinessResult.Severity.HIGH,
-				productionReadinessResult.getSeverity());
 		}
 	}
 

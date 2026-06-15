@@ -5,8 +5,6 @@
 
 export type RuleStatus = 'PASS' | 'FAIL';
 
-export type RuleSeverity = 'CRITICAL' | 'HIGH' | 'LOW' | 'MEDIUM';
-
 export interface RuleResult {
 	category: string;
 	categoryLabel: string;
@@ -16,7 +14,6 @@ export interface RuleResult {
 	name: string;
 	recommendedValue?: string;
 	ruleKey: string;
-	severity: RuleSeverity;
 	status: RuleStatus;
 }
 

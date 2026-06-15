@@ -59,7 +59,8 @@ public class SalesforceObjectSubscriber extends BasePubsubSubscriber {
 			JSONObject jsonObject = new JSONObject(message.getPayload());
 
 			String action = jsonObject.getString("action");
-			String salesforceObjectName = jsonObject.getString("sObjectName");
+			String salesforceObjectName = jsonObject.getString(
+				"salesforceObjectName");
 
 			JSONArray recordsJSONArray = jsonObject.getJSONArray("records");
 

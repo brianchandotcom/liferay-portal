@@ -87,10 +87,10 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 
 			String body = byteArrayOutputStream.toString(charset);
 
-			String redacted = _dataMaskingEngine.redact(
+			String redactedBody = _dataMaskingEngine.redact(
 				companyId, dataMaskExternalReferenceCodes, body);
 
-			originalOutputStream.write(redacted.getBytes(charset));
+			originalOutputStream.write(redactedBody.getBytes(charset));
 		}
 		finally {
 			writerInterceptorContext.setOutputStream(originalOutputStream);

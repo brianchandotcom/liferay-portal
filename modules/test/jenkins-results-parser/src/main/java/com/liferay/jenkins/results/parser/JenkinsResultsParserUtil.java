@@ -134,11 +134,20 @@ public class JenkinsResultsParserUtil {
 	public static boolean debug;
 
 	public static void addRedactToken(String token) {
-		if (_forbiddenRedactTokens.contains(token)) {
+		if (isNullOrEmpty(token) || _forbiddenRedactTokens.contains(token)) {
 			return;
 		}
 
 		_redactTokens.add(token);
+
+		String jsonEscapedToken = JSONObject.quote(token);
+
+		jsonEscapedToken = jsonEscapedToken.substring(
+			1, jsonEscapedToken.length() - 1);
+
+		if (!jsonEscapedToken.equals(token)) {
+			_redactTokens.add(jsonEscapedToken);
+		}
 	}
 
 	public static void append(File file, String content) throws IOException {
@@ -7273,13 +7282,7 @@ public class JenkinsResultsParserUtil {
 				continue;
 			}
 
-			if (!redactToken.isEmpty()) {
-				_redactTokens.add(redactToken);
-
-				if (redactToken.contains("\\")) {
-					_redactTokens.add(redactToken.replace("\\", "\\\\"));
-				}
-			}
+			addRedactToken(redactToken);
 		}
 	}
 

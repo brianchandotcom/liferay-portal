@@ -147,38 +147,4 @@ definition {
 		}
 	}
 
-	@description = "Set custom range filter with empty data for individual activity"
-	@priority = 5
-	test CanSetEmptyDataCustomRangeOnIndividualActivitiesCard {
-		ACUtils.createDMAndAddToPage();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View DM",
-			documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToIndividuals();
-
-		ACTimeFilter.setCustomRange(
-			endDay = 30,
-			endMonth = "January",
-			endYear = 2024,
-			startDay = 1,
-			startMonth = "January",
-			startYear = 2024);
-
-		ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jan 1, 2024 - Jan 30, 2024");
-
-		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
-	}
-
 }

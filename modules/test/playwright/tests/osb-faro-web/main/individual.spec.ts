@@ -21,6 +21,7 @@ import {
 } from './utils/distribution';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
+import {changeTimeFilter} from './utils/time-filter';
 import {viewPaginationResults} from './utils/utils';
 
 export const test = mergeTests(
@@ -452,3 +453,58 @@ test(
 		});
 	}
 );
+
+test('Active Individuals card is empty for a custom range with no activity', async ({
+	analyticsChannel: channel,
+	apiHelpers,
+	dxpSyncedAnalyticsChannel,
+	page,
+	project,
+}) => {
+	const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+	const individual = {
+		...generateIndividual({name: 'empty' + getRandomString()}),
+		dataSourceId,
+	};
+
+	const date = new Date();
+
+	await createIndividuals({apiHelpers, individuals: [individual]});
+
+	await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+		{
+			applicationId: 'Page',
+			canonicalUrl: 'https://www.liferay.com',
+			channelId: channel.id,
+			dataSourceId,
+			eventDate: date.toISOString(),
+			eventId: 'pageViewed',
+			title: 'My Page',
+			userId: individual.id,
+		},
+	]);
+
+	await navigateToACPageViaURL({
+		acPage: ACPage.individualPage,
+		channelID: channel.id,
+		page,
+		projectID: project.groupId,
+	});
+
+	// Pick a custom range in the previous month, which holds no seeded activity
+
+	await changeTimeFilter({page, timeFilterPeriod: 'Custom Range'});
+
+	await page.getByTestId('previous-month').first().click();
+
+	await page.getByRole('button', {exact: true, name: '10'}).first().click();
+
+	await page.getByRole('button', {exact: true, name: '15'}).first().click();
+
+	// The Active Individuals card shows its empty state instead of a chart
+
+	await expect(
+		page.getByText('There is no data for active individuals.')
+	).toBeVisible();
+});

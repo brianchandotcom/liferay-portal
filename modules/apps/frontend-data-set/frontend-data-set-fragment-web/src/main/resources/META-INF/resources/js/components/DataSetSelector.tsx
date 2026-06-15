@@ -125,15 +125,18 @@ export default function DataSetSelector({onChange, value}: IProps) {
 									? [value]
 									: [],
 								onItemsChange: (items: IDataSet[]) => {
-									onChange({
-										additionalAPIURLParameters:
-											items[0].additionalAPIURLParameters,
-										externalReferenceCode:
-											items[0].externalReferenceCode,
-										id: items[0].id,
-										label: items[0].label,
-										restEndpoint: items[0].restEndpoint,
-									});
+									if (items && !!items.length) {
+										onChange({
+											additionalAPIURLParameters:
+												items[0]
+													.additionalAPIURLParameters,
+											externalReferenceCode:
+												items[0].externalReferenceCode,
+											id: items[0].id,
+											label: items[0].label,
+											restEndpoint: items[0].restEndpoint,
+										});
+									}
 								},
 							});
 						}}

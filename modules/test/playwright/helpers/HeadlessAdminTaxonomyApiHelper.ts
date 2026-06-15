@@ -8,6 +8,7 @@ import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 interface postSiteTaxonomyVocabularyProps {
 	assetLibraries?: AssetLibrary[];
 	assetTypes?: AssetType[];
+	externalReferenceCode?: string;
 	multiValued?: boolean;
 	name: string;
 	siteId: string;
@@ -128,6 +129,7 @@ export class HeadlessAdminTaxonomyApiHelper {
 	async postSiteTaxonomyVocabulary({
 		assetLibraries,
 		assetTypes,
+		externalReferenceCode,
 		multiValued = true,
 		name,
 		siteId,
@@ -140,6 +142,7 @@ export class HeadlessAdminTaxonomyApiHelper {
 				data: {
 					assetLibraries,
 					assetTypes,
+					externalReferenceCode,
 					multiValued,
 					name,
 					system,

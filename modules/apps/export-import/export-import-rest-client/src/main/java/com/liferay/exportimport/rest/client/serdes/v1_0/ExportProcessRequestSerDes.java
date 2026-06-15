@@ -89,16 +89,6 @@ public class ExportProcessRequestSerDes {
 			sb.append("\"");
 		}
 
-		if (exportProcessRequest.getLast() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"last\": ");
-
-			sb.append(exportProcessRequest.getLast());
-		}
-
 		if (exportProcessRequest.getLogo() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -131,18 +121,6 @@ public class ExportProcessRequestSerDes {
 			sb.append("\"permissions\": ");
 
 			sb.append(exportProcessRequest.getPermissions());
-		}
-
-		if (exportProcessRequest.getRange() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"range\": ");
-
-			sb.append("\"");
-			sb.append(exportProcessRequest.getRange());
-			sb.append("\"");
 		}
 
 		if (exportProcessRequest.getRatings() != null) {
@@ -282,13 +260,6 @@ public class ExportProcessRequestSerDes {
 					exportProcessRequest.getEndDate()));
 		}
 
-		if (exportProcessRequest.getLast() == null) {
-			map.put("last", null);
-		}
-		else {
-			map.put("last", String.valueOf(exportProcessRequest.getLast()));
-		}
-
 		if (exportProcessRequest.getLogo() == null) {
 			map.put("logo", null);
 		}
@@ -310,13 +281,6 @@ public class ExportProcessRequestSerDes {
 			map.put(
 				"permissions",
 				String.valueOf(exportProcessRequest.getPermissions()));
-		}
-
-		if (exportProcessRequest.getRange() == null) {
-			map.put("range", null);
-		}
-		else {
-			map.put("range", String.valueOf(exportProcessRequest.getRange()));
 		}
 
 		if (exportProcessRequest.getRatings() == null) {
@@ -401,9 +365,6 @@ public class ExportProcessRequestSerDes {
 			else if (Objects.equals(jsonParserFieldName, "endDate")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "last")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "logo")) {
 				return false;
 			}
@@ -411,9 +372,6 @@ public class ExportProcessRequestSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "range")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "ratings")) {
@@ -465,12 +423,6 @@ public class ExportProcessRequestSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "last")) {
-				if (jsonParserFieldValue != null) {
-					exportProcessRequest.setLast(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "logo")) {
 				if (jsonParserFieldValue != null) {
 					exportProcessRequest.setLogo((Boolean)jsonParserFieldValue);
@@ -485,13 +437,6 @@ public class ExportProcessRequestSerDes {
 				if (jsonParserFieldValue != null) {
 					exportProcessRequest.setPermissions(
 						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "range")) {
-				if (jsonParserFieldValue != null) {
-					exportProcessRequest.setRange(
-						ExportProcessRequest.Range.create(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "ratings")) {
@@ -631,4 +576,4 @@ public class ExportProcessRequestSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1447166281
+// LIFERAY-REST-BUILDER-HASH:111588564

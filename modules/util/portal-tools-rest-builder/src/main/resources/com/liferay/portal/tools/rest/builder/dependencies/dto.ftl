@@ -92,35 +92,27 @@ import java.util.function.Supplier;
 )
 @JsonFilter("Liferay.Vulcan")
 <#if schema.deprecated || schema.requiredPropertySchemaNames?has_content || schema.description??>
-	@io.swagger.v3.oas.annotations.media.Schema(
-		<#if schema.deprecated>
-			deprecated = ${schema.deprecated?c}
-		</#if>
+	<#assign schemaParameters = [] />
 
-		<#if schema.requiredPropertySchemaNames?has_content>
-			<#if schema.deprecated>
-				,
-			</#if>
+	<#if schema.deprecated>
+		<#assign schemaParameters = schemaParameters + ["deprecated = ${schema.deprecated?c}"] />
+	</#if>
 
-			requiredProperties =
-				{
-					<#list schema.requiredPropertySchemaNames as requiredProperty>
-						"${requiredProperty}"
-						<#if requiredProperty_has_next>
-							,
-						</#if>
-					</#list>
-				}
-		</#if>
+	<#if schema.requiredPropertySchemaNames?has_content>
+		<#assign requiredPropertyNames = [] />
 
-		<#if schema.description??>
-			<#if schema.deprecated || schema.requiredPropertySchemaNames?has_content>
-				,
-			</#if>
+		<#list schema.requiredPropertySchemaNames as requiredProperty>
+			<#assign requiredPropertyNames = requiredPropertyNames + ["\"${requiredProperty}\""] />
+		</#list>
 
-			description = "${schema.description?j_string}"
-		</#if>
-	)
+		<#assign schemaParameters = schemaParameters + ["requiredProperties = {${requiredPropertyNames?join(', ')}}"] />
+	</#if>
+
+	<#if schema.description??>
+		<#assign schemaParameters = schemaParameters + ["description = \"${schema.description?j_string}\""] />
+	</#if>
+
+	@io.swagger.v3.oas.annotations.media.Schema(${schemaParameters?join(", ")})
 </#if>
 
 @XmlRootElement(name = "${schemaName}")

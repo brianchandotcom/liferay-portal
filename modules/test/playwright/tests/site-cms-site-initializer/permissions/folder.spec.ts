@@ -306,14 +306,16 @@ test(
 		const folderName = `Folder ${getRandomString()}`;
 		const contentTitle = `Content ${getRandomString()}`;
 
+		let assetLibrary;
 		let user;
 
 		await test.step('Create a new Space', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: spaceName,
-				settings: {},
-				type: 'Space',
-			});
+			assetLibrary =
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: spaceName,
+					settings: {},
+					type: 'Space',
+				});
 		});
 
 		await test.step('Create a user and add as content reviewer member to the space', async () => {
@@ -335,11 +337,15 @@ test(
 				Number(user.id)
 			);
 
-			await spaceSummaryPage.goto(spaceName);
-			await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
-			await spaceSummaryPage.addRoleToSpaceMember(
-				'Space Content Reviewer',
-				user.name
+			await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+				assetLibrary.externalReferenceCode,
+				user.externalReferenceCode
+			);
+
+			await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+				assetLibrary.externalReferenceCode,
+				user.externalReferenceCode,
+				['Asset Library Content Reviewer']
 			);
 		});
 

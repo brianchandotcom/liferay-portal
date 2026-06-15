@@ -194,6 +194,8 @@ public class BackgroundTaskLocalServiceImpl
 		}
 
 		if ((status == BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS) ||
+			(status ==
+				BackgroundTaskConstants.STATUS_COMPLETED_WITH_WARNINGS) ||
 			(status == BackgroundTaskConstants.STATUS_FAILED) ||
 			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
 

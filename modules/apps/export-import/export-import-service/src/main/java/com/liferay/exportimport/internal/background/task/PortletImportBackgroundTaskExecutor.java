@@ -9,6 +9,8 @@ import com.liferay.exportimport.internal.background.task.display.PortletExportIm
 import com.liferay.exportimport.kernel.exception.ExportImportIOException;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -109,17 +111,26 @@ public class PortletImportBackgroundTaskExecutor
 			}
 		}
 
-		int count =
-			_exportImportReportEntryLocalService.
-				getExportImportReportEntriesCount(
-					exportImportConfiguration.getCompanyId(),
-					exportImportConfiguration.getExportImportConfigurationId());
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				exportImportConfiguration.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
 
-		if (count > 0) {
-			return BackgroundTaskResult.COMPLETED_WITH_ERRORS;
+		if (exportImportReportEntries.isEmpty()) {
+			return BackgroundTaskResult.SUCCESS;
 		}
 
-		return BackgroundTaskResult.SUCCESS;
+		for (ExportImportReportEntry exportImportReportEntry :
+				exportImportReportEntries) {
+
+			if (exportImportReportEntry.getType() !=
+					ExportImportReportEntryConstants.TYPE_WARNING) {
+
+				return BackgroundTaskResult.COMPLETED_WITH_ERRORS;
+			}
+		}
+
+		return BackgroundTaskResult.COMPLETED_WITH_WARNINGS;
 	}
 
 	@Override

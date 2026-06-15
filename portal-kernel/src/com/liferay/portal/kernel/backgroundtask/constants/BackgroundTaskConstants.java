@@ -32,6 +32,9 @@ public class BackgroundTaskConstants {
 	public static final String LABEL_COMPLETED_WITH_ERRORS =
 		"completed-with-errors";
 
+	public static final String LABEL_COMPLETED_WITH_WARNINGS =
+		"completed-with-warnings";
+
 	public static final String LABEL_FAILED = "failed";
 
 	public static final String LABEL_IN_PROGRESS = "in-progress";
@@ -49,6 +52,8 @@ public class BackgroundTaskConstants {
 
 	public static final int STATUS_COMPLETED_WITH_ERRORS = 6;
 
+	public static final int STATUS_COMPLETED_WITH_WARNINGS = 7;
+
 	public static final int STATUS_FAILED = 2;
 
 	public static final int STATUS_IN_PROGRESS = 1;
@@ -63,7 +68,9 @@ public class BackgroundTaskConstants {
 		if ((status == STATUS_CANCELLED) || (status == STATUS_IN_PROGRESS)) {
 			return "text-info";
 		}
-		else if (status == STATUS_COMPLETED_WITH_ERRORS) {
+		else if ((status == STATUS_COMPLETED_WITH_ERRORS) ||
+				 (status == STATUS_COMPLETED_WITH_WARNINGS)) {
+
 			return "text-warning";
 		}
 		else if (status == STATUS_FAILED) {
@@ -87,6 +94,9 @@ public class BackgroundTaskConstants {
 		}
 		else if (status == STATUS_COMPLETED_WITH_ERRORS) {
 			return LABEL_COMPLETED_WITH_ERRORS;
+		}
+		else if (status == STATUS_COMPLETED_WITH_WARNINGS) {
+			return LABEL_COMPLETED_WITH_WARNINGS;
 		}
 		else if (status == STATUS_FAILED) {
 			return LABEL_FAILED;

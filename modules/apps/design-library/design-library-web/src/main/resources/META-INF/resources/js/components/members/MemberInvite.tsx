@@ -11,16 +11,7 @@ import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
 import {sub} from 'frontend-js-web';
 import React, {useId, useMemo, useState} from 'react';
 
-import {Member, MemberType} from '../../types';
-
-interface AutocompleteItem {
-	emailAddress?: string;
-	externalReferenceCode: string;
-	id: number;
-	image?: string;
-	name: string;
-	usersCount?: number;
-}
+import {AutocompleteItem, Member, MemberType} from '../../types';
 
 const ENDPOINTS: Record<MemberType, string> = {
 	user: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,

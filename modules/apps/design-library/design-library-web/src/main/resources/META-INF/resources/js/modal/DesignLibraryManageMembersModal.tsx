@@ -11,7 +11,7 @@ import React, {useEffect, useId, useState} from 'react';
 
 import {MemberInvite} from '../components/members';
 import MemberService from '../services/MemberService';
-import {Member, MemberType} from '../types';
+import {AutocompleteItem, Member, MemberType} from '../types';
 
 const showErrorMessage = (message: string) => {
 	openToast({
@@ -72,16 +72,7 @@ export default function DesignLibraryManageMembersModal({
 		fetchMembers();
 	}, [externalReferenceCode]);
 
-	const invite = async (
-		type: MemberType,
-		item: {
-			externalReferenceCode: string;
-			id: number;
-			image?: string;
-			name: string;
-			usersCount?: number;
-		}
-	) => {
+	const invite = async (type: MemberType, item: AutocompleteItem) => {
 		try {
 			if (type === 'user') {
 				await MemberService.addUser(

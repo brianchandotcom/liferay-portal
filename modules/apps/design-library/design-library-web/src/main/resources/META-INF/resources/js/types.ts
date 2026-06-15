@@ -38,6 +38,15 @@ export interface Role {
 
 export type MemberType = 'user' | 'userGroup';
 
+export interface AutocompleteItem {
+	emailAddress?: string;
+	externalReferenceCode: string;
+	id: number;
+	image?: string;
+	name: string;
+	usersCount?: number;
+}
+
 export interface Member {
 	externalReferenceCode: string;
 	id: number;

@@ -51,6 +51,7 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
+import com.liferay.commerce.util.CommerceChannelConfigurationUtil;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
@@ -443,6 +444,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceOrder commerceOrder = _addCommerceOrder(
 			cart, commerceChannel.getGroupId());
 
+		CommerceChannelConfigurationUtil.validateGuestCheckout(
+			commerceOrder.getCommerceOrderId());
+
 		_updateOrder(commerceOrder, cart);
 
 		return _toCart(commerceOrder.getCommerceOrderId(), true);
@@ -694,6 +698,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CartItem[] orderItems = cart.getCartItems();
 
 		if (orderItems != null) {
+			CommerceChannelConfigurationUtil.validateGuestCheckout(
+				commerceOrder.getCommerceOrderId());
+
 			_commerceOrderItemService.deleteCommerceOrderItems(
 				commerceOrder.getCommerceOrderId());
 

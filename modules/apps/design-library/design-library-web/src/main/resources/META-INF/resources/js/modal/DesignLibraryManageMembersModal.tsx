@@ -29,6 +29,8 @@ export default function DesignLibraryManageMembersModal({
 	const listLabelId = useId();
 
 	useEffect(() => {
+		let active = true;
+
 		const fetchMembers = async () => {
 			try {
 				const [{items: users}, {items: userGroups}] = await Promise.all(
@@ -39,6 +41,10 @@ export default function DesignLibraryManageMembersModal({
 						),
 					]
 				);
+
+				if (!active) {
+					return;
+				}
 
 				setMembers([
 					...users.map((user): Member => ({...user, type: 'user'})),
@@ -51,6 +57,10 @@ export default function DesignLibraryManageMembersModal({
 				]);
 			}
 			catch (error: any) {
+				if (!active) {
+					return;
+				}
+
 				showErrorMessage(
 					error?.title ??
 						error?.message ??
@@ -58,11 +68,17 @@ export default function DesignLibraryManageMembersModal({
 				);
 			}
 			finally {
-				setLoading(false);
+				if (active) {
+					setLoading(false);
+				}
 			}
 		};
 
 		fetchMembers();
+
+		return () => {
+			active = false;
+		};
 	}, [externalReferenceCode]);
 
 	return (

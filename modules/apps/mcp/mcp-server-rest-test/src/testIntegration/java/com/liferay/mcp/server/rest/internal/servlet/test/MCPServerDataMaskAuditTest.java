@@ -61,6 +61,18 @@ public class MCPServerDataMaskAuditTest {
 	public void setUp() throws Exception {
 		MCPServerDataMaskTestUtil.updateMCPServerConfiguration(true);
 
+		String dataMaskingPrefix =
+			".com.liferay.headless.data.masking.internal.batch.";
+
+		BatchEngineTestUtil.processBatchEngineUnits(
+			"com.liferay.headless.data.masking.impl",
+			MCPServerDataMaskAuditTest.class,
+			new String[] {
+				dataMaskingPrefix + "01.list.type.definition",
+				dataMaskingPrefix + "02.object.definition",
+				dataMaskingPrefix + "03.object.entry"
+			});
+
 		String prefix = ".com.liferay.mcp.server.rest.internal.batch.";
 
 		BatchEngineTestUtil.processBatchEngineUnits(

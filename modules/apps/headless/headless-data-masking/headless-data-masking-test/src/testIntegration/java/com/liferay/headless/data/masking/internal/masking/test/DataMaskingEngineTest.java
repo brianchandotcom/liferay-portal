@@ -23,6 +23,7 @@ import java.util.Arrays;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,6 +39,11 @@ public class DataMaskingEngineTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		DataMaskTestUtil.processBatchEngineUnits();
+	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
 	@Test

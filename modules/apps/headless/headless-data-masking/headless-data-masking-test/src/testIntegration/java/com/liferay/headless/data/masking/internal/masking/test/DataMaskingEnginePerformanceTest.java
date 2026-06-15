@@ -7,6 +7,7 @@ package com.liferay.headless.data.masking.internal.masking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
+import com.liferay.headless.data.masking.test.util.DataMaskTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.performance.PerformanceTimer;
@@ -20,6 +21,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,6 +38,11 @@ public class DataMaskingEnginePerformanceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		DataMaskTestUtil.processBatchEngineUnits();
+	}
 
 	@Test
 	@TestInfo("LPD-91092")

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.data.masking.test.util;
 
+import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -45,6 +46,17 @@ public class DataMaskTestUtil {
 				"replacementValue", replacementValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static void processBatchEngineUnits() {
+		String prefix = ".com.liferay.headless.data.masking.internal.batch.";
+
+		BatchEngineTestUtil.processBatchEngineUnits(
+			"com.liferay.headless.data.masking.impl", DataMaskTestUtil.class,
+			new String[] {
+				prefix + "01.list.type.definition",
+				prefix + "02.object.definition", prefix + "03.object.entry"
+			});
 	}
 
 }

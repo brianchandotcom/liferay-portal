@@ -102,6 +102,26 @@ public class MCPServerDataMaskTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	public static void deleteProfile(String externalReferenceCode)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_MCP_SERVER_PROFILE", TestPropsValues.getCompanyId());
+
+		if (objectDefinition == null) {
+			return;
+		}
+
+		ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.fetchObjectEntry(
+			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
+
+		if (objectEntry != null) {
+			ObjectEntryLocalServiceUtil.deleteObjectEntry(objectEntry);
+		}
+	}
+
 	public static void removeProfileDataMask(
 			ObjectEntry objectEntry, String deleteReason)
 		throws Exception {

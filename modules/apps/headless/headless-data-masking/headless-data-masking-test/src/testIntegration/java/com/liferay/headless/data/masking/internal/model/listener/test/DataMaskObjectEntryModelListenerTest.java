@@ -32,6 +32,7 @@ import java.util.Map;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,6 +48,11 @@ public class DataMaskObjectEntryModelListenerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		DataMaskTestUtil.processBatchEngineUnits();
+	}
 
 	@FeatureFlags(
 		featureFlags = {@FeatureFlag("LPD-63311"), @FeatureFlag("LPD-90204")}

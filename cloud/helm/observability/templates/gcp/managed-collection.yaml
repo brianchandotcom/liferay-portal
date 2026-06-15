@@ -1,0 +1,75 @@
+{{- if eq (include "observability.cloudProvider" .) "gcp" -}}
+{{- $scrape := .Values.alloy.scrape -}}
+{{- $interval := .Values.alloy.scrapeInterval -}}
+{{- $kubeStateMetricsName := index .Values "kube-state-metrics" "nameOverride" | default "kube-state-metrics" -}}
+{{- $nodeExporterName := index .Values "prometheus-node-exporter" "nameOverride" | default "prometheus-node-exporter" -}}
+{{- if $scrape.envoy.enabled }}
+apiVersion: monitoring.googleapis.com/v1
+kind: ClusterPodMonitoring
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+    name: {{ printf "%s-envoy" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" }}
+spec:
+    endpoints:
+        -   interval: {{ $interval | quote }}
+            path: {{ $scrape.envoy.path | quote }}
+            port: {{ $scrape.envoy.port }}
+    selector:
+        matchLabels:
+            app.kubernetes.io/managed-by: envoy-gateway
+---
+{{- end }}
+{{- if $scrape.kubeStateMetrics.enabled }}
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+    name: {{ printf "%s-kube-state-metrics" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" }}
+    namespace: {{ include "observability.namespace" . | quote }}
+spec:
+    endpoints:
+        -   interval: {{ $interval | quote }}
+            path: {{ $scrape.kubeStateMetrics.path | quote }}
+            port: {{ $scrape.kubeStateMetrics.port }}
+    selector:
+        matchLabels:
+            app.kubernetes.io/name: {{ $kubeStateMetricsName }}
+---
+{{- end }}
+{{- if $scrape.liferay.enabled }}
+apiVersion: monitoring.googleapis.com/v1
+kind: ClusterPodMonitoring
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+    name: {{ printf "%s-liferay" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" }}
+spec:
+    endpoints:
+        -   interval: {{ $interval | quote }}
+            path: {{ $scrape.liferay.path | quote }}
+            port: {{ $scrape.liferay.port }}
+    selector:
+        matchLabels:
+            {{- toYaml $scrape.liferay.matchLabels | nindent 12 }}
+---
+{{- end }}
+{{- if $scrape.nodeExporter.enabled }}
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+    name: {{ printf "%s-node-exporter" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" }}
+    namespace: {{ include "observability.namespace" . | quote }}
+spec:
+    endpoints:
+        -   interval: {{ $interval | quote }}
+            path: {{ $scrape.nodeExporter.path | quote }}
+            port: {{ $scrape.nodeExporter.port }}
+    selector:
+        matchLabels:
+            app.kubernetes.io/name: {{ $nodeExporterName }}
+{{- end }}
+{{- end -}}

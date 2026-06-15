@@ -536,7 +536,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 							setCode(backgroundTask::getStatus);
 							setLabel(
 								() -> _language.get(
-									contextAcceptLanguage.getPreferredLocale(),
+									contextUser.getLocale(),
 									BackgroundTaskConstants.getStatusLabel(
 										backgroundTask.getStatus())));
 						}

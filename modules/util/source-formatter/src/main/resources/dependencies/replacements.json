@@ -5750,6 +5750,27 @@
 	},
 	{
 		"classNames": [
+			"Language",
+			"LanguageUtil"
+		],
+		"from": "get(PageContext paramName, String paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-70233",
+		"validExtensions": [
+			"java"
+		]
+	},
+	{
+		"from": "regex:(?<class>Language(?:Util)?)\\.(?<method>format|get)\\(pageContext,",
+		"issueKey": "LPD-70233",
+		"to": "${class}.${method}(request,",
+		"validExtensions": [
+			"jsp",
+			"jspf"
+		]
+	},
+	{
+		"classNames": [
 			"FFDocumentLibraryDDMEditorConfigurationUtil"
 		],
 		"from": "useDataEngineEditor()",

@@ -105,7 +105,7 @@ public class ElasticsearchSearchEngineInformationTest {
 			_elasticsearchSearchEngineInformation.isInferenceAPISupported());
 	}
 
-	private void _setLicense(LicenseType type, LicenseStatus status)
+	private void _setLicense(LicenseStatus status, LicenseType type)
 		throws IOException {
 
 		GetLicenseResponse getLicenseResponse = Mockito.mock(
@@ -144,7 +144,7 @@ public class ElasticsearchSearchEngineInformationTest {
 			LicenseType licenseType)
 		throws IOException {
 
-		_setLicense(licenseType, licenseStatus);
+		_setLicense(licenseStatus, licenseType);
 
 		Assert.assertEquals(
 			expectedInferenceAPISupported,

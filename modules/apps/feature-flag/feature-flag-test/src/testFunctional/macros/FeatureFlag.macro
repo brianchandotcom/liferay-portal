@@ -20,7 +20,7 @@ definition {
 
 	@summary = "Default summary"
 	macro toggleFeatureFlag(toggleState = null, configurationScope = null, featureFlag = null, scope = null) {
-		if (!(isSet(toggleState))) {
+		if (!(isSet(configurationScope))) {
 			var configurationScope = "Virtual Instance Scope";
 		}
 

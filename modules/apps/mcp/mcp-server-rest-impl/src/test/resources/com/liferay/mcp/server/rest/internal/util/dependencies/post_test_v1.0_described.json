@@ -1,0 +1,12 @@
+{
+	"properties": {
+		"body": {
+			"description": "This is the request body description This is the schema description",
+			"type": "object"
+		}
+	},
+	"required": [
+		"body"
+	],
+	"type": "object"
+}

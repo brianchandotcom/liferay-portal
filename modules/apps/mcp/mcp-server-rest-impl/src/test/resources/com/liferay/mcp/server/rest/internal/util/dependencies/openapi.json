@@ -130,6 +130,22 @@
 				}
 			}
 		},
+		"/v1.0/described": {
+			"post": {
+				"operationId": "postDescribed",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"description": "This is the schema description",
+								"type": "object"
+							}
+						}
+					},
+					"description": "This is the request body description"
+				}
+			}
+		},
 		"/v1.0/empty-content": {
 			"post": {
 				"operationId": "postEmptyContent",
@@ -282,6 +298,7 @@
 			"post": {
 				"operationId": "postNoContent",
 				"requestBody": {
+					"description": "This is the request body description"
 				}
 			}
 		},
@@ -307,6 +324,21 @@
 							}
 						}
 					}
+				}
+			}
+		},
+		"/v1.0/undescribed": {
+			"post": {
+				"operationId": "postUndescribed",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					},
+					"description": "This is the request body description"
 				}
 			}
 		},

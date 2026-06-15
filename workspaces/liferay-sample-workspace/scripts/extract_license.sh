@@ -36,7 +36,7 @@ function main {
 		--rm \
 		--user root \
 		--volume "${license_dir}:/mnt/deploy" \
-		"liferay/dxp:latest" \
+		liferay/dxp:latest \
 		-c \
 		"cp /opt/liferay/deploy/trial-dxp-license*.xml /mnt/deploy/license.xml"
 }

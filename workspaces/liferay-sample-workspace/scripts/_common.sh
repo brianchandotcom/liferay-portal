@@ -5,7 +5,7 @@ set -o nounset
 set -o pipefail
 
 function get_gradle_property {
-	local key="${1}"
+	local key=${1}
 
 	local value
 
@@ -27,8 +27,8 @@ function get_gradle_property {
 }
 
 function _read_property {
-	local key="${1}"
-	local file="${2}"
+	local key=${1}
+	local file=${2}
 
 	if [[ -f ${file} ]]
 	then

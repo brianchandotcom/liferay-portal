@@ -5,7 +5,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 source _common.sh
 
 function main {
-	local hotfix_url="${1:-}"
+	local hotfix_url=${1:-}
 
 	if [[ -z ${hotfix_url} ]]
 	then

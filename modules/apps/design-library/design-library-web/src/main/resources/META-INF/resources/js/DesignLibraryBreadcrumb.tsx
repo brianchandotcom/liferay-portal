@@ -14,13 +14,15 @@ import DesignLibraryConnectedSitesModal from './modal/DesignLibraryConnectedSite
 import DesignLibraryManageMembersModal from './modal/DesignLibraryManageMembersModal';
 import confirmAndDeleteEntryAction from './props_transformer/actions/confirmAndDeleteEntryAction';
 
+type ActionTarget = 'connected-sites' | 'delete' | 'manage-members';
+
 export interface ActionDropdownItemProps {
 	descriptiveName?: string;
 	externalReferenceCode?: string;
 	href?: string;
 	label?: string;
 	redirect?: string;
-	target?: 'connected-sites' | 'manage-members' | string;
+	target?: string;
 }
 interface DesignLibraryBreadcrumbProps {
 	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'] &
@@ -37,47 +39,57 @@ function ActionDropdownItem({
 	target,
 	...props
 }: ActionDropdownItemProps) {
-	const handleClick = async () => {
-		if (target === 'connected-sites') {
-			openModal({
-				contentComponent: () =>
-					DesignLibraryConnectedSitesModal({
-						externalReferenceCode,
-					}),
-				size: 'md',
-			});
-		}
-		else if (target === 'manage-members') {
-			openModal({
-				contentComponent: () =>
-					DesignLibraryManageMembersModal({
-						externalReferenceCode,
-					}),
-				size: 'lg',
-			});
-		}
-		else if (target === 'delete') {
-			confirmAndDeleteEntryAction({
-				bodyHTML: `
-					<p>${Liferay.Language.get('delete-design-library-confirmation-body-main')}</p>
-					<p>${Liferay.Language.get('delete-design-library-confirmation-body-warning')}</p>
-				`,
-				deleteAction: {
-					href,
-					method: 'DELETE',
-				},
-				redirect,
-				successMessage: sub(
-					Liferay.Language.get('x-was-successfully-deleted'),
-					`<strong>${Liferay.Util.escapeHTML(descriptiveName)}</strong>`
-				),
-				title: sub(
-					Liferay.Language.get(
-						'delete-design-library-confirmation-title'
+	const handleClick = () => {
+		const actions: Record<ActionTarget, () => void> = {
+			'connected-sites': () => {
+				openModal({
+					contentComponent: () =>
+						DesignLibraryConnectedSitesModal({
+							externalReferenceCode,
+						}),
+					size: 'md',
+				});
+			},
+
+			'delete': () => {
+				confirmAndDeleteEntryAction({
+					bodyHTML: `
+						<p>${Liferay.Language.get('delete-design-library-confirmation-body-main')}</p>
+						<p>${Liferay.Language.get('delete-design-library-confirmation-body-warning')}</p>
+					`,
+					deleteAction: {
+						href,
+						method: 'DELETE',
+					},
+					redirect,
+					successMessage: sub(
+						Liferay.Language.get('x-was-successfully-deleted'),
+						`<strong>${Liferay.Util.escapeHTML(descriptiveName)}</strong>`
 					),
-					descriptiveName
-				),
-			});
+					title: sub(
+						Liferay.Language.get(
+							'delete-design-library-confirmation-title'
+						),
+						descriptiveName
+					),
+				});
+			},
+
+			'manage-members': () => {
+				openModal({
+					contentComponent: () =>
+						DesignLibraryManageMembersModal({
+							externalReferenceCode,
+						}),
+					size: 'lg',
+				});
+			},
+		};
+
+		const action = target ? actions[target as ActionTarget] : null;
+
+		if (action) {
+			action();
 		}
 		else {
 			navigate(href);

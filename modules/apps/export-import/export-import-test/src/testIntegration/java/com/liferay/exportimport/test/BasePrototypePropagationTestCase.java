@@ -6,7 +6,6 @@
 package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -203,8 +202,6 @@ public abstract class BasePrototypePropagationTestCase {
 
 		setLinkEnabled(linkEnabled);
 
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		Map<String, String> portletPreferencesMap = HashMapBuilder.put(
 			"articleId", StringPool.BLANK
 		).put(
@@ -252,8 +249,6 @@ public abstract class BasePrototypePropagationTestCase {
 	}
 
 	protected Layout propagateChanges(Layout layout) throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		_sites.mergeLayoutPrototypeLayout(layout);
 
 		return LayoutLocalServiceUtil.getLayout(layout.getPlid());

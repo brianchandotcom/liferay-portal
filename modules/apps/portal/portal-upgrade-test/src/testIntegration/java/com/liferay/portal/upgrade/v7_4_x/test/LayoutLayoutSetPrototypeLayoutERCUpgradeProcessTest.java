@@ -7,10 +7,9 @@ package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
@@ -164,8 +163,6 @@ public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
 			_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 				_layoutSetPrototype);
 
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			_group.getGroupId(), false);
 
@@ -177,7 +174,7 @@ public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
 
 		layoutSet = _layoutSetLocalService.updateLayoutSet(layoutSet);
 
-		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(false, layoutSet);
 	}
 
 	@Inject
@@ -196,13 +193,13 @@ public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
 	private LayoutSetPrototype _layoutSetPrototype;
 
 	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Inject
 	private MultiVMPool _multiVMPool;
-
-	@Inject
-	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private Sites _sites;

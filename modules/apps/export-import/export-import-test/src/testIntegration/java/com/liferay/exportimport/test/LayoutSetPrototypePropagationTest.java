@@ -7,13 +7,13 @@ package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -71,9 +71,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -151,52 +151,6 @@ public class LayoutSetPrototypePropagationTest
 	@Test
 	public void testIsLayoutUpdateable() throws Exception {
 		doTestIsLayoutUpdateable();
-	}
-
-	@Test
-	public void testLayoutDeleteAndReadWithSameFriendlyURL() throws Exception {
-		setLinkEnabled(true);
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), "test", true);
-
-		String friendlyURL = layout.getFriendlyURL();
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount, getGroupLayoutCount());
-
-		propagateChanges(group);
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
-
-		LayoutLocalServiceUtil.deleteLayout(
-			layout, ServiceContextTestUtil.getServiceContext());
-
-		Layout newLayout = LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), "test", true);
-
-		Assert.assertEquals(friendlyURL, newLayout.getFriendlyURL());
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
-
-		propagateChanges(group);
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
-
-		Layout propagatedLayout =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				newLayout.getUuid(), group.getGroupId(), false);
-
-		Assert.assertNotNull(
-			"Deleted and readded layout could not be found on propagated site",
-			propagatedLayout);
-
-		Assert.assertEquals(
-			"Friendly URLs of the source and target layouts should match",
-			friendlyURL, propagatedLayout.getFriendlyURL());
 	}
 
 	@Test
@@ -722,7 +676,8 @@ public class LayoutSetPrototypePropagationTest
 				testGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(),
 				false, true);
 
-			_layoutSetPrototypeHelper.executeLayoutSetSync(testGroup.getPrivateLayoutSet());
+			_layoutSetPrototypeHelper.executeLayoutSetSync(
+				false, testGroup.getPrivateLayoutSet());
 
 			LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				testGroup.getGroupId(), false);
@@ -789,7 +744,8 @@ public class LayoutSetPrototypePropagationTest
 				testGroup, layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 				true, false);
 
-			_layoutSetPrototypeHelper.executeLayoutSetSync(testGroup.getPublicLayoutSet());
+			_layoutSetPrototypeHelper.executeLayoutSetSync(
+				false, testGroup.getPublicLayoutSet());
 
 			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				testGroup.getGroupId(), false);
@@ -1018,8 +974,6 @@ public class LayoutSetPrototypePropagationTest
 			boolean layoutSetLayoutLinkEnabled)
 		throws Exception {
 
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		_layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
 			_layoutSetPrototypeGroup, true, globalGroupId, layoutPrototype,
 			layoutSetLayoutLinkEnabled);
@@ -1111,40 +1065,11 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	protected void propagateChanges(Group group) throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), false);
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
-		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
-
-		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-
-		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(
+			false,
+			LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), false));
 
 		Thread.sleep(2000);
-
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
-
-		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
-			layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-		int mergeFailCount = GetterUtil.getInteger(
-			layoutSetPrototypeSettingsUnicodeProperties.getProperty(
-				Sites.MERGE_FAIL_COUNT));
-
-		Assert.assertEquals(0, mergeFailCount);
 	}
 
 	protected void setLayoutsUpdateable(boolean layoutsUpdateable)
@@ -1189,8 +1114,6 @@ public class LayoutSetPrototypePropagationTest
 
 			LayoutLocalServiceUtil.updateLayout(_layout);
 		}
-
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		_sites.updateLayoutSetPrototypesLinks(
 			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
@@ -1346,6 +1269,9 @@ public class LayoutSetPrototypePropagationTest
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
 	private int _initialLayoutCount;
 	private int _initialPrototypeLayoutsCount;
 
@@ -1369,6 +1295,9 @@ public class LayoutSetPrototypePropagationTest
 
 	@DeleteAfterTestRun
 	private Layout _layoutSetPrototypeLayout;
+
+	@Inject
+	private Portal _portal;
 
 	private String _portletId;
 

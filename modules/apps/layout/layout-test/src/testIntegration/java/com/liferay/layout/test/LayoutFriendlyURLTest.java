@@ -9,9 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -126,6 +126,39 @@ public class LayoutFriendlyURLTest {
 			).put(
 				LocaleUtil.US, "/home"
 			).build());
+	}
+
+	@Test
+	public void testExecuteLayoutSetSync() throws Exception {
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
+
+		Layout layoutSetPrototypeLayout = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(),
+			layoutSetPrototypeGroup.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, null,
+			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				layoutSetPrototypeGroup.getGroupId()));
+
+		_sites.updateLayoutSetPrototypesLinks(
+			_group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			false);
+
+		_testExecuteLayoutSetSync(
+			_group, _group.getPublicLayoutSet(), layoutSetPrototypeLayout);
+
+		Group curGroup = GroupTestUtil.addGroup();
+
+		_sites.updateLayoutSetPrototypesLinks(
+			curGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(), false,
+			true);
+
+		_testExecuteLayoutSetSync(
+			curGroup, curGroup.getPrivateLayoutSet(), layoutSetPrototypeLayout);
 	}
 
 	@Test
@@ -402,39 +435,6 @@ public class LayoutFriendlyURLTest {
 	}
 
 	@Test
-	public void testPropagateLayoutSetPrototype() throws Exception {
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
-
-		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
-
-		Layout layoutSetPrototypeLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(),
-			layoutSetPrototypeGroup.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, null,
-			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(
-				layoutSetPrototypeGroup.getGroupId()));
-
-		_sites.updateLayoutSetPrototypesLinks(
-			_group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
-			false);
-
-		_testMergeLayoutSetPrototypeLayouts(
-			_group, _group.getPublicLayoutSet(), layoutSetPrototypeLayout);
-
-		Group curGroup = GroupTestUtil.addGroup();
-
-		_sites.updateLayoutSetPrototypesLinks(
-			curGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(), false,
-			true);
-
-		_testMergeLayoutSetPrototypeLayouts(
-			curGroup, curGroup.getPrivateLayoutSet(), layoutSetPrototypeLayout);
-	}
-
-	@Test
 	public void testSameFriendlyURLDifferentLocaleDifferentLayout()
 		throws Exception {
 
@@ -616,11 +616,11 @@ public class LayoutFriendlyURLTest {
 			friendlyURLMap, serviceContext);
 	}
 
-	private void _testMergeLayoutSetPrototypeLayouts(
+	private void _testExecuteLayoutSetSync(
 			Group group, LayoutSet layoutSet, Layout layoutSetPrototypeLayout)
 		throws Exception {
 
-		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(false, layoutSet);
 
 		Layout groupLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutSetPrototypeLayout.getUuid(), group.getGroupId(),

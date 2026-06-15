@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
@@ -34,12 +33,12 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.model.Group;
@@ -248,8 +247,6 @@ public class ExportImportPerformanceTest {
 
 	@Test
 	public void testSiteTemplatePropagation() throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		for (long layoutId : _layoutIds) {
 			Layout layout = _layoutLocalService.getLayout(
 				_group.getGroupId(), false, layoutId);
@@ -291,9 +288,8 @@ public class ExportImportPerformanceTest {
 			true);
 
 		try (Closeable closeable = new PerformanceTimer(_logFilePath, 1000)) {
-			MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
-			_layoutSetPrototypeHelper.executeLayoutSetSync(_group.getPublicLayoutSet());
+			_layoutSetPrototypeHelper.executeLayoutSetSync(
+				false, _group.getPublicLayoutSet());
 		}
 	}
 
@@ -614,15 +610,15 @@ public class ExportImportPerformanceTest {
 	private LayoutSetPrototype _layoutSetPrototype;
 
 	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	@Inject
 	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
-
-	@Inject
-	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private Sites _sites;

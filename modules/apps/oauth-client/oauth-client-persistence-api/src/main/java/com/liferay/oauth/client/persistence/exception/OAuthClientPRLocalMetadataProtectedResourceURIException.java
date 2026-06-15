@@ -10,23 +10,25 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OAuthClientPRLocalMetadataResourceException
+public class OAuthClientPRLocalMetadataProtectedResourceURIException
 	extends PortalException {
 
-	public OAuthClientPRLocalMetadataResourceException() {
+	public OAuthClientPRLocalMetadataProtectedResourceURIException() {
 	}
 
-	public OAuthClientPRLocalMetadataResourceException(String msg) {
+	public OAuthClientPRLocalMetadataProtectedResourceURIException(String msg) {
 		super(msg);
 	}
 
-	public OAuthClientPRLocalMetadataResourceException(
+	public OAuthClientPRLocalMetadataProtectedResourceURIException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public OAuthClientPRLocalMetadataResourceException(Throwable throwable) {
+	public OAuthClientPRLocalMetadataProtectedResourceURIException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

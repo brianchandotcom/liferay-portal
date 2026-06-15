@@ -8,7 +8,7 @@ package com.liferay.oauth.client.persistence.service.impl;
 import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientPRLocalMetadataException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientPRLocalMetadataLocalWellKnownURIException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientPRLocalMetadataMetadataJSONException;
-import com.liferay.oauth.client.persistence.exception.OAuthClientPRLocalMetadataResourceException;
+import com.liferay.oauth.client.persistence.exception.OAuthClientPRLocalMetadataProtectedResourceURIException;
 import com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientPRLocalMetadataLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
@@ -74,7 +74,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(protectedResourceURI)) {
-			throw new OAuthClientPRLocalMetadataResourceException();
+			throw new OAuthClientPRLocalMetadataProtectedResourceURIException();
 		}
 
 		_validateURL(protectedResourceURI);
@@ -265,7 +265,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(protectedResourceURI)) {
-			throw new OAuthClientPRLocalMetadataResourceException();
+			throw new OAuthClientPRLocalMetadataProtectedResourceURIException();
 		}
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
@@ -362,6 +362,14 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		}
 	}
 
+	private String _removeTrailingSlash(String urlString) {
+		if ((urlString == null) || !urlString.endsWith(StringPool.SLASH)) {
+			return urlString;
+		}
+
+		return urlString.substring(0, urlString.length() - 1);
+	}
+
 	private JSONObject _toMetadataJSONObject(String metadataJSON)
 		throws PortalException {
 
@@ -374,14 +382,6 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		}
 	}
 
-	private String _removeTrailingSlash(String urlString) {
-		if ((urlString == null) || !urlString.endsWith(StringPool.SLASH)) {
-			return urlString;
-		}
-
-		return urlString.substring(0, urlString.length() - 1);
-	}
-
 	private void _validate(
 			OAuthClientPRLocalMetadata oldOAuthClientPRLocalMetadata,
 			long companyId, String[] authorizationServers,
@@ -390,7 +390,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(protectedResourceURI)) {
-			throw new OAuthClientPRLocalMetadataResourceException();
+			throw new OAuthClientPRLocalMetadataProtectedResourceURIException();
 		}
 
 		if (ArrayUtil.isEmpty(authorizationServers)) {
@@ -443,14 +443,14 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 			if (!Http.HTTP.equalsIgnoreCase(scheme) &&
 				!Http.HTTPS.equalsIgnoreCase(scheme)) {
 
-				throw new OAuthClientPRLocalMetadataResourceException(
+				throw new OAuthClientPRLocalMetadataProtectedResourceURIException(
 					urlString);
 			}
 
 			String host = uri.getHost();
 
 			if (Validator.isNull(host)) {
-				throw new OAuthClientPRLocalMetadataResourceException(
+				throw new OAuthClientPRLocalMetadataProtectedResourceURIException(
 					urlString);
 			}
 
@@ -460,12 +460,12 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 				 !Objects.equals(host, "[::1]") &&
 				 !Objects.equals(host, "localhost"))) {
 
-				throw new OAuthClientPRLocalMetadataResourceException(
+				throw new OAuthClientPRLocalMetadataProtectedResourceURIException(
 					urlString);
 			}
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			throw new OAuthClientPRLocalMetadataResourceException(
+			throw new OAuthClientPRLocalMetadataProtectedResourceURIException(
 				urlString, uriSyntaxException);
 		}
 	}

@@ -569,10 +569,7 @@ export async function initializerSetUp(
 	return {catalog: catalogs.items[0], channel: channels.items[0], site};
 }
 
-export async function guestCheckoutSetUp(
-	channel: any,
-	commerceAdminChannelDetailsPage: CommerceAdminChannelDetailsPage,
-	commerceAdminChannelsPage: CommerceAdminChannelsPage,
+export async function enableGuestPageView(
 	page: Page,
 	site: Site,
 	childPages?: Array<{pageName: string; parentPageName: string}>
@@ -668,6 +665,17 @@ export async function guestCheckoutSetUp(
 	}
 
 	await page.reload();
+}
+
+export async function guestCheckoutSetUp(
+	channel: any,
+	commerceAdminChannelDetailsPage: CommerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage: CommerceAdminChannelsPage,
+	page: Page,
+	site: Site,
+	childPages?: Array<{pageName: string; parentPageName: string}>
+): Promise<void> {
+	await enableGuestPageView(page, site, childPages);
 
 	await commerceAdminChannelsPage.goto();
 
@@ -687,7 +695,7 @@ export async function guestCheckoutSetUp(
 
 	await performLogout(page);
 
-	await page.goto(siteURL, {waitUntil: 'networkidle'});
+	await page.goto(`/web${site.friendlyUrlPath}`, {waitUntil: 'networkidle'});
 
 	await expect(page.locator('.btn-account-selector')).not.toBeVisible();
 }

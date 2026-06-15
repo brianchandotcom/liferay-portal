@@ -45,15 +45,15 @@ public class TrashEntriesMaxAgeUpgradeProcess extends UpgradeProcess {
 			long companyId, int trashEntriesMaxAge)
 		throws Exception {
 
-		String selectSQL = StringBundler.concat(
-			"select Group_.ctCollectionId, Group_.groupId, ",
-			"Group_.typeSettings from DepotEntry inner join Group_ on ",
-			"DepotEntry.groupId = Group_.groupId and ",
-			"DepotEntry.ctCollectionId = Group_.ctCollectionId where ",
-			"DepotEntry.companyId = ? and DepotEntry.type_ = ?");
-
 		try (PreparedStatement selectPreparedStatement =
-				connection.prepareStatement(selectSQL);
+				connection.prepareStatement(
+					StringBundler.concat(
+						"select Group_.ctCollectionId, Group_.groupId, ",
+						"Group_.typeSettings from DepotEntry inner join ",
+						"Group_ on DepotEntry.groupId = Group_.groupId and ",
+						"DepotEntry.ctCollectionId = Group_.ctCollectionId ",
+						"where DepotEntry.companyId = ? and DepotEntry.type_ ",
+						"= ?"));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

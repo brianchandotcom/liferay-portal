@@ -49,10 +49,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tamas Molnar
  */
 @Component(
-	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.LayoutSetPrototypeMergeBackgroundTaskExecutor",
+	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor",
 	service = BackgroundTaskExecutor.class
 )
-public class LayoutSetPrototypeMergeBackgroundTaskExecutor
+public class LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor
 	extends BaseExportImportBackgroundTaskExecutor {
 
 	@Override
@@ -170,7 +170,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 		}
 		catch (Throwable throwable) {
 			_log.error(
-				"The merge process failed for layout set prototype " +
+				"The sync process failed for layout set prototype " +
 					layoutSetPrototypeId,
 				throwable);
 
@@ -191,7 +191,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 			"/liferay/layout_set_prototype/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutSetPrototypeMergeBackgroundTaskExecutor.class);
+		LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor.class);
 
 	@Reference
 	private ExportImportConfigurationLocalService

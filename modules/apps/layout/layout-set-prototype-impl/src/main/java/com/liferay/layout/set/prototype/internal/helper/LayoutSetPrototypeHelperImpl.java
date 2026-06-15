@@ -119,7 +119,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
 
-		_mergeLayoutSetPrototypeLayoutsInBackground(
+		_syncLayoutSetPrototypeLayoutsInBackground(
 			layoutSetPrototype, layoutSet);
 	}
 
@@ -689,7 +689,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		return false;
 	}
 
-	private boolean _isLayoutSetPrototypeMergeBackgroundTaskExists(
+	private boolean _isLayoutSetPrototypeSyncBackgroundTaskExists(
 			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
 		throws Exception {
 
@@ -697,7 +697,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			_backgroundTaskManager.getBackgroundTasks(
 				layoutSet.getGroupId(),
 				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR,
+					LAYOUT_SET_PROTOTYPE_SYNC_EXPORT_IMPORT_BACKGROUND_TASK_EXECUTOR,
 				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				BackgroundTaskCreateDateComparator.getInstance(false));
 
@@ -743,7 +743,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		return false;
 	}
 
-	private void _mergeLayoutSetPrototypeLayoutsInBackground(
+	private void _syncLayoutSetPrototypeLayoutsInBackground(
 			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
 		throws Exception {
 
@@ -754,7 +754,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
-		if (_isLayoutSetPrototypeMergeBackgroundTaskExists(
+		if (_isLayoutSetPrototypeSyncBackgroundTaskExists(
 				layoutSetPrototype, layoutSet)) {
 
 			if (_log.isDebugEnabled()) {
@@ -830,7 +830,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
-		_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
+		_exportImportLocalService.syncLayoutSetPrototypeInBackground(
 			user.getUserId(), layoutSet.getGroupId(),
 			exportImportConfiguration);
 	}

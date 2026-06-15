@@ -151,6 +151,6 @@
 		<exception>OAuthClientEntryTokenRequestParametersJSON</exception>
 		<exception>OAuthClientPRLocalMetadataLocalWellKnownURI</exception>
 		<exception>OAuthClientPRLocalMetadataMetadataJSON</exception>
-		<exception>OAuthClientPRLocalMetadataResource</exception>
+		<exception>OAuthClientPRLocalMetadataProtectedResourceURI</exception>
 	</exceptions>
 </service-builder>

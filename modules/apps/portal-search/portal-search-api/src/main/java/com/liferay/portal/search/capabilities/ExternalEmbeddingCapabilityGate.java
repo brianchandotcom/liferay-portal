@@ -9,7 +9,7 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Evaluates whether the External Embedding capability required by Bring Your
- * Own LLM (BYO-LLM) is available in the current runtime.
+ * Own LLM is available in the current runtime.
  *
  * <p>
  * Consumers should call {@link #check()} once per decision point and inspect

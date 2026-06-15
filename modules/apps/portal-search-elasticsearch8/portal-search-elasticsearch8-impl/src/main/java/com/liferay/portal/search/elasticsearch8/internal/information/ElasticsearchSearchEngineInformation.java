@@ -10,6 +10,7 @@ import co.elastic.clients.elasticsearch._types.ElasticsearchVersionInfo;
 import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.elasticsearch.core.InfoResponse;
+import co.elastic.clients.elasticsearch.license.ElasticsearchLicenseClient;
 import co.elastic.clients.elasticsearch.license.GetLicenseResponse;
 import co.elastic.clients.elasticsearch.license.LicenseStatus;
 import co.elastic.clients.elasticsearch.license.LicenseType;
@@ -331,8 +332,11 @@ public class ElasticsearchSearchEngineInformation
 			ElasticsearchClient elasticsearchClient =
 				elasticsearchConnectionManager.getElasticsearchClient();
 
-			GetLicenseResponse getLicenseResponse = elasticsearchClient.license(
-			).get();
+			ElasticsearchLicenseClient elasticsearchLicenseClient =
+				elasticsearchClient.license();
+
+			GetLicenseResponse getLicenseResponse =
+				elasticsearchLicenseClient.get();
 
 			if (getLicenseResponse == null) {
 				return null;

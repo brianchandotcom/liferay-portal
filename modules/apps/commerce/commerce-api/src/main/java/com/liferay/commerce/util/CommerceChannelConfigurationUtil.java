@@ -5,10 +5,17 @@
 
 package com.liferay.commerce.util;
 
+import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
+import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -115,6 +122,54 @@ public class CommerceChannelConfigurationUtil {
 		}
 
 		return false;
+	}
+
+	public static void validateGuestCheckout(long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.fetchCommerceOrder(commerceOrderId);
+
+		if ((commerceOrder == null) || !commerceOrder.isGuestOrder()) {
+			return;
+		}
+
+		long groupId = commerceOrder.getGroupId();
+
+		try {
+			CommerceAccountGroupServiceConfiguration
+				commerceAccountGroupServiceConfiguration =
+					ConfigurationProviderUtil.getConfiguration(
+						CommerceAccountGroupServiceConfiguration.class,
+						new GroupServiceSettingsLocator(
+							groupId,
+							CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
+
+			if (commerceAccountGroupServiceConfiguration.commerceSiteType() !=
+					CommerceChannelConstants.SITE_TYPE_B2B) {
+
+				return;
+			}
+
+			CommerceOrderCheckoutConfiguration
+				commerceOrderCheckoutConfiguration =
+					ConfigurationProviderUtil.getConfiguration(
+						CommerceOrderCheckoutConfiguration.class,
+						new GroupServiceSettingsLocator(
+							groupId,
+							CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+			if (commerceOrderCheckoutConfiguration.guestCheckoutEnabled()) {
+				return;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+		}
+
+		throw new CommerceOrderGuestCheckoutException();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

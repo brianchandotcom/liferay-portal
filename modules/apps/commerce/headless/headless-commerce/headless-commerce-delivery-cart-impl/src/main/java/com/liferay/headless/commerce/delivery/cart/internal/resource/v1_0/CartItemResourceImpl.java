@@ -19,6 +19,7 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceChannelConfigurationUtil;
 import com.liferay.headless.commerce.core.helper.ServiceContextHelper;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
@@ -403,6 +404,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 	private CommerceOrderItem _updateCartItem(
 			CartItem cartItem, CommerceOrder commerceOrder)
 		throws Exception {
+
+		CommerceChannelConfigurationUtil.validateGuestCheckout(
+			commerceOrder.getCommerceOrderId());
 
 		SkuUnitOfMeasure skuUnitOfMeasure = cartItem.getSkuUnitOfMeasure();
 		String skuUnitOfMeasureKey = StringPool.BLANK;

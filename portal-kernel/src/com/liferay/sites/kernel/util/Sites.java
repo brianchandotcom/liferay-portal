@@ -10,7 +10,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
-import com.liferay.portal.kernel.model.LayoutSet;
 
 import java.io.Serializable;
 
@@ -86,9 +85,6 @@ public interface Sites {
 		throws Exception;
 
 	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception;
-
-	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
-		throws Exception;
 
 	public void updateLayoutSetPrototypesLinks(
 			Group group, long publicLayoutSetPrototypeId,

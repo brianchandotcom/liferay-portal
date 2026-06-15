@@ -406,13 +406,6 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
-		throws Exception {
-
-		_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
-	}
-
-	@Override
 	public void updateLayoutSetPrototypesLinks(
 			Group group, long publicLayoutSetPrototypeId,
 			long privateLayoutSetPrototypeId,

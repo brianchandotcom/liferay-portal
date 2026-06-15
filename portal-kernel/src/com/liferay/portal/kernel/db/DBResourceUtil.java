@@ -52,8 +52,6 @@ public class DBResourceUtil {
 	public static void disableCache() {
 		_cacheEnabled = false;
 
-		_liferayTableNames = null;
-
 		_moduleTableNamesDCLSingleton.destroy(null);
 	}
 
@@ -64,30 +62,17 @@ public class DBResourceUtil {
 	public static Set<String> getLiferayTableNames(Connection connection)
 		throws Exception {
 
-		if (_cacheEnabled) {
-			Set<String> liferayTableNames = _liferayTableNames;
+		Set<String> liferayTableNames = new TreeSet<>(
+			String.CASE_INSENSITIVE_ORDER);
 
-			if (liferayTableNames == null) {
-				synchronized (DBResourceUtil.class) {
-					liferayTableNames = _liferayTableNames;
+		liferayTableNames.addAll(getModuleTableNames());
+		liferayTableNames.addAll(getPortalTableNames());
+		liferayTableNames.addAll(
+			getServiceComponentModuleTableNames(connection));
+		liferayTableNames.addAll(
+			getServiceComponentPortalTableNames(connection));
 
-					if (liferayTableNames == null) {
-						liferayTableNames = _buildLiferayTableNames(connection);
-
-						_liferayTableNames = liferayTableNames;
-					}
-				}
-			}
-
-			Set<String> tableNames = new TreeSet<>(
-				String.CASE_INSENSITIVE_ORDER);
-
-			tableNames.addAll(liferayTableNames);
-
-			return tableNames;
-		}
-
-		return _buildLiferayTableNames(connection);
+		return liferayTableNames;
 	}
 
 	public static String getModuleIndexesSQL(Bundle bundle) {
@@ -100,14 +85,14 @@ public class DBResourceUtil {
 
 	public static Set<String> getModuleTableNames() {
 		if (_cacheEnabled) {
-			Set<String> tableNames = new TreeSet<>(
+			Set<String> moduleTableNames = new TreeSet<>(
 				String.CASE_INSENSITIVE_ORDER);
 
-			tableNames.addAll(
+			moduleTableNames.addAll(
 				_moduleTableNamesDCLSingleton.getSingleton(
 					DBResourceUtil::_buildModuleTableNames));
 
-			return tableNames;
+			return moduleTableNames;
 		}
 
 		return _buildModuleTableNames();
@@ -170,13 +155,14 @@ public class DBResourceUtil {
 	}
 
 	public static Set<String> getPortalTableNames() {
-		Set<String> tableNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+		Set<String> portalTableNames = new TreeSet<>(
+			String.CASE_INSENSITIVE_ORDER);
 
-		tableNames.addAll(
+		portalTableNames.addAll(
 			_portalTableNamesDCLSingleton.getSingleton(
 				() -> parseCreateTableSQL(getPortalTablesSQL())));
 
-		return tableNames;
+		return portalTableNames;
 	}
 
 	public static Map<String, String[]> getPortalTablesPrimaryKeyColumnNames() {
@@ -241,24 +227,9 @@ public class DBResourceUtil {
 		return tableNames;
 	}
 
-	private static Set<String> _buildLiferayTableNames(Connection connection)
-		throws Exception {
-
-		Set<String> liferayTableNames = new TreeSet<>(
-			String.CASE_INSENSITIVE_ORDER);
-
-		liferayTableNames.addAll(getModuleTableNames());
-		liferayTableNames.addAll(getPortalTableNames());
-		liferayTableNames.addAll(
-			getServiceComponentModuleTableNames(connection));
-		liferayTableNames.addAll(
-			getServiceComponentPortalTableNames(connection));
-
-		return liferayTableNames;
-	}
-
 	private static Set<String> _buildModuleTableNames() {
-		Set<String> tableNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+		Set<String> moduleTableNames = new TreeSet<>(
+			String.CASE_INSENSITIVE_ORDER);
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
@@ -277,10 +248,10 @@ public class DBResourceUtil {
 				continue;
 			}
 
-			tableNames.addAll(parseCreateTableSQL(tableSQL));
+			moduleTableNames.addAll(parseCreateTableSQL(tableSQL));
 		}
 
-		return tableNames;
+		return moduleTableNames;
 	}
 
 	private static Map<String, List<String>>
@@ -441,7 +412,6 @@ public class DBResourceUtil {
 		"create table\\s+(\\w+)\\s*\\([^;]*?(\\w+)\\s+\\w+(?:\\([^)]*\\))?" +
 			"(?:\\s+\\w+)*\\s+primary key\\b",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-	private static volatile Set<String> _liferayTableNames;
 	private static final DCLSingleton<Set<String>>
 		_moduleTableNamesDCLSingleton = new DCLSingleton<>();
 	private static final DCLSingleton<Set<String>>

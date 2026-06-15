@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -75,6 +76,7 @@ import com.liferay.sites.kernel.util.Sites;
 import java.io.File;
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -117,10 +119,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private void _copyFileEntries(long[] fileEntryIds, Group group)
 		throws Exception {
 
-		if (ArrayUtil.isEmpty(fileEntryIds)) {
-			return;
-		}
-
 		long folderId = 0;
 
 		DLFolder dlFolder =
@@ -145,7 +143,23 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			folderId = dlFolder.getFolderId();
 		}
 
+		Map<String, Long> sourceFileEntries = new HashMap<>();
+
 		for (long fileEntryId : fileEntryIds) {
+			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+			sourceFileEntries.put(fileEntry.getTitle(), fileEntryId);
+		}
+
+		for (FileEntry fileEntry :
+				_dlAppService.getFileEntries(group.getGroupId(), folderId)) {
+
+			if (sourceFileEntries.remove(fileEntry.getTitle()) == null) {
+				_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+			}
+		}
+
+		for (long fileEntryId : sourceFileEntries.values()) {
 			_dlAppService.copyFileEntry(
 				fileEntryId, folderId, group.getGroupId(),
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
@@ -233,10 +247,13 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					company, user)) {
 
-			_copyFileEntries(fileEntryIds, group);
-
 			_importLayouts(parameterMap, false, sourceGroup, group, user);
 			_importLayouts(parameterMap, true, sourceGroup, group, user);
+
+			// The order is important. You must always import the layouts
+			// first, then copy the file entries.
+
+			_copyFileEntries(fileEntryIds, group);
 
 			_updateFragmentEntryLink(group);
 		}

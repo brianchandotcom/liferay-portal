@@ -21,6 +21,12 @@ async function fetchVocabulary(vocabularyId: number) {
 	);
 }
 
+async function getVocabularies(siteId: number | string) {
+	return ApiHelper.get<{
+		items: {assetLibraries: {id: number}[]; id: string; name: string}[];
+	}>(`/o/headless-admin-taxonomy/v1.0/sites/${siteId}/taxonomy-vocabularies`);
+}
+
 async function getRequiredVocabularies({
 	assetLibraryId,
 	assetTypeId,
@@ -78,5 +84,6 @@ export default {
 	fetchVocabulary,
 	getCommonCategories,
 	getRequiredVocabularies,
+	getVocabularies,
 	updateVocabulary,
 };

@@ -9,8 +9,12 @@ import React from 'react';
 import ContentSection from '../../../../../../src/main/resources/META-INF/resources/revamp/js/components/forms/content_selector/ContentSection';
 import {PreviewPortletDataHandlerSection} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/types/portletDataHandler';
 
-function makeSection(name: string): PreviewPortletDataHandlerSection {
+function makeSection(
+	name: string,
+	counts: {additionCount?: number; deletionCount?: number} = {}
+): PreviewPortletDataHandlerSection {
 	return {
+		...counts,
 		label: name,
 		name,
 		previewPortletDataHandlers: [{label: 'Handler', name: 'handler'}],
@@ -42,5 +46,24 @@ describe('ContentSection', () => {
 		);
 
 		expect(container.querySelector('.content-section-scroll')).toBeNull();
+	});
+
+	it('uses singular count labels for a single addition and deletion', () => {
+		const {queryByText} = render(
+			<ContentSection
+				onChange={jest.fn()}
+				section={makeSection('web-content', {
+					additionCount: 1,
+					deletionCount: 1,
+				})}
+				showDeletions
+				value={undefined}
+			/>
+		);
+
+		expect(queryByText('x-item')).not.toBeNull();
+		expect(queryByText('x-deletion')).not.toBeNull();
+		expect(queryByText('x-items')).toBeNull();
+		expect(queryByText('x-deletions')).toBeNull();
 	});
 });

@@ -104,12 +104,20 @@ public class MCPServerProfileObjectEntryModelListener
 			}
 
 			try {
-				profileDataMaskObjectEntry.setValues(
+				Map<String, Serializable> newValues =
 					HashMapBuilder.<String, Serializable>putAll(
 						values
 					).put(
 						"deleteReason", "Profile deleted."
-					).build());
+					).build();
+
+				_objectEntryLocalService.updateObjectEntry(
+					profileDataMaskObjectEntry.getUserId(),
+					profileDataMaskObjectEntry.getObjectEntryId(),
+					profileDataMaskObjectEntry.getObjectEntryFolderId(),
+					newValues, new ServiceContext());
+
+				profileDataMaskObjectEntry.setValues(newValues);
 
 				_objectEntryLocalService.deleteObjectEntry(
 					profileDataMaskObjectEntry);

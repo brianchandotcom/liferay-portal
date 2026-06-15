@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
@@ -75,12 +76,20 @@ public class MCPServerDataMaskObjectEntryModelListener
 			}
 
 			try {
-				profileDataMaskObjectEntry.setValues(
+				Map<String, Serializable> newValues =
 					HashMapBuilder.<String, Serializable>putAll(
 						values
 					).put(
 						"deleteReason", "Mask deleted."
-					).build());
+					).build();
+
+				_objectEntryLocalService.updateObjectEntry(
+					profileDataMaskObjectEntry.getUserId(),
+					profileDataMaskObjectEntry.getObjectEntryId(),
+					profileDataMaskObjectEntry.getObjectEntryFolderId(),
+					newValues, new ServiceContext());
+
+				profileDataMaskObjectEntry.setValues(newValues);
 
 				_objectEntryLocalService.deleteObjectEntry(
 					profileDataMaskObjectEntry);

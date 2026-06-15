@@ -32,15 +32,17 @@ export default function Categorization({
 	selectedPersonaCategories,
 }: CategorizationProps) {
 	const [formId, setFormId] = useState<string | undefined>();
-	const [funnelStageIds, setFunnelStageIds] = useState<number[]>(
-		selectedFunnelStageCategories.map((category) => category.id)
-	);
+	const [funnelStageCategories, setFunnelStageCategories] = useState<
+		Category[]
+	>(selectedFunnelStageCategories);
 	const [keywords, setKeywords] = useState<string[]>(objectEntryKeywords);
-	const [personaIds, setPersonaIds] = useState<number[]>(
-		selectedPersonaCategories.map((category) => category.id)
+	const [personaCategories, setPersonaCategories] = useState<Category[]>(
+		selectedPersonaCategories
 	);
 
-	const allIds = [...personaIds, ...funnelStageIds];
+	const allIds = [...personaCategories, ...funnelStageCategories].map(
+		(category) => category.id
+	);
 
 	useEffect(() => {
 		let form = document.querySelector('.lfr-main-form-container');
@@ -57,34 +59,28 @@ export default function Categorization({
 	return (
 		<ClayPanel
 			className="lfr-cmp__categorization"
-			collapsable={true}
-			defaultExpanded={true}
+			collapsable
+			defaultExpanded
 			displayTitle={Liferay.Language.get('categorization')}
 			displayType="default"
-			showCollapseIcon={true}
+			showCollapseIcon
 		>
 			<div className="lfr-cmp__categorization-grid">
 				<VocabularyMultiSelect
-					hasUpdatePermission={hasUpdatePermission}
-					initialSelectedCategories={selectedPersonaCategories}
+					disabled={!hasUpdatePermission}
 					label={Liferay.Language.get('personas')}
-					onSelectionChange={(categories) =>
-						setPersonaIds(categories.map((category) => category.id))
-					}
+					onChange={setPersonaCategories}
 					placeholder={Liferay.Language.get('add-personas')}
+					value={personaCategories}
 					vocabularyERC={personasVocabularyERC}
 				/>
 
 				<VocabularyMultiSelect
-					hasUpdatePermission={hasUpdatePermission}
-					initialSelectedCategories={selectedFunnelStageCategories}
+					disabled={!hasUpdatePermission}
 					label={Liferay.Language.get('funnel-stages')}
-					onSelectionChange={(categories) =>
-						setFunnelStageIds(
-							categories.map((category) => category.id)
-						)
-					}
+					onChange={setFunnelStageCategories}
 					placeholder={Liferay.Language.get('add-stages')}
+					value={funnelStageCategories}
 					vocabularyERC={funnelStagesVocabularyERC}
 				/>
 			</div>

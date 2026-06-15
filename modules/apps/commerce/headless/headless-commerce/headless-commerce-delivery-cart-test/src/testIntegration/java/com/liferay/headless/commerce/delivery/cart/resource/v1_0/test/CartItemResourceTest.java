@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.delivery.cart.resource.v1_0.test;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceConstants;
@@ -27,6 +28,7 @@ import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.delivery.cart.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.cart.client.pagination.Pagination;
+import com.liferay.headless.commerce.delivery.cart.client.problem.Problem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -169,6 +171,14 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 			testPostCartByExternalReferenceCodeItem_addCartItem(randomCartItem);
 
 		Assert.assertNotEquals(postCartItem1.getId(), postCartItem2.getId());
+	}
+
+	@Override
+	@Test
+	public void testPostCartItem() throws Exception {
+		super.testPostCartItem();
+
+		_testPostCartItemToGuestOrderWithGuestCheckoutDisabledOnB2BChannel();
 	}
 
 	@Override
@@ -505,6 +515,35 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 		assertEquals(postCartItem, cartItem);
 	}
 
+	private void _testPostCartItemToGuestOrderWithGuestCheckoutDisabledOnB2BChannel()
+		throws Exception {
+
+		CommerceTestUtil.runWithGuestCheckoutDisabledOnB2BChannel(
+			_commerceChannel.getGroupId(),
+			() -> {
+				AccountEntry guestAccountEntry =
+					_accountEntryLocalService.getGuestAccountEntry(
+						testCompany.getCompanyId());
+				User guestUser = testCompany.getGuestUser();
+
+				_guestCommerceOrder =
+					_commerceOrderLocalService.addCommerceOrder(
+						guestUser.getUserId(), _commerceChannel.getGroupId(),
+						guestAccountEntry.getAccountEntryId(),
+						_commerceCurrency.getCode(), 0);
+
+				Problem.ProblemException problemException = Assert.assertThrows(
+					Problem.ProblemException.class,
+					() -> cartItemResource.postCartItem(
+						_guestCommerceOrder.getCommerceOrderId(),
+						randomCartItem()));
+
+				Problem problem = problemException.getProblem();
+
+				Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			});
+	}
+
 	private void _updateCommercePriceEntry(
 		CPInstance cpInstance, boolean priceOnApplication,
 		String typePriceList) {
@@ -527,6 +566,9 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
@@ -547,6 +589,9 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 
 	@DeleteAfterTestRun
 	private final List<CPInstance> _cpInstances = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private CommerceOrder _guestCommerceOrder;
 
 	@DeleteAfterTestRun
 	private User _user;

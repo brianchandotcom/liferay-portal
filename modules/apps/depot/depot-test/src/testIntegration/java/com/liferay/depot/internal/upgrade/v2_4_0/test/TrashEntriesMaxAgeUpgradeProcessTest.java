@@ -92,19 +92,6 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 		return typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge");
 	}
 
-	private void _upgrade() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
-
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
-
-			upgradeProcess.upgrade();
-
-			_multiVMPool.clear();
-		}
-	}
-
 	private void _setGroupTrashEntriesMaxAge(
 			DepotEntry depotEntry, String trashEntriesMaxAge)
 		throws Exception {
@@ -162,6 +149,19 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 		Assert.assertEquals(
 			String.valueOf(_getTrashEntriesMaxAgeCompany()),
 			_getTrashEntriesMaxAgeGroup(depotEntry));
+	}
+
+	private void _upgrade() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+		}
 	}
 
 	private static final String _CLASS_NAME =

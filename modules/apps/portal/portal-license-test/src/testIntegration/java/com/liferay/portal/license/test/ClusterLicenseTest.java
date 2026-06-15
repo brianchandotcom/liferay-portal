@@ -431,8 +431,6 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			}
 		}
 
-		Assert.assertNotNull(encryptMethod);
-
 		return (String)encryptMethod.invoke(null, properties);
 	}
 

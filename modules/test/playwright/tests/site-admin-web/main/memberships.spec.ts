@@ -1023,3 +1023,60 @@ test('Search user group site members', async ({
 		).toBeVisible({timeout: 2000});
 	}).toPass();
 });
+
+test(
+	'Inherited members are labeled and removal affects only direct memberships',
+	{tag: '@LPD-87301'},
+	async ({apiHelpers, membershipsPage, page}) => {
+		const siteId = await page.evaluate(() => {
+			return String(Liferay.ThemeDisplay.getSiteGroupId());
+		});
+
+		const explicitUser =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.jsonWebServicesUser.assignUsersToSite(
+			siteId,
+			explicitUser.id
+		);
+
+		const inheritedUser =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+			userGroup.id,
+			[inheritedUser.id]
+		);
+
+		await apiHelpers.jsonWebServicesUserGroup.assignUserGroupsToGroup(
+			siteId,
+			String(userGroup.id)
+		);
+
+		await membershipsPage.goto();
+
+		await expect(membershipsPage.inheritanceSourceLabel).toBeVisible();
+		await expect(membershipsPage.inheritanceSourceLabel).toHaveCount(1);
+
+		let confirmationMessage = '';
+
+		page.once('dialog', (dialog) => {
+			confirmationMessage = dialog.message();
+
+			dialog.accept();
+		});
+
+		await membershipsPage.triggerRemoveMembership(
+			explicitUser.alternateName
+		);
+
+		await waitForAlert(page);
+
+		expect(confirmationMessage).toContain(
+			'Only direct memberships will be removed'
+		);
+		await expect(page.getByText(explicitUser.name)).not.toBeVisible();
+		await expect(membershipsPage.inheritanceSourceLabel).toBeVisible();
+	}
+);

@@ -3,17 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class MembershipsPage {
+	readonly inheritanceSourceLabel: Locator;
 	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
 
 	constructor(page: Page) {
+		this.inheritanceSourceLabel = page.getByText('Inherited');
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
 	}
@@ -114,21 +116,11 @@ export class MembershipsPage {
 	}
 
 	async removeSiteMembershipFromUser(userName: String) {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {
-				exact: true,
-				name: 'Remove Membership',
-			}),
-			timeout: 500,
-			trigger: this.page
-				.locator(
-					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_' +
-						userName +
-						'"]'
-				)
-				.getByLabel('More actions'),
+		this.page.once('dialog', (dialog) => {
+			dialog.accept();
 		});
+
+		await this.triggerRemoveMembership(userName);
 
 		await waitForAlert(this.page);
 	}
@@ -148,6 +140,24 @@ export class MembershipsPage {
 		});
 
 		await waitForAlert(this.page);
+	}
+
+	async triggerRemoveMembership(userName: String) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Remove Membership',
+			}),
+			timeout: 500,
+			trigger: this.page
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_' +
+						userName +
+						'"]'
+				)
+				.getByLabel('More actions'),
+		});
 	}
 
 	async unassignAllRolesFromUser(userName: String) {

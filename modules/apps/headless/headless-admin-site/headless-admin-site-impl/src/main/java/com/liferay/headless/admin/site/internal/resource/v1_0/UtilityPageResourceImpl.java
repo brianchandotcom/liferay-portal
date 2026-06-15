@@ -122,7 +122,7 @@ public class UtilityPageResourceImpl
 
 			@Override
 			public String getPortletId() {
-				return LayoutAdminPortletKeys.GROUP_PAGES;
+				return LayoutAdminPortletKeys.LAYOUT_UTILITY_PAGES;
 			}
 
 			@Override

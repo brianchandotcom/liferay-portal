@@ -19,4 +19,7 @@ public class LayoutAdminPortletKeys {
 	public static final String LAYOUT_SET_LAYOUTS =
 		"com_liferay_layout_admin_web_portlet_LayoutSetLayoutsPortlet";
 
+	public static final String LAYOUT_UTILITY_PAGES =
+		"com_liferay_layout_admin_web_portlet_LayoutUtilityPagesPortlet";
+
 }

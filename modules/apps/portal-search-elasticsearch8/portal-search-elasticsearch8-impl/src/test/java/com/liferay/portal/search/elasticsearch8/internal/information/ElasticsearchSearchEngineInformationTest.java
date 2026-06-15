@@ -67,23 +67,15 @@ public class ElasticsearchSearchEngineInformationTest {
 			true, LicenseStatus.Active, LicenseType.Trial);
 		_testIsInferenceAPISupported(
 			false, LicenseStatus.Expired, LicenseType.Enterprise);
-	}
 
-	@Test
-	public void testIsInferenceAPISupportedWhenClientIsUnavailable() {
 		Mockito.when(
-			_elasticsearchConnectionManager.getElasticsearchClient()
+			_elasticsearchLicenseClient.get()
 		).thenReturn(
 			null
 		);
 
 		Assert.assertFalse(
 			_elasticsearchSearchEngineInformation.isInferenceAPISupported());
-	}
-
-	@Test
-	public void testIsInferenceAPISupportedWhenLicenseIsMissing()
-		throws IOException {
 
 		Mockito.when(
 			_elasticsearchLicenseClient.get()
@@ -93,11 +85,6 @@ public class ElasticsearchSearchEngineInformationTest {
 
 		Assert.assertFalse(
 			_elasticsearchSearchEngineInformation.isInferenceAPISupported());
-	}
-
-	@Test
-	public void testIsInferenceAPISupportedWhenLicenseQueryThrowsException()
-		throws IOException {
 
 		Mockito.when(
 			_elasticsearchLicenseClient.get()
@@ -107,14 +94,9 @@ public class ElasticsearchSearchEngineInformationTest {
 
 		Assert.assertFalse(
 			_elasticsearchSearchEngineInformation.isInferenceAPISupported());
-	}
-
-	@Test
-	public void testIsInferenceAPISupportedWhenResponseIsNull()
-		throws IOException {
 
 		Mockito.when(
-			_elasticsearchLicenseClient.get()
+			_elasticsearchConnectionManager.getElasticsearchClient()
 		).thenReturn(
 			null
 		);

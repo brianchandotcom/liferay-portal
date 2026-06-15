@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(InvitedMemberResourceImpl.class);
 
+			add(RoomResourceImpl.class);
+
 			add(UserAccountResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
@@ -94,4 +96,4 @@ public class OpenAPIResourceImpl {
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1468967523
+// LIFERAY-REST-BUILDER-HASH:1610006332

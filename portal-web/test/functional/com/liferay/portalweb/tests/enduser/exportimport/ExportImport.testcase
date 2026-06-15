@@ -1057,17 +1057,11 @@ definition {
 		}
 
 		task ("Add a web content with a link as content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(webContentTitle = "WC WebContent 1");
-
-			CKEditor.addSourceContent(content = '''
-<p>Test: <a href="/web/test-site-name/test-site-name">Link</a></p>
-''');
-
-			WebContent.publishWithPermissions();
+			JSONWebcontent.addWebContent(
+				content = '''<p>Test: <a href="/web/test-site-name/test-site-name">Link</a></p>''',
+				groupName = "Test Site Name",
+				source = "true",
+				title = "WC WebContent 1");
 		}
 
 		task ("Add the second web content") {

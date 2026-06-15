@@ -386,14 +386,12 @@ public class SitesImpl implements Sites {
 	 *         the layout set; <code>false</code> otherwise
 	 */
 	@Override
-	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
-		throws Exception {
-
+	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception {
 		String layoutSetPrototypeLayoutERC =
 			layout.getLayoutSetPrototypeLayoutERC();
 
 		if (Validator.isNull(layoutSetPrototypeLayoutERC)) {
-			doMergeLayoutPrototypeLayout(group, layout);
+			doMergeLayoutPrototypeLayout(layout);
 
 			return;
 		}
@@ -413,12 +411,11 @@ public class SitesImpl implements Sites {
 					layoutSetPrototypeGroup.getGroupId());
 
 			if (sourcePrototypeLayout != null) {
-				doMergeLayoutPrototypeLayout(
-					layoutSetPrototypeGroup, sourcePrototypeLayout);
+				doMergeLayoutPrototypeLayout(sourcePrototypeLayout);
 			}
 		}
 
-		doMergeLayoutPrototypeLayout(group, layout);
+		doMergeLayoutPrototypeLayout(layout);
 	}
 
 	@Override
@@ -463,12 +460,16 @@ public class SitesImpl implements Sites {
 			targetLayout.getPlid());
 	}
 
-	protected void doMergeLayoutPrototypeLayout(Group group, Layout layout)
+	protected void doMergeLayoutPrototypeLayout(Layout layout)
 		throws Exception {
 
-		if (!layout.isPortletLayoutPageTemplateEntryLinkActive() ||
-			group.isLayoutPrototype() || group.hasStagingGroup()) {
+		if (!layout.isPortletLayoutPageTemplateEntryLinkActive()) {
+			return;
+		}
 
+		Group group = layout.getGroup();
+
+		if (group.isLayoutPrototype() || group.hasStagingGroup()) {
 			return;
 		}
 

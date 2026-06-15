@@ -85,8 +85,7 @@ public interface Sites {
 	public void copyPortletSetups(Layout sourceLayout, Layout targetLayout)
 		throws Exception;
 
-	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
-		throws Exception;
+	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception;
 
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception;

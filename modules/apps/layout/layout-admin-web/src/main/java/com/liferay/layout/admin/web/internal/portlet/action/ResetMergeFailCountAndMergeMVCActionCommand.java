@@ -66,7 +66,7 @@ public class ResetMergeFailCountAndMergeMVCActionCommand
 
 		_layoutSetPrototypeHelper.resetPrototype(selLayout);
 
-		_sites.mergeLayoutPrototypeLayout(selLayout.getGroup(), selLayout);
+		_sites.mergeLayoutPrototypeLayout(selLayout);
 
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);

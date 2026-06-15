@@ -1083,4 +1083,4 @@ public class ContentStructureField implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1620654563
+// LIFERAY-REST-BUILDER-HASH:-48572473

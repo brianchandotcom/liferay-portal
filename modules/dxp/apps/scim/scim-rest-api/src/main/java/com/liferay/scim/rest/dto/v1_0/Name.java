@@ -519,4 +519,4 @@ public class Name implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:617620120
+// LIFERAY-REST-BUILDER-HASH:1200015592

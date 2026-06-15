@@ -488,4 +488,4 @@ public class Meta implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1659118297
+// LIFERAY-REST-BUILDER-HASH:-901847453

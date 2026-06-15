@@ -635,4 +635,4 @@ public class PunchOutSession implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2129519358
+// LIFERAY-REST-BUILDER-HASH:-1540511737

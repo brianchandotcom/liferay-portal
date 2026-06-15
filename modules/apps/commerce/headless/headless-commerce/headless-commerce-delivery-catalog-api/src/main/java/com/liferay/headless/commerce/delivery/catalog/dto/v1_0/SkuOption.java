@@ -965,4 +965,4 @@ public class SkuOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:686075726
+// LIFERAY-REST-BUILDER-HASH:-1562414778

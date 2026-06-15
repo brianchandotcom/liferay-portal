@@ -244,4 +244,4 @@ public class URLImageValue extends ImageValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-754471145
+// LIFERAY-REST-BUILDER-HASH:-1381254919

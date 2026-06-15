@@ -632,4 +632,4 @@ public class CTProcess implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-747743536
+// LIFERAY-REST-BUILDER-HASH:730116586

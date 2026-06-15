@@ -2016,4 +2016,4 @@ public class Payment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1902796686
+// LIFERAY-REST-BUILDER-HASH:1649476370

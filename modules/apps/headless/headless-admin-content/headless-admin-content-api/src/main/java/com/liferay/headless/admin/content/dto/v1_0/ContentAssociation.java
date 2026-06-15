@@ -302,4 +302,4 @@ public class ContentAssociation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-922530232
+// LIFERAY-REST-BUILDER-HASH:-1485354126

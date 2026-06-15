@@ -621,4 +621,4 @@ public class SLAResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1691832884
+// LIFERAY-REST-BUILDER-HASH:480190970

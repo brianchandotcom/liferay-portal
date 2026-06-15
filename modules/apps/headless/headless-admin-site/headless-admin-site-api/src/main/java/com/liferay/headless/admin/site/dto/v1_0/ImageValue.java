@@ -298,4 +298,4 @@ public abstract class ImageValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-594757166
+// LIFERAY-REST-BUILDER-HASH:61385238

@@ -522,4 +522,4 @@ public class WidgetLookAndFeelConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1749996483
+// LIFERAY-REST-BUILDER-HASH:66740127

@@ -230,4 +230,4 @@ public class IconImageURL implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-215146216
+// LIFERAY-REST-BUILDER-HASH:2055765864

@@ -300,4 +300,4 @@ public class ToolSet implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:197118769
+// LIFERAY-REST-BUILDER-HASH:330563604

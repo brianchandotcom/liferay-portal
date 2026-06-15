@@ -781,4 +781,4 @@ public class DiscountSku implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:81889538
+// LIFERAY-REST-BUILDER-HASH:1558175653

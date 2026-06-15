@@ -854,4 +854,4 @@ public class Individual implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2135023284
+// LIFERAY-REST-BUILDER-HASH:136120986

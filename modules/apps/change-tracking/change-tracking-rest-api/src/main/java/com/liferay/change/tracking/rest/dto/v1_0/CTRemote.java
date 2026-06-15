@@ -755,4 +755,4 @@ public class CTRemote implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-829624244
+// LIFERAY-REST-BUILDER-HASH:189651484

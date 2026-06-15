@@ -784,4 +784,4 @@ public class SLA implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1486224808
+// LIFERAY-REST-BUILDER-HASH:-997111492

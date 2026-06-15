@@ -787,4 +787,4 @@ public class AccountChannelEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1070820657
+// LIFERAY-REST-BUILDER-HASH:1455640896

@@ -260,4 +260,4 @@ public class DisplayPageActionInteraction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:286235798
+// LIFERAY-REST-BUILDER-HASH:-612037316

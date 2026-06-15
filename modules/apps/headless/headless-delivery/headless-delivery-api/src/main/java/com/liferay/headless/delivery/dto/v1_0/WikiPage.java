@@ -1636,4 +1636,4 @@ public class WikiPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-403299181
+// LIFERAY-REST-BUILDER-HASH:125624285

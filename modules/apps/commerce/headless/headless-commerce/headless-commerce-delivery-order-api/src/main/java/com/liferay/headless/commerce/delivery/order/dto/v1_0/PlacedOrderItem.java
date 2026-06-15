@@ -2038,4 +2038,4 @@ public class PlacedOrderItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-310038118
+// LIFERAY-REST-BUILDER-HASH:-1612272560

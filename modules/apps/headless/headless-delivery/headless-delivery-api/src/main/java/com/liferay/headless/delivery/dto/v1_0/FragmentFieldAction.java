@@ -434,4 +434,4 @@ public class FragmentFieldAction implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1354900560
+// LIFERAY-REST-BUILDER-HASH:1278386624

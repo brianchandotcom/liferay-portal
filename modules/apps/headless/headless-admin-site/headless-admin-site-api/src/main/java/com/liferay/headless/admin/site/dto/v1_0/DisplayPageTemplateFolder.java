@@ -875,4 +875,4 @@ public class DisplayPageTemplateFolder implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1446989376
+// LIFERAY-REST-BUILDER-HASH:-1035586992

@@ -290,4 +290,4 @@ public class ContextReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1462768993
+// LIFERAY-REST-BUILDER-HASH:-129640173

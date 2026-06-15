@@ -380,4 +380,4 @@ public class TemplateListStyle
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:97776880
+// LIFERAY-REST-BUILDER-HASH:1230657560

@@ -305,4 +305,4 @@ public class FormRelationshipConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1607117656
+// LIFERAY-REST-BUILDER-HASH:888471000

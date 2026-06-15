@@ -595,4 +595,4 @@ public class PageTemplateCollection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:268067154
+// LIFERAY-REST-BUILDER-HASH:1533032222

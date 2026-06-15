@@ -516,4 +516,4 @@ public class Sp implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1459901018
+// LIFERAY-REST-BUILDER-HASH:-590685048

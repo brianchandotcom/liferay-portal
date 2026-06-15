@@ -375,4 +375,4 @@ public class BackgroundImage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1437613043
+// LIFERAY-REST-BUILDER-HASH:590831958

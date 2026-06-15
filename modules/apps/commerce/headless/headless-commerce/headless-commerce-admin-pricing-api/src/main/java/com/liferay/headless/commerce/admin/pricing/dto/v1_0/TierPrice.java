@@ -668,4 +668,4 @@ public class TierPrice implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-135545843
+// LIFERAY-REST-BUILDER-HASH:-1728381861

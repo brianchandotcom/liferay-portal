@@ -360,4 +360,4 @@ public class VirtualItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1331976815
+// LIFERAY-REST-BUILDER-HASH:-1834067405

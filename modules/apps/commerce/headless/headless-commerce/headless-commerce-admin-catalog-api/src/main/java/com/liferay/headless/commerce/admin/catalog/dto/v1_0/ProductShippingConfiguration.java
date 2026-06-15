@@ -664,4 +664,4 @@ public class ProductShippingConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-196497596
+// LIFERAY-REST-BUILDER-HASH:-78548020

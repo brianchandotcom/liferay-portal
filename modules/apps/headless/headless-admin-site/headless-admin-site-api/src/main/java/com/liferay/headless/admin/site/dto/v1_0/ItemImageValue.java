@@ -249,4 +249,4 @@ public class ItemImageValue extends ImageValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:10842108
+// LIFERAY-REST-BUILDER-HASH:1116651460

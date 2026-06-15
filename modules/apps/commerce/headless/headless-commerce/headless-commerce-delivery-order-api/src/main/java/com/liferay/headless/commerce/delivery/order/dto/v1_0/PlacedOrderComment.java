@@ -536,4 +536,4 @@ public class PlacedOrderComment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-989432668
+// LIFERAY-REST-BUILDER-HASH:-1150232364

@@ -367,4 +367,4 @@ public class Availability implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-726235064
+// LIFERAY-REST-BUILDER-HASH:594145990

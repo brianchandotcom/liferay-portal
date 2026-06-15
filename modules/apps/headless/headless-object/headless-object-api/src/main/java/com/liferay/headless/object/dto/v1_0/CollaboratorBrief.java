@@ -376,4 +376,4 @@ public class CollaboratorBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:251594981
+// LIFERAY-REST-BUILDER-HASH:1774087559

@@ -290,4 +290,4 @@ public class EntityModelResourceTestEntity2 implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1615816186
+// LIFERAY-REST-BUILDER-HASH:-1551568146

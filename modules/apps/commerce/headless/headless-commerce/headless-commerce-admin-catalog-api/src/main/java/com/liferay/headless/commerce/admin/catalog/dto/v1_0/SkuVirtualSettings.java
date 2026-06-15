@@ -1209,4 +1209,4 @@ public class SkuVirtualSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:208520003
+// LIFERAY-REST-BUILDER-HASH:207483895

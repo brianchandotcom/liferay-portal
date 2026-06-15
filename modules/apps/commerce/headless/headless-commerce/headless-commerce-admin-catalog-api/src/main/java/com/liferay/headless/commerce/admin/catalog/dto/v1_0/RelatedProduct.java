@@ -487,4 +487,4 @@ public class RelatedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:85163949
+// LIFERAY-REST-BUILDER-HASH:-408120569

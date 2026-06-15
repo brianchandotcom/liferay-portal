@@ -373,4 +373,4 @@ public class PageColumnDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:488659823
+// LIFERAY-REST-BUILDER-HASH:-424189291

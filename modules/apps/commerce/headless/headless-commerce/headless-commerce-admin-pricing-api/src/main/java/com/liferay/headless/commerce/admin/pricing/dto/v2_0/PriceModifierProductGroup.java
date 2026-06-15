@@ -620,4 +620,4 @@ public class PriceModifierProductGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-635734222
+// LIFERAY-REST-BUILDER-HASH:1228647368

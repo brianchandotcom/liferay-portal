@@ -13,10 +13,12 @@ import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -47,6 +49,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
@@ -150,6 +153,98 @@ public class LayoutImportBackgroundTaskExecutorTest {
 		}
 	}
 
+	@Test
+	public void testGetStatusCompletedWithWarnings() throws Exception {
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext());
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry[] objectEntries = _addObjectEntries(
+			3, 0L, objectDefinition);
+
+		File larFile = _exportLayouts(
+			true, group.getGroupId(), false, new long[0], objectDefinition);
+
+		_deleteObjectEntries(objectEntries);
+
+		ExportImportConfiguration exportImportConfiguration =
+			_addImportExportImportConfiguration(group, objectDefinition);
+
+		_exportImportReportEntryLocalService.addWarningExportImportReportEntry(
+			group.getGroupId(), TestPropsValues.getCompanyId(), null,
+			PortalUtil.getClassNameId(ExportImportConfiguration.class), 0,
+			exportImportConfiguration.getExportImportConfigurationId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		long backgroundTaskId =
+			ExportImportLocalServiceUtil.importLayoutsInBackground(
+				TestPropsValues.getUserId(), exportImportConfiguration,
+				larFile);
+
+		ExportImportTestUtil.retryAssert(
+			1, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+			() -> {
+				BackgroundTask backgroundTask =
+					_backgroundTaskLocalService.getBackgroundTask(
+						backgroundTaskId);
+
+				Assert.assertEquals(
+					BackgroundTaskConstants.STATUS_COMPLETED_WITH_WARNINGS,
+					backgroundTask.getStatus());
+			});
+
+		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testGetStatusSuccessful() throws Exception {
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext());
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry[] objectEntries = _addObjectEntries(
+			3, 0L, objectDefinition);
+
+		File larFile = _exportLayouts(
+			true, group.getGroupId(), false, new long[0], objectDefinition);
+
+		_deleteObjectEntries(objectEntries);
+
+		long backgroundTaskId =
+			ExportImportLocalServiceUtil.importLayoutsInBackground(
+				TestPropsValues.getUserId(),
+				_addImportExportImportConfiguration(group, objectDefinition),
+				larFile);
+
+		ExportImportTestUtil.retryAssert(
+			1, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+			() -> {
+				BackgroundTask backgroundTask =
+					_backgroundTaskLocalService.getBackgroundTask(
+						backgroundTaskId);
+
+				Assert.assertEquals(
+					BackgroundTaskConstants.STATUS_SUCCESSFUL,
+					backgroundTask.getStatus());
+			});
+
+		ServiceContextThreadLocal.popServiceContext();
+	}
+
 	private DLFileEntry _addDLFileEntry(byte[] content, long groupId)
 		throws Exception {
 
@@ -164,6 +259,24 @@ public class LayoutImportBackgroundTaskExecutorTest {
 
 		return _dlFileEntryLocalService.getFileEntry(
 			fileEntry.getFileEntryId());
+	}
+
+	private ExportImportConfiguration _addImportExportImportConfiguration(
+			Group group, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _exportImportConfigurationLocalService.
+			addExportImportConfiguration(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				ExportImportConfigurationSettingsMapFactoryUtil.
+					buildImportLayoutSettingsMap(
+						TestPropsValues.getUser(), group.getGroupId(), false,
+						new long[0],
+						_getExportImportParameterMap(
+							false, true, Arrays.asList(objectDefinition))),
+				WorkflowConstants.STATUS_DRAFT,
+				ServiceContextTestUtil.getServiceContext());
 	}
 
 	private ObjectDefinition _addObjectDefinition(String scope)
@@ -488,6 +601,10 @@ public class LayoutImportBackgroundTaskExecutorTest {
 
 	@Inject
 	private ExportImportLocalService _exportImportLocalService;
+
+	@Inject
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

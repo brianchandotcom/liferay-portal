@@ -8,7 +8,8 @@ package com.liferay.portal.search.capabilities;
 import com.liferay.petra.string.StringPool;
 
 /**
- * Immutable result of an external embedding capability gate evaluation.
+ * Represents the immutable result of an external embedding capability gate
+ * evaluation.
  *
  * <p>
  * When {@link #isAvailable()} is {@code true}, {@link #getReason()} returns an

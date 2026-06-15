@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useState} from 'react';
+import {Option, Picker} from '@clayui/core';
+import React from 'react';
 
-import {FilterDropdown, Item} from './FilterDropdown';
+import {Item} from './FilterDropdown';
 import {IAllFiltersDropdown} from './InventoryAnalysisCard';
+import PickerTrigger from './PickerTrigger';
 
 const defaultStructureTypes: Item[] = [
 	{
@@ -31,25 +33,28 @@ const GroupByDropdown: React.FC<IAllFiltersDropdown> = ({
 	className,
 	item,
 	onSelectItem,
-}) => {
-	const [dropdownActive, setDropdownActive] = useState(false);
+}) => (
+	<Picker
+		aria-label={Liferay.Language.get('group-by')}
+		as={PickerTrigger}
+		borderless
+		items={defaultStructureTypes}
+		onSelectionChange={(key) => {
+			const selectedStructureType = defaultStructureTypes.find(
+				({value}) => value === key
+			);
 
-	return (
-		<FilterDropdown
-			active={dropdownActive}
-			className={className}
-			filterByValue="structureTypes"
-			items={defaultStructureTypes}
-			loading={false}
-			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
-			onSelectItem={(item) => {
-				onSelectItem(item);
-				setDropdownActive(false);
-			}}
-			selectedItem={item}
-			showLabelInSmallViewport
-		/>
-	);
-};
+			if (selectedStructureType) {
+				onSelectItem(selectedStructureType);
+			}
+		}}
+		selectedKey={item.value}
+		triggerClassName={className}
+	>
+		{(structureType: Item) => (
+			<Option key={structureType.value}>{structureType.label}</Option>
+		)}
+	</Picker>
+);
 
 export {GroupByDropdown};

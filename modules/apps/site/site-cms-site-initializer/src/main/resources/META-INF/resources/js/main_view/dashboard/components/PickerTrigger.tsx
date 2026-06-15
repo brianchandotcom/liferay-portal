@@ -8,9 +8,13 @@ import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 const PickerTrigger = React.forwardRef<HTMLButtonElement, any>(
-	({children, triggerClassName, triggerIcon, ...otherProps}, ref) => (
+	(
+		{borderless, children, triggerClassName, triggerIcon, ...otherProps},
+		ref
+	) => (
 		<ClayButton
 			{...otherProps}
+			borderless={borderless}
 			className={triggerClassName}
 			displayType="secondary"
 			ref={ref}

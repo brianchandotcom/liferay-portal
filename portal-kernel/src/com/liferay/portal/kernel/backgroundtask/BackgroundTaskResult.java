@@ -18,6 +18,10 @@ public class BackgroundTaskResult implements Serializable {
 		new BackgroundTaskResult(
 			BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS);
 
+	public static BackgroundTaskResult COMPLETED_WITH_WARNINGS =
+		new BackgroundTaskResult(
+			BackgroundTaskConstants.STATUS_COMPLETED_WITH_WARNINGS);
+
 	public static BackgroundTaskResult SUCCESS = new BackgroundTaskResult(
 		BackgroundTaskConstants.STATUS_SUCCESSFUL);
 

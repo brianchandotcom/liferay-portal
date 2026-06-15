@@ -10,7 +10,7 @@
 <%
 String displayType = "info";
 
-if (backgroundTaskStatus == BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS) {
+if ((backgroundTaskStatus == BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS) || (backgroundTaskStatus == BackgroundTaskConstants.STATUS_COMPLETED_WITH_WARNINGS)) {
 	displayType = "warning";
 }
 else if (backgroundTaskStatus == BackgroundTaskConstants.STATUS_FAILED) {

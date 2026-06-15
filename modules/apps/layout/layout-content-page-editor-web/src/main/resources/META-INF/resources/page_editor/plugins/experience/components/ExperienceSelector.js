@@ -491,16 +491,18 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 					</ClayLayout.ContentRow>
 				</ClayButton>
 
-				<ClayButtonWithIcon
-					aria-label={Liferay.Language.get('create-variations')}
-					className="align-self-stretch h-auto"
-					disabled={!canUpdateExperiences}
-					displayType="secondary"
-					onClick={onCreateVariations}
-					size="sm"
-					symbol="nodes"
-					title={Liferay.Language.get('create-variations')}
-				/>
+				{Liferay.FeatureFlags['LPD-86901'] && (
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('create-variations')}
+						className="align-self-stretch h-auto"
+						disabled={!canUpdateExperiences}
+						displayType="secondary"
+						onClick={onCreateVariations}
+						size="sm"
+						symbol="nodes"
+						title={Liferay.Language.get('create-variations')}
+					/>
+				)}
 			</ClayButton.Group>
 
 			{open && (

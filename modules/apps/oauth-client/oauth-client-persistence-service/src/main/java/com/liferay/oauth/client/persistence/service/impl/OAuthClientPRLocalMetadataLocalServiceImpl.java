@@ -52,7 +52,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 			long userId, String metadataJSON)
 		throws PortalException {
 
-		JSONObject metadataJSONObject = _parseMetadataJSON(metadataJSON);
+		JSONObject metadataJSONObject = _toMetadataJSONObject(metadataJSON);
 
 		return addOAuthClientPRLocalMetadata(
 			null, userId,
@@ -243,7 +243,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 			long oAuthClientPRLocalMetadataId, String metadataJSON)
 		throws PortalException {
 
-		JSONObject metadataJSONObject = _parseMetadataJSON(metadataJSON);
+		JSONObject metadataJSONObject = _toMetadataJSONObject(metadataJSON);
 
 		return updateOAuthClientPRLocalMetadata(
 			oAuthClientPRLocalMetadataId,
@@ -364,7 +364,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		}
 	}
 
-	private JSONObject _parseMetadataJSON(String metadataJSON)
+	private JSONObject _toMetadataJSONObject(String metadataJSON)
 		throws PortalException {
 
 		try {

@@ -69,8 +69,6 @@ public class PropertyValidator {
 			File jenkinsRepositoryDir, File jenkinsResultsParserSourceDir)
 		throws IOException {
 
-		TreeSet<String> definedKeys = _getDefinedKeys(jenkinsRepositoryDir);
-
 		List<ConsumedKey> consumedKeys = new ArrayList<>();
 
 		for (PropertyScanner propertyScanner : _propertyScanners) {
@@ -83,6 +81,8 @@ public class PropertyValidator {
 						JenkinsResultsParserUtil.read(file), file));
 			}
 		}
+
+		TreeSet<String> definedKeys = _getDefinedKeys(jenkinsRepositoryDir);
 
 		return new ValidationResult(
 			_getConsumedKeyFailures(consumedKeys, definedKeys),

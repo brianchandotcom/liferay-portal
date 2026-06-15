@@ -769,6 +769,67 @@ test(
 );
 
 test(
+	'View Usages delete action opens the CMS confirmation modal instead of a native confirm dialog',
+	{tag: '@LPD-89560'},
+	async ({apiHelpers, page, structuresPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const title = `Content ${getRandomString()}`;
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title,
+			},
+			applicationName,
+			'Default'
+		);
+
+		try {
+
+			// Open the usages list of the structure
+
+			await structuresPage.goto();
+
+			await structuresPage.execItemAction({
+				action: 'View Usages',
+				filter: 'Basic Web Content',
+			});
+
+			// Open the delete action of the usage entry
+
+			await structuresPage.dataSetFragmentPage.execItemAction({
+				action: 'Delete',
+				filter: title,
+			});
+
+			// The CMS confirmation modal must appear instead of a native
+			// confirm dialog
+
+			await expect(
+				page.getByText('Are you sure you want to delete this entry?')
+			).toBeVisible();
+
+			// Confirm the deletion
+
+			await page
+				.locator('.liferay-modal')
+				.getByRole('button', {exact: true, name: 'Delete'})
+				.click();
+
+			await waitForAlert(page, `${title} was successfully deleted`, {
+				type: 'success',
+			});
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry.id)
+			);
+		}
+	}
+);
+
+test(
 	'Permissions of a Content Structure can be modified',
 	{tag: '@LPD-89302'},
 	async ({apiHelpers, page, structuresPage}) => {

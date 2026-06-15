@@ -63,7 +63,7 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 
 		List<String> dataMaskExternalReferenceCodes =
 			_getDataMaskExternalReferenceCodes(
-				_httpServletRequest.getHeader(_HEADER_DATA_MASKS));
+				_httpServletRequest.getHeader("X-Liferay-Data-Masks"));
 
 		if (dataMaskExternalReferenceCodes.isEmpty()) {
 			writerInterceptorContext.proceed();
@@ -157,8 +157,6 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 
 		return false;
 	}
-
-	private static final String _HEADER_DATA_MASKS = "X-Liferay-Data-Masks";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataMaskingWriterInterceptor.class);

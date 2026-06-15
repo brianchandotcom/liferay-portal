@@ -195,7 +195,7 @@ public class ReportResourceTest extends BaseReportResourceTestCase {
 			new String[] {"L_FIX_SPELLING_AND_GRAMMAR", "L_MAKE_SHORTER"});
 		report.setChatbotExternalReferenceCode(RandomTestUtil.randomString());
 		report.setFeedback("negative");
-		report.setReason("piiExposure");
+		report.setReason("personalDataExposure");
 		report.setSurface("aiAssistant");
 
 		return report;

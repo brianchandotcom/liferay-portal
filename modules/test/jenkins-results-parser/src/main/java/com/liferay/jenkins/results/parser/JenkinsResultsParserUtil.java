@@ -138,16 +138,7 @@ public class JenkinsResultsParserUtil {
 			return;
 		}
 
-		_redactTokens.add(token);
-
-		String jsonEscapedToken = JSONObject.quote(token);
-
-		jsonEscapedToken = jsonEscapedToken.substring(
-			1, jsonEscapedToken.length() - 1);
-
-		if (!jsonEscapedToken.equals(token)) {
-			_redactTokens.add(jsonEscapedToken);
-		}
+		_redactTokens.addAll(_getRedactTokenVariants(token));
 	}
 
 	public static void append(File file, String content) throws IOException {
@@ -7249,6 +7240,31 @@ public class JenkinsResultsParserUtil {
 
 	private static String _getRedactTokenKey(int index) {
 		return "github.message.redact.token[" + index + "]";
+	}
+
+	private static Set<String> _getRedactTokenVariants(String token) {
+		Set<String> redactTokenVariants = new HashSet<>();
+
+		redactTokenVariants.add(token);
+
+		String jsonEscapedToken = JSONObject.quote(token);
+
+		redactTokenVariants.add(
+			jsonEscapedToken.substring(1, jsonEscapedToken.length() - 1));
+
+		try {
+			String urlEncodedToken = URLEncoder.encode(
+				token, StandardCharsets.UTF_8.name());
+
+			urlEncodedToken = urlEncodedToken.replaceAll("\\+", "%20");
+
+			redactTokenVariants.add(urlEncodedToken);
+		}
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new RuntimeException(unsupportedEncodingException);
+		}
+
+		return redactTokenVariants;
 	}
 
 	private static String _getRyncPath(String hostName, String filePath) {

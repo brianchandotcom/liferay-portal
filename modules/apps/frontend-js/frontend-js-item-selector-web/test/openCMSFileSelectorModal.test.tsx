@@ -8,12 +8,25 @@ import {screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {fetch} from 'frontend-js-web';
 
+import {
+	getLastBreadcrumbFolders,
+	setLastBreadcrumbFolders,
+} from '../src/main/resources/META-INF/resources/item_selector/lastBreadcrumbFoldersMemory';
 import openCMSFileSelectorModal from '../src/main/resources/META-INF/resources/item_selector/openCMSFileSelectorModal';
+
+const FOLDER_MEMORY_KEY = 'test-field';
 
 const fileItem = {
 	embedded: {id: 1, title: 'File'},
 	id: 1,
 };
+
+function folderResponse(status: {code: number} = {code: 0}) {
+	return Promise.resolve({
+		json: () => Promise.resolve({id: 555, status, title: 'Folder'}),
+		ok: true,
+	});
+}
 
 function jsonResponse(items: object[]) {
 	return Promise.resolve({
@@ -44,6 +57,14 @@ function getDecodedSearchURLs() {
 }
 
 describe('openCMSFileSelectorModal', () => {
+	let root: {unmount?: () => void} | undefined;
+
+	function openModal(...args: Parameters<typeof openCMSFileSelectorModal>) {
+		root = openCMSFileSelectorModal(...args) as {unmount?: () => void};
+
+		return root;
+	}
+
 	beforeAll(() => {
 		Object.assign(Liferay.ThemeDisplay, {
 			isImpersonated: () => false,
@@ -51,10 +72,17 @@ describe('openCMSFileSelectorModal', () => {
 	});
 
 	beforeEach(() => {
+		setLastBreadcrumbFolders(FOLDER_MEMORY_KEY, null);
+
 		mockedFetch.mockImplementation(() => jsonResponse([fileItem]));
 	});
 
 	afterEach(() => {
+		root?.unmount?.();
+		root = undefined;
+
+		document.body.innerHTML = '';
+
 		jest.clearAllMocks();
 	});
 
@@ -67,7 +95,7 @@ describe('openCMSFileSelectorModal', () => {
 	it('renders cards and table options in the view-toggle picker', async () => {
 		const user = userEvent.setup();
 
-		openCMSFileSelectorModal({
+		openModal({
 			groupId: 123,
 			onSelect: jest.fn(),
 		});
@@ -90,7 +118,7 @@ describe('openCMSFileSelectorModal', () => {
 	});
 
 	it('fetches with a folder-inclusive root filter', async () => {
-		openCMSFileSelectorModal({
+		openModal({
 			groupId: 123,
 			onSelect: jest.fn(),
 		});
@@ -111,7 +139,7 @@ describe('openCMSFileSelectorModal', () => {
 	});
 
 	it("widens the extension filter so folders pass through with cmsKind eq 'folder'", async () => {
-		openCMSFileSelectorModal({
+		openModal({
 			allowedExtensions: 'jpg,png',
 			groupId: 123,
 			onSelect: jest.fn(),
@@ -128,5 +156,129 @@ describe('openCMSFileSelectorModal', () => {
 		expect(firstURL).toContain("extension in ('jpg','png')");
 
 		expect(firstURL).toContain("cmsKind eq 'folder'");
+	});
+
+	it('reopens at the folder browsed when the previous selection was confirmed', async () => {
+		setLastBreadcrumbFolders(FOLDER_MEMORY_KEY, [
+			{id: null, label: 'Files'},
+			{id: 555, label: 'Folder', scopeId: 1},
+		]);
+
+		mockedFetch.mockImplementation((url) => {
+			if (url.toString().includes('/object-entry-folders/555')) {
+				return folderResponse();
+			}
+
+			return jsonResponse([fileItem]);
+		});
+
+		openModal({
+			folderMemoryKey: FOLDER_MEMORY_KEY,
+			groupId: 123,
+			onSelect: jest.fn(),
+		});
+
+		await screen.findByRole('dialog');
+
+		await waitFor(() => {
+			expect(getDecodedSearchURLs().length).toBeGreaterThan(0);
+		});
+
+		expect(
+			getDecodedSearchURLs().every((url) =>
+				url.includes('folderId eq 555')
+			)
+		).toBe(true);
+	});
+
+	it('reopens at the root when the remembered folder was deleted', async () => {
+		setLastBreadcrumbFolders(FOLDER_MEMORY_KEY, [
+			{id: null, label: 'Files'},
+			{id: 555, label: 'Folder', scopeId: 1},
+		]);
+
+		mockedFetch.mockImplementation((url) => {
+			if (url.toString().includes('/object-entry-folders/555')) {
+				return Promise.resolve({ok: false});
+			}
+
+			return jsonResponse([fileItem]);
+		});
+
+		openModal({
+			folderMemoryKey: FOLDER_MEMORY_KEY,
+			groupId: 123,
+			onSelect: jest.fn(),
+		});
+
+		await screen.findByRole('dialog');
+
+		await waitFor(() => {
+			expect(getLastBreadcrumbFolders(FOLDER_MEMORY_KEY)).toBeNull();
+		});
+
+		await waitFor(() => {
+			expect(
+				getDecodedSearchURLs().some(
+					(url) => !url.includes('folderId eq ')
+				)
+			).toBe(true);
+		});
+
+		expect(
+			mockedFetch.mock.calls.some(([url]) =>
+				url?.toString?.().includes('/object-entry-folders/555')
+			)
+		).toBe(true);
+	});
+
+	it('treats a trashed remembered folder as deleted and reopens at the root', async () => {
+		setLastBreadcrumbFolders(FOLDER_MEMORY_KEY, [
+			{id: null, label: 'Files'},
+			{id: 555, label: 'Folder', scopeId: 1},
+		]);
+
+		mockedFetch.mockImplementation((url) => {
+			if (url.toString().includes('/object-entry-folders/555')) {
+				return folderResponse({code: 8});
+			}
+
+			return jsonResponse([fileItem]);
+		});
+
+		openModal({
+			folderMemoryKey: FOLDER_MEMORY_KEY,
+			groupId: 123,
+			onSelect: jest.fn(),
+		});
+
+		await screen.findByRole('dialog');
+
+		await waitFor(() => {
+			expect(getLastBreadcrumbFolders(FOLDER_MEMORY_KEY)).toBeNull();
+		});
+	});
+
+	it('does not restore a folder remembered by a different field', async () => {
+		setLastBreadcrumbFolders(FOLDER_MEMORY_KEY, [
+			{id: null, label: 'Files'},
+			{id: 555, label: 'Folder', scopeId: 1},
+		]);
+
+		openModal({
+			folderMemoryKey: 'another-field',
+			groupId: 123,
+			onSelect: jest.fn(),
+		});
+
+		await screen.findByRole('dialog');
+
+		await waitFor(() => {
+			expect(getDecodedSearchURLs().length).toBeGreaterThan(0);
+		});
+
+		expect(
+			getDecodedSearchURLs().every((url) => !url.includes('folderId eq '))
+		).toBe(true);
 	});
 });

@@ -48,6 +48,8 @@ const VIDEO_FILTER = `((objectDefinitionExternalReferenceCode eq 'L_CMS_EXTERNAL
 	"','"
 )}')))`;
 
+let instanceCount = 0;
+
 class HeadlessItemSelector extends Plugin {
 	init() {
 		const editor = this.editor;
@@ -57,6 +59,8 @@ class HeadlessItemSelector extends Plugin {
 		editor.commands.add(commandName, new Command(editor));
 
 		const command = editor.commands.get(commandName)!;
+
+		const folderMemoryKeyPrefix = `headless-item-selector:${instanceCount++}`;
 
 		const getGroupId = () =>
 			Number(editor.config.get('groupId')) ||
@@ -77,6 +81,7 @@ class HeadlessItemSelector extends Plugin {
 				openCMSFileSelectorModal({
 					allowDragAndDrop: true,
 					allowedExtensions: ALLOWED_IMAGE_EXTENSIONS_CSV,
+					folderMemoryKey: `${folderMemoryKeyPrefix}:image`,
 					groupId: getGroupId(),
 					itemTypeLabel: Liferay.Language.get('image'),
 					onSelect: (items) => {
@@ -116,6 +121,7 @@ class HeadlessItemSelector extends Plugin {
 					allowDragAndDrop: true,
 					allowedExtensions: ALLOWED_VIDEO_EXTENSIONS_CSV,
 					filters: [VIDEO_FILTER],
+					folderMemoryKey: `${folderMemoryKeyPrefix}:video`,
 					groupId: getGroupId(),
 					itemTypeLabel: Liferay.Language.get('video'),
 					onSelect: (items) => {

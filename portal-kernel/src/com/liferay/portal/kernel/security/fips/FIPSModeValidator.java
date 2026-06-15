@@ -7,8 +7,6 @@ package com.liferay.portal.kernel.security.fips;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -25,31 +23,27 @@ import java.util.Objects;
 /**
  * @author Caio Farias
  */
-public class FIPSProviderValidator {
+public class FIPSModeValidator {
 
 	public static void validate() {
 		Provider[] providers = Security.getProviders();
 
 		_validateFIPSProvider(providers);
 		_validateProviders(providers);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("FIPS provider validation finished successfully");
-		}
 	}
 
 	private static void _validateFIPSProvider(Provider[] providers) {
 		if (ArrayUtil.isEmpty(providers)) {
-			throw new SecurityException("There are no providers registered");
+			throw new SecurityException("There are no security providers");
 		}
 
 		Provider provider = providers[0];
 
 		String name = provider.getName();
 
-		if (!_allowedProviders.containsKey(name)) {
+		if (!_allowedProviderNames.containsKey(name)) {
 			throw new SecurityException(
-				"The first provider must be an allowed FIPS provider");
+				"The first security provider must be an allowed FIPS provider");
 		}
 
 		try {
@@ -114,10 +108,6 @@ public class FIPSProviderValidator {
 							getStatusMessageMethod.invoke(null));
 				}
 			}
-			else {
-				throw new SecurityException(
-					"Unsupported FIPS provider: " + name);
-			}
 		}
 		catch (SecurityException securityException) {
 			throw securityException;
@@ -141,42 +131,36 @@ public class FIPSProviderValidator {
 	}
 
 	private static void _validateProviders(Provider[] providers) {
-		Provider fipsProvider = providers[0];
+		Provider provider = providers[0];
 
-		List<String> allowedProviders = _allowedProviders.get(
-			fipsProvider.getName());
+		List<String> allowedProviderNames = _allowedProviderNames.get(
+			provider.getName());
 
 		Provider[] notAllowedProviders = ArrayUtil.filter(
 			providers,
-			provider ->
-				!provider.equals(fipsProvider) &&
-				!allowedProviders.contains(provider.getName()));
+			curProvider ->
+				!curProvider.equals(provider) &&
+				!allowedProviderNames.contains(curProvider.getName()));
 
 		if (ArrayUtil.isEmpty(notAllowedProviders)) {
-			if (_log.isInfoEnabled()) {
-				_log.info("All registered providers are allowed for FIPS mode");
-			}
-
 			return;
 		}
 
 		throw new SecurityException(
 			StringBundler.concat(
-				"The providers ", Arrays.toString(notAllowedProviders),
-				" are not allowed in FIPS mode for ", fipsProvider.getName()));
+				"The security providers ", Arrays.toString(notAllowedProviders),
+				" are not allowed in FIPS mode for ", provider.getName()));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		FIPSProviderValidator.class);
-
-	private static final Map<String, List<String>> _allowedProviders = Map.of(
-		"AmazonCorrettoCryptoProvider",
-		List.of(
-			"JdkLDAP", "JdkSASL", "SUN", "SunEC", "SunJCE", "SunJGSS",
-			"SunJSSE", "SunRsaSign", "SunSASL", "XMLDSig"),
-		"BCFIPS",
-		List.of(
-			"BCJSSE", "JdkLDAP", "JdkSASL", "SUN", "SunJCE", "SunJGSS",
-			"SunSASL", "XMLDSig"));
+	private static final Map<String, List<String>> _allowedProviderNames =
+		Map.of(
+			"AmazonCorrettoCryptoProvider",
+			List.of(
+				"JdkLDAP", "JdkSASL", "SUN", "SunEC", "SunJCE", "SunJGSS",
+				"SunJSSE", "SunRsaSign", "SunSASL", "XMLDSig"),
+			"BCFIPS",
+			List.of(
+				"BCJSSE", "JdkLDAP", "JdkSASL", "SUN", "SunJCE", "SunJGSS",
+				"SunSASL", "XMLDSig"));
 
 }

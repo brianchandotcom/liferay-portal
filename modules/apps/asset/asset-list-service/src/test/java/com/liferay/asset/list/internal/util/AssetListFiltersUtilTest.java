@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.MatchAllQuery;
 import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.NestedQuery;
 import com.liferay.portal.kernel.search.Query;
@@ -81,6 +82,69 @@ public class AssetListFiltersUtilTest {
 		_portalUtilMockedStatic.reset();
 
 		_setUpLocalizationUtil();
+	}
+
+	@Test
+	public void testHandlesCommonFieldOperators() {
+		_assertMatchQuery(
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "title", "Apple")),
+			"localized_title_en_US", "Apple");
+		_assertMatchQuery(
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("contains", "title", "App")),
+			"localized_title_en_US", "App");
+
+		_assertTermQuery(
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "userName", "Alice")),
+			"userName", "Alice");
+		_assertWildcardQuery(
+			_runAndAssertNegatedCommonFieldRow(
+				_buildCommonFieldFilter("not-contains", "userName", "Alice")),
+			"userName", "*Alice*");
+
+		_assertTermQuery(
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "viewCount", "5")),
+			"viewCount", "5");
+		_assertTermQuery(
+			_runAndAssertNegatedCommonFieldRow(
+				_buildCommonFieldFilter("not-eq", "status", "0")),
+			"status", "0");
+
+		_assertTermRangeQuery(
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("gt", "priority", "0.5")),
+			"priority", "0.5", null, false, false);
+
+		_assertTermRangeQuery(
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "modified", "2026-01-15")),
+			"modified", "20260115000000", "20260115235959", true, true);
+		_assertTermRangeQuery(
+			_runAndAssertNegatedCommonFieldRow(
+				_buildCommonFieldFilter("not-eq", "modified", "2026-01-15")),
+			"modified", "20260115000000", "20260115235959", true, true);
+		_assertTermRangeQuery(
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("gt", "createDate", "2026-01-15")),
+			"createDate", "20260115235959", null, false, false);
+		_assertTermRangeQuery(
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilterWithJSONArrayValue(
+					"between", "modified",
+					JSONUtil.putAll("2026-01-15", "2026-01-20"))),
+			"modified", "20260115000000", "20260120235959", true, true);
+
+		BooleanClause[] booleanClauses =
+			AssetListFiltersUtil.getFiltersBooleanClauses(
+				_COMPANY_ID,
+				JSONUtil.putAll(_buildCommonFieldFilter("eq", "bogus", "x")),
+				LocaleUtil.US);
+
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 0, booleanClauses.length);
 	}
 
 	@Test
@@ -513,6 +577,45 @@ public class AssetListFiltersUtilTest {
 		return Mockito.mockStatic(ObjectDefinitionLocalServiceUtil.class);
 	}
 
+	private Query _assertCommonFieldRow(BooleanClause[] booleanClauses) {
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 1, booleanClauses.length);
+
+		BooleanClause<?> outerBooleanClause = booleanClauses[0];
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST,
+			outerBooleanClause.getBooleanClauseOccur());
+
+		BooleanQuery outerBooleanQuery =
+			(BooleanQuery)outerBooleanClause.getClause();
+
+		List<BooleanClause<Query>> rowBooleanClauses =
+			outerBooleanQuery.clauses();
+
+		BooleanClause<Query> rowBooleanClause = rowBooleanClauses.get(0);
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST, rowBooleanClause.getBooleanClauseOccur());
+
+		Query query = rowBooleanClause.getClause();
+
+		Assert.assertFalse(query.toString(), query instanceof NestedQuery);
+
+		return query;
+	}
+
+	private void _assertMatchQuery(
+		Query query, String expectedField, String expectedValue) {
+
+		Assert.assertTrue(query.toString(), query instanceof MatchQuery);
+
+		MatchQuery matchQuery = (MatchQuery)query;
+
+		Assert.assertEquals(expectedField, matchQuery.getField());
+		Assert.assertEquals(expectedValue, matchQuery.getValue());
+	}
+
 	private Query _assertNestedRow(
 		BooleanClause[] booleanClauses, int rowIndex, String propertyName,
 		BooleanClauseOccur expectedValueOccur) {
@@ -674,6 +777,30 @@ public class AssetListFiltersUtilTest {
 			).getValue());
 	}
 
+	private JSONObject _buildCommonFieldFilter(
+		String operatorName, String propertyName, String value) {
+
+		return JSONUtil.put(
+			"operatorName", operatorName
+		).put(
+			"propertyName", propertyName
+		).put(
+			"value", value
+		);
+	}
+
+	private JSONObject _buildCommonFieldFilterWithJSONArrayValue(
+		String operatorName, String propertyName, JSONArray valueJSONArray) {
+
+		return JSONUtil.put(
+			"operatorName", operatorName
+		).put(
+			"propertyName", propertyName
+		).put(
+			"value", valueJSONArray
+		);
+	}
+
 	private JSONObject _buildFilter(
 		String operatorName, String propertyName, String value) {
 
@@ -712,6 +839,63 @@ public class AssetListFiltersUtilTest {
 		).put(
 			"value", value
 		);
+	}
+
+	private Query _runAndAssertCommonFieldRow(JSONObject filterJSONObject) {
+		return _assertCommonFieldRow(
+			AssetListFiltersUtil.getFiltersBooleanClauses(
+				_COMPANY_ID, JSONUtil.putAll(filterJSONObject), LocaleUtil.US));
+	}
+
+	private Query _runAndAssertNegatedCommonFieldRow(
+		JSONObject filterJSONObject) {
+
+		BooleanClause[] booleanClauses =
+			AssetListFiltersUtil.getFiltersBooleanClauses(
+				_COMPANY_ID, JSONUtil.putAll(filterJSONObject), LocaleUtil.US);
+
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 1, booleanClauses.length);
+
+		BooleanQuery outerBooleanQuery =
+			(BooleanQuery)booleanClauses[0].getClause();
+
+		BooleanClause<Query> rowBooleanClause = outerBooleanQuery.clauses(
+		).get(
+			0
+		);
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST, rowBooleanClause.getBooleanClauseOccur());
+
+		BooleanQuery negatedBooleanQuery =
+			(BooleanQuery)rowBooleanClause.getClause();
+
+		List<BooleanClause<Query>> negatedBooleanClauses =
+			negatedBooleanQuery.clauses();
+
+		Assert.assertEquals(
+			negatedBooleanClauses.toString(), 2, negatedBooleanClauses.size());
+
+		Assert.assertTrue(
+			negatedBooleanClauses.get(
+				0
+			).getClause() instanceof MatchAllQuery);
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST,
+			negatedBooleanClauses.get(
+				0
+			).getBooleanClauseOccur());
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST_NOT,
+			negatedBooleanClauses.get(
+				1
+			).getBooleanClauseOccur());
+
+		return negatedBooleanClauses.get(
+			1
+		).getClause();
 	}
 
 	private Query _runAndAssertNestedRow(

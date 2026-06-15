@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.rest.internal.resource.v1_0;
 
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
@@ -12,19 +13,18 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.rest.dto.v1_0.ExportPreview;
 import com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandler;
-import com.liferay.exportimport.rest.internal.util.DateRangeUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.internal.util.PreviewPortletDataHandlerUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ExportPreviewResource;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
 
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 
 import java.util.Date;
@@ -49,32 +49,30 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 	@Override
 	public ExportPreview getAssetLibraryExportPreview(
 			String assetLibraryExternalReferenceCode, Date endDate,
-			Integer last, String range, Date startDate)
+			Date startDate)
 		throws Exception {
 
 		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, 0, null, false, range,
-			startDate);
+			endDate, group.getGroupId(), 0, null, false, startDate);
 	}
 
 	@Override
 	public ExportPreview getAssetLibraryPortletExportPreview(
 			String assetLibraryExternalReferenceCode, String portletId,
-			Date endDate, Integer last, Long plid, String range, Date startDate)
+			Date endDate, Long plid, Date startDate)
 		throws Exception {
 
 		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, GetterUtil.getLong(plid),
-			portletId, false, range, startDate);
+			endDate, group.getGroupId(), GetterUtil.getLong(plid), portletId,
+			false, startDate);
 	}
 
 	@Override
-	public ExportPreview getExportPreview(
-			Date endDate, Integer last, String range, Date startDate)
+	public ExportPreview getExportPreview(Date endDate, Date startDate)
 		throws Exception {
 
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
@@ -85,34 +83,31 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		}
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, 0, null, false, range,
-			startDate);
+			endDate, group.getGroupId(), 0, null, false, startDate);
 	}
 
 	@Override
 	public ExportPreview getSiteExportPreview(
-			String siteExternalReferenceCode, Date endDate, Integer last,
-			String range, Date startDate)
+			String siteExternalReferenceCode, Date endDate, Date startDate)
 		throws Exception {
 
 		Group group = _getSiteGroup(siteExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, 0, null, false, range,
-			startDate);
+			endDate, group.getGroupId(), 0, null, false, startDate);
 	}
 
 	@Override
 	public ExportPreview getSitePortletExportPreview(
 			String siteExternalReferenceCode, String portletId, Date endDate,
-			Integer last, Long plid, String range, Date startDate)
+			Long plid, Date startDate)
 		throws Exception {
 
 		Group group = _getSiteGroup(siteExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, GetterUtil.getLong(plid),
-			portletId, false, range, startDate);
+			endDate, group.getGroupId(), GetterUtil.getLong(plid), portletId,
+			false, startDate);
 	}
 
 	private Group _getAssetLibraryGroup(String externalReferenceCode) {
@@ -127,9 +122,8 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 	}
 
 	private ExportPreview _getExportPreview(
-			Date endDate, long groupId, Integer last, long plid,
-			String portletId, boolean privateLayout, String range,
-			Date startDate)
+			Date endDate, long groupId, long plid, String portletId,
+			boolean privateLayout, Date startDate)
 		throws Exception {
 
 		PermissionUtil.checkExportPermission(
@@ -152,8 +146,13 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 				contextCompany.getCompanyId(), false, groupId);
 		}
 
-		DateRange dateRange = DateRangeUtil.toDateRange(
-			endDate, last, range, startDate);
+		if ((startDate == null) != (endDate == null)) {
+			throw new BadRequestException(
+				"A start date and an end date are required for a date range");
+		}
+
+		String range =
+			(startDate == null) ? null : ExportImportDateUtil.RANGE_DATE_RANGE;
 
 		Locale locale = contextAcceptLanguage.getPreferredLocale();
 
@@ -167,8 +166,8 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 
 			PortletDataContext portletDataContext =
 				_portletDataContextFactory.createPreparePortletDataContext(
-					contextCompany.getCompanyId(), groupId, range,
-					dateRange.getStartDate(), dateRange.getEndDate());
+					contextCompany.getCompanyId(), groupId, range, startDate,
+					endDate);
 
 			portletDataHandler.prepareManifestSummary(portletDataContext);
 

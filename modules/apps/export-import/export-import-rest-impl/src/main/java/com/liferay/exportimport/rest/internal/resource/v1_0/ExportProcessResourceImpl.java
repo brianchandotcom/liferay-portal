@@ -18,7 +18,6 @@ import com.liferay.exportimport.rest.dto.v1_0.ExportProcessRequest;
 import com.liferay.exportimport.rest.dto.v1_0.ProcessProgress;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
 import com.liferay.exportimport.rest.internal.util.BackgroundTaskUtil;
-import com.liferay.exportimport.rest.internal.util.DateRangeUtil;
 import com.liferay.exportimport.rest.internal.util.ParameterMapUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ExportProcessResource;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,11 +50,13 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.staging.StagingGroupHelper;
 
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -532,17 +532,20 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 		ExportProcessRequest exportProcessRequest,
 		Map<String, Serializable> settingsMap) {
 
-		DateRange dateRange = DateRangeUtil.toDateRange(
-			exportProcessRequest.getEndDate(), exportProcessRequest.getLast(),
-			exportProcessRequest.getRangeAsString(),
-			exportProcessRequest.getStartDate());
+		Date endDate = exportProcessRequest.getEndDate();
+		Date startDate = exportProcessRequest.getStartDate();
 
-		if (dateRange.getStartDate() == null) {
+		if ((startDate == null) != (endDate == null)) {
+			throw new BadRequestException(
+				"A start date and an end date are required for a date range");
+		}
+
+		if (startDate == null) {
 			return;
 		}
 
-		settingsMap.put("endDate", dateRange.getEndDate());
-		settingsMap.put("startDate", dateRange.getStartDate());
+		settingsMap.put("endDate", endDate);
+		settingsMap.put("startDate", startDate);
 	}
 
 	private void _setSorts(DynamicQuery dynamicQuery, Sort[] sorts) {

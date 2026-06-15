@@ -4,19 +4,19 @@
 		{
 			"externalReferenceCode": "AGENT_ERROR",
 			"key": "agentError",
-			"name": "Agent Error or Malfunction",
+			"name": "Agent Error",
 			"system": true
 		},
 		{
 			"externalReferenceCode": "HARMFUL_CONTENT",
 			"key": "harmfulContent",
-			"name": "Inappropriate or Harmful Content",
+			"name": "Harmful Content",
 			"system": true
 		},
 		{
-			"externalReferenceCode": "INCORRECT",
-			"key": "incorrect",
-			"name": "Incorrect or Inaccurate Response",
+			"externalReferenceCode": "INACCURATE_RESPONSE",
+			"key": "inaccurateResponse",
+			"name": "Inaccurate Response",
 			"system": true
 		},
 		{
@@ -26,9 +26,9 @@
 			"system": true
 		},
 		{
-			"externalReferenceCode": "PII_EXPOSURE",
-			"key": "piiExposure",
-			"name": "Exposure of Personal / Sensitive Data (PII)",
+			"externalReferenceCode": "PERSONAL_DATA_EXPOSURE",
+			"key": "personalDataExposure",
+			"name": "Personal Data Exposure",
 			"system": true
 		}
 	],

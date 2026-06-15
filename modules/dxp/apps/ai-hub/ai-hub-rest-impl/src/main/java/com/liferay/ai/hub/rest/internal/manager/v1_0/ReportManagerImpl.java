@@ -118,9 +118,9 @@ public class ReportManagerImpl implements ReportManager {
 	).put(
 		"harmfulContent", "critical"
 	).put(
-		"incorrect", "high"
+		"inaccurateResponse", "high"
 	).put(
-		"piiExposure", "critical"
+		"personalDataExposure", "critical"
 	).build();
 
 	@Reference

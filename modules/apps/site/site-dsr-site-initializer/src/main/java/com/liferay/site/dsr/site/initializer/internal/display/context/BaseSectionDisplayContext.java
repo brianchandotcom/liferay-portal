@@ -53,7 +53,9 @@ public abstract class BaseSectionDisplayContext {
 		return null;
 	}
 
-	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws Exception {
+
 		return null;
 	}
 

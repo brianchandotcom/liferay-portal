@@ -60,7 +60,7 @@ import {readConfigFromURL} from './utils/configInURL';
 import EVENTS from './utils/eventsDefinitions';
 import {activateFilter} from './utils/filters/activateFilter';
 import {deactivateFilter} from './utils/filters/deactivateFilter';
-import {getOrCreateFDSAtom} from './utils/getFDSAtom';
+import {getOrCreateFDSAtom} from './utils/getOrCreateFDSAtom';
 import getRandomId from './utils/getRandomId';
 
 // @ts-ignore

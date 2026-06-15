@@ -524,7 +524,14 @@ function isAtom(value: unknown): value is Atom<any> {
 	return Object.hasOwnProperty.call(value, ATOM);
 }
 
-window.Liferay.State = State;
+/** 
+ * The public `Liferay.State` declaration (see liferay.d.ts) exposes `Atom`
+ * and `Selector` as opaque types so consumers cannot depend on their internal
+ * shape. The implementation here uses the concrete shape, so the assignment to
+ * the global must be asserted at this boundary.
+ */
+
+window.Liferay.State = State as unknown as typeof window.Liferay.State;
 
 /**
  * Boilerplate to satisfy TypeScript and prevent: "TS2669: Augmentations

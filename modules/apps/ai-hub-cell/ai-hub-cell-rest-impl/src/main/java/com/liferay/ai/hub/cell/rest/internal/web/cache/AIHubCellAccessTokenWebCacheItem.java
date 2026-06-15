@@ -14,22 +14,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
-
-import com.nimbusds.jwt.JWTClaimsSet;
-import com.nimbusds.jwt.SignedJWT;
-
-import java.net.HttpURLConnection;
-
-import java.util.Date;
 
 /**
  * @author Manuele Castro
  */
-public class AIHubCellAccessTokenWebCacheItem implements WebCacheItem {
+public class AIHubCellAccessTokenWebCacheItem extends BaseWebCacheItem {
 
 	public static JSONObject get(
 		AIHubCellConfiguration aiHubCellConfiguration, long companyId) {
@@ -42,7 +32,7 @@ public class AIHubCellAccessTokenWebCacheItem implements WebCacheItem {
 		JSONObject jsonObject = (JSONObject)WebCachePoolUtil.get(
 			key, new AIHubCellAccessTokenWebCacheItem(aiHubCellConfiguration));
 
-		if (!_isExpired(jsonObject)) {
+		if (!isExpired(jsonObject.getString("access_token"))) {
 			return jsonObject;
 		}
 
@@ -71,49 +61,19 @@ public class AIHubCellAccessTokenWebCacheItem implements WebCacheItem {
 				_aiHubCellConfiguration.serviceURL() + "/o/oauth2/token");
 			options.setPost(true);
 
-			String responseJSON = HttpUtil.URLtoString(options);
-
-			Http.Response response = options.getResponse();
-
-			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Response code ", response.getResponseCode(), ": ",
-							responseJSON));
-				}
-
-				return null;
-			}
-
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				responseJSON);
+				HttpUtil.URLtoString(options));
 
-			if (Validator.isBlank(jsonObject.getString("access_token"))) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"The token response has no access token: " +
-							responseJSON);
-				}
+			long expirationTime = getExpirationTime(
+				jsonObject.getString("access_token"));
 
-				return null;
-			}
-
-			long expirationTime = _getExpirationTime(jsonObject);
-
-			if (expirationTime > 0) {
-				jsonObject.put("expirationTime", expirationTime);
-
-				_refreshTime =
-					(long)((expirationTime - System.currentTimeMillis()) * 0.8);
-			}
+			_refreshTime =
+				(long)((expirationTime - System.currentTimeMillis()) * 0.8);
 
 			return jsonObject;
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+			_log.error(exception);
 
 			return null;
 		}
@@ -122,51 +82,6 @@ public class AIHubCellAccessTokenWebCacheItem implements WebCacheItem {
 	@Override
 	public long getRefreshTime() {
 		return _refreshTime;
-	}
-
-	private static boolean _isExpired(JSONObject jsonObject) {
-		if (jsonObject == null) {
-			return false;
-		}
-
-		long expirationTime = jsonObject.getLong("expirationTime", 0);
-
-		if ((expirationTime > 0) &&
-			(expirationTime <= (System.currentTimeMillis() + Time.MINUTE))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private long _getExpirationTime(JSONObject jsonObject) {
-		try {
-			SignedJWT signedJWT = SignedJWT.parse(
-				jsonObject.getString("access_token"));
-
-			JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
-
-			Date expirationTime = jwtClaimsSet.getExpirationTime();
-
-			if (expirationTime != null) {
-				return expirationTime.getTime();
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to parse and verify the JWT token", exception);
-			}
-		}
-
-		long expiresIn = jsonObject.getLong("expires_in", 0);
-
-		if (expiresIn > 0) {
-			return System.currentTimeMillis() + (expiresIn * Time.SECOND);
-		}
-
-		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

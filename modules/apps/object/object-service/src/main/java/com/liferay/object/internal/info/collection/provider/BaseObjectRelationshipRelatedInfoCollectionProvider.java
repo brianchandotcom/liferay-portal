@@ -77,6 +77,8 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 			if (_objectDefinition1.isUnmodifiableSystemObject() &&
 				(relatedItem instanceof BaseModel)) {
 
+				BaseModel<?> baseModel = (BaseModel<?>)relatedItem;
+
 				long groupId = 0;
 
 				if (relatedItem instanceof GroupedModel) {
@@ -84,8 +86,6 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 
 					groupId = groupedModel.getGroupId();
 				}
-
-				BaseModel<?> baseModel = (BaseModel<?>)relatedItem;
 
 				Map<String, Object> modelAttributes =
 					baseModel.getModelAttributes();

@@ -36,7 +36,11 @@ export async function createIndividuals({
 			birthday: birthDate,
 			emailAddress: `${name}@liferay.com`,
 			fields: [
-				{dataSourceId, name: 'birthday', value: birthDate},
+				{
+					dataSourceId,
+					name: 'birthday',
+					value: String(new Date(birthDate).getTime()),
+				},
 				{
 					dataSourceId,
 					name: 'emailAddress',

@@ -9,10 +9,13 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetTestUtil;
@@ -1827,6 +1830,66 @@ public class ObjectEntryLocalServiceTest {
 
 		_siteObjectDefinition = _enableCategorization(
 			originalEnableCategorization, _siteObjectDefinition);
+	}
+
+	@Test
+	public void testAddObjectEntryWithCategorizationFromOutOfScopeVocabulary()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		AssetVocabulary availableAssetVocabulary = AssetTestUtil.addVocabulary(
+			group.getGroupId());
+
+		AssetCategory availableAssetCategory = AssetTestUtil.addCategory(
+			group.getGroupId(), availableAssetVocabulary.getVocabularyId());
+
+		AssetVocabulary outOfScopeAssetVocabulary = AssetTestUtil.addVocabulary(
+			group.getGroupId());
+
+		AssetCategory outOfScopeAssetCategory = AssetTestUtil.addCategory(
+			group.getGroupId(), outOfScopeAssetVocabulary.getVocabularyId());
+
+		Group outOfScopeGroup = GroupTestUtil.addGroup();
+
+		_assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
+			outOfScopeGroup.getGroupId(),
+			outOfScopeAssetVocabulary.getVocabularyId());
+
+		String name = RandomTestUtil.randomString();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, false, false,
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, name)),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {
+				availableAssetCategory.getCategoryId(),
+				outOfScopeAssetCategory.getCategoryId()
+			});
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			group.getGroupId(), objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				name, RandomTestUtil.randomString()
+			).build(),
+			serviceContext);
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+
+		Assert.assertArrayEquals(
+			new long[] {availableAssetCategory.getCategoryId()},
+			assetEntry.getCategoryIds());
 	}
 
 	@Test
@@ -10488,6 +10551,10 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

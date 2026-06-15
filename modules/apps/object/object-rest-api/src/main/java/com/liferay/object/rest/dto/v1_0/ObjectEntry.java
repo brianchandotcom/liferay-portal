@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -146,52 +145,6 @@ public class ObjectEntry implements Serializable {
 
 	@JsonIgnore
 	private Supplier<AuditEvent[]> _auditEventsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Optional field with the comments associated with this object entry, can be embedded with nestedFields"
-	)
-	@Valid
-	public Comment[] getComments() {
-		if (_commentsSupplier != null) {
-			comments = _commentsSupplier.get();
-
-			_commentsSupplier = null;
-		}
-
-		return comments;
-	}
-
-	public void setComments(Comment[] comments) {
-		this.comments = comments;
-
-		_commentsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setComments(
-		UnsafeSupplier<Comment[], Exception> commentsUnsafeSupplier) {
-
-		_commentsSupplier = () -> {
-			try {
-				return commentsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "Optional field with the comments associated with this object entry, can be embedded with nestedFields"
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Comment[] comments;
-
-	@JsonIgnore
-	private Supplier<Comment[]> _commentsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
@@ -1198,7 +1151,7 @@ public class ObjectEntry implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SystemProperties systemProperties;
 
 	@JsonIgnore
@@ -1320,9 +1273,6 @@ public class ObjectEntry implements Serializable {
 		else if (Objects.equals(propertyName, "auditEvents")) {
 			return getAuditEvents();
 		}
-		else if (Objects.equals(propertyName, "comments")) {
-			return getComments();
-		}
 		else if (Objects.equals(propertyName, "creator")) {
 			return getCreator();
 		}
@@ -1426,9 +1376,6 @@ public class ObjectEntry implements Serializable {
 		}
 		else if (Objects.equals(propertyName, "auditEvents")) {
 			setAuditEvents((AuditEvent[])propertyValue);
-		}
-		else if (Objects.equals(propertyName, "comments")) {
-			setComments((Comment[])propertyValue);
 		}
 		else if (Objects.equals(propertyName, "creator")) {
 			setCreator((Creator)propertyValue);
@@ -1580,28 +1527,6 @@ public class ObjectEntry implements Serializable {
 				sb.append(String.valueOf(auditEvents[i]));
 
 				if ((i + 1) < auditEvents.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		Comment[] comments = getComments();
-
-		if (comments != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"comments\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < comments.length; i++) {
-				sb.append(comments[i]);
-
-				if ((i + 1) < comments.length) {
 					sb.append(", ");
 				}
 			}
@@ -2101,4 +2026,4 @@ public class ObjectEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1395753834
+// LIFERAY-REST-BUILDER-HASH:-1649858630

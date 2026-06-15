@@ -128,12 +128,11 @@ export default function MemberInvite({
 												shape="circle"
 												size="sm"
 											>
-												<img
+												<ClaySticker.Image
 													alt={item.name}
-													className="sticker-img"
 													src={
 														item.image ||
-														'/image/user_portrait'
+														`${Liferay.ThemeDisplay.getPathContext() || ''}/image/user_portrait`
 													}
 												/>
 											</ClaySticker>

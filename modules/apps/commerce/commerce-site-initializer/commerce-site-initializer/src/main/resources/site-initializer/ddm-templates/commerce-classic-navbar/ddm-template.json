@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.theme.NavItem",
+	"ddmTemplateKey": "COMMERCE-CLASSIC-NAVBAR-FTL",
+	"name": "Commerce Classic Navbar",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

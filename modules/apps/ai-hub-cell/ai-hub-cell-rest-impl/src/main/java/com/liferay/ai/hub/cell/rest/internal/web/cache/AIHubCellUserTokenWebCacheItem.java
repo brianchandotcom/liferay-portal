@@ -62,12 +62,13 @@ public class AIHubCellUserTokenWebCacheItem extends BaseWebCacheItem {
 	@Override
 	public Object convert(String key) {
 		try {
-			String response = TransactionInvokerUtil.invoke(
+			String responseJSON = TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> _localOAuthClient.requestTokens(
 					_oAuth2Application, _userId));
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(response);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				responseJSON);
 
 			long expirationTime = getExpirationTime(
 				jsonObject.getString("access_token"));

@@ -81,6 +81,7 @@
 			"pluralLabel": {
 				"en_US": "MCP Server Profiles"
 			},
+			"portlet": true,
 			"scope": "company",
 			"status": {
 				"code": 0,

@@ -14,8 +14,10 @@ liferay-marketplace-etc-spring-boot-oahs:
         -   Liferay.Headless.Commerce.Delivery.Catalog.everything
         -   Liferay.Headless.Delivery.everything
         -   Liferay.Notification.REST.everything
+        -   c_aihubapplication.everything
         -   c_publisherassetattachment.everything
         -   c_publisherassets.everything
+        -   c_salesforceproject.everything
         -   c_trialextensionrequest.everything
     type: oAuthApplicationHeadlessServer
 liferay-marketplace-etc-spring-boot-oaua:

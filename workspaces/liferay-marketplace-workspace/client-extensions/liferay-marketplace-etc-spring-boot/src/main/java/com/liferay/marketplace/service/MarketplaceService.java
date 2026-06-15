@@ -218,6 +218,21 @@ public class MarketplaceService extends BaseService {
 		).build();
 	}
 
+	public JSONObject getAIHubApplicationJSONObject(
+		String externalReferenceCode) {
+
+		return new JSONObject(
+			get(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-marketplace-etc-spring-boot-oahs"),
+				UriComponentsBuilder.fromPath(
+					"/o/c/aihubapplications/by-external-reference-code/" +
+						externalReferenceCode +
+							"?nestedFields=orderToAIHubApplication"
+				).build(
+				).toUri()));
+	}
+
 	public AttachmentResource getAttachmentResource() throws Exception {
 		return AttachmentResource.builder(
 		).header(
@@ -754,6 +769,36 @@ public class MarketplaceService extends BaseService {
 				HashMapBuilder.put(
 					"file", file
 				).build());
+	}
+
+	public JSONObject putAIHubApplication(
+		String externalReferenceCode, JSONObject jsonObject) {
+
+		return new JSONObject(
+			put(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-marketplace-etc-spring-boot-oahs"),
+				jsonObject.toString(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/aihubapplications/by-external-reference-code/" +
+						externalReferenceCode
+				).build(
+				).toUri()));
+	}
+
+	public JSONObject putSalesforceProject(
+		String externalReferenceCode, JSONObject jsonObject) {
+
+		return new JSONObject(
+			put(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-marketplace-etc-spring-boot-oahs"),
+				jsonObject.toString(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/salesforceprojects/by-external-reference-code/" +
+						externalReferenceCode
+				).build(
+				).toUri()));
 	}
 
 	public void updateOrder(

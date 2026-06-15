@@ -45,13 +45,9 @@ public class SalesforceOpportunity {
 	}
 
 	public String toString() {
-		Account account = _order.getAccount();
-
 		JSONObject jsonObject = new JSONObject(
 		).put(
 			"accountId", _getAccountId()
-		).put(
-			"accountName", account.getName()
 		).put(
 			"billingAddress", _getBillingAddressJSONObject()
 		).put(
@@ -65,6 +61,8 @@ public class SalesforceOpportunity {
 		).put(
 			"opportunityOwner", "Marketplace Integration"
 		).put(
+			"paymentMethodType", _getPaymentMethodType()
+		).put(
 			"primaryContact", _getPrimaryContactJSONObject()
 		).put(
 			"project", _getProjectJSONObject()
@@ -73,10 +71,6 @@ public class SalesforceOpportunity {
 		).put(
 			"typeOfBusiness", "Existing Business"
 		);
-
-		if (Objects.equals(_order.getPaymentMethod(), "money-order")) {
-			jsonObject.put("invoice", _getInvoiceJSONObject());
-		}
 
 		return jsonObject.toString();
 	}
@@ -132,23 +126,6 @@ public class SalesforceOpportunity {
 		);
 	}
 
-	private JSONObject _getInvoiceJSONObject() {
-		return new JSONObject(
-		).put(
-			"accountInvoiceEmail", _order.getCreatorEmailAddress()
-		).put(
-			"grossAmount", _order.getTotalAmount()
-		).put(
-			"invoiceBy", "Liferay Intl."
-		).put(
-			"localCurrency", _order.getCurrencyCode()
-		).put(
-			"soldThrough", "Marketplace"
-		).put(
-			"status", "Needs Invoicing"
-		);
-	}
-
 	private JSONArray _getLineItemsJSONArray() {
 		String productId = null;
 
@@ -171,9 +148,13 @@ public class SalesforceOpportunity {
 		JSONArray jsonArray = new JSONArray();
 
 		for (OrderItem orderItem : _order.getOrderItems()) {
-			jsonArray.put(
-				new JSONObject(
-				).put(
+			JSONObject jsonObject = new JSONObject();
+
+			if (!Objects.equals(
+					_order.getOrderTypeExternalReferenceCode(),
+					"AI_HUB_TOKEN")) {
+
+				jsonObject.put(
 					"endDate",
 					_format(
 						MarketplaceUtil.getOrderPurchaseEndDate(
@@ -181,13 +162,17 @@ public class SalesforceOpportunity {
 							MarketplaceUtil.getSkuOptionValue(
 								"license-usage-type", orderItem.getOptions())))
 				).put(
+					"startDate", _format(_order.getCreateDate())
+				);
+			}
+
+			jsonArray.put(
+				jsonObject.put(
 					"orderType", "New"
 				).put(
 					"productId", productId
 				).put(
 					"quantity", orderItem.getQuantity()
-				).put(
-					"startDate", _format(_order.getCreateDate())
 				).put(
 					"unitPrice", orderItem.getUnitPrice()
 				));
@@ -196,22 +181,41 @@ public class SalesforceOpportunity {
 		return jsonArray;
 	}
 
-	private JSONObject _getPrimaryContactJSONObject() {
+	private String _getPaymentMethodType() {
+		if (Objects.equals(_order.getPaymentMethod(), "money-order")) {
+			return "Offline";
+		}
+
+		return "Online";
+	}
+
+	private String _getPrimaryContactEmailAddress() {
 		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
 			_order);
 
-		JSONObject provisioningFormJSONObject =
-			orderMetadataJSONObject.getJSONObject("provisioningForm");
+		if (Objects.equals(
+				_order.getOrderTypeExternalReferenceCode(), "AI_HUB")) {
 
-		return _getPrimaryContactJSONObject(provisioningFormJSONObject);
+			JSONObject aiHubFormJSONObject =
+				orderMetadataJSONObject.optJSONObject(
+					"aiHubForm", new JSONObject());
+
+			return aiHubFormJSONObject.optString(
+				"administratorEmailAddress", _order.getCreatorEmailAddress());
+		}
+
+		JSONObject provisioningFormJSONObject =
+			orderMetadataJSONObject.optJSONObject(
+				"provisioningForm", new JSONObject());
+
+		return provisioningFormJSONObject.optString(
+			"ownerEmailAddress", _order.getCreatorEmailAddress());
 	}
 
-	private JSONObject _getPrimaryContactJSONObject(JSONObject jsonObject) {
+	private JSONObject _getPrimaryContactJSONObject() {
 		return new JSONObject(
 		).put(
-			"email",
-			jsonObject.optString(
-				"ownerEmailAddress", _order.getCreatorEmailAddress())
+			"email", _getPrimaryContactEmailAddress()
 		).put(
 			"firstName", _userAccount.getGivenName()
 		).put(
@@ -225,11 +229,47 @@ public class SalesforceOpportunity {
 		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
 			_order);
 
-		JSONObject provisioningFormJSONObject =
-			orderMetadataJSONObject.getJSONObject("provisioningForm");
-
-		return new JSONObject(
+		JSONObject projectJSONObject = new JSONObject(
 		).put(
+			"projectId",
+			orderMetadataJSONObject.getString("salesforceProjectId")
+		);
+
+		if (Objects.equals(
+				_order.getOrderTypeExternalReferenceCode(), "AI_HUB")) {
+
+			MarketplaceUtil.getOrderMetadata(_order);
+
+			JSONObject aiHubFormJSONObject =
+				orderMetadataJSONObject.getJSONObject("aiHubForm");
+
+			return projectJSONObject.put(
+				"aiHubAccountName",
+				aiHubFormJSONObject.optString("aiHubAccountName")
+			).put(
+				"projectContacts",
+				new JSONArray(
+				).put(
+					_getPrimaryContactJSONObject().put(
+						"role", "AI Hub Administrator")
+				)
+			);
+		}
+
+		if (Objects.equals(
+				_order.getOrderTypeExternalReferenceCode(), "AI_HUB_TOKEN")) {
+
+			return projectJSONObject.put("projectContacts", new JSONArray());
+		}
+
+		JSONObject provisioningFormJSONObject =
+			orderMetadataJSONObject.optJSONObject("provisioningForm");
+
+		if (provisioningFormJSONObject == null) {
+			return projectJSONObject;
+		}
+
+		return projectJSONObject.put(
 			"allowedEmailDomains",
 			provisioningFormJSONObject.optString("allowedEmailDomains")
 		).put(
@@ -242,15 +282,8 @@ public class SalesforceOpportunity {
 			"projectContacts",
 			new JSONArray(
 			).put(
-				_getPrimaryContactJSONObject(
-					provisioningFormJSONObject
-				).put(
-					"role", "LDP Administrator"
-				)
+				_getPrimaryContactJSONObject().put("role", "LDP Administrator")
 			)
-		).put(
-			"projectId",
-			orderMetadataJSONObject.getString("salesforceProjectId")
 		).put(
 			"securityContactEmailAddress", _order.getCreatorEmailAddress()
 		).put(

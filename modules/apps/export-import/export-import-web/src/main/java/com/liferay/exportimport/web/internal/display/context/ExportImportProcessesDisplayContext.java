@@ -79,7 +79,8 @@ public class ExportImportProcessesDisplayContext {
 				HashMapBuilder.<String, Object>put(
 					"status.code", BackgroundTaskConstants.STATUS_SUCCESSFUL
 				).build()),
-			_getDeleteFDSActionDropdownItem("/export-processes/{id}"));
+			_getDeleteFDSActionDropdownItem("/export-processes/{id}"),
+			_getClearFDSActionDropdownItem("/export-processes/{id}"));
 	}
 
 	public String getExportFDSName() {
@@ -128,7 +129,8 @@ public class ExportImportProcessesDisplayContext {
 						BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
 						BackgroundTaskConstants.STATUS_FAILED)
 				).build()),
-			_getDeleteFDSActionDropdownItem("/import-processes/{id}"));
+			_getDeleteFDSActionDropdownItem("/import-processes/{id}"),
+			_getClearFDSActionDropdownItem("/import-processes/{id}"));
 	}
 
 	public String getImportFDSName() {
@@ -163,6 +165,29 @@ public class ExportImportProcessesDisplayContext {
 		return _BASE_PATH + _getScopePath() + endpoint;
 	}
 
+	private FDSActionDropdownItem _getClearFDSActionDropdownItem(
+		String endpoint) {
+
+		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
+			_BASE_PATH + endpoint, "trash", "clear",
+			LanguageUtil.get(_httpServletRequest, "clear"), "delete", null,
+			"async",
+			HashMapBuilder.<String, Object>put(
+				"status.code",
+				Arrays.asList(
+					BackgroundTaskConstants.STATUS_CANCELLED,
+					BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
+					BackgroundTaskConstants.STATUS_FAILED,
+					BackgroundTaskConstants.STATUS_SUCCESSFUL)
+			).build());
+
+		fdsActionDropdownItem.setConfirmationMessage(
+			LanguageUtil.get(
+				_httpServletRequest, "are-you-sure-you-want-to-delete-this"));
+
+		return fdsActionDropdownItem;
+	}
+
 	private CreationMenu _getCreationMenu(String cmd, String mvcPath) {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
@@ -183,12 +208,23 @@ public class ExportImportProcessesDisplayContext {
 	private FDSActionDropdownItem _getDeleteFDSActionDropdownItem(
 		String endpoint) {
 
-		return new FDSActionDropdownItem(
-			LanguageUtil.get(
-				_httpServletRequest, "are-you-sure-you-want-to-delete-this"),
+		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
 			_BASE_PATH + endpoint, "trash", "delete",
 			LanguageUtil.get(_httpServletRequest, "delete"), "delete", null,
-			"async");
+			"async",
+			HashMapBuilder.<String, Object>put(
+				"status.code",
+				Arrays.asList(
+					BackgroundTaskConstants.STATUS_IN_PROGRESS,
+					BackgroundTaskConstants.STATUS_NEW,
+					BackgroundTaskConstants.STATUS_QUEUED)
+			).build());
+
+		fdsActionDropdownItem.setConfirmationMessage(
+			LanguageUtil.get(
+				_httpServletRequest, "are-you-sure-you-want-to-delete-this"));
+
+		return fdsActionDropdownItem;
 	}
 
 	private String _getFDSName(String companyFDSName, String fdsName) {

@@ -14,6 +14,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.link.model.AssetLink;
 import com.liferay.asset.link.service.AssetLinkLocalServiceUtil;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -183,6 +184,13 @@ public class InputAssetLinksDisplayContext {
 		}
 
 		return assetType;
+	}
+
+	public String getConnectedGroupIds() throws PortalException {
+		return StringUtil.merge(
+			SiteConnectedGroupGroupProviderUtil.
+				getCurrentAndAncestorSiteAndDepotGroupIds(
+					new long[] {_themeDisplay.getScopeGroupId()}));
 	}
 
 	public String getGroupDescriptiveName(AssetEntry assetEntry)

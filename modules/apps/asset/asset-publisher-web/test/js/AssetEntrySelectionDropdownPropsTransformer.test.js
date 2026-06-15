@@ -19,7 +19,7 @@ function open(additionalProps = {}) {
 		additionalProps: {
 			assetEntryTypes: ASSET_ENTRY_TYPES,
 			currentURL: 'currentURL',
-			groupId: 123,
+			groupIds: '123',
 			...additionalProps,
 		},
 		portletNamespace: 'ns',

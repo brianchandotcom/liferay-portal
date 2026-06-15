@@ -110,7 +110,7 @@ long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 						).put(
 							"currentURL", configurationRenderURL.toString()
 						).put(
-							"groupId", groupId
+							"groupIds", assetPublisherDisplayContext.getConnectedGroupIds(groupId)
 						).build()
 					%>'
 					aria-label="<%= title %>"

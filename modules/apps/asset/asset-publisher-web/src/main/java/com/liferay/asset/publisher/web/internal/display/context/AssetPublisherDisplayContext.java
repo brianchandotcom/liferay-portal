@@ -44,6 +44,7 @@ import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.asset.util.comparator.ClassTypeNameComparator;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -771,6 +772,13 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _compilerTagNames;
+	}
+
+	public String getConnectedGroupIds(long groupId) throws PortalException {
+		return StringUtil.merge(
+			SiteConnectedGroupGroupProviderUtil.
+				getCurrentAndAncestorSiteAndDepotGroupIds(
+					new long[] {groupId}));
 	}
 
 	public String getDDMStructureDisplayFieldValue() throws Exception {

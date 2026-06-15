@@ -14,7 +14,7 @@ export default function propsTransformer({
 }) {
 	const {
 		assetEntryTypes = [],
-		groupId,
+		groupIds,
 		refererClassNameId,
 		refererClassPK,
 		removeIcon,
@@ -44,7 +44,7 @@ export default function propsTransformer({
 				...getAssetEntriesItemSelectorProps({
 					assetEntryTypes,
 					excludedAssetEntry,
-					groupId,
+					groupIds,
 					portletNamespace,
 				}),
 				items: existingEntryIds.map((entryId) => ({

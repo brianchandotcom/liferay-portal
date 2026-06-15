@@ -72,6 +72,11 @@ const AssetTags = ({
 		checkPermission();
 	}, [apiURL]);
 
+	const selectedKeywords = useMemo(
+		() => (objectEntry?.keywords || []).map((name) => ({id: name, name})),
+		[objectEntry?.keywords]
+	);
+
 	const addKeyword = useCallback(
 		async (keyword: TKeyword) => {
 			const {keywords = []} = objectEntry;
@@ -149,10 +154,11 @@ const AssetTags = ({
 				<ItemSelector<TKeyword>
 					apiURL={apiURL}
 					disabled={!hasUpdatePermission}
+					items={selectedKeywords}
 					locator={{
 						id: 'id',
 						label: 'name',
-						value: 'externalReferenceCode',
+						value: 'name',
 					}}
 					onChange={setValue}
 					onItemsChange={(newItems: TKeyword[]) => {

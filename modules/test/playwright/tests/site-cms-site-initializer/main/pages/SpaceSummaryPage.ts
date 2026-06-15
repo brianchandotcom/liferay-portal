@@ -102,7 +102,13 @@ export class SpaceSummaryPage {
 
 		await expect(triggerText).toContainText(roleName);
 
+		await waitForAlert(this.page, 'role was successfully updated.', {
+			autoClose: false,
+		});
+
 		await this.closeButton.click();
+
+		await this.page.getByRole('dialog').waitFor({state: 'detached'});
 	}
 
 	async addUserOrUserGroup(name: string, type: UserOrUserGroupType) {

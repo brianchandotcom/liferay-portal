@@ -9,10 +9,10 @@ package com.liferay.portal.workflow.kaleo.definition;
  * @author Fabian Bouché
  * @author Iliyan Peychev
  */
-public class HTTPCallNode extends Node {
+public class HTTPRequestNode extends Node {
 
-	public HTTPCallNode(String description, String name) {
-		super(NodeType.HTTP_CALL, name, description);
+	public HTTPRequestNode(String description, String name) {
+		super(NodeType.HTTP_REQUEST, name, description);
 	}
 
 }

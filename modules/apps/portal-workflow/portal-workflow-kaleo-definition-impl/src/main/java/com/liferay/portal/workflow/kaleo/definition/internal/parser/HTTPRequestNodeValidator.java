@@ -7,7 +7,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
-import com.liferay.portal.workflow.kaleo.definition.HTTPCallNode;
+import com.liferay.portal.workflow.kaleo.definition.HTTPRequestNode;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.Setting;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
@@ -22,20 +22,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Iliyan Peychev
  */
 @Component(service = NodeValidator.class)
-public class HTTPCallNodeValidator extends BaseNodeValidator<HTTPCallNode> {
+public class HTTPRequestNodeValidator
+	extends BaseNodeValidator<HTTPRequestNode> {
 
 	@Override
 	public NodeType getNodeType() {
-		return NodeType.HTTP_CALL;
+		return NodeType.HTTP_REQUEST;
 	}
 
 	@Override
-	protected void doValidate(Definition definition, HTTPCallNode httpCallNode)
+	protected void doValidate(
+			Definition definition, HTTPRequestNode httpRequestNode)
 		throws KaleoDefinitionValidationException {
 
 		String url = null;
 
-		for (Setting setting : httpCallNode.getSettings()) {
+		for (Setting setting : httpRequestNode.getSettings()) {
 			if (Objects.equals(setting.getName(), "url")) {
 				url = setting.getValue();
 			}
@@ -45,18 +47,18 @@ public class HTTPCallNodeValidator extends BaseNodeValidator<HTTPCallNode> {
 			throw new KaleoDefinitionValidationException(
 				String.format(
 					"HTTP call node %s must set a \"url\"",
-					httpCallNode.getDefaultLabel()));
+					httpRequestNode.getDefaultLabel()));
 		}
 
-		if (httpCallNode.getOutgoingTransitionsCount() == 0) {
+		if (httpRequestNode.getOutgoingTransitionsCount() == 0) {
 			throw new KaleoDefinitionValidationException.
-				MustSetOutgoingTransition(httpCallNode.getDefaultLabel());
+				MustSetOutgoingTransition(httpRequestNode.getDefaultLabel());
 		}
 
-		if (httpCallNode.getOutgoingTransitionsCount() > 1) {
+		if (httpRequestNode.getOutgoingTransitionsCount() > 1) {
 			throw new KaleoDefinitionValidationException.
 				MustNotSetMultipleOutgoingTransitions(
-					httpCallNode.getDefaultLabel());
+					httpRequestNode.getDefaultLabel());
 		}
 	}
 

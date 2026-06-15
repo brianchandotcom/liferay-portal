@@ -280,7 +280,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="http-call">
+	<xs:element name="http-request">
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="abstract-workflow-node-complex-type">
@@ -445,7 +445,7 @@
 			<xs:element ref="ai-decision" />
 			<xs:element ref="condition" />
 			<xs:element ref="fork" />
-			<xs:element ref="http-call" />
+			<xs:element ref="http-request" />
 			<xs:element ref="join" />
 			<xs:element ref="join-xor" />
 			<xs:element ref="llm" />

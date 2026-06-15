@@ -17,7 +17,7 @@
 			</transition>
 		</transitions>
 	</state>
-	<http-call>
+	<http-request>
 		<name>createSite</name>
 		<labels>
 			<label language-id="en_US">
@@ -41,7 +41,7 @@
 			</transition>
 		</transitions>
 		<url>/o/headless-admin-site/v1.0/sites</url>
-	</http-call>
+	</http-request>
 	<state>
 		<name>end</name>
 	</state>

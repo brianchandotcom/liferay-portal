@@ -16,26 +16,36 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
 /**
  * @author Rafael Praxedes
  */
-public class AIHubCellUserTokenWebCacheItem implements WebCacheItem {
+public class AIHubCellUserTokenWebCacheItem extends BaseWebCacheItem {
 
 	public static String get(
 		LocalOAuthClient localOAuthClient, OAuth2Application oAuth2Application,
 		long userId) {
 
+		String key = StringBundler.concat(
+			AIHubCellUserTokenWebCacheItem.class.getName(), StringPool.POUND,
+			oAuth2Application.getCompanyId(), StringPool.POUND,
+			oAuth2Application.getOAuth2ApplicationId(), StringPool.POUND,
+			userId);
+
+		String accessToken = (String)WebCachePoolUtil.get(
+			key,
+			new AIHubCellUserTokenWebCacheItem(
+				localOAuthClient, oAuth2Application, userId));
+
+		if (!isExpired(accessToken)) {
+			return accessToken;
+		}
+
+		WebCachePoolUtil.remove(key);
+
 		return (String)WebCachePoolUtil.get(
-			StringBundler.concat(
-				AIHubCellUserTokenWebCacheItem.class.getName(),
-				StringPool.POUND, oAuth2Application.getCompanyId(),
-				StringPool.POUND, oAuth2Application.getOAuth2ApplicationId(),
-				StringPool.POUND, userId),
+			key,
 			new AIHubCellUserTokenWebCacheItem(
 				localOAuthClient, oAuth2Application, userId));
 	}
@@ -52,27 +62,23 @@ public class AIHubCellUserTokenWebCacheItem implements WebCacheItem {
 	@Override
 	public Object convert(String key) {
 		try {
-			String responseJSON = TransactionInvokerUtil.invoke(
+			String response = TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> _localOAuthClient.requestTokens(
 					_oAuth2Application, _userId));
 
-			if (Validator.isNull(responseJSON)) {
-				return null;
-			}
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(response);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				responseJSON);
+			long expirationTime = getExpirationTime(
+				jsonObject.getString("access_token"));
 
 			_refreshTime =
-				(long)(jsonObject.getLong("expires_in") * 0.8 * Time.SECOND);
+				(long)((expirationTime - System.currentTimeMillis()) * 0.8);
 
-			return jsonObject.get("access_token");
+			return jsonObject.getString("access_token");
 		}
 		catch (Throwable throwable) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(throwable);
-			}
+			_log.error(throwable);
 
 			return null;
 		}

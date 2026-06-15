@@ -302,8 +302,6 @@ public class PropertyValidator {
 			}
 		}
 
-		Collections.sort(unconsumedKeys);
-
 		return unconsumedKeys;
 	}
 

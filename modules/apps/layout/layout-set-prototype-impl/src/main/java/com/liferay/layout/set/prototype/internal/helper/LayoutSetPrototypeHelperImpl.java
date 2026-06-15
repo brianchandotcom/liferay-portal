@@ -689,8 +689,13 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	private boolean _isLayoutSetMergeable(Group group, LayoutSet layoutSet) {
-		return layoutSet.isLayoutSetPrototypeLinkActive() &&
-			!group.isLayoutPrototype() && !group.isLayoutSetPrototype();
+		if (layoutSet.isLayoutSetPrototypeLinkActive() &&
+			!group.isLayoutPrototype() && !group.isLayoutSetPrototype()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isLayoutSetPrototypeMergeBackgroundTaskExists(

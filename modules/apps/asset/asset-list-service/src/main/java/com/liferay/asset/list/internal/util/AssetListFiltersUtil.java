@@ -80,6 +80,10 @@ public class AssetListFiltersUtil {
 		};
 	}
 
+	private static String _aliasMetadataName(String name) {
+		return _metadataCommonFieldNames.getOrDefault(name, name);
+	}
+
 	private static String _emptyToNull(String value) {
 		if (Validator.isNull(value)) {
 			return null;
@@ -276,6 +280,11 @@ public class AssetListFiltersUtil {
 
 		if (objectField == null) {
 			return null;
+		}
+
+		if (objectField.isMetadata()) {
+			return _toCommonFieldClause(
+				jsonObject, _aliasMetadataName(objectField.getName()), locale);
 		}
 
 		NestedQuery nestedQuery = _toNestedQuery(
@@ -675,6 +684,12 @@ public class AssetListFiltersUtil {
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
 	private static final Set<String> _localizedCommonFieldNames =
 		SetUtil.fromArray(Field.TITLE);
+	private static final Map<String, String> _metadataCommonFieldNames =
+		HashMapBuilder.put(
+			"creator", Field.USER_NAME
+		).put(
+			"modifiedDate", Field.MODIFIED_DATE
+		).build();
 	private static final List<String> _relativeDateValues = Arrays.asList(
 		"last-year", "next-month", "now", "past-24-hours", "past-day",
 		"past-month", "past-week", "past-year");

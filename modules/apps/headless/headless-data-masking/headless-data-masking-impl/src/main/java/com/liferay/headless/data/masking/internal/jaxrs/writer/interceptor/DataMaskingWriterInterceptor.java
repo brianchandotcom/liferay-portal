@@ -54,13 +54,17 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 	public void aroundWriteTo(WriterInterceptorContext writerInterceptorContext)
 		throws IOException {
 
+		if (!_isRedactableMediaType(writerInterceptorContext.getMediaType())) {
+			writerInterceptorContext.proceed();
+
+			return;
+		}
+
 		List<String> dataMaskExternalReferenceCodes =
 			_getDataMaskExternalReferenceCodes(
 				_httpServletRequest.getHeader(_HEADER_DATA_MASKS));
 
-		if (dataMaskExternalReferenceCodes.isEmpty() ||
-			!_isRedactableMediaType(writerInterceptorContext.getMediaType())) {
-
+		if (dataMaskExternalReferenceCodes.isEmpty()) {
 			writerInterceptorContext.proceed();
 
 			return;

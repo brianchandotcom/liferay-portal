@@ -9,15 +9,20 @@ import com.liferay.analytics.settings.rest.dto.v1_0.Channel;
 import com.liferay.analytics.settings.rest.dto.v1_0.DataSource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.site.dsr.site.initializer.constants.DSRFolderConstants;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -75,6 +80,110 @@ public class ObjectEntryModelListenerTest {
 			_userLocalService.getUser(Mockito.anyLong())
 		).thenReturn(
 			Mockito.mock(User.class)
+		);
+	}
+
+	@Test
+	public void testCopyFileEntries() throws Exception {
+		Mockito.when(
+			_group.getGroupId()
+		).thenReturn(
+			_GROUP_ID
+		);
+
+		Mockito.when(
+			_dlFolderLocalService.fetchDLFolderByExternalReferenceCode(
+				DSRFolderConstants.EXTERNAL_REFERENCE_CODE_DSR_DOCUMENTS,
+				_GROUP_ID)
+		).thenReturn(
+			_dlFolder
+		);
+
+		long folderId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_dlFolder.getFolderId()
+		).thenReturn(
+			folderId
+		);
+
+		long fileEntryId1 = RandomTestUtil.randomLong();
+		String fileEntryTitle1 = RandomTestUtil.randomString();
+
+		FileEntry fileEntry1 = Mockito.mock(FileEntry.class);
+
+		Mockito.when(
+			fileEntry1.getTitle()
+		).thenReturn(
+			fileEntryTitle1
+		);
+
+		Mockito.when(
+			_dlAppService.getFileEntry(fileEntryId1)
+		).thenReturn(
+			fileEntry1
+		);
+
+		long fileEntryId2 = RandomTestUtil.randomLong();
+
+		FileEntry fileEntry2 = Mockito.mock(FileEntry.class);
+
+		Mockito.when(
+			fileEntry2.getTitle()
+		).thenReturn(
+			fileEntryTitle1
+		);
+
+		Mockito.when(
+			_dlAppService.getFileEntry(fileEntryId2)
+		).thenReturn(
+			fileEntry2
+		);
+
+		long fileEntryId3 = RandomTestUtil.randomLong();
+
+		FileEntry fileEntry3 = Mockito.mock(FileEntry.class);
+
+		Mockito.when(
+			fileEntry3.getFileEntryId()
+		).thenReturn(
+			fileEntryId3
+		);
+
+		Mockito.when(
+			fileEntry3.getTitle()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			_dlAppService.getFileEntries(_GROUP_ID, folderId)
+		).thenReturn(
+			Arrays.asList(fileEntry2, fileEntry3)
+		);
+
+		ReflectionTestUtil.invoke(
+			_objectEntryModelListener, "_copyFileEntries",
+			new Class<?>[] {long[].class, Group.class},
+			new long[] {fileEntryId1}, _group);
+
+		Mockito.verify(
+			_dlAppService, Mockito.times(1)
+		).deleteFileEntry(
+			Mockito.anyLong()
+		);
+
+		Mockito.verify(
+			_dlAppService
+		).deleteFileEntry(
+			fileEntryId3
+		);
+
+		Mockito.verify(
+			_dlAppService, Mockito.never()
+		).copyFileEntry(
+			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong(),
+			Mockito.anyLong(), Mockito.any(), Mockito.any()
 		);
 	}
 
@@ -204,6 +313,10 @@ public class ObjectEntryModelListenerTest {
 		Mockito.mock(ChannelResource.Builder.class);
 	private final ChannelResource.Factory _channelResourceFactory =
 		Mockito.mock(ChannelResource.Factory.class);
+	private final DLAppService _dlAppService = Mockito.mock(DLAppService.class);
+	private final DLFolder _dlFolder = Mockito.mock(DLFolder.class);
+	private final DLFolderLocalService _dlFolderLocalService = Mockito.mock(
+		DLFolderLocalService.class);
 	private final Group _group = Mockito.mock(Group.class);
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);

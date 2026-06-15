@@ -834,7 +834,7 @@ Output ONLY valid JSON, with no Markdown code fence and no surrounding prose: {"
 
 _IGNORED_FILENAMES="CHANGELOG.md package-lock.json package.json"
 _IGNORED_PATTERNS="(^|/)Language_.*[.]properties$"
-_IGNORED_SUFFIXES="css js lock lockfile macro path scss snap testcase ts tsx"
+_IGNORED_SUFFIXES="css js jsx lock lockfile macro path scss snap testcase ts tsx"
 #_MODELS=(deepseek-v4-flash deepseek-v4-pro glm-5 mimo-v2-5 minimax-m2-7)
 _MODELS=(sonnet-4.6)
 _NAME_ONLY_SUFFIXES="bmp gif ico jpeg jpg png svg webp"

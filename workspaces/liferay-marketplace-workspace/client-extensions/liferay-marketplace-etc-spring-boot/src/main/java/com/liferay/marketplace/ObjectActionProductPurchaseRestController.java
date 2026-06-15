@@ -64,9 +64,30 @@ public class ObjectActionProductPurchaseRestController
 		Order order = _marketplaceService.getOrder(
 			commerceOrderJSONObject.getLong("id"));
 
+		String orderTypeExternalReferenceCode =
+			order.getOrderTypeExternalReferenceCode();
+
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				_marketplaceService.getOrderProductId(order));
+
 		int paymentStatus = commerceOrderJSONObject.getInt("paymentStatus");
 
-		_postNotificationQueueEntry(order);
+		if (Objects.equals(orderTypeExternalReferenceCode, "AI_HUB") &&
+			(commerceOrderJSONObject.getInt("orderStatus") !=
+				MarketplaceConstants.ORDER_STATUS_COMPLETED) &&
+			(paymentStatus ==
+				MarketplaceConstants.ORDER_PAYMENT_STATUS_AUTHORIZED)) {
+
+			_marketplaceService.updateOrder(
+				null, order.getId(),
+				MarketplaceConstants.ORDER_STATUS_PROCESSING);
+
+			_setUpSalesforceOpportunity(
+				productSpecificationsMap.get("license-type"), order);
+
+			return;
+		}
 
 		if ((paymentStatus !=
 				MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED) &&
@@ -83,14 +104,10 @@ public class ObjectActionProductPurchaseRestController
 			return;
 		}
 
+		_postNotificationQueueEntry(order);
+
 		_marketplaceService.updateOrder(
 			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
-
-		String orderTypeExternalReferenceCode =
-			order.getOrderTypeExternalReferenceCode();
-		Map<String, String> productSpecificationsMap =
-			_marketplaceService.getProductSpecificationsMap(
-				_marketplaceService.getOrderProductId(order));
 
 		if (Objects.equals(orderTypeExternalReferenceCode, "ADDONS")) {
 			_setUpAddOns(jwt, order, productSpecificationsMap);
@@ -439,13 +456,6 @@ public class ObjectActionProductPurchaseRestController
 
 		String solutionType = productSpecificationsMap.get("solution-type");
 
-		if (Objects.equals(solutionType, "ai-hub")) {
-			_setUpCustomAddOn(
-				productSpecificationsMap.get("license-type"), order);
-
-			return;
-		}
-
 		if (Objects.equals(solutionType, "analytics")) {
 			_setUpAnalyticsAddOn(jwt, order);
 
@@ -497,7 +507,34 @@ public class ObjectActionProductPurchaseRestController
 		}
 	}
 
-	private void _setUpCustomAddOn(String licenseType, Order order)
+	private void _setUpLDPAddOn(Jwt jwt, Order order) throws Exception {
+		ProductPurchase[] productPurchases =
+			_koroneikiService.postAccountProductPurchases(
+				jwt, "3 Months Limited Beta", order);
+
+		ProductPurchase productPurchase = productPurchases[0];
+
+		if (productPurchase == null) {
+			return;
+		}
+
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+			order);
+
+		_marketplaceService.updateOrder(
+			HashMapBuilder.put(
+				"order-metadata",
+				orderMetadataJSONObject.put(
+					"analyticsProject",
+					_analyticsService.provisionAnalyticsProject(
+						orderMetadataJSONObject.getJSONObject("analyticsForm"),
+						"internal", order.getAccountExternalReferenceCode())
+				).toString()
+			).build(),
+			order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
+	}
+
+	private void _setUpSalesforceOpportunity(String licenseType, Order order)
 		throws Exception {
 
 		OrderItem[] orderItems = order.getOrderItems();
@@ -542,33 +579,6 @@ public class ObjectActionProductPurchaseRestController
 						));
 				}
 			});
-	}
-
-	private void _setUpLDPAddOn(Jwt jwt, Order order) throws Exception {
-		ProductPurchase[] productPurchases =
-			_koroneikiService.postAccountProductPurchases(
-				jwt, "3 Months Limited Beta", order);
-
-		ProductPurchase productPurchase = productPurchases[0];
-
-		if (productPurchase == null) {
-			return;
-		}
-
-		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
-			order);
-
-		_marketplaceService.updateOrder(
-			HashMapBuilder.put(
-				"order-metadata",
-				orderMetadataJSONObject.put(
-					"analyticsProject",
-					_analyticsService.provisionAnalyticsProject(
-						orderMetadataJSONObject.getJSONObject("analyticsForm"),
-						"internal", order.getAccountExternalReferenceCode())
-				).toString()
-			).build(),
-			order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
 	}
 
 	private static final Log _log = LogFactory.getLog(

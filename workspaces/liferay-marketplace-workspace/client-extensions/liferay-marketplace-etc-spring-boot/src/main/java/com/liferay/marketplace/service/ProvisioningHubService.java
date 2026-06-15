@@ -33,7 +33,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Caleb Hall
@@ -48,30 +47,19 @@ public class ProvisioningHubService extends BaseService {
 
 		Product product = productPurchase.getProduct();
 
+		String productName = product.getName();
+
+		if (productName.startsWith("AI Hub")) {
+			_provisionAiHUB(koroneikiAccount, order);
+
+			return;
+		}
+
 		if (Objects.equals(
-				product.getName(), "Liferay Data Platform (Private Beta)")) {
+				productName, "Liferay Data Platform (Private Beta)")) {
 
 			_provisionLDP(koroneikiAccount, order);
 		}
-	}
-
-	public String provisionAIHub(JSONObject jsonObject) {
-		String response = post(
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"external-ai-hub"),
-			jsonObject.toString(),
-			UriComponentsBuilder.fromUriString(
-				_externalAIHubHomePageURL.toString()
-			).path(
-				"/o/ai-hub/v1.0/provisioning"
-			).build(
-			).toUri());
-
-		if (_log.isInfoEnabled()) {
-			_log.info("AI Hub provisioned " + jsonObject);
-		}
-
-		return response;
 	}
 
 	private Contact _getContact(String key) throws Exception {
@@ -81,6 +69,8 @@ public class ProvisioningHubService extends BaseService {
 		for (Contact contact : contactsPage.getItems()) {
 			for (ContactRole contactRole : contact.getContactRoles()) {
 				if (Objects.equals(
+						contactRole.getName(), "AI Hub Administrator") ||
+					Objects.equals(
 						contactRole.getName(), "LDP Administrator")) {
 
 					return contact;
@@ -89,6 +79,19 @@ public class ProvisioningHubService extends BaseService {
 		}
 
 		return null;
+	}
+
+	private String _getContactEmailAddress(
+			String accountKey, String defaultEmailAddress)
+		throws Exception {
+
+		Contact contact = _getContact(accountKey);
+
+		if (contact == null) {
+			return defaultEmailAddress;
+		}
+
+		return contact.getEmailAddress();
 	}
 
 	private String _getServerLocation(String dataCenterLocation) {
@@ -113,6 +116,84 @@ public class ProvisioningHubService extends BaseService {
 		}
 
 		return "us-west1-s2-c1";
+	}
+
+	private void _provisionAiHUB(Account koroneikiAccount, Order order)
+		throws Exception {
+
+		Contact contact = _getContact(koroneikiAccount.getKey());
+
+		if (contact == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Missing AI Hub Contact " + koroneikiAccount);
+			}
+
+			return;
+		}
+
+		Map<String, String> properties = koroneikiAccount.getProperties();
+
+		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
+			account = order.getAccount();
+
+		JSONObject aiHubJSONObject = _aiHubService.provision(
+			new JSONObject(
+			).put(
+				"accountEntryExternalReferenceCode",
+				order.getAccountExternalReferenceCode()
+			).put(
+				"accountEntryName", properties.get("aiHubAccountName")
+			).put(
+				"userAccounts",
+				new JSONArray(
+				).put(
+					new JSONObject(
+					).put(
+						"emailAddress", contact.getEmailAddress()
+					).put(
+						"firstName", contact.getFirstName()
+					).put(
+						"lastName", contact.getLastName()
+					)
+				)
+			));
+
+		if (aiHubJSONObject == null) {
+			return;
+		}
+
+		_marketplaceService.putAIHubApplication(
+			"AI-HUB-" + order.getAccountExternalReferenceCode(),
+			new JSONObject(
+			).put(
+				"accountEntryId", aiHubJSONObject.getInt("accountEntryId")
+			).put(
+				"accountName", properties.get("aiHubAccountName")
+			).put(
+				"administratorEmailAddress", contact.getEmailAddress()
+			).put(
+				"r_accountToAIHubApplication_accountEntryERC",
+				account.getExternalReferenceCode()
+			).put(
+				"r_orderToAIHubApplication_commerceOrderERC",
+				order.getExternalReferenceCode()
+			));
+
+		_marketplaceService.completeOrder(
+			HashMapBuilder.put(
+				"order-metadata",
+				MarketplaceUtil.getOrderMetadata(
+					order
+				).put(
+					"aiHub", aiHubJSONObject
+				).put(
+					"salesforceProjectId",
+					MarketplaceUtil.getExternalLinkValue(
+						koroneikiAccount.getExternalLinks(), "salesforce",
+						"project")
+				).toString()
+			).build(),
+			order.getId(), order.getPaymentStatus());
 	}
 
 	private void _provisionLDP(Account koroneikiAccount, Order order)
@@ -143,14 +224,6 @@ public class ProvisioningHubService extends BaseService {
 				securityContactEmailAddress.split(","));
 		}
 
-		Contact contact = _getContact(koroneikiAccount.getKey());
-
-		String ownerEmailAddress = securityContactEmailAddress;
-
-		if (contact != null) {
-			ownerEmailAddress = contact.getEmailAddress();
-		}
-
 		String analyticsProject = _analyticsService.provision(
 			new JSONObject(
 			).put(
@@ -163,7 +236,9 @@ public class ProvisioningHubService extends BaseService {
 			).put(
 				"name", properties.get("ldpWorkspaceName")
 			).put(
-				"ownerEmailAddress", ownerEmailAddress
+				"ownerEmailAddress",
+				_getContactEmailAddress(
+					koroneikiAccount.getKey(), securityContactEmailAddress)
 			).put(
 				"serverLocation",
 				_getServerLocation(properties.get("dataCenterLocation"))
@@ -183,6 +258,9 @@ public class ProvisioningHubService extends BaseService {
 
 	private static final Log _log = LogFactory.getLog(
 		ProvisioningHubService.class);
+
+	@Autowired
+	private AIHubService _aiHubService;
 
 	@Autowired
 	private AnalyticsService _analyticsService;

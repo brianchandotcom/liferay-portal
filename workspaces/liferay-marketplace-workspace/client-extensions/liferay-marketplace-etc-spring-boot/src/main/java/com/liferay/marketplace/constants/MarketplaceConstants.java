@@ -30,6 +30,11 @@ public class MarketplaceConstants {
 
 	public static final String ORDER_PAYMENT_METHOD_PAYPAL_LABEL = "PayPal";
 
+	public static final int ORDER_PAYMENT_STATUS_AUTHORIZED = 2;
+
+	public static final String ORDER_PAYMENT_STATUS_AUTHORIZED_LABEL =
+		"Authorized";
+
 	public static final int ORDER_PAYMENT_STATUS_COMPLETED = 0;
 
 	public static final int ORDER_PAYMENT_STATUS_NOT_REQUIRED = 23;
@@ -94,6 +99,10 @@ public class MarketplaceConstants {
 	}
 
 	public static String getOrderPaymentStatusLabel(int paymentStatus) {
+		if (paymentStatus == ORDER_PAYMENT_STATUS_AUTHORIZED) {
+			return ORDER_PAYMENT_STATUS_AUTHORIZED_LABEL;
+		}
+
 		if (paymentStatus == ORDER_PAYMENT_STATUS_COMPLETED) {
 			return PAYMENT_STATUS_COMPLETED_LABEL;
 		}

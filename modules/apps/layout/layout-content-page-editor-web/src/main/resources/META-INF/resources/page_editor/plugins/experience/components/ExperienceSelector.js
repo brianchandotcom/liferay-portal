@@ -4,7 +4,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -309,6 +309,20 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 		debouncedSetOpen(false);
 	};
 
+	const onCreateVariations = () => {
+		const url = new URL(
+			config.editElementVariationsURL,
+			window.location.origin
+		);
+
+		url.searchParams.set(
+			`${config.portletNamespace}segmentsExperienceId`,
+			selectedExperience.segmentsExperienceId
+		);
+
+		navigate(url.href);
+	};
+
 	const onEditExperience = (experienceData) => {
 		const {
 			name,
@@ -432,49 +446,62 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 
 	return (
 		<>
-			<ClayButton
-				aria-controls={experienceSelectorContentId}
-				aria-expanded={open}
-				aria-haspopup="true"
-				aria-label={`${Liferay.Language.get('experience')}: ${
-					selectedExperience.name
-				}`}
-				className="form-control-select page-editor__experience-selector pr-4 text-left text-truncate"
-				disabled={!canUpdateExperiences}
-				displayType="secondary"
-				onClick={() => debouncedSetOpen(!open)}
-				ref={buttonRef}
-				size="sm"
-				type="button"
-			>
-				<ClayLayout.ContentRow verticalAlign="center">
-					<ClayLayout.ContentCol expand>
-						<span className="text-truncate">
-							{selectedExperience.name}
-						</span>
-					</ClayLayout.ContentCol>
+			<ClayButton.Group className="page-editor__experience-selector-group">
+				<ClayButton
+					aria-controls={experienceSelectorContentId}
+					aria-expanded={open}
+					aria-haspopup="true"
+					aria-label={`${Liferay.Language.get('experience')}: ${
+						selectedExperience.name
+					}`}
+					className="form-control-select page-editor__experience-selector pr-4 text-left text-truncate"
+					disabled={!canUpdateExperiences}
+					displayType="secondary"
+					onClick={() => debouncedSetOpen(!open)}
+					ref={buttonRef}
+					size="sm"
+					type="button"
+				>
+					<ClayLayout.ContentRow verticalAlign="center">
+						<ClayLayout.ContentCol expand>
+							<span className="text-truncate">
+								{selectedExperience.name}
+							</span>
+						</ClayLayout.ContentCol>
 
-					{experiences.length > 1 && (
+						{experiences.length > 1 && (
+							<ClayLayout.ContentCol>
+								{isSelectedExperienceActive ? (
+									<ClayLabel displayType="success">
+										{Liferay.Language.get('active')}
+									</ClayLabel>
+								) : (
+									<ClayLabel displayType="secondary">
+										{Liferay.Language.get('inactive')}
+									</ClayLabel>
+								)}
+							</ClayLayout.ContentCol>
+						)}
+
 						<ClayLayout.ContentCol>
-							{isSelectedExperienceActive ? (
-								<ClayLabel displayType="success">
-									{Liferay.Language.get('active')}
-								</ClayLabel>
-							) : (
-								<ClayLabel displayType="secondary">
-									{Liferay.Language.get('inactive')}
-								</ClayLabel>
+							{selectedExperience.hasLockedSegmentsExperiment && (
+								<ClayIcon symbol="lock" />
 							)}
 						</ClayLayout.ContentCol>
-					)}
+					</ClayLayout.ContentRow>
+				</ClayButton>
 
-					<ClayLayout.ContentCol>
-						{selectedExperience.hasLockedSegmentsExperiment && (
-							<ClayIcon symbol="lock" />
-						)}
-					</ClayLayout.ContentCol>
-				</ClayLayout.ContentRow>
-			</ClayButton>
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('create-variations')}
+					className="align-self-stretch h-auto"
+					disabled={!canUpdateExperiences}
+					displayType="secondary"
+					onClick={onCreateVariations}
+					size="sm"
+					symbol="nodes"
+					title={Liferay.Language.get('create-variations')}
+				/>
+			</ClayButton.Group>
 
 			{open && (
 				<ReactPortal className="cadmin">

@@ -154,8 +154,8 @@ public class MCPServerServlet extends HttpServlet {
 
 		String mcpServerProfileName = (String)values.get("name");
 
-		long profileObjectEntryId =
-			mcpServerProfileObjectEntry.getObjectEntryId();
+		String mcpServerProfileExternalReferenceCode =
+			mcpServerProfileObjectEntry.getExternalReferenceCode();
 
 		HttpServletStatelessServerTransport
 			httpServletStatelessServerTransport =
@@ -189,8 +189,8 @@ public class MCPServerServlet extends HttpServlet {
 						_getTool(httpServletRequest, toolName, toolSetName),
 						(mcpTransportContext, callToolRequest) -> _call(
 							mcpTransportContext, callToolRequest.arguments(),
-							companyId, profileObjectEntryId, toolName,
-							toolSetName));
+							companyId, mcpServerProfileExternalReferenceCode,
+							toolName, toolSetName));
 				});
 
 		McpStatelessSyncServer mcpStatelessSyncServer = McpServer.sync(
@@ -246,8 +246,8 @@ public class MCPServerServlet extends HttpServlet {
 
 	private McpSchema.CallToolResult _call(
 		McpTransportContext mcpTransportContext, Object inputObject,
-		long companyId, long profileObjectEntryId, String toolName,
-		String toolSetName) {
+		long companyId, String mcpServerProfileExternalReferenceCode,
+		String toolName, String toolSetName) {
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)mcpTransportContext.get("httpServletRequest");
@@ -255,7 +255,7 @@ public class MCPServerServlet extends HttpServlet {
 		try {
 			Response response = ToolSetUtil.invokeTool(
 				_getDataMaskExternalReferenceCodes(
-					companyId, profileObjectEntryId),
+					companyId, mcpServerProfileExternalReferenceCode),
 				httpServletRequest, inputObject, toolName, toolSetName);
 
 			int responseCode = response.getStatus();
@@ -304,7 +304,7 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private List<String> _getDataMaskExternalReferenceCodes(
-			long companyId, long profileObjectEntryId)
+			long companyId, String mcpServerProfileExternalReferenceCode)
 		throws PortalException {
 
 		ObjectDefinition profileDataMaskObjectDefinition =
@@ -323,7 +323,8 @@ public class MCPServerServlet extends HttpServlet {
 				0, companyId, profileDataMaskObjectDefinition.getUserId(),
 				profileDataMaskObjectDefinition.getObjectDefinitionId(),
 				_filterFactory.create(
-					"mcpServerProfileId eq " + profileObjectEntryId,
+					"mcpServerProfileExternalReferenceCode eq '" +
+						mcpServerProfileExternalReferenceCode + "'",
 					profileDataMaskObjectDefinition),
 				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 

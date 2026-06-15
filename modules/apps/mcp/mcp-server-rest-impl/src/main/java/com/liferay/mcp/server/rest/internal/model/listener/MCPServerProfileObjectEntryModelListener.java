@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import jakarta.servlet.Servlet;
@@ -86,7 +85,8 @@ public class MCPServerProfileObjectEntryModelListener
 			return;
 		}
 
-		long profileObjectEntryId = objectEntry.getObjectEntryId();
+		String mcpServerProfileExternalReferenceCode =
+			objectEntry.getExternalReferenceCode();
 
 		for (ObjectEntry profileDataMaskObjectEntry :
 				_objectEntryLocalService.getObjectEntries(
@@ -96,10 +96,10 @@ public class MCPServerProfileObjectEntryModelListener
 			Map<String, Serializable> values =
 				profileDataMaskObjectEntry.getValues();
 
-			long profileId = GetterUtil.getLong(
-				values.get("mcpServerProfileId"));
+			if (!Objects.equals(
+					mcpServerProfileExternalReferenceCode,
+					values.get("mcpServerProfileExternalReferenceCode"))) {
 
-			if (profileId != profileObjectEntryId) {
 				continue;
 			}
 
@@ -128,7 +128,8 @@ public class MCPServerProfileObjectEntryModelListener
 						StringBundler.concat(
 							"Unable to delete profile data mask ",
 							profileDataMaskObjectEntry.getObjectEntryId(),
-							" for profile ", profileObjectEntryId),
+							" for profile ",
+							mcpServerProfileExternalReferenceCode),
 						portalException);
 				}
 			}
@@ -183,8 +184,8 @@ public class MCPServerProfileObjectEntryModelListener
 					).put(
 						"executionOrder", executionOrder
 					).put(
-						"mcpServerProfileId",
-						profileObjectEntry.getObjectEntryId()
+						"mcpServerProfileExternalReferenceCode",
+						profileObjectEntry.getExternalReferenceCode()
 					).build(),
 					new ServiceContext());
 

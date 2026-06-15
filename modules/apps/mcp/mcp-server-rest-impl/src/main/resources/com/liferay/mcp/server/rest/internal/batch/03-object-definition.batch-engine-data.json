@@ -56,19 +56,20 @@
 					"type": "Integer"
 				},
 				{
-					"DBType": "Long",
-					"businessType": "Integer",
-					"defaultValue": "0",
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "null",
 					"indexed": true,
 					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "MCP Server Profile ID"
+						"en_US": "MCP Server Profile External Reference Code"
 					},
-					"name": "mcpServerProfileId",
+					"name": "mcpServerProfileExternalReferenceCode",
 					"required": true,
 					"state": false,
 					"system": true,
-					"type": "Long"
+					"type": "String"
 				},
 				{
 					"DBType": "String",

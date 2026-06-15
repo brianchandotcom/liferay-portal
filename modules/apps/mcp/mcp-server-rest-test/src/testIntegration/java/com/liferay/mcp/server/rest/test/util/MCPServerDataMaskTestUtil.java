@@ -74,8 +74,8 @@ public class MCPServerDataMaskTestUtil {
 	}
 
 	public static ObjectEntry addProfileDataMask(
-			long profileObjectEntryId, long maskObjectEntryId,
-			int executionOrder)
+			String mcpServerProfileExternalReferenceCode,
+			long maskObjectEntryId, int executionOrder)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -97,7 +97,8 @@ public class MCPServerDataMaskTestUtil {
 			).put(
 				"executionOrder", executionOrder
 			).put(
-				"mcpServerProfileId", profileObjectEntryId
+				"mcpServerProfileExternalReferenceCode",
+				mcpServerProfileExternalReferenceCode
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 	}

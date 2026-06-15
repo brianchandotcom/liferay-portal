@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -117,7 +116,7 @@ public class MCPServerDataMaskingTest {
 
 		ObjectEntry profileDataMaskObjectEntry =
 			MCPServerDataMaskTestUtil.addProfileDataMask(
-				profileObjectEntry.getObjectEntryId(),
+				profileObjectEntry.getExternalReferenceCode(),
 				customMaskObjectEntry.getObjectEntryId(), 1);
 
 		PermissionChecker originalPermissionChecker =
@@ -160,7 +159,7 @@ public class MCPServerDataMaskingTest {
 		ObjectEntry emailMaskObjectEntry = _findSystemMask("Email Address");
 
 		ObjectEntry emailProfileDataMaskObjectEntry = _findProfileDataMask(
-			profileObjectEntry.getObjectEntryId(),
+			profileObjectEntry.getExternalReferenceCode(),
 			emailMaskObjectEntry.getObjectEntryId());
 
 		MCPServerDataMaskTestUtil.removeProfileDataMask(
@@ -189,7 +188,7 @@ public class MCPServerDataMaskingTest {
 		ObjectEntry emailMaskObjectEntry = _findSystemMask("Email Address");
 
 		MCPServerDataMaskTestUtil.addProfileDataMask(
-			profileObjectEntry.getObjectEntryId(),
+			profileObjectEntry.getExternalReferenceCode(),
 			emailMaskObjectEntry.getObjectEntryId(), 1);
 
 		String responseText = _callListProfilesTool(profileName);
@@ -215,7 +214,7 @@ public class MCPServerDataMaskingTest {
 		ObjectEntry emailMaskObjectEntry = _findSystemMask("Email Address");
 
 		MCPServerDataMaskTestUtil.addProfileDataMask(
-			profileObjectEntry.getObjectEntryId(),
+			profileObjectEntry.getExternalReferenceCode(),
 			emailMaskObjectEntry.getObjectEntryId(), 1);
 
 		McpSchema.CallToolResult callToolResult = _callTool(
@@ -278,7 +277,7 @@ public class MCPServerDataMaskingTest {
 
 		ObjectEntry profileDataMaskObjectEntry =
 			MCPServerDataMaskTestUtil.addProfileDataMask(
-				profileObjectEntry.getObjectEntryId(),
+				profileObjectEntry.getExternalReferenceCode(),
 				emailMaskObjectEntry.getObjectEntryId(), 1);
 
 		try {
@@ -320,10 +319,12 @@ public class MCPServerDataMaskingTest {
 			profileName, "Contact: " + _SAMPLE_EMAIL,
 			"mcp-server-profiles getMCPServerProfilesPage");
 
-		long profileObjectEntryId = profileObjectEntry.getObjectEntryId();
+		String mcpServerProfileExternalReferenceCode =
+			profileObjectEntry.getExternalReferenceCode();
 
 		Assert.assertEquals(
-			_SYSTEM_MASK_COUNT, _countProfileDataMasks(profileObjectEntryId));
+			_SYSTEM_MASK_COUNT,
+			_countProfileDataMasks(mcpServerProfileExternalReferenceCode));
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -339,7 +340,8 @@ public class MCPServerDataMaskingTest {
 				originalPermissionChecker);
 		}
 
-		Assert.assertEquals(0, _countProfileDataMasks(profileObjectEntryId));
+		Assert.assertEquals(
+			0, _countProfileDataMasks(mcpServerProfileExternalReferenceCode));
 	}
 
 	@FeatureFlags(
@@ -447,7 +449,8 @@ public class MCPServerDataMaskingTest {
 
 		Assert.assertEquals(
 			_SYSTEM_MASK_COUNT,
-			_countProfileDataMasks(profileObjectEntry.getObjectEntryId()));
+			_countProfileDataMasks(
+				profileObjectEntry.getExternalReferenceCode()));
 	}
 
 	@FeatureFlags(
@@ -461,7 +464,7 @@ public class MCPServerDataMaskingTest {
 		Assert.assertEquals(
 			_SYSTEM_MASK_COUNT,
 			_countProfileDataMasks(
-				defaultProfileObjectEntry.getObjectEntryId()));
+				defaultProfileObjectEntry.getExternalReferenceCode()));
 	}
 
 	private String _callListProfilesTool(String profileName) throws Exception {
@@ -503,7 +506,8 @@ public class MCPServerDataMaskingTest {
 		}
 	}
 
-	private int _countProfileDataMasks(long profileObjectEntryId)
+	private int _countProfileDataMasks(
+			String mcpServerProfileExternalReferenceCode)
 		throws Exception {
 
 		ObjectDefinition profileDataMaskObjectDefinition =
@@ -522,10 +526,10 @@ public class MCPServerDataMaskingTest {
 			Map<String, Serializable> values =
 				profileDataMaskObjectEntry.getValues();
 
-			long relationshipProfileId = GetterUtil.getLong(
-				values.get("mcpServerProfileId"));
+			if (Objects.equals(
+					mcpServerProfileExternalReferenceCode,
+					values.get("mcpServerProfileExternalReferenceCode"))) {
 
-			if (relationshipProfileId == profileObjectEntryId) {
 				count++;
 			}
 		}
@@ -559,7 +563,8 @@ public class MCPServerDataMaskingTest {
 	}
 
 	private ObjectEntry _findProfileDataMask(
-			long profileObjectEntryId, long maskObjectEntryId)
+			String mcpServerProfileExternalReferenceCode,
+			long maskObjectEntryId)
 		throws Exception {
 
 		ObjectDefinition profileDataMaskObjectDefinition =
@@ -576,12 +581,12 @@ public class MCPServerDataMaskingTest {
 			Map<String, Serializable> values =
 				profileDataMaskObjectEntry.getValues();
 
-			long profileId = GetterUtil.getLong(
-				values.get("mcpServerProfileId"));
 			String profileDataMaskERC = (String)values.get(
 				"dataMaskExternalReferenceCode");
 
-			if ((profileId == profileObjectEntryId) &&
+			if (Objects.equals(
+					mcpServerProfileExternalReferenceCode,
+					values.get("mcpServerProfileExternalReferenceCode")) &&
 				Objects.equals(
 					profileDataMaskERC,
 					_objectEntryLocalService.fetchObjectEntry(

@@ -221,7 +221,7 @@ public class MCPServerDataMaskAuditTest {
 
 			ObjectEntry profileDataMaskObjectEntry =
 				MCPServerDataMaskTestUtil.addProfileDataMask(
-					profileObjectEntry.getObjectEntryId(),
+					profileObjectEntry.getExternalReferenceCode(),
 					customMaskObjectEntry.getObjectEntryId(), 1);
 
 			PermissionChecker originalPermissionChecker =
@@ -286,7 +286,7 @@ public class MCPServerDataMaskAuditTest {
 
 			ObjectEntry profileDataMaskObjectEntry =
 				MCPServerDataMaskTestUtil.addProfileDataMask(
-					profileObjectEntry.getObjectEntryId(),
+					profileObjectEntry.getExternalReferenceCode(),
 					customMaskObjectEntry.getObjectEntryId(), 1);
 
 			PermissionChecker originalPermissionChecker =
@@ -349,7 +349,7 @@ public class MCPServerDataMaskAuditTest {
 
 			ObjectEntry profileDataMaskObjectEntry =
 				MCPServerDataMaskTestUtil.addProfileDataMask(
-					profileObjectEntry.getObjectEntryId(),
+					profileObjectEntry.getExternalReferenceCode(),
 					customMaskObjectEntry.getObjectEntryId(), 1);
 
 			List<AuditEvent> auditEvents = _getAuditEvents(
@@ -367,7 +367,8 @@ public class MCPServerDataMaskAuditTest {
 				additionalInfoJSONObject.toString(),
 				additionalInfoJSONObject.has("executionOrder"));
 			Assert.assertTrue(
-				additionalInfoJSONObject.has("mcpServerProfileId"));
+				additionalInfoJSONObject.has(
+					"mcpServerProfileExternalReferenceCode"));
 		}
 	}
 
@@ -389,7 +390,7 @@ public class MCPServerDataMaskAuditTest {
 
 			ObjectEntry profileDataMaskObjectEntry =
 				MCPServerDataMaskTestUtil.addProfileDataMask(
-					profileObjectEntry.getObjectEntryId(),
+					profileObjectEntry.getExternalReferenceCode(),
 					customMaskObjectEntry.getObjectEntryId(), 1);
 
 			MCPServerDataMaskTestUtil.removeProfileDataMask(

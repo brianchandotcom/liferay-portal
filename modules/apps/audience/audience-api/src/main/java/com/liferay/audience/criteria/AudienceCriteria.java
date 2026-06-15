@@ -15,18 +15,18 @@ import java.util.List;
 public class AudienceCriteria {
 
 	public AudienceCriteria(
-		String key, String label, String icon, List<Option> options,
+		String icon, String key, String label, List<Option> options,
 		Type type) {
 
+		_icon = icon;
 		_key = key;
 		_label = label;
-		_icon = icon;
 		_options = options;
 		_type = type;
 	}
 
-	public AudienceCriteria(String key, String label, String icon, Type type) {
-		this(key, label, icon, null, type);
+	public AudienceCriteria(String icon, String key, String label, Type type) {
+		this(icon, key, label, null, type);
 	}
 
 	public String getIcon() {

@@ -59,63 +59,63 @@ public class AudienceCriteriaProviderImpl implements AudienceCriteriaProvider {
 		return new AudienceCriteriaType(
 			Arrays.asList(
 				new AudienceCriteria(
-					AudienceCriteriaKeys.BROWSER_NAME,
-					_language.get(locale, "browser-name"), "desktop",
+					"desktop", AudienceCriteriaKeys.BROWSER_NAME,
+					_language.get(locale, "browser-name"),
 					AudienceCriteria.Type.STRING),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.BROWSER_VERSION,
-					_language.get(locale, "browser-version"), "desktop",
+					"desktop", AudienceCriteriaKeys.BROWSER_VERSION,
+					_language.get(locale, "browser-version"),
 					AudienceCriteria.Type.STRING),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.COOKIES,
-					_language.get(locale, "cookies"), "password",
+					"password", AudienceCriteriaKeys.COOKIES,
+					_language.get(locale, "cookies"),
 					AudienceCriteria.Type.COLLECTION),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.DEVICE_TYPE,
-					_language.get(locale, "device-type"), "desktop",
+					"desktop", AudienceCriteriaKeys.DEVICE_TYPE,
+					_language.get(locale, "device-type"),
 					AudienceCriteria.Type.STRING),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.GEOLOCATION,
-					_language.get(locale, "geolocation"), "globe",
+					"globe", AudienceCriteriaKeys.GEOLOCATION,
+					_language.get(locale, "geolocation"),
 					AudienceCriteria.Type.STRING),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.HOSTNAME,
-					_language.get(locale, "hostname"), "globe",
+					"globe", AudienceCriteriaKeys.HOSTNAME,
+					_language.get(locale, "hostname"),
 					AudienceCriteria.Type.STRING),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.LANGUAGE,
-					_language.get(locale, "language"), "globe",
+					"globe", AudienceCriteriaKeys.LANGUAGE,
+					_language.get(locale, "language"),
 					_getLanguageOptions(locale), AudienceCriteria.Type.OPTIONS),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.LOCAL_DATE,
-					_language.get(locale, "local-date"), "calendar",
+					"calendar", AudienceCriteriaKeys.LOCAL_DATE,
+					_language.get(locale, "local-date"),
 					AudienceCriteria.Type.DATE),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.LOCAL_HOUR,
-					_language.get(locale, "local-hour"), "time",
-					_getLocalHourOptions(), AudienceCriteria.Type.NUMBER),
+					"time", AudienceCriteriaKeys.LOCAL_HOUR,
+					_language.get(locale, "local-hour"), _getLocalHourOptions(),
+					AudienceCriteria.Type.NUMBER),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.PATHNAME,
-					_language.get(locale, "pathname"), "link",
+					"link", AudienceCriteriaKeys.PATHNAME,
+					_language.get(locale, "pathname"),
 					AudienceCriteria.Type.STRING),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.REFERRER,
-					_language.get(locale, "referrer-url"), "link",
+					"link", AudienceCriteriaKeys.REFERRER,
+					_language.get(locale, "referrer-url"),
 					AudienceCriteria.Type.STRING),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.REQUEST_PARAMETERS,
-					_language.get(locale, "request-parameters"), "code",
+					"code", AudienceCriteriaKeys.REQUEST_PARAMETERS,
+					_language.get(locale, "request-parameters"),
 					AudienceCriteria.Type.COLLECTION),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.TIMEZONE,
-					_language.get(locale, "time-zone"), "time",
+					"time", AudienceCriteriaKeys.TIMEZONE,
+					_language.get(locale, "time-zone"),
 					AudienceCriteria.Type.STRING),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.URL, _language.get(locale, "url"),
-					"link", AudienceCriteria.Type.STRING),
+					"link", AudienceCriteriaKeys.URL,
+					_language.get(locale, "url"), AudienceCriteria.Type.STRING),
 				new AudienceCriteria(
-					AudienceCriteriaKeys.USER_AGENT,
-					_language.get(locale, "user-agent"), "desktop",
+					"desktop", AudienceCriteriaKeys.USER_AGENT,
+					_language.get(locale, "user-agent"),
 					AudienceCriteria.Type.STRING)),
 			_language.get(locale, "browser-attributes"));
 	}
@@ -137,9 +137,8 @@ public class AudienceCriteriaProviderImpl implements AudienceCriteriaProvider {
 				TransformUtil.transform(
 					cets,
 					cet -> new AudienceCriteria(
-						"custom:" + cet.getExternalReferenceCode(),
-						cet.getName(locale), "cog",
-						AudienceCriteria.Type.STRING)),
+						"cog", "custom:" + cet.getExternalReferenceCode(),
+						cet.getName(locale), AudienceCriteria.Type.STRING)),
 				_language.get(locale, "custom"));
 		}
 		catch (PortalException portalException) {

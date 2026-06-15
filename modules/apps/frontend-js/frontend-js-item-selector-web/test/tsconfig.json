@@ -1,5 +1,5 @@
 {
-	"@generated": "32399210f6e93f8eb18525a24aa05e2ae567e73f",
+	"@generated": "7de442b0c2523b603065e2d777e341b494fc2909",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -15,7 +15,7 @@
 				"../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"@liferay/frontend-data-set-web/api": [
-				"../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/api/FDSConnection.ts"
+				"../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/js/api/api.ts"
 			],
 			"@liferay/frontend-js-react-web": [
 				"../../frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"

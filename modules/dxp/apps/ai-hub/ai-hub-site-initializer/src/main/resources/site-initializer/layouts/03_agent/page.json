@@ -34,7 +34,6 @@
 		},
 		{
 			"actionIds": [
-				"VIEW"
 			],
 			"roleName": "Site Member",
 			"scope": 4

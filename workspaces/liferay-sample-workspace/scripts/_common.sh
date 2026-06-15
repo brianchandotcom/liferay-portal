@@ -32,6 +32,6 @@ function _read_property {
 
 	if [[ -f ${file} ]]
 	then
-		grep "^${key}=" "${file}" | cut --delimiter "=" --fields 2- | tr --delete "[:space:]"
+		grep "^${key}=" "${file}" | cut --delimiter = --fields 2- | tr --delete "[:space:]"
 	fi
 }

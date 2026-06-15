@@ -7,14 +7,16 @@ source _common.sh
 function main {
 	local force=false
 
-	if [[ ${1:-} == "-f" || ${1:-} == "--force" ]]
+	if [[ ${1:-} == -f ]] ||
+	   [[ ${1:-} == --force ]]
 	then
 		force=true
 	fi
 
-	local license_path="../build/docker/deploy/license.xml"
+	local license_path=../build/docker/deploy/license.xml
 
-	if [[ -f ${license_path} && ${force} == false ]]
+	if [[ -f ${license_path} ]] &&
+	   [[ ${force} == false ]]
 	then
 		echo "A trial license already exists at ${license_path}."
 
@@ -25,7 +27,7 @@ function main {
 
 	license_dir=$(dirname "${license_path}")
 
-	echo "Extracting the trial license from liferay/dxp:latest."
+	echo "Extracting the trial license from \"liferay/dxp:latest\"."
 
 	mkdir --parents "${license_dir}"
 

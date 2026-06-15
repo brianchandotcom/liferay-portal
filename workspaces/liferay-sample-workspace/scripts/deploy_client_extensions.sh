@@ -9,7 +9,7 @@ function main {
 
 	./gradlew \
 		deploy \
-		-Ddeploy.docker.container.id="$(docker ps --filter "name=liferay" --quiet)"
+		-Ddeploy.docker.container.id="$(docker ps --filter name=liferay --quiet)"
 }
 
 main "${@}"

@@ -55,11 +55,8 @@ public class DataMaskResourceImpl extends BaseDataMaskResourceImpl {
 		try {
 			Pattern detectionPattern = Pattern.compile(detectionRegex);
 
-			String replacementRegex =
-				dataMaskPreviewRequest.getReplacementRegex();
-
-			Pattern replacementPattern = Validator.isNotNull(replacementRegex) ?
-				Pattern.compile(replacementRegex) : null;
+			Pattern replacementPattern = _getReplacementPattern(
+				dataMaskPreviewRequest);
 
 			dataMaskPreviewResult.setOutput(
 				() -> {
@@ -78,6 +75,18 @@ public class DataMaskResourceImpl extends BaseDataMaskResourceImpl {
 		}
 
 		return dataMaskPreviewResult;
+	}
+
+	private Pattern _getReplacementPattern(
+		DataMaskPreviewRequest dataMaskPreviewRequest) {
+
+		String replacementRegex = dataMaskPreviewRequest.getReplacementRegex();
+
+		if (Validator.isNull(replacementRegex)) {
+			return null;
+		}
+
+		return Pattern.compile(replacementRegex);
 	}
 
 }

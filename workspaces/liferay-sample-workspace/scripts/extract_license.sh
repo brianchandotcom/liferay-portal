@@ -13,19 +13,19 @@ function main {
 		force=true
 	fi
 
-	local license_path=../build/docker/deploy/license.xml
+	local license_file=../build/docker/deploy/license.xml
 
-	if [[ -f ${license_path} ]] &&
+	if [[ -f ${license_file} ]] &&
 	   [[ ${force} == false ]]
 	then
-		echo "A trial license already exists at ${license_path}."
+		echo "A trial license already exists at ${license_file}."
 
 		exit 0
 	fi
 
 	local license_dir
 
-	license_dir=$(dirname "${license_path}")
+	license_dir=$(dirname "${license_file}")
 
 	echo "Extracting the trial license from \"liferay/dxp:latest\"."
 

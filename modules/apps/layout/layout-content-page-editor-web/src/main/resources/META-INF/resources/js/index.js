@@ -5,3 +5,4 @@
 
 export {default as App} from '../page_editor/app/index';
 export {default as CollectionConfiguration} from '../page_editor/plugins/collection_configuration/CollectionConfiguration';
+export {default as ElementVariations} from '../page_editor/plugins/element_variations/ElementVariations';

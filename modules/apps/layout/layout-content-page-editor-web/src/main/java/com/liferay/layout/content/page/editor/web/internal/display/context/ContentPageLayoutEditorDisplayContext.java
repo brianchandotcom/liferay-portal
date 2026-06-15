@@ -11,6 +11,7 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -171,6 +173,8 @@ public class ContentPageLayoutEditorDisplayContext
 			"deleteSegmentsExperienceURL",
 			getFragmentEntryActionURL(
 				"/layout_content_page_editor/delete_segments_experience"));
+		configContext.put(
+			"editElementVariationsURL", _getEditElementVariationsURL());
 		configContext.put("editSegmentsEntryURL", _getEditSegmentsEntryURL());
 		configContext.put("plid", themeDisplay.getPlid());
 		configContext.put(
@@ -240,6 +244,27 @@ public class ContentPageLayoutEditorDisplayContext
 			themeDisplay.getPlid(), _segmentsExperienceId);
 
 		return _segmentsExperienceId;
+	}
+
+	private String _getEditElementVariationsURL() {
+		Layout layout = themeDisplay.getLayout();
+
+		return PortletURLBuilder.create(
+			portal.getControlPanelPortletURL(
+				httpServletRequest,
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/layout_content_page_editor/edit_element_variations"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setBackURL(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"backURLTitle", layout.getName(themeDisplay.getLocale())
+		).setParameter(
+			"plid", themeDisplay.getPlid()
+		).buildString();
 	}
 
 	private String _getEditSegmentsEntryURL() throws Exception {

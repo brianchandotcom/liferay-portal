@@ -12,6 +12,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.fragment.util.configuration.FragmentEntryMenuDisplayConfiguration;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -111,7 +112,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			_writeCss(
 				configurationJSONObject,
 				fragmentEntryLink.getEditableValuesJSONObject(),
-				fragmentElementId, printWriter);
+				fragmentElementId, httpServletRequest, printWriter);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
@@ -199,7 +200,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 	private void _writeCss(
 		JSONObject configurationJSONObject, JSONObject editableValuesJSONObject,
-		String fragmentElementId, PrintWriter printWriter) {
+		String fragmentElementId, HttpServletRequest httpServletRequest,
+		PrintWriter printWriter) {
 
 		String styles = StringUtil.replace(
 			StringUtil.read(
@@ -216,6 +218,10 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 						configurationJSONObject, editableValuesJSONObject,
 						LocaleUtil.getMostRelevantLocale(), "hoveredItemColor"),
 					"inherit")
+			).put(
+				"nonceAttribute",
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					httpServletRequest)
 			).put(
 				"selectedItemColor",
 				GetterUtil.getString(

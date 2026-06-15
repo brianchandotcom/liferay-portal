@@ -23,8 +23,6 @@ export type DateFilterValues =
 
 export type NormalizedDateFilter = {
 	endDate?: string;
-	last?: number;
-	range?: Range;
 	startDate?: string;
 };
 

@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Option, Picker} from '@clayui/core';
 import React, {useContext, useEffect, useState} from 'react';
 
 import SpaceService from '../../../common/services/SpaceService';
 import {ViewDashboardContext, initialLanguage} from '../ViewDashboardContext';
-import {FilterDropdown} from './FilterDropdown';
+import PickerTrigger from './PickerTrigger';
 
 type AvailableLocales = Exclude<
 	Liferay.Language.Locale,
@@ -53,9 +54,6 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	} = useContext(ViewDashboardContext);
 
 	const [languages, setLanguages] = useState(initialLanguages);
-	const [dropdownActive, setDropdownActive] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const [searchValue, setSearchValue] = useState('');
 
 	useEffect(() => {
 		if (space.value === 'all') {
@@ -65,8 +63,6 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 		}
 
 		const fetchSpaceLanguages = async () => {
-			setLoading(true);
-
 			try {
 				const {settings} = await SpaceService.getSpace(
 					space.externalReferenceCode as string
@@ -100,9 +96,6 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 
 				setLanguages(initialLanguages);
 			}
-			finally {
-				setLoading(false);
-			}
 		};
 
 		fetchSpaceLanguages();
@@ -113,37 +106,34 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 		space.externalReferenceCode,
 	]);
 
-	useEffect(() => {
-		if (!dropdownActive) {
-			setSearchValue('');
-		}
-	}, [dropdownActive]);
-
-	const filteredLanguages = searchValue
-		? languages.filter(({label}) =>
-				label.toLowerCase().includes(searchValue.toLowerCase())
-			)
-		: languages;
-
 	return (
-		<FilterDropdown
-			active={dropdownActive}
-			borderless={false}
-			className={className}
-			filterByValue="languages"
-			icon="automatic-translate"
-			items={filteredLanguages}
-			loading={loading}
-			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
-			onSearch={setSearchValue}
-			onSelectItem={(item) => {
-				changeLanguage(item);
-
-				setDropdownActive(false);
+		<Picker
+			aria-label={Liferay.Language.get('filter-by-languages')}
+			as={PickerTrigger}
+			filterKey="label"
+			items={languages}
+			messages={{
+				noResultsFound: Liferay.Language.get('no-results-were-found'),
+				searchPlaceholder: Liferay.Language.get('search'),
 			}}
-			selectedItem={language}
-			title={Liferay.Language.get('filter-by-languages')}
-		/>
+			onSelectionChange={(key) => {
+				const selectedLanguage = languages.find(
+					({value}) => value === String(key)
+				);
+
+				if (selectedLanguage) {
+					changeLanguage(selectedLanguage);
+				}
+			}}
+			searchable
+			selectedKey={language.value}
+			triggerClassName={className}
+			triggerIcon="automatic-translate"
+		>
+			{(item: {label: string; value: string}) => (
+				<Option key={item.value}>{item.label}</Option>
+			)}
+		</Picker>
 	);
 };
 

@@ -234,13 +234,13 @@ public class ExportImportLocalServiceUtil {
 			userId, exportImportConfigurationId, inputStream);
 	}
 
-	public static long mergeLayoutSetPrototypeInBackground(
+	public static long syncLayoutSetPrototypeInBackground(
 			long userId, long groupId,
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration)
 		throws PortalException {
 
-		return getService().mergeLayoutSetPrototypeInBackground(
+		return getService().syncLayoutSetPrototypeInBackground(
 			userId, groupId, exportImportConfiguration);
 	}
 
@@ -299,4 +299,4 @@ public class ExportImportLocalServiceUtil {
 	private static volatile ExportImportLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1718735358
+// LIFERAY-SERVICE-BUILDER-HASH:1693223764

@@ -33,18 +33,22 @@ public class ManyToManyObjectRelationshipRelatedInfoCollectionProvider
 
 	@Override
 	protected InfoPage<ObjectEntry> getCollectionInfoPage(
-			long groupId, Pagination pagination, long primaryKey)
+			ObjectEntry objectEntry, Pagination pagination)
 		throws PortalException {
 
 		return InfoPage.of(
 			objectEntryLocalService.getManyToManyObjectEntries(
-				groupId, objectRelationship.getObjectRelationshipId(),
-				primaryKey, true, objectRelationship.isReverse(), null,
-				pagination.getStart(), pagination.getEnd()),
+				objectEntry.getGroupId(),
+				objectRelationship.getObjectRelationshipId(),
+				objectEntry.getObjectEntryId(), true,
+				objectRelationship.isReverse(), null, pagination.getStart(),
+				pagination.getEnd()),
 			pagination,
 			objectEntryLocalService.getManyToManyObjectEntriesCount(
-				groupId, objectRelationship.getObjectRelationshipId(),
-				primaryKey, true, objectRelationship.isReverse(), null));
+				objectEntry.getGroupId(),
+				objectRelationship.getObjectRelationshipId(),
+				objectEntry.getObjectEntryId(), true,
+				objectRelationship.isReverse(), null));
 	}
 
 }

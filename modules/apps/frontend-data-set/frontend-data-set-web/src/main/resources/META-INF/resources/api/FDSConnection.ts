@@ -3,32 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getFDSAtom, getOrCreateSelector} from './_internal';
+import {getFDSAtom, getOrCreateSelector} from '../utils/getFDSAtom';
 
-import type {FDSState} from '@liferay/js-api/data-set';
+import type {
+	FDSConnectionInfo,
+	FDSConnectionOptions,
+	FDSConnectionStatus,
+	FDSState,
+	FDSStateChangeCallback,
+} from '@liferay/js-api/data-set';
 import Atom = Liferay.State.Atom;
 
 const DEFAULT_TIMEOUT = 10000;
-
-export interface FDSStateChangeCallback {
-	search: (query: string) => void;
-}
-
-export interface FDSConnectionOptions {
-	timeout?: number;
-}
-
-export interface FDSConnectionInfo {
-	fdsName: string;
-	instanceId: number;
-	status: FDSConnectionStatus;
-}
-
-export type FDSConnectionStatus =
-	| 'connecting'
-	| 'ready'
-	| 'timeout'
-	| 'disconnected';
 
 interface Subscriptions {
 	search: {dispose: () => void};

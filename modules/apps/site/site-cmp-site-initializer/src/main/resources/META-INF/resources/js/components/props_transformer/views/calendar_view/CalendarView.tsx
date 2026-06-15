@@ -182,6 +182,11 @@ export default function CalendarView({items}: CalendarViewProps) {
 				events={events}
 				headerToolbar={false}
 				initialView="dayGridMonth"
+				moreLinkClassNames={[
+					'btn',
+					'btn-outline-secondary',
+					'btn-outline-borderless',
+				]}
 				moreLinkClick={(arg) => {
 					setMoreLinkPopover({
 						alignElement: arg.jsEvent.currentTarget as HTMLElement,
@@ -201,14 +206,15 @@ export default function CalendarView({items}: CalendarViewProps) {
 					return true as unknown as void;
 				}}
 				moreLinkContent={(arg) => (
-					<ClayButton borderless displayType="secondary" size="xs">
+					<>
 						{`${arg.num} ${Liferay.Language.get('more')}`}
 
 						<span className="inline-item inline-item-after">
 							<ClayIcon symbol="caret-bottom" />
 						</span>
-					</ClayButton>
+					</>
 				)}
+				moreLinkHint={Liferay.Language.get('view-all-tasks')}
 				plugins={[dayGridPlugin]}
 				ref={calendarRef}
 			/>

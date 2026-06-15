@@ -981,3 +981,108 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'A seller can duplicate a room copying only the selected documents',
+	{tag: '@LPD-92370'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+		const roomName = `A${getRandomInt()}`;
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			'L_DSR_SELLER',
+			userAccount.id
+		);
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[userAccount.emailAddress]
+		);
+
+		await performUserSwitch(page, userAccount.alternateName);
+
+		await test.step('Create a room with two documents', async () => {
+			await digitalSalesRoomsPage.goToRoomsPageAsSeller();
+
+			await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+			await editDigitalSalesRoomPage.addDigitalSalesRoom({
+				accountName: account.name,
+				roomName,
+			});
+
+			await digitalSalesRoomsPage.goToRoomsPageAsSeller();
+
+			await digitalSalesRoomsPage.clickRowActionsMenuItem(
+				roomName,
+				digitalSalesRoomsPage.viewMenuItem
+			);
+
+			await editDigitalSalesRoomPage.uploadDocument(
+				path.join(__dirname, 'dependencies', 'document1.png')
+			);
+			await editDigitalSalesRoomPage.uploadDocument(
+				path.join(__dirname, 'dependencies', 'liferay.png')
+			);
+		});
+
+		await test.step('Duplicate the room selecting only one document', async () => {
+			await digitalSalesRoomsPage.goToRoomsPageAsSeller();
+
+			await digitalSalesRoomsPage.clickRowActionsMenuItem(
+				roomName,
+				digitalSalesRoomsPage.duplicateMenuItem
+			);
+
+			await expect(
+				digitalSalesRoomsPage.duplicateModalHeading
+			).toBeVisible();
+			await expect(
+				digitalSalesRoomsPage.documentRow('document1')
+			).toBeVisible();
+			await expect(
+				digitalSalesRoomsPage.documentRow('liferay')
+			).toBeVisible();
+
+			await digitalSalesRoomsPage.documentRowCheckbox('liferay').check();
+			await digitalSalesRoomsPage.duplicateButton.click();
+
+			await expect(digitalSalesRoomsPage.duplicateModal).not.toBeVisible({
+				timeout: 60000,
+			});
+		});
+
+		await test.step('Verify the duplicated room contains only the selected document', async () => {
+			await digitalSalesRoomsPage.goToRoomsPageAsSeller();
+
+			await digitalSalesRoomsPage.clickRowActionsMenuItem(
+				`${roomName} (Copy)`,
+				digitalSalesRoomsPage.viewMenuItem
+			);
+
+			await editDigitalSalesRoomPage.documentsMenuItem.click();
+
+			await expect(
+				editDigitalSalesRoomPage.documentCard('document1')
+			).not.toBeVisible();
+			await expect(
+				editDigitalSalesRoomPage.documentCard('liferay')
+			).toBeVisible();
+		});
+	}
+);

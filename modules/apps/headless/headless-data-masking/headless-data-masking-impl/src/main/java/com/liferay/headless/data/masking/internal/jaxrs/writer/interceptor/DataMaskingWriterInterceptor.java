@@ -54,10 +54,11 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 	public void aroundWriteTo(WriterInterceptorContext writerInterceptorContext)
 		throws IOException {
 
-		List<String> maskExternalReferenceCodes = _parseDataMasksHeader(
-			_httpServletRequest.getHeader(_HEADER_DATA_MASKS));
+		List<String> dataMaskExternalReferenceCodes =
+			_getDataMaskExternalReferenceCodes(
+				_httpServletRequest.getHeader(_HEADER_DATA_MASKS));
 
-		if (maskExternalReferenceCodes.isEmpty() ||
+		if (dataMaskExternalReferenceCodes.isEmpty() ||
 			!_isRedactableMediaType(writerInterceptorContext.getMediaType())) {
 
 			writerInterceptorContext.proceed();
@@ -84,7 +85,7 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 			String body = byteArrayOutputStream.toString(charset);
 
 			String redacted = _dataMaskingEngine.redact(
-				companyId, maskExternalReferenceCodes, body);
+				companyId, dataMaskExternalReferenceCodes, body);
 
 			originalOutputStream.write(redacted.getBytes(charset));
 		}
@@ -93,18 +94,9 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 		}
 	}
 
-	private boolean _isRedactableMediaType(MediaType mediaType) {
-		if ((mediaType != null) &&
-			(mediaType.isCompatible(MediaType.APPLICATION_JSON_TYPE) ||
-			 mediaType.isCompatible(MediaType.TEXT_PLAIN_TYPE))) {
+	private List<String> _getDataMaskExternalReferenceCodes(
+		String headerValue) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	private List<String> _parseDataMasksHeader(String headerValue) {
 		List<String> externalReferenceCodes = new ArrayList<>();
 
 		if (Validator.isNull(headerValue)) {
@@ -120,6 +112,17 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 		}
 
 		return externalReferenceCodes;
+	}
+
+	private boolean _isRedactableMediaType(MediaType mediaType) {
+		if ((mediaType != null) &&
+			(mediaType.isCompatible(MediaType.APPLICATION_JSON_TYPE) ||
+			 mediaType.isCompatible(MediaType.TEXT_PLAIN_TYPE))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private Charset _resolveCharset(MediaType mediaType) {

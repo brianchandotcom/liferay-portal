@@ -262,8 +262,9 @@ public class MCPServerServlet extends HttpServlet {
 			String content = (String)response.getEntity();
 
 			if (content != null) {
-				List<String> maskExternalReferenceCodes = _getDataMaskERCs(
-					companyId, profileObjectEntryId);
+				List<String> maskExternalReferenceCodes =
+					_getDataMaskExternalReferenceCodes(
+						companyId, profileObjectEntryId);
 
 				content = _dataMaskingEngine.redact(
 					companyId, maskExternalReferenceCodes, content);
@@ -310,7 +311,7 @@ public class MCPServerServlet extends HttpServlet {
 		}
 	}
 
-	private List<String> _getDataMaskERCs(
+	private List<String> _getDataMaskExternalReferenceCodes(
 			long companyId, long profileObjectEntryId)
 		throws PortalException {
 

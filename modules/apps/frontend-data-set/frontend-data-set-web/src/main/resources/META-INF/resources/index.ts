@@ -45,7 +45,7 @@ export {readConfigFromURL} from './utils/configInURL';
 export {getConfigParamName, serializeFDSConfig} from './utils/configInURL';
 export {default as FDS_EVENT} from './utils/eventsDefinitions';
 
-export {getFDSAtom} from './utils/getFDSAtom';
+export {getFDSAtom, getOrCreateFDSAtom} from './utils/getFDSAtom';
 
 export {
 	DisplayType,

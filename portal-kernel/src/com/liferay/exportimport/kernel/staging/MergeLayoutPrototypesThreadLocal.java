@@ -60,13 +60,16 @@ public class MergeLayoutPrototypesThreadLocal {
 
 	private static class MethodKey {
 
-		public MethodKey(String methodName, Object[] arguments) {
-			_methodName = methodName;
-			_arguments = arguments;
-		}
-
 		@Override
 		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof MethodKey)) {
+				return false;
+			}
+
 			MethodKey methodKey = (MethodKey)object;
 
 			if (Objects.equals(_methodName, methodKey._methodName) &&
@@ -80,20 +83,14 @@ public class MergeLayoutPrototypesThreadLocal {
 
 		@Override
 		public int hashCode() {
-			int hashCode = _methodName.hashCode();
+			int hashCode = HashUtil.hash(0, _methodName);
 
-			if (_arguments != null) {
-				for (Object object : _arguments) {
-					if (object == null) {
-						hashCode = HashUtil.hash(hashCode, 0);
-					}
-					else {
-						hashCode = HashUtil.hash(hashCode, object.hashCode());
-					}
-				}
-			}
+			return HashUtil.hash(hashCode, Arrays.hashCode(_arguments));
+		}
 
-			return hashCode;
+		private MethodKey(String methodName, Object... arguments) {
+			_methodName = methodName;
+			_arguments = arguments;
 		}
 
 		private final Object[] _arguments;

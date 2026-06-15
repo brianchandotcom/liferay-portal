@@ -1478,6 +1478,13 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		Fragment postFragment = _postSiteFragmentSetFragment(fragment);
 
+		FragmentVersion[] postFragmentVersions =
+			postFragment.getFragmentVersions();
+
+		Assert.assertTrue(
+			Arrays.toString(postFragmentVersions),
+			postFragmentVersions.length > 0);
+
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
 				postFragment.getExternalReferenceCode(),
@@ -1488,13 +1495,6 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				fragmentEntry.getFragmentEntryId());
 
 		FragmentVersion[] fragmentVersions = fragment.getFragmentVersions();
-
-		FragmentVersion[] postFragmentVersions =
-			postFragment.getFragmentVersions();
-
-		Assert.assertTrue(
-			Arrays.toString(postFragmentVersions),
-			postFragmentVersions.length > 0);
 
 		for (int i = 0; i < fragmentVersions.length; i++) {
 			FragmentVersion fragmentVersion = fragmentVersions[i];

@@ -15,6 +15,7 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.layout.set.prototype.exception.LayoutSetPrototypeSyncException;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -78,6 +79,14 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			long layoutSetPrototypeId, long userId)
 		throws PortalException {
 
+		if (ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			throw new LayoutSetPrototypeSyncException.
+				MustNotHaveExportImportInProgress();
+		}
+
 		LayoutSetPrototype layoutSetPrototype =
 			_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
 				layoutSetPrototypeId);
@@ -104,6 +113,14 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	@Override
 	public void executeLayoutSetSync(LayoutSet layoutSet) throws Exception {
+		if (ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			throw new LayoutSetPrototypeSyncException.
+				MustNotHaveExportImportInProgress();
+		}
+
 		Group group = layoutSet.getGroup();
 
 		layoutSet = _layoutSetLocalService.fetchLayoutSet(
@@ -746,13 +763,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	private void _syncLayoutSetPrototypeLayoutsInBackground(
 			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
 		throws Exception {
-
-		if (ExportImportThreadLocal.isExportInProcess() ||
-			ExportImportThreadLocal.isImportInProcess() ||
-			ExportImportThreadLocal.isStagingInProcess()) {
-
-			return;
-		}
 
 		if (_isLayoutSetPrototypeSyncBackgroundTaskExists(
 				layoutSetPrototype, layoutSet)) {

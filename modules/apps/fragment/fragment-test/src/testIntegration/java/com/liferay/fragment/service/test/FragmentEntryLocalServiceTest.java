@@ -552,7 +552,20 @@ public class FragmentEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteApprovedAndDraftFragmentEntryByExternalReferenceCode()
+	public void testDeleteFragmentEntry() throws Exception {
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId());
+
+		_fragmentEntryLocalService.deleteFragmentEntry(
+			fragmentEntry.getFragmentEntryId());
+
+		Assert.assertNull(
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntry.getFragmentEntryId()));
+	}
+
+	@Test
+	public void testDeleteFragmentEntryApprovedAndDraftByExternalReferenceCode()
 		throws Exception {
 
 		FragmentEntry fragmentEntry =
@@ -574,37 +587,6 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertNull(
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				draftFragmentEntry.getFragmentEntryId()));
-	}
-
-	@Test
-	public void testDeleteDraftFragmentEntryByExternalReferenceCode()
-		throws Exception {
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryTestUtil.addFragmentEntryByStatus(
-				_fragmentCollection.getFragmentCollectionId(),
-				WorkflowConstants.STATUS_DRAFT);
-
-		_fragmentEntryLocalService.deleteFragmentEntry(
-			fragmentEntry.getExternalReferenceCode(),
-			fragmentEntry.getGroupId());
-
-		Assert.assertNull(
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				fragmentEntry.getFragmentEntryId()));
-	}
-
-	@Test
-	public void testDeleteFragmentEntry() throws Exception {
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId());
-
-		_fragmentEntryLocalService.deleteFragmentEntry(
-			fragmentEntry.getFragmentEntryId());
-
-		Assert.assertNull(
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				fragmentEntry.getFragmentEntryId()));
 	}
 
 	@Test
@@ -633,8 +615,26 @@ public class FragmentEntryLocalServiceTest {
 				fragmentEntry.getFragmentEntryId()));
 	}
 
+	@Test
+	public void testDeleteFragmentEntryDraftByExternalReferenceCode()
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryTestUtil.addFragmentEntryByStatus(
+				_fragmentCollection.getFragmentCollectionId(),
+				WorkflowConstants.STATUS_DRAFT);
+
+		_fragmentEntryLocalService.deleteFragmentEntry(
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getGroupId());
+
+		Assert.assertNull(
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntry.getFragmentEntryId()));
+	}
+
 	@Test(expected = NoSuchEntryException.class)
-	public void testDeleteNonexistentFragmentEntryByExternalReferenceCode()
+	public void testDeleteFragmentEntryNonexistentByExternalReferenceCode()
 		throws Exception {
 
 		_fragmentEntryLocalService.deleteFragmentEntry(

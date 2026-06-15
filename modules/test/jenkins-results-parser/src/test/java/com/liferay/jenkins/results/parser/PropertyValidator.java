@@ -276,6 +276,8 @@ public class PropertyValidator {
 	private static List<String> _getUnconsumedKeys(
 		List<ConsumedKey> consumedKeys, TreeSet<String> definedKeys) {
 
+		List<String> unconsumedKeys = new ArrayList<>();
+
 		Set<String> consumedKeyNames = new TreeSet<>();
 		List<String> consumedPrefixes = new ArrayList<>();
 
@@ -296,8 +298,6 @@ public class PropertyValidator {
 				consumedPrefixes.add(key.substring(0, index + 1));
 			}
 		}
-
-		List<String> unconsumedKeys = new ArrayList<>();
 
 		for (String definedKey : definedKeys) {
 			if (!_isConsumed(consumedKeyNames, consumedPrefixes, definedKey)) {

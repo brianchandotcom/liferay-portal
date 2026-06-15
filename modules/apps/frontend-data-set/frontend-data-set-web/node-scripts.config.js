@@ -6,11 +6,11 @@
 module.exports = {
 	main: './src/main/resources/META-INF/resources/index.js',
 
-	typescript: {
-		main: './src/main/resources/META-INF/resources/index.ts',
-	},
-
 	submodules: {
 		api: './src/main/resources/META-INF/resources/api/FDSConnection.ts',
+	},
+
+	typescript: {
+		main: './src/main/resources/META-INF/resources/index.ts',
 	},
 };

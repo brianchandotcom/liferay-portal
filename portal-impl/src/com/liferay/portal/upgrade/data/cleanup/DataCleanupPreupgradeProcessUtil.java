@@ -5,6 +5,8 @@
 
 package com.liferay.portal.upgrade.data.cleanup;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
@@ -61,7 +64,9 @@ public class DataCleanupPreupgradeProcessUtil {
 				tableName);
 
 			if (primaryKeyColumnName != null) {
-				if (primaryKeyColumnName.isEmpty()) {
+				if (primaryKeyColumnName.equals(
+						_NULL_PRIMARY_KEY_COLUMN_NAME)) {
+
 					return null;
 				}
 
@@ -79,7 +84,8 @@ public class DataCleanupPreupgradeProcessUtil {
 
 		if (primaryKeyColumnNames.size() != 1) {
 			if (_cacheEnabled) {
-				_primaryKeyColumnNameCache.putIfAbsent(tableName, _NOT_FOUND);
+				_primaryKeyColumnNameCache.putIfAbsent(
+					tableName, _NULL_PRIMARY_KEY_COLUMN_NAME);
 			}
 
 			return null;
@@ -100,11 +106,16 @@ public class DataCleanupPreupgradeProcessUtil {
 			String fullyQualifiedName)
 		throws Exception {
 
+		String cacheKey = StringBundler.concat(
+			Objects.toString(dbInspector.getCatalog(), StringPool.BLANK), ".",
+			Objects.toString(dbInspector.getSchema(), StringPool.BLANK), ".",
+			fullyQualifiedName);
+
 		if (_cacheEnabled) {
-			String tableName = _tableNameCache.get(fullyQualifiedName);
+			String tableName = _tableNameCache.get(cacheKey);
 
 			if (tableName != null) {
-				if (tableName.isEmpty()) {
+				if (tableName.equals(_NULL_TABLE_NAME)) {
 					return null;
 				}
 
@@ -116,8 +127,7 @@ public class DataCleanupPreupgradeProcessUtil {
 
 		if (_cacheEnabled) {
 			_tableNameCache.putIfAbsent(
-				fullyQualifiedName,
-				(tableName != null) ? tableName : _NOT_FOUND);
+				cacheKey, (tableName != null) ? tableName : _NULL_TABLE_NAME);
 		}
 
 		return tableName;
@@ -177,7 +187,10 @@ public class DataCleanupPreupgradeProcessUtil {
 		return null;
 	}
 
-	private static final String _NOT_FOUND = "";
+	private static final String _NULL_PRIMARY_KEY_COLUMN_NAME =
+		"NULL_PRIMARY_KEY_COLUMN_NAME";
+
+	private static final String _NULL_TABLE_NAME = "NULL_TABLE_NAME";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataCleanupPreupgradeProcessUtil.class);

@@ -126,6 +126,11 @@ const AssetCategories = ({
 		[groupedTaxonomies.taxonomyCategoryIds, updateObjectEntry]
 	);
 
+	const selectedCategories = useMemo(
+		() => Object.values(groupedTaxonomies.taxonomyVocabularies).flat(),
+		[groupedTaxonomies.taxonomyVocabularies]
+	);
+
 	const removeCategory = useCallback(
 		async (category: ITaxonomyCategoryFacade) => {
 			const {taxonomyCategoryIds} = groupedTaxonomies;
@@ -172,10 +177,11 @@ const AssetCategories = ({
 						apiURL={apiURL}
 						disabled={!hasUpdatePermission}
 						estimateSize={49}
+						items={selectedCategories}
 						locator={{
 							id: 'id',
 							label: 'name',
-							value: 'externalReferenceCode',
+							value: 'id',
 						}}
 						onChange={setValue}
 						onItemsChange={(newItems: any) => {
@@ -196,7 +202,7 @@ const AssetCategories = ({
 					>
 						{(item) => (
 							<ItemSelector.Item
-								key={item.name}
+								key={item.id}
 								textValue={item.name}
 							>
 								<div>

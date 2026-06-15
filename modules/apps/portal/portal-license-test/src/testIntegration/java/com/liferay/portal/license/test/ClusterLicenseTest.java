@@ -366,7 +366,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 
 	@SafeVarargs
 	private static TomcatNode _startTomcatNode(
-			boolean overloadNodeAutoShutDown,
+			boolean overloadNodeAutoShutdown,
 			TomcatNode.ClusterExecutable<Serializable>...
 				additionalClusterExecutables)
 		throws Exception {
@@ -382,8 +382,8 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 				"CaptchaConfiguration_maxChallenges=I\"-1\"",
 			"configuration.override.com.liferay.captcha.configuration." +
 				"CaptchaConfiguration_sendPasswordCaptchaEnabled=\"false\"",
-			"license.cluster.overload.node.auto.shut.down=" +
-				overloadNodeAutoShutDown,
+			"license.cluster.overload.node.auto.shutdown=" +
+				overloadNodeAutoShutdown,
 			"virtual.hosts.default.site.name=Guest");
 
 		Files.write(

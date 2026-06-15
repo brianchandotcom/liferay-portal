@@ -57,10 +57,12 @@ function StatusCell({value}) {
 	);
 }
 
-function buildAPIURL(groupId, classNameIds, excludedAssetEntry) {
+function buildAPIURL(groupIds, classNameIds, excludedAssetEntry) {
 	const url = new URL(ASSET_ENTRIES_API_URL, window.location.origin);
 
-	url.searchParams.set('groupIds', groupId);
+	String(groupIds)
+		.split(',')
+		.forEach((groupId) => url.searchParams.append('groupIds', groupId));
 	url.searchParams.set('showNonindexable', 'true');
 
 	const filters = [];
@@ -93,7 +95,7 @@ function buildAPIURL(groupId, classNameIds, excludedAssetEntry) {
 export default function getAssetEntriesItemSelectorProps({
 	assetEntryTypes = [],
 	excludedAssetEntry,
-	groupId,
+	groupIds,
 	portletNamespace,
 }) {
 	const classNameIds = assetEntryTypes.map(
@@ -103,7 +105,7 @@ export default function getAssetEntriesItemSelectorProps({
 	const singleAssetEntryType = assetEntryTypes.length === 1;
 
 	return {
-		apiURL: buildAPIURL(groupId, classNameIds, excludedAssetEntry),
+		apiURL: buildAPIURL(groupIds, classNameIds, excludedAssetEntry),
 		fdsProps: {
 			configInURLBehavior: 'OFF',
 			customRenderers: {

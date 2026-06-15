@@ -32,6 +32,7 @@ import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
@@ -635,6 +636,13 @@ public class EditAssetListDisplayContext {
 
 		return _getClassTypeIds(
 			unicodeProperties, className, availableClassTypeIds);
+	}
+
+	public String getConnectedGroupIds() throws PortalException {
+		return StringUtil.merge(
+			SiteConnectedGroupGroupProviderUtil.
+				getCurrentAndAncestorSiteAndDepotGroupIds(
+					new long[] {_themeDisplay.getScopeGroupId()}));
 	}
 
 	public Map<String, Object> getData() {

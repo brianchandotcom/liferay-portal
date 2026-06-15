@@ -6,8 +6,8 @@ function test {
 
 	local variable1="${foo}/${bar}"
 	local variable2="Today is $(date)"
-	local variable3=`ls`
-	local variable4=$(ls)
+	local variable3=`curl -s https://api.example.com/auth`
+	local variable4=$(curl -s https://api.example.com/auth)
 	local variable5='Do not $(ls) this'
 	local variable6="/tmp/$(date +%Y)"
 	local variable7=$((1 + 1))

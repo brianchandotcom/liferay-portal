@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Option, Picker} from '@clayui/core';
 import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
 import getLocalizedValue from '../../../common/utils/getLocalizedValue';
 import {ViewDashboardContext} from '../ViewDashboardContext';
-import {FilterDropdown, Item} from './FilterDropdown';
+import {Item} from './FilterDropdown';
 import {IAllFiltersDropdown, initialFilters} from './InventoryAnalysisCard';
+import PickerTrigger from './PickerTrigger';
 
 const AllStructureTypesDropdown: React.FC<IAllFiltersDropdown> = ({
 	className,
@@ -22,76 +24,70 @@ const AllStructureTypesDropdown: React.FC<IAllFiltersDropdown> = ({
 	const [structures, setStructures] = useState<Item[]>([
 		initialFilters.structure,
 	]);
-	const [loading, setLoading] = useState(false);
-	const [dropdownActive, setDropdownActive] = useState(false);
 
-	const fetchStructures = async (search: string = '') => {
-		const queryParams = buildQueryString({
-			filter: `(objectFolderExternalReferenceCode eq '${constants.ercContentStructures}' or objectFolderExternalReferenceCode eq '${constants.ercFileTypes}')`,
-			search,
-		});
+	useEffect(() => {
+		const fetchStructures = async () => {
+			const queryParams = buildQueryString({
+				filter: `(objectFolderExternalReferenceCode eq '${constants.ercContentStructures}' or objectFolderExternalReferenceCode eq '${constants.ercFileTypes}')`,
+			});
 
-		const endpoint = `/o/object-admin/v1.0/object-definitions${queryParams}`;
+			const {data, error} = await ApiHelper.get<{
+				items: {id: string; label: Record<string, string>}[];
+			}>(`/o/object-admin/v1.0/object-definitions${queryParams}`);
 
-		const {data, error} = await ApiHelper.get<{
-			items: {id: string; label: Record<string, string>}[];
-		}>(endpoint);
+			if (error) {
+				console.error(error);
 
-		if (data) {
-			return data.items.map(({id, label}) => ({
-				label:
-					getLocalizedValue(label) ||
-					getLocalizedValue(label, 'en_US'),
-				value: String(id),
-			}));
-		}
+				return;
+			}
 
-		if (error) {
-			console.error(error);
-		}
+			if (data) {
+				setStructures([
+					initialFilters.structure,
+					...data.items.map(({id, label}) => ({
+						label:
+							getLocalizedValue(label) ||
+							getLocalizedValue(label, 'en_US'),
+						value: String(id),
+					})),
+				]);
+			}
+		};
 
-		return [];
-	};
+		fetchStructures();
+	}, [constants.ercContentStructures, constants.ercFileTypes]);
 
 	return (
-		<FilterDropdown
-			active={dropdownActive}
-			className={className}
-			filterByValue="structures"
-			icon="edit-layout"
+		<Picker
+			aria-label={Liferay.Language.get(
+				'filter-by-content-structure-type'
+			)}
+			as={PickerTrigger}
+			borderless
+			filterKey="label"
 			items={structures}
-			loading={loading}
-			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
-			onSearch={async (value) => {
-				setLoading(true);
-
-				const structures = await fetchStructures(value);
-
-				setStructures(
-					value
-						? structures
-						: [initialFilters.structure, ...structures]
+			messages={{
+				noResultsFound: Liferay.Language.get('no-results-were-found'),
+				searchPlaceholder: Liferay.Language.get('search'),
+			}}
+			onSelectionChange={(key) => {
+				const selectedStructure = structures.find(
+					({value}) => value === String(key)
 				);
 
-				setLoading(false);
+				if (selectedStructure) {
+					onSelectItem(selectedStructure);
+				}
 			}}
-			onSelectItem={(item) => {
-				onSelectItem(item);
-
-				setDropdownActive(false);
-			}}
-			onTrigger={async () => {
-				setLoading(true);
-
-				const structures = await fetchStructures();
-
-				setStructures([initialFilters.structure, ...structures]);
-
-				setLoading(false);
-			}}
-			selectedItem={item}
-			title={Liferay.Language.get('filter-by-content-structure-type')}
-		/>
+			searchable
+			selectedKey={item.value}
+			triggerClassName={className}
+			triggerIcon="edit-layout"
+		>
+			{(structure: Item) => (
+				<Option key={structure.value}>{structure.label}</Option>
+			)}
+		</Picker>
 	);
 };
 

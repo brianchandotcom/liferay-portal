@@ -94,17 +94,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 					new IndexDocumentRequest(indexName, document)));
 		}
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_openSearchConfigurationWrapper.logExceptionsOnly()) {
-				_log.error("Bulk add failed");
-			}
-			else {
-				throw new SystemException("Bulk add failed");
-			}
-		}
+		_executeBulkDocumentRequest(bulkDocumentRequest, "Bulk add failed");
 	}
 
 	@Override
@@ -168,17 +158,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 					new DeleteDocumentRequest(indexName, uid)));
 		}
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_openSearchConfigurationWrapper.logExceptionsOnly()) {
-				_log.error("Bulk delete failed");
-			}
-			else {
-				throw new SystemException("Bulk delete failed");
-			}
-		}
+		_executeBulkDocumentRequest(bulkDocumentRequest, "Bulk delete failed");
 	}
 
 	@Override
@@ -269,17 +249,8 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 						indexName, document.getUID(), document)));
 		}
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_openSearchConfigurationWrapper.logExceptionsOnly()) {
-				_log.error("Bulk partial update failed");
-			}
-			else {
-				throw new SystemException("Bulk partial update failed");
-			}
-		}
+		_executeBulkDocumentRequest(
+			bulkDocumentRequest, "Bulk partial update failed");
 	}
 
 	@Override
@@ -298,17 +269,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 				new IndexDocumentRequest(indexName, document));
 		}
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_openSearchConfigurationWrapper.logExceptionsOnly()) {
-				_log.error("Update failed");
-			}
-			else {
-				throw new SystemException("Update failed");
-			}
-		}
+		_executeBulkDocumentRequest(bulkDocumentRequest, "Update failed");
 	}
 
 	@Override
@@ -333,22 +294,42 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 				});
 		}
 
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			if (_openSearchConfigurationWrapper.logExceptionsOnly()) {
-				_log.error("Bulk update failed");
-			}
-			else {
-				throw new SystemException("Bulk update failed");
-			}
-		}
+		_executeBulkDocumentRequest(bulkDocumentRequest, "Bulk update failed");
 	}
 
 	@Override
 	protected SpellCheckIndexWriter getSpellCheckIndexWriter() {
 		return _spellCheckIndexWriter;
+	}
+
+	private void _executeBulkDocumentRequest(
+		BulkDocumentRequest bulkDocumentRequest, String failureMessage) {
+
+		BulkDocumentResponse bulkDocumentResponse = null;
+
+		try {
+			bulkDocumentResponse = _searchEngineAdapter.execute(
+				bulkDocumentRequest);
+		}
+		catch (RuntimeException runtimeException) {
+			if (_openSearchConfigurationWrapper.logExceptionsOnly()) {
+				_log.error(runtimeException);
+			}
+			else {
+				throw runtimeException;
+			}
+		}
+
+		if ((bulkDocumentResponse != null) &&
+			bulkDocumentResponse.hasErrors()) {
+
+			if (_openSearchConfigurationWrapper.logExceptionsOnly()) {
+				_log.error(failureMessage);
+			}
+			else {
+				throw new SystemException(failureMessage);
+			}
+		}
 	}
 
 	private String _getIndexNameNext(long companyId) {

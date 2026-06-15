@@ -511,14 +511,6 @@ resource "kubernetes_manifest" "observability_application" {
 						helm={
 							parameters=[
 								{
-									name="alloy.enabled"
-									value="true"
-								},
-								{
-									name="alloy.namespace"
-									value=var.observability_config.namespace
-								},
-								{
 									name="centralHub.argocdURL"
 									value=local.argocd_external_url
 								},
@@ -533,10 +525,6 @@ resource "kubernetes_manifest" "observability_application" {
 								{
 									name="gcp.projectId"
 									value=var.project_id
-								},
-								{
-									name="grafana-alloy.namespaceOverride"
-									value=var.observability_config.namespace
 								},
 								{
 									name="grafana.namespaceOverride"

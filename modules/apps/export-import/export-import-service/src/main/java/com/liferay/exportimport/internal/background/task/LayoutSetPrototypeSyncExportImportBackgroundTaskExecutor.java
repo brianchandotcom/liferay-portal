@@ -12,6 +12,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.layout.set.prototype.constants.LayoutSetPrototypeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -23,20 +24,22 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 import java.io.Serializable;
+
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -74,65 +77,65 @@ public class LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 
 		long layoutSetId = MapUtil.getLong(parameterMap, "layoutSetId");
-		long layoutSetPrototypeId = MapUtil.getLong(
-			parameterMap, "layoutSetPrototypeId");
 
 		try {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				layoutSetId);
 
-			LayoutSetPrototype layoutSetPrototype =
-				_layoutSetPrototypeLocalService.getLayoutSetPrototype(
-					layoutSetPrototypeId);
+			File larFile = null;
 
-			boolean importData = MapUtil.getBoolean(parameterMap, "importData");
+			String syncSessionId = MapUtil.getString(
+				backgroundTask.getTaskContextMap(),
+				LayoutSetPrototypeConstants.KEY_SYNC_SESSION_ID);
 
-			String cacheFileName = StringBundler.concat(
-				_TEMP_DIR, layoutSetPrototype.getUuid(), importData, ".v",
-				layoutSetPrototype.getMvccVersion(), ".lar");
+			if (!Validator.isBlank(syncSessionId)) {
+				File cacheFile = new File(
+					StringBundler.concat(_TEMP_DIR, syncSessionId, ".lar"));
 
-			File cacheFile = new File(cacheFileName);
+				if (cacheFile.exists()) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Using cached layout set prototype LAR file " +
+								cacheFile.getAbsolutePath());
+					}
 
-			if (cacheFile.exists()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Using cached layout set prototype LAR file " +
-							cacheFile.getAbsolutePath());
+					larFile = cacheFile;
+				}
+				else {
+					larFile = _exportImportLocalService.exportLayoutsAsFile(
+						exportImportConfiguration);
+
+					try {
+						FileUtil.mkdirs(cacheFile.getParentFile());
+
+						Files.move(
+							larFile.toPath(), cacheFile.toPath(),
+							StandardCopyOption.REPLACE_EXISTING);
+
+						larFile = cacheFile;
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Moved exported LAR to " +
+									cacheFile.getAbsolutePath());
+						}
+					}
+					catch (Exception exception) {
+						_log.error(
+							StringBundler.concat(
+								"Unable to move ", larFile.getAbsolutePath(),
+								" to ", cacheFile.getAbsolutePath()),
+							exception);
+					}
 				}
 			}
 			else {
-				File larFile = _exportImportLocalService.exportLayoutsAsFile(
+				larFile = _exportImportLocalService.exportLayoutsAsFile(
 					exportImportConfiguration);
-
-				try {
-					FileUtil.copyFile(larFile, cacheFile);
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Copied ", larFile.getAbsolutePath(), " to ",
-								cacheFile.getAbsolutePath()));
-					}
-				}
-				catch (Exception exception) {
-					_log.error(
-						StringBundler.concat(
-							"Unable to copy file ", larFile.getAbsolutePath(),
-							" to ", cacheFile.getAbsolutePath()),
-						exception);
-
-					cacheFile = larFile;
-				}
 			}
 
 			User user = _userLocalService.getDefaultUser(
 				layoutSet.getCompanyId());
-
-			parameterMap.put(
-				"lastMergeVersion",
-				new String[] {
-					String.valueOf(layoutSetPrototype.getMvccVersion())
-				});
 
 			Map<String, Serializable> importLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactoryUtil.
@@ -153,7 +156,7 @@ public class LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor
 			TransactionInvokerUtil.invoke(
 				transactionConfig,
 				new LayoutImportCallable(
-					importExportImportConfiguration, cacheFile, layoutSet));
+					importExportImportConfiguration, larFile));
 
 			int count =
 				_exportImportReportEntryLocalService.
@@ -171,7 +174,7 @@ public class LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor
 		catch (Throwable throwable) {
 			_log.error(
 				"The sync process failed for layout set prototype " +
-					layoutSetPrototypeId,
+					MapUtil.getLong(parameterMap, "layoutSetPrototypeId"),
 				throwable);
 
 			throw new SystemException(throwable);
@@ -208,20 +211,15 @@ public class LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
-	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
-
-	@Reference
 	private UserLocalService _userLocalService;
 
 	private class LayoutImportCallable implements Callable<Void> {
 
 		public LayoutImportCallable(
-			ExportImportConfiguration exportImportConfiguration, File file,
-			LayoutSet layoutSet) {
+			ExportImportConfiguration exportImportConfiguration, File file) {
 
 			_exportImportConfiguration = exportImportConfiguration;
 			_file = file;
-			_layoutSet = layoutSet;
 		}
 
 		@Override
@@ -241,7 +239,6 @@ public class LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor
 
 		private final ExportImportConfiguration _exportImportConfiguration;
 		private final File _file;
-		private final LayoutSet _layoutSet;
 
 	}
 

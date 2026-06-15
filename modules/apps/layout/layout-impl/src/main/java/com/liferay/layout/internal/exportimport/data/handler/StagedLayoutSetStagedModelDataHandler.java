@@ -278,6 +278,10 @@ public class StagedLayoutSetStagedModelDataHandler
 					portletDataContext.isPrivateLayout())) {
 
 			if (Validator.isNull(layout.getLayoutSetPrototypeLayoutERC())) {
+				_linkLayoutSetPrototypeLayout(layout, layoutSetPrototype);
+				_linkLayoutSetPrototypeLayout(
+					layout.fetchDraftLayout(), layoutSetPrototype);
+
 				continue;
 			}
 
@@ -714,6 +718,31 @@ public class StagedLayoutSetStagedModelDataHandler
 		}
 
 		return MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.FAVICON);
+	}
+
+	private void _linkLayoutSetPrototypeLayout(
+			Layout layout, LayoutSetPrototype layoutSetPrototype)
+		throws Exception {
+
+		if ((layout == null) ||
+			Validator.isNotNull(layout.getLayoutSetPrototypeLayoutERC())) {
+
+			return;
+		}
+
+		Layout sourcePrototypeLayout =
+			_layoutLocalService.fetchLayoutByExternalReferenceCode(
+				layout.getExternalReferenceCode(),
+				layoutSetPrototype.getGroupId());
+
+		if (sourcePrototypeLayout == null) {
+			return;
+		}
+
+		layout.setLayoutSetPrototypeLayoutERC(
+			sourcePrototypeLayout.getExternalReferenceCode());
+
+		_layoutLocalService.updateLayout(layout);
 	}
 
 	private StagedLayoutSet _unwrapLayoutSetStagingHandler(

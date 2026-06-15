@@ -105,7 +105,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 		}
 	}
 
-	private void _setTrashEntriesMaxAgeGroup(
+	private void _setGroupTrashEntriesMaxAge(
 			DepotEntry depotEntry, String trashEntriesMaxAge)
 		throws Exception {
 
@@ -125,7 +125,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 		DepotEntry depotEntry = _addDepotEntry(
 			DepotConstants.TYPE_ASSET_LIBRARY);
 
-		_setTrashEntriesMaxAgeGroup(depotEntry, "0");
+		_setGroupTrashEntriesMaxAge(depotEntry, "0");
 
 		_runUpgradeProcess();
 
@@ -135,7 +135,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 	private void _testUpgradeWithCustomMaxAge() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
 
-		_setTrashEntriesMaxAgeGroup(depotEntry, "1440");
+		_setGroupTrashEntriesMaxAge(depotEntry, "1440");
 
 		_runUpgradeProcess();
 
@@ -155,7 +155,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 	private void _testUpgradeWithZeroMaxAge() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
 
-		_setTrashEntriesMaxAgeGroup(depotEntry, "0");
+		_setGroupTrashEntriesMaxAge(depotEntry, "0");
 
 		_runUpgradeProcess();
 

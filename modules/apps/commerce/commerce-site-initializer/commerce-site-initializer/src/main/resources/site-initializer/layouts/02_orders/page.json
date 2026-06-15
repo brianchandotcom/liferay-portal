@@ -4,6 +4,14 @@
 	"name_i18n": {
 		"en_US": "Orders"
 	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
 	"private": false,
 	"system": false,
 	"title_i18n": {

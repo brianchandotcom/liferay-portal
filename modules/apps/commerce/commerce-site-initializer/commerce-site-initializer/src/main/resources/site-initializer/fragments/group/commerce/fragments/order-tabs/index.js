@@ -110,6 +110,14 @@ function handleDropdownButtonName(item) {
 }
 
 function main() {
+	if (!dropdownButton) {
+		if (tabPanelItems[0]) {
+			tabPanelItems[0].classList.remove('d-none');
+		}
+
+		return;
+	}
+
 	const tabItemId = tabItems[persistedTab.getId()] ? persistedTab.getId() : 0;
 
 	tabItems.forEach((item, index) => {

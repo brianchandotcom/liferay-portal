@@ -311,13 +311,11 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 		try {
 			URI uri = URI.create(protectedResourceURI);
 
-			String query = uri.getRawQuery();
-
-			if (Validator.isNotNull(query)) {
+			if (Validator.isNotNull(uri.getRawQuery())) {
 				return StringBundler.concat(
 					uri.getScheme(), "://", uri.getAuthority(),
 					"/.well-known/oauth-protected-resource", uri.getPath(),
-					StringPool.QUESTION, query);
+					StringPool.QUESTION, uri.getRawQuery());
 			}
 
 			return StringBundler.concat(

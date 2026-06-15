@@ -328,4 +328,4 @@ public class SitePageFormContainerSubmissionResult
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:421200069
+// LIFERAY-REST-BUILDER-HASH:-530185995

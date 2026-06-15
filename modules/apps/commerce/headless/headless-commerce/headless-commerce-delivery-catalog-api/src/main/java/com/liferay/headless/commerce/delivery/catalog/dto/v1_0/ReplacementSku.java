@@ -668,4 +668,4 @@ public class ReplacementSku implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1333853314
+// LIFERAY-REST-BUILDER-HASH:416728246

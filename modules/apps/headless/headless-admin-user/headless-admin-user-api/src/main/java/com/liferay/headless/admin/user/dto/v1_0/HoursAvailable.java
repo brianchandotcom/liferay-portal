@@ -361,4 +361,4 @@ public class HoursAvailable implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:561806566
+// LIFERAY-REST-BUILDER-HASH:-767246218

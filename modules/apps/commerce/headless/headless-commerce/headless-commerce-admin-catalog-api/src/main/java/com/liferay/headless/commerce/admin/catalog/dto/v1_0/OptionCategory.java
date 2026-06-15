@@ -540,4 +540,4 @@ public class OptionCategory implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:628506045
+// LIFERAY-REST-BUILDER-HASH:-812318417

@@ -240,4 +240,4 @@ public class UtilityPageSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:107490376
+// LIFERAY-REST-BUILDER-HASH:2068017002

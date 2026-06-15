@@ -795,4 +795,4 @@ public class ContainerPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1118448536
+// LIFERAY-REST-BUILDER-HASH:272140856

@@ -471,4 +471,4 @@ public class SiteMapSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1570560576
+// LIFERAY-REST-BUILDER-HASH:200847558

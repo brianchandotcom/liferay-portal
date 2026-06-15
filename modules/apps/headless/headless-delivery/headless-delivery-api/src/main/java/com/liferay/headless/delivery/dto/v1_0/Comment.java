@@ -766,4 +766,4 @@ public class Comment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1119321101
+// LIFERAY-REST-BUILDER-HASH:-10123473

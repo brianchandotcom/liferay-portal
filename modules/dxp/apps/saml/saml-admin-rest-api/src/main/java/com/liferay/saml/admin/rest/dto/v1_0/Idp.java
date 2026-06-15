@@ -398,4 +398,4 @@ public class Idp implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:346944286
+// LIFERAY-REST-BUILDER-HASH:1704049798

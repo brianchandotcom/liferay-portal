@@ -1828,4 +1828,4 @@ public class SitePage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-519393411
+// LIFERAY-REST-BUILDER-HASH:-942237446

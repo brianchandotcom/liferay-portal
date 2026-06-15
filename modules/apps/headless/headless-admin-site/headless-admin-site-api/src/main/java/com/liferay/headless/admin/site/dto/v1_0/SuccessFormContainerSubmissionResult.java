@@ -331,4 +331,4 @@ public abstract class SuccessFormContainerSubmissionResult
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1225343015
+// LIFERAY-REST-BUILDER-HASH:-1046958873

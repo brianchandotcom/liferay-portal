@@ -289,4 +289,4 @@ public class Geo implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-844380829
+// LIFERAY-REST-BUILDER-HASH:1095512521

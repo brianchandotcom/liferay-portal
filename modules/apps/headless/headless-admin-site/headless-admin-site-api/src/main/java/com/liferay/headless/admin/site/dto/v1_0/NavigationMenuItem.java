@@ -1172,4 +1172,4 @@ public class NavigationMenuItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1340513326
+// LIFERAY-REST-BUILDER-HASH:-961341572

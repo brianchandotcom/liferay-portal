@@ -240,4 +240,4 @@ public class CouponCode implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1335043027
+// LIFERAY-REST-BUILDER-HASH:-2069254595

@@ -2402,4 +2402,4 @@ public class StructuredContent implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:343037407
+// LIFERAY-REST-BUILDER-HASH:1219196645

@@ -527,4 +527,4 @@ public class UserNotification implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2002886917
+// LIFERAY-REST-BUILDER-HASH:996206687

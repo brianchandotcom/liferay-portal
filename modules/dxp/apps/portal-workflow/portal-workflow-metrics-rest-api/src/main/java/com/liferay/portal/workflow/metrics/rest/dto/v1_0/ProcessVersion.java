@@ -235,4 +235,4 @@ public class ProcessVersion implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1500350464
+// LIFERAY-REST-BUILDER-HASH:-1113804134

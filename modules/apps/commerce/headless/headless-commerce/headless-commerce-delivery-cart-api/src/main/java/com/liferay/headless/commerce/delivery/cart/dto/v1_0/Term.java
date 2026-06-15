@@ -479,4 +479,4 @@ public class Term implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:178274287
+// LIFERAY-REST-BUILDER-HASH:-1732819051

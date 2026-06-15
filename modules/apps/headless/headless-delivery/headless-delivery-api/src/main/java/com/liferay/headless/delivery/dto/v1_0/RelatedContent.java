@@ -351,4 +351,4 @@ public class RelatedContent implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:386647677
+// LIFERAY-REST-BUILDER-HASH:743246577

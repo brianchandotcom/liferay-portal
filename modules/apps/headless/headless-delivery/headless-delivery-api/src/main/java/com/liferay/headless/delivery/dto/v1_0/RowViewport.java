@@ -301,4 +301,4 @@ public class RowViewport implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2092374722
+// LIFERAY-REST-BUILDER-HASH:1336614062

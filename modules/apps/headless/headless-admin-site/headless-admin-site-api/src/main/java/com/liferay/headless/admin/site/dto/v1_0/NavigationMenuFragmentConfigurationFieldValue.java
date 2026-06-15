@@ -326,4 +326,4 @@ public class NavigationMenuFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1623338334
+// LIFERAY-REST-BUILDER-HASH:-923311138

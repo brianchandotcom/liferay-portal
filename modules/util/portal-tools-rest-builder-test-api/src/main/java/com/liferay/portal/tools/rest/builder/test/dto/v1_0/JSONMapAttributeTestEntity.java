@@ -568,4 +568,4 @@ public class JSONMapAttributeTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:534648921
+// LIFERAY-REST-BUILDER-HASH:755982599

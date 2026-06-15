@@ -1030,4 +1030,4 @@ public class PageRowDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-885082872
+// LIFERAY-REST-BUILDER-HASH:-415583036

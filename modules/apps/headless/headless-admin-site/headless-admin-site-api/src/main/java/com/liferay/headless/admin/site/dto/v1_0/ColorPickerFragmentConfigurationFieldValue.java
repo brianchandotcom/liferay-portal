@@ -326,4 +326,4 @@ public class ColorPickerFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1227630435
+// LIFERAY-REST-BUILDER-HASH:1455754817

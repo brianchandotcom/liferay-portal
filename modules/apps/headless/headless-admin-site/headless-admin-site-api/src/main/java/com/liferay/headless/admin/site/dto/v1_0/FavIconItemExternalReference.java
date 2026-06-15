@@ -370,4 +370,4 @@ public class FavIconItemExternalReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1347165212
+// LIFERAY-REST-BUILDER-HASH:-1562516552

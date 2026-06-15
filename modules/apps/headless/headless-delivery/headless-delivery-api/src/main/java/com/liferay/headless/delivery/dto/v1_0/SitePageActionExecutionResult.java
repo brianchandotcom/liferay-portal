@@ -243,4 +243,4 @@ public class SitePageActionExecutionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1775526922
+// LIFERAY-REST-BUILDER-HASH:-270246614

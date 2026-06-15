@@ -421,4 +421,4 @@ public class ProvisioningRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1802502784
+// LIFERAY-REST-BUILDER-HASH:-705613005

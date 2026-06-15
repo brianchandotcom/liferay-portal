@@ -1773,4 +1773,4 @@ public class FragmentViewportStyle implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:842574369
+// LIFERAY-REST-BUILDER-HASH:1437712295

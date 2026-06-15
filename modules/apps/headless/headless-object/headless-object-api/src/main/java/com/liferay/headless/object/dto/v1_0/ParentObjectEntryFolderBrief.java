@@ -479,4 +479,4 @@ public class ParentObjectEntryFolderBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:441281170
+// LIFERAY-REST-BUILDER-HASH:-1608111042

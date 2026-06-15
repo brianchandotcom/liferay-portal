@@ -265,4 +265,4 @@ public class EmbeddedPageSpecification
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-427482480
+// LIFERAY-REST-BUILDER-HASH:371021024

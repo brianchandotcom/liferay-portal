@@ -243,4 +243,4 @@ public class ParentTaxonomyVocabulary implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:306414404
+// LIFERAY-REST-BUILDER-HASH:-1959041378

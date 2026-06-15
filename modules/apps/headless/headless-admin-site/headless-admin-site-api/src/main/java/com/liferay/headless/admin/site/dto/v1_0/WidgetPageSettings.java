@@ -780,4 +780,4 @@ public class WidgetPageSettings extends PageSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1562891132
+// LIFERAY-REST-BUILDER-HASH:-1116864212

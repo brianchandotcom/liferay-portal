@@ -294,4 +294,4 @@ public class StyleBook implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-161276480
+// LIFERAY-REST-BUILDER-HASH:-574781992

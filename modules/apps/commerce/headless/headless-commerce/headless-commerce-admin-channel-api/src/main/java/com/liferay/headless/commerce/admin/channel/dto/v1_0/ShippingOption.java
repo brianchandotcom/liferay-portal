@@ -533,4 +533,4 @@ public class ShippingOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:689758098
+// LIFERAY-REST-BUILDER-HASH:1059561956

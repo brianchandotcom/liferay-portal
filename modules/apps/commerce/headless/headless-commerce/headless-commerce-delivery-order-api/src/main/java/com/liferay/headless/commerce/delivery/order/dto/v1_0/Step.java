@@ -364,4 +364,4 @@ public class Step implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-691796557
+// LIFERAY-REST-BUILDER-HASH:1782697505

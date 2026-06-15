@@ -350,4 +350,4 @@ public class TargetCollectionDisplayFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:917833155
+// LIFERAY-REST-BUILDER-HASH:-356055963

@@ -650,4 +650,4 @@ public class AssetEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1359746
+// LIFERAY-REST-BUILDER-HASH:-1716184882

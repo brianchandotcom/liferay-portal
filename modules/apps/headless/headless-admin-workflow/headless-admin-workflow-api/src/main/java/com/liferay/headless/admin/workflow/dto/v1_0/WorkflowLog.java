@@ -1096,4 +1096,4 @@ public class WorkflowLog implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-158932117
+// LIFERAY-REST-BUILDER-HASH:-754184037

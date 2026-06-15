@@ -294,4 +294,4 @@ public class ItemValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:203283846
+// LIFERAY-REST-BUILDER-HASH:2003854314

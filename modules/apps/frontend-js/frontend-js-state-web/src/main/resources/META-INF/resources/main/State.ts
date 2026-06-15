@@ -524,7 +524,7 @@ function isAtom(value: unknown): value is Atom<any> {
 	return Object.hasOwnProperty.call(value, ATOM);
 }
 
-/** 
+/**
  * The public `Liferay.State` declaration (see liferay.d.ts) exposes `Atom`
  * and `Selector` as opaque types so consumers cannot depend on their internal
  * shape. The implementation here uses the concrete shape, so the assignment to

@@ -119,9 +119,7 @@ public class KaleoInstanceLocalServiceTest
 		kaleoInstance = _kaleoInstanceLocalService.getKaleoInstance(
 			kaleoInstanceId);
 
-		Assert.assertEquals(
-			kaleoInstance.getMvccVersion() + parties,
-			kaleoInstance.getMvccVersion());
+		Assert.assertEquals(parties, kaleoInstance.getMvccVersion());
 	}
 
 	@Inject

@@ -31,6 +31,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,7 +84,7 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 		try {
 			writerInterceptorContext.proceed();
 
-			Charset charset = _resolveCharset(
+			Charset charset = _getCharset(
 				writerInterceptorContext.getMediaType());
 
 			String body = byteArrayOutputStream.toString(charset);
@@ -95,6 +96,34 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 		}
 		finally {
 			writerInterceptorContext.setOutputStream(originalOutputStream);
+		}
+	}
+
+	private Charset _getCharset(MediaType mediaType) {
+		if (mediaType == null) {
+			return StandardCharsets.UTF_8;
+		}
+
+		Map<String, String> parameters = mediaType.getParameters();
+
+		String charset = parameters.get(MediaType.CHARSET_PARAMETER);
+
+		if (Validator.isNull(charset)) {
+			return StandardCharsets.UTF_8;
+		}
+
+		try {
+			return Charset.forName(charset);
+		}
+		catch (RuntimeException runtimeException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to resolve charset \"" + charset +
+						"\"; falling back to UTF-8",
+					runtimeException);
+			}
+
+			return StandardCharsets.UTF_8;
 		}
 	}
 
@@ -127,35 +156,6 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 		}
 
 		return false;
-	}
-
-	private Charset _resolveCharset(MediaType mediaType) {
-		if (mediaType == null) {
-			return StandardCharsets.UTF_8;
-		}
-
-		String charset = mediaType.getParameters(
-		).get(
-			MediaType.CHARSET_PARAMETER
-		);
-
-		if (Validator.isNull(charset)) {
-			return StandardCharsets.UTF_8;
-		}
-
-		try {
-			return Charset.forName(charset);
-		}
-		catch (RuntimeException runtimeException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to resolve charset \"" + charset +
-						"\"; falling back to UTF-8",
-					runtimeException);
-			}
-
-			return StandardCharsets.UTF_8;
-		}
 	}
 
 	private static final String _HEADER_DATA_MASKS = "X-Liferay-Data-Masks";

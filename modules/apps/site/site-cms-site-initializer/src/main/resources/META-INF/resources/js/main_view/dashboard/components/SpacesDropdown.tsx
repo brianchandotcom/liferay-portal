@@ -3,19 +3,48 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
-import React, {useContext, useState} from 'react';
+import ClayButton from '@clayui/button';
+import {Option, Picker} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
+import React, {useContext, useEffect, useState} from 'react';
 
-import ApiHelper from '../../../common/services/ApiHelper';
+import SpaceService from '../../../common/services/SpaceService';
 import {ViewDashboardContext, initialSpace} from '../ViewDashboardContext';
-import {FilterDropdown} from './FilterDropdown';
 
-type Space = {
+type SpaceOption = {
+	externalReferenceCode?: string;
 	label: string;
 	value: string;
 };
 
-const PATH = '/o/headless-asset-library/v1.0/asset-libraries';
+const Trigger = React.forwardRef<HTMLButtonElement, any>(
+	(
+		{
+			children,
+			'className': _className,
+			triggerClassName,
+			triggerIcon,
+			...otherProps
+		},
+		ref
+	) => (
+		<ClayButton
+			{...otherProps}
+			className={triggerClassName}
+			displayType="secondary"
+			ref={ref}
+			size="sm"
+		>
+			{triggerIcon && <ClayIcon className="mr-2" symbol={triggerIcon} />}
+
+			{children}
+
+			<ClayIcon className="ml-2" symbol="caret-bottom" />
+		</ClayButton>
+	)
+);
+
+Trigger.displayName = 'Trigger';
 
 const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	className,
@@ -25,73 +54,53 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 		filters: {space},
 	} = useContext(ViewDashboardContext);
 
-	const [dropdownActive, setDropdownActive] = useState(false);
+	const [spaces, setSpaces] = useState<SpaceOption[]>([initialSpace]);
 
-	const [spaces, setSpaces] = useState<Space[]>([initialSpace]);
-	const [loading, setLoading] = useState(false);
+	useEffect(() => {
+		const fetchSpaces = async () => {
+			const spaces = await SpaceService.getSpaces();
 
-	const fetchSpaces = async (keywords: string = '') => {
-		const queryParams = buildQueryString({
-			filter: "type eq 'Space'",
-			keywords,
-		});
-		const endpoint = `${PATH}${queryParams}`;
+			setSpaces([
+				initialSpace,
+				...spaces.map(({externalReferenceCode, id, name}) => ({
+					externalReferenceCode,
+					label: name,
+					value: String(id),
+				})),
+			]);
+		};
 
-		const {data, error} = await ApiHelper.get<{
-			items: {externalReferenceCode: string; id: string; name: string}[];
-		}>(endpoint);
-
-		if (data) {
-			return data.items.map(({externalReferenceCode, id, name}) => ({
-				externalReferenceCode,
-				label: name,
-				value: String(id),
-			}));
-		}
-
-		if (error) {
-			console.error(error);
-		}
-
-		return [];
-	};
+		fetchSpaces();
+	}, []);
 
 	return (
-		<FilterDropdown
-			active={dropdownActive}
-			borderless={false}
-			className={className}
-			filterByValue="spaces"
-			icon="box-container"
+		<Picker
+			aria-label={Liferay.Language.get('filter-by-spaces')}
+			as={Trigger}
+			filterKey="label"
 			items={spaces}
-			loading={loading}
-			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
-			onSearch={async (value) => {
-				setLoading(true);
-
-				const spaces = await fetchSpaces(value);
-
-				setSpaces(value ? spaces : [initialSpace, ...spaces]);
-
-				setLoading(false);
+			messages={{
+				noResultsFound: Liferay.Language.get('no-results-were-found'),
+				searchPlaceholder: Liferay.Language.get('search'),
 			}}
-			onSelectItem={(item) => {
-				changeSpace(item);
+			onSelectionChange={(key) => {
+				const selectedSpace = spaces.find(
+					({value}) => value === String(key)
+				);
 
-				setDropdownActive(false);
+				if (selectedSpace) {
+					changeSpace(selectedSpace);
+				}
 			}}
-			onTrigger={async () => {
-				setLoading(true);
-
-				const spaces = await fetchSpaces();
-
-				setSpaces([initialSpace, ...spaces]);
-
-				setLoading(false);
-			}}
-			selectedItem={space}
-			title={Liferay.Language.get('filter-by-spaces')}
-		/>
+			searchable
+			selectedKey={space.value}
+			triggerClassName={className}
+			triggerIcon="box-container"
+		>
+			{(item: SpaceOption) => (
+				<Option key={item.value}>{item.label}</Option>
+			)}
+		</Picker>
 	);
 };
 

@@ -28,7 +28,8 @@ jobs:
                 working-directory: ./cloud/terraform/${{matrix.stack}}
             -   name: Run Terraform unit tests
                 run: cloud/scripts/tests/run_terraform_tests.sh "${{matrix.stack}}"
-            -   name: Publish test report
+            -   if: ${{!cancelled() && hashFiles('cloud/terraform/test-results/*.xml') != ''}}
+                name: Publish test report
                 uses: dorny/test-reporter@v2
                 with:
                     fail-on-error: true
@@ -36,7 +37,8 @@ jobs:
                     name: Terraform unit tests (${{matrix.stack}})
                     path: cloud/terraform/test-results/*.xml
                     reporter: java-junit
-            -   name: Upload test results
+            -   if: ${{!cancelled() && hashFiles('cloud/terraform/test-results/*.xml') != ''}}
+                name: Upload test results
                 uses: actions/upload-artifact@v4
                 with:
                     if-no-files-found: ignore

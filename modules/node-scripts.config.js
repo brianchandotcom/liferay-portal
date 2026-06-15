@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/** AUTO-GENERATED: DO NOT EDIT 
- * 
+/** AUTO-GENERATED: DO NOT EDIT
+ *
  * This is generated based on each module's `node-scripts.config.js`
- * 
-*/
+ *
+ */
 
 module.exports = {
 	hash: 'f6aac7b658075a88046669b7a03d1e4d7846849916854162ca09e1bd94c10a0d',
@@ -821,148 +821,71 @@ module.exports = {
 	//
 
 	symbols: {
-	"@clayui/core": [
-		"Body",
-		"Button",
-		"ButtonWithIcon",
-		"Cell",
-		"FocusTrap",
-		"Head",
-		"Heading",
-		"Icon",
-		"IconSelector",
-		"KeyboardArrowsIndicator",
-		"LanguagePicker",
-		"Modal",
-		"ModalContext",
-		"Nav",
-		"Option",
-		"OverlayMask",
-		"Picker",
-		"Provider",
-		"ResizeHandle",
-		"Row",
-		"SidePanel",
-		"SidePanelWithDrilldown",
-		"Table",
-		"Text",
-		"TextHighlight",
-		"TreeView",
-		"VerticalBar",
-		"VerticalNav",
-		"__EXPERIMENTAL_MENU",
-		"__NOT_PUBLIC_COLLECTION",
-		"__NOT_PUBLIC_LIVE_ANNOUNCER",
-		"useModal",
-		"useProvider"
-	],
-	"@clayui/date-picker": [
-		"FirstDayOfWeek",
-		"default"
-	],
-	"@clayui/provider": [
-		"Provider",
-		"__UNSTABLE_DataClient",
-		"useProvider"
-	],
-	"axe-core": [
-		"*",
-		"default"
-	],
-	"clipboard": [
-		"*",
-		"default"
-	],
-	"cropperjs": [
-		"*",
-		"default"
-	],
-	"dagre": [
-		"*",
-		"default"
-	],
-	"date-fns": [
-		"*"
-	],
-	"fuzzy": [
-		"*",
-		"default"
-	],
-	"graphql-hooks-memcache": [
-		"*",
-		"default"
-	],
-	"highlight.js": [
-		"*",
-		"default"
-	],
-	"highlight.js/lib/core": [
-		"*",
-		"default"
-	],
-	"highlight.js/lib/languages/java": [
-		"*",
-		"default"
-	],
-	"highlight.js/lib/languages/javascript": [
-		"*",
-		"default"
-	],
-	"highlight.js/lib/languages/plaintext": [
-		"*",
-		"default"
-	],
-	"liferay-ckeditor": [
-	],
-	"moment": [
-		"*",
-		"default"
-	],
-	"moment/min/moment-with-locales": [
-		"*",
-		"default"
-	],
-	"numeral": [
-		"*",
-		"default"
-	],
-	"object-hash": [
-		"*",
-		"default"
-	],
-	"prop-types": [
-		"*",
-		"bigint",
-		"default"
-	],
-	"qrcode": [
-		"create",
-		"toCanvas",
-		"toString",
-		"toDataURL"
-	],
-	"qs": [
-		"*",
-		"default"
-	],
-	"react": [
-		"*",
-		"default"
-	],
-	"react-dnd": [
-		"*"
-	],
-	"react-dom": [
-		"*",
-		"default"
-	],
-	"text-mask-addons": [
-		"*",
-		"default"
-	],
-	"text-mask-core": [
-		"*",
-		"default"
-	]
-},
+		'@clayui/core': [
+			'Body',
+			'Button',
+			'ButtonWithIcon',
+			'Cell',
+			'FocusTrap',
+			'Head',
+			'Heading',
+			'Icon',
+			'IconSelector',
+			'KeyboardArrowsIndicator',
+			'LanguagePicker',
+			'Modal',
+			'ModalContext',
+			'Nav',
+			'Option',
+			'OverlayMask',
+			'Picker',
+			'Provider',
+			'ResizeHandle',
+			'Row',
+			'SidePanel',
+			'SidePanelWithDrilldown',
+			'Table',
+			'Text',
+			'TextHighlight',
+			'TreeView',
+			'VerticalBar',
+			'VerticalNav',
+			'__EXPERIMENTAL_MENU',
+			'__NOT_PUBLIC_COLLECTION',
+			'__NOT_PUBLIC_LIVE_ANNOUNCER',
+			'useModal',
+			'useProvider',
+		],
+		'@clayui/date-picker': ['FirstDayOfWeek', 'default'],
+		'@clayui/provider': [
+			'Provider',
+			'__UNSTABLE_DataClient',
+			'useProvider',
+		],
+		'axe-core': ['*', 'default'],
+		'clipboard': ['*', 'default'],
+		'cropperjs': ['*', 'default'],
+		'dagre': ['*', 'default'],
+		'date-fns': ['*'],
+		'fuzzy': ['*', 'default'],
+		'graphql-hooks-memcache': ['*', 'default'],
+		'highlight.js': ['*', 'default'],
+		'highlight.js/lib/core': ['*', 'default'],
+		'highlight.js/lib/languages/java': ['*', 'default'],
+		'highlight.js/lib/languages/javascript': ['*', 'default'],
+		'highlight.js/lib/languages/plaintext': ['*', 'default'],
+		'liferay-ckeditor': [],
+		'moment': ['*', 'default'],
+		'moment/min/moment-with-locales': ['*', 'default'],
+		'numeral': ['*', 'default'],
+		'object-hash': ['*', 'default'],
+		'prop-types': ['*', 'bigint', 'default'],
+		'qrcode': ['create', 'toCanvas', 'toString', 'toDataURL'],
+		'qs': ['*', 'default'],
+		'react': ['*', 'default'],
+		'react-dnd': ['*'],
+		'react-dom': ['*', 'default'],
+		'text-mask-addons': ['*', 'default'],
+		'text-mask-core': ['*', 'default'],
+	},
 };

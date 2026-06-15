@@ -123,14 +123,14 @@ public class OAuth2WellKnownProtectedResourceMetadataFilterTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, httpResponse.statusCode());
 
-		OAuthClientPRLocalMetadata updatedOAuthClientPRLocalMetadata =
+		OAuthClientPRLocalMetadata existingOAuthClientPRLocalMetadata =
 			_oAuthClientPRLocalMetadataLocalService.
 				getOAuthClientPRLocalMetadata(
 					oAuthClientPRLocalMetadata.
 						getOAuthClientPRLocalMetadataId());
 
 		Assert.assertEquals(
-			updatedOAuthClientPRLocalMetadata.getMetadataJSON(),
+			existingOAuthClientPRLocalMetadata.getMetadataJSON(),
 			httpResponse.body());
 
 		httpResponse = _send(urlString, "HEAD");

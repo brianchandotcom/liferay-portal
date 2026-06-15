@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -87,17 +86,6 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 
 			KaleoInstanceToken kaleoInstanceToken =
 				executionContext.getKaleoInstanceToken();
-
-			if (url.startsWith("/")) {
-				Company company = _companyLocalService.getCompany(
-					kaleoInstanceToken.getCompanyId());
-
-				String portalURL = _portal.getPortalURL(
-					company.getVirtualHostname(),
-					_portal.getPortalServerPort(false), false);
-
-				url = portalURL + url;
-			}
 
 			Http.Options options = new Http.Options();
 
@@ -209,8 +197,5 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

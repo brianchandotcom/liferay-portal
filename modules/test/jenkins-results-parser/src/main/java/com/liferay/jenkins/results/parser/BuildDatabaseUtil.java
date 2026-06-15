@@ -114,14 +114,8 @@ public class BuildDatabaseUtil {
 	}
 
 	public static void setBuildDatabase(BuildDatabase buildDatabase) {
-		setBuildDatabase(_getBuildDir(null), buildDatabase);
-	}
-
-	public static void setBuildDatabase(
-		File buildDir, BuildDatabase buildDatabase) {
-
 		synchronized (_buildDatabases) {
-			_buildDatabases.put(buildDir, buildDatabase);
+			_buildDatabases.put(_getBuildDir(null), buildDatabase);
 		}
 	}
 

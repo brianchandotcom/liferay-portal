@@ -28,8 +28,7 @@ public class DataMaskResourceImpl extends BaseDataMaskResourceImpl {
 
 	@Override
 	public DataMaskPreviewResult previewDataMask(
-			DataMaskPreviewRequest dataMaskPreviewRequest)
-		throws Exception {
+		DataMaskPreviewRequest dataMaskPreviewRequest) {
 
 		String detectionRegex = dataMaskPreviewRequest.getDetectionRegex();
 		String replacementValue = dataMaskPreviewRequest.getReplacementValue();

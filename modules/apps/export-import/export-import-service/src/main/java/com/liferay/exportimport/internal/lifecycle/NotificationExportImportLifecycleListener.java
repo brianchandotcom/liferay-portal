@@ -13,6 +13,7 @@ import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -84,6 +85,13 @@ public class NotificationExportImportLifecycleListener
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
+
+		if (GetterUtil.getBoolean(
+				taskContextMap.get(
+					BackgroundTaskContextMapConstants.SKIP_NOTIFICATION))) {
+
+			return;
+		}
 
 		long exportImportConfigurationId = GetterUtil.getLong(
 			taskContextMap.get("exportImportConfigurationId"));

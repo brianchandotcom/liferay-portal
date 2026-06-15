@@ -16,7 +16,7 @@ import {
 	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
-import {SpaceSummaryPage} from '../main/pages/SpaceSummaryPage';
+import {SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE} from '../../setup/site-cms-site/constants/space';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -48,10 +48,6 @@ test.beforeAll(async ({browser}) => {
 
 	apiHelpers.data.push({id: cmsAdminUser.id, type: 'userAccount'});
 
-	const spaceSummaryPage = new SpaceSummaryPage(page);
-
-	await spaceSummaryPage.goto(spaceName);
-
 	const addRoleUser = async (role?: string) => {
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -63,17 +59,26 @@ test.beforeAll(async ({browser}) => {
 			surname: user.familyName,
 		};
 
-		await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+			user.externalReferenceCode
+		);
 
 		if (role) {
-			await spaceSummaryPage.addRoleToSpaceMember(role, user.name);
+			await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+				SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+				user.externalReferenceCode,
+				[role]
+			);
 		}
 
 		return user;
 	};
 
-	spaceAdminUser = await addRoleUser('Space Administrator');
-	spaceContentReviewerUser = await addRoleUser('Space Content Reviewer');
+	spaceAdminUser = await addRoleUser('Asset Library Administrator');
+	spaceContentReviewerUser = await addRoleUser(
+		'Asset Library Content Reviewer'
+	);
 	spaceMemberUser = await addRoleUser();
 
 	setupData = [...apiHelpers.data];

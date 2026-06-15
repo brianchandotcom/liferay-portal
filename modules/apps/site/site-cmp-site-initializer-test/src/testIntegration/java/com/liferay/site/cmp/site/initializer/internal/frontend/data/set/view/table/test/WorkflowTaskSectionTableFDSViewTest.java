@@ -6,6 +6,7 @@
 package com.liferay.site.cmp.site.initializer.internal.frontend.data.set.view.table.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -53,10 +54,10 @@ public class WorkflowTaskSectionTableFDSViewTest
 		assertFDSTableSchemaField(
 			null, "dateTime", "last-activity-date", "dateModified");
 
-		Assert.assertTrue(
-			fdsTableSchemaFieldsMap.get(
-				"dateModified"
-			).isSortable());
+		FDSTableSchemaField fdsTableSchemaField = fdsTableSchemaFieldsMap.get(
+			"dateModified");
+
+		Assert.assertTrue(fdsTableSchemaField.isSortable());
 	}
 
 	@Override

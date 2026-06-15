@@ -378,12 +378,13 @@ public class MirrorsGetTask extends Task {
 			if (gcpCredentialsFile != null) {
 				Process process = _executeCommands(
 					new String[] {
-						"gcloud", "auth", "activate-service-account",
-						"--key-file", gcpCredentialsFile.toString()
+						"gcloud", "auth", "login", "--cred-file",
+						gcpCredentialsFile.toString(), "--quiet"
 					});
 
 				if (process.exitValue() != 0) {
-					System.out.println("Unable to activate service account.");
+					System.out.println(
+						"Unable to authenticate with credential file.");
 				}
 			}
 

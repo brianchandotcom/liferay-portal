@@ -7256,9 +7256,8 @@ public class JenkinsResultsParserUtil {
 			String urlEncodedToken = URLEncoder.encode(
 				token, StandardCharsets.UTF_8.name());
 
-			urlEncodedToken = urlEncodedToken.replaceAll("\\+", "%20");
-
 			redactTokenVariants.add(urlEncodedToken);
+			redactTokenVariants.add(urlEncodedToken.replace("+", "%20"));
 		}
 		catch (UnsupportedEncodingException unsupportedEncodingException) {
 			throw new RuntimeException(unsupportedEncodingException);

@@ -9,10 +9,12 @@ import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +31,9 @@ public class SHSubshellCheck extends BaseFileCheck {
 		if (Validator.isBlank(content)) {
 			return content;
 		}
+
+		List<String> allowedSubshellNames = getAttributeValues(
+			_ALLOWED_SUBSHELL_NAMES_KEY, absolutePath);
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
@@ -93,8 +98,23 @@ public class SHSubshellCheck extends BaseFileCheck {
 
 				s = s.replaceAll("(?s)'.*?'", "''");
 
-				if (s.contains("`") ||
-					(s.contains("$(") && !s.contains("$(("))) {
+				if (s.contains("`") && ((StringUtil.count(s, '`') % 2) == 0)) {
+					addMessage(
+						fileName,
+						"Use \"$()\" for subshells instead of legacy backticks",
+						startLineNumber);
+				}
+
+				Matcher matcher = _subshellPattern.matcher(s);
+
+				while (matcher.find()) {
+					String name = matcher.group(1);
+
+					if (allowedSubshellNames.contains(name) ||
+						name.startsWith("_")) {
+
+						continue;
+					}
 
 					addMessage(
 						fileName,
@@ -135,6 +155,11 @@ public class SHSubshellCheck extends BaseFileCheck {
 		return insideQuotes;
 	}
 
+	private static final String _ALLOWED_SUBSHELL_NAMES_KEY =
+		"allowedSubshellNames";
+
+	private static final Pattern _subshellPattern = Pattern.compile(
+		"\\$\\(\\s*(?!\\()(\\w+)");
 	private static final Pattern _variableDefinitionPattern = Pattern.compile(
 		"local\\s+(-[a-zA-Z]+\\s+)?\\w+=(.*)");
 

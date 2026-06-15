@@ -3,13 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import {Text} from '@clayui/core';
-import ClayDropdown from '@clayui/drop-down';
+import {Option, Picker, Text} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
@@ -22,6 +20,7 @@ import {BaseCard} from './BaseCard';
 import {Item} from './FilterDropdown';
 import {GroupByDropdown} from './GroupByDropdown';
 import PaginatedTable from './PaginatedTable';
+import PickerTrigger from './PickerTrigger';
 
 export interface IAllFiltersDropdown extends React.HTMLAttributes<HTMLElement> {
 	item: Item;
@@ -165,8 +164,6 @@ export function InventoryAnalysisCard() {
 	const [inventoryAnalysisData, setInventoryAnalysisData] =
 		useState<InventoryAnalysisDataType>();
 
-	const [dropdownActive, setDropdownActive] = useState(false);
-
 	const [selectedItem, setSelectedItem] = useState<DropdownItem>(
 		dropdownItems[0]
 	);
@@ -195,79 +192,34 @@ export function InventoryAnalysisCard() {
 		fetchData();
 	}, [filters, language, pagination, space]);
 
-	const triggerRef = useRef<HTMLButtonElement | null>(null);
-
 	return (
 		<div className="cms-dashboard__inventory-analysis mb-3">
 			<BaseCard
 				Preferences={
-					<ClayDropdown
-						active={dropdownActive}
-						closeOnClickOutside={true}
-						onActiveChange={setDropdownActive}
-						trigger={
-							<ClayButton
-								aria-label={selectedItem.name}
-								borderless={true}
-								displayType="secondary"
-								onClick={() => {
-									setDropdownActive(!dropdownActive);
-								}}
-								ref={(node: HTMLButtonElement) => {
-									triggerRef.current = node;
-								}}
-								size="sm"
-							>
-								{selectedItem.icon && (
-									<ClayIcon
-										className="mr-2"
-										symbol={selectedItem.icon}
-									/>
-								)}
+					<Picker
+						aria-label={selectedItem.name}
+						as={PickerTrigger}
+						items={dropdownItems}
+						onSelectionChange={(key) => {
+							const item = dropdownItems.find(
+								({value}) => value === key
+							);
 
-								<Text weight="semi-bold">
-									{selectedItem.name}
-								</Text>
-
-								<ClayIcon
-									className="mx-2"
-									symbol="caret-bottom"
-								/>
-							</ClayButton>
-						}
+							if (item) {
+								setSelectedItem(item);
+							}
+						}}
+						selectedKey={selectedItem.value}
+						triggerIcon={selectedItem.icon}
 					>
-						{dropdownItems.map((item) => (
-							<ClayDropdown.Item
-								active={item.value === selectedItem.value}
-								key={item.value}
-								onClick={() => {
-									setSelectedItem(item);
-									setDropdownActive(false);
-									triggerRef?.current?.focus();
-								}}
-							>
-								<div className="align-items-center d-flex">
-									{item.value === selectedItem.value ? (
-										<ClayIcon
-											className="mr-2"
-											symbol="check"
-										/>
-									) : (
-										<ClayIcon className="mr-2" symbol="" />
-									)}
+						{(item: DropdownItem) => (
+							<Option key={item.value} textValue={item.name}>
+								<ClayIcon className="mr-2" symbol={item.icon} />
 
-									{item.icon && (
-										<ClayIcon
-											className="mr-2"
-											symbol={item.icon}
-										/>
-									)}
-
-									{item.name}
-								</div>
-							</ClayDropdown.Item>
-						))}
-					</ClayDropdown>
+								{item.name}
+							</Option>
+						)}
+					</Picker>
 				}
 				ariaLevel={3}
 				description={Liferay.Language.get(

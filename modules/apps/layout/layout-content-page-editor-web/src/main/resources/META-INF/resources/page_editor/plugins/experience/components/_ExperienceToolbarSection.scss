@@ -13,13 +13,20 @@ html#{$cadmin-selector} {
 			display: flex;
 			position: relative;
 
-			> button {
+			.page-editor__experience-selector {
 				display: inline-block;
 				max-width: 100%;
 				width: 12em;
 
 				@include media-breakpoint-down(xs) {
 					width: 10em;
+				}
+			}
+
+			.page-editor__experience-selector-group {
+				.page-editor__experience-selector {
+					border-bottom-right-radius: 0;
+					border-top-right-radius: 0;
 				}
 			}
 		}

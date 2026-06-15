@@ -286,6 +286,20 @@ public class MarketplaceUtil {
 		return localeMap.get("en_US");
 	}
 
+	public static String getExternalLinkValue(
+		ExternalLink[] externalLinks, String domain, String entityName) {
+
+		for (ExternalLink externalLink : externalLinks) {
+			if (Objects.equals(externalLink.getDomain(), domain) &&
+				Objects.equals(externalLink.getEntityName(), entityName)) {
+
+				return externalLink.getEntityId();
+			}
+		}
+
+		return null;
+	}
+
 	public static JSONObject getOrderMetadata(Order order) {
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();

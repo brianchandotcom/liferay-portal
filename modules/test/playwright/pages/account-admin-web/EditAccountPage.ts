@@ -57,6 +57,7 @@ export class EditAccountPage {
 	readonly setBillingDefaultAddressButton: Locator;
 	readonly setShippingDefaultAddressButton: Locator;
 	readonly tagInput: (name: string) => Locator;
+	readonly tagsCombobox: Locator;
 	readonly taxIDInput: Locator;
 	readonly typeInput: Locator;
 	readonly uploadImageSelectImageButton: Locator;
@@ -198,6 +199,7 @@ export class EditAccountPage {
 			.locator('[class$=btn-group-spaced]')
 			.getByText('Save');
 		this.tagInput = (name) => page.getByRole('row', {name});
+		this.tagsCombobox = page.getByRole('combobox', {name: 'Tags'});
 		this.taxIDInput = page.getByLabel('Tax ID');
 		this.typeInput = page.getByLabel('Type');
 		this.uploadImageSelectImageButton = page

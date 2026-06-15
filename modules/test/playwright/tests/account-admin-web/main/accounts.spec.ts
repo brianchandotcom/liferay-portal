@@ -1446,10 +1446,10 @@ test('LPD-47225 Can add and remove tags to an account', async ({
 	await expect(editAccountPage.tagInput(tags[1].name)).toBeVisible();
 	await expect(editAccountPage.tagInput(tags[2].name)).toHaveCount(0);
 
-	await editAccountPage.categoryClearAllButton.click();
+	await editAccountPage.categoryClearAllButton.click({force: true});
 
 	await expect(async () => {
-		await page.getByLabel('Tags', {exact: true}).press('Tab');
+		await editAccountPage.tagsCombobox.press('Tab');
 
 		await expect(editAccountPage.tagInput(tags[0].name)).toHaveCount(0);
 		await expect(editAccountPage.tagInput(tags[1].name)).toHaveCount(0);

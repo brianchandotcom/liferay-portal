@@ -54,13 +54,14 @@ public class PropertyValidator {
 				"WARNING: Unconsumed build property \"" + unconsumedKey + "\"");
 		}
 
-		for (ConsumedKeyFailure consumedKeyFailure :
-				validationResult.getConsumedKeyFailures()) {
+		List<ConsumedKeyFailure> consumedKeyFailures =
+			validationResult.getConsumedKeyFailures();
 
+		for (ConsumedKeyFailure consumedKeyFailure : consumedKeyFailures) {
 			System.err.println(consumedKeyFailure.getMessage());
 		}
 
-		if (validationResult.hasConsumedKeyFailures()) {
+		if (!consumedKeyFailures.isEmpty()) {
 			System.exit(1);
 		}
 	}
@@ -69,11 +70,15 @@ public class PropertyValidator {
 			File jenkinsRepositoryDir, File jenkinsResultsParserSourceDir)
 		throws IOException {
 
-		TreeSet<String> definedKeys = _getDefinedKeys(jenkinsRepositoryDir);
-
 		List<ConsumedKey> consumedKeys = new ArrayList<>();
 
-		for (PropertyScanner propertyScanner : _propertyScanners) {
+		List<PropertyScanner> propertyScanners = Arrays.asList(
+			new CommandsXMLPropertyScanner(),
+			new JenkinsResultsParserJavaPropertyScanner(),
+			new PortalPropertyScanner(), new PropertiesFilePropertyScanner(),
+			new ShellPropertyScanner());
+
+		for (PropertyScanner propertyScanner : propertyScanners) {
 			for (File file :
 					propertyScanner.findFiles(
 						jenkinsRepositoryDir, jenkinsResultsParserSourceDir)) {
@@ -83,6 +88,8 @@ public class PropertyValidator {
 						JenkinsResultsParserUtil.read(file), file));
 			}
 		}
+
+		TreeSet<String> definedKeys = _getDefinedKeys(jenkinsRepositoryDir);
 
 		return new ValidationResult(
 			_getConsumedKeyFailures(consumedKeys, definedKeys),
@@ -175,10 +182,6 @@ public class PropertyValidator {
 
 		public List<String> getUnconsumedKeys() {
 			return _unconsumedKeys;
-		}
-
-		public boolean hasConsumedKeyFailures() {
-			return !_consumedKeyFailures.isEmpty();
 		}
 
 		private final List<ConsumedKeyFailure> _consumedKeyFailures;
@@ -276,6 +279,8 @@ public class PropertyValidator {
 	private static List<String> _getUnconsumedKeys(
 		List<ConsumedKey> consumedKeys, TreeSet<String> definedKeys) {
 
+		List<String> unconsumedKeys = new ArrayList<>();
+
 		Set<String> consumedKeyNames = new TreeSet<>();
 		List<String> consumedPrefixes = new ArrayList<>();
 
@@ -297,15 +302,11 @@ public class PropertyValidator {
 			}
 		}
 
-		List<String> unconsumedKeys = new ArrayList<>();
-
 		for (String definedKey : definedKeys) {
 			if (!_isConsumed(consumedKeyNames, consumedPrefixes, definedKey)) {
 				unconsumedKeys.add(definedKey);
 			}
 		}
-
-		Collections.sort(unconsumedKeys);
 
 		return unconsumedKeys;
 	}
@@ -329,11 +330,11 @@ public class PropertyValidator {
 	}
 
 	private static boolean _isConsumed(
-		Set<String> consumedKeys, List<String> consumedPrefixes,
+		Set<String> consumedKeyNames, List<String> consumedPrefixes,
 		String definedKey) {
 
-		for (String consumedKey : consumedKeys) {
-			if (_isMatchingKey(definedKey, consumedKey)) {
+		for (String consumedKeyName : consumedKeyNames) {
+			if (_isMatchingKey(definedKey, consumedKeyName)) {
 				return true;
 			}
 		}
@@ -421,12 +422,6 @@ public class PropertyValidator {
 		Pattern.compile("(?<!System)\\.getProperty\\(\\s*\"([^\"]+)\"");
 	private static final Pattern _propertyKeyLiteralPattern = Pattern.compile(
 		"\"([a-z][a-z0-9]*(?:[.-][a-z0-9]+)+(?:\\[[^\"]*\\])*[.\\[]?)\"");
-	private static final List<PropertyScanner> _propertyScanners =
-		Arrays.asList(
-			new CommandsXMLPropertyScanner(),
-			new JenkinsResultsParserJavaPropertyScanner(),
-			new PortalPropertyScanner(), new PropertiesFilePropertyScanner(),
-			new ShellPropertyScanner());
 	private static final Pattern _shellGetBuildPropertyPattern =
 		Pattern.compile("get_build_property(?:_value)?\\s+\"([^\"$]+)");
 

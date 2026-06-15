@@ -6708,11 +6708,11 @@ public class JenkinsResultsParserUtil {
 			return _cacheURL;
 		}
 
-		File cacheRepositoryDir = getJenkinsRepositoryDir();
+		File jenkinsRepositoryDir = getJenkinsRepositoryDir();
 
-		File cacheDir = cacheRepositoryDir.getParentFile();
+		File cacheDir = jenkinsRepositoryDir.getParentFile();
 
-		if (cacheDir.exists() && cacheRepositoryDir.exists()) {
+		if (cacheDir.exists() && jenkinsRepositoryDir.exists()) {
 			String cacheDirPath = cacheDir.getPath();
 
 			System.out.println("Using " + cacheDirPath + " for cached files");

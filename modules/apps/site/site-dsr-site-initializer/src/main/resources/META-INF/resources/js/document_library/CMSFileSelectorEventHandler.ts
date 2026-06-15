@@ -104,6 +104,7 @@ function handleOpenCMSFileSelector(event: {data?: CMSFileEventData}) {
 		config: {
 			multiSelect: true,
 		},
+		folderMemoryKey: `cms-file-selector-document-library:${groupId}`,
 		groupId,
 		onSelect(items: CMSFileItem[]) {
 			if (!items || !items.length) {

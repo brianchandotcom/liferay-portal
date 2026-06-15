@@ -101,6 +101,7 @@ describe('CMSFileSelectorEventHandler', () => {
 			config: {
 				multiSelect: true,
 			},
+			folderMemoryKey: 'cms-file-selector-document-library:200',
 			groupId: 200,
 			onSelect: expect.any(Function),
 		});

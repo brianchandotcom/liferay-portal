@@ -151,6 +151,7 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 							value: 'embedded.file.id',
 						},
 					},
+					folderMemoryKey: `cms-file-upload:${fileInput.id}`,
 					groupId: input.attributes.groupId,
 					maxFileSize: mbToBytes(input.attributes.maxFileSize),
 					onSelect(items) {

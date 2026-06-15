@@ -34,19 +34,18 @@ public class CustomFacetPortletPreferencesImplTest {
 			PortletPreferences.class);
 
 		_mockValue(
-			portletPreferences,
 			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD,
-			"userName");
+			portletPreferences, "userName");
 		_mockValue(
-			portletPreferences,
 			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
-			StringPool.BLANK);
+			portletPreferences, StringPool.BLANK);
+
+		CustomFacetPortletPreferencesImpl customFacetPortletPreferencesImpl =
+			new CustomFacetPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
 			"userName",
-			new CustomFacetPortletPreferencesImpl(
-				portletPreferences
-			).getSEOParameterName());
+			customFacetPortletPreferencesImpl.getSEOParameterName());
 	}
 
 	@Test
@@ -55,23 +54,22 @@ public class CustomFacetPortletPreferencesImplTest {
 			PortletPreferences.class);
 
 		_mockValue(
-			portletPreferences,
 			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD,
-			RandomTestUtil.randomString());
+			portletPreferences, RandomTestUtil.randomString());
 		_mockValue(
-			portletPreferences,
 			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
-			"customParameter");
+			portletPreferences, "customParameter");
+
+		CustomFacetPortletPreferencesImpl customFacetPortletPreferencesImpl =
+			new CustomFacetPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
 			"customParameter",
-			new CustomFacetPortletPreferencesImpl(
-				portletPreferences
-			).getSEOParameterName());
+			customFacetPortletPreferencesImpl.getSEOParameterName());
 	}
 
 	private void _mockValue(
-		PortletPreferences portletPreferences, String key, String value) {
+		String key, PortletPreferences portletPreferences, String value) {
 
 		Mockito.when(
 			portletPreferences.getValue(key, StringPool.BLANK)

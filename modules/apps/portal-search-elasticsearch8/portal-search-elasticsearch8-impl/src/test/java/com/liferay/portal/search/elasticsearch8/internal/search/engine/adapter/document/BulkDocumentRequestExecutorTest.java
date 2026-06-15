@@ -5,13 +5,18 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch._types.ErrorCause;
 import co.elastic.clients.elasticsearch.core.BulkRequest;
+import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
+import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
+import co.elastic.clients.elasticsearch.core.bulk.OperationType;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -106,9 +111,78 @@ public class BulkDocumentRequestExecutorTest {
 		Assert.assertEquals(sb.toString(), 3, bulkOperations.size());
 	}
 
+	@Test
+	public void testBulkDocumentResponseWithRejectedBulkItems() {
+		try {
+			_bulkDocumentRequestExecutor.createBulkDocumentResponse(
+				_createBulkResponse());
+
+			Assert.fail();
+		}
+		catch (RuntimeException runtimeException) {
+			Assert.assertEquals(
+				"Unable to index 2/3 bulk items: " + _REJECTION_REASON,
+				runtimeException.getMessage());
+		}
+	}
+
+	private BulkResponse _createBulkResponse() {
+		ErrorCause errorCause = new ErrorCause.Builder(
+		).reason(
+			_REJECTION_REASON
+		).type(
+			RandomTestUtil.randomString()
+		).build();
+
+		BulkResponseItem rejectedBulkResponseItem1 =
+			new BulkResponseItem.Builder(
+			).error(
+				errorCause
+			).index(
+				_INDEX_NAME
+			).operationType(
+				OperationType.Index
+			).status(
+				429
+			).build();
+
+		BulkResponseItem rejectedBulkResponseItem2 =
+			new BulkResponseItem.Builder(
+			).index(
+				_INDEX_NAME
+			).operationType(
+				OperationType.Index
+			).status(
+				429
+			).build();
+
+		BulkResponseItem successfulBulkResponseItem =
+			new BulkResponseItem.Builder(
+			).index(
+				_INDEX_NAME
+			).operationType(
+				OperationType.Index
+			).status(
+				200
+			).build();
+
+		return new BulkResponse.Builder(
+		).errors(
+			true
+		).items(
+			rejectedBulkResponseItem1, rejectedBulkResponseItem2,
+			successfulBulkResponseItem
+		).took(
+			RandomTestUtil.randomLong()
+		).build();
+	}
+
 	private static final String _INDEX_NAME = "test_request_index";
 
 	private static final String _MAPPING_NAME = "testMapping";
+
+	private static final String _REJECTION_REASON =
+		"rejected execution of coordinating operation";
 
 	private BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
 	private final DocumentFixture _documentFixture = new DocumentFixture();

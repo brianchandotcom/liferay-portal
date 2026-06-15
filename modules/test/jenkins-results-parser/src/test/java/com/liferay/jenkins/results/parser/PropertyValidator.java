@@ -54,13 +54,14 @@ public class PropertyValidator {
 				"WARNING: Unconsumed build property \"" + unconsumedKey + "\"");
 		}
 
-		for (ConsumedKeyFailure consumedKeyFailure :
-				validationResult.getConsumedKeyFailures()) {
+		List<ConsumedKeyFailure> consumedKeyFailures =
+			validationResult.getConsumedKeyFailures();
 
+		for (ConsumedKeyFailure consumedKeyFailure : consumedKeyFailures) {
 			System.err.println(consumedKeyFailure.getMessage());
 		}
 
-		if (validationResult.hasConsumedKeyFailures()) {
+		if (!consumedKeyFailures.isEmpty()) {
 			System.exit(1);
 		}
 	}
@@ -175,10 +176,6 @@ public class PropertyValidator {
 
 		public List<String> getUnconsumedKeys() {
 			return _unconsumedKeys;
-		}
-
-		public boolean hasConsumedKeyFailures() {
-			return !_consumedKeyFailures.isEmpty();
 		}
 
 		private final List<ConsumedKeyFailure> _consumedKeyFailures;

@@ -54,6 +54,7 @@ import com.liferay.staging.StagingGroupHelper;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -637,25 +638,24 @@ public class ExportProcessResourceTest
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.WARN)) {
 
-			ExportProcessRequest dateRangeExportProcessRequest =
+			ExportProcessRequest startDateExportProcessRequest =
 				new ExportProcessRequest();
 
-			dateRangeExportProcessRequest.setName(
+			startDateExportProcessRequest.setName(
 				RandomTestUtil.randomString());
-			dateRangeExportProcessRequest.setRange(
-				ExportProcessRequest.Range.DATE_RANGE);
+			startDateExportProcessRequest.setStartDate(new Date());
 
 			assertHttpResponseStatusCode(
-				400, unsafeFunction.apply(dateRangeExportProcessRequest));
+				400, unsafeFunction.apply(startDateExportProcessRequest));
 
-			ExportProcessRequest lastExportProcessRequest =
+			ExportProcessRequest endDateExportProcessRequest =
 				new ExportProcessRequest();
 
-			lastExportProcessRequest.setName(RandomTestUtil.randomString());
-			lastExportProcessRequest.setRange(ExportProcessRequest.Range.LAST);
+			endDateExportProcessRequest.setName(RandomTestUtil.randomString());
+			endDateExportProcessRequest.setEndDate(new Date());
 
 			assertHttpResponseStatusCode(
-				400, unsafeFunction.apply(lastExportProcessRequest));
+				400, unsafeFunction.apply(endDateExportProcessRequest));
 		}
 	}
 

@@ -22,7 +22,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -125,20 +125,17 @@ public class ExportPreviewResourceTest
 		assertHttpResponseStatusCode(
 			404,
 			_exportPreviewResource.getAssetLibraryExportPreviewHttpResponse(
-				testDepotEntryGroup.getExternalReferenceCode(), null, null,
-				null, null));
+				testDepotEntryGroup.getExternalReferenceCode(), null, null));
 
 		_testGetExportPreviewWithDateFilter(
 			_depotObjectDefinition,
-			testDateFilter ->
+			(startDate, endDate) ->
 				exportPreviewResource.getAssetLibraryExportPreview(
-					testDepotEntryGroup.getExternalReferenceCode(),
-					testDateFilter.getEndDate(), testDateFilter.getLast(),
-					testDateFilter.getRange(), testDateFilter.getStartDate()));
+					testDepotEntryGroup.getExternalReferenceCode(), endDate,
+					startDate));
 		_testGetExportPreviewWithDifferentScope(
 			exportPreviewResource.getAssetLibraryExportPreview(
-				testDepotEntryGroup.getExternalReferenceCode(), null, null,
-				null, null),
+				testDepotEntryGroup.getExternalReferenceCode(), null, null),
 			_companyObjectDefinition, _siteObjectDefinition);
 	}
 
@@ -153,22 +150,21 @@ public class ExportPreviewResourceTest
 			_exportPreviewResource.
 				getAssetLibraryPortletExportPreviewHttpResponse(
 					testDepotEntryGroup.getExternalReferenceCode(), portletId,
-					null, null, 0L, null, null));
+					null, 0L, null));
 
 		_testGetExportPreviewWithDateFilter(
 			_depotObjectDefinition,
-			testDateFilter ->
+			(startDate, endDate) ->
 				exportPreviewResource.getAssetLibraryPortletExportPreview(
 					testDepotEntryGroup.getExternalReferenceCode(), portletId,
-					testDateFilter.getEndDate(), testDateFilter.getLast(), 0L,
-					testDateFilter.getRange(), testDateFilter.getStartDate()));
+					endDate, 0L, startDate));
 
 		long plid = _addLayoutWithPortlet(testDepotEntryGroup, portletId);
 
 		_testGetPortletExportPreview(
 			exportPreviewResource.getAssetLibraryPortletExportPreview(
 				testDepotEntryGroup.getExternalReferenceCode(), portletId, null,
-				null, plid, null, null),
+				plid, null),
 			portletId);
 	}
 
@@ -177,16 +173,14 @@ public class ExportPreviewResourceTest
 	public void testGetExportPreview() throws Exception {
 		assertHttpResponseStatusCode(
 			404,
-			_exportPreviewResource.getExportPreviewHttpResponse(
-				null, null, null, null));
+			_exportPreviewResource.getExportPreviewHttpResponse(null, null));
 
 		_testGetExportPreviewWithDateFilter(
 			_companyObjectDefinition,
-			testDateFilter -> exportPreviewResource.getExportPreview(
-				testDateFilter.getEndDate(), testDateFilter.getLast(),
-				testDateFilter.getRange(), testDateFilter.getStartDate()));
+			(startDate, endDate) -> exportPreviewResource.getExportPreview(
+				endDate, startDate));
 		_testGetExportPreviewWithDifferentScope(
-			exportPreviewResource.getExportPreview(null, null, null, null),
+			exportPreviewResource.getExportPreview(null, null),
 			_depotObjectDefinition, _siteObjectDefinition);
 	}
 
@@ -196,17 +190,15 @@ public class ExportPreviewResourceTest
 		assertHttpResponseStatusCode(
 			404,
 			_exportPreviewResource.getSiteExportPreviewHttpResponse(
-				testGroup.getExternalReferenceCode(), null, null, null, null));
+				testGroup.getExternalReferenceCode(), null, null));
 
 		_testGetExportPreviewWithDateFilter(
 			_siteObjectDefinition,
-			testDateFilter -> exportPreviewResource.getSiteExportPreview(
-				testGroup.getExternalReferenceCode(),
-				testDateFilter.getEndDate(), testDateFilter.getLast(),
-				testDateFilter.getRange(), testDateFilter.getStartDate()));
+			(startDate, endDate) -> exportPreviewResource.getSiteExportPreview(
+				testGroup.getExternalReferenceCode(), endDate, startDate));
 		_testGetExportPreviewWithDifferentScope(
 			exportPreviewResource.getSiteExportPreview(
-				testGroup.getExternalReferenceCode(), null, null, null, null),
+				testGroup.getExternalReferenceCode(), null, null),
 			_companyObjectDefinition, _depotObjectDefinition);
 	}
 
@@ -218,22 +210,22 @@ public class ExportPreviewResourceTest
 		assertHttpResponseStatusCode(
 			404,
 			_exportPreviewResource.getSitePortletExportPreviewHttpResponse(
-				testGroup.getExternalReferenceCode(), portletId, null, null, 0L,
-				null, null));
+				testGroup.getExternalReferenceCode(), portletId, null, 0L,
+				null));
 
 		_testGetExportPreviewWithDateFilter(
 			_siteObjectDefinition,
-			testDateFilter -> exportPreviewResource.getSitePortletExportPreview(
-				testGroup.getExternalReferenceCode(), portletId,
-				testDateFilter.getEndDate(), testDateFilter.getLast(), 0L,
-				testDateFilter.getRange(), testDateFilter.getStartDate()));
+			(startDate, endDate) ->
+				exportPreviewResource.getSitePortletExportPreview(
+					testGroup.getExternalReferenceCode(), portletId, endDate,
+					0L, startDate));
 
 		long plid = _addLayoutWithPortlet(testGroup, portletId);
 
 		_testGetPortletExportPreview(
 			exportPreviewResource.getSitePortletExportPreview(
-				testGroup.getExternalReferenceCode(), portletId, null, null,
-				plid, null, null),
+				testGroup.getExternalReferenceCode(), portletId, null, plid,
+				null),
 			portletId);
 	}
 
@@ -340,8 +332,8 @@ public class ExportPreviewResourceTest
 
 	private void _testGetExportPreviewWithDateFilter(
 			ObjectDefinition objectDefinition,
-			UnsafeFunction<TestDateFilter, ExportPreview, Exception>
-				unsafeFunction)
+			UnsafeBiFunction<Date, Date, ExportPreview, Exception>
+				unsafeBiFunction)
 		throws Exception {
 
 		long now = System.currentTimeMillis();
@@ -350,38 +342,32 @@ public class ExportPreviewResourceTest
 
 		Assert.assertEquals(
 			2L,
-			_getAdditionCount(
-				unsafeFunction.apply(TestDateFilter.all()), portletId));
+			_getAdditionCount(unsafeBiFunction.apply(null, null), portletId));
 		Assert.assertEquals(
 			1L,
 			_getAdditionCount(
-				unsafeFunction.apply(TestDateFilter.last(24)), portletId));
+				unsafeBiFunction.apply(
+					new Date(now - (24 * Time.HOUR)), new Date(now)),
+				portletId));
 		Assert.assertEquals(
 			2L,
 			_getAdditionCount(
-				unsafeFunction.apply(TestDateFilter.last(48)), portletId));
-		Assert.assertEquals(
-			1L,
-			_getAdditionCount(
-				unsafeFunction.apply(
-					TestDateFilter.dateRange(
-						new Date(now), new Date(now - Time.HOUR))),
+				unsafeBiFunction.apply(
+					new Date(now - (48 * Time.HOUR)), new Date(now)),
 				portletId));
 		Assert.assertEquals(
 			1L,
 			_getAdditionCount(
-				unsafeFunction.apply(
-					TestDateFilter.dateRange(
-						new Date(now - (24 * Time.HOUR)),
-						new Date(now - (26 * Time.HOUR)))),
+				unsafeBiFunction.apply(
+					new Date(now - (26 * Time.HOUR)),
+					new Date(now - (24 * Time.HOUR))),
 				portletId));
 		Assert.assertEquals(
 			0L,
 			_getAdditionCount(
-				unsafeFunction.apply(
-					TestDateFilter.dateRange(
-						new Date(now - (2 * Time.DAY)),
-						new Date(now - (3 * Time.DAY)))),
+				unsafeBiFunction.apply(
+					new Date(now - (3 * Time.DAY)),
+					new Date(now - (2 * Time.DAY))),
 				portletId));
 	}
 
@@ -450,51 +436,5 @@ public class ExportPreviewResourceTest
 
 	@Inject
 	private UserLocalService _userLocalService;
-
-	private static class TestDateFilter {
-
-		public static TestDateFilter all() {
-			return new TestDateFilter(null, null, null, null);
-		}
-
-		public static TestDateFilter dateRange(Date endDate, Date startDate) {
-			return new TestDateFilter(endDate, null, "dateRange", startDate);
-		}
-
-		public static TestDateFilter last(int hours) {
-			return new TestDateFilter(null, hours, "last", null);
-		}
-
-		public Date getEndDate() {
-			return _endDate;
-		}
-
-		public Integer getLast() {
-			return _last;
-		}
-
-		public String getRange() {
-			return _range;
-		}
-
-		public Date getStartDate() {
-			return _startDate;
-		}
-
-		private TestDateFilter(
-			Date endDate, Integer last, String range, Date startDate) {
-
-			_endDate = endDate;
-			_last = last;
-			_range = range;
-			_startDate = startDate;
-		}
-
-		private final Date _endDate;
-		private final Integer _last;
-		private final String _range;
-		private final Date _startDate;
-
-	}
 
 }

@@ -11,6 +11,7 @@ interface postSiteTaxonomyVocabularyProps {
 	multiValued?: boolean;
 	name: string;
 	siteId: string;
+	system?: boolean;
 	visibilityType?: string;
 }
 
@@ -130,6 +131,7 @@ export class HeadlessAdminTaxonomyApiHelper {
 		multiValued = true,
 		name,
 		siteId,
+		system,
 		visibilityType,
 	}: postSiteTaxonomyVocabularyProps): Promise<TTaxonomyVocabulary> {
 		const taxonomyVocabulary = await this.apiHelpers.post(
@@ -140,12 +142,17 @@ export class HeadlessAdminTaxonomyApiHelper {
 					assetTypes,
 					multiValued,
 					name,
+					system,
 					visibilityType,
 				},
 			}
 		);
 
-		if (this.apiHelpers instanceof DataApiHelpers) {
+		// A system vocabulary cannot be deleted while its feature flag is
+		// enabled, so it is not auto-tracked. Callers must clean it up
+		// explicitly (for example, by disabling the flag first).
+
+		if (!system && this.apiHelpers instanceof DataApiHelpers) {
 			this.apiHelpers.data.push({
 				id: taxonomyVocabulary.id,
 				type: 'taxonomyVocabulary',

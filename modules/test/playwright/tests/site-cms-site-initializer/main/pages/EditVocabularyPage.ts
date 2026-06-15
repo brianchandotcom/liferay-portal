@@ -11,16 +11,15 @@ import {PORTLET_URLS} from '../../../../utils/portletUrls';
 export class EditVocabularyPage {
 	readonly page: Page;
 
-	private readonly descriptionInput: Locator;
-	private readonly externalReferenceCodeInput: Locator;
-	private readonly nameInput: Locator;
-
 	readonly assetTypeCheckbox: Locator;
 	readonly assetTypeSelector: Locator;
 	readonly assetTypeToggle: Locator;
 	readonly assetTypesButton: Locator;
+	readonly descriptionInput: Locator;
+	readonly externalReferenceCodeInput: Locator;
 	readonly generalButton: Locator;
 	readonly multiSelectToggle: Locator;
+	readonly nameInput: Locator;
 	readonly newButton: Locator;
 	readonly saveButton: Locator;
 	readonly spaceCheckbox: Locator;

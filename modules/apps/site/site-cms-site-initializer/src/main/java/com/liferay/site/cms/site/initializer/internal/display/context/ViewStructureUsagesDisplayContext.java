@@ -132,12 +132,9 @@ public class ViewStructureUsagesDisplayContext {
 				_language.get(_httpServletRequest, "permissions"), "get", null,
 				"modal-permissions"),
 			new FDSActionDropdownItem(
-				_language.get(
-					_httpServletRequest,
-					"are-you-sure-you-want-to-delete-this-entry"),
 				null, "trash", "delete",
-				_language.get(_httpServletRequest, "delete"), "delete",
-				"delete", "headless"));
+				_language.get(_httpServletRequest, "delete"), null, "delete",
+				null));
 	}
 
 	private static final String _STATUSES = StringUtil.merge(

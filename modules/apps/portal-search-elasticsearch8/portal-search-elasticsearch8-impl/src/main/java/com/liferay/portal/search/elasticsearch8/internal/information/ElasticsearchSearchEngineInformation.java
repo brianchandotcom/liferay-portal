@@ -342,16 +342,15 @@ public class ElasticsearchSearchEngineInformation
 				return null;
 			}
 
-			LicenseInformation licenseInformation =
-				getLicenseResponse.license();
+			LicenseInformation license = getLicenseResponse.license();
 
-			if ((licenseInformation == null) ||
-				(licenseInformation.status() != LicenseStatus.Active)) {
+			if ((license == null) ||
+				(license.status() != LicenseStatus.Active)) {
 
 				return null;
 			}
 
-			return licenseInformation.type();
+			return license.type();
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

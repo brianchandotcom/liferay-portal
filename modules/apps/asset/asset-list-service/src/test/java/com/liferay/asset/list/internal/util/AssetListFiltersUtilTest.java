@@ -567,6 +567,38 @@ public class AssetListFiltersUtilTest {
 			Arrays.toString(booleanClauses), 0, booleanClauses.length);
 	}
 
+	@Test
+	public void testRoutesMetadataObjectFieldsToCommonFieldPath() {
+		_setUpMetadataObjectField(
+			"modifiedDate", ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE);
+
+		_assertTermRangeQuery(
+			_runAndAssertCommonFieldRow(
+				_buildFilter("eq", "modifiedDate", "2026-01-15")),
+			"modified", "20260115000000", "20260115235959", true, true);
+
+		_setUpMetadataObjectField(
+			"creator", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING);
+
+		_assertTermQuery(
+			_runAndAssertCommonFieldRow(_buildFilter("eq", "creator", "Alice")),
+			"userName", "Alice");
+
+		_setUpMetadataObjectField(
+			"id", ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+			ObjectFieldConstants.DB_TYPE_LONG);
+
+		BooleanClause[] booleanClauses =
+			AssetListFiltersUtil.getFiltersBooleanClauses(
+				_COMPANY_ID, JSONUtil.putAll(_buildFilter("eq", "id", "5")),
+				LocaleUtil.US);
+
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 0, booleanClauses.length);
+	}
+
 	private static MockedStatic<ObjectDefinitionLocalServiceUtil>
 		_createObjectDefinitionLocalServiceUtilMockedStatic() {
 
@@ -950,6 +982,20 @@ public class AssetListFiltersUtilTest {
 		);
 
 		localizationUtil.setLocalization(localization);
+	}
+
+	private ObjectField _setUpMetadataObjectField(
+		String name, String businessType, String dbType) {
+
+		ObjectField objectField = _setUpObjectField(name, businessType, dbType);
+
+		Mockito.when(
+			objectField.isMetadata()
+		).thenReturn(
+			true
+		);
+
+		return objectField;
 	}
 
 	private ObjectField _setUpObjectField(

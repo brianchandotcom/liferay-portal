@@ -7,8 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {isolatedDXPSyncedChannelTest} from '../../../fixtures/isolatedDXPSyncedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
@@ -27,8 +26,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
-	isolatedChannelTest,
-	isolatedSiteTest,
+	isolatedDXPSyncedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -58,12 +56,23 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
 		const individualName = 'ac';
 		const individuals = [
-			generateIndividual({
-				name: individualName,
-			}),
+			{
+				...generateIndividual({
+					name: individualName,
+				}),
+				dataSourceId,
+			},
 		];
 
 		await test.step('Create new Individual', async () => {
@@ -79,6 +88,7 @@ test(
 				applicationId: 'Page',
 				canonicalUrl: 'https://www.liferay.com',
 				channelId: channel.id,
+				dataSourceId,
 				eventDate: date.toISOString(),
 				eventId: 'pageViewed',
 				title: 'Liferay',
@@ -135,12 +145,23 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
 		const individualName = 'ac';
 		const individuals = [
-			generateIndividual({
-				name: individualName,
-			}),
+			{
+				...generateIndividual({
+					name: individualName,
+				}),
+				dataSourceId,
+			},
 		];
 
 		await test.step('Create new Individual', async () => {
@@ -156,6 +177,7 @@ test(
 				applicationId: 'Page',
 				canonicalUrl: 'https://www.liferay.com',
 				channelId: channel.id,
+				dataSourceId,
 				eventDate: date.toISOString(),
 				eventId: 'pageViewed',
 				title: 'Liferay',
@@ -213,7 +235,15 @@ test(
 	{
 		tag: '@LRAC-8911',
 	},
-	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
 		const individualId = getRandomString();
 		const individualName = 'enriched' + getRandomString();
 
@@ -229,6 +259,7 @@ test(
 					applicationId: 'Page',
 					canonicalUrl: 'https://www.liferay.com',
 					channelId: channel.id,
+					dataSourceId,
 					eventDate: date.toISOString(),
 					eventId: 'pageViewed',
 					title: 'My Page',
@@ -263,7 +294,9 @@ test(
 		await test.step('Create a known individual record for the anonymous identity', async () => {
 			await createIndividuals({
 				apiHelpers,
-				individuals: [{id: individualId, name: individualName}],
+				individuals: [
+					{dataSourceId, id: individualId, name: individualName},
+				],
 			});
 
 			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
@@ -271,6 +304,7 @@ test(
 					applicationId: 'Page',
 					canonicalUrl: 'https://www.liferay.com',
 					channelId: channel.id,
+					dataSourceId,
 					eventDate: new Date().toISOString(),
 					eventId: 'pageViewed',
 					title: 'My Page',

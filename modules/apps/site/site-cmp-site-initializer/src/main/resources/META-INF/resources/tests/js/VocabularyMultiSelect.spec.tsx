@@ -30,11 +30,11 @@ describe('VocabularyMultiSelect', () => {
 	it('renders initial selected categories as chips', () => {
 		const {getByText} = render(
 			<VocabularyMultiSelect
-				hasUpdatePermission={true}
-				initialSelectedCategories={mockCategories}
+				disabled={false}
 				label="Personas"
-				onSelectionChange={jest.fn()}
+				onChange={jest.fn()}
 				placeholder="Add Personas"
+				value={mockCategories}
 				vocabularyERC="L_CMP_PERSONAS"
 			/>
 		);
@@ -46,11 +46,11 @@ describe('VocabularyMultiSelect', () => {
 	it('renders the label', () => {
 		const {getByText} = render(
 			<VocabularyMultiSelect
-				hasUpdatePermission={true}
-				initialSelectedCategories={[]}
+				disabled={false}
 				label="Personas"
-				onSelectionChange={jest.fn()}
+				onChange={jest.fn()}
 				placeholder="Add Personas"
+				value={[]}
 				vocabularyERC="L_CMP_PERSONAS"
 			/>
 		);
@@ -58,35 +58,33 @@ describe('VocabularyMultiSelect', () => {
 		expect(getByText('Personas')).toBeInTheDocument();
 	});
 
-	it('calls onSelectionChange with remaining items when a chip is removed', () => {
-		const onSelectionChange = jest.fn();
+	it('calls onChange with remaining items when a chip is removed', () => {
+		const onChange = jest.fn();
 
 		const {getAllByLabelText} = render(
 			<VocabularyMultiSelect
-				hasUpdatePermission={true}
-				initialSelectedCategories={mockCategories}
+				disabled={false}
 				label="Personas"
-				onSelectionChange={onSelectionChange}
+				onChange={onChange}
 				placeholder="Add Personas"
+				value={mockCategories}
 				vocabularyERC="L_CMP_PERSONAS"
 			/>
 		);
 
 		fireEvent.click(getAllByLabelText('remove')[0]);
 
-		expect(onSelectionChange).toHaveBeenCalledWith([
-			{id: 2, name: 'Champion'},
-		]);
+		expect(onChange).toHaveBeenCalledWith([{id: 2, name: 'Champion'}]);
 	});
 
-	it('disables remove buttons when hasUpdatePermission is false', () => {
+	it('disables remove buttons when disabled is true', () => {
 		const {getAllByLabelText} = render(
 			<VocabularyMultiSelect
-				hasUpdatePermission={false}
-				initialSelectedCategories={mockCategories}
+				disabled={true}
 				label="Personas"
-				onSelectionChange={jest.fn()}
+				onChange={jest.fn()}
 				placeholder="Add Personas"
+				value={mockCategories}
 				vocabularyERC="L_CMP_PERSONAS"
 			/>
 		);

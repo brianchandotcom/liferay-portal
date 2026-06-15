@@ -7,7 +7,6 @@ package com.liferay.mcp.server.rest.internal.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.headless.data.masking.engine.DataMaskingEngine;
 import com.liferay.mcp.server.rest.dto.v1_0.Tool;
 import com.liferay.mcp.server.rest.internal.configuration.MCPServerConfiguration;
 import com.liferay.mcp.server.rest.internal.constants.MCPServerConstants;
@@ -255,19 +254,13 @@ public class MCPServerServlet extends HttpServlet {
 
 		try {
 			Response response = ToolSetUtil.invokeTool(
+				_getDataMaskExternalReferenceCodes(
+					companyId, profileObjectEntryId),
 				httpServletRequest, inputObject, toolName, toolSetName);
 
 			int responseCode = response.getStatus();
 
 			String content = (String)response.getEntity();
-
-			if (content != null) {
-				content = _dataMaskingEngine.redact(
-					companyId,
-					_getDataMaskExternalReferenceCodes(
-						companyId, profileObjectEntryId),
-					content);
-			}
 
 			if (responseCode < 300) {
 				if (content == null) {
@@ -513,9 +506,6 @@ public class MCPServerServlet extends HttpServlet {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private DataMaskingEngine _dataMaskingEngine;
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

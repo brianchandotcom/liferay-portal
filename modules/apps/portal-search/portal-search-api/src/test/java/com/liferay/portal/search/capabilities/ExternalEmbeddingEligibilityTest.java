@@ -23,7 +23,14 @@ public class ExternalEmbeddingEligibilityTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testAvailable() {
+	public void testAvailableReturnsSingleton() {
+		Assert.assertSame(
+			ExternalEmbeddingEligibility.available(),
+			ExternalEmbeddingEligibility.available());
+	}
+
+	@Test
+	public void testIsAvailable() {
 		ExternalEmbeddingEligibility externalEmbeddingEligibility =
 			ExternalEmbeddingEligibility.available();
 
@@ -32,14 +39,7 @@ public class ExternalEmbeddingEligibilityTest {
 	}
 
 	@Test
-	public void testAvailableReturnsSingleton() {
-		Assert.assertSame(
-			ExternalEmbeddingEligibility.available(),
-			ExternalEmbeddingEligibility.available());
-	}
-
-	@Test
-	public void testUnavailable() {
+	public void testIsAvailableWhenUnavailable() {
 		ExternalEmbeddingEligibility externalEmbeddingEligibility =
 			ExternalEmbeddingEligibility.unavailable(
 				"semantic-search.external-embedding-capability." +

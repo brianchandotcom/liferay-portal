@@ -129,6 +129,10 @@ public class SearchContext implements Serializable {
 					ReflectionUtil.throwException(searchException);
 				}
 			}
+
+			if (exception1 != null) {
+				ReflectionUtil.throwException(exception1);
+			}
 		};
 	}
 

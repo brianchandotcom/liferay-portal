@@ -65,8 +65,9 @@ export default function DesignLibraryManageMembersModal({
 						Liferay.Language.get('unable-to-load-members')
 				);
 			}
-
-			setLoading(false);
+			finally {
+				setLoading(false);
+			}
 		};
 
 		fetchMembers();
@@ -113,6 +114,8 @@ export default function DesignLibraryManageMembersModal({
 					error?.message ??
 					Liferay.Language.get('unable-to-add-member')
 			);
+
+			throw error;
 		}
 	};
 

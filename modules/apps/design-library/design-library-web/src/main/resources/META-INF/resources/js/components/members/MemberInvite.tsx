@@ -65,9 +65,18 @@ export default function MemberInvite({
 			return;
 		}
 
-		await invite(type, selectedItem);
+		try {
+			await invite(type, selectedItem);
 
-		setSelectedItems([]);
+			setSelectedItems([]);
+		}
+		catch (error) {
+
+			// The parent component handles showing the error message. Keep the
+			// selection so the user does not have to search for the member
+			// again.
+
+		}
 	};
 
 	return (

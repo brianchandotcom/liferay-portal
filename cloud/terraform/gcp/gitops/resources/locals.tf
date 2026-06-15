@@ -1,4 +1,5 @@
 locals {
+	argocd_external_url=var.argocd_domain_config.hostname == null ? "" : "${local.argocd_tls_enabled ? "https" : "http"}://${var.argocd_domain_config.hostname}"
 	argocd_gateway_class_name="argocd-gateway-class"
 	argocd_gateway_name="argocd-gateway"
 	argocd_tls_enabled=var.argocd_domain_config.hostname != null && var.argocd_domain_config.tls_external_secret_name != null

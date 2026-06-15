@@ -53,7 +53,7 @@ public class MCPServerProfileObjectEntryModelListener
 
 		_invalidateServlet(objectEntry, _getName(objectEntry));
 
-		_attachSystemMasks(objectEntry);
+		_addMCPServerProfileDataMasks(objectEntry);
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class MCPServerProfileObjectEntryModelListener
 		}
 	}
 
-	private void _attachSystemMasks(ObjectEntry profileObjectEntry) {
+	private void _addMCPServerProfileDataMasks(ObjectEntry profileObjectEntry) {
 		long companyId = profileObjectEntry.getCompanyId();
 
 		ObjectDefinition maskObjectDefinition =

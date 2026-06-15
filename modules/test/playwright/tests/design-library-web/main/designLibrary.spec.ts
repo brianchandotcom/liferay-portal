@@ -556,13 +556,15 @@ test(
 				);
 			});
 
-		await test.step('Open the manage members modal', async () => {
+		await test.step('Open the design library actions menu', async () => {
 			await designLibrariesPage.goToDesignLibrary(designLibraryName);
 
 			await page.getByRole('button', {name: 'More Actions'}).click();
 
 			await expect(page.getByRole('menu')).toBeVisible();
+		});
 
+		await test.step('Open the manage members modal from the menu', async () => {
 			await page
 				.getByRole('menu')
 				.getByRole('menuitem', {name: 'Manage Members'})
@@ -573,7 +575,9 @@ test(
 			await expect(
 				manageMembersDialog.getByText('Manage Members')
 			).toBeVisible();
+		});
 
+		await test.step('Check the add people to collaborate form and member list', async () => {
 			await expect(
 				manageMembersDialog.getByText('Add People to Collaborate')
 			).toBeVisible();

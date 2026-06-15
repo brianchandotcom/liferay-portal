@@ -79,6 +79,11 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 		boolean preValidationErrors, long userId) {
 
 		if (layoutSets.isEmpty()) {
+			postNotification(
+				Collections.singleton(
+					BackgroundTaskConstants.STATUS_SUCCESSFUL),
+				layoutSetPrototype.getNameMap(), userId);
+
 			return () -> {
 			};
 		}

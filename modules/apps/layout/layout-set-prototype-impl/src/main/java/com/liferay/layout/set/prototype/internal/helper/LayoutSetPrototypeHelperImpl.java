@@ -130,6 +130,13 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			}
 		}
 
+		if (mergeableLayoutSets.isEmpty() && preValidationErrors) {
+			LayoutSetPrototypeSyncSessionManagerUtil.postFailureNotification(
+				layoutSetPrototype.getNameMap(), userId);
+
+			return;
+		}
+
 		try (SafeCloseable safeCloseable =
 				LayoutSetPrototypeSyncSessionManagerUtil.openSession(
 					layoutSetPrototype, mergeableLayoutSets,

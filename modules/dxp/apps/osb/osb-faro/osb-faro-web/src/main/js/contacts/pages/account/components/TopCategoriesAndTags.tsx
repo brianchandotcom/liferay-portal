@@ -2,14 +2,13 @@ import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayButton from '@clayui/button';
-import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import ClayTabs from '@clayui/tabs';
 import React, {useCallback, useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
-import {Text} from '@clayui/core';
+import {Option, Picker, Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
@@ -54,6 +53,25 @@ const GROUP_BY_TO_METRIC: Record<GroupByMetric, TaxonomyMetric> = {
 };
 
 const TABS = ['category', 'tag'] as const;
+
+const GroupByTrigger = React.forwardRef<
+	HTMLButtonElement,
+	React.ButtonHTMLAttributes<HTMLButtonElement> & {label?: string}
+>(({label, ...rest}, ref) => (
+	<ClayButton
+		{...rest}
+		className='rounded-lg'
+		displayType='secondary'
+		ref={ref}
+		size='sm'
+	>
+		{label}
+		<ClayIcon
+			className='inline-item inline-item-after'
+			symbol='caret-bottom'
+		/>
+	</ClayButton>
+));
 
 type TaxonomyItem = ITopCategory | ITopTag;
 
@@ -108,50 +126,26 @@ const TabContent: React.FC<ITabContentProps> = ({
 				/>
 			</StatesRenderer.Empty>
 			<StatesRenderer.Success>
-				<ClayDropDown
-					alignmentPosition={Align.BottomRight}
-					closeOnClick
-					trigger={
-						<ClayButton
-							borderless
-							className='align-items-baseline d-inline-flex'
-							displayType='unstyled'
-							size='sm'
-						>
-							<div className='font-weight-semi-bold mr-3'>
-								<Text size={3}>
-									{Liferay.Language.get('group-by')}
-								</Text>
-							</div>
+				<div className='align-items-center d-flex'>
+					<div className='font-weight-semi-bold mr-2'>
+						<Text size={3}>{Liferay.Language.get('group-by')}</Text>
+					</div>
 
-							<div className='font-weight-semi-bold text-secondary'>
-								<Text size={3}>
-									{groupByLabel}
-									<ClayIcon
-										className='ml-1'
-										symbol='caret-bottom'
-									/>
-								</Text>
-							</div>
-						</ClayButton>
-					}
-				>
-					<ClayDropDown.ItemList>
-						{(Object.keys(groupByLabels) as GroupByMetric[]).map(
-							key => (
-								<ClayDropDown.Item
-									key={key}
-									onClick={() => setGroupBy(key)}
-									symbolRight={
-										groupBy === key ? 'check' : undefined
-									}
-								>
-									{groupByLabels[key]}
-								</ClayDropDown.Item>
-							)
+					<Picker
+						aria-label={Liferay.Language.get('group-by')}
+						as={GroupByTrigger}
+						items={Object.keys(groupByLabels) as GroupByMetric[]}
+						label={groupByLabel}
+						onSelectionChange={key =>
+							setGroupBy(key as GroupByMetric)
+						}
+						selectedKey={groupBy}
+					>
+						{(key: GroupByMetric) => (
+							<Option key={key}>{groupByLabels[key]}</Option>
 						)}
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
+					</Picker>
+				</div>
 
 				<ClayTable className='mt-3'>
 					<ClayTable.Head>

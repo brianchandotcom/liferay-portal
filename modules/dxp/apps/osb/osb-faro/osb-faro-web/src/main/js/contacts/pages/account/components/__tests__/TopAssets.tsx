@@ -134,7 +134,7 @@ describe('TopAssets', () => {
 			).toBeInTheDocument();
 		});
 
-		it('should render the Group By dropdown with the default metric (Impressions)', () => {
+		it('should render the Group By picker with the default metric (Impressions)', () => {
 			render(<TopAssets />);
 
 			expect(screen.getAllByText('Group By').length).toBeGreaterThan(0);
@@ -230,17 +230,15 @@ describe('TopAssets', () => {
 		});
 	});
 
-	describe('group by dropdown', () => {
+	describe('group by picker', () => {
 		it('should refetch with viewsMetric when the user picks Views', () => {
 			render(<TopAssets />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group By/})[0]
+				screen.getAllByRole('combobox', {name: 'Group By'})[0]
 			);
 
-			fireEvent.click(
-				screen.getAllByRole('menuitem', {name: 'Views'})[0]
-			);
+			fireEvent.click(screen.getAllByRole('option', {name: 'Views'})[0]);
 
 			const lastCall =
 				mockedUseRequest.mock.calls[
@@ -256,11 +254,11 @@ describe('TopAssets', () => {
 			fireEvent.click(screen.getByRole('tab', {name: 'Files'}));
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group By/})[0]
+				screen.getAllByRole('combobox', {name: 'Group By'})[0]
 			);
 
 			fireEvent.click(
-				screen.getAllByRole('menuitem', {name: 'Downloads'})[0]
+				screen.getAllByRole('option', {name: 'Downloads'})[0]
 			);
 
 			const lastCall =
@@ -275,17 +273,17 @@ describe('TopAssets', () => {
 			render(<TopAssets />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group By/})[0]
+				screen.getAllByRole('combobox', {name: 'Group By'})[0]
 			);
 
 			expect(
-				screen.queryByRole('menuitem', {name: 'Downloads'})
+				screen.queryByRole('option', {name: 'Downloads'})
 			).toBeNull();
 			expect(
-				screen.getAllByRole('menuitem', {name: 'Impressions'}).length
+				screen.getAllByRole('option', {name: 'Impressions'}).length
 			).toBeGreaterThan(0);
 			expect(
-				screen.getAllByRole('menuitem', {name: 'Views'}).length
+				screen.getAllByRole('option', {name: 'Views'}).length
 			).toBeGreaterThan(0);
 		});
 
@@ -295,11 +293,11 @@ describe('TopAssets', () => {
 			fireEvent.click(screen.getByRole('tab', {name: 'Files'}));
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group By/})[0]
+				screen.getAllByRole('combobox', {name: 'Group By'})[0]
 			);
 
 			expect(
-				screen.getAllByRole('menuitem', {name: 'Downloads'}).length
+				screen.getAllByRole('option', {name: 'Downloads'}).length
 			).toBeGreaterThan(0);
 		});
 
@@ -309,11 +307,11 @@ describe('TopAssets', () => {
 			fireEvent.click(screen.getByRole('tab', {name: 'Files'}));
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group By/})[0]
+				screen.getAllByRole('combobox', {name: 'Group By'})[0]
 			);
 
 			fireEvent.click(
-				screen.getAllByRole('menuitem', {name: 'Downloads'})[0]
+				screen.getAllByRole('option', {name: 'Downloads'})[0]
 			);
 
 			fireEvent.click(screen.getByRole('tab', {name: 'Content'}));

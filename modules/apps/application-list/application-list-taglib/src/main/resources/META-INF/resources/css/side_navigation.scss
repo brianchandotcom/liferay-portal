@@ -1,7 +1,7 @@
 @import 'atlas-custom-properties/_variables';
 
 .side-navigation-container {
-	--skeleton-shimmer-color: 247, 248, 249;
+	--skeleton-shimmer-color: var(--light-l1);
 
 	input:not(:focus-within) {
 		background-image: clay-icon(search, #6b6c7e);
@@ -24,13 +24,19 @@
 			overflow: hidden;
 			position: relative;
 
+			.side-navigation-skeleton {
+				aspect-ratio: 320 / 650;
+				color: $secondary-l3;
+				width: 100%;
+			}
+
 			&::after {
 				animation: shimmer 1.6s infinite;
 				background: linear-gradient(
 					90deg,
-					rgba(var(--skeleton-shimmer-color), 0) 0%,
-					rgba(var(--skeleton-shimmer-color), 0.6) 50%,
-					rgba(var(--skeleton-shimmer-color), 0) 100%
+					rgb(from var(--skeleton-shimmer-color) r g b / 0) 0%,
+					rgb(from var(--skeleton-shimmer-color) r g b / 0.6) 50%,
+					rgb(from var(--skeleton-shimmer-color) r g b / 0) 100%
 				);
 				content: '';
 				inset: 0;

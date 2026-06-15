@@ -57,18 +57,27 @@ export class InputLocalizedPage {
 
 	/**
 	 * Opens the editor's language dropdown, selects the given option, and
-	 * verifies the language button reflects the new locale. The whole flow is
-	 * retried as a unit: on slower environments the option click can register
-	 * as a highlight without committing the selection (the menu is still
-	 * rendering when the click lands), leaving the dropdown open and the locale
-	 * unchanged. Re-running open + click until the button text updates recovers
-	 * from that missed click instead of polling a value that never changes.
+	 * verifies the language button reflects the new locale.
+	 *
+	 * The dropdown menu is a portal aligned to its trigger. When the trigger
+	 * sits low on the page the menu opens below the viewport fold, so clicking
+	 * an option forces a page scroll that realigns the menu; on a slow CI
+	 * machine the menu shifts in the gap between Playwright computing the click
+	 * point and dispatching the event, and the click lands off the option
+	 * without committing the selection. Scrolling the trigger up first lets the
+	 * menu open fully on-screen, so the option click needs no scroll and lands
+	 * cleanly. The open/click/verify flow is still retried as a unit as a
+	 * safety net.
 	 */
 	async switchLanguage(
 		languageButton: Locator,
 		option: Locator,
 		expectedLanguageId: string
 	) {
+		await languageButton.evaluate((element) =>
+			element.scrollIntoView({block: 'start'})
+		);
+
 		await expect(async () => {
 			const expanded = await languageButton.getAttribute('aria-expanded');
 

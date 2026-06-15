@@ -38,6 +38,10 @@ public class ReportFaroControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		ReflectionTestUtils.setField(
+			_reportFaroController, "contactsEngineClient",
+			_contactsEngineClient);
+
 		Mockito.when(
 			_faroProjectLocalService.getFaroProjectByGroupId(Mockito.anyLong())
 		).thenReturn(
@@ -47,9 +51,6 @@ public class ReportFaroControllerTest {
 		ReflectionTestUtils.setField(
 			_reportFaroController, "faroProjectLocalService",
 			_faroProjectLocalService);
-		ReflectionTestUtils.setField(
-			_reportFaroController, "contactsEngineClient",
-			_contactsEngineClient);
 	}
 
 	@Test

@@ -307,6 +307,12 @@ public class VIESAccountEntryValidatorTest {
 		Address address = Mockito.mock(Address.class);
 
 		Mockito.when(
+			address.getClassName()
+		).thenReturn(
+			AccountEntry.class.getName()
+		);
+
+		Mockito.when(
 			address.getCountry()
 		).thenReturn(
 			country

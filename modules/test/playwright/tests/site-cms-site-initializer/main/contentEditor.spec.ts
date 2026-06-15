@@ -1082,6 +1082,41 @@ test.describe('Categorization Panel', () => {
 				await expect(tagLabel).toBeAttached();
 				await expect(categoryLabel).toBeAttached();
 
+				// Assert the applied category and tag are marked as selected
+				// in the dropdown menu
+
+				await page.getByPlaceholder('Add category').click();
+
+				const selectedCategoryOption = page.getByRole('option', {
+					name: categoryName,
+				});
+
+				await expect(selectedCategoryOption).toHaveAttribute(
+					'aria-selected',
+					'true'
+				);
+				await expect(
+					selectedCategoryOption.locator('.lexicon-icon-check-small')
+				).toBeVisible();
+
+				await page.keyboard.press('Escape');
+
+				await page.getByPlaceholder('Add tag').click();
+
+				const selectedTagOption = page.getByRole('option', {
+					name: secondTagName,
+				});
+
+				await expect(selectedTagOption).toHaveAttribute(
+					'aria-selected',
+					'true'
+				);
+				await expect(
+					selectedTagOption.locator('.lexicon-icon-check-small')
+				).toBeVisible();
+
+				await page.keyboard.press('Escape');
+
 				// Delete content
 
 				await contentsPage.goto();

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -50,7 +48,6 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -169,10 +166,15 @@ public class LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor
 						importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
-			TransactionInvokerUtil.invoke(
-				transactionConfig,
-				new LayoutImportCallable(
-					importExportImportConfiguration, larFile));
+			try {
+				MergeLayoutPrototypesThreadLocal.setInProgress(true);
+
+				_exportImportLocalService.importLayouts(
+					importExportImportConfiguration, larFile);
+			}
+			finally {
+				MergeLayoutPrototypesThreadLocal.setInProgress(false);
+			}
 
 			int count =
 				_exportImportReportEntryLocalService.
@@ -268,34 +270,5 @@ public class LayoutSetPrototypeSyncExportImportBackgroundTaskExecutor
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	private class LayoutImportCallable implements Callable<Void> {
-
-		public LayoutImportCallable(
-			ExportImportConfiguration exportImportConfiguration, File file) {
-
-			_exportImportConfiguration = exportImportConfiguration;
-			_file = file;
-		}
-
-		@Override
-		public Void call() throws PortalException {
-			try {
-				MergeLayoutPrototypesThreadLocal.setInProgress(true);
-
-				_exportImportLocalService.importLayouts(
-					_exportImportConfiguration, _file);
-
-				return null;
-			}
-			finally {
-				MergeLayoutPrototypesThreadLocal.setInProgress(false);
-			}
-		}
-
-		private final ExportImportConfiguration _exportImportConfiguration;
-		private final File _file;
-
-	}
 
 }

@@ -92,7 +92,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 		return typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge");
 	}
 
-	private void _runUpgradeProcess() throws Exception {
+	private void _upgrade() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.OFF)) {
 
@@ -127,7 +127,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 
 		_setGroupTrashEntriesMaxAge(depotEntry, "0");
 
-		_runUpgradeProcess();
+		_upgrade();
 
 		Assert.assertEquals("0", _getTrashEntriesMaxAgeGroup(depotEntry));
 	}
@@ -137,7 +137,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 
 		_setGroupTrashEntriesMaxAge(depotEntry, "1440");
 
-		_runUpgradeProcess();
+		_upgrade();
 
 		Assert.assertEquals("1440", _getTrashEntriesMaxAgeGroup(depotEntry));
 	}
@@ -145,7 +145,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 	private void _testUpgradeWithMissingTrashEntriesMaxAge() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
 
-		_runUpgradeProcess();
+		_upgrade();
 
 		Assert.assertEquals(
 			String.valueOf(_getTrashEntriesMaxAgeCompany()),
@@ -157,7 +157,7 @@ public class TrashEntriesMaxAgeUpgradeProcessTest {
 
 		_setGroupTrashEntriesMaxAge(depotEntry, "0");
 
-		_runUpgradeProcess();
+		_upgrade();
 
 		Assert.assertEquals(
 			String.valueOf(_getTrashEntriesMaxAgeCompany()),

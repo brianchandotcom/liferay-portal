@@ -5531,6 +5531,27 @@
 	},
 	{
 		"classNames": [
+			"ParamAndPropertyAncestorTagImpl"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-61579",
+		"methodsToFormat": [
+			{
+				"from": "regex:FileAvailabilityUtil\\.isAvailable\\(servletContext, (?<page>[^)]+)\\)",
+				"to": "FileAvailabilityUtil.isAvailable(getServletContext(), ${page})"
+			},
+			{
+				"from": "servletContext = ServletContextUtil.getServletContext()",
+				"to": "setServletContext(ServletContextUtil.getServletContext())"
+			},
+			{
+				"from": "setAttributes(request)",
+				"to": "setAttributes(getRequest())"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"JournalArticleLocalService",
 			"JournalArticleLocalServiceUtil",
 			"JournalArticleService",

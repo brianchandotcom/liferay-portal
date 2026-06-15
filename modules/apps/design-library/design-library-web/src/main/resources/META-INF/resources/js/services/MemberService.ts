@@ -15,7 +15,8 @@ interface RequestOptions extends RequestInit {
 }
 
 async function request(path: string, {params, ...init}: RequestOptions = {}) {
-	const url = new URL(`${location.origin}${BASE_PATH}${path}`);
+	const pathContext = Liferay.ThemeDisplay.getPathContext() || '';
+	const url = new URL(`${location.origin}${pathContext}${BASE_PATH}${path}`);
 
 	if (params) {
 		Object.entries(params).forEach(([key, value]) =>

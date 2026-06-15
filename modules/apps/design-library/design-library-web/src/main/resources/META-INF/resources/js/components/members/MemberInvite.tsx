@@ -14,8 +14,8 @@ import React, {useId, useMemo, useState} from 'react';
 import {AutocompleteItem, Member, MemberType} from '../../types';
 
 const ENDPOINTS: Record<MemberType, string> = {
-	user: `${location.origin}/o/headless-admin-user/v1.0/user-accounts`,
-	userGroup: `${location.origin}/o/headless-admin-user/v1.0/user-groups`,
+	user: `/o/headless-admin-user/v1.0/user-accounts`,
+	userGroup: `/o/headless-admin-user/v1.0/user-groups`,
 };
 
 export default function MemberInvite({
@@ -32,7 +32,10 @@ export default function MemberInvite({
 	const selectedItem = selectedItems[0];
 
 	const apiURL = useMemo(() => {
-		const url = new URL(ENDPOINTS[type]);
+		const pathContext = Liferay.ThemeDisplay.getPathContext() || '';
+		const url = new URL(
+			`${location.origin}${pathContext}${ENDPOINTS[type]}`
+		);
 
 		const excludedMembers = members.filter(
 			(member) => member.type === type

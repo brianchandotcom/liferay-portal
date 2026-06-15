@@ -46,7 +46,14 @@ export default function DataSetConfigurationFields({
 }: IConfigurationField) {
 	const [apiURLTokenMappings, setApiURLTokenMappings] = useState<
 		Record<string, TokenMapping>
-	>(JSON.parse(values.apiURLTokenMappings || '{}'));
+	>(() => {
+		try {
+			return JSON.parse(values?.apiURLTokenMappings || '{}');
+		}
+		catch (error) {
+			return {};
+		}
+	});
 
 	const tokenSelectId = useId();
 	const mappingSelectId = useId();

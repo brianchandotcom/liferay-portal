@@ -147,7 +147,7 @@ public class ClientExtensionCommerceCheckoutStep
 
 			String status = new String(
 				_launch(
-					commerceOrder, Http.Method.GET, jsonObject, "/ready",
+					commerceOrder, jsonObject, Http.Method.GET, "/ready",
 					response, currentUser));
 
 			if (!_isSuccess(response) || !Objects.equals(status, "READY")) {
@@ -157,7 +157,7 @@ public class ClientExtensionCommerceCheckoutStep
 			response = new Http.Response();
 
 			_launch(
-				commerceOrder, Http.Method.POST, jsonObject, "/active",
+				commerceOrder, jsonObject, Http.Method.POST, "/active",
 				response, currentUser);
 
 			return _isSuccess(response);
@@ -279,9 +279,9 @@ public class ClientExtensionCommerceCheckoutStep
 	}
 
 	private byte[] _launch(
-			CommerceOrder commerceOrder, Http.Method method,
-			JSONObject payloadJSONObject, String resourcePath,
-			Http.Response response, User user)
+			CommerceOrder commerceOrder, JSONObject jsonObject,
+			Http.Method method, String resourcePath, Http.Response response,
+			User user)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -290,7 +290,7 @@ public class ClientExtensionCommerceCheckoutStep
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
 		options.setBody(
-			payloadJSONObject.toString(), ContentTypes.APPLICATION_JSON,
+			jsonObject.toString(), ContentTypes.APPLICATION_JSON,
 			StringPool.UTF8);
 
 		OAuth2Application oAuth2Application =
@@ -310,7 +310,7 @@ public class ClientExtensionCommerceCheckoutStep
 				() -> {
 					_localOAuthClient.consumeAccessToken(
 						accessToken -> options.addHeader(
-							"Authorization", "Bearer " + accessToken),
+							HttpHeaders.AUTHORIZATION, "Bearer " + accessToken),
 						oAuth2Application, user.getUserId());
 
 					return null;

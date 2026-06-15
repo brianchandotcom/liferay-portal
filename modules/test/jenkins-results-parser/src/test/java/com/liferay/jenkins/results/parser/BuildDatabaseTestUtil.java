@@ -8,10 +8,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,36 +19,38 @@ import org.json.JSONObject;
  */
 public class BuildDatabaseTestUtil {
 
-	public static BuildDatabase addPortalAcceptancePR(
-		BuildDatabaseArgs.Consumer... consumers) {
-
-		BuildDatabaseArgs buildDatabaseArgs = new BuildDatabaseArgs();
-
-		for (BuildDatabaseArgs.Consumer consumer : consumers) {
-			consumer.accept(buildDatabaseArgs);
-		}
-
-		return _addBuildDatabase(buildDatabaseArgs);
+	public static BuildDatabase addPortalAcceptancePullRequest() {
+		return addPortalAcceptancePullRequest(new BuildDatabaseArgs());
 	}
 
-	private static BuildDatabase _addBuildDatabase(
+	public static BuildDatabase addPortalAcceptancePullRequest(
 		BuildDatabaseArgs buildDatabaseArgs) {
 
-		StagedBuildDatabase stagedBuildDatabase = new StagedBuildDatabase(
-			_newBuildDir());
+		File buildDir = _newBuildDir();
 
-		stagedBuildDatabase.setJSONObject(
-			_newBuildDatabaseJSONObject(buildDatabaseArgs));
+		File buildDatabaseFile = new File(
+			buildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 
-		stagedBuildDatabase.write();
+		try {
+			JenkinsResultsParserUtil.write(
+				buildDatabaseFile,
+				_newBuildDatabaseJSONObject(
+					buildDatabaseArgs
+				).toString());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 
-		return stagedBuildDatabase;
+		return new DefaultBuildDatabase(buildDir);
 	}
 
 	private static JSONObject _newBuildDatabaseJSONObject(
 		BuildDatabaseArgs buildDatabaseArgs) {
 
 		JSONObject jsonObject = new JSONObject();
+
+		int index = _index.getAndIncrement();
 
 		jsonObject.put(
 			"builds", new JSONObject()
@@ -65,11 +65,11 @@ public class BuildDatabaseTestUtil {
 		).put(
 			"properties", _newPropertiesJSONObject(buildDatabaseArgs)
 		).put(
-			"pull_requests", _newPullRequestsJSONObject()
+			"pull_requests", _newPullRequestsJSONObject(index)
 		).put(
 			"workspace_git_repositories", new JSONObject()
 		).put(
-			"workspaces", _newWorkspacesJSONObject()
+			"workspaces", _newWorkspacesJSONObject(index)
 		);
 
 		return jsonObject;
@@ -93,21 +93,19 @@ public class BuildDatabaseTestUtil {
 	private static JSONObject _newJobsJSONObject(
 		BuildDatabaseArgs buildDatabaseArgs) {
 
+		JSONObject jobsJSONObject = new JSONObject();
+		JSONObject jobJSONObject = new JSONObject();
+		JSONObject branchJSONObject = new JSONObject();
+
 		JSONArray modifiedFilesJSONArray = new JSONArray();
 
 		for (String modifiedFile : buildDatabaseArgs.modifiedFiles) {
 			modifiedFilesJSONArray.put(modifiedFile);
 		}
 
-		JSONObject branchJSONObject = new JSONObject();
-
 		branchJSONObject.put("modified_files", modifiedFilesJSONArray);
 
-		JSONObject jobJSONObject = new JSONObject();
-
 		jobJSONObject.put("branch", branchJSONObject);
-
-		JSONObject jobsJSONObject = new JSONObject();
 
 		jobsJSONObject.put(buildDatabaseArgs.jobKey, jobJSONObject);
 
@@ -119,18 +117,14 @@ public class BuildDatabaseTestUtil {
 
 		JSONObject propertiesJSONObject = new JSONObject();
 
-		Map<String, Map<String, String>> properties =
-			buildDatabaseArgs.properties;
-
 		for (Map.Entry<String, Map<String, String>> entry :
-				properties.entrySet()) {
+				buildDatabaseArgs.properties.entrySet()) {
 
 			JSONArray propertyJSONArray = new JSONArray();
 
-			Map<String, String> propertyMap = entry.getValue();
-
 			for (Map.Entry<String, String> propertyEntry :
-					propertyMap.entrySet()) {
+					entry.getValue(
+					).entrySet()) {
 
 				JSONObject propertyJSONObject = new JSONObject();
 
@@ -149,110 +143,58 @@ public class BuildDatabaseTestUtil {
 		return propertiesJSONObject;
 	}
 
-	private static JSONObject _newPullRequestsJSONObject() {
-		int number = _pullRequestNumber.getAndIncrement();
-
-		String htmlURL =
-			"https://github.com/test-owner/test-repo/pull/" + number;
+	private static JSONObject _newPullRequestsJSONObject(int index) {
+		JSONObject pullRequestsJSONObject = new JSONObject();
+		JSONObject pullRequestJSONObject = new JSONObject();
+		JSONObject baseJSONObject = new JSONObject();
+		JSONObject repositoryJSONObject = new JSONObject();
 
 		JSONObject ownerJSONObject = new JSONObject();
 
-		ownerJSONObject.put("login", "test-owner");
-
-		JSONObject repositoryJSONObject = new JSONObject();
+		ownerJSONObject.put("login", "test-owner-" + index);
 
 		repositoryJSONObject.put(
-			"name", "test-repo"
+			"name", "test-repository-" + index
 		).put(
 			"owner", ownerJSONObject
 		);
 
-		JSONObject baseJSONObject = new JSONObject();
-
 		baseJSONObject.put("repo", repositoryJSONObject);
 
-		JSONObject pullRequestJSONObject = new JSONObject();
+		String htmlURL =
+			"https://github.com/test-owner-" + index + "/test-repository-" +
+				index + "/pull/" + index;
 
 		pullRequestJSONObject.put(
 			"base", baseJSONObject
 		).put(
 			"html_url", htmlURL
 		).put(
-			"number", number
+			"number", index
 		);
-
-		JSONObject pullRequestsJSONObject = new JSONObject();
 
 		pullRequestsJSONObject.put(htmlURL, pullRequestJSONObject);
 
 		return pullRequestsJSONObject;
 	}
 
-	private static JSONObject _newWorkspacesJSONObject() {
+	private static JSONObject _newWorkspacesJSONObject(int index) {
+		JSONObject workspacesJSONObject = new JSONObject();
+
 		JSONObject workspaceJSONObject = new JSONObject();
 
 		workspaceJSONObject.put(
-			"primary_repository_dir_name", "liferay-portal"
+			"primary_repository_dir_name", "test-repository-" + index
 		).put(
-			"primary_repository_name", "liferay-portal"
+			"primary_repository_name", "test-repository-" + index
 		);
 
-		JSONObject workspacesJSONObject = new JSONObject();
-
-		workspacesJSONObject.put("liferay-portal", workspaceJSONObject);
+		workspacesJSONObject.put(
+			"test-repository-" + index, workspaceJSONObject);
 
 		return workspacesJSONObject;
 	}
 
-	private static final AtomicInteger _pullRequestNumber = new AtomicInteger(
-		1);
-
-	private static class StagedBuildDatabase extends DefaultBuildDatabase {
-
-		@Override
-		public FilePropagator rsyncBuildDatabaseFile(
-			List<String> distNodes, String distPath, String preDistCommand,
-			String postDistCommand, int threadCount) {
-
-			throw new UnsupportedOperationException(_MESSAGE);
-		}
-
-		@Override
-		public void rsyncBuildDatabaseFileToJenkinsMaster(
-			String destinationDirPath, JenkinsMaster jenkinsMaster) {
-
-			throw new UnsupportedOperationException(_MESSAGE);
-		}
-
-		@Override
-		public void uploadBuildDatabaseFileToCloudBucket() {
-			throw new UnsupportedOperationException(_MESSAGE);
-		}
-
-		@Override
-		public void uploadBuildDatabaseFileToCloudBucket(String path) {
-			throw new UnsupportedOperationException(_MESSAGE);
-		}
-
-		@Override
-		public void writeFilteredPropertiesToFile(
-			String destFilePath, Pattern pattern, String key) {
-
-			throw new UnsupportedOperationException(_MESSAGE);
-		}
-
-		@Override
-		public void writePropertiesToFile(String destFilePath, String key) {
-			throw new UnsupportedOperationException(_MESSAGE);
-		}
-
-		private StagedBuildDatabase(File buildDir) {
-			super(buildDir);
-		}
-
-		private static final String _MESSAGE =
-			"BuildDatabaseTestUtil does not support file distribution";
-
-	}
+	private static final AtomicInteger _index = new AtomicInteger(1);
 
 }

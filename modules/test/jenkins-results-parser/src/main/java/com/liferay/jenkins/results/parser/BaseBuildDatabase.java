@@ -415,7 +415,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 			buildsJSONObject.put(key, buildData.getJSONObject());
 
-			write();
+			_writeJSONFile();
 		}
 	}
 
@@ -428,7 +428,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 			jobsJSONObject.put(key, jobJSONObject);
 
-			write();
+			_writeJSONFile();
 		}
 	}
 
@@ -447,7 +447,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			portalFixpackReleasesJSONObject.put(
 				key, portalFixpackRelease.getJSONObject());
 
-			write();
+			_writeJSONFile();
 		}
 	}
 
@@ -466,7 +466,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			portalHotfixReleasesJSONObject.put(
 				key, portalHotfixRelease.getJSONObject());
 
-			write();
+			_writeJSONFile();
 		}
 	}
 
@@ -482,7 +482,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 			portalReleasesJSONObject.put(key, portalRelease.getJSONObject());
 
-			write();
+			_writeJSONFile();
 		}
 	}
 
@@ -516,7 +516,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			propertiesJSONObject.put(key, _toJSONArray(properties));
 
 			if (writeFile) {
-				write();
+				_writeJSONFile();
 			}
 		}
 	}
@@ -552,7 +552,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 			pullRequestsJSONObject.put(key, pullRequest.getJSONObject());
 
-			write();
+			_writeJSONFile();
 		}
 	}
 
@@ -564,7 +564,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 			workspacesJSONObject.put(key, workspace.getJSONObject());
 
-			write();
+			_writeJSONFile();
 		}
 	}
 
@@ -579,7 +579,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			workspaceGitRepositoriesJSONObject.put(
 				key, workspaceGitRepository.getJSONObject());
 
-			write();
+			_writeJSONFile();
 		}
 	}
 
@@ -832,28 +832,10 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		_buildDatabaseFile = new File(
 			baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 
-		_read();
+		_readBuildDatabaseFile();
 	}
 
-	protected void setJSONObject(JSONObject jsonObject) {
-		synchronized (_buildDatabaseFile) {
-			_jsonObject = jsonObject;
-		}
-	}
-
-	protected void write() {
-		synchronized (_buildDatabaseFile) {
-			try {
-				JenkinsResultsParserUtil.write(
-					_buildDatabaseFile, _jsonObject.toString());
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-		}
-	}
-
-	private void _read() {
+	private void _readBuildDatabaseFile() {
 		synchronized (_buildDatabaseFile) {
 			if (_buildDatabaseFile.exists()) {
 				try {
@@ -904,7 +886,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 				_jsonObject.put("workspaces", new JSONObject());
 			}
 
-			write();
+			_writeJSONFile();
 		}
 	}
 
@@ -928,6 +910,18 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		}
 
 		return jsonArray;
+	}
+
+	private synchronized void _writeJSONFile() {
+		synchronized (_buildDatabaseFile) {
+			try {
+				JenkinsResultsParserUtil.write(
+					_buildDatabaseFile, _jsonObject.toString());
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
 	}
 
 	private final File _buildDatabaseFile;

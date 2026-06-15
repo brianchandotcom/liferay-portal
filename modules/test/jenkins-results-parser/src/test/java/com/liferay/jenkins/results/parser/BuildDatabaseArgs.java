@@ -5,9 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,11 +13,7 @@ import java.util.Map;
  */
 public class BuildDatabaseArgs {
 
-	public void addModifiedFile(String modifiedFile) {
-		modifiedFiles.add(modifiedFile);
-	}
-
-	public void setProperty(String key, String name, String value) {
+	public void addProperty(String key, String name, String value) {
 		Map<String, String> values = properties.get(key);
 
 		if (values == null) {
@@ -31,13 +25,9 @@ public class BuildDatabaseArgs {
 		values.put(name, value);
 	}
 
-	public String jobKey = "PortalAcceptancePullRequestJob";
-	public List<String> modifiedFiles = new ArrayList<>();
+	public String jobKey =
+		"dxp_test-portal-acceptance-pullrequest(master)_default";
+	public String[] modifiedFiles = {};
 	public Map<String, Map<String, String>> properties = new LinkedHashMap<>();
-
-	@FunctionalInterface
-	public interface Consumer
-		extends java.util.function.Consumer<BuildDatabaseArgs> {
-	}
 
 }

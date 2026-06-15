@@ -46,11 +46,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iliyan Peychev
  */
 @Component(service = NodeExecutor.class)
-public class HTTPCallNodeExecutor extends BaseNodeExecutor {
+public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 
 	@Override
 	public NodeType getNodeType() {
-		return NodeType.HTTP_CALL;
+		return NodeType.HTTP_REQUEST;
 	}
 
 	@Override

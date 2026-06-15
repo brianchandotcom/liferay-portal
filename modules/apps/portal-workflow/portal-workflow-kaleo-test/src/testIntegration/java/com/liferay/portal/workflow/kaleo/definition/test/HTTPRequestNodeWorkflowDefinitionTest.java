@@ -38,7 +38,7 @@ import org.junit.runner.RunWith;
  * @author Iliyan Peychev
  */
 @RunWith(Arquillian.class)
-public class HTTPCallNodeWorkflowDefinitionTest {
+public class HTTPRequestNodeWorkflowDefinitionTest {
 
 	@ClassRule
 	@Rule
@@ -46,14 +46,14 @@ public class HTTPCallNodeWorkflowDefinitionTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testDeployWorkflowDefinitionWithHTTPCallNode()
+	public void testDeployWorkflowDefinitionWithHTTPRequestNode()
 		throws Exception {
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				FileUtil.getBytes(
 					_getResourceInputStream(
-						"http-call-node-workflow-definition.xml")),
+						"http-request-node-workflow-definition.xml")),
 				TestPropsValues.getCompanyId(), null,
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				TestPropsValues.getUserId());
@@ -63,15 +63,15 @@ public class HTTPCallNodeWorkflowDefinitionTest {
 				workflowDefinition.getCompanyId(),
 				workflowDefinition.getName());
 
-		KaleoNode httpCallKaleoNode = _getKaleoNode(
+		KaleoNode httpRequestKaleoNode = _getKaleoNode(
 			kaleoDefinitionVersion.getKaleoDefinitionVersionId(), "createSite");
 
 		Assert.assertEquals(
-			NodeType.HTTP_CALL.name(), httpCallKaleoNode.getType());
+			NodeType.HTTP_REQUEST.name(), httpRequestKaleoNode.getType());
 
 		List<KaleoNodeSetting> kaleoNodeSettings =
 			_kaleoNodeSettingLocalService.getKaleoNodeSettings(
-				httpCallKaleoNode.getKaleoNodeId());
+				httpRequestKaleoNode.getKaleoNodeId());
 
 		Assert.assertEquals(
 			"POST", _getSettingValue(kaleoNodeSettings, "httpMethod"));

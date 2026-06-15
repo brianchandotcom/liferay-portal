@@ -34,19 +34,18 @@ public class CustomFilterPortletPreferencesImplTest {
 			PortletPreferences.class);
 
 		_mockValue(
-			portletPreferences,
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_FIELD,
-			"modified");
+			portletPreferences, "modified");
 		_mockValue(
-			portletPreferences,
 			CustomFilterPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
-			StringPool.BLANK);
+			portletPreferences, StringPool.BLANK);
+
+		CustomFilterPortletPreferencesImpl customFilterPortletPreferencesImpl =
+			new CustomFilterPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
 			"modified",
-			new CustomFilterPortletPreferencesImpl(
-				portletPreferences
-			).getSEOParameterName());
+			customFilterPortletPreferencesImpl.getSEOParameterName());
 	}
 
 	@Test
@@ -55,23 +54,22 @@ public class CustomFilterPortletPreferencesImplTest {
 			PortletPreferences.class);
 
 		_mockValue(
-			portletPreferences,
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_FIELD,
-			RandomTestUtil.randomString());
+			portletPreferences, RandomTestUtil.randomString());
 		_mockValue(
-			portletPreferences,
 			CustomFilterPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
-			"customParameter");
+			portletPreferences, "customParameter");
+
+		CustomFilterPortletPreferencesImpl customFilterPortletPreferencesImpl =
+			new CustomFilterPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
 			"customParameter",
-			new CustomFilterPortletPreferencesImpl(
-				portletPreferences
-			).getSEOParameterName());
+			customFilterPortletPreferencesImpl.getSEOParameterName());
 	}
 
 	private void _mockValue(
-		PortletPreferences portletPreferences, String key, String value) {
+		String key, PortletPreferences portletPreferences, String value) {
 
 		Mockito.when(
 			portletPreferences.getValue(key, StringPool.BLANK)

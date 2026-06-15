@@ -23,11 +23,11 @@ function main {
 		exit 0
 	fi
 
+	echo "Extracting the trial license from \"liferay/dxp:latest\"."
+
 	local license_dir
 
 	license_dir=$(dirname "${license_file}")
-
-	echo "Extracting the trial license from \"liferay/dxp:latest\"."
 
 	mkdir --parents "${license_dir}"
 

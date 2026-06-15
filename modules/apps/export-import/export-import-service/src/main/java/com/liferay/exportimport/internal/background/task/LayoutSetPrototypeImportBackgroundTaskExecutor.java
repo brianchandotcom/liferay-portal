@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -36,7 +35,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -116,10 +114,12 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 
 					_file.write(file, attachmentsFileEntry.getContentStream());
 
-					TransactionInvokerUtil.invoke(
-						transactionConfig,
-						new LayoutImportCallable(
-							exportImportConfiguration, file));
+					_cleanUpPreviousBackgroundTasks(exportImportConfiguration);
+
+					MergeLayoutPrototypesThreadLocal.setInProgress(true);
+
+					_exportImportLocalService.importLayouts(
+						exportImportConfiguration, file);
 				}
 				catch (Throwable throwable) {
 					Map<String, Serializable> settingsMap =
@@ -195,6 +195,39 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 		return false;
 	}
 
+	private void _cleanUpPreviousBackgroundTasks(
+		ExportImportConfiguration exportImportConfiguration) {
+
+		try {
+			List<BackgroundTask> backgroundTasks =
+				_backgroundTaskManager.getBackgroundTasks(
+					exportImportConfiguration.getGroupId(),
+					BackgroundTaskExecutorNames.
+						LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR);
+
+			for (BackgroundTask backgroundTask : backgroundTasks) {
+				int status = backgroundTask.getStatus();
+
+				if ((status == BackgroundTaskConstants.STATUS_IN_PROGRESS) ||
+					(status == BackgroundTaskConstants.STATUS_NEW) ||
+					(status == BackgroundTaskConstants.STATUS_QUEUED)) {
+
+					continue;
+				}
+
+				_backgroundTaskManager.deleteBackgroundTask(
+					backgroundTask.getBackgroundTaskId());
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to clean up previous background tasks",
+					portalException);
+			}
+		}
+	}
+
 	private LayoutSetPrototypeConfiguration
 		_getLayoutSetPrototypeConfiguration() {
 
@@ -226,68 +259,5 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 
 	@Reference
 	private com.liferay.portal.kernel.util.File _file;
-
-	private class LayoutImportCallable implements Callable<Void> {
-
-		public LayoutImportCallable(
-			ExportImportConfiguration exportImportConfiguration, File file) {
-
-			_exportImportConfiguration = exportImportConfiguration;
-			_file = file;
-		}
-
-		@Override
-		public Void call() throws PortalException {
-			try {
-				_cleanUpPreviousBackgroundTasks();
-
-				MergeLayoutPrototypesThreadLocal.setInProgress(true);
-
-				_exportImportLocalService.importLayouts(
-					_exportImportConfiguration, _file);
-
-				return null;
-			}
-			finally {
-				MergeLayoutPrototypesThreadLocal.setInProgress(false);
-			}
-		}
-
-		private void _cleanUpPreviousBackgroundTasks() {
-			try {
-				List<BackgroundTask> backgroundTasks =
-					_backgroundTaskManager.getBackgroundTasks(
-						_exportImportConfiguration.getGroupId(),
-						BackgroundTaskExecutorNames.
-							LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR);
-
-				for (BackgroundTask backgroundTask : backgroundTasks) {
-					int status = backgroundTask.getStatus();
-
-					if ((status ==
-							BackgroundTaskConstants.STATUS_IN_PROGRESS) ||
-						(status == BackgroundTaskConstants.STATUS_NEW) ||
-						(status == BackgroundTaskConstants.STATUS_QUEUED)) {
-
-						continue;
-					}
-
-					_backgroundTaskManager.deleteBackgroundTask(
-						backgroundTask.getBackgroundTaskId());
-				}
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to clean up previous background tasks",
-						portalException);
-				}
-			}
-		}
-
-		private final ExportImportConfiguration _exportImportConfiguration;
-		private final File _file;
-
-	}
 
 }

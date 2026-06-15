@@ -67,6 +67,8 @@ public class ObjectEntryInfoItemUtil {
 				false, null, null, null, null, themeDisplay.getLocale(), null,
 				themeDisplay.getUser());
 
+		int version = serviceBuilderObjectEntry.getVersion();
+
 		if (serviceBuilderObjectEntry.getHeadObjectEntryId() > 0) {
 			serviceBuilderObjectEntry =
 				ObjectEntryLocalServiceUtil.fetchObjectEntry(
@@ -75,8 +77,7 @@ public class ObjectEntryInfoItemUtil {
 
 		ObjectEntryVersion objectEntryVersion =
 			ObjectEntryVersionLocalServiceUtil.fetchObjectEntryVersion(
-				serviceBuilderObjectEntry.getObjectEntryId(),
-				serviceBuilderObjectEntry.getVersion());
+				serviceBuilderObjectEntry.getObjectEntryId(), version);
 
 		if (objectEntryVersion != null) {
 			dtoConverterContext.setAttribute(

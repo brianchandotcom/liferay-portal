@@ -42,13 +42,11 @@ public class ExternalEmbeddingEligibilityTest {
 	public void testIsAvailableWhenUnavailable() {
 		ExternalEmbeddingEligibility externalEmbeddingEligibility =
 			ExternalEmbeddingEligibility.unavailable(
-				"semantic-search.external-embedding-capability." +
-					"missing-dxp-enterprise");
+				_MISSING_DXP_ENTERPRISE_REASON);
 
 		Assert.assertFalse(externalEmbeddingEligibility.isAvailable());
 		Assert.assertEquals(
-			"semantic-search.external-embedding-capability." +
-				"missing-dxp-enterprise",
+			_MISSING_DXP_ENTERPRISE_REASON,
 			externalEmbeddingEligibility.getReason());
 	}
 
@@ -61,5 +59,8 @@ public class ExternalEmbeddingEligibilityTest {
 	public void testUnavailableWithNullReason() {
 		ExternalEmbeddingEligibility.unavailable(null);
 	}
+
+	private static final String _MISSING_DXP_ENTERPRISE_REASON =
+		"semantic-search.external-embedding-capability.missing-dxp-enterprise";
 
 }

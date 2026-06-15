@@ -6,6 +6,7 @@
 package com.liferay.headless.data.masking.internal.model.listener;
 
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
+import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jose Luis Navarro
@@ -30,6 +32,21 @@ public class DataMaskObjectEntryModelListener
 	@Override
 	public String getObjectDefinitionExternalReferenceCode() {
 		return _EXTERNAL_REFERENCE_CODE_DATA_MASK;
+	}
+
+	@Override
+	public void onAfterRemove(ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		_evictPatterns(objectEntry);
+	}
+
+	@Override
+	public void onAfterUpdate(
+			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		_evictPatterns(originalObjectEntry);
 	}
 
 	@Override
@@ -82,6 +99,14 @@ public class DataMaskObjectEntryModelListener
 		}
 	}
 
+	private void _evictPatterns(ObjectEntry objectEntry) {
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		_dataMaskingService.evictPattern((String)values.get("detectionRegex"));
+		_dataMaskingService.evictPattern(
+			(String)values.get("replacementRegex"));
+	}
+
 	private boolean _isDataMaskingSeedImport() {
 		String fileName = BatchEngineUnitThreadLocal.getFileName();
 
@@ -93,5 +118,8 @@ public class DataMaskObjectEntryModelListener
 
 	private static final String _EXTERNAL_REFERENCE_CODE_DATA_MASK =
 		"L_DATA_MASK";
+
+	@Reference
+	private DataMaskingService _dataMaskingService;
 
 }

@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface DataMaskingService {
 
+	public void evictPattern(String regex);
+
 	public String redact(
 		long companyId, List<String> maskExternalReferenceCodes, String text);
 

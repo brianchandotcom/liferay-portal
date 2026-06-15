@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -32,6 +33,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DataMaskingService.class)
 public class DataMaskingEngine implements DataMaskingService {
+
+	@Override
+	public void evictPattern(String regex) {
+		if (regex != null) {
+			_patterns.remove(regex);
+		}
+	}
 
 	@Override
 	public String redact(
@@ -122,12 +130,12 @@ public class DataMaskingEngine implements DataMaskingService {
 		}
 
 		try {
-			Pattern detectionPattern = Pattern.compile(detectionRegex);
+			Pattern detectionPattern = _getPattern(detectionRegex);
 
 			Pattern replacementPattern = null;
 
 			if (Validator.isNotNull(replacementRegex)) {
-				replacementPattern = Pattern.compile(replacementRegex);
+				replacementPattern = _getPattern(replacementRegex);
 			}
 
 			return new DataMask(
@@ -146,6 +154,10 @@ public class DataMaskingEngine implements DataMaskingService {
 		}
 	}
 
+	private Pattern _getPattern(String regex) {
+		return _patterns.computeIfAbsent(regex, Pattern::compile);
+	}
+
 	private static final String _EXTERNAL_REFERENCE_CODE_DATA_MASK =
 		"L_DATA_MASK";
 
@@ -157,5 +169,7 @@ public class DataMaskingEngine implements DataMaskingService {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	private final Map<String, Pattern> _patterns = new ConcurrentHashMap<>();
 
 }

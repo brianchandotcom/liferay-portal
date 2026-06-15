@@ -41,10 +41,6 @@ public class ProductionReadinessResult {
 		return _recommendedValue;
 	}
 
-	public Severity getSeverity() {
-		return _severity;
-	}
-
 	public boolean isPass() {
 		return _pass;
 	}
@@ -83,12 +79,6 @@ public class ProductionReadinessResult {
 			return this;
 		}
 
-		public Builder severity(Severity severity) {
-			_severity = severity;
-
-			return this;
-		}
-
 		private Builder(String category, String key) {
 			_category = category;
 			_key = key;
@@ -110,7 +100,7 @@ public class ProductionReadinessResult {
 
 			return new ProductionReadinessResult(
 				_category, _currentValue, _key, sb.toString(),
-				_messageParameters, pass, _recommendedValue, _severity);
+				_messageParameters, pass, _recommendedValue);
 		}
 
 		private final String _category;
@@ -119,20 +109,12 @@ public class ProductionReadinessResult {
 		private String _messageKeySuffix;
 		private Object[] _messageParameters = new Object[0];
 		private String _recommendedValue;
-		private Severity _severity = Severity.LOW;
-
-	}
-
-	public enum Severity {
-
-		CRITICAL, HIGH, LOW, MEDIUM
 
 	}
 
 	private ProductionReadinessResult(
 		String category, String currentValue, String key, String messageKey,
-		Object[] messageParameters, boolean pass, String recommendedValue,
-		Severity severity) {
+		Object[] messageParameters, boolean pass, String recommendedValue) {
 
 		_category = category;
 		_currentValue = currentValue;
@@ -141,7 +123,6 @@ public class ProductionReadinessResult {
 		_messageParameters = messageParameters;
 		_pass = pass;
 		_recommendedValue = recommendedValue;
-		_severity = severity;
 	}
 
 	private final String _category;
@@ -151,6 +132,5 @@ public class ProductionReadinessResult {
 	private final Object[] _messageParameters;
 	private final boolean _pass;
 	private final String _recommendedValue;
-	private final Severity _severity;
 
 }

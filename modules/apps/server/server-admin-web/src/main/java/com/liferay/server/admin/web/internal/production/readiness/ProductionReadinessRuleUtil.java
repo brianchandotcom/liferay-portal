@@ -332,16 +332,12 @@ public class ProductionReadinessRuleUtil {
 				"no-large-pages"
 			).recommendedValue(
 				"-XX:+UseLargePages"
-			).severity(
-				ProductionReadinessResult.Severity.MEDIUM
 			).fail();
 		}
 
 		if (largePageSizeArg == null) {
 			return builder.messageKeySuffix(
 				"missing-large-page-size"
-			).severity(
-				ProductionReadinessResult.Severity.MEDIUM
 			).fail();
 		}
 
@@ -357,8 +353,6 @@ public class ProductionReadinessRuleUtil {
 						", OS's huge page size = ", osHugePageSize / 1024, "kB")
 				).messageKeySuffix(
 					"size-mismatch"
-				).severity(
-					ProductionReadinessResult.Severity.MEDIUM
 				).fail();
 			}
 		}
@@ -507,9 +501,7 @@ public class ProductionReadinessRuleUtil {
 			);
 
 		if (directServletContextReload) {
-			return builder.severity(
-				ProductionReadinessResult.Severity.MEDIUM
-			).fail();
+			return builder.fail();
 		}
 
 		return builder.pass();
@@ -531,9 +523,7 @@ public class ProductionReadinessRuleUtil {
 			return builder.pass();
 		}
 
-		return builder.severity(
-			ProductionReadinessResult.Severity.HIGH
-		).fail();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkPortalDeveloperProperties() {
@@ -549,8 +539,6 @@ public class ProductionReadinessRuleUtil {
 		if (hasDeveloperProperties) {
 			return builder.currentValue(
 				"portal-developer.properties included"
-			).severity(
-				ProductionReadinessResult.Severity.MEDIUM
 			).fail();
 		}
 
@@ -590,10 +578,7 @@ public class ProductionReadinessRuleUtil {
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
 				_CATEGORY_SEARCH_ENGINE_CONNECTIVITY_VALIDATION,
-				"sidecar-detection"
-			).severity(
-				ProductionReadinessResult.Severity.HIGH
-			);
+				"sidecar-detection");
 
 		if (!file.exists() || !_isProductionModeEnabled(file)) {
 			return builder.fail();

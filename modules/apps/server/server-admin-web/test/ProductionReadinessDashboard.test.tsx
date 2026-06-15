@@ -23,7 +23,6 @@ const SAMPLE_PAYLOAD = {
 			name: 'Security Enabled',
 			recommendedValue: 'true',
 			ruleKey: 'security-enabled',
-			severity: 'HIGH',
 			status: 'FAIL',
 		},
 		{
@@ -35,7 +34,6 @@ const SAMPLE_PAYLOAD = {
 			name: 'Password Encryption',
 			recommendedValue: 'AES',
 			ruleKey: 'password-encryption',
-			severity: 'LOW',
 			status: 'PASS',
 		},
 		{
@@ -47,7 +45,6 @@ const SAMPLE_PAYLOAD = {
 			name: 'Heap Size Upper Limit',
 			recommendedValue: '8G',
 			ruleKey: 'heap-size-upper-limit',
-			severity: 'MEDIUM',
 			status: 'FAIL',
 		},
 	],
@@ -90,7 +87,6 @@ function buildLargePayload(ruleCount: number) {
 			name: `Rule ${String(index).padStart(2, '0')}`,
 			recommendedValue: String(index + 1),
 			ruleKey: `rule-${String(index).padStart(2, '0')}`,
-			severity: 'LOW',
 			status: 'FAIL',
 		})),
 		summary: {

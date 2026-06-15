@@ -25,60 +25,33 @@ public class DataMaskTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testApplyAppliesReplacementRegexCaptureGroups() {
-		DataMask dataMask = new DataMask(
-			"IPv4 → /24", _ipv4DetectionPattern, _ipv4ReplacementPattern,
-			"$1.0/24");
-
-		Assert.assertEquals(
-			"Connected from 192.168.1.0/24",
-			dataMask.apply("Connected from 192.168.1.42"));
-	}
-
-	@Test
-	public void testApplyHandlesEmptyText() {
-		Assert.assertEquals("", _apply(_emailMask(), ""));
-	}
-
-	@Test
-	public void testApplyReplacesEveryMatchWithLiteralValue() {
-		Assert.assertEquals(
-			"From [EMAIL_ADDRESS] to [EMAIL_ADDRESS]",
-			_apply(_emailMask(), "From a@b.com to c@d.org"));
-	}
-
-	@Test
-	public void testApplyReplacesSingleMatchWithLiteralValue() {
+	public void testApply() {
 		Assert.assertEquals(
 			"Contact: [EMAIL_ADDRESS]",
 			_apply(_emailMask(), "Contact: alice@example.com"));
-	}
-
-	@Test
-	public void testApplyReplacesWithLiteralValueContainingSpecialCharacters() {
-		DataMask dataMask = new DataMask(
-			"Secrets", _secretDetectionPattern, null, "[$1\\X]");
-
 		Assert.assertEquals(
-			"value: [$1\\X]", _apply(dataMask, "value: secret"));
-	}
-
-	@Test
-	public void testApplyReturnsSameStringWhenNoMatch() {
-		String input = "No email here at all.";
-
-		Assert.assertSame(input, _apply(_emailMask(), input));
-	}
-
-	@Test
-	public void testApplyTruncatesCompressedIPv6ToPrefix() {
+			"From [EMAIL_ADDRESS] to [EMAIL_ADDRESS]",
+			_apply(_emailMask(), "From a@b.com to c@d.org"));
+		Assert.assertSame(
+			"No email here at all.",
+			_apply(_emailMask(), "No email here at all."));
+		Assert.assertEquals("", _apply(_emailMask(), ""));
+		Assert.assertEquals(
+			"Connected from 192.168.1.0/24",
+			_apply(
+				new DataMask(
+					"IPv4 → /24", _ipv4DetectionPattern,
+					_ipv4ReplacementPattern, "$1.0/24"),
+				"Connected from 192.168.1.42"));
+		Assert.assertEquals(
+			"value: [$1\\X]",
+			_apply(
+				new DataMask(
+					"Secrets", _secretDetectionPattern, null, "[$1\\X]"),
+				"value: secret"));
 		Assert.assertEquals(
 			"Connected from 2001:db8::/48",
 			_apply(_ipv6Mask(), "Connected from 2001:db8::1"));
-	}
-
-	@Test
-	public void testApplyTruncatesExpandedIPv6ToPrefix() {
 		Assert.assertEquals(
 			"Connected from 2001:0db8:85a3::/48",
 			_apply(

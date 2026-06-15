@@ -47,9 +47,11 @@ public class DataMaskingEngineTest {
 
 	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
 	@Test
-	public void testRedactionAppliesAllSystemMasks() throws Exception {
+	public void testRedact() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+
 		String redactedText = _dataMaskingEngine.redact(
-			TestPropsValues.getCompanyId(),
+			companyId,
 			Arrays.asList(
 				"L_DATA_MASK_IBAN", "L_DATA_MASK_CREDIT_CARD_NUMBER",
 				"L_DATA_MASK_EMAIL_ADDRESS", "L_DATA_MASK_IPV4",
@@ -77,7 +79,6 @@ public class DataMaskingEngineTest {
 			redactedText, CoreMatchers.containsString("192.168.1.0/24"));
 		Assert.assertThat(
 			redactedText, CoreMatchers.containsString("2001:0db8:85a3::/48"));
-
 		Assert.assertThat(
 			redactedText,
 			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_BSN)));
@@ -105,32 +106,24 @@ public class DataMaskingEngineTest {
 		Assert.assertThat(
 			redactedText,
 			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_SSN)));
-	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
-	@Test
-	public void testRedactionAppliesMasksInListOrder() throws Exception {
 		ObjectEntry domainMaskObjectEntry = DataMaskTestUtil.addCustomMask(
 			RandomTestUtil.randomString(), "example\\.com", "[DOMAIN]");
 
-		String redactedText = _dataMaskingEngine.redact(
-			TestPropsValues.getCompanyId(),
-			Arrays.asList(
-				domainMaskObjectEntry.getExternalReferenceCode(),
-				"L_DATA_MASK_EMAIL_ADDRESS"),
-			"Contact: contact@example.com");
+		Assert.assertEquals(
+			"Contact: contact@[DOMAIN]",
+			_dataMaskingEngine.redact(
+				companyId,
+				Arrays.asList(
+					domainMaskObjectEntry.getExternalReferenceCode(),
+					"L_DATA_MASK_EMAIL_ADDRESS"),
+				"Contact: contact@example.com"));
 
-		Assert.assertEquals("Contact: contact@[DOMAIN]", redactedText);
-	}
-
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
-	@Test
-	public void testRedactionContinuesWhenOneMaskThrows() throws Exception {
 		ObjectEntry badMaskObjectEntry = DataMaskTestUtil.addCustomMask(
 			RandomTestUtil.randomString(), "Contact", "$5-no-such-group");
 
-		String redactedText = _dataMaskingEngine.redact(
-			TestPropsValues.getCompanyId(),
+		redactedText = _dataMaskingEngine.redact(
+			companyId,
 			Arrays.asList(
 				badMaskObjectEntry.getExternalReferenceCode(),
 				"L_DATA_MASK_EMAIL_ADDRESS"),
@@ -141,81 +134,36 @@ public class DataMaskingEngineTest {
 		Assert.assertThat(
 			redactedText,
 			CoreMatchers.not(CoreMatchers.containsString(_SAMPLE_EMAIL)));
-	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
-	@Test
-	public void testRedactionIsSkippedForUnknownMask() throws Exception {
 		String text = "Contact: " + _SAMPLE_EMAIL;
 
-		String redactedText = _dataMaskingEngine.redact(
-			TestPropsValues.getCompanyId(),
-			Arrays.asList("L_UNKNOWN_DATA_MASK"), text);
-
-		Assert.assertEquals(text, redactedText);
-	}
-
-	@FeatureFlags(
-		featureFlags = @FeatureFlag(enable = false, value = "LPD-90204")
-	)
-	@Test
-	public void testRedactionIsSkippedWhenFeatureFlagIsOff() throws Exception {
-		String text = "Contact: " + _SAMPLE_EMAIL;
-
-		String redactedText = _dataMaskingEngine.redact(
-			TestPropsValues.getCompanyId(),
-			Arrays.asList("L_DATA_MASK_EMAIL_ADDRESS"), text);
-
-		Assert.assertEquals(text, redactedText);
-	}
-
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
-	@Test
-	public void testRedactsCreditCardAcrossFormats() throws Exception {
-		String redactedText = _dataMaskingEngine.redact(
-			TestPropsValues.getCompanyId(),
-			Arrays.asList("L_DATA_MASK_CREDIT_CARD_NUMBER"),
-			"Cards: 4111111111111111, 4111 1111 1111 1111, " +
-				"4111-1111-1111-1111.");
+		Assert.assertEquals(
+			text,
+			_dataMaskingEngine.redact(
+				companyId, Arrays.asList("L_UNKNOWN_DATA_MASK"), text));
 
 		Assert.assertEquals(
 			"Cards: [CREDIT_CARD_NUMBER], [CREDIT_CARD_NUMBER], " +
 				"[CREDIT_CARD_NUMBER].",
-			redactedText);
-	}
-
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
-	@Test
-	public void testRedactsEmailAcrossFormats() throws Exception {
-		String redactedText = _dataMaskingEngine.redact(
-			TestPropsValues.getCompanyId(),
-			Arrays.asList("L_DATA_MASK_EMAIL_ADDRESS"),
-			"Emails: a.b+tag@sub.example.co.uk and USER@EXAMPLE.COM.");
-
+			_dataMaskingEngine.redact(
+				companyId, Arrays.asList("L_DATA_MASK_CREDIT_CARD_NUMBER"),
+				"Cards: 4111111111111111, 4111 1111 1111 1111, " +
+					"4111-1111-1111-1111."));
 		Assert.assertEquals(
-			"Emails: [EMAIL_ADDRESS] and [EMAIL_ADDRESS].", redactedText);
-	}
-
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
-	@Test
-	public void testRedactsIBANAcrossFormats() throws Exception {
-		String redactedText = _dataMaskingEngine.redact(
-			TestPropsValues.getCompanyId(), Arrays.asList("L_DATA_MASK_IBAN"),
-			"IBANs: DE89 3704 0044 0532 0130 00, NL91ABNA0417164300, " +
-				"GB29NWBK60161331926819.");
-
+			"Emails: [EMAIL_ADDRESS] and [EMAIL_ADDRESS].",
+			_dataMaskingEngine.redact(
+				companyId, Arrays.asList("L_DATA_MASK_EMAIL_ADDRESS"),
+				"Emails: a.b+tag@sub.example.co.uk and USER@EXAMPLE.COM."));
 		Assert.assertEquals(
 			"IBANs: [BANK_ACCOUNT_NUMBER], [BANK_ACCOUNT_NUMBER], " +
 				"[BANK_ACCOUNT_NUMBER].",
-			redactedText);
-	}
+			_dataMaskingEngine.redact(
+				companyId, Arrays.asList("L_DATA_MASK_IBAN"),
+				"IBANs: DE89 3704 0044 0532 0130 00, NL91ABNA0417164300, " +
+					"GB29NWBK60161331926819."));
 
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
-	@Test
-	public void testRedactsPhoneAcrossFormats() throws Exception {
-		String redactedText = _dataMaskingEngine.redact(
-			TestPropsValues.getCompanyId(),
-			Arrays.asList("L_DATA_MASK_PHONE_NUMBER"),
+		redactedText = _dataMaskingEngine.redact(
+			companyId, Arrays.asList("L_DATA_MASK_PHONE_NUMBER"),
 			"Phones: +1 (202) 555-0199, +34600123456 and +44 20 7946 0958.");
 
 		Assert.assertThat(
@@ -229,6 +177,20 @@ public class DataMaskingEngineTest {
 		Assert.assertThat(
 			redactedText,
 			CoreMatchers.not(CoreMatchers.containsString("0958")));
+	}
+
+	@FeatureFlags(
+		featureFlags = @FeatureFlag(enable = false, value = "LPD-90204")
+	)
+	@Test
+	public void testRedactWhenFeatureFlagIsDisabled() throws Exception {
+		String text = "Contact: " + _SAMPLE_EMAIL;
+
+		Assert.assertEquals(
+			text,
+			_dataMaskingEngine.redact(
+				TestPropsValues.getCompanyId(),
+				Arrays.asList("L_DATA_MASK_EMAIL_ADDRESS"), text));
 	}
 
 	private static final String _SAMPLE_BSN = "123456789";

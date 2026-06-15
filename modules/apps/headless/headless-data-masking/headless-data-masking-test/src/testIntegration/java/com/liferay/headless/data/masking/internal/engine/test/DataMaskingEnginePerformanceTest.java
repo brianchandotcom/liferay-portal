@@ -46,7 +46,7 @@ public class DataMaskingEnginePerformanceTest {
 
 	@Test
 	@TestInfo("LPD-91092")
-	public void testRedaction() throws Exception {
+	public void testRedact() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
 		List<String> maskExternalReferenceCodes = Arrays.asList(

@@ -47,9 +47,7 @@ public class DataMaskingWriterInterceptorTest {
 	}
 
 	@Test
-	public void testRedactionIsSkippedForUnsupportedMediaType()
-		throws Exception {
-
+	public void testAroundWriteTo() throws Exception {
 		Mockito.when(
 			_httpServletRequest.getHeader("X-Liferay-Data-Masks")
 		).thenReturn(
@@ -64,37 +62,22 @@ public class DataMaskingWriterInterceptorTest {
 
 		_dataMaskingWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
 
-		Mockito.verify(
-			_writerInterceptorContext
-		).proceed();
-
-		Mockito.verify(
-			_writerInterceptorContext, Mockito.never()
-		).setOutputStream(
-			Mockito.any(OutputStream.class)
-		);
-
-		Mockito.verify(
-			_dataMaskingEngine, Mockito.never()
-		).redact(
-			Mockito.anyLong(), Mockito.anyList(), Mockito.anyString()
-		);
-	}
-
-	@Test
-	public void testRedactionIsSkippedWhenDataMasksHeaderIsMissing()
-		throws Exception {
-
 		Mockito.when(
 			_httpServletRequest.getHeader("X-Liferay-Data-Masks")
 		).thenReturn(
 			null
 		);
 
+		Mockito.when(
+			_writerInterceptorContext.getMediaType()
+		).thenReturn(
+			MediaType.APPLICATION_JSON_TYPE
+		);
+
 		_dataMaskingWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
 
 		Mockito.verify(
-			_writerInterceptorContext
+			_writerInterceptorContext, Mockito.times(2)
 		).proceed();
 
 		Mockito.verify(

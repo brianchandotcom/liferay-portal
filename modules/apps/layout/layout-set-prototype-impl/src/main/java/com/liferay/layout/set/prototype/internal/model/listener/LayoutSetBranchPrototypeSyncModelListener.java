@@ -46,7 +46,8 @@ public class LayoutSetBranchPrototypeSyncModelListener
 						return null;
 					}
 
-					_layoutSetPrototypeHelper.executeLayoutSetSync(layoutSet);
+					_layoutSetPrototypeHelper.executeLayoutSetSync(
+						true, layoutSet);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {

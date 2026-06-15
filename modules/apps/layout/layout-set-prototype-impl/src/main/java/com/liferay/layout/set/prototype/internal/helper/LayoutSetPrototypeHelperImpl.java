@@ -5,7 +5,6 @@
 
 package com.liferay.layout.set.prototype.internal.helper;
 
-import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -17,13 +16,10 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.layout.set.prototype.exception.LayoutSetPrototypeSyncException;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
+import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncSessionManagerUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +35,7 @@ import com.liferay.portal.kernel.model.LayoutSetTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -51,17 +48,17 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -95,24 +92,70 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
+		List<LayoutSet> mergeableLayoutSets = new ArrayList<>();
+
 		for (LayoutSet layoutSet :
 				_layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(
 					layoutSetPrototype.getUuid())) {
 
-			try {
-				executeLayoutSetSync(layoutSet);
+			if (_isLayoutSetMergeable(layoutSet)) {
+				mergeableLayoutSets.add(layoutSet);
 			}
-			catch (Exception exception) {
+		}
+
+		Map<Long, ExportImportConfiguration> exportImportConfigurations =
+			new HashMap<>();
+
+		boolean preValidationErrors = false;
+
+		for (Iterator<LayoutSet> iterator = mergeableLayoutSets.iterator();
+			 iterator.hasNext();) {
+
+			LayoutSet layoutSet = iterator.next();
+
+			try {
+				exportImportConfigurations.put(
+					layoutSet.getLayoutSetId(),
+					_buildExportImportConfiguration(false, layoutSet, userId));
+			}
+			catch (PortalException portalException) {
 				_log.error(
-					"Unable to start site template sync for layout set " +
-						layoutSet.getLayoutSetId(),
-					exception);
+					"Unable to add draft export-import configuration for " +
+						"layout set " + layoutSet.getLayoutSetId(),
+					portalException);
+
+				iterator.remove();
+
+				preValidationErrors = true;
+			}
+		}
+
+		try (SafeCloseable safeCloseable =
+				LayoutSetPrototypeSyncSessionManagerUtil.openSession(
+					layoutSetPrototype, mergeableLayoutSets,
+					preValidationErrors, userId)) {
+
+			for (LayoutSet layoutSet : mergeableLayoutSets) {
+				try {
+					_runSyncInBackground(
+						exportImportConfigurations.get(
+							layoutSet.getLayoutSetId()),
+						layoutSet, userId);
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to start site template sync for layout set " +
+							layoutSet.getLayoutSetId(),
+						exception);
+				}
 			}
 		}
 	}
 
 	@Override
-	public void executeLayoutSetSync(LayoutSet layoutSet) throws Exception {
+	public void executeLayoutSetSync(boolean initialSync, LayoutSet layoutSet)
+		throws PortalException {
+
 		if (ExportImportThreadLocal.isExportInProcess() ||
 			ExportImportThreadLocal.isImportInProcess() ||
 			ExportImportThreadLocal.isStagingInProcess()) {
@@ -121,23 +164,18 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				MustNotHaveExportImportInProgress();
 		}
 
-		Group group = layoutSet.getGroup();
-
 		layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			layoutSet.getLayoutSetId());
 
-		if (!_isLayoutSetMergeable(group, layoutSet)) {
+		if (!_isLayoutSetMergeable(layoutSet)) {
 			return;
 		}
 
-		LayoutSetPrototype layoutSetPrototype =
-			_layoutSetPrototypeLocalService.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
+		long userId = PrincipalThreadLocal.getUserId();
 
-		_syncLayoutSetPrototypeLayoutsInBackground(
-			layoutSetPrototype, layoutSet);
+		_runSyncInBackground(
+			_buildExportImportConfiguration(initialSync, layoutSet, userId),
+			layoutSet, userId);
 	}
 
 	@Override
@@ -286,14 +324,20 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	@Override
 	public Map<String, String[]> getLayoutSetPrototypeParameters(
-		boolean importData) {
+		boolean initialSync) {
 
-		Map<String, String[]> parameterMap = LinkedHashMapBuilder.put(
+		return LinkedHashMapBuilder.put(
+			PortletDataHandlerKeys.DATA_STRATEGY,
+			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR}
+		).put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
 			new String[] {Boolean.FALSE.toString()}
 		).put(
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
 			new String[] {Boolean.FALSE.toString()}
+		).put(
+			PortletDataHandlerKeys.FAVICON,
+			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
 			new String[] {Boolean.TRUE.toString()}
@@ -313,13 +357,21 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE
 			}
 		).put(
+			PortletDataHandlerKeys.LOGO, new String[] {Boolean.TRUE.toString()}
+		).put(
 			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()}
+			new String[] {String.valueOf(initialSync)}
 		).put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
@@ -334,55 +386,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
 			new String[] {UserIdStrategy.CURRENT_USER_ID}
 		).build();
-
-		if (importData) {
-			parameterMap.put(
-				PortletDataHandlerKeys.DATA_STRATEGY,
-				new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR});
-			parameterMap.put(
-				PortletDataHandlerKeys.FAVICON,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.LOGO,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA_ALL,
-				new String[] {Boolean.TRUE.toString()});
-		}
-		else {
-			parameterMap.put(
-				PortletDataHandlerKeys.DELETE_LAYOUTS,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.DELETIONS,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.FAVICON,
-				new String[] {Boolean.FALSE.toString()});
-
-			if (PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO) {
-				parameterMap.put(
-					PortletDataHandlerKeys.LOGO,
-					new String[] {Boolean.TRUE.toString()});
-			}
-			else {
-				parameterMap.put(
-					PortletDataHandlerKeys.LOGO,
-					new String[] {Boolean.FALSE.toString()});
-			}
-
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA,
-				new String[] {Boolean.FALSE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA_ALL,
-				new String[] {Boolean.FALSE.toString()});
-		}
-
-		return parameterMap;
 	}
 
 	@Override
@@ -465,6 +468,49 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				layoutPrototypeLayout.getLayoutId(),
 				layoutPrototypeLayout.getTypeSettings());
 		}
+	}
+
+	private ExportImportConfiguration _buildExportImportConfiguration(
+			boolean initialSync, LayoutSet layoutSet, long userId)
+		throws PortalException {
+
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getCompanyId());
+
+		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
+			initialSync);
+
+		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
+			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
+		parameterMap.put(
+			"layoutSetId",
+			new String[] {String.valueOf(layoutSet.getLayoutSetId())});
+		parameterMap.put(
+			"layoutSetPrototypeId",
+			new String[] {
+				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
+			});
+
+		User user = _userLocalService.getUser(userId);
+
+		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
+			layoutSetPrototype.getGroupId(), true);
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					user, layoutSetPrototype.getGroupId(), true,
+					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
+					parameterMap);
+
+		return _exportImportConfigurationLocalService.
+			addDraftExportImportConfiguration(
+				userId, ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+				exportLayoutSettingsMap);
 	}
 
 	/**
@@ -696,153 +742,20 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		return true;
 	}
 
-	private boolean _isLayoutSetMergeable(Group group, LayoutSet layoutSet) {
-		if (layoutSet.isLayoutSetPrototypeLinkActive() &&
-			!group.isLayoutPrototype() && !group.isLayoutSetPrototype()) {
+	private boolean _isLayoutSetMergeable(LayoutSet layoutSet)
+		throws PortalException {
 
-			return true;
+		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
+			return false;
 		}
 
-		return false;
-	}
+		Group group = layoutSet.getGroup();
 
-	private boolean _isLayoutSetPrototypeSyncBackgroundTaskExists(
-			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
-		throws Exception {
-
-		List<BackgroundTask> incompleteBackgroundTasks =
-			_backgroundTaskManager.getBackgroundTasks(
-				layoutSet.getGroupId(),
-				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_SYNC_EXPORT_IMPORT_BACKGROUND_TASK_EXECUTOR,
-				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				BackgroundTaskCreateDateComparator.getInstance(false));
-
-		for (BackgroundTask incompleteBackgroundTask :
-				incompleteBackgroundTasks) {
-
-			long exportImportConfigurationId = MapUtil.getLong(
-				incompleteBackgroundTask.getTaskContextMap(),
-				"exportImportConfigurationId");
-
-			ExportImportConfiguration exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					fetchExportImportConfiguration(exportImportConfigurationId);
-
-			if (exportImportConfiguration != null) {
-				Map<String, Serializable> settingsMap =
-					exportImportConfiguration.getSettingsMap();
-
-				Map<String, String[]> parameterMap =
-					(Map<String, String[]>)settingsMap.get("parameterMap");
-
-				long layoutSetId = MapUtil.getLong(parameterMap, "layoutSetId");
-
-				if (layoutSetId == layoutSet.getLayoutSetId()) {
-					if (incompleteBackgroundTask.getStatus() !=
-							BackgroundTaskConstants.STATUS_IN_PROGRESS) {
-
-						return true;
-					}
-
-					long lastMergeVersion = MapUtil.getLong(
-						parameterMap, "lastMergeVersion");
-
-					if (lastMergeVersion ==
-							layoutSetPrototype.getMvccVersion()) {
-
-						return true;
-					}
-				}
-			}
+		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+			return false;
 		}
 
-		return false;
-	}
-
-	private void _syncLayoutSetPrototypeLayoutsInBackground(
-			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
-		throws Exception {
-
-		if (_isLayoutSetPrototypeSyncBackgroundTaskExists(
-				layoutSetPrototype, layoutSet)) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Layout set prototype merge is in progress for layout " +
-						"set " + layoutSet.getLayoutSetId());
-			}
-
-			return;
-		}
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		boolean importData = true;
-
-		long lastMergeTime = GetterUtil.getLong(
-			settingsUnicodeProperties.getProperty(Sites.LAST_MERGE_TIME));
-		long lastResetTime = GetterUtil.getLong(
-			settingsUnicodeProperties.getProperty(Sites.LAST_RESET_TIME));
-
-		if ((lastMergeTime > 0) || (lastResetTime > 0)) {
-			importData = false;
-		}
-
-		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
-			importData);
-
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
-			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
-		parameterMap.put(
-			"importData", new String[] {String.valueOf(importData)});
-		parameterMap.put(
-			"lastMergeVersion",
-			new String[] {String.valueOf(layoutSetPrototype.getMvccVersion())});
-		parameterMap.put(
-			"layoutSetId",
-			new String[] {String.valueOf(layoutSet.getLayoutSetId())});
-		parameterMap.put(
-			"layoutSetPrototypeId",
-			new String[] {
-				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
-			});
-
-		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
-
-		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
-			layoutSetPrototype.getGroupId(), true);
-
-		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildExportLayoutSettingsMap(
-					user, layoutSetPrototype.getGroupId(), true,
-					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
-					parameterMap);
-
-		ExportImportConfiguration exportImportConfiguration = null;
-
-		try {
-			exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						exportLayoutSettingsMap);
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to add draft export-import configuration",
-				portalException);
-
-			return;
-		}
-
-		_exportImportLocalService.syncLayoutSetPrototypeInBackground(
-			user.getUserId(), layoutSet.getGroupId(),
-			exportImportConfiguration);
+		return true;
 	}
 
 	/**
@@ -857,11 +770,17 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		_layoutLocalService.updateLayout(layout);
 	}
 
+	private void _runSyncInBackground(
+			ExportImportConfiguration exportImportConfiguration,
+			LayoutSet layoutSet, long userId)
+		throws PortalException {
+
+		_exportImportLocalService.syncLayoutSetPrototypeInBackground(
+			userId, layoutSet.getGroupId(), exportImportConfiguration);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypeHelperImpl.class);
-
-	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private ExportImportConfigurationLocalService

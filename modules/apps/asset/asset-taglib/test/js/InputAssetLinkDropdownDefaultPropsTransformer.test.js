@@ -21,7 +21,7 @@ function openFilter(additionalProps = {}) {
 	propsTransformer({
 		additionalProps: {
 			assetEntryTypes: [{classNameId: 1, label: 'Web Content'}],
-			groupId: 123,
+			groupIds: '123',
 			refererClassNameId: 0,
 			refererClassPK: 0,
 			removeIcon: '',

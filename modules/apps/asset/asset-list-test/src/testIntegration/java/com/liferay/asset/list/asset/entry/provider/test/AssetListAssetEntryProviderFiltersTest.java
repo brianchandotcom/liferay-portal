@@ -13,6 +13,9 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.test.util.AssetListTestUtil;
 import com.liferay.info.pagination.InfoPage;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -23,8 +26,11 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -127,6 +133,77 @@ public class AssetListAssetEntryProviderFiltersTest {
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					"Title", "title", false)),
 			ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectField titleObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				_objectDefinition.getObjectDefinitionId(), "title");
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateTitleObjectFieldId(
+				_objectDefinition.getObjectDefinitionId(),
+				titleObjectField.getObjectFieldId());
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
+	public void testCommonFieldFilters() throws Exception {
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"title", "alpha"
+			).build());
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"title", "beta"
+			).build());
+
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(_commonFieldFilter("title", "eq", "alpha")),
+			objectEntry1);
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_commonFieldFilter("title", "contains", "alpha")),
+			objectEntry1);
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_commonFieldFilter("title", "not-contains", "alpha")),
+			objectEntry2);
+
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_commonFieldFilter("createDate", "gt", "2000-01-01")),
+			objectEntry1, objectEntry2);
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_commonFieldFilter("createDate", "lt", "2000-01-01")));
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
+	public void testCommonFieldFiltersMatchAcrossAssetTypes() throws Exception {
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"title", "crossfilter"
+			).build());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, 0, "crossfilter",
+			StringPool.BLANK, "content", LocaleUtil.US, false, true,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		List<Long> actualClassPKs = _getFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_commonFieldFilter("title", "contains", "crossfilter")));
+
+		Assert.assertEquals(
+			actualClassPKs.toString(), 2, actualClassPKs.size());
+		Assert.assertTrue(
+			actualClassPKs.toString(),
+			actualClassPKs.containsAll(
+				Arrays.asList(
+					objectEntry.getObjectEntryId(),
+					journalArticle.getResourcePrimKey())));
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
@@ -573,6 +650,18 @@ public class AssetListAssetEntryProviderFiltersTest {
 		return JSONUtil.putAll((Object[])filterJSONObjects);
 	}
 
+	private JSONObject _commonFieldFilter(
+		String propertyName, String operatorName, Object value) {
+
+		return JSONUtil.put(
+			"operatorName", operatorName
+		).put(
+			"propertyName", propertyName
+		).put(
+			"value", value
+		);
+	}
+
 	private ObjectFieldSetting _createObjectFieldSetting(
 		String name, String value) {
 
@@ -600,6 +689,41 @@ public class AssetListAssetEntryProviderFiltersTest {
 		).put(
 			"value", value
 		);
+	}
+
+	private List<Long> _getFilteredClassPKs(JSONArray filtersJSONArray)
+		throws Exception {
+
+		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId(), 0);
+
+		_assetListEntryLocalService.updateAssetListEntryTypeSettings(
+			assetListEntry.getAssetListEntryId(),
+			SegmentsEntryConstants.ID_DEFAULT,
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"anyAssetType", "true"
+			).put(
+				"filters", filtersJSONArray.toString()
+			).build(
+			).toString());
+
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				_assetListEntryLocalService.getAssetListEntry(
+					assetListEntry.getAssetListEntryId()),
+				new long[] {SegmentsEntryConstants.ID_DEFAULT}, null, null,
+				StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		List<Long> classPKs = new ArrayList<>();
+
+		for (AssetEntry assetEntry : infoPage.getPageItems()) {
+			classPKs.add(assetEntry.getClassPK());
+		}
+
+		return classPKs;
 	}
 
 	private JSONObject _picklistFilter(
@@ -652,7 +776,13 @@ public class AssetListAssetEntryProviderFiltersTest {
 	private ObjectDefinition _objectDefinition;
 
 	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
